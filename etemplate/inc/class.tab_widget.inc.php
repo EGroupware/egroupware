@@ -37,6 +37,8 @@
 
 			$cell['type'] = 'template';
 			$templ = new etemplate();
+			$tab = new etemplate('etemplate.tab_widget.tab');
+			$tab_active = new etemplate('etemplate.tab_widget.tab_active');
 
 			$templ->init('*** generated tab_widget','','',0,'',0,0);	// make an empty template
 
@@ -44,15 +46,27 @@
 			while (list($k,$name) = each($names))
 			{
 				$tcell = $templ->empty_cell();
-				$tcell['name'] = "_tab_widget[$name]";
+/*				$tcell['name'] = "_tab_widget[$name]";
 				$tcell['type'] = 'button';
 				$tcell['label'] = $labels[$k];
 				$tcell['help'] = $helps[$k];
-				if (is_array($value['_tab_widget']) && isset($value['_tab_widget'][$name]))
+*/				if (is_array($value['_tab_widget']) && isset($value['_tab_widget'][$name]))
 				{
-					$tcell['span'] = ',nmh';	// set tab as selected
+//					$tcell['span'] = ',nmh';	// set tab as selected
 					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $name;
+					$tcell['name'] = $tab_active;
 				}
+				else
+				{
+					$tcell['name'] = $tab;
+				}
+				$tcell['type'] = 'template';
+				$tcell['size'] = "_tab_widget[$name]";
+				$value['_tab_widget'][$name] = array(
+					'name'  => "_tab_widget[$name]",
+					'label' => $labels[$k],
+					'help'  => $helps[$k]
+				);
 				$tabs[$templ->num2chrs($k)] = $tcell;
 			}
 			// add one empty cell to take all the space of the row
@@ -61,19 +75,28 @@
 
 			if (!isset($selected_tab))
 			{
-				$tabs['A']['span'] = ',nmh';
+				//$tabs['A']['span'] = ',nmh';
+				$tabs['A']['name'] = $tab_active;
 				$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $names[0];
 			}
 			$templ->data[1] = $tabs;
+
+			$tcell = $templ->empty_cell(); 	// make the tabwidget-header
+			$tcell['label'] = ' ';
+			$tcell['span'] = 'all';
+			$templ->data[2]['A'] = $tcell;
+			$templ->data[0]['c2'] = 'nmh';
 
 			$tcell = $templ->empty_cell(); 	// make the tabwidget-body
 			$tcell['type'] = 'template';
 			$tcell['name'] = $selected_tab;
 			$tcell['span'] = 'all';
-			$templ->data[2]['A'] = $tcell;
+			$templ->data[3]['A'] = $tcell;
 
-			$templ->rows = 2;
+			$templ->rows = 3;
 			$templ->cols = sizeof($tabs);
+
+			$templ->size = ',,,,0';
 
 			$cell['type'] = 'template';
 			$cell['name'] = $templ;
