@@ -271,6 +271,56 @@
 		 */
 		function read ($data) { return False; }
 
+		 /*!
+		@function view
+		@abstract Views the specified file (does not return!)
+		@param string filename
+		@param relatives Relativity array
+		@result None (doesnt return)
+		@discussion By default this function just reads the file and
+		outputs it too the browser, after setting the content-type header 
+		appropriately.  For some other VFS implementations though, there
+		may be some more sensible way of viewing the file.
+		*/
+		 function view($data)
+		 {
+		 	
+		 	$default_values = array
+		 		(
+					'relatives'	=> array (RELATIVE_CURRENT)
+				);
+			$data = array_merge ($this->default_values ($data, $default_values), $data);
+ 
+			$GLOBALS['phpgw_info']['flags']['noheader'] = true;
+			$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
+			$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
+			$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
+			$ls_array = $this->ls (array (
+					'string'	=>  $data['string'],
+					'relatives'	=> $data['relatives'],
+					'checksubdirs'	=> False,
+					'nofiles'	=> True
+				)
+			);
+		
+			if ($ls_array[0]['mime_type'])
+			{
+				$mime_type = $ls_array[0]['mime_type'];
+			}
+			elseif ($GLOBALS['settings']['viewtextplain'])
+			{
+				$mime_type = 'text/plain';
+			}
+		
+			header('Content-type: ' . $mime_type);
+			echo $this->read (array (
+					'string'	=>  $data['string'],
+					'relatives'	=> $data['relatives'],
+				)
+			);		
+			exit(); 
+		 }
+		
 		/*!
 		 * @function write
 		 * @abstract Store file contents
