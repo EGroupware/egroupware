@@ -1,5 +1,6 @@
 %1 email addresses inserted	common	zh	已插入%1个EMail地址
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+%1 is not executable by the webserver !!!	common	zt	網頁伺服器無法執行 %1 ！
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
 (shift-)click or drag to change value	jscalendar	zh	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	zh	- Click on any of the time parts to increase it
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	zh	- Hold mouse button on any of the above buttons for faster selection.
@@ -9,6 +10,8 @@
 - use the %1, %2 buttons to select year	jscalendar	zh	- Use the %1, %2 buttons to select year
 00 (disable)	admin	zh	00 (disable)
 13 (ntp)	admin	zh	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	zt	日期的三個字元簡寫
+3 number of chars for month-shortcut	jscalendar	zt	月份的三個字元簡寫
 80 (http)	admin	zh	80 (http)
 about	common	zh	关于
 about %1	common	zh	关于%1
@@ -117,6 +120,8 @@ cocos (keeling) islands	common	zh	科科斯(基灵)群岛
 colombia	common	zh	哥伦比亚
 comoros	common	zh	科摩罗
 company	common	zh	公司
+config password	common	zt	設定管理員密碼
+config username	common	zt	設定管理員帳號
 congo	common	zh	刚果
 congo, the democratic republic of the	common	zh	刚果民主共和国
 cook islands	common	zh	库克群岛
@@ -152,7 +157,8 @@ disable internet explorer png-image-bugfix	common	zh	Disable Internet Explorer p
 disable slider effects	common	zh	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
 disabled	common	zh	已禁用
-display monday first	common	zh	从星期一开始
+display %s first	jscalendar	zt	先顯示 %s
+display monday first	jscalendar	zt	星期一在首
 display sunday first	common	zh	从星期日开始
 djibouti	common	zh	吉布提
 do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗?
@@ -245,6 +251,9 @@ guinea	common	zh	几内亚
 guinea-bissau	common	zh	几内亚比绍首都
 guyana	common	zh	圭亚那
 haiti	common	zh	HAITI
+header admin login	common	zt	頁首管理員登入
+header password	common	zt	密碼
+header username	common	zt	帳號
 heard island and mcdonald islands	common	zh	赫德与麦克唐纳群岛
 help	common	zh	显示提示信息
 help using editor	htmlarea	zh	Help using editor
@@ -282,6 +291,7 @@ january	common	zh	一月
 japan	common	zh	日本
 jordan	common	zh	约旦
 july	common	zh	七月
+jun	common	zt	六月
 june	common	zh	六月
 justify center	htmlarea	zh	Justify Center
 justify full	htmlarea	zh	Justify Full
@@ -424,6 +434,7 @@ personal	common	zh	个人
 peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
+phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zh	皮特凯恩
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称!
@@ -490,6 +501,7 @@ server name	common	zh	服务器名
 session has been killed	common	zh	会话已中止
 setup	common	zh	安装程序
 setup main menu	common	zh	Setup Main Menu
+setup/config admin login	common	zt	安裝/設定管理員登入
 seychelles	common	zh	塞舌尔
 show all	common	zh	全部显示
 show all categorys	common	zh	显示所有类别
@@ -538,7 +550,6 @@ the mail server returned	common	zh	退回邮件
 this application is current	common	zh	该应用程序当前在用
 this application requires an upgrade	common	zh	该应用程序需要升级
 this name has been used already	common	zh	该名称已被占用!
-This PHP has no IMAP support compiled in!!	common	zh	当前使用的PHP版本不支持IMAP!!
 thursday	common	zh	星期四
 time	common	zh	时间
 time selection:	jscalendar	zh	Time selection:
@@ -616,6 +627,7 @@ you have not entered participants	common	zh	必须输入参与者
 you have selected an invalid date	common	zh	选定的日期无效!
 you have selected an invalid main category	common	zh	选定的主类别无效!
 you have successfully logged out	common	zh	注销成功
+you need to add the webserver user '%1' to the group '%2'.	common	zt	您必須將網站伺服器使用者 '%1' 新增到群組 '%2'
 your message could <b>not</b> be sent!<br>	common	zh	邮件<b>无法</b>发送!<br>
 your message has been sent	common	zh	邮件已发送
 your search returned %1 matchs	common	zh	查找结果：%1个符合条件的记录
@@ -625,3 +637,4 @@ your settings have been updated	common	zh	您的配置已更新
 yugoslavia	common	zh	南斯拉夫
 zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦
+﻿%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
