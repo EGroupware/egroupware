@@ -36,9 +36,13 @@
       $thisyear = $phpgw->calendar->today["year"];
     else
       $thisyear = $year;
+    $date = $thisyear;
+    $date .= ($thismonth<=9?"0":"").$thismonth;
+    $date .= ($thisday<=9?"0":"").$thisday;
+
   }
 
-  $date = $thisyear.$thismonth.$thisday;
+//  $date = $thisyear.$thismonth.$thisday;
 
   if(isset($groups) && $groups) {
     for($i=0;$i<count($groups);$i++) {

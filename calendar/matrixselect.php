@@ -56,23 +56,20 @@
   $phpgw->template->set_var("field",lang("Date"));
 
   $day_html = "<select name=\"day\">";
-  for ($i = 1; $i <= 31; $i++)
-    $day_html .= "<option value=\"$i\"" . ($i == $thisday ? " selected" : "") . ">$i"
-	       . "</option>\n";
+  for($i=1;$i<=31;$i++)
+    $day_html .= "<option value=\"$i\"".($i==$thisday?" selected":"").">$i</option>\n";
   $day_html .= "</select>";
 
   $month_html = "<select name=\"month\">";
-  for ($i = 1; $i <= 12; $i++) {
+  for($i=1;$i<=12;$i++) {
     $m = lang(date("F", mktime(0,0,0,$i,1,$thisyear)));
-    $month_html .= "<option value=\"$i\"" . ($i == $thismonth ? " selected" : "") . ">$m"
-		 . "</option>\n";
+    $month_html .= "<option value=\"$i\"".($i==$thismonth?" selected":"").">$m</option>\n";
   }
   $month_html .= "</select>";
 
   $year_html = "<select name=\"year\">";
-  for ($i = ($thisyear - 1); $i < ($thisyear + 5); $i++) {
-    $year_html .= "<option value=\"$i\"" . ($i == $thisyear ? " selected" : "") . ">$i"
-	 	. "</option>\n";
+  for($i=($thisyear - 1);$i<($thisyear + 5);$i++) {
+    $year_html .= "<option value=\"$i\"".($i==$thisyear?" selected":"").">$i</option>\n";
   }
   $year_html .= "</select>";
 

@@ -253,7 +253,7 @@
     }
 
     function date_to_epoch($d) {
-      return $this->splitdate(mktime(2,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
+      return $this->splitdate(mktime(0,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
     }
 
     function overlap($starttime,$endtime,$participants,$groups,$owner=0,$id=0) {
