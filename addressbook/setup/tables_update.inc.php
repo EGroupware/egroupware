@@ -23,7 +23,8 @@
 		$oProc->AddColumn('addressbook', 'ab_address2', array('type' => 'varchar', 'precision' => 60));
 
 		$setup_info['addressbook']['currentver'] = '0.9.2';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	function addressbook_v0_9_2to0_9_3update_owner($table, $field)
@@ -64,7 +65,8 @@
 		if(addressbook_v0_9_2to0_9_3update_owner('addressbook','ab_owner'))
 		{
 			$setup_info['addressbook']['currentver'] = '0.9.3pre2';
-			return True;
+			return $setup_info['addressbook']['currentver'];
+		//return True;
 		}
 	}
 
@@ -77,7 +79,8 @@
 		$oProc->AddColumn('addressbook', 'ab_url', array('type' => 'varchar', 'precision' => 255));
 
 		$setup_info['addressbook']['currentver'] = '0.9.3pre7';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.8pre5";
@@ -85,7 +88,8 @@
 	{
 		global $setup_info;
 		$setup_info['addressbook']['currentver'] = '0.9.10pre4';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre4";
@@ -119,7 +123,8 @@
 		}
 
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre5";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
  
 	$test[] = "0.9.10pre5";
@@ -127,7 +132,8 @@
 	{
 		global $setup_info;
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre6";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
        
 	$test[] = "0.9.10pre6";
@@ -135,7 +141,8 @@
 	{
 		global $setup_info;
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre7";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre7";
@@ -143,7 +150,8 @@
 	{
 		global $setup_info;
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre8";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre8";
@@ -152,7 +160,8 @@
 		global $setup_info, $oProc;
 
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre9";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre9";
@@ -161,7 +170,8 @@
 		global $setup_info, $oProc;
 
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre10";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre10";
@@ -170,7 +180,8 @@
 		global $setup_info, $oProc;
 
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre11";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre11";
@@ -179,7 +190,8 @@
 		global $setup_info, $oProc;
 
 		$setup_info["addressbook"]["currentver"] = "0.9.10pre12";
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre12';
@@ -321,7 +333,8 @@
 			}
 		}
 		$setup_info['addressbook']['currentver'] = '0.9.10pre13';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 		// Note we are still leaving the old addressbook table alone here... for third party apps if they need it
 	}
 
@@ -386,7 +399,8 @@
 			}
 		}
 		$setup_info['addressbook']['currentver'] = '0.9.10pre14';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre14';
@@ -394,7 +408,8 @@
 	{
 		global $setup_info;
 		$setup_info['addressbook']['currentver'] = '0.9.10pre15';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre15';
@@ -430,7 +445,8 @@
 		$oProc->AlterColumn('phpgw_addressbook', 'd_email_home', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre16';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre16';
@@ -569,7 +585,8 @@
 			}
 		}
 		$setup_info['addressbook']['currentver'] = '0.9.10pre17';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre17';
@@ -623,7 +640,8 @@
 		$oProc->m_odb->query("update phpgw_addressbook set email_home_type=''    where email_home_type='n' OR  email_home_type='y'");
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre18';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre18';
@@ -631,7 +649,8 @@
 	{
 		global $setup_info;
 		$setup_info['addressbook']['currentver'] = '0.9.10pre19';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre19';
@@ -639,7 +658,8 @@
 	{
 		global $setup_info;
 		$setup_info['addressbook']['currentver'] = '0.9.10pre20';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre20';
@@ -652,7 +672,8 @@
 		$oProc->AddColumn('phpgw_addressbook', 'access', array('type' => 'char', 'precision' => 7));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre21';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre21';
@@ -665,7 +686,8 @@
 		$oProc->AddColumn('phpgw_addressbook', 'cat_id', array('type' => 'varchar', 'precision' => 32));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre22';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre22';
@@ -673,7 +695,8 @@
 	{
 		global $setup_info;
 		$setup_info['addressbook']['currentver'] = '0.9.10pre23';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre23';
@@ -686,6 +709,7 @@
 		$oProc->m_odb->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null");
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre24';
-		return True;
+		return $setup_info['addressbook']['currentver'];
+		//return True;
 	}
 ?>

@@ -30,7 +30,8 @@
 		$oProc->m_odb->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.2';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	function phpgwapi_v0_9_2to0_9_3update_owner($table, $field)
@@ -60,7 +61,8 @@
 		$oProc->AlterColumn("config", "config_name", array("type" => "varchar", "precision" => 255, "nullable" => false));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre5';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.3pre5";
@@ -85,7 +87,8 @@
 		);
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre6';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.3pre6";
@@ -96,7 +99,8 @@
 		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$setup_info['phpgwapi']['version']."')");
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre7';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.3pre7";
@@ -255,7 +259,8 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre8';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.4pre4";
@@ -266,7 +271,8 @@
 		$oProc->AlterColumn("sessions", "session_lid", array("type" => "varchar", "precision" => 255));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.4pre5';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.4";
@@ -413,7 +419,8 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('zu','Zulu','No')");
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.5pre1';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 	
 	$test[] = "0.9.5pre1";
@@ -481,7 +488,8 @@
 			));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.5pre2';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.5";
@@ -489,7 +497,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.6';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.6";
@@ -497,7 +506,8 @@
 	{
 		global $setup_info;
 		$phpgw_info['phpgwapi']['currentver'] = '0.9.7pre1';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.7pre3";
@@ -505,7 +515,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.7';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.7";
@@ -513,7 +524,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.8pre1';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.8pre1";
@@ -545,7 +557,8 @@
 		}
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.8pre2';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.8pre3";
@@ -572,7 +585,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.8pre4';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.8pre4";
@@ -596,7 +610,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.8pre5';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.8pre5";
@@ -628,7 +643,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.9pre1';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.9pre1";
@@ -636,7 +652,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.9';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.9";
@@ -684,7 +701,8 @@
 		$phpgw_setup->db->query("update groups set group_apps = ''",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre1';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre1";                                                                                                                                                    
@@ -696,7 +714,8 @@
 		$oProc->m_odb->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre2';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre2";
@@ -725,7 +744,8 @@
 		$oProc->m_odb->query("UPDATE accounts SET account_groups= ''",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre3';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre3";
@@ -741,7 +761,8 @@
 		$oProc->m_odb->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre4';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	// TODO see next function
@@ -850,7 +871,8 @@
 
 		$oProc->DropTable('groups');
 		$setup_info["phpgwapi"]["currentver"] = "0.9.10pre5";
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
  
 	$test[] = "0.9.10pre5";
@@ -878,7 +900,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre6';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre6";
@@ -890,7 +913,8 @@
 		$oProc->RenameTable('config','phpgw_config');
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre7';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre7";
@@ -902,7 +926,8 @@
 		$oProc->RenameTable('applications','phpgw_applications');
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre8';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = "0.9.10pre8";
@@ -915,7 +940,8 @@
 		$oProc->AlterColumn('phpgw_sessions', 'session_action', array('type' => 'varchar', 'precision' => '255'));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre9';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre9';
@@ -927,7 +953,8 @@
 		$oProc->RenameTable('preferences','phpgw_preferences');
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre10';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre10';
@@ -952,7 +979,8 @@
 		$oProc->DropColumn('phpgw_acl',$newtbldef,'acl_account_type');
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre11';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre11';
@@ -960,7 +988,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre12';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
     $test[] = '0.9.10pre12';
@@ -968,7 +997,8 @@
     {
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre13';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
     $test[] = '0.9.10pre13';
@@ -976,7 +1006,8 @@
     {
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre14';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre14';
@@ -988,7 +1019,8 @@
 		$oProc->AddColumn('phpgw_sessions','session_flags', array('type' => 'char', 'precision' => 2));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre15';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre15';
@@ -996,7 +1028,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre16';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
     $test[] = '0.9.10pre16';
@@ -1004,7 +1037,8 @@
     {
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre17';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
     $test[] = '0.9.10pre17';
@@ -1012,7 +1046,8 @@
     {
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre18';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre18';
@@ -1035,7 +1070,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre19';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre19';
@@ -1060,7 +1096,8 @@
 		);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre20';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre20';
@@ -1068,7 +1105,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre21';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre21';
@@ -1076,7 +1114,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre22';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre22';
@@ -1084,7 +1123,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre23';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre23';
@@ -1092,7 +1132,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre24';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre24';
@@ -1104,7 +1145,8 @@
 		$oProc->AlterColumn('phpgw_categories','cat_access', array('type' => 'char', 'precision' => 7));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre25';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre25';
@@ -1116,7 +1158,8 @@
 		$oProc->AddColumn('phpgw_app_sessions','session_dla', array('type' => 'int', 'precision' => 4));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre26';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre26';
@@ -1124,7 +1167,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre27';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre27';
@@ -1136,7 +1180,8 @@
 		$oProc->AlterColumn('phpgw_app_sessions', 'content', array('type' => 'longtext'));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre28';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10pre28';
@@ -1144,7 +1189,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.10';
@@ -1152,7 +1198,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.001';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.001';
@@ -1160,7 +1207,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.002';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.002';
@@ -1168,7 +1216,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.003';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.003';
@@ -1176,7 +1225,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.004';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.004';
@@ -1189,7 +1239,8 @@
 		$oProc->m_odb->query("UPDATE phpgw_config SET config_app='phpgwapi'",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.005';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.005';
@@ -1202,7 +1253,8 @@
 		$oProc->m_odb->query("UPDATE phpgw_accounts SET account_expires='-1'",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.006';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.006';
@@ -1210,7 +1262,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.007';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.007';
@@ -1218,7 +1271,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.008';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.008';
@@ -1230,7 +1284,8 @@
 		$oProc->DropTable('profiles');
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.009';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.009';
@@ -1238,7 +1293,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.11.010';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.11.010';
@@ -1246,7 +1302,8 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 
 	$test[] = '0.9.13.001';
@@ -1254,6 +1311,7 @@
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.002';
-		return True;
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
 	}
 ?>
