@@ -2612,8 +2612,9 @@
 				$str = '';
 				for ($i = -7; $i <= 7; $i++)
 				{
-					$begin = $sun + (604800 * $i);
-					$end = $begin + 604799;
+					$begin = $sun + (7*24*60*60 * $i) + 12*60*60;	// we use midday, that changes in daylight-saveing does not effect us
+					$end = $begin + 6*24*60*60;
+//					echo "<br>$i: ".date('d.m.Y H:i',$begin).' - '.date('d.m.Y H:i',$end);
 					$str .= '<option value="' . $GLOBALS['phpgw']->common->show_date($begin,'Ymd') . '"'.($begin <= $thisdate && $end >= $thisdate?' selected':'').'>'
 					   . $GLOBALS['phpgw']->common->show_date($begin,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']) . ' - '
 					   . $GLOBALS['phpgw']->common->show_date($end,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
