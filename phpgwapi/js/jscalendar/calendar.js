@@ -1751,6 +1751,8 @@ Date.prototype.print = function (str) {
 	s["%%"] = "%";		// a literal '%' character
 
 	var re = /%./g;
+	if (!Calendar.is_ie5)
+		return str.replace(re, function (par) { return s[par] || par; });
 
 	var a = str.match(re);
 	for (var i = 0; i < a.length; i++) {
@@ -1760,11 +1762,8 @@ Date.prototype.print = function (str) {
 			str = str.replace(re, tmp);
 		}
 	}
-
 	return str;
 };
-
-
 
 Date.prototype.__msh_oldSetFullYear = Date.prototype.setFullYear;
 Date.prototype.setFullYear = function(y) {
@@ -1780,4 +1779,3 @@ Date.prototype.setFullYear = function(y) {
 
 // global object that remembers the calendar
 window.calendar = null;
-
