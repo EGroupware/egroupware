@@ -105,8 +105,7 @@
 		{
 			$api_messages = lang('You are required to change your password during your first login')
                       . '<br> Click this image on the navbar: <img src="'
-                      . $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
-                      . $phpgw_info['server']['template_set'] . '/images/navbar.gif">';
+                      . $phpgw->common->image('preferences','navbar.gif').'">';
 		}
 		else if ($phpgw_info['user']['lastpasswd_change'] < time() - (86400*30))
 		{

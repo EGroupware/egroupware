@@ -37,8 +37,8 @@
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
 					. lang($app[1]['title']) . '" border="0" name="' . $app[0] . '">';
 
-				$img_src_over = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar-over.gif';
-				$img_src_out = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar.gif';
+				$img_src_over = $phpgw->common->image($app[0],'navbar-over.gif');
+				$img_src_out = $phpgw->common->image($app[0],'navbar.gif');
 
 				// onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
 				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
@@ -51,7 +51,7 @@
 				$applications .= $title . '</a></td></tr>';
 				$applications .= "\n";
 			}
-			$pre_load[] = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar-over.gif';
+			$pre_load[] = $phpgw->common->image($app[0],'navbar-over.gif');
 		}
 
 		$tpl->set_var('app_images',implode("','",$pre_load));
@@ -112,7 +112,7 @@
 		{
 			$api_messages = lang('You are required to change your password during your first login')
 				. '<br> Click this image on the navbar: <img src="'
-				. $phpgw->common->get_image_path('preferences').'/navbar.gif">';
+				. $phpgw->common->image('preferences','navbar.gif').'">';
 		}
 		elseif ($phpgw_info['user']['lastpasswd_change'] < time() - (86400*30))
 		{
