@@ -49,6 +49,15 @@
 		}
 		$tpl->set_var('applications',$applications);
 
+		if ($phpgw_info['theme']['special_logo'])
+		{
+			$tpl->set_var('logo',$phpgw_info['theme']['special_logo']);
+		}
+		else
+		{
+			$tpl->set_var('logo','logo.gif');
+		}
+
 		$tpl->set_var('home_link',$phpgw_info['navbar']['home']['url']);
 		$tpl->set_var('preferences_link',$phpgw_info['navbar']['preferences']['url']);
 		$tpl->set_var('logout_link',$phpgw_info['navbar']['logout']['url']);
