@@ -29,7 +29,7 @@
 		/* check if string contains any whitespace */
 		function has_space ($text)
 		{
-			return ereg('( |\n|\t|\r)+', $text);
+			return ereg("( |\n|\t|\r)+", $text);
 		}
 
 		function chconvert ($fragment)
@@ -50,7 +50,7 @@
 		/* strips all whitespace from a string */
 		function strip_space ($text)
 		{
-			return ereg('( |\n|\t|\r)+', '', $text);
+			return ereg_replace("( |\n|\t|\r)+", '', $text);
 		}
 
 		function is_allnumbers ($text)
