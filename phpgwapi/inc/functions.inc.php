@@ -97,6 +97,44 @@
 		if ($debugme == "on") { echo 'debug: '.$text.'<br>'; }
 	}
 
+	/************************************************************************\
+	* This function will return a properly formatted account_id.             *
+	* This needs to be placed here, or some classes will have a problem      *
+	* on instantiation.                                                      *
+	\************************************************************************/
+	function get_account_id($account_id = '',$default_id = '')
+	{
+		global $phpgw, $phpgw_info;
+
+		if (gettype($account_id) == 'integer')
+		{
+			return $account_id;
+		}
+		elseif ($account_id == '')
+		{
+			if ($default_id == '')
+			{
+				return $phpgw_info['user']['account_id'];
+			}
+			elseif (gettype($default_id) == 'string')
+			{
+				return $phpgw->accounts->name2id($default_id);
+			}
+			return intval($default_id);
+		}
+		elseif (gettype($account_id) == 'string')
+		{
+			if($phpgw->accounts->exists(intval($account_id)) == True)
+			{
+				return intval($account_id);
+			}
+			else
+			{
+				return $phpgw->accounts->name2id($account_id);
+			}
+		}
+	}
+
 	print_debug('core functions are done');
 	/****************************************************************************\
 	* Quick verification of sane environment                                     *
@@ -219,44 +257,6 @@
 	$phpgw->applications = CreateObject("phpgwapi.applications");
 	$phpgw->translation  = CreateObject("phpgwapi.translation");
 	print_debug('main class loaded');
-
-	/************************************************************************\
-	* This function will return a properly formatted account_id.             *
-	* This needs to be placed here, or some classes will have a problem      *
-	* on instantiation.                                                      *
-	\************************************************************************/
-	function get_account_id($account_id = '',$default_id = '')
-	{
-		global $phpgw, $phpgw_info;
-
-		if (gettype($account_id) == 'integer')
-		{
-			return $account_id;
-		}
-		elseif ($account_id == '')
-		{
-			if ($default_id == '')
-			{
-				return $phpgw_info['user']['account_id'];
-			}
-			elseif (gettype($default_id) == 'string')
-			{
-				return $phpgw->accounts->name2id($default_id);
-			}
-			return intval($default_id);
-		}
-		elseif (gettype($account_id) == 'string')
-		{
-			if($phpgw->accounts->exists(intval($account_id)) == True)
-			{
-				return intval($account_id);
-			}
-			else
-			{
-				return $phpgw->accounts->name2id($account_id);
-			}
-		}
-	}
 
 	/****************************************************************************\
 	* This is a global constant that should be used                              *
