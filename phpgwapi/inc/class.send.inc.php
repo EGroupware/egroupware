@@ -254,16 +254,10 @@
 
  function sig_html_to_text($sig)
  {
-	// convert HTML chars in the email sig to normal text
-	// note: initially include a "magic_quote" like escape slash with the single and double quotes
+	// convert HTML chars for  '  and  "  in the email sig to normal text
 	$sig_clean = $sig;
-	$sig_clean = ereg_replace('&gt;', '>', $sig_clean);
-	$sig_clean = ereg_replace('&lt;', '<', $sig_clean);
-	$sig_clean = ereg_replace('&quot;', '\"', $sig_clean);
+	$sig_clean = ereg_replace('&quot;', '"', $sig_clean);
 	$sig_clean = ereg_replace('&#039;', '\'', $sig_clean);
-	$sig_clean = ereg_replace('&amp;', '&', $sig_clean);
-	// now strip the "magic_quote" like escape slashs
-	$sig_clean = stripslashes($sig_clean);
 	return $sig_clean;
  }
 
