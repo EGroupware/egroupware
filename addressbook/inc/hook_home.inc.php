@@ -33,12 +33,9 @@
 			"n_family" => "n_family",
 			"bday"     => "bday"
 		);
-
-		$today = $phpgw->common->show_date(mktime(0,0,0,
-		$phpgw->common->show_date(time(),"m"),
-		$phpgw->common->show_date(time(),"d"),
-		$phpgw->common->show_date(time(),"Y")),"n/d" );
-		//echo $today."\n";
+		$now = time() - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+		$today = $phpgw->common->show_date($now,'n/d');
+//		echo $today."\n";
 
 		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$phpgw_info["user"]["account_id"]);
 
