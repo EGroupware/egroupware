@@ -69,35 +69,45 @@
 		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
-			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
-		}
-		if ($p1 == '_UNDEF_' && $p1 != 1)
-		{
-			eval('$obj = new ' . $classname . ';');
-		}
-		else
-		{
-			$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
-			$i = 1;
-			$code = '$obj = new ' . $classname . '(';
-			while (list($x,$test) = each($input))
+			if(@file_exists(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
 			{
-				if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
-				{
-					break;
-				}
-				else
-				{
-					$code .= '$p' . $i . ',';
-				}
-				$i++;
+				include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
 			}
-			$code = substr($code,0,-1) . ');';
-			eval($code);
+			else
+			{
+				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = False;
+			}
 		}
-		/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
-		return $obj;
+		if($GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
+		{
+			if ($p1 == '_UNDEF_' && $p1 != 1)
+			{
+				eval('$obj = new ' . $classname . ';');
+			}
+			else
+			{
+				$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
+				$i = 1;
+				$code = '$obj = new ' . $classname . '(';
+				while (list($x,$test) = each($input))
+				{
+					if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
+					{
+						break;
+					}
+					else
+					{
+						$code .= '$p' . $i . ',';
+					}
+					$i++;
+				}
+				$code = substr($code,0,-1) . ');';
+				eval($code);
+			}
+			/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
+			return $obj;
+		}
 	}
 
 	/*!
