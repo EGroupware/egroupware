@@ -29,6 +29,12 @@
 	);
 	include('./header.inc.php');
 
-	$sessionid = $GLOBALS['phpgw']->session->create($login,$passwd);
+	// If your are going to use multiable accounts, remove the following lines 
+	// You must create the useraccount and check its permissions before use 
+
+	$login  = 'anonymous'; 
+	$passwd = 'anonymous'; 
+
+	$sessionid = $GLOBALS['phpgw']->session->create($login,$passwd,'text');
 	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php'));
 ?>
