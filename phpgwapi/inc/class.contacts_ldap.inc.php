@@ -550,7 +550,7 @@
 			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
 
-			_debug_array($ldap_fields);
+			/* _debug_array($ldap_fields); */
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
 			if (count($extra_fields))
