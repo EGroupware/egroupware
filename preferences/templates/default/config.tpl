@@ -58,24 +58,43 @@
 
    <tr bgcolor="{row_on}">
     <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
-    <td><input type="checkbox" name="newsettings[htmlcompliant]" value="True" {checked_htmlcompliant}></td>
+    <td>
+     <select name="newsettings[htmlcompliant]">
+      <option value="">No</option>
+      <option value="True"{selected_htmlcompliant_True}>Yes</option>
+     </select>
+    </td>
    </tr>
 
    <tr bgcolor="{row_off}">
     <td>{lang_Use_cookies_to_pass_sessionid}:</td>
-    <td><input type="checkbox" name="newsettings[usecookies]" value="True" {checked_usecookies}></td>
+    <td>
+     <select name="newsettings[usecookies]">
+      <option value="">No</option>
+      <option value="True"{selected_usecookies_True}>Yes</option>
+     </select>
+    </td>
    </tr>
 
    <tr bgcolor="{row_on}">
     <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
-    <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True" {checked_checkfornewversion}></td>
+    <td>
+     <select name="newsettings[checkfornewversion]">
+      <option value="">No</option>
+      <option value="True"{selected_checkfornewversion_True}>Yes</option>
+     </select>
+    </td>
    </tr>
 
    <tr bgcolor="{row_off}">
-    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array ?}:</td>   
-    <td><input type="checkbox" name="newsettings[cache_phpgw_info]" value="True" {checked_cache_phpgw_info}></td>
-   </tr> 
-
+    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array ?}:</td>
+    <td>
+     <select name="newsettings[cache_phpgw_info]">
+      <option value="">No</option>
+      <option value="True"{selected_cache_phpgw_info_True}>Yes</option>
+     </select>
+    </td>
+   </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

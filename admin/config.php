@@ -60,6 +60,10 @@
 			{
 				$c->config_data[$key] = $config;
 			}
+			else
+			{
+				unset($c->config_data[$key]);
+			}
 		}
 		$c->save_repository(True);
 
@@ -103,7 +107,7 @@
 				$newval = ereg_replace(' ','_',$newval);
 				$t->set_var($value,$current_config[$newval]);
 				break;
-			case "checked":
+/*			case "checked":
 				$newval = ereg_replace(' ','_',$newval);
 				if ($current_config[$newval])
 				{
@@ -113,7 +117,7 @@
 				{
 					$t->set_var($value,'');
 				}
-				break;
+				break;*/
 			case "selected":
 				$configs = array();
 				$config  = '';
@@ -124,6 +128,7 @@
 					$configs[] = $newvals[$i];
 				}
 				$config = implode('_',$configs);
+				/* echo $config . '=' . $current_config[$config]; */
 				if ($current_config[$config] == $setting)
 				{
 					$t->set_var($value,' selected');
