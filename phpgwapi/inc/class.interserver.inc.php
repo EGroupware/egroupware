@@ -221,11 +221,12 @@
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			}
 
-			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
+			$this->debug('<pre>' . htmlentities($f->serialize()) . '</pre>' . "\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
 			$c->username = $this->sessionid;
 			$c->password = $this->kp3;
-			$c->setDebug(1);
+//			_debug_array($c);
+			$c->setDebug(0);
 			$r = $c->send($f);
 			if (!$r)
 			{

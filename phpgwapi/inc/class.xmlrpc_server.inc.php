@@ -25,6 +25,7 @@
 	class xmlrpc_server
 	{
 		var $dmap = array();
+		var $authed = False;
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
@@ -183,13 +184,16 @@
 				}
 				if(!isset($dmap[$methName]['function']))
 				{
-					/* phpgw mod - fetch the (bo) class methods to create the dmap */
-					$method = $methName;
-					$tmp = explode('.',$methName);
-					$methName = $tmp[2];
-					$listmeth = $tmp[0] . '.' . $tmp[1] . '.' . 'list_methods';
-					$dmap = ExecMethod($listmeth,'xmlrpc');
-					$this->dmap = $dmap;
+					if($this->authed)
+					{
+						/* phpgw mod - fetch the (bo) class methods to create the dmap */
+						$method = $methName;
+						$tmp = explode('.',$methName);
+						$methName = $tmp[2];
+						$listmeth = $tmp[0] . '.' . $tmp[1] . '.' . 'list_methods';
+						$dmap = ExecMethod($listmeth,'xmlrpc');
+						$this->dmap = $dmap;
+					}
 				}
 				if (isset($dmap[$methName]['function']))
 				{
@@ -222,15 +226,53 @@
 								$code = '$p = '  . $params . ';';
 								eval($code);
 								$params = $p->getval();
+								/* _debug_array($params); */
+								if(gettype($params) == 'array')
+								{
+									@reset($params);
+									while(list($key,$val) = @each($params))
+									{
+										if(gettype($val) == 'array')
+										{
+											@reset($val);
+											while(list($key1,$val1) = @each($val))
+											{
+												$tmp = '';
+												if(get_class($val1) == 'xmlrpcval')
+												{
+													$tmp[$key1] = $val1->getval();
+													/* echo '<br>Adding xmlrpc val1: ' . $tmp[$key1] . "\n"; */
+												}
+												else
+												{
+													/* echo '<br>Adding val1: ' . $val1 . "\n"; */
+													$tmp[$key1] = $val1;
+												}
+											}
+											$_params[$key] = $tmp;
+										}
+										else
+										{
+											/* echo '<br>Adding val: ' . $val . "\n"; */
+											$_params[$key] = $val;
+										}
+									}
+									$params = $_params;
+								}
+								/* _debug_array($params); */
 								$res = ExecMethod($method,$params);
+								/* _debug_array($res);exit; */
+								@reset($res);
 								while(list($key,$val) = @each($res))
 								{
 									if(gettype($val) == 'array')
 									{
+										@reset($val);
 										while(list($x,$y) = @each($val))
 										{
-											$ele[$x] = CreateObject('phpgwapi.xmlrpcval',$y,'string');
+											$aa[$x] = CreateObject('phpgwapi.xmlrpcval',$y,'string');
 										}
+										$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$aa,'struct');
 									}
 									else
 									{
@@ -238,6 +280,7 @@
 									}
 								}
 								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$ele,'struct'));
+								/* _debug_array($r);exit; */
 							}
 						}
 					}
@@ -254,12 +297,19 @@
 				else
 				{
 					// else prepare error response
-					$r = CreateObject(
-						'phpgwapi.xmlrpcresp',
-						CreateObject('phpgwapi.xmlrpcval'),
-						$GLOBALS['xmlrpcerr']['unknown_method'],
-						$GLOBALS['xmlrpcstr']['unknown_method']
-					);
+					if(!$this->authed)
+					{
+						$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval','UNAUTHORIZED','string'));
+					}
+					else
+					{
+						$r = CreateObject(
+							'phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval'),
+							$GLOBALS['xmlrpcerr']['unknown_method'],
+							$GLOBALS['xmlrpcstr']['unknown_method']
+						);
+					}
 				}
 			}
 			return $r;
