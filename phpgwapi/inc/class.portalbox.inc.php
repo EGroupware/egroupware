@@ -125,7 +125,9 @@
 
 		function set_controls($control='',$control_param='')
 		{
-			if($control != '' && $control_param != '')
+//			echo '<br>Control: ' . $control . ', control_param="' . $control_param . '"';
+//			if($control != '' && $control_param != '')
+			if($control != '' && is_array($control_param))
 			{
 				$this->setvar($control,$GLOBALS['phpgw']->link($control_param['url'],'app='.$control_param['app'].'&control='.$control));
 			}
