@@ -102,6 +102,7 @@
 
   if($datetime_check) {
     Header("Location: ".$phpgw->link("edit_entry.php","readsess=".$cal_info->id."&cd=".$datetime_check));
+    $phpgw->common->phpgw_exit();
   } elseif($overlapping_events) {
     $phpgw->common->phpgw_header();
     echo parse_navbar();
