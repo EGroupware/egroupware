@@ -1524,12 +1524,15 @@
 			{
 				// Check if the $user is one of the participants or has a read-grant from one of them
 				//
-				foreach($event['participants'] as $uid => $accept)
+				if (isset($event['participants']) && is_array($event['participants']))
 				{
-					if ($this->grants[$uid] & PHPGW_ACL_READ || $uid == $user)
+					foreach($event['participants'] as $uid => $accept)
 					{
-						$grants |= PHPGW_ACL_READ;
-						break;
+						if ($this->grants[$uid] & PHPGW_ACL_READ || $uid == $user)
+							{
+							$grants |= PHPGW_ACL_READ;
+							break;
+						}
 					}
 				}
 			}
@@ -3137,12 +3140,15 @@
 				);
 			}
 
-			$participants = array();
-			foreach($event['participants'] as $user => $short_status)
+			if (isset($event['participants']) && is_array($event['participants']))
 			{
-				if($GLOBALS['phpgw']->accounts->exists($user))
+				$participants = array();
+				foreach($event['participants'] as $user => $short_status)
 				{
-					$participants[$user] = $GLOBALS['phpgw']->common->grab_owner_name($user).' ('.$this->get_long_status($short_status).')';
+					if($GLOBALS['phpgw']->accounts->exists($user))
+					{
+						$participants[$user] = $GLOBALS['phpgw']->common->grab_owner_name($user).' ('.$this->get_long_status($short_status).')';
+					}
 				}
 			}
 			$var['participants'] = Array(
