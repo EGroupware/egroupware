@@ -133,9 +133,16 @@
 
 		function set_var($name, $value, $append = False)
 		{
-			if(!is_array($value) && $append)
+			if($append)
 			{
-				$this->vars[$name] .= $value;
+				//_debug_array($value);
+				if (is_array($value))
+				{
+					while(list($key,$val) = each($value))
+					{
+						$this->vars[$name][$key] = $val;
+					}
+				}
 			}
 			else
 			{
@@ -221,7 +228,7 @@
 			$this->xmldata = var2xml('PHPGW',$xmldata);
 			return $this->xmldata;
 		}
-		
+
 		function list_lineno($xml)
 		{
 			$xml = explode("\n",$xml);

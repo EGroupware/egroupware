@@ -262,7 +262,7 @@
 
 	if($GLOBALS['phpgw_info']['flags']['msgbox_data'])
 	{
-		$data['login_standard']['msgbox_data'] = $GLOBALS['phpgw']->common->msgbox('',False,True);
+		$data['login_standard']['msgbox_data'] = $GLOBALS['phpgw']->common->msgbox('',False);
 	}
 
 	$data['login_standard']['website_title']	= $GLOBALS['phpgw_info']['server']['site_title'];

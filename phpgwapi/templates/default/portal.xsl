@@ -1,50 +1,54 @@
 <!-- $Id$ -->
 
-	<xsl:template match="portal">
-			<table cellpadding="0" cellspacing="0" class="portal">
- 				<tr>
-  					<td class="portal_text">
-						<xsl:value-of disable-output-escaping="yes" select="space"/>
-						<xsl:value-of select="title"/>
-					</td>
-					<td valign="middle" align="right" class="portal_text">
-						<xsl:apply-templates select="control_link"/>
-					</td>
-				</tr>
- 				<tr>
-  					<td colspan="2">
-						<table cellpadding="3" cellspacing="0" class="portal">
-							<xsl:choose>
-								<xsl:when test="listbox">
-									<tr>
-										<td>
-											<ul>
-												<xsl:apply-templates select="listbox"/>
-											</ul>
-										</td>
-									</tr>
-								</xsl:when>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="extrabox">
-									<tr>
-										<td>
-											<xsl:value-of disable-output-escaping="yes" select="extrabox"/>
-										</td>
-									</tr>
-								</xsl:when>
-								<xsl:when test="xextrabox">
-									<tr>
-										<td>
-											<xsl:call-template name="extrabox"/>
-										</td>
-									</tr>
-								</xsl:when>
-							</xsl:choose>
-   						</table>
-  					</td>
- 				</tr>
-			</table>
+	<xsl:template name="portal">
+		<xsl:apply-templates select="portal_data"/>
+	</xsl:template>
+
+	<xsl:template match="portal_data">
+		<table cellpadding="0" cellspacing="0" class="portal">
+ 			<tr>
+  				<td class="portal_text">
+					<xsl:value-of disable-output-escaping="yes" select="space"/>
+					<xsl:value-of select="title"/>
+				</td>
+				<td valign="middle" align="right" class="portal_text">
+					<xsl:apply-templates select="control_link"/>
+				</td>
+			</tr>
+ 			<tr>
+  				<td colspan="2">
+					<table cellpadding="3" cellspacing="0" class="portal">
+						<xsl:choose>
+							<xsl:when test="listbox">
+								<tr>
+									<td>
+										<ul>
+											<xsl:apply-templates select="listbox"/>
+										</ul>
+									</td>
+								</tr>
+							</xsl:when>
+						</xsl:choose>
+						<xsl:choose>
+							<xsl:when test="extrabox">
+								<tr>
+									<td>
+										<xsl:value-of disable-output-escaping="yes" select="extrabox"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="xextrabox">
+								<tr>
+									<td>
+										<xsl:call-template name="extrabox"/>
+									</td>
+								</tr>
+							</xsl:when>
+						</xsl:choose>
+   					</table>
+  				</td>
+ 			</tr>
+		</table>
 	</xsl:template>
 
 	<xsl:template match="control_link">

@@ -422,10 +422,10 @@
 						return $lid;
 						break;
 					case 1:
-						return '&lt;' . $lid . '&gt; ' . $a[0];
+						return '<' . $lid . '> ' . $a[0];
 						break;
 					case 2:
-						return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
+						return '<' . $lid . '> ' . implode(', ',$a);
 						break;
 				}
 			}
@@ -697,9 +697,9 @@
 
 /******** start temporarily code **************************************/
 /* this just makes sure the template set is updated to the new format */
-if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'].'/parts.inc.php'))
+if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'].'/phpgw.xsl'))
 {
-	$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
+	$GLOBALS['phpgw_info']['server']['template_set'] = 'idsociety';
 }
 /******** end temporarily code **************************************/
 
@@ -993,7 +993,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@discussion makes it easier and more consistant to generate message boxes
 		*/
 
-		function msgbox($text='',$type=True,$xslt=False)
+		function msgbox($text = '', $type = True, $base = '')
 		{
 			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
 			{
@@ -1005,7 +1005,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				return;
 			}
 
-			$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox');
+			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox');
 
 			$prev_helper = $GLOBALS['phpgw']->translation->translator_helper;
 			$GLOBALS['phpgw']->translation->translator_helper = '';
@@ -1060,113 +1060,125 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
 
-			if ($xslt)
+			if ($base)
 			{
-				return $data;
+				$GLOBALS['phpgw']->xslttpl->set_var($base,array('msgbox_data' => $data),True);
 			}
 			else
 			{
-				$parse_data['msgbox_data'] = $data;
-
-				$GLOBALS['phpgw']->xslttpl->set_var('msgbox',$parse_data);
-				return $GLOBALS['phpgw']->xslttpl->parse();
+				return $data;
 			}
 		}
 
 		function framework()
 		{
-			if (!$GLOBALS['phpgw_info']['flags']['nonavbar'])
-			{
-				$GLOBALS['phpgw']->xslttpl->add_file('phpgw');
-			}
+			$this->navbar();
 
+			$css = $this->get_css_url();
 			$var = array
 			(
-				'img_root' => PHPGW_IMAGES_DIR
+				'charset'			=> lang('charset'),
+				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'],
+				'phpgw_css_file'	=> $css[0],
+				'theme_css_file'	=> $css[1],
+				'phpgw_body'		=> $phpgw_body
 			);
 
-			$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
-			$find_double = strpos(strrev($GLOBALS['phpgw_info']['server']['webserver_url'].' '),'//');
-			if($find_double)
-			{
-				$find_double = strlen($GLOBALS['phpgw_info']['server']['webserver_url']) - $find_double - 1;
-			}
-			if($find_double)
-			{
-				if($find_single == $find_double + 1)
-				{
-					$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'];
-				}
-				else
-				{
-					$GLOBALS['strip_portion'] = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
-				}
-			}
-			else
-			{
-				$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
-			}
+			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
 
-			$var['home_link'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
-			$var['preferences_link'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-			$var['logout_link'] = $GLOBALS['phpgw_info']['navbar']['logout']['url'];
-			$var['about_link'] = $GLOBALS['phpgw_info']['navbar']['about']['url'];
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'idsociety';
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
+			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
 			{
-				$var['welcome_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
-				$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
-			}
-			else
-			{
-				$var['welcome_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
-				$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
-			}
-			$var['welcome_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
+				case 'idsociety':
+					$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
+					$find_double = strpos(strrev($GLOBALS['phpgw_info']['server']['webserver_url'].' '),'//');
+					if($find_double)
+					{
+						$find_double = strlen($GLOBALS['phpgw_info']['server']['webserver_url']) - $find_double - 1;
+					}
+					if($find_double)
+					{
+						if($find_single == $find_double + 1)
+						{
+							$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'];
+						}
+						else
+						{
+							$GLOBALS['strip_portion'] = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
+						}
+					}
+					else
+					{
+						$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
+					}
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
-			{
-				$var['preferences_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences2');
-				$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
-			}
-			else
-			{
-				$var['preferences_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
-				$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences2');
-			}
-			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
+					$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
+					$var['prefs_link']		= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
+					$var['logout_link']		= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
+					$var['about_link']		= $GLOBALS['phpgw_info']['navbar']['about']['url'];
+	
+					$var['home_title']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
+					$var['prefs_title']		= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
+					$var['logout_title']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
+					$var['about_title']		= $GLOBALS['phpgw_info']['navbar']['about']['title'];
 
-			$var['logout_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','log_out2');
-			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image_on('phpgwapi','log_out2','_over');
-			$var['logout_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','log_out2','_over');
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
+					{
+						$var['home_img'] = $this->image('phpgwapi','welcome2');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','welcome2','_over');
+					}
+					else
+					{
+						$var['home_img'] = $this->image_on('phpgwapi','welcome2','_over');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('phpgwapi','welcome2');
+					}
+					$var['home_img_hover'] = $this->image_on('phpgwapi','welcome2','_over');
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
-			{
-				$var['about_img']		= $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
-				$var['about_img_hover']	= $GLOBALS['phpgw']->common->image_on('phpgwapi','question_mark2','_over');
-			}
-			else
-			{
-				$var['about_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','question_mark2','_over');
-				$var['about_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
-			}
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
+					{
+						$var['prefs_img'] = $this->image('phpgwapi','preferences2');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','preferences2','_over');
+					}
+					else
+					{
+						$var['prefs_img'] = $this->image_on('phpgwapi','preferences2','_over');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('phpgwapi','preferences2');
+					}
+					$var['prefs_img_hover'] = $this->image_on('phpgwapi','preferences2','_over');
 
-			$var['logo_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','logo2');
+					$var['logout_img'] = $this->image('phpgwapi','log_out2');
+					$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','log_out2','_over');
+					$var['logout_img_hover'] = $this->image_on('phpgwapi','log_out2','_over');
+
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
+					{
+						$var['about_img']		= $this->image('phpgwapi','question_mark2');
+						$var['about_img_hover']	= $this->image_on('phpgwapi','question_mark2','_over');
+					}
+					else
+					{
+						$var['about_img'] = $this->image_on('phpgwapi','question_mark2','_over');
+						$var['about_img_hover'] = $this->image('phpgwapi','question_mark2');
+					}
+
+					$var['logo_img'] = $this->image('phpgwapi','logo2');
+					$var['nav_bar_left_top_bg_img'] = $this->image('phpgwapi','nav_bar_left_top_bg');
+					break;
+			}
 
 			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
-				$db  = $GLOBALS['phpgw']->db;
-				$db->query('select count(session_id) from phpgw_sessions');
-				$db->next_record();
-				$var['current_users'] = lang('Current users') . ': ' . $db->f(0);
-				$var['url_current_users'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
+				$GLOBALS['phpgw']->db->query('select count(session_id) from phpgw_sessions');
+				$GLOBALS['phpgw']->db->next_record();
+				$var['current_users']		= lang('Current users') . ': ' . $GLOBALS['phpgw']->db->f(0);
+				$var['url_current_users']	= $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 			}
 
-			$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
+			$var['user_info_name'] = $this->display_fullname();
 			$now = time();
-			$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			$var['user_info_date'] = lang($this->show_date($now,'l')) . ' '
+									. $this->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 
 			while ($app = each($GLOBALS['phpgw_info']['navbar']))
@@ -1189,7 +1201,19 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 
-			$var['nav_bar_left_top_bg_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_top_bg');
+			$var['onload'] = $this->load_preload_images_data();
+
+			if($GLOBALS['phpgw_info']['flags']['msgbox_data'])
+			{
+				$this->msgbox('',False,'phpgw');
+			}
+
+			switch($GLOBALS['phpgw_info']['flags']['currentapp'])
+			{
+				case 'home':
+					$var['home'] = True;
+					break;
+			}
 
 			$var['lang_powered_by']			= lang('powered by');
 			$var['lang_version']			= lang('version');
@@ -1197,7 +1221,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['lang_phpgw_statustext']	= lang('phpGroupWare --> homepage');
 			$var['top_spacer_middle_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
 
-			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
+			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var,True);
 		}
 
 		/*!
@@ -1258,6 +1282,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 
+			$GLOBALS['phpgw_info']['navbar']['preferences']['title']		= lang('preferences');
 			$GLOBALS['phpgw_info']['navbar']['preferences']['url']			= $GLOBALS['phpgw']->link('/preferences/index.php');
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']			= $this->image('preferences',Array('navbar','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']	= $this->image_on('preferences',Array('navbar','nonav'),'-over');
@@ -1278,12 +1303,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');
 
-			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = 'Logout';
+			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = lang('logout');
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
-			if(PHPGW_USE_FRAMES)
-			{
-				$GLOBALS['phpgw_info']['navbar']['logout']['url']   .= '" target="_parent"';
-			}
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
 		}
@@ -1340,15 +1361,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 			$phpgw_css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
 							. SEP . 'css' . SEP . 'phpgw.css';
-
-			$GLOBALS['phpgw']->template->set_var('phpgw_css','<link rel="stylesheet" type="text/css" href="' . $phpgw_css_file . '">' . "\n"
-															. '<link rel="stylesheet" type="text/css" href="' . $css_file . '">');
+			return array($phpgw_css_file,$css_file);
 		}
 
 		function load_preload_images_data()
 		{
-			//$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
-
 			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
 			{
 				$preload_image_string = '';

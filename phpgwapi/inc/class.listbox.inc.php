@@ -93,10 +93,10 @@
 						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
 				}
-				$this->output['listbox'] = $var;
+				$this->output[]['listbox'] = $var;
 			}
 			$this->set_internal($extra_data);
-			return $this->draw_box();
+			$this->draw_box();
 		}
 
 		function xdraw($extra_data='')
@@ -121,10 +121,10 @@
 						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
 				}
-				$this->output['listbox'] = $var;
+				$this->output[]['listbox'] = $var;
 			}
 			$this->set_xinternal($extra_data);
-			return $this->draw_box();
+			$this->draw_box();
 		}
 	}
 ?>

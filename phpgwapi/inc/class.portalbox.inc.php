@@ -41,6 +41,14 @@
 		// Textual variables
 		var $title;
 
+		/* This is the constructor for the object. */
+
+		function portalbox($title = '')
+		{
+			$this->setvar('title',$title);
+            // echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
+		}
+
 		/*
 		Use these functions to get and set the values of this
 		object's variables. This is good OO practice, as it means
@@ -70,16 +78,6 @@
 			return $this->$var;
 		}
 
-		/*
-		This is the constructor for the object.
-		*/
-		function portalbox($title = '')
-		{
-			$this->setvar('title',$title);
-
-			// echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
-		}
-
 		function start_template($extra = '')
 		{
 			if ($extra && $this->getvar('app_name'))
@@ -88,14 +86,11 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->xslttpl->add_file(array('portal'));
+				$GLOBALS['phpgw']->xslttpl->add_file('portal');
 			}
 
-			$this->output = array
-			(
-				'title'	=> $this->getvar('title'),
-				'space'	=> '&nbsp;'
-			);
+			$this->output[]['title'] = $this->getvar('title');
+			$this->output[]['space'] = '&nbsp;';
 		}
 
 		function set_controls($control='',$control_param='')
@@ -112,7 +107,7 @@
 		{
 			if($extra_data !='')
 			{
-				$this->output['extrabox'] = $extra_data;
+				$this->output[]['extrabox'] = $extra_data;
 			}
 		}
 
@@ -120,7 +115,7 @@
 		{
 			if($extra_data !='')
 			{
-				$this->output['xextrabox'] = $extra_data;
+				$this->output[]['xextrabox'] = $extra_data;
 			}
 		}
 
@@ -158,9 +153,9 @@
 					}
 				}
 
-				$this->output['control_link'] = $control_link;
+				$this->output[]['control_link'] = $control_link;
 			}
-			$GLOBALS['phpgw']->xslttpl->set_var('portal',$this->output);
-			return $GLOBALS['phpgw']->xslttpl->parse();
+			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('portal_data' => $this->output),True);
+			//return $GLOBALS['phpgw']->xslttpl->parse();
 		}
 	}

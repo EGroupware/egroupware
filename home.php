@@ -205,4 +205,6 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
+
+	$GLOBALS['phpgw']->xslttpl->pp();
 ?>
