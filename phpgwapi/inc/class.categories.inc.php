@@ -424,7 +424,7 @@
 					}
 					if ($cats[$i]['owner'] == '-1')
 					{
-						$s .= '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$this->app_name]['title'] . '&gt;';
+						$s .= '&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
 					}
 
 					$s .= '</option>' . "\n";
@@ -446,12 +446,12 @@
 
 						if (in_array($cats[$i]['id'],$selected))
 						{
-							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
+							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','roter_pfeil') . '">';
 						}
 
 						if (($cats[$i]['level'] == 0) && !in_array($cats[$i]['id'],$selected))
 						{
-							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
+							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','grauer_pfeil') . '">';
 						}
 
 						$space_set = str_repeat($space,$cats[$i]['level']);
