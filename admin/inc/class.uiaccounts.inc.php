@@ -844,9 +844,11 @@
 				}
 				else
 				{
-					$userData['account_expires_month'] = date('m',$userData['expires']);
-					$userData['account_expires_day']   = date('d',$userData['expires']);
-					$userData['account_expires_year']  = date('Y',$userData['expires']);
+					/* Change this to be an admin/setup setting.  For now, default to expire one week from today. */
+					$time_var = time() + (60*60*24*7);
+					$userData['account_expires_month'] = date('m',$userData['expires'] ? $userData['expires'] : $time_var);
+					$userData['account_expires_day']   = date('d',$userData['expires'] ? $userData['expires'] : $time_var);
+					$userData['account_expires_year']  = date('Y',$userData['expires'] ? $userData['expires'] : $time_var);
 				}
 			}
 			$page_params['menuaction'] = 'admin.boaccounts.'.($_account_id?'edit':'add').'_user';
