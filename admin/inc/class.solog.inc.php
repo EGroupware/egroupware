@@ -149,7 +149,7 @@
 			/* If no Fields specified default to * */
 			if (!isset($fields))
 			{
-				$fields = $this->error_cols();
+				$fields = $this->get_error_cols();
 			}
 
 			$rows = array();
