@@ -172,14 +172,16 @@
 							/* Only set this if it has not already failed to upgrade - Milosch */
 							if ($setup_info[$key]['status'] != 'F' )//&& $setup_info[$key]['status'] != 'C')
 							{
+								/*
 								if($setup_info[$key]['status'] == 'C')
 								{
 									$setup_info[$key]['status'] = 'P';
 								}
 								else
 								{
+								*/
 									$setup_info[$key]['status'] = 'D';
-								}
+								//}
 							}
 						}
 					}
