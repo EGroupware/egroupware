@@ -1306,18 +1306,18 @@
 			return -1;
 		}
 
-		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'");
+		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
 		while( $phpgw->db->next_record() ) {
 			$id = $phpgw->db->f("id");
 		}
 
 		if (empty($id) || !$id) {
 			$id = 1;
-			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")");
-			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'");
+			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
 		} else {
 			$id = $id + 1;
-			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'");
+			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
 		}
 
 		return intval($id);
@@ -1337,7 +1337,7 @@
 			return -1;
 		}
 
-		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'");
+		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
 		while( $phpgw->db->next_record() ) {
 			$id = $phpgw->db->f("id");
 		}
