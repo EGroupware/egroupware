@@ -32,7 +32,7 @@
 	if ($filter != "private")
 		//$filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
 	
-		$fields = $this->read_single_entry($ab_id,$this->stock_contact_fields);
+		$fields = addressbook_read_entry($ab_id,$this->stock_contact_fields);
 		
 		$rights = $phpgw->acl->get_rights($fields[0]["owner"],$phpgw_info["flags"]["currentapp"]);
 		if ( ($rights & PHPGW_ACL_READ) || ($fields[0]["owner"] == $phpgw_info["user"]["account_id"]) ) {
