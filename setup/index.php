@@ -55,7 +55,7 @@
 
   /* Database setup */
   switch($action){
-    case "askforupgrade":
+    case "prebetaversion":
       echo "<html><head><title>phpGroupWare Setup</title></head>\n";
       echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
@@ -122,7 +122,7 @@
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>If you did not recieve any errors, your tables have been created.<br>\n";
+      echo "    <td>If you did not recieve any serious errors, your tables have been created.<br>\n";
       echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
@@ -149,7 +149,7 @@
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>If you did not recieve any errors, your tables *should* have been updated (no warranty on data integrity).<br>\n";
+      echo "    <td>If you did not recieve any serious errors, your tables *should* have been updated (no warranty on data integrity).<br>\n";
       echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
@@ -182,7 +182,7 @@
           echo "  </tr>\n";
           echo "</table>\n";
         }else{
-          Header("Location: $PHP_SELF?action=askforupgrade");
+          Header("Location: $PHP_SELF?action=prebetaversion");
         }
       }else{
         echo "<html><head><title>phpGroupWare Setup</title></head>\n";
