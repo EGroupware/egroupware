@@ -115,8 +115,10 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$GLOBALS['phpgw']->template->set_file(array('cat_list_t'  => 'listcats.tpl',
-														'data_column' => 'listcats.tpl'));
+			$GLOBALS['phpgw']->template->set_file(array(
+				'cat_list_t'  => 'listcats.tpl',
+				'data_column' => 'listcats.tpl'
+			));
 			$GLOBALS['phpgw']->template->set_block('cat_list_t','data_column','column');
 			$GLOBALS['phpgw']->template->set_block('cat_list_t','cat_list','list');
 
@@ -480,11 +482,13 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array('type' => $type,'selected' => $cats[0]['parent'],
-																									'globals' => $global_cats, 'self' => $cat_id)));
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array(
+				'type' => $type,'selected' => $cats[0]['parent'],
+				'globals' => $global_cats, 'self' => $cat_id
+			)));
 
 			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-												. ($cats[0]['access'] == private ?' checked':'') . '>');
+				. ($cats[0]['access'] == 'private' ? ' checked' : '') . '>');
 
 			if ($extra)
 			{
