@@ -367,11 +367,7 @@
 			return $return;
 		}
 
-		function create_database($adminname = '', $adminpasswd = '')
-		{
-			return False;
-		}
-		function CreateDatabase($adminname='', $adminpasswd='')
+		function create_database($adminname='', $adminpasswd='')
 		{
 			$currentUser = $this->User;
 			$currentPassword = $this->Password;
