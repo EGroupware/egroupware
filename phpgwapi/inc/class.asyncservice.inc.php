@@ -559,8 +559,19 @@
 				foreach ($binarys as $name => $path)
 				{
 					$this->$name = $path;	// a reasonable default for *nix
-					if (!is_executable($this->$name))
+
+					if (!($Ok = is_executable($this->$name)))
 					{
+						if (file_exists($this->$name))
+						{
+							echo '<p>'.lang('%1 is not executable by the webserver !!!',$this->$name)."</p>\n";
+							$perms = fileperms($this->$name);
+							if (!($perms & 0x0001) && ($perms & 0x0008))	// only executable by group
+							{
+								$group = posix_getgrgid(filegroup($this->$name));
+								$webserver = posix_getpwuid(posix_getuid ());
+								echo '<p>'.lang("You need to add the webserver user '%1' to the group '%2'.",$webserver['name'],$group['name'])."</p>\n";							}
+						}
 						if ($fd = popen('/bin/sh -c "type -p '.$name.'"','r'))
 						{
 							$this->$name = fgets($fd,256);
@@ -571,7 +582,7 @@
 							$this->$name = substr($this->$name,0,$pos);
 						}
 					}
-					if (!is_executable($this->$name))
+					if (!$Ok && !is_executable($this->$name))
 					{
 						$this->$name = $name;	// hopefully its in the path
 					}
@@ -659,9 +670,12 @@
 
 			if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -" 2>&1','w')) !== False)
 			{
-				foreach ($this->other_cronlines as $cronline)
+				if (is_array($this->other_cronlines))
 				{
-					fwrite($crontab,$cronline);		// preserv the other lines on install
+					foreach ($this->other_cronlines as $cronline)
+					{
+						fwrite($crontab,$cronline);		// preserv the other lines on install
+					}
 				}
 				if ($times !== False)
 				{
