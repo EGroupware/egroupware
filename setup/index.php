@@ -36,26 +36,18 @@
       }else{ /* authentication settled. Moving to the database portion. */
         loaddb();
         $db->Halt_On_Error = "no";
-
-// Skeeter
-// This is a patch sent in by mdean
-// Disable both of these lines and replaced with the 2 llines following
-//        $db->query("show tables");
-//        if ($db->num_rows()){
-	$tables = $db->table_names();
-	if (is_array($tables) && count($tables) > 0) {
+  
+        $tables = $db->table_names();
+        if (is_array($tables) && count($tables()) > 0){
           /* tables exists. checking for post beta version */
-          $db->free();
           $db->query("select app_version from applications where app_name='admin'");
           $db->next_record();
           $oldversion = $db->f("app_version");
-          $db->free();
           if (isset($oldversion)){
             if ($oldversion == $phpgw_info["server"]["version"]){
               $db->query("select config_value from config where config_name='freshinstall'");
               $db->next_record();
               $configed = $db->f("config_value");
-              $db->free();
               if ($configed){
                 $stage = 3.1;
                 $header_msg = "Stage 3 (Needs Configuration)";
@@ -75,11 +67,9 @@
           /* no tables, so checking if we can create them */
 
           /* I cannot get either to work properly
-          $db->free();
           $isdb = $db->connect("kljkjh", "localhost", "phpgroupware", "phpgr0upwar3");
           */
           
-          $db->free();
           $db_rights = $db->query("CREATE TABLE phpgw_testrights ( testfield varchar(5) NOT NULL )");
 
           if (isset($db_rights)){
