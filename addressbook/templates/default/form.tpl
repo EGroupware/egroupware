@@ -65,7 +65,6 @@
      <font color="{row_text}" face="" size="-1">{lang_url}:</font>
      <input size="30" name="url" value="{url}">
     </td>
-    <td><font size="-1"></font></td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
@@ -88,7 +87,6 @@
     <td colspan="3">
      <font size="-1"><input name="department" value="{department}"></font>
     </td>
-    <td><font size="-1"></font></td>
   </tr> 
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
