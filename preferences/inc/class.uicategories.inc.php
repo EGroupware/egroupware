@@ -551,7 +551,7 @@
 				}
 				else
 				{
-					$this->bo->delete($cat_id);
+					$this->bo->delete($cat_id,False);
 				}
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}

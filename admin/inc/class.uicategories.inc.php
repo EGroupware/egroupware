@@ -443,7 +443,7 @@
 				}
 				else
 				{
-					$this->bo->delete($this->cat_id);
+					$this->bo->delete($this->cat_id,False);
 				}
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
