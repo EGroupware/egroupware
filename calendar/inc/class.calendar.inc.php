@@ -825,7 +825,7 @@ class calendar extends calendar_
 						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right">';
 						$new_event_link .= '</a>';
 					}
-					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
+					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$owner).'">'.$date['day'].'</a>';
 				}
 				else
 				{
@@ -1006,6 +1006,7 @@ class calendar extends calendar_
 		for($i=0;$i<$counter;$i++)
 		{
 			$this->repeated_events = Null;
+			$this->repeating_events = Null;
 			$owner = $owners_array[$i];
 			$this->read_repeated_events($owner);
 			$p->set_var('month_filler_text',$this->display_week($start,True,$cellcolor,$display_name,$owner));
@@ -1139,9 +1140,11 @@ class calendar extends calendar_
 		$time[$ind] .= '<br>';
 	}
 
-	function print_day_at_a_glance($date,$owner=0)
+	function print_day_at_a_glance($date)
 	{
 		global $phpgw, $phpgw_info;
+
+		$this->read_repeated_events($this->owner);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');

@@ -53,7 +53,7 @@
 	{
 		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter.'&owner='.$owner;
-		$print = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/day.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+		$print = '<a href="'.$phpgw->link('/calendar/day.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 	}
 	else
 	{
@@ -68,7 +68,7 @@
 	$var = Array(
 		'printer_friendly'		=>	$printer,
 		'bg_text'					=> $phpgw_info['themem']['bg_text'],
-		'daily_events'				=>	$phpgw->calendar->print_day_at_a_glance($now,$owner),
+		'daily_events'				=>	$phpgw->calendar->print_day_at_a_glance($now),
 		'small_calendar'			=>	$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php'),
 		'date'						=>	lang(date('F',$m)).' '.$thisday.', '.$thisyear,
 		'username'					=>	$phpgw->common->grab_owner_name($owner),
