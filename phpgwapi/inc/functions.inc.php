@@ -40,7 +40,7 @@
 	@param $classname name of class
 	@param $p1-$p16 class parameters (all optional)
 	*/
-	function CreateObject($classname,
+	function CreateObject($class,
 		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
 		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
@@ -48,11 +48,14 @@
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
 
-		error_reporting(0);
+/*		error_reporting(0);		*/
 
-		$classpart = explode (".", $classname);
+/*
+		$classpart = explode (".", $class);
 		$appname   = $classpart[0];
 		$classname = $classpart[1];
+*/
+		list($appname,$classname) = explode(".", $class);
 		if (!isset($phpgw_info['flags']['included_classes'][$classname]) ||
 			!$phpgw_info['flags']['included_classes'][$classname])
 		{
@@ -83,30 +86,33 @@
 			$code = substr($code,0,-1) . ");";
 			eval($code);
 		}
-		error_reporting(E_ERROR | E_WARNING | E_PARSE);
+/*		error_reporting(E_ERROR | E_WARNING | E_PARSE);	*/
 		return $obj;
 	}
 
 	/*!
-	@function ExecObj
+	@function ExecObject
 	@abstract Execute a function, and load a class and include the class file if not done so already.
 	@discussion Author: seek3r<br>
 	This function is used to create an instance of a class,  
 	and if the class file has not been included it will do so. <br>
-	Syntax: CreateObject('app.class', 'constructor_params'); <br>
-	Example1: ExecObj('phpgwapi.acl.read');
+	Syntax: ExecObject('app.class', 'constructor_params'); <br>
+	Example1: ExecObject('phpgwapi.acl.read');
 	@param $object to execute
 	@param $functionparams function param should be an array
 	@param $loglevel developers choice of logging level
 	@param $classparams params to be sent to the contructor
 	*/
-	function ExecObj($object, $functionparams, $loglevel, $classparams)
+	function ExecObject($object, $functionparams, $loglevel, $classparams)
 	{
 		global $GLOBAL;
+/*
 		$objparts = explode (".", $object);
 		$appname = $objparts[0];
 		$classname = $objparts[1];
 		$functionname = $objparts[2];
+*/
+		list($appname,$classname,$functionname) = explode(".", $object);
 		$code = 'global $'.$classname.';';
 		eval($code);
 		if (!is_object($$classname))
