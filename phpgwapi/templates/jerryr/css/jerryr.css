@@ -50,7 +50,6 @@ a:hover,a:active
 {
 	cursor:pointer;
 	color: #ff9933;
-	text-decoration: underline;
 }
 /*
 a:active 
@@ -118,10 +117,10 @@ td
 {
 	position:relative;
 	width: 147px; 
-	border-right: #9c9c9c 1px solid; 
-	border-top: #9c9c9c 1px solid; 
-	border-left: #9c9c9c 1px solid; 
-	border-bottom: #9c9c9c 1px solid
+	border-right: #006699 groove; 
+	border-top: #006699 groove; 
+	border-left: #006699 groove; 
+	border-bottom: #006699 groove;
 }
 
 .divSideboxHeader 
@@ -131,6 +130,7 @@ td
 	height:18px;
 	background-color:#ffffff;
 	padding-top:2px;
+	border-bottom: #006699 groove;
 	font-size:10px;
 	font-weight:bold;
 	color:#ffffff;
@@ -140,15 +140,15 @@ a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:16px;
-	background-color:#f4f2ed;
+	background-color:#fafcff;
 }
 
 a.appTitles,.appTitles
 {
 	font-size: 10px; 
 	height:16px;
-	padding-top:2px;
-	padding-bottom:2px;
+	padding-top:1px;
+	padding-bottom:1px;
 }
 
 a.textSidebox
@@ -163,10 +163,9 @@ a.textSidebox
 	
 	font-size: 10px; 
 	height:16px;
-	padding-top:2px;
-	padding-bottom:1px;
-	border-top: #aaaaaa 1px solid;
-
+	padding-top:1px;
+	padding-bottom:2px;
+	
 }
 
 .sideboxSpace
@@ -302,8 +301,7 @@ a.textSidebox
 	border-right-width:2px;
 	border-right-style:solid;
 	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
+	border-bottom-style:groove;
 }
 
 #divAppbox
