@@ -144,6 +144,9 @@
 			'is_writable' => True,
 			'only_if_exists' => True
 		),
+		'gd' => array(
+			'func' => 'gd_check'
+		)
 	);
 
 	// some constanst for pre php4.3
@@ -408,6 +411,19 @@
 		return preg_match('/\(php.ini\).*<\/td><td[^>]*>([^ <]+)/',$phpinfo,$found) ? $found[1] : False;
 	}
 
+	function gd_check()
+	{
+		global $passed_icon, $warning_icon;
+		$available = (function_exists('imagecopyresampled')  || function_exists('imagecopyresized'));
+		
+		echo ($available ? $passed_icon : $warning_icon).' '.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."\n";
+		
+		if (!$available)
+		{
+			echo lang('Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.')."\n";
+		}
+	}
+	
 	if ($run_by_webserver)
 	{
 		//echo "<html>\n<header>\n<title>Checking the eGroupWare install</title>\n</header>\n<body>\n";
