@@ -155,7 +155,8 @@
 		global $debugme;
 		if (isset($debugme) && $debugme == 'on') { echo 'debug: '.$text.'<br>'; }
 	}
-	print_debug('core functions are done');
+
+//	print_debug('core functions are done');
 	/****************************************************************************\
 	* Quick verification of sane environment                                     *
 	\****************************************************************************/

@@ -473,7 +473,7 @@
 
 		function show_hits($total_records = '',$start)
 		{
-			global $phpgw_info, $start;
+			global $phpgw_info;
 
 			$limit = $this->maxmatchs;
 

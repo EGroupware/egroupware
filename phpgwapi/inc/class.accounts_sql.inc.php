@@ -154,7 +154,7 @@
 					'account_lastname'  => $this->db->f('account_lastname'),
 					'account_status'    => $this->db->f('account_status'),
 					'account_expires'   => $this->db->f('account_expires'),
-					'account_file_space'	=> $this->db->f('account_file_space'),
+					'account_file_space'	=> $this->db->f('account_file_space')
 				);
 			}
 			return $accounts;
@@ -250,7 +250,7 @@
 				'account_lastname'  => '',
 				'account_status'    => $account_status,
 				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate)),
-				'account_file_space'   => $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'],
+				'account_file_space'   => $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type']
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
