@@ -3015,15 +3015,15 @@
 					$id_array[0] = $ids;
 				}
 			}
-			@reset($id_array);
 			$ret_val = Array();
-			while(list($index,$id) = each($id_array))
+			foreach($id_array as $id)
 			{
 				if (!isset($cats[$id]))
 				{
-					$cat_arr = $this->cat->return_single( $id );
-					$cats[$id] = $cat_arr[0];
-					$cats[$id]['color'] = strstr($cats[$id]['description'],'#');
+					list($cat) = $this->cat->return_single( $id );
+					$cat['data'] = unserialize($cat['data']);
+					$cat['color'] = $cat['data']['color'] ? $cat['data']['color'] : strstr($cat['description'],'#');
+					$cats[$id] = $cat;
 				}
 				$ret_val[] = $cats[$id];
 			}
