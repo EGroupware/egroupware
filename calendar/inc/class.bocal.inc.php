@@ -385,7 +385,9 @@ class bocal
 			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,,%4) starting...',True,$event,$start_in,$end_in,$recur_exceptions);
 		}
 		$id = $event['id'];
-		$event_start_daybegin_ts = $this->date2ts($event['start']['full']);
+		// to be able to calculate the repetitions as difference to the start-date, 
+		// both need to be calculated without daylight saving: mktime(,,,,,,0)
+		$event_start_daybegin_ts = mktime(0,0,0,$event['start']['month'],$event['start']['day'],$event['start']['year'],0);
 
 		if($event['recur_enddate'])
 		{
@@ -422,7 +424,9 @@ class bocal
 			$search_date_month = date('m',$ts);
 			$search_date_day = date('d',$ts);
 			$search_date_dow = date('w',$ts);
-			$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
+			// to be able to calculate the repetitions as difference to the start-date, 
+			// both need to be calculated without daylight saving: mktime(,,,,,,0)
+			$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year,0);
 
 			if ($search_date_ymd == $event['start']['full'])	// first occurence
 			{
