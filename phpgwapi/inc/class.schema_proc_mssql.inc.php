@@ -194,6 +194,11 @@
 			return "UNIQUE($sFields)";
 		}
 
+		function GetIXSQL($sFields)
+		{
+			return "INDEX($sFields)";
+		}
+
 		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '')
 		{
 			$sColumns = '';

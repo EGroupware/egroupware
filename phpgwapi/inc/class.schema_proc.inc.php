@@ -24,6 +24,7 @@
 
 		function schema_proc($dbms)
 		{
+			$this->sType = $dbms;
 			$this->m_oTranslator = CreateObject('phpgwapi.schema_proc_' . $dbms);
 			$this->m_oDeltaProc = CreateObject('phpgwapi.schema_proc_array');
 			$this->m_aTables = array();
@@ -295,6 +296,7 @@
 
 			$sUCSQL = '';
 			$sPKSQL = '';
+			$sIXSQL = '';
 
 			if(count($aTableDef['pk']) > 0)
 			{
@@ -322,6 +324,19 @@
 				}
 			}
 
+			if(count($aTableDef['ix']) > 0)
+			{
+				if(!$this->_GetIX($aTableDef['ix'], $sIXSQL))
+				{
+					if($bOutputHTML)
+					{
+						print('<br>Failed getting index<br>');
+					}
+
+					return False;
+				}
+			}
+
 			if($sPKSQL != '')
 			{
 				$sTableSQL .= ",\n" . $sPKSQL;
@@ -330,6 +345,11 @@
 			if($sUCSQL != '')
 			{
 				$sTableSQL .= ",\n" . $sUCSQL;
+			}
+
+			if($sIXSQL != '')
+			{
+				$sTableSQL .= ",\n" . $sIXSQL;
 			}
 
 			return True;
@@ -404,18 +424,7 @@
 				return True;
 			}
 
-			$sFields = '';
-			reset($aFields);
-			while(list($key, $sField) = each($aFields))
-			{
-				if($sFields != '')
-				{
-					$sFields .= ',';
-				}
-				$sFields .= $sField;
-			}
-
-			$sPKSQL = $this->m_oTranslator->GetPKSQL($sFields);
+			$sPKSQL = $this->m_oTranslator->GetPKSQL(implode(',',$aFields));
 
 			return True;
 		}
@@ -427,19 +436,38 @@
 			{
 				return True;
 			}
-
-			$sFields = '';
-			reset($aFields);
-			while(list($key,$sField) = each($aFields))
+			foreach($aFields as $mFields)
 			{
-				if($sFields != '')
-				{
-					$sFields .= ',';
-				}
-				$sFields .= $sField;
+				$aUCSQL[] = $this->m_oTranslator->GetUCSQL(
+					is_array($mFields) ? implode(',',$mFields) : $mFields);
 			}
+			$sUCSQL = implode(",\n",$aUCSQL);
 
-			$sUCSQL = $this->m_oTranslator->GetUCSQL($sFields);
+			return True;
+		}
+
+		function _GetIX($aFields, &$sIXSQL)
+		{
+			$sUCSQL = '';
+			if(count($aFields) < 1)
+			{
+				return True;
+			}
+			foreach($aFields as $mFields)
+			{
+				$options = False;
+				if (is_array($mFields))
+				{
+					if (isset($mFields['options']))		// array sets additional options
+					{
+						$options = @$mFields['options'][$this->sType];	// db-specific options, eg. index-type
+						unset($mFields['options']);
+					}
+					$mFields = implode(',',$mFields);
+				}
+				$aIXSQL[] = $this->m_oTranslator->GetIXSQL($mFields,$options);
+			}
+			$sIXSQL = implode(",\n",$aIXSQL);
 
 			return True;
 		}

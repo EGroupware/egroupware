@@ -180,6 +180,11 @@
 			return "UNIQUE($sFields)";
 		}
 
+		function GetIXSQL($sFields)
+		{
+			return "INDEX($sFields)";
+		}
+
 		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '', $sAlteredColumn = '', $sAlteredColumnType = '')
 		{
 			$sdb = $oProc->m_odb;

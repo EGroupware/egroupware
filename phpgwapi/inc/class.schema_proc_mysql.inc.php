@@ -202,6 +202,21 @@
 			return "UNIQUE($sFields)";
 		}
 
+		function GetIXSQL($sFields,$options=False)
+		{
+			$type = 'INDEX';
+			$length = '';
+			if (strtoupper($options) == 'FULLTEXT')
+			{
+				$type = 'FULLTEXT';
+			}
+			if (is_numeric($options))
+			{
+				$length = "($options)";
+			}
+			return "$type($sFields $length)";
+		}
+
 		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '')
 		{
 			$sColumns = '';
@@ -223,7 +238,7 @@
 
 				/* The rest of this is used only for SQL->array */
 				$colinfo = explode('(',$oProc->m_odb->f(1));
-				$prec = ereg_replace(').*','',$colinfo[1]);
+				$prec = ereg_replace('\).*','',$colinfo[1]);
 				$scales = explode(',',$prec);
 
 				if($colinfo[0] == 'enum')
