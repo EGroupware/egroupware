@@ -26,13 +26,17 @@
   		
 		$t = new Template($phpgw->common->get_tpl_dir('admin'));
 		$t->set_unknowns('remove');
-		$t->set_file(array('form' => 'account_form.tpl'));
+		$t->set_file(array(
+			'form'              => 'account_form.tpl',
+			'form_passwordinfo' => 'account_form_password.tpl',
+			'form_buttons_'     => 'account_form_buttons.tpl',
+		));
 		
 		if ($_userData)
 		{
 			$userData=$_userData;
-			reset($userData['account_groups']);
-			while (list($key, $value) = each($userData['account_groups']))
+			@reset($userData['account_groups']);
+			while (list($key, $value) = @each($userData['account_groups']))
 			{
 				$userGroups[$key]['account_id'] = $value;
 			}
@@ -69,18 +73,25 @@
 		$t->set_var('lang_groups',lang('Groups'));
 		$t->set_var('lang_firstname',lang('First Name'));
 		$t->set_var('lang_button',lang('Save'));
+		$t->parse('form_buttons','form_buttons_',True);
 
-		$t->set_var('account_lid',$userData['account_lid']);
+		$t->set_var('account_lid','<input name="account_lid" value="' . $userData['account_lid'] . '">');
+
 		$t->set_var('account_passwd',$account_passwd);
 		$t->set_var('account_passwd_2',$account_passwd_2);
+		$t->parse('password_fields','form_passwordinfo',True);
 
 		if ($userData['status']) 
 		{
-			$t->set_var('account_status',' checked');
-		} 
+			$t->set_var('account_status','<input type="checkbox" name="account_status" value="A" checked>');
+		}
+		else
+		{
+			$t->set_var('account_status','<input type="checkbox" name="account_status" value="A">');
+		}
 
-		$t->set_var('account_firstname',$userData['firstname']);
-		$t->set_var('account_lastname',$userData['lastname']);
+		$t->set_var('account_firstname','<input name="account_firstname" value="' . $userData['firstname'] . '">');
+		$t->set_var('account_lastname','<input name="account_lastname" value="' . $userData['lastname'] . '">');
 
 		$allAccounts;
 		$userGroups;

@@ -1,108 +1,183 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - administration                                            *
-  * http://www.phpgroupware.org                                              *
-  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare - administration                                            *
+	* http://www.phpgroupware.org                                              *
+	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info = array();
-  if (! $account_id) {
-     $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);
-  }
+	if (! $account_id)
+	{
+		$phpgw_info['flags'] = array(
+			'nonavbar' => True,
+			'noheader' => True
+		);
+	}
 
-  $phpgw_info["flags"]["enable_nextmatchs_class"] = True;
-  $phpgw_info["flags"]["currentapp"]  = "admin";
-  $phpgw_info["flags"]["parent_page"] = "accounts.php";
+	$phpgw_info['flags']['enable_nextmatchs_class'] = True;
+	$phpgw_info['flags']['currentapp']  = 'admin';
+	$phpgw_info['flags']['parent_page'] = 'accounts.php';
 
-  include("../header.inc.php");
-  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+	include('../header.inc.php');
 
-  if (! $account_id) {
-     Header("Location: " . $phpgw->link("accounts.php"));
-  }
+	if (! $account_id)
+	{
+		Header('Location: ' . $phpgw->link('accounts.php'));
+	}
 
-  function display_row($lable,$value)
-  {
-     global $phpgw, $tr_color;
+	$t = new Template($phpgw->common->get_tpl_dir('admin'));
+	$t->set_unknowns('remove');
+	$t->set_file(array(
+		'form'           => 'account_form.tpl',
+		'form_logininfo' => 'account_form_logininfo.tpl'
+	));
 
-     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$t->set_var('tr_color1',$phpgw_info['theme']['row_on']);
+	$t->set_var('tr_color2',$phpgw_info['theme']['row_off']);
+	$t->set_var('lang_action',lang('View user account'));
+	$t->set_var('lang_loginid',lang('LoginID'));
+	$t->set_var('lang_account_active',lang('Account active'));
+	$t->set_var('lang_password',lang('Password'));
+	$t->set_var('lang_reenter_password',lang('Re-Enter Password'));
+	$t->set_var('lang_lastname',lang('Last Name'));
+	$t->set_var('lang_groups',lang('Groups'));
+	$t->set_var('lang_firstname',lang('First Name'));
+	$t->set_var('lang_lastlogin',lang('Last login'));
+	$t->set_var('lang_lastloginfrom',lang('Last login from'));
 
-     $phpgw->template->set_var("tr_color",$tr_color);
-     $phpgw->template->set_var("lable",$lable);
-     $phpgw->template->set_var("value",$value);
-     
-     $phpgw->template->parse("rows","row",True);
-  }
+	$account = CreateObject('phpgwapi.accounts',$account_id);
+	$userData = $account->read_repository();
 
-  $phpgw->template->set_file(array("display" => "account_view.tpl",
-              			         "row"     => "account_view_row.tpl"));  
+	$t->set_var('account_lid',$userData['account_lid']);
+	$t->set_var('account_firstname',$userData['firstname']);
+	$t->set_var('account_lastname',$userData['lastname']);
 
-  $userData = $phpgw->accounts->read_userData($account_id);
+	// Account status
+	if ($userData['status'])
+	{
+		$t->set_var('account_status',lang('Enabled'));
+	}
+	else
+	{
+		$t->set_var('account_status','<b>' . lang('Disabled') . '</b>');
+	}
 
-  $loginid = $userData["account_lid"];
-  $account_lastlogin      = $userData["account_lastlogin"];
-  $account_lastloginfrom  = $userData["account_lastloginfrom"];
-  $account_status	     = $userData["account_status"];
+	// Last login time
+	if ($userData['account_lastlogin'])
+	{
+		$t->set_var('account_lastlogin',$phpgw->common->show_date($userData['lastlogin']));
+	}
+	else
+	{
+		$t->set_var('account_lastlogin',lang('Never'));
+	}
 
-  $db_perms = $phpgw->accounts->read_apps($loginid);
+	// Last login IP
+	if ($userData['account_lastloginfrom'])
+	{
+		$t->set_var('account_lastloginfrom',$userData['lastloginfrom']);
+	}
+	else
+	{
+		$t->set_var('account_lastloginfrom',lang('Never'));
+	}
+	$t->parse('password_fields','form_logininfo',True);
 
 
-  #$phpgw->db->query("select account_lid from accounts where account_id='$account_id'");
-  #$phpgw->db->next_record();
-  #$loginid = $phpgw->db->f("account_lid");
-  
-  #$account_info = account_view($loginid);
+	// Find out which groups they are members of
+	$usergroups = $account->memberships(intval($account_id));
+	if (gettype($usergroups) != 'array')
+	{
+		$t->set_var('groups_select',lang('None'));
+	}
+	else
+	{
+		while (list(,$group) = each($usergroups))
+		{
+			$group_names[] = $group['account_name'];
+		}
+		$t->set_var('groups_select',implode(',',$group_names));
+	}
 
-  #$phpgw->db->query("select account_lastlogin,account_lastloginfrom,account_status from accounts "
-  #				. "where account_id='$account_id'");
-  #$phpgw->db->next_record();
 
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+	$loginid = $userData["account_lid"];
+	$account_lastlogin      = $userData["account_lastlogin"];
+	$account_lastloginfrom  = $userData["account_lastloginfrom"];
+	$account_status	     = $userData["account_status"];
 
-  display_row(lang("LoginID"),$loginid);
-  display_row(lang("First Name"),$userData["firstname"]);
-  display_row(lang("Last Name"),$userData["lastname"]);
 
-  $i = 0;
-  while ($permission = each($db_perms)) {
-     if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-        $perm_display[$i] = lang($phpgw_info["apps"][$permission[0]]["title"]);
-        $i++;
-     }
-  }
-  display_row(lang("account permissions"),implode(", ", $perm_display));
+	// create list of available app
+	$i = 0;
+		
+	$availableApps = $phpgw_info['apps'];
+	@asort($availableApps);
+	@reset($availableApps);
+	while ($application = each($availableApps)) 
+	{
+		if ($application[1]['enabled']) 
+		{
+			$perm_display[$i]['appName']        = $application[0];
+			$perm_display[$i]['translatedName'] = $application[1]['title'];
+			$i++;
+		}
+	}
 
-  if ($userData["status"] == "A") {
-     $account_status = lang("yes");
-  } else {
-     $account_status = "<b>" . lang("no") . "</b>";
-  }
-  display_row(lang("account active"),$account_status);
+	// create apps output
+	$apps = CreateObject('phpgwapi.applications',intval($account_id));
+	$db_perms = $apps->read_account_specific();
 
-  $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
-  for ($i=0;$i<count($user_groups); $i++) {
-      $group_html .= $user_groups[$i][1];
-      if (count($user_groups) !=0 && $i != count($user_groups)-1) {
-         $group_html .= ", ";
-      }
-  }
-  display_row(lang("Groups"),$group_html);
+	@reset($db_perms);
 
-  if (! $userData["lastlogin"]) {
-     $lastlogin = lang("Never");
-  } else {
-     $lastlogin = $phpgw->common->show_date($userData["lastlogin"]);
-  }
-  display_row(lang("Last login"),$lastlogin);
-  display_row(lang("Last login from"),$userData["lastloginfrom"]);
+	for ($i=0;$i<=count($perm_display);$i++)
+	{
+		$checked = '';
+		if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
+		{
+			$checked = '&nbsp;&nbsp;X';
+		}
+		else
+		{
+			$checked = '&nbsp;';
+		}
+			
+		if ($perm_display[$i]['translatedName'])
+		{
+			$part1 = sprintf("<td>%s</td><td>%s</td>",lang($perm_display[$i]['translatedName']),$checked);
+		}
 
-  $phpgw->template->pparse("out","display");
-  $phpgw->common->phpgw_footer();
+		$i++;			
+		
+		if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
+		{
+			$checked = '&nbsp;&nbsp;X';
+		}
+		else
+		{
+			$checked = '&nbsp;';
+		}
+			
+		if ($perm_display[$i]['translatedName'])
+		{
+			$part2 = sprintf("<td>%s</td><td>%s</td>",lang($perm_display[$i]['translatedName']),$checked);
+		}
+		else
+		{
+			$part2 = '<td colspan="2">&nbsp;</td>';
+		}
+			
+		$appRightsOutput .= sprintf("<tr bgcolor=\"%s\">$part1$part2</tr>\n",$phpgw_info["theme"]["row_on"]);
+	}
+
+	$t->set_var('permissions_list',$appRightsOutput);
+
+
+	$t->pfp('out','form');
+	$phpgw->common->phpgw_footer();
 ?>

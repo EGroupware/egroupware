@@ -15,7 +15,6 @@
   $phpgw_info["flags"] = array("currentapp"  => "admin", "noheader" => True, "nonavbar" => True,
                			       "parent_page" => "accounts.php");
   include("../header.inc.php");
-  #include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   function is_odd($n)
   {
@@ -146,50 +145,59 @@
 		$account_status = 'A';
 	}
 
-	$phpgw->template->set_file(array('form'	=> 'account_form.tpl'));
 	$phpgw->template->set_unknowns('remove');
+	$phpgw->template->set_file(array(
+		'form'              => 'account_form.tpl',
+		'form_passwordinfo' => 'account_form_password.tpl',
+		'form_buttons_'     => 'account_form_buttons.tpl',
+	));
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-  $phpgw->template->set_var("lang_action",lang("Add new account"));
+	$phpgw->template->set_var('lang_action',lang('Add new account'));
 
-  if ($totalerrors) {
-     $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
-  } else {
-     $phpgw->template->set_var("error_messages","");
-  }
-
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $phpgw->template->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
-  $phpgw->template->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
-  
-  $phpgw->template->set_var("form_action",$phpgw->link("newaccount.php"));
-  $phpgw->template->set_var("lang_loginid",lang("LoginID"));
-
-	if ($account_status)
+	if ($totalerrors)
 	{
-		$phpgw->template->set_var('account_status',' checked');
+		$phpgw->template->set_var('error_messages','<center>' . $phpgw->common->error_list($error) . '</center>');
 	}
 
-  $phpgw->template->set_var("account_lid",$account_lid);
-
-  $phpgw->template->set_var("lang_account_active",lang("Account active"));
-
-  $phpgw->template->set_var("lang_password",lang("Password"));
-  $phpgw->template->set_var("account_passwd",$account_passwd);
+	$phpgw->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$phpgw->template->set_var('tr_color1',$phpgw_info['theme']['row_on']);
+	$phpgw->template->set_var('tr_color2',$phpgw_info['theme']['row_off']);
   
-  $phpgw->template->set_var("lang_reenter_password",lang("Re-Enter Password"));
-  $phpgw->template->set_var("account_passwd_2",$account_passwd_2);
+	$phpgw->template->set_var('form_action',$phpgw->link('newaccount.php'));
+	$phpgw->template->set_var('lang_loginid',lang('LoginID'));
 
-  $phpgw->template->set_var("lang_firstname",lang("First Name"));
-  $phpgw->template->set_var("account_firstname",$account_firstname);
+	if ($account_status) 
+	{
+		$phpgw->template->set_var('account_status','<input type="checkbox" name="account_status" value="A" checked>');
+	}
+	else
+	{
+		$phpgw->template->set_var('account_status','<input type="checkbox" name="account_status" value="A">');
+	}
 
-  $phpgw->template->set_var("lang_lastname",lang("Last Name"));
-  $phpgw->template->set_var("account_lastname",$account_lastname);
+	$phpgw->template->set_var('account_lid','<input name="account_lid" value="' . $account_lid . '">');
 
-  $phpgw->template->set_var("lang_groups",lang("Groups"));
+	$phpgw->template->set_var('lang_account_active',lang('Account active'));
 
+	$phpgw->template->set_var('lang_password',lang('Password'));
+	$phpgw->template->set_var('account_passwd',$account_passwd);
+  
+	$phpgw->template->set_var('lang_reenter_password',lang('Re-Enter Password'));
+	$phpgw->template->set_var('account_passwd_2',$account_passwd_2);
+	$phpgw->template->parse('password_fields','form_passwordinfo',True);
+
+	$phpgw->template->set_var('lang_firstname',lang('First Name'));
+	$phpgw->template->set_var('account_firstname','<input name="account_firstname" value="' . $account_firstname . '">');
+
+	$phpgw->template->set_var('lang_lastname',lang('Last Name'));
+	$phpgw->template->set_var('account_lastname','<input name="account_lastname" value="' . $account_lastname . '">');
+
+	$phpgw->template->set_var('lang_groups',lang('Groups'));
+
+	$phpgw->template->parse('form_buttons','form_buttons_',True);
 
 	// groups list
 	$groups_select = '<select name="account_groups[]" multiple>';
@@ -208,57 +216,72 @@
 		}
 		@reset($account_groups);
 
-		$groups_select .= ">" . $group["account_lid"] . "</option>\n";
+		$groups_select .= '>' . $group['account_lid'] . '</option>';
+		$groups_select .= "\n";
 	}
 	$groups_select .= '</select>';
 	$phpgw->template->set_var('groups_select',$groups_select);
 	// end groups list
 
-  $phpgw->template->set_var("","");
-  $i = 0;
-  $sorted_apps = $phpgw_info["apps"];
-  @asort($sorted_apps);
-  @reset($sorted_apps);
-  while ($permission = each($sorted_apps)) {
-    if ($permission[1]["enabled"]) {
-       $perm_display[$i][0] = $permission[0];
-       $perm_display[$i][1] = $permission[1]["title"];
-       $i++;
-    }
-  }
+	$i = 0;
+	$sorted_apps = $phpgw_info['apps'];
+	@asort($sorted_apps);
+	@reset($sorted_apps);
+	while ($permission = each($sorted_apps))
+	{
+		if ($permission[1]['enabled'])
+		{
+			$perm_display[$i][0] = $permission[0];
+			$perm_display[$i][1] = $permission[1]['title'];
+			$i++;
+		}
+	}
 
-  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
-      if (! $perm_display[$i][1]) break;
+	// The $i<200 is only used for a brake
+	for ($i=0;$i<200;)
+	{
+		if (! $perm_display[$i][1])
+		{
+			break;
+		}
 
-      $perms_html .= '<tr bgcolor="' . $phpgw_info["theme"]["row_on"] . '"><td>' . lang($perm_display[$i][1]) . '</td>'
-                  . '<td><input type="checkbox" name="account_permissions['
-		          . $perm_display[$i][0] . ']" value="True"';
-      if ($account_permissions[$perm_display[$i][0]]) {
-         $perms_html .= " checked";
-      }
-      $perms_html .= "></td>";
+		$perms_html .= '<tr bgcolor="' . $phpgw_info['theme']['row_on'] . '"><td>' . lang($perm_display[$i][1]) . '</td>'
+			. '<td><input type="checkbox" name="account_permissions['
+			. $perm_display[$i][0] . ']" value="True"';
 
-      $i++;
+		if ($account_permissions[$perm_display[$i][0]])
+		{
+			$perms_html .= ' checked';
+		}
+		$perms_html .= '></td>';
 
-      if ($i == count($perm_display) && is_odd(count($perm_display))) {
-         $perms_html .= '<td colspan="2">&nbsp;</td></tr>';
-      }
+		$i++;
+
+		if ($i == count($perm_display) && is_odd(count($perm_display)))
+		{
+			$perms_html .= '<td colspan="2">&nbsp;</td></tr>';
+		}
  
-      if (! $perm_display[$i][1]) break;
+		if (! $perm_display[$i][1])
+		{
+			break;
+		}
  
-      $perms_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
-                   . '<td><input type="checkbox" name="account_permissions['
- 		          . $perm_display[$i][0] . ']" value="True"';
-      if ($account_permissions[$perm_display[$i][0]]) {
-         $perms_html .= " checked";
-      }
- 	 $perms_html .= "></td></tr>";
- 
-      $i++;
-  }
-  $phpgw->template->set_var("permissions_list",$perms_html);
+		$perms_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
+			. '<td><input type="checkbox" name="account_permissions['
+			. $perm_display[$i][0] . ']" value="True"';
 
-  $includedSomething = False;
+		if ($account_permissions[$perm_display[$i][0]])
+		{
+			$perms_html .= ' checked';
+		}
+		$perms_html .= '></td></tr>';
+
+		$i++;
+	}
+	$phpgw->template->set_var('permissions_list',$perms_html);
+
+	$includedSomething = False;
 // Skeeter: I don't see this as a player, if creating new accounts...
 
   // start inlcuding other admin tools
@@ -268,11 +291,9 @@
 	// {gui_hooks} to ""
 //  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
 //  }       
-  if (!$includedSomething) $phpgw->template->set_var("gui_hooks","");
 
-  $phpgw->template->set_var("lang_button",Lang("Add"));
-  echo $phpgw->template->finish($phpgw->template->parse("out","form"));
+  $phpgw->template->set_var('lang_button',Lang('Add'));
+  $phpgw->template->pfp('out','form');
   
-  #account_close();
   $phpgw->common->phpgw_footer();
 ?>

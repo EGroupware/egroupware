@@ -9,41 +9,33 @@
     </tr>
 
     <tr bgcolor="{tr_color1}">
-     <td>{lang_loginid}</td>
-     <td><input name="account_lid" value="{account_lid}"></td>
-     <td colspan="2" align="center">
-       {lang_account_active}:&nbsp;<input type="checkbox" name="account_status" value="A"{account_status}>
-     </td>
+     <td width="25%">{lang_loginid}</td>
+     <td width="25%">{account_lid}&nbsp;</td>
+
+     <td width="25%">{lang_account_active}:</td>
+     <td width="25%">{account_status}</td>
     </tr>
 
     <tr bgcolor="{tr_color2}">
      <td>{lang_firstname}</td>
-     <td><input name="account_firstname" value="{account_firstname}"></td>
+     <td>{account_firstname}&nbsp;</td>
      <td>{lang_lastname}</td>
-     <td><input name="account_lastname" value="{account_lastname}"></td>
+     <td>{account_lastname}&nbsp;</td>
     </tr>
 
-    <tr bgcolor="{tr_color1}">
-     <td>{lang_password}</td>
-     <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
-     <td>{lang_reenter_password}</td>
-     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
-    </tr>
-
+    {password_fields}
  
     <tr bgcolor="{tr_color2}">
      <td>{lang_groups}</td>
-     <td>{groups_select}&nbsp;</td>
-     <td colspan=2>&nbsp;</td>
+     <td colspan=3>{groups_select}&nbsp;</td>
     </tr>
 
     {permissions_list}
     
     {gui_hooks}
 
-    <tr bgcolor="{tr_color2}">
-     <td colspan="4" align="right"><input type="submit" name="submit" value="{lang_button}"></td>
-    </tr>
+	 {form_buttons}
+
    </table>
   </center>
  </form>
