@@ -75,9 +75,7 @@
          }
          $d_time = mktime(0,0,0,$m,$d,$y);
          $thisdate = date("Ymd", $d_time);
-	 $sun = $phpgw->calendar->get_sunday_before($y,$m,$d);
-	 if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday")
-	  $sun += 86400;
+         $sun = $phpgw->calendar->get_weekday_start($y,$m,$d);
          for ($i = -7; $i <= 7; $i++) {
              $tsun = $sun + (3600 * 24 * 7 * $i);
              $tsat = $tsun + (3600 * 24 * 6);

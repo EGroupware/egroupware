@@ -38,8 +38,8 @@
 
       $this->printer_friendly = $p_friendly;
 
-      $now = time();
-      $this->today = $this->splitdate($now);
+//      $now = time();
+      $this->today = $this->localdates(time());
     }
 
     function set_filter() {
