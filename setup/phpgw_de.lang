@@ -204,9 +204,12 @@ detail	tts	de	Detail
 details	tts	de	Details
 disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
+display interval in day view    calendar    de    Anzeigeintervall in der Tagesansicht
+display mini calendars when printing    calendar    de    Mini-Kalender in der Druckansicht anzeigen
 display missing phrases in lang set	transy	de	Im Sprachset fehlende Phrasen anzeigen
 display preferences    common    de    Einstellungen der Anzeige
 display note for	notes	de	Display note for
+display status of events    calendar    de    Ereignisstatus anzeigen
 do_delete	filemanager	de	Lösche
 domestic	addressbook	de	Wohnung
 don't use trash    squirrelmail    de    Keinen Papierkorb benutzen
@@ -565,6 +568,7 @@ section	email	de	Sektion
 select	projects	de	Auswählen
 select application	transy	de	Anwendung auswählen
 select category	common	de	Kategorie auswählen
+select country for including holidays    calendar    de    Land für Feiertagsanzeige auswählen
 select different theme	preferences	de	anderes Schema wählen
 select groups	projects	de	Gruppen auswählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
@@ -584,6 +588,7 @@ select your address	projects	de	Wählen sie Ihre Adresse
 send	email	de	Senden
 send deleted messages to the trash	email	de	gelöschte Nachrichten in die Mülltonne befördern
 send updates via email	common	de	Updates via EMail senden
+send/receive updates via email    calendar    de    Aktualisierungen per EMail versenden/empfangen
 september 	common	de	September
 session has been killed	common	de	Session wurde gelöscht
 short description	projects	de	Kurzbeschreibung
@@ -624,6 +629,7 @@ subject	common	de	Betreff
 submit	common	de	Absenden
 submit changes	admin	de	Änderungen Speichern
 subproject description	todo	de	Beschreibung des Teilprojekts
+subscribe    squirrelmail    de    Abonnieren
 suffix	addressbook	de	Zusatz
 sum	projects	de	Summe
 sum workunits	projects	de	Summe der Arbeitseinheiten
@@ -666,6 +672,7 @@ to correct this error for the future you will need to properly set the	common	de
 today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 todo	common	de	Aufgabenliste
+todo preferences    common    Einstellungen der Aufgabenliste
 todo categories	preferences	de	Kategorien editieren
 todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
@@ -682,6 +689,7 @@ tue	calendar	de	Di
 tuesday	common	de	Dienstag
 undisclosed recipients	email	de	Verborgene Empfänger
 undisclosed sender	email	de	Verborgener Absender
+unsubscribe    squirrelmail    de    abbestellen
 up    common    de    hoch
 update	common	de	Aktualisieren
 updated	common	de	Updated
@@ -722,6 +730,7 @@ wednesday	common	de	Mittwoch
 week	calendar	de	Woche
 weekday starts on	common	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
+when creating new events default set to private    calendar    de    Beim Erstellen neuer Einträge "privat" als Default annehmen
 which groups	common	de	Welche Gruppen
 white    common    de    Weiß
 work date	projects	de	Arbeitstag
