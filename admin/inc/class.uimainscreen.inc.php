@@ -41,9 +41,9 @@
 
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
-				$GLOBALS['phpgw']->db->query("DELETE FROM lang WHERE message_id='$section" . "_message' AND app_name='"
+				$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_lang WHERE message_id='$section" . "_message' AND app_name='"
 					. "$section' AND lang='$select_lang'",__LINE__,__FILE__);
-				$GLOBALS['phpgw']->db->query("INSERT INTO lang VALUES ('$section" . "_message','$section','$select_lang','"
+				$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_lang VALUES ('$section" . "_message','$section','$select_lang','"
 					. addslashes($message) . "')",__LINE__,__FILE__);
 				$message = '<center>'.lang('message has been updated').'</center>';
 			}
