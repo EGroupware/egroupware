@@ -83,4 +83,56 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-?>
+
+
+	$test[] = '1.0.1.002';
+	function phpgwapi_upgrade1_0_1_002()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','file_id','vfs_file_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','owner_id','vfs_owner_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','createdby_id','vfs_createdby_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','modifiedby_id','vfs_modifiedby_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','created','vfs_created');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','modified','vfs_modified');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','size','vfs_size');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','mime_type','vfs_mime_type');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','deleteable','vfs_deleteable');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','comment','vfs_comment');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','app','vfs_app');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','directory','vfs_directory');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','name','vfs_name');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','link_directory','vfs_link_directory');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','link_name','vfs_link_name');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','version','vfs_version');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','content','vfs_content');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_vfs','egw_vfs');
+
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('egw_vfs',array(
+			'fd' => array(
+				'vfs_file_id' => array('type' => 'auto','nullable' => False),
+				'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'vfs_createdby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_modifiedby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
+				'vfs_modified' => array('type' => 'date'),
+				'vfs_size' => array('type' => 'int','precision' => '4'),
+				'vfs_mime_type' => array('type' => 'varchar','precision' => '64'),
+				'vfs_deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'vfs_comment' => array('type' => 'varchar','precision' => '255'),
+				'vfs_app' => array('type' => 'varchar','precision' => '25'),
+				'vfs_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
+				'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
+				'vfs_content' => array('type' => 'text')
+			),
+			'pk' => array('vfs_file_id'),
+			'fk' => array(),
+			'ix' => array(array('vfs_directory','vfs_name','vfs_mime_type')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.003';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}

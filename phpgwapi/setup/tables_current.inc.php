@@ -314,29 +314,29 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_vfs' => array(
+		'egw_vfs' => array(
 			'fd' => array(
-				'file_id' => array('type' => 'auto','nullable' => False),
-				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
-				'createdby_id' => array('type' => 'int','precision' => '4'),
-				'modifiedby_id' => array('type' => 'int','precision' => '4'),
-				'created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
-				'modified' => array('type' => 'date'),
-				'size' => array('type' => 'int','precision' => '4'),
-				'mime_type' => array('type' => 'varchar','precision' => '64'),
-				'deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
-				'comment' => array('type' => 'varchar','precision' => '255'),
-				'app' => array('type' => 'varchar','precision' => '25'),
-				'directory' => array('type' => 'varchar','precision' => '255'),
-				'name' => array('type' => 'varchar','precision' => '128','nullable' => False),
-				'link_directory' => array('type' => 'varchar','precision' => '255'),
-				'link_name' => array('type' => 'varchar','precision' => '128'),
-				'version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
-				'content' => array('type' => 'longtext')
+				'vfs_file_id' => array('type' => 'auto','nullable' => False),
+				'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'vfs_createdby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_modifiedby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
+				'vfs_modified' => array('type' => 'date'),
+				'vfs_size' => array('type' => 'int','precision' => '4'),
+				'vfs_mime_type' => array('type' => 'varchar','precision' => '64'),
+				'vfs_deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'vfs_comment' => array('type' => 'varchar','precision' => '255'),
+				'vfs_app' => array('type' => 'varchar','precision' => '25'),
+				'vfs_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
+				'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
+				'vfs_content' => array('type' => 'text')
 			),
-			'pk' => array('file_id'),
+			'pk' => array('vfs_file_id'),
 			'fk' => array(),
-			'ix' => array(array('directory','name','mime_type')),
+			'ix' => array(array('vfs_directory','vfs_name','vfs_mime_type')),
 			'uc' => array()
 		),
 		'phpgw_history_log' => array(
@@ -370,4 +370,3 @@
 			'uc' => array()
 		)
 	);
-?>
