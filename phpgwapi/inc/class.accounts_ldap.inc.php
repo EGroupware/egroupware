@@ -113,19 +113,19 @@
 				// data for posixaccount
 				$newData['cn']				= $GLOBALS['phpgw']->translation->convert(sprintf("%s %s", 
 										$this->data['firstname'], 
-										$this->data['lastname']),$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+										$this->data['lastname']),$GLOBALS['phpgw']->translation->charset(),'utf-8');
 				$newData['uid']				= $GLOBALS['phpgw']->translation->convert(
 										$this->data['account_lid'],
-										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+										$GLOBALS['phpgw']->translation->charset(),'utf-8');
 				if($this->data['lastname'])
 					$newData['sn']			= $GLOBALS['phpgw']->translation->convert(
 										$this->data['lastname'],
-										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+										$GLOBALS['phpgw']->translation->charset(),'utf-8');
 
 				if($this->data['firstname'])
 					$newData['givenname']		= $GLOBALS['phpgw']->translation->convert(
 										$this->data['firstname'],
-										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+										$GLOBALS['phpgw']->translation->charset(),'utf-8');
 				if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 				{
 					$newData['homedirectory'] 	= $this->data['homedirectory'];
@@ -160,7 +160,7 @@
 				// data for posixgroup
 				$newData['cn']				= $GLOBALS['phpgw']->translation->convert(
 										$this->data['account_lid'],
-										$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
+										$GLOBALS['phpgw']->translation->charset(), 'utf-8');
 				$newData['gidnumber']			= $this->data['account_id'];
 				$newGroupID				= $newData['cn'];
 				$oldGroupID				= $newData['cn'];
@@ -832,7 +832,7 @@
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'posixGroup';
 					$entry['objectclass'][2] = 'phpgwAccount';
-					$entry['cn']             = $GLOBALS['phpgw']->translation->convert($account_info['account_lid'],$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+					$entry['cn']             = $GLOBALS['phpgw']->translation->convert($account_info['account_lid'],$GLOBALS['phpgw']->translation->charset(),'utf-8');
 					$entry['gidnumber']      = $account_id;
 					#$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['description']    = 'phpgw-created group';
@@ -844,16 +844,16 @@
 					$entry['cn']	= $GLOBALS['phpgw']->translation->convert(sprintf("%s %s",
 						$account_info['account_firstname'],
 						$account_info['account_lastname']
-					), $GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
+					), $GLOBALS['phpgw']->translation->charset(), 'utf-8');
 								
 					$entry['sn']	= $GLOBALS['phpgw']->translation->convert(
 								$account_info['account_lastname'],
-								$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
+								$GLOBALS['phpgw']->translation->charset(), 'utf-8');
 						
 					if($account_info['account_firstname'])
 						$entry['givenname']	= $GLOBALS['phpgw']->translation->convert(
 										$account_info['account_firstname'],
-										$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
+										$GLOBALS['phpgw']->translation->charset(), 'utf-8');
 						
 					$entry['uid']       	= $account_info['account_lid'];
 					$entry['uidnumber'] 	= $account_id;
