@@ -36,21 +36,27 @@
 			*/
 			error_reporting(0); 
 
-			$ldap = ldap_connect($GLOBALS['phpgw_info']['server']['ldap_host']);
-			if (! $ldap)
+			if(!$ldap = @ldap_connect($GLOBALS['phpgw_info']['server']['ldap_host']))
 			{
 				$GLOBALS['phpgw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
 				$GLOBALS['phpgw']->log->commit();
+				return False;
 			}
 
+			/* Login with the LDAP Admin. User to find the User DN.  */
+			if(!@ldap_bind($ldap, $GLOBALS['phpgw_info']['server']['ldap_root_dn'], $GLOBALS['phpgw_info']['server']['ldap_root_pw']))
+			{
+				return False;
+			}
+			
 			/* find the dn for this uid, the uid is not always in the dn */
-			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uid='.$username);
+			$attributes = array( "uid", "dn" );
+			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], "(uid=$username)", $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
 			{
 				/* we only care about the first dn */
 				$userDN = $allValues[0]['dn'];
-
 				/*
 				generate a bogus password to pass if the user doesn't give us one 
 				this gets around systems that are anonymous search enabled
@@ -60,7 +66,7 @@
 					$passwd = crypt(microtime());
 				}
 				/* try to bind as the user with user suplied password */
-				if (ldap_bind($ldap,$userDN, $passwd))
+				if (@ldap_bind($ldap, $userDN, $passwd))
 				{
 					return True;
 				}
