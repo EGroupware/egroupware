@@ -16,7 +16,7 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  if($REQUEST_METHOD <> "POST") {
+  if($REQUEST_METHOD == "POST") {
   }
 
   $cal_info = new calendar_item;

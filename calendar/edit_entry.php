@@ -59,7 +59,7 @@
     else
       $thisminute = (int)$minute;
 
-    $time = $phpgw->calendar->splittime_($phpgw->calendar->fixtime($thishour,$thisminute));
+    $time = $phpgw->calendar->splittime($phpgw->calendar->fixtime($thishour,$thisminute));
 
     $cal_info->name = "";
     $cal_info->description = "";
