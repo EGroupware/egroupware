@@ -108,7 +108,7 @@
 	$GLOBALS['logindomain'] = @$GLOBALS['HTTP_POST_VARS']['logindomain'];
 
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
-	if (isset($domain))
+	if (isset($domain) && $domain)
 	{
 		$GLOBALS['phpgw_info']['user']['domain'] = $domain;
 	}
