@@ -334,6 +334,11 @@ class uiviews extends uical
 	 */
 	function timeGridWidget($daysEvents,$width,$granularity_m=30,$px_m=1.7,$indent='',$title='')
 	{
+		// Get Owner/Participants
+		$_session_data = $GLOBALS['phpgw']->session->appsession("session_data", "calendar");
+		$participants = str_replace(",", ";", $_session_data["owner"]);
+		unset($_session_data);
+
 		if ($this->debug > 1 || $this->debug==='timeGridWidget') $this->bo->debug_message('uiviews::timeGridWidget(events=%1,width=%2,granularity_m=%3,px_m=%4,)',True,$daysEvents,$width,$granularity_m,$px_m);
 
 		$this->px_m = $px_m;	// for time2pos()
@@ -364,6 +369,7 @@ class uiviews extends uical
 			$add = array(
 				'menuaction' => 'calendar.uicalendar.add',
 				'date' => $this->date,
+				'owner' => $participants,
 			);
 			if ($t >= $this->wd_start && $t <= $this->wd_end)
 			{
