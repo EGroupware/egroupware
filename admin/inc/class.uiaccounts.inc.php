@@ -260,7 +260,8 @@
 			
 			if (! $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
-				$p->set_var('url_add','<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user').'">' . lang('Add') . '</a>');
+				$p->set_var('new_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'));
+				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
 			}
 
 			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
