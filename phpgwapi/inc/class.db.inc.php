@@ -163,10 +163,6 @@
 			{
 				$Port     = $this->Port;
 			}
-			if (isset($Port))
-			{
-				$Host = $Host.':'.$Port;
-			}
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -181,12 +177,18 @@
 				$this->type = $GLOBALS['phpgw_info']['server']['db_type'];
 				if (!is_object($GLOBALS['phpgw']->ADOdb))
 				{
+					$error_str = "$Host, $User, \$Password, $Database";
 					switch($this->type)	// convert to ADO db-type-names
 					{
 						case 'pgsql':
 							$type = 'postgres';
+							// create our own pgsql connection-string, to allow unix domain soccets if !$Host
+							$Host = "dbname=$Database".($Host ? " host=$Host".($Port ? " port=$Port" : '') : '').
+								" user=$User".($Password ? " password='".addslashes($Password)."'" : '');
+							$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 							break;
 						default:
+							$Host .= ($Port ? ':'.$Port : '');
 							$type = $this->type;
 					}
 					$GLOBALS['phpgw']->adodb = ADONewConnection($type);
@@ -197,7 +199,8 @@
 					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 					if (!$connect = $GLOBALS['phpgw']->adodb->$connect($Host, $User, $Password, $Database))
 					{
-						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
+						$this->halt("ADOdb::$connect($error_str) failed.");
+						return 0;	// in case error-reporting = 'no'
 					}
 				}
 				$this->Link_ID = &$GLOBALS['phpgw']->adodb;
@@ -206,10 +209,13 @@
 		}
 
 		/**
-		* Close a connection to a database - not needed for ADOdb connection
+		* Close a connection to a database
 		*/
 		function disconnect()
 		{
+			unset($GLOBALS['phpgw']->adodb);
+			unset($this->Link_ID);
+			$this->Link_ID = 0;
 		}
 
 		/**
@@ -397,6 +403,7 @@
 		*/
 		function transaction_begin()
 		{
+			$this->connect();
 			//return $this->Link_ID->BeginTrans();
 			return $this->Link_ID->StartTrans();
 		}
@@ -484,7 +491,7 @@
 		*/
 		function num_rows()
 		{
-			return $this->Query_ID->RecordCount();
+			return $this->Query_ID ? $this->Query_ID->RecordCount() : False;
 		}
 
 		/**
@@ -703,7 +710,42 @@
 		*/
 		function create_database($adminname = '', $adminpasswd = '')
 		{
-			echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented</p>\n";
+			$extra = array();
+			switch ($this->type)
+			{
+				case 'pgsql':
+					$meta_db = 'template1';
+					break;
+				case 'mysql':
+					$meta_db = 'mysql';
+					$extra[] = "grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'";
+					break;
+				default:
+					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->type'</p>\n";
+					break;
+			}
+			$currentUser = $this->User;
+			$currentPassword = $this->Password;
+			$currentDatabase = $this->Database;
+
+			if ($adminname != '')
+			{
+				$this->User = $adminname;
+				$this->Password = $adminpasswd;
+				$this->Database = $meta_db;
+			}
+			$this->disconnect();
+			$this->query("CREATE DATABASE $currentDatabase");
+			foreach($extra as $sql)
+			{
+				$this->query($sql);
+			}
+			$this->disconnect();
+
+			$this->User = $currentUser;
+			$this->Password = $currentPassword;
+			$this->Database = $currentDatabase;
+			$this->connect();
 		}
 
 		/**
