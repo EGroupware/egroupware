@@ -52,15 +52,9 @@
    </tr>
    <?php $selected = array(); */?>
 
-   <?php $selected[$current_config["htmlcompliant"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Use pure HTML compliant code (not fully working yet):</td>
-    <td>
-     <select name="newsettings[htmlcompliant]">
-      <option value="True"<?php echo $selected["True"]; ?>>True</option>
-      <option value="False"<?php echo $selected["False"]; ?>>False</option>
-     </select>
-    </td>
+    <td><input type="checkbox" name="newsettings[htmlcompliant]" value="True"<?php echo ($current_config["htmlcompliant"]?" checked":""); ?>></td>
    </tr>
    <?php $selected = array(); ?>
 
