@@ -1,5 +1,5 @@
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
-%1 is %2%3 !!!	setup	es-es	¡¡%e is %2%3 !!
+%1 is %2%3 !!!	setup	es-es	¡¡%1 está %2%3 !!
 (account deletion in sql only)	setup	es-es	(borrado de cuentas sólo en SQL)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que eGW funcione completamente ***
@@ -314,7 +314,7 @@ re-check my database	setup	es-es	Volver a comprobar mi base de datos
 re-check my installation	setup	es-es	Comprobar mi instalación
 re-enter password	setup	es-es	Confirme la contraseña
 read translations from	setup	es-es	Leer traducciones de
-readable by the webserver	setup	es-es	legible por el servidor web
+readable by the webserver	setup	es-es	permiso de lectura para el servidor web
 really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas las aplicaciones
 recommended: filesystem	setup	es-es	Recomendado: sistema de ficheros
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y eGroupWare NO lo necesita, por lo que es más seguro tenerlo en Off (desactivado).
@@ -353,7 +353,7 @@ select your old version	setup	es-es	Seleccione su versión anterior
 selectbox	setup	es-es	Cuadro de selección
 server root	setup	es-es	Raíz del servidor
 sessions type	setup	es-es	Tipo de sesiones
-set	setup	es-es	set
+set	setup	es-es	establecer
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	es-es	Ponga "old" para versiones anteriores a la 2.4.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	es-es	Poner el juego de caracteres del sistema en UTF-8 (unicode) permite coexistir datos de juegos de caracteres distintos.
 settings	setup	es-es	Configuración
@@ -442,14 +442,14 @@ welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación d
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	es-es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
 which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
 which database type do you want to use with phpgroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
-world readable	setup	es-es	legible por todos
-world writable	setup	es-es	escribible por todos
+world readable	setup	es-es	con permiso de lectura para todos
+world writable	setup	es-es	con permiso de escritura por todos
 would you like egroupware to cache the phpgw info array ?	setup	es-es	Desea que eGroupWare cachee el array de información phpgw?
 would you like egroupware to check for a new version<br>when admins login ?	setup	es-es	¿Desea que eGroupWare compruebe una nueva versión<br>cuando un administrador inicie la sesión?
 would you like phpgroupware to cache the phpgw info array ?	setup	es-es	¿Desea que eGrouWare tenga en caché el array de información phpgw?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	es-es	¿Desea que eGroupWare compruebe si hay una versión nueva<b>cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es-es	¿Desea mostrar el estado de la actualización de cada aplicación?
-writable by the webserver	setup	es-es	escribible por el servidor web
+writable by the webserver	setup	es-es	con permiso de escritura para el servidor web
 write config	setup	es-es	Escribir configuración
 yes	setup	es-es	Sí
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br>Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br>y luego actualizar desde ahí a la versión actual.
