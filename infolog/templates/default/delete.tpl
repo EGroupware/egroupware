@@ -30,8 +30,8 @@
         </td>
        </tr>
        <tr>
-         <td>{no_button}</td>
-         <td>{yes_button}</td>
+         <td align=center>{yes_button}</td>
+         <td align=center>{no_button}</td>
        </tr>
       </table>
      </center>
