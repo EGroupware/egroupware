@@ -26,19 +26,21 @@
   $db->query("DROP TABLE profiles");
   $db->query("drop sequence addressbook_ab_id_seq");
   $db->query("DROP TABLE addressbook");
-  $db->query("drop sequence webcal_entry_cal_id_seq");
+  $db->query("drop sequence calendar_entry_cal_id_seq");
+  $db->query("drop sequence todo_todo_id_seq");
   $db->query("DROP TABLE todo");
   $db->query("DROP TABLE calendar_entry");
-  $db->query("DROP TABLE calendar_entry_repeats");
+  $db->query("DROP TABLE webcal_entry_repeats");
   $db->query("DROP TABLE calendar_entry_user");
   $db->query("drop sequence newsgroups_con_seq");
   $db->query("DROP TABLE newsgroups");
-  $db->query("DROP TABLE users_newsgroups");
+/*  $db->query("DROP TABLE users_newsgroups");*/
   $db->query("DROP TABLE lang");
   $db->query("drop sequence news_msg_con_seq");
   $db->query("DROP TABLE news_msg");
   $db->query("DROP TABLE languages");
   $db->query("drop sequence categories_cat_id_seq");
   $db->query("DROP TABLE categories");
+  $db->query("DROP sequence notes_note_id_seq");
   $db->query("DROP TABLE notes");
 ?>
