@@ -74,6 +74,7 @@ disabled	calendar	nl	gedeactiveerd
 display interval in day view	calendar	nl	Verdelingen in dagelijks overzicht
 display mini calendars when printing	calendar	nl	Mini kalenders tijdens het afdrukken
 display status of events	calendar	nl	Status van afspraken weergeven
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	nl	Laat uw standaard agenda weergave zien op de startpagina (De pagina waarmee eGroupWare geopend wordt of die u krijgt als u op klikt op 'start'
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	nl	Geeft uw standaard agenda weer op de hoofdpagina
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	nl	Wilt u worden geïnformeerd over nieuwe of gewijzigde afspraken? U wordt geïnformeerd over wijzigingen die u zelf heeft gemaakt.<br/>U kunt de de notificaties beperken to alleen bepaalde wijzigingen. Elk item bevat alle notificaties hierboven weergegeven. "Alle wijzigingen" bevat wijziging va titel, beschrijving, deelnemers, maar niet reacties van deelnemers. Als de eigenaar van een afspraak verzocht heeft om een van de notificaties, zal hij of zij altijd reacties krijgen van de deelnemers zoals acceptaties en afwijzigingen.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	nl	Wilt u per email een periodieke overzichten ontvangen van uw afspraken? </br>Het overzicht wordt verzonden naar uw standaard emailadres op de ochtend dat de afspraak plaatsvind en op maandag voor wekelijkse overzichten. <br/> Er wordt alleen een overzicht verstuurd als er in die afspraken staan geregistreerd.
@@ -109,6 +110,7 @@ fri	calendar	nl	Vri
 full description	calendar	nl	Volledige omschrijving
 fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
 generate printer-friendly version	calendar	nl	Genereer printervriendelijke versie
+global categories	calendar	nl	Globale categorieën
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
 go!	calendar	nl	Uitvoeren!
@@ -233,6 +235,7 @@ show day view on main screen	calendar	nl	Dagelijkse weergave op hoofdscherm weer
 show default view on main screen	calendar	nl	Geeft standaard overzicht weer op beginscherm
 show high priority events on main screen	calendar	nl	Evenementen met hoge prioriteit weergeven op hoofdscherm
 show invitations you rejected	calendar	nl	Uitnodigingen weergeven die zijn afgewezen
+show list of upcoming events	calendar	nl	Lijst weergeven van toekomstige afspraken
 single event	calendar	nl	enkele afspraak
 sorry, the owner has just deleted this event	calendar	nl	Sorry, de eigenaar heeft deze afspraak zojuist verwijderd
 sorry, this event does not exist	calendar	nl	Excuses, deze afspraak bestaat niet
