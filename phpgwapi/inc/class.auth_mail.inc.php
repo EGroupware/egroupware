@@ -40,8 +40,13 @@
          $phpgw_info["server"]["mail_port"] = "110";
       }
 
-      $mailauth = imap_open("{".$phpgw_info["server"]["mail_server"]
-			     .":".$phpgw_info["server"]["mail_port"]."}INBOX", $username , $passwd);
+      if( $phpgw_info["server"]["mail_server_type"]=="pop3") {
+         $mailauth = imap_open("{".$phpgw_info["server"]["mail_server"]."/pop3"
+                                .":".$phpgw_info["server"]["mail_port"]."}INBOX", $username , $passwd);
+      } else { //assume imap 
+          $mailauth = imap_open("{".$phpgw_info["server"]["mail_server"]
+                                .":".$phpgw_info["server"]["mail_port"]."}INBOX", $username , $passwd);
+      }
 
       error_reporting(error_reporting() + 2);
       if ($mailauth == False) {
