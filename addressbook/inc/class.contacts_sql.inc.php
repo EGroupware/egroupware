@@ -174,6 +174,12 @@
 			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
 			$return_fields[0]["owner"]     = $this->db->f("owner"); // id of owner/parent for the record
 
+			if (gettype($stock_fieldnames) == "array") {
+				while (list($f_name) = each($stock_fieldnames)) {
+					$return_fields[0][$f_name] = $this->db->f($f_name);
+				}
+			}
+
 			// Setup address type fields
 			if ($this->db->f("adr_one_type")) {
 				$one_type = $this->db->f("adr_one_type");
@@ -190,11 +196,6 @@
 				}
 			}
 
-			if (gettype($stock_fieldnames) == "array") {
-				while (list($f_name) = each($stock_fieldnames)) {
-					$return_fields[0][$f_name] = $this->db->f($f_name);
-				}
-			}
 			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
 			while ($this->db2->next_record()) {
 				// If its not in the list to be returned, don't return it.
@@ -225,19 +226,37 @@
 			$this->db->next_record();
        
 			$id = $this->db->f("max(id)");
-			
+
 			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
-			
+
 			$return_fields[0]["id"]		= $this->db->f("id");
 			$return_fields[0]["lid"]    = $this->db->f("lid");
 			$return_fields[0]["tid"]    = $this->db->f("tid");
 			$return_fields[0]["owner"]  = $this->db->f("owner");
+
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
 			}
+
+			// Setup address type fields
+			if ($this->db->f("adr_one_type")) {
+				$one_type = $this->db->f("adr_one_type");
+				reset($this->adr_types);
+				while (list($name,$val) = each($this->adr_types)) {
+					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
+				}
+			}
+			if ($this->db->f("adr_two_type")) {
+				$two_type = $this->db->f("adr_two_type");
+				reset($this->adr_types);
+				while (list($name,$val) = each($this->adr_types)) {
+					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
+				}
+			}
+
 			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
 			while ($this->db2->next_record()) {
 				// If its not in the list to be returned, don't return it.
