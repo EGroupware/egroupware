@@ -1,4 +1,4 @@
-[09--2000] - Fixed a few missing variables with templates.
+[0.9.1]    - Fixed a few missing variables with templates.
 	      - editing a product in the inventory program now forwards you back to the category
 		   you where in.
 	      - You can now use decimals in the inventory program.
@@ -24,6 +24,7 @@
 	      - Updated docs a great deal.
 	      - Group public items should now be working.
 		 - Fixed a wrong data type error when calling sort() on 1 folder.
+		 - Added week number in month view of calendar. (Patch by grasl)
 	      - A bunch of other minor bug fixes.
 
 [09072000] - Added print icon that allows you to print out a page without having

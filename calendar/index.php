@@ -141,7 +141,17 @@
          } else {
             echo " BGCOLOR=\"$CELLBG\">";
          }
+
          print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
+
+         $thirsday=$i+24*3600*4;
+         if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Sunday" && $j == 0) {
+            echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' .(int)((date("z",$thirsday)+7)/7) . '</a></font>';
+         }
+         if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Monday" && $j == 1) {
+            echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' . (int)((date("z",$thirsday)+7)/7) . '</a></font>';
+         }
+
          echo "</TD>\n";
       } else {
          echo "<TD></TD>\n";
