@@ -56,13 +56,13 @@
        return $encrypted_passwd;
     }
 
-    function update_lastlogin($account_lid, $ip)
+    function update_lastlogin($account_id, $ip)
     {
        global $phpgw;
 
        $phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
    	                . "$ip', account_lastlogin='" . time()
-                       . "' where account_lid='$login'",__LINE__,__FILE__);
+                       . "' where account_id='$account_id'",__LINE__,__FILE__);
     }
   }
 ?>

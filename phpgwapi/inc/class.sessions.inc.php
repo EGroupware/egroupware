@@ -234,7 +234,7 @@
                       . "$login','" . $this->getuser_ip() . "','" . time()
                       . "','') ",__LINE__,__FILE__);
 
-      $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
+      $phpgw->auth->update_lastlogin($this->account_id,$this->getuser_ip());
 
       return $this->sessionid;
     }
