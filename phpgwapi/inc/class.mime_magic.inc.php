@@ -1,28 +1,28 @@
 <?php
-   /********************************************************************\
-   * phpGroupWare - phpGroupWare API - mime magic			*
-   * http://www.phpgroupware.org					*
-   * This program is part of the GNU project, see http://www.gnu.org	*
-   *									*
-   * Originally taken from the Horde Framework http://horde.org		*
-   *									*
-   * Copyright 1999-2003 Anil Madhavapeddy <anil@recoil.org>		*
-   * Copyright 2002-2003 Michael Slusarz <slusarz@bigworm.colorado.edu>	*
-   * Copyright 2003 Free Software Foundation, Inc.			*
-   *									*
-   * Ported to phpGroupWare by Dave Hall - dave.hall@mbox.com.au	*
-   * Note: this class was relicensed as GPL by Dave Hall - all mods GPL	*
-   * --------------------------------------------                       *
-   *  This program is Free Software; you can redistribute it and/or	*
-   *  modify it under the terms of the GNU General Public License as	*
-   *  published by the Free Software Foundation; either version 2 of	*
-   *  the License, or (at your option) any later version.		*
-   \********************************************************************/
-   /* $id */
+  /********************************************************************\
+  * phpGroupWare - phpGroupWare API - mime magic                       *
+  * http://www.phpgroupware.org                                        *
+  * This program is part of the GNU project, see http://www.gnu.org    *
+  *                                                                    *
+  * Originally taken from the Horde Framework http://horde.org         *
+  *                                                                    *
+  * Copyright 1999-2003 Anil Madhavapeddy <anil@recoil.org>            *
+  * Copyright 2002-2003 Michael Slusarz <slusarz@bigworm.colorado.edu> *
+  * Copyright 2003 Free Software Foundation, Inc.                      *
+  *                                                                    *
+  * Ported to phpGroupWare by Dave Hall - dave.hall@mbox.com.au        *
+  * Note: this class was relicensed as GPL by Dave Hall - all mods GPL *
+  * --------------------------------------------                       *
+  *  This program is Free Software; you can redistribute it and/or     *
+  *  modify it under the terms of the GNU General Public License as    *
+  *  published by the Free Software Foundation; either version 2 of    *
+  *  the License, or (at your option) any later version.               *
+  \********************************************************************/
+
+  /* $Id */
 
 	class mime_magic
 	{
-
 		//extension to mime type map
 		var $mime_extension_map;
 
@@ -41,7 +41,7 @@
 		*/
 
 		/**
-		* Constructor 
+		* Constructor
 		*
 		* Load the map values into the instance arrays
 		* @author skwashd
@@ -51,12 +51,12 @@
 			$this->mime_extension_map = $this->get_mime_ext_map();
 			$this->mime_magic_file = $this->get_mime_magic_file();
 		}
-		
+
 		/**
 		* Attempt to convert a file extension to a MIME type
 		*
 		* This is the simplest MIME type guessing function - rough but fast.
-		* If the MIME type is not found then 'application/octet-stream' 
+		* If the MIME type is not found then 'application/octet-stream'
 		* is returned.
 		*
 		* @access public
@@ -84,7 +84,7 @@
 				}
 			}
 		}
-		
+
 		/**
 		* Attempt to convert a filename to a MIME type, based on the
 		* global and application specific config files.
@@ -114,7 +114,7 @@
 		{
 			return $this->filename2mime($filename);
 		}
-		
+
 		/**
 		* Attempt to convert a MIME type to a file extension, based
 		* on the global Horde and application specific config files.
@@ -127,7 +127,6 @@
 		*
 		* @return string  The file extension of the MIME type.
 		*/
-		
 		function mime2ext($type)
 		{
 			$key = array_search($type, $this->mime_extension_map);
@@ -204,9 +203,9 @@
 				//nothing we can do but bail out
 				return false;
 			}
-			
+
 			mt_srand(time());
-			$filename = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP 
+			$filename = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP
 				. md5( time() + mt_rand() ) . '.tmp';
 
 			$fp = @fopen($filename, 'ab');
@@ -225,10 +224,10 @@
 			chmod($filename, 0600); //just to be cautious
 
 			$mime = $this->analyze_file($filename);
-			
+
 			unlink($filename);//remove the temp file
-			
-			return $mime;		
+
+			return $mime;
 		}
 
 		/**
