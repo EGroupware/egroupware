@@ -111,21 +111,11 @@
 			return $this->cats->delete($cat_id,$subs);
 		}
 
-		function check_values($action,$values)
+		function check_values($values)
 		{
-			if ($action == 'add')
-			{
-				$values['id'] = '';
-			}
-
 			if (strlen($values['descr']) >= 255)
 			{
 				$error[] = lang('Description can not exceed 255 characters in length !');
-			}
-
-			if (strlen($values['data']) >= 8000)
-			{
-				$error[] = lang('Data can not exceed 8000 characters in length !');
 			}
 
 			if (!$values['name'])

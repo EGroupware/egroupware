@@ -93,17 +93,19 @@
 		function get_list()
 		{
 			if($this->debug) { echo '<br>querying: "' . $this->query . '"'; }
-			return $this->cats->return_array('all',$this->start,True,$this->query,$this->sort,$this->order,True);
+			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
 		}
 
-		function edit($data)
+		function save_cat($values)
 		{
-			return $this->cats->edit($data);
-		}
-
-		function add($data)
-		{
-			return $this->cats->add($data);
+			if ($values['id'] && $values['id'] != 0)
+			{
+				return $this->cats->edit($values);
+			}
+			else
+			{
+				return $this->cats->add($values);
+			}
 		}
 
 		function exists($data)
@@ -121,5 +123,49 @@
 		function delete($cat_id,$subs=False)
 		{
 			return $this->cats->delete($cat_id,$subs);
+		}
+
+		function check_values($values)
+		{
+			if (strlen($values['descr']) >= 255)
+			{
+				$error[] = lang('Description can not exceed 255 characters in length !');
+			}
+
+			if (!$values['name'])
+			{
+				$error[] = lang('Please enter a name');
+			}
+			else
+			{
+				if (!$values['cat_parent'])
+				{
+					$exists = $this->exists(array
+					(
+						'type'     => 'appandmains',
+						'cat_name' => $values['name'],
+						'cat_id'   => $values['id']
+					));
+				}
+				else
+				{
+					$exists = $this->exists(array
+					(
+						'type'     => 'appandsubs',
+						'cat_name' => $values['name'],
+						'cat_id'   => $values['id']
+					));
+				}
+
+				if ($exists == True)
+				{
+					$error[] = lang('That name has been used already');
+				}
+			}
+
+			if (is_array($error))
+			{
+				return $error;
+			}
 		}
 	}

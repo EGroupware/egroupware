@@ -273,14 +273,17 @@
 
 			if ($submit)
 			{
-				$values = array();
-				$values['parent']	= $cat_parent;
-				$values['descr']	= $cat_description;
-				$values['name']		= $cat_name;
-				$values['access']	= $cat_access;
-				$values['data']		= $cat_data;
+				$values = array
+				(
+					'id'		=> '',
+					'parent'	=> $cat_parent,
+					'descr'		=> $cat_description,
+					'name'		=> $cat_name,
+					'access'	=> $cat_access,
+					'data'		=> $cat_data
+				);
 
-				$error = $this->bo->check_values('add',$values);
+				$error = $this->bo->check_values($values);
 				if (is_array($error))
 				{
 					$this->t->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
@@ -390,15 +393,17 @@
 
 			if ($submit)
 			{
-				$values = array();
-				$values['id']		= $cat_id;
-				$values['parent']	= $cat_parent;
-				$values['descr']	= $cat_description;
-				$values['name']		= $cat_name;
-				$values['access']	= $cat_access;
-				$values['data']		= $cat_data;
+				$values = array
+				(
+					'id'		=> $cat_id,
+					'parent'	=> $cat_parent,
+					'descr'		=> $cat_description,
+					'name'		=> $cat_name,
+					'access'	=> $cat_access,
+					'data'		=> $cat_data
+				);
 
-				$error = $this->bo->check_values('edit',$values);
+				$error = $this->bo->check_values($values);
 				if (is_array($error))
 				{
 					$this->t->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
@@ -507,7 +512,7 @@
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 
-				$this->t->set_var('messages',lang('Are you sure you want to delete this category ?'));
+				$this->t->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
 
 				$exists = $this->bo->exists(array
 				(
