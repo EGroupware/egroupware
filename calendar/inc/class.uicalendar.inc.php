@@ -1287,10 +1287,9 @@
 					$this->bo->set_class(True);
 				}
 				// Add participants from matrixview
-				$participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants") );
-				for($_f_part=0; $_f_part<count($participants); $_f_part++)
+				foreach(explode(';',$GLOBALS['phpgw']->session->appsession("participants")) as $part)
 				{
-					$this->bo->add_attribute('participants','U',$participants[$_f_part]);
+					if ($part) $this->bo->add_attribute('participants','U',$part);
 				}
 				// Add misc
 				$this->bo->add_attribute('participants','A',$this->bo->owner);

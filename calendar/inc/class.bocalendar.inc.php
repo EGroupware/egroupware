@@ -2640,7 +2640,7 @@
 			{
 				$details[$key] = $val['data'];
 			}
-			$details['participants'] = implode("\n",$details['participants']);
+			$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
 
 			$details['link'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uicalendar.view&cal_id='.$event['id'];
 			// if url is only a path, try guessing the rest ;-)
