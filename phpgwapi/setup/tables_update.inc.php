@@ -24,7 +24,7 @@
 		$phpgw_setup->oProc->query("update preferences set preference_name='da' where preference_name='dk'");
 		$phpgw_setup->oProc->query("update preferences set preference_name='ko' where preference_name='kr'");
 
-	  	//install weather support
+		//install weather support
 		$phpgw_setup->oProc->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
 		$phpgw_setup->oProc->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
 
@@ -580,7 +580,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->query("select * from preferences order by preference_owner");
+		$phpgw_setup->oProc->query("SELECT * FROM preferences ORDER BY preference_owner");
 		$t = array();
 		while ($phpgw_setup->oProc->next_record())
 		{
@@ -652,17 +652,17 @@
 		global $setup_info, $phpgw_setup;
 
 		$phpgw_setup->oProc->CreateTable(
-			"phpgw_hooks", array(
-				"fd" => array(
-					"hook_id" => array("type" => "auto", "nullable" => false),
-					"hook_appname" => array("type" => "varchar", "precision" => 255),
-					"hook_location" => array("type" => "varchar", "precision" => 255),
-					"hook_filename" => array("type" => "varchar", "precision" => 255)
+			'phpgw_hooks', array(
+				'fd' => array(
+					'hook_id' =>       array('type' => 'auto', 'nullable' => false),
+					'hook_appname' =>  array('type' => 'varchar', 'precision' => 255),
+					'hook_location' => array('type' => 'varchar', 'precision' => 255),
+					'hook_filename' => array('type' => 'varchar', 'precision' => 255)
 				),
-				"pk" => array("hook_id"),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
+				'pk' => array("hook_id"),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			)
 		);
 
@@ -682,19 +682,19 @@
 
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_categories', array(
-			"fd" => array(
-				'cat_id' => array('type' => 'auto', 'nullable' => false),
-				'cat_parent' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
-				'cat_owner' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
-				'cat_appname' => array('type' => 'varchar', 'precision'  => 50, 'nullable' => false),
-				'cat_name' => array('type' => 'varchar', 'precision'  => 150, 'nullable' => false),
-				'cat_description' => array('type' => 'varchar', 'precision'  => 255, 'nullable' => false),
-				'cat_data' => array('type' => 'text')
-			),
-				'pk' => array('cat_id'),
-				'ix' => array(),
-				'fk' => array(),
-				'uc' => array()
+				'fd' => array(
+					'cat_id' =>      array('type' => 'auto', 'nullable' => false),
+					'cat_parent' =>  array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => false),
+					'cat_owner' =>   array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => false),
+					'cat_appname' => array('type' => 'varchar', 'precision'  => 50, 'nullable' => false),
+					'cat_name' =>    array('type' => 'varchar', 'precision'  => 150, 'nullable' => false),
+					'cat_description' => array('type' => 'varchar', 'precision'  => 255, 'nullable' => false),
+					'cat_data' =>    array('type' => 'text')
+				),
+					'pk' => array('cat_id'),
+					'ix' => array(),
+					'fk' => array(),
+					'uc' => array()
 			)
 		);
 
@@ -762,7 +762,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre1";                                                                                                                                                    
+	$test[] = "0.9.10pre1";
 	function phpgwapi_upgrade0_9_10pre1()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1077,18 +1077,18 @@
 		//return True;
 	}
 
-    $test[] = '0.9.10pre12';
-    function phpgwapi_upgrade0_9_10pre12()
-    {
+	$test[] = '0.9.10pre12';
+	function phpgwapi_upgrade0_9_10pre12()
+	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre13';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
 
-    $test[] = '0.9.10pre13';
-    function phpgwapi_upgrade0_9_10pre13()
-    {
+	$test[] = '0.9.10pre13';
+	function phpgwapi_upgrade0_9_10pre13()
+	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre14';
 		return $setup_info['phpgwapi']['currentver'];
@@ -1116,18 +1116,18 @@
 		//return True;
 	}
 
-    $test[] = '0.9.10pre16';
-    function phpgwapi_upgrade0_9_10pre16()
-    {
+	$test[] = '0.9.10pre16';
+	function phpgwapi_upgrade0_9_10pre16()
+	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre17';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
 
-    $test[] = '0.9.10pre17';
-    function phpgwapi_upgrade0_9_10pre17()
-    {
+	$test[] = '0.9.10pre17';
+	function phpgwapi_upgrade0_9_10pre17()
+	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre18';
 		return $setup_info['phpgwapi']['currentver'];
