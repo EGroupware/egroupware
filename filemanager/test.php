@@ -22,6 +22,7 @@ html_break (1);
 $sep = $phpgw_info["server"]["dir_separator"];
 $user = $phpgw->vfs->working_lid;
 $homedir = $phpgw->vfs->fakebase . "/" . $user;
+$realhomedir = preg_replace ("|/|", $sep, $homedir);
 $filesdir = $phpgw->vfs->basedir;
 $currentapp = $phpgw_info["flags"]["currentapp"];
 
@@ -120,11 +121,11 @@ while (list ($i, $o) = each ($io))
 $cd = "";
 $phpgw->vfs->cd ($cd, False, array (RELATIVE_NONE));
 $relatives = array (RELATIVE_ROOT|VFS_REAL);
-$io = array ("" => "$filesdir", "dir" => "$filesdir/dir", "dir/dir2/dir3" => "$filesdir/dir/dir2/dir3", "dir/file" => "$filesdir/dir/file", "dir/dir2/dir3/file" => "$filesdir/dir/dir2/dir3/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
+$io = array ("" => "$filesdir", "dir" => "$filesdir$sep" . "dir", "dir/dir2/dir3" => "$filesdir$sep" . "dir$sep" . "dir2$sep" . "dir3", "dir/file" => "$filesdir$sep" . "dir$sep" . "file", "dir/dir2/dir3/file" => "$filesdir$sep" . "dir$sep" . "dir2$sep" . "dir3$sep" . "file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$sep" . "`~!@#$%^&*()-_=+$sep" . "|[{]};:'\",<.>?");
 
 while (list ($i, $o) = each ($io))
 {
-	if (($ao = $phpgw->vfs->getabsolutepath ($i, $relatives, False)) == $o)
+	if (($ao = $phpgw->vfs->getabsolutepath ($i, $relatives, False)) != $o)
 	{
 		echo "<br>getabsolutepath - $cd (shouldn't matter) - $i - $relatives[0] - $o - $ao";
 	}
@@ -133,7 +134,7 @@ while (list ($i, $o) = each ($io))
 $cd = "test5/test7";
 $phpgw->vfs->cd ($cd, False, array (RELATIVE_NONE));
 $relatives = array (RELATIVE_USER|VFS_REAL);
-$io = array ("" => "$filesdir$homedir", "dir" => "$filesdir$homedir/dir", "dir/dir2/dir3" => "$filesdir$homedir/dir/dir2/dir3", "dir/file" => "$filesdir$homedir/dir/file", "dir/dir2/dir3/file" => "$filesdir$homedir/dir/dir2/dir3/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$homedir/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
+$io = array ("" => "$filesdir$realhomedir", "dir" => "$filesdir$realhomedir$sep" . "dir", "dir/dir2/dir3" => "$filesdir$realhomedir$sep" . "dir$sep" . "dir2$sep" . "dir3", "dir/file" => "$filesdir$realhomedir$sep" . "dir$sep" . "file", "dir/dir2/dir3/file" => "$filesdir$realhomedir$sep" . "dir$sep" . "dir2$sep" . "dir3$sep" . "file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$realhomedir$sep" . "`~!@#$%^&*()-_=+$sep" . "|[{]};:'\",<.>?");
 
 while (list ($i, $o) = each ($io))
 {
@@ -147,7 +148,7 @@ $cd = "test6/test8";
 $phpgw->vfs->cd ($cd, False, array (RELATIVE_USER));
 /* RELATIVE_CURRENT should be implied */
 $relatives = array (VFS_REAL);
-$io = array ("" => "$filesdir$homedir/$cd", "dir" => "$filesdir$homedir/$cd/dir", "dir/dir2/dir3" => "$filesdir$homedir/$cd/dir/dir2/dir3", "dir/file" => "$filesdir$homedir/$cd/dir/file", "dir/dir2/dir3/file" => "$filesdir$homedir/$cd/dir/dir2/dir3/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$homedir/$cd/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
+$io = array ("" => "$filesdir$realhomedir$sep$cd", "dir" => "$filesdir$realhomedir$sep$cd$sep" . "dir", "dir/dir2/dir3" => "$filesdir$realhomedir$sep$cd$sep" . "dir$sep" . "dir2$sep" . "dir3", "dir/file" => "$filesdir$realhomedir$sep$cd$sep" . "dir$sep" . "file", "dir/dir2/dir3/file" => "$filesdir$realhomedir$sep$cd$sep" . "dir$sep" . "dir2$sep" . "dir3$sep" . "file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$realhomedir$sep$cd$sep" . "`~!@#$%^&*()-_=+$sep" . "|[{]};:'\",<.>?");
 
 while (list ($i, $o) = each ($io))
 {
@@ -160,7 +161,7 @@ while (list ($i, $o) = each ($io))
 $cd = "test7/test9";
 $phpgw->vfs->cd ($cd, False, array (RELATIVE_USER));
 $relatives = array (RELATIVE_USER_APP|VFS_REAL);
-$io = array ("" => "$filesdir$homedir/.$currentapp", "dir" => "$filesdir$homedir/.$currentapp/dir", "dir/dir2/dir3" => "$filesdir$homedir/.$currentapp/dir/dir2/dir3", "dir/file" => "$filesdir$homedir/.$currentapp/dir/file", "dir/dir2/dir3/file" => "$filesdir$homedir/.$currentapp/dir/dir2/dir3/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$homedir/.$currentapp/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
+$io = array ("" => "$filesdir$realhomedir$sep.$currentapp", "dir" => "$filesdir$realhomedir$sep.$currentapp$sep" . "dir", "dir/dir2/dir3" => "$filesdir$realhomedir$sep.$currentapp$sep" . "dir$sep" . "dir2$sep" . "dir3", "dir/file" => "$filesdir$realhomedir$sep.$currentapp$sep" . "dir$sep" . "file", "dir/dir2/dir3/file" => "$filesdir$realhomedir$sep.$currentapp$sep" . "dir$sep" . "dir2$sep" . "dir3$sep" . "file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$filesdir$realhomedir$sep.$currentapp$sep`~!@#$%^&*()-_=+$sep" . "|[{]};:'\",<.>?");
 
 while (list ($i, $o) = each ($io))
 {
@@ -203,7 +204,7 @@ while (list ($i, $o) = each ($io))
 ###
 
 html_break (2);
-html_text_bold ("The less output, the better.  Please send errors to the current VFS maintainer (NOT the PHPWebHosting maintainer (although they may be one in the same)).  Thanks!");
+html_text_bold ("The less output, the better.  Please file errors as a " . html_link ("https://sourceforge.net/tracker/?group_id=7305&atid=107305", "bug report", 1) .  ". Be sure to include the system information line at the top, and anything special about your setup.  Thanks!");
 
 html_page_close ();
 
