@@ -51,6 +51,8 @@
 
     if (! $start) $start = 0;
      
+    if (! $query_result) $query_result = 0;
+
     $orderby = "";
     if ($order)
     {
@@ -65,6 +67,27 @@
 	case 3:
 	  $orderby = " ORDER BY ACTIVE $sort";
 	  break;
+      }
+    }
+
+    if ($search || $next) {
+      if ($search) {
+	$query_result = 0;
+      } else
+	$query_result++;
+      $phpgw->db->query("SELECT name FROM newsgroups WHERE active='Y'$orderby");
+      $j = 0;
+      $i = 0;
+      while($phpgw->db->next_record())
+      {
+	if (stristr($phpgw->db->f("name"),$query)) {
+	  if($i==$query_result) {
+	    $start = $j;
+	    break;
+	  } else
+	    $i++;
+        }
+	$j++;
       }
     }
 
@@ -85,7 +108,12 @@
 		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n"
 		        . "<input type=\"hidden\" name=\"usercon\" value=\"".$usercon."\">\n"
 		        . "<input type=\"hidden\" name=\"order\" value=\"".$order."\">\n"
-		        . "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\">\n";
+		        . "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\">\n"
+		        . "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
+
+    $t->set_var("search_value",$query);
+    $t->set_var("search",lang_common("search"));
+    $t->set_var("next",lang_nntp("next"));
 
     $t->set_var("nml",$phpgw->nextmatchs->left(	$urlname,
 					$start,
