@@ -537,7 +537,7 @@ class calendar extends calendar_
 							continue;
 						}
 	  
-						if (($this->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $this->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
+						if (($this->datetime->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $this->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
 							(ceil($rep_events->start->mday/7) == ceil($search_date_day/7)))
 						{
 							$link[$this->repeating_event_matches++] = $id;
