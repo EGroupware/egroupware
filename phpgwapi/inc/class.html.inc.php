@@ -40,7 +40,19 @@ class html
 		$this->phpgwapi_js_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js';
 	}
 
-	function tooltip($text,$do_lang=False)
+	/**
+	 * Handles tooltips via the wz_tooltip class from Walter Zorn
+	 *
+	 * Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
+	 *
+	 * @param $text string text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	 * @param $do_lang boolean (default False) should the text be run though lang()
+	 * @param $options array param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
+	 *  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
+	 *  For a complete list and description see http://www.walterzorn.com/tooltip/tooltip_e.htm
+	 * @return string to be included in any tag, like '<p'.$html->tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
+	 */
+	function tooltip($text,$do_lang=False,$options=False)
 	{
 		if (!$this->wz_tooltip_included)
 		{
@@ -52,7 +64,15 @@ class html
 		}
 		if ($do_lang) $text = lang($text);
 
-		return ' onmouseover="return escape(\''.addslashes(@htmlentities($text,ENT_COMPAT,$this->charset)).'\')"';
+		$opt_out = '';
+		if (is_array($options))
+		{
+			foreach($options as $option => $value)
+			{
+				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_numeric($value)?$value:"'$value'").'; ';
+			}
+		}
+		return ' onmouseover="'.$opt_out.'return escape(\''.addslashes(@htmlentities(str_replace("\n",' ',$text),ENT_COMPAT,$this->charset)).'\')"';
 	}
 
 	function activate_links($content)
