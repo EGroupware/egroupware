@@ -137,7 +137,7 @@
 			}
 			$rows = array( $total );
 			$readonlys = array();
-			while (list($id,$info) = each($ids))
+			foreach($ids as $id => $info)
 			{
 				$rows[] = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
 			}
@@ -256,6 +256,8 @@
 			$values['main']['no_actions'] = True;
 			$persist['info_id'] = $info_id;
 			$persist['referer'] = $referer;
+			
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 
 			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
 		}
