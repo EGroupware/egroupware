@@ -403,7 +403,6 @@ translations removed	setup	es-es	Traducciones eliminadas
 translations upgraded	setup	es-es	Traducciones actualizadas
 true	setup	es-es	Verdadero
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-es	Intente configurar php para soportar uno de los mencionados SGBD, o instale eGroupWare a mano.
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	es-es	Intente configurar su php para soportar uno de los SGBD mencionados arriba, o instale eGroupWare manualmente.
 two weeks	setup	es-es	dos semanas
 uninstall	setup	es-es	desinstalar
 uninstall all applications	setup	es-es	Desinstalar todas las apliaciones
@@ -428,12 +427,10 @@ we will now run a series of tests, which may take a few minutes.  click the link
 welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de eGroupWare
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	es-es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
 which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
-which database type do you want to use with phpgroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
 world readable	setup	es-es	con permiso de lectura para todos
 world writable	setup	es-es	con permiso de escritura por todos
 would you like egroupware to cache the phpgw info array ?	setup	es-es	Desea que eGroupWare cachee el array de información phpgw?
 would you like egroupware to check for a new version<br>when admins login ?	setup	es-es	¿Desea que eGroupWare compruebe una nueva versión<br>cuando un administrador inicie la sesión?
-would you like phpgroupware to cache the phpgw info array ?	setup	es-es	¿Desea que eGrouWare tenga en caché el array de información phpgw?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	es-es	¿Desea que eGroupWare compruebe si hay una versión nueva<b>cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es-es	¿Desea mostrar el estado de la actualización de cada aplicación?
 writable by the webserver	setup	es-es	con permiso de escritura para el servidor web

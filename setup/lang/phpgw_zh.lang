@@ -337,7 +337,7 @@ top	setup	zh	顶部
 translations added	setup	zh	转换已添加
 translations removed	setup	zh	转换已删除
 translations upgraded	setup	zh	转换已升级
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	zh	请将您的php设置成支持上述的关系数据库, 或者手动安装phpGroupWare.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	zh	请将您的php设置成支持上述的关系数据库, 或者手动安装eGroupWare.
 two weeks	setup	zh	两周
 uninstall	setup	zh	卸载
 uninstall all applications	setup	zh	卸载所有应用程序
@@ -356,8 +356,8 @@ warning!	setup	zh	警告!
 we can proceed	setup	zh	可以继续
 we will automatically update your tables/records to %1	setup	zh	将自动将您的表格/纪录自动升级到%1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	zh	使用何种类型的会话管理工具?(PHP4的会话管理性能较好)
-which database type do you want to use with phpgroupware?	setup	zh 在phpGroupWare中使用何种数据库？
-would you like phpgroupware to cache the phpgw info array ?	setup	zh	是否让eGroupWare缓存系统信息?
+which database type do you want to use with egroupware?	setup	zh 在eGroupWare中使用何种数据库？
+would you like egroupware to cache the phpgw info array ?	setup	zh	是否让eGroupWare缓存系统信息?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	zh	管理员登陆时，是否检查phpGroupWare的更新版本?
 would you like to show each application's upgrade status ?	setup	zh	您希望显示每个应用程序的升级状态吗 ?
 write config	setup	zh	保存配置

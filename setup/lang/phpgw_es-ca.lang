@@ -361,7 +361,6 @@ translations added	setup	es-ca	Traduccions afegides
 translations removed	setup	es-ca	Traduccions esborrades
 translations upgraded	setup	es-ca	Traduccions actualitzades
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal.leu eGroupWare manualment.
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	es-ca	Intente configurar su php para soportar uno de los SGBD mencionados arriba, o instale eGroupWare manualmente.
 two weeks	setup	es-ca	dues setmanes
 uninstall	setup	es-ca	desinstal.lar
 uninstall all applications	setup	es-ca	Desinstal.lar totes les apliacions
@@ -383,10 +382,8 @@ we can proceed	setup	es-ca	Podem procedir
 we will automatically update your tables/records to %1	setup	es-ca	Actualitzarem automàticament les vostres taules/registres a %1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	es-ca	Quin tipus de gestió de sessions preferiu? (PHP4 pot tenir millor rendiment)
 which database type do you want to use with egroupware?	setup	es-ca	Quin tipus de base de dades voleu usar amb eGroupWare?
-which database type do you want to use with phpgroupware?	setup	es-ca	¿Qué tipo de base de datos quiere usar con eGroupWare?
 would you like egroupware to cache the phpgw info array ?	setup	es-ca	Voleu que eGroupWare desi en memòria cau la matriu d'informació phpgw?
 would you like egroupware to check for a new version<br>when admins login ?	setup	es-ca	Voleu que eGroupWare comprovi la existència de noves versions<br>quan un administrador inicii la sessió?
-would you like phpgroupware to cache the phpgw info array ?	setup	es-ca	¿Desea que eGrouWare tenga en caché el array de información phpgw?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	es-ca	¿Desea que eGroupWare compruebe si hay una versión nueva<b>cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es-ca	Voleu mostrar l'estat de l'actualització de cada aplicació?
 write config	setup	es-ca	Escriure configuració
