@@ -255,7 +255,7 @@
       }
     }
     $str = "<input type=\"checkbox\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\"";
-    if($id && $participate) {
+    if(($id && $participate) || !$id) {
       $str .= " checked";
     }
     $str .= ">";
