@@ -82,4 +82,13 @@
 			return FALSE; 
 		}
 	}
+
+	function str_repeat($input,$multiplier)
+	{
+		for($i=0,$output='';$i<$multiplier;$i++)
+		{
+			$output .= $input;
+		}
+		return $output;
+	}
 ?>
