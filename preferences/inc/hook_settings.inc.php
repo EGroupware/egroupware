@@ -86,17 +86,9 @@
 		'In which country are you. This is used to set certain defaults for you.');
 	
 	$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
-	foreach ($langs as $key => $name)	// if we have a translation use it
-	{
-		$trans = lang($name);
-		if ($trans != $name . '*')
-		{
-			$langs[$key] = $trans;
-		}
-	} 
 	create_select_box('Language','lang',$langs,
 		'Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.');
-	
+
 	// preference.php handles this function
 	if (is_admin())
 	{
