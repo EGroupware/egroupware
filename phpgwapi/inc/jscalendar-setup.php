@@ -15,7 +15,7 @@
 /* $Id$ */
 
 $GLOBALS['phpgw_info']['flags'] = Array(
-	'currentapp'  => 'calendar',		// can't be phpgwapi
+	'currentapp'  => 'home',		// can't be phpgwapi, nor jscalendar (no own directory)
 	'noheader'    => True,
 	'nonavbar'    => True,
 	'noappheader' => True,
@@ -25,6 +25,7 @@ $GLOBALS['phpgw_info']['flags'] = Array(
 );
 
 include('../../header.inc.php');
+$GLOBALS['phpgw']->translation->add_app('jscalendar');
 
 $dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
 $jsDateFormat = str_replace(array('Y','d','m','M'),array('%Y','%d','%m','%b'),$dateformat);

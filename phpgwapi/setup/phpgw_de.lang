@@ -1,17 +1,19 @@
 %1 email addresses inserted	common	de	%1 Email Adressen eingefügt
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1eGroupWare%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
-(shift-)click or drag to change value	common	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
-- click on any of the time parts to increase it	common	de	- Auf Uhrzeit clicken um sie zu erhöhen
-- hold mouse button on any of the above buttons for faster selection.	common	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Knöpfe
-- or click and drag for faster selection.	common	de	- oder clicken und ziehen für eine schnelle Auswahl
-- or shift-click to decrease it	common	de	- oder Umschalten-click um sie zu verkleinern
-- use the %1, %2 buttons to select month	common	de	- Benutzen Sie die %1, %2 Buttons um das Monat auszuwählen
-- use the %1, %2 buttons to select year	common	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
+(shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
+- click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit clicken um sie zu erhöhen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Knöpfe
+- or click and drag for faster selection.	jscalendar	de	- oder clicken und ziehen für eine schnelle Auswahl
+- or shift-click to decrease it	jscalendar	de	- oder Umschalten-click um sie zu verkleinern
+- use the %1, %2 buttons to select month	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Monat auszuwählen
+- use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 13 (ntp)	admin	de	13 (ntp)
 80 (http)	admin	de	80 (http)
 about	common	de	Über
 about %1	common	de	Über %1
+about the calendar	jscalendar	de	Über den Kalendar
+about this editor	htmlarea	de	Über den Editor
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
@@ -31,7 +33,7 @@ administration	common	de	Administration
 afghanistan	common	de	AFGHANISTAN
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
-all	common	de	alle
+all	common	de	Alle
 american samoa	common	de	AMERICANISCH SAMOA
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
@@ -55,6 +57,7 @@ autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
 back to user login	common	de	Zurück zur Benutzer Anmeldung
+background color	htmlarea	de	Hintergrundfarbe
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
@@ -69,6 +72,7 @@ benin	common	de	BENIN
 bermuda	common	de	BERMUDA
 bhutan	common	de	BHUTAN
 blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
+bold	htmlarea	de	Fett
 bolivia	common	de	BOLIVIEN
 bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
 botswana	common	de	BOTSWANA
@@ -77,6 +81,7 @@ brazil	common	de	BRASILIEN
 british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
+bulleted list	htmlarea	de	Aufzählungszeichen
 burkina faso	common	de	BURKINA FASO
 burundi	common	de	BURUNDI
 calendar	common	de	Kalender
@@ -94,7 +99,7 @@ cayman islands	common	de	KAIMAN INSELN
 cc	common	de	Kopie
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
-change	common	de	ändern
+change	common	de	Ändern
 charset	common	de	iso-8859-1
 check installation	common	de	Installation überprüfen
 check now	common	de	jetzt überprüfen
@@ -117,6 +122,7 @@ congo	common	de	KONGO
 congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
 cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
+copy selection	htmlarea	de	Auswahl kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 create	common	de	Erstellen
@@ -126,14 +132,17 @@ croatia	common	de	KROATIEN
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
+current style	htmlarea	de	Aktueller Stil
 current users	common	de	Derzeit angemeldete Benutzer
+cut selection	htmlarea	de	Auswahl ausschneiden
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 date	common	de	Datum
 date due	common	de	fällig am
-date selection:	common	de	Datum auswählen:
+date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	de	Dezember
+decrease indent	htmlarea	de	Einzug verkleinern
 default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
 denmark	common	de	DÄNEMARK
@@ -145,8 +154,8 @@ disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG Bilde
 disable slider effects	common	de	Schwebeeffekte des Navigations Menüs abschalten
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim anzeigen oder verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
 disabled	common	de	Deaktiviert
-display monday first	common	de	Montag zuerst anzeigen
-display sunday first	common	de	Sonntag zuerst anzeigen
+display monday first	jscalendar	de	Montag zuerst anzeigen
+display sunday first	jscalendar	de	Sonntag zuerst anzeigen
 djibouti	common	de	DJIBOUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 domain	common	de	Domain
@@ -155,7 +164,7 @@ domestic	common	de	Inland
 dominica	common	de	DOMINICA
 dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
 done	common	de	Fertig
-drag to move	common	de	Ziehen um zu Bewegen
+drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
 ecuador	common	de	EQUADOR
@@ -172,6 +181,7 @@ email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. 
 enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
+enlarge editor	htmlarea	de	Editor vergrößern
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 equatorial guinea	common	de	EQUATORIAL GUINEA
@@ -196,6 +206,7 @@ first name of the user, eg. "%1"	common	de	Vorname des Benutzers, zB. "%1"
 first page	common	de	Erste Seite
 firstname	common	de	Vorname
 fixme!	common	de	KORREGIER MICH!
+font color	htmlarea	de	Textfarbe
 force selectbox	common	de	Auswahlfeld erzwingen
 france	common	de	FRANKREICH
 french guiana	common	de	FRANZÖSISCH GUIANA
@@ -214,7 +225,7 @@ ghana	common	de	GHANA
 gibraltar	common	de	GIBRALTAR
 global	common	de	Global
 global public	common	de	Global Public
-go today	common	de	Heute setzen
+go today	jscalendar	de	Heute setzen
 grant access	common	de	Zugriff gewähren
 greece	common	de	GRIECHENLAND
 greenland	common	de	GRÖNLAND
@@ -238,6 +249,7 @@ guyana	common	de	GUYANA
 haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 help	common	de	Hilfe
+help using editor	htmlarea	de	Hilfe über den Editor
 high	common	de	Hoch
 highest	common	de	Höchste
 holy see (vatican city state)	common	de	VATICAN
@@ -245,12 +257,17 @@ home	common	de	Home
 home email	common	de	private Email
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
+horizontal rule	htmlarea	de	Horizontale Linie
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
+increase indent	htmlarea	de	Einzug vergrößern
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
+insert image	htmlarea	de	Bild einfügen
+insert table	htmlarea	de	Tabelle einfügen
+insert web link	htmlarea	de	Verweis (Link) einfügen
 international	common	de	International
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -260,6 +277,7 @@ ireland	common	de	IRELAND
 israel	common	de	ISRAEL
 it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
+italic	common	de	Kursiv
 italy	common	de	ITALIEN
 jamaica	common	de	JAMAICA
 january	common	de	Januar
@@ -267,6 +285,10 @@ japan	common	de	JAPAN
 jordan	common	de	JORDANIEN
 july	common	de	Juli
 june	common	de	Juni
+justify center	htmlarea	de	Mittig ausrichten
+justify full	htmlarea	de	Blocksatz
+justify left	htmlarea	de	Links ausrichten
+justify right	htmlarea	de	Rechts ausrichten
 kazakstan	common	de	KAZAKSTAN
 kenya	common	de	KENIA
 keywords	common	de	Schlüsselwort
@@ -346,9 +368,9 @@ new main category	common	de	neue Hauptkategorie
 new value	common	de	Neuer Wert
 new zealand	common	de	NEUSEELAND
 next	common	de	Nächste
-next month (hold for menu)	common	de	Nächster Monat (halten für Menü)
+next month (hold for menu)	jscalendar	de	Nächster Monat (halten für Menü)
 next page	common	de	Nächste Seite
-next year (hold for menu)	common	de	Nächstes Jahr (halten für Menü)
+next year (hold for menu)	jscalendar	de	Nächstes Jahr (halten für Menü)
 nicaragua	common	de	NICARAGUA
 niger	common	de	NIGER
 nigeria	common	de	NIGERIA
@@ -378,6 +400,7 @@ only private	common	de	nur private
 only yours	common	de	nur eigene
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Popup Fenster öffnen
+ordered list	htmlarea	de	Nummerierung
 original	common	de	Original
 other	common	de	Andere
 overview	common	de	Überblick
@@ -394,6 +417,8 @@ parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
 password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
+paste from clipboard	htmlarea	de	Einfügen aus der Zwischenablage
+path	htmlarea	de	Pfad
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 pattern for search in addressbook	common	de	Muster für suche im Adressbuch
 pattern for search in calendar	common	de	Muster für suche im Kalendar
@@ -416,8 +441,9 @@ portugal	common	de	PORTUGA
 postal	common	de	Postadresse
 powered by phpgroupware version %1	common	de	Powered by <a href="http://www.egroupware.org" target="_blank">eGroupWare</a> version %1
 preferences	common	de	Einstellungen
-prev. month (hold for menu)	common	de	Vorheriger Monat (halten für Menü)
-prev. year (hold for menu)	common	de	Vorheriges Jahr (halten für Menü)
+preferences for the idots template set	common	de	Einstellungen für die idots Benutzeroberfläche
+prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
+prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
 print	common	de	Drucken
 priority	common	de	Priorität
@@ -428,6 +454,7 @@ puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
 read	common	de	Lesen
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
+redoes your last action	htmlarea	de	Wiederherstellen
 reject	common	de	Zurückweisen
 rename	common	de	Umbenennen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
@@ -453,7 +480,7 @@ section	common	de	Sektion
 select	common	de	Auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
-select date	common	de	Datum auswählen
+select date	jscalendar	de	Datum auswählen
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private Email-Adresse auswählen
 select one	common	de	Einen auswählen
@@ -489,11 +516,14 @@ sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
+strikethrough	htmlarea	de	Durchgestrichen
 subject	common	de	Betreff
 submit	common	de	Absenden
+subscript	htmlarea	de	Tiefergestellt
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
 sudan	common	de	SUDAN
 sunday	common	de	Sonntag
+superscript	htmlarea	de	Höhergestellt
 suriname	common	de	SURINAME
 svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
 swaziland	common	de	SWAZILAND
@@ -513,7 +543,7 @@ this application requires an upgrade	common	de	Diese Anwendung benötigt eine Akt
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 time	common	de	Zeit
-time selection:	common	de	Zeit Auswahl:
+time selection:	jscalendar	de	Zeit Auswahl:
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
@@ -522,7 +552,8 @@ to correct this error for the future you will need to properly set the	common	de
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
-toggle first day of week	common	de	ersten Tag der Woche wechseln
+toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
+toggle html source	htmlarea	de	HTML Quelltext
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
@@ -537,6 +568,8 @@ turks and caicos islands	common	de	TURKS AND CAICOS ISLANDS
 tuvalu	common	de	TUVALU
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
+underline	htmlarea	de	Unterstreichen
+undoes your last action	htmlarea	de	Rückgänig
 united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
 united kingdom	common	de	GROSSBRITANIEN
 united states	common	de	VEREINIGTE STAATEN VON AMERIKA
@@ -569,13 +602,14 @@ wednesday	common	de	Mittwoch
 welcome	common	de	Willkommen
 western sahara	common	de	WEST SAHARA
 which groups	common	de	Welche Gruppen
-wk	common	de	KW
+wk	jscalendar	de	KW
 work email	common	de	geschäftliche Email
 written by	common	de	Geschrieben von
 written by:	common	de	Geschrieben von:
 year	common	de	Jahr
 yemen	common	de	YEMEN
 yes	common	de	Ja
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	de	Sie sind in TEXT MODE. Drücken sie den [<>] Knopf um wieder zur WYSIWIG Ansicht zu gelangen.
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you are running a newer version of phpgroupware than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.
 you have been successfully logged out	login	de	Abmelden erfolgreich

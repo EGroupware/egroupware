@@ -1,17 +1,19 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
-(shift-)click or drag to change value	common	en	(Shift-)Click or drag to change value
-- click on any of the time parts to increase it	common	en	- Click on any of the time parts to increase it
-- hold mouse button on any of the above buttons for faster selection.	common	en	- Hold mouse button on any of the above buttons for faster selection.
-- or click and drag for faster selection.	common	en	- or click and drag for faster selection.
-- or shift-click to decrease it	common	en	- or Shift-click to decrease it
-- use the %1, %2 buttons to select month	common	en	- Use the %1, %2 buttons to select month
-- use the %1, %2 buttons to select year	common	en	- Use the %1, %2 buttons to select year
+(shift-)click or drag to change value	jscalendar	en	(Shift-)Click or drag to change value
+- click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	en	- Hold mouse button on any of the above buttons for faster selection.
+- or click and drag for faster selection.	jscalendar	en	- or click and drag for faster selection.
+- or shift-click to decrease it	jscalendar	en	- or Shift-click to decrease it
+- use the %1, %2 buttons to select month	jscalendar	en	- Use the %1, %2 buttons to select month
+- use the %1, %2 buttons to select year	jscalendar	en	- Use the %1, %2 buttons to select year
 00 (disable)	admin	en	00 (disable)
 13 (ntp)	admin	en	13 (ntp)
 80 (http)	admin	en	80 (http)
 about	common	en	About
 about %1	common	en	About %1
+about the calendar	jscalendar	en	About the calendar
+about this editor	htmlarea	en	About this editor
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 account has been created	common	en	Account has been created
@@ -55,6 +57,7 @@ autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
+background color	htmlarea	en	Background Color
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
@@ -68,6 +71,7 @@ benin	common	en	BENIN
 bermuda	common	en	BERMUDA
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts
+bold	htmlarea	en	Bold
 bolivia	common	en	BOLIVIA
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
@@ -76,6 +80,7 @@ brazil	common	en	BRAZIL
 british indian ocean territory	common	en	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
+bulleted list	htmlarea	en	Bulleted List
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
 calendar	common	en	Calendar
@@ -115,6 +120,7 @@ congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
+copy selection	htmlarea	en	Copy selection
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
 create	common	en	Create
@@ -123,14 +129,17 @@ croatia	common	en	CROATIA
 cuba	common	en	CUBA
 currency	common	en	Currency
 current	common	en	Current
+current style	htmlarea	en	Current style
 current users	common	en	Current users
+cut selection	htmlarea	en	Cut selection
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
 date	common	en	Date
 date due	common	en	Date Due
-date selection:	common	en	Date selection:
+date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	en	December
+decrease indent	htmlarea	en	Decrease Indent
 default category	common	en	Default Category
 delete	common	en	Delete
 denmark	common	en	DENMARK
@@ -142,8 +151,8 @@ disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer p
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menu's in the page? Opera and Konqueror users will probably must want this.
 disabled	common	en	Disabled
-display monday first	common	en	Display Monday first
-display sunday first	common	en	Display Sunday first
+display monday first	jscalendar	en	Display Monday first
+display sunday first	jscalendar	en	Display Sunday first
 djibouti	common	en	DJIBOUTI
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 domain	common	en	Domain
@@ -152,7 +161,7 @@ domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
-drag to move	common	en	Drag to move
+drag to move	jscalendar	en	Drag to move
 e-mail	common	en	E-Mail
 east timor	common	en	EAST TIMOR
 ecuador	common	en	ECUADOR
@@ -169,6 +178,7 @@ email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
+enlarge editor	htmlarea	en	Enlarge Editor
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
 equatorial guinea	common	en	EQUATORIAL GUINEA
@@ -193,6 +203,7 @@ first name of the user, eg. "%1"	common	en	first name of the user, eg. "%1"
 first page	common	en	First page
 firstname	common	en	Firstname
 fixme!	common	en	FIXME!
+font color	htmlarea	en	Font Color
 force selectbox	common	en	Force SelectBox
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
@@ -210,7 +221,7 @@ ghana	common	en	GHANA
 gibraltar	common	en	GIBRALTAR
 global	common	en	Global
 global public	common	en	Global Public
-go today	common	en	Go Today
+go today	jscalendar	en	Go Today
 grant access	common	en	Grant Access
 greece	common	en	GREECE
 greenland	common	en	GREENLAND
@@ -234,6 +245,7 @@ guyana	common	en	GUYANA
 haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	en	Help
+help using editor	htmlarea	en	Help using editor
 high	common	en	High
 highest	common	en	Highest
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
@@ -241,12 +253,17 @@ home	common	en	Home
 home email	common	en	home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
+horizontal rule	htmlarea	en	Horizontal Rule
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
+increase indent	htmlarea	en	Increase Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
+insert image	htmlarea	en	Insert Image
+insert table	htmlarea	en	Insert Table
+insert web link	htmlarea	en	Insert Web Link
 international	common	en	International
 invalid ip address	common	en	Invalid IP address
 invalid password	common	en	Invalid password
@@ -256,6 +273,7 @@ ireland	common	en	IRELAND
 israel	common	en	ISRAEL
 it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
+italic	common	en	Italic
 italy	common	en	ITALY
 jamaica	common	en	JAMAICA
 january	common	en	January
@@ -263,6 +281,10 @@ japan	common	en	JAPAN
 jordan	common	en	JORDAN
 july	common	en	July
 june	common	en	June
+justify center	htmlarea	en	Justify Center
+justify full	htmlarea	en	Justify Full
+justify left	htmlarea	en	Justify Left
+justify right	htmlarea	en	Justify Right
 kazakstan	common	en	KAZAKSTAN
 kenya	common	en	KENYA
 keywords	common	en	Keywords
@@ -341,9 +363,9 @@ new main category	common	en	New main category
 new value	common	en	New Value
 new zealand	common	en	NEW ZEALAND
 next	common	en	Next
-next month (hold for menu)	common	en	Next month (hold for menu)
+next month (hold for menu)	jscalendar	en	Next month (hold for menu)
 next page	common	en	Next page
-next year (hold for menu)	common	en	Next year (hold for menu)
+next year (hold for menu)	jscalendar	en	Next year (hold for menu)
 nicaragua	common	en	NICARAGUA
 niger	common	en	NIGER
 nigeria	common	en	NIGERIA
@@ -372,6 +394,7 @@ only private	common	en	only private
 only yours	common	en	only yours
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
+ordered list	htmlarea	en	Ordered List
 original	common	en	Original
 other	common	en	Other
 overview	common	en	Overview
@@ -388,6 +411,8 @@ parent category	common	en	Parent Category
 password	common	en	Password
 password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
+paste from clipboard	htmlarea	en	Paste from clipboard
+path	htmlarea	en	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	common	en	Pattern for Search in Addressbook
 pattern for search in calendar	common	en	Pattern for Search in Calendar
@@ -410,8 +435,9 @@ portugal	common	en	PORTUGAL
 postal	common	en	Postal
 powered by phpgroupware version %1	common	en	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	en	Preferences
-prev. month (hold for menu)	common	en	Prev. month (hold for menu)
-prev. year (hold for menu)	common	en	Prev. year (hold for menu)
+preferences for the idots template set	common	en	Preferences for the idots template set
+prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
+prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
 print	common	en	Print
 priority	common	en	Priority
@@ -422,6 +448,7 @@ puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
+redoes your last action	htmlarea	en	Redoes your last action
 reject	common	en	Reject
 rename	common	en	Rename
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
@@ -447,7 +474,7 @@ section	common	en	Section
 select	common	en	Select
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select Category
-select date	common	en	Select date
+select date	jscalendar	en	Select date
 select group	common	en	Select group
 select home email address	common	en	Select home email address
 select one	common	en	Select one
@@ -483,11 +510,14 @@ sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
 status	common	en	Status
+strikethrough	htmlarea	en	Strikethrough
 subject	common	en	Subject
 submit	common	en	Submit
+subscript	htmlarea	en	Subscript
 substitutions and their meanings:	common	en	Substitutions and their meanings:
 sudan	common	en	SUDAN
 sunday	common	en	Sunday
+superscript	htmlarea	en	Superscript
 suriname	common	en	SURINAME
 svalbard and jan mayen	common	en	SVALBARD AND JAN MAYEN
 swaziland	common	en	SWAZILAND
@@ -507,7 +537,7 @@ this application requires an upgrade	common	en	This application requires an upgr
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 time	common	en	Time
-time selection:	common	en	Time selection:
+time selection:	jscalendar	en	Time selection:
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
@@ -516,7 +546,8 @@ to correct this error for the future you will need to properly set the	common	en
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
 todays date, eg. "%1"	common	en	todays date, eg. "%1"
-toggle first day of week	common	en	Toggle first day of week
+toggle first day of week	jscalendar	en	Toggle first day of week
+toggle html source	htmlarea	en	Toggle HTML Source
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -531,6 +562,8 @@ turks and caicos islands	common	en	TURKS AND CAICOS ISLANDS
 tuvalu	common	en	TUVALU
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
+underline	htmlarea	en	Underline
+undoes your last action	htmlarea	en	Undoes your last action
 united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES
@@ -562,12 +595,13 @@ wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
-wk	common	en	wk
+wk	jscalendar	en	wk
 work email	common	en	work email
 written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	en	You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
 you are running a newer version of phpgroupware than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.
 you have been successfully logged out	login	en	You have been successfully logged out
