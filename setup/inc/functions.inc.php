@@ -33,7 +33,7 @@
 
   $phpgw_info["server"]["app_images"] = "templates/default/images";
 
-  if(!file_exists("../header.inc.php")) { include("../header.inc.php"); }
+  if(file_exists("../header.inc.php")) { include("../header.inc.php"); }
 
   include("./inc/phpgw_setup.inc.php");
 //  include("./inc/phpgw_schema_proc.inc.php");
