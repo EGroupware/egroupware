@@ -31,7 +31,8 @@
 
   $dh = opendir($phpgw_info["server"]["server_root"] . "/themes");
   while ($file = readdir($dh)) {
-    if ($file != "." && $file != ".." && $file != "CVS") {
+#    if ($file != "." && $file != ".." && $file != "CVS") {
+    if ( eregi( "\.theme$", $file ) ) {
        $installed_themes[] = substr($file,0,strpos($file,"."));
     }
   }
@@ -49,3 +50,5 @@
   }
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+
+?>
