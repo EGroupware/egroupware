@@ -111,7 +111,7 @@
        if ($phpgw_forward) {
           while (list($name,$value) = each($HTTP_GET_VARS)) {
              if (ereg("phpgw_",$name)) {
-                $extra_vars .= "&" . $name . "=$value";
+                $extra_vars .= "&" . $name . "=" . urlencode($value);
              }
           }
        }
@@ -162,7 +162,7 @@
 
   while (list($name,$value) = each($HTTP_GET_VARS)) {
      if (ereg("phpgw_",$name)) {
-        $extra_vars .= "&" . $name . "=$value";
+        $extra_vars .= "&" . $name . "=" . urlencode($value);
      }
   }
   if ($extra_vars) {
