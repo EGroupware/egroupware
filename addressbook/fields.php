@@ -2,94 +2,108 @@
   /**************************************************************************\
   * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
+  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
+  * -----------------------------------------------                          *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-
   /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	$phpgw_info["flags"]["enable_nextmatchs_class"] = True;
-	$phpgw_info["flags"]["enable_contacts_class"] = True;
-	include("../header.inc.php");
+	$phpgw_info["flags"] = array(
+		'currentapp' => 'addressbook',
+		'enable_nextmatchs_class' => True);
 
-	$this = CreateObject("phpgwapi.contacts");
- 	$extrafields = array(
-		"pager"    => "pager",
-		"mphone"   => "mphone",
-		"ophone"   => "ophone",
-		"address2" => "address2",
-	);
-	$qfields = $this->stock_contact_fields + $extrafields;
+	include('../header.inc.php');
 
-	$phpgw->template->set_file(array(
-		"body"	=> "custom_field_list.tpl",
-		"row"	=> "custom_field_list_row.tpl"
-	));
+	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
 
-	$phpgw->template->set_var("title",lang('addressbook').' '.lang('custom fields'));
-	$phpgw->template->set_var("message",'');
-	$phpgw->template->set_var("sort_name",lang("Name"));
-	$phpgw->template->set_var("lang_edit",lang("Edit"));
-	$phpgw->template->set_var("lang_delete",lang("Delete"));
-	$phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+	$t->set_file(array(
+		'field_list_t' => 'listfields.tpl',
+		'field_list'   => 'listfields.tpl'));
+	$t->set_block('field_list_t','field_list','list');
 
-	$phpgw->preferences->read_repository();
+	$common_hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
+		. "<input type=\"hidden\" name=\"order\" value=\"$order\">\n"
+		. "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
+		. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
+		. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"]))
+	$t->set_var('lang_action',lang('Custom Fields'));
+	$t->set_var('add_action',$phpgw->link('/addressbook/addfield.php'));
+	$t->set_var('lang_add',lang('Add'));
+	$t->set_var('title_fields',lang('Custom Fields'));
+	$t->set_var('lang_search',lang('Search'));
+	$t->set_var('actionurl',$phpgw->link('/addressbook/fields.php'));
+	$t->set_var('lang_done',lang('Done'));
+	$t->set_var('doneurl',$phpgw->link('/admin/index.php'));
+
+	if (!$start) { $start = 0; }
+
+	if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] && $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0)
 	{
-		if ( substr($col,0,6) == 'extra_' )
-		{
-			$fields[$i] = ereg_replace('extra_','',$col);
-			$fields[$i] = ereg_replace(' ','_',$fields[$i]);
-			//echo "<br>".$i.": '".$fields[$i]."'";
-		}
-		else
-		{
-			$fields[$i] = '';
-		}
-		$i++;
+		$limit = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+	}
+	else
+	{
+		$limit = 15;
 	}
 
-	reset($fields);
-	for($i=0;$i<count($fields);$i++)
+	if (!$sort) { $sort = "ASC";  }
+
+	$fields = read_custom_fields($start,$limit,$query,$sort,$order);
+	$total_records = count($fields);
+
+//--------------------------------- nextmatch --------------------------------------------
+
+	$left = $phpgw->nextmatchs->left('/addressbook/fields.php',$start,$total_records);
+	$right = $phpgw->nextmatchs->right('/addressbook/fields.php',$start,$total_records);
+	$t->set_var('left',$left);
+	$t->set_var('right',$right);
+
+	if ($total_records > $limit)
 	{
-		if ($fields[$i])
-		{
-			$found = True;
-			$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
-
-			$phpgw->template->set_var("field_name",$fields[$i]);
-
-			$phpgw->template->set_var("field_edit",'<a href="'
-				. $phpgw->link("/addressbook/field_edit.php","ofield="
-				. $fields[$i] . "&method=edit")
-				. '">' . lang("Edit") . '</a>');
-
-			$phpgw->template->set_var("field_delete",'<a href="'
-				. $phpgw->link("/addressbook/field_edit.php","field="
-				. $fields[$i] . "&method=delete&deletefield=delete")
-				. '">' . lang("Delete") . '</a>');
-
-			$phpgw->template->parse("rows","row",True);
-		}
+		$t->set_var('lang_showing',lang("showing x - x of x",($start + 1),($start + $limit),$total_records));
 	}
-	if (!$found)
+	else
 	{
-		$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
-		$phpgw->template->set_var("field_name",'&nbsp;');
-		$phpgw->template->set_var("field_edit",'&nbsp;');
-		$phpgw->template->set_var("field_delete",'&nbsp;');
-		$phpgw->template->parse("rows","row",False);
+		$t->set_var('lang_showing',lang("showing x",$total_records));
 	}
 
-	$phpgw->template->set_var("add_field",'<a href="'
-		. $phpgw->link("/addressbook/field_edit.php","method=add")
-		. '">' . lang("Add") . '</a>');
+// ------------------------------ end nextmatch ------------------------------------------
 
-	$phpgw->template->pparse("out","body");
+//------------------- list header variable template-declarations ------------------------- 
+
+	$t->set_var('th_bg',$phpgw_info["theme"][th_bg]);
+	$t->set_var('sort_field',$phpgw->nextmatchs->show_sort_order($sort,'name',$order,'/addressbook/fields.php',lang('Name')));
+	$t->set_var('lang_edit',lang('Edit'));
+	$t->set_var('lang_delete',lang('Delete'));
+
+// -------------------------- end header declaration --------------------------------------
+
+	for ($i=0;$i<count($fields);$i++)
+	{
+		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+		$t->set_var(tr_color,$tr_color);
+
+		$field    = $fields[$i]['name'];
+
+//-------------------------- template declaration for list records ---------------------------
+
+		$t->set_var('cfield',$field);
+
+		$t->set_var('edit',$phpgw->link('/addressbook/editfield.php',"field=$field&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+		$t->set_var('lang_edit_entry',lang('Edit'));
+
+		$t->set_var('delete',$phpgw->link('/addressbook/deletefield.php',"field=$field&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+		$t->set_var('lang_delete_entry',lang('Delete'));
+		$t->parse('list','field_list',True);
+	}
+// ---------------------------- end record declaration -----------------------------------------
+
+	$t->parse('out','field_list_t',True);
+	$t->p('out');
+
 	$phpgw->common->phpgw_footer();
 ?>
