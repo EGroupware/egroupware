@@ -179,10 +179,10 @@
 	$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 	$GLOBALS['phpgw']->db     = $GLOBALS['phpgw_setup']->db;
 
-	$cfg_apps = array('phpgwapi','admin','preferences');
+	/*$cfg_apps = array('phpgwapi','admin','preferences');
 	while(list(,$cfg_app) = each($cfg_apps))
-	{
-		$t = CreateObject('setup.Template',$GLOBALS['phpgw']->common->get_tpl_dir($cfg_app));
+	{*/
+		$t = CreateObject('setup.Template',$GLOBALS['phpgw']->common->get_tpl_dir('setup'));
 
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
@@ -193,7 +193,7 @@
 		$t->set_var('row_off', 'EEEEEE');
 
 		$vars = $t->get_undefined('body');
-		$GLOBALS['phpgw_setup']->hook('config',$cfg_app);
+		$GLOBALS['phpgw_setup']->hook('config','setup');
 
 		while(list($null,$value) = each($vars))
 		{
@@ -256,7 +256,7 @@
 
 		$t->pfp('out','body');
 		unset($t);
-	}
+	//}
 
 	$setup_tpl->set_var('more_configs',lang('Please login to phpgroupware and run the admin application for additional site configuration') . '.');
 

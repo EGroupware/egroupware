@@ -12,112 +12,17 @@
 
   /* $Id$ */
 
-	function encryptalgo($config)
+	function country_set($config)
 	{
-		if(@function_exists('mcrypt_list_algorithms'))
-		{
-			$listed = array();
-			if(!isset($config['mcrypt_algo']))
-			{
-				$config['mcrypt_algo'] = 'tripledes';  /* MCRYPT_TRIPLEDES */
-			}
-			$algos = @mcrypt_list_algorithms();
-			$found = False;
-
-			$out = '';
-			while(list($key,$value) = each($algos))
-			{
-				$found = True;
-				/* Only show each once - seems this is a problem in some installs */
-				if(!in_array($value,$listed))
-				{
-					if($config['mcrypt_algo'] == $value)
-					{
-						$selected = ' selected';
-					}
-					else
-					{
-						$selected = '';
-					}
-					$descr = strtoupper($value);
-
-					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-					$listed[] = $value;
-				}
-			}
-			if(!$found)
-			{
-				/* Something is wrong with their mcrypt install or php.ini */
-				$out = '<option value="">' . lang('no algorithms available') . '</option>' . "\n";;
-			}
-		}
-		else
-		{
-			$out = '<option value="tripledes">TRIPLEDES</option>' . "\n";;
-		}
-		return $out;
-	}
-
-	function encryptmode($config)
-	{
-		if(@function_exists('mcrypt_list_modes'))
-		{
-			$listed = array();
-			if(!isset($config['mcrypt_mode']))
-			{
-				$config['mcrypt_mode'] = 'cbc'; /* MCRYPT_MODE_CBC */
-			}
-			$modes = @mcrypt_list_modes();
-			$found = False;
-
-			$out = '';
-			while(list($key,$value) = each($modes))
-			{
-				$found = True;
-				/* Only show each once - seems this is a problem in some installs */
-				if(!in_array($value,$listed))
-				{
-					if($config['mcrypt_mode'] == $value)
-					{
-						$selected = ' selected';
-					}
-					else
-					{
-						$selected = '';
-					}
-					$descr = strtoupper($value);
-
-					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-					$listed[] = $value;
-				}
-			}
-			if(!$found)
-			{
-				/* Something is wrong with their mcrypt install or php.ini */
-				$out = '<option value="" selected>' . lang('no modes available') . '</option>' . "\n";
-			}
-		}
-		else
-		{
-			$out = '<option value="cbc" selected>CBC</option>' . "\n";
-		}
-		return $out;
-	}
-
-	function passwdhashes($config)
-	{
-		$hashes = array(
-			'des' => 'des',
-			'md5' => 'md5'
+		$country  = array(
+			'user_choice'  => 'Users Choice',
+			'force_select' => 'Force Selectbox'
 		);
-		if(@function_exists('mhash'))
-		{
-			$hashes += array('sha' => 'sha');
-		}
 
-		while(list($key, $value) = each($hashes))
+		$out = '';
+		while (list ($key, $value) = each ($country))
 		{
-			if($config['ldap_encryption_type'] == $value)
+			if ($config['countrylist'] == $key)
 			{
 				$selected = ' selected';
 			}
@@ -125,9 +30,9 @@
 			{
 				$selected = '';
 			}
-			$descr = strtoupper($value);
+			$descr = lang($value);
 
-			$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
+			$out .= '<option value="' . $key . '"' . $selected . '>' . $descr . '</option>' . "\n";
 		}
 		return $out;
 	}

@@ -35,13 +35,12 @@
 				$_redir  = $referer ? $referer : $GLOBALS['phpgw']->link('/admin/index.php');
 			}
 
-			switch($GLOBALS['HTTP_GET_VARS']['appname'])
+			$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+			switch($appname)
 			{
 				case 'admin':
-				case 'preferences':
-					$appname = 'preferences';
-					$config_appname = 'phpgwapi';
-					break;
+				//case 'preferences':
+				//$appname = 'preferences';
 				case 'addressbook':
 				case 'calendar':
 				case 'email':
@@ -50,7 +49,6 @@
 					Other special apps can go here for now, e.g.:
 					case 'bogusappname':
 					*/
-					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
 					$config_appname = 'phpgwapi';
 					break;
 				case 'phpgwapi':
@@ -59,7 +57,6 @@
 					Header('Location: ' . $_redir);
 					break;
 				default:
-					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
 					$config_appname = $appname;
 					break;
 			}
