@@ -738,8 +738,9 @@
 
 			$t->set_var('lang_type',lang('Type'));
 			if (!isset($type)) $type = $this->data['info_type'];
-			$t->set_var('type_list',$sb->getArrayItem('type',$type,
-																			$this->enums['type']));
+			if (!$type) $type = 'note';
+			$t->set_var('type_list',$html->sbox_submit($sb->getArrayItem(
+												'type',$type,$this->enums['type']),True));
 
 			$t->set_var('lang_prfrom', lang('From'));
 			if (!isset($from)) $from =$phpgw->strip_html($this->data['info_from']);
@@ -782,8 +783,9 @@
 
 			$t->set_var('lang_status',lang('Status'));
 			if (!isset($status)) $status = $this->data['info_status'];
+			if (!$status) $status = $this->bo->status['defaults'][$type];
 			$t->set_var('status_list',$sb->getArrayItem('status',$status,
-																	$this->enums['status']));
+																	$this->bo->status[$type]));
 
 			$t->set_var('lang_priority',lang('Priority'));
 			if (!isset($pri)) $pri = $this->data['info_pri'];

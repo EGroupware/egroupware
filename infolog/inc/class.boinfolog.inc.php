@@ -54,6 +54,19 @@
 				/*	'confirm' => 'confirm','reject' => 'reject','email' => 'email',
 					'fax' => 'fax' no implemented so far */ )
 			);
+			$this->status = array(
+				'defaults' => array(
+					'task' => 'ongoing', 'phone' => 'call', 'note' => 'done'),
+				'task' => array(
+					'offer' => 'offer','ongoing' => 'ongoing',
+					'done' => 'done', 'billed' => 'billed' ),
+				'phone' => array(
+					'call' => 'call','will-call' => 'will-call',
+					'done' => 'done', 'billed' => 'billed' ),
+				'note' => array(
+					'ongoing' => 'ongoing', 'done' => 'done'
+			));
+					
 			$this->so = CreateObject('infolog.soinfolog');
 			$this->data = &$this->so->data;
 			$this->grants = &$this->so->grants;
