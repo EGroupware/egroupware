@@ -38,32 +38,41 @@
 			$this->db = $phpgw->db;
 		}
 
-    function read_repository()
-    {
-      global $phpgw, $phpgw_info;
-      $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
-      $this->db->next_record();
+		function read_repository()
+		{
+			global $phpgw, $phpgw_info;
+			$this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+			$this->db->next_record();
 
-      $this->data["userid"]            = $this->db->f("account_lid");
-      $this->data["account_id"]        = $this->db->f("account_id");
-      $this->data["account_lid"]       = $this->db->f("account_lid");
-      $this->data["firstname"]         = $this->db->f("account_firstname");
-      $this->data["lastname"]          = $this->db->f("account_lastname");
-      $this->data["fullname"]          = $this->db->f("account_firstname") . " "
-                                       . $this->db->f("account_lastname");
-      $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-      $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-      $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-      $this->data["status"]            = $this->db->f("account_status");
-      return $this->data;
-    }
+			$this->data["userid"]            = $this->db->f("account_lid");
+			$this->data["account_id"]        = $this->db->f("account_id");
+			$this->data["account_lid"]       = $this->db->f("account_lid");
+			$this->data["firstname"]         = $this->db->f("account_firstname");
+			$this->data["lastname"]          = $this->db->f("account_lastname");
+			$this->data["fullname"]          = $this->db->f("account_firstname") . " "
+														. $this->db->f("account_lastname");
+			$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
+			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+			$this->data["status"]            = $this->db->f("account_status");
+			return $this->data;
+		}
 
 		function save_repository()
 		{
 			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
 				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
-		
+		}
+
+		function delete($accountid = '')
+		{
+			global $phpgw, $phpgw_info;
+
+			$account_id = get_account_id($accountid);
+
+			// Do this last since we are depending upon this record to get the account_lid above
+			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
 		}
 
 
