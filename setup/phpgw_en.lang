@@ -461,7 +461,7 @@ you have not entered a\nbrief description	calendar	en	You have not entered a\nBr
 you have not entered a\nvalid time of day.	calendar	en	You have not entered a\nvalid time of day.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
 you have x new messages!	common	en	You have %1 new messages!
-you must add at least 1 permission to this account	admin	en	You must add at least 1 permission to this account
+you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
 you must enter a base url	admin	en	You must enter a base url
 you must enter a display	admin	en	You must enter a display
 you must enter a news url	admin	en	You must enter a news url
