@@ -18,7 +18,6 @@ class so_resources
 		$this->rs_table = 'egw_resources';
 	}
 
-			
 	/*!
 	@function search
 	@abstract searches db for rows matching searchcriteria and categories
@@ -115,7 +114,7 @@ class so_resources
 		@function save
 		@abstract saves a resource including binary datas
 		@param array $resource key => value 
-		@return bool succsess or not!
+		@return mixed id of resource if all right, false if fale
 	*/
 	function save($resource)
 	{
@@ -133,7 +132,7 @@ class so_resources
 				$data[$fielddef['name']] = $this->get_value($fielddef['name'],$resource['id']);
 			}
 		}
-		return $this->db->insert($this->rs_table,$data,$where,__LINE__,__FILE__) ? true : false;
+		return $this->db->insert($this->rs_table,$data,$where,__LINE__,__FILE__) ? $this->db->get_last_insert_id($this->rs_table, 'id') : false;
 	}
 	
 }

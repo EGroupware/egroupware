@@ -17,11 +17,15 @@ class bo_resources
 	(
 		'get_rows'	=> True
 	);*/
+	var $vfs_basedir = '/resources/';
+	var $pictures_dir = '/resources/pictures/';
+	var $thumbs_dir = '/resources/pictures/thumbs/';
 	
 	function bo_resources()
 	{
 		$this->so = CreateObject('resources.so_resources');
 		$this->acl = CreateObject('resources.bo_acl');
+		$this->vfs = CreateObject('phpgwapi.vfs');
 	}
 
 	/*!
@@ -44,13 +48,14 @@ class bo_resources
 						'useable'		=> '',
 						'bookable'		=> '',
 						'cat_id'		=> '',
-						'location'		=> ''
+						'location'		=> '',
+						'picture_src'		=> ''
 					));
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		
 		$nr = $this->so->search($criteria,$cats,&$rows,$order_by,$offset=$query['start'],$num_rows=0);
-		
+// 		print_r($rows);die();
 		foreach($rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
@@ -65,6 +70,10 @@ class bo_resources
 			{
 				$readonlys["bookable[$resource[id]]"] = true;
 			}
+// 			if($resource['picture_src'] == 'own_src')
+// 			{
+				$rows[$num]['picture_thumb'] = 'generic.png';
+// 			}
 		}
 		return $nr;
 	}
@@ -88,7 +97,7 @@ class bo_resources
 	
 	/*!
 		@function save
-		@abstract saves a resource including picture upload ...
+		@abstract saves a resource. pictures are saved in vfs
 		@param array $resource array with key => value of all needed datas
 		@return string msg if somthing went wrong
 		TODO make thumb an picture sizes choosable by preferences
@@ -101,9 +110,28 @@ class bo_resources
 			return lang('You are not permitted to edit this reource!');
 		}
 		
-		if($resource['own_file']['size']>0 && ($resource['picture_src']=='db_src' || sizeof($resource['picture_src'])<1))
+		if(!$resource['id'])
 		{
-			$resource['picture_src'] = 'db_src';
+			$resource['id'] = $this->so->save($resource);
+		}
+
+		if($resource['own_file']['size']>0 && ($resource['picture_src']=='own_src' || sizeof($resource['picture_src'])<1))
+		{
+			$resource['picture_src'] = 'own_src';
+			
+			// test upload dir
+			$vfs_data = array('string'=>$this->vfs_basedir,'relatives'=>array(RELATIVE_ROOT));
+			if (!($this->vfs->file_exists($vfs_data)))
+			{
+				$this->vfs->override_acl = 1;
+				$this->vfs->mkdir($vfs_data);
+				$vfs_data['string'] = $this->pictures_dir;
+				$this->vfs->mkdir($vfs_data);
+				$vfs_data['string'] = $this->thumbs_dir;
+				$this->vfs->mkdir($vfs_data);
+				$this->vfs->override_acl = 0;
+			}
+			
 			switch($resource['own_file']['type'])
 			{
 				case 'image/gif':
@@ -122,42 +150,60 @@ class bo_resources
 			}
 			
 			$img_size = getimagesize($resource['own_file']['tmp_name']);
+			$tmp_dir = $GLOBALS['phpgw_info']['server']['temp_dir'].'/';
 			if($img_size[0] > 64 || $img_size[1] > 48)
 			{
 				$dst_img = imagecreatetruecolor(64, 48);
 				imagecopyresized($dst_img,$src_img,0,0,0,0,64,48,$img_size[0],$img_size[1]);
-				ob_start();
-				imagepng($dst_img);
-				$resource['picture_thumb'] = ob_get_contents();
-				ob_end_clean();
-				
+				imagejpeg($dst_img,$tmp_dir.$resource['id'].'.thumb.jpg');
+
 				if($img_size[0] > 320 || $img_size[1] > 240)
 				{
 					$dst_img = imagecreatetruecolor(320, 240);
 					imagecopyresized($dst_img,$src_img,0,0,0,0,320,240,$img_size[0],$img_size[1]);
-					ob_start();
-					imagepng($dst_img);
-					$resource['picture'] = ob_get_contents();
-					ob_end_clean();
+					imagejpeg($dst_img,$tmp_dir.$resource['id'].'.jpg');
 				}
 				else
 				{
-					ob_start();
-					imagepng($src_img);
-					$resource['picture'] = ob_get_contents();
-					ob_end_clean();
+					imagejpeg($src_img,$tmp_dir.$resource['id'].'.jpg');
 				}
 				imagedestroy($dst_img);
 			}
 			else
 			{
-					ob_start();
-					imagepng($src_img);
-					$resource['picture'] = ob_get_contents();
-					$resource['picture_thumb'] = ob_get_contents();
-					ob_end_clean();
+					imagejpeg($src_img,$tmp_dir.$resource['id'].'.jpg');
+					imagejpeg($src_img,$tmp_dir.$resource['id'].'.thumb.jpg');
 			}
 			imagedestroy($src_img);
+				
+			$this->vfs->override_acl = 1;
+			$this->vfs->mv(array(
+				'from' => $tmp_dir.$resource['id'].'.jpg',
+				'to'   => $this->pictures_dir.$resource['id'].'.jpg',
+				'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
+			));
+			$this->vfs->set_attributes(array(
+				'string' => $this->pictures_dir.$resource['id'].'.jpg',
+				'relatives' => array (RELATIVE_ROOT),
+				'attributes' => array (
+					'mime_type' => 'image/jpeg',
+					'comment' => 'picture of resource no.'.$resource['id'],
+					'app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+			)));
+			$this->vfs->mv(array(
+				'from' => $tmp_dir.$resource['id'].'.thumb.jpg',
+				'to'   => $this->thumbs_dir.$resource['id'].'.jpg',
+				'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
+				));
+			$this->vfs->set_attributes(array(
+				'string' => $this->thumbs_dir.$resource['id'].'.jpg',
+				'relatives' => array (RELATIVE_ROOT),
+				'attributes' => array (
+					'mime_type' => 'image/jpeg',
+					'comment' => 'thumbnail of resource no.'.$resource['id'],
+					'app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+			)));
+			$this->vfs->override_acl = 0;
 		}
 		
 		if($resource['picture_src'] == 'gen_src')

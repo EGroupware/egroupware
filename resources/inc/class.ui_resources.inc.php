@@ -27,6 +27,7 @@ class ui_resources
 	*/
 	function ui_resources()
 	{
+// 		print_r($GLOBALS['phpgw_info']); die();
 		$this->tmpl	= CreateObject('etemplate.etemplate','resources.show');
 		$this->bo	= CreateObject('resources.bo_resources');
 		
@@ -68,9 +69,9 @@ class ui_resources
 		
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
-		$content['nm']['filter_label']	= lang('Category');
-		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
+		$content['nm']['filter_label']	= 'Category';
+		$content['nm']['filter_help']	= 'Select a category'; // is this used???
+		$content['nm']['options-filter']= array('0'=>'all categories')+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
 		$content['nm']['no_filter2']	= True;
 		$content['nm']['no_cat']	= True;
 		
