@@ -445,7 +445,7 @@ please wait...	common	zt	請等待...
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
 postal	common	zt	郵遞區號
-powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.egroupware.org">eGroupWare</a> %1 版。
+powered by egroupware version %1	common	zt	此軟體為 <a href="http://www.egroupware.org">eGroupWare</a> %1 版。
 preferences	common	zt	喜好設定
 preferences for the idots template set	common	zt	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zt	上一個月(在選單中)
