@@ -26,72 +26,79 @@
 
   $error = "";
 
-  if (strlen($keywords) == 0)
-     $error = lang("You must enter one or more search keywords.");
-
+  if (strlen($keywords) == 0) {
+    echo "<b>".lang("Error").":</b>";
+    echo lang("You must enter one or more search keywords.");
+    $phpgw->common->phpgw_footer();
+    exit;
+  }
   $matches = 0;
 
-?>
-
-<H2><FONT COLOR="<?php echo $H2COLOR . "\">" . lang("Search Results"); ?></FONT></H2>
-
-<?php
   // There is currently a problem searching in with repeated events.
   // It spits back out the date it was entered.  I would like to to say that
   // it is a repeated event.
-  if (strlen($error)) {
-     echo "<B>" . lang("Error") . ":</B> $error";
-  } else {
-     $ids = array();
-     $words = split(" ", $keywords);
-     for ($i = 0; $i < count($words); $i++) {
-         $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_name, "
-              . "calendar_entry.cal_datetime "
-              . "FROM calendar_entry, calendar_entry_user "
-	      . "WHERE "
-	      . "(UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
-	      . " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) AND "
-	      . "calendar_entry_user.cal_id=calendar_entry.cal_id AND "
-	      . "(((calendar_entry_user.cal_login=".$phpgw_info["user"]["account_id"].") AND "
-	      . "(calendar_entry.cal_access='private')) "
-	      . $phpgw->calendar->group_search()
-	      . "OR calendar_entry.cal_access='public') "
-	      . "ORDER BY cal_datetime";
+  $ids = array();
+  $words = split(" ", $keywords);
+  for ($i = 0; $i < count($words); $i++) {
+    $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_name, "
+         . "calendar_entry.cal_datetime "
+         . "FROM calendar_entry, calendar_entry_user "
+	 . "WHERE "
+	 . "(UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
+	 . " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) AND "
+	 . "calendar_entry_user.cal_id=calendar_entry.cal_id AND "
+	 . "(((calendar_entry_user.cal_login=".$phpgw_info["user"]["account_id"].") AND "
+	 . "(calendar_entry.cal_access='private')) "
+	 . $phpgw->calendar->group_search()
+	 . "OR calendar_entry.cal_access='public') "
+	 . "ORDER BY cal_datetime";
 
-         $phpgw->db->query($sql);
-         while ($phpgw->db->next_record()) {
-            $matches++;
-            $ids[strval( $phpgw->db->f(0) )]++;
-            $info[strval( $phpgw->db->f(0) )] = $phpgw->db->f(1) . " ("
-                                         . $phpgw->common->show_date($phpgw->db->f(2)) . ")";
-         }
-     }
+    $phpgw->db->query($sql);
+    while ($phpgw->db->next_record()) {
+      $matches++;
+      $ids[strval( $phpgw->db->f(0) )]++;
+      $info[strval( $phpgw->db->f(0) )] = $phpgw->db->f(1) . " ("
+                                        . $phpgw->common->show_date($phpgw->db->f(2)) . ")";
+    }
   }
 
   if ($matches > 0)
-     $matches = count($ids);
+    $matches = count($ids);
 
   if ($matches == 1)
-     echo "<B>1 match found.</B><P>";
+    $quantity = "1 match found.";
   else if ($matches > 0)
-     echo "<B>" . lang("x matches found",$matches) . ".</B><P>";
+    $quantity = lang("x matches found",$matches).".";
   else
-     $error = lang("no matches found.");
+    $error = lang("no matches found.");
+
+  if($error) {
+    echo "<b>".lang("Error").":</b>";
+    echo $error;
+    $phpgw->common->phpgw_footer();
+    exit;
+  }
+
+  $phpgw->template->set_file(array("search_t"	 => "search.tpl",
+				   "search_list" => "search_list.tpl"));
+
+  $phpgw->template->set_block("search_t","search_list");
+
+  $phpgw->template->set_var("color",$phpgw_info["theme"]["bg_text"]);
+  $phpgw->template->set_var("search_text",lang("Search Results"));
+  $phpgw->template->set_var("quantity",$quantity);
 
 // now sort by number of hits
   if (! strlen($error)) {
-     arsort ($ids);
-     for (reset($ids); $key = key($ids); next($ids)) {
-         echo "<LI><A HREF=\"" . $phpgw->link("view.php","id=$key") . "\">" . $info[$key] . "</A>\n";
-
-     }
-  } else {
-     echo $error;
+    arsort ($ids);
+    for (reset($ids); $key = key($ids); next($ids)) {
+      $phpgw->template->set_var("url_result",$phpgw->link("view.php","id=$key"));
+      $phpgw->template->set_var("result_desc",$info[$key]);
+      $phpgw->template->parse("output","search_list",True);
+    }
   }
 
-?>
+  $phpgw->template->pparse("out","search_t");
 
-<P>
-<?php 
   $phpgw->common->phpgw_footer();
 ?>
