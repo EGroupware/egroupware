@@ -247,7 +247,23 @@ var $last_column_size;
   
 		$maxlevel++;
     
-		$cnt=0;
+//		$cnt=0;
+
+		$browser = CreateObject('phpgwapi.browser');
+		$browser->browser();
+		$browser_agent = $browser->get_agent();
+		switch($browser_agent)
+		{
+			case 'MOZILLA':
+			case 'NETSCAPE':
+				$text_size = 3;
+				break;
+			case 'IE':
+				$text_size = 2;
+				break;
+		}
+
+
 		for($cnt=0;$cnt<$c_tree - 1;$cnt++)
 		{
 			if(!$visible[$cnt])
@@ -365,7 +381,7 @@ var $last_column_size;
 			/****************************************/
 			/* output item text                     */
 			/****************************************/
-			$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="2">';
+			$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="'.$text_size.'">';
 			if ($tree[$cnt][5]=='')
 			{
 				if ($tree[$cnt][2]=='')
