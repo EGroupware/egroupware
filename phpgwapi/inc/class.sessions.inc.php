@@ -117,7 +117,7 @@
        $this->update_dla();
        $this->account_id = $phpgw->accounts->name2id($this->account_lid);
 
-       if ($this->use_cache) {
+       if ($phpgw_info["server"]["cache_phpgw_info"]) {
       		$t = $this->appsession('phpgw_info_cache','phpgwapi');
 					$phpgw_info["server"]	= $t["server"];
 					$phpgw_info["user"]		= $t["user"];
@@ -219,7 +219,7 @@
       $this->read_repositories();
       $phpgw_info["user"]  = $this->user;
       $phpgw_info["hooks"] = $this->hooks;
-			if ($this->use_cache) {
+			if ($phpgw_info["server"]["cache_phpgw_info"]) {
 					$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info);
 			}
 
@@ -307,7 +307,7 @@
        $phpgw_info_temp["user"]["kp3"] = "";
        $phpgw_info_temp["flags"] = array();
 
-			if ($this->use_cache) {
+			if ($phpgw_info["server"]["cache_phpgw_info"]) {
 					$this->appsessions("phpgw_info_cache","phpgwapi",$phpgw_info_temp);
 			}
     }
