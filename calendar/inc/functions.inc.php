@@ -733,7 +733,7 @@
 	$str .= "<td valign=\"top\" width=\"75\" height=\"75\">".$phpgw->common->grab_owner_name($owner)."</td>";
       }
       for ($j=0;$j<$this->daysinweek;$j++) {
-	$date = $this->gmtdate($startdate + ($j * 24 * 3600));
+	$date = $this->localdates($startdate + ($j * 24 * 3600));
         if ($weekly || ($date["full"] >= $monthstart && $date["full"] <= $monthend)) {
 	  if($weekly) $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
 	  $str .= "<td valign=\"top\" width=\"75\" height=\"75\"";
@@ -1176,10 +1176,10 @@
 	  $p->set_unknowns("remove");
       $p->set_file(array('day_cal' => 'day_cal.tpl',
       					 'mini_week' => 'mini_week.tpl',
-      					 'day_row_99' => 'day_row_99.tpl',
+//      					 'day_row_99' => 'day_row_99.tpl',
       					 'day_row_event' => 'day_row_event.tpl',
       					 'day_row_time' => 'day_row_time.tpl'));
-      $p->set_block('day_cal','mini_week','day_row_99','day_row_event','day_row_time');
+      $p->set_block('day_cal','mini_week','day_row_event','day_row_time');
 
 
       if (! $phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"] &&
@@ -1225,20 +1225,25 @@
           $this->last_row = $i;
         }
       }
+      $p->set_var('time_bgcolor',$phpgw_info["theme"]["cal_dayview"]);
+      $p->set_var('bg_time_image',$phpgw->common->get_image_path('phpgwapi').'/navbar_filler.jpg');
+      $p->set_var('font_color',$phpgw_info["theme"]["bg_text"]);
+      $p->set_var('font',$phpgw_info["theme"]["font"]);
       if (isset($this->hour_arr[99]) && strlen($this->hour_arr[99])) {
-        $p->set_var('bgcolor1',$phpgw_info["theme"]["cal_dayview"]);
-        $p->set_var('text',$this->hour_arr[99]);
+        $p->set_var('event',$this->hour_arr[99]);
         $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+        $p->parse('monthweek_day','day_row_event',False);
+        
+        $p->set_var('open_link','');
+        $p->set_var('close_link','');
         $p->set_var('time','&nbsp;');
-        $p->parse('monthweek_day','day_row_99',False);
+        $p->parse('monthweek_day','day_row_time',True);
         $p->parse('row','mini_week',True);
+        $p->set_var('monthweek_day','');
       }
       $this->rowspan = 0;
-      $p->set_var('bgcolor1',$phpgw_info["theme"]["cal_dayview"]);
-      $p->set_var('font_color',$phpgw_info["theme"]["bg_text"]);
       $times = 0;
       for ($i=$this->first_hour;$i<=$this->last_hour;$i++) {
-        $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
         if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
         $time = $this->build_time_for_display($i * 10000);
         $p->set_var('extras','');
@@ -1248,46 +1253,46 @@
           // ends at 11:15 and another starts at 11:30.
           if (strlen($h)) {
             $p->set_var('event',$this->hour_arr[$i]);
+            $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
             $p->parse('monthweek_day','day_row_event',False);
-            $rows = 1;
           }
           $this->rowspan--;
         } else {
           if (!strlen($h)) {
             $p->set_var('event','&nbsp;');
+            $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
             $p->parse('monthweek_day','day_row_event',False);
-            $rows = 1;
           } else {
             $this->rowspan = isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0;
             if ($this->rowspan > 1) {
-              $p->set_var('extras',' valign="top" rowspan="'.$this->rowspan.'"');
+              $p->set_var('extras',' rowspan="'.$this->rowspan.'"');
               $p->set_var('event',$this->hour_arr[$i]);
+              $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
               $p->parse('monthweek_day','day_row_event',False);
-              $rows = $this->rowspan;
             } else {
               $p->set_var('event',$this->hour_arr[$i]);
+              $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
               $p->parse('monthweek_day','day_row_event',False);
-              $rows = 1;
             }
           }
         }
         $p->set_var('open_link','');
         $p->set_var('close_link','');
+        $str = ' - ';
         if(!$this->printer_friendly) {
-          $p->set_var('open_link','<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$date["year"]
+          $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$date["year"]
                 . "&month=".$date["month"]."&day=".$date["day"]
                 . "&hour=".substr($time,0,strpos($time,":"))
-                . "&minute=".substr($time,strpos($time,":")+1,2)).'">');
+                . "&minute=".substr($time,strpos($time,":")+1,2)).'">';
         }
-        $p->set_var('time',$time);
+        $p->set_var('open_link',$str);
+        $p->set_var('time',(intval(substr($time,0,strpos($time,':'))) < 10 ? '0'.$time : $time) );
         if(!$this->printer_friendly) {
           $p->set_var('close_link','</a>');
         }
-      $p->parse('monthweek_day','day_row_time',True);
-//      $times++;
-//      if ($times == $rows) { $p->set_var('monthweek_day',''); $times = 0; }
-      $p->parse('row','mini_week',True);
-      $p->set_var('monthweek_day','');
+        $p->parse('monthweek_day','day_row_time',True);
+        $p->parse('row','mini_week',True);
+        $p->set_var('monthweek_day','');
       }	// end for
       return $p->finish($p->parse('out','day_cal'));
     }	// end function
