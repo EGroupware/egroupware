@@ -1664,7 +1664,7 @@ class calendar extends calendar_
 	
 		$var = Array(
 			'field'	=>	lang('Updated'),
-			'data'	=>	$phpgw->common->show_date($event->mdatetime)
+			'data'	=>	$phpgw->common->show_date(mktime($event->mod->hour,$event->mod->min,$event->mod->sec,$event->mod->month,$event->mod->mday,$event->mod->year) - $this->datetime->tz_offset)
 		);
 		$p->set_var($var);
 		$p->parse('row','list',True);
