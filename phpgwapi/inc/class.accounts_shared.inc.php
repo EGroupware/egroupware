@@ -34,7 +34,7 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == False){ $this->account_id = $account_id; }
+      if ($account_id != False){ $this->account_id = $account_id; }
     }
 
     function read()
