@@ -178,7 +178,7 @@
 	$var = Array(
 						'errors'							=>	'',
 						'title'							=>	'<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
-						'action_url'					=>	$phpgw->link('/' . $phpgw_info['flags']['currentapp'] . '/acl_preferences.php'),
+						'action_url'					=>	$phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
 						'bg_color'						=>	$phpgw_info['theme']['th_bg'],
 						'submit_lang'					=> lang('submit'),
 						'common_hidden_vars_form'	=>	$common_hidden_vars
