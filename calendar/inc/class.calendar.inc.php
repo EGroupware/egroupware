@@ -1362,22 +1362,22 @@ class calendar extends calendar_
 		{
 			if($t_format == '12')
 			{
-				$time_width=26;
+				$time_width=12;
 			}
 			else
 			{
-				$time_width=26;
+				$time_width=8;
 			}
 		}
 		else
 		{
 			if($t_format == '12')
 			{
-				$time_width=20;
+				$time_width=11;
 			}
 			else
 			{
-				$time_width=14;
+				$time_width=7;
 			}
 		}
 		$var = Array(
