@@ -25,7 +25,6 @@
   class applications
   {
     var $account_id;
-    var $account_type;
     var $data = Array();
     var $db;
 
@@ -36,14 +35,9 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == ""){ 
-        $this->account_id = $phpgw_info["user"]["account_id"]; 
-      } elseif (is_long($account_id)) {
-        $this->account_id = $account_id;
-      } elseif(is_string($account_id)) {
-        $this->account_id = $phpgw->accounts->name2id($account_id);
-      }
-      $this->account_type = $phpgw->accounts->get_type($account_id);
+      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
+      elseif (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
+      $this->account_id = $account_id;
     }
 
     /**************************************************************************\
