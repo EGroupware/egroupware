@@ -469,13 +469,14 @@
 		// This will update the DateLastActive column, so the login does not expire
 		function update_dla()
 		{
-			if (isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			global $PHP_SELF;
+			if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 			{
 				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];			
 			}
 			else
 			{
-				$action = $GLOBALS['PHP_SELF'];
+				$action = $PHP_SELF;
 			}
 
 			$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
