@@ -221,7 +221,7 @@ this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwednung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag) 
-timeout for sessions in seconds (default 14400 = 4 hours)<br>(not for php4 sessions!!!)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)<br>(nicht für php4 Sitzungen)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
 top	admin	de	oben
 total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens

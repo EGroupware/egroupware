@@ -49,14 +49,13 @@
 
    <tr class="row_on">
     <td>
-      {lang_Timeout_for_sessions_(in_seconds)}.
-      <br>{lang_(not_for_php4_sessions)}
+      {lang_Timeout_for_sessions_in_seconds_(default_14400_=_4_hours)}
     </td>
     <td><input size="8" name="newsettings[sessions_timeout]" value="{value_sessions_timeout}"></td>
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Timeout_for_application_session_data_(in_seconds)}.</td>
+    <td>{lang_Timeout_for_application_session_data_in_seconds_(default_86400_=_1_day)}.</td>
     <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
    </tr>
 
@@ -148,6 +147,44 @@
      </td>
     </tr>
 -->
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_AccessLog_and_BruteForce_defense}</b></td>
+   </tr>
+   
+   <tr class="row_on">
+    <td>{lang_How_many_days_should_entries_stay_in_the_access_log,_before_they_get_deleted_(default_90)_?}:</td>
+    <td>
+     <input name="newsettings[max_access_log_age]" value="{value_max_access_log_age}" size="5">
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_After_how_many_unsuccessful_attempts_to_login,_an_account_should_be_blocked_(default_3)_?}:</td>
+    <td>
+     <input name="newsettings[num_unsuccessful_id]" value="{value_num_unsuccessful_id}" size="5">
+    </td>
+   </tr>
+   
+   <tr class="row_on">
+    <td>{lang_After_how_many_unsuccessful_attempts_to_login,_an_IP_should_be_blocked_(default_3)_?}:</td>
+    <td>
+     <input name="newsettings[num_unsuccessful_ip]" value="{value_num_unsuccessful_ip}" size="5">
+    </td>
+   </tr>
+   
+   <tr class="row_off">
+    <td>{lang_How_many_minutes_should_an_account_or_IP_be_blocked_(default_30)_?}:</td>
+    <td>
+     <input name="newsettings[block_time]" value="{value_block_time}" size="5">
+    </td>
+   </tr>
+   
+   <tr class="row_on">
+    <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)_?}:</td>
+    <td>
+     <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">
+    </td>
+   </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

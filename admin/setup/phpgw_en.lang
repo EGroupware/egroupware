@@ -251,7 +251,7 @@ this application is current	admin	en	This application is current
 this application requires an upgrade	admin	en	This application requires an upgrade
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds (default 86400 = 1 day)
-timeout for sessions in seconds (default 14400 = 4 hours)<br>(not for php4 sessions!!!)	admin	en	Timeout for sessions in seconds (default 14400 = 4 hours)<br>(not for php4 sessions!!!)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds (default 14400 = 4 hours)
 top	admin	en	top
 total records	admin	en	Total records
 trust level	admin	en	Trust Level
