@@ -24,7 +24,7 @@
 	{
 		Header('Location: ' . $phpgw->link('/preferences/index.php/'));
 		$phpgw->common->phpgw_exit();
-	}    
+	}
 
 	$phpgw->template->set_file(array(
 		'form' => 'changepassword.tpl'
@@ -38,9 +38,8 @@
 	if ($phpgw_info['server']['auth_type'] != 'ldap')
 	{
 		$phpgw->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
-	           	   	   . 'need to be done manually.'));
+			. 'need to be done manually.'));
 	}
-
 
 	if ($submit)
 	{
