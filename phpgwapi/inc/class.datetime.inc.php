@@ -62,13 +62,15 @@
 				if(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
 				{
 					$this->gmtnow = time() - (intval($GLOBALS['phpgw_info']['server']['tz_offset']) * 3600);
+					//echo "<p>set via tz_offset=".$GLOBALS['phpgw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow)."</p>\n";
 				}
 				else
 				{
 					$this->gmtnow = time() - ($this->getbestguess() * 3600);
+					//echo "<p>set via bestguess=".$this->getbestguess().": gmtnow=".date('Y/m/d H:i',$this->gmtnow)."</p>\n";
 				}
 			}
-			$this->users_localtime = $this->gmtnow + $this->tz_offset;
+			$this->users_localtime = time() + $this->tz_offset;
 		}
 		
 		function getntpoffset()
