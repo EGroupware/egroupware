@@ -62,7 +62,6 @@ site configuration	admin	en	Site configuration
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
 submit changes	admin	en	Submit Changes
-table	admin	en	Table
 that loginid has already been taken	admin	en	That loginid has already been taken
 the login and password can not be the same	admin	en	The login and password can not be the same
 they must be removed before you can continue	admin	en	They must be removed before you can continue
