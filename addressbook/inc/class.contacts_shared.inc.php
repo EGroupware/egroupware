@@ -304,11 +304,13 @@
 				$country = $phpgw_info['user']['preferences']['common']['country'];
 			}
 
-			if ($country == 'DE')
+		//	echo PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP . 'default' . SEP . 'format_' . strtolower($country) . '.tpl';
+
+			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'format_' . strtolower($country) . '.tpl'))
 			{
-				$a = $t->set_file(array('address_format' => 'format_de.tpl'));
+				$a = $t->set_file(array('address_format' => 'format_' . strtolower($country) . '.tpl'));
 			}
-				elseif ($country == 'US')
+			else
 			{
 				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
 			}
