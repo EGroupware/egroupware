@@ -69,7 +69,8 @@
 	$pref = new preferences($n_loginid);
         $phpgw->common->hook_single("add_def_pref", "admin");
         for ($i=1;$i<sizeof($apps) - 1;$i++) {
-           $phpgw->common->hook_single("add_def_pref", $apps[$i]);
+	   if($apps[$i]<>"admin")
+              $phpgw->common->hook_single("add_def_pref", $apps[$i]);
         }
         $pref->commit();
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));

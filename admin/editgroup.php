@@ -65,7 +65,11 @@
 	   $pref = new preferences(intval($n_users[$i]));
 	   $docommit = False;
 	   for ($j=1;$j<=count($apps_after);$j++) {
-	     if (!$pref->preferences[$apps_after[$j]]) {
+	     if($apps_after[$j]=="admin")
+	       $check = "common";
+	     else
+	       $check = $apps_after[$j];
+	     if (!$pref->preferences[$check]) {
 	       $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
 	       $docommit = True;
 	     }
