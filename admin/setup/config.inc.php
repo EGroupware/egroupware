@@ -43,8 +43,8 @@
     <td>If no ACL records for user or any group the user is a member of: </td>
     <td>
      <select name="newsettings[acl_default]">
-      <option value="grant"<?php echo $selected["grant"]; ?>>Grant Access</option>
       <option value="deny"<?php echo $selected["deny"]; ?>>Deny Access</option>
+      <option value="grant"<?php echo $selected["grant"]; ?>>Grant Access</option>
      </select>
     </td>
    </tr>

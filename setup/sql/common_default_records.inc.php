@@ -20,7 +20,7 @@
 
   function add_default_server_config(){
     global $phpgw_info, $phpgw_setup;
-    $phpgw_setup->db->query("insert into config (config_name, config_value) values ('template_set', 'default')");
+    $phpgw_setup->db->query("insert into config (config_name, config_value) values ('template_set', 'user_choice')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
@@ -112,12 +112,12 @@
   $phpgw_setup->db->query("insert into groups (group_name) values ('Default')");  
   $phpgw_setup->db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account','A')");
 
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 1, 'u', 1)";
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', 1, 'u', 1)";
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', 1, 'u', 1)";
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', 1, 'u', 1)";
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', 1, 'u', 1)";
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', 1, 'u', 1)";
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 1, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', 1, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', 1, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', 1, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', 1, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', 1, 'u', 1)");
 
   $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
   $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
