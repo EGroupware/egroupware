@@ -1,8 +1,10 @@
 <?php
   /* $Id$ */
 
-  global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-  global $matrixtype, $participants;
+  if (floor($PHP_VERSION ) == 4) {
+    global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
+    global $matrixtype, $participants;
+  }
 
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
      $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
@@ -28,17 +30,8 @@
         $thisyear = $year;
   }
 
-//  if($filter=="all") $filter_method = "All";
-//  if($filter=="private") $filter_method = "Private Only";
-//  if($filter=="public") $filter_method = "Global Public Only";
-//  if($filter=="group") $filter_method = "Group Public Only";
-//  if($filter=="private+public") $filter_method = "Private and Global Public";
-//  if($filter=="private+group") $filter_method = "Private and Group Public";
-//  if($filter=="public+private") $filter_method = "Global Public and Group Public";
-
   if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||
       !$phpgw_info["flags"]["nocalendarheader"]) {
-
 ?>
 
 <table border="0" width="100%" cols="8" cellpadding="0" cellspacing="0">
