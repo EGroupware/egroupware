@@ -12,11 +12,8 @@
 
 	/* $Id$ */
 
-	if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['so_sql']))
-	{
-		include(PHPGW_API_INC . '/../../etemplate/inc/class.so_sql.inc.php');
-		$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
-	}
+	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
+	$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True; // for 0.9.14
 
 	class et_media extends so_sql
 	{
@@ -154,7 +151,7 @@
 		{
 			$etm = new et_media(False);	// no lang on messages
 
-			$this->tmpl->writeLangFile('et_media','en',$etm->messages);
+			return $this->tmpl->writeLangFile('et_media','en',$etm->messages+$etm->types);
 		}
 	};
 

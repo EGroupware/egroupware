@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<!-- $Id$ -->
 <html>
 <head>
   <title>phpGroupware: eTemplates - Templates and Dialog-Editor</title>
-<!-- $Id$ -->
 <STYLE type="text/css">
 <!--
 pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-width: thin; border-style: solid; border-color: black; white-space: pre; }
@@ -167,13 +167,10 @@ Create the file <b>/et_media/index.php</b> with the following content:</p>
 *  option) any later version.                                              *
 \**************************************************************************/</span>
 
-<span>/* $Id$ */</span>
+<span>/* $ Id: class.et_media.inc.php,v 1.2 2002/10/19 11:11:03 ralfbecker Exp $ */</span>
 
-if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['so_sql']))
-{
-	include(PHPGW_API_INC . '/../../etemplate/inc/class.so_sql.inc.php');
-	$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
-}
+include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
+$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
 </pre>
 
 <p>This loads the class so_sql, in a way that more than one class may use it (would be nice if we had an api-function for that).</p>
@@ -454,11 +451,17 @@ There are 2 possibilties to create it automaticaly:</p>
 </ol>
 
 <pre>
+	<span>/*!
+	@function writeLangFile
+	@abstract writes langfile with all templates and messages registered here
+	@discussion can be called via [write Langfile] in eTemplate editor or 
+	@discussion http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
+	*/</span>
 	function writeLangFile()
 	{
-		$etm = new et_media(False);	<span>// no lang() on messages</span>
+		$etm = new et_media(False);	<span>// no lang on messages</span>
 
-		$this->tmpl->writeLangFile('et_media','en',$etm->messages);
+		return $this->tmpl->writeLangFile('et_media','en',$etm->messages+$etm->types);
 	}
 </pre>
 
