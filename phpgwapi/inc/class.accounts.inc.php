@@ -416,15 +416,25 @@
 				}
 			}
 
-			$i = count($add_users['users']);
+			if(is_array($add_users['groups']))
+			{
+				$add_users['groups'] = array_unique($add_users['groups']);
+				sort($add_users['groups']);
+			}
+
+			#$i = count($add_users['users']);
 
 			while(is_array($members) && list(,$mem) = each($members))
 			{
 				for($j=0;$j<count($mem);$j++)
 				{
-					$add_users['users'][$i] = $mem[$j];
-					$i++;
+					$add_users['users'][] = $mem[$j];
 				}
+			}
+			if(is_array($add_users['users']))
+			{
+				$add_users['users'] = array_unique($add_users['users']);
+				sort($add_users['users']);
 			}
 			return $add_users;
 		}
