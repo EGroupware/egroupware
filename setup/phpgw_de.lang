@@ -42,6 +42,7 @@ addsub	todo	de	AddSub
 addvcard	addressbook	de	VCard hinzufügen
 admin	common	de	Admin
 administration	common	de	Administration
+after message body    squirrelmail    de    Nach dem Nachrichtentext
 all	common	de	alle
 all delivery notes	projects	de	Alle Liefernotizen
 all invoiced	projects	de	Alle Rechnungen
@@ -67,6 +68,7 @@ are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie d
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 arial	notes	de	Arial
+as a subfolder of    squirrelmail    de    als Unterordner von
 assign to	tts	de	zuweisen an
 assigned from	tts	de	Zugewiesen von
 assigned to	tts	de	Zugewiesen an
@@ -80,6 +82,8 @@ available groups	nntp	de	verfügbare Gruppen
 bad login or password	login	de	Bad login or password
 base url	admin	de	Basis URL
 bbs phone	addressbook	de	BBS
+before headers    squirrelmail    de    Vor den Kopfzeilen
+between headers and message bodysquirrelmail    de    Zwischen Kopfzeilen und Nachrichtentext
 bill per workunit	projects	de	Betrag pro Arbeitseinheit
 billable activities	projects	de	Zu berechnende Aktivitäten
 billed only	projects	de	Nur berechnete
@@ -145,8 +149,9 @@ copy	common	de	Kopieren
 copy_as	filemanager	de	Kopieren nach
 country	addressbook	de	Land
 courier new	notes	de	Courier New
-create	filemanager	de	Erstellen
+create	common	de	Erstellen
 create delivery	projects	de	Lieferung erstellen
+create folder    squirrelmail    de    Ordner erstellen
 create group	admin	de	Erstelle Gruppe
 create invoice	projects	de	Rechnung erstellen
 create lang.sql file	transy	de	Erstelle lang.sql Datei (Export)
@@ -184,6 +189,7 @@ default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default category	addressbook	de	Standard-Kategorie
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
+delete folder    squirrelmail    de    Ordner löschen
 deliveries	projects	de	Lieferungen
 delivery	projects	de	Lieferung
 delivery date	projects	de	Lieferdatum
@@ -199,9 +205,12 @@ details	tts	de	Details
 disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
 display missing phrases in lang set	transy	de	Im Sprachset fehlende Phrasen anzeigen
+display preferences    common    de    Einstellungen der Anzeige
 display note for	notes	de	Display note for
 do_delete	filemanager	de	Lösche
 domestic	addressbook	de	Wohnung
+don't use trash    squirrelmail    de    Keinen Papierkorb benutzen
+don't use sent    squirrelmail    de    Keinen Ordner für gesendete Objekte
 done	common	de	Fertig
 down    common    de    runter
 download	filemanager	de	Download
@@ -253,6 +262,8 @@ firstname	common	de	Vorname
 first page	common	de	erste Seite
 flags    squirelmail    de    Flags
 folder	email	de	Ordner
+folders    squirrelmail    de    Ordner
+folder preferences    common    de    Einstellungen der Ordner
 forum	common	de	Forum
 forward	email	de	Weiterleiten
 fr	calendar	de	Fr
@@ -361,6 +372,7 @@ light gray    common    de    Hellgrau
 line 2	addressbook	de	Zeile 2
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
 listings displayed	admin	de	Zeilen maximal
+location of buttons when composing    squirrelmail    de    Position der Buttons während des Editierens
 login	common	de	Login
 login screen	admin	de	Login Seite
 login time	admin	de	Login Zeit
@@ -372,6 +384,7 @@ mail server	email	de	Mail Server
 mail server type	email	de	Typ des Mailservers
 main screen	common	de	Startseite
 main screen message	admin	de	Nachricht der Startseite
+manage folders    preferences    de    Ordner bearbeiten
 manager	admin	de	Manager
 manual	common	de	Handbuch
 march	common	de	März
@@ -530,8 +543,9 @@ remark	projects	de	Anmerkung
 remark required	projects	de	Anmerkung erforderlich
 remove    common    de    entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
-rename	filemanager	de	Umbenennen
+rename	common	de	Umbenennen
 rename_to	filemanager	de	Umbenennen in
+rename a folder    squirrelmail    Ordner umbenennen
 repeat day	calendar	de	Wiederholungstag
 repeat end date	calendar	de	Enddatum
 repeat type	calendar	de	Wiederholungstyp
@@ -587,6 +601,7 @@ showing x	common	de	%1 Einträge
 showing x - x of x	common	de	%1 Einträge - %2 von %3
 site	admin	de	Site
 size	common	de	Größe
+size of editor window    squirrelmail    de    Größe des Editorfensters
 small	notes	de	Klein
 sorry, that group name has already been taking.	admin	de	Dieser Gruppenname ist bereits vergeben.
 sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
@@ -715,6 +730,7 @@ work day starts on	common	de	Arbeitstag beginnt um
 work phone	addressbook	de	Tel dienstl.
 work time	projects	de	Arbeitszeit
 workunits	projects	de	Arbeitseinheiten
+wrap incoming text at    squirrelmail    de    Zeilenumbruch bei eingehenden Nachrichten in Spalte
 x matches found	calendar	de	%1 Treffer gefunden
 x messages have been deleted	email	de	%1 Nachrichten wurden gelöscht
 year	calendar	de	Jahr
