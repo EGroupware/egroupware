@@ -33,7 +33,7 @@
 		'This year'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.year'),
 		'Group Planner'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.planner'),
 		'Daily Matrix View'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.matrixselect'),
-		'_NewLine_', // give a newline
+		'Export'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.export'),
 		'Import'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiicalendar.import')
 	);
 	display_sidebox($appname,$menu_title,$file);
