@@ -165,7 +165,7 @@
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ha','Hausa','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('hi','Hindi','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('hr','Croatian','No')");
-  @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('hu','Hungarian','No')");
+  @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('hu','Hungarian','Yes')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('hy','Armenian','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ia','Interlingua','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ie','Interlingue','No')");
