@@ -11,6 +11,10 @@
     <?php if (!$current_config["contact_application"]) { $current_config["contact_application"] = "addressbook"; } ?>
     <td><input name="newsettings[contact_application]" value="<?php echo $current_config["contact_application"]; ?>"></td>
    </tr>
+   <tr bgcolor="e6e6e6">
+    <td>Select from list instead of text entry for country:</td>
+    <td><input type="checkbox" name="newsettings[countrylist]" value="True"<?php echo ($current_config["countrylist"]?" checked":""); ?>></td>
+   </tr>
    <?php $selected[$current_config["contact_repository"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Select where you want to store/retrieve contacts.</td>
