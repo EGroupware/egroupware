@@ -23,29 +23,31 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
-  if($d1 == "htt" || $d1 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
-    exit;
-  } unset($d1);
+	$d1 = strtolower(substr(PHPGW_API_INC,0,3));
+	if($d1 == 'htt' || $d1 == 'ftp')
+	{
+		echo 'Failed attempt to break in via an old Security Hole!<br>' . "\n";
+		exit;
+	}
+	unset($d1);
 
-  class utilities
-  {
-    var $rssparser;
-    var $clientsniffer;
-    var $http;
-    var $matrixview;
-    var $menutree;
-    var $sbox;
+	class utilities
+	{
+		var $rssparser;
+		var $clientsniffer;
+		var $http;
+		var $matrixview;
+		var $menutree;
+		var $sbox;
 
-    function utilities_()
-    {
-//      $phpgw->rssparser = CreateObject("phpgwapi.rssparser");
-//      $phpgw->clientsniffer = CreateObject("phpgwapi.clientsniffer");
-//      $phpgw->http = CreateObject("phpgwapi.http");
- //     $phpgw->matrixview = CreateObject("phpgwapi.matrixview");
- //     $phpgw->menutree = CreateObject("phpgwapi.menutree");
-      $phpgw->sbox = CreateObject("phpgwapi.portalbox");
-    }
-  }
+		function utilities_()
+		{
+			//      $GLOBALS['phpgw']->rssparser = CreateObject("phpgwapi.rssparser");
+			//      $GLOBALS['phpgw']->clientsniffer = CreateObject("phpgwapi.clientsniffer");
+			//      $GLOBALS['phpgw']->http = CreateObject("phpgwapi.http");
+			//     $GLOBALS['phpgw']->matrixview = CreateObject("phpgwapi.matrixview");
+			//     $GLOBALS['phpgw']->menutree = CreateObject("phpgwapi.menutree");
+			$GLOBALS['phpgw']->sbox = CreateObject('phpgwapi.portalbox');
+		}
+	}
 ?>
