@@ -6,6 +6,7 @@ All Users	setup	en	All Users
 Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 Authentication / Accounts	setup	en	Authentication / Accounts
 Auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
+bottom	setup	en	bottom
 Country Selection	setup	en	Country Selection
 Default file system space per user/group ?	setup	en	Default file system space per user/group ?
 Deny all users access to grant other users access to their entries ?	setup	en	Deny all users access to grant other users access to their entries ?
@@ -136,6 +137,7 @@ mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requir
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+no	setup	en	No
 no algorithms available	setup	en	no algorithms available
 no modes available	setup	en	no modes available
 not complete	setup	en	not complete
@@ -199,6 +201,7 @@ this section will help you import users and groups from your ldap tree into phpG
 this stage is completed<br>	setup	en	This stage is completed<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+top	setup	en	top
 translations added	setup	en	Translations Added
 translations removed	setup	en	Translations Removed
 uninstall all applications	setup	en	Uninstall all applications
@@ -208,6 +211,7 @@ upgraded	setup	en	upgraded
 upgrading tables	setup	en	Upgrading Tables
 version mismatch	setup	en	Version Mismatch
 we will automatically update your tables/records to x	setup	en	We will automatically update your tables/records to %1
+yes	setup	en	Yes
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
 you appear to be running version x of phpGroupWare	setup	en	You appear to be running version %1 of phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
@@ -220,3 +224,9 @@ your database is working, but you dont have any applications installed	setup	en	
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
+one week	setup	en	one week
+two weeks	setup	en	two weeks
+one month	setup	en	one month
+never	setup	en	never
+force selectbox	setup	en	Force Selectbox
+auto-created user accounts expire	setup	en	Auto-created user accounts expire
