@@ -637,7 +637,7 @@
 				++$i;
 			} while ($valid);
 
-			if ($this->tmpl->stable)
+			if (!$this->tmpl->xslt)
 			{
 				echo parse_navbar();
 				$GLOBALS['phpgw']->template->pfp('phpgw_body','info_admin');
