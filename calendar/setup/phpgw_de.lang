@@ -1,22 +1,41 @@
 (for weekly)	calendar	de	(für wöchentlich)
+(i/v)Cal	calendar	de	[iv]Cal
 1 match found	calendar	de	1 Treffer gefunden
+accept	calendar	de	Zusagen
+accepted	calendar	de	Zugesagt
+added	calendar	de	Neuer Termin
 alarm management	calendar	de	Alarm Management
+alarms	calendar	de	Alarme
+all day	calendar	de	ganztägig
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
+back	calendar	de	zurück
 brief description	calendar	de	Kurzbeschreibung
 calendar	common	de	Kalender
-calendar preferences	common	de	Kalender Einstellungen
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
-calendar holiday management	admin	Kalender Ferien-Verwaltung
+calendar - [iv]cal importer	calendar	de	Kalendar - [iv]Cal Importieren
+calendar event	calendar	de	Kalender Aktualisierung
+calendar holiday management	admin	de	Feiertage verwalten
+calendar preferences	common	de	Kalender Einstellungen
+calendar settings	admin	de	Kalender Einstellungen
+choose the category	calendar	de	Kategorie auswählen
+countries	calendar	de	Länder
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
 days repeated	calendar	de	wiederholte Tage
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
-Display interval in Day View	calendar	de	Intervall der Tagesansicht
+deleted	calendar	de	Abgesagt
+description	calendar	de	Beschreibung
+display interval in day view	calendar	de	Intervall der Tagesansicht
+display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
+display status of events	calendar	de	Status von Terminen anzeigen
+do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 duration	calendar	de	Dauer
 end date/time	calendar	de	Enddatum/-zeit
+enter output filename: ( .vcs appended )	calendar	de	Namen der Ausgabedatei (.vcs angehangen)
+event details follow	calendar	de	Details zum Termin folgen
 export	calendar	de	Exportieren
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
@@ -28,11 +47,22 @@ global public and group public	calendar	de	Global &Ouml;ffentlich und Gruppen-&O
 global public only	calendar	de	nur Global &Ouml;ffentlich
 go!	calendar	de	Go!
 grant calendar access	common	de	Berechtigungen f&uuml;r Kalenderzugriffe
+has been canceled	calendar	de	wurde abgesagt
+has been rescheduled to	calendar	de	wurde verschoben auf
+high	calendar	de	hoch
+holiday	calendar	de	Feiertag
+holidays	calendar	de	Feiertage
 i participate	calendar	de	Ich nehme teil
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
+interval	calendar	de	Interval
+load [iv]cal	calendar	de	[iv]Cal Laden
+location	calendar	de	Ort
+location to autoload from	admin	de	Von wo sollen sie geladen werden
+low	calendar	de	niedrig
 minutes	calendar	de	Minuten
 mo	calendar	de	Mo
+modified	calendar	de	Geändert
 mon	calendar	de	Mo
 month	calendar	de	Monat
 monthly	calendar	de	Monatlich
@@ -40,30 +70,60 @@ monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 new entry	calendar	de	Neuer Eintrag
 no matches found.	calendar	de	Keine Treffer gefunden.
+no response	calendar	de	Keine Antwort
+normal	calendar	de	normal
+number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag im Planer
+number of months	calendar	de	Anzahl Monate
+observance rule	calendar	de	Observance Rule
+occurence	calendar	de	Wiederholung
+on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
+participant	calendar	de	Teilnehmer
 participants	calendar	de	Teilnehmer
+participates	calendar	de	nimmt teil
+planner	calendar	de	Planer
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	de	Bitte den entsprechenden Eintrag im Ihrem Kalendar bestätigen, zusagen, absagen oder die Änderungen beachten
+planner by category	calendar	de	Planer nach Kategorien
+planner by user	calendar	de	Planer nach Benutzern
+preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
+print calendars in black & white	calendar	de	Kalender in Schwarz und Weiß drucken
 printer friendly	calendar	de	Drucker-freundlich
+private only	calendar	de	nur private
 re-edit event	calendar	de	Event erneut bearbeiten
+receive extra information in event mails	calendar	de	Zusätzliche Informationen bei EMail-Benachrichtigung
+refresh	calendar	de	Aktualisieren
+reject	calendar	de	Absagen
+rejected	calendar	de	Abgesagt
 repeat day	calendar	de	Wiederholungstag
 repeat end date	calendar	de	Enddatum
 repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
 repetition	calendar	de	Repetition
+reset	calendar	de	Zurücksetzen
 sa	calendar	de	Sa
 sat	calendar	de	Sa
+scheduling conflict	calendar	de	Terminüberschneidung
 search results	calendar	de	Suchergebnisse
 send updates via email	common	de	Updates via EMail senden
-show day view on main screen	calendar	de	Tagesübersicht auf der Startseite anzeigen
+send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
+show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
+sort by	calendar	de	Sortieren nach
 start date/time	calendar	de	Startdatum/-zeit
+start- and enddates	calendar	de	Start- und Enddatum/-zeit
 su	calendar	de	So
+submit to repository	calendar	de	Übertragen zu phpGroupWare.org
 sun	calendar	de	So
+tentative	calendar	de	Vorläufige Zusage
+text	calendar	de	Text
 th	calendar	de	Do
 the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 this month	calendar	de	Dieser Monat
-this week 	calendar	de	Diese Woche
+this week	calendar	de	Diese Woche
+this year	calendar	de	Dieses Jahr
 thu	calendar	de	Do
 today	calendar	de	Heute
 tu	calendar	de	Di
 tue	calendar	de	Di
+updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 view this entry	calendar	de	Diesen Eintrag anzeigen
 we	calendar	de	Mi
@@ -71,47 +131,19 @@ wed	calendar	de	Mi
 week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
+when creating new events default set to private	calendar	de	neue Termine sind privat
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 x matches found	calendar	de	%1 Treffer gefunden
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
 you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher Priorität auf Ihrer Liste!
-you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
+you have a meeting scheduled for	calendar	de	Sie haben einen Termin am
+you have not entered a title	calendar	de	Sie haben keinen Titel angegeben
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
 you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
+you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you must enter one or more search keywords	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben
+your meeting scheduled for	calendar	de	Ihr Termin am
+your meeting that had been scheduled for	calendar	de	Ihr Termin am
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:
-Calendar Holiday Management	admin	de	Feiertage verwalten
-Countries	calendar	de	Länder
-Holidays	calendar	de	Feiertage
-Back	calendar	de	zurück
-Holiday	calendar	de	Feiertag
-Reset	calendar	de	Zurücksetzen
-Occurence	calendar	de	Wiederholung
-Observance Rule	calendar	de	Observance Rule
-You have not entered a title	calendar	de	Sie haben keinen Titel angegeben
-Choose the category	calendar	de	Kategorie auswählen
-Participates	calendar	de	nimmt teil
-Scheduling Conflict	calendar	de	Terminüberschneidung
-Accepted	calendar	de	Zugesagt
-No Response	calendar	de	Keine Antwort
-Participant	calendar	de	Teilnehmer
-Accept	calendar	de	Zusagen
-Reject	calendar	de	Absagen
-Tentative	calendar	de	Vorläufige Zusage
-Calendar settings	calendar	de	Kalendar Einstellungen
-Do you wish to autoload calendar holidays files dynamically?	calendar	de	Sollen die Feiertage automatisch geladen werden?
-Location to autoload from	calendar	de	Wo sollen sie geladen werden
-Send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
-Display status of events	calendar	de	Status von Terminen anzeigen
-When creating new events default set to private	calendar	de	neue Termine sind privat
-Display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
-Print calendars in black & white	calendar	de	Kalender in Schwarz und Weiß drucken
-Normal	calendar	de	normal
-normal	calendar	de	normal
-low	calendar	de	niedrig
-high	calendar	de	hoch
-Location	calendar	de	Ort
-Updated	calendar	de	Aktualisiert
-Interval	calendar	de	Interval

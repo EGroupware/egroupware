@@ -25,6 +25,7 @@ days repeated	calendar	en	days repeated
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 deleted	calendar	en	Deleted
+description	calendar	en	DESCRIPTION
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
 display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
@@ -34,6 +35,7 @@ edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
 end date/time	calendar	en	End Date/Time
 ends	calendar	en	ends
+event details follow	calendar	en	Event Details Follow
 export	calendar	en	Export
 (for weekly)	calendar	en	(for Weekly)
 fr	calendar	en	F
@@ -68,10 +70,14 @@ new entry	calendar	en	New Entry
 no matches found.	calendar	en	No matches found.
 no response	calendar	en	No Response
 number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
+number of months	calendar	en	Number of months
+on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
 planner	calendar	en	Planner
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	en	Please confirm, accept, reject or examine changes in the corresponding entry in your calendar
+preselected group for entering the planner	calendar	en	Preselected group for entering the planner
 print calendars in black & white	calendar	en	Print calendars in black & white
 printer friendly	calendar	en	Printer Friendly
 private and global public	calendar	en	Private and Global Public
@@ -95,7 +101,9 @@ send updates via email	common	en	Send updates via EMail
 show default view on main screen	calendar	en	Show default view on main screen
 show high priority events on main screen	calendar	en	Show high priority events on main screen
 sorry, the owner has just deleted this event	calendar	en	Sorry, the owner has just deleted this event
+sort by	calendar	en	Sort by
 start date/time	calendar	en	Start Date/Time
+start- and enddates	calendar	en	Start- and Enddates
 su	calendar	en	Su
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
@@ -106,6 +114,7 @@ this month	calendar	en	This month
 this week	calendar	en	This week
 this year	calendar	en	This year
 thu	calendar	en	Thu
+title	calendar	en	TITLE
 today	calendar	en	Today
 tu	calendar	en	T
 tue	calendar	en	Tue
