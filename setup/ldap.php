@@ -27,7 +27,7 @@
   $common = new common;
   $phpgw_setup->loaddb(); 
 
-  $phpgw_setup->db->query("select config_name,config_value from config where config_name like 'ldap%'",__LINE__,__FILE__);
+  $phpgw_setup->db->query("select config_name,config_value from phpgw_config where config_name like 'ldap%'",__LINE__,__FILE__);
   while ($phpgw_setup->db->next_record()) {
      $config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
   }
@@ -120,7 +120,7 @@
   }
 
   if ($setup_complete) {
-     $phpgw_setup->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
+     $phpgw_setup->db->query("select config_value from phpgw_config where config_name='webserver_url'",__LINE__,__FILE__);
      $phpgw_setup->db->next_record();
      echo '<br><center>Setup has been completed!  Click <a href="' . $phpgw_setup->db->f("config_value")
         . '/login.php">here</a> to login</center>';
