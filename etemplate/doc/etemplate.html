@@ -3,10 +3,17 @@
 <html>
 <head>
   <title>phpGroupware: eTemplates - Templates and Dialog-Editor</title>
+<STYLE type="text/css">
+<!--
+pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-width: thin; border-style: solid; border-color: black; white-space: pre; }
+span { color: darkblue; font-family: sans-serife; }
+li { margin-top: 5px; }
+-->
+</STYLE>
 </head>
 <body>
 <h1>eTemplate - Templates and Dialog-Editor for phpGroupware</h1>
-<h3>RalfBecker@outdoor-training.de</h3>
+<h3>by Ralf Becker <a href="mailto:RalfBecker@outdoor-training.de">RalfBecker@outdoor-training.de</a></h3>
 <p>A developers tutorial how to write an application with the new eTemplates.<br>
 It is also an introduction how to write a phpgw- and setup(3)-compatible app.</p>
 <hr>
@@ -30,7 +37,7 @@ The eTemplates
 	<li>they are stored in an array and in serialized form in the db-table 'phpgw_etemplate'
 	<li>the dialog editor can dump all templates of an app for distribution (so they can be in the CVS too)
 	<li>they encapsulate differnt UI (User Interface) types from the app: at the moment only a HTML one is ready,
-	but a GTK one (using php-gtk, <b>running as native app under linux and win32</b>) and XUL is planed.
+	but a GTK one (using php-gtk, <b>running as native app under linux and win32</b>) and XUL is under development.
 </ul>
 <hr>
 <h1>Tutorial / Example: a simple media database</h1>
@@ -44,12 +51,12 @@ enable your account for using the app (Admin/User account: check eTemplates).</p
 <h2>1. Creating a new phpgw app directory</h2>
 <p>Each app need a name, eg. 'et_media'. We now need to create the following directory structur above the phpgroupware dir:
 <pre>
-et_media				(that has to be identical to our app-name)
-	+ setup				(files necessary for the setup Programm, give the webserver write-permission to that dir)
-	+ inc				(class-files)
-	+ templates			(templates, still need to store the images and get around a lot of complains from the api)
+et_media				<span>that has to be identical to our app-name</span>
+	+ setup				<span>files necessary for the setup Programm, give the webserver write-permission to that dir</span>
+	+ inc				<span>class-files</span>
+	+ templates			<span>templates, still needed to store the images and get around a lot of complains from the api</span>
 		+ default
-			+ images	(here goes our images / icons)
+			+ images	<span>here goes our images / icons</span>
 </pre>
 
 <h2>2. registering the app manualy</h2>
@@ -70,23 +77,24 @@ et_media				(that has to be identical to our app-name)
 	$setup_info['et_media']['name']      = 'et_media';
 	$setup_info['et_media']['title']     = 'eT-Media';
 	$setup_info['et_media']['version']   = '0.9.15.001';
-	$setup_info['et_media']['app_order'] = 100;	// at the end
+	$setup_info['et_media']['app_order'] = 100;		<span>// at the end</span>
 	$setup_info['et_media']['tables']    = array('phpgw_et_media');
 	$setup_info['et_media']['enable']    = 1;
 
-	/* Dependacies for this app to work */
+	<span>/* Dependacies for this app to work */</span>
 	$setup_info['et_media']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
-	$setup_info['et_media']['depends'][] = array(	// this is only necessary as long the etemplate-class is not in the api
+	$setup_info['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
 		 'appname' => 'etemplate',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
 </pre>
 
 <h2>4. setting up the db-table with the db_tools and setup</h2>
-<p>To enable setup to create a db-table for us, we need to define the fields we want.<br>
+<p>To enable setup to create a db-table for us and to supply the <b>so_sql</b>-class with the necessary information, we need to define
+the type and size of the fields / columns in our db-table.<br>
 We can use the db-Tools from the etemplate app to create the file for us:</p>
 
 <img src="db_tools.gif">
@@ -94,7 +102,7 @@ We can use the db-Tools from the etemplate app to create the file for us:</p>
 <ol>
 	<li>start the etemplate app and click on the button up, right which says db-Tools
 	<li>select Application: eT-Media
-	<li>type: phpgw_et_media in the field in front of the [Add Table] button and click on the button
+	<li>type 'phpgw_et_media' in the field in front of the [Add Table] button and click on the button
 	<li>now use [Add Column] to create the necessary fields as shown on the screenshot
 	<li>Click on [Write Table] (If you get the error-message like in the screenshot, you need to give the webserver write-permission
 	to the setup-dir of et_media, leave the write-permission as it is necessary later on too, click on write again)
@@ -107,12 +115,14 @@ We can use the db-Tools from the etemplate app to create the file for us:</p>
 
 <h2>5. creating an eTemplates for the edit-dialog</h2>
 <p>Now we need a nice edit dialog and use the eTemplate editor to set it up:</p>
+
 <img src="editor.gif">
+
 <ol>
 	<li>start the etemplate app and type <b>'et_media.edit'</b> in the name field
 	<li>enter the field-types and other data as shown above
 	<li>click on the [+] in the first column of the last row to add more rows
-	<li>click on save to save the dialog / template
+	<li>click on [Save] to save the dialog / template
 	<li>you can use [Show (no save)] to have a look at it:<p>
 </ol>
 
@@ -122,6 +132,7 @@ We can use the db-Tools from the etemplate app to create the file for us:</p>
 <h2>6. setting up the index page</h2>
 <p>The index page is only used if someone clicks on the navbar icon (or on the black cross as we haven't supplied one so far).<br>
 Create the file <b>/et_media/index.php</b> with the following content:</p>
+
 <pre>
 &lt;?php
 	$GLOBALS['phpgw_info']['flags'] = array(
@@ -140,118 +151,187 @@ Create the file <b>/et_media/index.php</b> with the following content:</p>
 
 <h2>7. the code of class.et_media.inc.php</h2>
 <p>As a first step, we only save new entries. The code of the app is in <b>/et_media/inc/class.et_media.inc.php</b>:</p>
+
 <pre>
 &lt;?php
-	/**************************************************************************\
-	* phpGroupWare - eTemplates - Tutoria Example - a simple MediaDB           *
-	* http://www.phpgroupware.org                                              *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+<span>/**************************************************************************\
+* phpGroupWare - eTemplates - Tutoria Example - a simple MediaDB           *
+* http://www.phpgroupware.org                                              *
+* Written by Ralf Becker &lt;RalfBecker@outdoor-training.de>                  *
+* --------------------------------------------                             *
+*  This program is free software; you can redistribute it and/or modify it *
+*  under the terms of the GNU General Public License as published by the   *
+*  Free Software Foundation; either version 2 of the License, or (at your  *
+*  option) any later version.                                              *
+\**************************************************************************/</span>
 
-	/* $Id$ */
+<span>/* $Id$ */</span>
 
-	if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['so_sql']))
+if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['so_sql']))
+{
+	include(PHPGW_API_INC . '/../../etemplate/inc/class.so_sql.inc.php');
+	$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
+}
+</pre>
+
+<p>This loads the class so_sql, in a way that more than one class may use it (would be nice if we had an api-function for that).</p>
+
+<pre>
+class et_media extends so_sql
+{
+	var $messages = array(
+		'nothing_found' => 'Nothing matched search criteria !!!',
+		'anz_found' => '%d matches on search criteria',
+		'saved' => 'Entry saved',
+		'error_writeing' => 'Error: writeing !!!'
+	);
+	var $types = array(
+		'' => 'Select one ...',
+		'cd' => 'Compact Disc',
+		'dvd' => 'DVD',
+		'book' => 'Book',
+		'video' => 'Video Tape'
+	);
+</pre>
+
+<p>These are a few messages to show the user what happend, we show it via 'msg' in content in the first Label-field after the app-title.<br>
+As one of the messages contain a %s to be used with sprintf, we have to run them manualy through lang().</p>
+
+<pre>
+	function et_media($lang_on_messages = True)
 	{
-		include(PHPGW_API_INC . '/../../etemplate/inc/class.so_sql.inc.php');
-		$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
-	}
+		$this->tmpl = CreateObject('etemplate.etemplate','et_media.edit');
 
-	class et_media extends so_sql
-	{
-		var $messages = array(
-			'nothing_found' => 'Nothing matched search criteria !!!',
-			'anz_found' => '%d matches on search criteria',
-			'saved' => 'Entry saved',
-			'error_writeing' => 'Error: writeing !!!'
-		);
-		var $types = array(
-			'' => 'Select one ...',
-			'cd' => 'Compact Disc',
-			'dvd' => 'DVD',
-			'book' => 'Book',
-			'video' => 'Video Tape'
+		$this->so_sql('et_media','phpgw_et_media');	<span>// sets up our storage layer using the table 'phpgw_et_media'</span>
+		$this->empty_on_write = "''";		<span>// what to write in the db, if a column is empty, the default is NULL</span>
+
+		$this->public_functions += array(	<span>// this function can be called external, eg. by /index.php?menuaction=...</span>
+			'edit' => True,
+			'writeLangFile' => True
 		);
 
-		function et_media($lang_on_messages = True)
+		if ($lang_on_messages)			<span>// run all our messages throug lang</span>
 		{
-			$this->tmpl = CreateObject('etemplate.etemplate','et_media.edit');
-
-			$this->so_sql('et_media','phpgw_et_media');	// sets up our storage layer using the table 'phpgw_et_media'
-			$this->empty_on_write = "''";	// that means if a column is empty how to write in the db, the default is NULL
-
-			$this->public_functions += array(
-				'edit' => True,
-				'writeLangFile' => True
-			);
-
-			if ($lang_on_messages)
-			{
-				reset($this->messages);
-				while (list($key,$msg) = each($this->messages))
-					$this->messages[$key] = lang($msg);
-			}
-		}
-
-		function edit($content='',$msg = '')
-		{
-			if (is_array($content))	// not first call from index
-			{
-				if ($content['id'] > 0)
-				{
-					$this->read($content);
-				}
-				$this->data_merge($content);
-
-				if (isset($content['save']))
-				{
-					$msg .= $this->messages[!$this->save() ? 'saved' : 'error_writeing'];
-				}
-				elseif (isset($content['read']))
-				{
-					unset($content['id']);
-					$found = $this->search($content,False,'name,author');
-
-					if (!$found)
-					{
-						$msg .= $this->messages['nothing_found'];
-					}
-					else
-					{
-						$this->init($found[0]);
-					}
-				}
-			}
-
-			// now we filling the content array for the next call to etemplate.exec
-
-			$content = $this->data + array(
-				'msg' => $msg
-			);
-			$sel_options = array(
-				'type' => $this->types
-			);
-			$no_button = array(
-				'delete' => !$this->data[$this->db_key_cols[$this->autoinc_id]]
-			);
-			$this->tmpl->exec('et_media.et_media.edit',$content,$sel_options,$no_button,array(
-				'id' => $this->data['id']
-			));
+			reset($this->messages);
+			while (list($key,$msg) = each($this->messages))
+				$this->messages[$key] = lang($msg);
 		}
 	}
 </pre>
 
-<h2>8. adding the search-function and a list-dialog</h2>
-<p>As saveing and reading of entries is working now we want to search for an entry and show a list of the result (if it's more than one).<br>
-First we need to create an other eTemplate to show the list: <b>'et_media.show'</b></p>
+<p>This is the contructor of the class, it does the following for us:
+<ol>
+	<li>creates a eTemplate object and load direct our 'et_media.show' template via the constructor
+	<li>set up our storage-layer, this is the <b>so_sql</b> class we are extending.<br>
+		<b>so_sql</b> provides basic functions to read, write, delete and search records in a sql-database.
+		It get's the information it needs about the structure of our table from the tables_current-file we created with the db-tools.
+	<li>set up / extends from so_sql the public_functions array, all functions called which should be called by links or as methode,
+		like our callbacks, need to be listed here.
+	<li>run our messages through lang() if we are not called with False (see later)
+</ol>
+
+<pre>
+	function edit($content='',$msg = '')
+	{
+		if (is_array($content))	<span>// we are called as callback for the dialog / form</span>
+		{
+			if ($content['id'] > 0)		<span>// if we have an id --> read the entry</span>
+			{
+				$this->read($content);
+			}
+			$this->data_merge($content);	<span>// merge content with our internal data-array ($this->data)</span>
+
+			if (isset($content['save']))	<span>// save the entry ($this->data)</span>
+			{
+				$msg .= $this->messages[!$this->save() ? 'saved' : 'error_writeing'];
+			}
+			elseif (isset($content['read']))
+			{
+				unset($content['id']);					<span>// not set by user, so dont use for seach</span>
+				$found = $this->search($content,False,'name,author');	<span>// searches by using the no-empty fields</span>
+
+				if (!$found)			<span>// search returned empty</span>
+				{
+					$msg .= $this->messages['nothing_found'];
+				}
+				else
+				{
+					$this->init($found[0]);	<span>// set data-array with the content of the first match</span>
+				}
+			}
+		}
+
+		<span>// now we filling the content array for the next call to etemplate.exec</span>
+
+		$content = $this->data + array(	<span>// the content to be merged in the template</span>
+			'msg' => $msg
+		);
+		$sel_options = array(		<span>// the options for our type selectbox</span>
+			'type' => $this->types
+		);
+		$no_button = array(		<span>// button not to show</span>
+		);
+		$preserv = array(		<span>// this data is preserved over the exec-call (like a hidden input-field in form)</span>
+				'id' => $this->data['id']
+		);
+		$this->tmpl->exec(
+			'et_media.et_media.edit',	<span>// setting this function as callback for the dialog</span>
+			$content,$sel_options,$no_button,$preserv
+		);
+	}
+}
+</pre>
+
+<p>The edit function is called from our index.php file or as callback for this form / dialog. In that case $content is an array
+with the content the user put into the fields of the dialog.</p>
+<p>Let first have a look what happend if we called the first time (or what we do to show the dialog again with the changed data):<br>
+<ol>
+	<li>the $content array is set up with our internal data-array (which is empty on the first call) and the message
+	<li>$sel_options has the options for our selectbox: the options are an array where the keys are the values returned by the selectbox
+		and the values are what the selectbox shows to the user. As we can have more than one selectbox in a dialog, the key in
+		$sel_options need to be the same as the name of the selectbox.
+	<li>$readonlys: if a fieldname is set in $readonlys to True, its content is showed readonly (for regular fields like type Text)
+		or left out for buttons (we use this later to show the delete-button only when an entry is loaded)
+	<li>the array $preserv is preserved, which means its stored in the app's session-data and is delivered back like the content of the
+		fields to the callback-function. We use it here to store the id of the entry. This is similar to use a hidden input-field in a
+		form, but it does not need to be serialized by the app and is NOT transmitted to the user and back.
+	<li>at last we call etemplate::exec to show the template with the content from $content and set the function itself as callback
+		for the dialog / form.
+</ol>
+<p>Now let's have a look what happens if the user submits the form and our callback is called:
+<ol>
+	<li>the callback (this function) is not the submit-address of the form, the form get's always submitted to the function
+		<b>process_exec</b> of the etemplate class. This function changes for some field-types the content (eg. a date-field consists
+		of 3 single fields, process_exec takes care that it is delivered back as timestamp, as we set it in content before). It can
+		even submit the form back to the user if for a address-selection a search for a pattern has to be performed and the matches
+		are shown to the user. In this case the callback is NOT called. The same is true if an int field contains letters or is not
+		within the minimum or maximum set. <i>Not all of the is allready working, it will follow in the next days/weeks.</i><br>
+		For the specialist process_exec uses $GLOBALS['HTTP_POST_VARS'] and ignores HTTP_GET_VARS set as query in the url.
+	<li>the so_sql function data_merge, copies all values from $content, which are columns in the db-table, in our internal data array.
+		Values which are not real data, like buttons pressed are not copied (!).
+	<li>if $content['save'] is set, the [Save] button has been pressed ('save' is the name NOT the label of the save button), in that
+		case we use so_sql's save function to save the content of our internal data-array to the db.
+	<li>the same check is used for the [Read]: we uses the content of all fields to search db for matching entries. The user can use
+		wildcards to perform a search on all field. The wildcards are '*' and '?', so_sql translates them into sql-wildcards.
+	<li>if the search return False we just set our message var.
+	<li>if something is found we use so_sql's init-function to set the data of the first match. Lateron we will show a list if
+		more than one entry is found.
+	<li>after that the content array is filled again as discriped above.
+</ol>
+
+<p>Now we are able to store entries in the db and retrive them by searching the database for patterns in the different fields.<br>
+We are only lacking some way to show if we get more than one match on a search, that's what we are going to implement next:</p>
+
+<h2>8. adding a list-dialog for the search-function</h2>
+<p>First we need to create an other eTemplate to show the list: <b>'et_media.show'</b></p>
+
 <img src="list.gif">
+
 <p>As you see the templates includes an other template: <b>'et_media.show.rows'</b></p>
+
 <img src="rows.gif">
-<p>We need some code in the class to call the template and fill the content:</p>
+
+<p>We need some code / a function in the class to call the template and fill the content:</p>
 
 <pre>
 	function show($found)
@@ -261,68 +341,99 @@ First we need to create an other eTemplate to show the list: <b>'et_media.show'<
 			$this->edit();
 			return;
 		}
-		reset($found);
+		reset($found);		<span>// create array with all matches, indexes starting with 1</span>
 		for ($row=1; list($key,$data) = each($found); ++$row)
 		{
 			$entry[$row] = $data;
 		}
 		$content = array(
 			'msg' => sprintf($this->messages['anz_found'],count($found)),
-			'entry' => $entry
+			'entry' => $entry		<span>// et_media.show.rows uses this, as we put 'entry' in the size-field</span>
 		);
-		$this->tmpl->read('et_media.show');
+		$this->tmpl->read('et_media.show'); 	<span>// read the show-template</span>
 
-		$this->tmpl->exec('et_media.et_media.edit',$content);
+		$this->tmpl->exec('et_media.et_media.edit',$content);	<span>// exec it with the edit-function as callback</span>
 	}
 </pre>
+
+<p>This function is called by edit with the matches of a search:</p>
+<ol>
+	<li>We build an array with all the matches, the index in that array is the row-number starting with 1 (!).<br>
+		$entry = array('empty') + $found; would do the same.
+	<li>$content contains again 'msg' which we set to the number of entris found and the above array with the data of all rows under
+		the key 'entry', as we put that in Size for the field loading the sub-template 'et_media.show.rows'. It not necessary to
+		put something in Size-field / use a sub-array for a sub-template, but it can be very helpful to organize a complex content-array.
+		(As an exercice you can remove 'entry' from the Size-field and change the function arrcordingly).
+	<li>we now explizitly read the template 'et_media.show' (the constructor reed 'et_media.edit') and execute it again with
+		the edit function as callback (because of that, show does NOT need to be listed in public_functions)
+</ol>
 
 <p>To call the show function, we need to make some changes to the edit-function too:</p>
 
 <pre>
-				elseif (isset($content['read']))
-				{
-					unset($content['id']);
-					$found = $this->search($content,False,'name,author');
+			elseif (isset($content['read']))
+			{
+				unset($content['id']);					<span>// not set by user, so dont use for seach</span>
+				$found = $this->search($content,False,'name,author');	<span>// searches by using the no-empty fields</span>
 
-					if (!$found)
-					{
-						$msg .= $this->messages['nothing_found'];
-					}
-					elseif (count($found) == 1)
-					{
-						$this->init($found[0]);
-					}
-					else
-					{
-						$this->show($found);
-						return;
-					}
-				}
-				elseif (isset($content['entry']['edit']))
+				if (!$found)	<span>// search returned empty</span>
 				{
-					list($id) = each($content['entry']['edit']);
-					if ($id > 0)
-					{
-						$this->read(array('id' => $id));
-					}
+					$msg .= $this->messages['nothing_found'];
 				}
+				elseif (count($found) == 1)		<span>// only one match --> show it in the editor</span>
+				{
+					$this->init($found[0]);
+				}
+				else					<span>// multiple matches --> use the show function/template</span>
+				{
+					$this->show($found);
+					return;
+				}
+			}
+			elseif (isset($content['entry']['edit']))	<span>// the callback from for the show function/template</span>
+			{						<span>// the id is set via the button name of '$row_cont[id]'</span>
+				list($id) = each($content['entry']['edit']);	<span>// note its not only ['edit'] !!!</span>
+				if ($id > 0)
+				{
+					$this->read(array('id' => $id));
+				}
+			}
 </pre>
+
+<ol>
+	<li>the first part should be self-explaining, we call show with $found if it contain more than one entry.
+	<li>The show function uses edit as callback, the [Edit] buttons in each row has 'edit[$row_cont[id]]' as name. If an [Edit] button is
+		pressed $content['entry']['edit'] is set to the id of the entry of that row. We use that id to read the whole entry.
+</ol>
 
 <p>While makeing this changes we can add a [Cancel] and [Delete] button too:</p>
 
 <pre>
-				elseif (isset($content['cancel']))
-				{
-					$this->init();
-				}
-				elseif (isset($content['delete']))
-				{
-					$this->delete();
-					$this->init();
-				}
+			elseif (isset($content['cancel']))
+			{
+				$this->init();
+			}
+			elseif (isset($content['delete']))
+			{
+				$this->delete();
+				$this->init();
+			}
+
+
+		$no_button = array(	<span>// no delete button if id == 0 --> entry not saved</span>
+			'delete' => !$this->data[$this->db_key_cols[$this->autoinc_id]]
+		);
 </pre>
 
-<p>Of course we have to add this buttons to the template 'et_media.edit'</p>
+<ol>
+	<li>on cancel we just clear the internal data-array with so_sql's init function.
+	<li>on delete we have to call so_sql's delete before (it deletes the db-row coresponding with our internal data-array)
+	<li>the last block checks if the id field is set (it can only be set by a read or save) and disables the [Delete] button if not
+		($this->db_key_cols[$this->autoinc_id] == 'id').
+</ol>
+
+<p>Of course we have to add this buttons to the template 'et_media.edit'. I trust you can add 2 Submitbuttons with the names
+'cancel' and 'delete', a Label and a nice helpmessages by now without looking at a screenshot ;-).</p>
 
 <h2>9. creating the english lang-file</h2>
 <p>To get rid of the stars '*' behind each Label and to be able to translate the app in other languages we need to create a lang-file<br>
@@ -335,14 +446,36 @@ There are 2 possibilties to create it automaticaly:</p>
 	http://ourDomain/phpgroupware/index.php?menuaction=et_media.et_media.writeLangFile (the errormsg can be savely ignored)<br>
 	This is the function (don't forget to add it like the edit-function to public_functions):
 </ol>
+
 <pre>
 	function writeLangFile()
 	{
-		$etm = new et_media(False);	// no lang on messages
+		$etm = new et_media(False);	<span>// no lang() on messages</span>
 
 		$this->tmpl->writeLangFile('et_media','en',$etm->messages);
 	}
 </pre>
+
+<h2>10. dumping the eTemplate to a file for distribution</h2>
+<p>To be able to put the eTemplates in CVS and to ship them with your app, you need to dump them in a file first.
+<p>This is done in the eTemplate editor by putting the app-name or an template-name in the Name field and clicking on the button
+[Dump4Setup]. This creates the file <b>et_media/setup/etemplates.inc.php</b>. The etemplate-class loads this file whenever it finds
+a new version automaticaly.</p>
+
+<h2>11. further information</h2>
+<ol>
+	<li>for all functions and parameters of the <b>etemplate</b>-class look in the comments (yes there are comments) of the files:
+		<ul>
+			<li>class.uietemplate.inc.php for the exec function
+			<li>class.boetemplate.inc.php for the variable replacement in names and about the autorepeat rows and columns
+			<li>class.soetemplate.inc.php for writeLangFile and all functions to read, store and dump an eTemplate
+		</ul>
+	<li>for all functions and parameters of the <b>so_sql</b>-class look in the comments of the file class.so_sql.inc.php
+	<li>for setup, the necessary files of an app or the format of tables_current.inc.php look at the exelent
+		<a href="../../setup/doc/setup3.html">docu of setup3</a> in the doc-dir of the setup app.
+</ol>
+
+<h2><i>That's it</i> - please <a href="mailto:RalfBecker@outdoor-training.de">contact me</a> if you have further questions or comments about the tutorial</h2>
 
 </body>
 </html>
