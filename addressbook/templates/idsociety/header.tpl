@@ -14,7 +14,7 @@
   </form>
 {search_filter}
 
-<table width=75% border=0 cellspacing=1 cellpadding=3>
+<table width=75% border=1 cellspacing=1 cellpadding=3>
 <tr bgcolor="{th_bg}">
 {cols}
   <td width="3%" height="21">
