@@ -3,7 +3,8 @@
 '{img_root}/log_out_over.gif',
 '{img_root}/preferences_over.gif',
 '{img_root}/help-over.gif',
-'{img_root}/welcome_over.gif')">
+'{img_root}/welcome_over.gif')"
+ background="{img_root}/content_spacer_middle.gif">
   <!-- the above is the continuation and finishing if the < body > element started in head.tpl
   the margin items could be merged into head, as head already supplies some
   the variables for onLoad are set in navbar -->
@@ -29,7 +30,8 @@
    </TABLE>
 
   </td>
-  <td width="100%" valign="top" background="{img_root}/content_spacer_middle.gif"><!-- top right table -->
+  <td width="100%" valign="top"> <!-- top right table -->
+  <!-- this TD background image moved to body element -->
    <TABLE BORDER="0" WIDTH="100%" HEIGHT="" CELLPADDING="0" CELLSPACING="0">
     <TR>
      <TD valign="top" width="12" height="58" background="{img_root}/nav_top_spacer.gif"><img src="{img_root}/em.gif"></TD>
