@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog Links                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog Links                                               *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -20,10 +20,10 @@
 	@class bolink
 	@author ralfbecker
 	@copyright GPL - GNU General Public License
-	@abstract generalized linking between entries of phpGroupware apps - BO layer
+	@abstract generalized linking between entries of eGroupware apps - BO layer
 	@discussion This class is the BO-layer of the links<br>
 		Links have two ends each pointing to an entry, each entry is a double:<br>
-		app   app-name or directory-name of an phpgw application, eg. 'infolog'<br>
+		app   app-name or directory-name of an egw application, eg. 'infolog'<br>
 		id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'<br>
 		The BO-layer implementes 2 extra features on top of the so-layer:<br>
 		1) It handles links to not already existing entries. This is used by the eTemplate link-widget, which allows to

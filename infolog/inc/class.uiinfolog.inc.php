@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog                                                   *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog                                                     *
+	* http://www.egroupware.org                                               *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
@@ -655,7 +655,7 @@
 		/*!
 		@function writeLangFile
 		@abstract writes langfile with all templates and messages registered here
-		@discussion called via [write Langfile] in the etemplate-editor or as http://domain/phpgroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
+		@discussion called via [write Langfile] in the etemplate-editor or as http://domain/egroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
 		*/
 		function writeLangFile()
 		{

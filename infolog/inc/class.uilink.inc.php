@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog Links                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog Links                                               *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -17,7 +17,7 @@
 	/*!
 	@class uilink
 	@author ralfbecker
-	@abstract generalized linking between entries of phpGroupware apps - HTML UI layer
+	@abstract generalized linking between entries of eGroupware apps - HTML UI layer
 	@discussion This class is the UI to show/modify the links
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
 	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'

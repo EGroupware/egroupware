@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog Links                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog Links                                               *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -17,10 +17,10 @@
 	@class solink
 	@author ralfbecker
 	@copyright GPL - GNU General Public License
-	@abstract generalized linking between entries of phpGroupware apps - DB layer
+	@abstract generalized linking between entries of eGroupware apps - DB layer
 	@discussion This class is to access the links in the DB<br>
 		Links have to ends each pointing two an entry, each entry is a double:<br>
-		app   app-name or directory-name of an phpgw application, eg. 'infolog'<br>
+		app   app-name or directory-name of an egw application, eg. 'infolog'<br>
 		id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	@note All vars passed to this class are run either through addslashes or intval 
 		to prevent query insertion and to get pgSql 7.3 compatibility.
