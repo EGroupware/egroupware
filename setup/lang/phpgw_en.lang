@@ -94,6 +94,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
+image type selection order	setup	en	Image type selection order
 import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the phpGroupWare accounts table (for a new install using SQL accounts)
 import ldap users/groups	setup	en	Import LDAP users/groups
 insanity	setup	en	Insanity
