@@ -354,6 +354,7 @@
 			if (is_int($this->debug) && $this->debug >= 1 || $this->name && $this->debug == $this->name)
 			{
 				echo "<p>etemplate.show($this->name): $cname =\n"; _debug_array($content);
+				echo "readonlys="; _debug_array($readonlys);
 			}
 			if (!is_array($content))
 			{
@@ -1055,7 +1056,7 @@
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
 						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'border="0"');
 					$html .= $image;
-					$extra_link = $cell_options;
+					list($extra_link,$extra_link_target) = explode(',',$cell['size']);
 					$extra_label = False;
 					break;
 				case 'file':
@@ -1242,6 +1243,7 @@
 				{
 					$options = " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
 					$options .= " onMouseOut=\"self.status=''; return true;\"";
+					if ($extra_link_target) $options .= ' target="'.$extra_link_target.'"';
 					return $this->html->a_href($html,$extra_link,'',$help != '' ? $options : '');
 				}
 			}
