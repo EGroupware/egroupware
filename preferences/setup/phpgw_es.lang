@@ -16,9 +16,8 @@ note: this feature does *not* change your email password. this will need to be d
 please, select a new theme	preferences	es	Por favor, seleccione un nuevo tema
 re-enter your password	preferences	es	Re-Ingrese su contraseña
 select different theme	preferences	es	Seleccione un tema diferente
-show current users on navigation bar	preferences	es	Mostrar usuarios conectados es la barra de navegación
 select one	preferences	es	Seleccione uno
-your preferences	preferences	es	Sus Preferencias
+show current users on navigation bar	preferences	es	Mostrar usuarios conectados es la barra de navegación
 show navigation bar as	preferences	es	Mostrar barra de navegacion como
 show text on navigation icons	preferences	es	Mostrar descripción sobre los iconos
 text only	preferences	es	Solo texto
@@ -26,11 +25,6 @@ theme (colors/fonts) selection	preferences	es	Seleccion de Temas (colores/fuente
 the two passwords are not the same	preferences	es	Las dos contraseñas son distintas
 this server is located in the x timezone	preferences	es	Este servidor se encuentra es la zona horaria
 time format	preferences	es	Formato hora
-time zone offset	preferences	es	Zona horaria
-users choice	preferences	es	A eleccion del usuario
-weekday starts on	preferences	es	La semana comienza el
-work day ends on	preferences	es	Final día laboral
-work day starts on	preferences	es	Comienzo día laboral
 you must enter a password	preferences	es	Debe entrar una contraseña
 your current theme is: x	preferences	es	Su actual tema es:
 your preferences	preferences	es	Sus Preferencias

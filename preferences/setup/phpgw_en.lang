@@ -3,8 +3,10 @@ change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
 date format	preferences	en	Date format
 default application	preferences	en	Default application
+default preferences	preferences	en	Default Preferences
 edit custom fields	preferences	en	edit custom fields
 enter your new password	preferences	en	Enter your new password
+forced preferences	preferences	en	Forced Preferences
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
 interface/template selection	preferences	en	Interface/Template Selection
@@ -14,16 +16,18 @@ note: this feature does *not* change your email password. this will need to be d
 please, select a new theme	preferences	en	Please, select a new theme
 re-enter your password	preferences	en	Re-Enter your password
 select different theme	preferences	en	Select different Theme
+select one	preferences	en	Select one
 show current users on navigation bar	preferences	en	Show current users on navigation bar
 show navigation bar as	preferences	en	Show navigation bar as
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
+the two passwords are not the same	preferences	en	The two passwords are not the same
 this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
 time format	preferences	en	Time format
 your current theme is: x	preferences	en	</b>
 you must enter a password	preferences	en	You must enter a password
 your preferences	preferences	en	Your Preferences
-default preferences	preferences	en	Default Preferences
-forced preferences	preferences	en	Forced Preferences
-select one	preferences	en	Select one
+
+
+
