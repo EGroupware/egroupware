@@ -360,9 +360,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 
 <a name="widgets">
 <h2>standard widgets and extensions of the eTemplates</h2>
-<table border=1>
+<table border="1">
 <tr>
-	<th>Widget Name in Editor</th>
+	<th>Widget Name<br>in Editor</th>
 	<th>xml tag</th>
 	<th>xul</th>
 	<th>internal name</th>
@@ -441,7 +441,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
-	<td><b>Formatted Text (HTML)</b></td>
+	<td><b>Formatted Text</b><br>(HTML)</td>
 	<td>&lt;htmlarea /></td>
 	<td>no</td>
 	<td>htmlarea</td>
@@ -607,7 +607,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>Date-/Time-input</b> via selectboxes or a field for the year<br>
 		The order of the input-fields is determined by the prefs of the user.<br>
-		<b>Options</b>: [datetime-storage-format][,&1=year-no-selectbox|&2=today-button]<br>
+		<b>Options</b>: [datetime-storage-format] [,&1=year-no-selectbox|&2=today-button|&4=one-min-steps|&8=ro-suppress-0h0]<br>
 		<b>datetime-storage-format</b> is the format, in which the date is stored in the variable: 
 		empty means an unix-timestamp (in GMT), or a string containing the letters <b>Y</b>, <b>m</b>, 
 		<b>d</b>, <b>H</b>, <b>i</b> plus separators, eg. 'Y-m-d': 2002-12-31. The storage format 
@@ -617,6 +617,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 		select-year widget.<br>
 		<b>today-button</b>: if set (&2) a [Today] button is displayed which sets the fields to 
 		the up-to-date date (via javascript)<br>
+		<b>one-min-steps</b>: if set (&4) the minute-selectbox uses one minutes steps, default 5min steps<br>
+		<b>ro-suppress-0h0</b>: if set (&8) the time is suppressed for readonly and a time of 0h0<br>
 		<b>Sub-widgets</b>: <b>date-time</b>: a date and a time and <b>date-timeonly</b>: only a time<br>
 		These widgets allow the input of times too or only, they use 12h am/pm or 24h format as 
 		specified in the user prefs.<br>
@@ -783,13 +785,13 @@ function index($content = 0)
 	</td>
 </tr>
 <tr>
-	<td><b>Nextmatch-SortHeader</b><p><b>Nextmatch-FilterHeader</b></td>
+	<td><b>Nextmatch-<br>SortHeader</b><p><b>Nextmatch-<br>FilterHeader</b></td>
 	<td>
 		&lt;nextmatch type="nextmatch-sortheader" id="col-name" label="ColLabel"/><p>
 		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/>
 	</td>
 	<td>no</td>
-	<td>nextmatch-sortheader<p>nextmatch-filterheader</td>
+	<td>nextmatch-<br>sortheader<p>nextmatch-<br>filterheader</td>
 	<td>
 		These widget are an optional part of the nextmatch widget.<p>
 		<b>nextmatch-sortheader</b><br>

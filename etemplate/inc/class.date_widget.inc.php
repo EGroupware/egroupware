@@ -19,7 +19,8 @@
 	@param Options/$cell['size'] = $format[,$options], 
 	@param $format: ''=timestamp or eg. 'Y-m-d H:i' for 2002-12-31 23:59
 	@param $options: &1 = year is int-input not selectbox, &2 = show a [Today] button, \
-		&4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps)
+		&4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
+		&8 = dont show time for readonly and type date-time if time is 0:00
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class date_widget
@@ -88,6 +89,8 @@
 					'i' => date('i',$value)
 				);
 			}
+			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
+
 			$timeformat = array(3 => 'H', 4 => 'i');
 			if ($this->timeformat == '12')
 			{
@@ -101,11 +104,14 @@
 			}
 			$format = split('[/.-]',$sep=$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			
-			if ($type != 'date')
+			$readonly = $cell['readonly'] || $readonlys;
+
+			// no time also if $options&8 and readonly and time=0h0
+			if ($type != 'date' && !($readonly && ($options & 8) && $time_0h0))
 			{
 				$format += $timeformat;
 			}
-			if ($cell['readonly'] || $readonlys)	// is readonly
+			if ($readonly)	// is readonly
 			{
 				$sep = array(
 					1 => $sep[1],
