@@ -1,8 +1,9 @@
 <?php
   /**************************************************************************\
-  * eGroupWare - addressbook                                               *
-  * http://www.egroupware.org                                              *
-  * Written by Joseph Engo <jengo@mail.com>                                  *
+  * eGroupWare - Addressbook                                                 *
+  * http://www.egroupware.org                                                *
+  * Written by Joseph Engo <jengo@phpgroupware.org                           *
+  *  and Miles Lott <milos@groupwhere.org>                                   *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
