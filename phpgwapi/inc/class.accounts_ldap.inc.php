@@ -71,8 +71,9 @@
 		'pvm'      => True,
 		'squid'    => True,
 		'ident'    => True,
+		'nscd'     => True,
 		'mailnull' => True,
-		'cyrus'	  => True
+		'cyrus'	   => True
 	);
 
 	class accounts_
