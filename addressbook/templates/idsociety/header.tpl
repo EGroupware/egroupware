@@ -5,7 +5,12 @@
 <br>{searchreturn}
   <form action="{cats_url}" method="POST">
 {cats}{cats_link}
-    <input type="submit" name="cats" value="{lang_cats}">
+    <input type="hidden" name="sort" value="{sort}">
+    <input type="hidden" name="order" value="{order}">
+    <input type="hidden" name="filter" value="{filter}">
+    <input type="hidden" name="query" value="{query}">
+    <input type="hidden" name="start" value="{start}">
+    <noscript><input type="submit" name="cats" value="{lang_cats}"></noscript>
   </form>
 {search_filter}
 

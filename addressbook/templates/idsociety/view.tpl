@@ -11,7 +11,8 @@
   <TR> 
    <TD align="left">
      {edit_link}
-     <input type="submit" name="edit" value="{lang_edit}">
+     <input type="hidden" name="ab_id" value="{ab_id}">
+     {edit_button}
     </form>
    </TD>
    <TD align="left">
@@ -36,7 +37,6 @@
    </TD>
    <TD align="left">
      {done_link}
-     <input type="hidden" name="ab_id" value="{ab_id}">
      <input type="hidden" name="sort" value="{sort}">
      <input type="hidden" name="order" value="{order}">
      <input type="hidden" name="filter" value="{filter}">
