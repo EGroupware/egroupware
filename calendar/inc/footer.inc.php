@@ -82,11 +82,11 @@
          for ($i = -7; $i <= 7; $i++) {
              $tsun = $sun + (3600 * 24 * 7 * $i);
              $tsat = $tsun + (3600 * 24 * 6);
-             echo "<OPTION VALUE=\"" . date("Ymd", $tsun) . "\"";
-             if (date("Ymd", $tsun) <= $thisdate && date("Ymd", $tsat) >= $thisdate)
+             echo "<OPTION VALUE=\"" . $phpgw->common->show_date($tsun,"Ymd") . "\"";
+             if ($phpgw->common->show_date($tsun,"Ymd") <= $thisdate && $phpgw->common->show_date($tsat,"Ymd") >= $thisdate)
                 echo " SELECTED";
-             echo ">" . lang(date("F",$tsun)) . strftime(" %d", $tsun) . "-"
-	            . lang(date("F",$tsat)) . strftime(" %d", $tsat);
+             echo ">" . lang($phpgw->common->show_date($tsun,"F")) . " " . $phpgw->common->show_date($tsun,"d") . "-"
+	            . lang($phpgw->common->show_date($tsat,"F")) . " " . $phpgw->common->show_date($tsat,"d");
             echo "</option>\n";
         }
       ?>
