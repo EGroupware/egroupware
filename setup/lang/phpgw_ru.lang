@@ -1,0 +1,40 @@
+%1 does not exist !!!	setup	ru	%1 не  существует
+add a domain	setup	ru	Добавить домен
+additional settings	setup	ru	Дополнительные установки
+admin first name	setup	ru	Имя администратора
+admin last name	setup	ru	Фамилия Администратора
+admin password	setup	ru	Пароль администратора
+admin password to header manager	setup	ru	Пароль администратора к header файлу
+all applications	setup	ru	все приложения
+all users	setup	ru	Все пользователи
+are you sure you want to delete your existing tables and data?	setup	ru	Вы уверены, что хотите удалить все существующие таблицы и данные?
+are you sure?	setup	ru	ВЫ УВЕРЕНЫ?
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ru	По вашему запросу, данный скрипт попытается обновить ваши старые приложения до текущей версии
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ru	По вашему запросу, данный скрипт попытается обновить старые таблицы и перевести их в новый формат
+authentication / accounts	setup	ru	Авторизация / Учетные записи
+change system-charset	setup	ru	Изменить кодировку
+charset	setup	ru	кодировка
+charset to convert to	setup	ru	Конвертировать в кодировку
+check installation	setup	ru	Проверка установки
+checking php.ini	setup	ru	Проверка php.ini
+checking the egroupware installation	setup	ru	Проверка установки eGroupWare
+click here to re-run the installation tests	setup	ru	Кликните здесь для повторной проверки установки
+completed	setup	ru	Готово
+config password	setup	ru	Пароль конфигурации
+create your header.inc.php	setup	ru	Создайте файл your header.inc.php
+created	setup	ru	создан
+current version	setup	ru	Текущая версия
+download	setup	ru	Скачать
+edit your header.inc.php	setup	ru	Редактировать  header.inc.php
+install all	setup	ru	Установить все
+install language	setup	ru	Установить язык
+invalid password	setup	ru	Неправильный пароль
+never	setup	ru	никогда
+no	setup	ru	Нет
+really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
+your header.inc.php needs upgrading.	setup	ru	Файл header.inc.php требует обновления.
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ru	Файл header.inc.php требует обновления.<br><blink><b class="msg">ВНИМАНИЕ!</b></blink><br><b>СДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ!</b>
+<br />
+<b>Warning</b>:  fsockopen(): unable to connect to 127.0.0.1:25 in <b>C:\Program Files\Apache Group\Apache2\htdocs\egroupware\phpgwapi\inc\class.smtp.php</b> on line <b>105</b><br />
+<p>bocalendar::send_update: sending message to 'ank@localhost' subject='Asynchronous timed services' failed !!!<br>
+SMTP Error: Could not connect to SMTP host.</p>
