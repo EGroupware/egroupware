@@ -64,67 +64,52 @@
 <!-- BEGIN addressbook_footer -->
  </table>
  <table width="75%" border="0" cellspacing="0" cellpadding="4">
-   <tr> 
+   <tr bgcolor="{th_bg}"> 
+     <form action="{add_url}" method="post">
      <td width="16%"> 
-       <div align="left"> 
-         <form action="{add_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
-        <input type="submit" name="Add" value="{lang_add}">
-       </div>
+         <input type="submit" name="Add" value="{lang_add}">
      </td>
+     </form>
+     <form action="{vcard_url}" method="post">
      <td width="16%">
-       <div align="left">
-         <form action="{vcard_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
         <input type="submit" name="AddVcard" value="{lang_addvcard}">
-       </div>
      </td>
-     <td width="64%">&nbsp;</td>
-     <td width="4%">&nbsp;</td>
-   </tr>
-   </form>
-   <tr>
+     </form>
+     <form action="{import_url}" method="post">
      <td width="16%">
-       <div align="left">
-         <form action="{import_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Import" value="{lang_import}">
-         </form>
-       </div>
      </td>
+     </form>
+     <form action="{import_alt_url}" method="post">
      <td width="16%">
-       <div align="left">
-         <form action="{import_alt_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Import" value="{lang_import_alt}">
-         </form>
-       </div>
      </td>
+     </form>
+     <form action="{export_url}" method="post">
      <td width="16%">
-       <div align="left">
-         <form action="{export_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Export" value="{lang_export}">
-         </form>
-       </div>
      </td>
-     <td width="64%">&nbsp;</td>
-     <td width="4">&nbsp;</td>
+     </form>
    </tr>
  </table>
  </center>
