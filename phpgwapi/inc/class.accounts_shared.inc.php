@@ -71,15 +71,17 @@
     function members ($account_id = False)
     {
       global $phpgw_info, $phpgw;
-      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
-      elseif (gettype($account_id) == "string") { $account_id = $this->name2id($account_id); }
+      if ($account_id == ''){ $account_id = $phpgw_info['user']['account_id']; }
+      elseif (gettype($account_id) == 'string') { $account_id = $this->name2id($account_id); }
 
       $security_equals = Array();
-      $security_equals = $phpgw->acl->get_ids_for_location(intval($account_id), 1, "phpgw_group");
+      $acl = CreateObject('phpgwapi.acl');
+      $security_equals = $acl->get_ids_for_location(intval($account_id), 1, 'phpgw_group');
+      unset($acl);
       if (!$security_equals) { return False; }
       for ($idx=0; $idx<count($security_equals); $idx++){
         $name = $this->name2id($security_equals[$idx]);
-        $this->members[] = Array("account_id" => $security_equals[$idx], "account_name" => "$name");
+        $this->members[] = Array('account_id' => $security_equals[$idx], 'account_name' => "$name");
       }
       return $this->members;
     }
