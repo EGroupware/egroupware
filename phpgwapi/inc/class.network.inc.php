@@ -150,7 +150,7 @@
 			if(!$this->socket)
 			{
 				return $this->set_error('521','socket does not exist',
-					'The required socked does not exist.  The settings for your mail server may be wrong.');
+					'The required socket does not exist.  The settings for your mail server may be wrong.');
 			}
 			if(!$this->write_port($str))
 			{
@@ -181,7 +181,7 @@
 			}
 		}
 
-		// return contents of a web url as an array or false if timeout
+		// return contents of a web url as an array (or string) or false if timeout
 		function gethttpsocketfile($file,$user='',$passwd='',$string=False)
 		{
 			$server = str_replace('http://','',$file);
