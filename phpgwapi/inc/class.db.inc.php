@@ -189,13 +189,16 @@
 					case 'pgsql':
 						$type = 'postgres';
 						// create our own pgsql connection-string, to allow unix domain soccets if !$Host
-						$this->Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
+						$Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
 							" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
-						$this->User = $this->Password = $this->Database = $this->Port = '';	// to indicate $Host is a connection-string
+						$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 						break;
 					default:
-						$this->Host .= ($this->Port ? ':'.$this->Port : '');
-						$this->Port = '';
+						$Host = $this->Host . ($this->Port ? ':'.$this->Port : '');
+						foreach(array('Database','User','Password') as $name)
+						{
+							$$name = $this->$name;
+						}
 						$type = $this->Type;
 				}
 
@@ -222,9 +225,9 @@
 						return 0;	// in case error-reporting = 'no'
 					}
 					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
-					if (!$this->Link_ID->$connect($this->Host, $this->User, $this->Password, $this->Database))
+					if (!$this->Link_ID->$connect($Host, $User, $Password, $Database))
 					{
-						$this->halt("ADOdb::$connect($this->Host, $this->User, \$Password, $this->Database) failed.");
+						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 						return 0;	// in case error-reporting = 'no'
 					}
 					//echo "new ADOdb connection<pre>".print_r($GLOBALS['phpgw']->ADOdb,True)."</pre>\n";
