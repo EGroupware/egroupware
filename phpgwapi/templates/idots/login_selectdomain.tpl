@@ -9,7 +9,7 @@
 <link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico">
 <link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
 <title>{website_title} - Login</title>
-<style>
+<style type="text/css">
 #containerDiv
 {
 	position:absolute;
@@ -23,7 +23,7 @@
 {
 	position:relative;
 	width:100%;
-	top:-70px;
+	top:-80px;
 	height:134px;
 	z-index:9;
 }
@@ -37,13 +37,13 @@
 <div id="centerBox">
 <center>{lang_message}</center>
 <p>&nbsp;</p>
+<form name="login_form" method="post" action="{login_url}">
 <table class=sidebox cellspacing=1 cellpadding=0  border=0  align=center>
 <tr> 
 <td class="sideboxtitle" align="center"  height=28>{website_title}</td>
 </tr>
 <tr> 
 <td class="sideboxcontent" bgcolor="#efefef">
-<form method="post" action="{login_url}">
 
 <table class="sideboxtext" cellspacing=0 cellpadding=0 width="100%" border="0">
 <tr bgcolor="#e6e6e6">
@@ -58,25 +58,43 @@
 </tr>
 <tr bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_username}:&nbsp;</font></td>
-<td align="right"><input name="login" value="{cookie}" style="width: 100px;"></td>
-<td align="left"><select name="logindomain">{select_domain}</select></td>
+<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+<td align="left">&nbsp;</select></td>
 </tr>
 <tr bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_password}:&nbsp;</font></td>
-<td align="right"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px;"></td>
+<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px; border: 1px solid silver;"></td>
 <td>&nbsp;</td>
 </tr>
 <tr bgcolor="#e6e6e6">
 <td colspan="3" align="center">
-<input type="submit" value="{lang_login}" name="submitit">
+&nbsp;
+</td>
+</tr>
+<tr bgcolor="#e6e6e6">
+<td colspan="3" align="center">
+<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
+</td>
+</tr>
+<tr bgcolor="#e6e6e6">
+<td colspan="3" align="center">
+&nbsp;
 </td>
 </tr>
 </table>
-</form>
 
 </td>
 </tr>
 </table>
+</form>
+<script language="javascript1.2" type="text/javascript">
+<!--
+// position cursor in top form field
+document.login_form.login.focus();
+//-->
+</script>
+
+
 </div>
 </div>
 
