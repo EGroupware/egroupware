@@ -459,7 +459,8 @@ class calendar extends calendar_
 		$search_date_dow = date('w',$datetime);
 		$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
 		@reset($this->repeated_events);
-		$r_events = count($this->repeated_events);
+		$repeated = $this->repeated_event;
+		$r_events = count($repeated);
 		for ($i=0;$i<$r_events;$i++)
 		{
 			$rep_events = $this->repeating_events[$i];
