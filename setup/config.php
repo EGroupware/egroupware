@@ -158,12 +158,10 @@
 		var $accounts;
 		var $applications;
 		var $db;
-		var $hooks;
 	}
 	$GLOBALS['phpgw'] = new phpgw;
 	$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 	$GLOBALS['phpgw']->db     = $phpgw_setup->db;
-	$GLOBALS['phpgw']->hooks  = CreateObject('phpgwapi.hooks');
 
 	$cfg_apps = array('phpgwapi','admin','preferences');
 	while(list(,$cfg_app) = each($cfg_apps))
@@ -179,7 +177,7 @@
 		$t->set_var('row_off', 'EEEEEE');
 
 		$vars = $t->get_undefined('body');
-		$GLOBALS['phpgw']->hooks->single('config',$cfg_app);
+		$phpgw_setup->hook('config',$cfg_app);
 
 		while (list($null,$value) = each($vars))
 		{

@@ -532,6 +532,32 @@
 		}
 
 		/*!
+		  @function hook
+		  @abstract call the hooks for a single application
+		  @param $location hook location - required
+		  @param $appname application name - optional
+		 */
+		function hook($location, $appname = '')
+		{
+			if (! $appname)
+			{
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+			$SEP = filesystem_separator();
+
+			$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
+			if (file_exists($f))
+			{
+				include($f);
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
+		/*
 		@function alessthanb
 		@abstract phpgw version checking, is param 1 < param 2 in phpgw versionspeak?
 		@param	$a	phpgw version number to check if less than $b
