@@ -179,6 +179,8 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 	}
 }
 
+//echo $phpgw->vfs->make_link ("dir18", "/tmp/blah", array (RELATIVE_USER, RELATIVE_NONE|VFS_REAL));
+
 ###
 # Read in file info from database to use in the rest of the script
 # $fakebase is a special directory.  In that directory, we list the user's
@@ -222,11 +224,13 @@ if ($path == $fakebase)
 }
 else
 {
-	$files_query = db_query ("SELECT * FROM phpgw_vfs WHERE directory = '$path' AND name != '' ORDER BY $sortby");
-	$numoffiles = db_call ("affected_rows", $files_query);
+	$ls_array = $phpgw->vfs->ls ($path, array (RELATIVE_NONE), False, False, False, $sortby);
 
-	while ($files_array[] = db_fetch_array ($files_query))
-		;
+	while (list ($num, $file_array) = each ($ls_array))
+	{
+		$numoffiles++;
+		$files_array[] = $file_array;
+	}
 }
 
 if ($download)
@@ -458,7 +462,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 	                                }
 					else
 					{
-						if ($settings["viewonserver"] && isset ($filesdir))
+						if ($settings["viewonserver"] && isset ($filesdir) && !$files["link_directory"])
 						{
 							$clickview = "$filesdir$pwd/$files[name]";
 						}
@@ -498,18 +502,8 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			{
 				html_table_col_begin ();
 
-				if ($files["mime_type"] == "Directory")
-				{
-					$size_query = db_query ("SELECT SUM(size) FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND directory RLIKE '^$disppath/$files[name]'");
-					$fileinfo = db_fetch_array ($size_query);
-					db_call ("free", $size_query);
-					if ($fileinfo[0])
-						borkb ($fileinfo[0]+1024);
-					else
-						echo "1KB";
-				}
-				else
-					borkb ($files["size"]);
+				$size = $phpgw->vfs->get_size ($files["directory"] . "/" . $files["name"], array (RELATIVE_NONE));
+				borkb ($size);
 
 				html_table_col_end ();
 			}
@@ -776,8 +770,8 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_text_bold ("Unused space: ");
 			html_text (borkb ($userinfo["hdspace"] - $usedspace, NULL, 1));
 
-			$query4 = db_query ("SELECT name FROM phpgw_vfs WHERE owner_id = '$userinfo[username]'");
-			$i = db_call ("affected_rows", $query4);
+			$ls_array = $phpgw->vfs->ls ($path, array (RELATIVE_NONE));
+			$i = count ($ls_array);
 
 			html_break (2);
 			html_text_bold ("Total Files: ");
@@ -975,57 +969,37 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 		if ($badchar = bad_chars ($file_name[$i], 1))
 		{
 			echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
-			html_break (2);
-			html_link_back ();
-			html_page_close ();
+
+			continue;
+		}
+
+		###
+		# Check to see if the file exists in the database, and get its info at the same time
+		###
+
+		$ls_array = $phpgw->vfs->ls ($path . "/" . $file_name[$i], array (RELATIVE_NONE), False, False, True);
+		$fileinfo = $ls_array[0];
+
+		if ($fileinfo["name"])
+		{
+			if ($fileinfo["mime_type"] == "Directory")
+			{
+				echo $phpgw->common->error_list (array ("Cannot replace $fileinfo[name] because it is a directory"));
+				continue;
+			}
 		}
 
 		if ($file_size[$i] > 0)
 		{
-			###
-			# Check to see if the file exists in the database
-			###
-
-			$query = db_query ("SELECT * FROM phpgw_vfs WHERE name = '$file_name[$i]' AND owner_id = '$userinfo[username]' AND directory = '$path'");
-
-			if ($fileinfo = db_fetch_array ($query))
+			if ($fileinfo["name"] && $fileinfo["deleteable"] != "N")
 			{
-				if ($fileinfo["mime_type"] == "Directory")
-				{
-					echo $phpgw->common->error_list (array ("Cannot replace $fileinfo[name] because it is a directory"));
-					continue;
-				}
+				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => $comment[$i]));
+				$phpgw->vfs->cp ($file[$i], "$file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 
-				$query = db_query ("SELECT SUM(size) FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND name != '$file_name[$i]'");
-        			$files = db_fetch_array ($query);
-        			$usedspace = $files[0];
-
-				if (($file_size[$i] + $usedspace) > $userinfo["hdspace"])
-				{
-					echo $phpgw->common->error_list (array ("Sorry, you do not have enough space to upload those files"));
-					continue;
-				}
-
-				if ($fileinfo["deleteable"] != "N")
-				{
-					$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => $comment[$i]));
-					$phpgw->vfs->cp ($file[$i], "$file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
-
-					html_text_summary ("Replaced $disppath/$file_name[$i]", $file_size[$i]);
-				}
+				html_text_summary ("Replaced $disppath/$file_name[$i]", $file_size[$i]);
 			}
 			else
 			{
-				$query = db_query ("SELECT SUM(size) FROM phpgw_vfs WHERE owner_id = '$userinfo[username]'");
-                                $files = db_fetch_array ($query);
-                                $usedspace = $files[0];
-
-				if (($file_size[$i] + $usedspace) > $userinfo["hdspace"])
-				{
-					echo $phpgw->common->error_list (array ("Not enough space to upload $file_name[$i] - $file_size[$i]"));
-					continue;
-                                }
-
 				$phpgw->vfs->cp ($file[$i], $file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => $comment[$i]));
 
@@ -1171,8 +1145,6 @@ elseif ($copy)
 
 elseif ($delete)
 {
-	$query = db_query ("SELECT name FROM phpgw_vfs WHERE owner_id = '$userinfo[username]'");
-	$numoffiles = db_call ("affected_rows", $query);
 	for ($i = 0; $i != $numoffiles; $i++)
 	{
 		if ($fileman[$i])
@@ -1216,19 +1188,21 @@ elseif ($newdir && $createdir)
 		html_page_close ();
 	}
 
-	$query = db_query ("SELECT name,mime_type FROM phpgw_vfs WHERE name = '$createdir' AND owner_id = '$userinfo[username]' AND directory = '$path'");
-	if ($fileinfo = db_fetch_array ($query))
+	$ls_array = $phpgw->vfs->ls ($path . "/" . $createdir, array (RELATIVE_NONE), False, False, True);
+	$fileinfo = $ls_array[0];
+
+	if ($fileinfo["name"])
 	{
-		if ($fileinfo[1] != "Directory")
+		if ($fileinfo["mime_type"] != "Directory")
 		{
-			echo $phpgw->common->error_list (array ("$fileinfo[0] already exists as a file"));
+			echo $phpgw->common->error_list (array ("$fileinfo[name] already exists as a file"));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Directory $fileinfo[0] already exists"));
+			echo $phpgw->common->error_list (array ("Directory $fileinfo[name] already exists"));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
@@ -1236,16 +1210,6 @@ elseif ($newdir && $createdir)
 	}
 	else
 	{
-		$query = db_query ("SELECT SUM(size) FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND name != '$file_name[$i]'");
-		$files = db_fetch_array ($query);
-		$usedspace = $files[0];
-
-		if (($usedspace + 1024) > $userinfo["hdspace"])
-		{
-			echo $phpgw->common->error_list (array ("Sorry, you do not have enough space to create a new directory"));
-			html_page_close ();
-		}
-
 		if ($phpgw->vfs->mkdir ($createdir))
 		{
 			html_text_summary ("Created directory $disppath/$createdir");
