@@ -41,16 +41,19 @@ file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file name	filemanager	en	File Name
+file names cannot contain  or /	filemanager	en	
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file names cannot contain \ or /	filemanager	en	File names cannot contain \ or /
 filemanager	common	en	Filemanager
 filemanager preferences	filemanager	en	FileManager preferences
 files	filemanager	en	Files
+files in this directory	filemanager	en	Files in this directory
 folder	filemanager	en	Folder
 go to	filemanager	en	Go To
 go to %1	filemanager	en	Go to %1
 go to your home directory	filemanager	en	Go to your home directory
 go to:	filemanager	en	Go to:
+go up	filemanager	en	go up
 home	filemanager	en	Home
 locked	filemanager	en	Locked
 mime type	filemanager	en	MIME Type
@@ -59,11 +62,15 @@ modified by	filemanager	en	Modified by
 move to	filemanager	en	Move To
 move to:	filemanager	en	Move to:
 moved %1 to %2	filemanager	en	Moved %1 to %2
+no files in this directory.	filemanager	en	No files in this directory.
 no version history for this file/directory	filemanager	en	No version history for this file/directory
 operation	filemanager	en	Operation
+other settings	filemanager	en	Other settings
 owner	filemanager	en	Owner
 preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
+quick jump to	filemanager	en	Quick jump to
+reload	filemanager	en	reload
 rename	filemanager	en	Rename
 renamed %1 to %2	filemanager	en	Renamed %1 to %2
 replaced %1	filemanager	en	Replaced %1
@@ -83,6 +90,7 @@ unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 update	filemanager	en	Update
 updated comment for %1	filemanager	en	Updated comment for %1
+upload	filemanager	en	Upload
 upload fields	filemanager	en	upload fields
 upload files	filemanager	en	Upload files
 used space	filemanager	en	Used Space
