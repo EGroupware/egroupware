@@ -360,6 +360,8 @@
 				'times' => array('type' => 'varchar','precision' => '255','nullable' => False),
 				'method' => array('type' => 'varchar','precision' => '80','nullable' => False),
 				'data' => array('type' => 'text','nullable' => False)
+				'account_id' => array('type' =>
+'int','precision' => '4','nullable' => False,'default' => '0')
 			),
 			'pk' => array('id'),
 			'fk' => array(),
