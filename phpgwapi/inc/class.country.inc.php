@@ -227,7 +227,7 @@
 				'SE'=>'SWEDEN', 
 				'CH'=>'SWITZERLAND', 
 				'SY'=>'SYRIAN ARAB REPUBLIC', 
-				'TW'=>'TAIWAN, PROVINCE OF CHINA', 
+				'TW'=>'TAIWAN', 
 				'TJ'=>'TAJIKISTAN', 
 				'TZ'=>'TANZANIA, UNITED REPUBLIC OF', 
 				'TH'=>'THAILAND', 
