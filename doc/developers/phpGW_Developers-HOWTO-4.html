@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>  phpGroupWare Application Development: Infastructure</TITLE>
+ <TITLE>  phpGroupWare Application Development: Infrastructure</TITLE>
  <LINK HREF="phpGW_Developers-HOWTO-5.html" REL=next>
  <LINK HREF="phpGW_Developers-HOWTO-3.html" REL=previous>
  <LINK HREF="phpGW_Developers-HOWTO.html#toc4" REL=contents>
@@ -12,13 +12,13 @@
 <A HREF="phpGW_Developers-HOWTO-3.html">Previous</A>
 <A HREF="phpGW_Developers-HOWTO.html#toc4">Contents</A>
 <HR>
-<H2><A NAME="s4">4. Infastructure</A></H2>
+<H2><A NAME="s4">4. Infrastructure</A></H2>
 
 <H2><A NAME="ss4.1">4.1 Overview</A>
 </H2>
 
 <P>phpGroupWare attempts to provide developers with a sound directory structure to work from.<BR>
-The directory layout may seem complex at first, but after some use, you will see that it is designed to accommidate a large number of applications and functions.
+The directory layout may seem complex at first, but after some use, you will see that it is designed to accommodate a large number of applications and functions.
 <H2><A NAME="ss4.2">4.2 Directory tree</A>
 </H2>
 
@@ -39,7 +39,8 @@ The directory layout may seem complex at first, but after some use, you will see
 |   `-- inc
 |   |   |-- functions.inc.php
 |   |   |-- header.inc.php
-|   |   `-- footer.inc.php
+|   |   |-- footer.inc.php
+|   |   `-- admin.inc.php
 |   `-- templates
 |       `-- default
 |-- calendar
@@ -59,7 +60,9 @@ The directory layout may seem complex at first, but after some use, you will see
 |   `-- inc
 |   |   |-- functions.inc.php
 |   |   |-- header.inc.php
-|   |   `-- footer.inc.php
+|   |   |-- footer.inc.php
+|   |   |-- preferences.inc.php
+|   |   `-- admin.inc.php
 |   `-- templates
 |       `-- default
 |-- filemanager
@@ -68,9 +71,9 @@ The directory layout may seem complex at first, but after some use, you will see
 |   `-- users
 |-- inc
 |   |-- phpgwapi
-    |   |-- phpgw.inc.php
-    |   |-- phpgw_info.inc.php
-    |   |-- phpgw_common.inc.php
+|   |   |-- phpgw.inc.php
+|   |   |-- phpgw_info.inc.php
+|   |   |-- phpgw_common.inc.php
 |   |   `-- etc...
 |   `-- templates
 |       |-- default
@@ -94,7 +97,8 @@ The directory layout may seem complex at first, but after some use, you will see
 |   `-- inc
 |   |   |-- functions.inc.php
 |   |   |-- header.inc.php
-|   |   `-- footer.inc.php
+|   |   |-- footer.inc.php
+|   |   `-- preferences.inc.php
 |   `-- templates
 |       `-- default
 |-- themes
@@ -114,7 +118,7 @@ The directory layout may seem complex at first, but after some use, you will see
 
 <P>The translations are now being done thru the database, and will be configurable to use other mechanisms.<BR>
 We are completing a program called Transy, which will provide developers/translators a nice GUI for building and updating translations.<BR>
-In the mean time you will need to create a sql script yourself and name it lang.sql. You can copy the one in doc/lang.sql and use it as a template.  
+In the mean time you will need to create a SQL script yourself and name it lang.sql. You can copy the one in doc/lang.sql and use it as a template.  
 <HR>
 <A HREF="phpGW_Developers-HOWTO-5.html">Next</A>
 <A HREF="phpGW_Developers-HOWTO-3.html">Previous</A>

@@ -2,7 +2,7 @@
   Dan Kuykendall <dan@kuykendall.org>
   v0.5, 09 September 2000
 
-  This document explains phpGroupWare's infastructure and API, along
+  This document explains phpGroupWare's infrastructure and API, along
   with what is required to integrate applications into it.
   ______________________________________________________________________
 
@@ -81,8 +81,12 @@
      3.2 Automatic features
      3.3 Adding files, directories and icons.
      3.4 Making phpGroupWare aware of your application
+     3.5 Hooking into Administration page
+        3.5.1 section_start
+        3.5.2 section_end
+     3.6 Hooking into Preferences page
 
-  4. Infastructure
+  4. Infrastructure
 
      4.1 Overview
      4.2 Directory tree
@@ -119,9 +123,13 @@
 
      7.1 Overview
      7.2 How to use lang support
+        7.2.1 The lang function
+        7.2.2 Adding translation data
+           7.2.2.1 The lang table
+           7.2.2.2 lang.sql
+     7.3 Common return codes
 
   8. Using Templates
-
      8.1 Overview
      8.2 How to use templates
 
@@ -131,7 +139,7 @@
      9.2 Comments
      9.3 History
      9.4 Copyrights and Trademarks
-     9.5 Acknowledgements and Thanks
+     9.5 Acknowledgments and Thanks
 
 
   ______________________________________________________________________
@@ -156,9 +164,9 @@
   database abstraction method, we support templates using the PHPLIB
   Templates class, a file system interface, and even a network i/o
   interface.
-  On top of these standard functions, phpgroupWare provides several
+  On top of these standard functions, phpGroupWare provides several
   functions to give you the information you need about the users
-  environment, and to properly plug into phpgroupWare.
+  environment, and to properly plug into phpGroupWare.
 
   22..  GGuuiiddeelliinneess
 
@@ -179,22 +187,20 @@
   Where possible it should run on both Unix and NT platforms.
 
   For applications that do not meet these requirements, they can be
-  avalible to users via the phpGroupWare Apps project, or whatever means
-  the developers decide.
+  available to users via the phpGroupWare Apps project, or whatever
+  means the developers decide.
   If you need help converting your application to templates and our lang
   support, we will try to connect you with someone to help.
 
   22..22..  WWrriittiinngg//ppoorrttiinngg yyoouurr aapppplliiccaattiioonn
+
+
 
   22..22..11..  IInncclluuddee ffiilleess
 
   Each PHP page you write will need to include the header.inc.php along
   with a few variables.
   This is done by putting this at the top of each PHP page.
-
-
-
-
 
   ______________________________________________________________________
     <?php
@@ -213,7 +219,7 @@
      until a later point.
 
   +o  appname/inc/functions.inc.php - This file is loaded just after the
-     phpgwAPI and before any html code is generated. This file should
+     phpgwAPI and before any HTML code is generated. This file should
      include all your application specific functions.. You are welcome
      to include any additional files you need from within this file.
 
@@ -223,7 +229,7 @@
 
   +o  appname/inc/footer.inc.php - This file is loaded just before the
      system footer, allowing developers to close connections and
-     whetever else they need.
+     whatever else they need.
 
   +o  The phpGW footer will be loaded, which closes several connections.
 
@@ -249,18 +255,12 @@
 
   +o  appname/inc/footer.inc.php - This file is loaded just before the
      system footer, allowing developers to close connections and
-     whetever else they need.
+     whatever else they need.
 
   33..33..  AAddddiinngg ffiilleess,, ddiirreeccttoorriieess aanndd iiccoonnss..
 
   You will need to create the following directories for your code
   (replace 'appname' with your application name)
-
-
-
-
-
-
 
     `-- appname
         `-- images
@@ -268,7 +268,9 @@
         `-- inc
         |   |-- functions.inc.php
         |   |-- header.inc.php
-        |   `-- footer.inc.php
+        |   |-- footer.inc.php
+        |   |-- preferences.inc.php
+        |   `-- admin.inc.php
         `-- templates
             `-- default
 
@@ -279,23 +281,87 @@
 
   To make the application aware of your application, add your
   application details to the applications table. This can be done via
-  the GUI administration screen, or via a sql script.
+  the GUI administration screen, or via a SQL script.
 
     insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
 
 
 
-  44..  IInnffaassttrruuccttuurree
+  33..55..  HHooookkiinngg iinnttoo AAddmmiinniissttrraattiioonn ppaaggee
+
+  When a user goes to the Administration page, it stats
+  appname/inc/admin.inc.php for each application that is enabled, in
+  alphabetical order of application title.  If the file exists, it is
+  include()d in the hopes it will display a selection of links to
+  configure that application.
+
+  Simple Example:
+
+  ______________________________________________________________________
+  <?php
+    $img = "/" . $appname . "/images/navbar.gif";
+    section_start("My Application",$img);
+    echo "<a HREF=\"" . $phpgw->link("myAdminPage.php") . "\">";
+    echo lang("Change myApp settings") . "</a>";
+    section_end();
+  ?>
+  ______________________________________________________________________
+
+
+  Look at headlines/inc/admin.inc.php and admin/inc/admin.inc.php for
+  more examples.
+
+  Things to note:
+
+  +o  Links are relative to the admin/index.php file, not your
+     application's base directory. (so use $appname in your link()
+     calls)
+
+  +o  The file is brought in with include() so be careful to not pollute
+     the name-space too much
+
+     The standard $phpgw and $phpgw_info variables are in-scope, as is
+     $appname which corresponds to the application name in the path.
+
+  There are 2 functions to coordinate the display of each application's
+  links, section_start() and section_end()
+
+
+
+  33..55..11..  sseeccttiioonn__ssttaarrtt
+
+  section_start($title,$icon_url) starts the section for your
+  application. $title is passed through lang() for you. $icon_url should
+  be page-relative to admin/index.php or an absolute URL.
+
+
+  33..55..22..  sseeccttiioonn__eenndd
+
+  section_end() closes the section that was started with
+  section_start().
+
+
+  33..66..  HHooookkiinngg iinnttoo PPrreeffeerreenncceess ppaaggee
+
+  The mechanism to hook into the preferences page is identical to the
+  one used to hook into the administration page, however it looks for
+  appname/inc/preferences.inc.php instead of appname/inc/admin.inc.php.
+  The same functions and variables are defined.
+
+  44..  IInnffrraassttrruuccttuurree
 
   44..11..  OOvveerrvviieeww
 
   phpGroupWare attempts to provide developers with a sound directory
   structure to work from.
   The directory layout may seem complex at first, but after some use,
-  you will see that it is designed to accommidate a large number of
+  you will see that it is designed to accommodate a large number of
   applications and functions.
 
   44..22..  DDiirreeccttoorryy ttrreeee
+
+
+
 
 
 
@@ -343,7 +409,8 @@
   |   `-- inc
   |   |   |-- functions.inc.php
   |   |   |-- header.inc.php
-  |   |   `-- footer.inc.php
+  |   |   |-- footer.inc.php
+  |   |   `-- admin.inc.php
   |   `-- templates
   |       `-- default
   |-- calendar
@@ -363,7 +430,9 @@
   |   `-- inc
   |   |   |-- functions.inc.php
   |   |   |-- header.inc.php
-  |   |   `-- footer.inc.php
+  |   |   |-- footer.inc.php
+  |   |   |-- preferences.inc.php
+  |   |   `-- admin.inc.php
   |   `-- templates
   |       `-- default
   |-- filemanager
@@ -372,9 +441,9 @@
   |   `-- users
   |-- inc
   |   |-- phpgwapi
-      |   |-- phpgw.inc.php
-      |   |-- phpgw_info.inc.php
-      |   |-- phpgw_common.inc.php
+  |   |   |-- phpgw.inc.php
+  |   |   |-- phpgw_info.inc.php
+  |   |   |-- phpgw_common.inc.php
   |   |   `-- etc...
   |   `-- templates
   |       |-- default
@@ -398,7 +467,8 @@
   |   `-- inc
   |   |   |-- functions.inc.php
   |   |   |-- header.inc.php
-  |   |   `-- footer.inc.php
+  |   |   |-- footer.inc.php
+  |   |   `-- preferences.inc.php
   |   `-- templates
   |       `-- default
   |-- themes
@@ -422,7 +492,7 @@
   We are completing a program called Transy, which will provide
   developers/translators a nice GUI for building and updating
   translations.
-  In the mean time you will need to create a sql script yourself and
+  In the mean time you will need to create a SQL script yourself and
   name it lang.sql. You can copy the one in doc/lang.sql and use it as a
   template.
 
@@ -435,7 +505,7 @@
   To do this we have created a multi-dimensional class $phpgw->.
   This allows for terrific code organization, and help developers easily
   identify the file that the function is in.  All the files that are
-  patr of this class are in the inc/core directory and are named to
+  part of this class are in the inc/core directory and are named to
   match the sub-class.
   Example: $phpgw->send->msg() is in the inc/phpgwapi/phpgw_send.inc.php
   file.
@@ -448,16 +518,21 @@
   Add support for session management. ALL links must use this, that
   includes href's form actions and header location's.
   If you are just doing a form action back to the same page, you can use
-  it without any paramaters.
+  it without any parameters.
   This function is right at the core of the class because it is used so
   often, we wanted to save developers a few keystrokes.  Example:
 
+
+
+
+
   ______________________________________________________________________
   <form name=copy method=post action="<?php echo $phpgw->link();?>">
-  /* If session management is done via passing url paramaters */
+  /* If session management is done via passing url parameters */
   /* The the result would be */
   /* <form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"> */
   ______________________________________________________________________
+
 
 
   55..33..  AApppplliiccaattiioonn FFuunnccttiioonnss
@@ -469,10 +544,10 @@
   Store important information session information that your application
   needs.
   $phpgw->appsession will return the value of your session data is you
-  leave the paramater enmpty [i.e. $phpgw->appsession("")], otherwise it
+  leave the parameter empty [i.e. $phpgw->appsession("")], otherwise it
   will store whatever data you send to it.
   You can also store a comma delimited string and use explode() to turn
-  it back into an array when you recieve the value back.
+  it back into an array when you receive the value back.
   Example:
 
   ______________________________________________________________________
@@ -517,11 +592,9 @@
   $phpgw->vfs->read_userfile($file)
   Returns the data from $file, which resides in the users private dir.
   Example:
-
   ______________________________________________________________________
   $data = $phpgw->vfs->read_userfile("file.txt");
   ______________________________________________________________________
-
 
 
 
@@ -585,13 +658,6 @@
   easy.
   Here are some examples:
 
-
-
-
-
-
-
-
   ______________________________________________________________________
     <?php
     // To do a hello username
@@ -614,7 +680,7 @@
   $phpgw_info["user"]["sessionid"] = The session ID
   $phpgw_info["user"]["theme"] = Selected theme
   $phpgw_info["user"]["private_dir"] = Users private dir. Use
-  phpgroupware core functions for access to the files.
+  phpGroupWare core functions for access to the files.
   $phpgw_info["user"]["firstname"] = Users first name
   $phpgw_info["user"]["lastname"] = Users last name
   $phpgw_info["user"]["fullname"] = Users Full Name
@@ -685,7 +751,7 @@
   $phpgw_info["server"]["mail_suffix] = This is the domain name, used to
   add to email address
   $phpgw_info["server"]["mail_login_type"] = This adds support for
-  VMailMgr. Generally this hsould be set to 'standard'.
+  VMailMgr. Generally this should be set to 'standard'.
   $phpgw_info["server"]["smtp_server"] = Address of the SMTP server.
   Usually this is set to localhost.
   $phpgw_info["server"]["smtp_port"] = This is usually 25, and should
@@ -698,11 +764,11 @@
   only be changed if there is a good reason.
   $phpgw_info["server"]["nntp_sender"] = Unknown
   $phpgw_info["server"]["nntp_organization"] = Unknown
-  $phpgw_info["server"]["nntp_admin"] = Uknown
+  $phpgw_info["server"]["nntp_admin"] = Unknown
 
   66..88..  AApppplliiccaattiioonn iinnffoorrmmaattiioonn
 
-  Each application has the following information avalible.
+  Each application has the following information available.
   $phpgw_info["apps"]["appname"]["title"] = The title of the
   application.
   $phpgw_info["apps"]["appname"]["enabled"] = If the application is
@@ -723,49 +789,141 @@
   77..11..  OOvveerrvviieeww
 
   phpGroupWare is built using a multi-language support scheme. This
-  means the pages can be translated to other languages very easily. It
-  is done thru a series of lang files, which can be translated and
-  selected by the user.
+  means the pages can be translated to other languages very easily.
+  Translations of text strings are stored in the phpGroupWare database,
+  and can be modified by the phpGroupWare administrator.
 
   77..22..  HHooww ttoo uussee llaanngg ssuuppppoorrtt
 
-  Some instructions on using the lang files.
-  Under inc/lang there needs to be a sub-directory for each langague.
-  Inside the directory there are a number of files for each application.
-  There is one common file which contains a list of words that all
-  applications use.  ie, add, delete, edit, etc...
-  Words that are specific to a application should be stored with that
-  applications include file.
+  The lang() function is your application's interface to phpGroupWare's
+  internationalization support.
+
+  While developing your application, just wrap all your text output with
+  calls to lang(), as in the following code:
 
   ______________________________________________________________________
-    function lang_todo($message, $m1 = "", $m2 = "", $m3 = "", $m4 = "")
-    {
-      $message = strtolower($message);
-      switch($message)
-      {
-         case "urgency": $s = "Urgency"; break;
-         case "completed": $s = "completed"; break;
-         [ snip ]
-         default: $s = "<b>*</b> " . $message;
-      }
-      return $s;
-    }
-
+    $x = 42;
+    echo lang("The counter is %1",$x)."<br>";
   ______________________________________________________________________
 
 
-  The list of words in the left column should always be written in
-  english.  The second column is used to return those words in that
-  includes language.  $m1, $m2, $m3, and $m4 are used to pass extra data
-  to be place in the middle of a sentence.
-  For example:
+  This will attempt to translate "The counter is %1", and return a
+  translated version based on the current application and language in
+  use. Note how the position that $x will end up is controlled by the
+  format string, nnoott by building up the string in your code. This allows
+  your application to be translated to languages where the actual number
+  is not placed at the end of the string.
 
-  You have 29 new messages!
+  When a translation is not found, the original text will be returned
+  with a * after the string.  This makes it easy to develop your
+  application, then go back and add missing translations (identified by
+  the *) later.
+
+  Without a specific translation in the lang table, the above code will
+  print:
+
+  The counter is 42*<br>
 
 
-  The default should return a bold faced * and the word that wasn't
-  found. This allows users to notice that something is missing in the
-  files and make changes if necessary.
+  If the current user speaks Italian, they string returned may instead
+  be:
+
+  il contatore  42<br>
+
+
+
+  77..22..11..  TThhee llaanngg ffuunnccttiioonn
+
+
+  lang($key, $m1="", $m2="", $m3="", $m4="", $m5="",
+               $m6="", $m7="", $m8="", $m9="", $m10="")
+
+
+
+     $$kkeeyy
+        is the string to translate and may contain replacement
+        directives of the form %n.
+
+     $$mm11
+        is the first replacement value or may be an array of replacement
+        values (in which case $m2 and above are ignored).
+
+     $$mm22 -- $$mm1100
+        the 2nd through 10th replacement values if $m1 is not an array.
+
+  The database is searched for rows with a lang.message_id that matches
+  $key.  If a translation is not found, the original $key is used. The
+  translation engine then replaces all tokens of the form %N with the
+  Nth parameter (either $m1[N] or $mN).
+
+  77..22..22..  AAddddiinngg ttrraannssllaattiioonn ddaattaa
+
+  An application called TTrraannssyy is being developed to make this easier,
+  until then you can create the translation data manually.
+
+
+  77..22..22..11..  TThhee llaanngg ttaabbllee
+
+  The translation class uses the lang table for all translations.  We
+  are concerned with 4 of the columns to create a translation:
+
+     mmeessssaaggee__iidd
+        The key to identify the message (the $key passed to the lang()
+        function). This is written in English.
+
+     aapppp__nnaammee
+        The application the translation applies to, or common if it is
+        common across multiple applications.
+
+     llaanngg
+        The code for the language the translation is in.
+
+     ccoonntteenntt
+        The translated string.
+
+  77..22..22..22..  llaanngg..ssqqll
+
+  Currently all applications, and the core phpGroupWare source tree have
+  a lang.sql file. This is the place to add translation data. Just add
+  lines of the form:
+
+  ______________________________________________________________________
+  REPLACE INTO lang (message_id, app_name, lang, content)
+  VALUES( 'account has been deleted','common','en','Account has been deleted');
+  ______________________________________________________________________
+
+
+  translating the content to reflect the message_id string in the lang
+  language.  If the string is specific to your application, put your
+  application name in for app_name otherwise use the name common. The
+  message_id should be in lower case for a small increase in speed.
+
+  77..33..  CCoommmmoonn rreettuurrnn ccooddeess
+
+  If you browse through the phpGroupWare sources, you may notice a
+  pattern to the return codes used in the higher-level functions.  The
+  codes used are partially documented in the doc/developers/CODES file.
+
+  Codes are used as a simple way to communicate common error and
+  progress conditions back to the user. They are mapped to a text string
+  through the check_code() function, which passes the strings through
+  lang() before returning.
+
+  For example, calling
+
+  ______________________________________________________________________
+  echo check_code(13);
+  ______________________________________________________________________
+
+
+  Would print
+
+  Your message has been sent
+
+
+
+  translated into the current language.
+
 
   88..  UUssiinngg TTeemmppllaatteess
 
@@ -787,8 +945,6 @@
 
   The newest version of this document can be found on our website
   <http://www.phpgroupware.org> as SGML source, as HTML and as TEXT.
-
-
 
   99..22..  CCoommmmeennttss
 
@@ -812,35 +968,11 @@
   A copy of the license is available at GNU Free Documentation License
   <http://www.gnu.org/copyleft/fdl.txt>.
 
-  99..55..  AAcckknnoowwlleeddggeemmeennttss aanndd TThhaannkkss
+  99..55..  AAcckknnoowwlleeddggmmeennttss aanndd TThhaannkkss
 
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro).  Thanks to all the developers and users who contribute to
   making phpGroupWare such a success.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -25,7 +25,7 @@
 <UL>
 <LI> appname/inc/functions.inc.php - This file should include all your application specific functions.</LI>
 <LI> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
-<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
+<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whatever else they need.</LI>
 </UL>
 <H2><A NAME="ss3.3">3.3 Adding files, directories and icons.</A>
 </H2>
@@ -39,7 +39,9 @@
       `-- inc
       |   |-- functions.inc.php
       |   |-- header.inc.php
-      |   `-- footer.inc.php
+      |   |-- footer.inc.php
+      |   |-- preferences.inc.php
+      |   `-- admin.inc.php
       `-- templates
           `-- default
   
@@ -47,10 +49,59 @@
 <H2><A NAME="ss3.4">3.4 Making phpGroupWare aware of your application</A>
 </H2>
 
-<P>To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a sql script.
+<P>To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a SQL script.
 <PRE>
   insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
 </PRE>
+<H2><A NAME="ss3.5">3.5 Hooking into Administration page</A>
+</H2>
+
+<P>When a user goes to the Administration page, it stats appname/inc/admin.inc.php
+for each application that is enabled, in alphabetical order of application title.
+If the file exists, it is include()d in the hopes it will display a selection of
+links to configure that application.
+<P>Simple Example:
+<HR>
+<PRE>
+&lt;?php
+  $img = "/" . $appname . "/images/navbar.gif";
+  section_start("My Application",$img);
+  echo "&lt;a HREF=\"" . $phpgw->link("myAdminPage.php") . "\"&gt;";
+  echo lang("Change myApp settings") . "&lt;/a&gt;";
+  section_end();
+?>
+</PRE>
+<HR>
+
+Look at headlines/inc/admin.inc.php and admin/inc/admin.inc.php for more examples.
+<P>Things to note:
+<UL>
+<LI>Links are relative to the admin/index.php file, not your application's
+base directory. (so use <CODE>$appname</CODE> in your <CODE>link()</CODE> calls)</LI>
+<LI>The file is brought in with include() so be careful to not pollute the name-space too much</LI>
+</UL>
+
+The standard $phpgw and $phpgw_info variables are in-scope, as is $appname
+which corresponds to the application name in the path.
+<P>There are 2 functions to coordinate the display of each application's links,
+section_start() and section_end()
+<H3>section_start</H3>
+
+<P><CODE>section_start($title,$icon_url)</CODE>
+starts the section for your application. <CODE>$title</CODE> is passed through <CODE>lang()</CODE>
+for you. <CODE>$icon_url</CODE> should be page-relative to admin/index.php or an absolute URL.
+<P>
+<H3>section_end</H3>
+
+<P><CODE>section_end()</CODE> closes the section that was started with section_start().
+<P>
+<H2><A NAME="ss3.6">3.6 Hooking into Preferences page</A>
+</H2>
+
+<P>The mechanism to hook into the preferences page is identical to the one used to
+hook into the administration page, however it looks for 
+<CODE>appname/inc/preferences.inc.php</CODE> instead of 
+<CODE>appname/inc/admin.inc.php</CODE>. The same functions and variables are defined.
 <HR>
 <A HREF="phpGW_Developers-HOWTO-4.html">Next</A>
 <A HREF="phpGW_Developers-HOWTO-2.html">Previous</A>
