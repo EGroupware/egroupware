@@ -22,7 +22,8 @@
 			)
 		);
 
-		$tpl->set_block('navbar','B_powered_top','V_powered_top');
+		//$tpl->set_block('navbar','B_powered_top','V_powered_top');
+		//$tpl->set_block('navbar','B_num_users','V_num_users');
 
 		$var['img_root'] = PHPGW_IMAGES_DIR;
 		$var['img_root_roll'] = PHPGW_IMAGES_DIR . '/rollover';
@@ -55,7 +56,7 @@
 				{
 					$applications .= ' onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'"';
 				}
-				$applications .= '>'.$title.'</a></td></tr>'."\n";
+				$applications .= '>'.$title.'</a></td></tr>'."\r\n";
 			}
 			$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
 			if($img_src_over)
@@ -92,16 +93,18 @@
 		}
 		$var['logout_img'] = PHPGW_IMAGES_DIR . '/logout-grey.gif';
 
+		// "powered_by_color" and "_size" are is also used by number of current users thing
+		$var['powered_by_size'] = '2';
+		$var['powered_by_color'] = '#ffffff';
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
 			$var['powered_by'] = lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			$var['power_size'] = '2';
 			$tpl->set_var($var);
-			$tpl->parse('V_powered_top','B_powered_top');
 		}
 		else
 		{
-			$var['V_powered_top'] = '';
+			$var['powered_by'] = '';
+			$tpl->set_var($var);
 		}
 
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
@@ -111,11 +114,22 @@
 			$db->next_record();
 			$var['current_users'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
 			 	. '">&nbsp;' . lang('Current users') . ': ' . $db->f(0) . '</a>';
+			$tpl->set_var($var);
 		}
-		$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . ' - '
-			. lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-			. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-			. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
+		else
+		{
+			$var['current_users'] = '';
+			$tpl->set_var($var);
+		}
+
+		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
+		$var['user_info_date'] =
+				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
+				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
+				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
+		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
+		$var['user_info_size'] = '2';
+		$var['user_info_color'] = '#000000';
 
 		// Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
 		// to get rid of duplicate code.
