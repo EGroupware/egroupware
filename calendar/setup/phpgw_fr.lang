@@ -340,3 +340,7 @@ previous day	calendar	fr	Jour précédent
 next day	calendar	fr	Jour suivant
 Show next seven days	calendar	fr	Voir les sept prochains jours
 Show only one day	calendar	fr	Voir un jour seulement
+default week view	calendar	fr	Vue par défaut
+Do you want a weekview with or without weekend?	calendar	fr	Voulez-vous voir les semaines avec ou sans week-end ?
+make freebusy information available to not loged in persons?	calendar	fr	Mettre à disposition les disponibilités sans être loggué
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne définissez pas de mot de passe ici, les informations seront disponibles à n'importe qui connaissant l'adresse
