@@ -19,6 +19,7 @@
 	- Changed javascript validation to server side upon submitting calendar events.
 	- Merged patch for parsing of non-compliant rfc822 email addresses.
 	  Thanks bwulf
+	- Fixed the addressbook not opening when composing email.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
