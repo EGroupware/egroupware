@@ -40,6 +40,7 @@
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_log_msg';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_interserv';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_history_log';
 
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
