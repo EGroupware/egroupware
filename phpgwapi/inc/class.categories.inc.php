@@ -430,9 +430,9 @@
 		{
 			switch($item)
 			{
-				case 'name':	$value = 'cat_name';
-				case 'owner':	$value = 'cat_owner';
-				case 'main':	$value = 'cat_main';
+				case 'name':	$value = 'cat_name'; break;
+				case 'owner':	$value = 'cat_owner'; break;
+				case 'main':	$value = 'cat_main'; break;
 				return $value;
 			 }
 
