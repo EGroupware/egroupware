@@ -33,6 +33,7 @@
 		{
 			$this->bo = createobject('admin.boaccounts');
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
+			@set_time_limit(300);
 		}
 
 		function row_action($action,$type,$account_id)
