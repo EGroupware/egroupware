@@ -17,8 +17,9 @@
 	//	Global disabler
 	//	Detect bad logins and passwords, spit out generic message
 
-	// If you plan on using this program, remove the following line.
-	echo "\n"; exit;
+	// If your are going to use multiable accounts, remove the following lines
+	$login  = 'anonymous';
+	$passwd = 'anonymous';
 
 	$phpgw_info['flags'] = array(
 		'disable_template_class' => True,
