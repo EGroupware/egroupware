@@ -120,14 +120,19 @@ class so_resources
 	function save($resource)
 	{
 		$where = array('id' => $resource['id']);
-		
-		// get rid of the non storeable datas
+
 		$tabledef = $this->db->metadata($table=$this->rs_table,$full=false);
 		foreach($tabledef as $n => $fielddef)
 		{
-			$data[$fielddef['name']] = $resource[$fielddef['name']];
+			if(isset($resource[$fielddef['name']]))
+			{
+				$data[$fielddef['name']] = $resource[$fielddef['name']];
+			}
+			elseif($resource['id'] > 0) //we need to reload old data! bug in db::update?
+			{
+				$data[$fielddef['name']] = $this->get_value($fielddef['name'],$resource['id']);
+			}
 		}
-		
 		return $this->db->insert($this->rs_table,$data,$where,__LINE__,__FILE__) ? true : false;
 	}
 	
