@@ -1,28 +1,29 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Preferences                                           *
-	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
-	* and Mark Peters <skeeter@phpgroupware.org>                               *
-	* Manages user preferences                                                 *
-	* Copyright (C) 2000, 2001 Joseph Engo                                     *
-	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	* phpGroupWare API - Preferences							*
+	* This file written by Joseph Engo <jengo@phpgroupware.org>			*
+	* and Mark Peters <skeeter@phpgroupware.org>					*
+	* Manages user preferences								*
+	* Copyright (C) 2000, 2001 Joseph Engo						*
+	* -------------------------------------------------------------------------			*
+	* This library is part of the phpGroupWare API					*
+	* http://www.phpgroupware.org/api							* 
+	* ------------------------------------------------------------------------ 			*
+	* This library is free software; you can redistribute it and/or modify it 		*
+	* under the terms of the GNU Lesser General Public License as published by	*
+	* the Free Software Foundation; either version 2.1 of the License,			*
+	* or any later version.								*
+	* This library is distributed in the hope that it will be useful, but			*
+	* WITHOUT ANY WARRANTY; without even the implied warranty of		*
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	*
+	* See the GNU Lesser General Public License for more details.			*
+	* You should have received a copy of the GNU Lesser General Public License 	*
+	* along with this library; if not, write to the Free Software Foundation, 		*
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA			*
 	\**************************************************************************/
 
 	/* $Id$ */
+	
 	/*!
 	@class preferences 
 	@abstract preferences class used for setting application preferences
@@ -163,6 +164,45 @@
 			reset ($this->data);
 			return $this->data;
 		}
+
+		/*!
+		@function add_struct
+		@abstract add complex array data preference to $app_name a particular app
+		@discussion Use for sublevels of prefs, such as email app's extra accounts preferences
+		@param $app_name name of the app
+		@param $var String to be evaled's as an ARRAY structure, name of preference to be stored
+		@param $value value of the preference
+		*/
+		function add_struct($app_name,$var,$value = '')
+		{
+			$code = '$this->data[$app_name]'.$var.' = $value;';
+			//echo 'class.preferences: add_struct: $code: '.$code.'<br>';
+			eval($code);
+			//echo 'class.preferences: add_struct: $this->data[$app_name] dump:'; _debug_array($this->data[$app_name]); echo '<br>';
+			reset($this->data);
+			return $this->data;
+		}
+
+		/*! 
+		@function delete_struct
+		@abstract delete complex array data preference from $app_name
+		@discussion Use for sublevels of prefs, such as email app's extra accounts preferences
+		@param $app_name name of app
+		@param $var String to be evaled's as an ARRAY structure, name of preference to be deleted
+		*/
+		function delete_struct($app_name, $var = '')
+		{
+			$code_1 = '$this->data[$app_name]'.$var.' = "";';
+			//echo 'class.preferences: delete_struct: $code_1: '.$code_1.'<br>';
+			eval($code_1);
+			$code_2 = 'unset($this->data[$app_name]'.$var.');' ;
+			//echo 'class.preferences: delete_struct:  $code_2: '.$code_2.'<br>';
+			eval($code_2);
+			//echo ' * $this->data[$app_name] dump:'; _debug_array($this->data[$app_name]); echo '<br>';
+			reset ($this->data);
+			return $this->data;
+		}
+
 
 		/*!
 		@function save_repository
@@ -434,7 +474,7 @@
 		a preference value for any particular preference item available to the user.
 		@access Public
 		*/
-		function create_email_preferences($accountid='')
+		function create_email_preferences($accountid='', $acctnum='')
 		{
 			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: ENTERING<br>'; }
 			// we may need function "html_quotes_decode" from the mail_msg class
@@ -464,9 +504,35 @@
 			{
 				$prefs = $this->data;
 			}
+			// are we dealing with the default email account or an extra email account?
+			if (!(isset($acctnum))
+			|| ((string)$acctnum == ''))
+			{
+				// account 0 is the default email account
+				$acctnum = 0;
+				// $prefs stays AS IS!
+			}
+			else
+			{
+				// prefs are actually a sub-element of the main email prefs
+				// at location [email][ex_accounts][X][...pref names] => pref values
+				// make this look like "prefs[email] so the code below code below will do its job transparently
+				
+				// store original prefs
+				$orig_prefs = array();
+				$orig_prefs = $prefs;
+				// obtain the desired sub-array of extra account prefs
+				$sub_prefs = array();
+				$sub_prefs['email'] = $prefs['email']['ex_accounts'][$acctnum];
+				// make the switch, make it seem like top level email prefs
+				$prefs = array();
+				$prefs['email'] = $sub_prefs['email'];
+				// since we return just $prefs, it's up to the calling program to put the sub prefs in the right place
+			}
+
 			if ($this->debug_init_prefs > 0)
 			{
-				echo 'class.preferences: create_email_preferences: raw $this->data dump';
+				echo 'class.preferences: create_email_preferences: $acctnum: ['.$acctnum.'] ; raw $this->data dump';
 				_debug_array($this->data);
 			}
 
@@ -474,7 +540,7 @@
 			// Default Preferences info that is:
 			// (a) not controlled by email prefs itself (mostly api and/or server level stuff)
 			// (b) too complicated to be described in the email prefs data array instructions
-
+			
 			// ---  [server][mail_server_type]  ---
 			// Set API Level Server Mail Type if not defined
 			// if for some reason the API didnot have a mail server type set during initialization
@@ -508,7 +574,16 @@
 			// a custom email preference. Currently, we simply use standard port numbers
 			// for the service in question.
 			$prefs['email']['mail_port'] = $this->sub_get_mailsvr_port($prefs);
-
+			
+			//---  [email][fullname]  ---
+			// we pick this up from phpgw api for the default account
+			// the user does not directly manipulate this pref for the default email account
+			if ((string)$acctnum == '0')
+			{
+				$prefs['email']['fullname'] = $GLOBALS['phpgw_info']['user']['fullname'];
+			}
+			
+			
 			// = = = =  SIMPLER PREFS  = = = =
 
 			// Default Preferences info that is articulated in the email prefs schema array itself
@@ -569,7 +644,7 @@
 			// default value for a particular preference if one is needed (i.e. if no user custom
 			// email preference exists that should override that default value, in which case we
 			// do not even need to obtain such a default value as described in ['init_default'] anyway).
-
+			
 			// --- loop thru $avail_pref_array and process each pref item ---
 			$c_prefs = count($avail_pref_array);
 			for($i=0;$i<$c_prefs;$i++)
@@ -724,9 +799,10 @@
 			
 			if ($this->debug_init_prefs > 1)
 			{
-				echo 'class.preferences: create_email_preferences: $prefs[email]';
+				echo 'class.preferences: $acctnum: ['.$acctnum.'] ; create_email_preferences: $prefs[email]';
 				_debug_array($prefs['email']);
 			}
+			
 			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: LEAVING<br>'; }
 			return $prefs;
 		}
