@@ -333,6 +333,22 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'phpgw_history_log', array(
+			'fd' => array(
+				'history_id'        => array('type' => 'auto',      'precision' => 4,  'nullable' => False),
+				'history_record_id' => array('type' => 'int',       'precision' => 4,  'nullable' => False),
+				'history_appname'   => array('type' => 'varchar',   'precision' => 64, 'nullable' => False),
+				'history_owner'     => array('type' => 'int',       'precision' => 4,  'nullable' => False),
+				'history_status'    => array('type' => 'char',      'precision' => 2,  'nullable' => False),
+				'history_new_value' => array('type' => 'text',      'nullable' => False),
+				'history_timestamp' => array('type' => 'timestamp', 'nullable' => False, 'default' => 'current_timestamp')
+			),
+			'pk' => array('history_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
+
 	);
 ?>
