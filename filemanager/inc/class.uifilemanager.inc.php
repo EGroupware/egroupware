@@ -1720,8 +1720,10 @@
 
 				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
-					header('Content-type: ' . $mime_type);
+	   				
+				    header('Content-type: ' . $mime_type);
 					header('Content-disposition: filename="' . $this->file . '"');//FIXME
+					Header("Pragma: public");
 				}
 				else
 				{
