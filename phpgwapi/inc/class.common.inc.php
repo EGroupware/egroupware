@@ -301,29 +301,29 @@
 		@param $firstname firstname
 		@param $lastname lastname
 		*/
-    function display_fullname($lid = '', $firstname = '', $lastname = '')
-    {
-      if (! $lid && ! $firstname && ! $lastname) {
-         global $phpgw_info;
-         $lid       = $phpgw_info['user']['account_lid'];
-         $firstname = $phpgw_info['user']['firstname'];
-         $lastname  = $phpgw_info['user']['lastname'];
-      }
+		function display_fullname($lid = '', $firstname = '', $lastname = '')
+		{
+			if (! $lid && ! $firstname && ! $lastname)
+			{
+				global $phpgw_info;
+				$lid       = $phpgw_info['user']['account_lid'];
+				$firstname = $phpgw_info['user']['firstname'];
+				$lastname  = $phpgw_info['user']['lastname'];
+			}
     
-      if (! $firstname && ! $lastname) {
-         $s = $lid;
-      }
-      if (! $firstname && $lastname) {
-         $s = $lastname;
-      }
-      if ($firstname && ! $lastname) {
-         $s = $firstname;
-      }
-      if ($firstname && $lastname) {
-         $s = "$lastname, $firstname";
-      }
-      return $s;
-    }
+			if ($firstname)
+			{
+				$a[] = $firstname;
+			}
+
+			if ($lastname)
+			{
+				$a[] = $lastname;
+			}
+
+			return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
+		}
+
 		/*!
 		@function grab_owner_name
 		@abstract grab the owner name
