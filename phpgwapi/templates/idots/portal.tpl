@@ -11,6 +11,7 @@
 	  </tr>
 	</table>
 	</div>
+  </td>
  </tr>
  <tr>
   <td colspan="2">
@@ -37,8 +38,9 @@
 
 
 <!-- BEGIN portal_listbox_header -->
-     <td>
-      <ul>
+	<tr>
+	 <td>
+	  <ul>
 <!-- END portal_listbox_header -->
 
 
@@ -50,8 +52,9 @@
 
 
 <!-- BEGIN portal_listbox_footer -->
-      </ul>
-     </td>
+	  </ul>
+	 </td>
+	</tr>
 <!-- END portal_listbox_footer -->
 
 
