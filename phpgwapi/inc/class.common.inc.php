@@ -888,12 +888,13 @@
 
 		function find_image($appname,$image)
 		{
+			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'].'/images';
+			
 			if (!@is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
 				$imagedir_default    = '/'.$appname.'/templates/default/images';
-				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'].'/images';
-
+				
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
@@ -945,7 +946,21 @@
 				$img_type=array('.png','.jpg','.gif');
 			}
 
-			if(isset($this->found_files[$appname][$image.$img_type[0]]))
+			// first look in the selected template dir
+			if(@$this->found_files[$appname][$image.$img_type[0]]==$imagedir)
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
+			}
+			elseif(@$this->found_files[$appname][$image.$img_type[1]]==$imagedir)
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[1]].'/'.$image.$img_type[1];
+			}
+			elseif(@$this->found_files[$appname][$image.$img_type[2]]==$imagedir)
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[2]].'/'.$image.$img_type[2];
+			}
+			// then look everywhere else
+			elseif(isset($this->found_files[$appname][$image.$img_type[0]]))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$img_type[0]].'/'.$image.$img_type[0];
 			}
