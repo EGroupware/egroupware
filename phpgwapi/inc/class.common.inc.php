@@ -201,7 +201,8 @@
 			$supportedLanguages = $this->getInstalledLanguages();
 
 			// find usersupported language
-			while (list($key,$value) = each($userLanguages))
+//			while (list($key,$value) = each($userLanguages))
+			foreach($userLanguages as $key => $value)
 			{
 				// remove everything behind '-' example: de-de
 				$value = trim($value);
@@ -232,25 +233,38 @@
 		@param $dn ldap_root_dn
 		@param $passwd ldap_root_pw
 		*/
-		function ldapConnect($host = '', $dn = '', $passwd = '')
+		function ldapConnect($host='', $dn='', $passwd='')
 		{
-			if (! $host)
+			if(!function_exists('ldap_connect'))
+			{
+				/* log does not exist in setup(, yet) */
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message('F-Abort, LDAP support unavailable');
+					$GLOBALS['phpgw']->log->commit();
+				}
+
+				printf('<b>Error: LDAP support unavailable</b><br>',$host);
+				return False;
+			}
+
+			if(!$host)
 			{
 				$host = $GLOBALS['phpgw_info']['server']['ldap_host'];
 			}
 
-			if (! $dn)
+			if(!$dn)
 			{
 				$dn = $GLOBALS['phpgw_info']['server']['ldap_root_dn'];
 			}
 
-			if (! $passwd)
+			if(!$passwd)
 			{
 				$passwd = $GLOBALS['phpgw_info']['server']['ldap_root_pw'];
 			}
 
 			// connect to ldap server
-			if (! $ds = ldap_connect($host))
+			if(!$ds = ldap_connect($host))
 			{
 				/* log does not exist in setup(, yet) */
 				if(is_object($GLOBALS['phpgw']->log))
@@ -271,8 +285,8 @@
 				}
 			}
 
-			// bind as admin, we not to able to do everything
-			if (! ldap_bind($ds,$dn,$passwd))
+			// bind as admin
+			if(!ldap_bind($ds,$dn,$passwd))
 			{
 				if(is_object($GLOBALS['phpgw']->log))
 				{
