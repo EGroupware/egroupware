@@ -115,9 +115,9 @@
 	display_item(lang('Start Date/Time'),$phpgw->common->show_date($start));
 
 	// save date so the trailer links are for the same time period
-	$thisyear	= $cal_info->start->year;
-	$thismonth	= $cal_info->start->month;
-	$thisday 	= $cal_info->start->mday;
+	$thisyear	= $event->start->year;
+	$thismonth	= $event->start->month;
+	$thisday 	= $event->start->mday;
 
 	$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
 	display_item(lang('End Date/Time'),$phpgw->common->show_date($end));
@@ -178,7 +178,7 @@
 				$status = 'Pending';
 				break;
 			case 'U':
-				$status = 'No Repsonse';
+				$status = 'No Response';
 				break;
 		}
 		$str .= $phpgw->common->grab_owner_name($event->participants[$i]).' ('.$status.')';
