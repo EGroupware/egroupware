@@ -30,23 +30,24 @@
 			. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
 			. "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
 			. "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
+			. "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
 			. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-    $t->set_var('font',$phpgw_info["theme"]["font"]);
-    $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
+    $t->set_var('font',$phpgw_info['theme']['font']);
+    $t->set_var('user_name',$phpgw_info['user']['fullname']);
     $t->set_var('title_categories',lang('categories for'));
     $t->set_var('lang_action',lang('Category list'));
-    $t->set_var('add_action',$phpgw->link('/preferences/addcategory.php',"cats_app=$cats_app&extra=$extra"));
+    $t->set_var('add_action',$phpgw->link('/preferences/addcategory.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_search',lang('Search'));
-    $t->set_var('actionurl',$phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra"));
+    $t->set_var('actionurl',$phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     $t->set_var('lang_done',lang('Done'));
     $t->set_var('doneurl',$phpgw->link('/preferences/'));
 
     if (! $start) { $start = 0; }
 
-    if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] && $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0) {
-                $limit = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+    if($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0) {
+                $limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
     }
     else { $limit = 15; }
 
@@ -56,26 +57,26 @@
 
 //--------------------------------- nextmatch --------------------------------------------
 
-    $left = $phpgw->nextmatchs->left('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
-    $right = $phpgw->nextmatchs->right('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
+    $left = $phpgw->nextmatchs->left('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra&cats_level=$cats_level");
+    $right = $phpgw->nextmatchs->right('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra&cats_level=$cats_level");
     $t->set_var('left',$left);
     $t->set_var('right',$right);
 
     if ($c->total_records > $limit) {
-	$t->set_var('lang_showing',lang("showing x - x of x",($start + 1),($start + $limit),$c->total_records));
+	$t->set_var('lang_showing',lang('showing x - x of x',($start + 1),($start + $limit),$c->total_records));
     }
-    else { $t->set_var('lang_showing',lang("showing x",$c->total_records)); }
+    else { $t->set_var('lang_showing',lang('showing x',$c->total_records)); }
 
 // ------------------------------ end nextmatch ------------------------------------------
 
 //------------------- list header variable template-declarations ------------------------- 
 
-    $t->set_var('th_bg',$phpgw_info["theme"][th_bg]);
-    $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/preferences/categories.php',lang('Name'),"&cats_app=$cats_app&extra=$extra"));
-    $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/preferences/categories.php',lang('Description'),"&cats_app=$cats_app&extra=$extra"));
+    $t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+    $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/preferences/categories.php',lang('Name'),"&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
+    $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/preferences/categories.php',lang('Description'),"&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     if ($extra) {
-	$t->set_var('sort_data','<td bgcolor="' . $phpgw_info["theme"][th_bg] . '"><font face="' . $phpgw_info["theme"]["font"] . '">'
-		    . $phpgw->nextmatchs->show_sort_order($sort,'cat_data',$order,'/preferences/categories.php',lang($extra),"&cats_app=$cats_app&extra=$extra") . '</td>');
+	$t->set_var('sort_data','<td bgcolor="' . $phpgw_info['theme']['th_bg'] . '"><font face="' . $phpgw_info['theme']['font'] . '">'
+		    . $phpgw->nextmatchs->show_sort_order($sort,'cat_data',$order,'/preferences/categories.php',lang($extra),"&cats_app=$cats_app&extra=$extra&cats_level=$cats_level") . '</td>');
     }
     else { $t->set_var('sort_data',''); }
 
@@ -88,7 +89,7 @@
     for ($i=0;$i<count($categories);$i++) {
 
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $t->set_var(tr_color,$tr_color);
+    $t->set_var('tr_color',$tr_color);
 
     $cat_id = $categories[$i]['id'];
     $owner = $categories[$i]['owner'];
@@ -106,7 +107,7 @@
     if ($extra) {
 	$data = $categories[$i]['data'];
 	if (! $data) { $data  = '&nbsp;'; }
-	$t->set_var('td_data','<td><font face=' . $phpgw_info["theme"]["font"] . '>' . $data . '</font></td>');
+	$t->set_var('td_data','<td><font face=' . $phpgw_info['theme']['font'] . '>' . $data . '</font></td>');
     }
     else { $t->set_var('td_data',''); }
 
@@ -124,16 +125,16 @@
 
     $t->set_var('app_url',$phpgw->link('/' . $phpgw_info['flags']['currentapp'] . '/index.php',"cat_id=$cat_id"));
 
-    if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
-    $t->set_var('edit',$phpgw->link('/preferences/editcategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra"));
+    if ($categories[$i]['owner'] == $phpgw_info['user']['account_id']) {
+    $t->set_var('edit',$phpgw->link('/preferences/editcategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     $t->set_var('lang_edit_entry',lang('Edit'));
     }
     else {
     $t->set_var('edit','');
     $t->set_var('lang_edit_entry','&nbsp;');
     }
-    if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
-    $t->set_var('delete',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra"));
+    if ($categories[$i]['owner'] == $phpgw_info['user']['account_id']) {
+    $t->set_var('delete',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     $t->set_var('lang_delete_entry',lang('Delete'));
     }
     else {

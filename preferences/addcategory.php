@@ -24,6 +24,7 @@
                 . "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
                 . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
                 . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
+                . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
 
@@ -59,27 +60,34 @@
 	}
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been added !",$cat_name)); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been added !',$cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
-
+    $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
+    $t->set_var('title_categories',lang('Add x category for',$cats_app));
+    $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
+    $t->set_var('user_name',$phpgw_info['user']['fullname']);
+    $t->set_var('hidden_vars',$hidden_vars);
+    $t->set_var('font',$phpgw_info['theme']['font']);
 
     $t->set_var('lang_main',lang('Main category'));
     $t->set_var('lang_new_main',lang('New main category'));
-    $t->set_var('font',$phpgw_info['theme']['font']);
     $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
-    $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('user_name',$phpgw_info['user']['fullname']);
-    $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
-    $t->set_var('title_categories',lang("Add x category for",$cats_app));
-    $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
-    $t->set_var('lang_parent',lang('Parent category'));
-    $t->set_var('lang_select_parent',lang('Select parent category'));
-    $t->set_var('lang_access',lang('Private'));
 
+    if ($cats_level) {
+	$category_list = $c->formated_list('select','all',$cat_parent);
+	$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
+	$t->set_var('lang_parent',lang('Parent category'));
+    }
+    else {
+	$t->set_var('lang_parent','');
+	$t->set_var('category_select','');
+    }
+
+    $t->set_var('lang_access',lang('Private'));
     if ($access) { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
     else { $t->set_var('access', '<input type="checkbox" name="access" value="True">'); }
+
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
     $t->set_var('cat_name',$cat_name);

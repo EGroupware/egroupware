@@ -15,7 +15,7 @@
     </tr>
     <tr>
      <td><font face="{font}">{lang_parent}</font></td>
-     <td><font face="{font}"><select name="cat_parent"><option value="">{lang_select_parent}</option>{category_list}</select></font></td>
+     <td><font face="{font}">{category_select}</font></td>
     </tr>
     <tr>
      <td><font face="{font}">{lang_name}</font></td>

@@ -24,11 +24,12 @@
                 . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
                 . "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n"
                 . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
+                . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
     if (! $cat_id) {
      Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"                                                                                                             
-					. "&filter=$filter&cats_app=$cats_app&extra=$extra"));
+					. "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
     }
 
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
@@ -65,8 +66,18 @@
     $t->set_var('lang_main',lang('Main category'));
     $t->set_var('lang_new_main',lang('New main category'));
     $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
-    $cat_parent = $cats[0]['parent'];
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
+
+    if ($cats_level) {
+	$cat_parent = $cats[0]['parent'];
+        $category_list = $c->formated_list('select','all',$cat_parent);
+        $t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
+        $t->set_var('lang_parent',lang('Parent category'));
+    }
+    else {
+        $t->set_var('lang_parent','');
+        $t->set_var('category_select','');
+    }
+
     $t->set_var('font',$phpgw_info['theme']['font']);
     $t->set_var('user_name',$phpgw_info['user']['fullname']);
     $t->set_var('title_categories',lang('Edit x category for',$cats_app));
@@ -74,10 +85,8 @@
     $t->set_var('actionurl',$phpgw->link('/preferences/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/preferences/deletecategory.php'));
     $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('lang_parent',lang('Parent category'));
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
-    $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('lang_access',lang('Private'));
     if ($cats[0]['access']=='private') { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
     else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
