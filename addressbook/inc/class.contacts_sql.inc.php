@@ -152,18 +152,10 @@
         return $return_fields;
      }
 
-     function read($start,$offset,$fields,$query="",$sort="",$order="") // send this the range,query,sort,order
-                                                                        // and whatever fields you want to see
+     function read($start,$offset,$fields,$query="",$filter="",$sort="",$order="") // send this the range,query,sort,order
+                                                                                   // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
-
-        if (!$sort)   { $sort   = "ASC";  }
-
-        if ($order) {
-           $ordermethod = "order by $order $sort ";
-        }  else {
-           $ordermethod = "order by N_Family,N_Given,D_EMAIL $sort";
-        }
 
         list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
         if (count($stock_fieldnames)) {
@@ -171,6 +163,51 @@
            if ($t_fields == ",") {
               unset($t_fields);
            }
+        }
+
+        // the following filter section is not working yet
+        if ($filter) {
+	  echo "DEBUG - Inbound filter is: #".$filter."#";
+          $filterarray = split(',',$filter);
+          if ($filterarray[1]) {
+	    $i=0;
+	    while (list($name,$value) = split('=',$filterarray[$i])) {
+	      $filterfields[$i] .= array($name => $value);
+	      $i++;
+	    }
+	  } else {
+	    list($name,$value) = split('=',$filter);
+	    echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#";
+	    $filterfields = array($name => $value);
+	  }
+
+          $i=0;
+	  while (list($name,$value) = each($filterfields)) {
+	    echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#";
+	    $filterlist .= $name."='".$value."',";
+	    $i++;
+	  }
+	  
+	  echo "<br>DEBUG - Filter output string: #".$filterlist."#";
+	  
+	  list($fields,$fieldnames,$extra) = $this->split_stock_and_extras($filterfields); 
+          
+          if ($extra) {
+	    while (list($name,$value) = each($extra)) {
+	      $filterextra .= " AND contact_name='".$name."' AND contact_value='".$value."',";
+            }
+          } else {
+            $filterstock = " AND ($filterlist) ";
+          }
+	  $filterextra = substr($filterextra,0,-1);
+        }
+
+        if (!$sort)   { $sort   = "ASC";  }
+
+        if ($order) {
+           $ordermethod = "order by $order $sort ";
+        }  else {
+           $ordermethod = "order by N_Family,N_Given,D_EMAIL $sort";
         }
 
         $this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
@@ -212,7 +249,7 @@
            }
 
            $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
-                           . $this->db->f("id") . "'",__LINE__,__FILE__);
+                           . $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
            while ($this->db2->next_record()) {
               // If its not in the list to be returned, don't return it.
               // This is still quicker then 5(+) separate queries
