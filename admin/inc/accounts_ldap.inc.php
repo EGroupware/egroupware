@@ -106,18 +106,7 @@
        $totaltodisplay = $nummsg;
     }
   
-/*
-    for ($i=$start, $j=0; $i<$totaltodisplay; $i++,$j++) {
-       if (! $phpgw_info["server"]["global_denied_users"][$info[$j]["uid"][0]]) {
-          $account_info[$j]["account_id"]        = rawurlencode($info[$j]["dn"]);
-          $account_info[$j]["account_lid"]       = $info[$j]["uid"][0];
-          $account_info[$j]["account_lastname"]  = $info[$j]["sn"][0];
-          $account_info[$j]["account_firstname"] = $info[$j]["givenname"][0];
-       }
-    }
-*/
-
-    for ($i=0, $j=0; $i<count($info); $i++,$j++) {
+    for ($i=0, $j=0; $i<$info["count"]; $i++,$j++) {
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
           $account_info[$i]["account_id"]        = rawurlencode($info[$i]["dn"]);
           $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
