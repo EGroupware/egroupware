@@ -16,7 +16,7 @@
 
   $phpgw_flags["currentapp"] = "preferences";
   include("../header.inc.php");
-  if ($phpgw_info["user"]["permissions"]["anonymous"]) {
+  if ($phpgw_info["user"]["apps"]["anonymous"]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
      exit;
   }
@@ -29,7 +29,8 @@
      . lang_pref("change your settings") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
      . lang_pref("change your profile") . "</a>";
-  if ($phpgw_info["user"]["permissions"]["nntp"])
+//  if ($phpgw_info["user"]["permissions"]["nntp"])
+  if ($phpgw_info["user"]["apps"]["nntp"])
     echo "<br><a href=\"" . $phpgw->link("nntp.php") . "\">"
        . lang_pref("monitor newsgroups") . "</a>";
 
