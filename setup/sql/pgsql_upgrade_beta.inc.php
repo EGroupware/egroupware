@@ -1930,7 +1930,7 @@
 			$public = $phpgw_setup->db->f('cal_access');
 			$title = $phpgw_setup->db->f('cal_name');
 			$description = $phpgw_setup->db->f('cal_description');
-			$temp_db->query("INSERT INTO phpgw_cal(cal_id,owner,category,groups,datetime,mdatetime,edatetime,priority,cal_type,is_public,title,description)
+			$temp_db->query("INSERT INTO phpgw_cal(cal_id,owner,category,groups,datetime,mdatetime,edatetime,priority,cal_type,is_public,title,desription)
 				values($id,$owner,0,'$groups',$datetime,$mdatetime,$edatetime,$priority,'$type',$public,'$title','$description')",__LINE__,__FILE__);
 		}
 
