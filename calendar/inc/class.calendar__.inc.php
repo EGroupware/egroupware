@@ -246,7 +246,7 @@ class calendar__
 		}
 	}
 
-	function set_common_recur($year,$month,$day)
+	function set_common_recur($year,$month,$day,$interval)
 	{
 		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
 		{
