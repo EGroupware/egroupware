@@ -1,4 +1,4 @@
-A:link 
+A:link
 {
 	COLOR: #006699; 
 	TEXT-DECORATION: none
@@ -60,8 +60,9 @@ TABLE
 	FONT-SIZE: 12px; 
 	PADDING-BOTTOM: 5px; 
 	WIDTH: 160px; 
-	COLOR: #000000; 
-	LINE-HEIGHT: 20px; 
+	COLOR: #000000;
+	BACKGROUND-COLOR: #efefef;
+	LINE-HEIGHT: 20px;
 	PADDING-TOP: 5px; 
 	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
@@ -70,6 +71,7 @@ TABLE
 {
 	FONT-SIZE: 12px; 
 	COLOR: #006699; 
+	BACKGROUND-COLOR: #efefef;
 	FONT-FAMILY: Arial, Helvetica, sans-serif
 }
 
