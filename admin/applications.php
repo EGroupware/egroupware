@@ -27,9 +27,9 @@
      . '<td align="center">' . lang_admin("Installed applications") . '</td></tr>';
 
   echo "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
-     . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang_common("title")) . "</td><td>"
+     . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang_admin("title")) . "</td><td>"
      . lang_common("Edit") . "</td> <td> " . lang_common("Delete") . " </td> <td> "
-     . lang_common("Enabled") . " </td> <td></tr>";
+     . lang_admin("Enabled") . " </td> <td></tr>";
 
   $phpgw->db->query("select * from applications $ordermethod");
 

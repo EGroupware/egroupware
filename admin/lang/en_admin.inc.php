@@ -38,6 +38,11 @@
        case "last time read":	$s = "Last Time Read";		break;
        case "manager":			$s = "Manager";				break;
        case "permissions":		$s = "Permissions";			break;
+       case "title":			$s = "Title";				break;
+       case "enabled":			$s = "Enabled";				break;
+
+       case "installed applications":
+	$s = "Installed applications";						break;
 
        case "are you sure you want to delete this group ?":
 	$s = "Are you sure you want to delete this group ?"; break;
