@@ -20,6 +20,7 @@
 			'read_entry'	=> True,
 			'delete_entry' => True,
 			'delete_calendar'	=> True,
+			'change_owner'	=> True,
 			'update'       => True,
 			'preferences'  => True,
 			'store_to_cache'	=> True,
@@ -47,6 +48,14 @@
 			'delete_calendar' => Array(
 				'in' => Array(
 					'int'
+				),
+				'out' => Array(
+					'int'
+				)
+			),
+			'change_owner' => Array(
+				'in' => Array(
+					'array'
 				),
 				'out' => Array(
 					'int'
@@ -305,6 +314,11 @@
 							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
 							'docstring' => lang('Delete an entire users calendar.')
 						),
+						'change_owner' => array(
+							'function'  => 'change_owner',
+							'signature' => array(array(xmlrpcInt,xmlrpcStruct)),
+							'docstring' => lang('Change all events for $params[\'old_owner\'] to $params[\'new_owner\'].')
+						),
 						'store_to_cache' => array(
 							'function'  => 'store_to_cache',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
@@ -493,11 +507,14 @@
 			}
 		}
 
-		function change_owner($account_id,$new_owner)
+		function change_owner($params='')
 		{
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
-				$this->so->change_owner($account_id,$new_owner);
+				if(is_array($params))
+				{
+					$this->so->change_owner($params['old_owner'],$params['new_owner']);
+				}
 			}
 		}
 

@@ -12,14 +12,17 @@
 	/* $Id$ */
 
 	// Delete all records for a user
-	$cal = CreateObject('calendar.bocalendar');
-
 	if(intval($GLOBALS['HTTP_POST_VARS']['new_owner'])==0)
 	{
-		$cal->delete_calendar(intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+		ExecMethod('calendar.bocalendar.delete_calendar',intval($GLOBALS['HTTP_POST_VARS']['account_id']));
 	}
 	else
 	{
-		$cal->change_owner(intval($GLOBALS['HTTP_POST_VARS']['account_id']),intval($GLOBALS['HTTP_POST_VARS']['new_owner']));
+		ExecMethod('calendar.bocalendar.change_owner',
+			Array(
+				'old_owner'	=> intval($GLOBALS['HTTP_POST_VARS']['account_id']),
+				'new_owner'	=> intval($GLOBALS['HTTP_POST_VARS']['new_owner'])
+			)
+		);
 	}
 ?>
