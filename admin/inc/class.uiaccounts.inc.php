@@ -430,7 +430,7 @@
 				'lang_groups'		=> lang('Groups'),
 				'lang_expires'		=> lang('Expires'),
 				'lang_firstname'	=> lang('First Name'),
-				'lang_button'		=> ($_account_id?lang('Save'):lang('Add')),
+				'lang_button'		=> ($_account_id?lang('Save'):lang('Add'))
 			/* 'lang_file_space'	=> lang('File Space') */
 			);
 			$t->set_var($var);
