@@ -41,14 +41,11 @@
 	// $GLOBALS['phpgw']->template->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
 	// $GLOBALS['phpgw']->template->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
 
-	// pull some vars from _POST
-	//
-	$action   = $_POST['action'];
 	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
 
-	if ($action == 'download' && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,"r")))) 
+	if ($_POST['action'] == 'download' && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,"r")))) 
 	{
-		$action = '';
+		$_POST['action'] = '';
 	}
 	$GLOBALS['phpgw']->template->set_var("action_url",$GLOBALS['phpgw']->link("/infolog/csv_import.php"));
 
@@ -136,7 +133,7 @@ function cat_id($cats)
 	return  $id_str;
 }
 
-	switch ($action) 
+	switch ($_POST['action']) 
 	{
 	case '':	// Start, ask Filename
 		$GLOBALS['phpgw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
@@ -275,7 +272,7 @@ function cat_id($cats)
 		break;
 
 	case 'import':
-		set_time_limit(0);
+		@set_time_limit(0);
 		$fp=fopen($_POST['csvfile'],'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
