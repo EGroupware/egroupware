@@ -1,21 +1,20 @@
 TODO:
-- configuration dialog for admin section
-	picture size
 - advanced search dialog, accessable via sideboxmenu
-- show dialog
-- make delete, show and edit dialoges popup (??)
+- show dialog /  make show dialoge popup (??)
 - some artwork : general resource pictures like (room, car, beamer ...) (Benkom)
 - sitemgr module
 
 - list 
 	handle select all button --> add actions for selected: move to other cat,...
 	
--edit / add
+- edit/add
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	inputvalidation on selectbox --> eTemplate --> Ralf
 	make some returnmessages js dialogs
 	accessories get inserted a second time on page-refresh
-	
+
+- admin section
+	add configure picture size	
 
 ----
 if basics are working --> make it scheudable (meeting with ralf)
