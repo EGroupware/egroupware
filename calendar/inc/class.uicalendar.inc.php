@@ -610,11 +610,10 @@
 				$cal_id = $GLOBALS['HTTP_GET_VARS']['cal_id'];
 				$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
 				
-				$can_edit = $this->bo->can_user_edit($event);
-				
-				if(!$can_edit)
+				if(!$this->bo->can_user_edit($event))
 				{
 					$this->view(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
+					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
 				{
