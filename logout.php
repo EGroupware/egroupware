@@ -22,7 +22,7 @@
   include("header.inc.php");
 //  include($phpgw_info["server"]["include_root"] . "/lang/en/" . "en" . "_logout.inc.php");
 
-  $sep = $phpgw->common->filesystem_separator();
+  $sep = $phpgw->common->filesystem_sepeartor();
 
 /*
   if ($installed[cron_apps] != "Y") {
