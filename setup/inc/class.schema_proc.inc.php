@@ -21,13 +21,24 @@
 
 		function schema_proc($dbms)
 		{
-			include('./inc/class.schema_proc_' . $dbms . '.inc.php');
+			if(@is_object($GLOBALS['phpgw']))
+			{
+				/* this allows usage from within phpgw */
+				$basedir = PHPGW_SERVER_ROOT . '/setup/';
+			}
+			else
+			{
+				$basedir = './';
+			}
+
+			include($basedir . 'inc/class.schema_proc_' . $dbms . '.inc.php');
 			eval("\$this->m_oTranslator = new schema_proc_$dbms;");
 
-			include('./inc/class.schema_proc_array.inc.php');
+			include($basedir . 'inc/class.schema_proc_array.inc.php');
+
 			$this->m_oDeltaProc = new schema_proc_array;
 			$this->m_aTables = array();
-			$this->m_bDeltaOnly = false; // Default to false here in case it's just a CreateTable script
+			$this->m_bDeltaOnly = False; // Default to false here in case it's just a CreateTable script
 		}
 
 		function GenerateScripts($aTables, $bOutputHTML = false)
