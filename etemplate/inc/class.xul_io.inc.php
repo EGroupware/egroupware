@@ -276,6 +276,7 @@
 				echo "<p>etempl->data = "; _debug_array($etempl->data);
 			}
 			$doc = new xmldoc();
+			$doc->add_comment('$Id$');
 
 			$xul_overlay = new xmlnode('overlay');
 
