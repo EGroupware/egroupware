@@ -205,13 +205,22 @@
 			return $temp_data;
 		}
 
+		/*!
+		@function create_defaults
+		@abstract insert a copy of the default preferences for use by real account_id
+		@discussion
+		@param $account_id numerical id of account for which to create the prefs
+		*/
 		function create_defaults($account_id)
 		{
 			$this->db->query("select * from phpgw_preferences where preference_owner='-2'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->db->query("insert into phpgw_preferences values ('$account_id','"
-				. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
+			if($this->db->f('preference_value'))
+			{
+				$this->db->query("insert into phpgw_preferences values ('$account_id','"
+					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
+			}
 		}
 
 		/*!
