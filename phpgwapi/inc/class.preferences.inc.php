@@ -49,7 +49,7 @@
     function read_repository()
     {
       $this->db->lock("preferences");
-      $this->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
+      $this->db->query("SELECT preference_value FROM preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
       $this->db->next_record();
       $pref_info = $this->db->f("preference_value");
       $this->data = Array();
