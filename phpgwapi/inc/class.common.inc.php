@@ -51,14 +51,15 @@
 		@param $str1
 		@param $str2
 		*/
-		function cmp_version($str1,$str2)
+		function cmp_version($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
-			//echo "<br>$regs[0] - $regs2[0]";
+			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
+
 			for($i=1;$i<5;$i++)
 			{
-				echo "<br>$i: $regs[$i] - $regs2[$i]";
+				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
 				if($regs2[$i] == $regs[$i])
 				{
 					continue;
