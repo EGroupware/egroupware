@@ -28,7 +28,7 @@
 	class translation
 	{
 		var $lang = array();
-		var $userlang   = 'en';
+		var $userlang   = '';
 		var $currentapp = '';
 		var $loaded = False;
 		var $translator_helper = '*';
@@ -56,6 +56,11 @@
 		*/
 		function load_langs()
 		{
+			if($this->userlang == '')
+			{
+				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] ?
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] : 'en';
+			}
 			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $this->userlang
 				. "' AND (app_name LIKE '" . $this->currentapp
 				. "' OR app_name LIKE 'common' OR app_name LIKE 'all') ORDER BY app_name ";
