@@ -2,35 +2,35 @@
 <overlay>
   <grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.002" spacing="0" padding="5">
     <columns>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
+      <column width="2%"/>
+      <column width="2%"/>
+      <column width="20%"/>
+      <column width="20%"/>
+      <column width="20%"/>
+      <column width="10%"/>
+      <column width="10%"/>
+      <column width="2%"/>
+      <column width="2%"/>
     </columns>
     <rows>
       <row>
-        <description span="3" value="entries" no_lang="1" align="right" id="range"/>
+        <description span="4" value="entries" no_lang="1" align="right" id="range"/>
         <description span="all" value="of" no_lang="1" id="rows[0]"/>
       </row>
       <row class="nmh">
         <button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
         <button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
-        <menulist label="Category" onchange="1" statustext="select a Category">
+        <menulist label="Category" align="center" onchange="1" statustext="select a Category">
           <menupopup id="cat_id" options="-1" type="select-cat"/>
         </menulist>
-        <textbox id="search" statustext="a pattern to be searched for"/>
-        <button label="Search" id="start_search" statustext="to start the search"/>
         <menulist label="@filter_label" onchange="1" statustext="@filter_help">
           <menupopup id="filter"/>
         </menulist>
         <menulist label="@filter2_label" onchange="1" statustext="@filter2_help">
           <menupopup id="filter2"/>
         </menulist>
+        <textbox id="search" align="right" statustext="a pattern to be searched for"/>
+        <button label="Search" id="start_search" statustext="to start the search"/>
         <button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
         <button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
       </row>
