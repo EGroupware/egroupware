@@ -97,7 +97,7 @@
 					$vals = count($attrs) > 1 ? explode(',',$val) : array($val);
 					while (list($n,$attr) = each($attrs))
 					{
-						if ($val = $vals[$n])
+						if (($val = $vals[$n]) != '')
 						{
 							if ($attr == 'span')
 							{
