@@ -152,7 +152,7 @@
 
 				if ($level > 0)
 				{
-					$space = '&nbsp;&nbsp;';
+					$space = '-';
 					$spaceset = str_repeat($space,$level);
 					$cat_name = $spaceset . $cat_name;
 				}

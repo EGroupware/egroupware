@@ -389,7 +389,7 @@
 					$s .= '>';
 					for ($j=0;$j<$cats[$i]['level'];$j++)
 					{
-						$s .= '&nbsp;';
+						$s .= '-';
 					}
 					$s .= $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')

@@ -181,7 +181,7 @@
 
 				if ($level > 0)
 				{
-					$space = '&nbsp;&nbsp;';
+					$space = '-';
 					$spaceset = str_repeat($space,$level);
 					$name = $spaceset . $GLOBALS['phpgw']->strip_html($cats[$i]['name']) . $appendix;
 				}
