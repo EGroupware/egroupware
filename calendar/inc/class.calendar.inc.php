@@ -64,7 +64,7 @@
       global $phpgw, $phpgw_info;
       
       $owner = $owner==$phpgw_info["user"]["account_id"]?0:$owner;
-      $groups = substr($phpgw->accounts->sql_search("calendar_entry.cal_group",intval($owner)),4);
+      $groups = substr($phpgw->common->sql_search("calendar_entry.cal_group",intval($owner)),4);
       if (!$groups) {
         return "";
       } else {
@@ -1335,30 +1335,29 @@
 
       if(!$phpgw_info["user"]["apps"]["calendar"]) return false;
 
+      $db2 = $phpgw->db;
+      
       $cal_id = array();
       if(is_long($calid)) {
-	if(!$calid) return false;
-	$cal_id[0] = $calid;
+        if(!$calid) return false;
+        $cal_id[0] = $calid;
       } elseif(is_string($calid)) {
-
-	$phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='$calid'",__LINE__,__FILE__);
-	$phpgw->db->next_record();
-	$calid = $phpgw->db->f("account_id");
-	$phpgw->db->query("SELECT cal_id FROM calendar_entry WHERE cal_owner=".$calid,__LINE__,__FILE__);
+        $calid = $phpgw->account->name2id($calid);
+        $db2->query("SELECT cal_id FROM calendar_entry WHERE cal_owner=".$calid,__LINE__,__FILE__);
         while($phpgw->db->next_record()) {
-	  $cal_id[count($cal_id)] = $phpgw->db->f("cal_id");
-	}
+          $cal_id[] = $db2->f("cal_id");
+        }
       } elseif(is_array($calid)) {
-	if(is_string($calid[0])) {
-	  for($i=0;$i<count($calid);$i++) {
-	    $phpgw->db->query("SELECT cal_id FROM calendar_entry WHERE cal_owner=".$calid[$i],__LINE__,__FILE__);
-            while($phpgw->db->next_record()) {
-	      $cal_id[count($cal_id)] = $phpgw->db->f("cal_id");
-	    }
-	  }
-	} elseif(is_long($calid[0])) {
-	  $cal_id = $calid;
-	}
+        if(is_string($calid[0])) {
+          for($i=0;$i<count($calid);$i++) {
+            $db2->query("SELECT cal_id FROM calendar_entry WHERE cal_owner=".$calid[$i],__LINE__,__FILE__);
+            while($db2->next_record()) {
+              $cal_id[] = $db2->f("cal_id");
+            }
+          }
+        } elseif(is_long($calid[0])) {
+          $cal_id = $calid;
+        }
       }
       return $cal_id;
     }
@@ -1512,28 +1511,30 @@
 
       if(!$cal_id) return false;
 
-      $phpgw->db->lock(array("calendar_entry","calendar_entry_user","calendar_entry_repeats"));
+      $db2 = $phpgw->db;
+
+      $db2->lock(array("calendar_entry","calendar_entry_user","calendar_entry_repeats"));
 
       $calendar = CreateObject('calendar.calendar_item');
 
       for($i=0;$i<count($cal_id);$i++) {
 
-	$phpgw->db->query("SELECT * FROM calendar_entry WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
-	$phpgw->db->next_record();
+        $db2->query("SELECT * FROM calendar_entry WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
+        $db2->next_record();
 
-        $calendar->id = (int)$phpgw->db->f("cal_id");
-	$calendar->owner = $phpgw->db->f("cal_owner");
+        $calendar->id = (int)$db2->f("cal_id");
+        $calendar->owner = $db2->f("cal_owner");
 
-	$calendar->datetime = $phpgw->db->f("cal_datetime");
-	$date = $this->date_to_epoch($phpgw->common->show_date($calendar->datetime,"Ymd"));
-	$calendar->day = $date["day"];
-	$calendar->month = $date["month"];
-	$calendar->year = $date["year"];
+        $calendar->datetime = $db2->f("cal_datetime");
+        $date = $this->date_to_epoch($phpgw->common->show_date($calendar->datetime,"Ymd"));
+        $calendar->day = $date["day"];
+        $calendar->month = $date["month"];
+        $calendar->year = $date["year"];
 
-	$time = $this->splittime($phpgw->common->show_date($calendar->datetime,"His"));
-	$calendar->hour   = (int)$time["hour"];
-	$calendar->minute = (int)$time["minute"];
-	$calendar->ampm   = $time["ampm"];
+        $time = $this->splittime($phpgw->common->show_date($calendar->datetime,"His"));
+        $calendar->hour   = (int)$time["hour"];
+        $calendar->minute = (int)$time["minute"];
+        $calendar->ampm   = $time["ampm"];
 
 //	echo "<br>TEST: hour: " . (int)$time["hour"];
 //	echo "<br>TEST: minute: " . (int)$time["minute"];
@@ -1542,80 +1543,84 @@
 //	echo "<br>TEST: minute: " . $calendar->minute;
 //	echo "<br>TEST: ampm: " . $calendar->ampm;
 
-	$calendar->mdatetime = $phpgw->db->f("cal_mdatetime");
-	$date = $this->date_to_epoch($phpgw->common->show_date($calendar->mdatetime,"Ymd"));
-	$calendar->mod_day = $date["day"];
-	$calendar->mod_month = $date["month"];
-	$calendar->mod_year = $date["year"];
+        $calendar->mdatetime = $db2->f("cal_mdatetime");
+        $date = $this->date_to_epoch($phpgw->common->show_date($calendar->mdatetime,"Ymd"));
+        $calendar->mod_day = $date["day"];
+        $calendar->mod_month = $date["month"];
+        $calendar->mod_year = $date["year"];
 
-	$time = $this->splittime($phpgw->common->show_date($calendar->mdatetime,"His"));
-	$calendar->mod_hour = (int)$time["hour"];
-	$calendar->mod_minute = (int)$time["minute"];
-	$calendar->mod_second = (int)$time["second"];
-	$calendar->mod_ampm = $time["ampm"];
+        $time = $this->splittime($phpgw->common->show_date($calendar->mdatetime,"His"));
+        $calendar->mod_hour = (int)$time["hour"];
+        $calendar->mod_minute = (int)$time["minute"];
+        $calendar->mod_second = (int)$time["second"];
+        $calendar->mod_ampm = $time["ampm"];
 
-	$calendar->edatetime = $phpgw->db->f("cal_edatetime");
-	$date = $this->date_to_epoch($phpgw->common->show_date($calendar->edatetime,"Ymd"));
-	$calendar->end_day = $date["day"];
-	$calendar->end_month = $date["month"];
-	$calendar->end_year = $date["year"];
+        $calendar->edatetime = $db2->f("cal_edatetime");
+        $date = $this->date_to_epoch($phpgw->common->show_date($calendar->edatetime,"Ymd"));
+        $calendar->end_day = $date["day"];
+        $calendar->end_month = $date["month"];
+        $calendar->end_year = $date["year"];
 
-	$time = $this->splittime($phpgw->common->show_date($calendar->edatetime,"His"));
-	$calendar->end_hour = (int)$time["hour"];
-	$calendar->end_minute = (int)$time["minute"];
-	$calendar->end_second = (int)$time["second"];
-	$calendar->end_ampm = $time["ampm"];
+        $time = $this->splittime($phpgw->common->show_date($calendar->edatetime,"His"));
+        $calendar->end_hour = (int)$time["hour"];
+        $calendar->end_minute = (int)$time["minute"];
+        $calendar->end_second = (int)$time["second"];
+        $calendar->end_ampm = $time["ampm"];
 
-	$calendar->priority = $phpgw->db->f("cal_priority");
+        $calendar->priority = $db2->f("cal_priority");
 // not loading webcal_entry.cal_type
-	$calendar->access = $phpgw->db->f("cal_access");
-	$calendar->name = htmlspecialchars(stripslashes($phpgw->db->f("cal_name")));
-	$calendar->description = htmlspecialchars(stripslashes($phpgw->db->f("cal_description")));
-	if($phpgw->db->f("cal_group"))
-	  $calendar->groups = $phpgw->accounts->string_to_array($phpgw->db->f("cal_group"));
+        $calendar->access = $db2->f("cal_access");
+        $calendar->name = htmlspecialchars(stripslashes($db2->f("cal_name")));
+        $calendar->description = htmlspecialchars(stripslashes($db2->f("cal_description")));
+        if($db2->f("cal_group")) {
+          $groups = explode(',',$db2->f("cal_group"));
+          for($j=1;$j<count($groups);$j++) {
+            $calendar->groups[] = $groups[$j];
+          }
+        }
 
-	$phpgw->db->query("SELECT * FROM calendar_entry_repeats WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
-	if($phpgw->db->num_rows()) {
-	  $phpgw->db->next_record();
+        $db2->query("SELECT * FROM calendar_entry_repeats WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
+        if($db2->num_rows()) {
+          $db2->next_record();
 
-	  $rpt_type = strtolower($phpgw->db->f("cal_type"));
-	  $calendar->rpt_type = !$rpt_type?"none":$rpt_type;
-	  $calendar->rpt_use_end = $phpgw->db->f("cal_use_end");
-	  if($calendar->rpt_use_end) {
-	    $calendar->rpt_end = $phpgw->db->f("cal_end");
-	    $rpt_end = $phpgw->common->show_date($phpgw->db->f("cal_end"),"Ymd");
-	    $date = $this->date_to_epoch($rpt_end);
-	    $calendar->rpt_end_day = (int)$date["day"];
-	    $calendar->rpt_end_month = (int)$date["month"];
-	    $calendar->rpt_end_year = (int)$date["year"];
-	  } else {
-	    $calendar->rpt_end = 0;
-	    $calendar->rpt_end_day = 0;
-	    $calendar->rpt_end_month = 0;
-	    $calendar->rpt_end_year = 0;
-	  }
-	  $calendar->rpt_freq = (int)$phpgw->db->f("cal_frequency");
-	  $rpt_days = strtoupper($phpgw->db->f("cal_days"));
-	  $calendar->rpt_days = $rpt_days;
-	  $calendar->rpt_sun = (substr($rpt_days,0,1)=="Y"?1:0);
-	  $calendar->rpt_mon = (substr($rpt_days,1,1)=="Y"?1:0);
-	  $calendar->rpt_tue = (substr($rpt_days,2,1)=="Y"?1:0);
-	  $calendar->rpt_wed = (substr($rpt_days,3,1)=="Y"?1:0);
-	  $calendar->rpt_thu = (substr($rpt_days,4,1)=="Y"?1:0);
-	  $calendar->rpt_fri = (substr($rpt_days,5,1)=="Y"?1:0);
-	  $calendar->rpt_sat = (substr($rpt_days,6,1)=="Y"?1:0);
-	}
+          $rpt_type = strtolower($db2->f("cal_type"));
+          $calendar->rpt_type = !$rpt_type?"none":$rpt_type;
+          $calendar->rpt_use_end = $db2->f("cal_use_end");
+          if($calendar->rpt_use_end) {
+            $calendar->rpt_end = $db2->f("cal_end");
+            $rpt_end = $phpgw->common->show_date($db2->f("cal_end"),"Ymd");
+            $date = $this->date_to_epoch($rpt_end);
+            $calendar->rpt_end_day = (int)$date["day"];
+            $calendar->rpt_end_month = (int)$date["month"];
+            $calendar->rpt_end_year = (int)$date["year"];
+          } else {
+            $calendar->rpt_end = 0;
+            $calendar->rpt_end_day = 0;
+            $calendar->rpt_end_month = 0;
+            $calendar->rpt_end_year = 0;
+          }
+          $calendar->rpt_freq = (int)$db2->f("cal_frequency");
+          $rpt_days = strtoupper($db2->f("cal_days"));
+          $calendar->rpt_days = $rpt_days;
+          $calendar->rpt_sun = (substr($rpt_days,0,1)=="Y"?1:0);
+          $calendar->rpt_mon = (substr($rpt_days,1,1)=="Y"?1:0);
+          $calendar->rpt_tue = (substr($rpt_days,2,1)=="Y"?1:0);
+          $calendar->rpt_wed = (substr($rpt_days,3,1)=="Y"?1:0);
+          $calendar->rpt_thu = (substr($rpt_days,4,1)=="Y"?1:0);
+          $calendar->rpt_fri = (substr($rpt_days,5,1)=="Y"?1:0);
+          $calendar->rpt_sat = (substr($rpt_days,6,1)=="Y"?1:0);
+        }
 
-	$phpgw->db->query("SELECT * FROM calendar_entry_user WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
-	if($phpgw->db->num_rows()) {
-	  while($phpgw->db->next_record()) {
-	    $calendar->participants[] = $phpgw->db->f("cal_login");
-	    $calendar->status[] = $phpgw->db->f("cal_status");
-	  }
-	}
-	$calendar_item[$i] = $calendar;
+        $db2->query("SELECT * FROM calendar_entry_user WHERE cal_id=".$cal_id[$i],__LINE__,__FILE__);
+        if($db2->num_rows()) {
+          while($db2->next_record()) {
+            $calendar->participants[] = $db2->f("cal_login");
+            $calendar->status[] = $db2->f("cal_status");
+          }
+        }
+        $calendar_item[$i] = $calendar;
       }
-      $phpgw->db->unlock();
+      $db2->unlock();
       return $calendar_item;
     }
 

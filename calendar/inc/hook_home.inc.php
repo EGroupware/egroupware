@@ -19,7 +19,7 @@
   } unset($d1);
 
   $tmp_app_inc = $phpgw_info["server"]["app_inc"];
-  $phpgw_info["server"]["app_inc"] = $phpgw_info["server"]["server_root"]."/calendar/inc";
+  $phpgw_info["server"]["app_inc"] = $phpgw->common->get_inc_dir('calendar');
 
   if ($phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
     include($phpgw_info["server"]["app_inc"].'/functions.inc.php');
