@@ -8,7 +8,6 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	/* Basic information about this app */
@@ -24,25 +23,15 @@
 		'email' => 'phpgroupware-developers@gnu.org'
 	);
 
+	$setup_info['phpgwapi']['maintainer'][] = array
+	(
+		'name'	=> 'phpGroupWare coreteam',
+		'email' => 'phpgroupware-developers@gnu.org',
+		'url'	=> 'www.phpgroupware.org/coredevelopers'
+	);
+
 	$setup_info['phpgwapi']['description'] = 'The core of phpGroupWare, the API itself';
-
-	$setup_info['phpgwapi']['maintainer'][]  = array
-	(
-		'name'	=> 'Joseph Engo',
-		'email'	=> 'jengo@phpgroupware.org'
-	);
-
-	$setup_info['phpgwapi']['maintainer'][]	= array
-	(
-		'name'	=> 'Bettina Gille',
-		'email'	=> 'ceb@phpgroupware.org'
-	);
-
-	$setup_info['phpgwapi']['maintainer'][]  = array
-	(
-		'name'	=> 'Dan Kuykendall',
-		'email'	=> 'seek3r@phpgroupware.org'
-	);
+	$setup_info['phpgwapi']['license'] = 'GPL | LGPL';
 
 	/* The tables this app creates */
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_sessions';

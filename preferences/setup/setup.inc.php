@@ -8,7 +8,6 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	$setup_info['preferences']['name']      = 'preferences';
@@ -17,38 +16,21 @@
 	$setup_info['preferences']['tables']    = '';
 	$setup_info['preferences']['enable']    = 2;
 
-	$setup_info['admin']['author'][] = array
+	$setup_info['preferences']['author'][] = array
 	(
 		'name'	=> 'phpGroupWare coreteam',
 		'email' => 'phpgroupware-developers@gnu.org'
 	);
 
-	$setup_info['admin']['maintainer'][]  = array
+	$setup_info['preferences']['maintainer'][] = array
 	(
-		'name'	=> 'Joseph Engo',
-		'email'	=> 'jengo@phpgroupware.org'
+		'name'	=> 'phpGroupWare coreteam',
+		'email' => 'phpgroupware-developers@gnu.org',
+		'url'	=> 'www.phpgroupware.org/coredevelopers'
 	);
 
-	$setup_info['admin']['maintainer'][]  = array
-	(
-		'name'	=> 'Marc A. Peters',
-		'email'	=> 'skeeter@phpgroupware.org'
-	);
-
-	$setup_info['admin']['maintainer'][]	= array
-	(
-		'name'	=> 'Bettina Gille',
-		'email'	=> 'ceb@phpgroupware.org'
-	);
-
-	$setup_info['admin']['maintainer'][]  = array
-	(
-		'name'	=> 'Dan Kuykendall',
-		'email'	=> 'seek3r@phpgroupware.org'
-	);
-
-	$setup_info['admin']['license']  = 'GPL';
-	$setup_info['admin']['description'] = 'phpGroupWare preferences application';
+	$setup_info['preferences']['license']  = 'GPL';
+	$setup_info['preferences']['description'] = 'phpGroupWare preferences application';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['preferences']['hooks'][] = 'deleteaccount';
