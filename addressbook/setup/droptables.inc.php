@@ -11,6 +11,6 @@
 
   /* $Id$ */
 
-  $db->query("DROP TABLE addressbook");
-  $db->query("DROP TABLE addressbook_extra");
+  $db->query("DROP TABLE phpgw_addressbook");
+  $db->query("DROP TABLE phpgw_addressbook_extra");
 ?>

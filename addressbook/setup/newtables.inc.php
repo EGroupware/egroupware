@@ -14,7 +14,7 @@
   // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
 
 
-  $sql = "CREATE TABLE addressbook (
+  $sql = "CREATE TABLE phpgw_addressbook (
    id int(8) DEFAULT '0' NOT NULL,
    lid varchar(32),
    tid char(1),
@@ -74,7 +74,7 @@
 
   $db->query($sql);
 
-  $sql = "CREATE TABLE addressbook_extra (
+  $sql = "CREATE TABLE phpgw_addressbook_extra (
    contact_id int(11),
    contact_owner int(11),
    contact_name varchar(255),
