@@ -23,7 +23,7 @@
        <FONT SIZE="-1">
 
        <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0>
-        <FORM ACTION="<?php echo $phpgw->link("index.php"); ?>" method="post" name="SelectMonth">
+        <FORM ACTION="<?php echo $phpgw->link("month.php"); ?>" method="post" name="SelectMonth">
         <TR>
          <TD VALIGN="top" WIDTH=33%><FONT SIZE="-1">
           <B><?php echo lang("Month"); ?>:</B>

@@ -64,7 +64,7 @@
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link("index.php","day=".$phpgw->calendar->today["day"]."&month=".$phpgw->calendar->today["month"]."&year=".$phpgw->calendar->today["year"]); ?>">
+   <a href="<?php echo $phpgw->link("month.php","day=".$phpgw->calendar->today["day"]."&month=".$phpgw->calendar->today["month"]."&year=".$phpgw->calendar->today["year"]); ?>">
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/month.gif" alt="<?php echo lang("This month"); ?>" border="0">
    </a>
   </td>
@@ -78,7 +78,7 @@
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/view.gif" alt="<?php echo lang("Daily Matrix View"); ?>" border="0">
    </a>
   </td>
-  <form action="<?php echo $phpgw->link(""); ?>" method="POST" name="filtermethod">
+  <form action="<?php echo $phpgw->link(); ?>" method="POST" name="filtermethod">
    <td width="55%" align="center" valign="center">
     <b><?php echo lang("Filter"); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
