@@ -306,5 +306,8 @@
          echo "</td></tr></table>";
   }
 
+  include("./inc/phpgw_schema_proc.inc.php");
+//  $phpgw_schema_proc = new phpgw_schema_proc($phpgw_domain[$SetupDomain]["db_type"]);
+  $phpgw_schema_proc = new phpgw_schema_proc("mysql");
 
 ?>
