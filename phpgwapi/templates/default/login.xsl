@@ -37,9 +37,9 @@
 				<img src="phpgwapi/templates/{$login_layout}/images/logo.png" alt="phpGroupWare" border="0"/>
 			</a>
 		</p>
-		<p>
-			<xsl:value-of select="phpgw_loginscreen_message"/>
-		</p>
+		<div align="center">
+			<xsl:value-of disable-output-escaping="yes" select="phpgw_loginscreen_message"/>
+		</div>
 		<table cellpadding="2" cellspacing="0" align="center" class="login">
 			<xsl:choose>
 				<xsl:when test="loginscreen">
