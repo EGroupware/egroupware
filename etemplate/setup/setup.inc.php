@@ -19,6 +19,13 @@
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;
 
+	$setup_info['etemplate']['author'] = 'Ralf Becker';
+	$setup_info['etemplate']['license']  = 'GPL';
+	$setup_info['etemplate']['description'] =
+		'interactive editor for eTemplates (new template type) and database table-editor (creates tables_current.inc.php and updates autom. tables_update.inc.php)';
+	$setup_info['etemplate']['maintainer'] = 'Ralf Becker';
+	$setup_info['etemplate']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
+
 	/* The hooks this app includes, needed for hooks registration */
 	//$setup_info['etemplate']['hooks'][] = 'preferences';
 	//$setup_info['etemplate']['hooks'][] = 'admin';
