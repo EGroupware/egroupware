@@ -58,10 +58,11 @@ manager	admin	en	Manager
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no matchs found	admin	en	No matchs found
+peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
-php information	admin	en	PHP Information
+phpinfo	admin	en	PHP information
 re-enter password	admin	en	Re-enter password
 remove all users from this group	admin	en	Remove all users from this group
 selectbox	admin	en	SelectBox
@@ -88,7 +89,8 @@ user accounts	admin	en	User accounts
 user groups	admin	en	User groups
 users choice	admin	en	Users Choice
 use theme	admin	en	Use theme
-view access log	admin	en	View Access Log
+view access log	admin	en	View access log
+view error log	admin	en	View error log
 view sessions	admin	en	View sessions
 would you like phpgroupWare to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
 would you like phpgroupWare to check for a new version<br>when admins login ?	admin	en	Would you like phpGroupWare to check for a new version<br>when admins login ?

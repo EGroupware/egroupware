@@ -52,7 +52,7 @@ new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerla
 percent of users that logged out	admin	de	Prozent der User, die sich korrekt abgemeldet haben
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
-php information	admin	de	PHP Informationen
+phpinfo	admin	de	PHP Informationen
 re-enter password	admin	de	Passwort wiederholen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 section	admin	de	Abschnitt
@@ -73,7 +73,8 @@ You will need to remove the subcategories before you can delete the parent categ
 total records	admin	de	Anzahl Datensätze insgesamt
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
-view access log	admin	de	Access Log anzeigen
+view access log	admin	de	Zugriffs-Protokoll anzeigen
+view error log	admin	de	Fehler-Protokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
