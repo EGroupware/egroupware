@@ -27,10 +27,18 @@
 Proposal for a Common Groupware Interface Standard
 \layout Author
 
-by Miles Lott <milosch@phpgroupware.org>
+by Miles Lott <milos@groupwhere.org>
 \layout Date
 
-September 13, 2001
+September 13, 2001 and December 29, 2003
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
 \layout Section
 
 Scope

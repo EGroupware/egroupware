@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->   phpGroupWare XML-RPC/SOAP Methodology
+>   eGroupWare XML-RPC/SOAP Methodology
   </TITLE
 ><META
 NAME="GENERATOR"
@@ -21,7 +21,7 @@ CLASS="TITLEPAGE"
 CLASS="TITLE"
 ><A
 NAME="AEN2"
->phpGroupWare XML-RPC/SOAP Methodology</A
+>eGroupWare XML-RPC/SOAP Methodology</A
 ></H1
 ><H3
 CLASS="AUTHOR"
@@ -47,7 +47,7 @@ NAME="AEN10"
 >Login and authentication</A
 ></H2
 ><P
->    Authentication for user logins is handled internally no differently than for the typical phpGroupWare login via web browser. Server logins, added for XML-RPC and SOAP, are only slightly different. For either protocol, user and server login and authentication and subsequent requests are handled by their respective server apps, xmlrpc.php and soap.php. A server is identified by a custom HTTP header, without which a normal user login will be undertaken.
+>    Authentication for user logins is handled internally no differently than for the typical eGroupWare login via web browser. Server logins, added for XML-RPC and SOAP, are only slightly different. For either protocol, user and server login and authentication and subsequent requests are handled by their respective server apps, xmlrpc.php and soap.php. A server is identified by a custom HTTP header, without which a normal user login will be undertaken.
    </P
 ><P
 >    A client or server sends the appropriate XML-RPC or SOAP packet containing host, user, and password information to the phpgw server. The server then assigns a sessionid and key, which is returned to the client in the appropriate format.

@@ -5,18 +5,27 @@
   See http://www.lyx.org/ for more information -->
   <artheader>
    <title>
-   Common Groupware Interface Standard
+   Proposal for a Common Groupware Interface Standard
   </title>
+  <author>
+   (C) 2001-2004 Miles Lott &lt;milos@groupwhere.org&gt;
+  </author>
+  <date>
+   September 13, 2001 and December 29, 2003
+  </date>
+  <para>
+   <toc></toc>
+  </para>
   </artheader>
   <sect1>
    <title>
    Scope
   </title>
   <para>
-   As many different opensource and freesoftware groupware systems are being developed, the full realization of the dream of a connected world must be prefaced by an agreement to interoperate. There are limited ways in which cooperation with commercial groupware systems may be achecived, the majority if not all of which were derived via the establishment of open standards. These might include email (POP3/IMAP), contacts(LDAP,vcard), or scheduling(ical/vcal). It is felt that while these have proven themselves to be very useful, they are insufficient to satisfy the real needs of a typical corporate environment.
+   As many different opensource and freesoftware groupware systems are being developed, the full realization of the dream of a connected world should be prefaced by an agreement to interoperate. There are limited ways in which cooperation with these and commercial groupware systems may be achecived, the majority if not all of which were derived via the establishment of open standards. These might include email (POP3/IMAP), contacts(LDAP,vcard), or scheduling(ical/vcal). It is felt that while these have proven themselves to be very useful, they are insufficient to satisfy the real needs of a typical business environment.
   </para>
   <para>
-   This document hopes to provide a reasonable recommendation for a set of standardized methods to be used for groupware services interaction. More specifically, it hopes to address the need for such a standard as well as to spur discussion about the common service names and methods themselves.
+   This document hopes to provide a reasonable, if limited, recommendation for a set of standardized methods to be used for groupware services interaction. More specifically, it hopes to address the need for such a standard as well as to spur discussion about the common service names and methods themselves.
   </para>
   <para>
    Examples will be given for implementations in XML-RPC, since this standard is relatively fixed and open.
@@ -62,7 +71,7 @@
    </listitem>
    </itemizedlist>
    <para>
-    These services are represented already in places such as existing groupware client-server applications and also in the PalmOS basic-4 buttons and applications.
+    These services are represented already in places such as existing groupware client-server applications and also in the PalmOS basic-4 buttons and applications. Different systems may have different names for these services internally, e.g. Contacts - addresses, addressbook, people, Schedule - calendar, agenda, meetings.
    </para>
    <para>
     Within each of these services are some common methods that would be called to store, retreive, or update data:
@@ -102,7 +111,7 @@
      The concept of contacts may encompass local addressbooks, LDAP, and lists stored in other media. The purpose of the contacts service is not to duplicate or attempt to replace these. In some respects, it might do just that. But its goal is more so to provide a common and shareable way for the other core services to create, edit, and read a common user and address list. All of the other services may use the contact service to obtain record owner information to be used in access control. They would also use them when it is required to share this data, as with a meeting where other local and non-local users will be invited to attend.
     </para>
     <para>
-     Contacts may include the local installed user base, users on other cooperative servers, or email addresses used for limited cooperation with other groupware services that are not compliant with this service scheme or implementations thereof. It could also include individuals using web-based or local ISP email services. The scope of this document, however, is to define the service with regard to the common methods to be used:
+     Contacts may include the local installed user base, users on other cooperative servers, or email addresses used for limited cooperation with other groupware services that are not compliant with this service scheme or implementations thereof. It could also include individuals using web-based or local ISP email services. The scope of this document, however, is to define the service with regard to the common methods to be used for server-server and client-server communications:
     </para>
     <itemizedlist>
      <listitem>
@@ -258,12 +267,6 @@
 ]]><![ CDATA [<value><string></string></value>
 ]]><![ CDATA [</member>
 ]]><![ CDATA [<member><name>filter</name>
-]]><![ CDATA [<value><string></string></value>
-]]><![ CDATA [</member>
-]]><![ CDATA [<member><name>sort</name>
-]]><![ CDATA [<value><string></string></value>
-]]><![ CDATA [</member>
-]]><![ CDATA [<member><name>order</name>
 ]]><![ CDATA [<value><string></string></value>
 ]]><![ CDATA [</member>
 ]]><![ CDATA [</struct></value>

@@ -5,7 +5,7 @@
 from xmlrpclib import *
 import sys
 
-server = Server("http://www.phpgroupware.org/cvsdemo/xmlrpc.php");
+server = Server("http://www.egroupware.org/egroupware/xmlrpc.php");
 
 try:
     print "Listing methods:\n"

@@ -1,9 +1,9 @@
 /* $Id$ */
 
-Perl interfacing to phpgroupware:
+Perl interfacing to egroupware:
 
-The Frontier::RPC module available at CPAN is capable of logging into a
-phpgroupware server.  To authenticate your session after the initial login,
+The Frontier::RPC module available at CPAN is capable of logging into an
+egroupware server.  To authenticate your session after the initial login,
 however, requires a patch to Frontier.  This patch causes Frontier to create
 an Authentication header using username/password values.  We use the assigned
 sessionid and kp3 for this.
@@ -18,7 +18,7 @@ TODO:
   the Frontier source:
 
 	rpc-client.pl \
-	http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
+	http://www.egroupware.org/egroupware/xmlrpc.php \
 	system.login \
 	"{domain => '',username => 'demo', password => 'guest'}"
 
@@ -32,7 +32,7 @@ $result = HASH(0x826d4b0)
 5. Place these on the commandline for a new request:
 
 	rpc-client.pl \
-	http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
+	http://www.egroupware.org/egroupware/xmlrpc.php \
 	--username 36f9ec1e4ad78bxd8bc902b1c38d3e14 \
 	--password e0219714614769x25bc92286016c60c2 \
 	service.contacts.read \

@@ -1,12 +1,12 @@
 
 
-phpGroupWare XML-RPC/SOAP Methodology
+eGroupWare XML-RPC/SOAP Methodology
 
-Miles Lott
+(C) 2001-2004 Miles Lott
 
-milosch@phpgroupware.org
+milos@groupwhere.org
 
-August 23, 2001
+August 23, 2001 and December 29, 2003
 
 additions made September 3, 2001.
 
@@ -18,13 +18,13 @@ system.
 1.1 Login and authentication
 
 Authentication for user logins is handled internally no differently
-than for the typical phpGroupWare login via web browser.
-Server logins, added for XML-RPC and SOAP, are only slightly
-different. For either protocol, user and server login and
-authentication and subsequent requests are handled by their
-respective server apps, xmlrpc.php and soap.php. A server
-is identified by a custom HTTP header, without which a normal
-user login will be undertaken.
+than for the typical eGroupWare login via web browser. Server
+logins, added for XML-RPC and SOAP, are only slightly different.
+For either protocol, user and server login and authentication
+and subsequent requests are handled by their respective
+server apps, xmlrpc.php and soap.php. A server is identified
+by a custom HTTP header, without which a normal user login
+will be undertaken.
 
 A client or server sends the appropriate XML-RPC or SOAP
 packet containing host, user, and password information to
@@ -462,7 +462,7 @@ Unauthorized access attempt returns:
 
 Documenting every single call will be difficult, but should
 be done. In leiu of this, please see the class.bo{APPNAME}.inc.php
-files in each application/inc directory in the phpgroupware
+files in each application/inc directory in the egroupware
 cvs. In this file will be a list_methods() function, which
 returns the information to the server about input/output
 structure for each call. If the file does not have this

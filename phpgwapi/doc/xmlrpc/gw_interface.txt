@@ -1,25 +1,50 @@
 
 
-Common Groupware Interface Standard
+Proposal for a Common Groupware Interface Standard
+
+(C) 2001-2004 Miles Lott <milos@groupwhere.org>
+
+September 13, 2001 and December 29, 2003
+
+Table of Contents
+
+1 Scope
+2 The Services
+    2.1 Overview
+    2.2 Detail
+        2.2.1 Contacts
+        2.2.2 Schedule
+        2.2.3 Notes
+        2.2.4 Todo
+    2.3 Examples in XML-RPC
+3 Conclusion
+    3.1 Contacts:
+    3.2 Schedule:
+    3.3 Notes:
+    3.4 Todo:
+
+
 
 1 Scope
 
 As many different opensource and freesoftware groupware systems
 are being developed, the full realization of the dream of
-a connected world must be prefaced by an agreement to interoperate.
-There are limited ways in which cooperation with commercial
-groupware systems may be achecived, the majority if not
-all of which were derived via the establishment of open
-standards. These might include email (POP3/IMAP), contacts(LDAP,vcard),
-or scheduling(ical/vcal). It is felt that while these have
-proven themselves to be very useful, they are insufficient
-to satisfy the real needs of a typical corporate environment.
+a connected world should be prefaced by an agreement to
+interoperate. There are limited ways in which cooperation
+with these and commercial groupware systems may be achecived,
+the majority if not all of which were derived via the establishment
+of open standards. These might include email (POP3/IMAP),
+contacts(LDAP,vcard), or scheduling(ical/vcal). It is felt
+that while these have proven themselves to be very useful,
+they are insufficient to satisfy the real needs of a typical
+business environment.
 
-This document hopes to provide a reasonable recommendation
-for a set of standardized methods to be used for groupware
-services interaction. More specifically, it hopes to address
-the need for such a standard as well as to spur discussion
-about the common service names and methods themselves.
+This document hopes to provide a reasonable, if limited,
+recommendation for a set of standardized methods to be used
+for groupware services interaction. More specifically, it
+hopes to address the need for such a standard as well as
+to spur discussion about the common service names and methods
+themselves.
 
 Examples will be given for implementations in XML-RPC, since
 this standard is relatively fixed and open.
@@ -49,7 +74,10 @@ They are:
 
 These services are represented already in places such as
 existing groupware client-server applications and also in
-the PalmOS basic-4 buttons and applications.
+the PalmOS basic-4 buttons and applications. Different systems
+may have different names for these services internally,
+e.g. Contacts - addresses, addressbook, people, Schedule
+- calendar, agenda, meetings.
 
 Within each of these services are some common methods that
 would be called to store, retreive, or update data:
@@ -85,7 +113,7 @@ not compliant with this service scheme or implementations
 thereof. It could also include individuals using web-based
 or local ISP email services. The scope of this document,
 however, is to define the service with regard to the common
-methods to be used:
+methods to be used for server-server and client-server communications:
 
 * read_list
 
@@ -207,18 +235,6 @@ vcard format):
 </member>
 
 <member><name>filter</name>
-
-<value><string></string></value>
-
-</member>
-
-<member><name>sort</name>
-
-<value><string></string></value>
-
-</member>
-
-<member><name>order</name>
 
 <value><string></string></value>
 
