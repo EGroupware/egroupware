@@ -39,6 +39,7 @@
 		'halt'     => True,
 		'ldap'     => True,
 		'mail'     => True,
+		'nscd'     => True,
 		'news'     => True,
 		'uucp'     => True,
 		'operator' => True,
