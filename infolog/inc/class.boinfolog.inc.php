@@ -323,7 +323,7 @@
 					{
 						$content .= $GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
 					}
-					$content = '<p style="margin: 0px">'.$GLOBALS['phpgw']->html->a_href($content.'&nbsp;'.$title,$view).'</p>';
+					$content = $GLOBALS['phpgw']->html->a_href($content.'&nbsp;'.$title,$view).'<br>';
 
 					$to_include[] = array(
 						'starttime' => $info['info_startdate'],
@@ -334,7 +334,7 @@
 						'content'   => $content
 					);
 				}
-				if ($total <= $start+count($infos))
+				if ($total <= ($start+=count($infos)))
 				{
 					break;	// no more availible
 				}
