@@ -175,7 +175,7 @@
 	display_item(lang('default calendar filter'),$str);
 
 	$str = '<input type="checkbox" name="send_updates" value="True"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
-	display_item(lang('send updates via email'),$str);
+	display_item(lang('send/receive updates via email'),$str);
 
 	$str = '<input type="checkbox" name="display_status" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_status'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
 	display_item(lang('display status of events'),$str);

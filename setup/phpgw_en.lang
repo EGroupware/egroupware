@@ -518,6 +518,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 send deleted messages to the trash	email	en	Send deleted messages to the trash
 send	email	en	Send
 send updates via email	common	en	Send updates via EMail
+send/Receive updates via email	calendar	en	Send/Receive updates via EMail
 september	common	en	September
 session has been killed	common	en	Session has been killed
 show all	common	en	show all
