@@ -1,10 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Messenger                                                 *
+	* phpGroupWare                                                             *
 	* http://www.phpgroupware.org                                              *
-	* This application written by Joseph Engo <jengo@phpgroupware.org>         *
-	* --------------------------------------------                             *
-	* Funding for this program was provided by http://www.checkwithmom.com     *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -13,6 +10,12 @@
 	\**************************************************************************/
 
 	/* $Id$ */
+
+	if (! $sessionid)
+	{
+		Header('Location: login.php');
+		exit;
+	}
 
 	/*
 		This is the preliminary menuaction driver for the new multi-layered design
