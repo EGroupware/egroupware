@@ -73,7 +73,7 @@
     return $account_info;
   }
 
-  function account_read($method,$start,$sort,$order)
+  function account_read($method,$start = 0,$sort,$order)
   {
     global $phpgw_info, $ldap;
     
@@ -91,8 +91,29 @@
     $filter = "(|(uid=*))";
     $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid","uidnumber"));
     $info = ldap_get_entries($ldap, $sr);
+
+    $nummsg = $start;
+    
+    if ($nummsg < $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
+       $totaltodisplay = $nummsg;
+    } else if (($nummsg - $start) > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
+       $totaltodisplay = $start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+    } else {
+       $totaltodisplay = $nummsg;
+    }
   
-    for ($i=0; $i<$info["count"]; $i++) {
+/*
+    for ($i=$start, $j=0; $i<$totaltodisplay; $i++,$j++) {
+       if (! $phpgw_info["server"]["global_denied_users"][$info[$j]["uid"][0]]) {
+          $account_info[$j]["account_id"]        = rawurlencode($info[$j]["dn"]);
+          $account_info[$j]["account_lid"]       = $info[$j]["uid"][0];
+          $account_info[$j]["account_lastname"]  = $info[$j]["givenname"][0];
+          $account_info[$j]["account_firstname"] = $info[$j]["sn"][0];
+       }
+    }
+*/
+
+    for ($i=0, $j=0; $i<count($info); $i++,$j++) {
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
           $account_info[$i]["account_id"]        = rawurlencode($info[$i]["dn"]);
           $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
@@ -100,6 +121,7 @@
           $account_info[$i]["account_firstname"] = $info[$i]["sn"][0];
        }
     }
+
     
 //    echo " - order: $order";
 /*    if ($order == "ASC") {

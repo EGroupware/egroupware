@@ -17,8 +17,8 @@
         . $phpgw_info["server"]["auth_type"] . ".inc.php");
 
   $phpgw->template->set_file(array("header" => "accounts.tpl",
-			         "row"	=> "accounts.tpl",
-			         "footer" => "accounts.tpl"));
+              			         "row"	=> "accounts.tpl",
+              			         "footer" => "accounts.tpl"));
 
   $phpgw->template->set_block("header","row","footer");
 
