@@ -76,6 +76,8 @@ class ui_resources
 						$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 						return $this->index();
 					case 'view':
+						list($id) = each($content['nm']['rows']['view']);
+						return $this->show($id);
 					case 'bookable':
 					case 'buyable':
 				}
@@ -251,12 +253,55 @@ class ui_resources
 		@function show
 		@abstract showes a single resource
 		@param int $id resource id
+		@author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 	*/
-	function show($id)
+	function show($id=0)
 	{
+		if (isset($_GET['id'])) $id = $_GET['id'];
+
+		$content = array('id' => $id);
+		$content = $this->bo->read($id);
+		$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
+		$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
+		$content['link_to'] = array(
+		    'to_id' => $id,
+    		    'to_app' => 'resources'
+    		    );
 	
+		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
+		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
+		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
+		
+		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable ').$content['useable'].')';
+		
+			    //$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
+		    
+		$content['cat_name'] =  $this->bo->acl->get_cat_name($content['cat_id']);
+		$content['cat_admin'] = $this->bo->acl->get_cat_admin($content['cat_id']);
+		
+	/*	if($content['accessory_of'] > 0)
+		{
+			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
+			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
+		} 
+	*/
+		$content['description'] = $content['long_description'] ? $content['long_description'] : $content['short_description'];
+		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
+		$sel_options = array();
+		$no_button = array();
+		$preserv = $content;
+		//print_r($content);
+		$this->tmpl->read('resources.showdetails');
+		$this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
+		
 	}
 
+	/*!
+		@function delete
+		@abstract deletes a resource
+		@param int $id resource id
+		@author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
+	*/
 	function delete($id)
 	{
  		$this->bo->delete($id);

@@ -66,7 +66,7 @@
 			@abstract get list of cats where current user has given rights
 			@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 			@param int $perm_type one of PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE, PHPGW_ACL_DIRECT_BOOKING
-			@return array cat_name => cat_id
+			@return array cat_id => cat_name
 			TODO mark subcats and so on!
 		*/
 		function get_cats($perm_type)
@@ -93,6 +93,20 @@
 				}
 			}
 			return $perm_cats;
+		}
+		
+		
+		/*!
+			@function get_cat_name
+			@abstract gets name of category 
+			@author Lukas Weiﬂ <wnz.gh05t@users.sourceforge.net>
+			@param int $cat_id
+			@return mixed name of category
+		*/
+		function get_cat_name($cat_id)
+		{
+		    $cat = $this->egw_cats->return_single($cat_id);
+		    return $cat[0]['name'];
 		}
 		
 		/*!

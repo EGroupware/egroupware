@@ -99,6 +99,7 @@ class bo_resources
 					}
 				}
 			}
+			print_r($content);
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
