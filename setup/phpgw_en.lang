@@ -22,6 +22,7 @@ add new application	admin	en	Add new application
 add new phrase	transy	en	Add new phrase
 add new ticket	tts	en	Add new ticket
 add note	notes	en	Add note 
+add sub	todo	en	Add sub
 add ticket 	tts	en	Add ticket
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
@@ -76,14 +77,17 @@ business phone	common	en	Business Phone
 business state	common	en	Business State
 business street	common	en	Business Street
 business zip code	common	en	Business Postal Code
-calendar	common	addressbook	en	calendar
+calendar	common	en	calendar
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
 calendar preferences	common	en	Calendar preferences
 cancel	common	en	Cancel
 cannot display the requested article from the requested newsgroup	nntp	en	Cannot display the requested article from the requested newsgroup
 car phone	addressbook	en	Car Phone
+categories	notes	en	categories
+categories for	notes	en	categories for
 cc	email	en	CC
+cell phone	addressbook	en    cell phone
 change	common	en	Change
 change main screen message	admin	en	Change main screen message
 change your password	preferences	en	Change your Password
