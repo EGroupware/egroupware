@@ -19,6 +19,24 @@
 
   include("../header.inc.php");
 
+  function is_user_admin($owner) {
+    global $phpgw;
+    
+    $acl = CreateObject('phpgwapi.acl',intval($owner));
+    $acl_list = $acl->read_repository();
+    for($k=0;$k<count($acl_list);$k++) {
+      if($apps_list[$k]['appname'] == 'admin') return True;
+    }
+    $memberships = $phpgw->accounts->memberships($owner);
+    for($k=0;$k<count($memberships);$k++) {
+      $apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
+      while($apps = each($apps_list)) {
+        if($apps[1] == 'admin') return True;
+      }
+    }
+    return False;
+  }
+
   if (! $submit) {
      if ($phpgw_info["server"]["useframes"] != "never") {
         $target = ' target="_top"';
@@ -231,24 +249,32 @@
      $phpgw->common->phpgw_footer();
   } else {
 
+    if(!$owner) {
+      $owner = $phpgw_info['user']['account_id'];
+    }
+    
+    $pref = CreateObject('phpgwapi.preferences',intval($owner));
+    $pref->read_repository();
+    $pref->delete('common');
+
      while ($setting = each($settings)) {
-        $phpgw->preferences->change("common",$setting[0],$setting[1]);
+        $pref->add('common',$setting[0],$setting[1]);
      }
 
      // This one is specialized, so we do it manually
-     if ($phpgw_info["user"]["apps"]["admin"]) {
+     if (is_user_admin($owner)) {
         if ($show_currentusers) {
-           $phpgw->preferences->change("common","show_currentusers");
+           $pref->add('common','show_currentusers');
         }
      }
 
-     $phpgw->preferences->commit(True);
+     $pref->save_repository();
 
-     if ($phpgw_info["server"]["useframes"] != "never") {
-        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
+     if ($phpgw_info['server']['useframes'] != 'never') {
+        Header('Location: ' . $phpgw->link($phpgw_info['server']['webserver_url'] . '/preferences/index.php'));
         $phpgw->common->phpgw_exit();
      }
 
-     Header("Location: " . $phpgw->link("index.php"));
+     Header('Location: ' . $phpgw->link('index.php'));
   }
 ?>
