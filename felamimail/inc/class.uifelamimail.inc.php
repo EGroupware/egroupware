@@ -951,8 +951,10 @@
 			$allFolders = array();
 
 			// create a list of all folders, also the ones which are not subscribed
- 			foreach($folders as $key => $value)
+			if (isset($folders) && is_array($folders))
 			{
+ 			   foreach($folders as $key => $value)
+			   {
 				$folderParts = explode('.',$key);
 				$partCount = count($folderParts);
 				$string = '';
@@ -962,6 +964,7 @@
 					$string .= $folderParts[$i];
 					$allFolders[$string] = $folderParts[$i];
 				}
+			    }
 			}
 
 			// keep track of the last parent id
