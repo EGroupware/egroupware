@@ -115,7 +115,7 @@
       <?php echo ($newinstall?'<input type="hidden" name="newinstall" value="True">':""); ?>
       <select name="lang_selected[]" multiple size="10">
        <?php
-         $db->query("select lang_id,lang_name from languages where available='Yes' and lang_id != 'en'");
+         $db->query("select lang_id,lang_name from languages where available='Yes'");
          while ($db->next_record()) {
            echo '<option value="' . $db->f("lang_id") . '">' . $db->f("lang_name") . '</option>';
          }
