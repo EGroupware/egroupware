@@ -531,19 +531,27 @@
 
 			if (get_var('confirm',array('POST')))
 			{
-				switch (get_var('subs',array('POST')))
+				if (get_var('subs',array('POST')))
 				{
-					case 'move':
-						$this->bo->delete(array('cat_id' => $this->cat_id,'modify_subs' => True));
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
-						break;
-					case 'drop':
-						$this->bo->delete(array('cat_id' => $this->cat_id,'drop_subs' => True));
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
-						break;
-					default:
-						$error_msg = lang('Please choose one of the methods to handle the subcategories');
-						break;
+					switch (get_var('subs',array('POST')))
+					{
+						case 'move':
+							$this->bo->delete(array('cat_id' => $this->cat_id,'modify_subs' => True));
+							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+							break;
+						case 'drop':
+							$this->bo->delete(array('cat_id' => $this->cat_id,'drop_subs' => True));
+							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+							break;
+						default:
+							$error_msg = lang('Please choose one of the methods to handle the subcategories');
+							break;
+					}
+				}
+				else
+				{
+					$this->bo->delete(array('cat_id' => $this->cat_id));
+					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 				}
 			}
 
