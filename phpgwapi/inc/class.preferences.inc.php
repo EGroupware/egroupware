@@ -53,6 +53,8 @@
 		//var $debug_init_prefs = 1;
 		//var $debug_init_prefs = 2;
 		//var $debug_init_prefs = 3;
+		
+		var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -71,6 +73,116 @@
 		/**************************************************************************\
 		* These are the standard $this->account_id specific functions              *
 		\**************************************************************************/
+
+		/*!
+		@function parse_notify
+		@abstract parses a notify and replaces the substitutes
+		@syntax parse_notify($msg,$values='',$use_standard_values=True)
+		@param $msg message to parse / substitute
+		@param $values extra vars to replace in addition to $this->values, vars are in an array with \
+			$key => $value pairs, $key does not include the $'s and is the *untranslated* name
+		@param $use_standard_values should the standard values are used
+		@returns the parsed notify-msg
+		*/
+		function parse_notify($msg,$values='',$use_standard_values=True)
+		{
+			$vals = $values ? $values : array();
+
+			if ($use_standard_values && is_array($this->values))
+			{
+				$vals += $this->values;
+			}
+			foreach($vals as $key => $val)
+			{
+				$replace[] = '$$'.$key.'$$';
+				$with[]    = $val;
+			}
+			return str_replace($replace,$with,$msg);
+		}
+		
+		/*!
+		@function lang_notify
+		@abstract replaces the english key's with translated ones, or if $un_lang the opposite
+		@syntax lang_notify($msg,$values='',$un_lang=False)
+		@param $msg message to translate
+		@param $values extra vars to replace in addition to $this->values, vars are in an array with \
+			$key => $value pairs, $key does not include the $'s and is the *untranslated* name
+		@param $un_lang if true translate back
+		@returns the result
+		*/
+		function lang_notify($msg,$vals=array(),$un_lang=False)
+		{
+			foreach($vals as $key => $val)
+			{
+				$lname = ($lname = lang($key)) == $key.'*' ? $key : $lname;
+				if ($un_lang)
+				{
+					$langs[$lname] = '$$'.$key.'$$';
+				}
+				else
+				{
+					$langs[$key] = '$$'.$lname.'$$';
+				}
+			}
+			return $this->parse_notify($msg,$langs,False);
+		}
+
+		/*!
+		@function standard_substitues
+		@abstract define some standard substitues-values and use them on the prefs, if needed
+		*/
+		function standard_substitutes()
+		{
+			if (!is_array($GLOBALS['phpgw_info']['user']['preferences']))
+			{
+				$GLOBALS['phpgw_info']['user']['preferences'] = $this->data;	// else no lang()
+			}
+			// we cant use phpgw_info/user/fullname, as it's not set when we run
+			$GLOBALS['phpgw']->accounts->get_account_name($this->account_id,$lid,$fname,$lname);
+
+			$this->values = array(	// standard notify replacements
+				'username'  => $fname.' '.$lname,
+				'firstname' => $fname,
+				'lastname'  => $lname,
+				'maildomain'=> $GLOBALS['phpgw_info']['server']['mail_suffix'],
+				'email'     => $this->email_address($this->account_id),
+				'date'      => $GLOBALS['phpgw']->common->show_date('',$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+			);
+			$this->vars = array(	// langs have to be in common !!!
+				'username'  => lang('name of the user, eg. "%1"',$this->values['username']),
+				'firstname' => lang('first name of the user, eg. "%1"',$this->values['firstname']),
+				'lastname'  => lang('last name of the user, eg. "%1"',$this->values['lastname']),
+				'maildomain'=> lang('mail domain, eg. "%1"',$this->values['maildomain']),
+				'email'     => lang('email-address of the user, eg. "%1"',$this->values['email']),
+				'date'      => lang('todays date, eg. "%1"',$this->values['date']),
+			);
+			// do this first, as it might be already contain some substitues
+			//
+			$this->values['email'] = $this->parse_notify($this->values['email']);
+
+			// do the substituetion in the effective prefs (data)
+			//
+			foreach($this->data as $app => $data)
+			{
+				foreach($data as $key => $val)
+				{
+					if (!is_array($val) && strstr($val,'$$') !== False)
+					{
+						$this->data[$app][$key] = $this->parse_notify($val);
+					}
+					elseif (is_array($val))
+					{
+						foreach($val as $k => $v)
+						{
+							if (!is_array($v) && strstr($val,'$$') !== False)
+							{
+								$this->data[$app][$key][$k] = $this->parse_notify($v);
+							}
+						}
+					}
+				}
+			}
+		}
 
 		/*!
 		@function unquote
@@ -116,39 +228,18 @@
 				$this->unquote($value);
 				if (!is_array($value))
 				{
-					$value = array();
+					continue;
 				}
 				switch($this->db->f('preference_owner'))
 				{
 					case -1:	// forced
-						if (empty($app))	// db not updated
-						{
-							$this->forced = $value;
-						}
-						else
-						{
-							$this->forced[$app] = $value;
-						}
+						$this->forced[$app] = $value;
 						break;
 					case -2:	// default
-						if (empty($app))	// db not updated
-						{
-							$this->default = $value;
-						}
-						else
-						{
-							$this->default[$app] = $value;
-						}
+						$this->default[$app] = $value;
 						break;
 					default:	// user
-						if (empty($app))	// db not updated
-						{
-							$this->user = $value;
-						}
-						else
-						{
-							$this->user[$app] = $value;
-						}
+						$this->user[$app] = $value;
 						break;
 				}
 			}
@@ -175,6 +266,10 @@
 					$this->data[$app][$var] = $value;
 				}
 			}
+			// setup the standard substitues and substitues the data in $this->data
+			//
+			$this->standard_substitutes();
+			
 			// This is to supress warnings durring login
 			if (is_array($this->data))
 			{
@@ -609,19 +704,26 @@
 		}
 
 		/*!
-		@function sub_default_address
-		@abstract Helper function for create_email_preferences, gets default "From:" email address
+		@function email_address
+		@abstract returns the custom email-address (if set) or generates a default one
 		@discussion This will generate the appropriate email address used as the "From:" 
 		email address when the user sends email, the localpert@domain part. The "personal" 
 		part is generated elsewhere.
 		In the absence of a custom ['email']['address'], this function should be used to set it.
 		@param $accountid - as determined in and/or passed to "create_email_preferences"
-		@access Private
+		@access Public now
 		*/
-		function sub_default_address($account_id='')
+		function email_address($account_id='')
 		{
-			$prefs_email_address = $GLOBALS['phpgw']->accounts->id2name($account_id)
-				. '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+			if ($this->data['email']['address'])
+			{
+				return $this->data['email']['address'];
+			}
+			$prefs_email_address = $GLOBALS['phpgw']->accounts->id2name($account_id);
+			if (strstr($prefs_email_address,'@') === False)
+			{
+				$prefs_email_address .= '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+			}
 			return $prefs_email_address;
 		}
 
@@ -991,7 +1093,7 @@
 			// ---  address  --- 
 			if (!isset($prefs['email']['address']))
 			{
-				$prefs['email']['address'] = $this->sub_default_address($accountid);
+				$prefs['email']['address'] = $this->email_address($accountid);
 			}
 			// ---  mail_server  ---
 			if (!isset($prefs['email']['mail_server']))
