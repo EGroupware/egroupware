@@ -771,15 +771,15 @@
 			$imagedir_default    = '/'.$appname.'/templates/default/images';
 			$imagedir_olddefault = '/'.$appname.'/images';
 
-			if(file_exists(PHPGW_SERVER_ROOT.$imagedir.'/'.$image))
+			if(@file_exists(PHPGW_SERVER_ROOT.$imagedir.'/'.$image))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir.'/'.$image;
 			}
-			elseif(file_exists(PHPGW_SERVER_ROOT.$imagedir_default.'/'.$image))
+			elseif(@file_exists(PHPGW_SERVER_ROOT.$imagedir_default.'/'.$image))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir_default.'/'.$image;
 			}
-			elseif(file_exists(PHPGW_SERVER_ROOT.$imagedir_olddefault.'/'.$image))
+			elseif(@file_exists(PHPGW_SERVER_ROOT.$imagedir_olddefault.'/'.$image))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir_olddefault.'/'.$image;
 			}
@@ -926,7 +926,6 @@
 		*/
 		function encrypt($data)
 		{
-			$data = serialize($data);
 			return $GLOBALS['phpgw']->crypto->encrypt($data);
 		}
 		/*!
@@ -936,8 +935,7 @@
 		*/
 		function decrypt($data)
 		{
-			$data = $GLOBALS['phpgw']->crypto->decrypt($data);
-			return unserialize($data);
+			return $GLOBALS['phpgw']->crypto->decrypt($data);
 		}
 		/*!
 		@function des_cryptpasswd

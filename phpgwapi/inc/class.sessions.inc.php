@@ -718,9 +718,9 @@
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
-				$query = "select content from phpgw_app_sessions where"
-					." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-					." and app = '".$appname."' and location = '".$location."'";
+				$query = "SELECT content FROM phpgw_app_sessions WHERE"
+					." sessionid='".$this->sessionid."' AND loginid='".$this->account_id."'"
+					." AND app = '".$appname."' AND location='".$location."'";
 	
 				$GLOBALS['phpgw']->db->query($query,__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record();
@@ -731,16 +731,23 @@
 				// This was not properly decoding structures saved into session data properly
 //				$data = $GLOBALS['phpgw']->common->decrypt($data);
 //				return stripslashes($data);
-				return $GLOBALS['phpgw']->crypto->decrypt($data);
-
+				// Changed by milosch 2001 Dec 20
+				// do not stripslashes here unless this proves to be a problem.
+				$data = $GLOBALS['phpgw']->common->decrypt($data);
+				//echo 'appsession returning: '; _debug_array($data);
+				return $data;
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("select content from phpgw_app_sessions where "
-					. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-					. " and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_app_sessions WHERE "
+					. "sessionid = '".$this->sessionid."' AND loginid = '".$this->account_id."'"
+					. " AND app = '".$appname."' AND location = '".$location."'",__LINE__,__FILE__);
 
 				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
+				// Added by milosch 2001 Dec 20
+				// Use db_addslashes to slash this
+				$encrypteddata = $GLOBALS['phpgw']->db->db_addslashes($encrypteddata);
+
 				if ($GLOBALS['phpgw']->db->num_rows()==0)
 				{
 					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
@@ -749,10 +756,10 @@
 				}
 				else
 				{
-					$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set content = '".$encrypteddata."'"
-						. "where sessionid = '".$this->sessionid."'"
-						. "and loginid = '".$this->account_id."' and app = '".$appname."'"
-						. "and location = '".$location."'",__LINE__,__FILE__);
+					$GLOBALS['phpgw']->db->query("UPDATE phpgw_app_sessions SET content='".$encrypteddata."'"
+						. "WHERE sessionid = '".$this->sessionid."'"
+						. "AND loginid = '".$this->account_id."' AND app = '".$appname."'"
+						. "AND location = '".$location."'",__LINE__,__FILE__);
 				}
 				return $data;
 			}
