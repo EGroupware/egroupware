@@ -232,7 +232,8 @@
 		*/
 		function to_timestamp($epoch)
 		{
-			return $this->Link_ID->DBTimeStamp($epoch);
+			// the substring is needed as the string is already in quotes
+			return substr($this->Link_ID->DBTimeStamp($epoch),1,-1);
 		}
 
 		/**
