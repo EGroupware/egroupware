@@ -78,7 +78,7 @@
 		}
 		else
 		{
-			$GLOBALS['phpgw_info']['user']['passwd'] = $passwd_changed;
+			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',base64_encode($n_passwd));
 			$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
 			$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
 			$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
