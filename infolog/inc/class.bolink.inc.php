@@ -27,7 +27,10 @@
 	*/
 	class bolink extends solink
 	{
-		var $app_register = array(		// this should be setup/extended by setup
+		// other apps can participate in the linking by implementing a search_link hook, which
+		// has to return an array in the format of an app_register entry
+		//
+		var $app_register = array(
 			'addressbook' => array(
 				'query' => 'addressbook_query',
 				'title' => 'addressbook_title',
@@ -40,7 +43,7 @@
 				'query' => 'projects_query',
 				'title' => 'projects_title',
 				'view' => array (
-					'menuaction' => 'projects.uiprocject.view_project'
+					'menuaction' => 'projects.uiprojects.view_project'
 				),
 				'view_id' => 'project_id'
 			),
@@ -76,7 +79,7 @@
 
 		function bolink( )
 		{
-			$this->solink( );							// call constructor of derived class
+			$this->solink( );					// call constructor of derived class
 			$this->public_functions += array(	// extend the public_functions of solink
 				'query' => True,
 				'title' => True,
@@ -93,6 +96,21 @@
 				$this->send_file_ips = $config->config_data['send_file_ips'];
 			}
 			unset($config);
+			
+			// other apps can participate in the linking by implementing a search_link hook, which
+			// has to return an array in the format of an app_register entry
+			//
+			$search_link_hooks = $GLOBALS['phpgw']->hooks->process('search_link');
+			if (is_array($search_link_hooks))
+			{
+				foreach($search_link_hooks as $app => $data)
+				{
+					if (is_array($data))
+					{
+						$this->app_register[$app] = $data;
+					}
+				}
+			}
 		}
 
 		/*!
@@ -120,7 +138,7 @@
 		*/
 		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 		{
-			if ($this->debug)
+			//if ($this->debug)
 			{
 				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner,$lastmod)</p>\n";
 			}
@@ -318,7 +336,7 @@
 			{
 				if ($GLOBALS['phpgw_info']['user']['apps'][$app])
 				{
-					$apps[$app] = lang($app);
+					$apps[$app] = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				}
 			}
 			return $apps;
@@ -445,8 +463,7 @@
 
 			if (empty($app) || empty($id) || empty($filename) /* || !$this->bo->check_access($info_id,PHPGW_ACL_READ)*/)
 			{
-				Header('Location: ' .  $GLOBALS['phpgw']->link('/'));
-				exit();
+				$GLOBALS['phpgw']->redirect_link('/');
 			}
 			$browser = CreateObject('phpgwapi.browser');
 
@@ -456,13 +473,14 @@
 			if ($local)
 			{
 				Header('Location: ' . $local);
-				exit();
 			}
-			$info = $this->info_attached($app,$id,$filename);
-			$browser->content_header($filename,$info['mime_type']);
-			echo $this->read_attached($app,$id,$filename);
-			
-			exit();
+			else
+			{
+				$info = $this->info_attached($app,$id,$filename);
+				$browser->content_header($filename,$info['type']);
+				echo $this->read_attached($app,$id,$filename);
+			}
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		/*!
