@@ -85,14 +85,14 @@
 	}
 
 	// Return a select form element with the categories option dialog in it
-	function cat_option($cat_id='',$notall=False,$java=True) {
+	function cat_option($cat_id='',$notall=False,$java=True,$multiple=False) {
 		global $phpgw_info;
 		if ($java)
 		{
 			$jselect = ' onChange="this.form.submit();"';
 		}
 		// Setup all and none first
-		$cats_link  = "\n" .'<select name="cat_id"' .$jselect .">\n";
+		$cats_link  = "\n" .'<select name="cat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
 		if (!$notall)
 		{
 			$cats_link .= '<option value=""';
@@ -356,8 +356,9 @@
 		if(!$cat_id) {
 			$cat_id   = $fields['cat_id'];
 		}
-
-		$cats_link    = cat_option($cat_id,True);
+																		// allow multiple categories on 'sql'
+		$cats_link    = cat_option($cat_id,True,False,!$phpgw_info["server"]["contact_repository"] || 
+																	  $phpgw_info["server"]["contact_repository"] == 'sql');
 
 		if ($access == 'private')
 		{
