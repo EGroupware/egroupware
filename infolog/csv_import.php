@@ -140,11 +140,10 @@ function cat_id($cats)
 		break;
 
 	case 'download':
-		$pref_file = '/tmp/csv_import_info_log.php';
-		if (is_readable($pref_file) && ($prefs = fopen($pref_file,'r'))) {
-			eval(fread($prefs,8000));
-			// echo "<p>defaults = array".dump_array($defaults)."</p>\n";
-		}	else {
+		$GLOBALS['phpgw']->preferences->read_repository();
+		$defaults = $GLOBALS['phpgw_info']['user']['preferences']['infolog']['cvs_import'];
+		if (!is_array($defaults))
+		{
 			$defaults = array();
 		}
 		$t->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
@@ -154,8 +153,7 @@ function cat_id($cats)
 		$t->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
 		$t->parse('fheaderhandle','fheader');
 		$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n".
-							'<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n".
-							'<input type="hidden" name="pref_file" value="'.$pref_file."\">\n";
+							'<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
 
 		$info_names = array(	'type' 		=> 'Type: task,phone,note,confirm,reject,email,fax',
 									'from' 		=> 'From: text(64) free text if no Addressbook-entry assigned',
@@ -177,6 +175,7 @@ function cat_id($cats)
 									'cat_id' 	=> 'Categorie id(s), to set use @cat_id(Cat1,Cat2)',
 									'addr_id'	=>	'Addressbook id, to set use @addr_id(nlast,nfirst,org)' );
 
+		/* this are settings to import from Lotus Organizer
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
 
 		$defaults += array(	'Land'			=> "addr$PSep.*[(]+([0-9]+)[)]+$ASep+${VPre}1 (${CPre}Ortsvorwahl$CPos) ${CPre}Telefon$CPos$PSep${CPre}Telefon$CPos",
@@ -190,7 +189,7 @@ function cat_id($cats)
 																		"${PSep}${CPre}Nachname$CPos, ${CPre}Vorname$CPos",
 									'no CSV 1'		=>	"type${PSep}phone",
 									'no CSV 2'		=>	"subject${PSep}@substr(${CPre}Notiz$CPos,0,60).' ...'" );
-
+		*/
 		$info_name_options = "<option value=\"\">none\n";
 		while (list($field,$name) = each($info_names)) {
 			$info_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
@@ -259,21 +258,27 @@ function cat_id($cats)
 	case 'import':
 		$fp=fopen($csvfile,"r");
 		$csv_fields = fgetcsv($fp,8000,$fieldsep);
+		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
+		$csv_fields[] = 'no CSV 2';
+		$csv_fields[] = 'no CSV 3';
 
 		$info_fields = array_diff($info_fields,array( '' ));	// throw away empty / not assigned entrys
 
-		if ($pref_file) {
-			// echo "writing pref_file ...<p>";
-			if (file_exists($pref_file)) rename($pref_file,$pref_file.'.old');
-			$pref = fopen($pref_file,'w');
-			while (list($csv_idx,$info) = each($info_fields)) {
-				$defaults[$csv_fields[$csv_idx]] = $info;
-				if ($trans[$csv_idx])
-					$defaults[$csv_fields[$csv_idx]] .= $PSep.$trans[$csv_idx];
+		$defaults = array();
+		while (list($csv_idx,$info) = each($info_fields))
+		{	// convert $trans[$csv_idx] into array of pattern => value
+			$defaults[$csv_fields[$csv_idx]] = $info;
+			if ($trans[$csv_idx])
+			{
+				$defaults[$csv_fields[$csv_idx]] .= $PSep.addslashes($trans[$csv_idx]);
 			}
-			fwrite($pref,'$defaults = array'.dump_array( $defaults ).';');
-			fclose($pref);
 		}
+
+		$GLOBALS['phpgw']->preferences->read_repository();
+		$test = $GLOBALS['phpgw']->preferences->add('infolog','cvs_import',$defaults);
+		echo "add('infolog','cvs_import',defaults) ="; _debug_array($test);
+		$GLOBALS['phpgw']->preferences->save_repository(True);
+
 		$log = "<table border=1>\n\t<tr><td>#</td>\n";
 
 		reset($info_fields);
