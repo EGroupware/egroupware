@@ -25,13 +25,12 @@
 		var $payload;
 		var $methodname;
 		var $params = array();
-//		var $debug  = True;
 		var $debug  = False;
 
 		function xmlrpcmsg($meth, $pars=0)
 		{
 			$this->methodname = $meth;
-			if (is_array($pars) && sizeof($pars)>0)
+			if(is_array($pars) && sizeof($pars)>0)
 			{
 				for($i=0; $i<sizeof($pars); $i++) 
 				{
@@ -42,7 +41,8 @@
 
 		function xml_header()
 		{
-			return '<?xml version="1.0"?>' . "\n" . '<methodCall>' . "\n";
+			return '<?xml version="1.0" encoding="' . $GLOBALS['xmlrpc_defencoding']
+				. '"?>' . "\n" . '<methodCall>' . "\n";
 		}
 
 		function xml_footer()
