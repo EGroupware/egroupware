@@ -33,6 +33,7 @@
 			'select_one' => 'Select one ...',
 			'writen' => 'File writen',
 			'error_writing' => 'Error: writing file (no write-permission for the webserver) !!!',
+			'no_write_necessary' => 'Table unchanged, no write necessary !!!',
 			'give_table_name' => 'Please enter table-name first !!!',
 			'new_table' => 'New table created',
 			'select_app' => 'Select an app first !!!'
@@ -44,10 +45,11 @@
 			'date'		=> 'date',
 			'decimal'	=> 'decimal',
 			'float'		=> 'float',
-			'int'			=> 'int',
+			'int'		=> 'int',
 			'longtext'	=> 'longtext',
 			'text'		=> 'text',
 			'timestamp'	=> 'timestamp',
+//			'abstime'   => 'abstime (mysql:timestamp)',
 			'varchar'	=> 'varchar'
 		);
 		var $setup_header = '<?php
@@ -154,7 +156,7 @@
 				{
 					return;
 				}
-				$msg .= $this->messages[$this->write($this->app,$this->data) ? 'writen' : 'error_writing'];
+				$msg .= $this->messages['no_write_necessary'];
 			}
 			elseif ($content['delete'])
 			{
@@ -271,6 +273,14 @@
 					{
 						$this->update($this->app,$this->data,$cont['new_version']);
 					}
+					else
+					{
+						foreach($this->data as $tname => $tinfo)
+						{
+							$tables .= ($tables ? ',' : '') . "'$tname'";
+						}
+						$this->setup_version($this->app,'',$tables);
+					}
 					$msg .= $this->messages[$this->write($this->app,$this->data) ?
 						'writen' : 'error_writing'];
 				}
@@ -365,6 +375,7 @@
 		@author ralfbecker
 		@abstract creates table-definition from posted content
 		@param $content posted content-array
+		@note  It sets some reasonalbe defaults for not set precisions (else setup will not install)
 		@result table-definition
 		*/
 		function content2table($content)
@@ -395,6 +406,16 @@
 					{
 						$this->changes[$posted_table][$old_name] = $col['name'];
 						//echo "<p>content2table: $posted_table.$old_name renamed to $col[name]</p>\n";
+					}
+					if ($col['precision'] <= 0)
+					{
+						switch ($col['type']) // set some defaults for precision, else setup fails
+						{
+							case 'float':   
+							case 'int':     $col['precision'] = 4; break;
+							case 'char':    $col['precision'] = 1; break;
+							case 'varchar': $col['precision'] = 255; break;
+						}
 					}
 					while (list($prop,$val) = each($col))
 					{
@@ -570,7 +591,10 @@
 		@function setup_version
 		@syntax setup_version( $app,$new = '',$tables='' )
 		@author ralfbecker
-		@abstract reads and updates the version in file $app/setup/setup.inc.php if $new != ''
+		@abstract reads and updates the version and tables info in file $app/setup/setup.inc.php
+		@param $app the app
+		@param $new new version number to set, if $new != ''
+		@param $tables new tables to include, if $tables != ''
 		@return the version or False if the file could not be read or written
 		*/
 		function setup_version($app,$new = '',$tables='')
@@ -586,9 +610,14 @@
 			{
 				return False;
 			}
-			if ($new == '' || $setup_info[$app]['version'] == $new)
+			if (($new == '' || $setup_info[$app]['version'] == $new) &&	
+			    (!$tables || $setup_info[$app]['tables'] && "'".implode("','",$setup_info[$app]['tables'])."'" == $tables))
 			{
-				return $setup_info[$app]['version'];
+				return $setup_info[$app]['version'];	// no change requested or not necessary 
+			}
+			if ($new == '') 
+			{
+				$new = $setup_info[$app]['version'];
 			}
 			if (!($f = fopen($file,'r')))
 			{
@@ -602,9 +631,22 @@
 				rename($file,PHPGW_SERVER_ROOT."/$app/setup/setup.old.inc.php");
 			}
 			$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*')[^']*('.*)","\\1$new"."\\2",$fcontent);
+			
 			if ($tables != '')
-				$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fnew);
-
+			{
+				if ($setup_info[$app]['tables'])	// if there is already tables array, update it
+				{
+					$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fnew);
+				}
+				else	// add the tables array
+				{
+					if (strstr($fnew,'?>'))	// remove a closeing tag
+					{
+						$fnew = str_replace('?>','',$fnew);
+					}
+					$fnew .= "\t\$setup_info['$app']['tables'] = array($tables);\n";
+				}
+			}
 			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
 				return False;
