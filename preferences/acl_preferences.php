@@ -18,15 +18,17 @@
 		'noappfooter'              => True
   	);
 
+	/*
 	// header from calendar-app resets $owner
 	if(isset($owner))
 	{
 		$save_my_owner = $owner;
 	}
+	*/
 
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
-
+	/*
 	if(isset($save_my_owner) && $phpgw_info['user']['apps']['admin'])
 	{
 		$owner = $save_my_owner;
@@ -37,7 +39,7 @@
 		echo '<center>'.lang('You do not have permission to set ACL\'s in this mode!').'</center>';
 		$phpgw->common->phpgw_footer();
 	}
-
+	*/
 	function check_acl($label,$id,$acl,$rights,$right,$is_group=False)
 	{
 		global $phpgw_info, $p;
