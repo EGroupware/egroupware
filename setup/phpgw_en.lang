@@ -370,6 +370,7 @@ private and group public	calendar	en	Private and Group Public
 private only	calendar	en	Private Only
 private_files	filemanager	en	Private files
 project description	todo	en	Project Description
+public	common	en	Public
 public key	common	en	Public Key
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
