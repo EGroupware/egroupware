@@ -4,8 +4,8 @@
   * Copyright (c) 1998,1999 SH Online Dienst GmbH Boris Erdmann,             *
   * Kristian Koehntopp                                                       *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           *
+  * http://www.phpgroupware.org/                                             *
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published    *
@@ -21,6 +21,8 @@
 
 		// PostgreSQL changed somethings from 6.x -> 7.x
 		var $db_version;
+
+		var $_byteaArray;
 
 		function ifadd($add, $me)
 		{
@@ -170,6 +172,8 @@
 				$this->halt('Invalid SQL: ' . $Query_String, $line, $file);
 			}
 
+			$this->_init_bytea_array();
+
 			return $this->Query_ID;
 		}
 
@@ -216,6 +220,12 @@
 				pg_freeresult($this->Query_ID);
 				$this->Query_ID = 0;
 			}
+
+			if (isset($this->_byteaArray))
+			{
+				$this->_fixbytea();
+			}
+
 			return $stat;
 		}
 
@@ -547,5 +557,40 @@
 			$this->Database = $currentDatabase;
 			$this->connect();
 		}
-	}
 
+		// cache types for blob decode check in a class-member called "_byteaArray"
+		function _init_bytea_array()
+		{
+			for ($i=0, $max = @pg_numfields($this->Query_ID); $i < $max; $i++)
+			{
+				if (@pg_fieldtype($this->Query_ID, $i) == 'bytea')
+				{
+					$this->_byteaArray[$i] = @pg_fieldname($this->Query_ID, $i);
+				}
+			}
+		}
+
+		function _fixbytea()
+		{
+			foreach($this->_byteaArray as $k => $v)
+			{
+				$this->Record[$k] = $this->_bytea_decode($this->Record[$k]);
+			}
+			foreach($this->_byteaArray as $k => $v)
+			{
+				if (!isset($this->Record[$v]))
+				{
+					$this->Record = false;
+					return;
+				}
+				$this->Record[$v] = $this->_bytea_decode($this->fields[$v]);
+			}
+		}
+
+		// fix data from bytea-fields, wich are not fully supported by PHP itself
+		function _bytea_decode($bytea)
+		{ echo "I'm called because of $bytea <br>";
+			eval('$realbytea="'.str_replace(array('"','$'),array('\"','\$'),$bytea).'";');
+			return $realbytea;
+		}
+	}
