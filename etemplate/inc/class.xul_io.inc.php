@@ -392,6 +392,7 @@
 						switch ($tag)
 						{
 							case 'description':
+							case 'label':
 								$attr['label'] = $attr['value'];
 								unset($attr['value']);
 								break;
