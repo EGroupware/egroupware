@@ -27,12 +27,12 @@ class phpgw_schema_proc
 		$this->m_aTables = array();
 	}
 	
-	function GenerateScripts(&$aTables, $bOutputHTML = false)
+	function GenerateScripts($aTables, $bOutputHTML = false)
 	{
 		if (!is_array($aTables))
 			return false;
 		
-		$this->m_aTables = &$aTables;
+		$this->m_aTables = $aTables;
 		
 		reset($this->m_aTables);
 		$sAllTableSQL = "";
@@ -61,12 +61,12 @@ class phpgw_schema_proc
 		return true;
 	}
 	
-	function ExecuteScripts(&$aTables, $bOutputHTML = false)
+	function ExecuteScripts($aTables, $bOutputHTML = false)
 	{
 		if (!is_array($aTables) || !IsSet($this->m_odb))
 			return false;
 		
-		$this->m_aTables = &$aTables;
+		$this->m_aTables = $aTables;
 		
 		reset($this->m_aTables);
 		while (list($sTableName, $aTableDef) = each($this->m_aTables))
@@ -83,12 +83,12 @@ class phpgw_schema_proc
 		return true;
 	}
 	
-	function DropAllTables(&$aTables, $bOutputHTML = false)
+	function DropAllTables($aTables, $bOutputHTML = false)
 	{
 		if (!is_array($aTables) || !IsSet($this->m_odb))
 			return false;
 		
-		$this->m_aTables = &$aTables;
+		$this->m_aTables = $aTables;
 		
 		reset($this->m_aTables);
 		while (list($sTableName, $aTableDef) = each($this->m_aTables))
@@ -140,7 +140,7 @@ class phpgw_schema_proc
 		return $this->m_oTranslator->CreateTable($this, $sTableName, $aTableDef);
 	}
 	
-	function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL)
+	function _GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL)
 	{
 		if (!is_array($aTableDef))
 			return false;
@@ -203,7 +203,7 @@ class phpgw_schema_proc
 	}
 	
 	// Get field DDL
-	function _GetFieldSQL($aField, &$sFieldSQL)
+	function _GetFieldSQL($aField, $sFieldSQL)
 	{
 		if (!is_array($aField))
 			return false;
@@ -258,7 +258,7 @@ class phpgw_schema_proc
 		return false;
 	}
 	
-	function _GetPK($aFields, &$sPKSQL)
+	function _GetPK($aFields, $sPKSQL)
 	{
 		$sPKSQL = "";
 		if (count($aFields) < 1)
@@ -278,7 +278,7 @@ class phpgw_schema_proc
 		return true;
 	}
 	
-	function _GetUC($aFields, &$sUCSQL)
+	function _GetUC($aFields, $sUCSQL)
 	{
 		$sUCSQL = "";
 		if (count($aFields) < 1)
