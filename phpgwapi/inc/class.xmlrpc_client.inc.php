@@ -95,7 +95,7 @@
 			}
 
 			$op = "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
-				. "Host: ". $this->server . "\r\n" .
+				. "Host: ". $this->server . "\r\n"
 				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
 				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. $credentials

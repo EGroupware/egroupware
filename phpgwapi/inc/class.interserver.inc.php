@@ -199,7 +199,9 @@
 
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
-			list($uri,$hostpart) = $this->_split_url($url);
+			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
+			$hostpart = ereg_replace('https://','',$hostpart);
+			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -211,10 +213,9 @@
 					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 				}
 			}
-			_debug_array($arr);
-			$f = CreateObject('phpgwapi.xmlrpcmsg', $method, CreateObject('phpgwapi.xmlrpcval',$arr,'struct'));
-			//echo "<pre>" . htmlentities($f->serialize()) . "</pre>\n";
-			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $uri, 80);
+			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
+			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
+			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
 			$c->setDebug(0);
 			$r = $c->send($f);
 			if (!$r)
