@@ -33,7 +33,7 @@
      echo "<Table Width=100% Border=0 CellPadding=0 CellSpacing=0 BGColor=".$phpgw_info["theme"]["navbar_bg"].">\n";
      echo " <TR><TD>";
      echo "<P><P>\n" . lang("Powered by phpGroupWare version x",
-							$phpgw_info["server"]["version"]) . "<br>\n";
+							$phpgw_info["server"]["versions"]["phpgwapi"]) . "<br>\n";
      echo "</TD>";
      if ($phpgw_info["flags"]["parent_page"])
        echo "<td align=\"right\"><a href=\"".$phpgw->link($phpgw_info["flags"]["parent_page"])."\">".lang("up")."</a></td>";

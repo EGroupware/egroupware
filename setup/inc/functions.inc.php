@@ -18,7 +18,7 @@
   if(file_exists("../version.inc.php") || is_file("../version.inc.php")) {
     include("../version.inc.php");  // To set the current core version
   }else{
-    $phpgw_info["server"]["version"] = "Undetected";
+    $phpgw_info["server"]["versions"]["phpgwapi"] = "Undetected";
   }
 
   $phpgw_info["server"]["app_images"] = "templates/default/images";
@@ -37,7 +37,7 @@
       <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
       <table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr>
-        <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '.$phpgw_info["server"]["version"].' setup</font>
+        <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '.$phpgw_info["server"]["versions"]["phpgwapi"].' setup</font>
       </td>
       <td align="right" bgcolor="486591">';
       if ($nologoutbutton) {
@@ -84,7 +84,7 @@
       $header_msg = "Stage One";
     }else{
       include("../header.inc.php");
-      if (!isset($phpgw_domain) || $phpgw_info["server"]["header_version"] != $phpgw_info["server"]["current_header_version"]) {
+      if (!isset($phpgw_domain) || $phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
         $stage = 1.2;
         $header_msg = "Stage One (Upgrade your header.inc.php)";
       }else{ /* header.inc.php part settled. Moving to authentication */
@@ -170,7 +170,7 @@
       $db->next_record();
       $oldversion = $db->f("app_version");
       if (isset($oldversion)){
-        if ($oldversion == $phpgw_info["server"]["version"]){
+        if ($oldversion == $phpgw_info["server"]["versions"]["phpgwapi"]){
           $db->query("select config_value from config where config_name='freshinstall'");
           $db->next_record();
           $configed = $db->f("config_value");
@@ -293,7 +293,7 @@
     <table border="0" width="100%" cellspacing="0" cellpadding="2">
      <tr>
       <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version <?php 
-       echo $phpgw_info["server"]["version"]; ?> setup</font>
+       echo $phpgw_info["server"]["versions"]["phpgwapi"]; ?> setup</font>
       </td>
       <td align="right" bgcolor="486591">
        <?php

@@ -20,7 +20,7 @@
       global $phpgw, $phpgw_info;
 
       if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-      	if ($phpgw_info["server"]["mcrypt_version"] == "old") {
+      	if ($phpgw_info["server"]["versions"]["mcrypt"] == "old") {
           $this->td = false;
           if (PHP_VERSION > "4.0.2pl1") {
             $keysize = mcrypt_get_key_size(MCRYPT_TRIPLEDES);
@@ -49,7 +49,7 @@
         for ($i = 0; $i < $keysize; $i++) {
           $this->key .= $key[$i % $x];
         }
-        if ($phpgw_info["server"]["mcrypt_version"] != "old") {
+        if ($phpgw_info["server"]["versions"]["mcrypt"] != "old") {
           mcrypt_generic_init ($this->td, $this->key, $this->iv);
         } 
       } 
@@ -61,7 +61,7 @@
       global $phpgw_info;
 
       if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-        if ($phpgw_info["server"]["mcrypt_version"] != "old") {
+        if ($phpgw_info["server"]["versions"]["mcrypt"] != "old") {
           mcrypt_generic_end ($this->td);
         } 
       }
@@ -79,7 +79,7 @@
 
       // Disable all encryption if the admin didn't set it up
       if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-      	switch ($phpgw_info["server"]["mcrypt_version"]) {
+      	switch ($phpgw_info["server"]["versions"]["mcrypt"]) {
     	    // The old code, only works with mcrypt <= 2.2.x
       	  case "old": {	 
             $encrypteddata = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_ENCRYPT);
@@ -104,7 +104,7 @@
       if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
         $data = $this->hex2bin($encrypteddata);
 
-      	switch ($phpgw_info["server"]["mcrypt_version"]) {
+      	switch ($phpgw_info["server"]["versions"]["mcrypt"]) {
    	     // The old code, only works with mcrypt <= 2.2.x
           case "old": {	 
             $data = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_DECRYPT);

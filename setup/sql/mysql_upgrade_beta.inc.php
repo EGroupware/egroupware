@@ -43,7 +43,7 @@
     $db->query("update preferences set preference_name='ko' where preference_name='kr'");
 
 	  //install weather support
-    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
+    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["versions"]["phpgwapi"]."')");
     $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
     $currentver = "0.9.2";
   }
@@ -136,7 +136,7 @@
   function upgrade0_9_3pre6(){
     global $currentver, $oldversion, $phpgw_info, $db;
     $db->query("alter table addressbook add ab_url varchar(255)");
-    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
+    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["versions"]["phpgwapi"]."')");
     $currentver = "0.9.3pre7";
   }
 
@@ -324,7 +324,7 @@
                PRIMARY KEY (note_id)
              )";
     $db->query($sql);
-    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 14, NULL, '".$phpgw_info["server"]["version"]."')");
+    $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 14, NULL, '".$phpgw_info["server"]["versions"]["phpgwapi"]."')");
     $currentver = "0.9.4pre2";
   }
 

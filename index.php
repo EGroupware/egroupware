@@ -81,7 +81,7 @@
   $phpgw->db->query("select app_version from applications where app_name='admin'",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
-  if ($phpgw_info["server"]["version"] > $phpgw->db->f("app_version")) {
+  if ($phpgw_info["server"]["versions"]["phpgwapi"] > $phpgw->db->f("app_version")) {
      echo "<p><b>" . lang("Your are running a newer version of phpGroupWare then your database is setup for")
         . "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
         . "</b>";
@@ -103,7 +103,7 @@
             $line_found = explode(":",chop($lines[$i]));
          }
      }
-     if ($line_found[1] > $phpgw_info["server"]["version"]) {
+     if ($line_found[1] > $phpgw_info["server"]["versions"]["phpgwapi"]) {
         echo "<p>There is a new version of phpGroupWare avaiable. <a href=\""
 	   . "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
      }

@@ -517,7 +517,7 @@
              $tpl->set_var("td_align","left");
              $tpl->set_var("td_width","");
              $tpl->set_var("tr_color",$phpgw_info["theme"]["bg_color"]);
-             $tpl->set_var("value",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["version"]));
+             $tpl->set_var("value",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
              $tpl->set_var("colspan",$colspan);
              $tpl->parse("navbar_columns","navbar_column");
              $tpl->parse("navbar_rows","navbar_row",True);
@@ -531,7 +531,7 @@
           $tpl->set_var("td_align","left");
           $tpl->set_var("td_width","");
           $tpl->set_var("tr_color",$phpgw_info["theme"]["bg_color"]);
-          $tpl->set_var("value",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["version"]));
+          $tpl->set_var("value",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
           $tpl->set_var("colspan",1);
           $tpl->parse("navbar_columns","navbar_column");
  

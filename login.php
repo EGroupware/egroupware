@@ -155,7 +155,7 @@
   $tmpl->set_var("cookie",show_cookie());
   $tmpl->set_var("lang_username","username");
   $tmpl->set_var("lang_phpgw_login","phpGroupWare login");
-  $tmpl->set_var("version",$phpgw_info["server"]["version"]);
+  $tmpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
   $tmpl->set_var("lang_password","password");
   $tmpl->set_var("lang_login","login");
 

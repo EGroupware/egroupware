@@ -24,7 +24,7 @@
   /**************************************************************************\
   * Quick verification of updated header.inc.php                             *
   \**************************************************************************/
-  if ($phpgw_info["server"]["header_version"] != $phpgw_info["server"]["current_header_version"]){
+  if ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]){
     echo "You need to port your settings to the new header.inc.php version.";
   }
 

@@ -149,7 +149,7 @@
   }elseif ($stage == 2.4) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>';
     echo "You appear to be running version $oldversion of phpGroupWare.<br>\n";
-    echo "We will automaticly update your tables/records to ".$phpgw_info["server"]["version"].", but we highly recommend backing up your tables in case the script causes damage to your data.\n";
+    echo "We will automaticly update your tables/records to ".$phpgw_info["server"]["versions"]["phpgwapi"].", but we highly recommend backing up your tables in case the script causes damage to your data.\n";
     echo "These automated scripts can easily destroy your data. Please backup before going any further!\n";
     echo "<form method=\"POST\" action=\"index.php\">\n";
     echo "<input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
