@@ -474,8 +474,8 @@
 			echo '<pre>'; print_r($array); echo '</pre>';
 			$contents = ob_get_contents(); 
 			ob_end_clean();
-//			echo $contents;
-			return $contents;
+			echo $contents;
+//			return $contents;
 		}
 		else
 		{
@@ -648,6 +648,11 @@
 		while ($GLOBALS['phpgw']->db->next_record())
 		{
 			$GLOBALS['phpgw_info']['server'][$GLOBALS['phpgw']->db->f('config_name')] = stripslashes($GLOBALS['phpgw']->db->f('config_value'));
+		}
+
+		if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
+		{
+			Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $REQUEST_URI);
 		}
 
 		if(@isset($GLOBALS['phpgw_info']['server']['cache_phpgw_info']))
