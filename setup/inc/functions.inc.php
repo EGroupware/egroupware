@@ -21,6 +21,24 @@
   } unset($d1);unset($d2);unset($d3);
   /* ######## End security check ########## */
 
+	function CreateObject($classname, $constructor_param = "")
+	{
+		global $phpgw, $phpgw_info, $phpgw_domain;
+		$classpart = explode (".", $classname);
+		$appname = $classpart[0];
+		$classname = $classpart[1];
+		if (!$phpgw_info["flags"]["included_classes"][$classname]){
+			$phpgw_info["flags"]["included_classes"][$classname] = True;   
+			include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
+		}
+		if ($constructor_param == ""){
+			$obj = new $classname;
+		} else {
+			$obj = new $classname($constructor_param);
+		}
+		return $obj;
+	}
+
 	// This is needed is some parts of setup, until we include the API directly
 	function filesystem_separator()
 	{
