@@ -216,6 +216,7 @@
 		else
 		{
 			$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+			$var['target'] = '';
 			if(is_array($item_link))
 			{
 				if(isset($item_link['icon']))
@@ -225,6 +226,10 @@
 				}
 				$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 				$var['item_link'] = $item_link['link'];
+				if ($item_link['target'])
+				{
+					$var['target'] = " target=\"$item_link[target]\"";
+				}
 			}
 			else
 			{
