@@ -65,23 +65,21 @@
 				$this->maxmatches = 15;
 			}
 
-			$this->action = $_GET['menuaction'] ? $_GET['menuaction'] : '';
-		}
-
-		/*!
-		@function get_var
-		@abstract Fetch commonly-used GP(C) vars
-		@discussion This calls get_var() from functions.inc.php
-		*/
-		function get_var()
-		{
-			return array(
-				get_var('filter',array('GLOBAL','POST','GET')),
-				get_var('qfield',array('GLOBAL','POST','GET')),
-				get_var('start',array('GLOBAL','POST','GET')),
-				get_var('order',array('GLOBAL','POST','GET')),
-				get_var('sort',array('GLOBAL','POST','GET'))
-			);
+			$this->_start = (int) get_var('start',array('GLOBAL','POST','GET'));
+			
+			foreach(array('menuaction','filter','qfield','order','sort') as $name)
+			{
+				$var = '_'.$name;
+				$this->$var = get_var($name,array('GLOBAL','POST','GET'));
+				if (!preg_match('/^[a-z0-9_. -]*$/i',$this->$var))
+				{
+					$this->$var = '';
+				}
+			}
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
 		}
 
 		/*!
@@ -125,7 +123,7 @@
 				$extras = implode($t_extras,'&');
 			}
 
-			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$this->action.$extras);
+			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$this->_menuaction.$extras);
 		}
 
 		/*!
@@ -138,31 +136,14 @@
 		*/
 		function set_link($align,$img,$link,$alt,$extravars)
 		{
-			$hidden = '';
-			foreach($extravars as $var => $value)
-			{
-				if((is_int($value) && $value == 0) || $value)
-				{
-//					if(is_int($value))
-//					{
-//						$param = (int)$value;
-//					}
-//					else
-//					{
-						$param = '"'.$value.'"';
-//					}
-					$hidden .= '     <input type="hidden" name="'.$var.'" value='.$param.'>'."\n";
-				}
-			}
-			$border = 0;
 			$var = Array(
 				'align'     => $align,
-				'action'    => ($this->action?$this->page():$GLOBALS['phpgw']->link($link)),
+				'action'    => ($this->_menuaction?$this->page():$GLOBALS['phpgw']->link($link)),
 				'form_name' => $img,
-				'hidden'    => substr($hidden,0,strlen($hidden)-1),
+				'hidden'    => $GLOBALS['phpgw']->html->input_hidden($extravars),
 				'img'       => $GLOBALS['phpgw']->common->image('phpgwapi',$img),
 				'label'     => $alt,
-				'border'    => $border,
+				'border'    => 0,
 				'start'     => $extravars['start']
 			);
 			$this->template->set_var($var);
@@ -184,34 +165,31 @@
 		*/
 		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
 		{
-			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
-
-			$start = $localstart;
-
-			$cats = CreateObject('phpgwapi.categories');
-
-			$extravars = Array();
+			if (!is_object($GLOBALS['phpgw']->categories))
+			{
+				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+			}
 			$extravars = $this->split_extras($extravars,$extra);
 
 			$var = array(
-				'form_action'   => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
+				'form_action'   => ($this->_menuaction?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'lang_category' => lang('Category'),
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
-				'filter_value'  => $filter,
-				'qfield'        => $qfield,
-				'start_value'   => $start,
-				'order_value'   => $order,
-				'sort_value'    => $sort,
-				'query_value'   => urlencode(stripslashes($GLOBALS['query'])),
+				'categories'    => $GLOBALS['phpgw']->categories->formated_list('select','all',$cat_id,'True'),
+				'filter_value'  => $this->_filter,
+				'qfield'        => $this->_qfield,
+				'start_value'   => (int)$localstart,
+				'order_value'   => $this->_order,
+				'sort_value'    => $this->_sort,
+				'query_value'   => $GLOBALS['phpgw']->html->htmlspecialchars($GLOBALS['query']),
 				'table_width'   => $twidth,
 				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'left'          => $this->left($sn,$start,$total,$extra),
+				'left'          => $this->left($sn,(int)$localstart,$total,$extra),
 				'search'        => ($showsearch?$this->search($search_obj):''),
 				'filter'        => ($filter_obj?$this->filter($filter_obj,$yours):''),
-				'right'         => $this->right($sn,$start,$total,$extra)
+				'right'         => $this->right($sn,(int)$localstart,$total,$extra)
 			);
 			$this->template->set_var($var);
 			$this->template->parse('cats','cats');
@@ -223,38 +201,19 @@
 		{
 			if($extradata)
 			{
-				if(is_string($extradata))
+				if(!is_array($extradata))
 				{
-					$extraparams = explode('&',$extradata);
-					$c_extraparams = count($extraparams) + 1;
-					for($i=0;$i<$c_extraparams;$i++)
-					{
-						if(isset($extraparams[$i]))
-						{
-							list($var,$value) = explode('=',$extraparams[$i]);
-							if($var != 'menuaction')
-							{
-								$extravars[$var] = $value;
-							}
-							else
-							{
-								$this->action = $value;
-							}
-						}
-					}
+					parse_str($extradata,&$extradata);
 				}
-				elseif(is_array($extradata))
+				foreach($extradata as $var => $value)
 				{
-					foreach($extradata as $var => $value)
+					if($var != 'menuaction')
 					{
-						if($var != 'menuaction')
-						{
-							$extravars[$var] = $value;
-						}
-						else
-						{
-							$this->action = $value;
-						}
+						$extravars[$var] = $value;
+					}
+					else
+					{
+						$this->_menuaction = $value;
 					}
 				}
 			}
@@ -267,7 +226,7 @@
 			{
 				foreach($extra as $var => $value)
 				{
-					$t_extras[] = $var . '=' . $value;
+					$t_extras[] = $var . '=' . urlencode($value);
 				}
 				$extra_s = '&' . implode('&',$t_extras);
 			}
@@ -284,18 +243,18 @@
 		*/
 		function left($scriptname,$start,$total,$extradata = '')
 		{
-			list($filter,$qfield,,$order,$sort) = $this->get_var();
-
 			$extravars = Array(
-				'order'   => $order,
-				'filter'  => $filter,
-				'q_field' => $qfield,
-				'sort'    => $sort,
+				'order'   => $this->_order,
+				'filter'  => $this->_filter,
+				'q_field' => $this->_qfield,
+				'sort'    => $this->_sort,
 				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
 			$ret_str = '';
+
+			$start = (int) $start;
 
 			if ($start != 0)
 			{
@@ -330,19 +289,18 @@
 		*/
 		function right($scriptname,$start,$total,$extradata = '')
 		{
-			list($filter,$qfield,,$order,$sort) = $this->get_var();
-
 			$extravars = Array(
-				'order'   => $order,
-				'filter'  => $filter,
-				'q_field' => $qfield,
-				'sort'    => $sort,
+				'order'   => $this->_order,
+				'filter'  => $this->_filter,
+				'q_field' => $this->_qfield,
+				'sort'    => $this->_sort,
 				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
-
 			$ret_str = '';
+			
+			$start = (int) $start;
 
 			if (($total > $this->maxmatches) &&
 				($total > $start + $this->maxmatches))
@@ -367,18 +325,17 @@
 		*/
 		function search_filter($search_obj=0,$filter_obj=1,$yours=0,$link='',$extra='')
 		{
-			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
-
-			$start = $localstart;
 			$var = array(
-				'form_action'  => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
-				'filter_value' => $filter,
-				'qfield'       => $qfield,
-				'start_value'  => $start,
-				'order_value'  => $order,
-				'sort_value'   => $sort,
-				'query_value'  => urlencode(stripslashes($GLOBALS['query'])),
+				'form_action'  => ($this->_menuaction?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'th_bg'        => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'hidden'       => $GLOBALS['phpgw']->html->input_hidden(array(
+					'filter_value' => $this->_filter,
+					'qfield_value' => $this->_qfield,
+					'start_value'  => 0,
+					'order_value'  => $this->_order,
+					'sort_value'   => $this->_sort,
+					'query_value'  => $GLOBALS['query'],
+				)),
 				'search'       => $this->search($search_obj),
 				'filter'       => ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
@@ -393,23 +350,25 @@
 		*/
 		function cats_search_filter($search_obj=0,$filter_obj=1,$yours=0,$cat_id=0,$cat_field='fcat_id',$link='',$extra='')
 		{
-			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
-
-			$start = $localstart;
-			$cats  = CreateObject('phpgwapi.categories');
+			if (!is_object($GLOBALS['phpgw']->categories))
+			{
+				$GLOBALS['phpgw']->categories  = CreateObject('phpgwapi.categories');
+			}
 			$var = array(
-				'form_action'   => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
+				'form_action'   => ($this->_menuaction?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'lang_category' => lang('Category'),
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
-				'filter_value'  => $filter,
-				'qfield'        => $qfield,
-				'start_value'   => $start,
-				'order_value'   => $order,
-				'sort_value'    => $sort,
-				'query_value'   => urlencode(stripslashes($GLOBALS['query'])),
+				'categories'    => $GLOBALS['phpgw']->categories->formated_list('select','all',(int)$cat_id,'True'),
+				'hidden'       => $GLOBALS['phpgw']->html->input_hidden(array(
+					'filter_value' => $this->_filter,
+					'qfield_value' => $this->_qfield,
+					'start_value'  => 0,
+					'order_value'  => $this->_order,
+					'sort_value'   => $this->_sort,
+					'query_value'  => $GLOBALS['query'],
+				)),
 				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'search'        => $this->search($search_obj),
 				'filter'        => ($filter_obj?$this->filter($filter_obj,$yours):'')
@@ -438,14 +397,13 @@
 
 			// If they place a '"' in their search, it will mess everything up
 			// Our only option is to remove it
-//			if (ereg('"',$_query))
 			if(strstr($query,'"'))
 			{
 				$_query = str_replace('"','',$_query);
 			}
 			$var = array
 			(
-				'query_value' => stripslashes($_query),
+				'query_value'   => $GLOBALS['phpgw']->html->htmlspecialchars($_query),
 				'lang_search' => lang('Search')
 			);
 
@@ -488,17 +446,15 @@
 		*/
 		function searchby($search_obj)
 		{
-			$qfield = get_var('qfield',Array('GET','POST'));
-
 			$str = '';
 			if (is_array($search_obj))
 			{
 				$indexlimit = count($search_obj);
 				for ($index=0; $index<$indexlimit; $index++)
 				{
-					if ($qfield == '')
+					if ($this->_qfield == '')
 					{
-						$qfield = $search_obj[$index][0];
+						$this->_qfield = $search_obj[$index][0];
 					}
 					$str .= '<option value="' . $search_obj[$index][0] . '"' . ($qfield == $search_obj[$index][0]?' selected':'') . '>' . lang($search_obj[$index][1]) . '</option>';
 				}
@@ -517,12 +473,8 @@
 			if (is_array($yours))
 			{
 				$params = $yours;
-				$filter = $params['filter'];
+				$this->_filter = $params['filter'];
 				$yours  = $params['yours'];
-			}
-			else
-			{
-				$filter = get_var('filter',array('POST','GET'));
 			}
 
 			if (is_long($filter_obj))
@@ -570,11 +522,11 @@
 
 				for ($index=0; $index<$indexlimit; $index++)
 				{
-					if ($filter == '')
+					if ($this->_filter == '')
 					{
-						$filter = $filter_obj[$index][0];
+						$this->_filter = $filter_obj[$index][0];
 					}
-					$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
+					$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($this->_filter == $filter_obj[$index][0]?' selected="1"':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
 				}
 
 				$str = '        <select name="filter" onChange="this.form.submit()">'."\n" . $str . '        </select>';
@@ -634,7 +586,7 @@
 				{
 					$filter = $filter_obj[$index][0];
 				}
-				$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
+				$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected="1"':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
 			}
 
 			$str = '        <select name="filter" onChange="this.form.submit()">'."\n" . $str . '        </select>';
@@ -693,8 +645,6 @@
 		*/
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
-			list($filter,$qfield,$start) = $this->get_var();
-
 			if ($order == $var)
 			{
 				$sort = $sort == 'ASC' ? 'DESC' : 'ASC';
@@ -711,9 +661,9 @@
 				$extra = $this->extras_to_string($extra);
 			}
 
-			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes(@$GLOBALS['query'])).$extra;
+			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$this->_filter.'&this->_qfield='.$qfield.'&start='.$this->_start.'&query='.urlencode(stripslashes(@$GLOBALS['query'])).$extra;
 
-			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
+			$link = ($this->_menuaction?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
 			if ($build_a_href)
 			{
@@ -787,7 +737,7 @@
 
 			$extravar = 'order='.$our_order.'&sort='.$new_sort.$extra;
 
-			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
+			$link = ($this->_menuaction?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 			return '<a href="' .$link .'">' .$text .'</a>';
 		}
 
