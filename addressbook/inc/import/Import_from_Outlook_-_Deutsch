@@ -171,6 +171,7 @@
 				$entry[$i]['email_home_type'] = 'INTERNET';
 				$entry[$i]['adr_one_type']    = 'intl';
 				$entry[$i]['adr_two_type']    = 'intl';
+				$entry[$i]['fn'] = $entry[$i]['n_given'] . ' ' . $entry[$i]['n_family'];
 				//echo '<br>';
 				$contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
 			}
