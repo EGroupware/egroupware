@@ -1,45 +1,45 @@
 %1 %2 in %3	calendar	zt	在%3的%1 %2
-%1 matches found	calendar	zt	共有 %1 個符合項目
-%1 records imported	calendar	zt	%1筆資料匯入
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	zt	讀取%1筆資料(尚未匯入，您必須回到上一頁取消匯入測試)
-(for weekly)	calendar	zt	（每周）
-(i/v)cal	calendar	zt	(i/v)日曆
-1 match found	calendar	zt	共有 1 個符合項目
+%1 matches found	calendar	zt	共有 %1 筆資料符合
+%1 records imported	calendar	zt	%1 筆資料匯入
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	zt	讀取了%1筆資料(還沒匯入，您必須回到上一頁並且取消圈選匯入測試)
+(for weekly)	calendar	zt	（每週）
+(i/v)cal	calendar	zt	(i/v)Cal
+1 match found	calendar	zt	共有 1 筆資料符合
 a	calendar	zt	一
 accept	calendar	zt	接受
 accepted	calendar	zt	已接受
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zt	需要通知的動作：新增、取消、接受、拒絕...
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zt	需要提醒的操作：新增、取消、接受、拒絕、...
 add a single entry by passing the fields.	calendar	zt	依據這個項目建立一個複本
-add alarm	calendar	zt	新增警告
+add alarm	calendar	zt	新增警示
 add contact	calendar	zt	新增聯繫
 added	calendar	zt	新增日期
 address book	calendar	zt	通訊錄
 alarm	calendar	zt	警告
 alarm for %1 at %2 in %3	calendar	zt	在%3的%1 中 %2警告
-alarm management	calendar	zt	警告管理
-alarm-management	calendar	zt	警告管理
+alarm management	calendar	zt	警示管理
+alarm-management	calendar	zt	警告管理員
 alarms	calendar	zt	警告
 all day	calendar	zt	所有日期
 are you sure you want to delete this country ?	calendar	zt	您確定要移除這個國家嗎？
 are you sure you want to delete this holiday ?	calendar	zt	您確定要移除這個假日嗎？
-are you sure\nyou want to\ndelete these alarms?	calendar	zt	您確定\n要刪除\n這些警告?
-are you sure\nyou want to\ndelete this entry ?	calendar	zt	您確定要移除這個項目嗎？
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定要移除這個紀錄嗎？\n\n所有使用者的這一紀錄都將被移除。
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定要\n刪除這個職業 ?\n\n這將會刪除所有使用者的相同設定。
+are you sure\nyou want to\ndelete these alarms?	calendar	zt	您確定\n要刪除\n這些提醒？
+are you sure\nyou want to\ndelete this entry ?	calendar	zt	您確定要移除\n這筆資料嗎？
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定要移除這筆資料嗎？\n所有使用者的資料將一併移除。
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定\n您要刪除這個期間？\n\n這將會\n刪除所有使用者的相同事件。
 before the event	calendar	zt	事件之前
-brief description	calendar	zt	簡介
+brief description	calendar	zt	簡短敘述
 business	calendar	zt	商務
-calendar	common	zt	日曆
-calendar - [iv]cal importer	calendar	zt	Calendar - [iv]Cal 導入
-calendar - add	calendar	zt	日曆 - 新增
-calendar - edit	calendar	zt	日曆 - 編輯
+calendar	common	zt	行事曆
+calendar - [iv]cal importer	calendar	zt	Calendar - [iv]Cal Importer
+calendar - add	calendar	zt	行事曆 - 新增
+calendar - edit	calendar	zt	行事曆 - 編輯
 calendar event	calendar	zt	日曆事件
-calendar holiday management	admin	zt	日曆 - 假日管理
-calendar preferences	calendar	zt	日曆喜好設定
-calendar settings	admin	zt	日曆設定
-calendar-fieldname	calendar	zt	日曆 - 欄位名稱
+calendar holiday management	admin	zt	行事曆假日管理
+calendar preferences	calendar	zt	行事曆喜好設定
+calendar settings	admin	zt	設定行事曆
+calendar-fieldname	calendar	zt	行事曆欄位名稱
 canceled	calendar	zt	取消
-change all events for $params['old_owner'] to $params['new_owner'].	calendar	zt	修改所有$params['old_owner']到$params['new_owner']的事件。
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	zt	改變所有$params['old_owner']的事件給$params['new_owner']。
 change status	calendar	zt	修改狀態
 click %1here%2 to return to the calendar.	calendar	zt	點選 %1這裡%2 回到行事曆
 configuration	calendar	zt	設定
@@ -49,18 +49,18 @@ csv-fieldname	calendar	zt	CSV-欄位名稱
 csv-filename	calendar	zt	CSV-檔案名稱
 custom fields	calendar	zt	自訂欄位
 custom fields and sorting	common	zt	自訂欄位與排序
-daily	calendar	zt	每天
-daily matrix view	calendar	zt	每天矩形瀏覽
+daily	calendar	zt	每日
+daily matrix view	calendar	zt	每日陣列檢視模式
 days	calendar	zt	日
 days repeated	calendar	zt	日重覆
 dayview	calendar	zt	日行事曆
 default appointment length (in minutes)	calendar	zt	預設會議時間長度(分鐘)
-default calendar filter	calendar	zt	預設日曆篩選方式
-default calendar view	calendar	zt	預設日曆瀏覽模式
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zt	預設新增事件持續時間(分鐘)，例如60等於1小時
-defines the size in minutes of the lines in the day view.	calendar	zt	定義日行事曆的時間間距(分鐘)
-delete a single entry by passing the id.	calendar	zt	
-delete an entire users calendar.	calendar	zt	
+default calendar filter	calendar	zt	預設行事曆過濾器
+default calendar view	calendar	zt	預設行事曆檢視模式
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zt	預設建立事件的長度(分鐘)，預設為60=1小時。
+defines the size in minutes of the lines in the day view.	calendar	zt	定義行事曆瀏覽時每個時段的分鐘數
+delete a single entry by passing the id.	calendar	zt	刪除這個事件並且略過這個ID
+delete an entire users calendar.	calendar	zt	刪除整個使用者的行事曆
 delete selected contacts	calendar	zt	刪除聯繫
 delete series	calendar	zt	刪除連鎖項目
 delete single	calendar	zt	刪除單一項目
@@ -68,14 +68,14 @@ deleted	calendar	zt	刪除日期
 description	calendar	zt	描述
 disable	calendar	zt	停用
 disabled	calendar	zt	停用
-display interval in day view	calendar	zt	
-display mini calendars when printing	calendar	zt	列印時顯示小日曆
+display interval in day view	calendar	zt	每日顯示的間隔
+display mini calendars when printing	calendar	zt	列印時顯示小行事曆
 display status of events	calendar	zt	顯示事件的狀態
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	
-do you wish to autoload calendar holidays files dynamically?	admin	zt	
-download	calendar	zt	
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入phpGroupWare第一個看到或是按下您的首頁按鈕的頁面)
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？<br>這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。<br>它只會在那一天或是那一週有約會時寄出。
+do you wish to autoload calendar holidays files dynamically?	admin	zt	您希望動態新增行事曆的假日嗎？
+download	calendar	zt	下載
 duration	calendar	zt	期間
 edit series	calendar	zt	編輯全系列約會
 edit single	calendar	zt	編輯單一約會
@@ -83,231 +83,232 @@ email notification	calendar	zt	電子郵件提醒
 email notification for %1	calendar	zt	%1的電子郵件提醒
 enable	calendar	zt	啟用
 enabled	calendar	zt	啟用
-end date/time	calendar	zt	結束日期/時間
+end date/time	calendar	zt	結束日期時間
 enddate	calendar	zt	結束日期
 ends	calendar	zt	結束日期
-enter output filename: ( .vcs appended )	calendar	zt	
-event details follow	calendar	zt	
-exceptions	calendar	zt	
-export	calendar	zt	導出
-export a list of entries in ical format.	calendar	zt	
-extended	calendar	zt	
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zt	
-external participants	calendar	zt	
-failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zt	
-fieldseparator	calendar	zt	
-firstname of person to notify	calendar	zt	
-format of event updates	calendar	zt	
+enter output filename: ( .vcs appended )	calendar	zt	輸入輸出檔名：(記得加上副檔名.vcs)
+event details follow	calendar	zt	事件細節
+exceptions	calendar	zt	例外
+export	calendar	zt	匯出
+export a list of entries in ical format.	calendar	zt	匯出事件清單成為iCal格式
+extended	calendar	zt	延伸的
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zt	延伸的更新包含完整的事件細節，iCal格式可以被其他行事曆軟體讀取。
+external participants	calendar	zt	外部參與者
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zt	無法傳送尋給'%1'#%2 標題='%3'，傳送者='%4'！
+fieldseparator	calendar	zt	欄位分隔字元
+firstname of person to notify	calendar	zt	需要通知的人名
+format of event updates	calendar	zt	事件更新的格式
 fr	calendar	zt	五
 free/busy	calendar	zt	有空/忙錄
 frequency	calendar	zt	頻率
 fri	calendar	zt	五
-full description	calendar	zt	完整?述
-fullname of person to notify	calendar	zt	
-generate printer-friendly version	calendar	zt	?生便於列印版本
-global public and group public	calendar	zt	全部公用與組共用
-global public only	calendar	zt	僅全部公用
-go!	calendar	zt	開始！
-grant calendar access	common	zt	允許日曆訪問
-group planner	calendar	zt	
-group public only	calendar	zt	僅組共用
-here is your requested alarm.	calendar	zt	
-high priority	calendar	zt	
-holiday	calendar	zt	
-holiday management	calendar	zt	
-holiday-management	calendar	zt	
-holidays	calendar	zt	
-hours	calendar	zt	
+full description	calendar	zt	完整敘述
+fullname of person to notify	calendar	zt	需要通知的全名
+generate printer-friendly version	calendar	zt	產生友善列印版本
+global categories	calendar	zt	全域類別
+global public and group public	calendar	zt	全區公用及群組公用
+global public only	calendar	zt	全區公用
+go!	calendar	zt	出發！
+grant calendar access	common	zt	管理行事曆權限
+group planner	calendar	zt	群組計畫
+group public only	calendar	zt	群組公用
+here is your requested alarm.	calendar	zt	這是您要求的提醒。
+high priority	calendar	zt	高優先權
+holiday	calendar	zt	假日
+holiday management	calendar	zt	假日管理
+holiday-management	calendar	zt	假日管理
+holidays	calendar	zt	假日
+hours	calendar	zt	小時
 i participate	calendar	zt	我要參與
-ical / rfc2445	calendar	zt	
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	zt	
-ignore conflict	calendar	zt	忽略衝突
-import	calendar	zt	
-import csv-file into calendar	calendar	zt	
-interval	calendar	zt	
-intervals in day view	calendar	zt	
-intervals per day in planner view	calendar	zt	
-invalid entry id.	calendar	zt	
-last	calendar	zt	
-lastname of person to notify	calendar	zt	
-length shown<br>(emtpy for full length)	calendar	zt	
-length<br>(<= 255)	calendar	zt	
-load [iv]cal	calendar	zt	載入 [iv]日曆
-location	calendar	zt	位置
-location to autoload from	admin	zt	
-matrixview	calendar	zt	
+ical / rfc2445	calendar	zt	iCal / rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	zt	如果選擇的假日剛好是週末，系統會自動移到星期一。
+ignore conflict	calendar	zt	忽略重疊的約會
+import	calendar	zt	匯入
+import csv-file into calendar	calendar	zt	匯入CSV檔案到行事曆
+interval	calendar	zt	間隔
+intervals in day view	calendar	zt	每日瀏覽的間隔
+intervals per day in planner view	calendar	zt	在計畫瀏覽模式的間隔日數
+invalid entry id.	calendar	zt	錯誤的事件ID。
+last	calendar	zt	最後
+lastname of person to notify	calendar	zt	要提醒的人名(姓)
+length shown<br>(emtpy for full length)	calendar	zt	顯示長度<br>(空白代表完整長度)
+length<br>(<= 255)	calendar	zt	長度<br>(<=255)
+load [iv]cal	calendar	zt	Load [iv]Cal
+location	calendar	zt	約會位置
+location to autoload from	admin	zt	自動讀取的位置
+matrixview	calendar	zt	基礎瀏覽
 minutes	calendar	zt	分鐘
 mo	calendar	zt	一
-modified	calendar	zt	
-modify list of external participants	calendar	zt	
+modified	calendar	zt	修改日期
+modify list of external participants	calendar	zt	外部參與者的修改清單
 mon	calendar	zt	一
 month	calendar	zt	月
 monthly	calendar	zt	每月
 monthly (by date)	calendar	zt	每月（以日期計）
 monthly (by day)	calendar	zt	每月（以天數計）
-monthview	calendar	zt	
-new entry	calendar	zt	新增條目
-new name must not exist and not be empty!!!	calendar	zt	
-no matches found	calendar	zt	
-no matches found.	calendar	zt	沒有找到符合的條目
+monthview	calendar	zt	月行事曆
+new entry	calendar	zt	新增資料
+new name must not exist and not be empty!!!	calendar	zt	新的名稱必須未存在或是不能夠空白！
+no matches found	calendar	zt	沒有找到符合的結果
+no matches found.	calendar	zt	沒有找到符合的資料
 no repsonse	calendar	zt	沒有回應
 no response	calendar	zt	沒有回應
-notification messages for added events	calendar	zt	
-notification messages for canceled events	calendar	zt	
-notification messages for modified events	calendar	zt	
-notification messages for your alarms	calendar	zt	
-notification messages for your responses	calendar	zt	
-number of intervals per day in planner view	calendar	zt	
-number of months	calendar	zt	
-number of records to read (<=200)	calendar	zt	
-observance rule	calendar	zt	
-occurence	calendar	zt	
-old startdate	calendar	zt	
-olddate	calendar	zt	
-on %1 %2 %3 your meeting request for %4	calendar	zt	
-on all changes	calendar	zt	
-on all modification, but responses	calendar	zt	
-on any time change too	calendar	zt	
-on invitation / cancelation only	calendar	zt	
-on participant responses too	calendar	zt	
-on time change of more than 4 hours too	calendar	zt	
-open todo's:	calendar	zt	
-order	calendar	zt	
-overlap holiday	calendar	zt	
+notification messages for added events	calendar	zt	新增事件提醒
+notification messages for canceled events	calendar	zt	取消事件提醒
+notification messages for modified events	calendar	zt	修改事件提醒
+notification messages for your alarms	calendar	zt	您的通知事件提醒
+notification messages for your responses	calendar	zt	您的回覆事件提醒
+number of intervals per day in planner view	calendar	zt	在計畫瀏覽模式下的間隔日數
+number of months	calendar	zt	月數
+number of records to read (<=200)	calendar	zt	讀取的資料筆數(<=200)
+observance rule	calendar	zt	遵循規則
+occurence	calendar	zt	期間
+old startdate	calendar	zt	舊的開始日期
+olddate	calendar	zt	舊的日期
+on %1 %2 %3 your meeting request for %4	calendar	zt	在 %1 %2 %3 有 %4 的約會
+on all changes	calendar	zt	所有改變
+on all modification, but responses	calendar	zt	所有修改，除了回應
+on any time change too	calendar	zt	任何時間改變
+on invitation / cancelation only	calendar	zt	只有邀請與取消
+on participant responses too	calendar	zt	參與者回應時
+on time change of more than 4 hours too	calendar	zt	在改變超過四小時後
+open todo's:	calendar	zt	未完成的待辦事項
+order	calendar	zt	順序
+overlap holiday	calendar	zt	重疊的假日
 participant	calendar	zt	與會者
 participants	calendar	zt	與會者
 participates	calendar	zt	參與
-people holiday	calendar	zt	
-permission denied	calendar	zt	
-planner	calendar	zt	
-planner by category	calendar	zt	
-planner by user	calendar	zt	
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zt	
-preselected group for entering the planner	calendar	zt	
-print calendars in black & white	calendar	zt	
-print the mini calendars	calendar	zt	
-printer friendly	calendar	zt	便於列印
-privat	calendar	zt	
-private and global public	calendar	zt	私人及全體公用
-private and group public	calendar	zt	私人及組公用
-private only	calendar	zt	僅私人
-re-edit event	calendar	zt	重新編輯事件
-read a list of entries.	calendar	zt	
-read a single entry by passing the id and fieldlist.	calendar	zt	
-read this list of methods.	calendar	zt	
-receive email updates	calendar	zt	
-receive extra information in event mails	calendar	zt	
-receive summary of appointments	calendar	zt	
-recurring event	calendar	zt	
-refresh	calendar	zt	更新
-reinstate	calendar	zt	
+people holiday	calendar	zt	假日
+permission denied	calendar	zt	拒絕存取
+planner	calendar	zt	計畫者
+planner by category	calendar	zt	類別計畫者
+planner by user	calendar	zt	使用者計畫者
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zt	請確認、同意、拒絕或是檢查您的行事曆中相同的事件異動
+preselected group for entering the planner	calendar	zt	進入計畫管理的預設群組
+print calendars in black & white	calendar	zt	使用單色列印
+print the mini calendars	calendar	zt	列印迷你行事曆
+printer friendly	calendar	zt	友善列印
+privat	calendar	zt	私人的
+private and global public	calendar	zt	私人及全區公用
+private and group public	calendar	zt	私人及群組公用
+private only	calendar	zt	私人
+re-edit event	calendar	zt	重新編輯約會
+read a list of entries.	calendar	zt	讀取事件列表
+read a single entry by passing the id and fieldlist.	calendar	zt	從傳遞的ID與欄位清單讀取單一事件
+read this list of methods.	calendar	zt	讀取這個方法的列表
+receive email updates	calendar	zt	接收更新郵件提醒
+receive extra information in event mails	calendar	zt	在事件提醒郵件中接收額外的資訊
+receive summary of appointments	calendar	zt	接收約會概要
+recurring event	calendar	zt	循環事件
+refresh	calendar	zt	重新整理
+reinstate	calendar	zt	復原
 reject	calendar	zt	拒絕
-rejected	calendar	zt	已拒絕
-repeat day	calendar	zt	重復日期
-repeat end date	calendar	zt	重復結束日期
+rejected	calendar	zt	拒絕
+repeat day	calendar	zt	重覆天數
+repeat end date	calendar	zt	重覆結束日期
 repeat type	calendar	zt	重覆類型
-repeating event information	calendar	zt	重復約會資訊
-repetition	calendar	zt	重復
-repetitiondetails (or empty)	calendar	zt	
-reset	calendar	zt	
-rule	calendar	zt	
+repeating event information	calendar	zt	約會重覆資訊
+repetition	calendar	zt	重覆約會
+repetitiondetails (or empty)	calendar	zt	重複細節(或空白)
+reset	calendar	zt	重設
+rule	calendar	zt	規則
 sa	calendar	zt	六
 sat	calendar	zt	六
-scheduling conflict	calendar	zt	約會衝突
-search results	calendar	zt	搜索結果
-selected contacts (%1)	calendar	zt	
-send updates via email	common	zt	透過電子郵件發送最新消息
+scheduling conflict	calendar	zt	約會重疊
+search results	calendar	zt	搜尋結果
+selected contacts (%1)	calendar	zt	選擇的聯絡人(%1)
+send updates via email	common	zt	透過電子郵件傳送最新消息
 send/receive updates via email	calendar	zt	透過電子郵件傳送/接收最新消息
-set a year only for one-time / non-regular holidays.	calendar	zt	
-set new events to private	calendar	zt	
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zt	
-should new events created as private by default ?	calendar	zt	
-should the mini calendars by printed / displayed in the printer friendly views ?	calendar	zt	
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	zt	
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zt	
-show day view on main screen	calendar	zt	在首頁顯示當日日程安排
-show default view on main screen	calendar	zt	
+set a year only for one-time / non-regular holidays.	calendar	zt	設定只有特定年會發生的假日
+set new events to private	calendar	zt	設定新事件為私人的
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zt	您已經拒絕的邀請還要顯示在您的行事曆中嗎？<br>如果它仍然顯示在您的行事曆中，您可以在事後接受(例如原本有牴觸的行程已經取消)它。
+should new events created as private by default ?	calendar	zt	預設新增的事件是私人的？
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	zt	要顯示/列印的迷你行事曆需要放在友善列印的頁面中瀏覽嗎？
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	zt	友善列印要使用單色顯示嗎？
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zt	在每個參與者名稱的後面需要顯示該參與者的狀態(接受、拒絕、...)嗎？
+show day view on main screen	calendar	zt	在首頁顯示當日行程
+show default view on main screen	calendar	zt	在主要畫面顯示預設瀏覽
 show high priority events on main screen	calendar	zt	在首頁顯示高優先權的約會
-show invitations you rejected	calendar	zt	
-single event	calendar	zt	
-sorry, the owner has just deleted this event	calendar	zt	很抱歉，此約會的所有者剛刪除了此約會
-sorry, this event does not exist	calendar	zt	
-sorry, this event does not have exceptions defined	calendar	zt	
-sort by	calendar	zt	
-specifies the the number of intervals shown in the planner view.	calendar	zt	
+show invitations you rejected	calendar	zt	顯示您已經拒絕的邀請
+single event	calendar	zt	單一事件
+sorry, the owner has just deleted this event	calendar	zt	很抱歉，該約會的擁有者剛移除了該約會
+sorry, this event does not exist	calendar	zt	抱歉，這個事件不存在
+sorry, this event does not have exceptions defined	calendar	zt	報建，這個事件並沒有例外
+sort by	calendar	zt	排序
+specifies the the number of intervals shown in the planner view.	calendar	zt	指定計畫管理瀏覽模式的間隔數
 start date/time	calendar	zt	開始日期/時間
-start- and enddates	calendar	zt	
-startdate	calendar	zt	
-startrecord	calendar	zt	
+start- and enddates	calendar	zt	開始與結束日期
+startdate	calendar	zt	開始日期
+startrecord	calendar	zt	開始紀錄
 su	calendar	zt	日
-submit to repository	calendar	zt	
+submit to repository	calendar	zt	送出到儲藏庫中
 sun	calendar	zt	日
 tentative	calendar	zt	暫定
-test import (show importable records <u>only</u> in browser)	calendar	zt	
-text	calendar	zt	
+test import (show importable records <u>only</u> in browser)	calendar	zt	測試匯入(<u>只有</u>在瀏覽器中顯示可以匯入的紀錄)
+text	calendar	zt	文字
 th	calendar	zt	四
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	zt	下列約會和您欲加入的約會衝突：<ul>%1</ul>
-the user %1 is not participating in this event!	calendar	zt	
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zt	無法連結到您的新聞伺服器，<br>請和網路管理者聯繫，檢查新聞伺服器的名稱、用戶名及密碼。
-this day is shown as first day in the week or month view.	calendar	zt	
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zt	
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zt	
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zt	
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	zt	
-this message is sent for canceled or deleted events.	calendar	zt	
-this message is sent for modified or moved events.	calendar	zt	
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zt	
-this message is sent when you accept, tentative accept or reject an event.	calendar	zt	
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zt	
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	zt	下列的約會和您欲加入的約會重疊：<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	zt	%1不是這個事件的參與者
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zt	無法連結到您的新聞主機，<br>請和網路管理者聯絡，協助檢查新聞主機的名稱、使用者代號及密碼。
+this day is shown as first day in the week or month view.	calendar	zt	這一天會在週或是月行事曆中第一個顯示
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zt	這定義了每日行事曆的結束，在這個時間之後的事件會顯示在日行事曆下面。
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zt	這定義了每日行事曆的開始，在這個時間之前的事件會顯示在日行事曆上面。<br>這個時間也會是新增事件的預設開始時間。
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zt	這個群組是當您進入計畫管理時預設的群組，您可以在事後修改。
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	zt	這通常是SMTP伺服器設定錯誤所造成，請提醒您的管理員。
+this message is sent for canceled or deleted events.	calendar	zt	這個訊息是因為事件的取消或刪除
+this message is sent for modified or moved events.	calendar	zt	這個訊息是因為事件的修改或移動
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zt	這個訊息會送給您所擁有的所有事件中有設定提醒功能的參與人。<br>您可以使用事件資料的替代值。第一行是郵件的標題。
+this message is sent when you accept, tentative accept or reject an event.	calendar	zt	這個訊息會在您同意、暫時同意或是拒絕一個事件後寄出，
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zt	這個訊息會在您設定事件警示時寄出，包含一些您或需需要的訊息。
 this month	calendar	zt	本月
-this week	calendar	zt	本周
+this week	calendar	zt	本週
 this year	calendar	zt	今年
 thu	calendar	zt	四
-title	calendar	zt	
-title of the event	calendar	zt	
-title-row	calendar	zt	
-to-firstname	calendar	zt	
-to-fullname	calendar	zt	
-to-lastname	calendar	zt	
+title	calendar	zt	標題
+title of the event	calendar	zt	事件標題
+title-row	calendar	zt	事件-列
+to-firstname	calendar	zt	-名
+to-fullname	calendar	zt	-全名
+to-lastname	calendar	zt	-姓
 today	calendar	zt	今天
-translation	calendar	zt	
+translation	calendar	zt	翻譯
 tu	calendar	zt	二
 tue	calendar	zt	二
-update a single entry by passing the fields.	calendar	zt	
-updated	calendar	zt	
-use end date	calendar	zt	使用結束日期
-view this entry	calendar	zt	瀏覽此條目
+update a single entry by passing the fields.	calendar	zt	透過第送的欄位更新一個單一事件
+updated	calendar	zt	更新日期
+use end date	calendar	zt	有結束日期
+view this entry	calendar	zt	檢視此筆資料
 we	calendar	zt	三
 wed	calendar	zt	三
 week	calendar	zt	星期
-weekday starts on	calendar	zt	每星期開始於
-weekly	calendar	zt	每周
-weekview	calendar	zt	
-when creating new events default set to private	calendar	zt	新增約會默認?私人約會
-which events do you want to see when you enter the calendar.	calendar	zt	
-which of calendar view do you want to see, when you start calendar ?	calendar	zt	
-work day ends on	calendar	zt	每天結束時間
-work day starts on	calendar	zt	每天開始時間
-workdayends	calendar	zt	
+weekday starts on	calendar	zt	星期開始日
+weekly	calendar	zt	每週
+weekview	calendar	zt	週行事曆
+when creating new events default set to private	calendar	zt	新增約會時預設為私人性約會
+which events do you want to see when you enter the calendar.	calendar	zt	當您進入行事曆時您希望看到什麼樣的行事曆。
+which of calendar view do you want to see, when you start calendar ?	calendar	zt	當您開始了一個行事曆您希望看到哪個行事曆？
+work day ends on	calendar	zt	每日結束時間
+work day starts on	calendar	zt	每日開始時間
+workdayends	calendar	zt	工作日結束於
 year	calendar	zt	年
 yearly	calendar	zt	每年
-yearview	calendar	zt	
-you can either set a year or a occurence, not both !!!	calendar	zt	
-you can only set a year or a occurence !!!	calendar	zt	
-you do not have permission to add alarms to this event !!!	calendar	zt	
-you do not have permission to delete this alarm !!!	calendar	zt	
-you do not have permission to enable/disable this alarm !!!	calendar	zt	
-you do not have permission to read this record!	calendar	zt	
+yearview	calendar	zt	年行事曆
+you can either set a year or a occurence, not both !!!	calendar	zt	您可以設定一個期間或是星期幾，不能兩者都選！
+you can only set a year or a occurence !!!	calendar	zt	您只可以設定一年或是一個事件！
+you do not have permission to add alarms to this event !!!	calendar	zt	您沒有權限新增這個事件的
+you do not have permission to delete this alarm !!!	calendar	zt	您沒有刪除這個警報的權限！
+you do not have permission to enable/disable this alarm !!!	calendar	zt	您沒有啟用/關閉這個警報的權限！
+you do not have permission to read this record!	calendar	zt	您沒有讀取這個紀錄的權限！
 you have %1 high priority events on your calendar today.	common	zt	您今天有 %1 個高重要性的約會。
 you have 1 high priority event on your calendar today.	common	zt	您今天有 1 個高重要性的約會。
-you have a meeting scheduled for %1	calendar	zt	
-you have not entered a title	calendar	zt	您沒有輸入主題
+you have a meeting scheduled for %1	calendar	zt	您跟%1有個行程
+you have not entered a title	calendar	zt	您沒有輸入約會主題
 you have not entered a valid date	calendar	zt	您沒有輸入正確的日期
 you have not entered a valid time of day	calendar	zt	您沒有輸入正確的時間
-you have not entered participants	calendar	zt	您沒有輸入與會者
+you have not entered participants	calendar	zt	您沒有選擇與會者
 you must enter one or more search keywords	calendar	zt	您必需輸入一個或一個以上的關鍵字
-you must select a [iv]cal. (*.[iv]cs)	calendar	zt	
-you need to set either a day or a occurence !!!	calendar	zt	
-your meeting scheduled for %1 has been canceled	calendar	zt	
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zt	
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zt	您所使用的約會時間 <B> %1 - %2 </B> 和下列的條目衝突：
+you must select a [iv]cal. (*.[iv]cs)	calendar	zt	您必須選擇一個 [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	zt	您必須設定一個日期或是一個期間！
+your meeting scheduled for %1 has been canceled	calendar	zt	您與%1的行程已經取消了
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zt	您與%1的行程已經重新安排到%2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zt	您所使用的約會時間 <B> %1 - %2 </B> 和下列的約會重疊：

@@ -1,44 +1,44 @@
 %1 already exists as a file	filemanager	zt	%1 檔案已經存在
 application	filemanager	zt	應用程式
 back to file manager	filemanager	zt	回到檔案管理員
-cannot create directory because it begins or ends in a space	filemanager	zt	名稱的起始與結束不應該有空白字元
-cannot replace %1 because it is a directory	filemanager	zt	不能取代 %1 因為它是一個目錄
-command sucessfully run	filemanager	zt	命令成功執行
+cannot create directory because it begins or ends in a space	filemanager	zt	資料夾名稱包含空白字元，無法建立資料夾
+cannot replace %1 because it is a directory	filemanager	zt	無法置換%1，因為它是一個資料夾
+command sucessfully run	filemanager	zt	指令執行成功
 comment	filemanager	zt	備註
 comments cannot contain "%1"	filemanager	zt	備註不能包含 "%1"
 copied %1 to %2	filemanager	zt	複製 %1 到 %2
 copy to	filemanager	zt	複製到
-copy to:	filemanager	zt	複製到:
-could not copy %1 to %2	filemanager	zt	不能複製 %1 到 %2
-could not create %1	filemanager	zt	不能建立 %1
-could not create directory %1	filemanager	zt	不能建立目錄 %1
-could not delete %1	filemanager	zt	不能刪除 %1
-could not move %1 to %2	filemanager	zt	不能移動 %1 到 %2
-could not rename %1 to %2	filemanager	zt	不能將 %1 改名為 %2
-could not save %1	filemanager	zt	不能儲存 %1
-create file	filemanager	zt	建立文件
+copy to:	filemanager	zt	複製到：
+could not copy %1 to %2	filemanager	zt	無法複製 %1 到 %2
+could not create %1	filemanager	zt	無法建立%1
+could not create directory %1	filemanager	zt	無法建立資料夾%1
+could not delete %1	filemanager	zt	無法刪除%1
+could not move %1 to %2	filemanager	zt	無法搬移%1到%2
+could not rename %1 to %2	filemanager	zt	無法將%1改名為%2
+could not save %1	filemanager	zt	無法儲存%1
+create file	filemanager	zt	建立檔案
 create folder	filemanager	zt	建立資料夾
 created	filemanager	zt	建立日期
-created %1	filemanager	zt	建立 %1
-created by	filemanager	zt	由建立
-created directory %1	filemanager	zt	建立目錄 %1
+created %1	filemanager	zt	建立%1
+created by	filemanager	zt	建立者
+created directory %1	filemanager	zt	建立資料夾%1
 date	filemanager	zt	日期
-default number of upload fields to show	filemanager	zt	要顯示的預設上傳區域數目
+default number of upload fields to show	filemanager	zt	預設上傳檔案欄位數量
 delete	filemanager	zt	刪除
-deleted %1	filemanager	zt	刪除 %1
+deleted %1	filemanager	zt	刪除%1
 directory	filemanager	zt	資料夾
 directory %1 already exists	filemanager	zt	資料夾 %1 已經存在
 directory %1 does not exist	filemanager	zt	資料夾 %1 不存在
-directory names cannot contain "%1"	filemanager	zt	資料夾名稱不能包含 "%1"
+directory names cannot contain "%1"	filemanager	zt	資料夾名稱不應該包含 "%1"
 display attributes	filemanager	zt	顯示屬性
 download	filemanager	zt	下載
 edit	filemanager	zt	編輯
 edit comments	filemanager	zt	編輯備註
-error running command	filemanager	zt	命令執行錯誤
+error running command	filemanager	zt	指令執行錯誤
 execute	filemanager	zt	執行
-failed to create directory	filemanager	zt	建立目錄失敗
+failed to create directory	filemanager	zt	建立資料夾失敗
 file	filemanager	zt	檔案
-file %1 already exists. please edit it or delete it first.	filemanager	zt	檔案 %1 已經存在，請先編輯或刪除。
+file %1 already exists. please edit it or delete it first.	filemanager	zt	檔案 %1已經存在，請先編輯或刪除它。
 file %1 could not be created.	filemanager	zt	檔案 %1 無法建立。
 file name	filemanager	zt	檔名
 file names cannot contain "%1"	filemanager	zt	檔案名不能包含 "%1"
@@ -47,14 +47,14 @@ filemanager	common	zt	檔案管理員
 filemanager preferences	filemanager	zt	檔案管理員設定
 files	filemanager	zt	檔案
 folder	filemanager	zt	資料夾
-go to	filemanager	zt	到
+go to	filemanager	zt	前往
 go to %1	filemanager	zt	到 %1
 go to your home directory	filemanager	zt	到主要目錄
 go to:	filemanager	zt	到：
 home	filemanager	zt	首頁
 locked	filemanager	zt	被鎖定
 mime type	filemanager	zt	MIME 類型
-modified	filemanager	zt	修改
+modified	filemanager	zt	修改日期
 modified by	filemanager	zt	修改者
 move to	filemanager	zt	搬到
 move to:	filemanager	zt	搬到：
@@ -74,17 +74,17 @@ show	filemanager	zt	顯示
 show ..	filemanager	zt	顯示 ..
 show .files	filemanager	zt	顯示 .檔案
 show command line (experimental. dangerous.)	filemanager	zt	顯示命令列(危險實驗)
-show help	filemanager	zt	顯示輔助資訊
+show help	filemanager	zt	顯示說明
 size	filemanager	zt	大小
 sort by:	filemanager	zt	排序：
 total files	filemanager	zt	檔案數
-unknown mime-type defaults to text/plain when viewing	filemanager	zt	未知mime類型，預設類型為 text/plain 類型
-unused space	filemanager	zt	未使用空間
-up	filemanager	zt	向上
+unknown mime-type defaults to text/plain when viewing	filemanager	zt	不明的MIME格式，預設瀏覽格式為純文字
+unused space	filemanager	zt	剩餘空間
+up	filemanager	zt	上一層
 update	filemanager	zt	更新
 updated comment for %1	filemanager	zt	更新%1的備註
 upload fields	filemanager	zt	上傳區域
-upload files	filemanager	zt	上傳文件
+upload files	filemanager	zt	上傳檔案
 used space	filemanager	zt	使用空間
 users	filemanager	zt	使用者
 version	filemanager	zt	版本
