@@ -13,10 +13,11 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
+
   if (! $start)
      $start = 0;
 
-  $limit =$phpgw->nextmatchs->sql_limit($start);
+  $limit = $phpgw->nextmatchs->sql_limit($start);
   $phpgw->db->query("select count(*) from sessions");
   $phpgw->db->next_record();
 
