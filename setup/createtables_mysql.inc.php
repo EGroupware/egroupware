@@ -148,6 +148,7 @@
 
   $sql = "CREATE TABLE todo (
     todo_id      int(11) DEFAULT '0' NOT NULL auto_increment,
+    todo_id_parent	int(11) DEFAULT '0' NOT NULL,
     todo_owner   varchar(25),
     todo_access  varchar(10),
     todo_des     text,

@@ -127,6 +127,7 @@
 
   $sql = "create table todo (
     todo_id	     serial,
+    todo_id_parent int,
     todo_owner	varchar(25),
     todo_access	varchar(10),
     todo_des	text,
