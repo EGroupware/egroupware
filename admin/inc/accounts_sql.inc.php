@@ -179,8 +179,7 @@
      $phpgw->db->query("delete from todo where todo_owner='".$account_id."'");
      $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'");
      $phpgw->db->query("delete from accounts where account_id='".$account_id."'");
-     
-     $phpgw->common->preferences_delete("all",$account_id);
+     $phpgw->db->query("delete from preferences where preference_owner='".$account_id."'");
 
      $phpgw->db->unlock();
 
