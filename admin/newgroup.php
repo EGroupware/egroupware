@@ -47,6 +47,23 @@
 			}
 		}
 
+		if ($account_expires_month || $account_expires_day || $account_expires_year)
+		{
+			if (! checkdate($account_expires_month,$account_expires_day,$account_expires_year))
+			{
+				$error[] = lang('You have entered an invalid expiration date');
+			}
+			else
+			{
+				$account_expires = mktime(2,0,0,$account_expires_month,$account_expires_day,$account_expires_year);
+			}
+		}
+		else
+		{
+			$account_expires = -1;
+		}
+
+
 		if (!$error)
 		{
 			$phpgw->db->lock(array(
@@ -59,7 +76,16 @@
 			));
 
 			$group = CreateObject('phpgwapi.accounts',$group_id);
-			$group->create('g', $n_group, 'Group', $n_group, '', '');
+			$account_info = array(
+				'account_type'      => 'g',
+				'account_lid'       => $n_group,
+				'account_passwd'    => '',
+				'account_firstname' => $n_group,
+				'account_lastname'  => 'Group',
+				'account_status'    => 'A',
+				'account_expires'   => $account_expires
+			);
+			$group->create($account_info);
 			$group_id = $phpgw->accounts->name2id($n_group);
 
 			$apps = CreateObject('phpgwapi.applications',intval($group_id));

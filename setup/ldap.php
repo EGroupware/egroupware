@@ -113,14 +113,14 @@
 			$id_exist   = $acct->exists(intval($defaultgroupid));
 			// if not, create it, using our original groupid.
 			$thisgroup_info = array(
-				'type'      => 'g',
-				'id'        => $defaultgroupid,
-				'lid'       => 'Default',
-				'passwd'    => $passwd,
-				'firstname' => 'Default',
-				'lastname'  => 'Group',
-				'status'    => 'A',
-				'expires'   => -1
+				'account_type'      => 'g',
+				'account_id'        => $defaultgroupid,
+				'account_lid'       => 'Default',
+				'account_passwd'    => $passwd,
+				'account_firstname' => 'Default',
+				'account_lastname'  => 'Group',
+				'account_status'    => 'A',
+				'account_expires'   => -1
 			);
 			if(!$id_exist)
 			{
@@ -169,13 +169,13 @@
 					if(!$id_exist)
 					{
 						$thisaccount_info = array(
-							'type'      => 'u',
-							'lid'       => $thisacctlid,
-							'passwd'    => 'x',
-							'firstname' => $thisfirstname,
-							'lastname'  => $thislastname,
-							'status'    => 'A',
-							'expires'   => -1
+							'account_type'      => 'u',
+							'account_lid'       => $thisacctlid,
+							'account_passwd'    => 'x',
+							'account_firstname' => $thisfirstname,
+							'account_lastname'  => $thislastname,
+							'account_status'    => 'A',
+							'account_expires'   => -1
 						);
 						$accounts->create($thisaccount_info);
 					}

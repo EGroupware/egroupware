@@ -338,7 +338,7 @@
 
 			$ds = $phpgw->common->ldapConnect();
 
-			if (! $account_info['id'])
+			if (! $account_info['account_id'])
 			{
 				if ($phpgw_info['server']['account_min_id']) { $min = $phpgw_info['server']['account_min_id']; }
 				if ($phpgw_info['server']['account_max_id']) { $max = $phpgw_info['server']['account_max_id']; }
@@ -371,22 +371,22 @@
 			}
 
 			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_id . "','" . $account_info['lid']
-				. "','" . $account_info['type'] . "','" . md5($account_info['passwd']) . "', '" . $account_info['firstname']
-				. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "'," . $account_info['expires'] . ")",__LINE__,__FILE__);
+				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_id . "','" . $account_info['account_lid']
+				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['lid']);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			$entry['uidnumber']    = $account_id;
 			$entry['gidnumber']    = $account_id;
-			$entry['uid']          = $account_info['lid'];
-			$entry['cn']           = sprintf('%s %s', $account_firstname, $account_info['lastname']);
-			$entry['sn']           = $account_info['lastname'];
-			$entry['givenname']    = $account_info['firstname'];
-			$entry['userpassword'] = $phpgw->common->encrypt_password($account_info['passwd']);
+			$entry['uid']          = $account_info['account_lid'];
+			$entry['cn']           = sprintf('%s %s', $account_firstname, $account_info['account_lastname']);
+			$entry['sn']           = $account_info['account_lastname'];
+			$entry['givenname']    = $account_info['account_firstname'];
+			$entry['userpassword'] = $phpgw->common->encrypt_password($account_info['account_passwd']);
 
-			if ($phpgw_info['server']['ldap_extra_attributes'] && $account_info['type'] != 'g')
+			if ($phpgw_info['server']['ldap_extra_attributes'] && $account_info['account_type'] != 'g')
 			{
 				if ($account_home)
 				{
@@ -394,7 +394,7 @@
 				}
 				else
 				{
-					$entry['homedirectory'] = $phpgw_info['server']['ldap_account_home'].SEP.$account_info['lid'];
+					$entry['homedirectory'] = $phpgw_info['server']['ldap_account_home'].SEP.$account_info['account_lid'];
 				}
 
 				if ($account_shell)
@@ -438,7 +438,7 @@
 //					$tmpentry["objectclass"][1] = 'posixGroup';
 //				}
 //				else
-				if ($account_info['type'] == 'u')
+				if ($account_info['account_type'] == 'u')
 				{
 					$tmpentry['objectclass'][0] = 'top';
 					$tmpentry['objectclass'][1] = 'person';
@@ -459,9 +459,9 @@
 //					$entry["objectclass"][1] = 'posixGroup';
 //				}
 //				else
-				if ($account_info['type'] == 'u')
+				if ($account_info['account_type'] == 'u')
 				{
-					$dn = 'uid=' . $account_info['lid'] . ',' . $phpgw_info['server']['ldap_context'];
+					$dn = 'uid=' . $account_info['account_lid'] . ',' . $phpgw_info['server']['ldap_context'];
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'person';
 					$entry['objectclass'][2] = 'organizationalPerson';

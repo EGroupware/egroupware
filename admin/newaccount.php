@@ -103,13 +103,13 @@
 			));
 
 			$account_info = array(
-				'type'      => 'u',
-				'lid'       => $account_lid,
-				'passwd'    => $account_passwd,
-				'firstname' => $account_firstname,
-				'lastname'  => $account_lastname,
-				'status'    => $account_status,
-				'expires'   => $account_expires
+				'account_type'      => 'u',
+				'account_lid'       => $account_lid,
+				'account_passwd'    => $account_passwd,
+				'account_firstname' => $account_firstname,
+				'account_lastname'  => $account_lastname,
+				'account_status'    => $account_status,
+				'account_expires'   => $account_expires
 			);
 			$phpgw->accounts->create($account_info);
        

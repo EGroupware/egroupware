@@ -213,9 +213,9 @@
 		function create($account_info)
 		{
 	      $this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-	      	. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['lid']
-	      	. "','" . $account_info['type'] . "','" . md5($account_info['passwd']) . "', '" . $account_info['firstname']
-	      	. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "','" . $account_info['expires']
+	      	. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['account_lid']
+	      	. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
+	      	. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires']
 	      	. "')",__LINE__,__FILE__);
 		}
 
