@@ -1126,6 +1126,10 @@
 					{
 						$values[] = $data;
 					}
+					elseif ($use_key === True && !$not_null && is_null($data))
+					{
+						$values[] = $this->name_quote($key) .' IS NULL';
+					}
 					else
 					{
 						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null);
