@@ -339,11 +339,13 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<input $type name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" $options />\n";
 	}
 
-	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='')
+	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='phpgwapi')
 	{
 		// workaround for idots and IE button problem (wrong cursor-image)
-		$options .= ' style="cursor: hand;"';
-
+		if ($this->user_agent == 'msie')
+		{
+			$options .= ' style="cursor: pointer; cursor: hand;"';
+		}
 		if ($image != '')
 		{
 			$image = str_replace(array('.gif','.GIF','.png','.PNG'),'',$image);
