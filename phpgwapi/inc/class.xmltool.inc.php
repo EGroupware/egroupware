@@ -7,17 +7,15 @@
 
 	class xmltool
 	{
-		/* shared */
-		var $node_type = '';
-		var $comments = Array();
-		/* for docs */
+		/* for root nodes */
 		var $xmlversion = '1.0';
 		var $doctype = Array();
-		var $root_node;
-		/* for nodes */
+		/* shared */
+		var $node_type = '';
 		var $name = '';
-		var $data;
 		var $data_type;
+		var $data;
+		/* for nodes */
 		var $attributes = Array();
 		var $comments = Array();
 		var $indentstring = "  ";
@@ -40,38 +38,10 @@
 			}
 		}
 		
-		function add_root ($node_object)
-		{
-			if ($this->node_type == 'root')
-			{
-				if(is_object($node_object))
-				{
-					$this->root_node = $node_object;
-				}
-				else
-				{
-					echo 'Not a valid xmltool node object<br>';
-					exit;
-				}
-			}
-			else
-			{
-				echo 'add_root can only be used by a root object<br>';
-				exit;
-			}
-		}
-
 		function set_version ($version = '1.0')
 		{
-			if ($this->node_type == 'node')
-			{
-				$this->xmlversion = $version;
-			}
-			else
-			{
-				echo 'set_version can only be used by a root object<br>';
-				exit;
-			}
+			$this->xmlversion = $version;
+			return True;
 		}
 
 		function set_doctype ($name, $uri = '')
@@ -79,55 +49,73 @@
 			if ($this->node_type == 'root')
 			{
 				$this->doctype[$name] = $uri;
+				return True;
 			}
 			else
 			{
-				echo 'set_doctype can only be used by a root object<br>';
-				exit;
+				return False;
 			}
 		}
 
-		function add_node ($node_object , $name = '')
+		function add_node ($node_object, $name = '')
 		{
-			if ($this->node_type == 'node')
+			switch ($this->node_type)
 			{
-				if (is_object($node_object))
-				{
-					if(!is_array($this->data))
+				case 'root':
+					if (is_object($node_object))
 					{
-						$this->data = Array();
-						$this->data_type = 'node';
-					}
-					if ($name != '')
-					{
-						$this->data[$name] = $node_object;
+						$this->data = $node_object;
 					}
 					else
 					{
-						$this->data[] = $node_object;
+						$this->data = $this->import_var($name, $node_object);
 					}
-				}
-				else
-				{
+					break;
+				case 'node':
 					if(!is_array($this->data))
 					{
 						$this->data = Array();
 						$this->data_type = 'node';
 					}
-					$this->data[$name] = $this->import_var($name, $node_object);
-				}
+					if (is_object($node_object))
+					{
+						if ($name != '')
+						{
+							$this->data[$name] = $node_object;
+						}
+						else
+						{
+							$this->data[] = $node_object;
+						}
+					}
+					else
+					{
+						$this->data[$name] = $this->import_var($name, $node_object);
+					}
+					return True;
+					break;
 			}
-			else
+		}
+
+		function get_node ($name = '')
+		{
+			switch	($this->data_type)
 			{
-				echo 'root objects should use add_root to create the root node<br>';
-				exit;
+				case 'root':
+					break;
+				case 'node':
+					break;
+				case 'object':
+					break;
 			}
+		
 		}
 
 		function set_value ($string)
 		{
 			$this->data = $string;
 			$this->data_type = 'value';
+			return True;
 		}
 		
 		function get_value ()
@@ -139,22 +127,13 @@
 			else
 			{
 				return False;
-				//echo 'get_value can only be used on data type of value.<br>';
-				exit;
 			}
 		}
 
 		function set_attribute ($name, $value = '')
 		{
-			if ($this->node_type == 'node')
-			{
-				$this->attributes[$name] = $value;
-			}
-			else
-			{
-				echo 'set_attribute can only be used by a node object<br>';
-				exit;
-			}
+			$this->attributes[$name] = $value;
+			return True;
 		}
 
 		function get_attribute ($name)
@@ -170,6 +149,7 @@
 		function add_comment ($comment)
 		{
 			$this->comments[] = $comment;
+			return True;
 		}
 
 		function import_var($name, $value,$is_root=False,$export_xml=False)
@@ -284,7 +264,7 @@
 	
 			if($is_root)
 			{
-				$this->add_root($node);
+				$this->add_node($node);
 				if($export_xml)
 				{
 					$xml = $this->export_xml();
@@ -297,18 +277,25 @@
 			}
 			else
 			{
+				$this->add_node($node);
 				return $node;
 			}
 		}
 
 		function export_var ($is_start = True)
 		{
-			if($is_start)
+			switch	($this->data_type)
 			{
-				//$xmldata = xml_get_tree($xmldata);
+				case 'root':
+					break;
+				case 'node':
+					break;
+				case 'object':
+					break;
 			}
 			
-			if($this->datatype != 'node')
+					
+			if($this->data_type != 'node')
 			{	
 				$data = $this->data;
 				$found_at = strstr($xmldata['value'],'PHP_SERIALIZED_OBJECT:');
@@ -317,14 +304,14 @@
 					$data = str_replace ('PHP_SERIALIZED_OBJECT:', '', $this->data);
 					$data = unserialize ($xmldata['value']);
 				}
-				if($is_start)
-				{
-					$xml_array[$this->data] = $data;
-				}
-				else
-				{
+				//if($is_start)
+				//{
+				//	$xml_array[$this->data] = $data;
+				//}
+				//else
+				//{
 					return $data;
-				}
+				//}
 			}
 			else
 			{
@@ -430,14 +417,7 @@
 				case 'closed':
 					exit;
 			}
-			if($this->node_type == 'root')
-			{
-				$this->add_root($node);
-			}
-			else
-			{
-				$this->add_node($node);
-			}
+			$this->add_node($node);
 		}
 
 		function export_xml($indent = 1)
@@ -458,10 +438,10 @@
 						$result .= "<!-- $val -->\n";
 					}
 				}
-				if(is_object($this->root_node))
+				if(is_object($this->data))
 				{
 					$indent = 0;
-					$result .= $this->root_node->export_xml($indent);
+					$result .= $this->data->export_xml($indent);
 				}
 				return $result;
 			}
