@@ -23,16 +23,14 @@
   {
      global $phpgw_info;
 
-     $phpgw_info["server"]["ldap_encryption_type"] = "DES";
+     if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
+        $salt = randomstring(2);
+        $userpassword = descryptpass($account_info["passwd"], $salt);
+     }
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
         $salt = randomstring(9);
         $userpassword = md5cryptpass($account_info["passwd"], $salt);
-     }
-
-     if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
-        $salt = randomstring(2);
-        $userpassword = descryptpass($account_info["passwd"], $salt);
      }
 
      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);

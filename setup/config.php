@@ -11,7 +11,8 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+  $phpgw_info["flags"] = array("noheader"   => True,   "nonavbar" => True,
+  							 "currentapp" => "home", "noapi"    => True);
   include("../header.inc.php");
 
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
@@ -25,12 +26,12 @@
   /* Database setup */
   include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
-  $db	            = new db;
+  $db	          = new db;
   $db->Host	    = $phpgw_info["server"]["db_host"];
   $db->Type	    = $phpgw_info["server"]["db_type"];
-  $db->Database   = $phpgw_info["server"]["db_name"];
+  $db->Database    = $phpgw_info["server"]["db_name"];
   $db->User	    = $phpgw_info["server"]["db_user"];
-  $db->Password   = $phpgw_info["server"]["db_pass"];
+  $db->Password    = $phpgw_info["server"]["db_pass"];
 
   echo "<title>phpGroupWare - setup</title>";
   echo '<body bgcolor="FFFFFF">';
@@ -166,6 +167,28 @@
     <td>LDAP context:</td>
     <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>"></td>
    </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>LDAP root dn:</td>
+    <td><input name="newsettings[ldap_root_dn]" value="<?php echo $current_config["ldap_root_dn"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>LDAP root password:</td>
+    <td><input name="newsettings[ldap_root_pw]" value="<?php echo $current_config["ldap_root_pw"]; ?>"></td>
+   </tr>
+   
+   <?php $selected[$current_config["ldap_encryption_type"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>LDAP encryption type</td>
+    <td>
+     <select name="newsettings[ldap_encryption_type]">
+      <option value="DES"<?php echo $selected["DES"]; ?>>DES</option>
+      <option value="MD5"<?php echo $selected["MD5"]; ?>>MD5</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
     <td>Use cookies to pass sessionid:</td>
