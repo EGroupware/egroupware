@@ -25,20 +25,26 @@
      Header("Location: " . $phpgw->link("accounts.php"));
   }
 
-  $phpgw->db->query("select account_lid from accounts where account_id='$account_id'");
-  $phpgw->db->next_record();
-  $loginid = $phpgw->db->f("account_lid");
-  
-  $db_perms = $phpgw->accounts->read_apps($loginid);
-  $account_info = account_view($loginid);
+  $userData = $phpgw->accounts->read_userData($account_id);
 
-  $phpgw->db->query("select account_lastlogin,account_lastloginfrom,account_status from accounts "
-  				. "where account_id='$account_id'");
-  $phpgw->db->next_record();
+  $loginid = $userData["account_lid"];
+  $account_lastlogin      = $userData["account_lastlogin"];
+  $account_lastloginfrom  = $userData["account_lastloginfrom"];
+  $account_status	  = $userData["account_status"];
+
+  $db_perms = $phpgw->accounts->read_apps($loginid);
+
+
+  #$phpgw->db->query("select account_lid from accounts where account_id='$account_id'");
+  #$phpgw->db->next_record();
+  #$loginid = $phpgw->db->f("account_lid");
   
-  $account_lastlogin      = $phpgw->db->f("account_lastlogin");
-  $account_lastloginfrom  = $phpgw->db->f("account_lastloginfrom");
-  $account_status	     = $phpgw->db->f("account_status");
+  #$account_info = account_view($loginid);
+
+  #$phpgw->db->query("select account_lastlogin,account_lastloginfrom,account_status from accounts "
+  #				. "where account_id='$account_id'");
+  #$phpgw->db->next_record();
+  
 
   ?>
    <center>
@@ -55,12 +61,12 @@
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
      <td width="40%"><?php echo lang("First Name"); ?></td>
-     <td width="60%"><?php echo $account_info["account_firstname"]; ?>&nbsp;</td>
+     <td width="60%"><?php echo $userData["firstname"]; ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
      <td width="40%"><?php echo lang("Last Name"); ?></td>
-     <td width="60%"><?php echo $account_info["account_lastname"]; ?>&nbsp;</td>
+     <td width="60%"><?php echo $userData["lastname"]; ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
@@ -79,7 +85,7 @@
 
       echo "<tr bgcolor=\"" . $phpgw_info["theme"]["row_on"] . "\"><td>"
 	 . lang("account active") . "</td> <td>";
-      if ($phpgw->db->f("account_status") == "A")
+      if ($userData["status"] == "A")
          echo lang("yes");
       else
          echo "<b>" . lang("no") . "</b>";
@@ -88,8 +94,7 @@
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
       <td>Groups: </td>
       <td><?php
-            $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("account_lid"));
-	     
+            $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
 	     for ($i=0;$i<count($user_groups); $i++) {
                 echo $user_groups[$i][1];
                 if (count($user_groups) !=0 && $i != count($user_groups)-1)
@@ -100,15 +105,15 @@
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
      <td>Last login</td><td> <?php 
 
-    if (! $account_lastlogin)
+    if (! $userData["lastlogin"])
        echo "Never";
     else
-       echo $phpgw->common->show_date($account_lastlogin);
+       echo $phpgw->common->show_date($userData["lastlogin"]);
 
    ?></td></tr>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
       <td>Last login from</td>
-      <td><?php echo $account_lastloginfrom; ?>&nbsp;</td>
+      <td><?php echo $userData["lastloginfrom"]; ?>&nbsp;</td>
     </tr>
     </table>
    </center>

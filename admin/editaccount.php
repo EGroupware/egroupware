@@ -53,10 +53,10 @@
      
      if (! $totalerrors) {
         $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
-        				         "firstname" => $n_firstname, "lastname"       => $n_lastname,
-        				         "passwd"    => $n_passwd,    "account_status" => $n_account_status,
-        				         "c_loginid" => $c_loginid,
-        				         "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+        			 "firstname" => $n_firstname, "lastname"       => $n_lastname,
+        			 "passwd"    => $n_passwd,    "account_status" => $n_account_status,
+        		  	 "c_loginid" => $c_loginid,   "account_id"     => rawurldecode($account_id),
+        			 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
      }
 
      Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
@@ -66,17 +66,14 @@
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
   
-  $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
-  $phpgw->db->next_record();
-  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("account_lid"));
+  $userData = $phpgw->accounts->read_userData($account_id);
 
-  $phpgw->db->query("select * from accounts where account_id=$account_id");
-  $phpgw->db->next_record();
-  $account_status = $phpgw->db->f("account_status");
+  $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
+
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
-      <input type="hidden" name="account_id" value="<? echo $account_id; ?>">
-      <input type="hidden" name="old_loginid" value="<? echo $phpgw->db->f("account_lid"); ?>">
+      <input type="hidden" name="account_id" value="<? echo rawurlencode($userData["account_id"]); ?>">
+      <input type="hidden" name="old_loginid" value="<? echo $userData["account_lid"]; ?>">
 <?php
   if ($error) {
     echo "<center>" . $phpgw->common->error_list($error) . "</center>";
@@ -86,21 +83,21 @@
        <table border=0 width=65%>
         <tr>
          <td><?php echo lang("LoginID"); ?></td>
-         <td><input name="n_loginid" value="<? echo $phpgw->db->f("account_lid"); ?>"></td>
+         <td><input name="n_loginid" value="<? echo $userData["account_lid"]; ?>"></td>
         </tr>
         <tr>
          <td><?php echo lang("First Name"); ?></td>
-         <td><input name="n_firstname" value="<?echo $phpgw->db->f("account_firstname"); ?>"></td>
+         <td><input name="n_firstname" value="<?echo $userData["firstname"]; ?>"></td>
         </tr>
         <tr>
          <td><?php echo lang("Last Name"); ?></td>
-         <td><input name="n_lastname" value="<? echo $phpgw->db->f("account_lastname"); ?>"></td>
+         <td><input name="n_lastname" value="<? echo $userData["lastname"]; ?>"></td>
         </tr>
         <tr>
            <td><?php echo lang("Groups"); ?></td>
            <td><select name="n_groups[]" multiple size="5">
 <?php
-            $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("account_lid"));
+            $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
 
             $phpgw->db->query("select * from groups");
             while ($phpgw->db->next_record()) {
@@ -148,7 +145,10 @@
 ?>
           <tr>
            <td><?php echo lang("Account active"); ?></td>
-           <td><input type="checkbox" name="n_account_status" value="A" <?php if ($account_status == "A") { echo " checked"; } ?>>
+           <td>
+           	<input type="checkbox" name="n_account_status" value="A"
+           		<?php if ($userData["status"] == "A") { echo " checked"; } ?> 
+           	>
           </td>
           </tr>
           <tr>

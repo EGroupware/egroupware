@@ -83,7 +83,7 @@
 
       $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
 
-      $dn = sprintf("uid=%s, %s", $phpgw_info["user"]["userid"],$phpgw_info["server"]["ldap_context"]);
+      $dn = $phpgw_info["user"]["account_id"];;
       @ldap_modify($ldap, $dn, $entry);
    }
 
