@@ -474,8 +474,8 @@
 			echo '<pre>'; print_r($array); echo '</pre>';
 			$contents = ob_get_contents(); 
 			ob_end_clean();
-			echo $contents;
-//			return $contents;
+//			echo $contents;
+			return $contents;
 		}
 		else
 		{
@@ -514,7 +514,7 @@
 		/* This object does not exist yet. */
 	/*	$GLOBALS['phpgw']->log->write(array('text'=>'W-MissingFlags, currentapp flag not set'));*/
 
-		echo '<b>!!! YOU DO NOT HAVE YOUR $phpgw_info["flags"]["currentapp"] SET !!!';
+		echo '<b>!!! YOU DO NOT HAVE YOUR $GLOBALS[\'phpgw_info\'][\'flags\'][\'currentapp\'] SET !!!';
 		echo '<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';
 	}
 
@@ -878,13 +878,13 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !isset($menuaction))
+		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
 		if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && 
 			!@$GLOBALS['phpgw_info']['flags']['noappheader'] &&
-			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($menuaction))
+			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 		{
 			include(PHPGW_APP_INC . '/header.inc.php');
 		}
