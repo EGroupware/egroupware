@@ -117,11 +117,14 @@
 
 	if (!$filter)
 	{
-		$filter = 'none';
-	}
-	if($phpgw_info['user']['preferences']['addressbook']['default_filter'])
-	{
-		$filter = $phpgw_info['user']['preferences']['addressbook']['default_filter'];
+		if($phpgw_info['user']['preferences']['addressbook']['default_filter'])
+		{
+			$filter = $phpgw_info['user']['preferences']['addressbook']['default_filter'];
+		}
+		else
+		{
+			$filter = 'none';
+		}
 	}
 
 	/*
