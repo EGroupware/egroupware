@@ -9,8 +9,6 @@ Class logical (?) organization map:
 		class.setup_lang.inc.php		Multi-lang functions for display
 		|
 		class.setup_html.inc.php		HTML/template output functions
-		|	|
-		|	class.template.inc.php					HTML template class
 		|
 		class.setup_process.inc.php		db processing functions/upgrade/install
 			|
@@ -21,6 +19,8 @@ Class logical (?) organization map:
 				class.schema_proc_mysql.inc.php		SQL functions for MySQL
 				|
 				class.schema_proc_pgsql.inc.php		SQL functions for Postgresql
+				|
+				class.schema_proc_mssql.inc.php		SQL functions for MS SQL
 				|
 				...									other db support...
 
