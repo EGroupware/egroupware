@@ -25,6 +25,7 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
   $phpgw_setup->db->query("DROP TABLE todo");
+  $phpgw_setup->db->query("DROP TABLE phpgw_todo");
   $phpgw_setup->db->query("DROP TABLE calendar_entry");
   $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
   $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
@@ -34,6 +35,8 @@
   $phpgw_setup->db->query("DROP TABLE languages");
   $phpgw_setup->db->query("DROP TABLE customers");
   $phpgw_setup->db->query("DROP TABLE notes");
+  $phpgw_setup->db->query("DROP TABLE phpgw_notes");
+  $phpgw_setup->db->query("DROP TABLE phpgw_nextid");
 
 	/* Legacy tables */
 

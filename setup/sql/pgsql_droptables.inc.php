@@ -32,6 +32,7 @@
   $phpgw_setup->db->query("drop sequence calendar_entry_cal_id_seq");
   $phpgw_setup->db->query("drop sequence todo_todo_id_seq");
   $phpgw_setup->db->query("DROP TABLE todo");
+  $phpgw_setup->db->query("DROP TABLE phpgw_todo");
   $phpgw_setup->db->query("DROP TABLE calendar_entry");
   $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
   $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
