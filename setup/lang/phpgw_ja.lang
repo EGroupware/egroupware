@@ -178,7 +178,7 @@ text entry	setup	ja	テキスト入力
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
 the tables	setup	ja	the tables
 this program will help you upgrade or install different languages for eGroupWare	setup	ja	eGroupWare での、言語環境を設定します。
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	ja	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ja	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	ja	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
 this stage is completed<br>	setup	ja	この段階は完了しました。<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	ja	１つの管理者アカウントと３つのデモアカウントをセットアップします。<br>デモアカウントのユーザ名とパスワードは demo/guest, demo2/guest, demo3/guest です。<br><b>現在のアカウントをすべて削除しますので注意してください。</b><br>

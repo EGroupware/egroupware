@@ -257,7 +257,7 @@ the tables	setup	it	le tabelle
 there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	it	Si &egrave; verificato un problema nel contattare il tuo server LDAP. <br>Per favore controlla la configurazione del tuo server LDAP
 this might take a while, please wait ...	setup	it	Questa operazione può richiedere del tempo, prego attendere...
 this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per eGroupWare
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
 this stage is completed<br>	setup	it	Questo passaggio &egrave; stato completato<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	it	Questo creer&agrave; 1 utente amministratore e 3 utenti di esempio<br>I nome utente/password sono: demo/guest, demo2/guest and demo3/guest.<br><b>!!!QUESTO CANCELLER&Agrave; TUTTI GLI UTENTI PREESISTENTI!!!</b><br>

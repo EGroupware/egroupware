@@ -264,7 +264,6 @@ please fix the above errors (%1) and warnings(%2) and %3continue to the header a
 please install	setup	es-ca	Instal.leu
 please login	setup	es-ca	Inicieu la sessió
 please login to egroupware and run the admin application for additional site configuration	setup	es-ca	Si us plau, inicieu la sessió en eGroupWare i executeu l'aplicació d'administració per a la configuració addicional del lloc
-please login to phpgroupware and run the admin application for additional site configuration	setup	es-ca	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para la configuración adicional del sitio
 please wait...	setup	es-ca	Si us plau, espereu...
 possible reasons	setup	es-ca	Possibles raons
 possible solutions	setup	es-ca	Possibles solucions
@@ -348,9 +347,7 @@ there was a problem trying to connect to your ldap server. <br>please check your
 this has to be outside the webservers document-root!!!	setup	es-ca	Aixó ha d'estar fora de l'arrel de documents dels servidors web!!!
 this program will convert your database to a new system-charset.	setup	es-ca	Aquest programa convertirà la base de dades a un nou joc de caracters del sistema.
 this program will help you upgrade or install different languages for egroupware	setup	es-ca	Aquest programa us ajudarà a actualitzar o instal.lar els diferents idiomes per a eGroupWare
-this program will help you upgrade or install different languages for phpgroupware	setup	es-ca	Este programa le ayudará a actualizar o instalar diferentes idiomas para eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	es-ca	Aquesta secció intentarà exportar els usuaris i grups de les taules de comptes d'eGroupWare a l'arbre LDAP
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	es-ca	Esta sección le ayudará a exportar usuarios y grupos de las tablas de cuentas de eGroupWare en su árbol LDAP.
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	es-ca	Aquesta secció us ajudarà a importar usuaris i grups de l'arbre LDAP a les taules de comptes d'eGroupWare
 this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	es-ca	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de phpGroupWare
 this section will help you setup your ldap accounts for use with egroupware	setup	es-ca	Aquesta secció us ajudarà a configurar els comptes LDAP per a usar amb eGroupWare

@@ -297,7 +297,7 @@ the tables	setup	fr	Les tables
 there was a problem trying to connect to your ldap server. <br>please check your LDAP server configuration	setup	fr	Il y a eu un problème en essayant de se connecter à votre serveur LDAP. <br>SVP vérifiez la configuration de votre serveur LDAP
 this has to be outside the webservers document-root!!!	setup	fr	Ceci doit être en dehors du répertoire racine des documents des serveurs Web!!!
 this program will help you upgrade or install different languages for eGroupWare	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de eGroupWare vers votre arbre LDAP
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de eGroupWare vers votre arbre LDAP
 this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arbre LDAP vers les tables de comptes de eGroupWare
 this section will help you setup your LDAP accounts for use with eGroupWare	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans eGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br>Note: la valeur par défaut a été générée au hasard.

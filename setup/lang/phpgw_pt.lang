@@ -195,7 +195,7 @@ there was a problem tring to connect to your ldap server. <br>please check your 
 the table definition was correct, and the tables were installed	setup	pt	As definições de tabelas estão corretas e as tabelas estão instaladas
 the tables	setup	pt	as tabelas
 this program will help you upgrade or install different languages for eGroupWare	setup	pt	Este programa ajudará a atualizar ou instalar diferentes idiomas para o eGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	pt	Esta seção ajudará a exportar usuários e grupos das tabelas do eGroupWare para o LDAP
+this section will help you export users and groups from egroupeare's account tables into your ldap tree	setup	pt	Esta seção ajudará a exportar usuários e grupos das tabelas do eGroupWare para o LDAP
 this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	pt	Esta seção ajudará a importar usuários e grupos LDAP para as tabelas do eGroupWare
 this stage is completed<br>	setup	pt	Este passo está completo<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	pt	Isto irá criar 1 conta de administrador e 3 contas de usuários para demonstração<br>Os usuários/senhas são: demo/guest, demo2/guest and demo3/guest.<br><b>!!!Isto irá remover TODAS as contas e grupos existentes!!!</b><br>

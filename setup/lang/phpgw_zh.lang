@@ -248,7 +248,7 @@ please consult the %1.	setup	zh	详情请查阅%1.
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	zh	请修正以上错误(%1)和警告(%2),并%3继续安装%4
 please install	setup	zh	请安装
 please login	setup	zh	请登陆
-please login to phpgroupware and run the admin application for additional site configuration	setup	zh	请登陆eGroupWare，运行管理员应用程序以进行站点的附加配置
+please login to egroupware and run the admin application for additional site configuration	setup	zh	请登陆eGroupWare，运行管理员应用程序以进行站点的附加配置
 please wait...	setup	zh	请稍候...
 possible reasons	setup	zh	可能的原因
 possible solutions	setup	zh	可能的解决方法
@@ -324,8 +324,8 @@ there was a problem trying to connect to your ldap server. <br>	setup	zh	无法�
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	zh	无法连接到您的LDAP服务器. <br>请检查您的LDAP服务器的配置
 this has to be outside the webservers document-root!!!	setup	zh	该目录不能位于web服务器的根目录内!!!
 this program will convert your database to a new system-charset.	setup	zh	该程序将转换您的数据库,使之符合新的系统编码.
-this program will help you upgrade or install different languages for phpgroupware	setup	zh	该程序将帮助升级您的 phpGroupWare 或安装其他语言
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	zh	这部分将帮助您从 phpGroupWare 的帐户表格中将用户和组信息导出到 LDAP 树
+this program will help you upgrade or install different languages for egroupware	setup	zh	该程序将帮助升级您的 eGroupWare 或安装其他语言
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	zh	这部分将帮助您从 eGroupWare 的帐户表格中将用户和组信息导出到 LDAP 树
 this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	zh	这部分将帮助您从 LDAP 树中将用户和组信息导入到 phpGroupWare 的帐户表格中
 this section will help you setup your ldap accounts for use with phpgroupware	setup	zh	这部分将帮助您建立您的 LDAP 帐户，以便和 phpGroupWare 一起使用
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	zh	长度应该在30字节左右.<br>注意: 默认值已经随机生成.
