@@ -129,7 +129,7 @@
 			$this->redirect($this->session->link($url, $extravars));
 		}
 		
-		/**
+	/**
 	 * Repsost Prevention Detection
 	 *
 	 * Used as a shortcut. Wrapper to session->is_repost()
@@ -140,7 +140,7 @@
 	 * @see	session->is_repost()
 	 * @syntax is_post()
 	 * @example $repost = $GLOBALS['phpgwapi']->is_repost();
-		* @author	Dave Hall
+	 * @author	Dave Hall
 	 */
 		function is_repost($display_error = False)
 		{
@@ -153,7 +153,7 @@
 		 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
 		 *
 		 * @access	public
-		 *	@param  string The url ro redirect to
+		 * @param  string The url ro redirect to
 		 * @syntax redirect(key as string)
 		 * @example None yet
 		 */
@@ -165,7 +165,7 @@
 			
 			if ( !$url )
 			{
-				$url = $GLOBALS['PHP_SELF'];
+				$url = $_SERVER['PHP_SELF'];
 			}
 			if ( $iis )
 			{
