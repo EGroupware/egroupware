@@ -77,11 +77,11 @@
 			}
 			if(floor(phpversion()) == 4)
 			{
-				$this->socket = fsockopen($server,$port,&$errcode,&$errmsg,$timeout);
+				$this->socket = fsockopen($server,$port,$errcode,$errmsg,$timeout);
 			}
 			else
 			{
-				$this->socket = fsockopen($server,$port,&$errcode,&$errmsg);
+				$this->socket = fsockopen($server,$port,$errcode,$errmsg);
 			}
 			if(!$this->socket)
 			{
