@@ -247,7 +247,8 @@
 		function split_login_domain($both,&$login,&$domain)
 		{
 			$parts = explode('@',$both);
-			$domain = array_pop($parts);
+			$domain = count($parts) > 1 ? array_pop($parts) :
+				$GLOBALS['phpgw_info']['server']['default_domain'];
 			$login = implode('@',$parts);
 		}
 
@@ -285,11 +286,6 @@
 			$this->session_flags = $session['session_flags'];
 
 			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
-
-			if ($this->account_domain == '')
-			{
-				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
-			}
 
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
@@ -507,17 +503,12 @@
 
 			$now = time();
 
-			if (strstr($login,'@') === False)
-			{
-				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
-			}
-
 			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = $this->getuser_ip();
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				$GLOBALS['phpgw_info']['server']['global_denied_users'][$this->account_lid] ||
-				!$GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) || 
+				!$GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
 				$GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
