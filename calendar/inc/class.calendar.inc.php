@@ -168,7 +168,7 @@ class calendar extends calendar_
 				5	=>	'Sat',
 				6	=>	'Sun'
 			);
-			$sday = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
+			$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
 		}
 		else
 		{
@@ -181,7 +181,7 @@ class calendar extends calendar_
 				5	=>	'Fri',
 				6	=>	'Sat'
 			);
-			$sday = mktime(0,0,0,$month,$day - $weekday,$year);
+			$sday = mktime(2,0,0,$month,$day - $weekday,$year);
 		}
 
 		$this->days = $days;
