@@ -101,7 +101,7 @@
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('tts', 'Trouble Ticket System', 0, 2, NULL, '0.0.0')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('inv', 'Inventory', 0, 3, NULL, '0.0.0')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('chat', 'Chat', 0, 4, NULL, '0.0.0')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('headlines', 'Headlines', 0, 5, 'news_sites,news_headlines,users_headlines', '0.0.0')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('headlines', 'Headlines', 0, 5, 'news_sites,news_headlines', '0.0.0')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('filemanager', 'File manager', 1, 6, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('addressbook', 'Address Book', 1, 7, 'addressbook', '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('todo', 'ToDo List', 1, 8, 'todo', '".$currentver."')");
