@@ -60,6 +60,7 @@ a.th,a.th_text
 td.left
 {
 	background: url(../images/nav_bar_left_spacer.png);
+	height: 22;
 }
 
 .bottom

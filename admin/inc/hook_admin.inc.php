@@ -72,5 +72,5 @@
 	}
  
 	/* Do not modify below this line */
-	display_section('admin','admin',$file);
+	display_section('admin',$file);
 ?>

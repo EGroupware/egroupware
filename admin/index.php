@@ -34,10 +34,10 @@
 	$GLOBALS['admin_tpl']->set_var('title',lang('Administration'));
 
 	// This func called by the includes to dump a row header
-	function section_start($name='',$icon='',$appname='')
+	function section_start($appname='',$icon='')
 	{
-		$GLOBALS['admin_tpl']->set_var('app_name',lang($name));
-		$GLOBALS['admin_tpl']->set_var('a_name',$appname);
+		$GLOBALS['admin_tpl']->set_var('app_title',lang($appname));
+		$GLOBALS['admin_tpl']->set_var('app_name',$appname);
 		$GLOBALS['admin_tpl']->set_var('app_icon',$icon);
 		if ($icon)
 		{
@@ -61,20 +61,12 @@
 		$GLOBALS['admin_tpl']->parse('rows','spacer_row',True);
 	}
 
-	function display_section($appname,$title,$file)
+	function display_section($appname,$file)
 	{
 		if(is_array($file))
 		{
-			section_start($title,
-				$GLOBALS['phpgw']->common->image(
-					$appname,
-					Array(
-						'navbar',
-						$appname,
-						'nonav'
-					)
-				),
-				$appname
+			section_start($appname,
+				$GLOBALS['phpgw']->common->image($appname,Array('navbar',$appname,'nonav'),'',True)
 			);
 
 			while(list($text,$url) = each($file))
@@ -86,7 +78,8 @@
 	}
 
 	$GLOBALS['phpgw']->hooks->process('admin');
-	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array(
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array
+	(
 		'body_data' => $GLOBALS['admin_tpl']->parse('out','list')
 	));
 ?>

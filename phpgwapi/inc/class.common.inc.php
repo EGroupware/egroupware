@@ -819,7 +819,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 		}
 
-		function find_image($appname,$image)
+		function find_image($appname,$image,$navbar=False)
 		{
 			static $imgpref;
 			if(! @$imgpref)
@@ -839,34 +839,38 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 			if (!@is_array($this->found_files[$appname]))
 			{
-				$imagedir_olddefault = '/'.$appname.'/images';
-				$imagedir_default    = '/'.$appname.'/templates/default/images';
 				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
 
-				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
+				if (!$navbar)
 				{
-					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
-					while (false != ($entry = $d->read()))
-					{
-						if ($entry != '.' && $entry != '..')
-						{
-							$this->found_files[$appname][$entry] = $imagedir_olddefault;
-						}
-					}
-					$d->close();
-				}
+					$imagedir_olddefault = '/'.$appname.'/images';
+					$imagedir_default    = '/'.$appname.'/templates/default/images';
 
-				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
-				{
-					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
-					while (false != ($entry = $d->read()))
+					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 					{
-						if ($entry != '.' && $entry != '..')
+						$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
+						while (false != ($entry = $d->read()))
 						{
-							$this->found_files[$appname][$entry] = $imagedir_default;
+							if ($entry != '.' && $entry != '..')
+							{
+								$this->found_files[$appname][$entry] = $imagedir_olddefault;
+							}
 						}
+						$d->close();
 					}
-					$d->close();
+
+					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
+					{
+						$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
+						while (false != ($entry = $d->read()))
+						{
+							if ($entry != '.' && $entry != '..')
+							{
+								$this->found_files[$appname][$entry] = $imagedir_default;
+							}
+						}
+						$d->close();
+					}
 				}
 
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir))
@@ -922,7 +926,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			return $imgfile;
 		}
 
-		function image($appname,$image='',$ext='',$use_lang=True)
+		function image($appname,$image='',$ext='',$navbar=False,$use_lang=True)
 		{
 			if (!is_array($image))
 			{
@@ -949,16 +953,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 				else
 				{
-					$image_found = $this->find_image($appname,$img.$ext);
+					$image_found = $this->find_image($appname,$img.$ext,$navbar);
 				}
 			}
 			return $image_found;
 		}
 
-		function image_on($appname,$image,$extension='_on')
+		function image_on($appname,$image,$extension='_on',$navbar=False)
 		{
-			$with_extension = $this->image($appname,$image,$extension);
-			$without_extension = $this->image($appname,$image);
+			$with_extension = $this->image($appname,$image,$extension,$navbar);
+			$without_extension = $this->image($appname,$image,'',$navbar);
 			if($with_extension != '')
 			{
 				return $with_extension;
@@ -1301,6 +1305,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($value);
 			unset($newarray);
 
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety')
+			{
+				$navbar = True;
+			}
+			else
+			{
+				$navbar = False;
+			}
+
 			while (list($app,$data) = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				if (is_long($app))
@@ -1311,18 +1324,18 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
 					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= lang($data['title']);
-					$GLOBALS['phpgw_info']['navbar'][$app]['url']		= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
+					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
 
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']		= $this->image($app,Array('navbar','nonav'));
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav'),'',$navbar);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over',$navbar);
 					}
 					else
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']		= $this->image_on($app,Array('navbar','nonav'),'-over');
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over',$navbar);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'),'',$navbar);
 					}
 				}
 			}
