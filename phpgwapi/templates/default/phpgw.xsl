@@ -2,6 +2,7 @@
 
 	<xsl:template name="phpgw">
 	<xsl:variable name="css_path"><xsl:value-of select="css_path"/></xsl:variable>
+	<xsl:variable name="phpgw_charset"><xsl:value-of select="phpgw_charset"/></xsl:variable>
 	<xsl:variable name="phpgw_bg"><xsl:value-of select="phpgw_bg"/></xsl:variable>
 	<xsl:variable name="phpgw_onload"><xsl:value-of select="phpgw_onload"/></xsl:variable>
 	<xsl:variable name="phpgw_top_table_height"><xsl:value-of select="phpgw_top_table_height"/></xsl:variable>
@@ -12,32 +13,31 @@
 	<xsl:variable name="phpgw_bottom_table_height"><xsl:value-of select="phpgw_bottom_table_height"/></xsl:variable>
 		<html>
 			<head>
-				<meta http-equiv="Content-Type" content="text/html; charset={phpgw_head_charset}"/>
-				<meta name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org"/>
+				<meta http-equiv="Content-Type" content="text/html; charset={$phpgw_charset}"/>
+				<meta name="author" content="phpGroupWare http://www.phpgroupware.org"/>
 				<meta name="description" content="phpGroupWare"/>
 				<meta name="keywords" content="phpGroupWare"/>
 				<meta name="robots" content="noindex"/>
-				<base target="{phpgw_head_target}"/>
 				<link rel="icon" href="favicon.ico" type="image/x-ico"/>
 				<link rel="shortcut icon" href="favicon.ico"/>
 				<title><xsl:value-of select="phpgw_website_title"/></title>
 				<xsl:apply-templates select="head_js"/>
 				<link rel="stylesheet" type="text/css" href="{$css_path}">
 			</head>
-			<body background="{$phpgw_bg}" onLoad="{phpgw_onload}">
+			<body background="{$phpgw_bg}" onLoad="{$phpgw_onload}">
 				<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 					<tr>
 						<td width="100%" height="{$phpgw_top_table_height}" valign="top" colspan="3">
-							<xsl:apply-templates select="phpgw_top"/>
+							<xsl:call-template name="phpgw_top"/>
 						</td>
 					</tr>
 					<tr>
 						<td width="{$phpgw_left_table_width}" height="{$phpgw_body_table_height}" valign="top">
-							<xsl:apply-templates select="phpgw_left"/>
+							<xsl:call-template name="phpgw_left"/>
 						</td>
 						<td width="{$phpgw_body_table_width}" height="{$phpgw_body_table_height}" valign="top">
-							<xsl:apply-templates select="phpgw_msg_box"/>
-							<xsl:apply-templates select="phpgw_body"/>
+							<xsl:call-template name="phpgw_msg_box"/>
+							<xsl:call-template name="phpgw_body"/>
 						</td>
 						<td width="{$phpgw_right_table_width}" height="{$phpgw_body_table_height}" align="right" valign="top">
 							<xsl:apply-templates select="phpgw_right"/>
@@ -45,7 +45,7 @@
 					</tr>
 					<tr>
 						<td width="100%" height="{$phpgw_bottom_table_height}" valign="top" colspan="3">
-							<xsl:apply-templates select="phpgw_bottom"/>
+							<xsl:call-template name="phpgw_bottom"/>
 						</td>
 					</tr>
 				</table>

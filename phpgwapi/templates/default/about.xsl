@@ -1,9 +1,8 @@
 <!-- $Id$ -->
 
-	<xsl:template name="about">
+	<xsl:template match="about">
 		<table cellpadding="2" cellspacing="2" width="80%" align="center">
 			<xsl:variable name="phpgw_logo"><xsl:value-of select="phpgw_logo"/></xsl:variable>
-			<xsl:variable name="phpgw_version"><xsl:value-of select="phpgw_version"/></xsl:variable>
 			<tr>
 				<td>
 					<a href="http://www.phpgroupware.org" target="_blank"><img src="{$phpgw_logo}" border="0"></a>
@@ -11,7 +10,7 @@
 			</tr>
 			<tr>
 				<td align="center">
-					<xsl:value-of select="phpgw_version"/>
+					<xsl:value-of select="lang_version"/><xsl:text>: </xsl:text><xsl:value-of select="phpgw_version"/>
 				</td>
 			</tr>
 			<tr>
@@ -32,7 +31,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<xsl:value-of select="lang_app_version"/><xsl:text>: </xsl:text><xsl:value-of select="app_version"/>
+				<xsl:value-of select="lang_version"/><xsl:text>: </xsl:text><xsl:value-of select="app_version"/>
 			</td>
 		</tr>
 		<tr>
