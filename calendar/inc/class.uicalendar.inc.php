@@ -126,7 +126,7 @@
 					$this->bo->return_to = $_GET['menuaction'].
 						sprintf('&date=%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day);
 					// reset the matrixview participants
-					$GLOBALS['phpgw']->session->appsession('participants', NULL,'');
+					# $GLOBALS['phpgw']->session->appsession('participants', NULL,'');
 				}
 				$this->bo->save_sessiondata();
 			}
@@ -1302,7 +1302,9 @@
 				// Construct Participants stack
 				$_stack_participants = $GLOBALS['phpgw']->session->appsession("participants");
 				if($matrix_mode == 1) // You come from matrix, ok
-					$_stack_participants = ";" . $GLOBALS['phpgw']->session->appsession("participants_matrix");
+					$_stack_participants .= ";" . $GLOBALS['phpgw']->session->appsession("participants_matrix");
+				if( get_var('owner',array('GET'),FALSE) )
+					$_stack_participants .= ";" . str_replace(",", ";", get_var('owner', array('GET'), FALSE));
 				
 				// Read each participant
 				foreach(explode(";", $_stack_participants) as $part)
