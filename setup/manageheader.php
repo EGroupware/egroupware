@@ -374,7 +374,7 @@
 		}
 ?>
         </select>
-        </td><td>What sessions management type do you want to use?</td></tr>
+        </td><td>What sessions management type do you want to use (PHP4 session management often performs better)?</td></tr>
 
 			
         <tr><td colspan=2><b>Enable MCrypt</b><br>
