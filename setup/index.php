@@ -119,10 +119,11 @@
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Information</b></font></td>\n";
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>At your request, this script is going to attempt to upgrade your tables to the new format.</td>\n";
+      echo "    <td>At your request, this script is going to attempt to upgrade your old tables to the new format.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
-      include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
+      $currentver = $oldversion;
+      include ("upgradetables_".$phpgw_info["server"]["db_type"].".inc.php");
       include ("default_records.inc.php");
       include ("lang_records.inc.php");
       echo "<table border=\"0\" align=\"center\">\n";
