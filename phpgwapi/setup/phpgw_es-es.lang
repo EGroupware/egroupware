@@ -1,18 +1,19 @@
 %1 email addresses inserted	common	es-es	%1 direcciones de correo insertadas
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
-(shift-)click or drag to change value	common	es-es	Pulse mayúsculas o arrastre para cambiar el valor
-- click on any of the time parts to increase it	common	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
-- hold mouse button on any of the above buttons for faster selection.	common	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
-- or click and drag for faster selection.	common	es-es	- o pulse y arrastre para una selección más rápida.
-- or shift-click to decrease it	common	es-es	- o pulse con la tecla mayúsculas para decrementarlo
-- use the %1, %2 buttons to select month	common	es-es	- Use los botones %1, %2 para seleccionar el mes
-- use the %1, %2 buttons to select year	common	es-es	- Use los botones %1, %2 para seleccionar el año
+(shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
+- click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
+- or click and drag for faster selection.	jscalendar	es-es	- o pulse y arrastre para una selección más rápida.
+- or shift-click to decrease it	jscalendar	es-es	- o pulse con la tecla mayúsculas para decrementarlo
+- use the %1, %2 buttons to select month	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el mes
+- use the %1, %2 buttons to select year	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el año
 00 (disable)	admin	es-es	00 (desactivar)
 13 (ntp)	admin	es-es	13 (ntp)
 80 (http)	admin	es-es	80 (http)
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
-about the calendar	common	es-es	Acerca del calendario
+about the calendar	jscalendar	es-es	Acerca del calendario
+about this editor	htmlarea	es-es	Acerca de este editor
 access	common	es-es	Acceso
 access not permitted	common	es-es	Acceso no permitido
 access type	common	es-es	Tipo Acceso
@@ -59,6 +60,7 @@ autosave default category	common	es-es	Autograbar Categoria Predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
+background color	htmlarea	es-es	Color de fondo
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
@@ -72,6 +74,7 @@ benin	common	es-es	BENIN
 bermuda	common	es-es	BERMUDA
 bhutan	common	es-es	BHUTAN
 blocked, too many attempts	common	es-es	Bloqueado, demasiados intentos
+bold	htmlarea	es-es	Negrita
 bolivia	common	es-es	BOLIVIA
 bookkeeping	common	es-es	Contabilidad
 bosnia and herzegovina	common	es-es	BOSNIA AND HERZEGOVINA
@@ -81,6 +84,7 @@ brazil	common	es-es	BRASIL
 british indian ocean territory	common	es-es	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	es-es	BRUNEI DARUSSALAM
 bulgaria	common	es-es	BULGARIA
+bulleted list	htmlarea	es-es	Lista de esquema
 burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
@@ -121,6 +125,7 @@ congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
+copy selection	htmlarea	es-es	Copiar selección
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COTE D IVOIRE
 create	common	es-es	Crear
@@ -129,14 +134,17 @@ croatia	common	es-es	CROATIA
 cuba	common	es-es	CUBA
 currency	common	es-es	Cambio
 current	common	es-es	Actual
+current style	htmlarea	es-es	Estilo actual
 current users	common	es-es	Usuarios actuales
+cut selection	htmlarea	es-es	Cortar selección
 cyprus	common	es-es	CYPRUS
 czech republic	common	es-es	CZECH REPUBLIC
 date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
-date selection:	common	es-es	Seleccionar fecha:
+date selection:	jscalendar	es-es	Seleccionar fecha:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
 december	common	es-es	Diciembre
+decrease indent	htmlarea	es-es	Reducir sangría
 default category	common	es-es	Categoría predeterminada
 delete	common	es-es	Eliminar
 denmark	common	es-es	DENMARK
@@ -148,8 +156,8 @@ disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de 
 disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
 disabled	common	es-es	Deshabilitado
-display monday first	common	es-es	Mostrar el lunes primero
-display sunday first	common	es-es	Mostar el domingo primero
+display monday first	jscalendar	es-es	Mostrar el lunes primero
+display sunday first	jscalendar	es-es	Mostar el domingo primero
 djibouti	common	es-es	DJIBOUTI
 do you also want to delete all subcategories ?	common	es-es	¿También desea eliminar todas las subcategorías?
 domain	common	es-es	Dominio
@@ -158,7 +166,7 @@ domestic	common	es-es	Doméstico
 dominica	common	es-es	DOMINICA
 dominican republic	common	es-es	DOMINICAN REPUBLIC
 done	common	es-es	Hecho
-drag to move	common	es-es	Arrastre para mover
+drag to move	jscalendar	es-es	Arrastre para mover
 e-mail	common	es-es	Correo electrónico
 east timor	common	es-es	EAST TIMOR
 ecuador	common	es-es	ECUADOR
@@ -177,6 +185,7 @@ email-address of the user, eg. "%1"	common	es-es	Direcciones de correo electróni
 enabled	common	es-es	Habilitado
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
+enlarge editor	htmlarea	es-es	Agrandar editor
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
 equatorial guinea	common	es-es	EQUATORIAL GUINEA
@@ -203,6 +212,7 @@ first name of the user, eg. "%1"	common	es-es	Primer nombre del usuario, ej "%1"
 first page	common	es-es	Primera página
 firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
+font color	htmlarea	es-es	Color de la letra
 force selectbox	common	es-es	Forzar cuadro de selección
 france	common	es-es	FRANCIA
 french guiana	common	es-es	FRENCH GUIANA
@@ -220,7 +230,7 @@ ghana	common	es-es	GHANA
 gibraltar	common	es-es	GIBRALTAR
 global	common	es-es	Global
 global public	common	es-es	Publico Global
-go today	common	es-es	Ir hoy
+go today	jscalendar	es-es	Ir hoy
 grant access	common	es-es	Conceder acceso
 greece	common	es-es	GREECE
 greenland	common	es-es	GREENLAND
@@ -244,6 +254,7 @@ guyana	common	es-es	GUYANA
 haiti	common	es-es	HAITI
 heard island and mcdonald islands	common	es-es	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	es-es	Ayuda
+help using editor	htmlarea	es-es	Ayuda usando el editor
 high	common	es-es	Alta
 highest	common	es-es	La más alta
 holy see (vatican city state)	common	es-es	HOLY SEE (VATICAN CITY STATE)
@@ -251,13 +262,18 @@ home	common	es-es	Inicio
 home email	common	es-es	correo electrónico privado
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
+horizontal rule	htmlarea	es-es	Regla horizontal
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
 hungary	common	es-es	HUNGARY
 iceland	common	es-es	ICELAND
+increase indent	htmlarea	es-es	Aumentar sangría
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
 info log	common	es-es	Info Log
 insert all %1 addresses of the %2 contacts in %3	common	es-es	Inserte todas las direcciones %1 de los contactos de %2 en %3
+insert image	htmlarea	es-es	Insertar imagen
+insert table	htmlarea	es-es	Insertar tabla
+insert web link	htmlarea	es-es	Insertar enlace web
 international	common	es-es	Internacional
 invalid ip address	common	es-es	Dirección IP no válida
 invalid password	common	es-es	La contraseña no es válida
@@ -267,6 +283,7 @@ ireland	common	es-es	IRELAND
 israel	common	es-es	ISRAEL
 it has been more then %1 days since you changed your password	common	es-es	Hace más de %1 días que cambió su contraseña
 it is recommended that you run setup to upgrade your tables to the current version	common	es-es	Se recomienda que ejecute <i>setup</i> para actualizar las tablas a la última versión
+italic	common	es-es	Cursiva
 italy	common	es-es	ITALIA
 jamaica	common	es-es	JAMAICA
 january	common	es-es	Enero
@@ -274,6 +291,10 @@ japan	common	es-es	JAPAN
 jordan	common	es-es	JORDAN
 july	common	es-es	Julio
 june	common	es-es	Junio
+justify center	htmlarea	es-es	Centrar
+justify full	htmlarea	es-es	Justificado
+justify left	htmlarea	es-es	Alinear a la izquierda
+justify right	htmlarea	es-es	Alinear a la derecha
 kazakstan	common	es-es	KAZAKSTAN
 kenya	common	es-es	KENYA
 keywords	common	es-es	Palabras clave
@@ -353,9 +374,9 @@ new phrase has been added	common	es-es	Nueva frase agregada
 new value	common	es-es	Nuevo valor
 new zealand	common	es-es	NEW ZEALAND
 next	common	es-es	Siguiente
-next month (hold for menu)	common	es-es	Mes siguiente (mantener para menú)
+next month (hold for menu)	jscalendar	es-es	Mes siguiente (mantener para menú)
 next page	common	es-es	proxima pagina
-next year (hold for menu)	common	es-es	Año siguiente (mantener para menú)
+next year (hold for menu)	jscalendar	es-es	Año siguiente (mantener para menú)
 nicaragua	common	es-es	NICARAGUA
 niger	common	es-es	NIGER
 nigeria	common	es-es	NIGERIA
@@ -384,6 +405,7 @@ only private	common	es-es	privado solamente
 only yours	common	es-es	sólo los suyos
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
+ordered list	htmlarea	es-es	Lista ordenada
 original	common	es-es	Original
 other	common	es-es	Otros
 overview	common	es-es	Resumen
@@ -400,6 +422,8 @@ parent category	common	es-es	Categoría superior
 password	common	es-es	Contraseña
 password could not be changed	common	es-es	No se pudo cambiar la contraseña
 password has been updated	common	es-es	Su contraseña ha sido actualizada
+paste from clipboard	htmlarea	es-es	Pegar desde el portapapeles
+path	htmlarea	es-es	Ruta
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 pattern for search in addressbook	common	es-es	Patrón de búsqueda en la Libreta de direcciones
 pattern for search in calendar	common	es-es	Patrón de búsqueda en el Calendario
@@ -425,8 +449,9 @@ portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal
 powered by phpgroupware version %1	common	es-es	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> %1
 preferences	common	es-es	Preferencias
-prev. month (hold for menu)	common	es-es	Mes anterior (mantener para menú)
-prev. year (hold for menu)	common	es-es	Año anterior (mantener para menú)
+preferences for the idots template set	common	es-es	Preferencias para las plantillas de idots
+prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
+prev. year (hold for menu)	jscalendar	es-es	Año anterior (mantener para menú)
 previous page	common	es-es	Página anterior
 print	common	es-es	Imprimir
 priority	common	es-es	Prioridad
@@ -437,6 +462,7 @@ puerto rico	common	es-es	PUERTO RICO
 qatar	common	es-es	QATAR
 read	common	es-es	Leer
 read this list of methods.	common	es-es	Leer esta lista de métodos
+redoes your last action	htmlarea	es-es	Rehace la última acción
 registration	common	es-es	Registracion
 reject	common	es-es	Rechazar
 rename	common	es-es	Renombrar
@@ -463,7 +489,7 @@ section	common	es-es	Sección
 select	common	es-es	Seleccionar
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
 select category	common	es-es	Seleccionar categoría
-select date	common	es-es	Seleccionar fecha
+select date	jscalendar	es-es	Seleccionar fecha
 select group	common	es-es	Seleccionar grupo
 select home email address	common	es-es	Seleccionar dirección de correo inicial
 select one	common	es-es	Seleccionar uno
@@ -500,12 +526,15 @@ sri lanka	common	es-es	SRI LANKA
 start date	common	es-es	Fecha de inicio
 start time	common	es-es	Hora de inicio
 status	common	es-es	Estado
+strikethrough	htmlarea	es-es	Tachado
 subject	common	es-es	Asunto
 submit	common	es-es	Enviar
+subscript	htmlarea	es-es	Subíndice
 substitutions and their meanings:	common	es-es	Sustituciones y sus significados
 sudan	common	es-es	SUDAN
 sunday	common	es-es	Domingo
-suriname	common	es-es	SURINAME
+superscript	htmlarea	es-es	Superíndice
+suriname	common	es-es	SURINAM
 svalbard and jan mayen	common	es-es	SVALBARD AND JAN MAYEN
 swaziland	common	es-es	SWAZILAND
 sweden	common	es-es	SUECIA
@@ -524,7 +553,7 @@ this application requires an upgrade	common	es-es	Esta aplicación requiere una a
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
 thursday	common	es-es	Jueves
 time	common	es-es	Hora
-time selection:	common	es-es	Seleccionar hora:
+time selection:	jscalendar	es-es	Seleccionar hora:
 time zone	common	es-es	Zona horaria
 time zone offset	common	es-es	Diferencia de zona horaria
 timetrack	preferences	es-es	Seguimiento del Tiempo
@@ -533,9 +562,11 @@ to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
 to go back to the msg list, click <a href= %1?sessionid=69211c0c32aa5581c5d69abdbcac4d64 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 to go back to the msg list, click <a href= %1?sessionid=7fe5595a67d8747e64c2b92411ceaf31 >here</a>	common	es-es	
+to go back to the msg list, click <a href= %1?sessionid=c0878fba5e3f2f6230f04199a7af15c6 >here</a>	common	es-es	Para volver a la lista de menseajes, pulse <a href="%1">aquí</a>
 today	common	es-es	Hoy
 todays date, eg. "%1"	common	es-es	fecha de hoy, ej. "%1"
-toggle first day of week	common	es-es	Cambiar el primer día de la semana
+toggle first day of week	jscalendar	es-es	Cambiar el primer día de la semana
+toggle html source	htmlarea	es-es	Cambiar a vista del código HTML
 togo	common	es-es	TOGO
 tokelau	common	es-es	TOKELAU
 tonga	common	es-es	TONGA
@@ -550,6 +581,8 @@ turks and caicos islands	common	es-es	TURKS AND CAICOS ISLANDS
 tuvalu	common	es-es	TUVALU
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UKRAINE
+underline	htmlarea	es-es	Subrayado
+undoes your last action	htmlarea	es-es	Deshace la última acción
 united arab emirates	common	es-es	UNITED ARAB EMIRATES
 united kingdom	common	es-es	UNITED KINGDOM
 united states	common	es-es	UNITED STATES
@@ -584,12 +617,13 @@ wednesday	common	es-es	Miércoles
 welcome	common	es-es	Página principal
 western sahara	common	es-es	WESTERN SAHARA
 which groups	common	es-es	Qué grupos
-wk	common	es-es	wk
+wk	jscalendar	es-es	wk
 work email	common	es-es	correo del trabajo
 written by:	common	es-es	Escrito por:
 year	common	es-es	Año
 yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	es-es	Está en MODO TEXTO. Use el botón [<>] para volver a la vista WYSIWIG.
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
 you are running a newer version of phpgroupware than your database is setup for	common	es-es	Usted está ejecutando una versión más reciente de lo que su base de datos está configurada.
 you have %1 new messages!	common	es-es	Ud. tiene %1 nuevos mensajes!
