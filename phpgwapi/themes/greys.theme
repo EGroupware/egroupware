@@ -11,37 +11,37 @@
 
 	/* $Id$ */
 
-	$phpgw_info['theme']['bg_color']    = '#dfdfdf';
-	$phpgw_info['theme']['bg_text']     = '#222222';
-	$phpgw_info['theme']['vlink']       = '#5555ff';
-	$phpgw_info['theme']['alink']       = 'black';
-	$phpgw_info['theme']['link']        = '#0000ff';
-	$phpgw_info['theme']['row_on']      = '#eeeeee';
-	$phpgw_info['theme']['row_off']     = '#cccccc';
-	$phpgw_info['theme']['row_text']    = '#000000';
-	$phpgw_info['theme']['th_bg']       = '#eeeeee';
-	$phpgw_info['theme']['th_text']     = '#000000';
-	$phpgw_info['theme']['navbar_bg']   = '#aaaaaa';
-	$phpgw_info['theme']['navbar_text'] = '#000000';
-	$phpgw_info['theme']['table_bg']    = '#eeeeee';
-	$phpgw_info['theme']['table_text']  = '#000000';
-	$phpgw_info['theme']['font']        = 'Arial, Helvetica, san-serif';
-	$phpgw_info['theme']['bg01']        = '#eeeeee';
-	$phpgw_info['theme']['bg02']        = '#cccccc';
-	$phpgw_info['theme']['bg03']        = '#bbbbbb';
-	$phpgw_info['theme']['bg04']        = '#aaaaaa';
-	$phpgw_info['theme']['bg05']        = '#999999';
-	$phpgw_info['theme']['bg06']        = '#888888';
-	$phpgw_info['theme']['bg07']        = '#777777';
-	$phpgw_info['theme']['bg08']        = '#666666';
-	$phpgw_info['theme']['bg09']        = '#555555';
-	$phpgw_info['theme']['bg10']        = '#444444';
+	$GLOBALS['phpgw_info']['theme']['bg_color']    = '#dfdfdf';
+	$GLOBALS['phpgw_info']['theme']['bg_text']     = '#222222';
+	$GLOBALS['phpgw_info']['theme']['vlink']       = '#5555ff';
+	$GLOBALS['phpgw_info']['theme']['alink']       = 'black';
+	$GLOBALS['phpgw_info']['theme']['link']        = '#0000ff';
+	$GLOBALS['phpgw_info']['theme']['row_on']      = '#eeeeee';
+	$GLOBALS['phpgw_info']['theme']['row_off']     = '#cccccc';
+	$GLOBALS['phpgw_info']['theme']['row_text']    = '#000000';
+	$GLOBALS['phpgw_info']['theme']['th_bg']       = '#eeeeee';
+	$GLOBALS['phpgw_info']['theme']['th_text']     = '#000000';
+	$GLOBALS['phpgw_info']['theme']['navbar_bg']   = '#aaaaaa';
+	$GLOBALS['phpgw_info']['theme']['navbar_text'] = '#000000';
+	$GLOBALS['phpgw_info']['theme']['table_bg']    = '#eeeeee';
+	$GLOBALS['phpgw_info']['theme']['table_text']  = '#000000';
+	$GLOBALS['phpgw_info']['theme']['font']        = 'Arial, Helvetica, san-serif';
+	$GLOBALS['phpgw_info']['theme']['bg01']        = '#eeeeee';
+	$GLOBALS['phpgw_info']['theme']['bg02']        = '#cccccc';
+	$GLOBALS['phpgw_info']['theme']['bg03']        = '#bbbbbb';
+	$GLOBALS['phpgw_info']['theme']['bg04']        = '#aaaaaa';
+	$GLOBALS['phpgw_info']['theme']['bg05']        = '#999999';
+	$GLOBALS['phpgw_info']['theme']['bg06']        = '#888888';
+	$GLOBALS['phpgw_info']['theme']['bg07']        = '#777777';
+	$GLOBALS['phpgw_info']['theme']['bg08']        = '#666666';
+	$GLOBALS['phpgw_info']['theme']['bg09']        = '#555555';
+	$GLOBALS['phpgw_info']['theme']['bg10']        = '#444444';
 
 	// Theses are for the calendar only
-	$phpgw_info['theme']['cal_today']   = '#FBF1C5';
-	$phpgw_info['theme']['cal_dayview'] = '#F9E99F';
+	$GLOBALS['phpgw_info']['theme']['cal_today']   = '#FBF1C5';
+	$GLOBALS['phpgw_info']['theme']['cal_dayview'] = '#F9E99F';
 
 	// These are for the email only
-	$phpgw_info['theme']['em_folder']      = '#EAD688';
-	$phpgw_info['theme']['em_folder_text'] = '#000000';
+	$GLOBALS['phpgw_info']['theme']['em_folder']      = '#EAD688';
+	$GLOBALS['phpgw_info']['theme']['em_folder_text'] = '#000000';
 ?>

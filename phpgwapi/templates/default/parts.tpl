@@ -1,6 +1,6 @@
 <!-- BEGIN top_part -->
 <TABLE width="100%" border="0" cellspacing="0" cellpadding="0">
-	<TR bgcolor="{navbar_color}">
+	<TR bgcolor="{navbar_bg}">
 		<TD align="left" nowrap>{user_info}</TD>
 		<TD align="right">{applications}</TD>
 	</TR>
@@ -15,7 +15,7 @@
 <!-- END top_part -->
 
 <!-- BEGIN bottom_part -->
-<TABLE border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="{bg_color}">
+<TABLE border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="{navbar_bg}">
   <TR>
     <TD align="CENTER">{msg}<BR></TD>
   </TR>

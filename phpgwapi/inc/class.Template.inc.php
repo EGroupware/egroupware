@@ -60,40 +60,6 @@
 			$this->set_unknowns($unknowns);
 		}
 
-		function update_css()
-		{
-			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
-			{
-				$css_string = '';
-				reset($GLOBALS['phpgw_info']['theme']['css']);
-				//$css_string = '<STYLE type="text/css">'."\n";
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['theme']['css']))
-				{
-					$css_string .= "\n\t$key { $value } ";
-				}
-				$css_string .= "\n";
-				//$css_string .= '</STYLE>'."\n";
-				$this->set_var('phpgw_css',$css_string);
-			}
-		}
-
-		function update_preload_images()
-		{
-			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
-			{
-				$preload_image_string = '';
-				reset($GLOBALS['phpgw_info']['flags']['preload_images']);
-				//$css_string = '<STYLE type="text/css">'."\n";
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['preload_images']))
-				{
-					$css_string .= "\n\t$key { $value } ";
-				}
-				$css_string .= "\n";
-				//$css_string .= '</STYLE>'."\n";
-				$this->set_var('phpgw_css',$css_string);
-			}
-		}
-
 		/* public: setroot(pathname $root)
 		 * root:   new template directory.
 		 */

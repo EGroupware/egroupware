@@ -11,10 +11,10 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw']->template->set_var('phpgw_top_height','10%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_left_width','0');
-	$GLOBALS['phpgw']->template->set_var('phpgw_right_width','0');
-	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_height','5%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','10%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','45');
+	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','5%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','40');
 
 	function parse_toppart($output)
   {
@@ -64,7 +64,6 @@
 		}
 		if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text')
 		{
-			$var['navbar_color'] = $GLOBALS['phpgw_info']['theme']['bg_color'];
 			$var['align'] = 'right';
 			$var['value'] = $GLOBALS['phpgw']->common->create_tabs($tabs,$selected,-1);
 			$GLOBALS['phpgw']->template->set_var($var);
@@ -90,23 +89,10 @@
 //				. lang($GLOBALS['phpgw']->common->show_date($now,'F')) . ' '
 //				. $GLOBALS['phpgw']->common->show_date($now,'d, Y');
 
-		// Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
-		// to get rid of duplicate code.
-		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
-		{
-			$api_messages = lang('You are required to change your password during your first login')
-				. '<br> Click this image on the navbar: <img src="'
-				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
-		}
-		elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
-		{
-			$api_messages = lang('it has been more then x days since you changed your password',30);
-		}
- 
 		// This is gonna change
 		if (isset($cd))
 		{
-			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
+			$var['messages'] = checkcode($cd);
 		}
 		$GLOBALS['phpgw']->template->set_var($var);
 		$GLOBALS['phpgw']->template->fp($output,'top_part');
@@ -119,7 +105,6 @@
 			$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 			$GLOBALS['phpgw']->template->set_block('parts','bottom_part');
 			$var = Array(
-				'bg_color' => $GLOBALS['phpgw_info']['theme']['bg_color'],
 				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 				'version'		=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);

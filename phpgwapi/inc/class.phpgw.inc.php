@@ -132,6 +132,11 @@
 					$url = str_replace ( 'http:', 'https:', $url);
 				}
 			}
+
+//			if(@isset($GLOBALS['HTTP_GET_VARS']['framepart']))
+//			{
+//				$url .= '" target="_parent"';
+//			}
 			if ($iis)
 			{
 				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";

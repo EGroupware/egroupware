@@ -5,7 +5,7 @@
 # template2theme.pl < infile > outfile
 # by Stephan
 # $Id$
-$wrap='$phpgw_info['theme']['_KEY_']= '_VAL_'';
+$wrap='$GLOBALS['phpgw_info']['theme']['_KEY_']= '_VAL_'';
 print '<?\n';
 print << 'EOF';
 # phpGroupWare Theme file

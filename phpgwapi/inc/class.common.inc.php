@@ -316,7 +316,10 @@
 			{
 				$this->phpgw_footer();
 			}
-			$GLOBALS['phpgw']->db->disconnect();
+			else
+			{
+				$GLOBALS['phpgw']->db->disconnect();
+			}
 			exit;
 		}
 
@@ -1145,54 +1148,157 @@
 
 			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = 'Logout';
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
+			if(PHPGW_USE_FRAMES)
+			{
+				$GLOBALS['phpgw_info']['navbar']['logout']['url']   .= '" target="_parent"';
+			}
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
 		}
 
+		/*!
+		@function load_theme
+		@abstract Discover the selected theme and include it into the template set
+		@discussion *someone wanna add some detail here*
+		*/
+		function load_theme_data()
+		{
+			if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
+			{
+				if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
+				{
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
+				}
+				else
+				{
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
+				}
+			}
+			if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
+			{
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']))
+				{
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
+				}
+			}
+			else
+			{
+				if (isset($GLOBALS['phpgw_info']['server']['force_theme']))
+				{
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['force_theme'];
+				}
+			}
+
+			if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme'))
+			{
+				include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme');
+			}
+			elseif(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
+			{
+				include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
+			}
+			else
+			{
+				/* Hope we don't get to this point.  Better then the user seeing a */
+				/* complety back screen and not know whats going on                */
+				$phpgw_info['theme']['bg_color'] = 'FFFFFF';
+				$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
+			}
+
+			/* This covers putting the theme values into the template, excluding CSS stuff which will be done later */
+			if (is_array($GLOBALS['phpgw_info']['theme']))
+			{
+				$theme_data = $GLOBALS['phpgw_info']['theme'];
+				unset($theme_data['css']);
+				$GLOBALS['phpgw']->template->set_var($theme_data);
+				unset($theme_data);
+			}
+			else
+			{
+				$GLOBALS['phpgw']->template->set_var('bg_color','FFFFFF');
+			}
+		}
+
+		/*!
+		@function load_css
+		@abstract generate CSS format from $phpgw_info['theme']['css'] and set its value into the template
+		@discussion *someone wanna add some detail here*
+		*/
+		function load_css_data()
+		{
+
+			/* Make sure some of the defaults are set */
+			if (!isset($phpgw_info['theme']['css']['A']))
+			{
+				$phpgw_info['theme']['css']['A'] = 'text-decoration:none;';
+			}
+			if (!isset($phpgw_info['theme']['css']['A:link']) && !empty($GLOBALS['phpgw_info']['theme']['link']))
+			{
+				$phpgw_info['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
+			}
+
+			if (!isset($phpgw_info['theme']['css']['A:visited']) && !empty($GLOBALS['phpgw_info']['theme']['vlink']))
+			{
+				$phpgw_info['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
+			}
+
+			if (!isset($phpgw_info['theme']['css']['A:active']) && !empty($GLOBALS['phpgw_info']['theme']['alink']))
+			{
+				$phpgw_info['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
+			}
+
+			if (!isset($phpgw_info['theme']['css']['A:hover']) && !empty($GLOBALS['phpgw_info']['theme']['hovlink']))
+			{
+				$phpgw_info['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
+			}
+
+			/* now put the css data into the template class */
+			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
+			{
+				$css_string = '';
+				reset($GLOBALS['phpgw_info']['theme']['css']);
+				$css_string = "<STYLE type=\"text/css\">";
+				while(list($key,$value) = each($GLOBALS['phpgw_info']['theme']['css']))
+				{
+					$css_string .= "\n\t\t$key { $value } ";
+				}
+				$css_string .= "\n";
+				$css_string .= "\t</STYLE>\n";
+				$GLOBALS['phpgw']->template->set_var('phpgw_css',$css_string);
+			}
+		}
+
+		function load_preload_images_data()
+		{
+			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
+			
+			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
+			{
+				$preload_image_string = '';
+				reset($GLOBALS['phpgw_info']['flags']['preload_images']);
+				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['preload_images']))
+				{
+					if($preload_image_string != '')
+					{
+						$preload_image_string .= ",'$value'";
+					}
+					else
+					{
+						$preload_image_string .= "'$value'";
+					}
+				}
+				$preload_image_string = "MM_preloadImages($preload_image_string); ";
+				$GLOBALS['phpgw']->template->set_var('phpgw_preload_images',$preload_image_string);
+			}
+		}
+		
 		/*!
 		@function phpgw_header
 		@abstract load the phpgw header
 		*/
 		function phpgw_header($forceheader = True, $forcenavbar = True)
 		{
-/*
-			if($forceheader)
-			{
-				$GLOBALS['phpgw_info']['flags']['noheader'] = False;
-			}
-			if($forcenavbar)
-			{
-				$GLOBALS['phpgw_info']['flags']['nonavbar'] = False;
-			}
-
-			if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
-			{
-				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
-				include(PHPGW_TEMPLATE_DIR.'/head.inc.php');
-				$GLOBALS['phpgw']->template->reset_root();
-			}
-			if(!function_exists('parse_navbar'))
-			{
-				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
-				$this->navbar(False);
-				include(PHPGW_TEMPLATE_DIR.'/navbar.inc.php');
-				$GLOBALS['phpgw']->template->reset_root();
-			}
-			if (!@$GLOBALS['phpgw_info']['flags']['nonavbar'] && !@$GLOBALS['phpgw_info']['flags']['navbar_target'])
-			{
-				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
-				parse_navbar();
-				$GLOBALS['phpgw']->template->reset_root();
-			}
-			//elseif (!@$GLOBALS['phpgw_info']['flags']['noheader'] && function_exists('parse_nonavbar'))
-			//{
-			//	parse_nonavbar();
-			//}
-			if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && !@$GLOBALS['phpgw_info']['flags']['nonavbar'])
-			{
-				$GLOBALS['phpgw']->hooks->process('after_navbar');
-			}
-*/			
+			/* This is no longer used */
 		}
 
 		/*!
@@ -1240,7 +1346,7 @@
 			if(!defined('PHPGW_FOOTER_RAN'))
 			{
 				define('PHPGW_FOOTER_RAN',True);
-				if (!isset($GLOBALS['phpgw_info']['flags']['nofooter']) || !$GLOBALS['phpgw_info']['flags']['nofooter'])
+				if (!isset($GLOBALS['phpgw_info']['flags']['nodisplay']) || !$GLOBALS['phpgw_info']['flags']['nodisplay'])
 				{
 					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
@@ -1251,6 +1357,8 @@
 					}
 					$GLOBALS['phpgw']->db->disconnect();
 					$this->msgbox('',False,'phpgw_msgbox');
+					$this->load_css_data();
+					$this->load_preload_images_data();
 					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
 /*
 				

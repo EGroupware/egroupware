@@ -60,11 +60,6 @@
 		return $GLOBALS['phpgw']->common->check_code($code);
 	}
 
-	/*!
-	 @collection_end direct functions
-	*/
-
-	//	print_debug('core functions are done');
 	/****************************************************************************\
 	* Quick verification of sane environment                                     *
 	\****************************************************************************/
@@ -157,14 +152,14 @@
 
 	@print_debug('domain',$GLOBALS['phpgw_info']['user']['domain'],'api');
 
-	 /****************************************************************************\
-	 * These lines load up the API, fill up the $phpgw_info array, etc            *
-	 \****************************************************************************/
+	/****************************************************************************\
+	* These lines load up the API, fill up the $GLOBALS["phpgw_info"] array, etc *
+	\****************************************************************************/
 	 /* Load main class */
 	$GLOBALS['phpgw'] = CreateObject('phpgwapi.phpgw');
-	 /************************************************************************\
-	 * Load up the main instance of the db class.                             *
-	 \************************************************************************/
+	/************************************************************************\
+	* Load up the main instance of the db class.                             *
+	\************************************************************************/
 	$GLOBALS['phpgw']->db           = CreateObject('phpgwapi.db');
 	$GLOBALS['phpgw']->db->Host     = $GLOBALS['phpgw_info']['server']['db_host'];
 	$GLOBALS['phpgw']->db->Type     = $GLOBALS['phpgw_info']['server']['db_type'];
@@ -187,8 +182,10 @@
 	}
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'yes';
 
-	 /* Fill phpgw_info["server"] array */
-	 // An Attempt to speed things up using cache premise
+	/****************************************************************************\
+	* These lines fill up the $GLOBALS["phpgw_info"]["server"] array             *
+	\****************************************************************************/
+	// An Attempt to speed things up using cache premise
 	$GLOBALS['phpgw']->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
 	if ($GLOBALS['phpgw']->db->num_rows())
 	{
@@ -276,7 +273,7 @@
 		{
 			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
 			{
-				Header('Location: https://'.$GLOBALS['phpgw_info']['server']['hostname'].$GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
+				Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']));
 				exit;
 			}
 			if (@$login != '')
@@ -296,17 +293,42 @@
 	}
 	else
 	{
+		/**************************************************************************\
+		* If users session is not valid, send them to login page                   *
+		\**************************************************************************/
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
 			Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','code=10')));
 			exit;
 		}
 
+		/***************************************************************************\
+		* Now that we know we have a good session we can load up the datatime class *
+		\***************************************************************************/
 		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 
-		/* A few hacker resistant constants that will be used throught the program */
+		/* Make sure user is keeping his password in order */
+		/* Maybe we should create a common function in the phpgw_accounts_shared.inc.php file */
+		/* to get rid of duplicate code. */
+		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
+		{
+			$message = lang('You are required to change your password during your first login')
+				. '<br> Click this image on the navbar: <img src="'
+				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
+			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
+		}
+		elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+		{
+			$message = lang('it has been more then x days since you changed your password',30);
+			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
+		}
 
-$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'default';
+		
+/*DELETE ME SOON!!!!*/ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'default'; 
+
+		/*************************************************************************\
+		* A few hacker resistant constants that will be used throught the program *
+		\*************************************************************************/
 		define('PHPGW_TEMPLATE_DIR', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir', 'phpgwapi'));
 		define('PHPGW_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi'));
 		define('PHPGW_IMAGES_FILEDIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir', 'phpgwapi'));
@@ -320,53 +342,42 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 		* These lines load up the templates class and set some default values     *
 		\*************************************************************************/
 		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+		/* load required tpl files */
 		$GLOBALS['phpgw']->template->set_file('common', 'common.tpl');
 		$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
 		$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
 		
-		/* This will bring in the template sets parts definitions */
-		if (file_exists(PHPGW_TEMPLATE_DIR . '/parts.inc.php'))
-		{
-			include(PHPGW_TEMPLATE_DIR . '/parts.inc.php');
-		}
-		$val = $GLOBALS['phpgw']->template->get_var('phpgw_top_height');
-		if (empty($val))
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_top_height','10');
-		}
-		$val = $GLOBALS['phpgw']->template->get_var('phpgw_left_width');
-		if (empty($val))
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_left_width','10');
-		}
-		$val = $GLOBALS['phpgw']->template->get_var('phpgw_right_width');
-		if (empty($val))
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_right_width','10');
-		}
-		$val = $GLOBALS['phpgw']->template->get_var('phpgw_bottom_height');
-		if (empty($val))
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_bottom_height','10');
-		}
+		/* These default values will be overridden and appended to as needed by template sets */
+		$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_top_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_left_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_right_table_width','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_right_frame_width','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_right_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','0');
+		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_scrolling','NO');
 
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare');
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
-
-		if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_head_base','https://'.$GLOBALS['phpgw_info']['server']['hostname'].$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
-		}
-		else
-		{
-			$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
-		}
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw']->session->link('/'));
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_browser_ico','favicon.ico');
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_website_title', $GLOBALS['phpgw_info']['server']['site_title']);
 
+		/* This will bring in the template sets parts definitions */
+		/* We do this so early to allow the template to overwrite */
+		/* and append to the previous defaults as needed for frames support to work */
+		if (file_exists(PHPGW_TEMPLATE_DIR . '/parts.inc.php'))
+		{
+			include(PHPGW_TEMPLATE_DIR . '/parts.inc.php');
+		}
+
 		/*************************************************************************\
-		* If they are using frames, we need to set some variables                 *
+		* If they are using frames, we need to set the PHPGW_FRAME_PART safely    *
 		\*************************************************************************/
 		if(@isset($GLOBALS['HTTP_GET_VARS']['framepart']) && 
 			(	$GLOBALS['HTTP_GET_VARS']['framepart'] == 'unsupported' ||
@@ -383,8 +394,7 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 		{
 			define('PHPGW_FRAME_PART','start');
 		}
-
-//$GLOBALS['phpgw_info']['server']['useframes'] = 'always';		
+$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
 		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&	
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] && 
 			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') || 
@@ -395,40 +405,34 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 			define('PHPGW_NAVBAR_TARGET','body');
 			if (PHPGW_FRAME_PART == 'start')
 			{
+				/* if just starting up, then we intialize the frameset with the appropriate block */
 				$GLOBALS['phpgw']->template->set_var('phpgw_top_link',$GLOBALS['phpgw']->session->link('home.php','framepart=top'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_right_link',$GLOBALS['phpgw']->session->link('home.php','framepart=right'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_body_link',$GLOBALS['phpgw']->session->link('home.php','framepart=body'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_left_link',$GLOBALS['phpgw']->session->link('home.php','framepart=left'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_bottom_link',$GLOBALS['phpgw']->session->link('home.php','framepart=bottom'));
+				$GLOBALS['phpgw']->template->set_var('phpgw_unupported_link',$GLOBALS['phpgw']->session->link($GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME'],'framepart=unsupported'));
 				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_frames','phpgw_main');
 			}
 			else
 			{
+				/* if we are using frames and not starting then we use the basic block to keep each part in a nice clean html format */
 				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
 			}
 		}
 		else
 		{
+			/* Not using frames, so we default to tables */
 			define('PHPGW_USE_FRAMES',False);
 			define('PHPGW_NAVBAR_TARGET','_self');
 			$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_tables','phpgw_main');
 		}
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_target',PHPGW_NAVBAR_TARGET);
 
-		/*	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir()); */
-
-		/* Moved outside of this logic
-		define('PHPGW_ACL_READ',1);
-		define('PHPGW_ACL_ADD',2);
-		define('PHPGW_ACL_EDIT',4);
-		define('PHPGW_ACL_DELETE',8);
-		define('PHPGW_ACL_PRIVATE',16);
-		*/
-
 		/******* Define the GLOBALS['MENUACTION'] *******/
 		define('MENUACTION',get_var('menuaction',Array('GET')));
 
-		/********* This sets the user variables *********/
+		/********* This sets the user variables (this should be moved to somewhere else [Seek3r])*********/
 		$GLOBALS['phpgw_info']['user']['private_dir'] = $GLOBALS['phpgw_info']['server']['files_dir']
 			. '/users/'.$GLOBALS['phpgw_info']['user']['userid'];
 
@@ -449,82 +453,15 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 		reset($GLOBALS['phpgw_info']['flags']);
 
 
-		/*************************************************************************\
-		* These lines load up the themes and CSS data                             *
-		\*************************************************************************/
-		if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
+		/***************************************************************************\
+		* These lines load up the themes data and put them into the templates class *
+		\***************************************************************************/
+		$GLOBALS['phpgw']->common->load_theme_data();
+		
+		if(!PHPGW_USE_FRAMES || (PHPGW_USE_FRAMES && PHPGW_FRAME_PART != 'body'))
 		{
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
-			{
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-			}
-			else
-			{
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
-			}
-		}
-		if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
-		{
-			if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']))
-			{
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-			}
-		}
-		else
-		{
-			if (isset($GLOBALS['phpgw_info']['server']['force_theme']))
-			{
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['force_theme'];
-			}
-		}
-
-		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme'))
-		{
-			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme');
-		}
-		elseif(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
-		{
-			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
-		}
-		else
-		{
-			/* Hope we don't get to this point.  Better then the user seeing a */
-			/* complety back screen and not know whats going on                */
-			echo '<body bgcolor="FFFFFF">';
-			$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
-		}
-
-		if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
-			 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
-		{
-			$phpgw_info['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
-		}
-
-		$phpgw_info['theme']['css']['A'] = 'text-decoration:none;';
-		$phpgw_info['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
-		$phpgw_info['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
-		$phpgw_info['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
-
-		if(@file_exists(PHPGW_TEMPLATE_DIR . '/css.inc.php'))
-		{
-			include(PHPGW_TEMPLATE_DIR . '/css.inc.php');
-		}
-		if(@file_exists(PHPGW_APP_TPL . '/css.inc.php'))
-		{
-			include(PHPGW_APP_TPL . '/css.inc.php');
-		}
-
-		/* This covers setting the theme values so that each app doesnt have to */
-		$theme_data = $GLOBALS['phpgw_info']['theme'];
-		unset($theme_data['css']);
-		$GLOBALS['phpgw']->template->set_var($theme_data);
-		unset($theme_data);
-		$GLOBALS['phpgw']->template->update_css();
-
-//		if(!PHPGW_USE_FRAMES || (PHPGW_USE_FRAMES && PHPGW_NAVBAR_TARGET != 'body'))
-//		{
 			$GLOBALS['phpgw']->common->navbar();
-//		}
+		}
 
 		/*************************************************************************\
 		* load up top part if appropriate                                         *
@@ -611,7 +548,7 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 			}
 			if(PHPGW_USE_FRAMES)
 			{
-//				$GLOBALS['phpgw']->common->phpgw_footer();
+				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 		}
 		
@@ -635,8 +572,8 @@ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'defau
 					$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
 					$continue_app_data = False;
 					$GLOBALS['phpgw']->template->set_var('phpgw_body',"user has no rights to this app!!!<br>\n");
-					//$GLOBALS['phpgw']->common->phpgw_display();
-					//$GLOBALS['phpgw']->common->phpgw_exit(True);
+					//$GLOBALS['phpgw']->common->phpgw_footer();
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 			}
 			if($continue_app_data)

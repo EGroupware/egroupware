@@ -13,6 +13,6 @@ print << 'EOF';
 EOF
 while( $_ = <STDIN> ) {
   chomp($_);
-  next unless ( $_ =~ /\$phpgw_info\[\'theme\'\]\[\'(.*)\'\].*=.*\'(.*)\'.*/ );
+  next unless ( $_ =~ /\$GLOBALS\[\'phpgw_info\'\]\[\'theme\'\]\[\'(.*)\'\].*=.*\'(.*)\'.*/ );
   print '$1=$2\n';
 }

@@ -11,37 +11,37 @@
 
 	/* $Id$ */
 
-	$phpgw_info['theme']['bg_color']= 'FBF1C5';
-	$phpgw_info['theme']['bg_text']= '000000';
-	$phpgw_info['theme']['vlink']= 'blue';
-	$phpgw_info['theme']['alink']= 'red';
-	$phpgw_info['theme']['link']= 'blue';
-	$phpgw_info['theme']['row_on']= 'F7E58F';
-	$phpgw_info['theme']['row_off']= 'EAD688';
-	$phpgw_info['theme']['row_text']= '000000';
-	$phpgw_info['theme']['th_bg']= 'C8A63B';
-	$phpgw_info['theme']['th_text']= '000000';
-	$phpgw_info['theme']['navbar_bg']= 'F7E58F';
-	$phpgw_info['theme']['navbar_text']= '000000';
-	$phpgw_info['theme']['table_bg']= 'EAD688';
-	$phpgw_info['theme']['table_text']= 'C5AA2B';
-	$phpgw_info['theme']['font']= 'Arial, Helvetica, san-serif';
-	$phpgw_info['theme']['bg01']= 'FBF4D3';
-	$phpgw_info['theme']['bg02']= 'F9EDB3';
-	$phpgw_info['theme']['bg03']= 'F5E28B';
-	$phpgw_info['theme']['bg04']= 'F0D866';
-	$phpgw_info['theme']['bg05']= 'EDCD39';
-	$phpgw_info['theme']['bg06']= 'D5B211';
-	$phpgw_info['theme']['bg07']= 'CCAB12';
-	$phpgw_info['theme']['bg08']= 'C58C13';
-	$phpgw_info['theme']['bg09']= 'B69910';
-	$phpgw_info['theme']['bg10']= 'AC9010';
+	$GLOBALS['phpgw_info']['theme']['bg_color']= 'FBF1C5';
+	$GLOBALS['phpgw_info']['theme']['bg_text']= '000000';
+	$GLOBALS['phpgw_info']['theme']['vlink']= 'blue';
+	$GLOBALS['phpgw_info']['theme']['alink']= 'red';
+	$GLOBALS['phpgw_info']['theme']['link']= 'blue';
+	$GLOBALS['phpgw_info']['theme']['row_on']= 'F7E58F';
+	$GLOBALS['phpgw_info']['theme']['row_off']= 'EAD688';
+	$GLOBALS['phpgw_info']['theme']['row_text']= '000000';
+	$GLOBALS['phpgw_info']['theme']['th_bg']= 'C8A63B';
+	$GLOBALS['phpgw_info']['theme']['th_text']= '000000';
+	$GLOBALS['phpgw_info']['theme']['navbar_bg']= 'F7E58F';
+	$GLOBALS['phpgw_info']['theme']['navbar_text']= '000000';
+	$GLOBALS['phpgw_info']['theme']['table_bg']= 'EAD688';
+	$GLOBALS['phpgw_info']['theme']['table_text']= 'C5AA2B';
+	$GLOBALS['phpgw_info']['theme']['font']= 'Arial, Helvetica, san-serif';
+	$GLOBALS['phpgw_info']['theme']['bg01']= 'FBF4D3';
+	$GLOBALS['phpgw_info']['theme']['bg02']= 'F9EDB3';
+	$GLOBALS['phpgw_info']['theme']['bg03']= 'F5E28B';
+	$GLOBALS['phpgw_info']['theme']['bg04']= 'F0D866';
+	$GLOBALS['phpgw_info']['theme']['bg05']= 'EDCD39';
+	$GLOBALS['phpgw_info']['theme']['bg06']= 'D5B211';
+	$GLOBALS['phpgw_info']['theme']['bg07']= 'CCAB12';
+	$GLOBALS['phpgw_info']['theme']['bg08']= 'C58C13';
+	$GLOBALS['phpgw_info']['theme']['bg09']= 'B69910';
+	$GLOBALS['phpgw_info']['theme']['bg10']= 'AC9010';
 
 	// Theses are for the calendar only
-	$phpgw_info['theme']['cal_today']= 'FBF1C5';
-	$phpgw_info['theme']['cal_dayview']= 'F9E99F';
+	$GLOBALS['phpgw_info']['theme']['cal_today']= 'FBF1C5';
+	$GLOBALS['phpgw_info']['theme']['cal_dayview']= 'F9E99F';
 
 	// These are for the email only
-	$phpgw_info['theme']['em_folder']= 'EAD688';
-	$phpgw_info['theme']['em_folder_text']= '000000';
+	$GLOBALS['phpgw_info']['theme']['em_folder']= 'EAD688';
+	$GLOBALS['phpgw_info']['theme']['em_folder_text']= '000000';
 
