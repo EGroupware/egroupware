@@ -96,15 +96,18 @@
 			$acct = CreateObject('phpgwapi.accounts',$defaultgroupid);
 			$acct->db = $phpgw_setup->db;
 
-			// Check if the group account is already there
-			// if so, set our group_id to that account's id for use below
+			// Check if the group account is already there.
+			// If so, set our group_id to that account's id for use below.
 			$acct_exist = $acct->name2id('Default');
 			if ($acct_exist) {
 				$defaultgroupid = $acct_exist;
 			}
 			$id_exist   = $acct->exists(intval($defaultgroupid));
-			// if not, create it, using our original groupid
+			// if not, create it, using our original groupid.
 			if(!$id_exist) {
+				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
+			} else {
+				$acct->delete($defaultgroupid);
 				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
 			}
 
@@ -112,36 +115,26 @@
 			$acl->db = $phpgw_setup->db;
 			$acl->read_repository();
 			while ($app = each($s_apps)) {
+				$acl->delete($app[1],'run',1);
 				$acl->add($app[1],'run',1);
 			}
 			$acl->save_repository();
 
 			while ($account = each($account_info)) {
 				$id_exist = 0;
-				// do some checks before we try to import the data
+				// Do some checks before we try to import the data.
 				if (!empty($account[1]['account_id']) && !empty($account[1]['account_lid']))
 					$accounts = CreateObject('phpgwapi.accounts',$account[1]['account_id']);
 					$accounts->db = $phpgw_setup->db;
 
-					$acl = CreateObject('phpgwapi.acl',intval($account[1]['account_id']));
-					$acl->db = $phpgw_setup->db;
-					$acl->read_repository();
-
-					// Only give them admin if we asked for them to have it
-					for ($a=0;$a<count($admins);$a++) {
-						if ($admins[$a] == $account[1]['account_id']) {
-							$acl->add('admin','run',1);
-						}
-					}
-
-					// Check if the account is already there
-					// if so, we won't try to create it again
+					// Check if the account is already there.
+					// If so, we won't try to create it again.
 					$acct_exist = $acct->name2id($account[1]['account_lid']);
 					if ($acct_exist) {
 						$account[1]['account_id'] = $acct_exist;
 					}
 					$id_exist = $accounts->exists(intval($account[1]['account_id']));
-					// if not, create it now
+					// If not, create it now.
 					if(!$id_exist) {
 						$accounts->create('u', $account[1]['account_lid'], 'x',
 							$account[1]['account_firstname'], $account[1]['account_lastname'],
@@ -149,8 +142,32 @@
 						);
 					}
 
-					// Now make them a member of the 'Default' group
-					$acl->add('phpgw_group',$defaultgroupid,1);
+					// Insert default acls for this user.
+					// Since the group has app rights, we don't need to give users
+					//  these rights.  Instead, we make the user a member of the Default group
+					//  below.
+					$acl = CreateObject('phpgwapi.acl',intval($account[1]['account_id']));
+					$acl->db = $phpgw_setup->db;
+					$acl->read_repository();
+
+					// Only give them admin if we asked for them to have it.
+					// This is typically an exception to apps for run rights
+					//  as a group member.
+					for ($a=0;$a<count($admins);$a++) {
+						if ($admins[$a] == $account[1]['account_id']) {
+							$acl->delete('admin','run',1);
+							$acl->add('admin','run',1);
+						}
+					}
+
+					// Now make them a member of the 'Default' group.
+					// But, only if the current user is not the group itself.
+					if ($defaultgroupid != $account[1]['account_id']) {
+						$acl->delete('phpgw_group',$defaultgroupid,1);
+						$acl->add('phpgw_group',$defaultgroupid,1);
+					}
+
+					// Save these new acls.
 					$acl->save_repository();
 				}
 				$setup_complete = True;
