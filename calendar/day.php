@@ -174,7 +174,7 @@ for ($i = $wkstart; date("Ymd", $i) <= date("Ymd", $monthend); $i += (24 * 3600 
      if ($thisyear)
         echo "&year=$thisyear&month=$thismonth&day=$thisday";
 
-     ?>&friendly=1" TARGET="cal_printer_friendly" onMouseOver="window.status = '<?php echo lang_calendar("Generate printer-friendly version") . "'\">[" . lang_calendar("Printer Friendly"); ?>]</A>
+     ?>&friendly=1" TARGET="cal_printer_friendly" onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version") . "'\">[" . lang("Printer Friendly"); ?>]</A>
 
 <?php 
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

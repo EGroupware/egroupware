@@ -38,15 +38,15 @@
   echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'
      . $phpgw_info["theme"][bg_color] . '">'
      . '<td align="left">' . $phpgw->nextmatchs->left("groups.php",$start,$total)  . '</td>'
-     . '<td align="center">' . lang_admin("user groups") . '</td>'
+     . '<td align="center">' . lang("user groups") . '</td>'
      . '<td align="right">' . $phpgw->nextmatchs->right("groups.php",$start,$total) . '</td>'
      . '</tr></table>';
 
   echo "<table border=0 width=45% align=center>"
      . "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
      . $phpgw->nextmatchs->show_sort_order($sort,"group_name",$order,"groups.php",
-				 lang_common("name")) . "</td>"
-     . "<td> " . lang_common("Edit") . " </td> <td> " . lang_common("Delete")
+				 lang("name")) . "</td>"
+     . "<td> " . lang("Edit") . " </td> <td> " . lang("Delete")
      . " </td> </tr>";
 
   $phpgw->db->query("select * from groups $querymethod $ordermethod limit $limit");
@@ -59,16 +59,16 @@
 
     echo "<tr bgcolor=$tr_color><td>$group_name</td>"
        . "<td width=5%><a href=\"" . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("group_id"))
-       . "\"> " . lang_common("Edit") . " </a></td>" . "<td width=5%><a href=\""
+       . "\"> " . lang("Edit") . " </a></td>" . "<td width=5%><a href=\""
        . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id"))
-       . "\"> " . lang_common("Delete") . " </a></td>";
+       . "\"> " . lang("Delete") . " </a></td>";
   }
 
   echo "\n<form method=POST action=\"".$phpgw->link("newgroup.php")."\">"
      . "</table></center>"
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
-     . "value=\"" . lang_common("Add") . "\"></form><form action=\"".$phpgw->link("groups.php")."\"></td>"
-     . "<td align=right>" . lang_common("search") . "&nbsp;"
+     . "value=\"" . lang("Add") . "\"></form><form action=\"".$phpgw->link("groups.php")."\"></td>"
+     . "<td align=right>" . lang("search") . "&nbsp;"
      . "<input name=\"query\"></td></tr></form></table>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

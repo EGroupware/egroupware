@@ -16,7 +16,7 @@
 
   include("../header.inc.php");
 
-  echo "<center>" . lang_addressbook("Address book");
+  echo "<center>" . lang("Address book");
 
   if (! $start)
      $start = 0;
@@ -53,9 +53,9 @@
     $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) == 1)
-        echo "<br>" . lang_common("your search returned 1 match");
+        echo "<br>" . lang("your search returned 1 match");
      else
-        echo "<br>" . lang_common("your search returned x matchs",$phpgw->db->f(0));
+        echo "<br>" . lang("your search returned x matchs",$phpgw->db->f(0));
   } else {
      $phpgw->db->query("select count(*) from addressbook where $filtermethod");
   }
@@ -63,10 +63,10 @@
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) > $phpgw_info["user"]["preferences"]["maxmatchs"])
-     echo "<br>" . lang_common("showing x - x of x",($start + 1),
+     echo "<br>" . lang("showing x - x of x",($start + 1),
 			   ($start + $phpgw_info["user"]["preferences"]["maxmatchs"]),$phpgw->db->f(0));
   else
-     echo "<br>" . lang_common("showing x",$phpgw->db->f(0)); 
+     echo "<br>" . lang("showing x",$phpgw->db->f(0)); 
 ?>
 
 <?php
@@ -80,25 +80,25 @@
       <td width=29% height="21">
        <font size="-1" face="Arial, Helvetica, sans-serif">
         <?php echo $phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"index.php",
-			      lang_common("Last Name"));
+			      lang("Last Name"));
         ?>
        </font>
       </td>
       <td width="63%" height="21" bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>">
        <font face="Arial, Helvetica, sans-serif" size="-1">
         <?php echo $phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"index.php",
-			      lang_common("First Name"));
+			      lang("First Name"));
         ?>
        </font>
       </td>
       <td width="3%" height="21">
        <font face="Arial, Helvetica, sans-serif" size="-1">
-         <?php echo lang_common("View"); ?>
+         <?php echo lang("View"); ?>
        </font>
       </td>
       <td width="5%" height="21">
        <font face="Arial, Helvetica, sans-serif" size="-1">
-         <?php echo lang_common("Edit"); ?>
+         <?php echo lang("Edit"); ?>
        </font>
       </td>
     </tr>
@@ -151,12 +151,12 @@
 	<font face=Arial, Helvetica, sans-serif size=2>
           <a href="<?php echo $phpgw->link("view.php","con=$con&start=$start&order=$order&filter="
 								 . "$filter&query=$query&sort=$sort");
-	  ?>"> <?php echo lang_common("View"); ?> </a>
+	  ?>"> <?php echo lang("View"); ?> </a>
         </font>
        </td>
        <td valign=top width=5%>
         <font face=Arial, Helvetica, sans-serif size=2>
-         <?php echo $phpgw->common->check_owner($phpgw->db->f("owner"),"edit.php",lang_common("edit"),"con=" . $phpgw->db->f("con")); ?>
+         <?php echo $phpgw->common->check_owner($phpgw->db->f("owner"),"edit.php",lang("edit"),"con=" . $phpgw->db->f("con")); ?>
         </font>
        </td>
       </tr>
@@ -176,7 +176,7 @@
     <tr> 
       <td width="4%"> 
         <div align="right"> 
-          <input type="submit" name="Add" value="<?php echo lang_common("Add"); ?>">
+          <input type="submit" name="Add" value="<?php echo lang("Add"); ?>">
         </div>
       </td>
       <td width="72%">&nbsp;</td>

@@ -25,7 +25,7 @@
 <FORM ACTION="<?php echo $phpgw->link("index.php"); ?>" method="post" name="SelectMonth">
 
 <TR><TD VALIGN="top" WIDTH=33%><FONT SIZE="-1">
-<B><?php echo lang_calendar("Month"); ?>:</B>
+<B><?php echo lang("Month"); ?>:</B>
 
 <SELECT NAME="date" ONCHANGE="document.SelectMonth.submit()">
 <?php
@@ -49,19 +49,19 @@
     echo "<OPTION VALUE=\"" . date("Ymd", $d) . "\"";
     if (date("Ymd", $d) == $thisdate)
       echo " SELECTED";
-    echo ">" . lang_common(date("F", $d)) . strftime(" %Y", $d) . "</option>\n";
+    echo ">" . lang(date("F", $d)) . strftime(" %Y", $d) . "</option>\n";
   }
 ?>
 </SELECT>
 
-<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang_calendar("Go!"); ?>"></NOSCRIPT>
+<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT>
 </FONT></TD>
 </FORM>
 
 <FORM ACTION="<?php echo $phpgw->link("week.php"); ?>" method="post" name="SelectWeek">
 
 <TD VALIGN="top" align="center" WIDTH=33%><FONT SIZE="-1">
-<B><?php echo lang_calendar("Week"); ?>:</B>
+<B><?php echo lang("Week"); ?>:</B>
 
 <SELECT NAME="date" ONCHANGE="document.SelectWeek.submit()">
 <?php
@@ -88,14 +88,14 @@
     if (date("Ymd", $tsun) <= $thisdate &&
        date("Ymd", $tsat) >= $thisdate)
        echo " SELECTED";
-    echo ">" . lang_common(date("F",$tsun)) . strftime(" %d", $tsun) . "-"
-	     . lang_common(date("F",$tsat)) . strftime(" %d", $tsat);
+    echo ">" . lang(date("F",$tsun)) . strftime(" %d", $tsun) . "-"
+	     . lang(date("F",$tsat)) . strftime(" %d", $tsat);
     echo "</option>\n";
   }
 ?>
 </SELECT>
 
-<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang_calendar("Go!"); ?>"></NOSCRIPT>
+<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT>
 </FONT></TD>
 </FORM>
 
@@ -104,7 +104,7 @@
 <FORM ACTION="<?php echo $phpgw->link("year.php"); ?>" method="post" name="SelectYear">
 
 <TD VALIGN="top" align="right" WIDTH=33%><FONT SIZE="-1">
-<B><?php echo lang_calendar("Year"); ?>:</B>
+<B><?php echo lang("Year"); ?>:</B>
 
 <SELECT NAME="year" ONCHANGE="document.SelectYear.submit()">
 <?php
@@ -122,7 +122,7 @@
 ?>
 </SELECT>
 
-<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang_calendar("Go!"); ?>"></NOSCRIPT>
+<NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT>
 </FONT></TD>
 </FORM>
 

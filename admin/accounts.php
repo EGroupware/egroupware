@@ -47,15 +47,15 @@
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $t->set_var("left_next_matchs",$phpgw->nextmatchs->left("accounts.php",$start,$total));
-  $t->set_var("lang_user_accounts",lang_admin("user accounts"));
+  $t->set_var("lang_user_accounts",lang("user accounts"));
   $t->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$total));
 
-  $t->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"accounts.php",lang_common("last name")));
-  $t->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"accounts.php",lang_common("first name")));
+  $t->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"accounts.php",lang("last name")));
+  $t->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"accounts.php",lang("first name")));
 
-  $t->set_var("lang_edit",lang_common("Edit"));
-  $t->set_var("lang_delete",lang_common("Delete"));
-  $t->set_var("lang_view",lang_common("View"));
+  $t->set_var("lang_edit",lang("Edit"));
+  $t->set_var("lang_delete",lang("Delete"));
+  $t->set_var("lang_view",lang("View"));
 
   $t->parse("out","header");
 
@@ -75,17 +75,17 @@
     $t->set_var("row_firstname",$firstname);
     $t->set_var("row_lastname",$lastname);
     $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","con="
-				  . $phpgw->db->f("con")) . '"> ' . lang_common("Edit") . ' </a>');
+				  . $phpgw->db->f("con")) . '"> ' . lang("Edit") . ' </a>');
 
     if ($phpgw_info["user"]["userid"] != $phpgw->db->f("loginid")) {
        $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'con='
-						. $phpgw->db->f("con")) . '"> '.lang_common("Delete").' </a>');
+						. $phpgw->db->f("con")) . '"> '.lang("Delete").' </a>');
     } else {
        $t->set_var("row_delete","&nbsp;");
     }
 
     $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "con="
-				 . $phpgw->db->f("con")) . '"> ' . lang_common("View") . ' </a>');
+				 . $phpgw->db->f("con")) . '"> ' . lang("View") . ' </a>');
 
     if ($phpgw->db->num_rows() == 1) {
        $t->set_var("output","");
@@ -97,8 +97,8 @@
   }
 
   $t->set_var("actionurl",$phpgw->link("newaccount.php"));
-  $t->set_var("lang_add",lang_common("add"));
-  $t->set_var("lang_search",lang_common("search"));
+  $t->set_var("lang_add",lang("add"));
+  $t->set_var("lang_search",lang("search"));
 
   $t->pparse("out","footer");
 

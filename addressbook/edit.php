@@ -95,13 +95,13 @@
             <TBODY>
              <tr>
               <TD align=left width=7%>
-               <input type="submit" name="submit" value="<?php echo lang_common("Submit"); ?>">
+               <input type="submit" name="submit" value="<?php echo lang("Submit"); ?>">
               </TD>
               <TD align=left width=7%>
-                <a href="<?php echo $phpgw->link("view.php","con=$con") . "\">" . lang_common("Cancel"); ?></a>
+                <a href="<?php echo $phpgw->link("view.php","con=$con") . "\">" . lang("Cancel"); ?></a>
               </TD>
               <TD align=right> 
-               <a href="<?php echo $phpgw->link("delete.php","con=$con") . "\">" . lang_common("Delete"); ?></a>
+               <a href="<?php echo $phpgw->link("delete.php","con=$con") . "\">" . lang("Delete"); ?></a>
               </TD>
             </TR>
             </TBODY> 

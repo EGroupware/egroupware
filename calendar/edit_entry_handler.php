@@ -110,7 +110,7 @@
   }
 
 if ($overlap)
-  $error = lang_calendar("The following conflicts with the suggested time:<ul>x</ul>",
+  $error = lang("The following conflicts with the suggested time:<ul>x</ul>",
 				 $overlap);
 
 if (! $error) {
@@ -221,7 +221,7 @@ $phpgw->common->header();
 <H2><FONT COLOR="<?php echo $H2COLOR;?>">Scheduling Conflict</H2></FONT>
 <?php
   $time = sprintf("%d:%02d",$hour,$minute);
-  echo lang_calendar("Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:", display_time($time),display_time(add_duration($time,$duration))); ?>
+  echo lang("Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:", display_time($time),display_time(add_duration($time,$duration))); ?>
 
 ?>
 

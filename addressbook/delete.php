@@ -32,12 +32,12 @@
 
      ?>
         <body bgcolor=FFFFFF aLink=0000EE link=0000EE vlink=0000EE>
-        <center><?php echo lang_common("Are you sure you want to delete this entry ?"); ?><center>
+        <center><?php echo lang("Are you sure you want to delete this entry ?"); ?><center>
         <br><center><a href="<?php 
           echo $phpgw->link("view.php","&con=$con&order=$order&sort=$sort&filter=$filter&start=$start&query=$query");
-          ?>"><?php echo lang_common("NO"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp;
+          ?>"><?php echo lang("NO"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="<?php echo $phpgw->link("delete.php","con=$con&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"); 
-            ?>"><?php echo lang_common("YES"); ?></a><center>
+            ?>"><?php echo lang("YES"); ?></a><center>
      <?php
 
      //exit;

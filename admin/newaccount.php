@@ -17,24 +17,24 @@
   include("../header.inc.php");
   if ($submit) {
      if (! $n_loginid)
-        $error = "<br>" . lang_admin("You must enter a loginid");
+        $error = "<br>" . lang("You must enter a loginid");
 
      if (! $n_passwd)
-        $error .= "<br>" . lang_admin("You must enter a password");
+        $error .= "<br>" . lang("You must enter a password");
 
      if ($n_passwd == $n_loginid)
-        $error = "<br>" . lang_admin("The login and password can not be the same");
+        $error = "<br>" . lang("The login and password can not be the same");
 
      if ($n_passwd != $n_passwd_2)
-        $error .= "<br>" . lang_admin("The two passwords are not the same");
+        $error .= "<br>" . lang("The two passwords are not the same");
 
      if (count($new_permissions) == 0)
-        $error .= "<br>" . lang_admin("You must add at least 1 permission to this account");
+        $error .= "<br>" . lang("You must add at least 1 permission to this account");
 
      $phpgw->db->query("select loginid from accounts where loginid='$n_loginid'");
      $phpgw->db->next_record();
      if ($phpgw->db->f("loginid"))
-        $error .= "<br>" . lang_admin("That loginid has already been taken");
+        $error .= "<br>" . lang("That loginid has already been taken");
 
      if (! $error) {
         $phpgw->db->lock(array("accounts","preferences"));
@@ -93,33 +93,33 @@
        <form method="POST" action="<?php echo $phpgw->link("newaccount.php"); ?>">
        <?php
          if ($error) {
-            echo "<center>" . lang_common("Error") . ":$error</center>";
+            echo "<center>" . lang("Error") . ":$error</center>";
          }
        ?>
         <center>
          <table border=0 width=65%>
            <tr>
-             <td><?php echo lang_admin("LoginID"); ?></td>
+             <td><?php echo lang("LoginID"); ?></td>
              <td><input name="n_loginid" value="<?php echo $n_loginid; ?>"></td>
            </tr>
            <tr>
-             <td><?php echo lang_common("Password"); ?></td>
+             <td><?php echo lang("Password"); ?></td>
              <td><input type="password" name="n_passwd" value="<?php echo $n_passwd; ?>"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("Re-Enter Password"); ?></td>
+             <td><?php echo lang("Re-Enter Password"); ?></td>
              <td><input type="password" name="n_passwd_2" value="<?php echo $n_passwd_2; ?>"></td>
            </tr>
            <tr>
-             <td><?php echo lang_common("First Name"); ?></td>
+             <td><?php echo lang("First Name"); ?></td>
              <td><input name="n_firstname" value="<?php echo $n_firstname; ?>"></td>
            </tr>
            <tr>
-             <td><?php echo lang_common("Last Name"); ?></td>
+             <td><?php echo lang("Last Name"); ?></td>
              <td><input name="n_lastname" value="<?php echo $n_lastname; ?>"></td>
            </tr>
            <tr>
-             <td><?php echo lang_common("Groups"); ?></td>
+             <td><?php echo lang("Groups"); ?></td>
              <td><select name="n_groups[]" multiple><?php
                    $phpgw->db->query("select * from groups");
                    while ($phpgw->db->next_record()) {
@@ -145,7 +145,7 @@
              for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
                 if (! $perm_display[$i][1]) break;
 
-                echo '<tr><td>' . lang_common($perm_display[$i][1]) . '</td>'
+                echo '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
                    . '<td><input type="checkbox" name="new_permissions['
 		   . $perm_display[$i][0] . ']" value="True"';
                 if ($new_permissions[$perm_display[$i][0]]) {
@@ -157,7 +157,7 @@
 
                 if (! $perm_display[$i][1]) break;
 
-                echo '<td>' . lang_common($perm_display[$i][1]) . '</td>'
+                echo '<td>' . lang($perm_display[$i][1]) . '</td>'
                    . '<td><input type="checkbox" name="new_permissions['
 		   . $perm_display[$i][0] . ']" value="True"';
                 if ($new_permissions[$perm_display[$i][0]]) {
@@ -170,17 +170,17 @@
 
 /*
            // Just until we can get thing the $phpgw_info["apps"] then figured out
-	   echo "<tr><td>" . lang_admin("Anonymous user") . "</td> <td><input type=\""
+	   echo "<tr><td>" . lang("Anonymous user") . "</td> <td><input type=\""
 	      . "checkbox\" name=\"new_permissions[anonymous]\" value=\"Y\"></td>";
 
-           echo "<td>" . lang_admin("Manager") . "</td> <td><input type=\""
+           echo "<td>" . lang("Manager") . "</td> <td><input type=\""
 	      . "checkbox\" name=\"new_permissions[manager]\" value=\"Y\"></td></tr>";
 */	      
 
            ?>
            <tr>
              <td colspan=2>
-              <input type="submit" name="submit" value="<?php echo lang_common("submit"); ?>">
+              <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
              </td>
            </tr>
          </table>

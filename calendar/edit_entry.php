@@ -93,13 +93,13 @@ if ($id > 0) {
 // do a little form verifying
 function validate_and_submit() {
   if (document.addform.name.value == "") {
-    alert("<?php echo lang_calendar("You have not entered a\\nBrief Description"); ?>.");
+    alert("<?php echo lang("You have not entered a\\nBrief Description"); ?>.");
     return false;
   }
   h = parseInt(document.addform.hour.value);
   m = parseInt(document.addform.minute.value);
   if (h > 23 || m > 59) {
-     alert ("<?php echo lang_calendar("You have not entered a\\nvalid time of day."); ?>");
+     alert ("<?php echo lang("You have not entered a\\nvalid time of day."); ?>");
      return false;
   }
   // would be nice to also check date to not allow Feb 31, etc...
@@ -112,9 +112,9 @@ function validate_and_submit() {
 
 <H2><FONT COLOR="<?php echo $H2COLOR;?>"><?php 
     if ($id)
-       echo lang_calendar("Calendar - Edit");
+       echo lang("Calendar - Edit");
     else
-       echo lang_calendar("Calendar - Add");
+       echo lang("Calendar - Add");
 
 ?></FONT></H2>
 
@@ -127,14 +127,14 @@ function validate_and_submit() {
 
 <TABLE BORDER=0>
 <TR>
-  <TD><B><?php echo lang_calendar("Brief Description"); ?>:</B></TD>
+  <TD><B><?php echo lang("Brief Description"); ?>:</B></TD>
   <TD>
    <INPUT NAME="name" SIZE=25 VALUE="<?php echo ($name); ?>">
   </TD>
 </TR>
 
 <TR>
-  <TD VALIGN="top"><B><?php echo lang_calendar("Full Description"); ?>:</B></TD>
+  <TD VALIGN="top"><B><?php echo lang("Full Description"); ?>:</B></TD>
   <TD>
    <TEXTAREA NAME="description" ROWS=5 COLS=40 WRAP="virtual"><?php
     echo ($description); ?></TEXTAREA>
@@ -142,7 +142,7 @@ function validate_and_submit() {
 </TR>
 
 <TR>
-  <TD><B><?php echo lang_common("Date"); ?>:</B></TD>
+  <TD><B><?php echo lang("Date"); ?>:</B></TD>
   <TD>
 <?php
   $day_html = "<SELECT NAME=\"day\">";
@@ -159,7 +159,7 @@ function validate_and_submit() {
   if ($year == 0)
      $year = date("Y");
   for ($i = 1; $i <= 12; $i++) {
-    $m = lang_common(date("F", mktime(0,0,0,$i,1,$year)));
+    $m = lang(date("F", mktime(0,0,0,$i,1,$year)));
     $month_html .= "<OPTION VALUE=\"$i\"" . ($i == $month ? " SELECTED" : "") . ">$m"
 		 . "</option>\n";
   }
@@ -180,7 +180,7 @@ function validate_and_submit() {
 </TR>
 
 <TR>
- <TD><B><?php echo lang_common("Time"); ?>:</B></TD>
+ <TD><B><?php echo lang("Time"); ?>:</B></TD>
 <?php
   $h12 = $hour;
   $amsel = "CHECKED"; $pmsel = "";
@@ -209,37 +209,37 @@ function validate_and_submit() {
 </TD></TR>
 
 <TR>
- <TD><B><?php echo lang_calendar("Duration"); ?>:</B></TD>
+ <TD><B><?php echo lang("Duration"); ?>:</B></TD>
   <TD><INPUT NAME="duration" SIZE=3 VALUE="<?php
-    echo $duration;?>"> <?php echo lang_calendar("minutes"); ?></TD>
+    echo $duration;?>"> <?php echo lang("minutes"); ?></TD>
 </TR>
 
 <TR>
-  <TD><B><?php echo lang_common("Priority"); ?>:</B></TD>
+  <TD><B><?php echo lang("Priority"); ?>:</B></TD>
   <TD><SELECT NAME="priority">
-    <OPTION VALUE="1"<?php if ($priority == 1) echo " SELECTED";?>><?php echo lang_common("Low"); ?> </option>
-    <OPTION VALUE="2"<?php if ($priority == 2 || $priority == 0 ) echo " SELECTED";?>><?php echo lang_common("Medium"); ?></option>
-    <OPTION VALUE="3"<?php if ($priority == 3) echo " SELECTED";?>><?php echo lang_common("High"); ?></option>
+    <OPTION VALUE="1"<?php if ($priority == 1) echo " SELECTED";?>><?php echo lang("Low"); ?> </option>
+    <OPTION VALUE="2"<?php if ($priority == 2 || $priority == 0 ) echo " SELECTED";?>><?php echo lang("Medium"); ?></option>
+    <OPTION VALUE="3"<?php if ($priority == 3) echo " SELECTED";?>><?php echo lang("High"); ?></option>
   </SELECT></TD>
 </TR>
 
 <TR>
- <TD><B><?php echo lang_common("Access"); ?>:</B></TD>
+ <TD><B><?php echo lang("Access"); ?>:</B></TD>
  <TD><SELECT NAME="access">
   <OPTION VALUE="private"<?php
-   if ($access == "private" || ! $id) echo " SELECTED";?>><?php echo lang_common("Private"); ?></option>
+   if ($access == "private" || ! $id) echo " SELECTED";?>><?php echo lang("Private"); ?></option>
 
   <OPTION VALUE="group"<?php
-   if ($access == "public" || strlen($access)) echo " SELECTED";?>><?php echo lang_common("Group Public"); ?></option>
+   if ($access == "public" || strlen($access)) echo " SELECTED";?>><?php echo lang("Group Public"); ?></option>
   <OPTION VALUE="public"<?php
-   if ($access == "public") echo " SELECTED"; ?>><?php echo lang_common("Global Public"); ?></option>
+   if ($access == "public") echo " SELECTED"; ?>><?php echo lang("Global Public"); ?></option>
 
   </SELECT>
  </TD>
  </tr>
  <tr>
 
- <TD><B><?php echo lang_common("group access"); ?>:</B></TD>
+ <TD><B><?php echo lang("group access"); ?>:</B></TD>
  <TD><SELECT NAME="n_groups[]" multiple size="5">
   <?php
     if ($id > 0) {
@@ -274,7 +274,7 @@ function validate_and_submit() {
   else
      $size = $phpgw->db->num_rows();
 
-  echo "<TR><TD VALIGN=\"top\"><B>" . lang_calendar("Participants") . ":</B></TD>"
+  echo "<TR><TD VALIGN=\"top\"><B>" . lang("Participants") . ":</B></TD>"
      . "<TD>\n<SELECT NAME=\"participants[]\" multiple size=\"$size\">\n";
 
   while ($phpgw->db->next_record()) {
@@ -298,33 +298,33 @@ function validate_and_submit() {
 ?>
 
 <tr>
- <td><b><?php echo lang_calendar("Repeat type"); ?>:</b></td>
+ <td><b><?php echo lang("Repeat type"); ?>:</b></td>
  <td><select name="rpt_type">
  <?php
    echo "<option value=\"none\"" . (strcmp($rpt_type,'none')==0?"selected":"") . ">"
-      . lang_calendar("None") . "</option>";
+      . lang("None") . "</option>";
 
    echo "<option value=\"daily\"" . (strcmp($rpt_type,'daily')==0?"selected":"") . ">"
-      . lang_calendar("Daily") . "</option>";
+      . lang("Daily") . "</option>";
 
    echo "<option value=\"weekly\"" . (strcmp($rpt_type,'weekly')==0?"selected":"") . ">"
-      . lang_calendar("Weekly") . "</option>";
+      . lang("Weekly") . "</option>";
 
    echo "<option value=\"monthlyByDay\"".(strcmp($rpt_type,'monthlyByDay')==0?"selected":"")
-      . ">" . lang_calendar("Monthly (by day)") . "</option>";
+      . ">" . lang("Monthly (by day)") . "</option>";
 
    echo "<option value=\"monthlyByDate\"".(strcmp($rpt_type,'monthlyByDate')==0?"checked":"")
-      . "> " . lang_calendar("Monthly (by date)") . "</option>";
+      . "> " . lang("Monthly (by date)") . "</option>";
 
    echo "<option value=\"yearly\"" . (strcmp($rpt_type,'yearly')==0?"checked":"") . ">"
-      . lang_calendar("Yearly") . "</option>";
+      . lang("Yearly") . "</option>";
 ?>
   </select>
  </td>
 <tr>
- <td><b><?php echo lang_calendar("Repeat End date"); ?>:</b></td>
+ <td><b><?php echo lang("Repeat End date"); ?>:</b></td>
  <td><input type=checkbox name=rpt_end_use value=y <?php
-      echo ($rpt_end?"checked":""); ?>> <?php echo lang_calendar("Use End date"); ?>
+      echo ($rpt_end?"checked":""); ?>> <?php echo lang("Use End date"); ?>
 
 <?php
   if ($rpt_end) {
@@ -346,7 +346,7 @@ function validate_and_submit() {
 
   $month_html = "<select name=\"rpt_month\">";
   for ($i = 1; $i <= 12; $i++) {
-    $m = lang_common(date("F", mktime(0,0,0,$i,1,$rpt_year)));
+    $m = lang(date("F", mktime(0,0,0,$i,1,$rpt_year)));
     $month_html .= "<OPTION VALUE=\"$i\"" . ($i == $rpt_month ? " SELECTED" : "")
 		 . ">$m</option>\n";
   }
@@ -366,27 +366,27 @@ function validate_and_submit() {
  </td>
 </tr>
 <tr>
-  <td><b><?php echo lang_calendar("Repeat day"); ?>: </b><?php echo lang_calendar("(for Weekly)"); ?></td>
+  <td><b><?php echo lang("Repeat day"); ?>: </b><?php echo lang("(for Weekly)"); ?></td>
   <td><?php
   echo "<input type=checkbox name=rpt_sun value=y "
-     . ($rpt_sun?"checked":"") . "> " . lang_common("Sunday");
+     . ($rpt_sun?"checked":"") . "> " . lang("Sunday");
   echo "<input type=checkbox name=rpt_mon value=y "
-     . ($rpt_mon?"checked":"") . "> " . lang_common("Monday");
+     . ($rpt_mon?"checked":"") . "> " . lang("Monday");
   echo "<input type=checkbox name=rpt_tue value=y "
-     . ($rpt_tue?"checked":"") . "> " . lang_common("Tuesday");
+     . ($rpt_tue?"checked":"") . "> " . lang("Tuesday");
   echo "<input type=checkbox name=rpt_wed value=y "
-     . ($rpt_wed?"checked":"") . "> " . lang_common("Wednesday");
+     . ($rpt_wed?"checked":"") . "> " . lang("Wednesday");
   echo "<input type=checkbox name=rpt_thu value=y "
-     . ($rpt_thu?"checked":"") . "> " . lang_common("Thursday");
+     . ($rpt_thu?"checked":"") . "> " . lang("Thursday");
   echo "<input type=checkbox name=rpt_fri value=y "
-     . ($rpt_fri?"checked":"") . "> " . lang_common("Friday");
+     . ($rpt_fri?"checked":"") . "> " . lang("Friday");
   echo "<input type=checkbox name=rpt_sat value=y "
-     . ($rpt_sat?"checked":"") . "> " . lang_common("Saturday");
+     . ($rpt_sat?"checked":"") . "> " . lang("Saturday");
   ?></td>
 </tr>
 
 <tr>
- <td><b><?php echo lang_calendar("Frequency"); ?>: </b></td>
+ <td><b><?php echo lang("Frequency"); ?>: </b></td>
  <td>
   <input name="rpt_freq" size="4" maxlength="4" value="<?php
 							echo $rpt_freq; ?>">
@@ -395,11 +395,11 @@ function validate_and_submit() {
 </TABLE>
 
 <SCRIPT LANGUAGE="JavaScript">
-  document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang_common("Submit"); ?>" ONCLICK="validate_and_submit()">' );
-  /* document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang_common("Help"); ?>" ONCLICK="window.open ( \'help_edit_entry.php\', \'cal_help\', \'dependent,menubar,height=365,width=650,innerHeight=365,outerWidth=420,resizable=1\');">' ); */
+  document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang("Submit"); ?>" ONCLICK="validate_and_submit()">' );
+  /* document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang("Help"); ?>" ONCLICK="window.open ( \'help_edit_entry.php\', \'cal_help\', \'dependent,menubar,height=365,width=650,innerHeight=365,outerWidth=420,resizable=1\');">' ); */
 </SCRIPT>
 <NOSCRIPT>
-<INPUT TYPE="submit" VALUE="<?php echo lang_common("Submit"); ?>">
+<INPUT TYPE="submit" VALUE="<?php echo lang("Submit"); ?>">
 </NOSCRIPT>
 
 <INPUT TYPE="hidden" NAME="participant_list" VALUE="">
@@ -409,8 +409,8 @@ function validate_and_submit() {
 <?php
   if ($id > 0) {
      echo "<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
-	. lang_calendar("Are you sure\\nyou want to\\ndelete this entry ?") . "');\">"
-	. lang_common("Delete") . "</A><BR>";
+	. lang("Are you sure\\nyou want to\\ndelete this entry ?") . "');\">"
+	. lang("Delete") . "</A><BR>";
   } 
   } // ***** This might be out of place.  I was getting tons of parse errors
     // from if ($can_edit) {   This needs to be rewritten, because if you do

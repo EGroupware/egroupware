@@ -73,7 +73,7 @@
                 <INPUT name=reset type=reset value="Clear">
               </TD>
               <TD align=left> 
-                <a href="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . "\">" . lang_common("Cancel"); ?></a>
+                <a href="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . "\">" . lang("Cancel"); ?></a>
               </TD>
             </TR>
             </TBODY> 

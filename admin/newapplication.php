@@ -24,7 +24,7 @@
 
   if ($submit) {
      if (! $n_app_name || ! $n_app_title) {
-        $error = lang_admin("You must enter an application name and title.");
+        $error = lang("You must enter an application name and title.");
      } else {
         $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values('"
 			    . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
@@ -39,7 +39,7 @@
      $phpgw->common->navbar();
   }
 
-  $t->set_var("lang_header",lang_admin("Add new application"));
+  $t->set_var("lang_header",lang("Add new application"));
 
   if ($error) {
      $t->set_var("error","<p><center>$error</center><br>");
@@ -49,10 +49,10 @@
 
   $t->set_var("session_hidden_var","");
   $t->set_var("form_action",$phpgw->link("newapplication.php"));
-  $t->set_var("lang_app_name",lang_admin("application name"));
-  $t->set_var("lang_app_title",lang_admin("application title"));
-  $t->set_var("lang_enabled",lang_admin("enabled"));
-  $t->set_var("lang_submit_button",lang_common("add"));
+  $t->set_var("lang_app_name",lang("application name"));
+  $t->set_var("lang_app_title",lang("application title"));
+  $t->set_var("lang_enabled",lang("enabled"));
+  $t->set_var("lang_submit_button",lang("add"));
 
   $t->set_var("app_name_value","");
   $t->set_var("app_title_value","");

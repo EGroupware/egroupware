@@ -24,13 +24,13 @@
   ?>
    <center>
    <table border=0 width=65%>
-    <tr><td><?php echo lang_admin("Display"); ?></td> <td><?php echo $phpgw->db->f("display"); ?></td></tr>
-    <tr><td><?php echo lang_admin("Base Url"); ?></td> <td><?php echo $phpgw->db->f("base_url"); ?></td></tr>
-    <tr><td><?php echo lang_admin("News File"); ?></td> <td><?php echo $phpgw->db->f("newsfile"); ?></td></tr>
-    <tr><td><?php echo lang_admin("Last Time Read"); ?></td> <td><?php echo $phpgw->common->show_date($phpgw->db->f("lastread")); ?></td></tr>
-    <tr><td><?php echo lang_admin("minutes between reloads"); ?></td> <td><?php echo $phpgw->db->f("cachetime"); ?></td></tr>
-    <tr><td><?php echo lang_admin("Listings Displayed"); ?></td> <td><?php echo $phpgw->db->f("listings"); ?></td></tr>
-    <tr><td><?php echo lang_admin("News Type"); ?></td> <td><?php echo $phpgw->db->f("newstype"); ?></td></tr>
+    <tr><td><?php echo lang("Display"); ?></td> <td><?php echo $phpgw->db->f("display"); ?></td></tr>
+    <tr><td><?php echo lang("Base Url"); ?></td> <td><?php echo $phpgw->db->f("base_url"); ?></td></tr>
+    <tr><td><?php echo lang("News File"); ?></td> <td><?php echo $phpgw->db->f("newsfile"); ?></td></tr>
+    <tr><td><?php echo lang("Last Time Read"); ?></td> <td><?php echo $phpgw->common->show_date($phpgw->db->f("lastread")); ?></td></tr>
+    <tr><td><?php echo lang("minutes between reloads"); ?></td> <td><?php echo $phpgw->db->f("cachetime"); ?></td></tr>
+    <tr><td><?php echo lang("Listings Displayed"); ?></td> <td><?php echo $phpgw->db->f("listings"); ?></td></tr>
+    <tr><td><?php echo lang("News Type"); ?></td> <td><?php echo $phpgw->db->f("newstype"); ?></td></tr>
 <?php
   $phpgw->db->query("select title,link from news_headlines where site=$con");
 

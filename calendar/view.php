@@ -28,14 +28,14 @@
   if ($year) $thisyear = $year;
   if ($month) $thismonth = $month;
 
-  $pri[1] = lang_common("Low");
-  $pri[2] = lang_common("Medium");
-  $pri[3] = lang_common("High");
+  $pri[1] = lang("Low");
+  $pri[2] = lang("Medium");
+  $pri[3] = lang("High");
 
   $unapproved = FALSE;
 
   if ($id < 1) {
-     echo lang_calendar("Invalid entry id.");
+     echo lang("Invalid entry id.");
      exit;
   }
 
@@ -76,14 +76,14 @@
   // Some browser add a \n when its entered in the database. Not a big deal
   // this will be printed even though its not needed.
   if ($description) {
-     echo "<tr><td VALIGN=\"top\"><b>" . lang_calendar("Description") . ":</B></TD><td>"
+     echo "<tr><td VALIGN=\"top\"><b>" . lang("Description") . ":</B></TD><td>"
 	. "$description</TD></TR>";
   }
 
 ?>
 
 <tr>
-  <TD VALIGN="top"><b><?php echo lang_common("Date"); ?>:</B></TD>
+  <TD VALIGN="top"><b><?php echo lang("Date"); ?>:</B></TD>
   <td><?php echo date_to_str($phpgw->db->f(1)); ?></TD>
 </TR>
 
@@ -97,30 +97,30 @@
   if ($phpgw->db->f(2) > 0) { 
      ?>
       <tr>
-       <TD VALIGN="top"><b><?php echo lang_common("Time"); ?>:</B></TD>
+       <TD VALIGN="top"><b><?php echo lang("Time"); ?>:</B></TD>
        <td><?php echo display_time($phpgw->db->f(2)); ?></TD>
       </TR>
      <?php 
   }
 
   if ($phpgw->db->f(5) > 0) {
-     echo "<tr><TD VALIGN=\"top\"><b>" . lang_calendar("Duration") . ":</B></TD><td>"
-	. $phpgw->db->f(5) . " " . lang_calendar("minutes") . "</TD></TR>";
+     echo "<tr><TD VALIGN=\"top\"><b>" . lang("Duration") . ":</B></TD><td>"
+	. $phpgw->db->f(5) . " " . lang("minutes") . "</TD></TR>";
   }
 ?>
 
 <tr>
-  <TD VALIGN="top"><b><?php echo lang_common("Priority"); ?>:</B></TD>
+  <TD VALIGN="top"><b><?php echo lang("Priority"); ?>:</B></TD>
   <td><?php echo $pri[$phpgw->db->f(6)]; ?></TD>
 </TR>
 
 <?php
-  echo "<tr><TD VALIGN=\"top\"><b>" . lang_common("Created by") . ":</B></TD>\n";
+  echo "<tr><TD VALIGN=\"top\"><b>" . lang("Created by") . ":</B></TD>\n";
 
   echo "<td>" . $phpgw_info["user"]["fullname"] . "</td></tr>\n";
 ?>
 <tr>
-  <TD VALIGN="top"><b><?php echo lang_common("Updated"); ?>:</B></TD>
+  <TD VALIGN="top"><b><?php echo lang("Updated"); ?>:</B></TD>
   <td><?php echo date_to_str($phpgw->db->f(3)) . " " . display_time($phpgw->db->f(4));
       ?></TD>
 </TR>
@@ -131,11 +131,11 @@
     $cal_groups .= $cal_groups_temp[$i][1] . "<br>\n";
   }
   if ($cal_groups)
-     echo "<tr><td><b>" . lang_common("Groups") . ":</b></td><td>".$cal_groups."</td></tr>";
+     echo "<tr><td><b>" . lang("Groups") . ":</b></td><td>".$cal_groups."</td></tr>";
 ?>
 
 <tr>
-  <TD VALIGN="top"><b><?php echo lang_calendar("Participants"); ?>:</B></TD>
+  <TD VALIGN="top"><b><?php echo lang("Participants"); ?>:</B></TD>
   <td><?php
 
     $phpgw->db->query("SELECT webcal_entry_user.cal_login, accounts.lastname, "
@@ -159,33 +159,33 @@
   </TD>
 </TR>
 <tr>
-  <TD VALIGN="top"><b><?php echo lang_calendar("Repetition"); ?>:</B></TD>
+  <TD VALIGN="top"><b><?php echo lang("Repetition"); ?>:</B></TD>
   <td>
    <?php
      $phpgw->db->query("SELECT * from webcal_entry_repeats WHERE cal_id=$id");
      $phpgw->db->next_record();
      if (substr($phpgw->db->f(5),0,1) == 'y')
-	$t_repeat_days = lang_common("Sunday ");
+	$t_repeat_days = lang("Sunday ");
      if (substr($phpgw->db->f(5),1,1) == 'y')
-	$t_repeat_days .= lang_common("Monday ");
+	$t_repeat_days .= lang("Monday ");
      if (substr($phpgw->db->f(5),2,1) == 'y')
-	$t_repeat_days .= lang_common("Tuesday ");
+	$t_repeat_days .= lang("Tuesday ");
      if (substr($phpgw->db->f(5),3,1) == 'y')
- 	$t_repeat_days .= lang_common("Wednesday ");
+ 	$t_repeat_days .= lang("Wednesday ");
      if (substr($phpgw->db->f(5),4,1) == 'y')
-	$t_repeat_days .= lang_common("Thursday ");
+	$t_repeat_days .= lang("Thursday ");
      if (substr($phpgw->db->f(5),5,1) == 'y')
-	$t_repeat_days .= lang_common("Friday ");
+	$t_repeat_days .= lang("Friday ");
      if (substr($phpgw->db->f(5),6,1) == 'y')
-	$t_repeat_days .= lang_common("Saturday ");
+	$t_repeat_days .= lang("Saturday ");
 	   
      echo $phpgw->db->f(2) . " (";
      if ($phpgw->db->f(3))
 	echo "ends: " . $phpgw->db->f(3) . ", ";
 	if ($phpgw->db->f(2) == 'weekly')
-	   echo lang_calendar("days repeated") . ": " . $t_repeat_days . ", ";
+	   echo lang("days repeated") . ": " . $t_repeat_days . ", ";
 
-	echo lang_calendar("frequency") . ": " . $phpgw->db->f(4) . ")";
+	echo lang("frequency") . ": " . $phpgw->db->f(4) . ")";
 		
    ?>
 
@@ -196,8 +196,8 @@
 <?php
   if ($phpgw_info["user"]["userid"] == $create_by) {
      echo "<A HREF=\"" . $phpgw->link("edit_entry.php","id=$id") . "\">"
-	. lang_common("Edit") . "</A><BR>\n<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
-	. lang_calendar("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.") . "');\">" . lang_common("Delete") . "</A><BR>\n";
+	. lang("Edit") . "</A><BR>\n<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
+	. lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.") . "');\">" . lang("Delete") . "</A><BR>\n";
   }
 ?>
 

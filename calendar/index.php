@@ -78,7 +78,7 @@
 <TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
 <?php
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  print lang_common(strftime("%B",$m)) . " " . $thisyear;
+  print lang(strftime("%B",$m)) . " " . $thisyear;
 ?>
 </B></FONT>
 <FONT COLOR="<?php echo $H2COLOR;?>" SIZE="+1">
@@ -99,13 +99,13 @@
 <TABLE WIDTH=100% BORDER=0 bordercolor=FFFFFF cellspacing=2 cellpadding=2>
 
 <TR>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Sun"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Mon"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Tue"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Wed"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Thu"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Fri"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang_calendar("Sat"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sun"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Mon"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Tue"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Wed"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Thu"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Fri"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sat"); ?></FONT></TH>
 </TR>
 
 <?php
@@ -163,8 +163,8 @@
         $param .= "year=$thisyear&month=$thismonth&";
 
      $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	. "status = '" . lang_calendar("Generate printer-friendly version"). "'";
+	. "status = '" . lang("Generate printer-friendly version"). "'";
      echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
-     echo "[". lang_calendar("Printer Friendly") . "]</A>";
+     echo "[". lang("Printer Friendly") . "]</A>";
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }

@@ -23,7 +23,7 @@
 
   if ($submit) {
      if (! $n_app_name || ! $n_app_title) {
-        $error = lang_admin("You must enter an application name and title.");
+        $error = lang("You must enter an application name and title.");
      } else {
         $phpgw->db->query("update applications set app_name='" . addslashes($n_app_name) . "',"
 			    . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
@@ -41,7 +41,7 @@
      $phpgw->common->navbar();
   }
  
-  $t->set_var("lang_header",lang_admin("Add new application"));
+  $t->set_var("lang_header",lang("Add new application"));
 
   if ($error) {
      $t->set_var("error","<p><center>$error</center><br>");
@@ -51,10 +51,10 @@
   $t->set_var("hidden_vars",'<input type="hidden" name="old_app_name" value="' . $phpgw->db->f("app_name") . '">');
 
   $t->set_var("form_action",$phpgw->link("editapplication.php"));
-  $t->set_var("lang_app_name",lang_admin("application name"));
-  $t->set_var("lang_app_title",lang_admin("application title"));
-  $t->set_var("lang_enabled",lang_admin("enabled"));
-  $t->set_var("lang_submit_button",lang_common("edit"));
+  $t->set_var("lang_app_name",lang("application name"));
+  $t->set_var("lang_app_title",lang("application title"));
+  $t->set_var("lang_enabled",lang("enabled"));
+  $t->set_var("lang_submit_button",lang("edit"));
 
   $t->set_var("app_name_value",$phpgw->db->f("app_name"));
   $t->set_var("app_title_value",$phpgw->db->f("app_title"));

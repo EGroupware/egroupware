@@ -101,7 +101,7 @@
 		        . "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
 
     $t->set_var("search_value",$query);
-    $t->set_var("search",lang_common("search"));
+    $t->set_var("search",lang("search"));
     $t->set_var("next",lang_nntp("next"));
 
     $t->set_var("nml",$phpgw->nextmatchs->left($urlname,$start,$tg,

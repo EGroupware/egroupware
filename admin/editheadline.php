@@ -33,27 +33,27 @@
       <center>
        <table border=0 width=65%>
         <tr>
-         <td><?php echo lang_admin("Display"); ?></td>
+         <td><?php echo lang("Display"); ?></td>
          <td><input name="n_display" value="<?echo $phpgw->db->f("display"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_admin("Base URL"); ?></td>
+         <td><?php echo lang("Base URL"); ?></td>
          <td><input name="n_base_url" value="<? echo $phpgw->db->f("base_url"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_admin("News File"); ?></td>
+         <td><?php echo lang("News File"); ?></td>
          <td><input name="n_newsfile" value="<? echo $phpgw->db->f("newsfile"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_admin("Minutes between Reloads"); ?></td>
+         <td><?php echo lang("Minutes between Reloads"); ?></td>
          <td><input name="n_cachetime" value="<? echo $phpgw->db->f("cachetime"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_admin("Listings Displayed"); ?></td>
+         <td><?php echo lang("Listings Displayed"); ?></td>
          <td><input name="n_listings" value="<? echo $phpgw->db->f("listings"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_admin("News Type"); ?></td>
+         <td><?php echo lang("News Type"); ?></td>
          <td>
 <?
 	 $news_type = array('rdf','fm','lt','sf','rdf-chan');
@@ -66,7 +66,7 @@
          </td>
         </tr>
         <tr>
-         <td colspan=2><input type="submit" name="submit" value="<?php echo lang_common("submit"); ?>"></td>
+         <td colspan=2><input type="submit" name="submit" value="<?php echo lang("submit"); ?>"></td>
         </tr>
        </table>
       </center>

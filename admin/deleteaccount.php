@@ -30,20 +30,20 @@
       <table border=0 with=65%>
        <tr colspan=2>
         <td align=center>
-         <?php echo lang_admin("Are you sure you want to delete this account ?"); ?>
+         <?php echo lang("Are you sure you want to delete this account ?"); ?>
         <td>
        </tr>
        <tr colspan=2>
         <td align=center>
-         <?php echo lang_admin("All records and account information will be lost!"); ?>
+         <?php echo lang("All records and account information will be lost!"); ?>
         </td>
        </tr>
        <tr>
          <td>
-           <a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang_common("No"); ?></a>
+           <a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang("No"); ?></a>
          </td>
          <td>
-           <a href="<?php echo $phpgw->link("deleteaccount.php","con=$con&confirm=true") . "\">" . lang_common("Yes"); ?></a>
+           <a href="<?php echo $phpgw->link("deleteaccount.php","con=$con&confirm=true") . "\">" . lang("Yes"); ?></a>
          </td>
        </tr>
       </table>

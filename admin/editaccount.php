@@ -34,22 +34,22 @@
 
     if ($n_passwd || $n_passwd_2) {
       if ($n_passwd != $n_passwd_2){
-        $error .= lang_admin("The two passwords are not the same");
+        $error .= lang("The two passwords are not the same");
       }
       if (! $n_passwd){
-        $error .= lang_admin("You must enter a password");
+        $error .= lang("You must enter a password");
       }
     } 
 
     if ($lid != $n_loginid) {
       $phpgw->db->query("select loginid from accounts where loginid='$n_loginid'");
       if ($phpgw->db->num_rows() != 0) {
-        $error .= "<br>" . lang_admin("That loginid has already been taken");
+        $error .= "<br>" . lang("That loginid has already been taken");
       }
     }
 
     if (count($new_permissions) == 0){
-      $error .= "<br>" . lang_admin("You must add at least 1 permission to this account");
+      $error .= "<br>" . lang("You must add at least 1 permission to this account");
     }
     if (! $error) {
       $phpgw->db->lock(array('accounts','preferences','sessions'));
@@ -125,25 +125,25 @@
       <input type="hidden" name="con" value="<? echo $con; ?>">
 <?php
   if ($error) {
-    echo "<center>" . lang_common("Error") . ":$error</center>";
+    echo "<center>" . lang("Error") . ":$error</center>";
   }
 ?>
       <center>
        <table border=0 width=65%>
         <tr>
-         <td><?php echo lang_admin("LoginID"); ?></td>
+         <td><?php echo lang("LoginID"); ?></td>
          <td><input name="n_loginid" value="<? echo $phpgw->db->f("loginid"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_common("First Name"); ?></td>
+         <td><?php echo lang("First Name"); ?></td>
          <td><input name="n_firstname" value="<?echo $phpgw->db->f("firstname"); ?>"></td>
         </tr>
         <tr>
-         <td><?php echo lang_common("Last Name"); ?></td>
+         <td><?php echo lang("Last Name"); ?></td>
          <td><input name="n_lastname" value="<? echo $phpgw->db->f("lastname"); ?>"></td>
         </tr>
         <tr>
-           <td><?php echo lang_common("Groups"); ?></td>
+           <td><?php echo lang("Groups"); ?></td>
            <td><select name="n_groups[]" multiple size="5">
 <?php
             $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("loginid"));
@@ -173,7 +173,7 @@
 
             for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
               if (! $perm_display[$i][1]) break;
-              echo '<tr><td>' . lang_common($perm_display[$i][1]) . '</td>'
+              echo '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
                 . '<td><input type="checkbox" name="new_permissions['
 		            . $perm_display[$i][0] . ']" value="True"';
               if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
@@ -182,7 +182,7 @@
               echo "></td>";
               $i++;
               if (! $perm_display[$i][1]) break;
-              echo '<td>' . lang_common($perm_display[$i][1]) . '</td>'
+              echo '<td>' . lang($perm_display[$i][1]) . '</td>'
                 . '<td><input type="checkbox" name="new_permissions['
 		            . $perm_display[$i][0] . ']" value="True"';
               if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
@@ -193,13 +193,13 @@
             }
 
 /*
-          echo "<tr><td>" . lang_admin("Anonymous user") . "</td><td><input type=\""
+          echo "<tr><td>" . lang("Anonymous user") . "</td><td><input type=\""
 	     . "checkbox\" name=\"new_permissions[anonymous]\" value=\"True\"";
 	     if ($db_perms["anonymous"] || $new_permissions[anonymous])
 		    echo " checked";
 	      echo "></td>";
 
-          echo "<td>" . lang_admin("Manager") . "</td><td><input type=\""
+          echo "<td>" . lang("Manager") . "</td><td><input type=\""
 	     . "checkbox\" name=\"new_permissions[manager]\" value=\"True\"";
 	     if ($db_perms["manager"] || $new_permissions[manager])
 		    echo " checked";
@@ -207,20 +207,20 @@
 */
 ?>
           <tr>
-           <td><?php echo lang_admin("Account active"); ?></td>
+           <td><?php echo lang("Account active"); ?></td>
            <td><input type="checkbox" name="n_account_status" value="A" <?php if ($account_status == "A") { echo " checked"; } ?>>
           </td>
           </tr>
           <tr>
-           <td><?php echo lang_admin("New password [ Leave blank for no change ]"); ?></td>
+           <td><?php echo lang("New password [ Leave blank for no change ]"); ?></td>
            <td><input type=password name="n_passwd"></td>
           </tr>
           <tr>
-           <td><?php echo lang_admin("Re-enter password"); ?></td>
+           <td><?php echo lang("Re-enter password"); ?></td>
            <td><input type=password name="n_passwd_2"></td>
           </tr>
           <tr>
-          <td colspan=2><input type="submit" name="submit" value="<?php echo lang_common("submit"); ?>"></td>
+          <td colspan=2><input type="submit" name="submit" value="<?php echo lang("submit"); ?>"></td>
           </tr>
          </table>
         </center>

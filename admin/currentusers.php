@@ -31,21 +31,21 @@
   $total = $phpgw->db->f(0);
   $limit = $phpgw->nextmatchs->sql_limit($start);
 
-  $t->set_var("lang_current_users",lang_admin("List of current users"));
+  $t->set_var("lang_current_users",lang("List of current users"));
   $t->set_var("bg_color",$phpgw_info["theme"][bg_color]);
   $t->set_var("left_next_matchs",$phpgw->nextmatchs->left("currentusers.php",$start,$total));
   $t->set_var("right_next_matchs",$phpgw->nextmatchs->right("currentusers.php",$start,$total));
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $t->set_var("sort_loginid",$phpgw->nextmatchs->show_sort_order($sort,"loginid",$order,
-					 "currentusers.php",lang_admin("LoginID")));
+					 "currentusers.php",lang("LoginID")));
   $t->set_var("sort_ip",$phpgw->nextmatchs->show_sort_order($sort,"ip",$order,
-				"currentusers.php",lang_admin("IP")));
+				"currentusers.php",lang("IP")));
   $t->set_var("sort_login_time",$phpgw->nextmatchs->show_sort_order($sort,"logintime",$order,
-						"currentusers.php",lang_admin("Login Time")));
+						"currentusers.php",lang("Login Time")));
   $t->set_var("sort_idle",$phpgw->nextmatchs->show_sort_order($sort,"dla",$order,
-				  "currentusers.php",lang_admin("idle")));
-  $t->set_var("lang_kill",lang_admin("Kill"));
+				  "currentusers.php",lang("idle")));
+  $t->set_var("lang_kill",lang("Kill"));
 
   $t->parse("out","header");
 
@@ -69,7 +69,7 @@
 
      if ($phpgw->db->f("sessionid") != $phpgw_info["user"]["sessionid"]) {
         $t->set_var("row_kill",'<a href="' . $phpgw->link("killsession.php","ksession="
-		  . $phpgw->db->f("sessionid") . "&kill=true\">" . lang_admin("Kill")).'</a>');
+		  . $phpgw->db->f("sessionid") . "&kill=true\">" . lang("Kill")).'</a>');
      } else {
 	$t->set_var("row_kill","&nbsp;");
      }

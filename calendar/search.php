@@ -27,20 +27,20 @@
   $error = "";
 
   if (strlen($keywords) == 0)
-     $error = lang_calendar("You must enter one or more search keywords.");
+     $error = lang("You must enter one or more search keywords.");
 
   $matches = 0;
 
 ?>
 
-<H2><FONT COLOR="<?php echo $H2COLOR . "\">" . lang_calendar("Search Results"); ?></FONT></H2>
+<H2><FONT COLOR="<?php echo $H2COLOR . "\">" . lang("Search Results"); ?></FONT></H2>
 
 <?php
   // There is currently a problem searching in with repeated events.
   // It spits back out the date it was entered.  I would like to to say that
   // it is a repeated event.
   if (strlen($error)) {
-     echo "<B>" . lang_common("Error") . ":</B> $error";
+     echo "<B>" . lang("Error") . ":</B> $error";
   } else {
      $ids = array();
      $words = split(" ", $keywords);
@@ -70,9 +70,9 @@
   if ($matches == 1)
      echo "<B>1 match found.</B><P>";
   else if ($matches > 0)
-     echo "<B>" . lang_calendar("x matches found",$matches) . ".</B><P>";
+     echo "<B>" . lang("x matches found",$matches) . ".</B><P>";
   else
-     $error = lang_calendar("no matches found.");
+     $error = lang("no matches found.");
 
 // now sort by number of hits
   if (! strlen($error)) {

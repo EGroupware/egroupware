@@ -19,13 +19,13 @@
 ?>
 
 <p>
-<br><a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang_admin("User accounts"); ?></a>
-<br><a href="<?php echo $phpgw->link("groups.php")  . "\">" . lang_admin("User groups"); ?></a>
-<br><a href="<?php echo $phpgw->link("applications.php")  . "\">" . lang_admin("Applications"); ?></a>
-<p><a href="<?php echo $phpgw->link("currentusers.php") . "\">" . lang_admin("View sessions"); ?></a>
-<br><a href="<?php echo $phpgw->link("accesslog.php") . "\">" . lang_admin("View Access Log"); ?></a>
-<p><a href="<?php echo $phpgw->link("headlines.php") . "\">" . lang_admin("Headline Sites"); ?></a>
-<p><a href="<?php echo $phpgw->link("nntp.php") . "\">" . lang_admin("Network News"); ?></a>
+<br><a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang("User accounts"); ?></a>
+<br><a href="<?php echo $phpgw->link("groups.php")  . "\">" . lang("User groups"); ?></a>
+<br><a href="<?php echo $phpgw->link("applications.php")  . "\">" . lang("Applications"); ?></a>
+<p><a href="<?php echo $phpgw->link("currentusers.php") . "\">" . lang("View sessions"); ?></a>
+<br><a href="<?php echo $phpgw->link("accesslog.php") . "\">" . lang("View Access Log"); ?></a>
+<p><a href="<?php echo $phpgw->link("headlines.php") . "\">" . lang("Headline Sites"); ?></a>
+<p><a href="<?php echo $phpgw->link("nntp.php") . "\">" . lang("Network News"); ?></a>
 <?php
 if ( $SHOW_INFO > 0 ) {
   echo "<p><a href=\"".$phpgw->link($PHP_SELF, "SHOW_INFO=0")."\">Hide PHP Information</a>";

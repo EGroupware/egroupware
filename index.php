@@ -82,11 +82,11 @@
   	$mailbox_status = $phpgw->msg->status($mbox,"{" . $phpgw_info["server"]["mail_server"] . ":" . $phpgw_info["server"]["mail_port"] . "}INBOX",SA_UNSEEN);
     if ($mailbox_status->unseen == 1) {
       echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\"> "
-	 . lang_common("You have 1 new message!") . "</A></td></tr>\n";
+	 . lang("You have 1 new message!") . "</A></td></tr>\n";
     }
     if ($mailbox_status->unseen > 1) {
       echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\"> "
-	 . lang_common("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
+	 . lang("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
     }
     echo "<!-- Mailox info -->\n";
   }
@@ -99,7 +99,7 @@
       . "/%' and (owner='" . $phpgw_info["user"]["userid"] . "' or access='"
       . "public')");
       while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang_common("Today is x's birthday!", $phpgw->db->f("firstname") . " "
+        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("firstname") . " "
 	  . $phpgw->db->f("lastname")) . "</td></tr>\n";
       }
       $tommorow = $phpgw->common->show_date(mktime(0,0,0,
@@ -110,7 +110,7 @@
         . "bday like '$tommorow/%' and (owner='"
         . $phpgw_info["user"]["userid"] . "' or access='public')");
       while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang_common("Tommorow is x's birthday.", $phpgw->db->f("firstname") . " "
+        echo "<tr><td>" . lang("Tommorow is x's birthday.", $phpgw->db->f("firstname") . " "
 	  . $phpgw->db->f("lastname")) . "</td></tr>\n";
       }
       echo "<!-- Birthday info -->\n";
@@ -139,7 +139,7 @@
     if ($check > 1) {
       $key = "You have x high priority events on your calendar today.";
     }
-    if ($check > 0) echo "<tr><td>" . lang_common($key,$check) . "</td></tr>";
+    if ($check > 0) echo "<tr><td>" . lang($key,$check) . "</td></tr>";
 
     echo "<!-- Calendar info -->\n";
   } 

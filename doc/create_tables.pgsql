@@ -175,4 +175,12 @@ CREATE TABLE users_newsgroups (
   newsgroup	int NOT NULL
 );
 
+CREATE TABLE lang (
+  message_id varchar(150) DEFAULT '' NOT NULL,
+  app_name varchar(100) DEFAULT 'common' NOT NULL,
+  lang varchar(5) DEFAULT '' NOT NULL,
+  content text NOT NULL,
+  unique(message_id,app_name,lang)
+);
+
 COMMIT;

@@ -33,15 +33,15 @@
       <table border=0 with=65%>
        <tr colspan=2>
         <td align=center>
-         <?php echo lang_admin("Are you sure you want to delete this application ?"); ?>
+         <?php echo lang("Are you sure you want to delete this application ?"); ?>
         <td>
        </tr>
        <tr>
          <td>
-           <a href="<?php echo $phpgw->link("applications.php") . "\">" . lang_common("No") . "</a>"; ?>
+           <a href="<?php echo $phpgw->link("applications.php") . "\">" . lang("No") . "</a>"; ?>
          </td>
          <td>
-           <a href="<?php echo $phpgw->link("deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . "\">" . lang_common("Yes") . "</a>"; ?>
+           <a href="<?php echo $phpgw->link("deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . "\">" . lang("Yes") . "</a>"; ?>
          </td>
        </tr>
       </table>

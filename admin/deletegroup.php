@@ -47,8 +47,8 @@
         $phpgw->common->navbar();
 
         echo '<p><center>';
-	   echo lang_admin("Sorry, the follow users are still a member of the group x",$group_name)
-	      . '<br>' . lang_admin("They must be removed before you can continue")
+	   echo lang("Sorry, the follow users are still a member of the group x",$group_name)
+	      . '<br>' . lang("They must be removed before you can continue")
 	      . '</td></tr>';
 
         echo '<table border="0"><tr><td>';
@@ -58,7 +58,7 @@
         }
         echo "</table></center>";
         echo "<a href=\"" . $phpgw->link("deletegroup.php","group_id=" . $group_id . "&removeusers=True")
-	   . "\">" . lang_admin("Remove all users from this group") . "</a>";
+	   . "\">" . lang("Remove all users from this group") . "</a>";
         exit;
      }
 
@@ -90,15 +90,15 @@
       <table border=0 with=65%>
        <tr colspan=2>
         <td align=center>
-         <?php echo lang_admin("Are you sure you want to delete this group ?"); ?>
+         <?php echo lang("Are you sure you want to delete this group ?"); ?>
         <td>
        </tr>
        <tr>
          <td>
-           <a href="<?php echo $phpgw->link("groups.php") . "\">" . lang_common("No") . "</a>"; ?>
+           <a href="<?php echo $phpgw->link("groups.php") . "\">" . lang("No") . "</a>"; ?>
          </td>
          <td>
-           <a href="<?php echo $phpgw->link("deletegroup.php","group_id=$group_id&confirm=true") . "\">" . lang_common("Yes") . "</a>"; ?>
+           <a href="<?php echo $phpgw->link("deletegroup.php","group_id=$group_id&confirm=true") . "\">" . lang("Yes") . "</a>"; ?>
          </td>
        </tr>
       </table>

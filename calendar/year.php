@@ -65,8 +65,8 @@
   if (! $friendly) {
      echo "&nbsp;<A HREF=\"" . $phpgw->link("year.php","friendly=1&"
 	. "&year=$year") . "\"TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	. "status = '" . lang_calendar("Generate printer-friendly version") . "'\">["
-	. lang_calendar("Printer Friendly") . "]</A>";
+	. "status = '" . lang("Generate printer-friendly version") . "'\">["
+	. lang("Printer Friendly") . "]</A>";
   }
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 

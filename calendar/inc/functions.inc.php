@@ -25,18 +25,18 @@
   $TODAYCELLBG = "#E0E0E0";// color of table cells of current day in month view
 
 
-  $month_names = array("01" =>	lang_common("January"), "07" =>	lang_common("July"),
-			   "02" =>	lang_common("February"),"08" =>	lang_common("August"),
-			   "03" =>	lang_common("March"),	"09" =>	lang_common("September"),
-			   "04" =>	lang_common("April"),	"10" =>	lang_common("October"),
-			   "05" =>	lang_common("May"),		"11" =>	lang_common("November"),
-			   "06" =>	lang_common("June"),	"12" =>	lang_common("December")
+  $month_names = array("01" =>	lang("January"), "07" =>	lang("July"),
+			   "02" =>	lang("February"),"08" =>	lang("August"),
+			   "03" =>	lang("March"),	"09" =>	lang("September"),
+			   "04" =>	lang("April"),	"10" =>	lang("October"),
+			   "05" =>	lang("May"),		"11" =>	lang("November"),
+			   "06" =>	lang("June"),	"12" =>	lang("December")
 			  );
 
-  $weekday_names = array( "0" => lang_common("Sunday"),	"1" => lang_common("Monday"),
-				 "2" =>	lang_common("Tuesday"), "3" => lang_common("Wednesday"),
-				 "4" => lang_common("Thursday"),"5" => lang_common("Friday"),
-				 "6" => lang_common("Saturday")
+  $weekday_names = array( "0" => lang("Sunday"),	"1" => lang("Monday"),
+				 "2" =>	lang("Tuesday"), "3" => lang("Wednesday"),
+				 "4" => lang("Thursday"),"5" => lang("Friday"),
+				 "6" => lang("Saturday")
 				);
 
 
@@ -60,19 +60,19 @@
     }
 
     if ($showyear) {
-       echo lang_common(date("F",$monthstart)) . " $thisyear" . "</a></font></td></tr>";
+       echo lang(date("F",$monthstart)) . " $thisyear" . "</a></font></td></tr>";
     } else {
-       echo lang_common(date("F",$monthstart)) . "</A></FONT></TD></TR>";
+       echo lang(date("F",$monthstart)) . "</A></FONT></TD></TR>";
     }
 
     echo "<tr>"
-       . "<td>" . lang_calendar("Su") . "</td>"
-       . "<td>" . lang_calendar("Mo") . "</td>"
-       . "<td>" . lang_calendar("Tu") . "</td>"
-       . "<td>" . lang_calendar("We") . "</td>"
-       . "<td>" . lang_calendar("Th") . "</td>"
-       . "<td>" . lang_calendar("Fr") . "</td>"
-       . "<td>" . lang_calendar("Sa") . "</td>"
+       . "<td>" . lang("Su") . "</td>"
+       . "<td>" . lang("Mo") . "</td>"
+       . "<td>" . lang("Tu") . "</td>"
+       . "<td>" . lang("We") . "</td>"
+       . "<td>" . lang("Th") . "</td>"
+       . "<td>" . lang("Fr") . "</td>"
+       . "<td>" . lang("Sa") . "</td>"
        . "</tr>";
 
     for ($i = $sun; date("Ymd",$i) <= date ("Ymd",$monthend);
@@ -101,32 +101,32 @@
   function weekday_short_name($w) {
     switch($w)
     {
-      case 0: return lang_calendar("Sun");
-      case 1: return lang_calendar("Mon");
-      case 2: return lang_calendar("Tue");
-      case 3: return lang_calendar("Wed");
-      case 4: return lang_calendar("Thu");
-      case 5: return lang_calendar("Fri");
-      case 6: return lang_calendar("Sat");
-      case 7: return lang_calendar("Jul");
+      case 0: return lang("Sun");
+      case 1: return lang("Mon");
+      case 2: return lang("Tue");
+      case 3: return lang("Wed");
+      case 4: return lang("Thu");
+      case 5: return lang("Fri");
+      case 6: return lang("Sat");
+      case 7: return lang("Jul");
     }
     return "unknown-weekday($w)";
   }
 
 function month_name ( $m ) {
   switch ( $m ) {
-    case 0: return lang_calendar("January");
-    case 1: return lang_calendar("February");
-    case 2: return lang_calendar("March");
-    case 3: return lang_calendar("April");
-    case 4: return lang_calendar("May");
-    case 5: return lang_calendar("June");
-    case 6: return lang_calendar("July");
-    case 7: return lang_calendar("August");
-    case 8: return lang_calendar("September");
-    case 9: return lang_calendar("October");
-    case 10: return lang_calendar("November");
-    case 11: return lang_calendar("December");
+    case 0: return lang("January");
+    case 1: return lang("February");
+    case 2: return lang("March");
+    case 3: return lang("April");
+    case 4: return lang("May");
+    case 5: return lang("June");
+    case 6: return lang("July");
+    case 7: return lang("August");
+    case 8: return lang("September");
+    case 9: return lang("October");
+    case 10: return lang("November");
+    case 11: return lang("December");
   }
   return "unknown-month($m)";
 }
@@ -439,7 +439,7 @@ function month_name ( $m ) {
 				."&day=".date("d",$date))
 	  . "\">"
 	  . "<IMG SRC=\"".$phpgw_info["server"]["app_images"]."/new.gif\" WIDTH=10 HEIGHT=10 ALT=\""
-	  . lang_calendar("New Entry") . "\" BORDER=0 ALIGN=right></A>";
+	  . lang("New Entry") . "\" BORDER=0 ALIGN=right></A>";
        echo "[ " . "<a href=\"".$phpgw->link("day.php","month=".date("m",$date)
 									."&day=".date("d",$date)."&year=".date("Y",$date))
        									. "\">" . date("d", $date) . "</a> ]<BR>\n";
@@ -487,7 +487,7 @@ function month_name ( $m ) {
          if (! $hide_icons) {
             echo "<A HREF=\"".$phpgw->link("view.php","id=".$phpgw->db->f(0))
 	       . "\" onMouseOver=\"window.status='"
-	       . lang_calendar("View this entry") . "'; return true;\"><IMG SRC=\"".$phpgw_info["server"]["app_images"]."/"
+	       . lang("View this entry") . "'; return true;\"><IMG SRC=\"".$phpgw_info["server"]["app_images"]."/"
 	       . "circle.gif\" WIDTH=5 HEIGHT=7 ALT=\"" . $phpgw->db->f("cal_description")
 	       . "\" BORDER=0></A>";
          }
@@ -575,7 +575,7 @@ function month_name ( $m ) {
   $class = "entry";
   if (! $hide_icons) {
      $hour_arr[$ind] .= "<A HREF=\"".$phpgw->link("view.php","id=$id");
-     $hour_arr[$ind] .= "\" onMouseOver=\"window.status='" . lang_calendar("View this entry")
+     $hour_arr[$ind] .= "\" onMouseOver=\"window.status='" . lang("View this entry")
 			  . "'; return true;\">";
   }
 

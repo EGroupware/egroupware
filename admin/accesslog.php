@@ -24,13 +24,13 @@
   $show_maxlog = 30;
 
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $t->set_var("lang_last_x_logins",lang_admin("Last x logins",$show_maxlog));
+  $t->set_var("lang_last_x_logins",lang("Last x logins",$show_maxlog));
 
-  $t->set_var("lang_loginid",lang_admin("LoginID"));
-  $t->set_var("lang_ip",lang_admin("IP"));
-  $t->set_var("lang_login",lang_common("Login"));
-  $t->set_var("lang_logout",lang_common("Logout"));
-  $t->set_var("lang_total",lang_common("Total"));
+  $t->set_var("lang_loginid",lang("LoginID"));
+  $t->set_var("lang_ip",lang("IP"));
+  $t->set_var("lang_login",lang("Login"));
+  $t->set_var("lang_logout",lang("Logout"));
+  $t->set_var("lang_total",lang("Total"));
 
   $t->parse("out","header");
 
@@ -90,8 +90,8 @@
   $percent = round((10000 * ($loggedout / $total)) / 100);
 
   $t->set_var("bg_color",$phpgw_info["themes"]["bg_color"]);
-  $t->set_var("footer_total",lang_admin("Total records") . ": $total");
-  $t->set_var("lang_percent",lang_admin("Percent of users that logged out") . ": $percent%");
+  $t->set_var("footer_total",lang("Total records") . ": $total");
+  $t->set_var("lang_percent",lang("Percent of users that logged out") . ": $percent%");
 
   $t->pparse("out","footer");
 

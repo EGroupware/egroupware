@@ -22,27 +22,27 @@
         <center>
          <table border=0 width=65%>
            <tr>
-             <td><?php echo lang_admin("Display"); ?></td>
+             <td><?php echo lang("Display"); ?></td>
              <td><input name="n_display"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("Base URL"); ?></td>
+             <td><?php echo lang("Base URL"); ?></td>
              <td><input name="n_base_url"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("News File"); ?></td>
+             <td><?php echo lang("News File"); ?></td>
              <td><input name="n_newsfile"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("Minutes between Reloads"); ?></td>
+             <td><?php echo lang("Minutes between Reloads"); ?></td>
              <td><input name="n_cachetime"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("Listings Displayed"); ?></td>
+             <td><?php echo lang("Listings Displayed"); ?></td>
              <td><input name="n_listings"></td>
            </tr>
            <tr>
-             <td><?php echo lang_admin("News Type"); ?></td>
+             <td><?php echo lang("News Type"); ?></td>
              <td>
 <?
 	 $news_type = array('rdf','fm','lt','sf','rdf-chan');
@@ -55,7 +55,7 @@
            </tr>
            <tr>
              <td colspan=2>
-              <input type="submit" name="submit" value="<?php echo lang_common("submit"); ?>">
+              <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
              </td>
            </tr>
          </table>
@@ -66,22 +66,22 @@
 
   } else {
      if (! $n_display)
-        $error = "<br>" . lang_admin("You must enter a display");
+        $error = "<br>" . lang("You must enter a display");
 
      if (! $n_base_url)
-        $error = "<br>" . lang_admin("You must enter a base url");
+        $error = "<br>" . lang("You must enter a base url");
 
      if (! $n_newsfile)
-        $error = "<br>" . lang_admin("You must enter a news url");
+        $error = "<br>" . lang("You must enter a news url");
 
      if (! $n_cachetime)
-        $error = "<br>" . lang_admin("You must enter the number of minutes between reload");
+        $error = "<br>" . lang("You must enter the number of minutes between reload");
 
      if (! $n_listings)
-        $error = "<br>" . lang_admin("You must enter the number of listings display");
+        $error = "<br>" . lang("You must enter the number of listings display");
 
      if (! $n_newstype)
-        $error = "<br>" . lang_admin("You must select a file type");
+        $error = "<br>" . lang("You must select a file type");
 
      if ($error) 
         exit;
@@ -92,7 +92,7 @@
      $phpgw->db->next_record();
      if ($phpgw->db->f("display")) {
         navigation_bar();
-        echo "<center>" . lang_admin("That site has already been entered") . "</center>";
+        echo "<center>" . lang("That site has already been entered") . "</center>";
         exit;
      }
 

@@ -26,10 +26,10 @@
      $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) != 0) {
-        $error = "<br>" . lang_admin("Sorry, that group name has already been taking.");
+        $error = "<br>" . lang("Sorry, that group name has already been taking.");
      }
      if (! $n_group) {
-        $error = "<br>" . lang_admin("You must enter a group name.");
+        $error = "<br>" . lang("You must enter a group name.");
      }
 
      if (! $error) {
@@ -75,7 +75,7 @@
   }
 
   $t->set_var("form_action",$phpgw->link("newgroup.php"));
-  $t->set_var("lang_group_name",lang_admin("New group name"));
+  $t->set_var("lang_group_name",lang("New group name"));
   $t->set_var("group_name_value","");
 
   $phpgw->db->query("select count(*) from accounts where status !='L'");
@@ -87,7 +87,7 @@
      $t->set_var("select_size","5");
   }
 
-  $t->set_var("lang_include_user",lang_admin("Select users for inclusion"));
+  $t->set_var("lang_include_user",lang("Select users for inclusion"));
   for ($i=0; $i<count($n_users); $i++) {
      $selected_users[$n_users[$i]] = " selected";
   }
@@ -103,7 +103,7 @@
   }
   $t->set_var("user_list",$user_list);
 
-  $t->set_var("lang_permissions",lang_admin("Select permissions this group will have"));
+  $t->set_var("lang_permissions",lang("Select permissions this group will have"));
   for ($i=0; $i<count($n_group_permissions); $i++) {
      $selected_permissions[$n_group_permissions[$i]] = " selected";
   }
@@ -116,7 +116,7 @@
      }
   }
   $t->set_var("permissions_list",$permissions_list);
-  $t->set_var("lang_submit_button",lang_admin("Create Group"));
+  $t->set_var("lang_submit_button",lang("Create Group"));
 
   $t->pparse("out","form");
 

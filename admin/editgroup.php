@@ -36,7 +36,7 @@
      $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) != 0 && $n_group != $old_group_name) {
-        $error = lang_admin("Sorry, that group name has already been taking.");
+        $error = lang("Sorry, that group name has already been taking.");
      }
 
      if (! $error) {
@@ -124,7 +124,7 @@
   $t->set_var("form_action",$phpgw->link("editgroup.php"));
   $t->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
 
-  $t->set_var("lang_group_name",lang_admin("group name"));
+  $t->set_var("lang_group_name",lang("group name"));
   $t->set_var("group_name_value",$phpgw->db->f("group_name"));
 
   $phpgw->db->query("select count(*) from accounts where status !='L'");
@@ -136,7 +136,7 @@
      $t->set_var("select_size","5");
   }
 
-  $t->set_var("lang_include_user",lang_admin("Select users for inclusion"));
+  $t->set_var("lang_include_user",lang("Select users for inclusion"));
   $phpgw->db->query("SELECT con,firstname,lastname, loginid FROM accounts where "
 	  	  . "status != 'L' ORDER BY lastname,firstname,loginid asc");
   while ($phpgw->db->next_record()) {
@@ -148,7 +148,7 @@
   }
   $t->set_var("user_list",$user_list);
 
-  $t->set_var("lang_permissions",lang_admin("Permissions this group has"));
+  $t->set_var("lang_permissions",lang("Permissions this group has"));
   while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
         $permissions_list .= "<option value=\"" . $permission[0] . "\""
@@ -157,7 +157,7 @@
      }
   }
   $t->set_var("permissions_list",$permissions_list);
-  $t->set_var("lang_submit_button",lang_admin("submit changes"));
+  $t->set_var("lang_submit_button",lang("submit changes"));
 
   $t->pparse("out","form");
 

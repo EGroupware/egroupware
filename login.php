@@ -19,7 +19,7 @@
 			       );
 
   include("header.inc.php");
-  include($phpgw_info["server"]["include_root"] . "/lang/" . "en" . "_login.inc.php");
+//  include($phpgw_info["server"]["include_root"] . "/lang/" . "en" . "_login.inc.php");
   include($phpgw_info["server"]["api_dir"] . "/phpgw_template.inc.php");
 
 /*
@@ -64,16 +64,16 @@
     global $phpgw_info;
     switch($code){
       case "1":
-        return lang_login("You have been successfully logged out");
+        return lang("You have been successfully logged out");
         break;
       case "2":
-        return lang_login("Sorry, your login has expired");
+        return lang("Sorry, your login has expired");
         break;
       case "5":
-        return "<font color=FF0000>" . lang_login("Bad login or password") . "</font>";
+        return "<font color=FF0000>" . lang("Bad login or password") . "</font>";
         break;
       case "10":
-        return "<font color=FF0000>" . lang_login("Your session could not be verified.") . "</font>";
+        return "<font color=FF0000>" . lang("Your session could not be verified.") . "</font>";
         break;
       default:
       return "&nbsp;";
@@ -116,9 +116,9 @@
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
-  $tmpl->set_var("lang_username",lang_login("username"));
-  $tmpl->set_var("lang_password",lang_login("password"));
-  $tmpl->set_var("lang_login",lang_login("login"));
+  $tmpl->set_var("lang_username",lang("username"));
+  $tmpl->set_var("lang_password",lang("password"));
+  $tmpl->set_var("lang_login",lang("login"));
 
   $tmpl->parse("login2out","login2");
   $tmpl->parse("loginout", "login");

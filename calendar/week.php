@@ -123,13 +123,13 @@
 <TABLE WIDTH=100% BORDER=0 bordercolor=FFFFFF cellspacing=2 cellpadding=2>
 
 <TR>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Sun"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Mon"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Tue"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Wed"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Thu"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Fri"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang_calendar("Sat"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Sun"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Mon"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Tue"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Wed"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Thu"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Fri"); ?></FONT></TH>
+<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Sat"); ?></FONT></TH>
 </TR>
 
 <TR>
@@ -167,7 +167,7 @@
      echo "<P>&nbsp;<A HREF=\"" . $phpgw->link("week.php","$yeartext&friendly=1");
   }
 ?>" TARGET="cal_printer_friendly"
-onMouseOver="window.status = '<?php echo lang_calendar("Generate printer-friendly version"); ?>'">[<?php echo lang_calendar("Printer Friendly"); ?>]</A>
+onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version"); ?>'">[<?php echo lang("Printer Friendly"); ?>]</A>
 
 <?php
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

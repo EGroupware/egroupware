@@ -2,3 +2,5 @@ This release requires you to resubmit all of your user accounts.  The format of 
 has changed.
 
 The inventory program has a new field called mstock.
+
+There is a new translation support system, you need to add the lang table, which can be found at the end of the create_table script

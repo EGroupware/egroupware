@@ -24,13 +24,13 @@
 
   echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'
      . $phpgw_info["theme"][bg_color] . '">'
-     . '<td align="center" colspan=4><b>' . lang_admin("Installed applications") . '</b></td></tr>'
+     . '<td align="center" colspan=4><b>' . lang("Installed applications") . '</b></td></tr>'
      . '<tr><td colspan=4>&nbsp;</td></tr>';
 
   echo "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
-     . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang_admin("title")) . "</td><td>"
-     . lang_common("Edit") . "</td> <td> " . lang_common("Delete") . " </td> <td> "
-     . lang_admin("Enabled") . " </td> <td></tr>";
+     . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang("title")) . "</td><td>"
+     . lang("Edit") . "</td> <td> " . lang("Delete") . " </td> <td> "
+     . lang("Enabled") . " </td> <td></tr>";
 
   $phpgw->db->query("select * from applications $ordermethod");
 
@@ -43,23 +43,23 @@
 
     echo "<tr bgcolor=$tr_color><td>$name</td><td width=5%><a href=\""
        . $phpgw->link("editapplication.php","app_name=" . urlencode($phpgw->db->f("app_name")))
-       . "\"> " . lang_common("Edit") . " </a></td>";
+       . "\"> " . lang("Edit") . " </a></td>";
 
     echo "<td width=5%><a href=\"" . $phpgw->link("deleteapplication.php",
-         "app_name=" . urlencode($phpgw->db->f("app_name"))) . "\"> " . lang_common("Delete")
+         "app_name=" . urlencode($phpgw->db->f("app_name"))) . "\"> " . lang("Delete")
        . " </a></td>";
 
     echo  "<td width=5%>";
     if ($phpgw->db->f("app_enabled") == 1) {
-       echo lang_common("Yes");
+       echo lang("Yes");
     } else {
-       echo "<b>" . lang_common("No") . "</b>";
+       echo "<b>" . lang("No") . "</b>";
     }
     echo "</td></tr>\n";
   }
 
   echo "</form></table><form method=POST action=\"".$phpgw->link("newapplication.php")."\">"
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
-     . "value=\"" . lang_common("Add") . "\"></td></tr></table></form>";
+     . "value=\"" . lang("Add") . "\"></td></tr></table></form>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

@@ -14,10 +14,10 @@
 
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
-  echo "<p><center>" . lang_admin("Headline Sites") . "<br><table border=0 width=65%>"
-     . "<tr bgcolor=" . $theme["th_bg"] . "><td>" . lang_admin("Site") . "</td>"
-     . "<td> " . lang_common("Edit") . " </td> <td> " . lang_common("Delete") . " </td> <td> "
-     . lang_common("View") . " </td></tr>";
+  echo "<p><center>" . lang("Headline Sites") . "<br><table border=0 width=65%>"
+     . "<tr bgcolor=" . $theme["th_bg"] . "><td>" . lang("Site") . "</td>"
+     . "<td> " . lang("Edit") . " </td> <td> " . lang("Delete") . " </td> <td> "
+     . lang("View") . " </td></tr>";
   $phpgw->db->query("select con,display from news_site order by "
 	         . "display");
 
@@ -31,15 +31,15 @@
 
     echo "<tr bgcolor=$tr_color><td>$display</td>"
        . "<td width=5%><a href=\"".$phpgw->link("editheadline.php",
-         "con=".$phpgw->db->f("con"))."\"> ".lang_common("Edit")." </a></td>";
+         "con=".$phpgw->db->f("con"))."\"> ".lang("Edit")." </a></td>";
 
     echo "<td width=5%><a href=\"".$phpgw->link("deleteheadline.php",
-         "con=".$phpgw->db->f("con"))."\"> ".lang_common("Delete")." </a></td>";
+         "con=".$phpgw->db->f("con"))."\"> ".lang("Delete")." </a></td>";
     echo  "<td width=5%><a href=\"".$phpgw->link("viewheadline.php",
-         "con=".$phpgw->db->f("con"))."\"> ".lang_common("View")." </a> </td></tr>\n";
+         "con=".$phpgw->db->f("con"))."\"> ".lang("View")." </a> </td></tr>\n";
   }
   echo "<form method=POST action=\"".$phpgw->link("newheadline.php")."\">"
-     . "<tr><td colspan=\"5\"><input type=\"submit\" value=\"".lang_common("Add")
+     . "<tr><td colspan=\"5\"><input type=\"submit\" value=\"".lang("Add")
      . "\"></td></tr></form></table></center>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

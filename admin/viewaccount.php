@@ -34,28 +34,28 @@
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
-     <td width="40%"><?php echo lang_admin("LoginID"); ?></td>
+     <td width="40%"><?php echo lang("LoginID"); ?></td>
      <td width="60%"><?php echo $phpgw->db->f("loginid"); ?></td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-     <td width="40%"><?php echo lang_common("First Name"); ?></td>
+     <td width="40%"><?php echo lang("First Name"); ?></td>
      <td width="60%"><?php echo $phpgw->db->f("firstname"); ?></td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
-     <td width="40%"><?php echo lang_common("Last Name"); ?></td>
+     <td width="40%"><?php echo lang("Last Name"); ?></td>
      <td width="60%"><?php echo $phpgw->db->f("lastname"); ?></td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-     <td width="40%"><?php echo lang_admin("permissions"); ?></td>
+     <td width="40%"><?php echo lang("permissions"); ?></td>
     <?php
 
       $i = 0;
       while ($permission = each($db_perms)) {
          if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-            $perm_display[$i] = lang_common($phpgw_info["apps"][$permission[0]]["title"]);
+            $perm_display[$i] = lang($phpgw_info["apps"][$permission[0]]["title"]);
             $i++;
          }
       }
@@ -63,11 +63,11 @@
       echo "<td>" . implode(", ", $perm_display) . "</td></tr>";
 
       echo "<tr bgcolor=\"" . $phpgw_info["theme"]["row_on"] . "\"><td>"
-	 . lang_admin("account active") . "</td> <td>";
+	 . lang("account active") . "</td> <td>";
       if ($phpgw->db->f("status") == "A")
-         echo lang_common("yes");
+         echo lang("yes");
       else
-         echo "<b>" . lang_common("no") . "</b>";
+         echo "<b>" . lang("no") . "</b>";
 
     ?></td></tr>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
