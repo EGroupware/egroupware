@@ -154,6 +154,10 @@
 			if (!is_array($values))
 			{
 				$values = array('nm' => $GLOBALS['phpgw']->session->appsession('session_data','infolog'));
+				if (isset($_GET['filter']))
+				{
+					$values['nm']['filter'] = $_GET['filter'];	// infolog/index.php sets defaultFilter that way
+				}
 			}
 			else
 			{
