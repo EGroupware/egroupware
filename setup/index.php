@@ -60,7 +60,8 @@
   if (!$ok) {
     exit;
   } else {
-    echo "<table width=\"70%\" border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='0'>\n";
+    setup_header();
+    echo "<p><table width=\"70%\" border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='0'>\n";
     echo "<tr bgcolor='#486591'>";
     echo "<th align=\"center\"><font color='#fefefe'>phpGroupWare Core Staus</font></th>";
     echo "</tr>\n";

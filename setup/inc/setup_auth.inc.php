@@ -17,24 +17,42 @@
 
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
 
-  function setup_header($title = ""){
+  function setup_header($title = "",$nologoutbutton = False) {
     global $phpgw_info, $PHP_SELF;
-
-    echo '<title>phpGroupWare setup ' . $title . '</title><BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" '
-      . 'marginright="0" marginbottom="0"><table border="0" width="100%"><tr>'
-      . '<td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '
-      . $phpgw_info["server"]["version"] . ' setup</font></td><td align="right" bgcolor="486591">';
-    echo "<form action='".$PHP_SELF."' method='POST'>\n";
-    echo "      <input type='hidden' name='FormLogout' value='True'>\n";
-    echo "      <input type='submit' name='Logout' value='Logout'>\n";
-    echo "    </form>\n";
-    echo "</td></tr></table>";
+    ?>
+    
+    <head>
+     <title>phpGroupWare setup <?php echo $title; ?></title>
+      <style type="text/css">
+       <!--
+         .link
+         { 
+            color: #FFFFFF;
+         }
+       -->
+      </style>
+    </head>
+    <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="2">
+     <tr>
+      <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version <?php 
+       echo $phpgw_info["server"]["version"]; ?> setup</font>
+      </td>
+      <td align="right" bgcolor="486591">
+       <?php
+         if ($nologoutbutton) {
+            echo "&nbsp;";
+         } else {
+            echo '<a href="' . $PHP_SELF . '?FormLogout=True" class="link">Logout</a>&nbsp;';
+         }
+       
+         echo "</td></tr></table>";
   }
 
   function loginForm($err=""){
    	global $phpgw_info, $phpgw_domain, $SetupDomain, $SetupPW, $PHP_SELF;
  	
- 	  setup_header("Please login");
+ 	  setup_header("Please login",True);
     echo "<p><body bgcolor='#ffffff'>\n";
     echo "<table border=\"0\" align=\"center\">\n";
     echo "  <tr bgcolor=\"486591\">\n";
