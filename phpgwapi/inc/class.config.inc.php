@@ -26,7 +26,8 @@
 	{
 		var $db;
 		var $appname;
-		var $config_data;
+		var $config_data;	// actual config-data
+		var $read_data;		// config-data as read from db
 
 		function config($appname = '')
 		{
@@ -45,6 +46,8 @@
 		*/
 		function read_repository()
 		{
+			$this->config_data = array();
+
 			$this->db->query("select * from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
@@ -58,6 +61,7 @@
 					$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
 				}
 			}
+			$this->read_data = $this->config_data;
 		}
 
 		/*!
@@ -66,7 +70,7 @@
 		*/
 		function save_repository()
 		{
-			if ($this->config_data)
+			if (is_array($this->config_data))
 			{
 				$this->db->lock(array('phpgw_config','phpgw_app_sessions'));
 				if($this->appname == 'phpgwapi')
@@ -77,8 +81,16 @@
 				{
 					$this->save_value($name,$value);
 				}
+				foreach($this->read_data as $name => $value)
+				{
+					if (!isset($this->config_data[$name]))	// has been deleted
+					{
+						$this->db->query("DELETE FROM phpgw_config WHERE config_app='$this->appname' AND config_name='$name'",__LINE__,__FILE__);
+					}
+				}
 				$this->db->unlock();
 			}
+			$this->read_data = $this->config_data;
 		}
 
 		/*!
@@ -97,6 +109,11 @@
 				$this->config_data[$name] = $value;
 			}
 			$name = $this->db->db_addslashes($name);
+
+			if ($app == $this->appname && $this->read_data[$name] == $value)
+			{
+				return True;	// no change ==> exit
+			}
 			$this->db->query($sql="select * from phpgw_config where config_app='$app' AND config_name='$name'",__LINE__,__FILE__);
 			if ($this->db->next_record())
 			{
@@ -134,6 +151,15 @@
 			$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
+		/*!
+		@function delete_value
+		@abstract deletes a single value from the repository, you need to call save_repository after
+		@param $variable_name string name of the config
+		*/
+		function delete_value($variable_name)
+		{
+			unset($this->config_data[$variable_name]);
+		}
 		/*!
 		@function value
 		@abstract sets a single value in the repositry, you need to call save_repository after
