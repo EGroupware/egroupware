@@ -526,7 +526,7 @@ class vfs
 			fwrite ($fp, $contents, strlen ($contents));
 			fclose ($fp);
 
-			$this->set_attributes ($p->fake_full_path, array ("size" => filesize ($p->real_full_path)), array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("size" => filesize ($p->real_full_path)));
 			return True;
 		}
 		else
@@ -563,13 +563,13 @@ class vfs
 		/* We, however, have to decide this ourselves */
 		if ($this->file_exists ($p->fake_full_path, array (RELATIVE_NONE)))
 		{
-			$vr = $this->set_attributes ($p->fake_full_path, array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")), array (RELATIVE_NONE));
+			$vr = $this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")));
 		}
 		else
 		{
 			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', directory='$p->fake_leading_dirs', name='$p->fake_name'");
 
-			$this->set_attributes ($p->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp), array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
 			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 		}
 
@@ -622,13 +622,13 @@ class vfs
 				{
 					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs', name='$t->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'");
 
-					$this->set_attributes ($t->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]), array (RELATIVE_NONE));
+					$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
 				}
 				else
 				{
 					$this->touch ($t->fake_full_path, array (RELATIVE_NONE));
 
-					$this->set_attributes ($t->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]), array (RELATIVE_NONE));
+					$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
 				}
 
 				$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
@@ -712,7 +712,7 @@ class vfs
 			$this->delete ($t->fake_full_path, array (RELATIVE_NONE));
 			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name', directory='$t->fake_leading_dirs' WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'");
 
-			$this->set_attributes ($t->fake_full_path, array ("modifiedby_id" => $account_id, modified => $this->now), array (RELATIVE_NONE));
+			$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("modifiedby_id" => $account_id, modified => $this->now));
 			$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
 
 			$rr = rename ($f->real_full_path, $t->real_full_path);
@@ -865,7 +865,7 @@ class vfs
 			{
 				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', name='$p->fake_name', directory='$p->fake_leading_dirs'");
 
-				$this->set_attributes ($p->fake_full_path, array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp), array (RELATIVE_NONE));
+				$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
 
 				$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 			}
@@ -898,7 +898,7 @@ class vfs
 			app
 	*/
 
-	function set_attributes ($file, $attributes = array (), $relatives = array (RELATIVE_CURRENT))
+	function set_attributes ($file, $relatives = array (RELATIVE_CURRENT), $attributes = array ())
 	{
 		global $phpgw;
 		global $phpgw_info;
@@ -964,19 +964,19 @@ class vfs
 		if ($p->fake_leading_dirs != $fakebase && $p->fake_leading_dirs != "/")
 		{
 			$ls_array = $this->ls ($p->fake_leading_dirs, array (RELATIVE_NONE), False, False, True);
-			$this->set_attributes ($p->fake_full_path, array ("owner_id" => $ls_array["owner_id"]), array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("owner_id" => $ls_array["owner_id"]));
 
 			return True;
 		}
 		elseif (preg_match ("+^$fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 		{
-			$this->set_attributes ($p->fake_full_path, array ("owner_id" => $matches[1]), array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("owner_id" => $matches[1]));
 
 			return True;
 		}
 		else
 		{
-			$this->set_attributes ($p->fake_full_name, array ("owner_id" => 0), array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_name, array (RELATIVE_NONE), array ("owner_id" => 0));
 
 			return True;
 		}
