@@ -275,6 +275,7 @@
 			{
 				return False;
 			}
+if (is_array($str)) $this->halt('db::db_addslashes('.print_r($str,True).",'$type') 1. arguments is an array!!!");
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->quote($str),1,-1);
 		}
@@ -849,6 +850,8 @@
 		*/
 		function quote($value,$type=False)
 		{
+			if ($this->Debug) echo "<p>db::quote('$value','$type')</p>\n";
+
 			switch($type)
 			{
 				case 'int':
@@ -868,6 +871,10 @@
 			switch($type)
 			{
 				case 'blob':
+					if ($this->Type == 'mysql')
+					{
+						break;	// ADOdb has no BlobEncode for mysql and returns an unquoted string !!!
+					}
 					return "'" . $this->Link_ID->BlobEncode($value) . "'";
 			}
 			return $this->Link_ID->quote($value);
@@ -896,6 +903,8 @@
 			{
 				$column_definitions = $this->column_definitions;
 			}
+			if ($this->Debug) echo "<p>db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre>\n";
+
 			$keys = $values = array();
 			foreach($array as $key => $data)
 			{
