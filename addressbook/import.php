@@ -47,7 +47,8 @@
 		closedir($dir_handle);
 		sort($myfilearray);
 		for ($i=0;$i<count($myfilearray);$i++) {
-			$conv .= '<OPTION VALUE="'.$myfilearray[$i].'">'.$myfilearray[$i].'</OPTION>';
+			$fname = ereg_replace('_',' ',$myfilearray[$i]);
+			$conv .= '<OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>';
 		}
 
 		$t->set_var("lang_cancel",lang("Cancel"));
