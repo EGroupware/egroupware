@@ -351,6 +351,7 @@
 
 		/* This will make sure that a user has the basic default prefs. If not it will add them */
 		$GLOBALS['phpgw']->preferences->verify_basic_settings();
+		$GLOBALS['phpgw']->applications->read_installed_apps();	// to get translated app-titles
 
 		/********* Optional classes, which can be disabled for performance increases *********/
 		while ($phpgw_class_name = each($GLOBALS['phpgw_info']['flags']))

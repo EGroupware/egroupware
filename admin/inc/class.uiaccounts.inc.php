@@ -808,7 +808,7 @@
 					$tr_color = $this->nextmatchs->alternate_row_color();
 					$perm_html .= '<tr class="'.$tr_color.'">';
 				}
-				$perm_html .= '<td width="40%">' . lang($perm_display[$i][1]) . '</td>'
+				$perm_html .= '<td width="40%">' . $perm_display[$i][1] . '</td>'
 					. '<td width="5%"><input type="checkbox" name="account_apps['
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%" align="center">'
 					. ($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
@@ -1054,7 +1054,7 @@
 				if ($perm_display[$i]['translatedName'])
 				{
 					$part1 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
-						lang($perm_display[$i]['translatedName']),
+						$perm_display[$i]['translatedName'],
 						$perm_display[$i]['appName'],
 						($userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]?' checked':''));
 				}
@@ -1064,7 +1064,7 @@
 				if ($perm_display[$i]['translatedName'])
 				{
 					$part2 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
-						lang($perm_display[$i]['translatedName']),
+						$perm_display[$i]['translatedName'],
 						$perm_display[$i]['appName'],
 						($userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]?' checked':''));
 				}

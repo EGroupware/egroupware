@@ -20,6 +20,7 @@
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
 	/* $Id$ */
+
 	/*!
 	@class applicatons
 	@abstract functions for managing and installing apps
@@ -300,9 +301,15 @@
 			{
 				while ($this->db->next_record())
 				{
+					$title = $this->db->f('app_name');
+					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) && 
+					    ($t = lang($title)) != $title.'*')
+					{
+						$title = $t;
+					}
 					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array
 					(
-						'title'		=> $this->db->f('app_name'),
+						'title'   	=> $title,
 						'name'		=> $this->db->f('app_name'),
 						'enabled'	=> True,
 						'status'	=> $this->db->f('app_enabled'),
