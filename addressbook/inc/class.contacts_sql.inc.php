@@ -577,6 +577,20 @@
 			}
 		}
 
+		// Used by admin to change ownership on account delete
+		function change_owner($old_owner='',$new_owner='')
+		{
+			if (!($new_owner && $old_owner))
+			{
+				return False;
+			}
+
+			$this->db->query("update $this->std_table set owner='$new_owner' WHERE owner=$old_owner",__LINE__,__FILE__);
+			$this->db->query("update $this->ext_table set contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
+
+			return;
+		}
+
 		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{

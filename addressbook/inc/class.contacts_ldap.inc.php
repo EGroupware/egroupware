@@ -701,6 +701,26 @@
 			}
 		}
 
+		// Used by admin to change ownership on account delete
+		function change_owner($old_owner='',$new_owner='')
+		{
+			if (!($new_owner && $old_owner))
+			{
+				return False;
+			}
+
+			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=".$old_owner);
+			$ldap_fields = ldap_get_entries($this->ldap, $sri);
+
+			$entry = "";
+			while (list($null,$entry) =  each($ldap_fields)) {
+				$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $new_owner));
+			}
+
+			$this->db->query("update $this->ext_table set contact_owner='$new_owner' WHERE contact_owner=$owner",__LINE__,__FILE__);
+			return;
+		}
+
 		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{
@@ -733,7 +753,7 @@
 			}
 
 			if ($owner) {
-				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$owner);
+				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=".$owner);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = "";
