@@ -23,13 +23,12 @@
 		var $ids = array();
 
 		var $export = array(
-			// These are normal
 			"fn"                  => "FN",
-			"n_given"             => "N.GIVEN",
-			"n_family"            => "N.FAMILY",
-			"n_middle"            => "N.MIDDLE",
-			"n_prefix"            => "N.PREFIX",
-			"n_suffix"            => "N.SUFFIX",
+			"n_given"             => "N;GIVEN",
+			"n_family"            => "N;FAMILY",
+			"n_middle"            => "N;MIDDLE",
+			"n_prefix"            => "N;PREFIX",
+			"n_suffix"            => "N;SUFFIX",
 			"sound"               => "SOUND",
 			"bday"                => "BDAY",
 			"note"                => "NOTE",
@@ -37,12 +36,10 @@
 			"geo"                 => "GEO",
 			"url"                 => "URL",
 			"pubkey"              => "PUBKEY",
-			"org_name"            => "ORG_NAME",
-			"org_unit"            => "ORG_UNIT",
+			"org_name"            => "ORG;NAME",
+			"org_unit"            => "ORG;UNIT",
 			"title"               => "TITLE",
 
-			// Following require further parsing
-			// Load these weird ones first
 			"adr_one_type"        => "ADR;TYPE;WORK",
 			"adr_two_type"        => "ADR;TYPE;HOME",
 			"tel_prefer"          => "TEL;PREFER",
@@ -174,49 +171,83 @@
 		function export_end_file($buffer) {
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++) {
-				$work     = "";
-				$workaddr = "";
-				$workattr = "";
-				$home     = "";
-				$homeaddr = "";
-				$homeattr = "";
-				$entries .= "BEGIN:VCARD\r\n";
-				$entries .= "VERSION:2.1\r\n";
-				$entries .= "X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\r\n";
+				$work      = "";
+				$workaddr  = "";
+				$workattr  = "";
+				$home      = "";
+				$homeaddr  = "";
+				$homeattr  = "";
+				$org_name  = "";
+				$org_unit  = "";
+				$firstname = "";
+				$middle    = "";
+				$lastname  = "";
+				$prefix    = "";
+				$suffix    = "";
+				$entry     = "";
+				$header    = "BEGIN:VCARD\r\n";
+				$header   .= "VERSION:2.1\r\n";
+				$header   .= "X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\r\n";
 
 				reset($this->export);
 				while (list($name,$value)=each($this->export)) {
 					if (!empty($buffer[$i][$value])) {
 						$mult = explode(";",$value);
 						if (!$mult[1]) { // Normal
-							$entries .= $value . ":".$buffer[$i][$value]."\r\n";
+							$entry .= $value . ":".$buffer[$i][$value]."\r\n";
 						} else {
 							switch ($mult[0]) {
+								case "N":
+									switch ($mult[1]) {
+										case "PREFIX":
+											$prefix    = ";" . $buffer[$i][$value];
+											break;
+										case "GIVEN":
+											$firstname = ";" . $buffer[$i][$value];
+											break;
+										case "MIDDLE":
+											$middle    = ";" . $buffer[$i][$value];
+											break;
+										case "FAMILY":
+											$lastname  =       $buffer[$i][$value];
+											break;
+										case "SUFFIX":
+											$suffix    = ";" . $buffer[$i][$value];
+											break;
+									}
+									break;
+								case "ORG":
+									switch ($mult[1]) {
+										case "NAME":
+											$org_name = $buffer[$i][$value];
+											break;
+										case "UNIT":
+											$org_unit = ";".$buffer[$i][$value];
+											break;
+									}
+									break;
 								case "ADR":
 									switch ($mult[1]) {
 										case "TYPE":
 											$types = explode(";",$buffer[$i][$value]);
 											if ($types[1]) {
-												while ($type = strtoupper(each($types))) {
-													$typei[$i][$mult[2]] .= ";".$type;
+												while ( $type = each($types) ) {
+													$typei[$i][$mult[2]] .= ";".strtoupper($type[1]);
 												}
 											} elseif ($types[0]) {
 												$typei[$i][$mult[2]] .= ";".strtoupper($types[0]);
 											} else {
 												$typei[$i][$mult[2]] .= ";".strtoupper($buffer[$i][$value]);
 											}
-											//$typei[$i][strtoupper($types[0])] = ";".$types[0];
-											//echo "TYPE;".$mult[2]."=".$buffer[$i][$value];
+											//echo "TYPE=".$typei[$i][$mult[2]];
 											break;
 										case "WORK":
 											$workaddr .= $buffer[$i][$value].";";
 											$workattr = $mult[0].";".$mult[1].$typei[$i][$mult[1]];
-											//$entries .= "A.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
 											$homeaddr .= $buffer[$i][$value].";";
 											$homeattr = $mult[0].";".$mult[1].$typei[$i][$mult[1]];
-											//$entries .= "B.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
 											break;
@@ -241,13 +272,13 @@
 											break;
 										case "WORK":
 											// Wow, this is fun!
-											$entries .= "A.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
+											$entry .= "A.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
-											$entries .= "B.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
+											$entry .= "B.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
-											$entries .= $mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
+											$entry .= $mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 									}
 									break;
@@ -259,11 +290,11 @@
 											break;
 										case "WORK":
 											$newval = "A.".$value;
-											$entries .= $newval.$emailtype.":".$buffer[$i][$value]."\r\n";
+											$entry .= $newval.$emailtype.":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
 											$newval = "B.".$value;
-											$entries .= $newval.$hemailtype.":".$buffer[$i][$value]."\r\n";
+											$entry .= $newval.$hemailtype.":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
 											break;
@@ -276,20 +307,29 @@
 					}
 				}
 
-				if (!$buffer[$i]["FN"]) {
-					if ($buffer[$i]['N.GIVEN'] || $buffer[$i]['N.FAMILY']) {
-						$entries .= "FN".$buffer[$i]['N.GIVEN']." ".$buffer[$i]['N.FAMILY']."\r\n";
+				if ($lastname && $firstname) {
+					$entries .= $header;
+					$entries .= "N:".$lastname.$firstname.$middle.$prefix.$suffix."\r\n";
+					$entries .= $entry;
+
+					if (!$buffer[$i]["FN"]) {
+						if ($lastname || $firstname ) {
+							$entries .= "FN".$firstname." ".$lastname."\r\n";
+						}
 					}
+					if ($org_name || $org_unit) {
+						$entries .= "ORG:".$org_name.$org_unit."\r\n";
+					}
+
+					$workattr = ereg_replace("ADR;","",$workattr);
+					$homeattr = ereg_replace("ADR;","",$homeattr);
+					if (!$buffer[$i]['EXT']) { $buffer[$i]['EXT'] = ";"; }
+					if ($workaddr) {$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n"; }
+					if ($homeaddr) {$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n"; }
+
+					$entries .= $work.$home."END:VCARD\r\n";
+					$entries .= "\r\n";
 				}
-
-				$workattr = ereg_replace("ADR;","",$workattr);
-				$homeattr = ereg_replace("ADR;","",$homeattr);
-				if (!$buffer[$i]['EXT']) { $buffer[$i]['EXT'] = ";"; }
-				if ($workaddr) {$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n"; }
-				if ($homeaddr) {$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n"; }
-
-				$entries .= $work.$home."END:VCARD\r\n";
-				$entries .= "\r\n";
 			}
 			$buffer = $entries;
 			return $buffer;
