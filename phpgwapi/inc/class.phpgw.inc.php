@@ -24,14 +24,13 @@
 
 	/* $Id$ */
 
-
 	/**
 	* Parent class for the phpgwAPI
 	* Parent class. Has a few functions but is more importantly used as a parent class for everything else.
-  * @author	Dan Kuykendall <dan@kuykendall.org>
+	* @author	Dan Kuykendall <dan@kuykendall.org>
 	* @copyright LGPL
 	* @package phpgwapi
-  * @access	public
+	* @access	public
 	*/
 
 	class phpgw
@@ -41,11 +40,11 @@
 		var $acl;
 		var $auth;
 		var $db; 
-  	/**
-	  * Turn on debug mode. Will output additional data for debugging purposes.
-	  * @var	string	$debug
-	  * @access	public
-	  */	
+		/**
+		 * Turn on debug mode. Will output additional data for debugging purposes.
+		 * @var	string	$debug
+		 * @access	public
+		 */	
 		var $debug = 0;		// This will turn on debugging information.
 		var $crypto;
 		var $categories;
@@ -70,89 +69,92 @@
 		* Core functions                                                           *
 		\**************************************************************************/
 
-  	/**
-	  * Strips out html chars
-		*
-	  * Used as a shortcut for stripping out html special chars. 
-		*
-	  * @access	public
-  	*	@param $s string  The string to have its html special chars stripped out.
-	  * @return string  The string with html special characters removed
-		* @syntax strip_html($string)
-		* @example $reg_string = strip_html($urlencode_string);
-	  */
+		/**
+		 * Strips out html chars
+		 *
+		 * Used as a shortcut for stripping out html special chars. 
+		 *
+		 * @access	public
+		 *	@param $s string  The string to have its html special chars stripped out.
+		 * @return string  The string with html special characters removed
+		 * @syntax strip_html($string)
+		 * @example $reg_string = strip_html($urlencode_string);
+		 */
+		function strip_html($s)
+		{
+			return htmlspecialchars(stripslashes($s));
+		}
 
-    function strip_html($s)
-    {
-       return htmlspecialchars(stripslashes($s));
-    }
-
-  	/**
-	  * Link url generator
-		*
-	  * Used for backwards compatibility and as a shortcut. If no url is passed, it will use PHP_SELF. Wrapper to session->link()
-		*
-	  * @access	public
-  	*	@param	string	$string	The url the link is for
-  	*	@param  string	$extravars	Extra params to be passed to the url
-	  * @return string	The full url after processing
-	  * @see	session->link()
-		* @syntax link($string, $extravars)
-		* @example None yet
-	  */
-		function link($url = "", $extravars = "")
+		/**
+		 * Link url generator
+		 *
+		 * Used for backwards compatibility and as a shortcut. If no url is passed, it will use PHP_SELF. Wrapper to session->link()
+		 *
+		 * @access	public
+		 *	@param	string	$string	The url the link is for
+		 *	@param  string	$extravars	Extra params to be passed to the url
+		 * @return string	The full url after processing
+		 * @see	session->link()
+		 * @syntax link($string, $extravars)
+		 * @example None yet
+		 */
+		function link($url = '', $extravars = '')
 		{
 			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
 			return $this->session->link($url, $extravars);
 		}
 
-  	/**
-	  * Handles redirects under iis and apache
-		*
-	  * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
-		*
-	  * @access	public
-  	*	@param  string The url ro redirect to
-		* @syntax redirect(key as string)
-		* @example None yet
-	  */
-		function redirect($url = "")
+		/**
+		 * Handles redirects under iis and apache
+		 *
+		 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
+		 *
+		 * @access	public
+		 *	@param  string The url ro redirect to
+		 * @syntax redirect(key as string)
+		 * @example None yet
+		 */
+		function redirect($url = '')
 		{
 			global $HTTP_ENV_VARS;
 
-			$iis = @strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
+			$iis = @strpos($HTTP_ENV_VARS['SERVER_SOFTWARE'], 'IIS', 0);
 			
-			if ( !$url ) {
+			if ( !$url )
+			{
 				$url = $PHP_SELF;
 			}
-			if ( $iis ) {
+			if ( $iis )
+			{
 				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
 				echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
 				echo "\n</HEAD><BODY>";
 				echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
 				echo "\n</BODY></HTML>";
 				exit;
-			} else {
+			}
+			else
+			{
 				Header("Location: $url");
 				print("\n\n");
 				exit;
 			}
 		}
 
-  	/**
-	  * Shortcut to tranlation class
-		*
-	  * This function is a basic wrapper to translation->translate()
-		*
-	  * @access	public
-  	*	@param  string	The key for the phrase
-  	*	@param  string	the first additional param
-  	*	@param  string	the second additional param
-  	*	@param  string	the thrid additional param
-  	*	@param  string	the fourth additional param
-	  * @see	translation->translate()
-	  */
-		function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
+		/**
+		 * Shortcut to tranlation class
+		 *
+		 * This function is a basic wrapper to translation->translate()
+		 *
+		 * @access	public
+		 *	@param  string	The key for the phrase
+		 *	@param  string	the first additional param
+		 *	@param  string	the second additional param
+		 *	@param  string	the thrid additional param
+		 *	@param  string	the fourth additional param
+		 * @see	translation->translate()
+		 */
+		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '') 
 		{
 			global $phpgw;
 			return $this->translation->translate($key);
