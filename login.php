@@ -379,6 +379,7 @@
 	{
 		$select_lang = '<select name="lang">';
 		$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
+		uasort($langs,'strcasecmp');
 		foreach ($langs as $key => $name)	// if we have a translation use it
 		{
 			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] ? ' selected="1"' : '').'>'.$name.'</option>';
