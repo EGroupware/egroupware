@@ -1,4 +1,4 @@
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
 <!ENTITY introduction SYSTEM "introduction.sgml">
 <!ENTITY general SYSTEM "general.sgml">
 <!ENTITY calendar SYSTEM "calendar.sgml">
@@ -8,7 +8,7 @@
 <!ENTITY todo SYSTEM "todo.sgml">
 <!ENTITY project SYSTEM "project.sgml">
 <!ENTITY filemanager SYSTEM "filemanager.sgml">
-
+]>
 <book id="index">
 
 <bookinfo>

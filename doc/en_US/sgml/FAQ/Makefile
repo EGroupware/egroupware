@@ -21,8 +21,8 @@ html:  FAQ.sgml
 install:
 	@if [ -e FAQ.txt ]; \
 		then \
-		echo "Copying FAQ.txt to $(INSTDIR)"; \
-		cp FAQ.txt $(INSTDIR)/; \
+		echo "Moving FAQ.txt to $(INSTDIR)"; \
+		mv FAQ.txt $(INSTDIR)/; \
 	fi
 	-@if [ -e FAQ.html ]; \
 		then \
@@ -30,34 +30,35 @@ install:
 			then \
 			mkdir -p $(INSTDIR)/html/FAQ; \
 		fi; \
-		echo "Tidying HTML files and coping them to $(INSTDIR)/html"; \
+		echo "Tidying HTML files and moving them to $(INSTDIR)/html"; \
 		echo "You may get an ignored error here, it's OK";\
 		tidy -i -clean <FAQ.html >$(INSTDIR)/html/FAQ/FAQ.html 2> /dev/null; \
+		rm FAQ.html; \
 	fi
 	@if [ -e FAQ.ps ]; \
 		then \
-		echo "Copying FAQ.ps to $(INSTDIR)/ps"; \
+		echo "Moving FAQ.ps to $(INSTDIR)/ps"; \
 		if [ ! -d $(INSTDIR)/ps ]; \
 			then \
 			mkdir $(INSTDIR)/ps; \
 		fi; \
-		cp FAQ.ps $(INSTDIR)/ps; \
+		mv FAQ.ps $(INSTDIR)/ps; \
 	fi
 
 clean: 
 	@if [ -e FAQ.txt ];\
 		then \
 		rm FAQ.txt ;\
-		rm txt; \
 	fi
+	-rm txt
 	@if [ -e FAQ.html ]; \
 		then \
 		rm FAQ.html; \
-		rm html; \
 	fi
+	-rm html
 	@if [ -e FAQ.ps ]; \
 		then \
 		rm FAQ.ps; \
-		rm ps; \
 	fi
+	-rm ps
 
