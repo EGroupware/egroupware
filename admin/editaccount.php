@@ -283,7 +283,7 @@
 
 		if ($_userData['old_loginid'] != $_userData['account_lid']) 
 		{
-			if ($phpgw->accounts->exists($_userData['account_loginid']))
+			if ($phpgw->accounts->exists($_userData['account_lid']))
 			{
 				$error[$totalerrors] = lang('That loginid has already been taken');
 				$totalerrors++;
