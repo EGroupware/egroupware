@@ -35,8 +35,35 @@
 				<link rel="icon" href="favicon.ico" type="image/x-ico"/>
 				<link rel="shortcut icon" href="favicon.ico"/>
 				<title><xsl:value-of select="website_title"/></title>
+				<script type="text/javascript" language="javascript" src="{$webserver_url}/phpgwapi/templates/default/scripts.js"></script>
+				<xsl:choose>
+					<xsl:when test="app_java_script != ''">
+						<xsl:value-of disable-output-escaping="yes" select="app_java_script"/>
+					</xsl:when>
+				</xsl:choose>
+				<xsl:choose>
+					<xsl:when test="app_java_script_url != ''">
+						<xsl:variable name="app_java_script_url" select="app_java_script_url"/>
+						<script type="text/javascript" language="javascript" src="{$webserver_url}/{$current_app}/templates/{$app_java_script_url}"></script>
+					</xsl:when>
+				</xsl:choose>
 				<link rel="stylesheet" type="text/css" href="{$phpgw_css_file}"/>
 				<link rel="stylesheet" type="text/css" href="{$theme_css_file}"/>
+				<xsl:choose>
+					<xsl:when test="app_css != ''">
+						<style type="text/css">
+							<xsl:text>&lt;!--</xsl:text>
+								<xsl:value-of disable-output-escaping="yes" select="app_css"/>
+							<xsl:text>--&gt;</xsl:text>
+						</style>
+					</xsl:when>
+				</xsl:choose>
+				<xsl:choose>
+					<xsl:when test="app_css_url != ''">
+						<xsl:variable name="app_css_url" select="app_css_url"/>
+						<link rel="stylesheet" type="text/css" href="{$webserver_url}/{$current_app}/templates/{$app_css_url}"/>
+					</xsl:when>
+				</xsl:choose>
 			</head>
 			<body>
 				<!-- BEGIN top_part -->

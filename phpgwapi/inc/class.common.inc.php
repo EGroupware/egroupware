@@ -1322,12 +1322,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['app_tpl'] = '';
 
 			$menuaction	= get_var('menuaction',Array('GET'));
-			if ($menuaction && $GLOBALS['phpgw_info']['flags']['xslt_app'])
+			if ($menuaction && isset($GLOBALS['phpgw_info']['flags']['xslt_app']))
 			{
 				list($app,$class,$method) = explode('.',$menuaction);
 				$var['app_tpl']	= $method;
-				//$app_function	= strrchr($menuaction,'.');
-				//$var['app_tpl']	= substr($app_function,1,strlen($app_function));
 			}
 
 			$var['lang_powered_by']			= lang('powered by');
@@ -1341,8 +1339,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$var['app_header'] = $GLOBALS['phpgw_info']['flags']['app_header'];
 			}
-			$var['java_script'] = $var['app_css'] = '';
-			if (isset($_GET['menuaction']))
+
+			$var['app_java_script'] = $var['app_css'] = $var['app_java_script_url'] = $var['app_css_url'] = '';
+
+			if (isset($_GET['menuaction']) && isset($GLOBALS['phpgw_info']['flags']['etemplate_app']))
 			{
 				list($app,$class,$method) = explode('.',$_GET['menuaction']);
 				$class = CreateObject("$app.$class");
@@ -1352,18 +1352,29 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 				if (isset($class->public_functions['java_script']))
 				{
-					$var['java_script'] = $class->java_script();
+					$var['app_java_script'] = $class->java_script();
 				}
 				unset($class);
 			}
+
 			if (isset($GLOBALS['phpgw_info']['flags']['css']))
 			{
 				$var['app_css'] .= $GLOBALS['phpgw_info']['flags']['css'];
 			}
 			if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
 			{
-				$var['java_script'] .= $GLOBALS['phpgw_info']['flags']['java_script'];
+				$var['app_java_script'] .= $GLOBALS['phpgw_info']['flags']['java_script'];
 			}
+
+			if (isset($GLOBALS['phpgw_info']['flags']['css_url']))
+			{
+				$var['app_css_url'] = $GLOBALS['phpgw_info']['flags']['css_url'];
+			}
+			if (isset($GLOBALS['phpgw_info']['flags']['java_script_url']))
+			{
+				$var['app_java_script_url'] = $GLOBALS['phpgw_info']['flags']['java_script_url'];
+			}
+
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
 		}
 
