@@ -46,6 +46,12 @@
 			$this->db      = $GLOBALS['phpgw']->db;
 		}
 
+		function delete($record_id)
+		{
+			$this->db->query("delete from phpgw_history_log where history_record_id='$record_id' and "
+				. "history_appname='" . $this->appname . "'",__LINE__,__FILE__);
+		}
+
 		function add($status,$record_id,$new_value)
 		{
 			$this->db->query("insert into phpgw_history_log (history_record_id,"
