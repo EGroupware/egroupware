@@ -32,19 +32,17 @@
 	$phpgw_info['flags']['enable_browser_class'] = True;
 	include('../header.inc.php');
 
-	$sep = SEP;
-
 	if (!$convert)
 	{
 		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array('export' => 'export.tpl'));
 
-		$dir_handle=opendir($phpgw_info['server']['app_root'].$sep.'export');
+		$dir_handle=opendir(PHPGW_APP_ROOT . SEP . 'export');
 		$i=0; $myfilearray='';
 		while ($file = readdir($dir_handle))
 		{
 			#echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."conv".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != '.') && is_file($phpgw_info['server']['app_root'].$sep.'export'.$sep.$file) )
+			if ((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_ROOT . SEP . 'export' . SEP . $file) )
 			{
 				$myfilearray[$i] = $file;
 				$i++;
@@ -97,7 +95,7 @@
 		}
 		else
 		{
-			include ($phpgw_info['server']['app_root'].$sep.'export'.$sep.$conv_type);
+			include (PHPGW_APP_ROOT . SEP . 'export' . SEP . $conv_type);
 			$buffer=array();
 			$this = new export_conv;
 

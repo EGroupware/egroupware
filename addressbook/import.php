@@ -19,19 +19,17 @@
 	);
 	include('../header.inc.php');
 
-	$sep = SEP;
-
 	if (!$convert)
 	{
 		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array('import' => 'import.tpl'));
 
-		$dir_handle=opendir($phpgw_info['server']['app_root'] . $sep . 'import');
+		$dir_handle=opendir(PHPGW_APP_ROOT . SEP . 'import');
 		$i=0; $myfilearray='';
 		while ($file = readdir($dir_handle))
 		{
 			//echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != '.') && is_file($phpgw_info['server']['app_root'] . $sep . 'import' . $sep . $file) )
+			if ((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_ROOT . SEP . 'import' . SEP . $file) )
 			{
 				$myfilearray[$i] = $file;
 				$i++;
@@ -69,7 +67,7 @@
 	}
 	else
 	{
-		include ($phpgw_info['server']['app_root'] . $sep . 'import' . $sep . $conv_type);
+		include (PHPGW_APP_ROOT . SEP. 'import' . SEP . $conv_type);
 
 		if ($private == '') { $private = 'public'; }
 		$row=0;
