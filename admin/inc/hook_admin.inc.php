@@ -11,18 +11,19 @@
 
   /* $Id$ */
 
-{ 
-	$imgpath = $phpgw->common->image($appname,'navbar.gif');
-	section_start(ucfirst($appname),$imgpath);
-
-	section_item($phpgw->link('/admin/accounts.php'),lang('User accounts'));
-	section_item($phpgw->link('/admin/groups.php'),lang('User groups'));
-	section_item($phpgw->link('/admin/applications.php'),lang('Applications'));
-	section_item($phpgw->link('/admin/categories.php'),lang('Global Categories'));
-	section_item($phpgw->link('/admin/mainscreen_message.php'),lang('Change main screen message'));
-	section_item($phpgw->link('/admin/currentusers.php'),lang('View sessions'));
-	section_item($phpgw->link('/admin/accesslog.php'),lang('View Access Log'));
-
-	section_end(); 
+{
+// Only Modify the $file and $title variables.....
+	$title = $appname;
+	$file = Array(
+		'User Accounts'	=> $phpgw->link('/admin/accounts.php'),
+		'User Groups'	=> $phpgw->link('/admin/groups.php'),
+		'Applications'		=> $phpgw->link('/admin/applications.php'),
+		'Global Categories'		=> $phpgw->link('/admin/categories.php'),
+		'Change Main Screen Message'		=> $phpgw->link('/admin/mainscreen_message.php'),
+		'View Sessions'		=> $phpgw->link('/admin/currentusers.php'),
+		'View Access Log'		=> $phpgw->link('/admin/accesslog.php')
+	);
+//Do not modify below this line
+	display_section($appname,$title,$file);
 }
 ?>

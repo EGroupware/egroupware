@@ -16,62 +16,66 @@
 	include('../header.inc.php');
 
 	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$pref_tpl->set_file(array(
-		'T_index_out' => 'index.tpl',
-	));
+	$templates = Array(
+		'pref' => 'index.tpl'
+	);
+	
+	$pref_tpl->set_file($templates);
 
-	$pref_tpl->set_block('T_index_out','B_icon_cell','V_icon_cell');
-	$pref_tpl->set_block('T_index_out','B_link_cell','V_link_cell');
+	$pref_tpl->set_block('pref','list');
+	$pref_tpl->set_block('pref','app_row');
+	$pref_tpl->set_block('pref','app_row_noicon');
+	$pref_tpl->set_block('pref','link_row');
+	$pref_tpl->set_block('pref','spacer_row');
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='')
 	{
-		global $phpgw,$phpgw_info, $loopnum, $pref_tpl;
+		global $phpgw_info, $pref_tpl;
 		
 		$pref_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
-		$pref_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
+//		$pref_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
 		$pref_tpl->set_var('app_name',lang($name));
 		$pref_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
-			$pref_tpl->parse('V_icon_cell','B_icon_cell');
+			$pref_tpl->parse('rows','app_row',True);
 		}
 		else
 		{
-			$pref_tpl->set_var('V_icon_cell','&nbsp;');
+			$pref_tpl->parse('rows','app_row_noicon',True);
 		} 
-
-		// prepare an iteration variable for section_item to know when to add a <br>
-		$loopnum = 1;
 	}
 
 	function section_item($pref_link='',$pref_text='')
 	{
-		global $phpgw,$phpgw_info, $loopnum, $pref_tpl;
-		if ($loopnum > 1)
-		{
-			$pref_tpl->set_var('insert_br','<br>');
-		}
-		else
-		{
-			$pref_tpl->set_var('insert_br','');
-		}
+		global $pref_tpl;
 
 		$pref_tpl->set_var('pref_link',$pref_link);
 		$pref_tpl->set_var('pref_text',$pref_text);		
-		$pref_tpl->parse('V_link_cell','B_link_cell',True);
-		$loopnum = $loopnum + 1;
+		$pref_tpl->parse('rows','link_row',True);
 	} 
 
 	function section_end()
 	{
-		global $phpgw,$phpgw_info, $pref_tpl;
-		$pref_tpl->pparse('out','T_index_out');
-		$pref_tpl->set_var('V_icon_cell','');
-		$pref_tpl->set_var('V_link_cell','');
+		global $pref_tpl;
+		
+		$pref_tpl->parse('rows','spacer_row',True);
+	}
+
+	function display_section($appname,$title,$file)
+	{
+		global $phpgw;
+		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')));
+
+		while(list($text,$url) = each($file))
+		{
+			section_item($url,lang($text));
+		}
+		section_end(); 
 	}
 
 	$phpgw->common->hook();
-
+	$pref_tpl->pparse('out','list');
 	$phpgw->common->phpgw_footer();
 ?>

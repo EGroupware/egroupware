@@ -11,11 +11,13 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-
-	$imgpath = $phpgw->common->image($appname,'navbar.gif');
-	section_start(ucfirst($appname),$imgpath);
-
-	section_item($phpgw->link('/calendar/holiday_admin.php'),lang('Calendar Holiday Management'));
-
-	section_end();
+{
+// Only Modify the $file and $title variables.....
+	$title = $appname;
+	$file = Array(
+		'Calendar Holiday Management'		=> $phpgw->link('/calendar/holiday_admin.php')
+	);
+//Do not modify below this line
+	display_section($appname,$title,$file);
+}
 ?>

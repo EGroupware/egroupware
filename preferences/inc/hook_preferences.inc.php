@@ -12,34 +12,16 @@
 
   /* $Id$ */
 {
-	echo "<p>\n";
-	$imgfile = $phpgw->common->get_image_dir("preferences")."/" . $appname .".gif";
-	if (file_exists($imgfile))
-	{
-		$imgpath = $phpgw->common->get_image_path("preferences")."/" . $appname .".gif";
-	} else
-	{
-		$imgfile = $phpgw->common->get_image_dir("preferences")."/navbar.gif";
-		if (file_exists($imgfile))
-		{
-			$imgpath = $phpgw->common->get_image_path("preferences")."/navbar.gif";
-		} else
-		{
-			$imgpath = "";
-		}
-	}
 
-	section_start("Account Preferences",$imgpath);
-
-
+//Do not modify below this line
 	// Actual content
+	$title = $appname;
 	if ($phpgw->acl->check('changepassword',1))
 	{
-		section_item($phpgw->link('/preferences/changepassword.php'), lang("change your password"));
+		$file['Change your Password'] = $phpgw->link('/preferences/changepassword.php');
 	}
-	
-	section_item($phpgw->link('/preferences/settings.php'), lang('change your settings'));
+	$file['change your settings'] = $phpgw->link('/preferences/settings.php');
 
-	section_end(); 
+	display_section($appname,$title,$file);
 }
 ?>

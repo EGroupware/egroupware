@@ -12,30 +12,12 @@
 
   /* $Id$ */
 {
-	echo "<p>\n";
-	$imgfile = $phpgw->common->get_image_dir($appname) . SEP . $appname . '.gif';
-	if (file_exists($imgfile))
-	{
-		$imgpath = $phpgw->common->get_image_path($appname) . SEP . $appname . '.gif';
-	}
-	else
-	{
-		$imgfile = $phpgw->common->get_image_dir($appname) . SEP . 'navbar.gif';
-		if (file_exists($imgfile))
-		{
-			$imgpath = $phpgw->common->get_image_path($appname) . SEP . 'navbar.gif';
-		}
-		else
-		{
-			$imgpath = '';
-		}
-	}
-
-	section_start(ucfirst($appname),$imgpath);
-
-	section_item($phpgw->link('/addressbook/admin.php'),
-		lang('Countries'));
-
-	section_end(); 
+// Only Modify the $file and $title variables.....
+	$title = $appname;
+	$file = Array(
+		'Countries'		=> $phpgw->link('/addressbook/admin.php')
+	);
+//Do not modify below this line
+	display_section($appname,$title,$file);
 }
 ?>

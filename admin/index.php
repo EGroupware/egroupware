@@ -65,6 +65,18 @@
 		$admin_tpl->parse('rows','spacer_row',True);
 	}
 
+	function display_section($appname,$title,$file)
+	{
+		global $phpgw;
+		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')));
+
+		while(list($text,$url) = each($file))
+		{
+			section_item($url,lang($text));
+		}
+		section_end(); 
+	}
+
 	$phpgw->common->hook();
 	$admin_tpl->pparse('out','list');
 

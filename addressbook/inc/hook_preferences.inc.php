@@ -12,33 +12,15 @@
 
   /* $Id$ */
 {
-	echo "<p>\n";
-	$imgfile = $phpgw->common->get_image_dir($appname) . SEP . $appname . '.gif';
-	if (file_exists($imgfile)) {
-		$imgpath = $phpgw->common->get_image_path($appname) . SEP . $appname . '.gif';
-	} else {
-		$imgfile = $phpgw->common->get_image_dir($appname) . SEP . 'navbar.gif';
-		if (file_exists($imgfile)) {
-			$imgpath = $phpgw->common->get_image_path($appname) . SEP . 'navbar.gif';
-		} else {
-			$imgpath = '';
-		}
-	}
-
-	section_start(ucfirst($appname),$imgpath);
-
-	section_item($phpgw->link('/addressbook/preferences.php'),
-		lang('Preferences'));
-
-	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
-		lang('Grant Access'));
-
-	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname . '&cats_level=True&global_cats=True'),
-		lang('Edit Categories'));
-
-	section_item($phpgw->link('/addressbook/fields.php'),
-		lang('Edit custom fields'));
-
-	section_end(); 
+// Only Modify the $file and $title variables.....
+	$title = $appname;
+	$file = Array(
+		'Preferences'	=> $phpgw->link('/addressbook/preferences.php'),
+		'Grant Access'	=> $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
+		'Edit Categories'	=> $phpgw->link('/preferences/categories.php','cats_app='.$appname . '&cats_level=True&global_cats=True'),
+		'Edit custom fields'	=> $phpgw->link('/addressbook/fields.php')
+	);
+//Do not modify below this line
+	display_section($appname,$title,$file);
 }
 ?>
