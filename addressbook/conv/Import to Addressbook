@@ -26,6 +26,7 @@
 	class import_conv
 	{
 		var $currentrecord = array(); //used for buffering to allow uid lines to go first
+		var $id;
 
 		var $import = array(
 			"Title" => "title", 
@@ -123,30 +124,29 @@
 	
 			//$contacts = CreateObject("phpgwapi.contacts");
 			echo '<br>'; 
-			while ( list($name,$value) = each($buffer) ) {
-				echo '<br>'.$name.' => '.$value;
-				$i++;
-				//$contacts->add($phpgw_info["user"]["account_id"],$entry);
+			for ($i=0;$i<count($buffer);$i++) {
+				while ( list($name,$value) = each($buffer[$i]) ) {
+					echo '<br>'.$i.': '.$name.' => '.$value;
+					//$contacts->add($phpgw_info["user"]["account_id"],$entry);
+				}
 			}
-  
+
 			return "Successfully imported $i records into your addressbook.";
 		}
 
 		function import_start_record($buffer) {
 			$top=array();
+			++$this->id;
 			$this->currentrecord = $top;
 			return $buffer;
 		}
 
 		function import_end_record($buffer,$private="private") {
 			global $phpgw_info;
-			$namelist=array();
 			while ( list($name, $value) = each($this->currentrecord)) {
-				$namelist = $namelist + array($name => $value);
-				echo '<br>'.$name.' => '.$value;
+				$buffer[$this->id][$name] = $value;
+				//echo '<br>'.$name.' => '.$value;
 			}
-			echo '<br>';
-			$buffer = $buffer + $namelist;
 			return $buffer;
 		}
 
