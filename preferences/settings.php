@@ -35,7 +35,9 @@
 			}
 		}
 
-		$memberships = $phpgw->accounts->memberships($owner);
+		$acct = CreateObject('phpgwapi.accounts');
+		$memberships = $acct->membership($owner);
+		unset($acct);
 		for ($k=0;$k<count($memberships);$k++)
 		{
 			$apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
