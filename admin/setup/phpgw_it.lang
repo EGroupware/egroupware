@@ -1,4 +1,4 @@
-%1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 account utenti
+%1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 accounts utenti
 %1 - %2 of %3 user groups	admin	it	%1 - %2 di %3 gruppi utenti
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile !!!
 (stored password will not be shown here)	admin	it	(La password memorizzata non verrà mostrata qui)
@@ -8,7 +8,7 @@ account active	admin	it	Account attivo
 account has been created	common	it	L'account è stato creato
 account has been deleted	common	it	L'account è stato eliminato
 account has been updated	common	it	L'account è stato aggiornato
-account list	admin	it	Elenco Account
+account list	admin	it	Lista Account
 account permissions	admin	it	Permessi account
 account preferences	admin	it	Preferenze account
 acl manager	admin	it	Gestione ACL
@@ -221,7 +221,7 @@ list current sessions	admin	it	Lista sessioni currenti
 list of current users	admin	it	lista utenti attivi
 login history	common	it	Cronologia Collegamenti
 login message	admin	it	Messaggio di Login
-login screen	admin	it	Schermata di Login
+login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
 loginid	admin	it	LoginID
@@ -272,7 +272,7 @@ remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gru
 remove all users from this group ?	admin	it	Rimuovi tutti gli utenti da questo gruppo ?
 return to admin mainscreen	admin	it	ritorna alla pagina principale di amministrazione
 return to view account	admin	it	Ritorna alla visualizzazone dell'account
-run asynchronous services	admin	it	Esegui servizi Asincroni
+run asynchronous services	admin	it	Esegui lo Schedulatore
 save the category	admin	it	salva la categoria
 save the category and return back to the list	admin	it	salva la categoria e ritorna alla lista
 search accounts	admin	it	Cerca account
@@ -331,7 +331,7 @@ the two passwords are not the same	admin	it	Le due password non coincidono
 the users bellow are still members of group %1	admin	it	L'utente sottostante fa ancora parte del gruppo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	it	C'è già un gruppo con questo nome. L'ID utente non può avere lo stesso nome di un gruppo.
 they must be removed before you can continue	admin	it	Devono essere rimossi prima di poter proseguire
-this application is current	admin	it	Questa applicazione è aggiornata
+this application is current	admin	it	Questa è l'applicazione corrente
 this application requires an upgrade	admin	it	Questa applicazione ha bisogno di un aggiornamento
 this category is currently being used by applications as a parent category	admin	it	Questa categoria è attualmente utilizzata dalle applicazioni come categoria padre
 timeout for application session data in seconds (default 86400 = 1 day)	admin	it	Timeout per i dati della sessione di un'applicazione in secondi (predefinito 86400 = 1 giorno)
