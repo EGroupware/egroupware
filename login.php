@@ -211,19 +211,25 @@
 		}
 		else
 		{
-			if ($GLOBALS['phpgw_forward'])
+			$forward = get_var('phpgw_forward', array('GET', 'POST'), 0);
+			if($forward)
 			{
-				while (list($name,$value) = each($_GET))
+				$extra_vars['phpgw_forward'] =  $forward;
+				foreach($_GET as $name => $value)
 				{
 					if (ereg('phpgw_',$name))
 					{
-						$extra_vars .= '&' . $name . '=' . urlencode($value);
+						$extra_vars[$name] = urlencode($value);
 					}
 				}
 			}
-			check_langs();
+			if (!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
+			{
+				check_langs();
+			}
+			$extra_vars['cd'] = 'yes';
 			
-			$GLOBALS['phpgw']->redirect_link('/home.php','cd=yes' . $extra_vars);
+			$GLOBALS['phpgw']->redirect_link('/home.php', $extra_vars);
 		}
 	}
 	else
@@ -277,13 +283,14 @@
 	{
 		reset($GLOBALS['phpgw_domain']);
 		list($default_domain) = each($GLOBALS['phpgw_domain']);
+
 		if ($_COOKIE['last_domain'] != $default_domain && !empty($_COOKIE['last_domain']))
 		{
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
 	}
 
-	while (list($name,$value) = each($_GET))
+	foreach($_GET as $name => $value)
 	{
 		if (ereg('phpgw_',$name))
 		{
