@@ -29,7 +29,9 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
-        $phpgw->db->query("INSERT INTO groups (group_name) VALUES ('$n_group') ");
+        $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
+				. "('$n_group','"
+				. $phpgw->groups->array_to_string("none",$n_group_permissions) . "') ");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
         $groups_con = $phpgw->db->f("group_id");
 
@@ -96,6 +98,21 @@
 									   $phpgw->db->f("lastname")) . "</option>";
       }
       echo "</select></td></tr>\n";
+
+      for ($i=0; $i<count($n_group_permissions); $i++) {
+         $selected_permissions[$n_group_permissions[$i]] = " selected";
+      }
+
+      echo "<tr><td>" . lang_admin("Select permissions this group will have") . "</td> <td>"
+        .  "<select name=\"n_group_permissions[]\" multiple size=5>\n";
+             while ($permission = each($phpgw_info["apps"])) {
+               if ($permission[1]["enabled"]) {
+                  echo "<option value=\"" . $permission[0] . "\""
+			 . $selected_permissions[$permission[0]] . ">"
+			 . $permission[1]["title"] . "</option>";
+               }
+	     }
+      echo "</select></td></tr>";
 
       ?>
        <tr>
