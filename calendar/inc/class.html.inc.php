@@ -15,13 +15,8 @@
 
 class html
 {
-	var $prefered_img_title;
-
 	function html()
 	{
-		global $HTTP_USER_AGENT;
-																// should be Ok for all HTML 4 compatible browsers
-		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
 	}
 
 	function input_hidden($vars,$value='')
@@ -145,7 +140,7 @@ class html
 
 		if ($title)
 		{
-			$html .= " $this->prefered_img_title=\"$title\"";
+			$html .= " alt=\"$title\" title=\"$title\"";
 		}
 		if ($opts)
 		{

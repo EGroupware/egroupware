@@ -117,14 +117,13 @@
 		var $modified;
 		var $deleted;
 		var $added;
-
 		var $is_group = False;
-
 		var $soap = False;
-		
 		var $use_session = False;
-
 		var $today;
+
+		var $sortby;
+		var $num_months;
 
 		function bocalendar($session=0)
 		{
@@ -192,6 +191,7 @@
 			$this->printer_friendly = (intval(get_var('friendly',Array('HTTP_GET_VARS','HTTP_POST_VARS','DEFAULT'),0)) == 1?True:False);
 
 			$this->filter = get_var('filter',Array('HTTP_POST_VARS','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
+			$this->sortby = get_var('sortby',Array('HTTP_POST_VARS'));
 			$this->cat_id = get_var('cat_id',Array('HTTP_POST_VARS'));
 
 			$this->so = CreateObject('calendar.socalendar',
@@ -208,6 +208,7 @@
 			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$month = get_var('month',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$day = get_var('day',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$num_months = get_var('num_months',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			
 			if(isset($date) && $date!='')
 			{
@@ -221,7 +222,7 @@
 				{
 					$this->year = $year;
 				}
-				elseif($this->year == 0)
+				else	// if($this->year == 0)
 				{
 					$this->year = date('Y',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
@@ -229,7 +230,7 @@
 				{
 					$this->month = $month;
 				}
-				elseif($this->month == 0)
+				else	// if($this->month == 0)
 				{
 					$this->month = date('m',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
@@ -237,11 +238,21 @@
 				{
 					$this->day = $day;
 				}
-				elseif($this->day == 0)
+				else	// if($this->day == 0)
 				{
 					$this->day = date('d',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
 			}
+
+			if(isset($num_months) && $num_months!='')
+			{
+				$this->num_months = $num_months;
+			}
+			elseif($this->num_months == 0)
+			{
+				$this->num_months = 1;
+			}
+
 
 			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
 
@@ -355,10 +366,7 @@
 		{
 			if ($this->use_session)
 			{
-				if($this->debug)
-				{
-					echo '<!-- '."\n".'Save:'."\n"._debug_array($data,False)."\n".' -->'."\n";
-				}
+				print_debug('Save',_debug_array($data,False));
 				$GLOBALS['phpgw']->session->appsession('session_data','calendar',$data);
 			}
 		}
@@ -366,17 +374,16 @@
 		function read_sessiondata()
 		{
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','calendar');
-			if($this->debug)
-			{
-				echo '<!-- '."\n".'Read:'."\n"._debug_array($data,False)."\n".' -->'."\n";
-			}
+			print_debug('Read',_debug_array($data,False));
 
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
+			$this->sortby = $data['sortby'];
 			$this->owner  = intval($data['owner']);
 			$this->year   = intval($data['year']);
 			$this->month  = intval($data['month']);
 			$this->day    = intval($data['day']);
+			$this->num_months = intval($data['num_months']);
 		}
 
 		function read_entry($id)
@@ -400,25 +407,22 @@
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
 				$temp_event = $this->get_cached_event();
-			   $event = $this->read_entry(intval($param['id']));
-			   if($this->owner == $event['owner'])
-			   {
-			   	$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $GLOBALS['phpgw']->datetime->tz_offset;
-			   	$event['recur_exception'][] = intval($exception_time);
-			   	$this->so->cal->event = $event;
-			   	if($this->debug)
-			   	{
-				   	echo '<!-- exception time = '.$event['recur_exception'][count($event['recur_exception']) -1].' -->'."\n";
-				   	echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
-				   }
-   				$this->so->add_entry($event);
-   				$cd = 16;
-   			}
-   			else
-   			{
-   			   $cd = 60;
-   			}
+				$event = $this->read_entry(intval($param['id']));
+//				if($this->owner == $event['owner'])
+//				{
+				$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$event['recur_exception'][] = intval($exception_time);
+				$this->so->cal->event = $event;
+				print_debug('exception time',$event['recur_exception'][count($event['recur_exception']) -1]);
+				print_debug('count event exceptions',count($event['recur_exception']));
+				$this->so->add_entry($event);
+				$cd = 16;
 			}
+			else
+			{
+				$cd = 60;
+			}
+//			}
 			$this->so->cal->event = $temp_event;
 			unset($temp_event);
 			return $cd;
@@ -428,17 +432,17 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
-			   $temp_event = $this->read_entry($id);
-			   if($this->owner == $temp_event['owner'])
-			   {
-   				$this->so->delete_entry($id);
-   				$cd = 16;
-   			}
-   			else
-   			{
-   			   $cd = 60;
-   			}
+				$temp_event = $this->read_entry($id);
+//				if($this->owner == $temp_event['owner'])
+//				{
+				$this->so->delete_entry($id);
+				$cd = 16;
 			}
+			else
+			{
+				$cd = 60;
+			}
+//			}
 			return $cd;
 		}
 
@@ -448,39 +452,27 @@
 			{
 				$event = $this->so->read_entry($params['cal_id']);
 				@reset($params['reinstate_index']);
-				echo '<!-- Count of reinstate_index = '.count($params['reinstate_index']).' -->'."\n";
+				print_debug('Count of reinstate_index',count($params['reinstate_index']));
 				if(count($params['reinstate_index']) > 1)
 				{
 					while(list($key,$value) = each($params['reinstate_index']))
 					{
-						if($this->debug)
-						{
-							echo '<!-- reinstate_index ['.$key.'] = '.intval($value).' -->'."\n";
-							echo '<!-- exception time = '.$event['recur_exception'][intval($value)].' -->'."\n";
-						}
+						print_debug('reinstate_index ['.$key.']',intval($value));
+						print_debug('exception time',$event['recur_exception'][intval($value)]);
 						unset($event['recur_exception'][intval($value)]);
-						if($this->debug)
-						{
-							echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
-						}
-				 	}
+						print_debug('count event exceptions',count($event['recur_exception']));
+					}
 				}
 				else
 				{
-			   	if($this->debug)
-			   	{
-		   			echo '<!-- reinstate_index [0] = '.intval($params['reinstate_index'][0]).' -->'."\n";
-			   		echo '<!-- exception time = '.$event['recur_exception'][intval($params['reinstate_index'][0])].' -->'."\n";
-				   }
+					print_debug('reinstate_index[0]',intval($params['reinstate_index'][0]));
+					print_debug('exception time',$event['recur_exception'][intval($params['reinstate_index'][0])]);
 					unset($event['recur_exception'][intval($params['reinstate_index'][0])]);
-			   	if($this->debug)
-			   	{
-				   	echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
-			   	}
-			   }
-		   	$this->so->cal->event = $event;
-  				$this->so->add_entry($event);
-  				return 42;
+					print_debug('count event exceptions',count($event['recur_exception']));
+				}
+				$this->so->cal->event = $event;
+				$this->so->add_entry($event);
+				return 42;
 			}
 			else
 			{
@@ -654,14 +646,20 @@
 					$part = Array();
 					for($i=0;$i<count($parts);$i++)
 					{
+						if (($accept_type = substr($parts[$i],-1,1)) == '0' || intval($accept_type) > 0)
+						{
+							$accept_type = 'U';
+						}
 						$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
 						if($acct_type == 'u')
 						{
-							$part[$parts[$i]] = 1;
+//							$part[$parts[$i]] = 1;
+							$part[intval($parts[$i])] = $accept_type;
 						}
 						elseif($acct_type == 'g')
 						{
-							$part[$parts[$i]] = 1;
+//							$part[$parts[$i]] = 1;
+							$part[intval($parts[$i])] = $accept_type;
 							$groups[] = $parts[$i];
 							/* This pulls ALL users of a group and makes them as participants to the event */
 							/* I would like to turn this back into a group thing. */
@@ -674,7 +672,8 @@
 							}
 							while($member = each($members))
 							{
-								$part[$member[1]['account_id']] = 1;
+//								$part[$member[1]['account_id']] = 1;
++								$part[$member[1]['account_id']] = $accept_type;
 							}
 						}
 					}
@@ -687,9 +686,9 @@
 				if($part)
 				{
 					@reset($part);
-					while(list($key,$value) = each($part))
+					while(list($key,$accept_type) = each($part))
 					{
-						$this->so->add_attribute('participants','U',intval($key));
+						$this->so->add_attribute('participants',$accept_type,intval($key));
 					}
 				}
 

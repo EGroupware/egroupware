@@ -14,6 +14,7 @@
           <font size="-1">
            <form action="{action_url}" method="post" name="{form_name}">
             <B>{label}:</B>
+			{hidden_vars}
             <select name="{form_label}" onchange="{form_onchange}">
 	     {row}
 	    </select>

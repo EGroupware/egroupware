@@ -19,7 +19,7 @@
 
 	function add_image_ahref($link,$image,$alt)
 	{
-		return '<a href="'.$link.'"><img src="'.$GLOBALS['phpgw']->common->image('calendar',$image).'" alt="'.$alt.'" border="0"></a>';
+		return '<a href="'.$link.'"><img src="'.$GLOBALS['phpgw']->common->image('calendar',$image).'" alt="'.$alt.'" title="'.$alt.'" border="0"></a>';
 	}
 
 	$refer = explode('.',MENUACTION);
