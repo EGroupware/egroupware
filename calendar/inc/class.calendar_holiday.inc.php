@@ -56,6 +56,22 @@ class calendar_holiday
 		}
 	}
 
+	function save_holiday($holiday)
+	{
+		if(isset($holiday['hol_id']) && $holiday['hol_id'])
+		{
+//			echo "Updating LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
+			$sql = "UPDATE phpgw_cal_holidays SET name='".$holiday['name']."', mday=".$holiday['mday'].', month_num='.$holiday['month_num'].', occurence='.$holiday['occurence'].', dow='.$holiday['dow'].', observance_rule='.intval($holiday['observance_rule']).' WHERE hol_id='.$holiday['hol_id'];
+		}
+		else
+		{
+//			echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
+			$sql = 'INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) '
+					. "VALUES('".$holiday['locale']."','".$holiday['name']."',".$holiday['mday'].','.$holiday['month_num'].','.$holiday['occurence'].','.$holiday['dow'].','.intval($holiday['observance_rule']).")";
+		}
+		$this->db->query($sql,__LINE__,__FILE__);
+	}
+
 	function load_from_network($locale)
 	{
 		global $phpgw_info, $HTTP_HOST, $SERVER_PORT;
@@ -101,16 +117,15 @@ class calendar_holiday
 			$holiday = explode("\t",$lines[$i]);
 			if(count($holiday) == 7)
 			{
-				$loc = $holiday[0];
-				$name = addslashes($holiday[1]);
-				$day = intval($holiday[2]);
-				$month = intval($holiday[3]);
-				$occurence = intval($holiday[4]);
-				$dow = intval($holiday[5]);
-				$observ_rule = intval($holiday[6]);
-//				echo "Inserting LOCALE='".$loc."' NAME='".$name."' extra=(".$day.'/'.$month.'/'.$occurence.'/'.$dow.'/'.")<br>\n";
-				$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) VALUES('$loc','$name',$day,$month,$occurence,$dow,$observ_rule)";
-				$this->db->query($sql,__LINE__,__FILE__);
+				$holiday['locale'] = $holiday[0];
+				$holiday['name'] = addslashes($holiday[1]);
+				$holiday['mday'] = intval($holiday[2]);
+				$holiday['month_num'] = intval($holiday[3]);
+				$holiday['occurence'] = intval($holiday[4]);
+				$holiday['dow'] = intval($holiday[5]);
+				$holiday['observance_rule'] = intval($holiday[6]);
+				$holiday['hol_id'] = 0;
+				$this->save_holiday($holiday);
 			}
 		}
 	}
