@@ -107,8 +107,22 @@ A.bminicalgreyhol
 	border: thin solid black;
 }
 
+.calendar_link_print
+{
+	text-align: center;
+	font-size: 10px;
+}
 
 // week view
+
+.calendar_dropbuttons
+{
+	align: center;
+	text-align: center;
+	vertical-align: bottom;
+	font-weight: bold;
+	font-size: 8px;
+}
 
 .calendar-weekidentifier
 {
@@ -118,7 +132,77 @@ A.bminicalgreyhol
 
 .calendar_header
 {
-	font-size:16px;
+	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
+}
+
+.calendar_dayview_table_header
+{
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.calendar_dayview_todo_header
+{
+	margin: 0px; 
+	padding: 2px;
+	font-weight: bold;
+}
+
+
+.calendar_week_identifier_table
+{
+	border: 0px solid black;
+	width: 100%;
+}
+
+.calendar_week_identifier
+{
+	font-size: 13px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.calendar_weekview_daytitle
+{
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.calendar_m_w_table
+{
+	table-layout:fixed;
+	overflow:auto;
+	height: 100%;
+	width: 100%;
+	border: 0px #000000 solid;
+}
+
+.calendar_m_w_tablecell
+{
+	vertical-align: top;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+A.event_entry
+{
+	font-size:10px;
+}
+
+/* month view */
+
+.calendar_month_identifier
+{
+	font-size:14px;
+	font-weight: bold;
+}
+
+.calendar_user_identifier
+{
+	font-size:12px;
+	color: #009999;
+	font-weight: bold;
 }
