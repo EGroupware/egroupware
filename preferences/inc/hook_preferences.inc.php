@@ -10,18 +10,14 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
-{
+	/* $Id$ */
 
-//Do not modify below this line
-	// Actual content
-	$title = $appname;
 	if ($phpgw->acl->check('changepassword',1))
 	{
 		$file['Change your Password'] = $phpgw->link('/preferences/changepassword.php');
 	}
-	$file['change your settings'] = $phpgw->link('/preferences/settings.php');
+	$file['change your settings'] = $phpgw->link('/preferences/preferences.php','appname=preferences');
 
-	display_section($appname,$title,$file);
-}
+	display_section('Preferences','Preferences',$file);
+
 ?>
