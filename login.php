@@ -48,14 +48,14 @@
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
-		$deny_msg=lang('Opps! You caught us in the middle of a system maintainance.<br/>
+		$deny_msg=lang('Oops! You caught us in the middle of system maintainance.<br/>
 		Please, check back with us shortly.');
-	
+
 	$tmpl->set_file(array
 	(
 		'login_form' => 'login_denylogin.tpl'
 	));
-	
+
 	$tmpl->set_var('template_set','default');
 	$tmpl->set_var('deny_msg',$deny_msg);
 	$tmpl->pfp('loginout','login_form');
@@ -321,9 +321,7 @@
 	{
 		$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
 	}
-	
 
-	
 	$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
 
 	$tmpl->set_var('register_link',$reg_link);
@@ -360,7 +358,7 @@
 	{
 		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi','logo'));
 	}
-	
+
 	$tmpl->set_var('logo_title',($GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'eGroupWare --&gt; home'));
 	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
