@@ -12,6 +12,7 @@
   /* $Id$ */
 
 	$run_by_webserver = !!$_SERVER['PHP_SELF'];
+	$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
 	if ($run_by_webserver)
 	{
@@ -42,20 +43,24 @@
 	}
 	else
 	{
-		$passed_icon = ' Passed';
+		$passed_icon = '>>> Passed ';
 		$error_icon = '*** Error: ';
 		$warning_icon = '!!! Warning: ';
+
+		function lang($msg,$arg1=NULL,$arg2=NULL,$arg3=NULL,$arg4=NULL)
+		{
+			return is_null($arg1) ? $msg : str_replace(array('%1','%2','%3','%4'),array($arg1,$arg2,$arg3,$arg4),$msg);
+		}
 	}
 	$checks = array(
 		'safe_mode' => array(
 			'func' => 'php_ini_check',
 			'value' => 0,
 			'verbose_value' => 'Off',
-			'warning' => 'safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
-If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
-*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!
-*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time,
-which leaves your DB in an unrecoverable state (your data is lost) !!!'
+			'warning' => lang('safe_mode is turned on, which is generaly a good thing as it makes your install more secure.')."\n".
+				lang('If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.')."\n".
+				lang('*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!')."\n".
+				lang('*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!')
 		),
 /* not longer needed, as it gets set now on runtime (works even with safe_mode)
 		'error_reporting' => array(
@@ -76,44 +81,49 @@ which leaves your DB in an unrecoverable state (your data is lost) !!!'
 			'func' => 'php_ini_check',
 			'value' => 0,
 			'verbose_value' => 'Off',
-			'warning' => "register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off"
+			'warning' => lang("register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off")
 		),
 		'memory_limit' => array(
 			'func' => 'php_ini_check',
 			'value' => '16M',
 			'check' => '>=',
-			'error' => 'memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M,
-expect occasional failures',
+			'error' => lang('memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures'),
 			'change' => 'memory_limit = 16M'
 		),
 		'max_execution_time' => array(
 			'func' => 'php_ini_check',
 			'value' => 30,
 			'check' => '>=',
-			'error' => 'max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time,
-expect occasional failures',
+			'error' => lang('max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures'),
+			'safe_mode' => 'max_execution_time = 30'
+		),
+		'include_path' => array(
+			'func' => 'php_ini_check',
+			'value' => '.',
+			'check' => 'contain',
+			'error' => lang('include_path need to contain "." - the current directory'),
 			'save_mode' => 'max_execution_time = 30'
 		),
 		'mysql' => array(
 			'func' => 'extension_check',
-			'warning' => 'The mysql extension is needed, if you plan to use a MySQL database.'
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL')
 		),
 		'pgsql' => array(
 			'func' => 'extension_check',
-			'warning' => 'The pgsql extension is needed, if you plan to use a pgSQL database.'
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','pgsql','pgSQL')
 		),
 		'mssql' => array(
 			'func' => 'extension_check',
-			'warning' => 'The mssql extension is needed, if you plan to use a MsSQL database.',
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL'),
 			'win_only' => True
 		),
 		'mbstring' => array(
 			'func' => 'extension_check',
-			'warning' => 'The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.'
+			'warning' => lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.')
 		),
 		'imap' => array(
 			'func' => 'extension_check',
-			'warning' => 'The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).'
+			'warning' => lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).')
 		),
 		'.' => array(
 			'func' => 'permission_check',
@@ -123,7 +133,7 @@ expect occasional failures',
 		'header.inc.php' => array(
 			'func' => 'permission_check',
 			'is_world_readable' => False,
-			'only_if_exists' => $GLOBALS['phpgw_info']['setup']['stage']['header'] != 10
+			'only_if_exists' => @$GLOBALS['phpgw_info']['setup']['stage']['header'] != 10
 		),
 		'phpgwapi/images' => array(
 			'func' => 'permission_check',
@@ -139,7 +149,7 @@ expect occasional failures',
 	// some constanst for pre php4.3
 	if (!defined('PHP_SHLIB_SUFFIX'))
 	{
-		define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+		define('PHP_SHLIB_SUFFIX',$is_windows ? 'dll' : 'so');
 	}
 	if (!defined('PHP_SHLIB_PREFIX'))
 	{
@@ -148,26 +158,22 @@ expect occasional failures',
 
 	function extension_check($name,$args)
 	{
-		global $passed_icon, $error_icon, $warning_icon;
+		global $passed_icon, $error_icon, $warning_icon, $is_windows;
 
-		$is_win = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
-
-		if (isset($args['win_only']) && $args['win_only'] && !$is_win)
+		if (isset($args['win_only']) && $args['win_only'] && !$is_windows)
 		{
 			return True;	// check only under windows
 		}
 		$availible = extension_loaded($name) || @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
 
-		echo "Checking extension $name is loaded or loadable: ".($availible ? 'True' : 'False')."\n";
+		echo ($availible ? $passed_icon : $warning_icon).' '.lang('Checking extension %1 is loaded or loadable',$name).': '.($availible ? lang('True') : lang('False'))."\n";
 
 		if (!$availible)
 		{
-			echo $warning_icon.$args['warning']."\n\n";
+			echo $args['warning'];
 		}
-		else
-		{
-			echo $passed_icon."\n\n";
-		}
+		echo "\n";
+
 		return $availible;
 	}
 
@@ -228,7 +234,7 @@ expect occasional failures',
 
 	function permission_check($name,$args,$verbose=True)
 	{
-		global $passed_icon, $error_icon, $warning_icon;
+		global $passed_icon, $error_icon, $warning_icon,$is_windows;
 		//echo "<p>permision_check('$name',".print_r($args,True).",'$verbose')</p>\n";
 
 		if (substr($name,0,3) != '../')
@@ -237,39 +243,40 @@ expect occasional failures',
 		}
 		$rel_name = substr($name,3);
 
-		// dont know how much of this is working on windows
 		if (!file_exists($name) && isset($args['only_if_exists']) && $args['only_if_exists'])
 		{
 			return True;
 		}
 
+		$perms = $checks = '';
 		if ($verbose)
 		{
-			$perms = '';
 			if (file_exists($name))
 			{
 				$owner = function_exists('posix_getpwuid') ? posix_getpwuid(@fileowner($name)) : array('name' => 'nn');
 				$group = function_exists('posix_getgrgid') ? posix_getgrgid(@filegroup($name)) : array('name' => 'nn');
 
 				$checks = array();
-				if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').'writable by webserver';
-				if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?'not ':'').'world readable';
-				if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?'not ':'').'world writable';
+				if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').lang('writable by webserver');
+				if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?lang('not').' ':'').lang('world readable');
+				if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?lang('not').' ':'').lang('world writable');
 				$checks = implode(', ',$checks);
 
 				$perms = "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
 			}
-			echo "Checking file-permissions of $rel_name for $checks: $perms\n";
 		}
+		$icon = $passed_icon;
+		$msg = lang('Checking file-permissions of %1 for %2: %3',$rel_name,$checks,$perms)."\n";
+
 		if (!file_exists($name))
 		{
-			echo "$error_icon$rel_name does not exist !!!\n";
+			echo $error_icon.' '.$msg.lang('%1 does not exist !!!',$rel_name)."\n";
 			return False;
 		}
 		$warning = False;
-		if (!$GLOBALS['run_by_webserver'] && ($args['is_readable'] || $args['is_writable']))
+		if (!$GLOBALS['run_by_webserver'] && (@$args['is_readable'] || @$args['is_writable']))
 		{
-			echo "$warning_icon check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.\n";
+			echo $warning_icon.' '.$msg.'Check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.'."\n";
 			unset($args['is_readable']);
 			unset($args['is_writable']);
 			$warning = True;
@@ -277,32 +284,31 @@ expect occasional failures',
 		$Ok = True;
 		if (isset($args['is_writable']) && is_writable($name) != $args['is_writable'])
 		{
-			echo "$error_icon$rel_name ".($args['is_writable']?'not ':'')."writable by the webserver !!!\n";
+			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writeable by the webserver'))."\n";
 			$Ok = False;
 		}
 		if (isset($args['is_readable']) && is_readable($name) != $args['is_readable'])
 		{
-			echo "$error_icon$rel_name ".($args['is_readable']?'not ':'')."readable by the webserver !!!\n";
+			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."\n";
 			$Ok = False;
 		}
-		if (isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
+		if (!$is_windows && isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
 		{
-			echo "$error_icon$rel_name ".($args['is_world_readable']?'not ':'')."world-readable !!!\n";
+			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'','world-readable')."\n";
 			$Ok = False;
 		}
-		if (isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
+		if (!$is_windows && isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
 		{
-			echo "$error_icon$rel_name ".($args['is_world_writable']?'not ':'')."world-writable !!!\n";
+			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'','world-writable')."\n";
 			$Ok = False;
 		}
 		if ($Ok && !$warning && $verbose)
 		{
-			echo "$passed_icon\n";
+			echo "$passed_icon $msg\n";
 		}
-		if ($verbose) echo "\n";
-
 		if ($Ok && @$args['recursiv'] && is_dir($name))
 		{
+			@set_time_limit(0);
 			$handle = @opendir($name);
 			while($handle && ($file = readdir($handle)))
 			{
@@ -318,7 +324,7 @@ expect occasional failures',
 
 	function php_ini_check($name,$args)
 	{
-		global $passed_icon, $error_icon, $warning_icon;
+		global $passed_icon, $error_icon, $warning_icon, $is_windows;
 
 		$safe_mode = ini_get('safe_mode');
 
@@ -330,13 +336,14 @@ expect occasional failures',
 		{
 			$ini_value_verbose = ' = '.($ini_value ? 'On' : 'Off');
 		}
-		echo "Checking php.ini: $name $check $verbose_value: ini_get('$name')='$ini_value'$ini_value_verbose\n";
 		switch ($check)
 		{
 			case 'not set':
+				$check = lang('not set');
 				$result = !($ini_value & $args['value']);
 				break;
 			case 'set':
+				$check = lang('set');
 				$result = !!($ini_value & $args['value']);
 				break;
 			case '>=':
@@ -345,31 +352,43 @@ expect occasional failures',
 				($args['value'] == intval($args['value']) ||
 				substr($args['value'],-1) == substr($ini_value,-1));
 				break;
+			case 'contain':
+				$check = lang('contain');
+				$sep = $is_windows ? '[; ]+' : '[: ]+';
+				$result = in_array($args['value'],split($sep,$ini_value));
+				break;
 			case '=':
 			default:
 				$result = $ini_value == $args['value'];
 				break;
 		}
+		$msg = ' '.lang('Checking php.ini').": $name $check $verbose_value: ini_get('$name')='$ini_value'$ini_value_verbose\n";
+
+		if ($result)
+		{
+			echo $passed_icon.$msg;
+		}
 		if (!$result)
 		{
 			if (isset($args['warning']))
 			{
-				echo $warning_icon.$args['warning']."\n";
+				echo $warning_icon.$msg.$args['warning']."\n";
 			}
 			if (isset($args['error']))
 			{
-				echo $error_icon.$args['error']."\n";
+				echo $error_icon.$msg.$args['error']."\n";
 			}
 			if (isset($args['safe_mode']) && $safe_mode || @$args['change'])
 			{
-				echo $error_icon."Please make the following change in your php.ini: ".($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
+				if (!isset($args['warning']) && !isset($args['error']))
+				{
+					echo $error_icon.$msg;
+				}
+				echo '*** '.lang('Please make the following change in your php.ini').': '.($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
 			}
-			echo "\n";
-			return False;
 		}
-		echo "$passed_icon\n\n";
-
-		return True;
+		echo "\n";
+		return $result;
 	}
 
 	if ($run_by_webserver)
@@ -416,7 +435,12 @@ expect occasional failures',
 		}
 		else
 		{
-			echo '<h3><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
+			echo '<h3>';
+			if (!$Ok)
+			{
+				echo lang('Please fix the above errors (%1) and warnings(%2) and',$error_icon,$warning_icon).' ';
+			}
+			echo '<a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 		}
 		$setup_tpl->pparse('out','T_footer');
 		//echo "</body>\n</html>\n";
