@@ -23,7 +23,7 @@
 
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 
-	$GLOBALS['phpgw']->hooks->process('help',array('help'));
+	$GLOBALS['phpgw']->hooks->process('help',array('manual'));
 
 	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->help->output);
 ?>
