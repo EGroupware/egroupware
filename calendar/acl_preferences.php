@@ -22,17 +22,43 @@
 
   function display_row($bg_color,$label,$id,$name) {
     global $p;
+    global $phpgw_info;
     
     $p->set_var('row_color',$bg_color);
     $p->set_var('user',$name);
-    $p->set_var('read',$label.'calendar['.$id.'][read]');
-    $p->set_var('add',$label.'calendar['.$id.'][add]');
-    $p->set_var('edit',$label.'calendar['.$id.'][edit]');
-    $p->set_var('delete',$label.'calendar['.$id.'][delete]');
+    $p->set_var('read',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_READ.']');
+    $p->set_var('add',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_ADD.']');
+    $p->set_var('edit',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_EDIT.']');
+    $p->set_var('delete',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_DELETE.']');
     $p->parse('row','acl_row',True);
   }
 
   if ($submit) {
+
+// Still need to write a function in ACL class to wipe all records where 
+// acl_location like '[gu]_$phpgw_info["flags"]["currentapp"]_%'
+  
+// Group records
+    $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
+    
+    while(list($group_id,$acllist) = each($$group_variable)) {
+      $totalacl = 0;
+      while(list($acl,$permission) = each($acllist)) {
+        $totalacl += $acl;
+      }
+      echo "Commiting ACL record for group_id[$group_id]: ".$totalacl."<br>\n";
+    }
+
+// User records
+    $user_variable = 'u_'.$phpgw_info["flags"]["currentapp"];
+    
+    while(list($user_id,$acllist) = each($$user_variable)) {
+      $totalacl = 0;
+      while(list($acl,$permission) = each($acllist)) {
+        $totalacl += $acl;
+      }
+      echo "Commiting ACL record for user_id[$user_id]: ".$totalacl."<br>\n";
+    }
 //     $phpgw->db->query("DELETE FROM phpgw_acl WHERE acl_appname='calendar' AND ");
 //     $phpgw->preferences->change("calendar","weekdaystarts");
 //     $phpgw->preferences->change("calendar","workdaystarts");
@@ -56,7 +82,7 @@
                      'acl_row' => 'preference_acl_row.tpl'));
 
   $p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
-  $p->set_var('title','<p><b>'.lang("Calendar preferences").' - '.lang("acl").':</b><hr><p>');
+  $p->set_var('title','<p><b>'.lang($phpgw_info["flags"]["currentapp"]." preferences").' - '.lang("acl").':</b><hr><p>');
 
   $p->set_var('action_url',$phpgw->link(''));
   $p->set_var('bg_color',$phpgw_info["theme"]["th_bg"]);
