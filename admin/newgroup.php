@@ -36,7 +36,7 @@
         $phpgw->db->lock(array("accounts","groups"));
 
         $phpgw->accounts->add_app($n_group_permissions);
-	$apps = $phpgw->accounts->add_app("",True)
+	$apps = $phpgw->accounts->add_app("",True);
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
 				. $apps . "')");
