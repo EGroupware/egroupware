@@ -101,8 +101,7 @@
 
      $sep = $phpgw->common->filesystem_sepeartor();
 
-     $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "users"
-	      . $sep;
+     $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
      if (! @rmdir($basedir . $lid)) {
         $cd = 34;

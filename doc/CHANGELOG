@@ -2,6 +2,7 @@
 	     Thanks Sam Wynn Jr <sam.wynn@lmco.com>
 	   - on group creation the files directory tried to be created in
 	     "filemanager/groups/" instead of in "files/groups/" - fixed.
+	     Same for the user directory.
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly

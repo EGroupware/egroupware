@@ -71,8 +71,7 @@
 
           $sep = $phpgw->common->filesystem_sepeartor();
 
-          $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-	           . "users" . $sep;
+          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
           if (! @mkdir($basedir . $n_loginid, 0707)) {
              $cd = 36;
