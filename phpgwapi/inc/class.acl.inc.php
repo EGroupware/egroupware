@@ -513,7 +513,7 @@ It should use the values in the $this->data
            . "acl_location in ";
       $security = "('". $phpgw_info['user']['account_id'] ."'";
       $my_memberships = $phpgw->accounts->memberships(intval($phpgw_info['user']['account_id']));
-      while($groups = each($my_memberships))
+      while($my_memberships && $groups = each($my_memberships))
       {
         $group = each($groups);
         $security .= ",'" . $group[1]['account_id'] . "'";
