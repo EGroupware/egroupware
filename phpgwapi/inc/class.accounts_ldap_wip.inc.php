@@ -113,6 +113,7 @@
 	{
 		var $db;
 		var $account_id;
+		var $acct_type = '';
 		var $data;
 
 		function accounts_()
@@ -144,12 +145,13 @@
 			if($acct_type =='g')
 			{
 				$this->data["account_id"]   = $allValues[0]["gidnumber"][0];
+				$this->data["account_lid"]  = $allValues[0]["cn"][0];
 			}
 			else
 			{
 				$this->data["account_id"]	= $allValues[0]["uidnumber"][0];
+				$this->data["account_lid"]  = $allValues[0]["uid"][0];
 			}
-			$this->data["account_lid"] 	= $allValues[0]["uid"][0];
 			$this->data["account_dn"]  	= $allValues[0]["dn"];
 			$this->data["firstname"]   	= $allValues[0]["givenname"][0];
 			$this->data["lastname"]    	= $allValues[0]["sn"][0];
@@ -203,7 +205,6 @@
 			else                   { $test = $allValues[0]["uid"][0]; }
 			if ($test != $this->data["account_lid"])
 			{
-				echo $allValues[0]["cn"][0]; exit;
 				ldap_delete($ds,$allValues[0]["dn"]);
 				unset($allValues[0]["dn"]);
 				while (list($key,$val) = each($allValues[0]))
@@ -241,7 +242,8 @@
 					$entry["objectclass"] = "";
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
-					$members = $this->memberships($this->data["account_id"]);
+					$members = $this->members($this->data["account_id"]);
+					$entry["memberuid"] = "";
 					for ($i=0;$i<count($members);$i++)
 					{
 						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
@@ -290,9 +292,11 @@
 			{
 				if ($this->data["account_type"] == "g" && $phpgw_info["server"]["ldap_group_context"] )
 				{
-					$members = $this->memberships($this->data["account_id"]);
+					$members = $this->members($this->data["account_id"]);
+					$entry["memberuid"] = "";
 					for ($i=0;$i<count($members);$i++)
 					{
+						//echo $this->id2name($members[$i]['account_id']);
 						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
 					}
 					unset($entry["givenname"]);
@@ -301,7 +305,15 @@
 				while (list($key,$val) = each($entry))
 				{
 					$tmpentry = '';
-					$tmpentry[$key] = trim($val); // must trim!
+					if(is_array($val))
+					{
+						$tmpentry[$key] = $val;
+					}
+					else
+					{
+						$tmpentry[$key] = trim($val); // must trim!
+					}
+					
 					//echo '<br>'.$key.' '.$val;
 					if ($tmpentry[$key] && $key)
 					{
@@ -343,7 +355,8 @@
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uid='.$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]['dn']) {
+			if ($allValues[0]['dn'])
+			{
 				$del = ldap_delete($ds, $allValues[0]['dn']);
 			}
 
@@ -411,7 +424,9 @@
 						"account_lastname" => $allValues[0]["sn"][0],
 						"account_status" => $this->db->f("account_status")
 					);
-				} else {
+				}
+				else
+				{
 					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "gidnumber=".$this->db->f("account_id"));
 					$allValues = ldap_get_entries($ds, $sri);
 					$accounts[] = Array(
@@ -433,10 +448,13 @@
 			global $phpgw, $phpgw_info;
 
 			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-			if($this->db->num_rows()) {
+			if($this->db->num_rows())
+			{
 				$this->db->next_record();
 				return intval($this->db->f('account_id'));
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -446,10 +464,13 @@
 			global $phpgw, $phpgw_info;
 	
 			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if($this->db->num_rows()) {
+			if($this->db->num_rows())
+			{
 				$this->db->next_record();
 				return $this->db->f('account_lid');
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -460,10 +481,13 @@
 
 	    	$account_id = get_account_id($accountid);
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if ($this->db->num_rows()) {
+			if ($this->db->num_rows())
+			{
 				$this->db->next_record();
 				return $this->db->f("account_type");
-	    	} else {
+	    	}
+			else
+			{
 				return False;
 			}
 		}
@@ -477,35 +501,76 @@
 				$account_id = $account_lid;
 				settype($account_lid,'string');
 				$account_lid = $this->id2name($account_id);
+				$searchlid = 0;
+			}
+			else
+			{
+				$searchlid = 1;
+				$account_id = $this->name2id($account_lid);
 			}
 
-			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			if($searchlid)
+			{
+				//echo '<br>searching SQL for lid: '.$account_lid;
+				$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			}
+			else
+			{
+				//echo '<br>searching SQL for id: '.$account_id;
+				$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_id=".$account_id,__LINE__,__FILE__);
+			}
 			$this->db->next_record();
 			if ($this->db->f(0))
 			{
 				$insql = True;
+				//echo ' - found in SQL';
 			}
 			else
 			{
 				$insql = False;
+				//echo ' - not found in SQL';
 			}
 
 			$ds = $phpgw->common->ldapConnect();
-			$acct_type = $this->get_type($account_id);
+			$acct_type = $this->acct_type;
+			
 			if ($acct_type == 'g' && $phpgw_info["server"]["ldap_group_context"])
 			{
-				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "cn=".$account_lid);
+				if($searchlid)
+				{
+					//echo '<br>searching LDAP groups for lid: '.$account_lid;
+					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "cn=".$account_lid);
+				}
+				else
+				{
+					//echo '<br>searching LDAP groups for id: '.$account_id;
+					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "gidnumber=".$account_id);
+				}
 			}
 			else
 			{
-				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+				if($searchlid)
+				{
+					//echo '<br>searching LDAP accounts for lid: '.$account_lid;
+					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+				}
+				else
+				{
+					//echo '<br>searching LDAP accounts for id: '.$account_id;
+					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$account_id);
+				}
 			}
-			$allValues = ldap_get_entries($ds, $sri);
+			$allValues   = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]["dn"]) {
+			if ($allValues[0]["dn"])
+			{
 				$inldap = True;
-			} else {
+				//echo ' - found in LDAP';
+			}
+			else
+			{
 				$inldap = False;
+				//echo ' - not found in LDAP';
 			}
 
 			$rtrn = $insql || $inldap;
@@ -517,28 +582,41 @@
 			global $phpgw_info, $phpgw;
 
 			$ds = $phpgw->common->ldapConnect();
+			$this->acct_type = $account_type;
 
-			if (!$account_id) {
+			//echo '<br>in create for account_lid: "'.$account_lid.'"';
+			if (empty($account_id) || !$account_id) {
 				if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
 				if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
 
-				$nextid = $phpgw->common->last_id("accounts_ldap",$min,$max);
+				$nextid = $phpgw->common->last_id("accounts",$min,$max);
 
 				// Loop until we find a free id
 				$free = 0;
 				while (!$free) {
+					//echo '<br>calling search for id: '.$nextid;
 					if ($this->exists($nextid))
 					{
-						$nextid = $phpgw->common->next_id("accounts_ldap",$min,$max);
-					} else {
-						$free = True;
+						$nextid = $phpgw->common->next_id("accounts",$min,$max);
+					}
+					else
+					{
+						//echo '<br>calling search for lid: '.$account_lid;
+						if ($this->exists($account_lid))
+						{
+							$nextid = $phpgw->common->next_id("accounts",$min,$max);
+						}
+						else
+						{
+							$free = True;
+						}
 					}
 				}
 				if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
 					return False;
 				}
 				$account_id = $nextid;
-				//echo $account_id;exit;
+				//echo '<br>using'.$account_id;exit;
 			}
 
 			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
@@ -621,6 +699,7 @@
 				}
 				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 			} else {
+				// Not already there, we will add it
 				if ($account_type == "g")
 				{
 					$dn = 'cn='.$account_lid.','.$phpgw_info["server"]["ldap_group_context"];
@@ -661,14 +740,14 @@
 			if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
 			if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
 
-			$nextid = $phpgw->common->last_id("accounts_ldap",$min,$max);
+			$nextid = $phpgw->common->last_id("accounts",$min,$max);
 
 			// Loop until we find a free id
 			$free = 0;
 			while (!$free) {
 				if ($this->exists($nextid))
 				{
-					$nextid = $phpgw->common->next_id("accounts_ldap",$min,$max);
+					$nextid = $phpgw->common->next_id("accounts",$min,$max);
 				} else {
 					$free = True;
 				}
