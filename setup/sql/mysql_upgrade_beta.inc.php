@@ -1671,6 +1671,13 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
 	}
 
+	$test[] = '0.9.11.010';
+	function upgrade0_9_11_010()
+	{
+		global $phpgw_info;
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+	}
+
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

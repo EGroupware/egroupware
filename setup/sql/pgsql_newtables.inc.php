@@ -323,7 +323,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
