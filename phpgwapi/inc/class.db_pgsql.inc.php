@@ -561,6 +561,7 @@
 		// cache types for blob decode check in a class-member called "_byteaArray"
 		function _init_bytea_array()
 		{
+			unset($this->_byteaArray);
 			for ($i=0, $max = @pg_numfields($this->Query_ID); $i < $max; $i++)
 			{
 				if (@pg_fieldtype($this->Query_ID, $i) == 'bytea')
@@ -589,7 +590,7 @@
 
 		// fix data from bytea-fields, wich are not fully supported by PHP itself
 		function _bytea_decode($bytea)
-		{ echo "I'm called because of $bytea <br>";
+		{
 			eval('$realbytea="'.str_replace(array('"','$'),array('\"','\$'),$bytea).'";');
 			return $realbytea;
 		}
