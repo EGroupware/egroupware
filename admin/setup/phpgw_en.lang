@@ -341,7 +341,7 @@ top	admin	en	top
 total records	admin	en	Total records
 trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you can only use the fallback mode at the moment. Fallback means the jobs get only checked after each page-view !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
 use theme	admin	en	Use theme

@@ -145,7 +145,7 @@
 
 			if ($async->only_fallback)
 			{
-				echo '<p>'.lang('Under windows you can only use the fallback mode at the moment. Fallback means the jobs get only checked after each page-view !!!')."</p>\n";
+				echo '<p>'.lang('Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!','<a href="http://www.egroupware.org/wiki/TimedAsyncServicesWindows" target="_blank">','</a>')."</p>\n";
 			}
 			else
 			{
