@@ -221,6 +221,13 @@
       if (! $url) {
         $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
         $url = $url_root[0]."//".$url_root[2].$PHP_SELF;
+        /* Some hosting providers have their paths screwy.
+           If the value from $PHP_SELF is not what you expect, you can use this to patch it
+           It will need to be adjusted to your specific problem tho.
+        */
+        //$patched_php_self = str_replace("/php4/php/phpgroupware", "/phpgroupware", $PHP_SELF);
+        $patched_php_self = $PHP_SELF;
+        $url = $url_root[0]."//".$url_root[2].$patched_php_self;
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&

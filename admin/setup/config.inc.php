@@ -82,11 +82,6 @@
    <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
-    <td>Use cookies to pass sessionid:</td>
-    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
-   </tr>
-   
-   <tr bgcolor="e6e6e6">
     <td>Enter some random text for app_session <br>encryption (requires mcrypt)</td>
     <td><input name="newsettings[encryptkey]" value="<?php echo $current_config["encryptkey"]; ?>" size="40"></td>
    </tr>

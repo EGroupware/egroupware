@@ -65,6 +65,11 @@
    <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
+    <td>Use cookies to pass sessionid:</td>
+    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
     <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
     <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
    </tr>
