@@ -323,7 +323,7 @@ news file	admin	de	News File
 news headlines	common	de	News headlines
 news reader	common	de	News Reader
 news type	admin	de	Nachrichtentyp
-newsgroups	nntp	de	Newsgroups
+newsgroups	common	de	Newsgroups
 next	nntp	de	Nächste
 next page	common	de	nächste Seite
 nntp	common	de	NNTP
@@ -497,7 +497,7 @@ to	email	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler für die Zukunft zu beheben, korrigieren Sie die Einstellungen
 today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
-todo	todo	de	Beschreibung
+todo	common	de	Beschreibung
 todo	preferences	de	Aufgabenliste
 todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
