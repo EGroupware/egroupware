@@ -1055,7 +1055,7 @@ elseif ($comment_files)
 	{
 		if ($badchar = bad_chars ($comment_files[$file], 1))
 		{
-			echo $phpgw->common->error_list (array (html_encode ("Comments cannot contain \"$badchar\")", 1)));
+			echo $phpgw->common->error_list (array (html_encode ("Comments cannot contain \"$badchar\"", 1)));
 			continue;
 		}
 
@@ -1202,7 +1202,7 @@ elseif ($newdir && $createdir)
 {
 	if ($badchar = bad_chars ($createdir, 1))
 	{
-		echo $phpgw->common->error_list (array (html_encode ("Directory names cannot contain \"$badchar\")", 1)));
+		echo $phpgw->common->error_list (array (html_encode ("Directory names cannot contain \"$badchar\"", 1)));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
