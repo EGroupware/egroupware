@@ -96,7 +96,7 @@
      $sep = $phpgw->common->filesystem_separator();
 
      $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
-
+     //echo "TEST: " . $basedir . $account_info["loginid"];
      if (! @mkdir($basedir . $account_info["loginid"], 0707)) {
         $cd = 36;
      } else {
@@ -111,13 +111,13 @@
   
      $phpgw->db->lock(array('accounts','preferences','sessions'));
      
-     $lid = $account_info["loginid"];
+//     $lid = $account_info["loginid"];
 
-     if ($account_info["c_loginid"]) {
-        $phpgw->db->query("update accounts set account_lid='" . $account_info["c_loginid"]
-                        . "' where account_lid='" . $account_info["loginid"] . "'");
+     if ($account_info["old_loginid"] != $account_info["loginid"]) {
+        $phpgw->db->query("update accounts set account_lid='" . $account_info["loginid"]
+                        . "' where account_lid='" . $account_info["old_loginid"] . "'");
 
-        $account_info["loginid"] = $account_info["c_loginid"];
+//        $account_info["loginid"] = $account_info["n_loginid"];
      }
 
      if ($account_info["passwd"]) {
@@ -139,12 +139,12 @@
       }
       $cd = 27;
 
-      if ($account_info["c_loginid"] != $account_info["loginid"]) {
+      if ($account_info["old_loginid"] != $account_info["loginid"]) {
          $sep = $phpgw->common->filesystem_separator();
 	
          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-         if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
+         if (! @rename($basedir . $account_info["old_loginid"], $basedir . $account_info["loginid"])) {
             $cd = 35;
          }
       }

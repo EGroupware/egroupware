@@ -34,8 +34,8 @@
         if (account_exsists($n_loginid)) {
            $error[$totalerrors++] = lang("That loginid has already been taken");
         }
-        $c_loginid = $n_loginid;
-        $n_loginid = $old_loginid;
+//        $c_loginid = $n_loginid;
+//        $n_loginid = $old_loginid;
      }
   
      if ($n_passwd || $n_passwd_2) {
@@ -53,10 +53,10 @@
      
      if (! $totalerrors) {
         $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
-        			 "firstname" => $n_firstname, "lastname"       => $n_lastname,
-        			 "passwd"    => $n_passwd,    "account_status" => $n_account_status,
-        		  	 "c_loginid" => $c_loginid,   "account_id"     => rawurldecode($account_id),
-        			 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+                                 "firstname" => $n_firstname, "lastname"       => $n_lastname,
+                        	     "passwd"    => $n_passwd,    "account_status" => $n_account_status,
+                                 "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
+                                 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
      }
 
      Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
