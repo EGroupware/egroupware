@@ -18,6 +18,30 @@
 	 * This widget replaces the old nextmatch-class. It is independent of the UI,
 	 * as it only uses etemplate-widgets and has therefor no render-function
 	 *
+	 * $content[$id] = array(	// I = value set by the app, 0 = value on return / output
+	 * 	'get_rows'       =>		// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+	 * 	'filter_label'   =>		// I  label for filter    (optional)
+	 * 	'filter_help'    =>		// I  help-msg for filter (optional)
+	 * 	'no_filter'      => True// I  disable the 1. filter
+	 * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
+	 * 	'no_cat'         => True// I  disable the cat-selectbox
+	 * 	'template'       =>		// I  template to use for the rows, if not set via options
+	 * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
+	 * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
+	 * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
+	 * 	'start'          =>		// IO position in list
+	 * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
+	 * 	'search'         =>		// IO search pattern
+	 * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
+	 * 	'sort'           =>		// IO direction of the sort: 'ASC' or 'DESC'
+	 * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
+	 * 	'filter'         =>		// IO filter, if not 'no_filter' => True
+	 * 	'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
+	 * 	'filter2'        =>		// IO filter2, if not 'no_filter2' => True
+	 * 	'filter2_no_lang'=> True// I  set no_lang for filter2 (=dont translate the options)
+	 * 	'rows'           =>		//  O content set by callback
+	 * 	'total'          =>		//  O the total number of entries
+	 * );
 	 * @package etemplate
 	 * @subpackage extensions
 	 * @author RalfBecker-AT-outdoor-training.de
@@ -176,17 +200,13 @@
 				// keep the editor away from the generated tmpls
 				$nextmatch->no_onclick = true;			
 
-				if ($value['no_cat'])
+				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2') as $val_name => $cell_name)
 				{
-					$nextmatch->disable_cells('cat_id');
+					if (isset($value[$val_name])) $nextmatch->set_cell_attribute($cell_name,'disabled',$value[$val_name]);
 				}
-				if ($value['no_filter'])
+				foreach(array('filter','filter2') as $cell_name)
 				{
-					$nextmatch->disable_cells('filter');
-				}
-				if ($value['no_filter2'])
-				{
-					$nextmatch->disable_cells('filter2');
+					if (isset($value[$cell_name.'_no_lang'])) $nextmatch->set_cell_attribute($cell_name,'no_lang',$value[$cell_name.'_no_lang']);
 				}
 				$start = $value['start'];
 				$end   = $start+$max > $total ? $total : $start+$max;
