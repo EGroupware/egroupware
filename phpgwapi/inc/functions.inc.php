@@ -39,7 +39,170 @@
 	 * Direct functions, which are not part of the API class                      *
 	 * because they are require to be availble at the lowest level.               *
 	 \****************************************************************************/
-	 /*!
+
+	/*!
+	 @function sanitize
+	 @abstract Validate data.
+	 @discussion Author: seek3r<br>
+	 This function is used to validate input data. <br>
+	 Syntax: sanitize('type', 'match string'); <br>
+	 Example1: sanitize('number',$somestring);
+	*/
+
+	 /*
+		$GLOBALS['phpgw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
+	*/
+	
+	function sanitize($string,$type) {
+		switch ($type)
+		{
+    	case "bool":
+      	if ($string == 1 || $string == 0)
+				{
+        	return True;
+				}
+	      break;
+  	  case "number":
+    	  if (preg_match("/^[0-9]+$/i", $string))
+				{
+      	  return True;
+				}
+	      break;
+  	  case "string":
+    	  if (preg_match("/^[a-z]+$/i", $string))
+				{
+      	  return True;
+				}
+	      break;
+  	  case "alpha":
+    	  if (preg_match("/^[a-z0-9 -._]+$/i", $string))
+				{
+      	  return True;
+				}
+	      break;
+  	  case "ip":
+    	  if (eregi("^[0-9]{1,3}(\.[0-9]{1,3}){3}$",$string))
+				{
+    			$octets = split('\.',$string);
+    			for ($i=0; $i != count($octets); $i++)
+					{
+	    			if ($octets[$i] < 0 || $octets[$i] > 255)
+						{
+  	  				return False;
+						}
+					}
+    			return True;
+    		}
+	    	return False;
+  	    break;
+    	case "file":
+	      if (preg_match("/^[a-z0-9_]+\.+[a-z]+$/i", $string))
+				{
+  	      return True;
+				}
+				break;
+    	case "email":
+		    if (eregi("^([[:alnum:]_%+=.-]+)@([[:alnum:]_.-]+)\.([a-z]{2,3}|[0-9]{1,3})$",$string))
+				{
+					return True;
+				}
+				break;
+  	  case "any":
+    	  return True;
+      	break;
+	    default :
+				if (isset($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']))
+				{
+  	  	  if ($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['string'], $string))
+					{
+    	  	  return True;
+					}
+				}
+			return False;
+	  }
+	}	
+
+
+	function registervar($varname, $valuetype = 'alpha', $posttype = 'post', $allowblank = True)
+	{
+  	switch ($posttype) {
+    	case "get":
+				$posttype = 'HTTP_GET_VARS';
+	      break;
+  	  default :
+				$posttype = 'HTTP_POST_VARS';
+	  }
+
+		if (isset($GLOBALS[$posttype][$varname]))
+		{
+			if (!is_array($GLOBALS[$posttype][$varname]))
+			{
+				if ($allowblank == True && $GLOBALS[$posttype][$varname] == '')
+				{
+					$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
+					return 'Post';
+				}
+				else
+				{
+					if (sanitize($GLOBALS[$posttype][$varname],$valuetype) == 1)
+					{
+						$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
+						return 'Post';
+					}
+					else
+					{
+						return False;
+					}
+				}
+				return False;
+			}
+			else
+			{
+				if (is_array($valuetype))
+				{
+					reset($GLOBALS[$posttype][$varname]);
+					$isvalid = True;
+					while(list($key, $value) = each($GLOBALS[$posttype][$varname]))
+					{
+						if ($allowblank == True && $GLOBALS[$posttype][$varname][$key] == '')
+						{
+						}
+						else
+						{
+							if (sanitize($GLOBALS[$posttype][$varname][$key],$valuetype[$key]) == 1)
+							{
+							}
+							else
+							{
+								$isvalid = False;
+							}
+						}
+					}
+					if ($isvalid)
+					{
+						$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
+						return 'Post';
+					}
+					else
+					{
+						return 'Session';
+					}
+					return False;
+				}
+			}
+			return False;
+		}
+		elseif (count($GLOBALS[$posttype]) == 0)
+		{
+			return 'Session';
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	/*!
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
 	 @discussion Author: mdean, milosch (thanks to jengo and ralf)<br>
