@@ -351,7 +351,7 @@
 		@abstract writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
 		@syntax write( $values )
 		@param $values array with the data of the log-entry
-		@returns nothing direct, but the info_id gets
+		@return the info_id
 		*/
 		function write($values)  // did _not_ ensure ACL
 		{
@@ -424,7 +424,7 @@
 				}
 				else
 				{
-					$query = "INSERT INTO phpgw_infolog_extra (info_id,info_extra_name,info_extra_value) VALUES ($info_id,'$name','$val')";
+					$query = "INSERT INTO phpgw_infolog_extra (info_id,info_extra_name,info_extra_value) VALUES (".$this->data['info_id'].",'$name','$val')";
 				}
 				$this->db->query($query,__LINE__,__FILE__);
 			}
