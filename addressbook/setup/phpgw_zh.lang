@@ -104,7 +104,7 @@ ldif	addressbook	zh	LDIF
 line 2	addressbook	zh	第2行
 mark records as private	addressbook	zh	将导入的条目设为私有条目
 message phone	addressbook	zh	短信电话
-middle name	addressbook	zh	名字
+middle name	addressbook	zh	中间名
 mobile	addressbook	zh	移动的
 mobile phone	addressbook	zh	移动电话
 modem phone	addressbook	zh	Modem电话

@@ -306,10 +306,10 @@ show 'powered by' logo on	setup	zh	显示 'powered by' 徽标
 some or all of its tables are missing	setup	zh	一些或全部表格丢失
 start the postmaster	setup	zh	启动 postmaster 守护进程
 status	setup	zh	状态
-step %1 - simple application management	setup	zh	步骤 %1 - 基本应用程序管理
-step %1 - configuration	setup	zh	步骤 %1 - 配置
-step %1 - language management	setup	zh	步骤 %1 - 语言管理
-step %1 - advanced application management	setup	zh	步骤 %1 - 高级应用程序管理
+step 1 - simple application management	setup	zh	步骤 1 - 基本应用程序管理
+step 2 - configuration	setup	zh	步骤 2 - 配置
+step 3 - language management	setup	zh	步骤 3 - 语言管理
+step 4 - advanced application management	setup	zh	步骤 4 - 高级应用程序管理
 table change messages	setup	zh	表格变动信息
 tables dropped	setup	zh	表格已经移除
 tables installed, unless there are errors printed above	setup	zh	如果上面没有显示任何错误信息，则表格已经安装
