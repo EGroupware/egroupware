@@ -1340,6 +1340,8 @@
     function upgrade0_9_10pre19() {
         global $phpgw_info, $phpgw_setup;
 
+		@$phpgw_setup->db->query("drop table if exists phpgw_nextid");
+
         $sql = "create table phpgw_nextid (
            appname varchar(25) NOT NULL,
            id      int(8),
