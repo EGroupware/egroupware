@@ -20,20 +20,18 @@
 	);
 	include('../header.inc.php');
 
+	if ($appname == 'admin')
+	{
+		$appname = 'preferences';
+	}
 	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($appname));
+	$t->set_unknowns('keep');
 	$t->set_file(array(
 		'config' => 'config.tpl'
 	));
 	$t->set_block('config','header','header');
 	$t->set_block('config','body','body');
 	$t->set_block('config','footer','footer');
-
-	function nextcolor()
-	{
-		global $phpgw,$trcolor;
-		$trcolor = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		echo $trcolor;
-	}
 
 	$c = CreateObject('phpgwapi.config',$appname);
 	$c->read_repository();
@@ -81,6 +79,9 @@
 	$t->pparse('out','header');
 
 	$vars = $t->get_undefined('body');
+
+	$phpgw->common->hook_single('config',$appname);
+
 	while (list($null,$value) = each($vars))
 	{
 		$valarray = explode('_',$value);
@@ -131,13 +132,18 @@
 					$t->set_var($value,'');
 				}
 				break;
+			case "hook":
+				$newval = ereg_replace(' ','_',$newval);
+				$t->set_var($value,$newval($current_config));
+				break;
 			default:
 				$t->set_var($value,'');
 				break;
 		}
 	}
-	$t->pparse('out','body');
 
-	$t->pparse('out','footer');
+	$t->pfp('out','body');
+
+	$t->pfp('out','footer');
 	$phpgw->common->phpgw_footer();
 ?>
