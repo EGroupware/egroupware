@@ -429,7 +429,10 @@
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
-		$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+		if(!$phpgw_info['flags']['disable_Template_class'])
+		{
+			$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+		}
 
 		/*************************************************************************\
 		* These lines load up the themes                                          *
