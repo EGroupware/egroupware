@@ -233,11 +233,16 @@
      }
      
      if ($account_info["passwd"]) {
-        $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
+//        $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
+        $entry["userpassword"] = $phpgw->common->encrypt_password($account_info["passwd"]);
+
+		if ($account_info["account_id"] == $phpgw_info["user"]["account_id"]) {
+		  $phpgw_info["user"]["passwd"] = $phpgw->common->encrypt($account_info["passwd"];
+		}
 
         // Update the sessions table. (The user might be logged in)
-        $phpgw->db->query("update sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd) . "' "
-                        . "where session_lid='$lid'",__LINE__,__FILE__);
+//        $phpgw->db->query("update phpgw_sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd) . "' "
+//                        . "where session_lid='$lid'",__LINE__,__FILE__);
      }
      
      while ($permission = each($account_info["permissions"])) {
