@@ -53,7 +53,7 @@
 		'phpgw_accounts' => array(
 			'fd' => array(
 				'account_id' => array('type' => 'auto'),
-				'account_lid' => array('type' => 'varchar','precision' => '25'),
+				'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
 				'account_pwd' => array('type' => 'varchar','precision' => '100','nullable' => False),
 				'account_firstname' => array('type' => 'varchar','precision' => '50'),
 				'account_lastname' => array('type' => 'varchar','precision' => '50'),

@@ -987,8 +987,6 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-
-
 	$test[] = '0.9.99.011';
 	function phpgwapi_upgrade0_9_99_011()
 	{
@@ -1004,6 +1002,19 @@
 		));
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.99.012';
+	function phpgwapi_upgrade0_9_99_012()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn(
+			'phpgw_accounts',
+			'account_lid',
+			array('type' => 'varchar','precision' => '25','nullable' => False)
+		);
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.013';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>
