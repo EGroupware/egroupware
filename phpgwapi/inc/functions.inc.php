@@ -309,8 +309,7 @@ function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 	/* Make sure the developer is following the rules. */
 	if (!isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 	{
-		$phpgw->log->message('W-MissingFlags, currentapp flag not set');
-		$phpgw->log->commit();
+		$phpgw->log->write(array('text'=>'W-MissingFlags, currentapp flag not set'));
 
 		echo '<b>!!! YOU DO NOT HAVE YOUR $phpgw_info["flags"]["currentapp"] SET !!!';
 		echo '<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';
@@ -600,8 +599,7 @@ function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 			/* Hope we don't get to this point.  Better then the user seeing a */
 			/* complety back screen and not know whats going on                */
 			echo '<body bgcolor="FFFFFF">';
-			$phpgw->log->message('F-Abort, No themes found');
-			$phpgw->log->commit();
+			$phpgw->log->write(array('text'=>'F-Abort, No themes found'));
 
 			exit;
 		}
@@ -636,8 +634,7 @@ function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 					echo parse_navbar();
 				}
 
-				$phpgw->log->message('W-Permissions, Attempted to access %1',$GLOBALS['phpgw_info']['flags']['currentapp']);
-				$phpgw->log->commit();
+				$phpgw->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
 				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
