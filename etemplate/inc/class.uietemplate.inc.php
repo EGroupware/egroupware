@@ -1013,6 +1013,24 @@
 			return $html;
 		}
 
+		/**
+		 * applies stripslashes recursivly on each element of an array
+		 * 
+		 * @param array &$var 
+		 * @return array
+		 */
+		function array_stripslashes($var)
+		{
+			if (!is_array($var))
+			{
+				return stripslashes($var);
+			}
+			foreach($var as $key => $val)
+			{
+				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
+			}
+			return $var;
+		}
 
 		/*!
 		@function process_show
@@ -1037,6 +1055,10 @@
 			}
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
+			if (get_magic_quotes_gpc())
+			{
+				$content_in = $this->array_stripslashes($content_in);
+			}
 			$GLOBALS['phpgw_info']['etemplate']['validation_errors'] = array();
 			$this->canceled = $this->button_pressed = False;
 
@@ -1052,8 +1074,6 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True);
-				
-				if ($value && get_magic_quotes_gpc()) $value = stripslashes($value);
 
 				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
