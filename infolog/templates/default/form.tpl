@@ -1,30 +1,3 @@
-<!-- BEGIN add -->
-         <table width="90%" border="0" cellspacing="0" cellpadding="0">
-         <tr valign="bottom">
-          <td height="35" width="50%">
-           <div align="center">
-                 <input type="submit" name="add" value="{lang_addsubmitb}">
-            </div>
-          </td>
-          <td height="35" width="50%">
-           <div align="center">
-                 <input type="reset" name="reset" value="{lang_addresetb}">
-           </div>
-          </td>
-         </tr>
-         </table>
-<!-- END add -->
-
-<!-- BEGIN edit -->
-         <table width="90%" border="0">
-         <tr valing=bottom height=100>
-          <td>{edit_button}</td>
-          <td>{cancel_button}</td>
-          <td width="80%" align=right>{delete_button}</td>
-         </tr>
-         </table>
-<!-- END edit -->
-
 <!-- BEGIN info_edit -->
 {doSearchFkt}
 {info_css}
@@ -137,7 +110,13 @@
 
          </table>
 
-         {buttons}
+         <table width="90%" border="0">
+         <tr valing=bottom height=100>
+          <td>{edit_button}</td>
+          <td>{cancel_button}</td>
+          <td width="80%" align=right>{delete_button}</td>
+         </tr>
+         </table>
        </form>
      </center>
 <!-- END info_edit -->

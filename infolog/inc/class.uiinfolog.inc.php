@@ -693,11 +693,12 @@
 			if((!isset($info_id) || !$info_id) && !$action || get_var('cancel',Array('POST')))
 			{
 				Header('Location: ' . $this->html->link($referer) );
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			if(get_var('delete',Array('POST')))
 			{
-				Header('Location: ' . $this->html->link('/index.php',$this->menuaction('delete')+
-				       array('info_id' => $info_id, 'referer' => $referer)) );
+				$this->delete($info_id);
+				return;
 			}
 
 			// check wether to write dates or not
@@ -869,8 +870,6 @@
 
 			$GLOBALS['phpgw']->template->set_file(array('info_edit_t' => 'form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('info_edit_t','info_edit');
-			$GLOBALS['phpgw']->template->set_block('info_edit_t','add');
-			$GLOBALS['phpgw']->template->set_block('info_edit_t','edit');
 
 			if (is_array($error))
 			{
@@ -996,23 +995,27 @@
 			{
 				$GLOBALS['phpgw']->template->set_var('delete_button',$this->html->submit_button('delete','Delete'));
 			}
-			$GLOBALS['phpgw']->template->parse('buttons',$is_edit ? 'edit' : 'add');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','info_edit');
 		}
 
-		function delete( )
+		function delete( $id=0 )
 		{
 			global $info_id,$confirm,$to_del;
+			//echo "<p>delete(id=$id): info_id='$info_id', confirm='$confirm', to_del='$to_del'</p>\n";
 
 			$referer = $this->get_referer();
 
+			if ($id)
+			{
+				$info_id = $id;
+			}
 			if (!$info_id ||
 			    !$this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
 				Header('Location: ' .  $this->html->link($referer));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
-			if ($confirm)
+			if ($confirm && !$id)
 			{
 				if (!isset($to_del) || $to_del == '.')
 				{
@@ -1023,6 +1026,7 @@
 					$this->bo->delete_attached($info_id,$to_del);
 				}
 				Header('Location: ' . $this->html->link($referer,array( 'cd' => 16 )));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			else
 			{
