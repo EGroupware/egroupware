@@ -181,16 +181,11 @@
 				{
 					$error[$totalerrors++] = lang('You must enter an application name.');
 				}
-				if (!$n_app_title)
-				{
-					$error[$totalerrors++] = lang('You must enter an application title.');
-				}
 
 				if (!$totalerrors)
 				{
 					$this->bo->add(array(
 						'n_app_name'   => $n_app_name,
-						'n_app_title'  => $n_app_title,
 						'n_app_status' => $n_app_status,
 						'app_order'    => $app_order
 					));
@@ -218,7 +213,6 @@
 			$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.add'));
 
 			$this->display_row(lang('application name'),'<input name="n_app_name" value="' . $n_app_name . '">');
-			$this->display_row(lang('application title'),'<input name="n_app_title" value="' . $n_app_title . '">');
 
 			if(!isset($n_app_status))
 			{
@@ -257,7 +251,6 @@
 				$old_app_name = $GLOBALS['HTTP_POST_VARS']['old_app_name'];
 				$app_order    = $GLOBALS['HTTP_POST_VARS']['app_order'] ? $GLOBALS['HTTP_POST_VARS']['app_order'] : 0;
 				$n_app_name   = chop($GLOBALS['HTTP_POST_VARS']['n_app_name']);
-				$n_app_title  = chop($GLOBALS['HTTP_POST_VARS']['n_app_title']);
 				$n_app_status = $GLOBALS['HTTP_POST_VARS']['n_app_status'];
 
 				if (! $n_app_name)
@@ -282,7 +275,6 @@
 				{
 					$this->bo->save(array(
 						'n_app_name'   => $n_app_name,
-						'n_app_title'  => $n_app_title,
 						'n_app_status' => $n_app_status,
 						'app_order'    => $app_order,
 						'old_app_name' => $old_app_name
@@ -312,7 +304,6 @@
 			$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.edit'));
 
 			$this->display_row(lang('application name'),'<input name="n_app_name" value="' . $n_app_name . '">');
-			$this->display_row(lang('application title'),'<input name="n_app_title" value="' . $n_app_title . '">');
 
 			$GLOBALS['phpgw']->template->set_var('lang_status',lang('Status'));
 			$GLOBALS['phpgw']->template->set_var('lang_submit_button',lang('edit'));

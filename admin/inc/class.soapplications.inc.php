@@ -28,7 +28,7 @@
 			$this->db->next_record();
 			$app_info = array(
 				$this->db->f('app_name'),
-				$this->db->f('app_title'),
+				$this->db->f('app_name'),
 				$this->db->f('app_enabled'),
 				$this->db->f('app_name'),
 				$this->db->f('app_order')
@@ -44,7 +44,7 @@
 				while ($this->db->next_record())
 				{
 					$apps[$this->db->f('app_name')] = array(
-						'title'  => $this->db->f('app_title'),
+						'title'		=> str_replace('- ','-',ucwords(str_replace('_','- ',$this->db->f('app_name')))),
 						'name'   => $this->db->f('app_name'),
 						'status' => $this->db->f('app_enabled')
 					);
@@ -63,8 +63,8 @@
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
 			$app_id = $this->db->f(0) + 1;
-			$sql = 'INSERT INTO phpgw_applications (app_id,app_name,app_title,app_enabled,app_order) VALUES('
-				. $app_id . ",'" . addslashes($data['n_app_name']) . "','" . addslashes($data['n_app_title']) . "','"
+			$sql = 'INSERT INTO phpgw_applications (app_id,app_name,app_enabled,app_order) VALUES('
+				. $app_id . ",'" . addslashes($data['n_app_name']) . "','"
 				. $data['n_app_status'] . "','" . $data['app_order'] . "')";
 
 			$this->db->query($sql,__LINE__,__FILE__);
@@ -74,8 +74,8 @@
 		function save($data)
 		{
 			$sql = "UPDATE phpgw_applications SET app_name='" . addslashes($data['n_app_name']) . "',"
-				. "app_title='" . addslashes($data['n_app_title']) . "', app_enabled='"
-				. $data['n_app_status'] . "',app_order='" . $data['app_order'] . "' WHERE app_name='" . $data['old_app_name'] . "'";
+				. "app_enabled='" . $data['n_app_status'] . "',app_order='" . $data['app_order']
+				. "' WHERE app_name='" . $data['old_app_name'] . "'";
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			return True;

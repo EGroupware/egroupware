@@ -36,7 +36,7 @@
 					include($_versionfile);
 					/* echo '<br>' . $_versionfile . ','; */
 					$_file_version = $setup_info[$app_name]['version'];
-					$_app_title    = $setup_info[$app_name]['title'];
+					$_app_title    = str_replace('- ','-',ucwords(str_replace('_','- ',$setup_info[$app_name]['name']))),
 					unset($setup_info);
 
 					/* echo '<br>' . $app_name . ',' . $_db_version . ',' . $_file_version; */

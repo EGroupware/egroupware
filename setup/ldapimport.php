@@ -128,10 +128,10 @@
 		$group_info = array();
 	}
 
-	$GLOBALS['phpgw_setup']->db->query("SELECT app_name,app_title FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_title",__LINE__,__FILE__);
+	$GLOBALS['phpgw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_title",__LINE__,__FILE__);
 	while ($GLOBALS['phpgw_setup']->db->next_record())
 	{
-		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = $GLOBALS['phpgw_setup']->db->f('app_title');
+		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = lang($GLOBALS['phpgw_setup']->db->f('app_name'));
 	}
 
 	if ($cancel)
