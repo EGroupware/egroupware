@@ -9,10 +9,10 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 	/* $Id$ */
-	
+	/*
 	global $phpgw;
 	global $account_id;
-
+	*/
 	/* NOTE: This is untested */
 	/* WIP: it should get all files owned by $account_id, not just in /home/account_id */
 	/* Should also be capable of transfering files to another user */
