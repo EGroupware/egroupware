@@ -261,7 +261,7 @@
 				if(IsSet($arguments['PostValues']))
 				{
 					$values = $arguments['PostValues'];
-					if(GetType($values) != 'array')
+					if(!@is_array($values))
 					{
 						return('5 it was not specified a valid POST method values array');
 					}
@@ -294,7 +294,7 @@
 				{
 					$header_name  = Key($headers);
 					$header_value = $headers[$header_name];
-					if(GetType($header_value)=='array')
+					if(@is_array($header_value))
 					{
 						for(Reset($header_value),$value=0;$value<count($header_value);Next($header_value),$value++)
 						{
@@ -402,7 +402,7 @@
 			for(;;)
 			{
 				$line = $this->GetLine();
-				if(GetType($line) != 'string')
+				if(!is_string($line))
 				{
 					return('4 could not read request reply');
 				}
@@ -415,7 +415,7 @@
 				$header_value = Trim(Chop(strtok("\r\n")));
 				if(IsSet($headers[$header_name]))
 				{
-					if(GetType($headers[$header_name]) == 'string')
+					if(is_string($headers[$header_name]))
 					{
 						$headers[$header_name] = array($headers[$header_name]);
 					}
@@ -428,7 +428,7 @@
 				switch($header_name)
 				{
 					case 'content-length':
-					$this->content_length = intval($headers[$header_name]);
+					$this->content_length = (int)$headers[$header_name];
 					$this->content_length_set = 1;
 					break;
 					case 'set-cookie':
@@ -461,7 +461,7 @@
 								case 'expires':
 									if(ereg("^((Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thu|Thursday|Fri|Friday|Sat|Saturday|Sun|Sunday), )?([0-9]{2})\\-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\-([0-9]{2,4}) ([0-9]{2})\\:([0-9]{2})\\:([0-9]{2}) GMT$",$value,$matches))
 									{
-										$year = intval($matches[5]);
+										$year = (int)$matches[5];
 										if($year<1900)
 										{
 											$year += ($year<70 ? 2000 : 1900);

@@ -61,10 +61,10 @@
 		*/
 		function acl($account_id = '')
 		{
-			$this->db = $GLOBALS['phpgw']->db;
-			if (!($this->account_id = intval($account_id)))
+			copyobj($GLOBALS['phpgw']->db,$this->db);
+			if ((int)$this->account_id != (int)$account_id)
 			{
-				$this->account_id = get_account_id($account_id,@$GLOBALS['phpgw_info']['user']['account_id']);
+				$this->account_id = get_account_id((int)$account_id,@$GLOBALS['phpgw_info']['user']['account_id']);
 			}
 		}
 
@@ -244,7 +244,7 @@
 		{
 			reset($this->data);
 
-			$sql = 'delete from phpgw_acl where acl_account = '. intval($this->account_id);
+			$sql = 'delete from phpgw_acl where acl_account = '. (int)$this->account_id;
 			$this->db->query($sql ,__LINE__,__FILE__);
 
 			$count = count($this->data);
@@ -534,7 +534,7 @@
 			}
 			$sql  = 'SELECT acl_appname, acl_rights from phpgw_acl ';
 			$sql .= "where acl_location = '" . $this->db->db_addslashes($location) . "' ";
-			$sql .= 'AND acl_account = ' . intval($account_id);
+			$sql .= 'AND acl_account = ' . (int)$account_id;
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
 			if ($this->db->num_rows() == 0 )
@@ -579,7 +579,7 @@
 			}
 			$sql  = 'SELECT acl_location, acl_rights ';
 			$sql .= "FROM phpgw_acl where acl_appname = '" . $this->db->db_addslashes($app) . "' ";
-			$sql .= 'AND acl_account =' . intval($account_id);
+			$sql .= 'AND acl_account =' . (int)$account_id;
 			
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
@@ -627,7 +627,7 @@
 				$rights |= $this->db->f('acl_rights');
 				if (!!($rights & $required) == True)
 				{
-					$accounts[] = intval($this->db->f('acl_account'));
+					$accounts[] = (int)$this->db->f('acl_account');
 				}
 			}
 			@reset($accounts);

@@ -118,7 +118,7 @@
 			//
 			if (!is_array($times))	
 			{
-				$next = intval($times);
+				$next = (int)$times;
 
 				return $next > $now ? $next : False;
 			}
@@ -194,7 +194,7 @@
 
 								return False;
 							}
-							for ($i = intval($min); $i <= $max; ++$i)
+							for ($i = (int)$min; $i <= $max; ++$i)
 							{
 								$times[$u][$i] = True;
 							}
@@ -214,7 +214,7 @@
 							}
 							if (count($arr) == 1)
 							{
-								$times[$u][intval($one)] = True;
+								$times[$u][(int)$one] = True;
 							}
 							else
 							{
@@ -260,8 +260,8 @@
 
 				foreach($units as $u => $date_pattern)
 				{
-					$unit_now = $u != 'dow' ? intval(date($date_pattern)) :
-						intval(date($date_pattern,mktime(12,0,0,$found['month'],$found['day'],$found['year'])));
+					$unit_now = $u != 'dow' ? (int)date($date_pattern) :
+						(int)date($date_pattern,mktime(12,0,0,$found['month'],$found['day'],$found['year']));
 
 					if (isset($found[$u]))
 					{
@@ -509,8 +509,8 @@
 		{
 			$job['times'] = $this->db->db_addslashes(serialize($job['times']));
 			$job['data']  = $this->db->db_addslashes(serialize($job['data']));
-			$job['next']  = intval($job['next']);
-			$job['account_id']  = intval($job['account_id']);
+			$job['next']  = (int)$job['next'];
+			$job['account_id']  = (int)$job['account_id'];
 
 			if ($exists || $this->read($job['id']))
 			{

@@ -423,7 +423,7 @@
 								{
 									//echo "<br>adding - insert into phpgw_lang values ('$message_id','$app_name','$lang','$content')";
 									$result = $this->db->query("INSERT INTO phpgw_lang (message_id,app_name,lang,content) VALUES('$message_id','$app_name','$lang','$content')",__LINE__,__FILE__);
-									if (intval($result) <= 0)
+									if ((int)$result <= 0)
 									{
 										echo "<br>Error inserting record: phpgw_lang values ('$message_id','$app_name','$lang','$content')";
 									}
@@ -464,7 +464,7 @@
 				if (file_exists($fname))
 				{
 					$ctime = filectime($fname);
-					$ltime = intval($GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app]);
+					$ltime = (int)$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app];
 					//echo "checking lang='$lang', app='$app', ctime='$ctime', ltime='$ltime'<br>\n";
 
 					if ($ctime != $ltime)

@@ -136,7 +136,7 @@
 					.", '". $db->db_addslashes($err->msg) . "'"
 					.", '". $db->db_addslashes((count($err->parms) > 1?implode('|',$err->parms):$err->parms[1])). "'"
 					.", '". $err->fname . "'"
-					.", " . intval($err->line)
+					.", " . (int)$err->line
 					.")" 
 					,__LINE__,__FILE__
 				);
