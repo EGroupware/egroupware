@@ -274,6 +274,26 @@
 		{
 			$this->m_aTables[$sTableName]['fd'][$sNewColumnName] = $this->m_aTables[$sTableName]['fd'][$sOldColumnName];
 			unset($this->m_aTables[$sTableName]['fd'][$sOldColumnName]);
+
+			// check if column is used in an index and evtl. rename the column in the index-definition
+			if (($key = array_search($sOldColumnName,$this->m_aTables[$sTableName]['pk'])) !== false)
+			{
+				$this->m_aTables[$sTableName]['pk'][$key] = $sNewColumnName;
+			}
+			foreach(array('ix','uc') as $kind)
+			{
+				foreach($this->m_aTables[$sTableName][$kind] as $key => $index)
+				{
+					if (!is_array($index))
+					{
+						if ($index == $sOldColumnName) $this->m_aTables[$sTableName][$kind][$key] = $sNewColumnName;
+					}
+					elseif (($sub_key = array_search($sOldColumnName,$index)) !== false)
+					{
+						$this->m_aTables[$sTableName][$kind][$key][$sub_key] = $sNewColumnName;
+					}
+				}
+			}
 			if($this->m_bDeltaOnly) return True;
 
 			// we have to use the new column-name, as m_oDeltaProc has already changed m_aTables
@@ -541,7 +561,7 @@
 			if ($this->debug) $bOutputHTML = True;
 			if ($bOutputHTML && !$this->debug) $this->debug = 2;
 
-			$this->m_aTables = $aTables;
+			$this->m_aTables = array();
 
 			foreach($aTables as $sTableName => $aTableDef)
 			{
