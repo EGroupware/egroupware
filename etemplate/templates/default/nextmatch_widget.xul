@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <overlay>
-  <grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.001">
+  <grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.002" spacing="0" padding="5">
     <columns>
       <column/>
       <column/>
@@ -14,7 +14,8 @@
     </columns>
     <rows>
       <row>
-        <description span="all" value="Total %s notes" no_lang="1" align="center" id="rows[0]"/>
+        <description span="3" value="entries" no_lang="1" align="right" id="range"/>
+        <description span="all" value="of" no_lang="1" id="rows[0]"/>
       </row>
       <row class="nmh">
         <button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>

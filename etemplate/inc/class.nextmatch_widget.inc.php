@@ -58,6 +58,8 @@
 			$total = $value['rows'][0];
 			$start = $value['start'];
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+			$end   = $start+$max > $total ? $total : $start+$max;
+			$value['range'] = (1+$start) . ' - ' . $end;
 			$nextmatch->set_cell_attribute('first','readonly',$start <= 0);
 			$nextmatch->set_cell_attribute('left', 'readonly',$start <= 0);
 			$nextmatch->set_cell_attribute('right','readonly',$start+$max >= $total);
