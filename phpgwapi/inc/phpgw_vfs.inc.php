@@ -235,23 +235,6 @@
       }
     }
 
-    function move_uploaded_file($fromfile, $tofile, $from_absolute = "") {
-      global $phpgw_info;
-      if ($from_absolute){
-        $frompath = $fromfile;
-      }else{
-        $frompath = $this->getabsolutepath($fromfile);
-      }
-      $topath = $this->getabsolutepath($tofile);
-      umask(000);
-      //if (!$this->move_uploaded_file($fromfile, $topath)) {
-      if (!$this->mv($fromfile, $topath)) {
-        return False;
-      }else{
-        return True;
-      }
-    }
-
     function cp($fromfile, $tofile, $from_absolute = "") {
       global $phpgw_info;
       if ($from_absolute){
@@ -273,10 +256,15 @@
       return $this->cp($fromfile, $tofile);
     }
 
-    function mv($fromfile, $tofile) {
+    function mv($fromfile, $tofile, $from_absolute = False) {
       global $phpgw_info;
-      $frompath = $this->getabsolutepath($fromfile);
+      if ($from_absolute){
+        $frompath = $fromfile;
+      }else{
+        $frompath = $this->getabsolutepath($fromfile);
+      }
       $topath = $this->getabsolutepath($tofile);
+      umask(000);
       if (!copy($frompath, $topath)) {
         return False;
       }else{
@@ -288,9 +276,9 @@
       }
     }
 
-    function move($fromfile, $tofile) {
+    function move($fromfile, $tofile, $from_absolute) {
       umask(000);
-      return $this->mv($fromfile, $tofile);
+      return $this->mv($fromfile, $tofile, $from_absolute);
     }
 
     function rm($file) {

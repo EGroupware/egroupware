@@ -335,7 +335,7 @@
 
       if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["template_set"])){
         $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["template_set"];
-      }elseif ($phpgw_info["server"]["template_set"] == "user_choice" || empty($phpgw_info["server"]["template_set"])){
+      }elseif ($phpgw_info["server"]["template_set"] == "user_choice" || !isset($phpgw_info["server"]["template_set"])){
         $phpgw_info["server"]["template_set"] = "default";
       }
 
