@@ -1263,8 +1263,28 @@
 		$phpgw_setup->db->query("alter table phpgw_addressbook add url varchar(128)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook add bday varchar(32)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook add note text");
-		$phpgw_setup->db->query("alter table phpgw_addressbook_extra change contact_value contact_value text");
+		
+		$sql = "CREATE TABLE phpgw_addressbook_extra_temp (
+			contact_id 		int,
+			contact_owner 	int,
+			contact_name 	varchar(255),
+			contact_value 	text
+		)";
+		$phpgw_setup->db->query($sql);
+		
+		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook_extra");
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cname = $phpgw_setup->db->f("contact_name");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			$insert = 'INSERT INTO phpgw_addressbook_extra_temp (contact_id,contact_name,contact_value)'
+				. 'VALUES ("'.$cid.'","'.$cname.'","'.$cvalu.'")';
+			$db1->query($insert);
+		}
+		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
+		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook_extra_temp RENAME TO phpgw_addressbook_extra",__LINE__,__FILE__);
 
+		
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='url'";
 		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
