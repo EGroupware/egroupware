@@ -1283,7 +1283,7 @@
 				$participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants") );
 				for($_f_part=0; $_f_part<count($participants); $_f_part++)
 				{
-					$this->bo->add_attribute('participants','A',$participants[$_f_part]);
+					$this->bo->add_attribute('participants','U',$participants[$_f_part]);
 				}
 				// Add misc
 				$this->bo->add_attribute('participants','A',$this->bo->owner);

@@ -839,6 +839,8 @@
 					ExecMethod('calendar.uicalendar.index');
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
+				// reading the old event-state, to preserver the participant status
+				$old_event = $l_cal['id'] ? $this->so->read_entry((int) $l_cal['id']) : False;
 
 				print_debug('Prior to fix_update_time()');
 				$this->fix_update_time($l_start);
@@ -928,10 +930,9 @@
 					$part = Array();
 					for($i=0;$i<count($parts);$i++)
 					{
-						if (($accept_type = substr($parts[$i],-1,1)) == '0' || (int)$accept_type > 0)
-						{
-							$accept_type = 'U';
-						}
+						// fetching the accept-type from the old version of the event
+						$accept_type = $old_event && isset($old_event['participants'][$parts[$i]]) ? $old_event['participants'][$parts[$i]] : 'U';
+
 						$acct_type = $GLOBALS['phpgw']->accounts->get_type((int)$parts[$i]);
 						if($acct_type == 'u')
 						{
