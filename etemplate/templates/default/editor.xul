@@ -142,19 +142,19 @@
       </row>
     </rows>
   </grid>
-  <grid id="etemplate.editor.edit" template="" lang="" group="" version="0.9.13.002" border="1" class="editorEdit">
+  <grid id="etemplate.editor.edit" template="" lang="" group="0" version="0.9.13.002" border="1" class="editorEdit">
     <columns>
       <column/>
       <column/>
     </columns>
     <rows>
       <row class="nmh">
-        <image align="center" src="navbar.gif"/>
-        <grid id="etemplate.editor.col_header" content="Col$col,"/>
+        <image src="navbar.gif" align="center"/>
+        <grid content="Col$col," id="etemplate.editor.col_header"/>
       </row>
       <row>
-        <grid id="etemplate.editor.row_header" content="Row$row," class="nmh"/>
-        <grid id="etemplate.editor.cell" content="$col$row"/>
+        <grid content="Row$row," class="nmh" id="etemplate.editor.row_header"/>
+        <grid content="$col$row" id="etemplate.editor.cell"/>
       </row>
     </rows>
     <styles>
