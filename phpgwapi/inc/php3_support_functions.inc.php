@@ -312,6 +312,50 @@
 		}
 	}
 
+	if(!defined('STR_PAD_LEFT'))
+	{
+		define('STR_PAD_LEFT',0);
+		define('STR_PAD_RIGHT',1);
+		define('STR_PAD_BOTH',2);
+	}
+	/* str_pad --  Pad a string to a certain length with another string (PHP4)
+	 *   string str_pad ( string input, int pad_length [, string pad_string [, int pad_type]])
+	 * This functions returns the input string padded on the left, the right, or both sides to the specified
+	 * padding length. If the optional argument pad_string is not supplied, the input is padded with spaces,
+	 * otherwise it is padded with characters from pad_string up to the limit. 
+	 *
+	 * Optional argument pad_type can be STR_PAD_RIGHT, STR_PAD_LEFT, or STR_PAD_BOTH. If pad_type is not
+	 * specified it is assumed to be STR_PAD_RIGHT. 
+	 *
+	 * If the value of pad_length is negative or less than the length of the input string, no padding takes
+	 * place.
+	 */
+	function str_pad($pm, $lt, $pw=' ', $dn=STR_PAD_RIGHT)
+	{
+		if($lt < 0 || $lt < strlen($pm))
+		{
+			return $pm;
+		}
+		$cnt = $lt - strlen($pm);
+		for($i=0;$i<$cnt;$i++)
+		{
+			switch($dn)
+			{
+				case 2:
+					$i % 2 ? $pm = $pw . $pm : $pm = $pm . $pw;
+					break;
+				case 1:
+					$pm = $pm . $pw;
+					break;
+				default:
+					$pm = $pw . $pm;
+					break;  
+			}
+		}
+		echo '<br>' . $pm;
+		return $pm;
+	}
+
 	/* str_repeat (PHP 4 >= 4.0.0)
 	 *   string str_repeat (string input, int multiplier)
 	 * Returns input_str repeated multiplier times. multiplier has to be greater than 0.
