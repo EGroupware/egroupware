@@ -340,7 +340,7 @@
 		function _GetFieldSQL($aField, &$sFieldSQL)
 		{
 			global $DEBUG;
-			if ($DEBUG) { echo'<br>_GetFieldSQL(): Incoming ARRAY: '; print_r($aField); }
+			if ($DEBUG) { echo'<br>_GetFieldSQL(): Incoming ARRAY: '; var_dump($aField); }
 			if (!is_array($aField))
 			{
 				return false;
