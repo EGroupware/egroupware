@@ -1,4 +1,4 @@
-<body bgcolor="AAAAAA" marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" onLoad="MM_preloadImages('{app_images}','{img_root}/log_out_over.gif','{img_root}/preferences_over.gif','{img_root}/welcome_over.gif')">
+<body bgcolor="AAAAAA" marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" onLoad="MM_preloadImages('{app_images}','{img_root}/log_out_over.gif','{img_root}/preferences_over.gif','{img_root}/help-over.gif','{img_root}/welcome_over.gif')">
 
 <table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
@@ -35,7 +35,7 @@
          <TD><a href="{home_link}" onMouseOver="nine.src='{img_root}/rollover/welcome_over.gif'" onMouseOut="nine.src='{img_root}/welcome.gif'"><img src="{img_root}/welcome.gif" border="0" name="nine"></TD>
          <TD><a href="{preferences_link}" onMouseOver="ten.src='{img_root}/rollover/preferences_over.gif'" onMouseOut="ten.src='{img_root}/preferences.gif'"><img src="{img_root}/preferences.gif" border="0" name="ten"></TD>
          <TD><a href="{logout_link}" onMouseOver="eleven.src='{img_root}/rollover/log_out_over.gif'" onMouseOut="eleven.src='{img_root}/log_out.gif'"><img src="{img_root}/log_out.gif" border="0" name="eleven"></TD>
-         <TD><a href="{help_link}"><img src="{img_root}/question_mark.gif" border="0"></TD>
+         <TD><a href="{help_link}" onMouseOver="help.src='{img_root}/rollover/help-over.gif'" onMouseOut="help.src='{img_root}/question_mark.gif'"><img src="{img_root}/question_mark.gif" border="0" name="help"></TD>
         </TR>
       </TABLE>
 
