@@ -214,16 +214,18 @@
 
 			//$tables = explode(',',$setup_info[$appname]['tables']);
 			$tables = $setup_info[$appname]['tables'];
-			$i = 1;
+			/* $i = 1; */
 			while(list($key,$table) = @each($tables))
 			{
+				/*
 				if($i == count($tables))
 				{
 					$term = '';
 				}
+				*/
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
-				$i++;
+				/* $i++; */
 			}
 			$dlstring .= printout('sqlfooter');
 		}
