@@ -1796,6 +1796,37 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
 	}
 
+	$test[] = '0.9.10pre26';
+	function upgrade0_9_10pre26()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("create table phpgw_temp as select * from phpgw_todo",__LINE__,FILE__);
+		$phpgw_setup->db->query("drop sequence phpgw_todo_todo_id_seq",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop table phpgw_todo",__LINE__,__FILE__);
+
+		  $sql = "create table phpgw_todo (
+		    todo_id	     serial,
+		    todo_id_parent int,
+		    todo_owner	varchar(25),
+		    todo_access	varchar(10),
+		    todo_cat       int,
+		    todo_des	text,
+		    todo_pri	int,
+		    todo_status	int,
+		    todo_datecreated	int,
+		    todo_startdate	int,
+		    todo_enddate int
+		  )";
+		  $phpgw_setup->db->query($sql);
+
+		$phpgw_setup->db->query("insert into phpgw_todo select * from phpgw_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre27';
+	}
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

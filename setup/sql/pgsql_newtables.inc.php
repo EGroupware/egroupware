@@ -175,6 +175,7 @@
     todo_id_parent int,
     todo_owner	varchar(25),
     todo_access	varchar(10),
+    todo_cat       int,
     todo_des	text,
     todo_pri	int,
     todo_status	int,
@@ -315,7 +316,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre27';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
