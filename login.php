@@ -137,7 +137,8 @@
      $tmpl->parse("null","domain_row");
   }
 */
-  
+
+  if(!isset($cd) || !$cd) $cd="";
   
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
