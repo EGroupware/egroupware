@@ -11,7 +11,6 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	/* $Id$ */
-
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
@@ -99,9 +98,60 @@
 				break;
 		}
 	}
+	
+	function check_langs()
+	{
+		//$f = fopen('/tmp/log','a'); fwrite($f,"\ncheck_langs()\n");
+		if ($GLOBALS['phpgw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['phpgw_info']['server']['lang_ctimes']))
+		{
+			$GLOBALS['phpgw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['phpgw_info']['server']['lang_ctimes']);
+		}
+		
+		$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+		$apps = $GLOBALS['phpgw_info']['user']['apps'];
+		$apps['phpgwapi'] = true;	// check the api too
+		while (list($app,$data) = each($apps))
+		{
+			$fname = PHPGW_SERVER_ROOT . "/$app/setup/phpgw_$lang.lang";
+			
+			if (file_exists($fname))
+			{
+				$ctime = filectime($fname);
+				$ltime = intval($GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app]);
+				//fwrite($f,"checking lang='$lang', app='$app', ctime='$ctime', ltime='$ltime'\n");
+				
+				if ($ctime != $ltime)
+				{
+					//fwrite($f,"\nupdate_langs()\n");
+		
+					update_langs();		// update all langs
+					break;
+				}
+			}
+		}
+		//fclose ($f);
+	}
+	
+	function update_langs()
+	{
+		$GLOBALS['phpgw_setup'] = CreateObject('phpgwapi.setup');
+		$GLOBALS['phpgw_setup']->db = $GLOBALS['phpgw']->db;
+		
+		$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
+		$langs = $GLOBALS['phpgw_info']['setup']['installed_langs'];
+		while (list($lang) = each($langs))
+		{
+			$langs[$lang] = $lang;
+		}
+		$GLOBALS['HTTP_POST_VARS']['submit'] = true;
+		$GLOBALS['HTTP_POST_VARS']['lang_selected'] = $langs;
+		$GLOBALS['HTTP_POST_VARS']['upgrademethod'] = 'dumpold';
+		$included = 'from_login';
+		
+		include(PHPGW_SERVER_ROOT . '/setup/lang.php');
+	}
 
 	/* Program starts here */
-  
 	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'http' && isset($PHP_AUTH_USER))
 	{
 		$submit = True;
@@ -141,10 +191,10 @@
 		unset($val);
 		unset($sslattributes);
 	}
-
 	if (isset($GLOBALS['HTTP_POST_VARS']['passwd_type']) || $submit_x || $submit_y)
 //		 isset($GLOBALS['HTTP_POST_VARS']['passwd']) && $GLOBALS['HTTP_POST_VARS']['passwd']) // enable konqueror to login via Return
 	{
+Echo "Hallo Ralf 2";
 		if (getenv(REQUEST_METHOD) != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST'
 			&& !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
 		{
@@ -168,6 +218,8 @@
 					}
 				}
 			}
+			check_langs();
+			
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/home.php','code=yes' . $extra_vars,True));
 		}
 	}
@@ -218,27 +270,15 @@
 
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		reset($phpgw_domain);
-		while ($domain = each($phpgw_domain))
+		foreach ($phpgw_domain as $domain => $domain_data)
 		{
-			if ($domain[0] == $last_domain)
+			$ds = array('domain' => $domain);
+			if ($domain == $last_domain)
 			{
-				$select = 'selected';
+				$ds += array('selected' => 'selected');
 			}
 
-			$data['login_standard']['domain_select'] = array
-			(
-				'domain'	=> $domain[0],
-				'selected'	=> $selected
-			);
-		}
-
-		for ($i=0;$i<count($data['login_standard']['domain_select']);$i++)
-		{
-			if ($data['login_standard']['domain_select'][$i]['selected'] != 'selected')
-			{
-				unset($data['login_standard']['domain_select'][$i]['selected']);
-			}
+			$data['login_standard']['domain_select'][] = $ds;
 		}
 	}
 
