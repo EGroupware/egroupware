@@ -107,5 +107,6 @@ you have x high priority events on your calendar today.	common	en	You have %1 hi
 you have not entered a valid date	calendar	en	You have not entered a valid date
 you have not entered a title	calendar	en	You have not entered a title
 you have not entered a valid time of day	calendar	en	You have not entered a valid time of day
+you have not entered participants	calendar	en	You have not entered participants
 you must enter one or more search keywords	calendar	en	You must enter one or more search keywords
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:

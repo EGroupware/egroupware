@@ -1411,6 +1411,8 @@
 					break;
 				case 42: $s .= lang('You have not entered a valid date').'.';
 					break;
+				case 43: $s .= lang('You have not entered participants').'.';
+					break;
 				default:	return '';
 			}
 			return $s;
