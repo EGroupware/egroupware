@@ -85,7 +85,7 @@
 				'session_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
 				'session_lid' => array('type' => 'varchar', 'precision' => 20),
 				'session_ip' => array('type' => 'varchar', 'precision' => 255),
-				'session_logintime' => array('type' => 'varchar', 'precision' => 4),
+				'session_logintime' => array('int' => 'varchar', 'precision' => 4),
 				'session_dla' => array('type' => 'int', 'precision' => 4),
 				'session_action' => array('type' => 'varchar', 'precision' => 255),
 				'session_flags' => array('type' => 'char', 'precision' => 2)
