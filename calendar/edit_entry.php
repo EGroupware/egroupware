@@ -261,11 +261,9 @@ function validate_and_submit() {
 
 
 <?php
-  // This will cause problems if there are more then 13 permissions.
-  // The permissions class needs to be updated to handle this.
-  $phpgw->db->query("select loginid, lastname, firstname from accounts where "
-	             . "status !='L' and loginid != '" . $phpgw_info["user"]["userid"] . "' and "
-	             . "permissions like '%:calendar:%' order by lastname,firstname,loginid");
+  $phpgw->db->query("select account_lid,account_lastname, account_firstname from accounts where "
+	             . "account_status !='L' and account_lid != '" . $phpgw_info["user"]["userid"] . "' and "
+	             . "account_permissions like '%:calendar:%' order by account_lastname,account_firstname,account_lid");
 
   if ($phpgw->db->num_rows() > 50)
      $size = 15;
@@ -279,14 +277,15 @@ function validate_and_submit() {
 
   while ($phpgw->db->next_record()) {
     echo "<option value=\"" . $phpgw->db->f("loginid") . "\"";  
-    if (($participants[$phpgw->db->f("loginid")]
-	|| $phpgw->db->f("loginid") == $loginid))
+    if (($participants[$phpgw->db->f("account_lid")]
+	|| $phpgw->db->f("account_lid") == $loginid))
        echo " selected";
 
-    if (! $phpgw->db->f("lastname"))
-       echo ">" . $phpgw->db->f("loginid");
+    // Change this to use accounts->display_full_name()
+    if (! $phpgw->db->f("account_lastname"))
+       echo ">" . $phpgw->db->f("account_loginid");
     else
-       echo ">" . $phpgw->db->f("lastname") . ", " . $phpgw->db->f("firstname");
+       echo ">" . $phpgw->db->f("account_lastname") . ", " . $phpgw->db->f("account_firstname");
 
     echo "</option>\n";
   }
