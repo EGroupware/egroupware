@@ -149,7 +149,7 @@ do you want to move all global subcategories one level down ?	admin	es-es	¿Desea
 edit account	admin	es-es	Editar cuenta
 edit application	admin	es-es	Editar aplicación
 edit cvs repository list	admin	es-es	Editar Lista de Sitios CVS
-edit email settings	admin	es-es	editar configuracion de correo
+edit email settings	admin	es-es	editar configuración de correo
 edit global category	admin	es-es	Editar categoria global
 edit global category for %1	admin	es-es	Editar categoría global para %1
 edit group	admin	es-es	Editar Grupo
@@ -167,7 +167,7 @@ edit user	admin	es-es	editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
 edit work catagory table	admin	es-es	Editar Tabla de Categorias de Trabajos
 email account active	admin	es-es	cuenta de correo activa
-email address	admin	es-es	direccion de correo electronico
+email address	admin	es-es	dirección de correo electrónico
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enabled	admin	es-es	Habilitado
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación

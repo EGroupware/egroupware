@@ -67,6 +67,7 @@ defines the size in minutes of the lines in the day view.	calendar	es-es	Define 
 delete a single entry by passing the id.	calendar	es-es	Borrar una entrada simple pasando el id.
 delete an entire users calendar.	calendar	es-es	Borrar todo el calendario de un usuario.
 delete selected contacts	calendar	es-es	Eliminar contactos seleccionados
+delete selected participants	calendar	es-es	Borrar los participantes seleccionados
 delete series	calendar	es-es	Borrar series
 delete single	calendar	es-es	Borrar simple
 deleted	calendar	es-es	Eliminado
@@ -107,6 +108,7 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	es-es	Participantes externos
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	es-es	Fallo al enviar mensaje a '%1' nº%2 asunto='%3', remitente='%4'
 fieldseparator	calendar	es-es	Separador de campos
+find free timeslots where the marked participants are availible for the given timespan	calendar	es-es	Encontrar espacios de tiempo libres donde los partipantes marcados estén disponibles para el horario elegido
 firstname of person to notify	calendar	es-es	Nombre de pila de la persona a notificar
 format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 fr	calendar	es-es	V

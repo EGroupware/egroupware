@@ -359,6 +359,8 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	es-es	No se encontró una configuración de ejemplo. Usando los valores predefinidos.
 save	setup	es-es	Guardar
 save this text as contents of your header.inc.php	setup	es-es	Guardar este texto como contenido de su header.inc.php
+schedule	setup	es-es	planificar
+scheduled backups	setup	es-es	copias de seguridad planificadas
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	es-es	Seleccione una aplicación, elija una versión objetivo, luego elija "Enviar" para realizar el proceso de actualización hasta dicha versión.<br>Si no selecciona una versión, solo la tablas de la versión base será instaladas.<br><blink>¡ESTO ELIMINARÁ TODAS LAS TABLAS DE LAS APLICACIONES PRIMERO!</blink>
 select one...	setup	es-es	seleccionar uno...
 select the default applications to which your users will have access	setup	es-es	Seleccione las aplicaciones predeterminadas a las que tendrán acceso los usuarios
@@ -391,8 +393,6 @@ setup demo accounts in ldap	setup	es-es	Instalar cuentas de demostración en LDAP
 setup main menu	setup	es-es	Menú principal de la instalación
 setup the database	setup	es-es	Instalar la base de datos
 setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
-schedule	setup	es-es	planificar
-scheduled backups	setup	es-es	copias de seguridad planificadas
 show 'powered by' logo on	setup	es-es	Mostrar el logo en
 size	setup	es-es	tamaño
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
