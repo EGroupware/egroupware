@@ -224,12 +224,12 @@
 			}
 			if(extension_loaded('pgsql') || function_exists('pg_connect'))
 			{
-				$detected .= lang('You appear to have Postgres-DB support enabled') . '<br>' . "\n";
+				$detected .= lang('You appear to have PostgreSQL support enabled') . '<br>' . "\n";
 				$supported_db[]  = 'pgsql';
 			}
 			else
 			{
-				$detected .= lang('No Postgres-DB support found. Disabling') . '<br>' . "\n";
+				$detected .= lang('No PostgreSQL support found. Disabling') . '<br>' . "\n";
 			}
 			if(extension_loaded('mssql') || function_exists('mssql_connect'))
 			{
