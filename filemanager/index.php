@@ -244,26 +244,6 @@ if (($path == $GLOBALS['homedir'])
 
 	$GLOBALS['phpgw']->vfs->override_acl = 0;
 }
-elseif (preg_match ('|^'.$GLOBALS['fakebase'].'\/(.*)$|U', $path, $matches))
-{
-	if (!$GLOBALS['phpgw']->vfs->file_exists (array ('string' => $path, 'relatives' => array (RELATIVE_NONE))))
-	{
-		$GLOBALS['phpgw']->vfs->override_acl = 1;
-		$GLOBALS['phpgw']->vfs->mkdir (array ('string' => $path, 'relatives' => array (RELATIVE_NONE)));
-		$GLOBALS['phpgw']->vfs->override_acl = 0;
-
-		$group_id = $GLOBALS['phpgw']->accounts->name2id ($matches[1]);
-		$GLOBALS['phpgw']->vfs->set_attributes (array (
-				'string'	=> $path,
-				'relatives'	=> array (RELATIVE_NONE),
-				'attributes'	=> array (
-							'owner_id' => $group_id,
-							'createdby_id' => $group_id
-						)
-			)
-		);
-	}
-}
 
 ###
 # Verify path is real
@@ -355,11 +335,13 @@ if ($path == $GLOBALS['fakebase'])
 			))
 		)
 		{
+			$GLOBALS['phpgw']->vfs->override_acl = 1;
 			$GLOBALS['phpgw']->vfs->mkdir (array (
 					'string'	=> $GLOBALS['fakebase'].'/'.$group_array['account_name'],
 					'relatives'	=> array (RELATIVE_NONE)
 				)
 			);
+			$GLOBALS['phpgw']->vfs->override_acl = 0;
 
 			$GLOBALS['phpgw']->vfs->set_attributes (array (
 					'string'	=> $GLOBALS['fakebase'].'/'.$group_array['account_name'],
