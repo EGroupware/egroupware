@@ -28,7 +28,7 @@
 		include('./header.inc.php');
 		if(function_exists('CreateObject'))
 		{
-			$GLOBALS['phpgw']->sessions = CreateObject('phpgwapi.sessions');
+			$GLOBALS['phpgw']->session = CreateObject('phpgwapi.sessions');
 		}
 		else
 		{
@@ -74,15 +74,15 @@
 /*
 	if($GLOBALS['phpgw_info']['server']['usecookies'] == True)
 	{
-		$GLOBALS['phpgw']->sessions->phpgw_setcookie('eGroupWareLoginTime', time());
+		$GLOBALS['phpgw']->session->phpgw_setcookie('eGroupWareLoginTime', time());
 	}
 */
 /*
 	if($_GET['cd'] != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
 	{
-		$GLOBALS['phpgw']->sessions->setcookie('sessionid');
-		$GLOBALS['phpgw']->sessions->setcookie('kp3');
-		$GLOBALS['phpgw']->sessions->setcookie('domain');
+		$GLOBALS['phpgw']->session->setcookie('sessionid');
+		$GLOBALS['phpgw']->session->setcookie('kp3');
+		$GLOBALS['phpgw']->session->setcookie('domain');
 	}
 */
 
@@ -119,14 +119,14 @@
 				return '<font color="FF0000">' . lang('Blocked, too many attempts') . '</font>';
 				break;
 			case 10:
-				$GLOBALS['phpgw']->sessions->phpgw_setcookie('sessionid');
-				$GLOBALS['phpgw']->sessions->phpgw_setcookie('kp3');
-				$GLOBALS['phpgw']->sessions->phpgw_setcookie('domain');
+				$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
+				$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
+				$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
 
 				//fix for bug php4 expired sessions bug
 				if($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
 				{
-					$GLOBALS['phpgw']->sessions->phpgw_setcookie(PHPGW_PHPSESSID);
+					$GLOBALS['phpgw']->session->phpgw_setcookie(PHPGW_PHPSESSID);
 				}
 
 				return '<font color="#FF0000">' . lang('Your session could not be verified.') . '</font>';

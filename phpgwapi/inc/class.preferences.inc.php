@@ -342,7 +342,7 @@
 					if (!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '')
 					{
 						$this->session[$app_name][$var] = $this->data[$app_name][$var] = $value;
-						$GLOBALS['phpgw']->sessions->appsession('preferences','preferences',$this->session);
+						$GLOBALS['phpgw']->session->appsession('preferences','preferences',$this->session);
 					}
 					break;
 
