@@ -44,7 +44,7 @@
 			return 0;
 		}
 
-		function pre_process(&$cell,&$value,&$templ)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
 		{
 			if ($cell['size'] != '')
 			{
@@ -74,7 +74,7 @@
 			return $this->$func($cell,$form_name,$value,$readonly);
 		}
 
-		function post_process(&$cell,&$value,&$templ)
+		function post_process(&$cell,&$value,&$extension_data,&$loop)
 		{
 			if (!isset($value))
 			{

@@ -31,7 +31,7 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$templ)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
 		{
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
@@ -50,7 +50,7 @@
 				if (is_array($value['_tab_widget']) && $value['_tab_widget'][$name][0])
 				{
 					// save selected tab in persistent extension_data to use it in post_process
-					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $name;
+					$extension_data = $selected_tab = $name;
 					$tcell['name'] = $tab_active;
 				}
 				else
@@ -74,7 +74,7 @@
 			if (!isset($selected_tab))
 			{
 				$tab_row['A']['name'] = $tab_active;
-				$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $names[0];
+				$extension_data = $selected_tab = $names[0];
 			}
 			$tabs->data[1] = $tab_row;
 			$tabs->rows = 1;
@@ -92,13 +92,13 @@
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$templ)
+		function post_process(&$cell,&$value,&$extension_data,&$loop)
 		{
 			$old_value = array(
 				'_tab_widget' => array(
-					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] => array(True)
+					$extension_data => array(True)
 			));
-			$this->pre_process($cell,$old_value,$templ);
+			$this->pre_process($cell,$old_value,$extension_data,$dummy);
 
 			if (is_array($value['_tab_widget']))
 			{
@@ -106,12 +106,10 @@
 				{
 					if (is_array($val) && $val[0])
 					{
-						$templ->loop = True;
+						$loop = True;
 					}
 				}
 			}
-			//$templ->loop = is_array($value['_tab_widget']);
-
 			return True;
 		}
 	}

@@ -31,11 +31,11 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$templ,&$readonlys)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
 		{
 			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
 			// save values in persistent extension_data to be able use it in post_process
-			$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']] = $value;
+			$extension_data = $value;
 
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			$obj = CreateObject($app.'.'.$class);
@@ -45,7 +45,7 @@
 				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
-			$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']]['total'] = $total;
+			$extension_data['total'] = $total;
 
 			if ($cell['size'])
 			{
@@ -81,11 +81,11 @@
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$templ)
+		function post_process(&$cell,&$value,&$extension_data,&$loop)
 		{
 			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
 
-			$old_value = $GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']];
+			$old_value = $extension_data;
 
 			list($value['cat_id']) = $value['cat_id'];
 			list($value['filter']) = $value['filter'];
@@ -93,7 +93,7 @@
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 
-			$templ->loop = False;
+			$loop = False;
 			if ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
 			    $old_value['filter'] != '' && $value['filter'] != $old_value['filter'] ||
 			    $old_value['filter2'] != '' && $value['filter2'] != $old_value['filter2'])
@@ -101,27 +101,27 @@
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
 				//_debug_array($old_value);
-				$templ->loop = True;
+				$loop = True;
 			}
 			elseif ($value['first'])
 			{
 				$value['start'] = 0;
-				$templ->loop = True;
+				$loop = True;
 			}
 			elseif ($value['left'])
 			{
 				$value['start'] = $old_value['start'] - $max;
-				$templ->loop = True;
+				$loop = True;
 			}
 			elseif ($value['right'])
 			{
 				$value['start'] = $old_value['start'] + $max;
-				$templ->loop = True;
+				$loop = True;
 			}
 			elseif ($value['last'])
 			{
 				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
-				$templ->loop = True;
+				$loop = True;
 			}
 			return True;
 		}

@@ -101,6 +101,7 @@
 
 			$id = $this->appsession_id();
 
+			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$html .= $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
 				$this->html->form($this->include_java_script() .
@@ -165,7 +166,7 @@
 			$content = $this->complete_array_merge($session_data['changes'],$content);
 			//echo "process_exec($this->name) merge(changes,content) ="; _debug_array($content);
 
-			if ($this->loop)
+			if ($GLOBALS['phpgw_info']['etemplate']['loop'])
 			{
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
@@ -364,7 +365,8 @@
 			if (!$this->types[$cell['type']] &&
 			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
 			{
-				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,$this,$readonlys[$name]);
+				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,
+					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],$readonlys[$name]);
 				if (strstr($name,'|'))
 				{
 					$content = $this->complete_array_merge($content,$value);
@@ -457,7 +459,7 @@
 					if ($this->java_script() && $cell['onchange'])
 					{
 						$html .= $this->html->input_hidden($form_name,'',False) . "\n";
-						$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;">' .
+						$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;" '.$options.'>' .
 							(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
 					}
 					else
@@ -754,7 +756,9 @@
 				{
 					echo "<p>value for $cell[type]::post_process: "; _debug_array($value);
 				}
-				$this->extension[$cell['type']]->post_process($cell,$value,$this);
+				$this->extension[$cell['type']]->post_process($cell,$value,
+					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],
+					$GLOBALS['phpgw_info']['etemplate']['loop']);
 
 				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
 				{
