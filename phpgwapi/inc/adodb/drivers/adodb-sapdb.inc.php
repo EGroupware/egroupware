@@ -26,8 +26,8 @@ class ADODB_SAPDB extends ADODB_odbc {
 	var $concat_operator = '||';
 	var $sysDate = 'DATE';
 	var $sysTimeStamp = 'TIMESTAMP';
-	var $fmtDate = "\\D\\A\\T\\E('Y-m-d')";	/// used by DBDate() as the default date format used by the database
-	var $fmtTimeStamp = "\\T\\I\\M\\E\\S\\T\\A\\M\\P('Y-m-d','H:i:s')"; /// used by DBTimeStamp as the default timestamp fmt.
+	var $fmtDate = "'Y-m-d'";	/// used by DBDate() as the default date format used by the database
+	var $fmtTimeStamp = "'Y-m-d H:i:s'"; /// used by DBTimeStamp as the default timestamp fmt.
 	var $hasInsertId = true;
 	var $_bindInputArray = true;
 
@@ -118,6 +118,16 @@ class ADODB_SAPDB extends ADODB_odbc {
 					$fld->has_default = false;
 				} else {
 					$fld->default_value = $column[6];
+					switch($fld->type) {
+						case 'VARCHAR':
+						case 'CHARACTER':
+						case 'LONG':
+							$fld->default_value = $column[6];
+							break;
+						default:
+							$fld->default_value = trim($column[6]);
+							break;
+					}
 				}
 			}
 			$retarr[$fld->name] = $fld;	

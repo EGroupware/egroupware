@@ -29,6 +29,9 @@ class ADODB2_postgres extends ADODB_DataDict {
 			$t = $fieldobj->type;
 			$len = $fieldobj->max_length;
 		}
+		$is_serial = is_object($fieldobj) && $fieldobj->primary_key && $fieldobj->unique && 
+			$fieldobj->has_default && substr($fieldobj->default_value,0,8) == 'nextval(';
+		
 		switch (strtoupper($t)) {
 			case 'INTERVAL':
 			case 'CHAR':
@@ -61,12 +64,12 @@ class ADODB2_postgres extends ADODB_DataDict {
 			case 'TIMESTAMPTZ':
 				return 'T';
 			
-			case 'INTEGER': return (empty($fieldobj->primary_key) && empty($fieldobj->unique))? 'I' : 'R';
+			case 'INTEGER': return !$is_serial ? 'I' : 'R';
 			case 'SMALLINT': 
-			case 'INT2': return (empty($fieldobj->primary_key) && empty($fieldobj->unique))? 'I2' : 'R';
-			case 'INT4': return (empty($fieldobj->primary_key) && empty($fieldobj->unique))? 'I4' : 'R';
+			case 'INT2': return !$is_serial ? 'I2' : 'R';
+			case 'INT4': return !$is_serial ? 'I4' : 'R';
 			case 'BIGINT': 
-			case 'INT8': return (empty($fieldobj->primary_key) && empty($fieldobj->unique))? 'I8' : 'R';
+			case 'INT8': return !$is_serial ? 'I8' : 'R';
 				
 			case 'OID':
 			case 'SERIAL':

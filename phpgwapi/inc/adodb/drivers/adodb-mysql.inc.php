@@ -392,7 +392,15 @@ class ADODB_mysql extends ADOConnection {
 				
 				// split type into type(length):
 				$fld->scale = null;
-				if (strpos($type,',') && preg_match("/^(.+)\((\d+),(\d+)/", $type, $query_array)) {
+				if (preg_match('/^enum\((.+)\)$/',$type,$enum_vals)) {	// convert enum to varchar
+					$fld->type = 'varchar';
+					$fld->max_length = 1;
+					$enum_vals = explode(',',$enum_vals[1]);
+					foreach($enum_vals as $val)
+					{
+						if ($fld->max_length < strlen($val)-2) $fld->max_length = strlen($val)-2;
+					}
+				} elseif (strpos($type,',') && preg_match("/^(.+)\((\d+),(\d+)/", $type, $query_array)) {
 					$fld->type = $query_array[1];
 					$fld->max_length = is_numeric($query_array[2]) ? $query_array[2] : -1;
 					$fld->scale = is_numeric($query_array[3]) ? $query_array[3] : -1;
@@ -668,7 +676,7 @@ class ADORecordSet_mysql extends ADORecordSet{
 		case 'MEDIUMINT':
 		case 'SMALLINT': 
 			
-			if (!empty($fieldobj->primary_key)) return 'R';
+			if (is_object($fieldobj) && $fieldobj->primary_key && $fieldobj->auto_increment) return 'R';
 			else return 'I';
 		
 		default: return 'N';

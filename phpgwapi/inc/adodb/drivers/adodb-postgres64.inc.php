@@ -443,10 +443,8 @@ select viewname,'V' from pg_views where viewname like $mask";
 					$num = $rsdef->fields['num'];
 					$s = $rsdef->fields['def'];
 					if (strpos($s,'::')===false && substr($s, 0, 1) == "'") { /* quoted strings hack... for now... fixme */
-						$s = substr($s, 1);
-						$s = substr($s, 0, strlen($s) - 1);
+						$s = substr($s, 1,-1);
 					}
-
 					$rsdefa[$num] = $s;
 					$rsdef->MoveNext();
 				}
@@ -457,14 +455,17 @@ select viewname,'V' from pg_views where viewname like $mask";
 		}
 	
 		$retarr = array();
-		while (!$rs->EOF) { 	
+		while (!$rs->EOF) {
 			$fld = new ADOFieldObject();
 			$fld->name = $rs->fields[0];
 			$fld->type = $rs->fields[1];
 			$fld->max_length = $rs->fields[2];
 			if ($fld->max_length <= 0) $fld->max_length = $rs->fields[3]-4;
 			if ($fld->max_length <= 0) $fld->max_length = -1;
-			
+			if ($fld->type == 'numeric') {
+				$fld->scale = $fld->max_length & 0xFFFF;
+				$fld->max_length >>= 16;
+			}
 			// dannym
 			// 5 hasdefault; 6 num-of-column
 			$fld->has_default = ($rs->fields[5] == 't');
@@ -944,8 +945,8 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 				case 'INT8': 
 				case 'INT4':
 				case 'INT2':
-					if (isset($fieldobj) &&
-				empty($fieldobj->primary_key) && empty($fieldobj->unique)) return 'I';
+					if (!is_object($fieldobj) || !$fieldobj->primary_key || !$fieldobj->unique || 
+						!$fieldobj->has_default || substr($fieldobj->default_value,0,8) != 'nextval(') return 'I';
 				
 				case 'OID':
 				case 'SERIAL':

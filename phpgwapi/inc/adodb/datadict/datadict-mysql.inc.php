@@ -29,6 +29,7 @@ class ADODB2_mysql extends ADODB_DataDict {
 			$t = $fieldobj->type;
 			$len = $fieldobj->max_length;
 		}
+		$is_serial = is_object($fieldobj) && $fieldobj->primary_key && $fieldobj->auto_increment;
 		
 		$len = -1; // mysql max_length is not accurate
 		switch (strtoupper($t)) {
@@ -66,11 +67,11 @@ class ADODB2_mysql extends ADODB_DataDict {
 			return 'F';
 			
 		case 'INT': 
-		case 'INTEGER': return (!empty($fieldobj->primary_key)) ? 'R' : 'I';
-		case 'TINYINT': return (!empty($fieldobj->primary_key)) ? 'R' : 'I1';
-		case 'SMALLINT': return (!empty($fieldobj->primary_key)) ? 'R' : 'I2';
-		case 'MEDIUMINT': return (!empty($fieldobj->primary_key)) ? 'R' : 'I4';
-		case 'BIGINT':  return (!empty($fieldobj->primary_key)) ? 'R' : 'I8';
+		case 'INTEGER': return $is_serial ? 'R' : 'I';
+		case 'TINYINT': return $is_serial ? 'R' : 'I1';
+		case 'SMALLINT': return $is_serial ? 'R' : 'I2';
+		case 'MEDIUMINT': return $is_serial ? 'R' : 'I4';
+		case 'BIGINT':  return $is_serial ? 'R' : 'I8';
 		default: return 'N';
 		}
 	}
