@@ -42,29 +42,18 @@
      }
   }
 */
-  if ($usercookie) {
-     Setcookie("sessionid",time() - 3);
-     Setcookie("kp3",time() - 3);
-     Setcookie("usercookie",time() - 3);
-     sleep(1);							// Make SURE its expired in the browser.
-
-  }
-
 
   if ($phpgw->session->verify($sessionid)) {
-     if (file_exists($phpgw_info["server"]["temp_dir"] . $sep . $sessionid)) {
-        $dh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
-        while ($file = readdir($dh)) {
-          if ($file != "." && $file != "..") {
-             unlink($phpgw_info["server"]["temp_dir"] . $sep . $sessionid
-	         . $sep . $file);
-          }
-
+    if (file_exists($phpgw_info["server"]["temp_dir"] . $sep . $sessionid)) {
+      $dh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
+      while ($file = readdir($dh)) {
+        if ($file != "." && $file != "..") {
+          unlink($phpgw_info["server"]["temp_dir"] . $sep . $sessionid . $sep . $file);
         }
-        rmdir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
-     }
-     $phpgw->session->destroy($sessionid);
-     $phpgw->db->query("delete from app_sessions where sessionid='" . $sessionid . "'");
+      }
+      rmdir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
+    }
+    $phpgw->session->destroy();
   }
 
   Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=1");
