@@ -1,28 +1,35 @@
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
-change your settings	preferences	it	Cambia le tue preferenze
+change your settings	preferences	it	Cambia le tue impostazioni
 country selection	preferences	it	Selezione Nazione
 date format	preferences	it	Formato data
 default application	preferences	it	Applicazione preferita
+default preferences	preferences	it	Preferenze Predefinite
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
+forced preferences	preferences	it	Preferenze Forzate
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
 interface/template selection	preferences	it	Selezione Interfaccia/Aspetto
 language	preferences	it	Lingua
-max matchs per page	preferences	it	Numero massimo di risultati per pagina
+max matches per page	preferences	it	Numero massimo di risultati per pagina
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questo *non* cambia la vostra password di email. Questo deve essere fatto manualemnte.
-please, select a new theme	preferences	it	Please, select a new theme
+please, select a new theme	preferences	it	Per favore, selezionare un nuovo tema
 re-enter your password	preferences	it	Reinserisci la password
 select different theme	preferences	it	Seleziona un tema differente
+select one	preferences	it	Seleziona uno
 show current users on navigation bar	preferences	it	Mostra utenti attuali nella barra di navigazione
 show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
-template selection	admin	it	Aspetto selezionabili
+template selection	admin	it	Selezione Aspetto
 text only	preferences	it	Solo Testo
+theme (colors/fonts) selection	preferences	it	Selezione tema (colori/caratteri)
+the two passwords are not the same	preferences	it	Le due password non sono uguali
 this server is located in the x timezone	preferences	it	 Questo server è situato nel fuso orario %1
 time format	preferences	it	Formato ora
 use selectbox	preferences	it	Usa men&ugrave;
 use text entry	preferences	it	Usa testo
 your current theme is: x	preferences	it	il tuo tema</b>
+you must enter a password	preferences	it	Devi inserire una password
+your preferences	preferences	it	Tue Preferenze
 
