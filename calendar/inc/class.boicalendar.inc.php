@@ -3128,6 +3128,9 @@
 							$recur_enddate['year']  = (int)($ical['event'][$i]['rrule']['until']['year']);
 							$recur_enddate['month'] = (int)($ical['event'][$i]['rrule']['until']['month']);
 							$recur_enddate['mday']  = (int)($ical['event'][$i]['rrule']['until']['mday']);
+							$recur_enddate['hour']  = (int)($ical['event'][$i]['rrule']['until']['hour']);
+							$recur_enddate['min']  = (int)($ical['event'][$i]['rrule']['until']['min']);
+							$recur_enddate['sec']  = (int)($ical['event'][$i]['rrule']['until']['sec']);
 						}
 						elseif( isset($ical['event'][$i]['duration']) )
 						{
@@ -3206,7 +3209,6 @@
 								$recur_enddate['min'],
 								$recur_enddate['sec']
 							);
-
 						}
 						else
 						{

@@ -34,7 +34,7 @@
 			'owner'       => 'Created By',
 			'updated'     => 'Updated',
 			'alarm'       => 'Alarm',
-			'recure_type' => 'Repetition'
+			'recur_type'  => 'Repetition'
 		);
 
 		function bocustom_fields()
