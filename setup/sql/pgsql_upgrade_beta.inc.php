@@ -1802,8 +1802,8 @@
 		global $phpgw_info, $phpgw_setup;
 
 		$phpgw_setup->db->query("create table phpgw_temp as select * from phpgw_todo",__LINE__,FILE__);
-		$phpgw_setup->db->query("drop sequence phpgw_todo_todo_id_seq",__LINE__,__FILE__);
 
+		$phpgw_setup->db->query("drop sequence phpgw_todo_todo_id_seq",__LINE__,__FILE__);
 		$phpgw_setup->db->query("drop table phpgw_todo",__LINE__,__FILE__);
 
 		  $sql = "create table phpgw_todo (
@@ -1821,7 +1821,9 @@
 		  )";
 		  $phpgw_setup->db->query($sql);
 
-		$phpgw_setup->db->query("insert into phpgw_todo select * from phpgw_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("insert into phpgw_todo(todo_id,todo_id_parent,todo_owner,todo_access,"
+			. "todo_des,todo_pri,todo_status,todo_datecreated,todo_startdate,todo_enddate) select * from "
+			. "phpgw_temp",__LINE__,__FILE__);
 		$phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre27';
