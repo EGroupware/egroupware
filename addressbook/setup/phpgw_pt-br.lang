@@ -1,10 +1,10 @@
 %1 records imported	addressbook	pt-br	%1 registros importados
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt-br	%1 registro lido (não importado ainda. Você deve voltar e desmarcar Testar Impotação)
-(e.g. 1969)	addressbook	pt-br	(e.g. 1969)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt-br	%1 registro lido (não importado ainda. Você deve voltar e desmarcar o campo Testar Importação)
+(e.g. 1969)	addressbook	pt-br	(ex. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pt-br	<b>O tipo de conversão &lt;Nenhum&gt; não foi encontrado.</b>  Escolha um tipo de conversão da lista
 @-eval() is only availible to admins!!!	addressbook	pt-br	@-eval() está disponível somente para administradores !!!
 actions	addressbook	pt-br	Ações
-add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os camps.
+add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
 add custom field	addressbook	pt-br	Adicionar campo personalizado
 address book	common	pt-br	Contatos
 address book - vcard in	addressbook	pt-br	Contatos - VCard
@@ -17,7 +17,7 @@ addressbook preferences	addressbook	pt-br	Preferências do Catálogo de Endereços
 addressbook-fieldname	addressbook	pt-br	Contatos - Nome do Campo
 addvcard	addressbook	pt-br	Adicionar VCard
 alt. csv import	addressbook	pt-br	Importar CSV
-are you sure you want to delete this field?	addressbook	pt-br	Tem certeza que deseja remover este campo ?
+are you sure you want to delete this field?	addressbook	pt-br	Tem certeza que deseja remover este campo?
 bbs phone	addressbook	pt-br	Telefone BBS
 birthday	common	pt-br	Aniversário
 birthdays	common	pt-br	Aniversários
@@ -29,11 +29,11 @@ business country	addressbook	pt-br	País
 business email	addressbook	pt-br	Email
 business email type	addressbook	pt-br	Tipo de Email
 business fax	addressbook	pt-br	Fax
-business phone	addressbook	pt-br	Telefone
+business phone	addressbook	pt-br	Telefone coml.
 business state	addressbook	pt-br	Estado
 business street	addressbook	pt-br	Rua
 business zip code	addressbook	pt-br	CEP
-car phone	addressbook	pt-br	Telefone veicular
+car phone	addressbook	pt-br	Telefone no veículo
 cell phone	addressbook	pt-br	Telefone celular
 charset of file	addressbook	pt-br	Charset do arquivo
 city	common	pt-br	Cidade
@@ -62,10 +62,10 @@ empty for all	addressbook	pt-br	vazio para todos
 enter the path to the exported file here	addressbook	pt-br	Entre aqui com o caminho do arquivo exportado
 export contacts	addressbook	pt-br	Exportar contatos
 export file name	addressbook	pt-br	Exportar arquivo
-export from addressbook	addressbook	pt-br	Exportar dos Contatos
+export from addressbook	addressbook	pt-br	Exportar dos Catálogo de Endereços
 extra	addressbook	pt-br	Extra
 fax	addressbook	pt-br	Fax
-fax number	common	pt-br	Fax
+fax number	common	pt-br	Número do Fax
 field %1 has been added !	addressbook	pt-br	Campo %1 foi adicionado !
 field %1 has been updated !	addressbook	pt-br	Campo %1 foi atualizado !
 field name	addressbook	pt-br	Nome do campo
@@ -78,15 +78,15 @@ grant addressbook access	common	pt-br	Permitir acesso aos Contatos
 home address type	addressbook	pt-br	Endereço residencial
 home city	addressbook	pt-br	Cidade
 home country	addressbook	pt-br	País
-home email	addressbook	pt-br	Email
-home email type	addressbook	pt-br	Email
-home phone	addressbook	pt-br	Telefone
+home email	addressbook	pt-br	E-mail
+home email type	addressbook	pt-br	Tipo de E-mail
+home phone	addressbook	pt-br	Telefone res.
 home state	addressbook	pt-br	Estado
-home street	addressbook	pt-br	Rua
+home street	addressbook	pt-br	Rua, Av, Trav., etc.
 home zip code	addressbook	pt-br	CEP
 import	addressbook	pt-br	Importar
 import contacts	addressbook	pt-br	Importar contatos
-import csv-file into addressbook	addressbook	pt-br	Importar arquivo CSV para Contatos
+import csv-file into addressbook	addressbook	pt-br	Importar arquivo CSV para Catálogo de Endereços
 import file	addressbook	pt-br	Importar arquivo
 import from ldif, csv, or vcard	addressbook	pt-br	Importar de LDIF, CSV ou VCard
 import from outlook	addressbook	pt-br	Importar do Outlook
@@ -101,22 +101,22 @@ ldap root dn for contacts	admin	pt-br	super usuário LDAP para contatos
 ldap root pw for contacts	admin	pt-br	senha do super usuário LDAP para contatos
 ldif	addressbook	pt-br	LDIF
 line 2	addressbook	pt-br	Linha 2
-mark records as private	addressbook	pt-br	Marcar registos como privados
-message phone	addressbook	pt-br	Telefone de mensagens
+mark records as private	addressbook	pt-br	Marcar registos como particulares
+message phone	addressbook	pt-br	Telefone para recado
 middle name	addressbook	pt-br	Nome do meio
 mobile	addressbook	pt-br	Celular
-mobile phone	addressbook	pt-br	Telefone móvel
+mobile phone	addressbook	pt-br	Telefone celular
 modem phone	addressbook	pt-br	Telefone de Dados (Modem)
 no vcard	addressbook	pt-br	Nenhum VCard
-number of records to read (%1)	addressbook	pt-br	Númeor de registros a ler (%1)
+number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
 other number	addressbook	pt-br	Outro número
 other phone	addressbook	pt-br	Outro telefone
 pager	common	pt-br	Pager
-parcel	addressbook	pt-br	Parcel
+parcel	addressbook	pt-br	Parcial
 phone number	common	pt-br	Número de telefone
 phone numbers	common	pt-br	Números de telefone
 please enter a name for that field !	addressbook	pt-br	Por favor digite o nome para esse campo!
-postal	common	pt-br	Postal
+postal	common	pt-br	Cx Postal
 pref	addressbook	pt-br	pref
 prefix	addressbook	pt-br	Prefixo
 public key	addressbook	pt-br	Chave pública
@@ -136,10 +136,10 @@ street	common	pt-br	Rua
 successfully imported %1 records into your addressbook.	addressbook	pt-br	%1 Registros importados para o seu catálogo de endereços.
 suffix	addressbook	pt-br	Sufixo
 test import (show importable records <u>only</u> in browser)	addressbook	pt-br	Testar Importação (mostrar no navegador <u>somente</u> os registros que serão importados)
-that field name has been used already !	addressbook	pt-br	Nome do campo já está em uso !
-this person's first name was not in the address book.	addressbook	pt-br	O primeiro nome desta pessoa não estava no Catálogo de Endereços
-this person's last name was not in the address book.	addressbook	pt-br	O último nome dessa pessoa não está nos Contatos
-to many might exceed your execution-time-limit	addressbook	pt-br	muitos poderão exceder seu tempo limite de execução
+that field name has been used already !	addressbook	pt-br	Este nome de campo já está em uso !
+this person's first name was not in the address book.	addressbook	pt-br	O primeiro nome desta pessoa não estava no Catálogo de Endereços.
+this person's last name was not in the address book.	addressbook	pt-br	O último nome dessa pessoa não está no Catálogo de Endereços.
+to many might exceed your execution-time-limit	addressbook	pt-br	muitos poderá exceder seu tempo limite de execução
 today is %1's birthday!	common	pt-br	Hoje é o aniversário de %1.
 tomorrow is %1's birthday.	common	pt-br	Amanhã é o aniversário de %1.
 translation	addressbook	pt-br	Tradução
