@@ -461,7 +461,6 @@ function cat_id($cats)
 				}
 				// convert participants-names to user-id's
 				$parts = isset($values['participants']) ? split('[,;]',$values['participants']) : array($values['owner'].'=A');
-echo "<p>parts=".print_r($parts,True)."</p>\n";
 				foreach($parts as $part_status)
 				{
 					list($part,$status) = explode('=',$part_status);
@@ -472,7 +471,7 @@ echo "<p>parts=".print_r($parts,True)."</p>\n";
 						$part = $GLOBALS['phpgw']->accounts->name2id($part);
 					}
 					if ($part)
-					{echo "<p>add_attribute('participants','$status','$part')</p>\n";
+					{
 						$calendar->add_attribute('participants',$status,$part);
 					}
 				}
