@@ -1010,6 +1010,18 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
   }
 
+  $test[] = '0.9.10pre11';
+  function upgrade0_9_10pre11()
+  {
+                global $phpgw_info, $phpgw_setup;
+
+                $phpgw_setup->db->query("alter table notes rename phpgw_notes",__LINE__,__FILE__);
+
+                $phpgw_setup->db->query("alter table phpgw_notes add column note_category int(9) after note_date",__LINE__,__FILE__);
+
+                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

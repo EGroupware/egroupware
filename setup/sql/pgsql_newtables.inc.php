@@ -248,10 +248,11 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE notes (
+  $sql = "CREATE TABLE phpgw_notes (
            note_id        serial, 
            note_owner     int,
            note_date      int,
+	   note_category  int,
            note_content   text
           )";
   $phpgw_setup->db->query($sql);

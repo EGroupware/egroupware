@@ -19,26 +19,26 @@
   * the absolute path to fit your site, and you should be up and running.    *
   \**************************************************************************/
 
-  define("PHPGW_SERVER_ROOT", "{SERVER_ROOT}");
-  define("PHPGW_INCLUDE_ROOT", "{INCLUDE_ROOT}");
-  $phpgw_info["server"]["header_admin_password"] = "{HEADER_ADMIN_PASSWORD}";
+  define("PHPGW_SERVER_ROOT", "/usr/local/www/phpgroupware");
+  define("PHPGW_INCLUDE_ROOT", "/usr/local/www/phpgroupware");
+  $phpgw_info["server"]["header_admin_password"] = "bla";
 
   $phpgw_domain["default"] = array (
-    "db_host" => "{DB_HOST}", 
-    "db_name" => "{DB_NAME}", 
-    "db_user" => "{DB_USER}", 
-    "db_pass" => "{DB_PASS}", 
+    "db_host" => "localhost", 
+    "db_name" => "phpgw", 
+    "db_user" => "root", 
+    "db_pass" => "", 
   /* Look at the README file */
-    "db_type" => "{DB_TYPE}",
+    "db_type" => "mysql",
   /* This will limit who is allowed to make configuration modifcations */
-    "config_passwd" => "{CONFIG_PASS}"
+    "config_passwd" => "bla"
   );
 
   /* If you want to have your domains in a select box, change to True */
-  $phpgw_info["server"]["show_domain_selectbox"] = {DOMAIN_SELECTBOX};
+  $phpgw_info["server"]["show_domain_selectbox"] = False;
 
   /* This is used to control mcrypt's use */
-  $phpgw_info["server"]["mcrypt_enabled"] = {ENABLE_MCRYPT};
+  $phpgw_info["server"]["mcrypt_enabled"] = False;
   /* Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use. */
   $phpgw_info["server"]["versions"]["mcrypt"] = "{MCRYPT_VERSION}";
 

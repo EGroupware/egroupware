@@ -273,10 +273,11 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE notes (
+  $sql = "CREATE TABLE phpgw_notes (
            note_id        int(20) NOT NULL auto_increment, 
            note_owner     int(11),
            note_date      int(11),
+	   note_category  int(9),
            note_content   text, 
            PRIMARY KEY (note_id)
           )";
