@@ -64,6 +64,13 @@
 				$phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
 			}
 
+ 			if ($cat_id) {
+				$phpgw->preferences->delete("addressbook","default_category");
+				$phpgw->preferences->add("addressbook","default_category",$cat_id);
+			} else {
+				$phpgw->preferences->delete("addressbook","default_category");
+			}
+
 			$phpgw->preferences->save_repository(True);
 			Header("Location: " . $phpgw->link("/preferences/index.php"));
 		}
@@ -125,6 +132,11 @@
     <tr bgcolor="<?php echo $tr_color; ?>">
      <td colspan="2"><?php echo lang("show birthday reminders on main screen"); ?></td>
      <td><input type="checkbox" name="mainscreen_showbirthdays" value="True"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
+    </tr><?
+	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
+    <tr bgcolor="<?php echo $tr_color; ?>">
+     <td colspan="2"><?php echo lang("Default Category"); ?></td>
+     <td><? echo cat_option($phpgw_info["user"]["preferences"]["addressbook"]["default_category"]); ?></td>
     </tr>
     <tr>
      <td colspan="3" align="center">
