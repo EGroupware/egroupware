@@ -130,6 +130,12 @@
 		$GLOBALS['phpgw']->db       = $phpgw_setup->db;
 		$GLOBALS['phpgw']->common   = CreateObject('phpgwapi.common');
 		$GLOBALS['phpgw']->accounts = CreateObject('phpgwapi.accounts');
+		if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
+			!$GLOBALS['phpgw']->accounts->ds)
+		{
+			printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['phpgw_info']['server']['ldap_host']);
+			exit;
+		}
 
 		/* Begin transaction for acl, etc */
 		$phpgw_setup->db->transaction_begin();
