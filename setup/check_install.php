@@ -426,7 +426,6 @@
 	
 	if ($run_by_webserver)
 	{
-		//echo "<html>\n<header>\n<title>Checking the eGroupWare install</title>\n</header>\n<body>\n";
 		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 		$setup_tpl = CreateObject('setup.Template',$tpl_root);
 		$setup_tpl->set_file(array(
@@ -435,9 +434,17 @@
 		));
 		$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 		if (@$_GET['intro']) {
+			if($ConfigLang = get_var('ConfigLang',array('POST','COOKIE')))
+			{
+				$GLOBALS['phpgw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
+			}
 			$GLOBALS['phpgw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
 			echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
-			echo lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.');
+			if(!$ConfigLang)
+			{
+				echo '<p><form action="check_install.php?intro=1" method="Post">Please Select your language '.lang_select(True,'en')."</form></p>\n";
+			}
+			echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.');
 			echo '<br /><br />'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.');
 			echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
 			$setup_tpl->pparse('out','T_footer');
