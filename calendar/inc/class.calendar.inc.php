@@ -268,6 +268,7 @@ class calendar extends calendar_
 			$p->set_var('link_link',$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$this->owner));
 			$p->set_var('lang_view',lang('View this entry'));
 			$p->set_var('pic_image',$this->image_dir.'/'.$pic);
+			$p->set_var('pic_size',' width="5" height="7"');
 			$p->set_var('description',$description);
 			$str = $p->finish($p->parse('out','link_pict'));
 			unset($p);
@@ -1002,7 +1003,7 @@ class calendar extends calendar_
 				{
 					while(list(,$value) = each($holiday_found))
 					{
-						$p->set_var('month_filler_text',$this->holidays->get_name($value).'<br>');
+						$p->set_var('month_filler_text','<font size="-1">'.$this->holidays->get_name($value).'</font><br>');
 						$p->parse('column_data','month_filler',True);
 					}
 				}
@@ -1021,13 +1022,16 @@ class calendar extends calendar_
 					{
 						$lr_events = $rep_events[$k];
 						$pict = 'circle.gif';
+						$pic_size = ' width="5" height="7"';
 						if($lr_events->recur_type != RECUR_NONE)
 						{
-							$pict = 'rpt.gif';
+							$pict = 'repeat.gif';
+							$pic_size = ' width=25 height=35';
 						}
 //						if(count($lr_events->participants) > 1)
 //						{
 //							$pict = 'multi_1.gif';
+//							$pic_size = ' width="10" height="14"';
 //						}
 						
 						$description = $this->is_private($lr_events,$owner,'description');
@@ -1040,6 +1044,7 @@ class calendar extends calendar_
 								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
 								'lang_view'			=>	lang('View this entry'),
 								'pic_image'			=>	$this->image_dir.'/'.$pict,
+								'pic_size'			=> $pic_size,
 								'description'		=>	$description.$this->display_status($lr_events->users_status)
 							);
 							$p->set_var($var);
