@@ -28,9 +28,9 @@
 	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
 		include($phpgw_info['server']['app_inc'].'/functions.inc.php');
-		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="30%" valign="top"><!-- Calendar info -->'."\n";
+		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- Calendar info -->'."\n";
 		echo $phpgw->calendar->mini_calendar($phpgw->calendar->today["day"],$phpgw->calendar->today["month"],$phpgw->calendar->today["year"],"day.php").'</td><td align="center">';
-		echo '<table border="0" width="70%" cellspacing="0" cellpadding="0"><tr><td align="center">'
+		echo '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
 			. lang(date("F",$phpgw->calendar->today["raw"])).' '.$phpgw->calendar->today["day"].', '.$phpgw->calendar->today["year"].'</tr></td>'
 			. '<tr><td bgcolor="'.$phpgw_info["theme"]["bg_text"].'" valign="top">';
 //		$phpgw->calendar->printer_friendly = True;
