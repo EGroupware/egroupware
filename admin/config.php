@@ -20,17 +20,32 @@
 	);
 	include('../header.inc.php');
 
-	$config_appname = $appname;
-	if ($appname == 'admin' || $appname == 'preferences')
+	switch($GLOBALS['HTTP_GET_VARS']['appname'])
 	{
-		$appname = 'preferences';
-		$config_appname = 'phpgwapi';
+		case 'admin':
+		case 'preferences':
+			$appname = 'preferences';
+			$config_appname = 'phpgwapi';
+			break;
+		case 'addressbook':
+		case 'calendar':
+		case 'email':
+			/*
+			  Other special apps can go here for now, e.g.:
+			  case 'bogusappname':
+			*/
+			$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+			$config_appname = 'phpgwapi';
+			break;
+		default:
+			$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+			$config_appname = $appname;
+			break;
 	}
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($appname));
+
+	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($appname));
 	$t->set_unknowns('keep');
-	$t->set_file(array(
-		'config' => 'config.tpl'
-	));
+	$t->set_file(array('config' => 'config.tpl'));
 	$t->set_block('config','header','header');
 	$t->set_block('config','body','body');
 	$t->set_block('config','footer','footer');
@@ -43,12 +58,12 @@
 		$current_config = $c->config_data;
 	}
 
-	if ($cancel)
+	if ($GLOBALS['HTTP_POST_VARS']['cancel'])
 	{
-		Header('Location: '.$phpgw->link('/admin/index.php'));
+		Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
 	}
 
-	if ($submit)
+	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		while (list($key,$config) = each($newsettings))
 		{
@@ -63,24 +78,24 @@
 		}
 		$c->save_repository(True);
 
-		Header('Location: '.$phpgw->link('/admin/index.php'));
-		$phpgw->common->phpgw_exit();
+		Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
-	$phpgw->common->phpgw_header();
+	$GLOBALS['phpgw']->common->phpgw_header();
 	echo parse_navbar();
 
 	$t->set_var('title',lang('Site Configuration'));
-	$t->set_var('action_url',$phpgw->link('/admin/config.php','appname=' . $appname));
-	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
-	$t->set_var('th_text',$phpgw_info['theme']['th_text']);
-	$t->set_var('row_on',$phpgw_info['theme']['row_on']);
-	$t->set_var('row_off',$phpgw_info['theme']['row_off']);
+	$t->set_var('action_url',$GLOBALS['phpgw']->link('/admin/config.php','appname=' . $appname));
+	$t->set_var('th_bg',     $GLOBALS['phpgw_info']['theme']['th_bg']);
+	$t->set_var('th_text',   $GLOBALS['phpgw_info']['theme']['th_text']);
+	$t->set_var('row_on',    $GLOBALS['phpgw_info']['theme']['row_on']);
+	$t->set_var('row_off',   $GLOBALS['phpgw_info']['theme']['row_off']);
 	$t->pparse('out','header');
 
 	$vars = $t->get_undefined('body');
 
-	$phpgw->common->hook_single('config',$appname);
+	$GLOBALS['phpgw']->common->hook_single('config',$appname);
 
 	while (list($null,$value) = each($vars))
 	{
@@ -96,10 +111,10 @@
 
 		switch ($type)
 		{
-			case "lang":
+			case 'lang':
 				$t->set_var($value,lang($newval));
 				break;
-			case "value":
+			case 'value':
 				$newval = ereg_replace(' ','_',$newval);
 				$t->set_var($value,$current_config[$newval]);
 				break;
@@ -114,7 +129,7 @@
 					$t->set_var($value,'');
 				}
 				break;*/
-			case "selected":
+			case 'selected':
 				$configs = array();
 				$config  = '';
 				$newvals = explode(' ',$newval);
@@ -149,5 +164,5 @@
 	$t->set_var('lang_submit', lang('submit'));
 	$t->set_var('lang_cancel', lang('cancel'));
 	$t->pfp('out','footer');
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
