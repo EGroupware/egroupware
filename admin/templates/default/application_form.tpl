@@ -16,8 +16,12 @@
   </tr>
 
   <tr>
-   <td>{lang_enabled}</td>
-   <td><input type="checkbox" name="n_app_enabled" value="1"{app_enabled_checked}></td>
+   <td>{lang_status}</td>
+   <td>
+    <select name="n_app_status">
+     {select_status}
+    </select>
+   </td>
   </tr>
 
   <tr>

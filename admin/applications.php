@@ -30,7 +30,7 @@
      . lang("Edit") . "</td> <td> " . lang("Delete") . " </td> <td> "
      . lang("Enabled") . " </td> <td></tr>";
 
-  $phpgw->db->query("select * from applications $ordermethod");
+  $phpgw->db->query("select * from applications $ordermethod",__LINE__,__FILE__);
 
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -48,7 +48,7 @@
        . " </a></td>";
 
     echo  "<td width=5%>";
-    if ($phpgw->db->f("app_enabled") == 1) {
+    if ($phpgw->db->f("app_enabled") != 0) {
        echo lang("Yes");
     } else {
        echo "<b>" . lang("No") . "</b>";
