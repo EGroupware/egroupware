@@ -74,6 +74,70 @@
       return $this;
     }
 
+    function add_entry() {
+      global $phpgw,$phpgw_info;
+
+      if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+        $sql = "INSERT INTO addressbook ("
+            . "ab_email,ab_firstname,ab_lastname,ab_title,ab_hphone,ab_wphone,"
+	    . "ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,"
+	    . "ab_city,ab_state,ab_zip,ab_bday,ab_notes,ab_company_id,ab_access,ab_url,"
+	    . "ab_owner) VALUES ("
+	    . "  '" . addslashes($this->email)
+            . "','" . addslashes($this->firstname)
+	    . "','" . addslashes($this->lastname)
+            . "','" . addslashes($this->title)
+   	    . "','" . addslashes($this->hphone)
+	    . "','" . addslashes($this->wphone)
+   	    . "','" . addslashes($this->fax)
+	    . "','" . addslashes($this->pager)
+   	    . "','" . addslashes($this->mphone)
+	    . "','" . addslashes($this->ophone)
+   	    . "','" . addslashes($this->street)
+            . "','" . addslashes($this->address2)
+	    . "','" . addslashes($this->city)
+   	    . "','" . addslashes($this->state)
+	    . "','" . addslashes($this->zip)
+   	    . "','" . addslashes($this->bday)
+	    . "','" . addslashes($this->notes)
+   	    . "','" . addslashes($this->company_id)
+	    . "','" . addslashes($this->access)
+	    . "','" . addslashes($this->url)
+   	    . "','" . $phpgw_info["user"]["account_id"]
+            . "')";
+      } else {
+        $sql = "INSERT INTO addressbook ("
+            . "ab_email,ab_firstname,ab_lastname,ab_title,ab_hphone,ab_wphone,"
+	    . "ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,"
+	    . "ab_city,ab_state,ab_zip,ab_bday,ab_notes,ab_company,ab_access,ab_url,"
+	    . "ab_owner) VALUES ("
+	    . "  '" . addslashes($this->email)
+            . "','" . addslashes($this->firstname)
+	    . "','" . addslashes($this->lastname)
+            . "','" . addslashes($this->title)
+   	    . "','" . addslashes($this->hphone)
+	    . "','" . addslashes($this->wphone)
+   	    . "','" . addslashes($this->fax)
+	    . "','" . addslashes($this->pager)
+   	    . "','" . addslashes($this->mphone)
+	    . "','" . addslashes($this->ophone)
+   	    . "','" . addslashes($this->street)
+            . "','" . addslashes($this->address2)
+	    . "','" . addslashes($this->city)
+   	    . "','" . addslashes($this->state)
+	    . "','" . addslashes($this->zip)
+   	    . "','" . addslashes($this->bday)
+	    . "','" . addslashes($this->notes)
+   	    . "','" . addslashes($this->company)
+	    . "','" . addslashes($this->access)
+	    . "','" . addslashes($this->url)
+   	    . "','" . $phpgw_info["user"]["account_id"]
+            . "')";
+      }
+      $phpgw->db->query($sql);
+      return;
+    }
+
     function update_entry() {
       global $phpgw,$phpgw_info;
 
@@ -85,7 +149,6 @@
             . "', ab_title='"       . addslashes($this->title)
    	    . "', ab_hphone='" 	    . addslashes($this->hphone)
 	    . "', ab_wphone='" 	    . addslashes($this->wphone)
-	    . "', ab_company='"     . addslashes($this->company)
    	    . "', ab_fax='"         . addslashes($this->fax)
 	    . "', ab_pager='"       . addslashes($this->pager)
    	    . "', ab_mphone='" 	    . addslashes($this->mphone)
