@@ -11,7 +11,7 @@
         <ol>
         <li>{lang_select}
         <select name="conv_type">
-        <option value="none">&lt;none&gt;</option>
+        <option value="none">&lt;{lang_none}&gt;</option>
 {conv}        </select><p></li>
         <li>{filename}:<input name="tsvfilename" value="export.txt"></li>
         <li>{lang_cat}:{cat_link}</li>

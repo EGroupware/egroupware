@@ -16,7 +16,7 @@
               <input name="tsvfile" size="48" type="file" value="{tsvfilename}"><p></li>
             <li>{lang_conv_type}:
             <select name="conv_type">
-            <option value="none">&lt;none&gt;</option>
+            <option value="none">&lt;{lang_none}&gt;</option>
      {conv}
             </select><p></li>
    <li>{lang_cat}:{cat_link}</li>
