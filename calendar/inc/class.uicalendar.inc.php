@@ -674,10 +674,10 @@
 			}
 
 			$var = Array(
-				'action_url_button'	=> $this->page('export','&cal_id='.$cal_id),
+				'action_url_button'	=> $this->page('export'),
 				'action_text_button'	=> lang('Export'),
 				'action_confirm_button'	=> '',
-				'action_extra_field'	=> ''
+				'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
 			);
 			$p->set_var($var);
 			echo $p->fp('out','form_button').'</center>';
@@ -755,10 +755,55 @@
 
 		function export($vcal_id=0)
 		{
-			unset($GLOBALS['phpgw_info']['flags']['noheader']);
-			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo nl2br(execmethod('calendar.boicalendar.export',$GLOBALS['HTTP_GET_VARS']['cal_id']));
+			if(!isset($GLOBALS['HTTP_POST_VARS']['cal_id']) || !$GLOBALS['HTTP_POST_VARS']['cal_id'])
+			{
+				Header('Location: '.$this->index());
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
+			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			if(!isset($GLOBALS['HTTP_POST_VARS']['output_file']) || !$GLOBALS['HTTP_POST_VARS']['output_file'])
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+				
+				$p = CreateObject('phpgwapi.Template',$this->template_dir);
+				$p->set_file(
+					Array(
+						'form_button'	=> 'form_button_script.tpl'
+					)
+				);
+				$var = Array(
+					'action_url_button'	=> $this->page('export'),
+					'action_text_button'	=> lang('Submit'),
+					'action_confirm_button'	=> '',
+					'action_extra_field'	=> "\n".lang('Enter Output Filename: ( .vcs appended )')."\n".'   <input name="output_file" size="25" maxlength="80" value="">'."\n"
+						. '   <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_POST_VARS']['cal_id'].'">'
+				);
+				$p->set_var($var);
+				echo $p->fp('out','form_button');
+			}
+			else
+			{
+				$output_file = $GLOBALS['HTTP_POST_VARS']['output_file'].'.vcs';
+				$vfs = CreateObject('phpgwapi.vfs');
+//				if(!$vfs->file_exists('.calendar',array(RELATIVE_USER)))
+//				{
+//					$vfs->mkdir('.calendar',array(RELATIVE_USER));
+//				}
+
+				$content = ExecMethod('calendar.boicalendar.export',$GLOBALS['HTTP_POST_VARS']['cal_id']);
+				$vfs->cd('/', True, array(RELATIVE_USER));
+				$vfs->write($output_file, array (RELATIVE_USER), $content);
+//				$vfs->write($output_file, array (RELATIVE_USER_APP), $content);
+//				echo 'DEBUG: Output Filename = '.$output_file."<br>\n";
+//				echo 'DEBUG: Fakebase = '.$vfs->fakebase."<br>\n";
+//				echo 'DEBUG: Path = '.$vfs->pwd()."<br>\n";
+
+				Header('Location: '.$this->index());
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
 		}
 
 		function reinstate_list($params='')
