@@ -29,7 +29,7 @@
     var $account_id;
     var $preference;
 
-    function preferences($account_id)
+    function preferences($account_id = 0)
     {
       global $phpgw;
 //      echo "Account ID (Initializing) = ".$account_id."<br>\n";

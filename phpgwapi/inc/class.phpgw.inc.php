@@ -111,9 +111,8 @@
       /* Load selected accounts class */
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->accounts = CreateObject("phpgwapi.accounts");
-      $this->preferences = CreateObject("phpgwapi.preferences", 0);
+      $this->preferences = CreateObject("phpgwapi.preferences");
       $this->session = CreateObject("phpgwapi.sessions");
-
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
         $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);

@@ -45,8 +45,7 @@
       $phpgw_info["flags"]["included_classes"][$classname] = True;   
       include($phpgw_info["server"]["include_root"]."/".$appname."/inc/class.".$classname.".inc.php");
     }
-//    if ($constructor_param == ""){ $obj = new $classname; }else{$obj = new $classname($constructor_param); }
-    $obj = new $classname($constructor_param);
+    if ($constructor_param == ""){ $obj = new $classname; }else{$obj = new $classname($constructor_param); }
     return $obj;
   }
 
