@@ -34,19 +34,13 @@
 		$auth = base64_decode(trim($tmp));
 		list($sessionid,$kp3) = split(':',$auth);
 
-		if($HTTP_SERVER_VARS['HTTP_X_PHPGW_SERVER'])
+		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
 		{
-			if($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
-			{
-				$server->authed = True;
-			}
+			$server->authed = True;
 		}
-		else
+		elseif($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
 		{
-			if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
-			{
-				$server->authed = True;
-			}
+			$server->authed = True;
 		}
 	}
 
