@@ -3,7 +3,7 @@
 ### Start Configuration Options ###
 ### These are automatically set in phpGW - do not edit ###
 
-$sep = $phpgw_info["server"]["dir_separator"];
+$sep = SEP;
 $rootdir = $phpgw->vfs->basedir;
 $fakebase = $phpgw->vfs->fakebase;
 $hostname = $phpgw_info["server"]["webserver_url"] . $filesdir;

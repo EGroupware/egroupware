@@ -16,7 +16,7 @@ html_break (1);
 html_text_italic (PHP_OS . " - " . $phpgw_info["server"]["db_type"] . " - " . PHP_VERSION . " - " . $phpgw->vfs->basedir);
 html_break (1);
 
-$sep = $phpgw_info["server"]["dir_separator"];
+$sep = SEP;
 $user = $phpgw->vfs->working_lid;
 $homedir = $phpgw->vfs->fakebase . "/" . $user;
 $realhomedir = preg_replace ("|/|", $sep, $homedir);
