@@ -19,7 +19,7 @@
   $db->query($sql);  
  
   $sql = "CREATE TABLE applications (
-    app_name     varchar(25) NOT NULL,
+    app_name     varchar(25),
     app_title    varchar(50),
     app_enabled  int,
     app_order    int,

@@ -12,7 +12,7 @@
   /* $Id$ */
 
   /* !!! This needs to be changed each time we do an update !!! */
-  $newversion = "0.9.1";
+  $newversion = "0.9.2";
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
