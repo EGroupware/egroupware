@@ -969,7 +969,7 @@
 
       $h12 = $hour;
       if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12') {
-         if ($hour > 12) 
+         if ($hour >= 12) 
             $ampm = ' pm';
          else
             $ampm = ' am';
