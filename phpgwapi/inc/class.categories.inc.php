@@ -192,6 +192,120 @@
 			return $cats;
 		}
 
+
+		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$public = False)
+		{
+			if ($public)
+			{
+				$public_cats = " OR cat_appname='phpgw'";
+			}
+
+			if (!$sort)
+			{
+				$sort = 'ASC';
+			}
+
+			if ($order)
+			{
+				$ordermethod = " ORDER BY $order $sort";
+			}
+			else
+			{
+				$ordermethod = ' ORDER BY cat_name ASC';
+			}
+
+			if (is_array($this->grants))
+			{
+				$grants = $this->grants;
+				while(list($user) = each($grants))
+				{
+					$public_user_list[] = $user;
+				}
+				reset($public_user_list);
+				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+			}
+			else
+			{
+				$grant_cats = " cat_owner='" . $this->account_id . "' ";
+			}
+
+			if ($query)
+			{
+				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
+			}
+
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $public_cats . ")"
+					. $querymethod;
+
+			$mainselect = ' AND cat_level=0';
+
+			$this->db->query($sql . $mainselect . $ordermethod,__LINE__,__FILE__);
+
+			$i = 0;
+			while ($this->db->next_record())
+			{
+				$cats[$i]['id']          = $this->db->f('cat_id');
+				$cats[$i]['owner']       = $this->db->f('cat_owner');
+				$cats[$i]['access']      = $this->db->f('cat_access');
+				$cats[$i]['app_name']    = $this->db->f('cat_appname');
+				$cats[$i]['main']        = $this->db->f('cat_main');
+				$cats[$i]['level']       = $this->db->f('cat_level');
+				$cats[$i]['parent']      = $this->db->f('cat_parent');
+				$cats[$i]['name']        = $this->db->f('cat_name');
+				$cats[$i]['description'] = $this->db->f('cat_description');
+				$cats[$i]['data']        = $this->db->f('cat_data');
+				$i++;
+			}
+
+			$num_cats = count($cats);
+			for ($i=0;$i < $num_cats;$i++)
+			{
+				$subselect = " AND cat_parent='" . $cats[$i]['id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
+
+				$this->db->query($sql . $subselect . $ordermethod,__LINE__,__FILE__);
+
+				$subcats = array();
+				$j = 0;
+				while ($this->db->next_record())
+				{
+					$subcats[$j]['id']          = $this->db->f('cat_id');
+					$subcats[$j]['owner']       = $this->db->f('cat_owner');
+					$subcats[$j]['access']      = $this->db->f('cat_access');
+					$subcats[$j]['app_name']    = $this->db->f('cat_appname');
+					$subcats[$j]['main']        = $this->db->f('cat_main');
+					$subcats[$j]['level']       = $this->db->f('cat_level');
+					$subcats[$j]['parent']      = $this->db->f('cat_parent');
+					$subcats[$j]['name']        = $this->db->f('cat_name');
+					$subcats[$j]['description'] = $this->db->f('cat_description');
+					$subcats[$j]['data']        = $this->db->f('cat_data');
+					$j++;
+				}
+
+				$num_subcats = count($subcats);
+				if ($num_subcats != 0)
+				{
+					$newcats = array();
+					for ($k = 0; $k <= $i; $k++)
+					{
+						$newcats[$k] = $cats[$k];
+					}
+					for ($k = 0; $k < $num_subcats; $k++)
+					{
+						$newcats[$k+$i+1] = $subcats[$k];
+					}
+					for ($k = $i+1; $k < $num_cats; $k++)
+					{
+						$newcats[$k+$num_subcats] = $cats[$k];
+					}
+					$cats = $newcats;
+					$num_cats = count($cats);
+				}
+			}
+			$this->total_records = count($cats);
+
+			return $cats;
+		}
+
 		/*!
 		@function return_single
 		@abstract return single
@@ -219,18 +333,18 @@
 		}
 
 		/*!
-		@function formatted_list
+		@function formated_list
 		@abstract return into a select box, list or other formats
 		@param $format currently only supports select (select box)
 		@param $type string - subs or mains
 		@param $selected - cat_id or array with cat_id values 
 		@result $s array - populated with categories
 		*/
-		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
-		{
-			return $this->formatted_list($format,$type,$selected,$public,$site_link);
-		}
 		function formatted_list($format,$type,$selected = '',$public = False,$site_link = 'site')
+		{
+			return $this->formated_list($format,$type,$selected,$public,$site_link);
+		}
+		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
 		{
 			if(is_array($format))
 			{
@@ -244,17 +358,22 @@
 				unset($temp_format);
 			}
 
-			$filter = $this->filter($type);
-
 			if (!is_array($selected))
 			{
 				$selected = explode(',',$selected);
 			}
 
-			if ($format == 'select')
+			if ($type != 'all')
 			{
 				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
+			}
+			else
+			{
+				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$public);
+			}
 
+			if ($format == 'select')
+			{
 				for ($i=0;$i<count($cats);$i++)
 				{
 					$s .= '<option value="' . $cats[$i]['id'] . '"';
@@ -262,7 +381,12 @@
 					{
 						$s .= ' selected';
 					}
-					$s .= '>' . $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
+					$s .= '>';
+					for ($j=0;$j<$cats[$i]['level'];$j++)
+					{
+						$s .= '&nbsp;';
+					}
+					$s .= $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
 					{
 						$s .= '&lt;' . lang('Global') . '&gt;';
@@ -275,8 +399,6 @@
 			if ($format == 'list')
 			{
 				$space = '&nbsp;&nbsp;';
-
-				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
 
 				$s  = '<table border="0" cellpadding="2" cellspacing="2">' . "\n";
 
@@ -329,6 +451,7 @@
 
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
+			$cat_values['data'] = $this->db->db_addslashes($cat_values['data']);
 
 			$this->db->query("INSERT INTO phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
 				. "cat_main,cat_level) VALUES ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access']
@@ -384,6 +507,7 @@
 
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
+			$cat_values['data'] = $this->db->db_addslashes($cat_values['data']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $cat_values['name'] . "', cat_description='" . $cat_values['descr']
 				. "', cat_data='" . $cat_values['data'] . "', cat_parent='" . $cat_values['parent'] . "', cat_access='"
