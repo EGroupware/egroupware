@@ -9,14 +9,24 @@
 	* Free Software Foundation; either version 2 of the License, or (at your	*
 	* option) any later version.												*
 	\***************************************************************************/
+
 	/* $Id$ */
 
-	$phpgw_flags = array('currentapp' => $cats_app,
-			'enable_nextmatchs_class' => True,
-			'noappheader' => True,
-			'noappfooter' => True);
+	$phpgw_info['flags'] = array(
+		'currentapp'              => $cats_app,
+		'enable_nextmatchs_class' => True
+	);
 
-	$phpgw_info['flags'] = $phpgw_flags;
+	if (! $appheader)
+	{
+		$phpgw_info['flags']['noappheader'] = True;
+	}
+
+	if (! $appfooter)
+	{
+		$phpgw_info['flags']['noappfooter'] = True;
+	}
+
 	include('../header.inc.php');
 
 	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
