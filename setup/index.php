@@ -20,7 +20,8 @@
  
   /* processing and discovery phase */
   $phpgw_setup->check_header();
-  if ( $phpgw_info["setup"]["stage"] >= 1.3){
+//echo "phpgw_info[setup][stage]: ".$phpgw_info["setup"]["stage"]."<br>";
+  if ( $phpgw_info["setup"]["stage"] >= 1.4){
     if (!$phpgw_setup->config_auth()){
       $phpgw_setup->show_header("Please login",True);
       $phpgw_setup->loginForm($login_msg);
@@ -28,6 +29,12 @@
     }else{ /* authentication settled. Moving to the database portion. */
       $phpgw_setup->loaddb();
       $phpgw_setup->check_db();
+    }
+  }else{
+    if (!$phpgw_setup->header_auth()){
+      $phpgw_setup->show_header("Header.inc.php needs updating",True);
+      $phpgw_setup->loginForm("", $header_login_msg);
+      exit;
     }
   }
 
@@ -87,9 +94,9 @@
   echo '  <tr><td align="left" WIDTH="20%" bgcolor="486591"><font color="fefefe">Step 1 - header.inc.php</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"] == 1.1) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="./createheader.php" method=post>You have not created your header.inc.php yet.<br> <input type=submit value="Create one now"></form></td></tr>';
-  }elseif ($phpgw_info["setup"]["stage"] == 1.2) {
+  }elseif ($phpgw_info["setup"]["stage"] == 1.2 || $phpgw_info["setup"]["stage"] == 1.3) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="./createheader.php" method=post>Your header.inc.php is out of date. Please upgrade it.<br> <input type=submit value="Upgrade now"></form></td></tr>';
-  }elseif ($phpgw_info["setup"]["stage"] >= 1.3) {
+  }elseif ($phpgw_info["setup"]["stage"] >= 1.4) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td><form action="./createheader.php" method=post>
     Your header.inc.php is in place and current.<br> <input type=submit value="Edit existing header.inc.php"></form></td></tr>';
   }

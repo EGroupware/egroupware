@@ -40,41 +40,43 @@
         }
         echo "</td></tr></table>";
     }
-    function loginForm($err="")
+    function loginForm($login_msg="", $header_login_msg="")
     {
      	global $phpgw_info, $phpgw_domain, $SetupDomain, $SetupPW, $PHP_SELF;
       echo "<p><body bgcolor='#ffffff'>\n";
       echo "<table border=\"0\" align=\"center\">\n";
-      echo "  <tr bgcolor=\"486591\">\n";
-      echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup/Config Admin Login</b></font></td>\n";
-      echo "  </tr>\n";
-      if ($err != "") {
-        echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$err."</font></td></tr>\n";
+      if ( $phpgw_info["setup"]["stage"] >= 1.4){
+        echo "  <tr bgcolor=\"486591\">\n";
+        echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup/Config Admin Login</b></font></td>\n";
+        echo "  </tr>\n";
+        if ($err != "") {
+          echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$login_msg."</font></td></tr>\n";
+        }
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
+        if (count($phpgw_domain) > 1){
+          echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
+          echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
+        }else{
+          reset($phpgw_domain);
+          $default_domain = each($phpgw_domain);
+          echo "      <input type='password' name='FormPW' value=''>\n";
+          echo "      <input type='hidden' name='FormDomain' value='".$default_domain[0]."'>\n";
+        }
+        echo "      <input type='submit' name='Login' value='Login'>\n";
+        echo "    </form></td>\n";
+        echo "  </tr>\n";
       }
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
-      if (count($phpgw_domain) > 1){
-        echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
-        echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
-      }else{
-        reset($phpgw_domain);
-        $default_domain = each($phpgw_domain);
-        echo "      <input type='password' name='FormPW' value=''>\n";
-        echo "      <input type='hidden' name='FormDomain' value='".$default_domain[0]."'>\n";
-      }
-      echo "      <input type='submit' name='Login' value='Login'>\n";
-      echo "    </form></td>\n";
-      echo "  </tr>\n";
-  
+
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Header Admin Login</b></font></td>\n";
       echo "  </tr>\n";
       if ($err != "") {
-        echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$err."</font></td></tr>\n";
+        echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$header_login_msg."</font></td></tr>\n";
       }
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
-      echo "      <input type='password' name='HeaderPW' value=''>\n";
+      echo "    <td><form action='createheader.php' method='POST'>\n";
+      echo "      <input type='password' name='HeaderPW' value='changethis'>\n";
       echo "      <input type='submit' name='HeaderLogin' value='Login'>\n";
       echo "    </form></td>\n";
       echo "  </tr>\n";
@@ -91,11 +93,14 @@
         $phpgw_info["setup"]["header_msg"] = "Stage One";
       }else{
         include("../header.inc.php");
-        if (!isset($phpgw_domain) || $phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
+        if (!isset($phpgw_info["server"]["header_admin_password"])){
           $phpgw_info["setup"]["stage"] = 1.2;
+          $phpgw_info["setup"]["header_msg"] = "Stage One (No header admin password set)";
+        }elseif (!isset($phpgw_domain) || $phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
+          $phpgw_info["setup"]["stage"] = 1.3;
           $phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
         }else{ /* header.inc.php part settled. Moving to authentication */
-          $phpgw_info["setup"]["stage"] = 1.3;
+          $phpgw_info["setup"]["stage"] = 1.4;
           $phpgw_info["setup"]["header_msg"] = "Stage One (Completed)";
         }
       }
@@ -114,10 +119,11 @@
   
     function config_auth()
     {
-      global $phpgw_domain, $FormLogout, $FormDomain, $FormPW, $SetupPW, $SetupDomain, $HTTP_POST_VARS, $login_msg;
+      global $phpgw_domain, $FormLogout, $FormDomain, $FormHeaderPW, $FormPW, $SetupDomain, $HTTP_POST_VARS, $login_msg;
       if (isset($FormLogout)) {
         setcookie("SetupPW");  // scrub the old one
         setcookie("SetupDomain");  // scrub the old one
+        setcookie("HeaderPW");  // scrub the old one
         $login_msg = "You have sucessfully logged out";
         return False;
       } elseif (isset($SetupPW)) {
@@ -146,29 +152,27 @@
   
     function header_auth()
     {
-      global $phpgw_domain, $FormLogout, $FormDomain, $FormPW, $SetupPW, $SetupDomain, $HTTP_POST_VARS, $login_msg;
-      if (isset($FormLogout)) {
-        setcookie("SetupPW");  // scrub the old one
-        setcookie("SetupDomain");  // scrub the old one
-        $login_msg = "You have sucessfully logged out";
+      global $phpgw_domain, $FormHeaderPW, $FormHeaderLogout,$HTTP_POST_VARS, $header_login_msg;
+      if (isset($FormHeaderLogout)) {
+        setcookie("HeaderPW");  // scrub the old one
+        $header_login_msg = "You have sucessfully logged out";
         return False;
-      } elseif (isset($SetupPW)) {
-        if ($SetupPW != $phpgw_domain[$SetupDomain]["config_passwd"]) {
+      } elseif (isset($HeaderPW)) {
+        if ($HeaderPW != $phpgw_info["server"]["header_admin_password"]) {
           setcookie("SetupPW");  // scrub the old one
           setcookie("SetupDomain");  // scrub the old one
-          $login_msg = "Invalid session cookie (cookies must be enabled)";
+          setcookie("HeaderPW");  // scrub the old one
+          $header_login_msg = "Invalid session cookie (cookies must be enabled)";
           return False;
         }else{
           return True;
         }
-      } elseif (isset($FormPW)) {
-        if ($FormPW == $phpgw_domain[$FormDomain]["config_passwd"]) {
-          setcookie("SetupPW",$FormPW);
-          setcookie("SetupDomain",$FormDomain);
-          $SetupDomain = $FormDomain;
+      } elseif (isset($FormHeaderPW)) {
+        if ($FormHeaderPW == $phpgw_info["server"]["header_admin_password"]) {
+          setcookie("HeaderPW",$HeaderPW);
           return True;
         }else{
-          $login_msg = "Invalid password";
+          $header_login_msg = "Invalid password";
           return False;
         }
       } else {

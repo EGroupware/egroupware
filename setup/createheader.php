@@ -1,6 +1,26 @@
 <?php
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("./inc/functions.inc.php");
   include("../version.inc.php");
+
+  /* processing and discovery phase */
+  $phpgw_setup->check_header();
+//echo "phpgw_info[setup][stage]: ".$phpgw_info["setup"]["stage"]."<br>";
+  if ( $phpgw_info["setup"]["stage"] >= 1.4){
+    if (!$phpgw_setup->header_auth()){
+      $phpgw_setup->show_header("Please login",True);
+      $phpgw_setup->loginForm($login_msg);
+      exit;
+    }else{ /* authentication settled. Moving to the database portion. */
+      $phpgw_setup->loaddb();
+    }
+  }else{
+        $phpgw_setup->show_header("Please login",True);
+      $phpgw_setup->loginForm($login_msg);
+      exit;
+
+  }
+
 
   switch($action){
     case "download":
