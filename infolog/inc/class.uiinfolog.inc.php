@@ -492,7 +492,7 @@
 
 			// ---------- end nextmatch template --------------------
 
-			if ($for_include == 2)
+			if (intval($for_include) == 2)
 			{
 				$t->set_block('info_list_t','info_headers','headershandle');
 			}
@@ -574,7 +574,7 @@
 						'/index.php',$this->menuaction()+array('filter'=>$filter)));
 			}
 
-			if ($for_include == 2)
+			if (intval($for_include) == 2)
 			{
 				return $t->fp('out','info_list_t',true);
 			}
