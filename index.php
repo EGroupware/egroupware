@@ -33,6 +33,7 @@
   $phpgw->common->read_preferences("addressbook");
   $phpgw->common->read_preferences("email");
   $phpgw->common->read_preferences("calendar");
+  $phpgw->common->read_preferences("stocks");
   
   $phpgw->db->query("select app_version from applications where app_name='admin'",__LINE__,__FILE__);
   $phpgw->db->next_record();
@@ -66,7 +67,7 @@
      }
   }
 
-  echo '<p><TABLE border="0">';
+  echo '<p><table border="0" width="100%">';
 ?>
  <script langague="JavaScript">
     function opennotifywindow()
@@ -85,6 +86,11 @@
 	break;
     }
   }
+  
+  if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {
+     include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
+     echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
+  }  
 
   if ((isset($phpgw_info["user"]["apps"]["email"]) &&
        $phpgw_info["user"]["apps"]["email"]) &&
