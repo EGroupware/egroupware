@@ -315,7 +315,7 @@ if ($run_by_webserver)
 }
 else
 {
-	echo lang('Checking the eGroupWare Installation')."\n\n";
+	echo "Checking the eGroupWare Installation\n\n";
 }
 
 $Ok = True;
