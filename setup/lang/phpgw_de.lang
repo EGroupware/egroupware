@@ -213,7 +213,6 @@ ldap host	setup	de	LDAP Host
 ldap import	setup	de	LDAP Import
 ldap import users	setup	de	LDAP Benutzer importieren
 ldap modify	setup	de	LDAP Ändern
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README	setup	de	Sie müssen das entsprechende schema bei ihrem LDAP Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 ldap root password	setup	de	LDAP Root Passwort
 ldap rootdn	setup	de	LDAP rootdn
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	de	Zugang zu Setup auf die folgenden IP Adressen oder Netzwerke beschränken (z.B. 127.0.0.1,10.1.1)
@@ -365,6 +364,7 @@ there was a problem tring to connect to your ldap server. <br>please check your 
 there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>Bitte überprüfen sie die Konfiguration ihres LDAP servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss ausserhalb der document-root des Webservers sein!!!
+this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
 this program will convert your database to a new system-charset.	setup	de	Diese Programm wird ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus eGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
@@ -434,6 +434,7 @@ you must enter a username for the admin	setup	de	sie müssen einen Benutzernamen 
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu ihrer header.inc.php zufügen.
 you need to select your current charset!	setup	de	Sie müssen ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende schema bei ihrem LDAP Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell

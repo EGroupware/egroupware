@@ -211,7 +211,6 @@ ldap host	setup	en	LDAP host
 ldap import	setup	en	LDAP Import
 ldap import users	setup	en	LDAP import users
 ldap modify	setup	en	LDAP Modify
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	en	Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)
@@ -362,6 +361,7 @@ the tables	setup	en	the tables
 there was a problem trying to connect to your ldap server. <br>	setup	en	There was a problem trying to connect to your LDAP server. <br>
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
+this might take a while, please wait ...	setup	en	This might take a while, please wait ...
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
 this program will help you upgrade or install different languages for egroupware	setup	en	This program will help you upgrade or install different languages for eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
@@ -431,6 +431,7 @@ you must enter a username for the admin	setup	en	You must enter a username for t
 you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current

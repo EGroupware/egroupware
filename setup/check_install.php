@@ -249,21 +249,18 @@
 		}
 
 		$perms = $checks = '';
-		if ($verbose)
+		if (file_exists($name))
 		{
-			if (file_exists($name))
-			{
-				$owner = function_exists('posix_getpwuid') ? posix_getpwuid(@fileowner($name)) : array('name' => 'nn');
-				$group = function_exists('posix_getgrgid') ? posix_getgrgid(@filegroup($name)) : array('name' => 'nn');
+			$owner = function_exists('posix_getpwuid') ? posix_getpwuid(@fileowner($name)) : array('name' => 'nn');
+			$group = function_exists('posix_getgrgid') ? posix_getgrgid(@filegroup($name)) : array('name' => 'nn');
 
-				$checks = array();
-				if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').lang('writable by webserver');
-				if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?lang('not').' ':'').lang('world readable');
-				if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?lang('not').' ':'').lang('world writable');
-				$checks = implode(', ',$checks);
+			$checks = array();
+			if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').lang('writable by webserver');
+			if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?lang('not').' ':'').lang('world readable');
+			if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?lang('not').' ':'').lang('world writable');
+			$checks = implode(', ',$checks);
 
-				$perms = "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
-			}
+			$perms = "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
 		}
 		$icon = $passed_icon;
 		$msg = lang('Checking file-permissions of %1 for %2: %3',$rel_name,$checks,$perms)."\n";
@@ -284,30 +281,35 @@
 		$Ok = True;
 		if (isset($args['is_writable']) && is_writable($name) != $args['is_writable'])
 		{
-			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writeable by the webserver'))."\n";
+			echo "$error_icon $msg ".lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writeable by the webserver'))."\n";
 			$Ok = False;
 		}
 		if (isset($args['is_readable']) && is_readable($name) != $args['is_readable'])
 		{
-			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."\n";
+			echo "$error_icon $msg ".lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
 		{
-			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'','world-readable')."\n";
+			echo "$error_icon $msg ".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'',lang('world readable'))."\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
 		{
-			echo "$error_icon $msg\n".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'','world-writable')."\n";
+			echo "$error_icon $msg ".lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'',lang('world writable'))."\n";
 			$Ok = False;
 		}
 		if ($Ok && !$warning && $verbose)
 		{
-			echo "$passed_icon $msg\n";
+			echo $passed_icon.' '.$msg;
 		}
 		if ($Ok && @$args['recursiv'] && is_dir($name))
 		{
+			if ($verbose)
+			{
+				echo lang('This might take a while, please wait ...')."\n";
+				flush();
+			}
 			@set_time_limit(0);
 			$handle = @opendir($name);
 			while($handle && ($file = readdir($handle)))
@@ -319,6 +321,8 @@
 			}
 			if ($handle) closedir($handle);
 		}
+		if ($verbose) echo "\n";
+
 		return $Ok;
 	}
 
