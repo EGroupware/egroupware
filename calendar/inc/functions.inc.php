@@ -422,9 +422,8 @@ function month_name ( $m ) {
   function sql_search_calendar()
   {
      global $phpgw;
-     $s .= $phpgw->accounts->sql_search("webcal_entry_groups.groups");
-     $s .= " OR webcal_entry.cal_access='public'";
-     return $s;
+
+     return $phpgw->accounts->sql_search("webcal_entry_groups.groups") . " OR webcal_entry.cal_access='public'";
   }
 
 

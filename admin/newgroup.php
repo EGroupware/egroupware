@@ -75,6 +75,7 @@
   }
 
   $t->set_var("form_action",$phpgw->link("newgroup.php"));
+  $t->set_var("hidden_vars","");
   $t->set_var("lang_group_name",lang("New group name"));
   $t->set_var("group_name_value","");
 
