@@ -19,12 +19,12 @@
     <td>
      <select name="newsettings[auth_type]">
       <option value="sql"{selected_auth_type_sql}>SQL</option>
-	  <option value="sqlssl"{selected_auth_type_sqlssl}>SQL / SSL</option>
-	  <option value="ldap"{selected_auth_type_ldap}>LDAP</option>
-	  <option value="mail"{selected_auth_type_mail}>Mail</option>
-	  <option value="http"{selected_auth_type_http}>HTTP</option>
-	  <option value="nis"{selected_auth_type_nis}>NIS</option>
-	  <option value="pam"{selected_auth_type_pam}>PAM (Not Ready)</option>
+      <option value="sqlssl"{selected_auth_type_sqlssl}>SQL / SSL</option>
+      <option value="ldap"{selected_auth_type_ldap}>LDAP</option>
+      <option value="mail"{selected_auth_type_mail}>Mail</option>
+      <option value="http"{selected_auth_type_http}>HTTP</option>
+      <option value="nis"{selected_auth_type_nis}>NIS</option>
+      <option value="pam"{selected_auth_type_pam}>PAM (Not Ready)</option>
      </select>
     </td>
    </tr>
@@ -55,7 +55,7 @@
    </tr>
    <tr bgcolor="{row_off}">
     <td>{lang_Maximum_account_id_(e.g._65535_or_1000000)}:</td>
-	<td><input name="newsettings[account_max_id]" value="{value_account_max_id}"></td>
+    <td><input name="newsettings[account_max_id]" value="{value_account_max_id}"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
@@ -63,7 +63,7 @@
      <td>
       <select name="newsettings[ldap_extra_attributes]">
        <option value="">No</option>
-	   <option value="True"{selected_ldap_extra_attributes_True}>Yes</option>
+       <option value="True"{selected_ldap_extra_attributes_True}>Yes</option>
       </select>
      </td>
     </tr>
@@ -83,7 +83,7 @@
     <td>
       <select name="newsettings[auto_create_acct]">
        <option value="">No</option>
-	   <option value="True"{selected_auto_create_acct_True}>Yes</option>
+       <option value="True"{selected_auto_create_acct_True}>Yes</option>
       </select>
     </td>
    </tr>
@@ -94,7 +94,7 @@
    </tr>
 
    <tr bgcolor="{row_off}">
-	   <td>{lang_If_no_ACL_records_for_user_or_any_group_the_user_is_a_member_of}:</td>
+    <td>{lang_If_no_ACL_records_for_user_or_any_group_the_user_is_a_member_of}:</td>
     <td>
      <select name="newsettings[acl_default]">
       <option value="deny"{selected_acl_default_deny}>Deny Access</option>
@@ -105,31 +105,31 @@
 
    <tr bgcolor="{row_off}">
     <td>{lang_LDAP_host}:</td>
-	<td><input name="newsettings[ldap_host]" value="{value_ldap_host}"></td>
+    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
     <td>{lang_LDAP_accounts_context}:</td>
-	<td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40"></td>
+    <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
     <td>{lang_LDAP_groups_context}:</td>
-	<td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
+    <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
     <td>{lang_LDAP_rootdn}:</td>
-	<td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
+    <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
     <td>{lang_LDAP_root_password}:</td>
-	<td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
+    <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
    </tr>
 
    <tr bgcolor="{row_off}">
-	   <td>{lang_LDAP_encryption_type}:</td>
+    <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
       <option value="DES"{selected_ldap_encryption_type_DES}>DES</option>
@@ -138,9 +138,31 @@
     </td>
    </tr>
 
+   <tr bgcolor="{th_bg}">
+    <td colspan="2"><font color="{th_text}"><b>{lang_Mcrypt_Settings_(requires_mcrypt_PHP_extension)}</b></font></td>
+   </tr>
+
    <tr bgcolor="{row_off}">
-    <td>{lang_Enter_some_random_text_for_app_session_<br>encryption_(requires_mcrypt)}:</td>
+    <td>{lang_Enter_some_random_text_for_app_session_encryption}:</td>
     <td><input name="newsettings[encryptkey]" value="{value_encryptkey}" size="40"></td>
+   </tr>
+
+   <tr bgcolor="{row_on}">
+    <td>{lang_Mcrypt_algorithm_(default_TRIPLEDES)}:</td>
+    <td>
+     <select name="newsettings[mcrypt_algo]">
+{hook_encryptalgo}
+     </select>
+    </td>
+   </tr>
+
+   <tr bgcolor="{row_off}">
+    <td>{lang_Mcrypt_mode_(default_CBC)}:</td>
+    <td>
+     <select name="newsettings[mcrypt_mode]">
+{hook_encryptmode}
+     </select>
+    </td>
    </tr>
 <!-- END body -->
 

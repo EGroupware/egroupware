@@ -37,7 +37,6 @@
 
 		function crypto($vars)
 		{
-			/* _debug_array(mcrypt_list_algorithms()); */
 			$key = $vars[0];
 			$iv  = $vars[1];
 			if ($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
@@ -49,6 +48,12 @@
 				if($GLOBALS['phpgw_info']['server']['mcrypt_mode'])
 				{
 					$this->mode = $GLOBALS['phpgw_info']['server']['mcrypt_mode'];
+				}
+
+				if($this->debug)
+				{
+					echo '<br>crypto: algorithm=' . $this->algo;
+					echo '<br>crypto: mode     =' . $this->mode;
 				}
 
 				$this->enabled = True;
