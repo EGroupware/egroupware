@@ -114,7 +114,7 @@
 
 	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array(
-		'preferences' => 'preferences.tpl',
+		'preferences' => 'preferences.tpl'
 	));
 
 	$t->set_var(action_url,$phpgw->link('/addressbook/preferences.php'));
