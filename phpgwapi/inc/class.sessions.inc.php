@@ -438,7 +438,6 @@
 			global $phpgw;
 			
 			$sessionData = $this->appsession("sessiondata");
-#			$sessionData = unserialize($serializedData);
 			
 			if (is_array($sessionData))
 			{
@@ -448,7 +447,7 @@
 					global $$key;
 					$$key = $value;
 					$this->variableNames[$key] = 'registered';
-					print "restored: ".$key.", $value<br>";
+					#print "restored: ".$key.", $value<br>";
 				}
 			}
 		}
