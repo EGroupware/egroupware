@@ -79,12 +79,13 @@
      $phpgw->db->query("delete from webcal_entry where cal_create_by='$lid'");
      $phpgw->db->query("delete from webcal_entry_user where cal_login='$lid'");
 
-     $phpgw->db->query("delete from preferences where owner='$lid'");
      $phpgw->db->query("delete from todo where todo_owner='$lid'");
      $phpgw->db->query("delete from addressbook where ab_owner='$lid'");
      $phpgw->db->query("delete from accounts where account_lid='$lid'");
      //$phpgw->db->query("delete from users_headlines where owner='$lid'");
      //$phpgw->db->query("delete from profiles where owner='$lid'");
+     
+     $phpgw->common->preferences_delete("all",$lid);
 
      $phpgw->db->unlock();
 
