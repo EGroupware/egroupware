@@ -823,7 +823,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			static $imgpref;
 
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety' || $GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
+			if($GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
 			{
 				$force_layout = True;
 			}
@@ -849,8 +849,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if (!$force_layout)
 				{
-					$imagedir_olddefault = '/'.$appname.'/images';
+					//$imagedir_olddefault = '/'.$appname.'/images';
 					$imagedir_default    = '/'.$appname.'/templates/default/images';
+
+					/* apps should be updated now to use the tpl img_dirs
 
 					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 					{
@@ -863,7 +865,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 							}
 						}
 						$d->close();
-					}
+					} */
 
 					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
 					{
@@ -1419,6 +1421,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($value);
 			unset($newarray);
 
+			$force_layout = False;
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety')
+			{
+				$force_layout = True;
+			}
+
 			foreach($GLOBALS['phpgw_info']['user']['apps'] as $app => $data)
 			{
 				if (is_long($app))
@@ -1434,13 +1442,13 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav'));
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav','',$force_layout));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over',$force_layout);
 					}
 					else
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over');
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over',$force_layout);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav','',$force_layout));
 					}
 				}
 			}
@@ -1469,8 +1477,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			/* We handle this here becuase its special */
-			$app_title = isset($GLOBALS['phpgw_info']['apps'][$app]) ? 
-				$GLOBALS['phpgw_info']['apps'][$app]['title'] : 'phpGroupWare';
+			$app_title = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : 'phpGroupWare';
+
 			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about %1',$app_title);
 			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
