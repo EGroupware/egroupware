@@ -19,6 +19,11 @@
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
 
+	$setup_info['phpgwapi']['author']      = 'phpGW Core';
+	$setup_info['phpgwapi']['description'] = 'The core of phpGroupWare, the API itself...';
+	$setup_info['phpgwapi']['maintainer']  = 'phpGW Core';
+	$setup_info['phpgwapi']['maintainer_email'] = 'ceb@phpgwroupware.org<br>jengo@phpgroupware.org<br>milosch@phpgroupware.org<br>seek3r@phpgroupware.org<br>skeeter@phpgroupware.org';
+
 	/* The tables this app creates */
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_sessions';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_preferences';
