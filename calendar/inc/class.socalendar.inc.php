@@ -72,7 +72,21 @@
 		{
 			$extra = '';
 			$extra .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
-			$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
+			//$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
+			if ($this->cat_id)
+			{
+				if (!is_object($GLOBALS['phpgw']->categories))
+				{
+					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				}
+				$cats = $GLOBALS['phpgw']->categories->return_all_children($this->cat_id);
+				$extra .= "AND (phpgw_cal.category".(count($cats) > 1 ? ' IN ('.implode(',',$cats).')' : '='.(int)$this->cat_id);
+				foreach($cats as $cat)
+				{
+					$extra .= " OR phpgw_cal.category LIKE '$cat,%' OR phpgw_cal.category LIKE '%,$cat,%' OR phpgw_cal.category LIKE '%,$cat'";
+				}
+				$extra .= ') ';
+			}
 			if($owner_id)
 			{
 				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$GLOBALS['phpgw']->datetime->tz_offset,$owner_id);

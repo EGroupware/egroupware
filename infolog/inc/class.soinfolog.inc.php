@@ -518,9 +518,15 @@
 			}
 			//echo "<p>filtermethod='$filtermethod'</p>";
 
-			if (intval($query['cat_id']))
+			if ((int)$query['cat_id'])
 			{
-			  $filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
+				//$filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
+				if (!is_object($GLOBALS['phpgw']->categories))
+				{
+					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				}
+				$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$query['cat_id']);
+				$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 			}
 			$join = '';
 			if ($query['query']) $query['search'] = $query['query'];	// allow both names

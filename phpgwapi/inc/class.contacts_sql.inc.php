@@ -348,7 +348,21 @@
 					{
 						if($name == 'cat_id')
 						{
-							$filterlist[] = "(" . $name . " LIKE '%," . (int)$value . ",%' OR " . $name."='".(int)$value."')";
+							if (!(int)$value) continue;	// nothing to filter
+
+							//$filterlist[] = "(" . $name . " LIKE '%," . (int)$value . ",%' OR " . $name."='".(int)$value."')";
+							if (!is_object($GLOBALS['phpgw']->categories))
+							{
+								$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+							}
+							$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$value);
+							$cat_filter = '(cat_id IN ('.implode(',',$cats).')';
+							foreach($cats as $cat)
+							{
+								$cat_filter .= " OR cat_id LIKE '%,$cat,%'";
+							}
+							$cat_filter .= ')';
+							$filterlist[] = $cat_filter;
 						}
 						elseif(@is_int($value))
 						{
