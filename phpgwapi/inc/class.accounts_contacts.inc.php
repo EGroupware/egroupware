@@ -28,9 +28,41 @@
 	THIS NEEDS WORK!!!!!!!!! - Milosch
 	But it is a lot closer now...
 	*/
+	$phpgw_info['server']['global_denied_users'] = array(
+		'root'     => True, 'bin'      => True, 'daemon'   => True,
+		'adm'      => True, 'lp'       => True, 'sync'     => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
+		'mail'     => True, 'news'     => True, 'uucp'     => True,
+		'operator' => True, 'games'    => True, 'gopher'   => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
+		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
+		'ftp'      => True, 'gdm'      => True, 'named'    => True,
+		'alias'    => True, 'web'      => True, 'sweep'    => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
+		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
+		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
+		'pvm'      => True, 'squid'    => True, 'ident'    => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True,
+		'backup'   => True
+	);
 
-	$phpgw_info['server']['global_denied_users'] = array();
-	$phpgw_info['server']['global_denied_groups'] = array();
+	$phpgw_info['server']['global_denied_groups'] = array(
+		'root'      => True, 'bin'       => True, 'daemon'    => True,
+		'sys'       => True, 'adm'       => True, 'tty'       => True,
+		'disk'      => True, 'lp'        => True, 'mem'       => True,
+		'kmem'      => True, 'wheel'     => True, 'mail'      => True,
+		'uucp'      => True, 'man'       => True, 'games'     => True,
+		'dip'       => True, 'ftp'       => True, 'nobody'    => True,
+		'floppy'    => True, 'xfs'       => True, 'console'   => True,
+		'utmp'      => True, 'pppusers'  => True, 'popusers'  => True,
+		'slipusers' => True, 'slocate'   => True, 'mysql'     => True,
+		'dnstools'  => True, 'web'       => True, 'named'     => True,
+		'dba'       => True, 'oinstall'  => True, 'oracle'    => True,
+		'gdm'       => True, 'sweep'     => True, 'cvs'       => True,
+		'postgres'  => True, 'qmail'     => True, 'nofiles'   => True,
+		'ldap'      => True, 'backup'  	 => True
+	);
 
 	class accounts_
 	{
