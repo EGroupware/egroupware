@@ -1,4 +1,3 @@
-<?php_track_vars?>
 <?php
   /**************************************************************************\
   * phpGroupWare - Calendar                                                  *
@@ -13,7 +12,7 @@
   \**************************************************************************/
 
   /* $Id$ */
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True);
   include("../header.inc.php");
 
   if ($id > 0) {
@@ -23,7 +22,7 @@
      $thisyear = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"Y"));
      $thismonth = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"n"));
 
-     $phpgw->calendar->delete($id);
+     $phpgw->calendar->delete(intval($id));
   }
 
   Header("Location: " . $phpgw->link("index.php","year=$thisyear&month=$thismonth"));
