@@ -881,9 +881,11 @@
 		*
 		* @param string $glue in most cases this will be either ',' or ' AND ', depending you your query
 		* @param array  $array column-value pairs
-		* @param boolean $use_key should a "$key=" prefix each value, typicaly set to False for insert querys
+		* @param boolean/string If $use_key===True a "$key=" prefix each value (default), typically set to False
+		*	or 'VALUES' for insert querys, on 'VALUES' "(key1,key2,...) VALUES (val1,val2,...)" is returned
 		* @param array/boolean $only if set to an array only colums which are set (as data !!!) are written
-		*	typicaly used to form a WHERE-clause from the primary keys
+		*	typicaly used to form a WHERE-clause from the primary keys.
+		*	If set to True, only columns from the colum_definitons are written.
 		* @param array/boolean $column_definitions this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 		*	If its set, the column-type-data determinates if (int) or addslashes is used.
@@ -894,16 +896,19 @@
 			{
 				$column_definitions = $this->column_definitions;
 			}
-			$pairs = array();
+			$keys = $values = array();
 			foreach($array as $key => $data)
 			{
-				if (!$only || in_array($key,$only))
+				if (!$only || $only === True && isset($column_definitions[$key]) || is_array($only) && in_array($key,$only))
 				{
+					$keys[] = $key;
+
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
-					$values[] = ($use_key ? $key.'=' : '') . $this->quote($data,$column_type);
+					$values[] = ($use_key===True ? $key.'=' : '') . $this->quote($data,$column_type);
 				}
 			}
-			return implode($glue,$values);
+			return ($use_key==='VALUES' ? '('.implode(',',$keys).') VALUES (' : '').
+				implode($glue,$values) . ($use_key==='VALUES' ? ')' : '');
 		}
 
 		/**
