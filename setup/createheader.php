@@ -8,6 +8,7 @@
       header("Content-type: application/octet-stream");
       header("Pragma: no-cache");
       header("Expires: 0");
+      $newheader = generate_header();
       echo $newheader;
       break;
     case "view":
