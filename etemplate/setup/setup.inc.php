@@ -13,7 +13,6 @@
 	/* $Id$ */
 
 	$setup_info['etemplate']['name']      = 'etemplate';
-	$setup_info['etemplate']['title']     = 'eTemplate';
 	$setup_info['etemplate']['version']   = '0.9.15.002';
 	$setup_info['etemplate']['app_order'] = 8;	// just behind the developers-tools
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
@@ -30,8 +29,9 @@
 		interactive editor and a database table-editor (creates tables_current.inc.php and
 		updates automaticaly tables_update.inc.php).';
 	$setup_info['etemplate']['note'] =
-		'For more information check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>
-		and the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a>.';
+		'For <b>more information</b> check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>, 
+		the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a> 
+		or the <a href="http://www.phpgroupware.org/wiki/etemplate" target="_blank">eTemplate page in our Wiki</a>.';
 
 	/* The hooks this app includes, needed for hooks registration */
 	//$setup_info['etemplate']['hooks'][] = 'preferences';
@@ -41,6 +41,6 @@
 	/* Dependencies for this app to work */
 	$setup_info['etemplate']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13','0.9.14','0.9.15')
+		 'versions' => Array('0.9.13','0.9.14','0.9.15','0.9.16')
 	);
 ?>
