@@ -443,6 +443,9 @@
 			$setup_tpl->set_var('mcrypt',$GLOBALS['phpgw_info']['server']['versions']['mcrypt']);
 			$setup_tpl->set_var('mcrypt_iv',$GLOBALS['phpgw_info']['server']['mcrypt_iv']);
 
+			$setup_tpl->set_var('lang_setup_acl',lang('Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)'));
+			$setup_tpl->set_var('setup_acl',$GLOBALS['phpgw_info']['server']['setup_acl']);
+
 			if($GLOBALS['phpgw_info']['server']['domain_selectbox'])
 			{
 				$setup_tpl->set_var('domain_selectbox_yes',' selected');
