@@ -18,6 +18,6 @@
 	}
 	$file['change your settings'] = $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=preferences&type=user');
 
-	display_section('Preferences','Preferences',$file);
+	display_section('preferences',$file);
 
 ?>

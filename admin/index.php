@@ -66,7 +66,7 @@
 		if(is_array($file))
 		{
 			section_start($appname,
-				$GLOBALS['phpgw']->common->image($appname,Array('navbar',$appname,'nonav'),'',True)
+				$GLOBALS['phpgw']->common->image($appname,'navbar','',True)
 			);
 
 			while(list($text,$url) = each($file))

@@ -2,8 +2,8 @@
 	/**************************************************************************\
 	* phpGroupWare - preferences                                               *
 	* http://www.phpgroupware.org                                              *
-	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-	* --------------------------------------------                             *
+	* Written by phpGroupWare coreteam <phpgroupware-developers@gnu.org>       *
+	* ------------------------------------------------------------------       *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
@@ -78,13 +78,14 @@
 	}
 
 	// This func called by the includes to dump a row header
-	function section_start($name='',$icon='',$appname='')
+	function section_start($appname='',$icon='')
 	{
 		$GLOBALS['pref_tpl']->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 //		$GLOBALS['pref_tpl']->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-		$GLOBALS['pref_tpl']->set_var('a_name',$appname);
-		$GLOBALS['pref_tpl']->set_var('app_name',lang($name));
+		$GLOBALS['pref_tpl']->set_var('app_name',$appname);
+		$GLOBALS['pref_tpl']->set_var('app_title',lang($appname));
 		$GLOBALS['pref_tpl']->set_var('app_icon',$icon);
+
 		if ($icon)
 		{
 			$GLOBALS['pref_tpl']->parse('rows','app_row',True);
@@ -116,9 +117,9 @@
 		$GLOBALS['pref_tpl']->parse('rows','spacer_row',True);
 	}
 
-	function display_section($appname,$title,$file)
+	function display_section($appname,$file)
 	{
-		section_start($title,$GLOBALS['phpgw']->common->image($appname,'navbar'),$appname);
+		section_start($appname,$GLOBALS['phpgw']->common->image($appname,'navbar','',True));
 
 		while(list($text,$url) = each($file))
 		{

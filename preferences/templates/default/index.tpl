@@ -12,14 +12,14 @@
 
 <!-- BEGIN app_row -->
  <tr class="th_bright">
-  <td width="5%" valign="middle"><img src="{app_icon}" alt="[ {app_name} ]"> <a name="{a_name}"></a></td>
-  <td width="95%" valign="middle"><strong>&nbsp;&nbsp;{app_name}</strong></td>
+  <td width="5%" valign="middle"><img src="{app_icon}" alt="[ {app_title} ]"> <a name="{app_name}"></a></td>
+  <td width="95%" valign="middle"><b>&nbsp;&nbsp;{app_title}</b></td>
  </tr>
 <!-- END app_row -->
 
 <!-- BEGIN app_row_noicon -->
  <tr class="th_bright">
-  <td colspan="2" width="95%" valign="middle"><strong>&nbsp;&nbsp;{app_name}</strong> <a name="{a_name}"></a></td>
+  <td colspan="2" width="95%" valign="middle"><b>&nbsp;&nbsp;{app_title}</b> <a name="{app_name}"></a></td>
  </tr>
 <!-- END app_row_noicon -->
 
