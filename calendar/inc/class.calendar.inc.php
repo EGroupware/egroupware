@@ -220,42 +220,67 @@ class calendar extends calendar_
 		global $phpgw_info;
 
 		$weekday = $this->day_of_week($year,$month,$day);
-		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
+		switch($phpgw_info['user']['preferences']['calendar']['weekdaystarts'])
 		{
-			$days = Array(
-				0 => 'Mon',
-				1 => 'Tue',
-				2 => 'Wed',
-				3 => 'Thu',
-				4 => 'Fri',
-				5 => 'Sat',
-				6 => 'Sun'
-			);
-			switch($weekday)
-			{
-				case 0:
-					$sday = mktime(2,0,0,$month,$day - 6,$year);
-					break;
-				case 1:
-					$sday = mktime(2,0,0,$month,$day,$year);
-					break;
-				default:
-					$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
-					break;
-			}
-		}
-		else
-		{
-			$days = Array(
-				0 => 'Sun',
-				1 => 'Mon',
-				2 => 'Tue',
-				3 => 'Wed',
-				4 => 'Thu',
-				5 => 'Fri',
-				6 => 'Sat'
-			);
-			$sday = mktime(2,0,0,$month,$day - $weekday,$year);
+			case 'Monday':
+				$days = Array(
+					0 => 'Mon',
+					1 => 'Tue',
+					2 => 'Wed',
+					3 => 'Thu',
+					4 => 'Fri',
+					5 => 'Sat',
+					6 => 'Sun'
+				);
+				switch($weekday)
+				{
+					case 0:
+						$sday = mktime(2,0,0,$month,$day - 6,$year);
+						break;
+					case 1:
+						$sday = mktime(2,0,0,$month,$day,$year);
+						break;
+					default:
+						$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
+						break;
+				}
+				break;
+			case 'Sunday':
+				$days = Array(
+					0 => 'Sun',
+					1 => 'Mon',
+					2 => 'Tue',
+					3 => 'Wed',
+					4 => 'Thu',
+					5 => 'Fri',
+					6 => 'Sat'
+				);
+				$sday = mktime(2,0,0,$month,$day - $weekday,$year);
+				break;
+// The following is for Arabic support.....
+			case 'Saturday':
+				$days = Array(
+					0 => 'Sat',
+					1 => 'Sun',
+					2 => 'Mon',
+					3 => 'Tue',
+					4 => 'Wed',
+					5 => 'Thu',
+					6 => 'Fri'
+				);
+				switch($weekday)
+				{
+					case 0:
+						$sday = mktime(2,0,0,$month,$day - 1,$year);
+						break;
+					case 6:
+						$sday = mktime(2,0,0,$month,$day,$year);
+						break;
+					default:
+						$sday = mktime(2,0,0,$month,$day - ($weekday + 1),$year);
+						break;
+				}
+				break;				
 		}
 
 		$this->days = $days;

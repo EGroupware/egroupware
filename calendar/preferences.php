@@ -120,6 +120,8 @@
 	$str = '<select name="weekdaystarts">'
 		. '<option value="Monday"'.$t_weekday['Monday'].'>'.lang('Monday').'</option>'
 		. '<option value="Sunday"'.$t_weekday['Sunday'].'>'.lang('Sunday').'</option>'
+// The following is for Arabic support.....
+		. '<option value="Saturday"'.$t_weekday['Saturday'].'>'.lang('Saturday').'</option>'
 		. '</select>';
 	display_item(lang('weekday starts on'),$str);
 
