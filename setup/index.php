@@ -16,6 +16,7 @@
   //        page explaining what to do from there (ie, create there own account)
 	$DEBUG = False;
 
+	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,

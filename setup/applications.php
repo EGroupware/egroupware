@@ -17,6 +17,7 @@
 	// out from under other apps.  e.g. if they select to uninstall the api
 	// this will happen without further warning.
 
+	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,

@@ -11,6 +11,7 @@
 
   /* $Id$ */
 
+	$phpgw_info = array();
 	if (!$included)
 	{
 		$GLOBALS['phpgw_info']['flags'] = array(

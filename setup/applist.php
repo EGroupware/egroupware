@@ -11,7 +11,8 @@
 
 /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$phpgw_info = array();
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
