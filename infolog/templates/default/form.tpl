@@ -64,10 +64,10 @@
 
          <tr>
            <td>{lang_file}</td>
-           <td><input type="file" name="attachfile" value=""></td>
+           <td><input type="file" name="attachfile" value="{file_val}"></td>
 
            <td>{lang_comment}</td>
-           <td><input name="filecomment" size="30" maxlength="64" value=""></td>
+           <td><input name="filecomment" size="30" maxlength="64" value="{comment_val}"></td>
          </tr>
          <tr>
             <td colspan="4"><hr size="1"></td>
