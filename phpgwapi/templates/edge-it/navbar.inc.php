@@ -91,7 +91,7 @@
 						$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 					}
 
-					$app_icons .= '>' . $icon . '</a></td>';
+					$app_icons .= $app_data['target'] . '>' . $icon . '</a></td>';
 
 					$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$app_data['url'] . '"';
 
@@ -100,7 +100,7 @@
 						$app_titles .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 					}
 
-					$app_titles .= '>' . $title . '</a></td>';
+					$app_titles .= $app_data['target'] . '>' . $title . '</a></td>';
 				}
 				//				else // generate extra icon layer | always shows icons and text
 				else // generate extra icon layer shows icons and/or text

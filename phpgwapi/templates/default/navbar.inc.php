@@ -37,7 +37,15 @@
 			{
 				$tabs[$i]['label'] = $app_data['title'];
 				$tabs[$i]['link']  = $app_data['url'];
-				if (ereg($GLOBALS['phpgw_info']['navbar'][$app],$PHP_SELF))
+				if (!empty($app_data['target']))
+				{
+					$tabs[$i]['target'] = $app_data['target'];
+				}
+				elseif (!empty($target))
+				{
+					$tabs[$i]['target'] = $target;
+				}
+				if (ereg($GLOBALS['phpgw_info']['navbar'][$app],$_SERVER['PHP_SELF']))
 				{
 					$selected = $i;
 				}
@@ -56,8 +64,8 @@
 				{
 					$var['width']  = '3%';
 				}
-   
-				$var['value'] = '<a href="' . $app_data['url'] . '"' . $target . '>' . $title . '</a>';
+
+				$var['value'] = '<a href="' . $app_data['url'] . '"' . ($app_data['target'] ? $app_data['target'] : $target) . '>' . $title . '</a>';
 				$var['align'] = 'center';
 				$tpl->set_var($var);
 				$tpl->parse('applications','navbar_app',True);

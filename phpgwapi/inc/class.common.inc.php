@@ -536,7 +536,7 @@
 					}
 
 					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
-						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
+						. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label']
 						. $fse . '</a></b>&nbsp;</td>';
 					if ($i == count($tabs))
 					{
@@ -554,7 +554,7 @@
 						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
 					}
 					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
-						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
+						. $tab[1]['link'] . '" class="tablink" '.$tab[1]['target'].'>' . $fs . $tab[1]['label'] . $fse
 						. '</a></b>&nbsp;</td>';
 					if (($i + 1) == $selected)
 					{

@@ -76,7 +76,7 @@
 				{
 					$applications .= ' onMouseOut="' . str_replace('-','_',$app) . ".src='" . $img_src_out . '\'"';
 				}
-				$applications .= '>'.$title.'</a></td></tr>'."\r\n";
+				$applications .= $app_data['target'] . '>'.$title.'</a></td></tr>'."\r\n";
 			}
 			else
 			{

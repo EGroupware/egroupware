@@ -48,7 +48,7 @@
 				{
 					$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 				}
-				$app_icons .= '>' . $icon . '</a></TD>';
+				$app_icons .= $app_data['target'] . '>' . $icon . '</a></TD>';
 
 				$app_titles .= '<TD align=center class="mainnote"><a href="'.$app_data['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
@@ -56,7 +56,7 @@
 				{
 					$app_titles .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 				}
-				$app_titles .= '>' . $title . '</a></TD>';
+				$app_titles .= $app_data['target'] . '>' . $title . '</a></TD>';
 
 				unset($icon);
 				unset($title);
