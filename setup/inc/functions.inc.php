@@ -89,12 +89,11 @@
 		fclose($f);
 
 		$d = dir('./lang');
-		while($entry=$d->read())
+		while($file=$d->read())
 		{
-			if(ereg('^phpgw_',$entry))
+			if(preg_match('/^phpgw_([-a-z]+).lang$/i',$file,$matches))
 			{
-				$z = substr($entry,6,2);
-				$languages[$z]['available'] = True;
+				$languages[$matches[1]]['available'] = True;
 			}
 		}
 		$d->close();

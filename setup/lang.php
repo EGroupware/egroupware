@@ -61,7 +61,9 @@
 	}
 	$select_box_desc = lang('Select which languages you would like to use');
 	$select_box = '';
-	foreach(get_langs() as $id => $data)
+	$languages = get_langs();
+	uasort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
+	foreach($languages as $id => $data)
 	{
 		$select_box_langs =
 			@$select_box_langs

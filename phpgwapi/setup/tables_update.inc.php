@@ -1371,4 +1371,27 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.000';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '1.0.0.000';
+	function phpgwapi_upgrade1_0_0_000()
+	{
+		// removing the not longer needed 'availible' column, that information is in the file setup/lang/languages
+		$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_languages',array(
+			'fd' => array(
+				'lang_id' => array('type' => 'varchar','precision' => '5','nullable' => False),
+				'lang_name' => array('type' => 'varchar','precision' => '50','nullable' => False)
+			),
+			'pk' => array('lang_id'),
+			'ix' => array(),
+			'fk' => array(),
+			'uc' => array()
+		),'available');
+
+		// correcting the id for Catalan
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET lang_id='es-ca' WHERE lang_id='ca'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.001';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

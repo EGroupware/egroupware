@@ -378,8 +378,10 @@
 				{
 					$sql = "SELECT lang_name FROM $languagestbl WHERE lang_id = '".$value."'";
 					$GLOBALS['phpgw_setup']->db->query($sql);
-					$GLOBALS['phpgw_setup']->db->next_record();
-					$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');
+					if ($GLOBALS['phpgw_setup']->db->next_record())
+					{
+						$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');
+					}
 				}
 				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (Completed)';
 				return 10;

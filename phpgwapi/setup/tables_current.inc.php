@@ -141,12 +141,11 @@
 		'phpgw_languages' => array(
 			'fd' => array(
 				'lang_id' => array('type' => 'varchar','precision' => '5','nullable' => False),
-				'lang_name' => array('type' => 'varchar','precision' => '50','nullable' => False),
-				'available' => array('type' => 'char','precision' => '3','nullable' => False,'default' => 'No')
+				'lang_name' => array('type' => 'varchar','precision' => '50','nullable' => False)
 			),
 			'pk' => array('lang_id'),
-			'ix' => array(),
 			'fk' => array(),
+			'ix' => array(),
 			'uc' => array()
 		),
 		'phpgw_lang' => array(
