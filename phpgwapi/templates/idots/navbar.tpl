@@ -86,7 +86,7 @@
 		<td id="tdAppbox" valign="top" {remove_padding}>
 		<div id="divAppboxHeader">{current_app_title}</div>
 		<div id="divAppbox">
-		<table width="98%" cellpadding"0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
 		<tr><td>
 <!-- END navbar_footer -->
 
