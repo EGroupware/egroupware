@@ -205,7 +205,7 @@ class bo_resources
 	{
 		$this->remove_picture($id);
  		$this->link->unlink(0,'resources',$id);
-		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by saving resource');
+		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by deleting resource');
 	}
 	
 	/*!
@@ -220,13 +220,10 @@ class bo_resources
 		if($id < 1){return;}
 		$cat_id = $this->so->get_value('cat_id',$id);
 		$data[0] = array('id' => '', 'name' => '');
-		$this->so->search(array('accessory_only' => 1),array($cat_id => ''),&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
+		$this->so->search(array('name' => '*'),array($cat_id => ''),&$data,$accessory_of=$id,$order_by='',$offset=false,$num_rows=-1);
 		foreach($data as $num => $resource)
 		{
-			if($num != 0)
-			{
-				$acc_list[$resource['id']] = $resource['name'];
-			}
+			$acc_list[$resource['id']] = $resource['name'];
 		}
 		return $acc_list;
 	}

@@ -18,6 +18,8 @@ class ui_resources
 	var $public_functions = array(
 		'index'		=> True,
 		'edit'		=> True,
+		'show'		=> True,
+		'admin'		=> True,
 		'writeLangFile'	=> True
 		);
 
@@ -62,7 +64,7 @@ class ui_resources
 						return $this->delete($id);
 					case 'new_acc':
 						list($id) = each($content['nm']['rows']['new_acc']);
-						return $this->edit(array('resource_id' => 0, 'accessory_of' => $id));
+						return $this->edit(array('id' => 0, 'accessory_of' => $id));
 					case 'view_acc':
 						list($id) = each($content['nm']['rows']['view_acc']);
 						$content['view_accs_of'] = $id;
@@ -74,7 +76,7 @@ class ui_resources
 			}
 			if (isset($content['add']))
 			{
-				return $this->edit(0);
+				return $content['view_accs_of'] ? $this->edit(array('id' => 0, 'accessory_of' => $id)) : $this->edit(0);
 			}
 			if (isset($content['back']))
 			{
@@ -106,9 +108,9 @@ class ui_resources
 			$content['nm']['no_filter'] 	= true;
 			$content['nm']['no_filter2'] 	= true;
 			$content['nm']['view_accs_of']	= $content['view_accs_of'];
-			$no_button['add'] = true;
 			$no_button['back'] = false;
 		}
+		$preserv = $content;
 		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
 
@@ -140,7 +142,7 @@ class ui_resources
 					unset($content['delete']);
 					$content['msg'] = $this->delete($content['id']);
 				}
-				return $content['msg'] ? $this->edit($content) : $this->index();
+				return $content['msg'] ? $this->edit($content) : $content['accessory_of'] ? $this->index(array('view_accs_of' => $content['accessory_of'])) : $this->index();
 			}
 			elseif($content['cancel'])
 			{
@@ -149,23 +151,23 @@ class ui_resources
 		}
 		else
 		{
-			$resource_id = $content;
-			$content = array('resource_id' => $resource_id);
+			$id = $content;
+			$content = array('id' => $id);
 			
-			if ($resource_id > 0)
+			if ($id > 0)
 			{
-				$content = $this->bo->read($resource_id);
+				$content = $this->bo->read($id);
 				$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
 				$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 				$content['link_to'] = array(
-					'to_id' => $resource_id,
+					'to_id' => $id,
 					'to_app' => 'resources'
 				);
 			}
 			
 		}
 		// some presetes
-		$content['resource_picture'] = $this->bo->get_picture($content['resource_id'],$content['picture_src'],$size=true);
+		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : -1;
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
@@ -199,7 +201,6 @@ class ui_resources
 
 	function delete($id)
 	{
-// 		Wollen sie Dieses bla bla wirklich löschen --> ja (Wie bekommt man mit eTemplate ein Javascript Dialog???)
  		$this->bo->delete($id);
 		return $this->index();
 	}
