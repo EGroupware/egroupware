@@ -13,8 +13,8 @@ if(empty($instance->instanceId)) {
   }
 }
 // Set the current user for this activity
-if(isset($user) && !empty($instance->instanceId) && !empty($activity->activityId)) {
-  $instance->setActivityUser($activity->activityId,$user);
+if(isset($GLOBALS['user']) && !empty($instance->instanceId) && !empty($activity_id)) {
+  $instance->setActivityUser($activity_id,$GLOBALS['user']);
 }
 
 ?>
