@@ -2024,7 +2024,7 @@
 			{
 				$text .= $this->bo->display_status($event['users_status']);
 			}
-			$text = '<font size="-2" face="'.$this->theme['font'].'"><nobr>'.$time.'</nobr>&nbsp;'.$this->bo->get_short_field($event,$is_private,'title').$text.'</font>'.$GLOBALS['phpgw']->browser->br;
+			$text = '<font size="-2" face="'.$this->theme['font'].'"><nobr>'.$time.'</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.'</font>'.$GLOBALS['phpgw']->browser->br;
 
 			if ($editable)
 			{
