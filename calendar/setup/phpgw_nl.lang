@@ -1,0 +1,67 @@
+(for weekly)	calendar	nl	(voor wekelijks)
+1 match found	calendar	nl	1 resultaat gevonden
+a	calendar	nl	a
+are you sure\nyou want to\ndelete this entry ?	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen\nDit zal de afspraak bij\nalle gebruikers verwijderen.
+brief description	calendar	nl	Korte omschrijving
+calendar - add	calendar	nl	Kalender - toevoegen
+calendar - edit	calendar	nl	Kalender - Bewerken
+daily	calendar	nl	Dagelijks
+days repeated	calendar	nl	dagen herhaald
+delete this entry ?	calendar	nl	Weet u zeker
+description	calendar	nl	Omschrijving
+duration	calendar	nl	Duur
+fr	calendar	nl	Vr
+free/busy	calendar	nl	Vrij/Bezet
+frequency	calendar	nl	Frequentie
+fri	calendar	nl	Vr
+full description	calendar	nl	Volledige omschrijving
+generate printer-friendly version	calendar	nl	Genereer printervriendelijke versie
+go!	calendar	nl	Uitvoeren!
+i participate	calendar	nl	Ik doe mee
+ignore conflict	calendar	nl	Conflict negeren
+minutes	calendar	nl	minuten
+mo	calendar	nl	Ma
+mon	calendar	nl	Ma
+month	calendar	nl	Maand
+monthly (by date)	calendar	nl	Maandelijks (op datum)
+monthly (by day)	calendar	nl	Maandelijks (op dag)
+new entry	calendar	nl	Nieuwe afspraak
+no matches found.	calendar	nl	Geen resultaten gevonden
+participants	calendar	nl	Deelnemers
+printer friendly	calendar	nl	Printervriendelijk
+re-edit event	calendar	nl	Afspraak herbewerken
+repeat day	calendar	nl	Dag herhalen
+repeat end date	calendar	nl	Einddatum herhalingspatroon
+repeat type	calendar	nl	Herhalingstype
+repetition	calendar	nl	Herhalingspatroon
+sa	calendar	nl	Za
+sat	calendar	nl	Za
+search results	calendar	nl	Zoekresultaten
+show high priority events on main screen	calendar	nl	Evenementen met hoge prioriteit weergeven op hoofdscherm
+su	calendar	nl	Zo
+sun	calendar	nl	Zo
+th	calendar	nl	Do
+the following conflicts with the suggested time:<ul>x</ul>	calendar	nl	Het volgende levert een confilct op met de voorgestelde tijd:<ul>%1</ul>
+this month	calendar	nl	Deze maand
+this week	calendar	nl	Deze week
+thu	calendar	nl	Do
+today	calendar	nl	Vandaag
+tu	calendar	nl	Di
+tue	calendar	nl	Di
+use end date	calendar	nl	Gebruik einddatum
+view this entry	calendar	nl	Deze afspraak bekijken
+we	calendar	nl	Wo
+wed	calendar	nl	Wo
+week	calendar	nl	Week
+weekday starts on	calendar	nl	Weekdag begint om
+weekly	calendar	nl	wekelijks
+work day ends on	calendar	nl	Werkdag eindigt om
+work day starts on	calendar	nl	Werkdag begint om
+x matches found	calendar	nl	%1 resultaten gevonden
+year	calendar	nl	Jaar
+yearly	calendar	nl	Jaarlijks
+you have not entered a\nbrief description	calendar	nl	U hebt geen korte\nomschrijving ingevoerd
+you have not entered a\nvalid time of day.	calendar	nl	U hebt geen geldige\n tijd ingevoerd
+you must enter one or more search keywords	calendar	nl	U moet een of meer zoektermen invoeren
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	nl	Uw opgegeven tijd (%1 - %2) levert een conflict op met de volgende afspraken:

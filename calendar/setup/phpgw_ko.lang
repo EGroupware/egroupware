@@ -1,0 +1,51 @@
+1 match found	calendar	ko	1개항목 찾음
+a	calendar	ko	
+are you sure\nyou want to\ndelete this entry ?	calendar	ko	이 항목을 정말로 삭제 하시겠습니까 ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ko	이 항목을 정말로 삭제하시겠습니까?
+brief description	calendar	ko	간단한 설명
+calendar - add	calendar	ko	달력 - 추가
+calendar - edit	calendar	ko	달력 - 편집
+daily	calendar	ko	매일
+days repeated	calendar	ko	동안 반복되었음
+description	calendar	ko	설명
+duration	calendar	ko	기간
+frequency	calendar	ko	빈도
+fri	calendar	ko	금요일
+full description	calendar	ko	자세한 설명
+generate printer-friendly version	calendar	ko	프린트하기
+go!	calendar	ko	실행!
+minutes	calendar	ko	분
+mon	calendar	ko	월요일
+month	calendar	ko	월
+monthly (by date)	calendar	ko	매월 (by date)
+monthly (by day)	calendar	ko	매월 (by day) 
+new entry	calendar	ko	새로운 항목
+no matches found.	calendar	ko	검색조건에 맞는 항목이 없습니다.
+participants	calendar	ko	참여자
+printer friendly	calendar	ko	프린트하기
+r	calendar	ko	�
+repeat day	calendar	ko	반복 요일
+repeat end date	calendar	ko	반복 종료날짜
+repeat type	calendar	ko	반복방법
+repetition	calendar	ko	반복
+sat	calendar	ko	토요일
+search results	calendar	ko	검색결과
+sun	calendar	ko	일요일
+the following conflicts with the suggested time:<ul>x</ul>	calendar	ko	다음 항목이 제안된 시간과 충돌합니다. :<ul>%1</ul>
+this month	calendar	ko	이번달
+this week	calendar	ko	이번주
+thu	calendar	ko	목요일
+today	calendar	ko	오늘
+tue	calendar	ko	화요일
+use end date	calendar	ko	마지막 날짜 사용
+view this entry	calendar	ko	항목 보기
+wed	calendar	ko	수요일
+week	calendar	ko	주
+weekly	calendar	ko	매주
+x matches found	calendar	ko	%1개 항목 찾음
+year	calendar	ko	년
+yearly	calendar	ko	매년
+you have not entered a\nbrief description	calendar	ko	간단한 설명을 입력하세요.
+you have not entered a\nvalid time of day.	calendar	ko	시간을 정확하게 입력하세요.
+you must enter one or more search keywords	calendar	ko	하나 이상의 검색키워드를 입력하셔야 합니다.
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ko	<B> %1 - %2 </B>이 항목이 달력에 있는 내용과 같습니다.

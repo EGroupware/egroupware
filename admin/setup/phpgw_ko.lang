@@ -1,0 +1,51 @@
+* make sure that you remove users from this group before you delete it.	admin	ko	* 이 그룹에서 사용자를 정말 삭제하시겠습니까?
+account active	admin	ko	계정 활정화
+active	admin	ko	활성화
+all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
+anonymous user	admin	ko	무명 사용자
+are you sure you want to delete this account ?	admin	ko	이 계정을 정말 삭제하시겠습니까 ?
+are you sure you want to delete this group ?	admin	ko	이 그룹을 정말 삭제하시겠습니까 ?
+are you sure you want to delete this news site ?	admin	ko	이 뉴스사이트를 정말 삭제하시겠습니까?
+are you sure you want to kill this session ?	admin	ko	이 세션을 정말 종료시키시겠습니까 ?
+base url	admin	ko	기본  URL
+create group	admin	ko	새 그룹 만들기
+disabled	admin	ko	비활성화
+display	admin	ko	Display
+group name	admin	ko	그룹이름
+headline sites	admin	ko	헤드라인 사이트
+idle	admin	ko	idle
+ip	admin	ko	IP
+kill	admin	ko	종료
+last time read	admin	ko	마지막 읽은 시각
+last x logins	admin	ko	Last %1 logins
+list of current users	admin	ko	현재 사용자 목록
+listings displayed	admin	ko	Listings Displayed
+login time	admin	ko	접속 시간
+loginid	admin	ko	접속ID
+manager	admin	ko	관리자
+minutes between reloads	admin	ko	재로드 시간(분단위)
+network news	admin	ko	네트워크 뉴스
+new group name	admin	ko	새 그룹 이름
+new password [ leave blank for no change ]	admin	ko	새 패스워드[ 바꾸지 않으려면 빈칸으로 남겨두세요 ]
+news file	admin	ko	새로운 파일
+news type	admin	ko	뉴스 타입
+percent of users that logged out	admin	ko	퍼센트의 사용자가 로그아웃 하였습니다.
+re-enter password	admin	ko	비밀번호 재입력
+select users for inclusion	admin	ko	포함할 사용자를 선택하세요.
+site	admin	ko	Site
+that loginid has already been taken	admin	ko	이 사용자 계정은 이미 사용중입니다.
+that site has already been entered	admin	ko	이 사이트는 이미 입력되어 있습니다.
+the login and password can not be the same	admin	ko	계정과 패스워드는 같지 않아야 합니다.
+the two passwords are not the same	admin	ko	비밀번호가 같지 않습니다.
+total records	admin	ko	Total records
+user accounts	admin	ko	사용자 계정
+user groups	admin	ko	사용자 그룹
+view access log	admin	ko	접속 로그 보기
+view sessions	admin	ko	세션 보기
+you must enter a base url	admin	ko	기본 URL을 입력해야 합니다.
+you must enter a display	admin	ko	출력을 입력해야 합니다.
+you must enter a news url	admin	ko	뉴스 URL을 입력해야 합니다.
+you must enter a password	admin	ko	패스워드를 입력해야 합니다.
+you must enter the number of listings display	admin	ko	한번에 출혁할 개수를 입력해야 합니다.
+you must enter the number of minutes between reload	admin	ko	재로드될 시간 간격을 입력해야 합니다.
+you must select a file type	admin	ko	파일 타입을 선택해야 합니다.

@@ -1,0 +1,50 @@
+(for weekly)	calendar	no	(for Ukentlig)
+1 match found	calendar	no	1 match funnet
+are you sure\nyou want to\ndelete this entry ?	calendar	no	Er du sikker på at\ndu vil\nslette denne?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	no	Er du sikker på at\ndu vil\nslette denne entry ?\n\nDette vil slette\ndenne entry for alle brukere.
+brief description	calendar	no	Kort beskrivelse
+calendar - add	calendar	no	Kalender - Tilføy
+calendar - edit	calendar	no	Kalender - Edit
+daily	calendar	no	Daglig
+days repeated	calendar	no	dager gjentatt
+description	calendar	no	Beskrivelse
+duration	calendar	no	Varighet
+frequency	calendar	no	Hvor ofte
+fri	calendar	no	Fre
+full description	calendar	no	Full beskrivelse
+generate printer-friendly version	calendar	no	Generer printer-vennlig versjon
+go!	calendar	no	Go!
+minutes	calendar	no	minutter
+mon	calendar	no	Man
+month	calendar	no	Måned
+monthly (by date)	calendar	no	Månedlig (etter dato)
+monthly (by day)	calendar	no	Månedlig (etter dag)
+new entry	calendar	no	Ny Entry
+no matches found.	calendar	no	Ingen match funnet.
+participants	calendar	no	Deltakere
+printer friendly	calendar	no	Printer Vennlig
+repeat day	calendar	no	Gjenta dag
+repeat end date	calendar	no	Gjennta sluttdato
+repeat type	calendar	no	Gjenta type
+repetition	calendar	no	Gjenntakelse
+sat	calendar	no	Lør
+search results	calendar	no	Søk resultater
+sun	calendar	no	Søn
+the following conflicts with the suggested time:<ul>x</ul>	calendar	no	De følgende konflikter ved den foreslåtte tidene:<ul>%1</ul>
+this month	calendar	no	Denne måneden
+this week	calendar	no	Denne uken
+thu	calendar	no	Tor
+today	calendar	no	I dag
+tue	calendar	no	Tir
+use end date	calendar	no	Bruk sluttdato
+view this entry	calendar	no	Vis denne entry
+wed	calendar	no	Ons
+week	calendar	no	Uke
+weekly	calendar	no	Ukentlig
+x matches found	calendar	no	%1 match funnet
+year	calendar	no	År
+yearly	calendar	no	Årlig
+you have not entered a\nbrief description	calendar	no	Du har ikke skrevet inn en\nkort beskrivelse
+you have not entered a\nvalid time of day.	calendar	no	Du har ikke skrevet inn en\ngyldig tid.
+you must enter one or more search keywords	calendar	no	Du må skrive inn ett eller flere søkeord
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	no	Din foreslåtte tid av <B> %1 - %2 </B> er i konflikt med de følgende kalender entries:

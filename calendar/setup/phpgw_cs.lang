@@ -1,0 +1,54 @@
+(for weekly)	calendar	cs	(pro týdenní)
+1 match found	calendar	cs	Nalezen 1 záznam
+are you sure\nyou want to\ndelete this entry ?	calendar	cs	Jste si jist,\n¾e chcete\nvymazat tento záznam ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì\nchcete\ndsmazat tento záznam ?\n\nBude vymazán\npro v¹echny u¾ivatele.
+brief description	calendar	cs	Krátký popis
+calendar - add	calendar	cs	Kalendáø - Pøidej
+calendar - edit	calendar	cs	Kalendáø - Uprav
+daily	calendar	cs	Dennì
+days repeated	calendar	cs	dnù se opakuje
+description	calendar	cs	Popis
+duration	calendar	cs	Trvání
+f	calendar	cs	Pá
+frequency	calendar	cs	Frekvence opakování
+fri	calendar	cs	Pá
+full description	calendar	cs	Celkový popis
+generate printer-friendly version	calendar	cs	Generuj verzi pro tisk
+go!	calendar	cs	Jdi!
+m	calendar	cs	P
+minutes	calendar	cs	Minut
+mon	calendar	cs	Po
+month	calendar	cs	Mìsíc
+monthly (by date)	calendar	cs	Mìsíènì (podle data)
+monthly (by day)	calendar	cs	Mìsíènì (podle dne)
+new entry	calendar	cs	Nový záznam
+no matches found.	calendar	cs	®ádný záznam nenalezen.
+participants	calendar	cs	Spoluzodpovìdní
+printer friendly	calendar	cs	Pro tisk
+repeat day	calendar	cs	Den pro opakování
+repeat end date	calendar	cs	Datum konce opakování
+repeat type	calendar	cs	Druh opakování
+repetition	calendar	cs	Opakování
+sa	calendar	cs	So
+sat	calendar	cs	So
+search results	calendar	cs	Výsledky hledání
+sun	calendar	cs	Ne
+the following conflicts with the suggested time:<ul>x</ul>	calendar	cs	Následují kolize se zadaným èasem:<ul></ul>
+this month	calendar	cs	Tento mìsíc
+this week	calendar	cs	Tento týden
+thu	calendar	cs	Èt
+today	calendar	cs	Dnes
+tue	calendar	cs	Út
+use end date	calendar	cs	Datum konce pou¾ití
+view this entry	calendar	cs	Uka¾ tento záznam
+w	calendar	cs	S
+wed	calendar	cs	St
+week	calendar	cs	Týden
+weekly	calendar	cs	Týdnì
+x matches found	calendar	cs	 záznamù nalezeno
+year	calendar	cs	Rok
+yearly	calendar	cs	Roènì
+you have not entered a\nbrief description	calendar	cs	Nebyl zadán \nkrátký popis
+you have not entered a\nvalid time of day.	calendar	cs	Nebyl zadán \nplatný èas.
+you must enter one or more search keywords	calendar	cs	Musíte zadat aspoò jedno klíèové slovo
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	cs	Vá¹ navrhovaný èas <B> %1 - %2 </B> se pøekrývá s následujícími záznamy v kalendáøi:

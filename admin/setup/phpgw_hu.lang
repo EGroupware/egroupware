@@ -1,0 +1,73 @@
+account active	admin	hu	Hozzáférés aktív
+active	admin	hu	Aktív
+add new account	admin	hu	Hozzáférést hozzáad
+add new application	admin	hu	Alkalmazás hozzáadása
+all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
+anonymous user	admin	hu	Név nélküli felhasználó
+application name	admin	hu	Alkalmazás neve
+application title	admin	hu	Alkalmazás címe
+applications	admin	hu	Alkalmazások
+are you sure you want to delete this account ?	admin	hu	Biztosan törölni akarja ezt a hozzáférési jogot?
+are you sure you want to delete this application ?	admin	hu	Biztosan törölni akarja ezt az alkalmazást?
+are you sure you want to delete this group ?	admin	hu	Biztosan törölni akarja ezt a csoportot?
+are you sure you want to delete this news site ?	admin	hu	Biztosan törölni akarja ezt a híroldalt?
+are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozzáférést?
+base url	admin	hu	Fõ URL
+create group	admin	hu	Csoport létrehozása
+disabled	admin	hu	Tiltott
+display	admin	hu	Megjelenítés
+edit application	admin	hu	Alkalmazás módosítása
+edit group	admin	hu	Csoport módosítása
+enabled	admin	hu	Engedélyezett
+enabled - hidden from navbar	admin	hu	Engedélyezve - Navbar-ban rejtve
+group name	admin	hu	Csoport neve
+headline sites	admin	hu	Fõcím oldalak
+idle	admin	hu	inaktív
+installed applications	admin	hu	Telepített alkalmazások
+ip	admin	hu	IP
+kill	admin	hu	Kitiltás
+last time read	admin	hu	Utolsó olvasás idõpontja
+last x logins	admin	hu	Utolsó %1 bejelentkezés
+list of current users	admin	hu	aktuális felhasználók listája
+listings displayed	admin	hu	Listázások megjelnítve
+login time	admin	hu	Belépés ideje
+loginid	admin	hu	LoginID
+manager	admin	hu	Manager
+minutes between reloads	admin	hu	Percek újratöltés elõtt
+network news	admin	hu	Hálózati hírek
+new group name	admin	hu	Új csoport neve
+new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
+news file	admin	hu	Hírek fájl
+news type	admin	hu	Hírek típusa
+percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók %-ban
+permissions	admin	hu	Jogok
+permissions this group has	admin	hu	A csoport jogosultságai
+re-enter password	admin	hu	Jelszó újra
+remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
+select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
+select users for inclusion	admin	hu	Felhasználók kiválasztása
+site	admin	hu	Oldal
+sorry, that group name has already been taking.	admin	hu	Sajnos ez a csoportnév már foglalt.
+sorry, the follow users are still a member of the group x	admin	hu	A következõ felhasználók már a(z) %1 csoport tagjai
+status	admin	hu	Status
+submit changes	admin	hu	Változások elküldése
+that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt
+that site has already been entered	admin	hu	Már megtörtént a belépés erre a híroldalra
+the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg
+the two passwords are not the same	admin	hu	A két jelszó nem egyezik
+they must be removed before you can continue	admin	hu	El kell távolítani õket a folytatáshoz
+title	admin	hu	Cím
+total records	admin	hu	Összes rekord
+user accounts	admin	hu	Felhasználói hozzáférések
+user groups	admin	hu	Felhasználói csoportok
+view access log	admin	hu	Elérési napló megtekintése
+view sessions	admin	hu	Kapcsolatok megtekintése
+you must add at least 1 permission to this account	admin	hu	Legalább egy jogosultságot meg kell adni a belépési joghoz
+you must enter a base url	admin	hu	Meg kell adni az alap url-t
+you must enter a display	admin	hu	Meg kell adni egy megjelenítõt
+you must enter a news url	admin	hu	Meg kell adni egy news url-t
+you must enter a password	admin	hu	Kötelezõ jelszót megadni
+you must enter an application name and title.	admin	hu	Kötelezõ megadni az alkalmazás nevét és címét!
+you must enter the number of listings display	admin	hu	You must enter the number of listings display
+you must enter the number of minutes between reload	admin	hu	Meg kell adni a frissítések közti idõt
+you must select a file type	admin	hu	Kötelezõ fájltípust választani

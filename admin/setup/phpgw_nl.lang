@@ -1,0 +1,75 @@
+account active	admin	nl	Gebruiker actief
+active	admin	nl	actief
+add new account	admin	nl	Nieuwe gebruiker toevoegen
+add new application	admin	nl	Nieuwe toepassing toevoegen
+all records and account information will be lost!	admin	nl	Alle records en gebruikersinformatie zal verloren gaan!
+anonymous user	admin	nl	Anonieme gebruiker
+application name	admin	nl	Toepassingsnaam
+application title	admin	nl	Toepassingstitel
+applications	admin	nl	Toepassingen
+are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
+are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
+are you sure you want to delete this group ?	admin	nl	Weet u zeker dat u deze groep wilt verwijderen?
+are you sure you want to delete this news site ?	admin	nl	Weet u zeker dat u deze nieuwssite wilt verwijderen?
+are you sure you want to kill this session ?	admin	nl	Weet u zeker dat u deze sessie wilt verwijderen?
+base url	admin	nl	Basis-url
+create group	admin	nl	Groep maken
+disabled	admin	nl	Uitgeschakeld
+display	admin	nl	Weergave
+edit application	admin	nl	Toepassing bewerken
+edit group	admin	nl	Groep bewerken
+enabled	admin	nl	Ingeschakeld
+enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
+group name	admin	nl	Groepsnaam
+headline sites	admin	nl	Krantekoppen Sites
+idle	admin	nl	inactief
+installed applications	admin	nl	Geinstalleerde toepassingen
+ip	admin	nl	IP
+kill	admin	nl	Beeindigen
+last time read	admin	nl	Laatste keer gelezen
+last x logins	admin	nl	Laatste %1 logins
+list of current users	admin	nl	Lijst van huidige gebruikers
+listings displayed	admin	nl	Weergegeven lijsten
+login time	admin	nl	Logintijd
+loginid	admin	nl	LoginID
+manager	admin	nl	Manager
+minutes between reloads	admin	nl	Minuten tussen heropenen
+network news	admin	nl	Netwerknieuws
+new group name	admin	nl	Nieuwe groepsnaam
+new password [ leave blank for no change ]	admin	nl	Nieuw wachtwoord [Leeg laten om niet te wijzigen]
+news file	admin	nl	Nieuwsbestand
+news type	admin	nl	Nieuwstype
+percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
+permissions	admin	nl	Rechten
+permissions this group has	admin	nl	Rechten van deze groep
+Projects	admin	nl	Projecten
+re-enter password	admin	nl	Wachtwoord opnieuw invoeren
+remove all users from this group	admin	nl	Verwijder alle gebruikers uit deze groep
+select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
+select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
+site	admin	nl	Site
+sorry, that group name has already been taking.	admin	nl	Sorry, die groepsnaam is al in gebruik
+sorry, the follow users are still a member of the group x	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
+status	admin	nl	status
+submit changes	admin	nl	Wijzigingen toepassen
+that loginid has already been taken	admin	nl	Die loginid is al in gebruik
+that site has already been entered	admin	nl	Die site is al toegevoegd
+the login and password can not be the same	admin	nl	De login en het wachtwoord mogen niet gelijk zijn
+the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen
+they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt
+title	admin	nl	Titel
+total records	admin	nl	Aantal records
+user accounts	admin	nl	Gebruikersaccounts
+user groups	admin	nl	Gebruikersgroepen
+user profiles	admin	nl	Gebruikersprofielen
+view access log	admin	nl	Toegangslog bekijken
+view sessions	admin	nl	Sessies bekijken
+you must add at least 1 permission to this account	admin	nl	U moet tenminste 1 recht toekennen aan deze gebruiker
+you must enter a base url	admin	nl	U moet een basis-url invoeren
+you must enter a display	admin	nl	U moet een weergave invoeren
+you must enter a news url	admin	nl	U moet een nieuws-url invoeren
+you must enter a password	admin	nl	U moet een wachtwoord invoeren
+you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren
+you must enter the number of listings display	admin	nl	U moet het aantal weer te geven lijsten invoeren
+you must enter the number of minutes between reload	admin	nl	U moet het aantal minuten tussen heropenen invoeren
+you must select a file type	admin	nl	U moet een bestandstype invoeren

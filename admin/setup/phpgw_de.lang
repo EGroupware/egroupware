@@ -1,0 +1,83 @@
+account active	admin	de	Konto aktiv
+account permissions	admin	de	Zugriffsrechte
+action	admin	de	Aktion
+add new account	admin	de	Neues Konto hinzufügen
+add new application	admin	de	Neue Anwendung hinzufügen
+all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
+allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
+anonymous user 	admin	de	Anonymer Benutzer
+application name	admin	de	Name der Anwendung
+application title	admin	de	Titel der Anwendung
+applications	admin	de	Anwendungen
+are you sure you want to delete this account ?	admin	de	Sind Sie sicher, daß Sie dieses Konto löschen wollen ?
+are you sure you want to delete this application ?	admin	de	Sind Sie sicher, daß Sie diese Anwendung löschen wollen ?
+are you sure you want to delete this group ?	admin	de	Sind Sie sicher, daß Sie diese Gruppe löschen wollen ?
+are you sure you want to delete this news site ?	admin	de	Sind Sie sicher, diese News Site löschen zu wollen ?
+are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie diese Session killen wollen ?
+base url	admin	de	Basis URL
+change main screen message	admin	de	Nachricht der Startseite ändern
+create group	admin	de	Erstelle Gruppe
+disabled	admin	de	Deaktiviert
+display	admin	de	Bezeichnung
+edit application	admin	de	Anwendung editieren
+edit group	admin	de	Gruppe editieren
+edit user account	admin	de	Benutzerkonto editieren
+enabled	admin	de	Verfügbar
+enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+group name	admin	de	Gruppenname
+headline site management	admin	de	Schlagzeilen Management
+headline sites	admin	de	Sites für Schlagzeilen
+hide php information	admin	de	PHP Informationen ausblenden
+idle	admin	de	idle
+installed applications	admin	de	Installierte Anwendungen
+ip	admin	de	IP
+kill	admin	de	Kill
+last login	admin	de	Letzter Login
+last login from	admin	de	Letzer Login von
+last time read	admin	de	Zuletzt gelesen
+last x logins	admin	de	Letze %1 Logins
+list of current users	admin	de	Liste der gegenwärtigen Benutzer
+listings displayed	admin	de	Zeilen maximal
+login screen	admin	de	Login Seite
+login time	admin	de	Login Zeit
+loginid	admin	de	LoginID
+main screen message	admin	de	Nachricht der Startseite
+manager	admin	de	Manager
+minutes between reloads	admin	de	Minuten zwischen Reloads
+network news	admin	de	Network News
+never	admin	de	Nie
+new group name	admin	de	Neuer Gruppenname
+new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+news file	admin	de	News File
+news type	admin	de	Nachrichtentyp
+percent of users that logged out	admin	de	Prozent der User, die sich korrekt abgemeldet haben
+permissions	admin	de	Zugriffsrechte
+permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
+php information	admin	de	PHP Informationen
+re-enter password	admin	de	Passwort wiederholen
+remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
+section	admin	de	Abschnitt
+select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
+select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
+site	admin	de	Site
+sorry, that group name has already been taking.	admin	de	Dieser Gruppenname ist bereits vergeben.
+sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
+submit changes	admin	de	Änderungen Speichern
+that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
+that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
+the login and password can not be the same	admin	de	Login und Passwort dürfen nicht identisch sein
+they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
+total records	admin	de	Anzahl Datensätze insgesamt
+user accounts	admin	de	Benutzerkonten
+user groups	admin	de	Benutzergruppen
+view access log	admin	de	Access Log anzeigen
+view sessions	admin	de	Sitzungen anzeigen
+you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
+you must enter a base url	admin	de	Sie müssen eine Basis URL angeben
+you must enter a display	admin	de	Sie müssen einen Namen für die Site eingeben
+you must enter a news url	admin	de	Sie müssen eine News URL angeben
+you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
+you must enter the number of listings display	admin	de	Sie müssen die Anzahl der anzuzeigenden Zeilen angeben
+you must enter the number of minutes between reload	admin	de	Sie müssen eine Anzahl von Minuten zwischen Reloads angeben
+you must select a file type	admin	de	Sie müssen einen Filetyp auswählen

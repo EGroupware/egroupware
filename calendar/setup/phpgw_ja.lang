@@ -1,0 +1,108 @@
+(for weekly)	calendar	ja	(毎週時)
+1 match found	calendar	ja	１件見つかりました。
+a	calendar	ja	
+accept	calendar	ja	承諾
+all day	calendar	ja	全ての日
+am	calendar	ja	午前
+are you sure\nyou want to\ndelete this entry ?	calendar	ja	この項目を\n削除してもよろしいですか。
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	削除してもよろしいですか。\n（全てのユーザに影響します。）
+brief description	calendar	ja	件名
+calendar - add	calendar	ja	カレンダー - 追加
+calendar - edit	calendar	ja	カレンダー - 編集
+calendar holiday management	calendar	ja	休日設定
+countries	calendar	ja	国一覧
+daily	calendar	ja	日単位
+daily matrix view	calendar	ja	日程表示
+days repeated	calendar	ja	曜日
+default calendar filter	calendar	ja	カレンダーの初期選択
+default calendar view	calendar	ja	カレンダーの初期表示
+display status of events	calendar	ja	イベント状況表示
+duration	calendar	ja	継続時間
+end date/time	calendar	ja	終了日時
+ends	calendar	ja	終了日
+fr	calendar	ja	金
+free/busy	calendar	ja	時間表
+frequency	calendar	ja	間隔
+fri	calendar	ja	金
+full description	calendar	ja	詳細
+generate printer-friendly version	calendar	ja	印刷用
+global public and group public	calendar	ja	パブリックと所属グループ
+global public only	calendar	ja	パブリック
+go!	calendar	ja	Go!
+group public only	calendar	ja	所属グループ
+holiday	calendar	ja	休日
+holidays	calendar	ja	休日一覧
+i participate	calendar	ja	自分も参加者
+ignore conflict	calendar	ja	無視
+minutes	calendar	ja	分
+mo	calendar	ja	月
+mon	calendar	ja	月
+month	calendar	ja	月
+monthly	calendar	ja	月単位
+monthly (by date)	calendar	ja	月単位(日)
+monthly (by day)	calendar	ja	月単位(曜日)
+monthlybydate	calendar	ja	月単位(日)
+monthlybyday	calendar	ja	月単位(曜日)
+new entry	calendar	ja	項目追加
+no matches found.	calendar	ja	見つかりません。
+no response	calendar	ja	返答なし
+observance rule	calendar	ja	休日のルールを適用
+occurence	calendar	ja	曜日指定
+participant	calendar	ja	参加者
+participates	calendar	ja	も参加
+participants	calendar	ja	参加者
+pm	calendar	ja	午後
+printer friendly	calendar	ja	印刷用へ
+private and global public	calendar	ja	プライベートと共有
+private and group public	calendar	ja	プライベートと所属グループ
+private only	calendar	ja	プライベートのみ
+re-edit event	calendar	ja	再編集
+refresh	calendar	ja	再表示
+reject	calendar	ja	拒否
+rejected	calendar	ja	拒否済み
+repeat day	calendar	ja	曜日の繰返し
+repeat end date	calendar	ja	繰返しの終了日
+repeat type	calendar	ja	タイプ
+repeating event information	calendar	ja	繰返しイベント
+repetition	calendar	ja	繰返し
+repitition	calendar	ja	繰返し
+reset	calendar	ja	再入力
+sa	calendar	ja	土
+sat	calendar	ja	土
+scheduling conflict	calendar	ja	予定を確認
+search results	calendar	ja	検索結果
+select country for including holidays	calendar	ja	休日データ選択
+show day view on main screen	calendar	ja	今日の予定をメイン画面に表示
+show high priority events on main screen	calendar	ja	優先度が高いイベントをメイン画面に表示
+start date/time	calendar	ja	開始日時
+su	calendar	ja	日
+sun	calendar	ja	日
+tentative	calendar	ja	仮承諾
+th	calendar	ja	木
+the following conflicts with the suggested time:<ul>x</ul>	calendar	ja	The following conflicts with the suggested time:<ul>%1</ul>
+this month	calendar	ja	今月
+this week	calendar	ja	今週
+this year	calendar	ja	今年
+thu	calendar	ja	木
+today	calendar	ja	今日
+tu	calendar	ja	火
+tue	calendar	ja	火
+use end date	calendar	ja	終了日指定
+user	calendar	ja	ユーザ
+view this entry	calendar	ja	項目表示
+we	calendar	ja	水
+wed	calendar	ja	水
+week	calendar	ja	週
+weekday starts on	calendar	ja	週の初め
+weekly	calendar	ja	週単位
+when creating new events default set to private	calendar	ja	プライベート用とする（新規作成時）
+work day ends on	calendar	ja	就業時間（終了）
+work day starts on	calendar	ja	就業時間（開始）
+x matches found	calendar	ja	%1 件見つかりました。
+year	calendar	ja	年
+yearly	calendar	ja	年単位
+you have not entered a\nbrief description	calendar	ja	概要を入力してください。
+you have not entered a brief description	calendar	ja	概要を入力してください。
+you have not entered a\nvalid time of day.	calendar	ja	時刻が誤っています。
+you must enter one or more search keywords	calendar	ja	検索キーワードを入力して下さい。
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> には、別の予定があります。

@@ -1,0 +1,78 @@
+(for weekly)	calendar	hu	(hetente történõ eseménynél)
+1 match found	calendar	hu	1 találat
+a	calendar	hu	
+all	calendar	hu	Összes
+are you sure\nyou want to\ndelete this entry ?	calendar	hu	Biztosan törölni\nakarja ezt\na bejegyzést?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	hu	Biztosan törölni\nakarja ezt\na bejegyzést?\n\nMinden felhasználó számára\ntörölni fogja a bejegyzés.
+brief description	calendar	hu	Rövid leírás
+calendar - add	calendar	hu	Naptár - Hozzáadás
+calendar - edit	calendar	hu	Naptár - Módosítás
+daily	calendar	hu	Naponta
+daily matrix view	calendar	hu	Napi mátrix megtekintése
+days repeated	calendar	hu	napon ismétlõdik
+description	calendar	hu	Leírás
+duration	calendar	hu	Idõtartam
+end date/time	calendar	hu	Befejezés dátuma/ideje
+fr	calendar	hu	P
+free/busy	calendar	hu	Szabad/Elfoglalt
+frequency	calendar	hu	Gyakoriság
+fri	calendar	hu	P
+full description	calendar	hu	Teljes leírás
+generate printer-friendly version	calendar	hu	Nyomtató-barát verzió generálása
+global public and group public	calendar	hu	Globális publiskus és csoport publikus
+global public only	calendar	hu	Csak globális publikus
+go!	calendar	hu	Hajrá!
+group public only	calendar	hu	Csak csoport publikus
+i participate	calendar	hu	Résztveszek
+ignore conflict	calendar	hu	Átfedés figyelmen kivül hagyása
+minutes	calendar	hu	perc
+mo	calendar	hu	H
+mon	calendar	hu	H
+month	calendar	hu	Hónap
+monthly	calendar	hu	Havonta
+monthly (by date)	calendar	hu	Havonta (dátum szerint)
+monthly (by day)	calendar	hu	Havonta (naponta)
+new entry	calendar	hu	Új bejegyzés
+no matches found.	calendar	hu	Nincs találat.
+participants	calendar	hu	Résztvevõk
+printer friendly	calendar	hu	Nyomtató-barát
+private and global public	calendar	hu	Személyes és globális publikus
+private and group public	calendar	hu	Személyes és csoport publikus
+private only	calendar	hu	Csak személyes
+re-edit event	calendar	hu	Esemény módosítása
+repeat day	calendar	hu	Ismétlõdés napja
+repeat end date	calendar	hu	Ismétlõdés végsõ dátuma
+repeat type	calendar	hu	Ismétlõdés típusa
+repeating event information	calendar	hu	Ismétlõdõ esemény információ
+repetition	calendar	hu	Ismétlõdés
+sa	calendar	hu	Sz
+sat	calendar	hu	Sz
+search results	calendar	hu	Keresés eredménye
+show high priority events on main screen	calendar	hu	Magas prioritásu események megjelenítése a fõképernyõn
+start date/time	calendar	hu	Kezdet dátuma/ideje
+su	calendar	hu	V
+sun	calendar	hu	V
+th	calendar	hu	Cs
+the following conflicts with the suggested time:<ul>x</ul>	calendar	hu	A következõ bejegyzés ütközik a javasolt idõponttal:<ul>%1</ul>
+this month	calendar	hu	Aktuális hónapban
+this week	calendar	hu	Aktuális héten
+thu	calendar	hu	Cs
+today	calendar	hu	Ma
+tu	calendar	hu	K
+tue	calendar	hu	K
+use end date	calendar	hu	Végsõ dátumot használja
+view this entry	calendar	hu	Bejegyzés megtekintése
+we	calendar	hu	Sz
+wed	calendar	hu	Sz
+week	calendar	hu	Hét
+weekday starts on	calendar	hu	Hétköznap kezdete
+weekly	calendar	hu	Hetente
+work day ends on	calendar	hu	Munkanapok vége
+work day starts on	calendar	hu	Munkanapok kezdete
+x matches found	calendar	hu	%1 találat
+year	calendar	hu	Év
+yearly	calendar	hu	Évente
+you have not entered a\nbrief description	calendar	hu	Nem írt be\nleírást
+you have not entered a\nvalid time of day.	calendar	hu	Nem írt be érvényes\nidõpontot.
+you must enter one or more search keywords	calendar	hu	Egy vagy több kulcsszót meg kell adni a kereséshez
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	hu	A megadott idõpont <B> %1 - %2 </B> összeütközik a következõ bejegyzésekkel:

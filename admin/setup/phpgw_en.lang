@@ -1,0 +1,102 @@
+account active	admin	en	Account active
+account permissions	admin	en	Account permissions
+action	admin	en	Action
+add global category	admin	en	Add global category
+add new account	admin	en	Add new account
+add new application	admin	en	Add new application
+allow anonymous access to this app	admin	en	Allow anonymous access to this app
+all records and account information will be lost!	admin	en	All records and account information will be lost!
+anonymous user	admin	en	Anonymous user
+application name	admin	en	Application name
+applications	admin	en	Applications
+application title	admin	en	Application title
+are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
+are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
+are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
+are you sure you want to delete this news site ?	admin	en	Are you sure you want to delete this news site ?
+are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
+base url	admin	en	Base URL
+category description	admin	en	Category description
+category name	admin	en	Category name
+change main screen message	admin	en	Change main screen message
+city	admin	en	City
+create group	admin	en	Create Group
+disabled	admin	en	Disabled
+display	admin	en	Display
+edit application	admin	en	Edit application
+edit group	admin	en	Edit Group
+edit user account	admin	en	Edit user account
+enabled	admin	en	Enabled
+enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
+forecast	admin	en	Forecast
+forecast zone	admin	en	Forecast Zone
+fzone	admin	en	FZone
+global categories	admin	en	Global Categories
+group name	admin	en	Group Name
+headline sites	admin	en	Headline Sites
+hide php information	admin	en	hide php information
+home directory	admin	en	Home directory
+id	admin	en	ID
+idle	admin	en	idle
+installed applications	admin	en	Installed applications
+ip	admin	en	IP
+kill	admin	en	Kill
+last login	admin	en	last login
+last login from	admin	en	last login from
+last time read	admin	en	Last Time Read
+last x logins	admin	en	Last %1 logins
+listings displayed	admin	en	Listings Displayed
+list of current users	admin	en	list of current users
+loginid	admin	en	LoginID
+login screen	admin	en	Login screen
+login shell	admin	en	Login shell
+login time	admin	en	Login Time
+main screen message	admin	en	Main screen message
+manager	admin	en	Manager
+metar	admin	en	Metar
+minutes between reloads	admin	en	Minutes between Reloads
+network news	admin	en	Network News
+new group name	admin	en	New group name
+new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
+news file	admin	en	News File
+news type	admin	en	News Type
+no matchs found	admin	en	No matchs found
+percent of users that logged out	admin	en	Percent of users that logged out
+permissions	admin	en	Permissions
+permissions this group has	admin	en	Permissions this group has
+php information	admin	en	PHP Information
+please enter a name for that category !	admin	en	Please enter a name for that category !
+re-enter password	admin	en	Re-enter password
+region	admin	en	Region
+regions	admin	en	Regions
+remove all users from this group	admin	en	Remove all users from this group
+select permissions this group will have	admin	en	Select permissions this group will have
+select users for inclusion	admin	en	Select users for inclusion
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
+site	admin	en	Site
+sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
+sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
+station	admin	en	Station
+stations	admin	en	Stations
+submit changes	admin	en	Submit Changes
+table	admin	en	Table
+that category name has been used already !	admin	en	That category name has been used already !
+that loginid has already been taken	admin	en	That loginid has already been taken
+that site has already been entered	admin	en	That site has already been entered
+the login and password can not be the same	admin	en	The login and password can not be the same
+they must be removed before you can continue	admin	en	They must be removed before you can continue
+total records	admin	en	Total records
+user accounts	admin	en	User accounts
+user groups	admin	en	User groups
+view access log	admin	en	View Access Log
+view sessions	admin	en	View sessions
+weather center	admin	en	Weather Center
+you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
+you must enter a base url	admin	en	You must enter a base url
+you must enter a display	admin	en	You must enter a display
+you must enter an application name and title.	admin	en	You must enter an application name and title.
+you must enter a news url	admin	en	You must enter a news url
+you must enter the number of listings display	admin	en	You must enter the number of listings display
+you must enter the number of minutes between reload	admin	en	You must enter the number of minutes between reload
+you must select a file type	admin	en	You must select a file type
+zone	admin	en	Zone

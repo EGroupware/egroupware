@@ -1,0 +1,89 @@
+1 match found	calendar	it	Trovata 1 occorrenza
+a	calendar	it	A
+all day	calendar	it	Tutto il giorno
+are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota ?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
+brief description	calendar	it	Descrizione breve
+calendar - add	calendar	it	Calendario - Aggiungi
+calendar - edit	calendar	it	Calendario - Modifica
+daily	calendar	it	Giornaliero
+daily matrix view	calendar	it	Visualizza Matrice Giornaliera
+days repeated	calendar	it	giorni ripetuti
+default calendar filter	calendar	it	Filtro del calendario preferito
+default calendar view	calendar	it	Visualizzazione preferita del calendario
+description	calendar	it	Descrizione
+display status of events	calendar	it	Visualizza lo stato per gli Eventi
+duration	calendar	it	Durata
+end date/time	calendar	it	Data/Ora finale
+(for weekly)	calendar	it	(per settimana)
+fr	calendar	it	V
+free/busy	calendar	it	Libero/Occupato
+frequency	calendar	it	Frequenza
+fri	calendar	it	Ven
+full description	calendar	it	Descrizione completa
+generate printer-friendly version	calendar	it	Genera versione stampabile
+global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
+global public only	calendar	it	Solo Pubblico Globale
+go!	calendar	it	Vai!
+group public only	calendar	it	Solo Pubblico per il Gruppo
+ignore conflict	calendar	it	Ignora Conflitto
+i participate	calendar	it	Io Partecipo
+minutes	calendar	it	minuti
+mo	calendar	it	L
+mon	calendar	it	Lun
+month	calendar	it	Mese
+monthly (by date)	calendar	it	Mensile (per data)
+monthly (by day)	calendar	it	Mensile (per giorno)
+monthly	calendar	it	Mensile
+new entry	calendar	it	Nuovo Appuntamento
+no matches found.	calendar	it	Nessuna corrispondenza trovata.
+none	calendar	it	Nessuna
+participants	calendar	it	Partecipanti
+printer friendly	calendar	it	Versione Stampabile
+private and global public	calendar	it	Privato e Pubblico Globale
+private and group public	calendar	it	Private e Pubblico per il Gruppo
+private only	calendar	it	Solo privato
+re-edit event	calendar	it	Ri-modifica l'evento
+repeat day	calendar	it	Giorno ripetizione
+repeat end date	calendar	it	Data ultima ripetizione
+repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
+repeat type	calendar	it	Tipo di ripetizione
+repetition	calendar	it	Ripetizione
+sa	calendar	it	Sa
+sat	calendar	it	Sab
+search results	calendar	it	Risultati Ricerca
+show day view on main screen	calendar	it	Mostra la vista giornaliera nella schermata principale
+show high priority events on main screen	calendar	it	Mostra eventi ad alta priorità nella schermata principale
+start date/time	calendar	it	Data/Ora Inizio
+su	calendar	it	Do
+sun	calendar	it	Dom
+th	calendar	it	G
+the following conflicts with the suggested time:<ul>x</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
+this month	calendar	it	Questo mese
+this week	calendar	it	Questa settimana
+thu	calendar	it	Gio
+today	calendar	it	Oggi
+tu	calendar	it	M
+tue	calendar	it	Mar
+use end date	calendar	it	Usa data di termine
+view this entry	calendar	it	Visualizza questo inserimento
+we	calendar	it	M
+wed	calendar	it	Mer
+week	calendar	it	Settimana
+weekday starts on	calendar	it	La settimana inizia di
+weekly	calendar	it	Settimanale
+when creating new events default set to private	calendar	it	Quando vengono creati nuovi eventi settali automaticamente privati
+work day ends on	calendar	it	La giornata lavorativa termina alle
+work day starts on	calendar	it	La giornata lavorativa inizia alle
+x matches found	calendar	it	Trovate %1 occorrenze
+year	calendar	it	Anno
+yearly	calendar	it	Annuale
+you have not entered a\nbrief description	calendar	it	Non hai inserito una\nBreve Descrizione
+you have not entered a\nvalid time of day.	calendar	it	Non hai inserito un\norario valido.
+you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in calendario:
+user	calendar	it	utente
+start date 	calendar	it	Data Inizio
+end date	calendar	it	Data Fine
+this year	calendar	it	Quest'anno
+participates	calendar	it	partecipa

@@ -1,0 +1,66 @@
+(for weekly)	calendar	da	(for ugentlig)
+1 match found	calendar	da	1 resultat er fundet
+a	calendar	da	a
+are you sure\nyou want to\ndelete this entry ?	calendar	da	Vil Du virkelig\n slette dette\nfelt
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	da	Vil Du virkelig\n slette dette\nfelt ?\n\nDette vil slette\nfeltet for alle brugere.
+brief description	calendar	da	Kort beskrivelse
+calendar - add	calendar	da	Kalender - tilføj
+calendar - edit	calendar	da	Kalender - redigér
+daily	calendar	da	Daglig
+days repeated	calendar	da	Gentagne dage
+description	calendar	da	Beskrivelse
+duration	calendar	da	Varighed
+fr	calendar	da	Fr
+free/busy	calendar	da	Fri/optaget
+frequency	calendar	da	Frekvens
+fri	calendar	da	Fre
+full description	calendar	da	Fuld beskrivelse
+generate printer-friendly version	calendar	da	Lav en printer venlig version
+go!	calendar	da	Udfør!
+i participate	calendar	da	Jeg deltager
+ignore conflict	calendar	da	Ignorér konflikt
+minutes	calendar	da	Minutter
+mo	calendar	da	Ma
+mon	calendar	da	Man
+month	calendar	da	Måned
+monthly (by date)	calendar	da	Månedlig (pr. dato)
+monthly (by day)	calendar	da	Månedlig (pr. dag)
+new entry	calendar	da	Nyt punkt
+no matches found.	calendar	da	Ingen resultater fundet
+participants	calendar	da	Deltagere
+printer friendly	calendar	da	Udskriftsvenlig
+re-edit event	calendar	da	Redigér igen
+repeat day	calendar	da	Gentag dag
+repeat end date	calendar	da	Gentagelse slut dato
+repeat type	calendar	da	Gentagelsestype
+repetition	calendar	da	Gentagelse
+sa	calendar	da	Lø
+sat	calendar	da	Lør
+search results	calendar	da	Søgeresultater
+show high priority events on main screen	calendar	da	Vis begivenheder med høj prioritet på forsiden
+su	calendar	da	Sø
+sun	calendar	da	Søn
+th	calendar	da	To
+the following conflicts with the suggested time:<ul>x</ul>	calendar	da	Det følgende er i konflikt med den ønskede tid:<ul>%1</ul>
+this month	calendar	da	Denne måned
+this week	calendar	da	Denne uge
+thu	calendar	da	Tor
+today	calendar	da	I dag
+tu	calendar	da	Ti
+tue	calendar	da	Tir
+use end date	calendar	da	Brug slutdato
+view this entry	calendar	da	Se denne aftale
+we	calendar	da	On
+wed	calendar	da	Ons
+week	calendar	da	Uge
+weekday starts on	calendar	da	Ugedage starter med
+weekly	calendar	da	Ugentlig kalender
+work day ends on	calendar	da	Arbejdsdage slutter om
+work day starts on	calendar	da	Arbejdsdage begynder om
+x matches found	calendar	da	%1 resultater fundet
+year	calendar	da	År
+yearly	calendar	da	Årlig
+you have not entered a\nbrief description	calendar	da	Du har ikke skrevet\nen kort beskrivelse
+you have not entered a\nvalid time of day.	calendar	da	Du har ikke skrevet\n et gyldigt klokkeslæt
+you must enter one or more search keywords	calendar	da	Du skal indtaste et eller flere søgeord
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	da	Den foreslåede tid (<b>%1 - %2</b>) er i konflikt med følgende kalender punkter:

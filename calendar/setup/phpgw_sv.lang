@@ -1,0 +1,86 @@
+(for weekly)	calendar	sv	(för veckovis)
+1 match found	calendar	sv	1 träff hittad
+a	calendar	sv	a
+all	calendar	sv	Alla
+are you sure\\\\nyou want to\\\\ndelete this entry ?	calendar	sv	Är du säker på attndu villnta bort denna?
+are you sure\\\\nyou want to\\\\ndelete this entry ?\\\\n\\\\nthis will delete\\\\nthis entry for all users.	calendar	sv	Är du säker på attndu villnta bort denna entry ?nnDetta vill ta bortndenna entry för alla användare.
+are you sure\\nyou want to\\ndelete this entry ?	calendar	sv	Är du säker\\natt du vill\\ntabort denna post?
+are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.	calendar	sv	Är du säker\\natt du vill\\ntabort denna post?\\n\\nDetta tar bort den\\nför alla användare.
+are you sure\nyou want to\ndelete this entry ?	calendar	sv	Är du säker\natt du vill\\nradera denna post?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker\\natt du vill\\nradera denna post?\\n\\nDetta tar bort\\ndenna post för alla\\nanvändare.
+brief description	calendar	sv	Kort beskrivning
+calendar - add	calendar	sv	Kalender - Lägg till
+calendar - edit	calendar	sv	Kalender - Edit
+daily	calendar	sv	Daglig
+daily matrix view	calendar	sv	Daglig matris vy
+days repeated	calendar	sv	dagar repeterade
+description	calendar	sv	Beskrivning
+duration	calendar	sv	Varaktighet
+end date/time	calendar	sv	Slut Datum/tid
+fr	calendar	sv	Fr
+free/busy	calendar	sv	Ledig/Upptagen
+frequency	calendar	sv	Hur ofta
+fri	calendar	sv	Fre
+full description	calendar	sv	Full beskrivning
+generate printer-friendly version	calendar	sv	Gör en printer-vänlig verision
+global public and group public	calendar	sv	Globalt publikt och Grupp publikt
+global public only	calendar	sv	Endast Globalt publikt
+go!	calendar	sv	Go!
+group public only	calendar	sv	Endast grupp publikt
+i participate	calendar	sv	Jag deltar
+ignore conflict	calendar	sv	Ignorera konflikt
+minutes	calendar	sv	minuter
+mo	calendar	sv	Må
+mon	calendar	sv	Mån
+month	calendar	sv	Månad
+monthly	calendar	sv	Månadsvis
+monthly (by date)	calendar	sv	Månatligt (efter datum)
+monthly (by day)	calendar	sv	Månatligt (efter dag)
+new entry	calendar	sv	Ny Post
+no matches found.	calendar	sv	Ingen träff hittad.
+participants	calendar	sv	Deltagare
+printer friendly	calendar	sv	Printer Vänlig
+private and global public	calendar	sv	Privat och globalt publikt
+private and group public	calendar	sv	Privat och Grupp publikt
+private only	calendar	sv	Endast privat
+re-edit event	calendar	sv	Ändra händelse
+repeat day	calendar	sv	Repetera dag
+repeat end date	calendar	sv	Repetera slutdatum
+repeat type	calendar	sv	Repetera type
+repeating event information	calendar	sv	Repetera händelse information
+repetition	calendar	sv	Repetition
+sa	calendar	sv	Lö
+sat	calendar	sv	Lör
+search results	calendar	sv	Sök resultat
+show high priority events on main screen	calendar	sv	Visa högprioritets händelser på huvudskärmen
+start date/time	calendar	sv	Start Datum/Tid
+su	calendar	sv	Sö
+sun	calendar	sv	Sön
+th	calendar	sv	To
+the following conflicts with the suggested time:<ul>x</ul>	calendar	sv	Följande kommer i konflikt med den föreslagna tiden:<ul>%1</ul>
+this month	calendar	sv	Denna månaden
+this week	calendar	sv	Denna veckan
+thu	calendar	sv	Tor
+today	calendar	sv	I dag
+tu	calendar	sv	Ti
+tue	calendar	sv	Tis
+use end date	calendar	sv	Använd slutdatum
+view this entry	calendar	sv	Visa denna post
+we	calendar	sv	On
+wed	calendar	sv	Ons
+week	calendar	sv	Vecka
+weekday starts on	calendar	sv	Första veckodag är
+weekly	calendar	sv	Veckovis
+work day ends on	calendar	sv	Arbetsdagen slutar
+work day starts on	calendar	sv	Arbetsdagen börjar
+x matches found	calendar	sv	%1 träffar hittade
+year	calendar	sv	År
+yearly	calendar	sv	Årligen
+you have not entered a\\\\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
+you have not entered a\\\\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
+you have not entered a\\nbrief description	calendar	sv	Du har inte gett\\nnågon beskrivning
+you have not entered a\\nvalid time of day.	calendar	sv	Du har inte angett\\nnågon giltig tid på dagen.
+you have not entered a\nbrief description	calendar	sv	Du har inte skrivit\\nen beskrivning.
+you have not entered a\nvalid time of day.	calendar	sv	Du har inte angivit\\nen giltig tid.
+you must enter one or more search keywords	calendar	sv	Du måste skriva in ett eller flera sökord
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	sv	Din föreslagna tid av <B> %1 - %2 </B> är i konflikt med de följande kalender entries:
