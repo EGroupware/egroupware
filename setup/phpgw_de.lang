@@ -456,3 +456,7 @@ project description	todo	de	Beschreibung
 or: select for today:	todo	de	alternativ: heute
 or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
 addsub	todo	de	AddSub
+you have messages!	common	de	Sie haben Nachrichten!
+vcard	addressbook	de	VCard
+addvcard	addressbook	de	VCard hinzu&uuml;|gen
+import file	addressbook	de	Datei importieren
