@@ -238,7 +238,7 @@
 			static $account_type;
 
 			$account_id = get_account_id($accountid);
-			if(@isset($account_type[$account_id]))
+			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
 			{
 				return $account_type[$account_id];
 			}
