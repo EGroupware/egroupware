@@ -212,7 +212,7 @@
 				$GLOBALS[$class]->header();
 			}
 		}
-		$GLOBALS['phpgw']->common->hook('after_navbar');
+		$GLOBALS['phpgw']->hooks->process('after_navbar');
 		return;
 	}
 
@@ -241,6 +241,6 @@
 			$tpl->set_var('V_powered_bottom','');
 		}
 
-		$GLOBALS['phpgw']->common->hook('navbar_end');
+		$GLOBALS['phpgw']->hooks->process('navbar_end');
 		$tpl->pfp('out','footer');
 	}

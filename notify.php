@@ -38,7 +38,7 @@
 <table>
 	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>">Check Now</a></td></tr>
 <?php
-	$GLOBALS['phpgw']->common->hook('notifywindow',array('email'));
+	$GLOBALS['phpgw']->hooks->process('notifywindow',array('email'));
 ?>
 </table>
 </body>

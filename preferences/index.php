@@ -133,7 +133,7 @@
 		section_end(); 
 	}
 
-	$phpgw->common->hook('preferences',array('preferences'));
+	$phpgw->hooks->process('preferences',array('preferences'));
 	$pref_tpl->pfp('out','list');
 	$phpgw->common->phpgw_footer();
 ?>

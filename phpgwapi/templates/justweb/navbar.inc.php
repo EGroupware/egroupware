@@ -113,6 +113,21 @@
 			$var['messages'] = $api_messages . "<br>" . checkcode($cd);
 		}
 */
+
+/*
+function display_section($appname,$title,$file)
+{
+	$GLOBALS['prefs'][$appname]['title'] = $title;
+	$GLOBALS['prefs'][$appname]['file'][] = $file;
+}
+		$temp_common = CreateObject('phpgwapi.common');
+
+	$temp_hooks->process('preferences',array('preferences'));
+*/
+//	echo '>prefs<pre>';
+//	print_r($GLOBALS['prefs']);
+//	echo '</pre>';
+
 		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
@@ -124,7 +139,7 @@
 				$GLOBALS[$class]->header();
 			}
 		}
-		$GLOBALS['phpgw']->common->hook('after_navbar');
+		$GLOBALS['phpgw']->hooks->process('after_navbar');
 		return;
 	}
 
@@ -147,6 +162,6 @@
 				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y')
 		);
 		$tpl->set_var($var);
-		$GLOBALS['phpgw']->common->hook('navbar_end');
+		$GLOBALS['phpgw']->hooks->process('navbar_end');
 		echo $tpl->pfp('out','footer');
 	}

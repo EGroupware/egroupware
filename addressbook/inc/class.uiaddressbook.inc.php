@@ -1001,7 +1001,7 @@
 
 			$this->template->pfp('out','view_t');
 
-			$GLOBALS['phpgw']->common->hook('addressbook_view');
+			$GLOBALS['phpgw']->hooks->process('addressbook_view');
 		}
 
 		function html_1button_form($name,$lang,$link)

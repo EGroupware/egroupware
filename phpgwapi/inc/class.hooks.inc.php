@@ -31,26 +31,125 @@
 	@package   phpgwapi
 	@access    public
 	*/
+
 	class hooks
 	{
-		/*! 
-		@function read()
-		@abstract currently not being used
-		*/
-		function read()
+		var $found_hooks = Array();
+		function hooks()
 		{
-			$db = $GLOBALS['phpgw']->db;
-
-			$db->query('select * from phpgw_hooks');
-			while ($db->next_record())
+			//$GLOBALS['phpgw']->db->query("SELECT hook_appname, hook_location, hook_filename FROM phpgw_hooks WHERE hook_location='".$location."'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("SELECT hook_appname, hook_location, hook_filename FROM phpgw_hooks",__LINE__,__FILE__);
+			while( $GLOBALS['phpgw']->db->next_record() )
 			{
-				$return_array[$db->f('hook_id')]['app']      = $db->f('hook_appname');
-				$return_array[$db->f('hook_id')]['location'] = $db->f('hook_location');
-				$return_array[$db->f('hook_id')]['filename'] = $db->f('hook_filename');
+				$this->found_hooks[$GLOBALS['phpgw']->db->f('hook_appname')][$GLOBALS['phpgw']->db->f('hook_location')] = $GLOBALS['phpgw']->db->f('hook_filename');
 			}
-			if(isset($return_array))
+			//echo '<pre>';
+			//print_r($this->found_hooks);
+			//echo '</pre>';
+		}
+		
+		/*!
+		@function process
+		@abstract loads up all the hooks the user has rights to
+		@discussion Someone flesh this out please
+		*/
+		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
+		function process($location, $order = '', $no_permission_check = False)
+		{
+			$SEP = filesystem_separator();
+			if ($order == '')
 			{
-				return $return_array;
+				settype($order,'array');
+				$order[] = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+
+			/* First include the ordered apps hook file */
+			reset ($order);
+			while (list(,$appname) = each($order))
+			{
+				if (isset($this->found_hooks[$appname][$location]))
+				{
+					$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+					if (file_exists($f) &&
+						( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
+					{
+						include($f);
+					}
+				}
+				$completed_hooks[$appname] = True;
+			}
+
+			/* Then add the rest */
+
+			if ($no_permission_check)
+			{
+				reset($GLOBALS['phpgw_info']['apps']);
+				while (list(,$p) = each($GLOBALS['phpgw_info']['apps']))
+				{
+					$appname = $p['name'];
+					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
+					{
+						if (isset($this->found_hooks[$appname][$location]))
+						{
+							$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+							if (file_exists($f))
+							{
+								include($f);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				reset ($GLOBALS['phpgw_info']['user']['apps']);
+				while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+				{
+					$appname = $p['name'];
+					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
+					{
+						if (isset($this->found_hooks[$appname][$location]))
+						{
+							$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+							if (file_exists($f))
+							{
+								include($f);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/*!
+		@function single
+		@abstract call the hooks for a single application
+		@param $location hook location - required
+		@param $appname application name - optional
+		*/
+		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
+		function single($location, $appname = '', $no_permission_check = False)
+		{
+			if (! $appname)
+			{
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+			$SEP = filesystem_separator();
+
+			/* First include the ordered apps hook file */
+			if (isset($this->found_hooks[$appname][$location]))
+			{
+				$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+				if (file_exists($f) &&
+					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
+				{
+					include($f);
+					return True;
+				}
+				else
+				{
+					return False;
+				}
 			}
 			else
 			{
@@ -59,55 +158,36 @@
 		}
 
 		/*!
-		@function process
-		@abstract process the hooks
-		@discussion not currently being used
-		@param \$type 
-		@param \$where
+		@function count
+		@abstract loop through the applications and count the hooks
 		*/
-		function process($type,$where='')
+		function count($location)
 		{
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$type = strtolower($type);
-
-			if ($type != 'location' && $type != 'app')
+			$count = 0;
+			reset($GLOBALS['phpgw_info']['user']['apps']);
+			$SEP = filesystem_separator();
+			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
-				return False;
-			}
-
-			// Add a check to see if that location/app has a hook
-			// This way it doesn't have to loop everytime
-
-			while ($hook = each($GLOBALS['phpgw_info']['hooks']))
-			{
-				if ($type == 'app')
+				if (isset($this->found_hooks[$permission[0]][$location]))
 				{
-					if ($hook[1]['app'] == $currentapp)
-					{
-						$include_file = $GLOBALS['phpgw_info']['server']['server_root'] . '/'
-							. $currentapp . '/hooks/'
-							. $hook[1]['app'] . $hook[1]['filename'];
-						include($include_file);
-					}
-				}
-				elseif ($type == "location")
-				{
-					if ($hook[1]["location"] == $where)
-					{
-						$include_file = $GLOBALS['phpgw_info']['server']['server_root'] . '/'
-							. $hook[1]['app'] . '/hooks/'
-							. $hook[1]['filename'];
-						if (! is_file($include_file))
-						{
-							$GLOBALS['phpgw']->common->phpgw_error('Failed to include hook: ' . $include_file);
-						}
-						else
-						{
-							include($include_file);
-						}
-					}
+						++$count;
 				}
 			}
+			return $count;
+		}
+		
+		
+		/*! 
+		@function read()
+		@abstract currently not being used
+		*/
+		function read()
+		{
+			//if (!is_array($this->found_hooks))
+			//{
+				$this->hooks();
+			//}
+			return $this->found_hooks;
 		}
 	}
 ?>

@@ -96,12 +96,12 @@
 /*			if ($apps_after)
 			{
 				$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$userData['account_id']);
-				$GLOBALS['phpgw']->common->hook_single('add_def_pref','admin');
+				$GLOBALS['phpgw']->hooks->single('add_def_pref','admin');
 				while ($apps = each($apps_after))
 				{
 					if (strcasecmp ($apps[0], 'admin') != 0)
 					{
-						$GLOBALS['phpgw']->common->hook_single('add_def_pref', $apps[1]);
+						$GLOBALS['phpgw']->hooks->single('add_def_pref', $apps[1]);
 					}
 				}
 				$GLOBALS['pref']->save_repository(False);
@@ -116,7 +116,7 @@
 			// start inlcuding other admin tools
 			while($app = each($apps_after))
 			{
-				$GLOBALS['phpgw']->common->hook_single('add_user_data', $value);
+				$GLOBALS['phpgw']->hooks->single('add_user_data', $value);
 			}
 */
 			return $userData['account_id'];

@@ -41,7 +41,7 @@
 			}
 			rmdir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
 		}
-		$GLOBALS['phpgw']->common->hook('logout');
+		$GLOBALS['phpgw']->hooks->process('logout');
 		$GLOBALS['phpgw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 	}
 	else

@@ -70,7 +70,7 @@
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				/* Load hook file with functions to validate each config (one/none/all) */
-				$GLOBALS['phpgw']->common->hook_single('config_validate',$appname);
+				$GLOBALS['phpgw']->hooks->single('config_validate',$appname);
 
 				while (list($key,$config) = each($GLOBALS['HTTP_POST_VARS']['newsettings']))
 				{
@@ -145,7 +145,7 @@
 
 			$vars = $t->get_undefined('body');
 
-			$GLOBALS['phpgw']->common->hook_single('config',$appname);
+			$GLOBALS['phpgw']->hooks->single('config',$appname);
 
 			while (list($null,$value) = each($vars))
 			{

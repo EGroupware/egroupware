@@ -323,7 +323,7 @@
 							$returndoc['value']['file'][] = $fn;
 						}
 					}
-					if (isset($returndoc['value']) && is_array($returndoc['value']))
+					if (@isset($returndoc['value']) && is_array($returndoc['value']))
 					{
 						$doc_array[$startstop[$key]][0] = $returndoc['value'];
 					}

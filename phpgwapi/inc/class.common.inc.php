@@ -535,11 +535,11 @@
 			$appdir         = PHPGW_INCLUDE_ROOT . '/'.$appname;
 			$appdir_default = PHPGW_SERVER_ROOT . '/'.$appname;
 
-			if (is_dir ($appdir))
+			if (@is_dir ($appdir))
 			{
 				return $appdir;
 			}
-			elseif (is_dir ($appdir_default))
+			elseif (@is_dir ($appdir_default))
 			{
 				return $appdir_default;
 			}
@@ -569,11 +569,11 @@
 			$incdir         = PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc';
 			$incdir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/inc';
  
-			if (is_dir ($incdir))
+			if (@is_dir ($incdir))
 			{
 				return $incdir;
 			}
-			elseif (is_dir ($incdir_default))
+			elseif (@is_dir ($incdir_default))
 			{
 				return $incdir_default;
 			}
@@ -1113,116 +1113,33 @@
 
 		/*!
 		@function hook
-		@abstract hooking function which allows applications to 'hook' into each other
-		@discussion Someone flesh this out please
+		@abstract temp wrapper to new hooks class
 		*/
-		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
-		function hook($location, $order = '', $no_permission_check = False)
+		function hook($location, $appname = '', $no_permission_check = False)
 		{
-			if ($order == '')
-			{
-				settype($order,'array');
-				$order[] = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-
-			/* First include the ordered apps hook file */
-			reset ($order);
-			while (list(,$appname) = each($order))
-			{
-				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
-				if (file_exists($f) &&
-					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
-				{
-					include($f);
-				}
-
-				$completed_hooks[$appname] = True;
-			}
-
-			/* Then add the rest */
-
-			if ($no_permission_check)
-			{
-				reset($GLOBALS['phpgw_info']['apps']);
-				while (list(,$p) = each($GLOBALS['phpgw_info']['apps']))
-				{
-					$appname = $p['name'];
-					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
-					{
-						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
-						if (file_exists($f))
-						{
-							include($f);
-						}
-					}
-				}
-			}
-			else
-			{
-				reset ($GLOBALS['phpgw_info']['user']['apps']);
-				while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
-				{
-					$appname = $p['name'];
-					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
-					{
-						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
-						if (file_exists($f))
-						{
-							include($f);
-						}
-					}
-				}
-			}
+			echo '$'."GLOBALS['phpgw']common->hook()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->process()".'. For now this will act as a wrapper<br>';
+			return $GLOBALS['phpgw']->hooks->process($location, $order, $no_permission_check);
 		}
 
 		/*!
 		@function hook_single
-		@abstract call the hooks for a single application
-		@param $location hook location - required
-		@param $appname application name - optional
+		@abstract temp wrapper to new hooks class
 		*/
 		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		function hook_single($location, $appname = '', $no_permission_check = False)
 		{
-			if (! $appname)
-			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-			$SEP = filesystem_separator();
-
-			/* First include the ordered apps hook file */
-			$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
-			if (file_exists($f) &&
-				( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
-			{
-				include($f);
-				return True;
-			}
-			else
-			{
-				return False;
-			}
+			echo '$'."GLOBALS['phpgw']common->hook_single()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->single()".'. For now this will act as a wrapper<br>';
+			return $GLOBALS['phpgw']->hooks->single($location, $order, $no_permission_check);
 		}
 
 		/*!
 		@function hook_count
-		@abstract loop through the applications and count the hooks
+		@abstract temp wrapper to new hooks class
 		*/
 		function hook_count($location)
 		{
-			$count = 0;
-			reset($GLOBALS['phpgw_info']['user']['apps']);
-			$SEP = filesystem_separator();
-			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
-			{
-				$f = PHPGW_SERVER_ROOT . $SEP . $permission[0] . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
-
-				if (file_exists($f))
-				{
-					++$count;
-				}
-			}
-			return $count;
+			echo '$'."GLOBALS['phpgw']common->hook_count()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->count()".'. For now this will act as a wrapper<br>';
+			return $GLOBALS['phpgw']->hooks->count($location);
 		}
 
 		/* Wrapper to the session->appsession() */

@@ -176,7 +176,7 @@
 		$t->set_var('row_off', 'EEEEEE');
 
 		$vars = $t->get_undefined('body');
-		$GLOBALS['phpgw']->common->hook_single('config',$cfg_app);
+		$GLOBALS['phpgw']->hooks->single('config',$cfg_app);
 
 		while (list($null,$value) = each($vars))
 		{

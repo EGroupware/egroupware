@@ -292,14 +292,14 @@
 
 	if ($GLOBALS['HTTP_GET_VARS']['appname'] == 'preferences')
 	{
-		if (! $GLOBALS['phpgw']->common->hook_single('settings','preferences',True))
+		if (! $GLOBALS['phpgw']->hooks->single('settings','preferences',True))
 		{
 			$error = True;
 		}
 	}
 	else
 	{
-		if (! $GLOBALS['phpgw']->common->hook_single('settings',$GLOBALS['HTTP_GET_VARS']['appname']))
+		if (! $GLOBALS['phpgw']->hooks->single('settings',$GLOBALS['HTTP_GET_VARS']['appname']))
 		{
 			$error = True;
 		}	

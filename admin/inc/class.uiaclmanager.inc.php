@@ -36,7 +36,7 @@
 		{
 			$this->common_header();
 
-			$GLOBALS['phpgw']->common->hook('acl_manager',array('preferences'));
+			$GLOBALS['phpgw']->hooks->process('acl_manager',array('preferences'));
 
 			$this->template->set_file(array(
 				'app_list'   => 'acl_applist.tpl'
@@ -99,7 +99,7 @@
 
 		function access_form()
 		{
-			$GLOBALS['phpgw']->common->hook_single('acl_manager',$GLOBALS['acl_app']);
+			$GLOBALS['phpgw']->hooks->single('acl_manager',$GLOBALS['acl_app']);
 			$location = base64_decode($GLOBALS['location']);
 
 			$acl_manager = $GLOBALS['acl_manager'][$GLOBALS['acl_app']][$location];

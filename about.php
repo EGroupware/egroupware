@@ -19,7 +19,7 @@
 	$app = $HTTP_GET_VARS['app'];
 	if ($app)
 	{
-		$included = $GLOBALS['phpgw']->common->hook_single('about',$app);
+		$included = $GLOBALS['phpgw']->hooks->single('about',$app);
 	}
 	else
 	{

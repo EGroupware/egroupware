@@ -326,7 +326,7 @@
 								@reset($s_apps);
 								while (list($key,$app) = each($s_apps))
 								{
-									$phpgw->common->hook_single('add_def_pref',$app);
+									$phpgw->hooks->single('add_def_pref',$app);
 								}
 								$pref->save_repository();
 							}

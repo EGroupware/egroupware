@@ -239,7 +239,7 @@
 		);
 	}
 	@reset($sorted_apps);
-	$GLOBALS['phpgw']->common->hook('home',$sorted_apps);
+	$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
 
 	if($GLOBALS['portal_order'])
 	{

@@ -92,7 +92,7 @@
 					break;
 			}
 
-			$GLOBALS['phpgw']->common->hook($_hookname);
+			$GLOBALS['phpgw']->hooks->process($_hookname);
 
 			if (count($GLOBALS['menuData']) > 1) 
 			{

@@ -131,7 +131,7 @@
 				$GLOBALS[$class]->header();
 			}
 		}
-		$GLOBALS['phpgw']->common->hook('after_navbar');
+		$GLOBALS['phpgw']->hooks->process('after_navbar');
 		return;
 	}
 
@@ -150,6 +150,6 @@
 			'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 		);
 		$tpl->set_var($var);
-		$GLOBALS['phpgw']->common->hook('navbar_end');
+		$GLOBALS['phpgw']->hooks->process('navbar_end');
 		echo $tpl->pfp('out','footer');
 	}

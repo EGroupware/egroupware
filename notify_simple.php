@@ -20,6 +20,6 @@
 	include('./header.inc.php');
 
 	echo '<html><body>';
-	$GLOBALS['phpgw']->common->hook('simple',array('email'));
+	$GLOBALS['phpgw']->hooks->process('simple',array('email'));
 	echo '</body></html>';
 ?>

@@ -141,13 +141,13 @@
 
 						if($appname <> 'admin')
 						{
-							$GLOBALS['phpgw']->common->hook_single('deleteaccount', $appname);
+							$GLOBALS['phpgw']->hooks->single('deleteaccount', $appname);
 						}
 					}
 				}
 
-				$GLOBALS['phpgw']->common->hook_single('deleteaccount','preferences');
-				$GLOBALS['phpgw']->common->hook_single('deleteaccount','admin');
+				$GLOBALS['phpgw']->hooks->single('deleteaccount','preferences');
+				$GLOBALS['phpgw']->hooks->single('deleteaccount','admin');
 
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
 
@@ -261,7 +261,7 @@
 				{
 					if (!$t[($app_name=='admin'?'common':$app_name)])
 					{
-						$GLOBALS['phpgw']->common->hook_single('add_def_pref', $app_name);
+						$GLOBALS['phpgw']->hooks->single('add_def_pref', $app_name);
 						$docommit = True;
 					}
 				}
@@ -478,7 +478,7 @@
 					{
 						if (!$t[($app_name=='admin'?'common':$app_name)])
 						{
-							$GLOBALS['phpgw']->common->hook_single('add_def_pref', $app_name);
+							$GLOBALS['phpgw']->hooks->single('add_def_pref', $app_name);
 							$docommit = True;
 						}
 					}
