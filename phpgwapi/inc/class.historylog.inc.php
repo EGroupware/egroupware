@@ -158,7 +158,7 @@
 
 			while (list(,$value) = each($values))
 			{
-				$this->nextmatchs->template_alternate_row_color(&$this->template);
+				$this->nextmatchs->template_alternate_row_color($this->template);
 
 				$this->template->set_var('row_date',$GLOBALS['phpgw']->common->show_date($value['datetime']));
 				$this->template->set_var('row_owner',$value['owner']);
