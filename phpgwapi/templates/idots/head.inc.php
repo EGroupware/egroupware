@@ -62,11 +62,6 @@
 		</script>';
 	}
 
-// 030204 ndee for calling foldertree
-
-	$foldertree_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/js/foldertree/foldertree.js';
-	$js_foldertree = '<script src="'.$foldertree_src.'" type="text/javascript"></script>';
-
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('_head' => 'head.tpl'));
@@ -89,7 +84,6 @@
 		'theme_css'     => $theme_css,
 		'css'           => $GLOBALS['phpgw']->common->get_css(),
 		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
-		'js_foldertree'	=> $js_foldertree
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

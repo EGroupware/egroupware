@@ -17,7 +17,6 @@
 		{simple_show_hide}
 		{pngfix}
 		{css}
-		{js_foldertree}
 		{java_script}
 	</head>
 	<!-- we don't need body tags anymore, do we?) we do!!! onload!! LK -->
