@@ -540,6 +540,10 @@
 		*/
 		function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
 		{
+			if (is_array($name) && empty($name['name']) || empty($name))
+			{
+				return False;
+			}
 			if (!$this->read_from_cache($name,$template,$lang,$group,$version))
 			{
 				if (!soetemplate::read($name,$template,$lang,$group,$version))
