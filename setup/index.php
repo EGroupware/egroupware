@@ -46,6 +46,11 @@
     $db->next_record();
     $oldversion = $db->f("app_version");
   }
+  
+  if (PHP_VERSION < "3.0.16") {
+     echo "You appear to be running an old version of PHP.  It its recommend that you upgrade "
+        . "to a new version.  Older version of PHP might not run phpGroupWare correctly, if at all.";
+  }
 
   switch($msg){
     case "1":
