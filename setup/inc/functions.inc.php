@@ -17,11 +17,16 @@
   /* $Id$ */
 
 	error_reporting(error_reporting() & ~E_NOTICE);
-
+	
+	// for an old header, we need to setup the reference before including it
+	if (!is_array($GLOBALS['phpgw_info'])) $GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+	
 	if(file_exists('../header.inc.php'))
 	{
 		include('../header.inc.php');
 	}
+	// for an old header we need to setup a reference for the domains
+	if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
 
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
@@ -57,7 +62,7 @@
 		{
 			$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
 		}
-		$value = $GLOBALS['phpgw_setup']->translation->translate("$key", $vars );
+		$value = $GLOBALS['egw_setup']->translation->translate("$key", $vars );
 		return $value;
 	}
 
