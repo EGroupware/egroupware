@@ -52,7 +52,7 @@
 
 	/*
 	** This is a random string used as the initialization vector for mcrypt
-	** feel free to change it when setting up phpgroupware on a clean database,
+	** feel free to change it when setting up eGrouWare on a clean database,
 	** but you must not change it after that point!
 	** It should be around 30 bytes in length.
 	*/
