@@ -1651,7 +1651,7 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
 
 	    case "cut":
 	    case "copy":
-	    case "paste":
+/*	    case "paste":
 		try {
 			if (this.config.killWordOnPaste)
 				this._wordClean();
@@ -1670,6 +1670,7 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
 			}
 		}
 		break;
+		*/
 	    case "lefttoright":
 	    case "righttoleft":
 		var dir = (cmdID == "righttoleft") ? "rtl" : "ltr";
