@@ -1,7 +1,9 @@
+(stored password will not be shown here)	admin	ru	(Хранящиеся пароли не будут отображены здесь)
 account active	admin	ru	Учетная запись активна
 account has been created	common	ru	Учетная запись была создана
 account has been deleted	common	ru	Учетная запись была удалена
 account has been updated	common	ru	Учетная запись была изменена
+action	admin	ru	Действие
 activate wysiwyg-editor	admin	ru	включить визуальный (WYSIWYG) редактор
 add a category	admin	ru	Добавить категорию
 add a group	admin	ru	Добавить группу
@@ -37,17 +39,29 @@ authentication / accounts	admin	ru	Авторизация / Учетные записи
 back to the list	admin	ru	назад к списку
 can change password	admin	ru	Возможно изменять пароль
 categories list	admin	ru	Список категорий
+category %1 has been saved !	admin	ru	Категория %1 сохранена !
+change main screen message	admin	ru	Изменить сообщение на главной странице
 check ip address of all sessions	admin	ru	Проверить IP-адреса всех сессий
+click to select a color	admin	ru	Щелкните для выбора цвета
 color	admin	ru	Цвет
 country selection	admin	ru	Выбор страны
 create group	admin	ru	Создать группу
+data	admin	ru	Дата
+day	admin	ru	День
 day of week<br>(0-6, 0=sun)	admin	ru	День недели<br> (0-6, 0=Вск)
 delete account	admin	ru	Удалить учетную запись
+delete all records	admin	ru	Удалить Все записи
 delete application	admin	ru	Удалить приложение
 delete category	admin	ru	Удалить категорию
 delete group	admin	ru	Удалить группу
+delete the category	admin	ru	удалить категорию
+delete the group	admin	ru	удалить группу
+delete this category	admin	ru	удалить данную категорию
+delete this group	admin	ru	удалить данную группу
+delete this user	admin	ru	удалить данного пользователя
 disable wysiwyg-editor	admin	ru	отключить визуальный (WYSIWYG) редактор
 edit account	admin	ru	Редактировать учетную запись
+edit application	admin	ru	Редактировать приложение
 edit group	admin	ru	Редактировать группу
 edit login screen message	admin	ru	Редактировать сообщение при входе в систему
 edit this category	admin	ru	редактировать данную категорию
@@ -65,8 +79,10 @@ expires	admin	ru	Окончание действия
 group has been added	common	ru	Группа была добавлена
 group has been deleted	common	ru	Группа была удалена
 group has been updated	common	ru	Группа была обновлена
-group manager	admin	ru	Менеджер Групп
+group manager	admin	ru	Менеджер Группы
+group name	admin	ru	Имя Группы
 home directory	admin	ru	Домашняя директория
+icon	admin	ru	Иконка
 login history	common	ru	История Подключений
 mail settings	admin	ru	Установки почты
 new group name	admin	ru	Название новой группы
@@ -76,9 +92,17 @@ no permission to create groups	admin	ru	нет прав для создания групп
 permissions this group has	admin	ru	Эта группа имеет доступ к
 primary group	admin	ru	основная Группа
 re-enter password	admin	ru	Введите пароль еще раз
+remove all users from this group ?	admin	ru	Исключить всех пользователей из данной группы?
 select users for inclusion	admin	ru	Выбирите пользователя для включения в Группу
 sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
+sorry, the above users are still a member of the group %1	admin	ru	Извините, но указанные выше пользователи являются членами группы %1
 submit changes	admin	ru	Отправить изменения
 the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
+they must be removed before you can continue	admin	ru	Они должны быть исключены прежде, чем вы сможете продолжить
 user data	admin	ru	Данные Пользователя
+you must select a file type	admin	ru	Вы должны выбрать тип файла
 you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
+<br />
+<b>Warning</b>:  fsockopen(): unable to connect to 127.0.0.1:25 in <b>C:\Program Files\Apache Group\Apache2\htdocs\egroupware\phpgwapi\inc\class.smtp.php</b> on line <b>105</b><br />
+<p>bocalendar::send_update: sending message to 'ank@localhost' subject='Asynchronous timed services' failed !!!<br>
+SMTP Error: Could not connect to SMTP host.</p>
