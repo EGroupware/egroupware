@@ -12,13 +12,50 @@
 
 /* $Id$ */
 
+/**
+ * generates html with methods representing html-tags or higher widgets
+ *
+ * @package api
+ * @subpackage html
+ * @author RalfBecker-AT-outdoor-training.de
+ * @license GPL
+ */
 class html
 {
-	var $user_agent,$ua_version;	// 'mozilla','msie','konqueror'
+	/**
+	 * user-agent: 'mozilla','msie','konqueror', 'safari', 'opera'
+	 * @var string
+	 */
+	var $user_agent;
+	/**
+	 * version of user-agent as specified by browser
+	 * @var string
+	 */
+	var $ua_version;
+	/**
+	 * what attribute to use for the title of an image: 'title' for everything but netscape4='alt'
+	 * @var string
+	 */
 	var $prefered_img_title;
-	var $charset,$phpgwapi_js_url;
-	var $need_footer = False;		// do we need to be called at the end of the page
+	/**
+	 * charset used by the page, as returned by $GLOBALS['phpgw']->translation->charset()
+	 * @var string
+	 */
+	var $charset;
+	/**
+	 * URL (NOT path) of the js directory in the api
+	 * @var string
+	 */
+	var $phpgwapi_js_url;
+	/**
+	 * do we need to set the wz_tooltip class, to be included at the end of the page
+	 * @var boolean
+	 */
+	var $wz_tooltips_included = False;
 	
+	/**
+	 * Constructor: initialised the class-vars
+	 */
 	function html()
 	{
 		// should be Ok for all HTML 4 compatible browsers
@@ -42,13 +79,14 @@ class html
 	}
 
 	/**
-	* Created an input-field with an attached tigra color-picker
+	* Created an input-field with an attached color-picker
 	*
 	* Please note: it need to be called before the call to phpgw_header() !!!
 	*
-	* @param $name string the name of the input-field
-	* @param $value string the actual value for the input-field, default ''
-	* @param $title string tooltip/title for the picker-activation-icon
+	* @param string $name the name of the input-field
+	* @param string $value the actual value for the input-field, default ''
+	* @param string $title tooltip/title for the picker-activation-icon
+	* @return string the html
 	*/
 	function inputColor($name,$value='',$title='')
 	{
@@ -64,10 +102,10 @@ class html
 	*
 	* Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
 	*
-	* @param $text string/boolean text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	* @param string/boolean $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
 	*	Or if False the content (innerHTML) of the element itself is used.
-	* @param $do_lang boolean (default False) should the text be run though lang()
-	* @param $options array param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
+	* @param boolean $do_lang (default False) should the text be run though lang()
+	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	*  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
 	*  For a complete list and description see http://www.walterzorn.com/tooltip/tooltip_e.htm
 	* @return string to be included in any tag, like '<p'.$html->tooltip('Hello <b>Ralf</b>').'>Text with tooltip</p>'
@@ -97,6 +135,12 @@ class html
 		return ' onmouseover="'.$opt_out.'return escape(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\')"';
 	}
 	
+	/**
+	 * activates URLs in a text, URLs get replaced by html-links
+	 *
+	 * @param string $content text containing URLs
+	 * @return string html with activated links
+	 */
 	function activate_links($content)
 	{
 		// Exclude everything which is already a link
@@ -124,6 +168,17 @@ class html
 		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result );
 	}
 	
+	/**
+	 * escapes chars with special meaning in html as entities
+	 *
+	 * Allows to use and char in the html-output and prefents XSS attacks.
+	 * Some entities are allowed and get NOT escaped: 
+	 * - &# some translations (AFAIK the arabic ones) need this
+	 * - &nbsp; &lt; &gt; for convinience
+	 *
+	 * @param string $str string to escape
+	 * @return string
+	 */
 	function htmlspecialchars($str)
 	{
 		// add @ by lkneschke to supress warning about unknown charset
@@ -141,12 +196,12 @@ class html
 	 * @param string $name	string with name of the submitted var which holds the key of the selected item form array
 	 * @param string/array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
 	 * @param array $arr array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
-	 * @param boolean $no_lang if !$no_lang send items through lang()
+	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
 	 * @param int $multiple number of lines for a multiselect, default 0 = no multiselect
 	 * @return string to set for a template or to echo into html page
 	 */
-	function select($name, $key, $arr=0,$no_lang=0,$options='',$multiple=0)
+	function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0)
 	{
 		if (!is_array($arr))
 		{
@@ -167,21 +222,53 @@ class html
 			// explode on ',' only if multiple values expected and the key contains just numbers and commas
 			$key = $multiple && preg_match('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
 		}
-		foreach($arr as $k => $text)
+		foreach($arr as $k => $data)
 		{
-			$out .= '<option value="'.$this->htmlspecialchars($k).'"';
-			
-			if(in_array($k,$key))
+			if (!is_array($data))
 			{
-				$out .= ' selected="1"';
+				$out .= $this->select_option($k,$data,$key,$no_lang);
 			}
-			$out .= ">" . $this->htmlspecialchars($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
+			else
+			{
+				$out .= '<optgroup label="'.$this->htmlspecialchars($no_lang || $k == '' ? $k : lang($k))."\">\n";
+				
+				foreach($data as $k => $label)
+				{
+					$out .= $this->select_option($k,$label,$key,$no_lang);
+				}
+				$out .= "</optgroup>\n";
+			}
 		}
 		$out .= "</select>\n";
 		
 		return $out;
 	}
 	
+	/**
+	 * generates an option-tag for a selectbox
+	 *
+	 * @param string $value value
+	 * @param string $label label
+	 * @param mixed $selected value or array of values of options to mark as selected
+	 * @param boolean $no_lang NOT running the label through lang(), default false=use lang()
+	 * @return string html
+	 */
+	function select_option($value,$label,$selected,$no_lang=0)
+	{
+		return '<option value="'.$this->htmlspecialchars($value).'"'.
+			(in_array($value,$selected) ? ' selected="1"' : '') . ">".
+			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
+	}
+	
+	/**
+	 * generates a div-tag
+	 *
+	 * @param string $content of a div, or '' to generate only the opening tag
+	 * @param string $options to include in the tag, default ''=none
+	 * @param string $class css-class attribute, default ''=none
+	 * @param string $style css-styles attribute, default ''=none
+	 * @return string html
+	 */
 	function div($content,$options='',$class='',$style='')
 	{
 		if ($class) $options .= ' class="'.$class.'"';
@@ -190,6 +277,14 @@ class html
 		return "<div $options>\n".($content ? "$content</div>\n" : '');
 	}
 	
+	/**
+	 * generate one or more hidden input tag(s)
+	 *
+	 * @param array/string $vars var-name or array with name / value pairs
+	 * @param string $value value if $vars is no array, default ''
+	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
+	 * @param string html
+	 */
 	function input_hidden($vars,$value='',$ignore_empty=True)
 	{
 		if (!is_array($vars))
@@ -210,14 +305,24 @@ class html
 		return $html;
 	}
 	
+	/**
+	 * generate a textarea tag
+	 *
+	 * @param string $name name attr. of the tag
+	 * @param string $value default 
+	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
+	 * @param string html
+	 */
 	function textarea($name,$value='',$options='' )
 	{
 		return "<textarea name=\"$name\" $options>".$this->htmlspecialchars($value)."</textarea>\n";
 	}
 	
 	/**
-	* Checks if HTMLarea (or an other richtext editor) is availible for the used browser
-	*/
+	 * Checks if HTMLarea (or an other richtext editor) is availible for the used browser
+	 *
+	 * @return boolean
+	 */
 	function htmlarea_availible()
 	{
 		switch($this->user_agent)
@@ -232,19 +337,19 @@ class html
 	}
 	
 	/**
-	* creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
-	*
-	* Please note: it need to be called before the call to phpgw_header() !!!
-	* @author ralfbecker
-	* @param $name string name and id of the input-field
-	* @param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
-	* @param $style string inline styles, eg. dimension of textarea element
-	* @param $base_href string set a base href to get relative image-pathes working
-	* @param $plugins string plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
-	* (htmlarea breaks when a plugin calls a nonexisiting lang file)
-	* @param $custom_toolbar when given this toolbar lay-out replaces the default lay-out.
-	* @return the necessary html for the textarea
-	*/
+	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
+	 *
+	 * Please note: it need to be called before the call to phpgw_header() !!!
+	 *
+	 * @param string $name name and id of the input-field
+	 * @param string $content of the htmlarea (will be run through htmlspecialchars !!!), default ''
+	 * @param string $style inline styles, eg. dimension of textarea element
+	 * @param string $base_href set a base href to get relative image-pathes working
+	 * @param string $plugins plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
+	 * (htmlarea breaks when a plugin calls a nonexisiting lang file)
+	 * @param string $custom_toolbar when given this toolbar lay-out replaces the default lay-out.
+	 * @return string the necessary html for the textarea
+	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='')
 	{
 		// check if htmlarea is availible for the browser and use a textarea if not
@@ -387,6 +492,14 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<textarea name=\"$name\" id=\"$id\"$style>".$this->htmlspecialchars($content)."</textarea>\n";
 	}
 	
+	/**
+	 * represents html's input tag
+	 *
+	 * @param string $name name
+	 * @param string $value default value of the field
+	 * @param string $type type, default ''=not specified = text
+	 * @param string $options attributes for the tag, default ''=none
+	 */
 	function input($name,$value='',$type='',$options='' )
 	{
 		if ($type)
@@ -396,7 +509,19 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<input $type name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" $options />\n";
 	}
 	
-	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='phpgwapi')
+	/**
+	 * represents html's button (input type submit or image)
+	 *
+	 * @param string $name name
+	 * @param string $label label of the button
+	 * @param string $onClick javascript to call, when button is clicked
+	 * @param boolean $no_lang NOT running the label through lang(), default false=use lang()
+	 * @param string $options attributes for the tag, default ''=none
+	 * @param string $image to show instead of the label, default ''=none
+	 * @param string $app app to search the image in
+	 * @return string html
+	 */
+	function submit_button($name,$label,$onClick='',$no_lang=false,$options='',$image='',$app='phpgwapi')
 	{
 		// workaround for idots and IE button problem (wrong cursor-image)
 		if ($this->user_agent == 'msie')
@@ -415,40 +540,41 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		}
 		if (!$no_lang)
 		{
-			$lang = lang($lang);
+			$label = lang($label);
 		}
-		if (($accesskey = strstr($lang,'&')) && $accesskey[1] != ' ' &&
+		if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' &&
 			(($pos = strpos($accesskey,';')) === False || $pos > 5))
 		{
-			$lang_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$lang);
-			$lang = str_replace('&','',$lang);
+			$label_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
+			$label = str_replace('&','',$label);
 			$options = 'accesskey="'.$accesskey[1].'" '.$options;
 		}
 		else
 		{
 			$accesskey = '';
-			$lang_u = $lang;
+			$label_u = $label;
 		}
 		if ($onClick) $options .= " onclick=\"$onClick\"";
 		
 		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
 		{
-			return $this->input($name,$lang,$image != '' ? 'image' : 'submit',$options.$image);
+			return $this->input($name,$label,$image != '' ? 'image' : 'submit',$options.$image);
 		}
-		return '<button type="submit" name="'.$name.'" value="'.$lang.'" '.$options.' />'.
-			($image != '' ? "<img$image $this->prefered_img_title=\"$lang\"> " : '').
-			($image == '' || $accesskey ? $lang_u : '').'</button>';
+		return '<button type="submit" name="'.$name.'" value="'.$label.'" '.$options.' />'.
+			($image != '' ? "<img$image $this->prefered_img_title=\"$label\"> " : '').
+			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
 	
 	/**
-	* creates an absolut link + the query / get-variables
-	*
-	* Example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
-	*	gives 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
-	* @param $url phpgw-relative link, may include query / get-vars
-	* @param $vars query or array ('name' => 'value', ...) with query
-	* @return string absolut link already run through $phpgw->link
-	*/
+	 * creates an absolut link + the query / get-variables
+	 *
+	 * Example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
+	 *	gives 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
+	 *
+	 * @param string $url phpgw-relative link, may include query / get-vars
+	 * @param array/string $vars query or array ('name' => 'value', ...) with query
+	 * @return string absolut link already run through $phpgw->link
+	 */
 	function link($url,$vars='')
 	{
 		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
@@ -465,11 +591,31 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $GLOBALS['phpgw']->link($url,$vars);
 	}
 	
-	function checkbox($name,$value='')
+	/**
+	 * represents html checkbox
+	 *
+	 * @param string $name name
+	 * @param boolean $checked box checked on display
+	 * @param string $value value the var should be set to, default 'True'
+	 * @return string html
+	 */
+	function checkbox($name,$checked=false,$value='True')
 	{
-		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked="1"' : '') . " />\n";
+		return '<input type="checkbox" name="'.$name.'" value="'.$this->htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . " />\n";
 	}
 	
+	/**
+	 * represents a html form
+	 *
+	 * @param string $content of the form, if '' only the opening tag gets returned
+	 * @param array $hidden_vars array with name-value pairs for hidden input fields
+	 * @param string $url eGW relative URL, will be run through the link function
+	 * @param string/array $url_vars parameters for the URL, send to link function too
+	 * @param string $name name of the form, defaul ''=none
+	 * @param string $options attributes for the tag, default ''=none
+	 * @param string $method method of the form, default 'POST'
+	 * @return string html
+	 */
 	function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
 	{
 		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\" $options>\n";
@@ -483,26 +629,41 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $html;
 	}
 	
-	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
+	/**
+	 * represents a html form with one button
+	 *
+	 * @param string $name name of the button
+	 * @param string $label label of the button
+	 * @param array $hidden_vars array with name-value pairs for hidden input fields
+	 * @param string $url eGW relative URL, will be run through the link function
+	 * @param string/array $url_vars parameters for the URL, send to link function too
+	 * @param string $options attributes for the tag, default ''=none
+	 * @param string $form_name name of the form, defaul ''=none
+	 * @param string $method method of the form, default 'POST'
+	 * @return string html
+	 */
+	function form_1button($name,$label,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
 	{
-		return $this->form($this->submit_button($name,$lang),$hidden_vars,$url,$url_vars,$form_name,'',$method);
+		return $this->form($this->submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 	
 	/**
-	* creates table from array of rows
-	*
-	* abstracts the html stuff for the table creation
-	* Example: $rows = array (
-	*	'1'  => array(
-	*		1 => 'cell1', '.1' => 'colspan=3',
-	*		2 => 'cell2',
-	*		3 => 'cell3', '.3' => 'width="10%"'
-	*	),'.1' => 'BGCOLOR="#0000FF"' );
-	*	table($rows,'width="100%"') = '<table width="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
-	* @param $rows array with rows, each row is an array of the cols
-	* @param $options options for the table-tag
-	* @result string with html-code of the table
-	*/
+	 * creates table from array of rows
+	 *
+	 * abstracts the html stuff for the table creation
+	 * Example: $rows = array (
+	 *	'1'  => array(
+	 *		1 => 'cell1', '.1' => 'colspan=3',
+	 *		2 => 'cell2',
+	 *		3 => 'cell3', '.3' => 'width="10%"'
+	 *	),'.1' => 'BGCOLOR="#0000FF"' );
+	 *	table($rows,'width="100%"') = '<table width="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
+	 *
+	 * @param array $rows with rows, each row is an array of the cols
+	 * @param string $options options for the table-tag
+	 * @param boolean $no_table_tr dont return the table- and outmost tr-tabs, default false=return table+tr
+	 * @return string with html-code of the table
+	 */
 	function table($rows,$options = '',$no_table_tr=False)
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
@@ -547,7 +708,14 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $html;
 	}
 	
-	function sbox_submit( $sbox,$no_script=0 )
+	/**
+	 * changes a selectbox to submit the form if it gets changed, to be used with the sbox-class
+	 *
+	 * @param string $sbox html with the select-box
+	 * @param boolean $no_script if true generate a submit-button if javascript is off
+	 * @return string html
+	 */
+	function sbox_submit( $sbox,$no_script=false )
 	{
 		$html = str_replace('<select','<select onchange="this.form.submit()" ',$sbox);
 		if ($no_script)
@@ -557,6 +725,17 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $html;
 	}
 	
+	/**
+	 * html-widget showing progessbar with a view div's (html4 only, textual percentage otherwise)
+	 *
+	 * @param mixed $percent percent-value, gets casted to int
+	 * @param string $title title for the progressbar, default ''=the percentage itself
+	 * @param string $options attributes for the outmost div (may include onclick="...")
+	 * @param string $width width, default 30px
+	 * @param string $color color, default '#D00000' (dark red)
+	 * @param string $height height, default 5px
+	 * @return string html
+	 */	 
 	function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
 	{
 		$percent = (int) $percent;
@@ -575,34 +754,79 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
 	
+	/**
+	 * representates a html img tag, output a picture
+	 *
+	 * If the name ends with a '%' and the rest is numeric, a progressionbar is shown instead of an image.
+	 * The vfs:/ pseudo protocoll allows to access images in the vfs, eg. vfs:/home/ralf/me.png
+	 * Instead of a name you specify an array with get-vars, it is passed to eGW's link function.
+	 * This way session-information gets passed, eg. $name=array('menuaction'=>'myapp.class.image','id'=>123).
+	 *
+	 * @param string $app app-name to search the image
+	 * @param string/array $name image-name or URL (incl. vfs:/) or array with get-vars
+	 * @param string $title tooltip, default '' = none
+	 * @param string $options further options for the tag, default '' = none
+	 * @return string the html
+	 */
 	function image( $app,$name,$title='',$options='' )
 	{
-		$name = str_replace(array('.gif','.GIF','.png','.PNG'),'',$name);
-		
-		if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
+		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
-			$path = $name;		// name may already contain absolut path
+			$parts = explode('/',substr($name,4));
+			$file = array_pop($parts);
+			$path = implode('/',$parts);
+			$name = array(
+				'menuaction' => 'filemanager.uifilemanager.view',
+				'path'       => rawurlencode(base64_encode($path)),
+				'file'       => rawurlencode(base64_encode($file)),
+			);
 		}
-		if(!$GLOBALS['phpgw_info']['server']['webserver_url'])
+		if (is_array($name))	// menuaction and other get-vars
 		{
-			$base_path = "./";
+			$name = $GLOBALS['phpgw']->link('/index.php',$name);
 		}
-		if (!@is_readable($base_path . str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$path)))
+		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')
 		{
-			// if the image-name is a percentage, use a progressbar
-			if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
+			$url = $name;
+		}
+		else	// no URL, so try searching the image
+		{
+			$name = str_replace(array('.gif','.GIF','.png','.PNG'),'',$name);
+			
+			if (!($url = $GLOBALS['phpgw']->common->image($app,$name)))
 			{
-				return $this->progressbar($percent,$title);
+				$url = $name;		// name may already contain absolut path
 			}
-			return $title;
+			if(!$GLOBALS['phpgw_info']['server']['webserver_url'])
+			{
+				$base_path = "./";
+			}
+			if (!@is_readable($base_path . str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$url)))
+			{
+				// if the image-name is a percentage, use a progressbar
+				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
+				{
+					return $this->progressbar($percent,$title);
+				}
+				return $title;
+			}
 		}
 		if ($title)
 		{
 			$options .= " $this->prefered_img_title=\"".$this->htmlspecialchars($title).'"';
 		}
-		return "<img src=\"$path\" $options />";
+		return "<img src=\"$url\" $options />";
 	}
 	
+	/**
+	 * representates a html link
+	 *
+	 * @param string $content of the link, if '' only the opening tag gets returned
+	 * @param string $url eGW relative URL, will be run through the link function
+	 * @param string/array $vars parameters for the URL, send to link function too
+	 * @param string $options attributes for the tag, default ''=none
+	 * @return string the html
+	 */
 	function a_href( $content,$url,$vars='',$options='')
 	{
 		if (!strstr($url,'/') && count(explode('.',$url)) == 3)
@@ -618,17 +842,36 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
 	
+	/**
+	 * representates a b tab (bold)
+	 *
+	 * @param string $content of the link, if '' only the opening tag gets returned
+	 * @return string the html
+	 */
 	function bold($content)
 	{
 		return '<b>'.$content.'</b>';
 	}
 	
+	/**
+	 * representates a i tab (bold)
+	 *
+	 * @param string $content of the link, if '' only the opening tag gets returned
+	 * @return string the html
+	 */
 	function italic($content)
 	{
 		return '<i>'.$content.'</i>';
 	}
 	
-	function hr($width=0,$options='')
+	/**
+	 * representates a hr tag (horizontal rule)
+	 *
+	 * @param string $width default ''=none given
+	 * @param string $options attributes for the tag, default ''=none
+	 * @return string the html
+	 */
+	function hr($width='',$options='')
 	{
 		if ($width) $options .= " width=\"$width\"";
 
@@ -636,13 +879,14 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	}
 	
 	/**
-	* formats option-string for most of the above functions
-	*
-	* Example: formatOptions('100%,,1','width,height,border') = ' width="100%" border="1"'
-	* @param $options mixed String (or Array) with option-values eg. '100%,,1'
-	* @param $names mixed String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
-	* @result string with options/attributes
-	*/
+	 * formats option-string for most of the above functions
+	 *
+	 * Example: formatOptions('100%,,1','width,height,border') = ' width="100%" border="1"'
+	 *
+	 * @param mixed $options String (or Array) with option-values eg. '100%,,1'
+	 * @param mixed $names String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
+	 * @return string with options/attributes
+	 */
 	function formatOptions($options,$names)
 	{
 		if (!is_array($options)) $options = explode(',',$options);
@@ -659,18 +903,22 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	}
 	
 	/**
-	* returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
-	* @result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
-	*/
+	 * returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
+	 *
+	 * @deprecated  included now always by the framework
+	 * @return string classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
+	 */
 	function themeStyles()
 	{
 		return $this->style($this->theme2css());
 	}
 	
 	/**
-	* returns simple stylesheet for nextmatch row-colors
-	* @result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
-	*/
+	 * returns simple stylesheet for nextmatch row-colors
+	 *
+	 * @deprecated included now always by the framework
+	 * @return string classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
+	 */
 	function theme2css()
 	{
 		return ".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
@@ -678,11 +926,26 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n";
 	}
 	
+	/**
+	 * html style tag (incl. type)
+	 *
+	 * @param string $styles css-style definitions
+	 * @return string html
+	 */
 	function style($styles)
 	{
 		return $styles ? "<style type=\"text/css\">\n<!--\n$styles\n-->\n</style>" : '';
 	}
 	
+	/**
+	 * html label tag
+	 *
+	 * @param string $content the label
+	 * @param string $id for the for attribute, default ''=none
+	 * @param string $accesskey accesskey, default ''=none
+	 * @param string $options attributes for the tag, default ''=none
+	 * @return string the html
+	 */	 
 	function label($content,$id='',$accesskey='',$options='')
 	{
 		if ($id != '')
@@ -696,6 +959,14 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<label$id$accesskey $options>$content</label>";
 	}
 	
+	/**
+	 * html fieldset, eg. groups a group of radiobuttons
+	 *
+	 * @param string $content the content
+	 * @param string $legend legend / label of the fieldset, default ''=none
+	 * @param string $options attributes for the tag, default ''=none
+	 * @return string the html
+	 */	 
 	function fieldset($content,$legend='',$options='')
 	{
 		$html = "<fieldset $options>".($legend ? '<legend>'.$this->htmlspecialchars($legend).'</legend>' : '')."\n";
