@@ -198,7 +198,6 @@ class calendar extends calendar_
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$p->set_file(array('link_pict' => 'link_pict.tpl'));
-//			$p->set_block('link_pict','link_pict');
 			$p->set_var('link_link',$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$this->owner));
 			$p->set_var('lang_view',lang('View this entry'));
 			$p->set_var('pic_image',$this->image_dir.'/'.$pic);
@@ -211,10 +210,11 @@ class calendar extends calendar_
 
 	function is_private($event,$owner,$field)
 	{
-		global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info, $grants;
 
+		if($owner == 0) { $owner = $phpgw_info['user']['account_id']; }
 		$is_private  = False;
-		if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(PHPGW_ACL_PRIVATE) == True)
+		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True))
 		{
 		}
 		elseif ($event->public == False)
@@ -247,9 +247,6 @@ class calendar extends calendar_
 			$str = $event->$field;
 		}
 
-//		$str .= ' ('.$this->get_long_status($this->users_status).')';
-//		$str .= ' ('.$this->users_status.')';
-		
 		return $str;
 	}
 
@@ -765,7 +762,9 @@ class calendar extends calendar_
 
 	function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0)
 	{
-		global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info, $grants;
+
+		if($owner == 0) { $owner= $phpgw_info['user']['account_id']; }
 
 		$str = '';
 		$gr_events = CreateObject('calendar.calendar_item');
@@ -820,13 +819,10 @@ class calendar extends calendar_
 				$new_event_link = '';
 				if (!$this->printer_friendly)
 				{
-					
-					if($this->check_perms(PHPGW_ACL_ADD) == True)
+					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
 					{
-						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
-						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" ';
-						$new_event_link .= 'alt="'.lang('New Entry').'" ';
-						$new_event_link .= 'border="0" align="right">';
+						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">';
+						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right">';
 						$new_event_link .= '</a>';
 					}
 					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
@@ -871,7 +867,9 @@ class calendar extends calendar_
 						
 						$description = $this->is_private($lr_events,$owner,'description');
 
-						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						if (($this->printer_friendly == False) &&
+							(($description == 'private' && (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True)) || ($description != 'private'))  &&
+							(!!($grants[$owner] & PHPGW_ACL_EDIT) == True))
 						{
 							$var = Array(
 								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
@@ -1009,16 +1007,6 @@ class calendar extends calendar_
 		{
 			$this->repeated_events = Null;
 			$owner = $owners_array[$i];
-			
-			if($owner <> $phpgw_info['user']['account_id'] && $owner <> 0)
-			{
-				$this->printer_friendly = True;
-			}
-			else
-			{
-				$this->printer_friendly = $true_printer_friendly;
-			}
-			
 			$this->read_repeated_events($owner);
 			$p->set_var('month_filler_text',$this->display_week($start,True,$cellcolor,$display_name,$owner));
 			$p->parse('row','month_filler',True);
