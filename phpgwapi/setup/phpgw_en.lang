@@ -1,0 +1,239 @@
+access	common	en	Access
+access not permitted	common	en	Access not permitted
+access type	common	en	Access type
+account has been created	common	en	Account has been created
+account has been deleted	common	en	Account has been deleted
+account has been updated	common	en	Account has been updated
+account preferences	common	en	Account Preferences
+acl	common	en	ACL
+active	common	en	Active
+add category	common	en	Add Category
+add	common	en	Add
+add x category for	common	en	Add %1 category for
+address book	common	en	Address Book
+addressbook	common	en	Addressbook
+addressbook preferences	common	en	Addressbook preferences
+addvcard	common	en	Add VCard
+admin	common	en	Admin
+administration	common	en	Administration
+all	common	en	All
+april	common	en	April
+are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
+august	common	en	August
+autosave default category	common	en	Autosave Default Category
+bookkeeping admins	common	en	Bookkeeping admins
+bookkeeping	common	en	Bookkeeping
+book marks	common	en	Book marks
+bookmarks	common	en	Bookmarks
+business city	common	en	Business City
+business	common	en	Business
+business country	common	en	Business Country
+business email	common	en	Business EMail
+business email type	common	en	Business EMail Type
+business fax	common	en	Business Fax
+business phone	common	en	Business Phone
+business state	common	en	Business State
+business street	common	en	Business Street
+business zip code	common	en	Business Postal Code
+calendar	common	en	calendar
+calendar preferences	common	en	Calendar preferences
+cancel	common	en	Cancel
+categories	common	en	Categories
+categories for	common	en	categories for
+category	common	en	Category
+category x has been added !	common	en	Category %1 has been added !
+category x has been updated !	common	en	Category %1 has been updated !
+change	common	en	Change
+charset	common	en	iso-8859-1
+chat	common	en	Chat
+choose a category	common	en	Choose a category
+choose the category	common	en	Choose the category
+clear	common	en	Clear
+clear form	common	en	Clear Form
+company	common	en	Company
+contact	common	en	Contact
+copy	common	en	Copy
+create	common	en	Create
+created by	common	en	Created By
+currency	common	en	Currency
+current users	common	en	Current users
+custom	common	en	Custom
+date	common	en	Date
+date due	common	en	Date Due
+december	common	en	December
+delete	common	en	Delete
+description	common	en	Description
+domestic	common	en	Domestic
+done	common	en	Done
+edit	common	en	Edit
+edit category	common	en	Edit Category
+edit categories	common	en	Edit Categories
+edit x category for	common	en	Edit %1 category for
+e-mail	common	en	E-Mail
+email	common	en	E-Mail
+e-mail preferences	common	en	E-Mail preferences
+email type	common	en	E-Mail Type
+end date	common	en	End Date
+end time	common	en	end time
+entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
+entry updated sucessfully	common	en	Entry updated sucessfully
+error	common	en	Error
+error creating x x directory	common	en	Error creating %1%2 directory
+error deleting x x directory	common	en	Error deleting %1%2 directory
+error renaming x x directory	common	en	Error renaming %1%2 directory
+exit	common	en	Exit
+extra	common	en	Extra
+february	common	en	February
+fields	common	en	Fields
+file manager	common	en	File manager
+files	common	en	Files
+filter	common	en	Filter
+first name	common	en	First name
+first page	common	en	first page
+forum	common	en	Forum
+friday	common	en	Friday
+ftp	common	en	FTP
+global	common	en	Global
+global public	common	en	Global Public
+grant addressbook access	common	en	Grant Addressbook Access
+grant calendar access	common	en	Grant Calendar Access
+grant todo access	common	en	Grant Todo Access
+group access	common	en	Group Access
+group	common	en	Group
+group has been added	common	en	Group has been added
+group has been deleted	common	en	Group has been deleted
+group has been updated	common	en	Group has been updated
+group public	common	en	Group Public
+groups	common	en	Groups
+headline preferences	common	en	Headline preferences
+headlines	common	en	Headlines
+help	common	en	Help
+high	common	en	High
+home	common	en	Home
+human resources	common	en	Human Resources
+international	common	en	International
+inventory	common	en	Inventory
+it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+january	common	en	January
+july	common	en	July
+june	common	en	June
+last name	common	en	Last name
+last page	common	en	last page
+login	common	en	Login
+logout	common	en	Logout
+low	common	en	Low
+main screen	common	en	Main screen
+manual	common	en	Manual
+march	common	en	March
+may	common	en	May
+medium	common	en	Medium
+message	common	en	Message
+mobile phone	common	en	Mobile phone
+modem phone	common	en	Modem Phone
+monday	common	en	Monday
+monitor	common	en	Monitor
+name	common	en	Name
+new entry added sucessfully	common	en	New entry added sucessfully
+newsgroups	common	en	Newsgroups
+news headlines	common	en	News headlines
+news reader	common	en	News Reader
+next	common	en	Next
+next page	common	en	next page
+nntp	common	en	NNTP
+no	common	en	No
+none	common	en	None
+normal	common	en	Normal
+no subject	common	en	No Subject
+notes	common	en	Notes
+notes categories	common	en	Notes categories
+notes preferences	common	en	Notes preferences
+november	common	en	November
+october	common	en	October
+ok	common	en	OK
+only yours	common	en	only yours
+on *nix systems please type: x	common	en	On *nix systems please type: %1
+other	common	en	Other
+other phone	common	en	Other phone
+owner	common	en	Owner
+parent category	common	en	Parent Category
+password	common	en	Password
+password has been updated	common	en	Password has been updated
+permissions to the files/users directory	common	en	permissions to the files/users directory
+personal	common	en	Personal
+please set your preferences for this app	common	en	Please set your preferences for this application
+please x by hand	common	en	Please %1 by hand
+powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+pref	common	en	pref
+prefer	common	en	Prefer
+preferences	common	en	Preferences
+previous page	common	en	Previous page
+print	common	en	Print
+priority	common	en	Priority
+private	common	en	Private
+public	common	en	public
+read	common	en	Read
+rename	common	en	Rename
+saturday	common	en	Saturday
+save	common	en	Save
+search	common	en	Search
+select category	common	en	Select Category
+select headline news sites	common	en	Select Headline News sites
+select parent category	common	en	Select parent category
+send updates via email	common	en	Send updates via EMail
+september	common	en	September
+session has been killed	common	en	Session has been killed
+show all	common	en	show all
+showing x	common	en	showing %1
+showing x - x of x	common	en	showing %1 - %2 of %3
+sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
+start date	common	en	Start Date
+start time	common	en	Start Time
+status	common	en	Status
+subject	common	en	Subject
+submit	common	en	Submit
+sunday	common	en	Sunday
+that phrase already exists	common	en	That phrase already exists
+the two passwords are not the same	common	en	The two passwords are not the same
+thursday	common	en	Thursday
+time	common	en	Time
+time zone	common	en	Timezone
+time zone offset	common	en	Time zone offset
+title	common	en	Title
+to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
+today is x's birthday!	common	en	Today is %1's birthday!
+todo categories	common	en	Todo categories
+todo list	common	en	Todo List
+todo preferences	common	en	Todo preferences
+todo	common	en	Todo
+tomorrow is x's birthday.	common	en	Tomorrow is %1's birthday.
+total	common	en	Total
+translation management	common	en	Translation Management
+trouble ticket system	common	en	Trouble Ticket System
+tuesday	common	en	Tuesday
+updated	common	en	Updated
+user	common	en	User
+users	common	en	users
+vcard	common	en	VCard
+view	common	en	View
+wednesday	common	en	Wednesday
+which groups	common	en	Which groups
+yes	common	en	Yes
+you are required to change your password during your first login	common	en	You are required to change your password during your first login
+you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
+you have 1 new message!	common	en	You have 1 new message!
+you have messages!	common	en	You have messages!
+you have no new messages	common	en	You have no new messages
+you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
+you have x new messages!	common	en	You have %1 new messages!
+you must enter a password	common	en	You must enter a password
+your message has been sent	common	en	Your message has been sent
+your search returned 1 match	common	en	your search returned 1 match
+your search returned x matchs	common	en	your search returned %1 matches
+your settings have been updated	common	en	Your settings have been Updated
+bad login or password	login	en	Bad login or password
+phpgroupware login	login	en	phpGroupWare login
+sorry, your login has expired	login	en	Sorry, your login has expired
+use cookies	login	en	use cookies
+username	login	en	Username
+you have been successfully logged out	login	en	You have been successfully logged out
+your session could not be verified.	login	en	Your session could not be verified.

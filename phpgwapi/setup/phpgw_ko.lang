@@ -1,0 +1,136 @@
+access	common	ko	액세스
+access type	common	ko	액세스타입
+account has been created	common	ko	아이디가 생성되었습니다.
+account has been deleted	common	ko	아이디가 삭제되었습니다.
+account has been updated	common	ko	아이디가 변경되었습니다.
+add	common	ko	추가
+address book	common	ko	주소록
+addressbook	common	ko	주소록
+admin	common	ko	관리
+administration	common	ko	관리
+april	common	ko	 4월
+are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
+august	common	ko	 8월
+book marks	common	ko	북마크
+bookmarks	common	ko	북마크
+calendar	common	ko	일정
+cancel	common	ko	취소
+change	common	ko	변경
+charset	common	ko	euc-kr
+chat	common	ko	대화
+clear	common	ko	초기화
+clear form	common	ko	초기화
+copy	common	ko	복사
+create	common	ko	작성
+created by	common	ko	작성자
+current users	common	ko	현재 사용자
+date	common	ko	날짜
+december	common	ko	12월
+delete	common	ko	삭제
+done	common	ko	완료
+e-mail	common	ko	E-Mail
+edit	common	ko	수정
+email	common	ko	E-Mail
+entry has been deleted sucessfully	common	ko	데이터가 성공적으로 삭제되었습니다.
+entry updated sucessfully	common	ko	데이터가 성공적으로 수정되었습니다.
+error	common	ko	에러
+error creating x x directory	common	ko	%1%2 디렉토리를 생성할 수 없습니다..
+error deleting x x directory	common	ko	%1%2 디렉토리를 삭제할 수 없습니다.
+error renaming x x directory	common	ko	%1%2 디렉토리의 이름을 변경할 수 없습니다.
+exit	common	ko	나가기
+february	common	ko	 2월
+file manager	common	ko	파일 관리자
+filter	common	ko	필터
+first name	common	ko	이름
+first page	common	ko	첫 페이지로
+friday	common	ko	금요일
+ftp	common	ko	FTP
+global public	common	ko	모두에게 공개
+group access	common	ko	그룹 액세스
+group has been added	common	ko	그룹이 추가되었습니다.
+group has been deleted	common	ko	그룹이 삭제되었습니다.
+group has been updated	common	ko	그룹이 변경되었습니다.
+group public	common	ko	그룹내 공개
+groups	common	ko	그룹
+headlines	common	ko	헤드라인
+help	common	ko	도움말
+high	common	ko	높음
+home	common	ko	홈으로
+it has been more then x days since you changed your password	common	ko	암호를 변경한지 %1 일이 경과했습니다.
+january	common	ko	 1월
+july	common	ko	 7월
+june	common	ko	 6월
+last name	common	ko	성
+last page	common	ko	끝 페이지로
+login	common	ko	로그인
+logout	common	ko	로그아웃
+low	common	ko	낮음
+march	common	ko	 3월
+may	common	ko	 5월
+medium	common	ko	중간
+monday	common	ko	월요일
+name	common	ko	이름
+new entry added sucessfully	common	ko	새로운 데이터가 추가되었습니다.
+news headlines	common	ko	새 표제어
+news reader	common	ko	뉴스 읽기
+next page	common	ko	다음 페이지로
+nntp	common	ko	NNTP
+no	common	ko	아니오
+none	common	ko	없음
+normal	common	ko	보통
+november	common	ko	11월
+october	common	ko	10월
+ok	common	ko	확인
+on *nix systems please type: x	common	ko	On *nix systems please type: %1
+only yours	common	ko	자신의 것만
+password	common	ko	암호
+password has been updated	common	ko	암호가 변경되었습니다.
+permissions to the files/users directory	common	ko	permissions to the files/users directory
+please x by hand	common	ko	%1을 직접 하시오. 
+powered by phpgroupware version	common	ko	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version
+preferences	common	ko	환경설정
+previous page	common	ko	이전 페이지로
+priority	common	ko	중요도
+private	common	ko	개인
+rename	common	ko	이름변경
+saturday	common	ko	토요일
+save	common	ko	저장
+search	common	ko	검색
+september	common	ko	 9월
+session has been killed	common	ko	작업이 종료되었습니다.
+show all	common	ko	모두 보기
+showing x	common	ko	현재 %1
+showing x - x of x	common	ko	전체 %3에서 %1 - %2
+sorry, there was a problem processing your request.	common	ko	처리중 에러가 발생했습니다.
+submit	common	ko	전송
+sunday	common	ko	일요일
+thursday	common	ko	목요일
+time	common	ko	시간
+to correct this error for the future you will need to properly set the	common	ko	To correct this error for the future you will need to properly set the
+today is x's birthday!	common	ko	오늘은 %1의 생일입니다!
+todo list	common	ko	할일
+tomorrow is x's birthday.	common	ko	내일은 %1의 생일입니다.
+total	common	ko	합계
+trouble ticket system	common	ko	에러리포트시스템
+tuesday	common	ko	화요일
+updated	common	ko	최종 수정
+users	common	ko	사용자
+view	common	ko	보기
+wednesday	common	ko	수요일
+which groups	common	ko	그룹선택
+yes	common	ko	예
+you have 1 high priority event on your calendar today.	common	ko	1건의 중요도가 높은 작업이 있습니다.
+you have 1 new message!	common	ko	1 개의 새로운 메시지가 있습니다!
+you have x high priority events on your calendar today.	common	ko	%1건의 중요도가 높은 작업들이 있습니다.
+you have x new messages!	common	ko	%1 개의 새로운 메시지가 있습니다!
+your message has been sent	common	ko	메시지가 전송되었습니다.
+your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
+your search returned x matchs	common	ko	%1건의 결과가 검색되었습니다.
+your settings have been updated	common	ko	설정이 변경되었습니다.
+bad login or password	login	ko	사용자ID나 패스워드가 틀립니다.
+login	login	ko	로그인
+password	login	ko	비밀번호
+sorry, your login has expired	login	ko	사용자ID를 더 이상 사용하실수 없습니다.
+use cookies	login	ko	쿠키사용
+username	login	ko	사용자ID
+you have been successfully logged out	login	ko	로그아웃 되었습니다.

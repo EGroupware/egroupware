@@ -1,0 +1,161 @@
+about x	common	sv	Om %1
+access	common	sv	Åtkomst
+access type	common	sv	Åtkomst typ
+account has been created	common	sv	Kontot har blivit skapat
+account has been deleted	common	sv	Kontot har blivit borttaget
+account has been updated	common	sv	Kontot har blivit uppdaterat
+account preferences	common	sv	Konto inställningar
+add	common	sv	Lägg till
+address book	common	sv	Adress Bok
+addressbook	common	sv	Adressbok
+addressbook preferences	common	sv	Adressbok inställningar
+addvcard	common	sv	Lägg till Vkort
+admin	common	sv	Admin
+administration	common	sv	Administration
+april	common	sv	April
+are you sure you want to delete this entry ?	common	sv	Är du säker att du vill radera denna entry ?
+august	common	sv	Augusti
+birthday	common	sv	Födelsedag
+book marks	common	sv	Bokmärken
+bookmarks	common	sv	Bookmarks
+calendar	common	sv	kalender
+calendar preferences	common	sv	Kalender inställningar
+cancel	common	sv	Avbryt
+change	common	sv	Ändra
+charset	common	sv	iso-8859-1
+chat	common	sv	Chat
+city	common	sv	Stad
+clear	common	sv	Rensa
+clear form	common	sv	Rensa formulär
+company	common	sv	Företag
+copy	common	sv	Kopiera
+create	common	sv	Skapa
+created by	common	sv	Skapat av
+current users	common	sv	Nuvarande användare
+date	common	sv	Datum
+december	common	sv	December
+delete	common	sv	Ta bort
+done	common	sv	Färdig
+e-mail	common	sv	E-Post
+e-mail preferences	common	sv	E-Post intällningar
+edit	common	sv	Editera
+email	common	sv	E-Post
+entry has been deleted sucessfully	common	sv	Entry har blivit borttaget
+entry updated sucessfully	common	sv	Entry är uppdaterad
+error	common	sv	Fel
+error creating x x directory	common	sv	Fel vid skapande %1%2 bibliotek
+error deleting x x directory	common	sv	Fel vid borttagning %1%2 bibliotek
+error renaming x x directory	common	sv	Fel vid namnbyte %1%2 bibliotek
+exit	common	sv	Avsluta
+fax	common	sv	Fax nummer
+february	common	sv	Februari
+file manager	common	sv	Fil manager
+filter	common	sv	Filter
+first name	common	sv	Förnamn
+first page	common	sv	första sidan
+forum	common	sv	Forum
+friday	common	sv	Fredag
+ftp	common	sv	FTP
+global public	common	sv	Global Public
+group access	common	sv	Grupp Access
+group has been added	common	sv	Grupp har lagts till
+group has been deleted	common	sv	Grupp har tagits bort
+group has been updated	common	sv	Grupp har uppdaterats
+group public	common	sv	Grupp Public
+groups	common	sv	Grupper
+headlines	common	sv	Headlines
+help	common	sv	Hjälp
+high	common	sv	Hög
+home	common	sv	Hem
+home phone	common	sv	Hemma telefon
+human resources	common	sv	Mänskliga resurser
+inventory	common	sv	Inventarium
+it has been more then x days since you changed your password	common	sv	Det er mer än %1 dagar sedan du ändrade ditt lösenord
+january	common	sv	Januari
+july	common	sv	Juli
+june	common	sv	Juni
+last name	common	sv	Efternamn
+last page	common	sv	sista sidan
+line 2	common	sv	Andra raden
+login	common	sv	Login
+logout	common	sv	Logout
+low	common	sv	Låg
+march	common	sv	Mars
+may	common	sv	Maj
+medium	common	sv	Medium
+mobile phone	common	sv	Mobil nummer
+monday	common	sv	Måndag
+name	common	sv	Namn
+new entry added sucessfully	common	sv	Ny entry har lagts till
+new phrase has been added	common	sv	Ny fras har lagts till
+news headlines	common	sv	Nyhets headlines
+news reader	common	sv	Nyhets Läsare
+next page	common	sv	nästa sida
+nntp	common	sv	NNTP
+no	common	sv	Nej
+none	common	sv	Ingen
+normal	common	sv	Normal
+november	common	sv	November
+october	common	sv	Oktober
+ok	common	sv	OK
+on *nix systems please type: x	common	sv	Skriv %1 på *nix system
+only yours	common	sv	endast dina
+other phone	common	sv	Annat nummer
+pager	common	sv	Personsökare
+password	common	sv	Lösenord
+password has been updated	common	sv	Lösenord har blivit uppdaterat
+permissions to the files/users directory	common	sv	rättigheter på files/users bibliotek
+please x by hand	common	sv	Var vänlig %1 för hand
+powered by phpgroupware version x	common	sv	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+preferences	common	sv	Inställningar
+previous page	common	sv	Föregående sida
+print	common	sv	Skriv ut
+priority	common	sv	Prioritet
+private	common	sv	Privat
+rename	common	sv	Ändra namn
+saturday	common	sv	Lördag
+save	common	sv	Spara
+search	common	sv	Sök
+september	common	sv	September
+session has been killed	common	sv	Session har blivit avslutad
+show all	common	sv	visa alla
+showing x	common	sv	visar %1
+showing x - x of x	common	sv	visar %1 - %2 av %3
+sorry, there was a problem processing your request.	common	sv	Beklagar, det var problem att utföra din önskan.
+state	common	sv	Stat
+street	common	sv	Gata
+submit	common	sv	Utför
+sunday	common	sv	Söndag
+thursday	common	sv	Torsdag
+time	common	sv	Tid
+to correct this error for the future you will need to properly set the	common	sv	För att framgent rätta till detta problem måste du riktigt sätta
+today is x's birthday!	common	sv	I dag har %1 födelsedag!
+todo list	common	sv	Att göra lista
+tomorrow is x's birthday.	common	sv	I morgon är det %1's födelsedag.
+total	common	sv	Total
+translation management	common	sv	Översättnings hanteraren
+trouble ticket system	common	sv	Trouble Ticket System
+tuesday	common	sv	Tisdag
+updated	common	sv	Uppdaterat
+users	common	sv	användare
+vcard	common	sv	VKort
+view	common	sv	Visa
+wednesday	common	sv	Onsdag
+which groups	common	sv	vilken grupp
+work phone	common	sv	Arbets telefon
+yes	common	sv	Ja
+you are required to change your password during your first login	common	sv	Du måste byta lösenord vid din första inloggning
+you have 1 high priority event on your calendar today.	common	sv	Du har 1 högprioritets händelse i din kalender i dag.
+you have 1 new message!	common	sv	Du har 1 nytt meddelande!
+you have x high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
+you have x new messages!	common	sv	Du har %1 nya meddelanden!
+your message has been sent	common	sv	Ditt meddelande har blivit sänt
+your search returned 1 match	common	sv	din sökning gav 1 träff
+your search returned x matchs	common	sv	din sökning gav %1 träffar
+your settings have been updated	common	sv	Dina innställningar har blivit uppdaterade
+zip code	common	sv	Postnummer
+bad login or password	login	sv	Ogiltigt login eller lösenord
+sorry, your login has expired	login	sv	Beklagar, din login har utgått
+use cookies	login	sv	Använd cookies
+username	login	sv	Användarnamn
+you have been successfully logged out	login	sv	Du har nu loggat ut
