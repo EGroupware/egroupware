@@ -85,6 +85,9 @@ a:hover
 .portal
 {
 	background-color: #80BBFF;
+	border-width: 1px;
+	border-color: #000000;
+	border-style: ridge;
 }
 
 
