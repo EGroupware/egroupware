@@ -318,9 +318,19 @@
 							/* This only happens if they have app access.  If not, we will
 							 * return a fault below.
 							 */
-							$listmeth = $tmp[0] . '.' . $service . '.' . 'list_methods';
+							$listmeth = $class . '.' . $service . '.' . 'list_methods';
 							$dmap = ExecMethod($listmeth,'xmlrpc');
 						}
+						else
+						{
+							$r = CreateObject('phpgwapi.xmlrpcresp',
+								'',
+								$GLOBALS['xmlrpcerr']['no_access'],
+								$GLOBALS['xmlrpcstr']['no_access']
+							);
+							return $r;
+						}
+
 						$this->dmap = $dmap;
 						/* _debug_array($this->dmap);exit; */
 					}

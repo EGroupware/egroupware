@@ -79,6 +79,8 @@
 	$GLOBALS['xmlrpcstr']['no_ssl']             = 'No SSL support compiled in.';
 	$GLOBALS['xmlrpcerr']['curl_fail']          = 8;
 	$GLOBALS['xmlrpcstr']['curl_fail']          = 'CURL error';
+	$GLOBALS['xmlrpcerr']['no_access']          = 9;
+	$GLOBALS['xmlrpcstr']['no_access']          = 'Access denied';
 
 	$GLOBALS['xmlrpc_defencoding'] = 'UTF-8';
 
