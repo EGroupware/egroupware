@@ -1,5 +1,5 @@
 <table border="0" width="100%">
- <tr>
+<!-- <tr>
   <td align="left">
    <a href="http://www.eGroupWare.org" target="_new"><img src="{phpgw_logo}" border="0" alt="logo"></a>
   </td>
@@ -15,7 +15,7 @@
  </tr>
  <tr>
   <td><hr></td>
- </tr>
+ </tr>-->
  <tr>
   <td align="center">
 
