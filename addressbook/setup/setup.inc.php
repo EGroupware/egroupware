@@ -14,9 +14,14 @@
 	/* Basic information about this app */
 	$setup_info['addressbook']['name']      = 'addressbook';
 	$setup_info['addressbook']['title']     = 'Addressbook';
-	$setup_info['addressbook']['version']   = '0.9.13.002';
+	$setup_info['addressbook']['version']   = '0.9.13.003';
 	$setup_info['addressbook']['app_order'] = 4;
 	$setup_info['addressbook']['enable']    = 1;
+
+	$setup_info['addressbook']['author'] = 'Joseph Engo, Miles Lott';
+	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
+	/* Tables */
+	$setup_info['addressbook']['tables'][] = 'phpgw_addressbook_servers';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'about';
@@ -32,6 +37,6 @@
 	/* Dependencies for this app to work */
 	$setup_info['addressbook']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13', '0.9.14', '0.9.15')
+		 'versions' => Array('0.9.15', '0.9.16')
 	);
 ?>
