@@ -156,7 +156,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	es
 enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
 enter the background color for the site title	admin	es-es	Introduzca el color de fondo para el título del sitio
 enter the file name of your logo	admin	es-es	Introduzca el nombre del fichero del logo
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta complets para los archivos temporales.<br> Ejemplos: /files , E:FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /files , E:FILES
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-es	
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	es-es	
