@@ -259,7 +259,10 @@ class socalendar_ extends socalendar__
 		$user_where .= ','.implode(',',$member);
 		$user_where .= ')) ';
 
-		echo '<!-- '.$user_where.' -->'."\n";
+		if($this->debug)
+		{
+			echo '<!-- '.$user_where.' -->'."\n";
+		}
 
 		$startDate = 'AND ( ( (phpgw_cal.datetime >= '.$datetime.') ';
 

@@ -610,14 +610,37 @@
 
 					if ($this->bo->check_perms(PHPGW_ACL_DELETE))
 					{
-						$var = Array(
-							'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
-							'action_text_button'	=> lang('Delete'),
-							'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
-							'action_extra_field'	=> ''
-						);
-						$p->set_var($var);
-						echo $p->fp('out','form_button');
+						if($event['recur_type'] != MCAL_RECUR_NONE)
+						{
+							$var = Array(
+								'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Delete Single'),
+								'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+								'action_extra_field'	=> '<input type="hidden" name="delete_type" value="single">'
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+
+							$var = Array(
+								'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Delete Series'),
+								'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+								'action_extra_field'	=> '<input type="hidden" name="delete_type" value="series">'
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+						}
+						else
+						{
+							$var = Array(
+								'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Delete'),
+								'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+								'action_extra_field'	=> ''
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+						}
 					}
 				}
 
@@ -764,8 +787,15 @@
 			{
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 
-				$cd = $this->bo->delete_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
-				$this->bo->expunge();
+				if(isset($GLOBALS['HTTP_GET_VARS']['delete_type']) && $GLOBALS['HTTP_GET_VARS']['delete_type'] == 'delete_series')
+				{
+					$cd = $this->bo->delete_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
+					$this->bo->expunge();
+				}
+				else
+				{
+					// Still need to create a function to handle the deletion of a single day in a repeating serires.
+				}
 			}
 			else
 			{
@@ -2415,13 +2445,15 @@
 				$this->index();
 			}
 
+			echo '<!-- in print_day() -->'."\n";
+
 			$this->bo->store_to_cache(
 				Array(
 					'syear'	=> $params['year'],
-					'smomth'=> $params['month'],
+					'smonth'	=> $params['month'],
 					'sday'	=> $params['day'],
 					'eyear'	=> $params['year'],
-					'emonth'=> $params['month'],
+					'emonth'	=> $params['month'],
 					'eday'	=> $params['day']
 				)
 			);

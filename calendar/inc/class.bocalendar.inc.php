@@ -121,7 +121,7 @@
 		{
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
 
-			if($this->debug) { echo "Read Use_Session : (".$session.")<br>\n"; }
+			if($this->debug) { echo '<!-- Read Use_Session : ('.$session.') -->'."\n"; }
 
 			if($session)
 			{
@@ -131,8 +131,8 @@
 
 			if($this->debug)
 			{
-				echo "BO Filter : (".$this->filter.")<br>\n";
-				echo "Owner : ".$this->owner."<br>\n";
+				echo '<!-- BO Filter : ('.$this->filter.') -->'."\n";
+				echo '<!-- Owner : '.$this->owner.' -->'."\n";
 			}
 			
 			$owner = (isset($GLOBALS['owner'])?$GLOBALS['owner']:'');
@@ -244,8 +244,8 @@
 
 			if($this->debug)
 			{
-				echo "BO Filter : (".$this->filter.")<br>\n";
-				echo "Owner : ".$this->owner."<br>\n";
+				echo '<!-- BO Filter : ('.$this->filter.') -->'."\n";
+				echo '<!-- Owner : '.$this->owner.' -->'."\n";
 			}
 		}
 
@@ -358,7 +358,7 @@
 				$event = $this->so->read_entry($id);
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
 				{
-					$this->add_attribute('participants','U',intval($this->owner));
+					$this->so->add_attribute('participants','U',intval($this->owner));
 					$this->so->add_entry($event);
 					$event = $this->get_cached_event();
 				}
@@ -437,7 +437,7 @@
 
 			if($this->debug)
 			{
-				echo "ID : ".$l_cal['id']."<br>\n";
+				echo '<!-- ID : '.$l_cal['id'].' -->'."\n";
 			}
 
          if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
@@ -460,12 +460,7 @@
          }
          else
 			{
-   			if(!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD))
-	   		{
-	   		   ExecMethod('calendar.uicalendar.index');
-					$GLOBALS['phpgw']->common->phpgw_exit();
-	   		}
-	   		elseif($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT))
+   			if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT)))
 	   		{
 	   		   ExecMethod('calendar.uicalendar.index');
 					$GLOBALS['phpgw']->common->phpgw_exit();
@@ -615,7 +610,6 @@
 				   );
 				}
 
-				$event_ids = Array();
 				if($event['id'])
 				{
 					$event_ids[] = $event['id'];
@@ -626,8 +620,10 @@
 				}
 
 				$overlapping_events = $this->overlap(
-												$this->maketime($event['start']) - $this->datetime->tz_offset,
-												$this->maketime($event['end']) - $this->datetime->tz_offset,
+//												$this->maketime($event['start']) - $this->datetime->tz_offset,
+//												$this->maketime($event['end']) - $this->datetime->tz_offset,
+												$this->maketime($event['start']),
+												$this->maketime($event['end']),
 												$event['participants'],
 												$event['owner'],
 												$event_ids
@@ -791,85 +787,207 @@
 			return $error;
 		}
 
-		function overlap($starttime,$endtime,$participants,$owner=0,$id=0)
+		function overlap($starttime,$endtime,$participants,$owner=0,$id=0,$restore_cache=False)
 		{
-			$retval = Array();
-			$ok = False;
+//			$retval = Array();
+//			$ok = False;
 
 /* This needs some attention.. by commenting this chunk of code it will fix bug #444265 */
-			if($starttime == $endtime && $GLOBALS['phpgw']->common->show_date($starttime,'Hi') == 0)
+
+			if($restore_cache)
 			{
-				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
+				$temp_cache_events = $this->cached_events;
 			}
 
-			$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
-					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$starttime.' < phpgw_cal.edatetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
-					.  'OR (('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
-					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime))) ';
-
-			if(count($participants) > 0)
+//			$temp_start = intval($GLOBALS['phpgw']->common->show_date($starttime,'Ymd'));
+//			$temp_start_time = intval($GLOBALS['phpgw']->common->show_date($starttime,'Hi'));
+//			$temp_end = intval($GLOBALS['phpgw']->common->show_date($endtime,'Ymd'));
+//			$temp_end_time = intval($GLOBALS['phpgw']->common->show_date($endtime,'Hi'));
+			$temp_start = intval(date('Ymd',$starttime));
+			$temp_start_time = intval(date('Hi',$starttime));
+			$temp_end = intval(date('Ymd',$endtime));
+			$temp_end_time = intval(date('Hi',$endtime));
+			if($this->debug)
 			{
-				$p_g = '';
-				if(count($participants))
+				echo '<!-- Temp_Start: '.$temp_start.' -->'."\n";
+				echo '<!-- Temp_End: '.$temp_end.' -->'."\n";
+			}
+
+			$users = Array();
+			if(count($participants))
+			{
+				while(list($user,$status) = each($participants))
 				{
-					$users = Array();
-					while(list($user,$status) = each($participants))
-					{
-						$users[] = $user;
-					}
-					if($users)
-					{
-						$p_g .= 'phpgw_cal_user.cal_login IN ('.implode(',',$users).')';
-					}
+					$users[] = $user;
 				}
-				if($p_g)
-				{
-					$sql .= ' AND (' . $p_g . ')';
-				}
-			}
-      
-			if(count($id) >= 1)
-			{
-				@reset($id);
-				$sql .= ' AND phpgw_cal.cal_id NOT IN ('.(count($id)==1?$id[0]:implode(',',$id)).')';
-			}
-
-			$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
-
-			$events = $this->so->get_event_ids(False,$sql);
-			if($events == False)
-			{
-				return false;
-			}
-		
-			$db2 = $GLOBALS['phpgw']->db;
-
-			for($i=0;$i<count($events);$i++)
-			{
-				$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
-				if($db2->num_rows() == 0)
-				{
-					$retval[] = $events[$i];
-					$ok = True;
-				}
-				else
-				{
-					$db2->next_record();
-					if($db2->f('recur_type') <> MCAL_RECUR_MONTHLY_MDAY)
-					{
-						$retval[] = $events[$i];
-						$ok = True;
-					}
-				}
-			}
-			if($ok == True)
-			{
-				return $retval;
 			}
 			else
 			{
-				return False;
+				$users[] = $this->owner;
 			}
+
+			$possible_conflicts = $this->store_to_cache(
+				Array(
+					'smonth'	=> substr(strval($temp_start),4,2),
+					'sday'	=> substr(strval($temp_start),6,2),
+					'syear'	=> substr(strval($temp_start),0,4),
+					'emonth'	=> substr(strval($temp_end),4,2),
+					'eday'	=> substr(strval($temp_end),6,2),
+					'eyear'	=> substr(strval($temp_end),0,4),
+					'owner'	=> $users
+				)
+			);
+
+			if($this->debug)
+			{
+				echo '<!-- Possible Conflicts ('.($temp_start - 1).'): '.count($possible_conflicts[$temp_start - 1]).' -->'."\n";
+				echo '<!-- Possible Conflicts ('.$temp_start.'): '.count($possible_conflicts[$temp_start]).' '.count($id).' -->'."\n";
+			}
+
+			if($possible_conflicts[$temp_start] || $possible_conflicts[$temp_end])
+			{
+				if($temp_start == $temp_end)
+				{
+					if($this->debug)
+					{
+						echo '<!-- Temp_Start == Temp_End -->'."\n";
+					}
+					@reset($possible_conflicts[$temp_start]);
+					while(list($key,$event) = each($possible_conflicts[$temp_start]))
+					{
+						$found = False;
+						if($id)
+						{
+							@reset($id);
+							while(list($key,$event_id) = each($id))
+							{
+								if($this->debug)
+								{
+									echo '<!-- $id['.$key.'] = '.$id[$key].' = '.$event_id.' -->'."\n";
+									echo '<!-- '.$event['id'].' == '.$event_id.' -->'."\n";
+								}
+								if($event['id'] == $event_id)
+								{
+									$found = True;
+								}
+							}
+						}
+						if($this->debug)
+						{
+							echo '<!-- Item found: '.$found.' -->'."<br>\n";
+						}
+						if(!$found)
+						{
+							if($this->debug)
+							{
+								echo '<!-- Checking event id #'.$event['id'];
+							}
+							$temp_event_start = sprintf("%d%02d",$event['start']['hour'],$event['start']['min']);
+							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);					
+							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
+								(($temp_start_time >= $temp_event_start) && ($temp_start_time < $temp_event_end) && ($temp_end_time >= $temp_event_end)) ||
+								(($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_end)) ||
+								(($temp_start_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)))
+							{
+								if($this->debug)
+								{
+									echo ' Conflicts';
+								}
+								$retval[] = $event['id'];
+							}
+							if($this->debug)
+							{
+								echo ' -->'."\n";
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				$retval = False;
+			}
+
+			if($restore_cache)
+			{
+				$this->cached_events = $temp_cache_events;
+			}
+
+			return $retval;
+
+//			if($starttime == $endtime && $GLOBALS['phpgw']->common->show_date($starttime,'Hi') == 0)
+//			{
+//				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
+//			}
+//
+//	-		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
+//					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$starttime.' < phpgw_cal.edatetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+//	-				.  'OR (('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+//	-				.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime))) ';
+//
+//			if(count($participants) > 0)
+//			{
+//				$p_g = '';
+//				if(count($participants))
+//				{
+//					$users = Array();
+//					while(list($user,$status) = each($participants))
+//					{
+//						$users[] = $user;
+//					}
+//					if($users)
+//					{
+//						$p_g .= 'phpgw_cal_user.cal_login IN ('.implode(',',$users).')';
+//					}
+//				}
+//				if($p_g)
+//				{
+//					$sql .= ' AND (' . $p_g . ')';
+//				}
+//			}
+//
+//			if(count($id) >= 1)
+//			{
+//				@reset($id);
+//				$sql .= ' AND phpgw_cal.cal_id NOT IN ('.(count($id)==1?$id[0]:implode(',',$id)).')';
+//			}
+//
+//			$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+//
+//			$events = $this->so->get_event_ids(False,$sql);
+//			if($events == False)
+//			{
+//				return false;
+//			}
+//		
+//			$db2 = $GLOBALS['phpgw']->db;
+//
+//			for($i=0;$i<count($events);$i++)
+//			{
+//				$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
+//				if($db2->num_rows() == 0)
+//				{
+//					$retval[] = $events[$i];
+//					$ok = True;
+//				}
+//				else
+//				{
+//					$db2->next_record();
+//					if($db2->f('recur_type') <> MCAL_RECUR_MONTHLY_MDAY)
+//					{
+//						$retval[] = $events[$i];
+//						$ok = True;
+//					}
+//				}
+//			}
+//			if($ok == True)
+//			{
+//				return $retval;
+//			}
+//			else
+//			{
+//				return False;
+//			}
 		}
 
 		function check_perms($needed,$user=0)
@@ -1069,13 +1187,18 @@
 			$inserted = False;
 			if($this->cached_events[$date])
 			{
+				
+				if($this->debug)
+				{
+					echo '<!-- Cached Events found for '.$date.' -->'."\n";
+				}
 				$year = substr($date,0,4);
 				$month = substr($date,4,2);
 				$day = substr($date,6,2);
 
 				if($this->debug)
 				{
-					echo "Date : ".$date." Count : ".count($this->cached_events[$date])."<br>\n";
+					echo '<!-- Date : '.$date.' Count : '.count($this->cached_events[$date]).' -->'."\n";
 				}
 				
 				for($i=0;$i<count($this->cached_events[$date]);$i++)
@@ -1085,7 +1208,7 @@
 					{
 						if($this->debug)
 						{
-							echo "Item already inserted!<br>\n";
+							echo '<!-- Item already inserted! -->'."\n";
 						}
 						$inserted = True;
 						break;
@@ -1104,6 +1227,10 @@
 						{
 							$this->cached_events[$date][$j] = $this->cached_events[$date][$j-1];
 						}
+						if($this->debug)
+						{
+							echo '<!-- Adding event ID: '.$event['id'].' to cached_events -->'."\n";
+						}
 						$inserted = True;
 						$this->cached_events[$date][$i] = $event;
 						break;
@@ -1112,6 +1239,10 @@
 			}
 			if(!$inserted)
 			{
+				if($this->debug)
+				{
+					echo '<!-- Adding event ID: '.$event['id'].' to cached_events -->'."\n";
+				}
 				$this->cached_events[$date][] = $event;
 			}					
 		}
@@ -1125,6 +1256,10 @@
 			$search_date_day = date('d',$datetime);
 			$search_date_dow = date('w',$datetime);
 			$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
+			if($this->debug)
+			{
+				echo '<!-- Search Date Full = '.$search_date_full.' -->'."\n";
+			}
 			$repeated = $this->repeating_events;
 			$r_events = count($repeated);
 			for ($i=0;$i<$r_events;$i++)
@@ -1142,7 +1277,13 @@
 				}
 				$end_recur_date = date('Ymd',$event_recur_time);
 				$full_event_date = date('Ymd',$event_beg_day);
-			
+
+				if($this->debug)
+				{
+					echo '<!-- check_repeating_events - Processing ID - '.$id.' -->'."\n";
+					echo '<!-- check_repeating_events - Recurring End Date - '.$end_recur_date.' -->'."\n";
+				}
+
 				// only repeat after the beginning, and if there is an rpt_end before the end date
 				if (($search_date_full > $end_recur_date) || ($search_date_full < $full_event_date))
 				{
@@ -1161,7 +1302,15 @@
 					switch($type)
 					{
 						case MCAL_RECUR_DAILY:
-							if (floor(($search_beg_day - $event_beg_day)/86400) % $freq)
+							if($this->debug)
+							{
+								echo '<!-- check_repeating_events - MCAL_RECUR_DAILY - '.$id.' -->'."\n";
+							}
+							if ($freq == 1 && $rep_events['recur_enddate']['month'] != 0 && $rep_events['recur_enddate']['mday'] != 0 && $rep_events['recur_enddate']['year'] != 0 && $search_date_full <= $end_recur_date)
+							{
+								$this->sort_event($rep_events,$search_date_full);
+							}
+							elseif (floor(($search_beg_day - $event_beg_day)/86400) % $freq)
 							{
 								continue;
 							}
@@ -1260,7 +1409,10 @@
 			{
 				unset($owner_id);
 				$owner_id = $this->g_owner;
-				echo '<!-- owner_id in ('.implode($owner_id,',').') -->'."\n";
+				if($this->debug)
+				{
+					echo '<!-- owner_id in ('.implode($owner_id,',').') -->'."\n";
+				}
 			}
 			
 			if(!$eyear && !$emonth && !$eday)
@@ -1294,8 +1446,8 @@
 			
 			if($this->debug)
 			{
-				echo "Start Date : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
-				echo "End   Date : ".sprintf("%04d%02d%02d",$eyear,$emonth,$eday)."<br>\n";
+				echo '<!-- Start Date : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
+				echo '<!-- End   Date : '.sprintf("%04d%02d%02d",$eyear,$emonth,$eday).' -->'."\n";
 			}
 
 			if($owner_id)
@@ -1314,8 +1466,8 @@
 
 			if($this->debug)
 			{
-				echo "events cached : $c_cached_ids : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
-				echo "repeating events cached : $c_cached_ids_repeating : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+				echo '<!-- events cached : '.$c_cached_ids.' : for : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
+				echo '<!-- repeating events cached : '.$c_cached_ids_repeating.' : for : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
 			}
 
 			$this->cached_events = Array();
@@ -1325,7 +1477,6 @@
 				return;
 			}
 
-			$this->cached_events = Array();
 			if($c_cached_ids)
 			{
 				for($i=0;$i<$c_cached_ids;$i++)
@@ -1348,13 +1499,13 @@
 							}
 							if($this->debug)
 							{
-								echo "Date: ".$j." Count : ".$c_evt_day."<br>\n";
+								echo '<!-- Date: '.$j.' Count : '.$c_evt_day.' -->'."\n";
 							}
 							if($this->cached_events[$j][$c_evt_day]['id'] != $event['id'])
 							{
 								if($this->debug)
 								{
-									echo "Adding Event for Date: ".$j."<br>\n";
+									echo '<!-- Adding Event for Date: '.$j.' -->'."\n";
 								}
 								$this->cached_events[$j][] = $event;
 							}
@@ -1369,11 +1520,30 @@
 				for($i=0;$i<$c_cached_ids_repeating;$i++)
 				{
 					$this->repeating_events[$i] = $this->so->read_entry($cached_event_ids_repeating[$i]);
+					if($this->debug)
+					{
+						echo '<!-- Cached Events ID: '.$cached_event_ids_repeating[$i].' ('.sprintf("%04d%02d%02d",$this->repeating_events[$i]['start']['year'],$this->repeating_events[$i]['start']['month'],$this->repeating_events[$i]['start']['mday']).') -->'."\n";
+					}
 				}
-				$edate -= $this->datetime->tz_offset;
-				for($date=mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;$date<$edate;$date += 86400)
+//				$edate -= $this->datetime->tz_offset;
+//				for($date=mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;$date<=$edate;$date += 86400)
+				for($date=mktime(0,0,0,$smonth,$sday,$syear);$date<=$edate;$date += 86400)
 				{
+					if($this->debug)
+					{
+//						$search_date = $GLOBALS['phpgw']->common->show_date($date,'Ymd');
+						$search_date = date('Ymd',$date);
+						echo '<!-- Calling check_repeating_events('.$search_date.') -->'."\n";
+					}
 					$this->check_repeating_events($date);
+					if($this->debug)
+					{
+						echo '<!-- Total events found matching '.$search_date.' = '.count($this->cached_events[$search_date]).' -->'."\n";
+						for($i=0;$i<count($this->cached_events[$search_date]);$i++)
+						{
+							echo '<!-- Date: '.$search_date.' ['.$i.'] = '.$this->cached_events[$search_date][$i]['id'].' -->'."\n";
+						}
+					}
 				}
 			}
 			$retval = Array();
@@ -1409,7 +1579,7 @@
 			return $this->so->get_cached_event();
 		}
 		
-		function add_attribute($var,$value,$index='')
+		function add_attribute($var,$value,$index='False')
 		{
 			$this->so->add_attribute($var,$value,$index);
 		}
@@ -1685,8 +1855,8 @@
 				{
 					if($this->debug)
 					{
-						echo "Msg Type = ".$msg_type."<br>\n";
-						echo "userid = ".$userid."<br>\n";
+						echo '<!-- Msg Type = '.$msg_type.' -->'."\n";
+						echo '<!-- userid = '.$userid.' -->'."\n";
 					}
 					if(!is_object($send))
 					{
@@ -1704,7 +1874,7 @@
 					
 					if($this->debug)
 					{
-						echo "Email being sent to: ".$to."<br>\n";
+						echo '<!-- Email being sent to: '.$to.' -->'."\n";
 					}
 
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
@@ -1810,7 +1980,7 @@
 				{
 					if($this->debug)
 					{
-						echo "Modifying event for user ".$old_userid."<br>\n";
+						echo '<!-- Modifying event for user '.$old_userid.' -->'."\n";
 					}
 					$this->modified[intval($old_userid)] = $new_status;
 				}
@@ -1818,7 +1988,7 @@
 				{
 					if($this->debug)
 					{
-						echo "Deleting user ".$old_userid." from the event<br>\n";
+						echo '<!-- Deleting user '.$old_userid.' from the event -->'."\n";
 					}
 					$this->deleted[intval($old_userid)] = $old_status;
 				}
@@ -1830,7 +2000,7 @@
 				{
 					if($this->debug)
 					{
-						echo "Adding event for user ".$new_userid."<br>\n";
+						echo '<!-- Adding event for user '.$new_userid.' -->'."\n";
 					}
 					$this->added[$new_userid] = 'U';
 					$new_event['participants'][$new_userid] = 'U';
@@ -1869,7 +2039,7 @@
 					if($this->debug)
 					{
 						echo "<p>Event:<br>"; print_r($event); echo "</p>";
-						echo "<p>start='$start', v='$v' ";
+						echo '<!-- start='.$start.', v='.$v.' ';
 					}
 
 //					if ($start != $v && $event['recur_type'] == MCAL_RECUR_NONE)							// this is an enddate-entry --> remove it
@@ -1904,7 +2074,7 @@
 								$already_moved[$event['id']] = 1;
 								if($this->debug)
 								{
-									echo "moved</p>\n";
+									echo 'moved --> '."\n";
 								}
 							}
 							else
@@ -1912,18 +2082,18 @@
 								$already_moved[$event['id']] = 2;
 								if($this->debug)
 								{
-									echo "removed (not moved)</p>\n";
+									echo 'removed (not moved) -->'."\n";
 								}
 							}
        				}
 						elseif($this->debug)
 						{
-							echo "removed</p>\n";
+							echo 'removed -->'."\n";
 						}
 					}
 					elseif($this->debug)
 					{
-						echo "ok</p>\n";
+						echo 'ok -->'."\n";
 					}
 				}
 				flush();

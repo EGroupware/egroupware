@@ -16,6 +16,7 @@
 
 	class socalendar
 	{
+//		var $debug = True;
 		var $debug = False;
 		var $cal;
 		var $db;
@@ -41,8 +42,8 @@
 			}
 			if($this->debug)
 			{
-				echo 'SO Filter : '.$this->filter."<br>\n";
-				echo 'SO cat_id : '.$this->cat_id."<br>\n";
+				echo '<!-- SO Filter : '.$this->filter.' -->'."\n";
+				echo '<!-- SO cat_id : '.$this->cat_id.' -->'."\n";
 			}
 			$this->cal = CreateObject('calendar.socalendar_');
 			$this->cal->open('INBOX',intval($this->owner));
@@ -88,7 +89,14 @@
 				. 'AND (phpgw_cal_user.cal_login in (';
 			if($owner_id)
 			{
-				$sql .= implode(',',$owner_id);
+				if(is_array($owner_id))
+				{
+					$sql .= implode(',',$owner_id);
+				}
+				else
+				{
+					$sql .= $owner_id;
+				}
 			}
 			else
 			{
@@ -102,18 +110,17 @@
 				$member[] = $group_info['account_id'];
 			}
 			@reset($member);
-			$sql .= ','.implode(',',$member);
-
-			$sql .= ') ';
-//			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') '
-			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
+			$sql .= ','.implode(',',$member).') ';
+//			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') ';
+//			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
+			$sql .= 'AND ((phpgw_cal_repeats.recur_enddate >= '.$starttime.') OR (phpgw_cal_repeats.recur_enddate=0))) '
 				. (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'')
 				. ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'')
 				. 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 			if($this->debug)
 			{
-				echo "SO list_repeated_events : SQL : ".$sql."<br>\n";
+				echo '<!-- SO list_repeated_events : SQL : '.$sql.' -->'."\n";
 			}
 
 			return $this->get_event_ids(True,$sql);
