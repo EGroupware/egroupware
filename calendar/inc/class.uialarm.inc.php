@@ -52,9 +52,9 @@
 
 		function prep_page()
 		{
-			$this->event = $this->bo->cal->read_entry($this->bo->cal_id);
+			$this->event = $this->bo->read_entry($this->bo->cal_id);
 
-			$can_edit = $this->bo->cal->can_user_edit($this->event);
+			$can_edit = $this->bo->can_user_edit($this->event);
 				
 			if(!$can_edit)
 			{
