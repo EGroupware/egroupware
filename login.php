@@ -14,6 +14,9 @@
 
   $phpgw_info["flags"] = array("disable_template_class" => True, "login" => True, "currentapp" => "login", "noheader"  => True);
   include("./header.inc.php");
+
+  $deny_login = False;
+
 /*
   if ($code != 10 && $phpgw_info["server"]["usecookies"] == False) {
     Setcookie("sessionid");
@@ -21,21 +24,23 @@
     Setcookie("domain");
   }
 */
-  $deny_login = False;  
 
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
-  $tmpl->set_file(array("login_form"  => "login.tpl",
-                        "domain_row"  => "login_domain_row.tpl"));
-  $tmpl->set_block("login_form","domain_row");
+
+  if (! $deny_login && ! $phpgw_info["server"]["show_domain_selectbox"]) {
+     $tmpl->set_file(array("login_form"  => "login.tpl"));
+  } else if ($phpgw_info["server"]["show_domain_selectbox"]) {
+     $tmpl->set_file(array("login_form"  => "login_selectdomain.tpl"));  
+  } else {
+     $tmpl->set_file(array("login_form"  => "login_denylogin.tpl"));
+  }
 
   // When I am updating my server, I don't want people logging in a messing 
   // things up.
   function deny_login()
   {
     global $tmpl;
-    $tmpl->set_var("updating","<center>Opps! You caught us in the middle of a system"
-                 . " upgrade.<br>Please, check back with us shortly.</center>");
-    $tmpl->parse("loginout", "login");
+    $tmpl->parse("loginout", "login_form");
     $tmpl->p("loginout");
     exit;
   }
@@ -109,6 +114,19 @@
   }
 
   if(!isset($cd) || !$cd) $cd="";
+
+  if ($phpgw_info["server"]["show_domain_selectbox"]) {
+     reset($phpgw_domain);
+     unset($domain_select);      // For security ... just in case
+     while ($domain = each($phpgw_domain)) {
+        $domain_select .= '<option value="' . $domain[0] . '"';
+        if ($domain[0] == "last_domain") {
+           $domain_select .= " selected";
+        }
+        $domain_select .= '>' . $domain[0] . '</option>';
+     }
+     $tmpl->set_var("select_domain",$domain_select);
+  }
   
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
