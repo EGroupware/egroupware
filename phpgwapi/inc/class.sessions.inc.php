@@ -127,6 +127,8 @@
 
 			$phpgw_info['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
+// Thinking this might solve auth_http	problems
+			if($userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
 			$this->account_id = $phpgw->accounts->name2id($this->account_lid);
