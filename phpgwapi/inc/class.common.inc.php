@@ -644,7 +644,7 @@
 		/*!
 		@function list_themes
 		@abstract list themes available
-		@note themes can either be css file like in HEAD (if the template has a css-dir) \
+		@note themes can either be css file like in HEAD (if the template has a css-dir and has css-files in is) \
 			or ordinary .14 themes-files
 		*/
 		function list_themes()
@@ -661,7 +661,7 @@
 					}
 				}
 			}
-			else
+			if(!is_array($list))
 			{
 				$dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
 				while ($file = readdir($dh))
