@@ -64,7 +64,7 @@
        . "\"> " . lang_common("Delete") . " </a></td>";
   }
 
-  echo "\n<form method=POST action=\"newgroups.php\">"
+  echo "\n<form method=POST action=\"newgroup.php\">"
      . $phpgw->session->hidden_var() . "</table></center>"
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
      . "value=\"" . lang_common("Add") . "\"></form><form action=\"groups.php\"></td>"
