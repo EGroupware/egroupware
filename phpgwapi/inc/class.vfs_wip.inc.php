@@ -553,6 +553,7 @@ class vfs
 		else
 		{
 			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created=NOW(), size=0, deleteable='Y', app='$this->currentapp', directory='$p->fake_leading_dirs', name='$p->fake_name'");
+			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 		}
 
 		if ($tr || $vr || $query)
@@ -602,12 +603,14 @@ class vfs
 
 				if ($this->file_exists ($to, array ($relatives[1])))
 				{
-					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', mime_type='$record[mime_type]', deleteable='Y', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'");
+					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', mime_type='$record[mime_type]', deleteable='$record[deletable]', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$t->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'");
 				}
 				else
 				{
-					$phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', deleteable='Y', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$t->fake_name'");
+					$phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', deleteable='$record[deleteable]', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$t->fake_name'");
 				}
+
+				$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
 
 				return True;
 			}
@@ -678,6 +681,7 @@ class vfs
 
 			$this->delete ($t->fake_full_path, array (RELATIVE_NONE));
 			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name', directory='$t->fake_leading_dirs', modifiedby_id='$account_id', modified=NOW() WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'");
+			$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
 
 			$rr = rename ($f->real_full_path, $t->real_full_path);
 		}
@@ -693,6 +697,7 @@ class vfs
 			{
 				$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry["directory"]);
 				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir' WHERE file_id='$entry[file_id]'");
+				$this->correct_attributes ("$newdir/$entry[name]", array (RELATIVE_NONE));
 			}
 		}
 
@@ -819,7 +824,6 @@ class vfs
 
 		if (!mkdir ($p->real_full_path, 0770))
 		{
-			echo "Couldn't make real dir";
 			return False;
 		}
 		else
@@ -827,6 +831,8 @@ class vfs
 			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array (RELATIVE_NONE)))
 			{
 				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='" . $phpgw_info["user"]["account_id"] . "', name='$p->fake_name', size=1024, mime_type='Directory', created=NOW(), modified='', deleteable='Y', app='$currentapp', directory='$p->fake_leading_dirs'");
+
+				$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 			}
 			else
 			{
@@ -901,6 +907,41 @@ class vfs
 		else
 		{
 			return False;
+		}
+	}
+
+	/*!
+	@function correct_attributes
+	@abstract Set the correct attributes for $string (e.g. owner)
+	@param $string File/directory to correct attributes of
+	@param $relatives Relativity array
+	@result Boolean True/False
+	*/
+
+	function correct_attributes ($string, $relatives = array (RELATIVE_CURRENT))
+	{
+		global $phpgw;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if ($p->fake_leading_dirs != $fakebase && $p->fake_leading_dirs != "/")
+		{
+			$ls_array = $this->ls ($p->fake_leading_dirs, array (RELATIVE_NONE), False, False, True);
+			$this->set_attributes ($p->fake_full_path, array ("owner_id" => $ls_array["owner_id"]), array (RELATIVE_NONE));
+
+			return True;
+		}
+		elseif (preg_match ("+^$fakebase\/(.*)$+U", $p->fake_full_path, $matches))
+		{
+			$this->set_attributes ($p->fake_full_path, array ("owner_id" => $matches[1]), array (RELATIVE_NONE));
+
+			return True;
+		}
+		else
+		{
+			$this->set_attributes ($p->fake_full_name, array ("owner_id" => 0), array (RELATIVE_NONE));
+
+			return True;
 		}
 	}
 
@@ -1065,8 +1106,8 @@ class vfs
 	@abstract shortcut to ls
 	*/
 
-	function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False)
+	function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False)
 	{
-		return $this->ls ($dir, $relatives, $checksubdirs, $mime_type);
+		return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles);
 	}
 }
