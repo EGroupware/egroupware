@@ -31,6 +31,7 @@
 	   Sent folder.  Sent Folders automatically created if not exist.)
 	- Fixed matrixview warnings when viewing manual.
 	- Fixed problem with moving to prev/next msg in NNTP.
+	- Fix possible problem connecting to LDAP server.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
