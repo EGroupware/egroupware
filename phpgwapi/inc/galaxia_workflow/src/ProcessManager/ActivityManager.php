@@ -75,13 +75,19 @@ class ActivityManager extends BaseManager {
   function add_transition($pId, $actFromId, $actToId)
   {
     // No circular transitions allowed
-    if($actFromId == $actToId) return false;
+    if($actFromId == $actToId) {
+		$this->error= tra('No circular transitions allowed.');
+		return false;
+    }
     
     // Rule: if act is not spl-x or spl-a it can't have more than
     // 1 outbound transition.
     $a1 = $this->get_activity($pId, $actFromId);
     $a2 = $this->get_activity($pId, $actToId);
-    if(!$a1 || !$a2) return false;
+    if(!$a1 || !$a2) {
+		$this->error = tra('No activites');
+		return false;
+    }
     if($a1['wf_type'] != 'switch' && $a1['wf_type'] != 'split') {
       if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where wf_act_from_id=$actFromId")) {
         $this->error = tra('Cannot add transition only split activities can have more than one outbound transition');
@@ -90,11 +96,20 @@ class ActivityManager extends BaseManager {
     }
     
     // Rule: if act is standalone no transitions allowed
-    if($a1['wf_type'] == 'standalone' || $a2['wf_type']=='standalone') return false;
+    if($a1['wf_type'] == 'standalone' || $a2['wf_type']=='standalone') {
+		$this->error= tra('No transitions allowed for standalone activities');
+		return false;
+    }
     // No inbound to start
-    if($a2['wf_type'] == 'start') return false;
+    if($a2['wf_type'] == 'start') {
+		$this->error= tra('No inbound for start activity');
+		return false;
+    }
     // No outbound from end
-    if($a1['wf_type'] == 'end') return false;
+    if($a1['wf_type'] == 'end') {
+		$this->error= tra('No outbound for end activity');
+		return false;
+    }
      
     
     $query = "delete from `".GALAXIA_TABLE_PREFIX."transitions` where `wf_act_from_id`=? and `wf_act_to_id`=?";
