@@ -11,33 +11,40 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
-  include("../header.inc.php");
+  if (! $included) {
 
-  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+     include("../header.inc.php");
+
+     $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
   
-  // Authorize the user to use setup app
-  include("inc/setup_auth.inc.php");
-  // Does not return unless user is authorized
+     // Authorize the user to use setup app
+     include("inc/setup_auth.inc.php");
+     // Does not return unless user is authorized
 
-  /* Database setup */
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
+     /* Database setup */
+     include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
-  $db	            = new db;
-  $db->Host	      = $phpgw_info["server"]["db_host"];
-  $db->Type	      = $phpgw_info["server"]["db_type"];
-  $db->Database      = $phpgw_info["server"]["db_name"];
-  $db->User	      = $phpgw_info["server"]["db_user"];
-  $db->Password      = $phpgw_info["server"]["db_pass"];
-  //$db->Halt_On_Error = "report";
-  //$db->Halt_On_Error = "no";
+     $db	            = new db;
+     $db->Host	      = $phpgw_info["server"]["db_host"];
+     $db->Type	      = $phpgw_info["server"]["db_type"];
+     $db->Database      = $phpgw_info["server"]["db_name"];
+     $db->User	      = $phpgw_info["server"]["db_user"];
+     $db->Password      = $phpgw_info["server"]["db_pass"];
+     //$db->Halt_On_Error = "report";
+     //$db->Halt_On_Error = "no";
 
-  echo "<html><head><title>phpGroupWare Setup</title></head>\n";
-  echo "<body bgcolor='#ffffff'>\n";
+     echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+     echo "<body bgcolor='#ffffff'>\n";
 
-  include($phpgw_info["server"]["include_root"]."/phpgwapi/phpgw_common.inc.php");
-  $common = new common;
-  $sep = $common->filesystem_separator();
+     include($phpgw_info["server"]["include_root"]."/phpgwapi/phpgw_common.inc.php");
+     $common = new common;
+     $sep = $common->filesystem_separator();
+  } else {
+     $newinstall             = True;
+     $lang_selected["en"]    = "en";
+     $submit                 = True;
+  }
 
   if ($submit) {
      if (count($lang_selected)) {
@@ -87,10 +94,13 @@
        }
     } 
 
-    echo "<center>Language files have been installed</center>";
-    exit;     
-  
+    if (! $included) {
+       echo "<center>Language files have been installed</center>";
+       exit;
+    }
+
   } else {
+    if (! $included) {
 ?>
   <table border="0" align="center" width="<?php echo ($newinstall?"60%":"80%"); ?>">
    <tr bgcolor="486591">
@@ -105,7 +115,7 @@
       <?php echo ($newinstall?'<input type="hidden" name="newinstall" value="True">':""); ?>
       <select name="lang_selected[]" multiple size="10">
        <?php
-         $db->query("select lang_id,lang_name from languages where available='Yes'");
+         $db->query("select lang_id,lang_name from languages where available='Yes' and lang_id != 'en'");
          while ($db->next_record()) {
            echo '<option value="' . $db->f("lang_id") . '">' . $db->f("lang_name") . '</option>';
          }
@@ -127,6 +137,6 @@
     echo '<center><input type="submit" name="submit" value="Install"></center>';
   }
 
-
+  }
 
 

@@ -25,7 +25,7 @@
     include("./sql/".$phpgw_info["server"]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
     $included = True;
-    include("../lang.php");
+    include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
   }
   echo "<table border=\"0\" align=\"center\">\n";
   echo "  <tr bgcolor=\"486591\">\n";
