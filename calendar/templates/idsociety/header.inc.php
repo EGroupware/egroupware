@@ -49,7 +49,10 @@
 
 	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('year','&date='.$today),'year.gif',lang('This Year')).'</td>');
 
-	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('planner','&date='.$today),'planner.gif',lang('Planner')).'</td>');
+	if(floor(phpversion()) >= 4)
+	{
+		add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('planner','&date='.$today),'planner.gif',lang('Planner')).'</td>');
+	}
 
 	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('matrixselect'),'view.gif',lang('Daily Matrix View')).'</td>');
 
