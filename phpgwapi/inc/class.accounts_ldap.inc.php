@@ -356,14 +356,26 @@
 					{
 						$allValues = ldap_get_entries($this->ds, $sri);
 						// if the user is not member of this group, add him
-						if(!in_array($newData['uid'],$allValues[0]['memberuid']))
+						if(is_array($allValues[0]['memberuid']))
 						{
+							// this group has already some members
+							if(!in_array($newData['uid'],$allValues[0]['memberuid']))
+							{
+								$dn = $allValues[0]['dn'];
+								$newData = array();
+								$newData['memberuid'] = $allValues[0]['memberuid'];
+								unset($newData['memberuid']['count']);
+								$newData['memberuid'][]	= $accountID;
+								$newData['memberuid'] = array_values(array_unique($newData['memberuid']));
+								ldap_mod_replace($this->ds, $dn, $newData);
+							}
+						}
+						else
+						{
+							// this group has no members
 							$dn = $allValues[0]['dn'];
 							$newData = array();
-							$newData['memberuid'] = $allValues[0]['memberuid'];
-							unset($newData['memberuid']['count']);
-							$newData['memberuid'][]	= $accountID;
-							$newData['memberuid'] = array_values(array_unique($newData['memberuid']));
+							$newData['memberuid'][] = $accountID;
 							ldap_mod_replace($this->ds, $dn, $newData);
 						}
 					}
@@ -765,6 +777,11 @@
 				$entry['homedirectory'] = $account_info['homedirectory'] && $account_info['homedirectory'] != $GLOBALS['phpgw_info']['server']['ldap_account_home'] ? $account_info['homedirectory'] : $GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_info['account_lid'];
 				$entry['loginshell'] = $account_info['loginshell'] ? $account_info['loginshell'] : $GLOBALS['phpgw_info']['server']['ldap_account_shell'];
 			}
+			else
+			{
+				$entry['homedirectory'] = '/home/'.$account_info['account_lid'];
+				$entry['loginshell'] = '/bin/false';
+			}
 
 			if ($allValues[0]['dn'])
 			{
@@ -846,16 +863,9 @@
 					if($account_info['account_firstname'])
 						$entry['givenname']	= utf8_encode($account_info['account_firstname']);
 						
-					$entry['uid']       = $account_info['account_lid'];
-					$entry['uidnumber'] = $account_id;
-					if ($GLOBALS['phpgw_info']['server']['ldap_group_id'])
-					{
-						$entry['gidnumber'] = $GLOBALS['phpgw_info']['server']['ldap_group_id'];
-					}
-					else
-					{
-						$entry['gidnumber'] = $account_id;
-					}
+					$entry['uid']       	= $account_info['account_lid'];
+					$entry['uidnumber'] 	= $account_id;
+					$entry['gidnumber']	= $account_info['account_primary_group'];
 					$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'person';
@@ -869,7 +879,7 @@
 					$entry['phpgwaccountexpires']   = $account_info['account_expires'];
 				}
 
-				/* _debug_array($entry);exit; */
+				#_debug_array($entry);exit;
 
 				ldap_add($this->ds, $dn, $entry);
 			}
@@ -881,21 +891,33 @@
 				// search for the group
 				$filter 	= 'gidnumber='.$value;
 				$justThese 	= array('memberuid');
-				$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$value, $justThese);
+				$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
 				if($sri)
 				{
 					$allValues = ldap_get_entries($this->ds, $sri);
 					// if the user is not member of this group, add him
-					if(!in_array($account_info['account_lid'],$allValues[0]['memberuid']))
+					if(is_array($allValues[0]['memberuid']))
 					{
+						// this group has already some members
+						if(!in_array($account_info['account_lid'],$allValues[0]['memberuid']))
+						{
+							$dn = $allValues[0]['dn'];
+							$newData = array();
+							$newData['memberuid'] = $allValues[0]['memberuid'];
+							unset($newData['memberuid']['count']);
+							$newData['memberuid'][]	= $account_info['account_lid'];
+							$newData['memberuid'] = array_unique($newData['memberuid']);
+							ldap_mod_replace($this->ds, $dn, $newData);
+							#print ldap_error($this->ds)."<br>";
+						}
+					}
+					else
+					{
+						// this group has no members
 						$dn = $allValues[0]['dn'];
 						$newData = array();
-						$newData['memberuid'] = $allValues[0]['memberuid'];
-						unset($newData['memberuid']['count']);
-						$newData['memberuid'][]	= $account_info['account_lid'];
-						$newData['memberuid'] = array_unique($newData['memberuid']);
+						$newData['memberuid'][] = $account_info['account_lid'];
 						ldap_mod_replace($this->ds, $dn, $newData);
-						#print ldap_error($this->ds)."<br>";
 					}
 				}
 			}

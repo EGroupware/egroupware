@@ -259,7 +259,12 @@
 				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
 				return False;
 			}
-
+			
+			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
+			{	
+				ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+			}
+			
 			// bind as admin, we not to able to do everything
 			if (! ldap_bind($ds,$dn,$passwd))
 			{
