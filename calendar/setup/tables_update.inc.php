@@ -1036,6 +1036,7 @@
 	function calendar_upgrade0_9_16_005()
 	{
 		// creates uid's for all entries which do not have unique ones, they are '-@domain.com'
+		// very old entries even have an empty uid, see 0.9.16.006 update
 		$GLOBALS['phpgw_setup']->oProc->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name IN ('install_id','mail_suffix') AND config_app='phpgwapi'",__LINE__,__FILE__);
 		while ($GLOBALS['phpgw_setup']->oProc->next_record())
 		{
@@ -1045,9 +1046,17 @@
 			$GLOBALS['phpgw_setup']->db->concat($GLOBALS['phpgw_setup']->db->quote('cal-'),'cal_id',
 				$GLOBALS['phpgw_setup']->db->quote('-'.$config['install_id'].'@'.
 				($config['mail_suffix'] ? $config['mail_suffix'] : 'local'))).
-			" WHERE uid LIKE '-@%'");
+			" WHERE uid LIKE '-@%' OR uid=''");
 
-		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.006';
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.007';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '0.9.16.006';
+	function calendar_upgrade0_9_16_006()
+	{
+		// re-run the update as very old entries only have an empty uid
+		return calendar_upgrade0_9_16_005();
 	}
 ?>
