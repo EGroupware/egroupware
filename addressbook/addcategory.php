@@ -24,13 +24,10 @@
     if ($submit) {
     $errorcount = 0;
 
-    $exists_main = $c->exists('main',$cat_name);
-	if ($exists_main == True) { $error[$errorcount++] = lang('That main category name has been used already !'); }
-
-    $exists_sub = $c->exists('subs',$cat_name);
-	if ($exists_subs == True) { $error[$errorcount++] = lang('That sub category name has been used already !'); }
-
-     if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+    if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name); }
+    else { $exists = $c->exists('subs',$cat_name); }
+    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 
     if (! $error) {
 	$cat_name = addslashes($cat_name);
