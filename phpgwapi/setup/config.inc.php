@@ -40,7 +40,7 @@
    </tr>
 
    <?php $selected = array(); ?>
-   <?php $selected[$current_config['ftp_use_mime']] = " selected"; ?>
+   <?php $selected[@$current_config['ftp_use_mime']] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'.</td>
     <td>

@@ -421,7 +421,7 @@
 		*/
 		function process_upgrade($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!@$this->oProc)
 			{
 				$this->init_process();
 			}
@@ -478,7 +478,7 @@
 						// This should be a break with a status setting, or not at all
 						//break;
 					}
-					if (file_exists($appdir . 'tables_update.inc.php') && !$setup_info[$key]['updateincluded'])
+					if (file_exists($appdir . 'tables_update.inc.php') && !@$setup_info[$key]['updateincluded'])
 					{
 						include ($appdir . 'tables_update.inc.php');
 						$setup_info[$key]['updateincluded'] = True;
