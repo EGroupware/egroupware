@@ -531,17 +531,13 @@
 				}
 			}
 
-			if ($this->xmlrpc || $this->soap)
+			if ($this->xmlrpc)
 			{
-				$r = CreateObject('phpgwapi.xmlrpcresp',
-					CreateObject('phpgwapi.xmlrpcval'),
-					$GLOBALS['xmlrpcerr']['unknown_method'],
-					$s
-				);
-				$payload = "<?xml version=\"1.0\"?>\n" . $r->serialize();
-				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
-				print $payload;
-				$GLOBALS['phpgw']->common->phpgw_exit(False);
+				xmlrpcfault($s);
+			}
+			else if ($this->soap)
+			{
+
 			}
 			else
 			{
