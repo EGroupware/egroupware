@@ -123,7 +123,7 @@
 						{
 							$this->status[$key] = array();
 						}
-						$this->status[$key] += $this->config->config_data['status'][$key];
+						$this->status[$key] = array_merge($this->status[$key],$this->config->config_data['status'][$key]);
 					}
 				}
 				if (isset($this->config->config_data['types']) && is_array($this->config->config_data['types']))
