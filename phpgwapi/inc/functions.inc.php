@@ -101,6 +101,7 @@
 	{
 	/* Need to make sure this is working against a single dimensional object */
 	$partscount = substr_count($object, '.');
+	echo 'partscount = '.$partscount;
 	if ($partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $object);
@@ -126,7 +127,7 @@
 		}
 	}
 	/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
-	elseif ($partscount => 3)
+	elseif ($partscount >= 3)
 	{
 		$classpart = explode(".", $object);
 		$classpartnum = $partscount - 1;
@@ -137,9 +138,9 @@
 		$functionname = $classpart[$partscount];
 		/* Now I clear these out of the array so that I can do a proper */
 		/* loop and build the $parentobject */
-		unset $classpart[0];
-		unset $classpart[$classpartnum];
-		unset $classpart[$partscount];
+		unset ($classpart[0]);
+		unset ($classpart[$classpartnum]);
+		unset ($classpart[$partscount]);
 		reset ($classpart);
 		$firstparent = 'True';
 		while(list($key, $val) = each($classpart))
