@@ -112,8 +112,8 @@
 			$city != "" || /* City */
 			$state != "" || /* State */
 			$zip != "")     /* Zip */
-			printf("ADR:;%s;%s;%s;%s;%s;%s\r\n", $address2,
-			$street,$city,$state,$zip,$country);
+			printf("ADR:;;%s;%s;%s;%s;%s;%s\r\n", $street,
+			$address2,$city,$state,$zip,$country);
 
 		if($bday != "" && $bday != "//") /* Birthday */
 			printf("BDAY:%s\r\n", $bday); /* This is not the right format. */
