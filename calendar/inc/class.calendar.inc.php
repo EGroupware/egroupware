@@ -210,8 +210,7 @@ class calendar extends calendar_
 	{
 		global $phpgw_info;
 
-		$weekday = intval(date('w',mktime(2,0,0,$month,$day,$year)));
-
+		$weekday = $this->day_of_week($year,$month,$day);
 		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 		{
 			$days = Array(

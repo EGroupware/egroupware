@@ -423,12 +423,30 @@ class calendar_ extends calendar__
 
 	function day_of_week($year,$month,$day)
 	{
-		return date('w',mktime(0,0,0,intval($month),intval($day),intval($year)));
+		if($month > 2)
+		{
+			$month -= 2;
+		}
+		else
+		{
+			$month += 10;
+			$year--;
+		}
+		$day = (floor((13 * $month - 1) / 5) + $day + ($year % 100) + floor(($year % 100) / 4) + floor(($year / 100) / 4) - 2 * floor($year / 100) + 77);
+		return (($day - 7 * floor($day / 7)));
 	}
 	
 	function day_of_year($year,$month,$day)
 	{
-		return date('w',mktime(0,0,0,intval($month),intval($day),intval($year)));
+		$days = array(0,31,59,90,120,151,181,212,243,273,304,334);
+        
+		$julian = ($days[$month - 1] + $day);
+
+		if($month > 2 && $this->is_leap_year($year))
+		{
+			$julian++;
+		}
+		return($julian);
 	}
 
 	function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
@@ -815,7 +833,7 @@ class calendar_ extends calendar__
 		$date['full'] = intval($phpgw->common->show_date($date['raw'],'Ymd'));
 		$date['bd'] = mktime(0,0,0,$date['month'],$date['day'],$date['year']);
 		$date['dm'] = intval($phpgw->common->show_date($date['raw'],'dm'));
-		$date['dow'] = intval($phpgw->common->show_date($date['raw'],'w'));
+		$date['dow'] = $this->day_of_week($date['year'],$date['month'],$date['day']);
 		$date['hour'] = intval($phpgw->common->show_date($date['raw'],'H'));
 		$date['minute'] = intval($phpgw->common->show_date($date['raw'],'i'));
 		$date['second'] = intval($phpgw->common->show_date($date['raw'],'s'));
