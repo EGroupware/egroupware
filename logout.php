@@ -19,7 +19,7 @@
   $phpgw_info["flags"]["currentapp"] = "logout";
   $phpgw_info["flags"]["noheader"] = True;
 
-  include("header.inc.php");
+  include("./header.inc.php");
 
   $sep = $phpgw->common->filesystem_separator();
 
@@ -60,5 +60,5 @@
   Setcookie("kp3");
   Setcookie("domain");
 
-  Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=1");
+  $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=1");
 ?>
