@@ -29,18 +29,31 @@
     var $account_apps = Array();
     var $db;
 
-    function applications($account_id = "", $account_type = "u")
+    function applications($params)
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == ""){ 
+      if (is_array($params)) {
+        if (isset($app_params[1])){ 
+          $this->account_type = $app_params[1];
+        }else{
+          $this->account_type = "u";
+        }
+        if ($params[0] == ""){ 
+          $this->account_id = $phpgw_info["user"]["account_id"]; 
+        }elseif (is_long($params[0])) {
+          $this->account_id = $params[0];
+        } elseif(is_string($params[0])) {
+          if ($this->account_type = "u"){
+            $this->account_id = $phpgw->accounts->username2userid($params[0]);
+          }else{
+            $this->account_id = $phpgw->accounts->groupname2groupid($params[0]);
+          }
+        }
+      }else{
         $this->account_id = $phpgw_info["user"]["account_id"]; 
-      }elseif (is_long($account_id)) {
-        $this->account_id = $account_id;
-      } elseif(is_string($account_id)) {
-        $this->account_id = $phpgw->accounts->username2userid($account_id);
+        $this->account_type = "u";
       }
-      $this->account_type = $account_type;
 //echo "Account ID (Initializing applications) = ".$this->account_id."<br>\n";
     }
 
@@ -84,9 +97,8 @@
         if ($phpgw->acl->check_specific("run",1,$app, $this->account_id, $this->account_type)) {
           $this->account_apps[$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
         } 
-        return $this->account_apps;
       }
-      return False;
+      return $this->account_apps;
     }
 
     function add_app($apps) {

@@ -127,7 +127,8 @@
           exit;
         }
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
-        $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
+        $app_params[] = intval($phpgw_info["user"]["account_id"]);
+        $this->applications = CreateObject("phpgwapi.applications", $app_params);
         $phpgw_info["user"]["preferences"] = $this->preferences->get_saved_preferences();
         $phpgw_info["user"]["apps"] = $this->applications->enabled_apps();
       }
