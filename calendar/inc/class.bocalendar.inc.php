@@ -448,7 +448,7 @@
 						),
 						'categories' => array(
 							'function'  => 'categories',
-							'signature' => array(array(xmlrpcBoolean,xmlrpcBoolean)),
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('List all categories.')
 						),
 					);
@@ -1024,10 +1024,6 @@
 				{
 					if (!$send_to_ui)
 					{
-						if ($this->xmlrpc)
-						{
-							$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['incorrect_params'],$GLOBALS['xmlrpcstr']['incorrect_params']);
-						}
 						return array($datetime_check => 'invalid input data');
 					}
 					ExecMethod('calendar.uicalendar.edit',
@@ -1567,10 +1563,13 @@
 			{
 				return 'private';
 			}
-//			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
-			elseif(strlen($event[$field]) > 19 && $this->printer_friendly)
+
+//NDEE: cutting off too long entries 140304
+//ToDo: calculate length based on client window
+			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
+//			elseif(strlen($event[$field]) > 19 && $this->printer_friendly)
 			{
-				return substr($event[$field], 0 , 19) . '...';
+				return substr($event[$field], 0 , 19) . '&nbsp;<span class="to_continue">[...]</span>';
 			}
 			else
 			{
