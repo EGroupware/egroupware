@@ -20,8 +20,11 @@ default calendar view	calendar	en	Default calendar view
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
 duration	calendar	en	Duration
+edit series	calendar	en	Edit Series
+edit single	calendar	en	Edit Single
 end date/time	calendar	en	End Date/Time
 ends	calendar	en	ends
+export	calendar	en	Export
 (for weekly)	calendar	en	(for Weekly)
 fr	calendar	en	F
 free/busy	calendar	en	Free/Busy
