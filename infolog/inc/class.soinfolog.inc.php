@@ -287,7 +287,7 @@
 				return;
 			}
 			$this->db->query("DELETE FROM phpgw_infolog WHERE info_id=$info_id",__LINE__,__FILE__);
-			$this->db->query("DELETE FORM phpgw_infolog_extra WHERE info_id=$info_id");
+			$this->db->query("DELETE FROM phpgw_infolog_extra WHERE info_id=$info_id");
 			$this->links->unlink(0,'infolog',$info_id);
 
 			if ($this->data['info_id'] == $info_id)
