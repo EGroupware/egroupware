@@ -942,4 +942,20 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.001';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	$test[] = '0.9.16.001';
+	function calendar_upgrade0_9_16_001()
+	{
+		// this is to set the default as schema_proc was not setting an empty default
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_cal_user','cal_type',array(
+			'type' => 'varchar',
+			'precision' => '1',
+			'nullable' => False,
+			'default' => 'u'
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.002';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>

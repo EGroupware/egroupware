@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['calendar']['name']    = 'calendar';
-	$setup_info['calendar']['version'] = '0.9.16.001';
+	$setup_info['calendar']['version'] = '0.9.16.002';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -56,6 +56,7 @@
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.14','0.9.15','0.9.16')
 	);
+
 
 
 

@@ -71,7 +71,7 @@
 				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'cal_login' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'cal_status' => array('type' => 'char','precision' => '1','nullable' => True,'default' => 'A'),
-				'cal_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => '')
+				'cal_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
 			),
 			'pk' => array('cal_id','cal_login'),
 			'fk' => array(),
