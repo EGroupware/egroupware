@@ -89,11 +89,11 @@
 				if (!isset($this->charsets[$lang]))
 				{
 					$this->db->query("SELECT content FROM phpgw_lang WHERE lang='$lang' AND message_id='charset' AND app_name='common'",__LINE__,__FILE__);
-					$this->charsets[$lang] = $this->db->next_record() ? $this->db->f(0) : 'iso-8859-1';
+					$this->charsets[$lang] = $this->db->next_record() ? strtolower($this->db->f(0)) : 'iso-8859-1';
 				}
 				return $this->charsets[$lang];
 			}
-			return $this->system_charset ? $this->system_charset : $this->translate('charset');
+			return $this->system_charset ? $this->system_charset : strtolower($this->translate('charset'));
 		}
 
 		function init()
@@ -212,7 +212,7 @@
 				}
 				while ($this->db->next_record())
 				{
-					$data = &$this->charsets[$charset = $this->db->f('charset')];
+					$data = &$this->charsets[$charset = strtolower($this->db->f('charset'))];
 					$data .= ($data ? ', ' : $charset.': ').
 						$this->db->f('lang_name').' ('.$this->db->f('lang').')';
 				}
