@@ -47,10 +47,7 @@
     global $phpgw_info, $code, $lastloginid, $login;
     /* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
     if ($code != 5 && (isset($phpgw_info["server"]["usecookies"]) && $phpgw_info["server"]["usecookies"])){
-      if (!empty($login)) {
-        SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
-      }
-      return $lastloginid;
+       return $lastloginid;
     }
   }
 
