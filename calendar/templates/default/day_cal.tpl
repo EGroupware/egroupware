@@ -1,7 +1,9 @@
 <!-- $Id$ -->
 <!-- BEGIN day -->
-<table width="100%" cellspacing="0" cellpadding="0">
+<div class="th">
+ <table width="100%" cellspacing="0" cellpadding="0">
 {row}
+ </div>
 </table>
 <!-- END day -->
 <!-- BEGIN day_row -->

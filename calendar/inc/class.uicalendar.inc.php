@@ -1331,7 +1331,8 @@
 							{
 								$icons .= ($icons?' ':'').$GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
 							}
-							$content .= " <tr>\n  <td valign=\"top\" nowrap>".
+							$class = $class == 'row_on' ? 'row_off' : 'row_on';
+							$content .= " <tr class=\"$class\">\n  <td valign=\"top\" nowrap>".
 								($this->bo->printer_friendly?$icons:$GLOBALS['phpgw']->html->a_href($icons,$todo['view'])).
 								"</td>\n  <td>".($this->bo->printer_friendly?$todo['title']:
 								$GLOBALS['phpgw']->html->a_href($todo['title'],$todo['view']))."</td>\n </tr>\n";
@@ -1713,7 +1714,7 @@
 
 				if (!$is_private)
 				{
-					$max_chars = intval(6*$colspan/$intervals_per_day-2);
+					$max_chars = intval(3*$colspan/$intervals_per_day-2);
 
 					$min_chars = 3; // minimum for max_chars to display -> this should be configurable
 					if ($max_chars >= $min_chars)
@@ -1769,7 +1770,7 @@
 
 			if (!$is_private)
 			{
-				$opt .= '" onClick="location=\''.$view.'\'" class="planner-cell"';
+				$opt .= '" onClick="location=\''.$view.'\'"';
 				$cel = '<a href="'.$view.'">';
 			}
 			else
@@ -1777,6 +1778,7 @@
 				$opt .= '"';
 				$cel = '';
 			}
+			$opt .= ' class="planner-cell"';
 
 			if ($event['priority'] == 3)
 			{
@@ -2553,7 +2555,7 @@
 				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .time { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: center; }'."\n"
+				. '  .time { background: '.$this->theme['th'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: center; }'."\n"
 				. '  .tablecell { width: 80px; height: 80px }'."\n"
 				. '  .planner-cell { cursor:pointer; cursor:hand; border: thin solid black; }';
 		}

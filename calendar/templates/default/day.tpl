@@ -23,9 +23,11 @@
      </td>
     </tr>
     <tr>
-     <td>
-      <b>{lang_todos}</b>
+     <td align="center">
+      <div class="th">
+       <p style="margin: 0px; padding: 2px;"><b>{lang_todos}</b></p>
 {todos}
+      </div>
      </td>
     </tr>
    </table>

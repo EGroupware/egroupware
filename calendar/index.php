@@ -36,8 +36,8 @@
 		'date'		=> date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime)
 	);
 	
-//	echo 'Local DateTime: '.date('Ymd H:i:s',$GLOBALS['phpgw']->datetime->users_localtime).'<br>'."\n";
+	//echo 'Local DateTime: '.date('Ymd H:i:s',$GLOBALS['phpgw']->datetime->users_localtime).'<br>'."\n";
 
-	Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$parms));
+	$GLOBALS['phpgw']->redirect_link('/index.php',$parms);
 	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
