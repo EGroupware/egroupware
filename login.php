@@ -230,9 +230,7 @@
 			}
 			if(!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
 			{
-				// this need to be fixed
-				// lkneschke 20.01.2004
-				#$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
+				$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
 			}
 			$extra_vars['cd'] = 'yes';
 			
@@ -354,30 +352,23 @@
 	$tmpl->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
 	$tmpl->set_var('bg_color',($GLOBALS['phpgw_info']['server']['login_bg_color']?$GLOBALS['phpgw_info']['server']['login_bg_color']:'FFFFFF'));
 	$tmpl->set_var('bg_color_title',($GLOBALS['phpgw_info']['server']['login_bg_color_title']?$GLOBALS['phpgw_info']['server']['login_bg_color_title']:'486591'));
-	$tmpl->set_var('logo_url',($GLOBALS['phpgw_info']['server']['login_logo_url']?'http://'.$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.egroupware.org'));
 
-	// retrieve logo from login template set 
-	// FIXME $GLOBALS['phpgw']->common->image must get extra argument: force to look in this template set thirst
-	$template_logo_file = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
-	$template_logo_real = PHPGW_SERVER_ROOT . '/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
-
-	if($GLOBALS['phpgw_info']['server']['login_logo_file'])
+	if (substr($GLOBALS['phpgw_info']['server']['login_logo_file'],0,4) == 'http')
 	{
-		// the find_image function does require this information
-		$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 
-			$GLOBALS['phpgw_info']['login_template_set'];
-		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']));
-	}
-	elseif(getimagesize($template_logo_real))
-	{
-		$tmpl->set_var('logo_file',$template_logo_file);
+		$var['logo_file'] = $GLOBALS['phpgw_info']['server']['login_logo_file'];
 	}
 	else
 	{
-		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi','logo'));
+		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
 	}
+	$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+	if (substr($var['logo_url'],0,4) != 'http')
+	{
+		$var['logo_url'] = 'http://'.$var['logo_url'];
+	}
+	$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+	$tmpl->set_var($var);
 
-	$tmpl->set_var('logo_title',($GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'eGroupWare --&gt; home'));
 	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
 	$tmpl->pfp('loginout','login_form');
