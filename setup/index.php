@@ -198,8 +198,12 @@
     echo '</td></tr>';
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
-  if ($stage < 4.1) {
-    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
+  if ($stage < 3.1) {
+     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.<br></td></tr>';
+  }
+
+  if ($stage < 4.1 || $stage > 3.1) {
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="O" border="0"></td><td><a href="lang.php">Click here for now</a></td></tr>';
   }elseif ($stage == 4.1) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 4.1.<br></td></tr>';
   }elseif ($stage == 4.2) {
@@ -207,7 +211,7 @@
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 5 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage < 5.1) {
-    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet. (under construction)</td></tr>';
   }elseif ($stage == 5.1) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 5.1.<br></td></tr>';
   }elseif ($stage == 5.2) {
