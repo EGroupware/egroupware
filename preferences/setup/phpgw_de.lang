@@ -1,29 +1,32 @@
 %1 - preferences	preferences	de	%1 - Einstellungen
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
-a template defines the layout of phpgroupware and it contains icons vor each application.	preferences	de	
-a theme defines the colors and fonts used by the template.	preferences	de	
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definert das Layout von phpGroupWare und enthält die Icons (Symbole) der Andwendungen.
+a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benuteroberfläche.
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upgedatet
-any listing in phpgw will show you this number or entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in phpGroupWare zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsammen den Aufbau der Seite, zu wenige kosten den Überblick.
+are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
 change your password	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
+country	preferences	de	Land
 date format	preferences	de	Datumsformat
 default application	preferences	de	Standard-Anwendung
 default preferences	preferences	de	Voreinstellungen
+delete categories	preferences	de	Kategorie Löschen
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
-do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	de	
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	de	Bevorzugen sie ein 24 Stunden Zeit-Format, oder 12 Stunden mit angehangenem Vor-/Nachmittag.
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enter your new password	preferences	de	Neues Passwort eingeben
 error: there was a problem finding the preference file for %1 in %2	preferences	de	Fehler: Es gab ein Problem die Einstellungen für %1 in %2 zu finden
 forced preferences	preferences	de	Erzwungene Einstellungen
 help off	preferences	de	Keine Hilfe
 hours	preferences	de	Stunden
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	
-how should phpgroupware display dates for you.	preferences	de	
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden sind sie vor der Zeitzone des Servers.<br>Wenn sie in der gleichen Zeitzone wie der Server sind, wählen sie 0 Stunden, ansonsten wählen sie ihr lokales Datum und die Uhrzeit.
+how should phpgroupware display dates for you.	preferences	de	Wie soll phpGroupWare das Datum für sie anzeigen?
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
-in which country are you. this is used to set certain defaults for you.	preferences	de	
+in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land sind sie? Damit werden verschiedene Voreinstellungen für sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 language	preferences	de	Sprache
 max matches per page	preferences	de	maximale Treffer pro Seite
@@ -33,9 +36,9 @@ please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
 select one	preferences	de	Bitte wählen
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	
-should the help messages always be shown when you enter the preferences or only on request.	preferences	de	
-should the number of active sessions be displayed for you all the time.	preferences	de	
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der phpGroupWare.<br>Machne Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der Englische Text angezeigt.
+should the help messages always be shown when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn sie die Einstellungen aufrufen oder nur auf Anforderung.
+should the number of active sessions be displayed for you all the time.	preferences	de	Soll die Anzahl aktiver Sitzungen permanent für sie angezeigt werden.
 show current users on navigation bar	preferences	de	Anzahl gegenwärtiger Benutzer in der Navigationsleiste anzeigen
 show helpmessages by default	preferences	de	Hilfetexte standardmässig anzeigen
 show high priority events on main screen	preferences	de	Ereignisse mit hoher Priorität auf der Startseite anzeigen
@@ -44,13 +47,14 @@ show text on navigation icons	preferences	de	Text zu Icons in der Navigationslei
 text only	preferences	de	nur Text
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
-this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).	preferences	de	
+this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie phpGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
 users choice	preferences	de	Benutzerauswahl
-which currency symbole or name should be used in phpgroupware.	preferences	de	
-you can show the applications as icons only, icons with app-name or both.	preferences	de	
+which currency symbole or name should be used in phpgroupware.	preferences	de	Welches Währungssymbol oder Name soll in phpGroupWare verwendet werden.
+you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
+you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesm Modus zu setzen.
 you do not have permission to set acl\'s in this mode!	preferences	de	Sie haben keine Berechtigung ACL's in diesem Modus zu setzen!
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
-your preferences	preferences	de	Pers&ouml;nliche Einstellungen
+your preferences	preferences	de	Persönliche Einstellungen

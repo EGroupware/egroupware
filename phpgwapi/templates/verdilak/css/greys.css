@@ -3,34 +3,19 @@ body,p,td,th,table,input,form,option
 	color: #000000;
 }
 
-body
+a:link,a:active,a:visited
 {
-	background-color: #FFFFFF;
+	color: #336699;
 }
 
-a:link,a:visited
+a:hover
 {
-	color: blue;
-}
-
-a:active,a:hover
-{
-	color: red;
-}
-
-.navbar,.th,.bottom
-{
-	background-color: #885522;
-}
-
-.navbar:spezial_logo
-{
-	background-image: url(logo_885522.gif);	
+	color: #cc0000;
 }
 
 .login,.portal,.about
 {
-	background-color: #885522;
+	background-color: #ADADAD;
 	border-color: #000000;
 }
 
@@ -49,9 +34,14 @@ a:active,a:hover
 	background-color: #EEEEEE;
 }
 
+.th,.navbar,.app_header
+{
+	background-color: #ADADAD;
+}
+
 .cal_today
 {
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
 
 .cal_dayview
@@ -61,6 +51,12 @@ a:active,a:hover
 
 .email_folder
 {
-	background-color: #666699;
-	color: #FFFFFF;
+	background-color: #adadad;
+	color: #ffffff;
+}
+
+.info,a.info
+{
+	color: white;
+	font-weight: bold;
 }

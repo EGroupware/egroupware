@@ -2,28 +2,21 @@
 
 <!-- BEGIN form -->
 
-<center>
-{error_msg}
-<table border="0" width="65%" cellpadding="2" cellspacing="2">
+<center><br>
 <form method="POST" action="{action_url}">
+<table border="0" width="65%" cellpadding="2" cellspacing="2">
 	<tr>
 		<td align="center" colspan="2">{deleteheader}</td>
 	</tr>
 	<tr>
 		<td align="center" colspan="2">{sub_select}</td>
 	</tr>
-	<tr>
-		<td>
-			<input type="submit" name="confirm" value="{lang_yes}">
-			</form>
-		</td>
-		<td align="right">
-			<form method="POST" action="{nolink}">
-				<input type="submit" name="cancel" value="{lang_no}">
-			</form>
-		</td>
+	<tr height="50" valign="botton">
+		<td align="center" width="50%"><input type="submit" name="confirm" value="{lang_yes}"></td>
+		<td align="center" width="50%"><input type="submit" name="cancel" value="{lang_no}"></td>
 	</tr>
 </table>
+</form>
 </center>
 
 <!-- END form -->

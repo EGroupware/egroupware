@@ -78,7 +78,7 @@ a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.t
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #ADADAD;
 }
@@ -93,7 +93,7 @@ a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.t
 	background-color: #FFFFFF;
 }
 
-.th
+.th,.app_header,td.app_header
 {
 	background-color: #FFE000;
 }

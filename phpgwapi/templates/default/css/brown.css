@@ -18,7 +18,7 @@ a:hover
 	color: red;
 }
 
-.navbar,.th
+.navbar,.th,.bottom
 {
 	background-color: #5A0000;
 }
@@ -39,7 +39,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #D3DCE3;
 }

@@ -18,7 +18,7 @@ a:hover
 	color: red;
 }
 
-.navbar,.th
+.navbar,.th,.bottom
 {
 	background-color: #000000;
 }
@@ -40,7 +40,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header,.portal,.about
+.row_on,.th_bright,.portal,.about
 {
 	background-color: #D3DCE3;
 }

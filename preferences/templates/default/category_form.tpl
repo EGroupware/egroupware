@@ -1,35 +1,28 @@
 <!-- $Id$ -->
 
 <!-- BEGIN form -->
-
+<br>
 <center>
-<table border="0" width="80%" cellspacing="2" cellpadding="2">
-	<tr>
-		<td align="center" bgcolor="#c9c9c9"><b>{title_categories}:&nbsp;{user_name}<b/></td>
-	</tr>
-</table>
-{message}
+{message}<br>
 <table border="0" width="80%" cellspacing="2" cellpadding="2"> 
 <form name="form" action="{actionurl}" method="POST">
-	<tr>
+	<tr class="th">
 		<td>{lang_parent}</td>
 		<td><select name="values[parent]"><option value="">{lang_none}</option>{category_list}</select></td>
 	</tr>
-	<tr>
+	<tr class="row_on">
 		<td>{lang_name}</td>
 		<td><input name="values[name]" size="50" value="{cat_name}"></td>
 	</tr>
-	<tr>
+	<tr class="row_off">
 		<td>{lang_descr}</td>
 		<td><textarea name="values[descr]" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></td>
 	</tr>
-
-	{rows}
-
-	<tr>
+	<tr class="row_on">
 		<td>{lang_access}</td>
 		<td><input type="checkbox" name="values[access]" value="True" {access}></td>
 	</tr>
+	{rows}
 </table>
 
 {buttons}
@@ -40,15 +33,11 @@
 
 <!-- BEGIN add -->
 
-<table width="80%" border="0" cellspacing="2" cellpadding="2">
-	<tr valign="bottom">
-		<td height="50">
-			<input type="submit" name="submit" value="{lang_save}"></td>
-		<td height="50" align="center">
-			<input type="reset" name="reset" value="{lang_reset}"></form></td>
-		<td height="50" align="right">
-			<form method="POST" action="{doneurl}">
-			<input type="submit" name="done" value="{lang_done}"></form></td>
+<table width="80%" border="0" cellspacing="5">
+	<tr valign="top">
+		<td><input type="submit" name="submit" value="{lang_save}"></form></td>
+		<td><form method="POST" action="{doneurl}"><input type="submit" name="done" value="{lang_done}"></form></td>
+		<td width="80%">&nbsp;</td>
 	</tr>
 </table>
 
@@ -56,16 +45,15 @@
 
 <!-- BEGIN edit -->
 
-<table width="80%" border="0" cellspacing="2" cellpadding="2">
-	<tr valign="bottom">
-		<td height="50">
+<table width="80%" border="0" cellspacing="5">
+	<tr valign="top">
+		<td>
 			<input type="hidden" name="values[old_parent]" value="{old_parent}">
 			<input type="submit" name="submit" value="{lang_save}"></form></td>
-		<td height="50" align="center">
-			{delete}</td>
-		<td height="50" align="right">
+		<td>
 			<form method="POST" action="{doneurl}">
 			<input type="submit" name="done" value="{lang_done}"></form></td>
+		<td width="80%" align="right">{delete}</td>
 	</tr>
 </table>
 
@@ -73,7 +61,7 @@
 
 <!-- BEGIN data_row -->
 
-	<tr>
+	<tr class="{tr_color}">
 		<td>{lang_data}</td>
 		<td>{td_data}</td>
 	</tr>

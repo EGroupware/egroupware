@@ -18,7 +18,7 @@ a:hover
 	color: #C5AA2B;
 }
 
-.navbar,.th
+.navbar,.th,.bottom
 {
 	background-color: #F7E58F;
 }
@@ -34,7 +34,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #C8A63B;
 }

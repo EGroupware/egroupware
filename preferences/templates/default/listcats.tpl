@@ -1,11 +1,9 @@
 <!-- $Id$ -->
 
 <!-- BEGIN cat_list -->
+<br>
 <center>
-<table border="0" cellspacing="2" cellpadding="2" width="87%">
-	<tr>
-		<td colspan="3" width="87%" align="center" bgcolor="#c9c9c9"><b>{lang_app}&nbsp;{title_categories}:&nbsp;{user_name}<b/></td>
-	</tr>
+<table border="0" cellspacing="2" cellpadding="2" width="80%">
 	<tr>
 		<td colspan="3" align=left>
 			<table border="0" width="100%">
@@ -25,7 +23,7 @@
 				</form></td>
 	</tr>
 </table>
-<table border="0" cellspacing="2" cellpadding="2" width="87%">
+<table border="0" cellspacing="2" cellpadding="2" width="80%">
 	<tr class="th">
 		<td class="th">{sort_name}</td>
 		<td class="th">{sort_description}</td>
@@ -41,17 +39,18 @@
 	{rows}
 </table>
 
-<table border="0" cellspacing="2" cellpadding="2" width="87%">
+<table border="0" cellspacing="5" width="80%">
 	<tr valign="bottom">
-		<td width="50%">
+		<td>
 			<form method="POST" action="{add_action}">
 			<input type="submit" value="{lang_add}">
 			</form></td>
-		<td width="50%" align="right">
+		<td>
 			<form method="POST" action="{doneurl}">
 			<input type="submit" name="done" value="{lang_done}">
 			</form>
 		</td>
+		<td width="80%">&nbsp;</td>
 	</tr>
 </table>
 

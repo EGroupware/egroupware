@@ -125,3 +125,10 @@ table.login
 {
 	font-weight: bold;
 }
+
+.app_header
+{
+	padding: 5px;
+	padding-bottom: 0px;
+	text-align: center;
+}

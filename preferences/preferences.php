@@ -377,14 +377,9 @@
 		$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
 	}
 
-	if ($_GET['appname'] == 'preferences')
-	{
-		$t->set_var('lang_title',lang('Preferences'));
-	}
-	else
-	{
-		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$_GET['appname']]['title']));
-	}
+	$GLOBALS['phpgw_info']['flags']['app_header'] = $_GET['appname'] == 'preferences' ?
+		lang('Preferences') : lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$_GET['appname']]['title']);
+	$GLOBALS['phpgw']->common->phpgw_header();
 
 	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname']));
 

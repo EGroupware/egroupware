@@ -40,7 +40,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #909090;
 }
@@ -50,7 +50,7 @@ a:hover
 	background-color: #808080;
 }
 
-.th
+.th,.bottom
 {
 	background-color: #404040;
 	color: #00FF33;

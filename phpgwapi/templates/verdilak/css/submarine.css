@@ -13,12 +13,12 @@ a:link,a:visited,a:active
 	color: mediumblue;
 }
 
-a:hover
+a:hover,a.info:hover
 {
 	color: #cc0000;
 }
 
-.navbar,.th
+.navbar,.th,.app_header
 {
 	background-color: #80BBFF;
 }
@@ -32,9 +32,15 @@ a:hover
 .portal_text,.info
 {
 	color: #FFFFFF;
+	
 }
 
-.row_on,.th_bright,.app_header
+.info
+{
+	font-weight: bold;
+}
+
+.row_on,.th_bright
 {
 	background-color: #CCEEFF;
 }

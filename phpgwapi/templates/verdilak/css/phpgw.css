@@ -93,3 +93,10 @@ table.login
 	background-image: url(../images/bg_filler.png);
 }
 
+.app_header
+{
+	text-align: center;
+	padding: 2px;
+	padding-top: 5px;
+}
+

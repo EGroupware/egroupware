@@ -29,13 +29,16 @@
 			$query    = get_var('query',Array('GET','POST'));
 			$s_groups = get_var('s_groups',Array('GET','POST'));
 			$s_users  = get_var('s_users',Array('GET','POST'));
-
 			$owner = get_var('owner',Array('POST','GET'));
 
 			if (! $acl_app)
 			{
 				$acl_app = 'preferences';
 				$acl_app_not_passed = True;
+			}
+			else
+			{
+				$GLOBALS['phpgw']->translation->add_app($acl_app);
 			}
 
 			$GLOBALS['phpgw_info']['flags']['currentapp'] = $acl_app;
@@ -196,6 +199,7 @@
 				}
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$this->template = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($acl_app));
@@ -224,10 +228,10 @@
 
 			$var = Array(
 				'errors'      => '',
-				'title'       => '<p><b>'.lang($GLOBALS['phpgw_info']['flags']['currentapp'].' preferences').' - '.lang('acl').': '.$owner_name.'</b><hr><p>',
+				'title'       => '<br>',
 				'action_url'  => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=' . $acl_app),
 				'bg_color'    => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'submit_lang' => lang('submit'),
+				'submit_lang' => lang('Save'),
 				'common_hidden_vars_form' => $common_hidden_vars
 			);
 

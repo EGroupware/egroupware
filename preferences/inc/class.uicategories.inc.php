@@ -110,7 +110,8 @@
 			{
 				$edata = explode(',',$extra);
 			}
-
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps'][$cats_app]['title'].
+				'&nbsp;'.lang('categories for').':&nbsp;'.$this->user;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_list_t' => 'listcats.tpl'));
@@ -202,6 +203,10 @@
 					{
 						$GLOBALS['phpgw']->template->set_var('td_data',$this->cat_data($edata,$data));
 					}
+				}
+				else
+				{
+					$GLOBALS['phpgw']->template->set_var('td_data','');
 				}
 
 				if ($level == 0)
@@ -304,11 +309,13 @@
 					else
 					{
 						$this->cat_id = $this->bo->save_cat($values);
-						$message = lang('Category x has been added !', $values['name']);
+						$message = lang('Category %1 has been added !', $values['name']);
 					}
 				}
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Add %1 category for',
+				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
@@ -319,7 +326,7 @@
 
 			$this->set_langs();
 
-			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Add x category for',lang($cats_app)));
+			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Add %1 category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('message',$message);
 			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
@@ -362,6 +369,10 @@
 					$GLOBALS['phpgw']->template->fp('rows','data_row',True);
 				}
 			}
+			else
+			{
+				$GLOBALS['phpgw']->template->set_var('rows','');
+			}
 
 			$link_data['menuaction'] = 'preferences.uicategories.index';
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
@@ -388,11 +399,15 @@
 
 			if (!$this->cat_id)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+				$GLOBALS['phpgw']->link_redirect('/index.php',$link_data);
 			}
 
 			$values		= get_var('values',Array('POST'));
 			$cat_data	= get_var('cat_data',Array('POST'));
+
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Edit %1 category for',
+				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
+			$GLOBALS['phpgw']->common->phpgw_header();
 
 			if (get_var('submit',Array('POST')))
 			{
@@ -414,12 +429,10 @@
 					else
 					{
 						$this->cat_id = $this->bo->save_cat($values);
-						$message = lang('Category x has been updated !',$values['name']);
+						$message = lang('Category %1 has been updated !',$values['name']);
 					}
 				}
 			}
-
-			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('cat_form','data_row');
@@ -431,7 +444,7 @@
 
 			$cats = $this->bo->cats->return_single($this->cat_id);
 
-			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit x category for',lang($cats_app)));
+			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit %1 category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('message',$message);
 			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
@@ -477,6 +490,10 @@
 					$GLOBALS['phpgw']->template->fp('rows','data_row',True);
 				}
 			}
+			else
+			{
+				$GLOBALS['phpgw']->template->set_var('rows','');
+			}
 
 			if ($cats[0]['owner'] == $this->account)
 			{
@@ -509,9 +526,9 @@
 				'cats_level'  => $cats_level
 			);
 
-			if (!$this->cat_id)
+			if (!$this->cat_id || $_POST['cancel'])
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
 			$this->bo->cats->app_name = $cats_app;
@@ -524,11 +541,9 @@
 					{
 						case 'move':
 							$this->bo->delete(array('cat_id' => $this->cat_id,'modify_subs' => True));
-							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 							break;
 						case 'drop':
 							$this->bo->delete(array('cat_id' => $this->cat_id,'drop_subs' => True));
-							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 							break;
 						default:
 							$error_msg = lang('Please choose one of the methods to handle the subcategories');
@@ -538,10 +553,11 @@
 				else
 				{
 					$this->bo->delete(array('cat_id' => $this->cat_id));
-					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 				}
+				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Delete Categories');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			$GLOBALS['phpgw']->template->set_file(array('category_delete' => 'delete.tpl'));
 

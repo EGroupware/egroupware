@@ -39,6 +39,16 @@
 				<script type="text/javascript" language="javascript" src="{$webserver_url}/phpgwapi/templates/justweb/scripts.js"></script>
 				<link rel="stylesheet" type="text/css" href="{$phpgw_css_file}"/>
 				<link rel="stylesheet" type="text/css" href="{$theme_css_file}"/>
+				<xsl:value-of disable-output-escaping="yes" select="java_script"/>
+				<xsl:choose>
+					<xsl:when test="app_css">
+						<style type="text/css">
+							<xsl:text>&lt;!--</xsl:text>
+								<xsl:value-of disable-output-escaping="yes" select="app_css"/>
+							<xsl:text>--></xsl:text>
+						</style>
+					</xsl:when>
+				</xsl:choose>
 			</head>
 			<body onLoad="init();">
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
@@ -60,36 +70,9 @@
 							</table>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="2" valign="top">
-							<table width="100%" height="24" cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="7" class="menubar_left"> </td>
-									<td class="menubar" width="100%">
-										<table width="100%" height="24" cellpadding="0" cellspacing="0">
-											<tr>
-												<td width="33%" class="menubar">&nbsp;<xsl:value-of select="user_info_name"/></td>
-													<xsl:choose>
-														<xsl:when test="current_users">
-															<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
-															<td width="33%" class="menubar"><a href="{$url_current_users}"><xsl:value-of select="current_users"/></a></td>
-														</xsl:when>
-														<xsl:otherwise>
-															<td></td>
-														</xsl:otherwise>
-													</xsl:choose>
-												<td width="33%" align="right" class="menubar"><xsl:value-of select="user_info_date"/>&nbsp;</td>
-											</tr>
-										</table>
-									</td>
-									<td width="9" class="menubar_right"> </td>
-								</tr>
-							</table>
-						</td>
-					</tr>
 					<!-- END top_part -->
 					<tr valign="top">
-						<td>
+						<td rowspan="2">
 						<!-- BEGIN left_part -->
 							<table width="59" cellspacing="0" cellpadding="0" height="100%" valign="top">
 								<tr>
@@ -107,6 +90,18 @@
 							</table>
 						<!-- END left_part -->
 						</td>
+						<!-- BEGIN app_header -->
+						<td height="15">
+							<xsl:choose>
+								<xsl:when test="app_header">
+									<xsl:attribute name="class">app_header</xsl:attribute>
+									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
+								</xsl:when>
+							</xsl:choose>
+						</td>
+						<!-- END app_header -->
+					</tr>
+					<tr valign="top">
 						<td width="100%" height="100%" valign="top" align="center">
 							<xsl:choose>
 								<xsl:when test="msgbox_data">
@@ -138,31 +133,37 @@
 							</xsl:choose>
 						</td>
 					</tr>
-					<tr valign="top">
-						<td colspan="2" align="center" valign="top">
-						<!-- BEGIN bottom_part -->
-							<table width="100%" height="24" cellspacing="0" cellpadding="0">
-								<tr>
-									<td width="7" class="menubar_left"> </td>
-									<td class="menubar" width="100%"> </td>
-									<td width="9" class="menubar_right"> </td>
-								</tr>
-							</table>
-						</td>
-					</tr>
 					<tr>
 						<td class="top" height="20" colspan="2" align="center">
-							<xsl:value-of select="lang_powered_by"/>
-							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">
-								<xsl:attribute name="onMouseover">
-									<xsl:text>window.status='</xsl:text>
-									<xsl:value-of select="lang_phpgw_statustext"/>
-									<xsl:text>'; return true;</xsl:text>
-								</xsl:attribute>
-								<xsl:text> phpGroupWare </xsl:text>
-							</a>
-							<xsl:text> </xsl:text><xsl:value-of select="lang_version"/><xsl:text> </xsl:text><xsl:value-of select="phpgw_version"/>
-						<!-- END bottom_part -->
+							<!-- BEGIN bottom_part -->
+							<table width="100%" cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<td align="left" width="30%" class="info">
+										<xsl:value-of select="user_info"/>
+									</td>
+									<td align="center" width="30%" class="info">
+										<xsl:choose>
+											<xsl:when test="current_users">
+											<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
+												<a href="{$url_current_users}" class="info"><xsl:value-of select="current_users"/></a>
+											</xsl:when>
+										</xsl:choose>
+									</td>
+									<td align="right" width="30%" class="info">
+										<xsl:value-of select="lang_powered_by"/>
+										<a href="http://www.phpgroupware.org" class="info" target="blank" onMouseout="window.status='';return true;">
+											<xsl:attribute name="onMouseover">
+												<xsl:text>window.status='</xsl:text>
+												<xsl:value-of select="lang_phpgw_statustext"/>
+												<xsl:text>'; return true;</xsl:text>
+											</xsl:attribute>
+											<xsl:text> phpGroupWare </xsl:text>
+										</a>
+										<xsl:text> </xsl:text><xsl:value-of select="lang_version"/><xsl:text> </xsl:text><xsl:value-of select="phpgw_version"/>
+									</td>
+								</tr>
+							</table>
+							<!-- END bottom_part -->
 						</td>
 					</tr>
 				</table>

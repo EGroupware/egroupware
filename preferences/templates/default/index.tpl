@@ -1,5 +1,5 @@
 <!-- BEGIN list -->
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<table border="0" width="75%" cellspacing="0" cellpadding="0">
  <tr>
   <td align="left">{tabs}</td>
  </tr>

@@ -43,6 +43,16 @@
 				<script type="text/javascript" language="javascript" src="{$webserver_url}/phpgwapi/templates/idsociety/scripts.js"></script>
 				<link rel="stylesheet" type="text/css" href="{$phpgw_css_file}"/>
 				<link rel="stylesheet" type="text/css" href="{$theme_css_file}"/>
+				<xsl:value-of disable-output-escaping="yes" select="java_script"/>
+				<xsl:choose>
+					<xsl:when test="app_css">
+						<style type="text/css">
+							<xsl:text>&lt;!--</xsl:text>
+								<xsl:value-of disable-output-escaping="yes" select="app_css"/>
+							<xsl:text>--></xsl:text>
+						</style>
+					</xsl:when>
+				</xsl:choose>
 			</head>
 			<body onLoad="{$onload}">
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
@@ -95,7 +105,7 @@
 						</td>
 					</tr>
 					<tr valign="top">
-						<td>
+						<td rowspan="2">
 						<!-- BEGIN left_part -->
 							<table cellspacing="0" cellpadding="0" valign="top" class="left" height="100%">
 								<xsl:apply-templates select="applications"/>
@@ -105,6 +115,18 @@
 							</table>
 						<!-- END left_part -->
 						</td>
+						<!-- BEGIN app_header -->
+						<td height="15">
+							<xsl:choose>
+								<xsl:when test="app_header">
+									<xsl:attribute name="class">app_header</xsl:attribute>
+									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
+								</xsl:when>
+							</xsl:choose>
+						</td>
+						<!-- END app_header -->
+					</tr>
+					<tr valign="top">
 						<td width="100%" height="100%" valign="top" align="center">
 							<xsl:choose>
 								<xsl:when test="msgbox_data">

@@ -37,6 +37,16 @@
 				<title><xsl:value-of select="website_title"/></title>
 				<link rel="stylesheet" type="text/css" href="{$phpgw_css_file}"/>
 				<link rel="stylesheet" type="text/css" href="{$theme_css_file}"/>
+				<xsl:value-of disable-output-escaping="yes" select="java_script"/>
+				<xsl:choose>
+					<xsl:when test="app_css">
+						<style type="text/css">
+							<xsl:text>&lt;!--</xsl:text>
+								<xsl:value-of disable-output-escaping="yes" select="app_css"/>
+							<xsl:text>--></xsl:text>
+						</style>
+					</xsl:when>
+				</xsl:choose>
 			</head>
 			<body>
 				<!-- BEGIN top_part -->
@@ -74,7 +84,7 @@
 				<!-- END top_part -->
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 					<tr valign="top" width="100%">
-						<td width="17%">
+						<td width="17%" rowspan="2">
 						<!-- BEGIN left_part -->
 							<table valign="top" cellpadding="2" cellspacing="2">
 								<xsl:apply-templates select="applications"/>
@@ -84,6 +94,18 @@
 							</table>
 						<!-- END left_part -->
 						</td>
+						<!-- BEGIN app_header -->
+						<td height="15" colspan="2">
+							<xsl:choose>
+								<xsl:when test="app_header">
+									<xsl:attribute name="class">app_header</xsl:attribute>
+									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
+								</xsl:when>
+							</xsl:choose>
+						</td>
+						<!-- END app_header -->
+					</tr>
+					<tr valign="top">
 						<td height="100%" width="80%" valign="top" align="center">
 							<xsl:choose>
 								<xsl:when test="msgbox_data">

@@ -25,7 +25,7 @@ a:hover
 	background-color: #486591;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #fefefe;
 }
@@ -40,7 +40,7 @@ a:hover
 	background-color: #FFFFFF;
 }
 
-.th
+.th,.app_header
 {
 	background-color: #486591;
 }

@@ -1,5 +1,3 @@
-<b>{lang_title}</b>
-<hr>
 <br>
 <center><b>{messages}</b></center>
 

@@ -18,7 +18,7 @@ a:hover
 	color: #cc0000;
 }
 
-.navbar,.th
+.navbar,.th,.app_header
 {
 	background-color: #80BBFF;
 }
@@ -34,7 +34,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #CCEEFF;
 }
@@ -63,4 +63,9 @@ a:hover
 {
 	background-color: #7090FF;
 	color: #FFFFFF;
+}
+
+a.info,.info
+{
+	font-weight: bold;
 }

@@ -39,7 +39,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #CCCCFF;
 }
@@ -49,7 +49,7 @@ a:hover
 	background-color: #E4DFFF;
 }
 
-.th
+.th,.bottom
 {
 	background-color: #9999FF;
 }

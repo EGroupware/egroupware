@@ -28,7 +28,7 @@ a:active,a:hover
 	color: black;
 }
 
-.navbar,.th
+.navbar,.th,.bottom
 {
 	background-color: #aaaaaa;
 	color: #000000;
@@ -50,7 +50,7 @@ a:active,a:hover
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright,.app_header
+.row_on,.th_bright
 {
 	background-color: #eeeeee;
 }

@@ -1,4 +1,4 @@
-<b>{lang_changepassword}</b><hr><p>
+<br>
 
    <center>{messages}</center>
 
@@ -22,7 +22,10 @@
      </tr>
      <tr>
        <td colspan="2">
-        <input type="submit" name="submit" value="{lang_change}">
+        <table cellspacing="5"><tr>
+         <td><input type="submit" name="change" value="{lang_change}"></td>
+         <td><input type="submit" name="cancel" value="{lang_cancel}"></td>
+        </tr></table>
        </td>
      </tr>
     </table>
