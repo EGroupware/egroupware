@@ -1,463 +1,161 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - smtp mailer                                             *
-  * This file written by Itzchak Rehberg <izzysoft@qumran.org>               *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * This module should replace php's mail() function. It is fully syntax     *
-  * compatible. In addition, when an error occures, a detailed error info    *
-  * is stored in the array $send->err (see ../inc/email/global.inc.php for   *
-  * details on this variable).                                               *
-  * Copyright (C) 2000, 2001 Itzchak Rehberg                                 *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+/**************************************************************************\
+* eGroupWare API - smtp mailer using PHPMailer                             *
+* This file written by RalfBecker@outdoor-training.de                      *
+* ------------------------------------------------------------------------ *
+* This library is free software; you can redistribute it and/or modify it  *
+* under the terms of the GNU Lesser General Public License as published by *
+* the Free Software Foundation; either version 2.1 of the License,         *
+* or any later version.                                                    *
+* This library is distributed in the hope that it will be useful, but      *
+* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+* See the GNU Lesser General Public License for more details.              *
+* You should have received a copy of the GNU Lesser General Public License *
+* along with this library; if not, write to the Free Software Foundation,  *
+* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+\**************************************************************************/
 
-  /* $Id$ */
+/* $Id$ */
 
-	class send
+require_once(PHPGW_API_INC.'/class.phpmailer.inc.php');
+
+class send extends PHPMailer 
+{
+	var $err    = array();
+	var $to_res = array();
+	
+	/**
+	 * eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
+	 *
+	 * To be able to call PHPMailer's Send function, we check if a subject, body or address is set and call it in that case,
+	 * else we do our constructors work.
+	 */
+	function send()
 	{
-		var $err    = array('code','msg','desc');
-		var $to_res = array();
-
-		function send()
+		if ($this->Subject || $this->Body || count($this->to))
 		{
-			$this->err['code'] = ' ';
-			$this->err['msg']  = ' ';
-			$this->err['desc'] = ' ';
-			$this->charset = $GLOBALS['phpgw']->translation->charset();
+			return PHPMailer::Send();
 		}
-
-		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
+		$this->CharSet = $GLOBALS['phpgw']->translation->charset();
+		list($lang,$nation) = explode('-',$GLOBALS['phpgw_info']['user']['preferences']['common']['lang']);
+		$lang_path = PHPGW_SERVER_ROOT.'/phpgwapi/setup/';
+		if ($nation && file_exists($lang_path."phpmailer.lang-$nation.php"))	// atm. only for pt-br => br
 		{
-			if ($from == '')
+			$lang = $nation;
+		}
+		$this->SetLanguage($lang,$lang_path);
+		
+		$this->IsSmtp();
+		$this->Host = $GLOBALS['phpgw_info']['server']['smtp_server']?$GLOBALS['phpgw_info']['server']['smtp_server']:'localhost';
+		$this->Port = $GLOBALS['phpgw_info']['server']['smtp_port']?$GLOBALS['phpgw_info']['server']['smtp_port']:25;
+		
+		$this->Hostname = $GLOBALS['phpgw_info']['server']['hostname'];
+	}
+		
+	/**
+	 * Reset all Settings to send multiple Messages
+	 */
+	function ClearAll()
+	{
+		$this->err = array();
+	
+		$this->Subject = $this->Body = $this->AltBody = '';
+		$this->IsHTML(False);
+		$this->ClearAllRecipients();
+		$this->ClearAttachments();
+		$this->ClearCustomHeaders();
+			
+		$this->FromName = $GLOBALS['phpgw_info']['user']['fullname'];
+		$this->From = $GLOBALS['phpgw_info']['user']['email'];
+		$this->Sender = '';
+		
+		$this->AddCustomHeader('X-Mailer:eGroupWare (http://www.eGroupWare.org)');
+	}
+	
+	/**
+	 * Emulating the old send::msg interface for compatibility with existing code
+	 *
+	 * You can either use that code or the PHPMailer variables and methods direct.
+	 */
+	function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
+	{
+		echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
+		$this->ClearAll();	// reset everything to its default, we might be called more then once !!!
+	
+		if ($service != 'email')
+		{
+			return False;
+		}
+		if ($from)
+		{
+			if (preg_match('/"?(.+)"?<(.+)>/',$from,$matches))
 			{
-				$from = $GLOBALS['phpgw_info']['user']['fullname'].' <'.$GLOBALS['phpgw_info']['user']['preferences']['email']['address'].'>';
+				list(,$this->FromName,$this->From) = $matches;
 			}
-			if ($sender == '')
+			else
 			{
-				$sender = $GLOBALS['phpgw_info']['user']['fullname'].' <'.$GLOBALS['phpgw_info']['user']['preferences']['email']['address'].'>';
+				$this->From = $from;
+				$this->FromName = '';
 			}
-
-			if ($service == "email")
+		}
+		if ($sender)
+		{
+			$this->Sender = $sender;
+		}
+		foreach(array('to','cc','bcc') as $adr)
+		{
+			if ($$adr)
 			{
-				$now = getdate();
-				$header  = 'Date: '.gmdate('D, d M Y H:i:s').' +0000'."\n";
-				$header .= 'From: '.$from."\n";
-				if($from != $sender)
+				if (preg_match_all('/"?(.+)"?<(.+)>,?/',$$adr,$matches))
 				{
-					$header .= 'Sender: '.$sender."\n";
-				}
-				$header .= 'Reply-To: '.$GLOBALS['phpgw_info']['user']['preferences']['email']['address']."\n";
-				$header .= 'To: '.$to."\n";
-				if (!empty($cc))
-				{
-					$header .= 'Cc: '.$cc."\n";
-				}
-				if (!empty($bcc))
-				{
-					$header .= 'Bcc: '.$bcc."\n";
-				}
-				if (!empty($msgtype))
-				{
-					$header .= 'X-phpGW-Type: '.$msgtype."\n";
-				}
-				$header .= 'X-Mailer: eGroupWare (http://www.egroupware.org)'."\n";
-
-				/* // moved to email/send_message.php
-				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['email_sig'] && $attach_sig)
-				{
-					//$body .= "\n-----\n".$GLOBALS['phpgw_info']['user']['preferences']['email']['email_sig'];
-					$get_sig = $this->sig_html_to_text($GLOBALS['phpgw_info']['user']['preferences']['email']['email_sig']);
-					$body .= "\n-----\n" .$get_sig;
-				}
-				*/
-
-				if (empty($content_type))
-				{
-					$content_type ='plain';
-				}
-
-				if (ereg($boundary, $body)) 
-				{
-					$header .= 'Subject: ' . stripslashes($subject) . "\n"
-						. 'MIME-Version: 1.0'."\n"
-						. 'Content-Type: multipart/mixed;'."\n"
-						. " boundary=\"$boundary\"\n\n"
-						. "--$boundary\n"
-						. 'Content-type: text/' .$content_type . '; charset="'.$this->charset.'"'."\n";
-//					if (!empty($msgtype))
-//					{
-//						$header .= "Content-type: text/' .$content_type . '; phpgw-type=".$msgtype."\n";
-//					}
-
-					$header .= 'Content-Disposition: inline'."\n"
-						. 'Content-transfer-encoding: 7BIT'."\n\n"
-						. $body;
-					$body = "";
+					$names = $matches[1];
+					$addresses = $matches[2];
 				}
 				else
 				{
-					$header .= 'Subject: '.stripslashes($subject)."\n"
-						. 'MIME-version: 1.0'."\n"
-						. 'Content-type: text/' .$content_type . '; charset="'.$this->charset.'"'."\n";
-					if (!empty($msgtype))
-					{
-						$header .= 'Content-type: text/' .$content_type . '; phpgw-type='.$msgtype."\n";
-					}
-					$header .= 'Content-Disposition: inline'."\n"
-						. 'Content-description: Mail message body'."\n";
-				}
-				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['mail_server_type'] == 'imap' && $GLOBALS['phpgw_info']['user']['apps']['email'] &&
-				    $GLOBALS['phpgw_info']['user']['preferences']['email']['use_sent_folder'])
+					$addresses = split('[, ]',$$adr);
+					$names = array();
+				}					
+				$method = 'Add'.($adr == 'to' ? 'Address' : $adr);
+	
+				foreach($addresses as $n => $address)
 				{
-					if(!is_object($GLOBALS['phpgw']->msg))
-					{
-						$GLOBALS['phpgw']->msg = CreateObject('email.mail_msg');
-					}
-					$args_array = Array();
-					$args_array['do_login'] = True;
-					$args_array['folder'] = $GLOBALS['phpgw_info']['user']['preferences']['email']['sent_folder_name'];
-					$GLOBALS['phpgw']->msg->begin_request($args_array);
-					$GLOBALS['phpgw']->msg->phpgw_append('Sent', $header."\n".$body, "\\Seen");
-					$GLOBALS['phpgw']->msg->end_request();
+					$this->$method($address,$names[$n]);
 				}
-				if (strlen($cc)>1)
-				{
-					$to .= ','.$cc;
-				}
-
-				if (strlen($bcc)>1)
-				{
-					$to .= ','.$bcc;
-				}
-				$returnccode = $this->smail($to, '', $body, $header);
-
-				return $returnccode;
-			}
-			elseif ($type == 'nntp')
-			{
-				// nothing is here?
 			}
 		}
-
-		// ==================================================[ some sub-functions ]===
-
-		/*!
-		@function encode_subject
-		@abstract encode 8-bit chars in subject-line
-		@author ralfbecker
-		@note the quoted subjects get a header stateing the charset (eg. "=?iso-8859-1?Q?"), the \
-			8-bit chars as '=XX' (XX is the hex-representation of the char) and a trainling '?='.
-		*/
-		function encode_subject($subject)
+		if (!empty($msgtype))
 		{
-			// remove unnecessary CR's as some mail-scanners complain about them
-			$subject = str_replace("\r",'',$subject);
-
-			$enc_start = $enc_end = 0;
-
-			$words = explode(' ',$subject);
-			foreach($words as $w => $word)
-			{
-				$str = '';
-
-				for ($i = 0; $i < strlen($word); ++$i)
-				{
-					if (($n = ord($word[$i])) > 127 || $word[$i] == '=') {
-						$str .= sprintf('=%0X',$n);
-						if (!$enc_start)
-						{
-							$enc_start = $w+1;
-						}
-						$enc_end = $w+1;
-					}
-					else
-					{
-						$str .= $word[$i];
-					}
-				}
-				$strs[] = $str;
-				//echo "word='$word', start=$enc_start, end=$enc_end, encoded='$str'<br>\n";
-			}
-			if (!$enc_start)
-			{
-				return $subject;
-			}
-			$str = '';
-			foreach ($strs as $w => $s)
-			{
-				$str .= $str != '' ? ' ' : '';
-
-				if ($enc_start == $w+1)	// first word to encode
-				{
-					$str .= '=?'.$this->charset.'?Q?';
-				}
-				$str .= $w+1 > $enc_end ? str_replace('=3D','=',$s) : $s;
-
-				if ($enc_end == $w+1)	// last word to encode
-				{
-					$str .= '?=';
-				}
-			}
-			//echo "<p>send::encode_subject('$subject')='$str'</p>\n";
-			return $str;
+			$this->AddCustomHeader('X-eGW-Type: '.$msgtype);
 		}
-
-		function socket2msg($socket)
+		if ($content_type)
 		{
-			$followme = '-';
-			$this->err['msg'] = '';
-			do
-			{
-				$rmsg = fgets($socket,255);
-				// echo "< $rmsg<BR>\n";
-				$this->err['code'] = substr($rmsg,0,3);
-				$followme = substr($rmsg,3,1);
-				$this->err['msg'] = substr($rmsg,4);
-				if (substr($this->err["code"],0,1) != 2 && substr($this->err["code"],0,1) != 3)
-				{
-					$rc  = fclose($socket);
-					return False;
-				}
-				if ($followme = ' ')
-				{
-					break;
-				}
-			}
-			while ($followme = '-');
-			return True;
+			$this->ContentType = $content_type;
 		}
-
-		function msg2socket($socket,$message)
+		$this->Subject = $subject;
+		$this->Body = $body;
+	
+		echo "PHPMailer = <pre>".print_r($this,True)."</pre>\n";
+		if (!$this->Send())
 		{
-			// send single line\n
-			// echo "raw> $message<BR>\n";
-			// echo "hex> ".bin2hex($message)."<BR>\n";
-			$rc = fputs($socket,"$message");
-			if (!$rc)
-			{
-				$this->err['code'] = '420';
-				$this->err['msg']  = 'lost connection';
-				$this->err['desc'] = 'Lost connection to smtp server.';
-				$rc  = fclose($socket);
-				return False;
-			}
-			return True;
-		}
-
-		function put2socket($socket,$message)
-		{
-			// check for multiple lines 1st
-			$pos = strpos($message,"\n");
-			if (!is_int($pos))
-			{
-				// no new line found
-				$message .= "\r\n";
-				$this->msg2socket($socket,$message);
-			}
-			else
-			{
-				// multiple lines, we have to split it
-				do
-				{
-					$msglen = $pos + 1;
-					$msg = substr($message,0,$msglen);
-					$message = substr($message,$msglen);
-					$pos = strpos($msg,"\r\n");
-					if (!is_int($pos))
-					{
-						// line not terminated
-						$msg = chop($msg)."\r\n";
-					}
-					$pos = strpos($msg,'.');  // escape leading periods
-					if (is_int($pos) && !$pos)
-					{
-						$msg = '.' . $msg;
-					}
-					if (!$this->msg2socket($socket,$msg))
-					{
-						return False;
-					}
-					$pos = strpos($message,"\n");
-				}
-				while (strlen($message)>0);
-			}
-			return True;
-		}
-
-		function check_header($subject,$header)
-		{
-			// check if header contains subject and is correctly terminated
-			$header = chop($header);
-			$header .= "\n";
-			if (is_string($subject) && !$subject)
-			{
-				// no subject specified
-				return $header;
-			}
-			$theader = strtolower($header);
-			$pos  = strpos($theader,"\nsubject:");
-			if (is_int($pos))
-			{
-				// found after a new line
-				return $header;
-			}
-			$pos = strpos($theader,'subject:');
-			if (is_int($pos) && !$pos)
-			{
-				// found at start
-				return $header;
-			}
-			$pos = substr($subject,"\n");
-			if (!is_int($pos))
-			{
-				$subject .= "\n";
-			}
-			$subject = 'Subject: ' .$subject;
-			$header .= $subject;
-			return $header;
-		}
-
-		function sig_html_to_text($sig)
-		{
-			// convert HTML chars for  '  and  "  in the email sig to normal text
-			$sig_clean = $sig;
-			$sig_clean = ereg_replace('&quot;', '"', $sig_clean);
-			$sig_clean = ereg_replace('&#039;', '\'', $sig_clean);
-			return $sig_clean;
-		}
-
- // ==============================================[ main function: smail() ]===
-
-		function smail($to,$subject,$message,$header)
-		{
-			$fromuser = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
-			$mymachine = $GLOBALS['phpgw_info']['server']['hostname'];
-			// error code and message of failed connection
-			$errcode = '';
-			$errmsg = '';
-			// timeout in secs
-			$timeout = 5;
-
-			// now we try to open the socket and check, if any smtp server responds
-			$smtp_port = $GLOBALS['phpgw_info']['server']['smtp_port'] ? $GLOBALS['phpgw_info']['server']['smtp_port'] : 25;
-			$socket = fsockopen($GLOBALS['phpgw_info']['server']['smtp_server'],$smtp_port,$errcode,$errmsg,$timeout);
-			if (!$socket)
-			{
-				$this->err['code'] = '420';
-				$this->err['msg']  = $errcode . ':' . $errmsg;
-				$this->err['desc'] = 'Connection to '.$GLOBALS['phpgw_info']['server']['smtp_server'].':'.$GLOBALS['phpgw_info']['server']['smtp_port'].' failed - could not open socket.';
-				return False;
-			}
-			else
-			{
-				$rrc = $this->socket2msg($socket);
-			}
-
-			// now we can send our message. 1st we identify ourselves and the sender
-			$cmds = array (
-				"\$src = \$this->msg2socket(\$socket,\"HELO \$mymachine\r\n\");",
-				"\$rrc = \$this->socket2msg(\$socket);",
-				"\$src = \$this->msg2socket(\$socket,\"MAIL FROM:<\$fromuser>\r\n\");",
-				"\$rrc = \$this->socket2msg(\$socket);"
+			$this->err = array(
+				'code' => 1,	// we dont get a numerical code from PHPMailer
+				'msg'  => $this->ErrorInfo,
+				'desc' => $this->ErrorInfo,
 			);
-			for ($src=True,$rrc=True,$i=0; $i<count($cmds);$i++)
-			{
-				eval ($cmds[$i]);
-				if (!$src || !$rrc)
-				{
-					return False;
-				}
-			}
-
-			// now we've got to evaluate the $to's
-			$toaddr = explode(",",$to);
-			$numaddr = count($toaddr);
-			for ($i=0; $i<$numaddr; $i++)
-			{
-				$src = $this->msg2socket($socket,'RCPT TO:<'.$toaddr[$i].">\r\n");
-				$rrc = $this->socket2msg($socket);
-				// for lateron validation
-				$this->to_res[$i]['addr'] = $toaddr[$i];
-				$this->to_res[$i]['code'] = $this->err['code'];
-				$this->to_res[$i]['msg']  = $this->err['msg'];
-				$this->to_res[$i]['desc'] = $this->err['desc'];
-			}
-
-			//now we have to make sure that at least one $to-address was accepted
-			$stop = 1;
-			for ($i=0;$i<count($this->to_res);$i++)
-			{
-				$rc = substr($this->to_res[$i]['code'],0,1);
-				if ($rc == 2)
-				{
-					// at least to this address we can deliver
-					$stop = 0;
-				}
-			}
-			if ($stop)
-			{
-				// no address found we can deliver to
-				return False;
-			}
-
-			// now we can go to deliver the message!
-			if (!$this->msg2socket($socket,"DATA\r\n"))
-			{
-				return False;
-			}
-			if (!$this->socket2msg($socket))
-			{
-				return False;
-			}
-			if ($header != "")
-			{
-				$header = $this->check_header($subject,$header);
-				if (!$this->put2socket($socket,$header))
-				{
-					return False;
-				}
-				if (!$this->put2socket($socket,"\r\n"))
-				{
-					return False;
-				}
-			}
-			$message  = chop($message);
-			$message .= "\n";
-			if (!$this->put2socket($socket,$message))
-			{
-				return False;
-			}
-			if (!$this->msg2socket($socket,".\r\n"))
-			{
-				return False;
-			}
-			if (!$this->socket2msg($socket))
-			{
-				return False;
-			}
-			if (!$this->msg2socket($socket,"QUIT\r\n"))
-			{
-				return False;
-			}
-			do
-			{
-				$closing = $this->socket2msg($socket);
-			}
-			while ($closing);
-			return True;
+			return False;
 		}
-	} /* end of class */
+		return True;
+	}
+	
+	/**
+	 * encode 8-bit chars in subject-line
+	 *
+	 * This is not needed any more, as it is done be PHPMailer, but older code depend on it.
+	 */
+	function encode_subject($subject)
+	{
+		return $subject;
+	}
+}
