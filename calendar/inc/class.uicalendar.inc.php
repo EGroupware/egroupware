@@ -2156,7 +2156,8 @@
 			$overlap = '';
 			for($i=0;$i<count($overlapping_events);$i++)
 			{
-				$overlap .= '<li>'.$this->link_to_entry($this->bo->read_entry($overlapping_events[$i]),$month,$mday,$year);
+				$overlapped_event = $this->bo->read_entry($overlapping_events[$i])
+				$overlap .= '<li> ['.$GLOBALS['phpgw']->common->grab_owner_name($overlapped_event['owner']).'] '.$this->link_to_entry($overlapped_event,$month,$mday,$year);
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
