@@ -29,3 +29,13 @@
     <td>LDAP context for contacts:</td>
     <td><input name="newsettings[ldap_contact_context]" value="<?php echo $current_config["ldap_contact_context"]; ?>" size="40"></td>
    </tr>
+  <tr bgcolor="e6e6e6">
+   <td>LDAP root dn for contacts:</td>
+   <? if (!$current_config["ldap_contact_dn"]) { $current_config["ldap_contact_dn"] = $current_config["ldap_root_dn"]; } ?>
+   <td><input name="newsettings[ldap_contact_dn]" value="<?php echo $current_config["ldap_contact_dn"]; ?>"></td>
+  </tr>
+  <tr bgcolor="e6e6e6">
+   <td>LDAP root pw for contacts:</td>
+   <? if (!$current_config["ldap_contact_pw"]) { $current_config["ldap_contact_pw"] = $current_config["ldap_root_pw"]; } ?>
+   <td><input name="newsettings[ldap_contact_pw]" value="<?php echo $current_config["ldap_contact_pw"]; ?>"></td>
+  </tr>
