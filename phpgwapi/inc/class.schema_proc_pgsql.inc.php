@@ -392,8 +392,14 @@
 						$sSQL .= ',';
 					}
 
-					if($oProc->m_odb->f($name) != null)
+					// !isset($arraydef['nullable']) means nullable !!!
+					if($oProc->m_odb->f($name) == NULL && (!isset($arraydef['nullable']) || $arraydef['nullable']))
 					{
+						$sSQL .= 'NULL';
+					}
+					else
+					{
+						$value = $oProc->m_odb->f($name) != NULL ? $oProc->m_odb->f($name) : @$arraydef['default'];
 						switch($arraydef['type'])
 						{
 							case 'blob':
@@ -406,17 +412,6 @@
 								break;
 							default:
 								$sSQL .= (int)$oProc->m_odb->f($name);
-						}
-					}
-					else
-					{
-						if(isset($arraydef['nullable']) && $arraydef['nullable'])
-						{
-							$sSQL .= 'null';
-						}
-						else
-						{
-							$sSQL .= "''";
 						}
 					}
 					$i++;
