@@ -28,6 +28,12 @@
 		var $oProc;
 		var $tables;
 		var $updateincluded = array();
+		var $translation;
+
+ 		function setup_process()
+		{
+			$this->translation = CreateObject('phpgwapi.setup_translation');
+		}
 
 		/*!
 		@function init_process
