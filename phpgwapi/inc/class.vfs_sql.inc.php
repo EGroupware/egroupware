@@ -2022,7 +2022,15 @@
 						$sql .= ', ';
 					}
 
-					$sql .= "$attribute='" . $this->clean_string (array ('string' => $data['attributes'][$attribute])) . "'";
+					// RalfBecker 2004/07/24:
+					// this is only a hack to fix bug [ 991222 ] Error uploading file
+					// the whole class need to be reworked with the new db-functions 
+					if (!isset($this->column_defs))
+					{
+						$table_defs = $GLOBALS['phpgw']->db->get_table_definitions('phpgwapi','phpgw_vfs');
+						$this->column_defs = $table_defs['fd'];
+					}
+					$sql .= $attribute.'=' .$GLOBALS['phpgw']->db->quote($data['attributes'][$attribute],$this->column_defs[$attribute]['type']);
 
 					$change_attributes++;
 				}
@@ -2032,7 +2040,7 @@
 			{
 				return True;	// nothing to do
 			}
-			$sql .= " WHERE file_id='$record[file_id]'";
+			$sql .= ' WHERE file_id='.(int) $record['file_id'];
 			$sql .= $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE));
 			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
