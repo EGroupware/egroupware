@@ -1,0 +1,94 @@
+%1 already exists as a file		sl	%1 že obstaja kot datoteka.
+application		sl	Aplikacija
+back to file manager		sl	Nazaj v upravljalca datotek
+cannot create directory because it begins or ends in a space		sl	Ne morem ustvariti mape, ker se njeno ime za&#269;ne ali kon&#269;a s presledkom.
+cannot replace %1 because it is a directory		sl	Ne morem nadomestiti %1, ker je mapa.
+command sucessfully run		sl	Ukaz je bil uspešno izveden.
+comment		sl	Komentar
+comments cannot contain "%1"		sl	Komentarji ne smejo vsebovati "%1".
+copied %1 to %2		sl	%1 prekopirano v %2.
+copy to		sl	Kopiraj v
+copy to:		sl	Kopiraj v:
+could not copy %1 to %2		sl	Ne morem kopirati %1 v %2.
+could not create %1		sl	Ne morem ustvariti %1
+could not create directory %1		sl	Ne morem ustvariti mape %1
+could not delete %1		sl	Ne morem izbrisati %1
+could not move %1 to %2		sl	Ne morem prenesti %1 v %2
+could not rename %1 to %2		sl	Ne morem preimenovati %1 v %2
+could not save %1		sl	Ne morem shraniti %1
+create file		sl	Ustvari datoteko
+create folder		sl	Ustvari mapo
+created		sl	Ustvarjeno
+created %1		sl	Ustvarjen %1
+created by		sl	Ustvaril
+created directory %1		sl	Ustvarjena mapa %1
+date		sl	Datum
+default number of upload fields to show		sl	Privzeto število datotek za prikaz na seznamu
+delete		sl	Briši
+deleted %1		sl	Izbrisano %1
+directory		sl	Mapa
+directory %1 already exists		sl	Mapa %1 že obstaja
+directory %1 does not exist		sl	Mapa %1 ne obstaja
+directory names cannot contain "%1"		sl	Imena map ne smejo vsebovati "%1"
+display attributes		sl	Prikaži atribute
+download		sl	Prenesi
+edit		sl	Uredi
+edit comments		sl	Uredi komentarje
+error running command		sl	Napaka pri izvajanju ukaza
+execute		sl	Izvedi
+failed to create directory		sl	Nisem uspel ustvariti mape
+file		sl	Datoteka
+file %1 already exists. please edit it or delete it first.		sl	Datoteka %1 že obstaja. Prosim, &#269;e uredite obstoje&#269;o razli&#269;ico, ali pa jo izbrišete.
+file %1 could not be created.		sl	Ne morem ustvariti datoteke %1.
+file name		sl	Ime datoteke
+file names cannot contain "%1"		sl	Imena datotek ne smejo vsebovati "%1"
+file names cannot contain \ or /		sl	Imena datotek ne smejo vsebovati \ ali /
+filemanager		sl	Upravljalec datotek
+filemanager preferences		sl	Nastavitve Upravljalca datotek
+files		sl	Datoteke
+folder		sl	Mapa
+go to		sl	Pojdi na
+go to %1		sl	Pojdi na %1
+go to your home directory		sl	Pojdi na doma&#269;o mapo
+go to:		sl	Pojdi na:
+home		sl	Domov
+locked		sl	Zaklenjen
+mime type		sl	MIME tip
+modified		sl	Spremenjeno
+modified by		sl	Spremenil
+move to		sl	Premakni v
+move to:		sl	Premakni v:
+moved %1 to %2		sl	%1 je bilo premaknjeno v %2
+no version history for this file/directory		sl	Ni zgodovine razli&#269;ic za to datoteko/mapo.
+operation		sl	Operacija
+owner		sl	Lastnik
+preview %1		sl	Predogled %1
+preview of %1		sl	Predogled %1
+rename		sl	Preimenuj
+renamed %1 to %2		sl	%1 je bilo preimenovano v %2
+replaced %1		sl	Zamenjana %1
+save %1		sl	Shrani %1
+save all		sl	Shrani vse
+saved %1		sl	Shranjen %1
+show		sl	Prikaži
+show ..		sl	Prikaži ..
+show .files		sl	Prikaži .datoteke
+show command line (experimental. dangerous.)		sl	Prikaži ukazno vrstico (POIZKUSNO. NEVARNO.)
+show help		sl	Prikaži pomo&#269;
+size		sl	Velikost
+sort by:		sl	Uredi po:
+total files		sl	Vseh datotek
+unknown mime-type defaults to text/plain when viewing		sl	Neznani MIME tip se pri pregledovanju obravnava kot text/plain
+unused space		sl	Neuporabljen prostor
+up		sl	Navzgor
+update		sl	Osveži
+updated comment for %1		sl	Komentar za %1 je bil osvežen
+upload fields		sl	polja za nalaganje
+upload files		sl	Naloži datoteke
+used space		sl	Neuporabljen prostor
+users		sl	Uporabniki
+version		sl	Razli&#269;ica
+view documents in new window		sl	Preglej doumente v novem oknu
+view documents on server (if available)		sl	Preglej dokument na strežniku (&#269;e je mogo&#269;e)
+who		sl	Kdo
+you do not have access to %1		sl	Nimate dostopa do %1
