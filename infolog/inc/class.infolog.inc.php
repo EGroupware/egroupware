@@ -389,7 +389,7 @@
 				}
 			}
 			if ($values['info_id']) {
-				$query = 'update info set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
+				$query = 'update infolog set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
 			} else {
 				$query = 'insert INTO infolog set '.$query;
 				/*
