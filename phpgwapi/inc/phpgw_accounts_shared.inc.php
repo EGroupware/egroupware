@@ -52,9 +52,8 @@
        $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
                                                                  // database for security.
 
-       $db->query("update phpgw_sessions set session_info='" . serialize($phpgw_info_temp)
+       $db->query("update phpgw_sessions set session_info='" . addslashes(serialize($phpgw_info_temp))
                 . "' where session_id='" . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
-
     }
 
     function add_app($appname,$rebuild = False)
