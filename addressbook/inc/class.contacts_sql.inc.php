@@ -252,7 +252,7 @@
 
 		// send this the range, query, sort, order and whatever fields you want to see
 		// 'rights' is unused at this time
-		function read($start,$offset,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
+		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -346,6 +346,20 @@
 				echo "<br>DEBUG - $ordermethod";
 			}
 
+			// This logic allows you to limit rows, or not.
+			// The export feature, for example, does not limit rows.
+			// This way, it can retrieve all rows at once.
+			if ($start && $offset) {
+				$limit = $this->db->limit($start,$offset);
+			} elseif ($start && !$offset) {
+				$limit = "";
+			} elseif(!$start && !$offset) {
+				$limit = "";
+			} else { #(!$start && $offset) {
+				$start = 0;
+				$limit = $this->db->limit($start,$offset);
+			}
+
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
 			if ($query) {
@@ -365,14 +379,14 @@
 					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
 					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
-					. $this->db->limit($start,$offset),__LINE__,__FILE__);
+					. $limit,__LINE__,__FILE__);
 			}  else  {
 				$this->db3->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod,__LINE__,__FILE__);
 				$this->total_records = $this->db3->num_rows();
 
 				$this->db->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
-				. $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
+				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
 			}
 
 			$i=0;
