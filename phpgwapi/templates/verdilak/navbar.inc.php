@@ -58,16 +58,15 @@
      }
      $tpl->set_var("logout_img",$ir . "/logout-grey.gif");
 
-/*     if ($phpgw_info["server"]["showpoweredbyon"] == "top") {
-        $tpl->set_var("powered_by",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
-     }
+     $tpl->set_var("powered_by",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
+
      if (isset($phpgw_info["navbar"]["admin"]) && isset($phpgw_info["user"]["preferences"]["common"]["show_currentusers"])) {
         $db  = $phpgw->db;
         $db->query("select count(*) from phpgw_sessions");
         $db->next_record();
         $tpl->set_var("current_users",'<a href="' . $phpgw->link("/admin/currentusers.php") . '">&nbsp;'
                                     . lang("Current users") . ': ' . $db->f(0) . '</a>');
-     } */
+     }
      $tpl->set_var("user_info",$phpgw->common->display_fullname() . " - "
                              . lang($phpgw->common->show_date(time(),"l")) . " "
                              . lang($phpgw->common->show_date(time(),"F")) . " "

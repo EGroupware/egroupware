@@ -16,4 +16,14 @@
    {applications}
   </td>
   <td width="100%">
+   <table border="0" cellspacing="1" cellpadding="1" width="100%">
+    <tr>
+     <td align="left">
+      {current_users}
+     </td>
+     <td align="right">
+      {powered_by}
+     </td>
+    </tr>
+   </table>
 <!-- END navbar -->
