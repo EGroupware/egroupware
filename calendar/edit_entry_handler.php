@@ -77,6 +77,7 @@
 
 	if(!isset($readsess))
 	{
+		$cal_info->set('access','');
 		for(reset($cal);$key=key($cal);next($cal))
 		{
 			$data = $cal[$key];

@@ -74,11 +74,13 @@
     <select name="filter" onchange="document.filtermethod.submit()">
      <option value="all"<?php if($filter=='all') echo ' selected'; ?>><?php echo lang('All'); ?></option>
      <option value="private"<?php if((!isset($filter) || !$filter) || $filter=='private') echo ' selected'; ?>><?php echo lang('Private Only'); ?></option>
+<!--
      <option value="public"<?php if($filter=='public') echo ' selected'; ?>><?php echo lang('Global Public Only'); ?></option>
      <option value="group"<?php if($filter=='group') echo ' selected'; ?>><?php echo lang('Group Public Only'); ?></option>
      <option value="private+public"<?php if($filter=='private+public') echo ' selected'; ?>><?php echo lang('Private and Global Public'); ?></option>
      <option value="private+group"<?php if($filter=='private+group') echo ' selected'; ?>><?php echo lang('Private and Group Public'); ?></option>
      <option value="public+group"<?php if($filter=='public+group') echo ' selected'; ?>><?php echo lang('Global Public and Group Public'); ?></option>
+-->
     </select>
     <NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang('Go!'); ?>"></NOSCRIPT></FONT>
    </td>

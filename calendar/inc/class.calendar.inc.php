@@ -20,46 +20,448 @@ include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']
 
 class calendar extends calendar_
 {
+	var $owner;
+	var $rights;
+	var $printer_friendly = False;
+
 	var $template_dir;
 	var $phpgwapi_template_dir;
 	var $image_dir;
+
+	var $filter;
+	var $repeating_events;
+	var $repeated_events = Array();
+	var $repeating_event_matches = 0;
+	var $sorted_events_matching = 0;
+	var $weekstarttime;
+	var $days = Array();
+
+	var $tempyear;
+	var $tempmonth;
+	var $tempday;
 
 	var $rowspan_arr = Array();
 	var $rowspan;
 
 	function calendar($params=False)
 	{
-	  global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info;
 	  
-	  if(gettype($params)=="array")
-	  {
-	    while(list($key,$value) = each($params))
-	    {
-		  $this->$key = $value;
-	    }
-	  }
-	  else
-	  {
-        $this->printer_friendly = $params;
-      }
+		if(gettype($params)=="array")
+		{
+			while(list($key,$value) = each($params))
+			{
+				$this->$key = $value;
+			}
+		}
+		else
+		{
+			$this->printer_friendly = $params;
+		}
 
-      if(!$this->owner)
-      {
-        $this->owner = $phpgw_info['user']['account_id'];
-      }
+		if(!$this->owner)
+		{
+			$this->owner = $phpgw_info['user']['account_id'];
+		}
       
-      if(!isset($this->rights))
-      {
-        $this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-      }
+		if(!isset($this->rights))
+		{
+			$this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+		}
 
 		$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
 		$this->phpgwapi_template_dir = $phpgw->common->get_image_path('phpgwapi');
 		$this->image_dir = $phpgw->common->get_image_path('calendar');
-      $this->today = $this->localdates(time());
+		$this->today = $this->localdates(time());
 
-      $this->open($this->owner);
-    }
+		$this->open($this->owner);
+		$this->read_repeated_events($this->owner);
+		$this->set_filter();
+	}
+
+	function set_filter()
+	{
+		global $phpgw_info, $phpgw, $filter;
+		if (!isset($this->filter) || !$this->filter)
+		{
+			if (isset($filter) && $filter)
+			{
+				$this->filter = ' '.$filter.' ';
+			}
+         else
+			{
+				if (!isset($phpgw_info['user']['preferences']['calendar']['defaultfilter']))
+				{
+					$phpgw->preferences->add('calendar','defaultfilter','all');
+					$phpgw->preferences->save_repository(True);
+				}
+				$this->filter = ' '.$phpgw_info['user']['preferences']['calendar']['defaultfilter'].' ';
+			}
+		}
+	}
+
+	function check_perms($needed)
+	{
+		if($this->rights & $needed)
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	function get_weekday_start($year,$month,$day) {
+		global $phpgw_info;
+
+		$weekday = date('w',mktime(0,0,0,$month,$day,$year));
+
+		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
+		{
+			$days = Array(
+				0	=>	'Mon',
+				1	=>	'Tue',
+				2	=>	'Wed',
+				3	=>	'Thu',
+				4	=>	'Fri',
+				5	=>	'Sat',
+				6	=>	'Sun'
+			);
+			$sday = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
+		}
+		else
+		{
+			$days = Array(
+				0	=>	'Sun',
+				1	=>	'Mon',
+				2	=>	'Tue',
+				3	=>	'Wed',
+				4	=>	'Thu',
+				5	=>	'Fri',
+				6	=>	'Sat'
+			);
+			$sday = mktime(0,0,0,$month,$day - $weekday,$year);
+		}
+
+		$this->days = $days;
+      return $sday;
+	}
+
+	function link_to_entry($id, $pic, $description)
+	{
+		global $phpgw, $phpgw_info;
+
+		$str = '';
+		if (!$this->printer_friendly)
+		{
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_unknowns('remove');
+			$p->set_file(array('link_pict' => 'link_pict.tpl'));
+//			$p->set_block('link_pict','link_pict');
+			$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$id.'&owner='.$this->owner));
+			$p->set_var('lang_view',lang('View this entry'));
+			$p->set_var('pic_image',$this->image_dir.'/'.$pic);
+			$p->set_var('description',$description);
+			$str = $p->finish($p->parse('out','link_pict'));
+			unset($p);
+		}
+		return $str;
+	}
+
+	function is_private($cal_info,$owner,$field)
+	{
+		global $phpgw, $phpgw_info;
+
+		$is_private  = False;
+		if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(16) == True)
+		{
+		}
+		elseif ($cal_info->access == 'private')
+		{
+			$is_private = True;
+		}
+		elseif($cal_info->access == 'group')
+		{
+			$is_private = True;
+			$groups = $phpgw->accounts->memberships($owner);
+			while ($group = each($groups))
+			{
+				if (strpos(' '.$cal_info->groups.' ',','.$group[1]['account_id']).',')
+				{
+					$is_private = False;
+				}
+			}
+		}
+
+		if ($is_private)
+		{
+			$str = 'private';
+		}
+		elseif (strlen($cal_info->$field) > 19)
+		{
+			$str = substr($cal_info->$field, 0 , 19) . '...';
+		}
+		else
+		{
+			$str = $cal_info->$field;
+		}
+		return $str;
+	}
+
+	function read_repeated_events($owner=0)
+	{
+		global $phpgw, $phpgw_info;
+
+		$this->set_filter();
+		$owner = $owner == 0?$phpgw_info['user']['account_id']:$owner;
+		$sql = "AND (calendar_entry.cal_type='M') "
+			. 'AND (calendar_entry_user.cal_login='.$owner;
+
+// Private
+		if(strpos($this->filter,'private'))
+		{
+			$sql .= " AND calendar_entry.cal_access='private'";
+		}
+		
+		$sql .= ') ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
+
+		$events = $this->get_event_ids(True,$sql);
+
+		if($events == False)
+		{
+			$this->repeated_events = Null;
+			$this->repeating_events = False;
+		}
+		else
+		{
+			$this->repeated_events = $events;
+			$this->repeating_events = $this->getevent($events);
+		}
+	}
+
+	function check_repeating_entries($datetime)
+	{
+		global $phpgw, $phpgw_info;
+
+		$this->repeating_event_matches = 0;
+
+		if(count($this->repeated_events) <= 0)
+		{
+			return False;
+		}
+		
+		$link = Array();
+//		$date = $this->gmtdate($datetime);
+		$date = $this->localdates($datetime);
+		for ($i=0;$i<count($this->repeated_events);$i++)
+		{
+			$rep_events = $this->repeating_events[$i];
+			$id = $rep_events->id;
+			$frequency = intval($rep_events->rpt_freq);
+			$start = $this->localdates($rep_events->datetime);
+			if($rep_events->rpt_use_end)
+			{
+				$enddate = $this->gmtdate($rep_events->rpt_end);
+			}
+			else
+			{
+				$enddate   = $this->makegmttime(0,0,0,1,1,2007);
+			}
+			
+			// only repeat after the beginning, and if there is an rpt_end before the end date
+			if (($rep_events->rpt_use_end && ($date['full'] > $enddate['full'])) ||
+				($date['full'] < $start['full']))
+			{
+				continue;
+			}
+
+			if ($date['full'] == $start['full'])
+			{
+				$link[$this->repeating_event_matches++] = $id;
+			}
+			elseif ($rep_events->rpt_type == 'daily')
+			{
+				if ((floor(($date['bd'] - $start['bd'])/86400) % $frequency))
+				{
+					continue;
+				}
+				else
+				{
+					$link[$this->repeating_event_matches++] = $id;
+				}
+			}
+			elseif ($rep_events->rpt_type == 'weekly')
+			{
+				$isDay = strtoupper(substr($rep_events->rpt_days, $date['dow'], 1));
+				
+				if (floor(($date['bd'] - $start['bd'])/604800) % $frequency)
+				{
+					continue;
+				}
+				
+				if (strcmp($isDay,'Y') == 0)
+				{
+					$link[$this->repeating_event_matches++] = $id;
+				}
+			}
+			elseif ($rep_events->rpt_type == 'monthlybyday')
+			{
+				if ((($date['year'] - $start['year']) * 12 + $date['month'] - $start['month']) % $frequency)
+				{
+					continue;
+				}
+	  
+				if (($start['dow'] == $date['dow']) &&
+					(ceil($start['day']/7) == ceil($date['day']/7)))
+				{
+					$link[$this->repeating_event_matches++] = $id;
+				}
+			}
+			elseif ($rep_events->rpt_type == 'monthlybydate')
+			{
+				if ((($date['year'] - $start['year']) * 12 + $date['month'] - $start['month']) % $frequency)
+				{
+					continue;
+				}
+				
+				if ($date['day'] == $start['day'])
+				{
+					$link[$this->repeating_event_matches++] = $id;
+				}
+			}
+			elseif ($rep_events->rpt_type == 'yearly')
+			{
+				if (($date['year'] - $start['year']) % $frequency)
+				{
+					continue;
+				}
+				
+				if ($date['dm'] == $start['dm'])
+				{
+					$link[$this->repeating_event_matches++] = $id;
+				}
+			}
+			else
+			{
+				// unknown rpt type - because of all our else ifs
+			}
+		}	// end for loop
+
+		if($this->repeating_event_matches > 0)
+		{
+			return $link;
+		}
+		else
+		{
+			return False;
+		}
+	}	// end function
+
+	function get_sorted_by_date($datetime,$owner=0)
+	{
+		global $phpgw, $phpgw_info;
+
+		$this->sorted_events_matching = 0;
+		$this->set_filter();
+		$owner = !$owner?$phpgw_info['user']['account_id']:$owner;
+		$repeating_events_matched = $this->check_repeating_entries($datetime);
+		$sql = "AND (calendar_entry.cal_type != 'M') "
+				. 'AND ((calendar_entry.cal_datetime >= '.$datetime.' AND calendar_entry.cal_datetime <= '.($datetime + 86399).') '
+				.   'OR (calendar_entry.cal_datetime <= '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
+				.   'OR (calendar_entry.cal_edatetime >= '.$datetime.' AND calendar_entry.cal_edatetime <= '.($datetime + 86399).')) '
+				. 'AND (calendar_entry_user.cal_login='.$owner;
+
+// Private
+		if(strpos($this->filter,'private'))
+		{
+			$sql .= " AND calendar_entry.cal_access='private'";
+		}
+		
+		$sql .= ') ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
+
+		$event = $this->get_event_ids(False,$sql);
+
+		if($this->repeating_event_matches == False && $event == False)
+		{
+			return False;
+		}
+
+		if($this->repeating_event_matches != False)
+		{
+			reset($repeating_events_matched);
+			while(list($key,$value) = each($repeating_events_matched))
+			{
+				$event[] = $value;
+			}
+		}
+
+		$this->sorted_events_matching = count($event);
+
+		if($this->sorted_events_matching == 0)
+		{
+			return False;
+		}
+		else
+		{
+			$events = $this->getevent($event);
+			if($this->sorted_events_matching == 1)
+			{
+				return $events;
+			}
+		}
+
+		for($outer_loop=0;$outer_loop<($this->sorted_events_matching - 1);$outer_loop++)
+		{
+			$outer = $events[$outer_loop];
+			$outer_time = $phpgw->common->show_date($outer->datetime,'Hi');
+			$outer_etime = $phpgw->common->show_date($outer->edatetime,'Hi');
+			
+			if($outer->datetime < $datetime)
+			{
+				$outer_time = 0;
+			}
+			
+			if($outer->edatetime > ($datetime + 86399))
+			{
+				$outer_etime = 2359;
+			}
+			
+			for($inner_loop=$outer_loop;$inner_loop<$this->sorted_events_matching;$inner_loop++)
+			{
+				$inner = $events[$inner_loop];
+				$inner_time = $phpgw->common->show_date($inner->datetime,'Hi');
+				$inner_etime = $phpgw->common->show_date($inner->edatetime,'Hi');
+				
+				if($inner->datetime < $datetime)
+				{
+					$inner_time = 0;
+				}
+				
+				if($inner->edatetime > ($datetime + 86399))
+				{
+					$inner_etime = 2359;
+				}
+				
+				if(($outer_time > $inner_time) ||
+					(($outer_time == $inner_time) && ($outer_etime > $inner_etime)))
+				{
+					$temp = $events[$inner_loop];
+					$events[$inner_loop] = $events[$outer_loop];
+					$events[$outer_loop] = $temp;
+				}
+			}
+		}
+		
+		if(isset($events))
+		{
+			return $events;
+		}
+		else
+		{
+			return False;
+		}
+	}
 
 	function mini_calendar($day,$month,$year,$link='')
 	{
@@ -250,6 +652,235 @@ class calendar extends calendar_
 		}
 	}
 
+	function large_month_header($month,$year,$display_name = False)
+	{
+		global $phpgw_info;
+
+		$this->weekstarttime = $this->get_weekday_start($year,$month,1);
+
+		$p = CreateObject('phpgwapi.Template',$this->template_dir);
+		$p->set_unknowns('remove');
+		$templates = Array (
+			'month_header' => 'month_header.tpl',
+			'column_title' => 'column_title.tpl'
+		);
+		$p->set_file($templates);
+
+		$var = Array(
+			'bgcolor'		=> $phpgw_info['theme']['th_bg'],
+			'font_color'	=> $phpgw_info['theme']['th_text']
+		);
+		$p->set_var($var);
+		
+		if($display_name == True)
+		{
+			$p->set_var('col_title',lang('name'));
+			$p->parse('column_header','column_title',True);
+		}
+
+		for($i=0;$i<7;$i++)
+		{
+			$p->set_var('col_title',lang($this->days[$i]));
+			$p->parse('column_header','column_title',True);
+		}
+		
+		return $p->finish($p->parse('out','month_header'));
+	}
+
+	function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0)
+	{
+		global $phpgw, $phpgw_info;
+
+		$str = '';
+		$gr_events = CreateObject('calendar.calendar_item');
+		$lr_events = CreateObject('calendar.calendar_item');
+
+		$p = CreateObject('phpgwapi.Template',$this->template_dir);
+		$p->set_unknowns('remove');
+		
+		$templates = Array (
+			'month_header'		=> 'month_header.tpl',
+			'month_column'		=> 'month_column.tpl',
+			'month_day'			=> 'month_day.tpl',
+			'week_day_event'	=> 'week_day_event.tpl',
+			'week_day_events'	=> 'week_day_events.tpl',
+			'link_pict'			=>	'link_pict.tpl'
+		);
+		$p->set_file($templates);
+
+		$p->set_var('extra','');
+		
+		if($display_name)
+		{
+			$p->set_var('column_data',$phpgw->common->grab_owner_name($owner));
+			$p->parse('column_header','month_column',True);
+		}
+		
+		for ($j=0;$j<7;$j++)
+		{
+			$date = $this->gmtdate($startdate + ($j * 24 * 3600));
+			$p->set_var('column_data','');
+			$p->set_var('extra','');
+			
+			if ($weekly || ($date['full'] >= $monthstart && $date['full'] <= $monthend))
+			{
+				if($weekly)
+				{
+					$cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
+				}
+				
+				if ($date['full'] == $this->today['full'])
+				{
+					$p->set_var('extra',' bgcolor="'.$phpgw_info['theme']['cal_today'].'"');
+				}
+				else
+				{
+					$p->set_var('extra',' bgcolor="'.$cellcolor.'"');
+				}
+
+				if (!$this->printer_friendly)
+				{
+					$str = '';
+					
+					if($this->check_perms(PHPGW_ACL_ADD) == True)
+					{
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
+						$str .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" ';
+						$str .= 'alt="'.lang('New Entry').'" ';
+						$str .= 'border="0" align="right">';
+						$str .= '</a>';
+					}
+            
+					$p->set_var('new_event_link',$str);
+					$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
+					$p->set_var('day_number',$str);
+				}
+				else
+				{
+					$p->set_var('new_event_link','');
+					$p->set_var('day_number',$date['day']);
+				}
+				
+				$p->parse('column_data','month_day',True);
+
+				$rep_events = $this->get_sorted_by_date($date['raw'],$owner);
+
+				if ($this->sorted_events_matching)
+				{
+					$lr_events = CreateObject('calendar.calendar_item');
+					$p->set_var('week_day_font_size','2');
+					$p->set_var('events','');
+					for ($k=0;$k<$this->sorted_events_matching;$k++)
+					{
+						$lr_events = $rep_events[$k];
+						$pict = 'circle.gif';
+						for ($outer_loop=0;$outer_loop<count($this->repeated_events);$outer_loop++)
+						{
+							$gr_events = $this->repeating_events[$outer_loop];
+							if ($gr_events->id == $lr_events->id)
+							{
+								$pict = 'rpt.gif';
+							}
+						}
+						
+						$p->set_var('link_entry','');
+						$description = $this->is_private($lr_events,$owner,'description');
+
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						{
+							$var = Array(
+								'link_link'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
+								'lang_view'			=>	lang('View this entry'),
+								'pic_image'			=>	$this->image_dir.'/'.$pict,
+								'description'		=>	$description
+							);
+							$p->set_var($var);
+							$p->parse('link_entry','link_pict');
+						}
+
+						if (intval($phpgw->common->show_date($lr_events->datetime,'Hi')))
+						{
+							if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+							{
+								$format = 'h:i a';
+							}
+							else
+							{
+								$format = 'H:i';
+							}
+							
+							if($lr_events->datetime < $date['raw'] && $lr_events->rpt_type=='none')
+							{
+								$temp_time = $this->makegmttime(0,0,0,$date['month'],$date['day'],$date['year']);
+								$start_time = $phpgw->common->show_date($temp_time['raw'],$format);
+							}
+							else
+							{
+								$start_time = $phpgw->common->show_date($lr_events->datetime,$format);
+							}
+                
+							if($lr_events->edatetime > ($date['raw'] + 86400))
+							{
+								$temp_time = $this->makegmttime(23,59,59,$date['month'],$date['day'],$date['year']);
+								$end_time = $phpgw->common->show_date($temp_time['raw'],$format);
+							}
+							else
+							{
+								$end_time = $phpgw->common->show_date($lr_events->edatetime,$format);
+							}
+							
+						}
+						else
+						{
+							$start_time = '';
+							$end_time = '';
+						}
+						
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						{
+							$close_view_link = '</a>';
+						}
+						else
+						{
+							$close_view_link = '';
+						}
+						$var = Array(
+							'start_time'		=>	$start_time,
+							'end_time'			=>	$end_time,
+							'close_view_link'	=> $close_link,
+							'name'				=>	$this->is_private($lr_events,$owner,'name')
+						);
+						$p->set_var($var);
+						$p->parse('events','week_day_event',True);
+					}
+				}
+				$p->parse('column_data','week_day_events',True);
+				$p->set_var('events','');
+				if (!$j || ($j && $date["full"] == $monthstart))
+				{
+					if(!$this->printer_friendly)
+					{
+						$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/week.php','date='.$date['full'].'&owner='.$this->owner).'">week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7).'</a>';
+					}
+					else
+					{
+						$str = 'week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7);
+					}
+					$var = Array(
+						'week_day_font_size'	=>	'-2',
+						'events'					=> $str
+					);
+					$p->set_var($var);
+					$p->parse('column_data','week_day_events',True);
+					$p->set_var('events','');
+				}
+			}
+			$p->parse('column_header','month_column',True);
+			$p->set_var('column_data','');
+		}
+		return $p->finish($p->parse('out','month_header'));
+	}
+
 	function display_large_week($day,$month,$year,$showyear,$owners=0)
 	{
 		global $phpgw, $phpgw_info;
@@ -437,8 +1068,6 @@ class calendar extends calendar_
 	function print_day_at_a_glance($date,$owner=0)
 	{
 		global $phpgw, $phpgw_info;
-
-		$this->read_repeated_events($owner);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');

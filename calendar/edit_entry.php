@@ -15,10 +15,12 @@
   /* $Id$ */
 
 	$phpgw_flags = Array(
-								'currentapp'					=>	'calendar',
-								'noheader'						=> True,
-								'nonavbar'						=> True,
-								'enable_nextmatchs_class'	=> True
+		'currentapp'					=>	'calendar',
+		'enable_nextmatchs_class'	=> True,
+		'noheader'						=> True,
+		'nonavbar'						=> True,
+		'noappheader'					=>	True,
+		'noappfooter'					=>	True
 	);
 	
 	$phpgw_info['flags'] = $phpgw_flags;
