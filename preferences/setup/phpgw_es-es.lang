@@ -26,7 +26,7 @@ forced preferences	preferences	es-es	Preferencias forzadas
 help off	preferences	es-es	Desactivar ayuda
 hours	preferences	es-es	horas
 how do you like to display accounts	preferences	es-es	¿Cómo desea ver las cuentas?
-how do you like to select accounts	preferences	es-es	¿Cómo desde seleccionar las cuentas?
+how do you like to select accounts	preferences	es-es	¿Cómo desea seleccionar las cuentas?
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas, si no, seleccione su fecha y hora local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-es	Número de iconos a mostrar en la barra de navegación en la parte superior de la página. Los iconos adicionales van en un menú desplegable, en la parte derecha de la barra de navegación.
 how should phpgroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas

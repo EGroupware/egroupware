@@ -183,7 +183,6 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 re:	infolog	es-es	Re:
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192.168.1.
 reg. expr. for local ip\'s<br>eg. ^192\\.168\\.1\\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
 reject	infolog	es-es	rechazar
@@ -248,8 +247,6 @@ use button to search for address	infolog	es-es	usar el botón para buscar por la 
 use button to search for project	infolog	es-es	usar el botón para buscar por el proyecto
 valid path on clientside<br>eg. \\\\server\\share or e:\\	infolog	es-es	Ruta válida en el cliente<br>por ej. \\servidor\recurso o e:\
 valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. servidorrecurso o e:
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	
-valid path on clientside<br>eg. servershare or e:	infolog	es-es	
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

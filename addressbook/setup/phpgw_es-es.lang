@@ -105,6 +105,8 @@ ldap root dn for contacts	admin	es-es	Raiz LDAP dn para contactos
 ldap root pw for contacts	admin	es-es	Raiz LDAP pw para contactos
 ldif	addressbook	es-es	LDIF
 line 2	addressbook	es-es	Línea 2
+list all categories	addressbook	es-es	Lista de todas las categorías
+list all customfields	addressbook	es-es	Lista de todos los campos personalizados
 mark records as private	addressbook	es-es	Marcar registros como privados
 message phone	addressbook	es-es	Teléfono de mensajes
 middle name	addressbook	es-es	Segundo nombre
@@ -127,6 +129,7 @@ postal	common	es-es	Postal
 pref	addressbook	es-es	pref
 prefix	addressbook	es-es	Prefijo
 public key	addressbook	es-es	Clave pública
+read a list / search for entries.	addressbook	es-es	Leer una lista / buscar entradas
 read a list of entries.	addressbook	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	addressbook	es-es	Leer una sola entrada pasando el identificador y la lista de campos
 record access	addressbook	es-es	Acceso al registro
@@ -162,6 +165,7 @@ video phone	addressbook	es-es	Teléfono de videoconferencia
 voice phone	addressbook	es-es	Teléfono de voz
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! LDAP es valido sólo si no esta usando contactos para almacenar las cuentas!
 work phone	addressbook	es-es	Teléfono del trabajo
+write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (acatualizar o añadir) una sola entrada pasando los campos.
 you must select a vcard. (*.vcf)	addressbook	es-es	Debe seleccionar una tarjeta (*.vcf)
 you must select at least 1 column to display	addressbook	es-es	Debe seleccionar al menos una columna para mostrar
 zip code	common	es-es	Código postal
