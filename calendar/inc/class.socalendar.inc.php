@@ -274,7 +274,7 @@
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
 				$db2 = $this->db;
-				$this->db->select($this->user_table,'cal_id'.array('cal_user_id'=>$account_id),__LINE__,__FILE__);
+				$this->db->select($this->user_table,'cal_id',array('cal_user_id'=>$account_id),__LINE__,__FILE__);
 				while($this->db->next_record())
 				{
 					$id = $this->db->f('cal_id');
