@@ -12,10 +12,12 @@
 /* $Id$ */
 
 	$phpgw_info["flags"] = array(
-		"noheader" => True, 
-		"nonavbar" => True, 
-		"currentapp" => "addressbook", 
-		"enable_contacts_class" => True,
+		"currentapp"              => "addressbook", 
+		"noheader"                => True, 
+		"nonavbar"                => True, 
+		'noappheader'             => True,
+		'noappfooter'             => True,
+		"enable_contacts_class"   => True,
 		"enable_nextmatchs_class" => True
 	);
                                
@@ -99,7 +101,6 @@
 
 	$i = 0; $j = 0;
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-	echo "<tr bgcolor=\"" . $tr_color . "\">\n";
 
 	while (list($col, $descr) = each($qfields))
 	{
