@@ -47,10 +47,8 @@
   <tr bgcolor="{row_on}">
     <td>{lang_Enable_remote_search}:</td>
     <td>
-     <select name="newsettings[enable_remote_addressbook]">
-      <option value="">{lang_no}</option>
-	  <option value="True"{selected_enable_remote_addressbook_True}>{lang_yes}</option>
-     </select>
+     <input name="newsettings[enable_remote_addressbook]" type="radio" value=""{checked_enable_remote_addressbook+}>{lang_no}
+     <input name="newsettings[enable_remote_addressbook]" type="radio" value="True"{checked_enable_remote_addressbook+True}>{lang_yes}
     </td>
   </tr>
 <!-- END body -->

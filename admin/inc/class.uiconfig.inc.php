@@ -181,7 +181,7 @@
 				}
 				$newval = implode(' ',$new);
 
-				switch ($type)
+				switch($type)
 				{
 					case 'lang':
 						$t->set_var($value,lang($newval));
@@ -198,19 +198,19 @@
 							$t->set_var($value,$current_config[$newval]);
 						}
 						break;
-					/*
 					case 'checked':
-						$newval = ereg_replace(' ','_',$newval);
-						if ($current_config[$newval])
+						/* '+' is used as a delimiter for the check value */
+						list($newvalue,$check) = split('\+',$newval);
+						$newval = ereg_replace(' ','_',$newvalue);
+						if($current_config[$newval] == $check)
 						{
-							$t->set_var($value,' checked');
+							$t->set_var($value, ' checked');
 						}
 						else
 						{
-							$t->set_var($value,'');
+							$t->set_var($value, '');
 						}
 						break;
-					*/
 					case 'selected':
 						$configs = array();
 						$config  = '';
