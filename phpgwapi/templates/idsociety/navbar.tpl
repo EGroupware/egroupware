@@ -3,7 +3,7 @@
 '{img_root_roll}/log_out_over2.gif',
 '{img_root_roll}/preferences_over2.gif',
 '{img_root_roll}/question_mark_over2.gif',
-'{img_root_roll}/welcome_over2.gif')"
+'{img_root_roll}/welcome_over2.gif');"
  background="{img_root}/content_spacer_middle.gif">
   <!-- the above is the continuation and finishing if the < body > element started in head.tpl
   the margin items could be merged into head, as head already supplies some

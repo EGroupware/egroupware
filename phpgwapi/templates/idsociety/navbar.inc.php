@@ -29,11 +29,30 @@
 		$var['img_root_roll'] = PHPGW_IMAGES_DIR . '/rollover';
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
+		$find_double = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'//');
+		$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
+		if($find_double)
+		{
+			if($find_single == $find_double + 1)
+			{
+				$strip_portion = $GLOBALS['phpgw_info']['server']['webserver_url'];
+			}
+			else
+			{
+				$strip_portion = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
+			}
+		}
+		else
+		{
+			$strip_portion = '';
+		}
+
 		#  echo '<pre>'; print_r($GLOBALS['phpgw_info']['navbar']); echo '</pre>';
 		$applications = '';
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))
 		{
-			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && ! ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
+			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && !ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
+//			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && $app[1]['title'] != 'About' && $app[1]['title'] != 'Logout')
 			{
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
 					. lang($app[1]['title']) . '" border="0" name="' . $app[0] . '">';
@@ -50,18 +69,26 @@
 
 				if($img_src_over != '')
 				{
-					$applications .= ' onMouseOver="' . $app[0] . '.src=\'' . $img_src_over . '\'" ';
+					$applications .= ' onMouseOver="' . $app[0] . ".src='" . $img_src_over . '\'" ';
 				}
 				if($img_src_out != '')
 				{
-					$applications .= ' onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'"';
+					$applications .= ' onMouseOut="' . $app[0] . ".src='" . $img_src_out . '\'" ';
 				}
 				$applications .= '>'.$title.'</a></td></tr>'."\r\n";
 			}
-			$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
+			else
+			{
+				$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
+			}
 			if($img_src_over)
 			{
-				$pre_load[] = str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$img_src_over);
+				if($strip_portion)
+				{
+					$img_src_over = str_replace($strip_portion,'',$img_src_over);
+				}
+					
+				$pre_load[] = $img_src_over;
 			}
 		}
 
