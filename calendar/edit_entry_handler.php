@@ -26,7 +26,7 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	$cal_info = CreateObject('calendar.calendar_item');
+	$event = CreateObject('calendar.calendar_item');
 
 	function validate($event)
 	{
@@ -42,7 +42,7 @@
 		{
 			$error = 41;
 		}
-		elseif (($phpgw->calendar->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($phpgw->calendar->date_valid($event->end->year,$event->end->month,$event->end->mday) == False)  || ($phpgw->calendar->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == -1))
+		elseif (($phpgw->calendar->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($phpgw->calendar->date_valid($event->end->year,$event->end->month,$event->end->mday) == False) || ($phpgw->calendar->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 1))
 		{
 			$error = 42;
 		}
@@ -191,13 +191,17 @@
 	}
 	else
 	{
-		$event = $phpgw->session->appsession('entry','calendar');
+		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
+		$phpgw->calendar->event_init($cal_stream);
+		
+		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
 		$phpgw->calendar->event = $event;
+		$datetime_check = validate($event);
 	}
 
 	if($datetime_check)
 	{
-		Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','readsess='.$cal_info->id.'&cd='.$datetime_check));
+		Header('Location: '.$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&cd='.$datetime_check));
 		$phpgw->common->phpgw_exit();
 	}
 	elseif($overlapping_events)
@@ -231,8 +235,8 @@
 				$overlap .= $phpgw->calendar->link_to_entry($over->id,'circle.gif',$over->description).$over->title;
 			}
 
-			$over_start = mktime($over->start->hour,$over->start->min,$over->start->sec,$over->start->month,$over->start->mday,$over->start->year);
-			$over_end = mktime($over->end->hour,$over->end->min,$over->end->sec,$over->end->month,$over->end->mday,$over->end->year);
+			$over_start = mktime($over->start->hour,$over->start->min,$over->start->sec,$over->start->month,$over->start->mday,$over->start->year) - $tz_offset;
+			$over_end = mktime($over->end->hour,$over->end->min,$over->end->sec,$over->end->month,$over->end->mday,$over->end->year) - $tz_offset;
 			$overlap .= ' ('.$phpgw->common->show_date($over_start).' - '.$phpgw->common->show_date($over_end).')<br>';
 		}
 		if(strlen($overlap) > 0)
@@ -255,7 +259,7 @@
 		$phpgw->calendar->event = $event;
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry_handler.php','readsess='.$event->id.'&year='.$event->year.'&month='.$event->month.'&day='.$event->mday),
+							'action_url_button'		=>	$phpgw->link('/calendar/edit_entry_handler.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
 							'action_text_button'		=>	lang('Ignore Conflict'),
 							'action_confirm_button'	=>	''
 		);
@@ -264,7 +268,7 @@
 		$p->parse('resubmit_button','form_button');
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->day),
+							'action_url_button'		=>	$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
 							'action_text_button'		=>	lang('Re-Edit Event'),
 							'action_confirm_button'	=>	''
 		);
