@@ -65,7 +65,7 @@
 		$GLOBALS['phpgw']->preferences->delete('portal_order',$new_order);
 		$GLOBALS['phpgw']->preferences->add('portal_order',$new_order,intval($_GET['app']));
 			
-		$GLOBALS['phpgw_info']['user']['preferences']['portal_order'] = $GLOBALS['phpgw']->preferences->save_repository();
+		$GLOBALS['phpgw']->preferences->save_repository();
 	}
 
 	//error_reporting(E_ALL);
