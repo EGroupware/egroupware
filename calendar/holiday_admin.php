@@ -34,7 +34,7 @@
 		$querymethod='';
 		if($query)
 		{
-			$querymethod = "WHERE locale='".$query."'";
+			$querymethod = " WHERE locale like '%".$query."%'";
 		}
 		$phpgw->db->query("SELECT DISTINCT locale FROM phpgw_cal_holidays".$querymethod,__LINE__,__FILE__);
 		$count = 0;
@@ -53,7 +53,7 @@
 
 		if($query)
 		{
-			$querymethod .= " WHERE locale='".$query."'";
+			$querymethod .= " WHERE locale like '%".$query."%'";
 		}
 		
 		if($order)
@@ -66,11 +66,6 @@
 			$locale[] = $phpgw->db->f('locale');
 		}
 		return $locale;
-	}
-
-	if($query)
-	{
-		$query = str_replace('=',"='",$query)."'";
 	}
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));

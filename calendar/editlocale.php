@@ -36,7 +36,7 @@
 		$querymethod='';
 		if($query)
 		{
-			$querymethod = ' AND '.$query;
+			$querymethod = " AND name like '%".$query."%'";
 		}
 		$phpgw->db->query("SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod,__LINE__,__FILE__);
 		$phpgw->db->next_record();
@@ -57,7 +57,7 @@
 
 		if($query)
 		{
-			$querymethod .= ' AND '.$query;
+			$querymethod = " AND name like '%".$query."%'";
 		}
 		
 		if($order)
@@ -72,10 +72,10 @@
 		return $holiday;
 	}
 
-	if($query)
-	{
-		$query = str_replace('=',"='",$query)."'";
-	}
+//	if($query)
+//	{
+//		$query = str_replace('=',"='",$query)."'";
+//	}
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array(
 		'locale'	=> 'locales.tpl'
@@ -131,7 +131,7 @@
 	$p->set_var('back_action',$phpgw->link('/calendar/holiday_admin.php'));
 	$p->set_var('lang_back',lang('Back'));
 
-	$p->set_var('search_action',$phpgw->link('/calendar/editlocale.php'));
+	$p->set_var('search_action',$phpgw->link('/calendar/editlocale.php','locale='.$locale));
 	$p->set_var('lang_search',lang('search'));
 
 	$phpgw->common->phpgw_header();
