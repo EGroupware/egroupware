@@ -2,7 +2,6 @@
   /**************************************************************************\
   * phpGroupWare API - Accounts manager for the contacts class               *
   * This file written by Miles Lott <milosch@phpgroupware.org>               *
-  * and Lars Kneschke <kneschke@phpgroupware.org>                            *
   * View and manipulate account records using the contacts class             *
   * Copyright (C) 2000, 2001 Miles Lott                                      *
   * -------------------------------------------------------------------------*
@@ -27,10 +26,6 @@
 
 	// THIS NEEDS WORK!!!!!!!!! - Milosch
 
-  	// Dont know where to put this (seek3r)
-	// This is where it belongs (jengo)
-	// This is where it ended up (milosch)
-	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array();
 	$phpgw_info["server"]["global_denied_groups"] = array();
 
@@ -124,18 +119,18 @@
 			switch($_type)
 			{
 				case 'accounts':
-					$whereclause = "u";
+					$filter = "tid=u";
 					break;
 				case 'groups':
-					$whereclause = "g";
+					$filter = "tid=g";
 					break;
 				default:
-					$whereclause = "u,tid=g";
+					$filter = "tid=u,tid=g";
 			}
 
-			$allValues = $contacts->read(0,0,$qcols,'',"tid=".$whereclause);
+			$allValues = $this->contacts->read(0,0,$qcols,'',$filter);
 
-			// get user information from ldap only, if it's a user, not a group
+			// get user information for each user/group
 			for($i=0;$i<count($allValues);$i++) {
 				$accounts[] = Array(
 					"account_id"        => $allValues[$i]["id"],
@@ -159,7 +154,7 @@
 
 			$qcols = array('id' => 'id');
 
-			$allValues = $contacts->read(0,0,$qcols,'',"lid=".$account_lid);
+			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
 
 			if($allValues[0]['id']) {
 				return intval($allValues[0]['id']);
@@ -203,11 +198,11 @@
 			if(gettype($account_lid) == 'integer')
 			{
 				$account_id = $account_lid;
-				settype($acount_lid,'string');
+				settype($account_lid,'string');
 				$account_lid = $this->id2name($account_id);
 			}
 
-			$allValues = $contacts->read(0,0,$qcols,'',"lid=".$account_lid);
+			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
 			if $allValues[0]['id'])
 			{
 				return True;
@@ -229,13 +224,13 @@
 			$entry['status']   = $account_status;
 
 			// 'public' access, no category id, tid set to account_type
-			$contacts->add($owner,$entry,'public','',$account_type);
+			$this->contacts->add($owner,$entry,'public','',$account_type);
 			return;
 		}
 
 		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
 		{
-			print "not done until now auto_generate class.accounts_ldap.inc.php<br>";
+			print "not done until now auto_generate class.accounts_contacts.inc.php<br>";
 			exit();
 		}
 	}
