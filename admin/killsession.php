@@ -23,7 +23,7 @@
   }
 
   if ($confirm) {
-     $phpgw->db->query("delete from sessions where session_id='$ksession'");
+     $phpgw->db->query("delete from phpgw_sessions where session_id='$ksession'");
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/admin/currentusers.php",
 	    "cd=19"));
   } else {

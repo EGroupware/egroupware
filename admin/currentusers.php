@@ -23,7 +23,7 @@
   }
 
   $limit = $phpgw->nextmatchs->sql_limit($start);
-  $phpgw->db->query("select count(*) from sessions",__LINE__,__FILE__);
+  $phpgw->db->query("select count(*) from phpgw_sessions",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   $total = $phpgw->db->f(0);
@@ -51,7 +51,7 @@
      $ordermethod = "order by session_dla asc";
   }
 
-  $phpgw->db->query("select * from sessions $ordermethod limit $limit",__LINE__,__FILE__);
+  $phpgw->db->query("select * from phpgw_sessions $ordermethod limit $limit",__LINE__,__FILE__);
 
   $i = 0;
   while ($phpgw->db->next_record()) {
