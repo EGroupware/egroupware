@@ -485,38 +485,52 @@
 
 			$filtermethod = '';
 
-			if ($query)
+			if($query)
 			{
 				$query  = ereg_replace("'",'',$query);
 				$query  = ereg_replace('"','',$query);
 
 				$sql = "SELECT * FROM $this->std_table WHERE (";
+				$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
 				reset($this->stock_contact_fields);
 				while(list($f,$x) = each($this->stock_contact_fields))
 				{
 					$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
+					$sqlcount .= $sql;
 				}
 				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				$sqlcount = $sql;
 				unset($f); unset($x);
 			}
 			else
 			{
 				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
+				$sqlcount = "SELECT COUNT(id) FROM $this->std_table " . $fwhere
+					. $filtermethod . ' ' . $ordermethod;
 			}
-			if ($DEBUG) { echo '<br>' . $sql; }
+			if($DEBUG) { echo '<br>' . $sql; }
 
 //			$db2 = $this->db;
 			copyobj($this->db,$db2);
 
-			$this->db->query($sql,__LINE__,__FILE__);
+			/* Perhaps it is more efficient to count records for this query, which is all we need here */
+			$this->db->query($sqlcount,__LINE__,__FILE__);
+			unset($sqlcount);
 			$this->total_records = $this->db->num_rows();
 
-			if ($start && $limit)
+			if($start && $limit)
 			{
-				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$limit);
+				if($this->total_records <= $limit)
+				{
+					$this->db->query($sql,__LINE__,__FILE__);
+				}
+				else
+				{
+					$this->db->limit_query($sql,$start,__LINE__,__FILE__,$limit);
+				}
 			}
-			elseif (!$limit)
+			elseif(!$limit)
 			{
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
@@ -526,7 +540,7 @@
 			}
 
 			$i = 0;
-			while ($this->db->next_record())
+			while($this->db->next_record())
 			{
 				$return_fields[$i]['id']     = $this->db->f('id');
 				$return_fields[$i]['lid']    = $this->db->f('lid');
@@ -536,9 +550,9 @@
 				$return_fields[$i]['cat_id'] = $this->db->f('cat_id');
 				$return_fields[$i]['last_mod']	= $this->db->f('last_mod');
 
-				if (gettype($stock_fieldnames) == 'array')
+				if(@is_array($stock_fieldnames))
 				{
-					while (list($f_name) = each($stock_fieldnames))
+					while(list($f_name) = each($stock_fieldnames))
 					{
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
@@ -546,9 +560,9 @@
 				}
 				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 					. $this->db->f('id') . "'" .$filterextra,__LINE__,__FILE__);
-				while ($db2->next_record())
+				while($db2->next_record())
 				{
-					if ($extra_fields[$db2->f('contact_name')])
+					if($extra_fields[$db2->f('contact_name')])
 					{
 						$return_fields[$i][$db2->f('contact_name')] = $db2->f('contact_value');
 					}
