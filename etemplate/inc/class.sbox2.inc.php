@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Select Box 2                                          *
+  * eGroupWare API - Select Box 2                                            *
   * Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
   * Class for creating select boxes for addresse, projects, array items, ... *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

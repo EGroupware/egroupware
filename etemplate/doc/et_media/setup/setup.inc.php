@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Editable Templates: Example App of the tutorial           *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Editable Templates: Example App of the tutorial             *
+	* http://www.egroupware.org                                                *
 	" Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -25,7 +25,7 @@
 	);
 	$setup_info['et_media']['license']   = 'GPL';
 	$setup_info['et_media']['description'] =
-		'<b>eTemplates</b> are a new widget-based template system for phpGroupWare.<br>
+		'<b>eTemplates</b> are a new widget-based template system for eGroupWare.<br>
 		<b>eT-Media</b> is the example application of the eTemplates tutorial.';
 	$setup_info['et_media']['note'] =
 		'For more information check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>

@@ -1,7 +1,7 @@
 <?php
 	/***************************************************************************\
-	* phpGroupWare - Notes eTemplate Port                                       *
-	* http://www.phpgroupware.org                                               *
+	* eGroupWare - Notes eTemplate Port                                         *
+	* http://www.egroupware.org                                                 *
 	* Written by : Andy Holman (LoCdOg)                                         *
 	*              Bettina Gille [ceb@phpgroupware.org]                         *
 	* Ported to eTemplate by Ralf Becker [ralfbecker@outdoor-training.de]       *

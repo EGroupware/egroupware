@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Editable Templates                                        *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Editable Templates                                          * 
+	* http://www.egroupware.org                                                *
 	" Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -25,7 +25,7 @@
 	);
 	$setup_info['etemplate']['license']   = 'GPL';
 	$setup_info['etemplate']['description'] =
-		'<b>eTemplates</b> are a new widget-based template system for phpGroupWare with an
+		'<b>eTemplates</b> are a new widget-based template system for eGroupWare with an
 		interactive editor and a database table-editor (creates tables_current.inc.php and
 		updates automaticaly tables_update.inc.php).';
 	$setup_info['etemplate']['note'] =

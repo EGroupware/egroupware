@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Notes eTemplates Port                                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Notes eTemplates Port                                       *
+	* http://www.egroupware.org                                                *
 	* Ported to eTemplate by Ralf Becker [ralfbecker@outdoor-training.de]      *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -25,7 +25,7 @@
 		
 	$setup_info['et_notes']['author'] = 'Bettina Gille, Andy Holman (LoCdOg)';
 	$setup_info['et_notes']['maintainer'] = 'Ralf Becker';
-	$setup_info['et_notes']['maintainer_email'] = 'ralfbecker@phpgroupware.org';
+	$setup_info['et_notes']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['et_notes']['hooks'][] = 'deleteaccount';

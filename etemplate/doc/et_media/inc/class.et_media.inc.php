@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - eTemplates - Tutoria Example - a simple MediaDB           *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - eTemplates - Tutoria Example - a simple MediaDB             *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -133,7 +133,7 @@
 		@function writeLangFile
 		@abstract writes langfile with all templates and types here
 		@discussion can be called via [write Langfile] in the eTemplate editor or
-		@discussion http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
+		@discussion http://domain/egroupware/index.php?et_media.et_media.writeLangFile
 		*/
 		function writeLangFile()
 		{

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - EditableTemplates - Storage Objects                       *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - EditableTemplates - Storage Objects                         *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
