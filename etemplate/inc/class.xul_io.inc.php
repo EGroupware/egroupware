@@ -111,16 +111,8 @@
 			}
 		}
 
-		function export($etempl)
+		function etempl2grid($etempl,&$root,$embeded_too=True)
 		{
-			if ($this->debug)
-			{
-				echo "<p>etempl->data = "; _debug_array($etempl->data);
-			}
-			$doc = new xmldoc();
-
-			$xul_overlay = new xmlnode('overlay');
-
 			$xul_grid = new xmlnode('grid');
 			$xul_grid->set_attribute('id',$etempl->name);
 			$xul_grid->set_attribute('template',$etempl->template);
@@ -158,6 +150,12 @@
 					if (is_array($type))
 					{
 						list(,$type) = each($type);
+					}
+					if ($type == 'template' && $cell['name'][0] != '@' && $embeded_too)
+					{
+						$embeded = new etemplate($cell['name']);
+						$this->etempl2grid($embeded,&$root,$embeded_too);
+						unset($embeded);
 					}
 					if (substr($type,0,6) == 'select')
 					{
@@ -257,7 +255,22 @@
 				$styles->set_text($etempl->style);
 				$xul_grid->add_node($styles);
 			}
-			$xul_overlay->add_node($xul_grid);
+			$root->add_node($xul_grid);
+
+			return '';
+		}
+
+		function export($etempl)
+		{
+			if ($this->debug)
+			{
+				echo "<p>etempl->data = "; _debug_array($etempl->data);
+			}
+			$doc = new xmldoc();
+
+			$xul_overlay = new xmlnode('overlay');
+
+			$this->etempl2grid($etempl,&$xul_overlay);
 
 			$doc->add_root($xul_overlay);
 			$xml = $doc->dump_mem();
@@ -279,11 +292,12 @@
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 			xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE,   1);
 			$vals = $index = '';
-			xml_parse_into_struct($parser, $data, $vals, $index);
+			$ok = xml_parse_into_struct($parser, $data, $vals, $index);
 
-			if (!is_array($vals))
+			if (!$ok || !is_array($vals))
 			{
-				$err = xml_error_string(xml_get_error_code($parser));
+				$err = 'Error Line '.xml_get_current_line_number($parser).', Column '.xml_get_current_column_number($parser).
+				       ': '.xml_error_string(xml_get_error_code($parser));
 			}
 			xml_parser_free($parser);
 
@@ -314,10 +328,12 @@
 				}
 				if ($this->debug)
 				{
-					echo "<p>$node[level]: $tag/$type: value='$node[value]' attr="; _debug_array($attr);
+					echo "<p>$node[level]: $tag/$type: value='$node[value]' attr=\n"; _debug_array($attr);
 				}
 				switch ($tag)
 				{
+					case 'overlay':
+						break;
 					case 'grid':
 						if ($type != 'close' && is_array($tab_attr))
 						{
@@ -332,6 +348,13 @@
 						{
 							break;
 						}
+						if ($grid_started)	// more than one grid in the file --> place it into the cache
+						{
+							$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
+							         ($etempl->lang == '' ? '' : '.'.$etempl->lang);
+							$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
+						}
+						$grid_started = True;
 						$etempl->init($attr);
 						$size_opts = array('padding','spacing','class','border','height','width');
 						for ($size = ''; list(,$opt) = each($size_opts); )
