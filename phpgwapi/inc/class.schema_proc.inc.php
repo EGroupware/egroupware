@@ -1,131 +1,152 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Setup                                                       *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  * This file written by Michael Dean<mdean@users.sourceforge.net>           *
-  *  and Miles Lott<milosch@groupwhere.org>                                  *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Setup - db-schema-processor                                 *
+	* http://www.egroupware.org                                                *
+	* --------------------------------------------                             *
+	* Rewritten and adopted to ADOdb's data-dictionary by Ralf Becker          *
+	*  <RalfBecker@outdoor-training.de>                                        *
+	* This file was originaly written by                                       *
+	*  - Michael Dean <mdean@users.sourceforge.net>                            *
+	*  - Miles Lott<milosch@groupwhere.org>                                    *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	
+	/* $Id$ */
 
-  /* $Id$ */
-
+	/**
+	 * eGW's ADOdb based schema-processor
+	 *
+	 * @class schema_proc
+	 * @author RalfBecker-AT-outdoor-training.de and others
+	 * @license GPL
+	 */
 	class schema_proc
 	{
 		var $m_oTranslator;
 		var $m_oDeltaProc;
 		var $m_odb;
-		var $m_aTables;
+		var $m_aTables;		// stores the table-definitions of an application, set by ExecuteScripts
 		var $m_bDeltaOnly;
+		var $debug = 0;	// 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
+		var $max_index_length=array(	// if known
+			'sapdb' => 32,
+		);
+		var $sType;	// type of the database, set by the the constructor
 
-		function schema_proc($dbms)
+		/**
+		 * Constructor of schema-processor
+		 *
+		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
+		 */
+		function schema_proc($dbms,$aTables=False)
 		{
 			$this->sType = $dbms;
-			$this->m_oTranslator = CreateObject('phpgwapi.schema_proc_' . $dbms);
-			$this->m_oDeltaProc = CreateObject('phpgwapi.schema_proc_array');
 			$this->m_aTables = array();
 			$this->m_bDeltaOnly = False; // Default to false here in case it's just a CreateTable script
+			
+			$this->adodb = &$GLOBALS['phpgw']->ADOdb;
+			$this->dict = NewDataDictionary($this->adodb);
+			
+			$this->m_odb = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			
+			// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1
+			if ($this->debug > 1) $this->dict->debug = True;
+			
+			// to allow some of the former translator-functions to be called, we assign ourself as the translator
+			$this->m_oTranslator = &$this;
 		}
-
-		function GenerateScripts($aTables, $bOutputHTML=False)
+		
+		/**
+		 * Created a table named $sTableName as defined in $aTableDef
+		 *
+		 * @param string $sTableName
+		 * @param array $aTableDef
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function CreateTable($sTableName, $aTableDef)
 		{
-			if (!is_array($aTables))
+			if ($this->debug)
 			{
-				return False;
+				$this->debug_message('schema_proc::CreateTable(%1,%2)',False,$sTableName, $aTableDef);
 			}
-			$this->m_aTables = $aTables;
+			$this->m_aTables[$sTableName] = $aTableDef;
+			if($this->m_bDeltaOnly) return true;
 
-			$sAllTableSQL = '';
-			foreach ($this->m_aTables as $sTableName => $aTableDef)
+			// creating the table
+			$aSql = $this->dict->CreateTableSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef($aTableDef));
+			if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateTableSQL(%1,%2) sql=%3',False,$sTableName,$ado_cols,$aSql)))
 			{
-				$sSequenceSQL = '';
-				$append_ix = False;
-				if($this->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL,$append_ix))
+				return $retVal;
+			}
+			// creating unique indices/constrains
+			foreach ($aTableDef['uc'] as $name => $mFields)
+			{
+				if (is_numeric($name))
 				{
-					if($append_ix)
-					{
-						$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n"
-							. $this->m_oTranslator->m_sStatementTerminator;
-					}
-					else
-					{
-						$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n)"
-							. $this->m_oTranslator->m_sStatementTerminator;
-					}
-					if($sSequenceSQL != '')
-					{
-						$sAllTableSQL .= $sSequenceSQL . "\n";
-					}
-					$sAllTableSQL .= $sTableSQL . "\n\n";
+					$name = $this->_index_name($sTableName,$mFields);
 				}
-				else
+				$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$mFields,array('UNIQUE'));
+				if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateIndexSql(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$mFields,array('UNIQUE'),$aSql)))
 				{
-					if($bOutputHTML)
-					{
-						print('<br>Failed generating script for <b>' . $sTableName . '</b><br>');
-						echo '<pre style="text-align: left;">'.$sTableName.' = '; print_r($aTableDef); echo "</pre>\n";
-					}
-
-					return false;
+					return $retVal;
 				}
 			}
-
-			if($bOutputHTML)
+			// creation indices
+			foreach ($aTableDef['ix'] as $name => $mFields)
 			{
-				print('<pre>' . $sAllTableSQL . '</pre><br><br>');
-			}
+				$options = False;
+				if (is_array($mFields))
+				{
+					if (isset($mFields['options']))		// array sets additional options
+					{
+						if (isset($mFields['options'][$this->sType]))
+						{
+							$options = $mFields['options'][$this->sType];	// db-specific options, eg. index-type
+							
+							if (!$options) continue;	// no index for our db-type
+						}
+						unset($mFields['options']);
+					}
+				}
 
-			return True;
+				if (is_numeric($name))
+				{
+					$name = $this->_index_name($sTableName,$mFields);
+				}
+				$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$mFields,array($options));
+				if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateIndexSql(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$mFields,$options,$aSql)))
+				{
+					return $retVal;
+				}
+			}
+			return $retVal;
 		}
-
-		function ExecuteScripts($aTables, $bOutputHTML=False)
-		{
-			if(!is_array($aTables) || !IsSet($this->m_odb))
-			{
-				return False;
-			}
-
-			reset($aTables);
-			$this->m_aTables = $aTables;
-
-			while(list($sTableName, $aTableDef) = each($aTables))
-			{
-				if($this->CreateTable($sTableName, $aTableDef))
-				{
-					if($bOutputHTML)
-					{
-						echo '<br>Create Table <b>' . $sTableName . '</b>';
-					}
-				}
-				else
-				{
-					if($bOutputHTML)
-					{
-						echo '<br>Create Table Failed For <b>' . $sTableName . '</b>';
-					}
-
-					return False;
-				}
-			}
-
-			return True;
-		}
-
+		
+		/**
+		 * Drops all tables in $aTables
+		 *
+		 * @param array $aTables array of eGW table-definitions
+		 * @param boolean $bOutputHTML should we give diagnostics, default False
+		 * @return boolean True if no error, else False
+		 */
 		function DropAllTables($aTables, $bOutputHTML=False)
 		{
 			if(!is_array($aTables) || !isset($this->m_odb))
 			{
 				return False;
 			}
+			// set our debug-mode or $bOutputHTML is the other one is set
+			if ($this->debug) $bOutputHTML = True;
+			if ($bOutputHTML && !$this->debug) $this->debug = 2;
 
-			$this->m_aTables = $aTables;
+			$this->m_aTables = array();
+			if($this->m_bDeltaOnly) return true;
 
-			reset($this->m_aTables);
-			while(list($sTableName, $aTableDef) = each($this->m_aTables))
+			foreach($aTables as $sTableName => $aTableDef)
 			{
 				if($this->DropTable($sTableName))
 				{
@@ -139,116 +160,285 @@
 					return False;
 				}
 			}
-
 			return True;
 		}
 
+		/**
+		 * Drops the table $sTableName
+		 *
+		 * @param string $sTableName
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
 		function DropTable($sTableName)
 		{
-			$retVal = $this->m_oDeltaProc->DropTable($this, $this->m_aTables, $sTableName);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
+			unset($this->m_aTables[$sTableName]);
+			if($this->m_bDeltaOnly) return True;
 
-			return $retVal && $this->m_oTranslator->DropTable($this, $this->m_aTables, $sTableName);
+			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
+
+			$aSql = $this->dict->DropTableSql($sTableName);
+		
+			return $this->ExecuteSQLArray($aSql,2,'DropTable(%1) sql=%2',False,$sTableName,$aSql);
 		}
 
+		/**
+		 * Drops column $sColumnName from table $sTableName
+		 *
+		 * @param string $sTableName table-name
+		 * @param array $aTableDef eGW table-defintion
+		 * @param string $sColumnName column-name
+		 * @param boolean $bCopyData ???
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
 		function DropColumn($sTableName, $aTableDef, $sColumnName, $bCopyData = true)
 		{
-			$retVal = $this->m_oDeltaProc->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
+			unset($this->m_aTables[$sTableName]['fd'][$sColumnName]);
+			if($this->m_bDeltaOnly) return True;
 
-			return $retVal && $this->m_oTranslator->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
+			$aSql = $this->dict->DropColumnSql($sTableName,$sColumnName,$ado_table=$this->_egw2adodb_columndef($this->m_aTables[$sTableName]));
+
+			return $this->ExecuteSQLArray($aSql,2,'DropColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sColumnName,$ado_table,$aSql);
 		}
 
+		/**
+		 * Renames table $sOldTableName to $sNewTableName
+		 *
+		 * @param string $sOldTableName old (existing) table-name
+		 * @param string $sNewTableName new table-name
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
 		function RenameTable($sOldTableName, $sNewTableName)
 		{
-			$retVal = $this->m_oDeltaProc->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
+			$this->m_aTables[$sNewTableName] = $this->m_aTables[$sOldTableName];
+			unset($this->m_aTables[$sOldTableName]);
+			if($this->m_bDeltaOnly) return True;
+			
+			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
 
-			return $retVal && $this->m_oTranslator->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
-		}
+			$aSql = $this->dict->RenameTableSQL($sOldTableName, $sNewTableName);
 
-		function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
-		{
-			$retVal = $this->m_oDeltaProc->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
-
-			return $retVal && $this->m_oTranslator->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
-		}
-
-		function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData=True)
-		{
-			$retVal = $this->m_oDeltaProc->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
-
-			return $retVal && $this->m_oTranslator->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
-		}
-
-		function AddColumn($sTableName, $sColumnName, $aColumnDef)
-		{
-			$retVal = $this->m_oDeltaProc->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
-
-			return $retVal && $this->m_oTranslator->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
-		}
-
-		function CreateTable($sTableName, $aTableDef)
-		{
-			$retVal = $this->m_oDeltaProc->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
-			if($this->m_bDeltaOnly)
-			{
-				return $retVal;
-			}
-
-			return $retVal && $this->m_oTranslator->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
+			return $this->ExecuteSQLArray($aSql,2,'RenameTableSQL(%1,%2) sql=%3',False,$sOldTableName,$sNewTableName,$aSql);
 		}
 		
+		/**
+		 * Check if we have an old, not automaticaly droped sequence and drop it
+		 *
+		 * 
+		 * @param $sTableName
+		 */
+		function _PostgresTestDropOldSequence($sTableName)
+		{
+			if (!$this->sType == 'pgsql') return;
+
+			$seq = $this->adodb->GetOne("SELECT a.attname FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+			
+			if ($seq)
+			{
+				$this->query("DROP SEQUENCE $seq",__LINE__,__FILE__);
+			}
+		}
+
+		/**
+		 * Changes one (exiting) column in a table
+		 *
+		 * @param string $sTableName table-name
+		 * @param string $sColumnName column-name
+		 * @param array $aColumnDef new column-definition
+		 * @param boolean $bCopyData ???
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData=True)
+		{
+			$this->m_aTables[$sTableName]['fd'][$sColumnName] = $aColumnDef;
+			if($this->m_bDeltaOnly) return True;
+
+			$aSql = $this->dict->AlterColumnSQL($sTableName,$ado_col = $this->_egw2adodb_columndef(array(
+					'fd' => array($sColumnName => $aColumnDef),
+					'pk' => array(),
+				)),$ado_table=$this->_egw2adodb_columndef($this->m_aTables[$sTableName]));
+
+			return $this->ExecuteSQLArray($aSql,2,'AlterColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$ado_col,$ado_table,$aSql);
+		}
+
+		/**
+		 * Renames column $sOldColumnName to $sNewColumnName in table $sTableName
+		 *
+		 * @param string $sTableName table-name
+		 * @param string $sOldColumnName old (existing) column-name
+		 * @param string $sNewColumnName new column-name
+		 * @param boolean $bCopyData ???
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
+		{
+			$this->m_aTables[$sTableName]['fd'][$sNewColumnName] = $this->m_aTables[$sTableName]['fd'][$sOldColumnName];
+			unset($this->m_aTables[$sTableName]['fd'][$sOldColumnName]);
+			if($this->m_bDeltaOnly) return True;
+
+			// we have to use the new column-name, as m_oDeltaProc has already changed m_aTables
+			$col_def = $this->_egw2adodb_columndef(array(
+					'fd' => array($sNewColumnName => $this->m_aTables[$sTableName]['fd'][$sNewColumnName]),
+					'pk' => array(),
+				));
+
+			$aSql = $this->dict->RenameColumnSQL($sTableName,$sOldColumnName,$sNewColumnName,$col_def);
+
+			return $this->ExecuteSQLArray($aSql,2,'RenameColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sOldColumnName, $sNewColumnName,$aSql);
+		}
+
+		/**
+		 * Add one (new) column to a table
+		 *
+		 * @param string $sTableName table-name
+		 * @param string $sColumnName column-name
+		 * @param array $aColumnDef column-definition
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function AddColumn($sTableName, $sColumnName, $aColumnDef)
+		{
+			$this->m_aTables[$sTableName]['fd'][$sColumnName] = $aColumnDef;
+			if($this->m_bDeltaOnly) return True;
+
+			$aSql = $this->dict->AddColumnSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef(array(
+					'fd' => array($sColumnName => $aColumnDef),
+					'pk' => array(),
+				)));
+
+			return $this->ExecuteSQLArray($aSql,2,'AlterColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sColumnName, $aColumnDef,$aSql);
+		}
+		
+		/**
+		 * Create an (unique) Index over one or more columns
+		 *
+		 * @param string $sTablename table-name
+		 * @param array $aColumnNames columns for the index
+		 * @param boolean $bUnique=false true for a unique index, default false
+		 * @param array/string $options='' db-sepecific options, default '' = none
+		 * @param string $sIdxName='' name of the index, if not given (default) its created automaticaly
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function CreateIndex($sTableName,$aColumnNames,$type=False,$options='',$sIdxName='')
+		{
+			$kind = $bUnique ? 'uc' : 'ix';
+			$key = !$sIdxName || is_numeric($sIdxName) ? count($this->m_aTables[$sTableName][$kind]) : $sIdxName;
+			$this->m_aTables[$sTableName][$kind][$key] = $aColumnNames;
+			if($this->m_bDeltaOnly) return true;
+
+			if (!$sIdxName || is_numeric($sIdxName))
+			{
+				$sIdxName = $this->_index_name($sTableName,$aColumnNames);
+			}
+			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$aColumnNames,is_array($options) ? $options : array($options));
+
+			return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3) sql=%4',False,$name,$sTableName,$sColumnName, $aColumnDef,$aSql);
+		}
+
+		/**
+		 * Drop an Index
+		 *
+		 * @param string $sTablename table-name
+		 * @param array/string $aColumnNames columns of the index or the name of the index
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function DropIndex($sTableName,$aColumnNames)
+		{
+			if (is_array($aColumnNames)) 
+			{
+				foreach(array('ix','uc') as $kind)
+				{
+					foreach($this->m_aTables[$sTableName][$kind] as $idx => $columns)
+					{
+						if (!is_array($columns)) $columns = array($columns);
+						unset($columns['options']);
+						
+						if (implode(':',$columns) == implode(':',$aColumnNames))
+						{
+							unset($this->m_aTables[$sTableName][$kind][$idx]);
+							break;
+						}
+					}
+				}
+				$indexes = $this->dict->MetaIndexes($sTableName);
+				if ($indexes === False)
+				{
+					// if MetaIndexes is not availible for the DB, we try the name the index was created with
+					// this fails if one of the columns have been renamed
+					$sIdxName = $this->_index_name($sTableName,$aColumnNames);
+				}
+				else
+				{
+					foreach($this->dict->MetaIndexes($sTableName) as $idx => $idx_data)
+					{
+						if (strtolower(implode(':',$idx_data['columns'])) == implode(':',$aColumnNames))
+						{
+							$sIdxName = $idx;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				$sIdxName = $aColumnNames;
+			}
+			if($this->m_bDeltaOnly || !$sIdxName)
+			{
+				return True;
+			}
+			$aSql = $this->dict->DropIndexSQL($sIdxName,$sTableName);
+
+			return $this->ExecuteSQLArray($aSql,2,'DropIndexSQL(%1(%2),%3) sql=%4',False,$sIdxName,$aColumnNames,$sTableName,$aSql);
+		}	
+
+		/**
+		 * Updating the sequence-value, after eg. copying data via RefreshTable
+		 * @param string $sTableName table-name
+		 * @param string $sColumnName column-name, which default is set to nextval()
+		 */
 		function UpdateSequence($sTableName,$sColumnName)
 		{
-			if (method_exists($this->m_oTranslator,'UpdateSequence'))
+			switch($this->sType)
 			{
-				return $this->m_oTranslator->UpdateSequence($this->m_odb,$sTableName,$sColumnName);
+				case 'pgsql':
+					// identify the sequence name, ADOdb uses a different name or it might be renamed
+					$columns = $this->dict->MetaColumns($sTableName);
+					$seq_name = 'seq_'.$sTableName;
+					if (preg_match("/nextval\('([^']+)'::text\)/",$columns[$sColumnName]->default_value,$matches)) 
+					{
+						$seq_name = $matches[1];
+					}
+					$sql = "SELECT setval('$seq_name',MAX($sColumnName) FROM $sTableName";
+					if($GLOBALS['DEBUG']) { echo "<br>Updating sequence '$seq_name using: $sql"; }
+					return $this->query($sql,__LINE__,__FILE__);
 			}
 			return True;
 		}
-			
 
-		// This function manually re-created the table incl. primary key and all other indices
-		// It is meant to use if the primary key, existing indices or column-order changes or
-		// columns are not longer used or new columns need to be created (with there default value or NULL)
-		// Beside the default-value in the schema, one can give extra defaults via $aDefaults to eg. use an
-		// other colum or function to set the value of a new or changed column
+		/**
+		 * This function manually re-created the table incl. primary key and all other indices
+		 *
+		 * It is meant to use if the primary key, existing indices or column-order changes or
+		 * columns are not longer used or new columns need to be created (with there default value or NULL)
+		 * Beside the default-value in the schema, one can give extra defaults via $aDefaults to eg. use an
+		 * other colum or function to set the value of a new or changed column
+		 *
+		 * @param string $sTableName table-name
+		 * @param array $aTableDef eGW table-defintion
+		 * @param array/boolean $aDefaults array with default for the colums during copying, values are either (old) column-names or quoted string-literals
+		 */
 		function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 		{
 			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>m_aTables[$sTableName]="._debug_array($this->m_aTables[$sTableName],False)."\n"; }
 			$old_fd = $this->m_aTables[$sTableName]['fd'];
 
-			$Ok = $this->m_oDeltaProc->RefreshTable($this, $this->m_aTables, $sTableName, $aTableDef);
-			if(!$Ok || $this->m_bDeltaOnly)
-			{
-				return $Ok;	// nothing else to do
-			}
+			$this->m_aTables[$sTableName] = $aTableDef;
+			if($this->m_bDeltaOnly) return true;
+
 			$tmp_name = 'tmp_'.$sTableName;
 			$this->m_odb->transaction_begin();
 
 			$select = array();
+			$blob_column_included = $auto_column_included = False;
 			foreach($aTableDef['fd'] as $name => $data)
 			{
 				if ($aDefaults && isset($aDefaults[$name]))	// use given default
@@ -276,13 +466,37 @@
 						}
 					}
 				}
+				$blob_column_included = $blob_column_included || in_array($data['type'],array('blob','text','longtext'));
+				$auto_column_included = $auto_column_included || $data['type'] == 'auto';
 				$select[] = $value;
 			}
 			$select = implode(',',$select);
 			
-			$Ok = $this->RenameTable($sTableName,$tmp_name) &&
-				$this->CreateTable($sTableName,$aTableDef) &&
-				$this->m_odb->query("INSERT INTO $sTableName SELECT DISTINCT $select FROM $tmp_name",__LINE__,__FILE__);
+			$extra = '';
+			$distinct = 'DISTINCT';
+			switch($this->sType)
+			{
+				case 'mssql':
+					if ($auto_column_included) $extra = "SET IDENTITY_INSERT $sTableName ON\n";
+					if ($blob_column_included) $distinct = '';	// no distinct on blob-columns
+					break;					
+			}
+			// because of all the trouble with sequences and indexes in the global namespace, 
+			// we use an additional temp. table for postgres and not rename the existing on, but drop it.
+			if ($this->sType == 'pgsql')	
+			{
+				$Ok = $this->m_odb->query("SELECT * INTO TEMPORARY TABLE $tmp_name FROM $sTableName",__LINE__,__FILE__) &&
+					$this->DropTable($sTableName);
+			}
+			else
+			{
+				$Ok = $this->RenameTable($sTableName,$tmp_name);
+			}
+			$Ok = $Ok && $this->CreateTable($sTableName,$aTableDef) &&
+				$this->m_odb->query("$extra INSERT INTO $sTableName (".
+					implode(',',array_keys($aTableDef['fd'])).
+					") SELECT $distinct $select FROM $tmp_name",__LINE__,__FILE__) &&
+				$this->DropTable($tmp_name);
 
 			if (!$Ok)
 			{
@@ -300,17 +514,78 @@
 			return True;
 		}
 
-		function f($value)
+		/**
+		 * depricated Function does nothing any more
+		 * @depricated
+		 */
+		function GenerateScripts($aTables, $bOutputHTML=False)
+		{
+			return True;
+		}
+
+		/**
+		 * Creates all tables for one application
+		 *
+		 * @param array $aTables array of eGW table-definitions
+		 * @param boolean $bOutputHTML should we give diagnostics, default False
+		 * @return boolean True on success, False if an (fatal) error occured
+		 */
+		function ExecuteScripts($aTables, $bOutputHTML=False)
+		{
+			if(!is_array($aTables) || !IsSet($this->m_odb))
+			{
+				return False;
+			}
+			// set our debug-mode or $bOutputHTML is the other one is set
+			if ($this->debug) $bOutputHTML = True;
+			if ($bOutputHTML && !$this->debug) $this->debug = 2;
+
+			$this->m_aTables = $aTables;
+
+			foreach($aTables as $sTableName => $aTableDef)
+			{
+				if($this->CreateTable($sTableName, $aTableDef))
+				{
+					if($bOutputHTML)
+					{
+						echo '<br>Create Table <b>' . $sTableName . '</b>';
+					}
+				}
+				else
+				{
+					if($bOutputHTML)
+					{
+						echo '<br>Create Table Failed For <b>' . $sTableName . '</b>';
+					}
+
+					return False;
+				}
+			}
+			return True;
+		}
+
+		/**
+		* Return the value of a column
+		*
+		* @param string/integer $Name name of field or positional index starting from 0
+		* @param bool $strip_slashes string escape chars from field(optional), default false
+		* @return string the field value
+		*/
+		function f($value,$strip_slashes=False)
 		{
 			if($this->m_bDeltaOnly)
 			{
 				// Don't care, since we are processing deltas only
 				return False;
 			}
-
-			return $this->m_odb->f($value);
+			return $this->m_odb->f($value,$strip_slashes);
 		}
 
+		/**
+		* Number of rows in current result set
+		*
+		* @return int number of rows
+		*/
 		function num_rows()
 		{
 			if($this->m_bDeltaOnly)
@@ -318,10 +593,14 @@
 				// If not False, we will cause while loops calling us to hang
 				return False;
 			}
-
 			return $this->m_odb->num_rows();
 		}
 
+		/**
+		* Move to the next row in the results set
+		*
+		* @return bool was another row found?
+		*/
 		function next_record()
 		{
 			if($this->m_bDeltaOnly)
@@ -329,10 +608,19 @@
 				// If not False, we will cause while loops calling us to hang
 				return False;
 			}
-
 			return $this->m_odb->next_record();
 		}
 
+		/**
+		* Execute a query
+		*
+		* @param string $Query_String the query to be executed
+		* @param mixed $line the line method was called from - use __LINE__
+		* @param string $file the file method was called from - use __FILE__
+		* @param int $offset row to start from
+		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
+		* @return ADORecordSet or false, if the query fails
+		*/
 		function query($sQuery, $line='', $file='')
 		{
 			if($this->m_bDeltaOnly)
@@ -340,251 +628,291 @@
 				// Don't run this query, since we are processing deltas only
 				return True;
 			}
-
 			return $this->m_odb->query($sQuery, $line, $file);
 		}
-
-		function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL,&$append_ix)
+		
+		/**
+		* Insert a row of data into a table or updates it if $where is given, all data is quoted according to it's type
+		*
+		* @param string $table name of the table
+		* @param array $data with column-name / value pairs
+		* @param mixed $where string with where clause or array with column-name / values pairs to check if a row with that keys already exists, or false for an unconditional insert
+		*	if the row exists db::update is called else a new row with $date merged with $where gets inserted (data has precedence)
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param string $app string with name of app, this need to be set in setup anyway!!!
+		* @return ADORecordSet or false, if the query fails
+		*/
+		function insert($table,$data,$where,$line,$file,$app)
 		{
-			if(!is_array($aTableDef))
+			if($this->m_bDeltaOnly)
 			{
-				return False;
+				// Don't run this query, since we are processing deltas only
+				return True;
 			}
-
-			$sTableSQL = '';
-			reset($aTableDef['fd']);
-			while(list($sFieldName, $aFieldAttr) = each($aTableDef['fd']))
+			return $this->m_odb->insert($table,$data,$where,$line,$file,$app);
+		}		
+			
+		/**
+		 * Execute the Sql statements in an array and give diagnostics, if any error occures
+		 *
+		 * @param $aSql array of SQL strings to execute
+		 * @param $debug_level int for which debug_level (and higher) should the diagnostics always been printed
+		 * @param $debug string variable number of arguments for the debug_message functions in case of an error
+		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
+		 */
+		function ExecuteSqlArray($aSql,$debug_level,$debug)
+		{
+			$retval = $this->dict->ExecuteSQLArray($aSql);
+			
+			if ($retval < 2 || $this->debug >= $debug_level || $this->debug > 3)
 			{
-				$sFieldSQL = '';
-				if($this->_GetFieldSQL($aFieldAttr, $sFieldSQL))
+				$debug_params = func_get_args();
+				array_shift($debug_params);
+				array_shift($debug_params);
+				call_user_method_array('debug_message',$this,$debug_params);		
+				if ($retval < 2 && !$this->dict->debug)
 				{
-					if($sTableSQL != '')
+					echo '<p><b>'.$this->adodb->ErrorMsg()."</b></p>\n";
+				}
+			}
+			return $retval;
+		}
+
+		/**
+		 * Created a (unique) name for an index
+		 *
+		 * As the length of the index name is limited on some databases, we use two algorithms:
+		 * a) we use just the first column-name with and added _2, _3, ... if more indexes uses that column
+		 * b) we use the table-names plus all column-names and remove dublicate parts
+		 *
+		 * @internal
+		 * @param $sTableName string name of the table
+		 * @param $aColumnNames array of column-names or string with a single column-name
+		 * @return string the index-name
+		 */
+		function _index_name($sTableName,$aColumnNames)
+		{
+			// this code creates extrem short index-names, eg. for MaxDB
+			if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32)
+			{
+				static $existing_indexes=array();
+				
+				if (!isset($existing_indexes[$sTableName]) && method_exists($this->adodb,'MetaIndexes'))
+				{
+					$existing_indexes[$sTableName] = $this->adodb->MetaIndexes($sTableName);
+				}	
+				$i = 0; 
+				$firstCol = is_array($aColumnNames) ? $aColumnNames[0] : $aColumnNames;
+				do 
+				{
+					++$i;
+					$name = $firstCol . ($i > 1  ? '_'.$i : '');
+				}
+				while (isset($existing_indexes[$sTableName][$name]) || isset($existing_indexes[strtoupper($sTableName)][strtoupper($name)]));
+				
+				$existing_indexes[$sTableName][$name] = True;	// mark it as existing now
+				
+				return $name;
+			}
+			// This code creates longer index-names incl. the table-names and the used columns
+			$table = str_replace(array('phpgw_','egw_'),'',$sTableName);
+			// if the table-name or a part of it is repeated in the column-name, remove it there
+			$remove[] = $table.'_';
+			// also remove 3 or 4 letter shortcuts of the table- or app-name
+			$remove[] = substr($table,0,3).'_';
+			$remove[] = substr($table,0,4).'_';	
+			// if the table-name consists of '_' limtied parts, remove occurences of these parts too
+			foreach (explode('_',$table) as $part)
+			{
+				$remove[] = $part.'_';
+			}
+			$aColumnNames = str_replace($remove,'',$aColumnNames);
+			
+			$name = $sTableName.'_'.(is_array($aColumnNames) ? implode('_',$aColumnNames) : $aColumnNames);
+			
+			return $name;			
+		}
+			
+		/**
+		 * Giving a non-fatal error-message
+		 */
+		function error($str)
+		{
+			echo "<p><b>Error:</b> $str</p>";
+		}
+
+		/**
+		 * Giving a fatal error-message and exiting
+		 */
+		function fatal($str)
+		{
+			echo "<p><b>Fatal Error:</b> $str</p>";
+			exit;
+		}
+		
+		/**
+		 * Gives out a debug-message with certain parameters
+		 *
+		 * All permanent debug-messages in the calendar should be done by this function !!!
+		 *	(In future they may be logged or sent as xmlrpc-faults back.)
+		 *
+		 * Permanent debug-message need to make sure NOT to give secret information like passwords !!!
+		 *
+		 * This function do NOT honor the setting of the debug variable, you may use it like
+		 * if ($this->debug > N) $this->debug_message('Error ;-)');
+		 *
+		 * The parameters get formated depending on their type.
+		 *
+		 * @param $msg string message with parameters/variables like lang(), eg. '%1'
+		 * @param $backtrace include a function-backtrace, default True=On
+		 *	should only be set to False=Off, if your code ensures a call with backtrace=On was made before !!!
+		 * @param $param mixed a variable number of parameters, to be inserted in $msg
+		 *	arrays get serialized with print_r() !
+		 */
+		function debug_message($msg,$backtrace=True)
+		{
+			for($i = 2; $i < func_num_args(); ++$i)
+			{
+				$param = func_get_arg($i);
+		
+				if (is_null($param))
+				{
+					$param='NULL';
+				}
+				else
+				{
+					switch(gettype($param))
 					{
-						$sTableSQL .= ",\n";
+						case 'string':
+							$param = "'$param'";
+							break;
+						case 'array':
+						case 'object':
+							list(,$content) = @each($param);
+							$do_pre = is_array($param) ? count($param) > 6 || is_array($content)&&count($content) : True;
+							$param = ($do_pre ? '<pre>' : '').print_r($param,True).($do_pre ? '</pre>' : '');
+							break;
+						case 'boolean':
+							$param = $param ? 'True' : 'False';
+							break;
 					}
+				}
+				$msg = str_replace('%'.($i-1),$param,$msg);
+			}
+			echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '');
+		}
 
-					$sTableSQL .= "$sFieldName $sFieldSQL";
+		/**
+		 * Converts an eGW table-definition array into an ADOdb column-definition string
+		 *
+		 * @internal
+		 * @param array $aTableDef eGW table-defintion
+		 * @return string ADOdb column-definition string (comma separated)
+		 */
+		function _egw2adodb_columndef($aTableDef)
+		{
+			$ado_defs = array();
+			foreach($aTableDef['fd'] as $col => $col_data)
+			{
+				$ado_col = False;
 
-					if($aFieldAttr['type'] == 'auto')
-					{
-						$this->m_oTranslator->GetSequenceSQL($sTableName, $sSequenceSQL);
-						if($sSequenceSQL != '')
+				switch($col_data['type'])
+				{
+					case 'auto':
+						$ado_col = 'I AUTOINCREMENT NOTNULL';
+						unset($col_data['nullable']);	// else we set it twice
+						break;
+					case 'blob':
+						$ado_col = 'B';
+						break;
+					case 'bool':
+						$ado_col = 'L';
+						break;
+					case 'char':	
+						// ADOdb does not differ between char and varchar
+					case 'varchar':					
+						if($col_data['precision'] > 0 && $col_data['precision'] < 256)
 						{
-							$sTableSQL .= sprintf(" DEFAULT nextval('seq_%s')", $sTableName);
+							$ado_col = "C($col_data[precision])";
 						}
-					}
+						if($col_data['precision'] > 255)
+						{
+							$ado_col = 'X';
+						}
+						break;
+					case 'date':
+						$ado_col = 'D';
+						if ($col_data['default'] == 'current_date')
+						{
+							$ado_col .= ' DEFDATE';
+							unset($col_data['default']);
+						}
+						break;
+					case 'decimal':
+						$ado_col = "N($col_data[precision].$col_data[scale])";
+						break;
+					case 'float':
+						// ADOdb does not differ between float and double
+						$ado_col = 'F';
+						break;
+					case 'int':
+						$ado_col = 'I';
+						switch($col_data['precision'])
+						{
+							case 1:
+							case 2:
+							case 4:
+							case 8:
+								$ado_col .= $col_data['precision'];
+								break;
+						}
+						break;
+					case 'longtext':
+						$ado_col = 'XL';
+						break;
+					case 'text':
+						$ado_col = 'X';
+						break;
+					case 'timestamp':
+						$ado_col = 'T';
+						if ($col_data['default'] == 'current_timestamp')
+						{
+							$ado_col .= ' DEFTIMESTAMP';
+							unset($col_data['default']);
+						}
+						break;
 				}
-				else
+				if (!$ado_col)
 				{
-					if($GLOBALS['DEBUG']) { echo 'GetFieldSQL failed for ' . $sFieldName; }
-					return False;
+					$this->error("Ignoring unknown column-type '$col_data[type]($col_data[precision])' !!!");
+					continue;
 				}
-			}
-
-			$sUCSQL = '';
-			$sPKSQL = '';
-			$sIXSQL = '';
-
-			if(count($aTableDef['pk']) > 0)
-			{
-				if(!$this->_GetPK($aTableDef['pk'], $sPKSQL))
+				if (isset($col_data['nullable']) && !$col_data['nullable'])
 				{
-					if($bOutputHTML)
-					{
-						print('<br>Failed getting primary key<br>');
-					}
-
-					return False;
+					$ado_col .= ' NOTNULL';
 				}
-			}
-
-			if(count($aTableDef['uc']) > 0)
-			{
-				if(!$this->_GetUC($aTableDef['uc'], $sUCSQL))
+				if (isset($col_data['default']))
 				{
-					if($bOutputHTML)
-					{
-						print('<br>Failed getting unique constraint<br>');
-					}
-
-					return False;
+					$ado_col .= " DEFAULT '$col_data[default]'";
 				}
-			}
-
-			if(count($aTableDef['ix']) > 0)
-			{
-				$append_ix = False;
-				if(!$this->_GetIX($aTableDef['ix'], $sIXSQL,$append_ix,$sTableName))
+				if (in_array($col,$aTableDef['pk']))
 				{
-					if($bOutputHTML)
-					{
-						print('<br>Failed getting index<br>');
-					}
-
-					return False;
+					$ado_col .= ' PRIMARY';
 				}
-//				print('<br>HELLO!: ' .  $sIXSQL);
+				$ado_defs[] = $col . ' ' . $ado_col;
 			}
-
-			if($sPKSQL != '')
-			{
-				$sTableSQL .= ",\n" . $sPKSQL;
-			}
-
-			if($sUCSQL != '')
-			{
-				$sTableSQL .= ",\n" . $sUCSQL;
-			}
-
-			if($sIXSQL != '')
-			{
-				if($append_ix)
-				{
-					$sTableSQL .= ");\n" . $sIXSQL;
-					//pg: CREATE INDEX test1_id_index ON test1 (id);
-				}
-				else
-				{
-					$sTableSQL .= ",\n" . $sIXSQL;
-				}
-			}
-
-			return True;
+			//print_r($aTableDef); echo implode(",\n",$ado_defs)."\n";
+			return implode(",\n",$ado_defs);
 		}
-
-		// Get field DDL
-		function _GetFieldSQL($aField, &$sFieldSQL)
+		
+		/**
+		 * Get actual columnnames as a comma-separated string, old translator function
+		 * @depricated
+		 */
+		function _GetColumns($oProc,$sTableName,&$sColumns)
 		{
-			if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Incoming ARRAY: '; var_dump($aField); }
-			if(!is_array($aField))
-			{
-				return false;
-			}
-
-			$sType = '';
-			$iPrecision = 0;
-			$iScale = 0;
-			$bNullable = true;
-
-			reset($aField);
-			while(list($sAttr, $vAttrVal) = each($aField))
-			{
-				switch ($sAttr)
-				{
-					case 'type':
-						$sType = $vAttrVal;
-						break;
-					case 'precision':
-						$iPrecision = (int)$vAttrVal;
-						break;
-					case 'scale':
-						$iScale = (int)$vAttrVal;
-						break;
-					case 'nullable':
-						$bNullable = $vAttrVal;
-						break;
-					default:
-						break;
-				}
-			}
-
-			// Translate the type for the DBMS
-			if($sFieldSQL = $this->m_oTranslator->TranslateType($sType, $iPrecision, $iScale))
-			{
-				if(strpos(strtolower($sFieldSQL),'null')===false)
-				{
-					if(!$bNullable)
-					{
-						$sFieldSQL .= ' NOT NULL';
-					}
-					elseif ($this->m_oTranslator->b_needExplicitNULL)
-					{
-						$sFieldSQL .= ' NULL';
-					}
-				}
-				if(isset($aField['default']))
-				{
-					if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $aField['default'] . '"'; }
-					// Get default DDL - useful for differences in date defaults (eg, now() vs. getdate())
-
-					$sFieldSQL .= ' DEFAULT ' . (is_numeric($aField['default']) ? $aField['default'] :
-						$this->m_oTranslator->TranslateDefault($aField['default']));
-				}
-				if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Outgoing SQL:   ' . $sFieldSQL; }
-				return true;
-			}
-
-			if($GLOBALS['DEBUG']) { echo '<br>Failed to translate field: type[' . $sType . '] precision[' . $iPrecision . '] scale[' . $iScale . ']<br>'; }
-
-			return False;
-		}
-
-		function _GetPK($aFields, &$sPKSQL)
-		{
-			$sPKSQL = '';
-			if(count($aFields) < 1)
-			{
-				return True;
-			}
-
-			$sPKSQL = $this->m_oTranslator->GetPKSQL(implode(',',$aFields));
-
-			return True;
-		}
-
-		function _GetUC($aFields, &$sUCSQL)
-		{
-			$sUCSQL = '';
-			if(count($aFields) < 1)
-			{
-				return True;
-			}
-			foreach($aFields as $mFields)
-			{
-				$aUCSQL[] = $this->m_oTranslator->GetUCSQL(
-					is_array($mFields) ? implode(',',$mFields) : $mFields);
-			}
-			$sUCSQL = implode(",\n",$aUCSQL);
-
-			return True;
-		}
-
-		function _GetIX($aFields, &$sIXSQL, &$append, $sTableName)
-		{
-			$sUCSQL = '';
-			if(count($aFields) < 1)
-			{
-				return True;
-			}
-			$aIXSQL = array();
-			foreach($aFields as $mFields)
-			{
-				$options = False;
-				if (is_array($mFields))
-				{
-					if (isset($mFields['options']))		// array sets additional options
-					{
-						$options = @$mFields['options'][$this->sType];	// db-specific options, eg. index-type
-						unset($mFields['options']);
-					}
-					if ($options === false)
-					{
-						continue;	// dont create index for that db, eg. cant index text
-					}
-					$mFields = implode(',',$mFields);
-				}
-				$aIXSQL[] = $this->m_oTranslator->GetIXSQL($mFields,$append,$options,$sTableName);
-			}
-			if($append)
-			{
-				$sIXSQL = implode("\n",$aIXSQL);
-			}
-			else
-			{
-				$sIXSQL = implode(",\n",$aIXSQL);
-			}
-
-			return True;
+			return strtolower(implode(',',array_keys($this->dict->MetaColumns($sTableName))));
 		}
 	}
 ?>
