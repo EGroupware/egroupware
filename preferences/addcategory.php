@@ -81,7 +81,7 @@
 	$t->set_var('lang_data',lang($extra));
     }
     else {
-        $t->set_var('cat_data','');
+        $t->set_var('td_data','');
         $t->set_var('lang_data','');
     }
 
