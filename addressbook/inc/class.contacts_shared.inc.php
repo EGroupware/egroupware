@@ -174,40 +174,27 @@
 			$match = 0;
 			if($DEBUG) { echo "<br>"; }
 			for($i=0;$i<count($ldap_fields);$i++) {
-				$matched = "";
-				$allmatched = False;
-				reset($filterfields);
+				$yes = True;
 
+				reset($filterfields);
 				while (list($col,$filt) = each($filterfields))
 				{
 					if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
 					if ($ldap_fields[$i][$col][0] == $filt)
 					{
 						if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
-						$matched[$col] = True;
+						$yes &= True;
 						$match++;
 					}
 					else
 					{
-						$matched[$col] = False;
 						if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+						$yes &= False;
 						$match--;
-					}
-
-					while (list($colmatch) = each($matched))
-					{
-						if ($matched[$col])
-						{
-							$allmatched = True;
-						}
-						else
-						{
-							$allmatched = False;
-						}
 					}
 				}
 
-				if ($allmatched)
+				if ($yes)
 				{
 					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
 					$new_ldap[] = $ldap_fields[$i];

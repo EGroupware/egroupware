@@ -109,19 +109,19 @@
 	if (!$filter) { $filter = "none"; }
 
 	if ($filter == "none") {
-		if ($cat_id == "all") {
+		if (!$cat_id) {
 			$qfilter  = 'tid=n';
 		} else {
 			$qfilter  = 'tid=n,cat_id='.$cat_id;
 		}
 	} elseif($filter == "private") {
-		if ($cat_id == "all") {
+		if (!$cat_id) {
 			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info["user"]["account_id"];
 		} else {
 			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
 		}
 	} else {
-		if ($cat_id == "all") {
+		if (!$cat_id) {
 			$qfilter = 'tid=n,owner='.$filter;
 		} else {
 			$qfilter = 'tid=n,owner='.$filter.'cat_id='.$cat_id;
