@@ -439,5 +439,36 @@
 				. "qfield=$qfield&start=$start" . $extra) . '">' . $text . '</a>';
 		}
 
+		function show_hits($total_records = '',$start)
+		{
+			global $phpgw_info, $start;
+
+			if ($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
+			{
+				$limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			}
+			else
+			{
+				$limit = 15;
+			}
+
+			if ($total_records > $limit)
+			{
+				if ($start + $limit > $total_records)
+				{
+					$end = $total_records;
+				}
+				else
+				{
+					$end = $start + $limit;
+				}
+				$f = lang('showing x - x of x',($start + 1),$end,$total_records);
+			}
+			else
+			{
+				$f = lang('showing x',$total_records);
+			}
+			return $f;
+		}
 	}		// End of nextmatchs class
 ?>
