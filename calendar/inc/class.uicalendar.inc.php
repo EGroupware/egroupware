@@ -444,8 +444,7 @@
 			echo $this->get_year();
 		}
 
-
-		functiong get_year()
+		function get_year()
 		{
 			if(!$this->bo->printer_friendly)
 			{
