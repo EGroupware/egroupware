@@ -64,7 +64,7 @@
 // vv This is new
 		$grantors = $acl->get_ids_for_location($id,$rights,$phpgw_info['flags']['currentapp']);
 		$is_group_set = False;
-		while(list($key,$grantor) = each($grantors))
+		while(@$grantors && list($key,$grantor) = each($grantors))
 		{
 			if($phpgw->accounts->get_type($grantor) == 'g')
 			{
