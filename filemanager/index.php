@@ -247,6 +247,18 @@ if ($download)
 
 if ($op == "view" && $file)
 {
+	$ls_array = $phpgw->vfs->ls ($file, array (RELATIVE_ALL), False, False, True);
+
+	if ($ls_array[0]["mime_type"])
+	{
+		$mime_type = $ls_array[0]["mime_type"];
+	}
+	elseif ($settings["viewtextplain"])
+	{
+		$mime_type = "text/plain";
+	}
+
+	header('Content-type: ' . $mime_type);
 	echo $phpgw->vfs->read ($file);
 	$phpgw->common->phpgw_exit ();
 }

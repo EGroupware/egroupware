@@ -14,6 +14,7 @@ $pref->change ("phpwebhosting", "modifiedby_id", "True");
 $pref->change ("phpwebhosting", "comment", "True");
 //$pref->change ("phpwebhosting", "viewinnewwin", "False");
 //$pref->change ("phpwebhosting", "viewonserver", "False");
+$pref->change ("phpwebhosting", "viewtextplain", True);
 //$pref->change ("phpwebhosting", "dotdot", "False");
 //$pref->change ("phpwebhosting", "dotfiles", "False");
 
