@@ -40,8 +40,8 @@
         <a href="<?php echo $phpgw->link("delete.php","ab_id=$ab_id&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"); 
             ?>"><?php echo lang("YES"); ?></a><center>
      <?php
+   $phpgw->common->phpgw_footer(); 
 
-     //$phpgw->common->phpgw_exit();
   } else {
 
      $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["account_id"]
