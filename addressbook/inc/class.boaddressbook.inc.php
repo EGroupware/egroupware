@@ -68,7 +68,12 @@
 		function boaddressbook($session=False)
 		{
 			$this->so = CreateObject('addressbook.soaddressbook');
+			// make some fields of the contacts-object availible
 			$this->grants = &$this->so->grants;
+			$this->stock_contact_fields = &$this->so->contacts->stock_contact_fields;
+			$this->tel_types = &$this->so->contacts->tel_types;
+			$this->email_types = &$this->so->contacts->email_types;
+			$this->adr_types = &$this->so->contacts->adr_types;
 
 			if($session)
 			{
@@ -417,19 +422,9 @@
 		*/
 		function check_perms($addr,$rights)
 		{
-			$id = !is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
-
-			if (!is_array($addr) || !isset($addr['owner']))
-			{
-				$a = $this->so->read_entry($id,array('owner'));
-				$owner = $a[0]['owner'];
-			}
-			else
-			{
-				$owner = $addr['owner'];
-			}
-			//echo "<p>boaddressbook::check_perms(id='$id',rights=$rights): grant[owner='$owner']='".$this->grants[$owner]."' => ".(($this->grants[$owner] & 4) ? 'True':'False')."</p>\n";
-			return $owner && !!($this->grants[$owner] & $rights);
+			$ret = $this->so->contacts->check_perms(False,$rights,$addr);
+			//echo "<p>boaddressbook::check_perms(".print_r($addr,True).",$rights) = ".($ret?'True':'False')."</p>\n";
+			return $ret;
 		}
 
 		function save_preferences($prefs,$other,$qfields,$fcat_id)

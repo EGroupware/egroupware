@@ -56,7 +56,6 @@
 			$this->fields = CreateObject('addressbook.uifields');
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
-			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->cat      = CreateObject('phpgwapi.categories');
 			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
 			$this->prefs    = $GLOBALS['phpgw_info']['user']['preferences']['addressbook'];
@@ -255,7 +254,7 @@
 
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
-			while($column = each($this->contacts->stock_contact_fields))
+			while($column = each($this->bo->stock_contact_fields))
 			{
 				$test = strtolower($column[0]);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
@@ -515,7 +514,7 @@
 				$GLOBALS['phpgw']->template->set_var('row_vcard_link',$GLOBALS['phpgw']->link('/index.php',
 				'menuaction=addressbook.uivcard.out&ab_id='.$entries[$i]['id']));
 				/* echo '<br>: ' . $contacts->grants[$myowner] . ' - ' . $myowner; */
-				if ($this->contacts->check_perms($this->contacts->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $GLOBALS['phpgw_info']['user']['account_id'])
+				if ($this->bo->check_perms($entries[$i],PHPGW_ACL_EDIT))
 				{
 					$GLOBALS['phpgw']->template->set_var('row_edit','<a href="' . $GLOBALS['phpgw']->link('/index.php',
 					'menuaction=addressbook.uiaddressbook.edit&ab_id='.$entries[$i]['id']) . '">' . lang('Edit') . '</a>');
@@ -580,7 +579,7 @@
 		{
 			list($addnew) = $this->bo->read_entry(array(
 				'id' => $_GET['ab_id'],
-				'fields' => $this->contacts->stock_contact_fields
+				'fields' => $this->bo->stock_contact_fields
 			));
 
 			$addnew['note'] .= "\n".lang("Copied by %1, from record #%2.",$GLOBALS['phpgw']->accounts->id2name($addnew['owner']),$addnew['id']);
@@ -613,6 +612,7 @@
 
 			$GLOBALS['phpgw']->template->set_file(array('add' => 'add.tpl'));
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Add');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -639,7 +639,7 @@
 				/* _debug_array($_fields);exit; */
 				$check = $this->bo->read_entry(array('id' => $_fields['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-				if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
+				if ($this->bo->check_perms($check[0],PHPGW_ACL_EDIT))
 				{
 					$userid = $check[0]['owner'];
 				}
@@ -663,13 +663,13 @@
 			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry(array('id' => $_GET['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-			if ( !$this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_EDIT) &&
-				($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']) )
+			if ( !$this->bo->check_perms($check[0],PHPGW_ACL_EDIT))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Edit');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -682,7 +682,7 @@
 			}
 
 			/* merge in extra fields */
-			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
+			$qfields = $this->bo->stock_contact_fields + $this->extrafields + $customfields;
 			$fields = $this->bo->read_entry(array('id' => $_GET['ab_id'], 'fields' => $qfields));
 
 			$this->addressbook_form('edit','menuaction=addressbook.uiaddressbook.edit',lang('Edit'),$fields[0],$customfields);
@@ -698,7 +698,7 @@
 			$GLOBALS['phpgw']->template->set_var('cancel_link','<form method="POST" action="'
 				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index') . '">');
 
-			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
+			if (($this->bo->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				$GLOBALS['phpgw']->template->set_var('delete_link','<form method="POST" action="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.delete') . '">');
 				$GLOBALS['phpgw']->template->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
@@ -722,7 +722,7 @@
 
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-			if (!(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id']))
+			if (!(($this->bo->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
@@ -758,18 +758,7 @@
 			$referer = urldecode($_GET['referer']);
 
 			/* First, make sure they have permission to this entry */
-			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
-
-			$tmp = $check[0]['owner'];
-			$perms = $this->contacts->check_perms($this->contacts->grants[$tmp],PHPGW_ACL_READ);
-
-			if ( (!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']) )
-			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
-			}
-
-			if (!$ab_id)
+			if (!$ab_id || !$this->bo->check_perms($ab_id,PHPGW_ACL_READ))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
@@ -795,7 +784,7 @@
 			}
 
 			/* _debug_array($this->prefs); */
-			while (list($column,$x) = each($this->contacts->stock_contact_fields))
+			while (list($column,$x) = each($this->bo->stock_contact_fields))
 			{
 				if (isset($this->prefs[$column]) && $this->prefs[$column])
 				{
@@ -805,7 +794,7 @@
 			}
 
 			/* merge in extra fields */
-			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
+			$qfields = $this->bo->stock_contact_fields + $this->extrafields + $customfields;
 
 			$fields = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
 
@@ -951,7 +940,7 @@
 			$GLOBALS['phpgw']->template->set_var('lang_category',lang('Category'));
 			$GLOBALS['phpgw']->template->set_var('catname',$catname);
 
-			if (($this->contacts->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $GLOBALS['phpgw_info']['user']['account_id']))
+			if (($this->bo->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				$extra_vars = array('cd' => 16,'query' => $this->query,'cat_id' => $this->cat_id);
 
@@ -1009,7 +998,7 @@
 				$customfields[$y['name']] = $y['name'];
 			}
 
-			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
+			$qfields = $this->bo->stock_contact_fields + $this->extrafields + $customfields;
 
 			if ($_POST['cancel'])
 			{
@@ -1408,7 +1397,7 @@
 				/* Preferred phone number radio buttons */
 				$pref[0] = '<font size="-2">';
 				$pref[1] = '(' . lang('pref') . ')</font>';
-				while (list($name,$val) = each($this->contacts->tel_types))
+				while (list($name,$val) = each($this->bo->tel_types))
 				{
 					$str[$name] = "\n".'      <input type="radio" name="entry[tel_prefer]" value="'.$name.'"';
 					if ($name == $preferred)
@@ -1483,7 +1472,7 @@
 				$time_zone .= '</select>' . "\n";
 
 				$email_type = '<select name=entry[email_type]>';
-				while ($type = each($this->contacts->email_types))
+				while ($type = each($this->bo->email_types))
 				{
 					$email_type .= '<option value="' . $type[0] . '"';
 					if ($type[0] == $emailtype) { $email_type .= ' selected'; }
@@ -1491,9 +1480,9 @@
 				}
 				$email_type .= '</select>';
 
-				reset($this->contacts->email_types);
+				reset($this->bo->email_types);
 				$hemail_type = '<select name=entry[hemail_type]>';
-				while ($type = each($this->contacts->email_types))
+				while ($type = each($this->bo->email_types))
 				{
 					$hemail_type .= '<option value="' . $type[0] . '"';
 					if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
@@ -1501,8 +1490,8 @@
 				}
 				$hemail_type .= '</select>';
 
-				reset($this->contacts->adr_types);
-				while (list($type,$val) = each($this->contacts->adr_types))
+				reset($this->bo->adr_types);
+				while (list($type,$val) = each($this->bo->adr_types))
 				{
 					$badrtype .= "\n".'<INPUT type="checkbox" name="entry[one_'.$type.']"';
 					$ot = 'one_'.$type;
@@ -1514,8 +1503,8 @@
 					$badrtype .= '>'.$val;
 				}
 
-				reset($this->contacts->adr_types);
-				while (list($type,$val) = each($this->contacts->adr_types))
+				reset($this->bo->adr_types);
+				while (list($type,$val) = each($this->bo->adr_types))
 				{
 					$hadrtype .= "\n".'<INPUT type="checkbox" name="entry[two_'.$type.']"';
 					$tt = 'two_'.$type;
