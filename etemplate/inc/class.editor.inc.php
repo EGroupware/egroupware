@@ -328,9 +328,13 @@
 						{
 							return $this->list_result(array('result' => $result));
 						}
-						elseif (!count($result) || $this->etemplate->read($result[0]))
+						elseif (!count($result) || !$this->etemplate->read($result[0]))
 						{
 							$msg = $this->messages['not_found'];
+						}
+						elseif ($content['name'] == $result[0]['name'])
+						{
+							$msg = $this->messages['other_version'];
 						}
 					}
 				}
@@ -445,13 +449,20 @@
 			{
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
-			$msg = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
+			$imported = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
 
-			if (!$msg)
+			if (is_array($imported))
 			{
-				$msg = sprintf($this->messages['imported'],$this->etemplate->name);
+				if (count($imported) == 1)
+				{
+					$imported = sprintf($this->messages['imported'],$this->etemplate->name);
+				}
+				else
+				{
+					$imported = 'File contains more than one etemplates, last one is shown !!!';
+				}
 			}
-			return $msg;
+			return $imported;
 		}
 
 		function delete($post_vars='',$back = 'edit')
