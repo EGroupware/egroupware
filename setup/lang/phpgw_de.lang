@@ -291,7 +291,7 @@ re-check my database	setup	de	Datenbank erneut überprofen
 re-check my installation	setup	de	Installation erneut überprüfen
 re-enter password	setup	de	Passworteingabe wiederholen
 read translations from	setup	de	Lese Übersetzungen von
-readable by the webserver	setup	de	lesebar bei dem Webserver
+readable by the webserver	setup	de	lesebar durch den Webserver
 really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallieren
 recommended: filesystem	setup	de	Empfohlen: Dateisystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), eGroupWare benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
@@ -406,9 +406,8 @@ world writable	setup	de	schreibbar von jedem (world writeable)
 would you like egroupware to cache the phpgw info array ?	setup	de	Soll eGroupWare das phpgw info Array cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	setup	de	Soll eGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
-writable by webserver	setup	de	schreibbar durch den Webserver
+writable by the webserver	setup	de	schreibar durch den Webserver
 write config	setup	de	Konfiguration schreiben
-writeable by the webserver	setup	de	lesbar durch den Webserver
 yes	setup	de	Ja
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1

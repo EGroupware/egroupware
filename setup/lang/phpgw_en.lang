@@ -403,9 +403,8 @@ world writable	setup	en	world writable
 would you like egroupware to cache the phpgw info array ?	setup	en	Would you like eGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	setup	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
-writable by webserver	setup	en	writable by webserver
+writable by the webserver	setup	en	writable by the webserver
 write config	setup	en	Write config
-writeable by the webserver	setup	en	writeable by the webserver
 yes	setup	en	Yes
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
