@@ -1,6 +1,6 @@
 <?php
 /*
-  V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved.
+  V4.50 6 July 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved.
  
   First cut at the Netezza Driver by Josh Eldridge joshuae74#hotmail.com
  Based on the previous postgres drivers.
@@ -14,7 +14,8 @@
     Updated public variables for Netezza
     Still need to remove blob functions, as Netezza doesn't suppport blob
 */
-
+// security - hide paths
+if (!defined('ADODB_DIR')) die();
 
 include_once(ADODB_DIR.'/drivers/adodb-postgres64.inc.php');
 

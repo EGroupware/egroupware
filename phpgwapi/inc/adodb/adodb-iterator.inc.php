@@ -1,14 +1,15 @@
 <?php
 
 /*
-  V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.50 6 July 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
   
   Set tabs to 4.
   
-  PHP5 Iterator Class:
+  Declares the ADODB Base Class for PHP5 "ADODB_BASE_RS", and supports iteration with 
+  the ADODB_Iterator class.
   
   		$rs = $db->Execute("select * from adoxyz");
 		foreach($rs as $k => $v) {
@@ -19,6 +20,7 @@
 	Iterator code based on http://cvs.php.net/cvs.php/php-src/ext/spl/examples/cachingiterator.inc?login=2
  */
  
+
  class ADODB_Iterator implements Iterator {
 
     private $rs;
@@ -59,9 +61,16 @@
 	
 	function __toString()
 	{
-		return 'ADODB Iterator';
+		if (isset($rs->databaseType)) $s = ' for '.$rs->databaseType;
+		else $s = '';
+		
+		return 'ADODB Iterator'.$s;
 	}
-
+	
+	function hasMore()
+	{
+		return !$this->rs->EOF;
+	}
 
 }
 

@@ -1,15 +1,19 @@
 <?php
+
+// security - hide paths
+if (!defined('ADODB_DIR')) die();
+
 global $ADODB_INCLUDED_CSV;
 $ADODB_INCLUDED_CSV = 1;
 
 /* 
-  V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.50 6 July 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
   Set tabs to 4 for best viewing.
   
-  Latest version is available at http://php.weblogs.com/
+  Latest version is available at http://adodb.sourceforge.net
   
   Library for CSV serialization. This is used by the csv/proxy driver and is the 
   CacheExecute() serialization format. 
@@ -83,7 +87,7 @@ $ADODB_INCLUDED_CSV = 1;
 	function &csv2rs($url,&$err,$timeout=0)
 	{
 		$err = false;
-		$fp = @fopen($url,'r');
+		$fp = @fopen($url,'rb');
 		if (!$fp) {
 			$err = $url.' file/URL not found';
 			return false;
@@ -179,14 +183,18 @@ $ADODB_INCLUDED_CSV = 1;
 					$MAXSIZE = 128000;
 					
 					$text = fread($fp,$MAXSIZE);
-					if (strlen($text) === $MAXSIZE) {
+					if (strlen($text)) {
 						while ($txt = fread($fp,$MAXSIZE)) {
 							$text .= $txt;
 						}
 					}
 					fclose($fp);
-					@$rs = unserialize($text);
+					$rs = unserialize($text);
 					if (is_object($rs)) $rs->timeCreated = $ttl;
+					else {
+						$err = "Unable to unserialize recordset";
+						//echo htmlspecialchars($text),' !--END--!<p>';
+					}
 					return $rs;
 				}
 				

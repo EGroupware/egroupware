@@ -18,9 +18,11 @@
   <body bgcolor="#FFFFFF">
 
 <h2>ADOdb Data Dictionary Library for PHP</h2>
-<p>V4.22 15 Apr 2004 (c) 2000-2004 John Lim (<a href="mailto:jlim#natsoft.com.my">jlim#natsoft.com.my</a>).<br> AXMLS (c) 2004 ars Cognita, Inc</p>
+<p>V4.50 6 July 2004 (c) 2000-2004 John Lim (<a href="mailto:jlim#natsoft.com.my">jlim#natsoft.com.my</a>).<br> AXMLS (c) 2004 ars Cognita, Inc</p>
 <p><font size="1">This software is dual licensed using BSD-Style and LGPL. This means you can use it in compiled proprietary and commercial products.</font></p>
-<p>Useful ADOdb links:  <a href=http://php.weblogs.com/adodb?dd=1>Download</a> &nbsp; <a href=http://php.weblogs.com/adodb_manual?dd=1>Other Docs</a></p>
+  <table border=1><tr><td><font color=red>Kindly note that the ADOdb home page has moved to <a href=http://adodb.sourceforge.net/>http://adodb.sourceforge.net/</a> because of the persistent 
+  unreliability of http://php.weblogs.com. <b>Please change your links</b>!</font></td></tr></table>
+	<p>Useful ADOdb links:  <a href=http://adodb.sourceforge.net/#download>Download</a> &nbsp; <a href=http://adodb.sourceforge.net/#docs>Other Docs</a>
 
 <p>This documentation describes a PHP class library to automate the creation of tables, 
   indexes and foreign key constraints portably for multiple databases. Richard Tango-Lowy and Dan Cech
@@ -138,7 +140,7 @@ field size. Then optional keywords in $otheroptions:</p>
     NAME C(32) CONSTRAINTS 'FOREIGN KEY REFERENCES reftable'</strong></font>
   ";
 </pre>
-<p>Note that if you have special characters in the field name (e.g. My Date), you should enclose it in back-quotes. Normally field names are not case-sensitive, but if you enclose it in back-quotes, some databases treat the names as case-sensitive, and some don't. So be careful.</p>
+<p>Note that if you have special characters in the field name (e.g. My Date), you should enclose it in back-quotes. Normally field names are not case-sensitive, but if you enclose it in back-quotes, some databases will treat the names as case-sensitive (eg. Oracle) , and others won't. So be careful.</p>
 
 <p>The $taboptarray is the 3rd parameter of the CreateTableSQL function. This contains table specific settings. Legal keywords include:</p>
 <ul>

@@ -681,8 +681,8 @@ class ADODB_Session {
 			if (!$rs->EOF) {
 				$ref = $rs->fields[0];
 				$key = $rs->fields[1];
-				assert('$ref');
-				assert('$key');
+				//assert('$ref');
+				//assert('$key');
 				$fn($ref, $key);
 			}
 			$rs->Close();

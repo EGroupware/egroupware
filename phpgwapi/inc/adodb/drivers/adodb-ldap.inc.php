@@ -1,6 +1,6 @@
 <?php
 /*
-  V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved.
+  V4.50 6 July 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved.
    Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -10,6 +10,8 @@
   Joshua Eldridge (joshuae74#hotmail.com)
 */ 
 
+// security - hide paths
+if (!defined('ADODB_DIR')) die();
 
 class ADODB_ldap extends ADOConnection {
     var $databaseType = 'ldap';
@@ -34,7 +36,7 @@ class ADODB_ldap extends ADOConnection {
 	function _connect( $host, $username, $password, $ldapbase )
 	{
 
-	   if ( !function_exists( 'ldap_connect' ) ) return false;
+	   if ( !function_exists( 'ldap_connect' ) ) return null;
 	   
 	   $conn_info = array( $host );
 	   
