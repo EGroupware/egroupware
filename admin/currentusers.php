@@ -17,10 +17,10 @@
 	);
 	include('../header.inc.php');
 
-	$phpgw->template->set_file(array(
-		'list' => 'currentusers.tpl',
-		'row'  => 'currentusers_row.tpl'
-	));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$p->set_file(array('current' => 'currentusers.tpl'));
+	$p->set_block('current','list','list');
+	$p->set_block('current','row','row');
 
 	if (! $start)
 	{
@@ -33,23 +33,23 @@
 
 	$total = $phpgw->db->f(0);
 
-	$phpgw->template->set_var('lang_current_users',lang('List of current users'));
-	$phpgw->template->set_var('bg_color',$phpgw_info['theme'][bg_color]);
-	$phpgw->template->set_var('left_next_matchs',$phpgw->nextmatchs->left('currentusers.php',$start,$total));
-	$phpgw->template->set_var('right_next_matchs',$phpgw->nextmatchs->right('currentusers.php',$start,$total));
-	$phpgw->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$p->set_var('lang_current_users',lang('List of current users'));
+	$p->set_var('bg_color',$phpgw_info['theme'][bg_color]);
+	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('currentusers.php',$start,$total));
+	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('currentusers.php',$start,$total));
+	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-	$phpgw->template->set_var('sort_loginid',$phpgw->nextmatchs->show_sort_order($sort,'session_lid',$order,
-			'/admin/currentusers.php',lang('LoginID')));
-	$phpgw->template->set_var('sort_ip',$phpgw->nextmatchs->show_sort_order($sort,'session_ip',$order,
-			'/admin/currentusers.php',lang('IP')));
-	$phpgw->template->set_var('sort_login_time',$phpgw->nextmatchs->show_sort_order($sort,'session_logintime',$order,
-			'/admin/currentusers.php',lang('Login Time')));
-	$phpgw->template->set_var('sort_action',$phpgw->nextmatchs->show_sort_order($sort,'session_action',$order,
-			'/admin/currentusers.php',lang('Action')));
-	$phpgw->template->set_var('sort_idle',$phpgw->nextmatchs->show_sort_order($sort,'session_dla',$order,
-			'/admin/currentusers.php',lang('idle')));
-	$phpgw->template->set_var('lang_kill',lang('Kill'));
+	$p->set_var('sort_loginid',$phpgw->nextmatchs->show_sort_order($sort,'session_lid',$order,
+		'/admin/currentusers.php',lang('LoginID')));
+	$p->set_var('sort_ip',$phpgw->nextmatchs->show_sort_order($sort,'session_ip',$order,
+		'/admin/currentusers.php',lang('IP')));
+	$p->set_var('sort_login_time',$phpgw->nextmatchs->show_sort_order($sort,'session_logintime',$order,
+		'/admin/currentusers.php',lang('Login Time')));
+	$p->set_var('sort_action',$phpgw->nextmatchs->show_sort_order($sort,'session_action',$order,
+		'/admin/currentusers.php',lang('Action')));
+	$p->set_var('sort_idle',$phpgw->nextmatchs->show_sort_order($sort,'session_dla',$order,
+		'/admin/currentusers.php',lang('idle')));
+	$p->set_var('lang_kill',lang('Kill'));
 
 	if ($order)
 	{
@@ -66,7 +66,7 @@
 	while ($phpgw->db->next_record())
 	{
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$phpgw->template->set_var('tr_color',$tr_color);
+		$p->set_var('tr_color',$tr_color);
 
 		if (ereg('@',$phpgw->db->f('session_lid')))
 		{
@@ -78,32 +78,32 @@
 			$loginid = $phpgw->db->f('session_lid');
 		}
 
-		$phpgw->template->set_var('row_loginid',$loginid);
-		$phpgw->template->set_var('row_ip',$phpgw->db->f('session_ip'));
-		$phpgw->template->set_var('row_logintime',$phpgw->common->show_date($phpgw->db->f('session_logintime')));
+		$p->set_var('row_loginid',$loginid);
+		$p->set_var('row_ip',$phpgw->db->f('session_ip'));
+		$p->set_var('row_logintime',$phpgw->common->show_date($phpgw->db->f('session_logintime')));
 		if($phpgw->db->f('session_action'))
 		{
-			$phpgw->template->set_var('row_action',$phpgw->strip_html($phpgw->db->f('session_action')));
+			$p->set_var('row_action',$phpgw->strip_html($phpgw->db->f('session_action')));
 		}
 		else
 		{
-			 $phpgw->template->set_var('row_action','&nbsp;');
+			 $p->set_var('row_action','&nbsp;');
 		}
-		$phpgw->template->set_var('row_idle',gmdate('G:i:s',(time() - $phpgw->db->f('session_dla'))));
+		$p->set_var('row_idle',gmdate('G:i:s',(time() - $phpgw->db->f('session_dla'))));
 
 		if ($phpgw->db->f('session_id') != $phpgw_info['user']['sessionid'])
 		{
-			$phpgw->template->set_var('row_kill','<a href="' . $phpgw->link('/admin/killsession.php','ksession='
+			$p->set_var('row_kill','<a href="' . $phpgw->link('/admin/killsession.php','ksession='
 				. $phpgw->db->f('session_id') . '&kill=true') . '">' . lang('Kill').'</a>');
 		}
 		else
 		{
-			$phpgw->template->set_var('row_kill','&nbsp;');
+			$p->set_var('row_kill','&nbsp;');
 		}
 
-		$phpgw->template->parse('rows','row',True);
+		$p->parse('rows','row',True);
 	}
 
-	$phpgw->template->pparse('out','list');
+	$p->pparse('out','list');
 	$phpgw->common->phpgw_footer();
 ?>
