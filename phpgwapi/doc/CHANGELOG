@@ -35,6 +35,9 @@
         - Merged in patch for Danish translation
           Thanks again zaphod
         - Fixed birthday reminders not showing up
+        - Added in an about link on the navbar, it will return information about phpGroupWare
+          (version, credits, etc) and it can also return information about an app.
+        - Fixed changing of users password through admin.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
