@@ -288,40 +288,24 @@
 
 		function add_vcard($uploadedfile='')
 		{
-			if($uploadedfile == 'none' || $uploadedfile == '')
+			if($uploadedfile == 'none' || $uploadedfile == '' || substr($uploadedfile['name'],-4) != '.vcf')
 			{
 				return False;
 			}
 			else
 			{
-				$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
-
-				srand((double)microtime() * 1000000);
-				$random_number = rand(100000000,999999999);
-				$newfilename = md5("$uploadedfile, $uploadedfile_name, "
-					. time() . getenv('REMOTE_ADDR') . $random_number);
-
-				copy($uploadedfile, $uploaddir . $newfilename);
-				$ftp = fopen($uploaddir . $newfilename . '.info','w');
-				fputs($ftp,"$uploadedfile_type\n$uploadedfile_name\n");
-				fclose($ftp);
-
-				$filename = $uploaddir . $newfilename;
+				$filename = $uploadedfile['tmp_name'];
 
 				$vcard = CreateObject('phpgwapi.vcard');
 				$entry = $vcard->in_file($filename);
 				/* _debug_array($entry);exit; */
-				$entry['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+				$entry['owner'] = (int)$GLOBALS['phpgw_info']['user']['account_id'];
 				$entry['access'] = 'private';
 				$entry['tid'] = 'n';
 				/* _debug_array($entry);exit; */
 
 				$this->so->add_entry($entry);
 				$ab_id = $this->get_lastid();
-
-				/* Delete the temp file. */
-				unlink($filename);
-				unlink($filename . '.info');
 
 				return(int)$ab_id;
 			}

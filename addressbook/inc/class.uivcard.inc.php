@@ -46,19 +46,18 @@
 			$uploadedfile = get_var('uploadedfile','FILES');
 			$action = get_var('action',array('POST','GET'));
 
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
-
-			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
-
 			if($uploadedfile)
 			{
 				$ab_id = $this->bo->add_vcard($uploadedfile);
-				if($done)
+				if($ab_id)
 				{
 					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
 				}
 			}
+
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
 
 			if($action == 'GetFile')
 			{
