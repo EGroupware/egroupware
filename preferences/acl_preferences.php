@@ -40,7 +40,7 @@
 	function display_row($bg_color,$label,$id,$name)
 	{
 		global $phpgw_info, $acl, $p;
-    
+
 		$p->set_var('row_color',$bg_color);
 		$p->set_var('user',$name);
 		$rights = $acl->get_rights($id,$phpgw_info['flags']['currentapp']);
@@ -50,7 +50,7 @@
 		check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
 		check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE);
 		check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
-    
+
 		$p->parse('row','acl_row',True);
 	}
 
@@ -243,10 +243,18 @@
 			$p->set_var('string',ucfirst(lang('Users')));
 			$p->parse('row','row_colspan',True);
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-			for($k=$s_users;$k<$total || $k==count($users);$k++)
+			for($k=$s_users;$k<$totalentries || $k==count($users);$k++)
 			{
 				$user = $users[$k];
-				$go = True;
+				//echo '<br>acctid: '.$user['account_id'];
+				if ($user['account_id'])
+				{
+					$go = True;
+				}
+				else
+				{
+					$go = False;
+				}
 				if($query)
 				{
 					$name = ' '.$user['account_firstname'].' '.$user['account_lastname'].' '.$user['account_lid'].' ';
