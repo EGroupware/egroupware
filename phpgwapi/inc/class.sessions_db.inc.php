@@ -134,6 +134,10 @@
 
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 		{
+			if (!$this->account_id || !$this->sessionid)
+			{
+				return False;	// this can happen during login or logout
+			}
 			if (! $appname)
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
