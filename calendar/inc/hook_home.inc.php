@@ -24,7 +24,9 @@
 
 	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
+		global $date;
 		$time = time() - ((60*60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+		$date = $phpgw->common->show_date($time,'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
 		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
 			. $cal->mini_calendar(
