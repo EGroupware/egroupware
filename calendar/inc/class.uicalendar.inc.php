@@ -284,7 +284,7 @@
 			{
 				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 				$print =	'';
-				$phpgw_info['flags']['nofooter'] = True;
+				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
 
 			$var = Array(
@@ -1835,7 +1835,6 @@
 		function planner_category($ids)
 		{
 			static $cats;
-	echo "Categories : ".$ids."<br>\n";
 			if(!is_array($ids))
 			{
 				if (strpos($ids,','))
@@ -1859,7 +1858,7 @@
 				}
 				$ret_val[] = $cats[$id];
 			}
-			return implode($ret_val,',');
+			return $ret_val;
 		}
 
 		function week_header($month,$year,$display_name = False)
@@ -2190,8 +2189,16 @@
 
 			if ($event['category'])
 			{
+				$category = Array();
 				$this->cat->categories($this->bo->owner,'calendar');
-				$category = explode(',',$event['category']);
+				if(strpos($event['category'],','))
+				{
+					$category = explode(',',$event['category']);
+				}
+				else
+				{
+					$category[] = $event['category'];
+				}
 				@reset($category);
 				while(list($key,$cat) = each($category))
 				{
