@@ -939,7 +939,7 @@
 
 		/*!
 		@function navbar
-		@abstract none yet
+		@abstract Build the application navigation bar based on user's accessible applications
 		@discussion *someone wanna add some detail here*
 		*/
 		function navbar()
@@ -950,7 +950,7 @@
 			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']  = $this->image_on('phpgwapi',Array('home','nonav'),'-over');
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
-			ksort($GLOBALS['phpgw_info']['user']['apps']);
+			/* ksort($GLOBALS['phpgw_info']['user']['apps']); */
 
 			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
@@ -968,7 +968,7 @@
 			unset($index);
 			unset($value);
 			unset($newarray);
-			
+
 			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				if (is_long($permission[0]))
@@ -1013,7 +1013,7 @@
 				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			// We handle this here becuase its special
+			/* We handle this here becuase its special */
 			$GLOBALS['phpgw_info']['navbar']['about']['title'] = lang('About x',$app);
 
 			$GLOBALS['phpgw_info']['navbar']['about']['url']   = $GLOBALS['phpgw']->link('/about.php','app='.$app);
