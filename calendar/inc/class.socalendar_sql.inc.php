@@ -539,12 +539,10 @@ class socalendar_ extends socalendar__
 			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 		}
 
-		if($this->debug)
-		{
-			echo '<!-- Event ID #'.$event['id'].' saved! -->'."\n";
-		}
-		
+		print_debug('Event Saved: ID #',$event['id']);
+
 		$this->stream->unlock();
+		$GLOBALS['phpgw_info']['cal_new_event_id'] = $event['id'];
 		return True;
 	}
 
