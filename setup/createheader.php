@@ -4,7 +4,7 @@
 
   switch($action){
     case "download":
-      header("Content-disposition: attachment; filename=header.inc.php");
+      header("Content-disposition: attachment; filename=\"header.inc.php\"");
       header("Content-type: application/octet-stream");
       header("Pragma: no-cache");
       header("Expires: 0");
