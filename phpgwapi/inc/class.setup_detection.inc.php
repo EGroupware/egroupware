@@ -326,8 +326,7 @@
 			}
 
 			@$GLOBALS['phpgw_setup']->db->query("select config_value from $config_table where config_name='freshinstall'");
-			$GLOBALS['phpgw_setup']->db->next_record();
-			$configed = $GLOBALS['phpgw_setup']->db->f('config_value');
+			$configured = $GLOBALS['phpgw_setup']->db->next_record() ? $GLOBALS['phpgw_setup']->db->f('config_value') : False;
 			if($configed)
 			{
 				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
