@@ -126,13 +126,13 @@
 
 			if ($query)
 			{
-				$sql = "SELECT * from phpgw_categories WHERE cat_appname='" . $this->app_name . "' AND "
-				    . " $grant_cats $public_cats AND (cat_name like '%$query%' OR cat_description like '%$query%') $filter $ordermethod";
+				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats) AND "
+				    . " $grant_cats AND (cat_name like '%$query%' OR cat_description like '%$query%') $filter $ordermethod";
 			}
 			else
 			{
-				$sql = "SELECT * from phpgw_categories WHERE cat_appname='" . $this->app_name . "' AND " 
-					. " $grant_cats $public_cats $filter $ordermethod";
+				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats) AND " 
+					. " $grant_cats $filter $ordermethod";
 			}
 
 			$this->db2->query($sql,__LINE__,__FILE__);
