@@ -67,19 +67,22 @@
 		switch($GLOBALS['HTTP_GET_VARS']['code'])
 		{
 			case 1:
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['You have been successfully logged out']=True;
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['You have been successfully logged out'] = True;
 				break;
 			case 2:
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Sorry, your login has expired']=False;
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Sorry, your login has expired'] = False;
 				break;
 			case 5:
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Bad login or password']=False;
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Bad login or password'] = False;
 				break;
 			case 10:
-				Setcookie('sessionid');
-				Setcookie('kp3');
-				Setcookie('domain');
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Your session could not be verified']=False;
+				if($GLOBALS['phpgw_info']['server']['usecookies'])
+				{
+					Setcookie('sessionid');
+					Setcookie('kp3');
+					Setcookie('domain');
+				}
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Your session could not be verified'] = False;
 				break;
 		}
 	}
@@ -114,7 +117,8 @@
 
 			# login will be set here if the user logged out and uses a different username with
 			# the same SSL-certificate.
-			if (!isset($login)&&isset($sslattributes['Email'])) {
+			if (!isset($login)&&isset($sslattributes['Email']))
+			{
 				$login = $sslattributes['Email'];
 				# not checked against the database, but delivered to authentication module
 				$passwd = $HTTP_SERVER_VARS['SSL_CLIENT_S_DN'];
@@ -134,7 +138,7 @@
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['HTTP_POST_VARS']['login'],$GLOBALS['HTTP_POST_VARS']['passwd'],$GLOBALS['HTTP_POST_VARS']['passwd_type']);
 
-		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
+		if(!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?code=5');
 		}
