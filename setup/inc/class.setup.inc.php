@@ -571,14 +571,14 @@
 			$newa = ereg_replace('pre','.',$a);
 			$newb = ereg_replace('pre','.',$b);
 			$testa = explode('.',$newa);
-			if($testa[3] == '')
+			if(@$testa[3] == '')
 			{
 				$testa[3] = 0;
 			}
 			$testb = explode('.',$newb);
-			if($testa[3] == '')
+			if(@$testb[3] == '')
 			{
-				$testa[3] = 0;
+				$testb[3] = 0;
 			}
 			$less = 0;
 
