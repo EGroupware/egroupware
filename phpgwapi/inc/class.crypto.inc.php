@@ -115,7 +115,14 @@
 			{
 				if ($this->mcrypt_version != 'old')
 				{
-					mcrypt_generic_end ($this->td);
+					if(phpversion >= '4.1.1')
+					{
+						mcrypt_generic_deinit($this->td);
+					}
+					else
+					{
+						mcrypt_generic_end($this->td);
+					}
 				}
 			}
 		}
