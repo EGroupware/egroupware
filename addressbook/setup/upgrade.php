@@ -1,4 +1,16 @@
 <?
+  /**************************************************************************\
+  * phpGroupWare - Setup                                                     *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
+
 	function upgrade_addressbook {
 		global $phpgw_info, $phpgw_setup;
 
@@ -75,9 +87,8 @@
 		// read in old addressbook
 		$phpgw_setup->db->query("select * from addressbook");
 
-		// create a couple of extra db objects for the two nested queries below
+		// create an extra db objects for the two nested queries below
 		$db2 = $phpgw_setup->db;
-		$db3 = $phpgw_setup->db;
 
 		while ( $phpgw_setup->db->nextrecord() ) {
 			$fields["org_name"]			= $phpgw->db->f("ab_company");
@@ -126,7 +137,7 @@
 
 			// insert extra data for this record into extra fields table
 			while (list($name,$value) = each($extra)) {
-				$phpgw_setup->db3->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
+				$phpgw_setup->db2->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 			}
 		}
