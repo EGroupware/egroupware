@@ -22,13 +22,14 @@ class send {
       $this->err["desc"] = " ";
     }
 
-    function msg($service, $to, $subject, $body, $msgtype="", $cc="", $bcc="") {
+    function msg($service, $to, $subject, $body, $msgtype="", $cc="", $bcc="", $from ="") {
       global $phpgw_info, $phpgw, $attach_sig;
+      if ($from ==""){ $from = $phpgw_info["user"]["fullname"]." <".$phpgw_info["user"]["preferences"]["email"]["address"].">"; }
 
       if ($service == "email") {
           $now = getdate();
           $header  = "Date: " . gmdate("D, d M Y H:i:s") . " +0000\n";
-          $header .= "From: ".$phpgw_info["user"]["fullname"]." <".$phpgw_info["user"]["preferences"]["email"]["address"].">\n";
+          $header .= "From: ".$from."\n";
           $header .= "Reply-To: ".$phpgw_info["user"]["preferences"]["email"]["address"]."\n";
           $header .= "To: $to\n";
           if (!empty($cc)) {
