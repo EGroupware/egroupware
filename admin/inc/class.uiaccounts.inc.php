@@ -539,9 +539,6 @@
 			$t->set_block('account','link_row');
 
 			$var = Array(
-				'th_bg'        => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'tr_color1'    => $GLOBALS['phpgw_info']['theme']['row_on'],
-				'tr_color2'    => $GLOBALS['phpgw_info']['theme']['row_off'],
 				'lang_action'  => lang('View user account'),
 				'lang_loginid' => lang('LoginID'),
 				'lang_account_active'   => lang('Account active'),
@@ -662,7 +659,7 @@
 					$part2 = '<td colspan="2">&nbsp;</td>';
 				}
 
-				$appRightsOutput .= sprintf("<tr bgcolor=\"%s\">$part1$part2</tr>\n",$GLOBALS['phpgw_info']['theme']['row_on']);
+				$appRightsOutput .= "<tr class=\"row_on\">$part1$part2</tr>\n";
 			}
 
 			$var['permissions_list'] = $appRightsOutput;
@@ -800,8 +797,7 @@
 			}
 
 			$perm_html = '<td>'.lang('Application').'</td><td>&nbsp;</td><td>'.lang('ACL').'</td>';
-			$perm_html = '<tr bgcolor="'.$GLOBALS['phpgw_info']['theme']['th_bg'].'">'.
-				$perm_html.$perm_html."</tr>\n";
+			$perm_html = '<tr class="th">'.$perm_html.$perm_html."</tr>\n";
 			
 			$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
 			for ($i=0;$i < count($perm_display);$i++)
@@ -810,7 +806,7 @@
 				if(!($i & 1))
 				{
 					$tr_color = $this->nextmatchs->alternate_row_color();
-					$perm_html .= '<tr bgcolor="'.$tr_color.'">';
+					$perm_html .= '<tr class="'.$tr_color.'">';
 				}
 				$perm_html .= '<td width="40%">' . lang($perm_display[$i][1]) . '</td>'
 					. '<td width="5%"><input type="checkbox" name="account_apps['
@@ -917,9 +913,6 @@
 				'form_action'    => $GLOBALS['phpgw']->link('/index.php',$page_params),
 				'cancel_action'  => $GLOBALS['phpgw']->link('/admin/index.php'),
 				'error_messages' => (!$_errors?'':'<center>'.$GLOBALS['phpgw']->common->error_list($_errors).'</center>'),
-				'th_bg'          => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'tr_color1'      => $GLOBALS['phpgw_info']['theme']['row_on'],
-				'tr_color2'      => $GLOBALS['phpgw_info']['theme']['row_off'],
 				'lang_action'    => ($_account_id?lang('Edit user account'):lang('Add new account')),
 				'lang_loginid'   => lang('LoginID'),
 				'lang_account_active' => lang('Account active'),
@@ -1080,7 +1073,7 @@
 					$part2 = '<td colspan="2">&nbsp;</td>';
 				}
 
-				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$GLOBALS['phpgw_info']['theme']['row_on'], $part1, $part2);
+				$appRightsOutput .= '<tr class="'.($i&2?'row_off':'row_on').'">'.$part1.$part2.'</tr>';
 			}
 
 			$var = Array(
