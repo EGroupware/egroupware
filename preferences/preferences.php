@@ -225,7 +225,7 @@
 	@param $default default-value
 	@param $vars2 array with extra substitution-variables of the form key => help-text
 	*/
-	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='')
+	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='',$subst_help=True)
 	{
 		global $t,$prefs,$notifys;
 
@@ -238,15 +238,17 @@
 
 		$notifys[$name] = $vars;	// this gets saved in the app_session for re-translation
 
-		$help = $help ? lang($help).'<br>' : '';
-		$help .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
-		foreach($vars as $var => $var_help)
+		$help = $help ? lang($help) : '';
+		if ($subst_help)
 		{
-			$lname = ($lname = lang($var)) == $var.'*' ? $var : $lname;
-			$help .= "<br>\n".'<b>$$'.$lname.'$$</b>: '.$var_help;
+			$help .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
+			foreach($vars as $var => $var_help)
+			{
+				$lname = ($lname = lang($var)) == $var.'*' ? $var : $lname;
+				$help .= "<br>\n".'<b>$$'.$lname.'$$</b>: '.$var_help;
+			}
+			$help .= "</p>\n";
 		}
-		$help .= "</p>\n";
-		
 		if ($row == 1)
 		{
 			create_input_box($label,$name,$help,$default,$cols,'','',False);
@@ -313,7 +315,7 @@
 					}
 				}
 				$prefs[$var] = stripslashes($value);
-				
+
 				if ($notifys[$var])	// need to translate the key-words back
 				{
 					$prefs[$var] = $GLOBALS['phpgw']->preferences->lang_notify($prefs[$var],$notifys[$var],True);
@@ -326,7 +328,23 @@
 		}
 		//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$_appname]); echo "</pre>\n";
 
+		// the following hook can be used to verify the prefs 
+		// if you return something else than False, it is treated as an error-msg and 
+		// displayed to the user (the prefs get not saved !!!)
+		//
+		if ($error = $GLOBALS['phpgw']->hooks->single(array(
+			'location' => 'verify_settings',
+			'prefs'    => $repository[$_appname],
+			'prefix'   => $prefix,
+			'type'     => $GLOBALS['type']
+		),$_GET['appname']))
+		{
+			return $error;
+		}
+		
 		$GLOBALS['phpgw']->preferences->save_repository(True,$GLOBALS['type']);
+		
+		return False;
 	}
 
 	/* Only check this once */
@@ -397,20 +415,20 @@
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
-			process_array($GLOBALS['phpgw']->preferences->user,$user,$session_data['notifys'],$prefix);
+			$error = process_array($GLOBALS['phpgw']->preferences->user,$user,$session_data['notifys'],$prefix);
 		}
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
-			process_array($GLOBALS['phpgw']->preferences->default, $default,$session_data['notifys']);
+			$error = process_array($GLOBALS['phpgw']->preferences->default, $default,$session_data['notifys']);
 		}
 
 		if ($GLOBALS['type'] == 'forced' && is_admin())
 		{
-			process_array($GLOBALS['phpgw']->preferences->forced, $forced,$session_data['notifys']);
+			$error = process_array($GLOBALS['phpgw']->preferences->forced, $forced,$session_data['notifys']);
 		}
 
-		if (!is_admin())
+		if (!is_admin() || $error)
 		{
 			$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
 		}
@@ -427,7 +445,7 @@
 		'appname'   => $_GET['appname']		// we use this to reset prefix on appname-change
 	));
 	// changes for the admin itself, should have immediate feedback ==> redirect
-	if ($_POST['submit'] && $GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences') {
+	if (!$error && $_POST['submit'] && $GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences') {
 		$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
 	}
 
@@ -435,6 +453,7 @@
 		lang('Preferences') : lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$_GET['appname']]['title']);
 	$GLOBALS['phpgw']->common->phpgw_header();
 
+	$t->set_var('messages',$error);
 	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname']));
 
 	switch ($GLOBALS['type'])	// set up some globals to be used by the hooks
