@@ -10,7 +10,6 @@
 00 (disable)	admin	el	00 (Απενεργοποίηση)
 13 (ntp)	admin	el	13 (ntp)
 80 (http)	admin	el	80 (http)
-a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z		el
 about	common	el	Πληροφορίες
 about %1	common	el	Πληροφορίες %1
 about the calendar	jscalendar	el	Για το ημερολόγιο
