@@ -250,11 +250,12 @@
 */
 		}
 
-		function update($p_cal=Array(),$p_start=Array(),$p_end=Array(),$p_recur_enddata=Array())
+		function update($p_cal=0,$p_participants=0,$p_start=0,$p_end=0,$p_recur_enddata=0)
 		{
 			global $phpgw, $phpgw_info, $readsess, $cal, $participants, $start, $end, $recur_enddate;
 
 			$cal = ($p_cal?$p_cal:$cal);
+			$participants = ($p_participants?$p_participants:$participants);
 			$start = ($p_start?$p_start:$start);
 			$end = ($p_end?$p_end:$end);
 			$recur_enddate = ($p_recur_enddate?$p_recur_enddate:$recur_enddate);
