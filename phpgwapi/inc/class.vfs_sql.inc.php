@@ -283,10 +283,15 @@
 		@result Boolean True/False
 		*/
 	
-		function add_journal ($string, $relatives = array (RELATIVE_CURRENT), $operation, $state_one = False, $state_two = False, $incversion = True)
+		function add_journal ($string, $relatives = '', $operation, $state_one = False, $state_two = False, $incversion = True)
 		{
 			global $phpgw, $phpgw_info;
-	
+
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
 			$account_id = $phpgw_info["user"]["account_id"];
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
@@ -529,9 +534,14 @@
 		@result Boolean True/False
 		*/
 	
-		function flush_journal ($string, $relatives = array (RELATIVE_CURRENT), $deleteall = False, $deletedonly = False)
+		function flush_journal ($string, $relatives = '', $deleteall = False, $deletedonly = False)
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -572,9 +582,14 @@
 		@result Array of arrays of journal entries
 		*/
 	
-		function get_journal ($string, $relatives = array (RELATIVE_CURRENT), $type = False)
+		function get_journal ($string, $relatives = '', $type = False)
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -644,9 +659,15 @@
 			outside is boolean, True if $relatives contains VFS_REAL
 		*/
 	
-		function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True, $nolinks = False)
+		function path_parts ($string, $relatives = '', $object = True, $nolinks = False)
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
 			$sep = SEP;
 	
 			$rarray["mask"] = RELATIVE_NONE;
@@ -807,10 +828,10 @@
 		@result $basedir Full fake or real path
 		*/      
 	
-		function getabsolutepath ($target = False, $relatives = array (RELATIVE_CURRENT), $fake = True)
+		function getabsolutepath ($target = False, $relatives = '', $fake = True)
 		{
 			global $phpgw, $phpgw_info;
-	
+			
 			$currentdir = $this->pwd (False);
 	
 			if (!is_array ($relatives))
@@ -912,9 +933,14 @@
 		@result Boolean.  True if access is ok, False otherwise
 		*/
 	
-		function acl_check ($file, $relatives = array (RELATIVE_CURRENT), $operation = PHPGW_ACL_READ, $must_exist = False)
+		function acl_check ($file, $relatives = '', $operation = PHPGW_ACL_READ, $must_exist = False)
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			/* Accommodate special situations */
 			if ($this->override_acl)
@@ -1034,9 +1060,14 @@
 		@param $relatives Relativity array
 		*/
 	
-		function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRENT))
+		function cd ($target = "/", $relative = True, $relatives = '')
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			if ($relatives[0] & VFS_REAL)
 			{
@@ -1105,10 +1136,15 @@
 		@result $contents Contents of $file, or False if file cannot be read
 		*/
 	
-		function read ($file, $relatives = array (RELATIVE_CURRENT))
+		function read ($file, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($file, array ($relatives[0]));
 	
@@ -1139,11 +1175,16 @@
 		@result Boolean True/False
 		*/		
 	
-		function write ($file, $relatives = array (RELATIVE_CURRENT), $contents)
+		function write ($file, $relatives = '', $contents)
 		{
 			global $phpgw;
 			global $phpgw_info;
-	
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
 			$p = $this->path_parts ($file, array ($relatives[0]));
 	
 			if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
@@ -1197,10 +1238,15 @@
 		@result Boolean True/False
 		*/
 	
-		function touch ($file, $relatives = array (RELATIVE_CURRENT))
+		function touch ($file, $relatives = '')
 		{
 			global $phpgw, $phpgw_info;
-	
+
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
 			$account_id = $phpgw_info["user"]["account_id"];
 			$currentapp = $phpgw_info["flags"]["currentapp"];
 	
@@ -1263,10 +1309,15 @@
 		@result boolean True/False
 		*/
 	
-		function cp ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+		function cp ($from, $to, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT);
+			}
 	
 			$account_id = $phpgw_info["user"]["account_id"];
 	
@@ -1367,10 +1418,10 @@
 			return True;
 		}
 	
-		function copy ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+		function copy ($from, $to, $relatives = '')
 		{
 			umask (000);
-			return $this->cp ($from, $to);
+			return $this->cp ($from, $to, $relatives);
 		}
 	
 		/*!
@@ -1382,10 +1433,15 @@
 		@result boolean True/False
 		*/
 	
-		function mv ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+		function mv ($from, $to, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT);
+			}
 	
 			$account_id = $phpgw_info["user"]["account_id"];
 	
@@ -1498,7 +1554,7 @@
 		@abstract shortcut to mv
 		*/
 	
-		function move ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+		function move ($from, $to, $relatives = '')
 		{
 			umask (000);
 			return $this->mv ($from, $to, $relatives);
@@ -1512,10 +1568,15 @@
 		@result boolean True/False
 		*/
 	
-		function rm ($string, $relatives = array (RELATIVE_CURRENT))
+		function rm ($string, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -1608,7 +1669,7 @@
 		@abstract shortcut to rm
 		*/
 	
-		function delete ($string, $relatives = array (RELATIVE_CURRENT))
+		function delete ($string, $relatives = '')
 		{
 			return $this->rm ($string, $relatives);
 		}
@@ -1621,10 +1682,15 @@
 		@result boolean True on success
 		*/
 	
-		function mkdir ($dir, $relatives = array (RELATIVE_CURRENT))
+		function mkdir ($dir, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$account_id = $phpgw_info["user"]["account_id"];
 			$currentapp = $phpgw_info["flags"]["currentapp"];
@@ -1678,10 +1744,15 @@
 		@result Boolean True/False
 		*/
 	
-		function make_link ($vdir, $rdir, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+		function make_link ($vdir, $rdir, $relatives = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT);
+			}
 	
 			$account_id = $phpgw_info["user"]["account_id"];
 			$currentapp = $phpgw_info["flags"]["currentapp"];
@@ -1736,10 +1807,20 @@
 				version
 		*/
 	
-		function set_attributes ($file, $relatives = array (RELATIVE_CURRENT), $attributes = array ())
+		function set_attributes ($file, $relatives = '', $attributes = '')
 		{
 			global $phpgw;
 			global $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
+			if (!is_array ($attributes))
+			{
+				$attributes = array ();
+			}
 	
 			$p = $this->path_parts ($file, array ($relatives[0]));
 	
@@ -1826,9 +1907,14 @@
 		@result Boolean True/False
 		*/
 	
-		function correct_attributes ($string, $relatives = array (RELATIVE_CURRENT))
+		function correct_attributes ($string, $relatives = '')
 		{
 			global $phpgw;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -1861,9 +1947,14 @@
 		@result MIME type, "Directory", or nothing if MIME type is not known
 		*/
 	
-		function file_type ($file, $relatives = array (RELATIVE_CURRENT))
+		function file_type ($file, $relatives = '')
 		{
 			global $phpgw;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($file, array ($relatives[0]));
 	
@@ -1904,9 +1995,14 @@
 		@result Boolean True/False
 		*/
 	
-		function file_exists ($string, $relatives = array (RELATIVE_CURRENT))
+		function file_exists ($string, $relatives = '')
 		{
 			global $phpgw;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -1938,9 +2034,14 @@
 		@result Size of $string in bytes
 		*/
 	
-		function get_size ($string, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True)
+		function get_size ($string, $relatives = '', $checksubdirs = True)
 		{
 			global $phpgw, $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -1995,9 +2096,14 @@
 		@result Boolean True/False
 		*/
 			
-		function checkperms ($dir, $relatives = array (RELATIVE_CURRENT))
+		function checkperms ($dir, $relatives = '')
 		{
 			global $phpgw, $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($dir, array ($relatives[0]));
 	
@@ -2026,9 +2132,14 @@
 		@result array of arrays.  Subarrays contain full info for each file/dir.
 		*/
 	
-		function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
+		function ls ($dir = False, $relatives = '', $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
 		{
 			global $phpgw, $phpgw_info;
+	
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($dir, array ($relatives[0]));
 			$dir = $p->fake_full_path;
@@ -2155,7 +2266,7 @@
 		@abstract shortcut to ls
 		*/
 	
-		function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
+		function dir ($dir = False, $relatives = '', $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
 		{
 			return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles, $orderby);
 		}
@@ -2264,9 +2375,14 @@
 		@result Boolean True/False
 		*/
 	
-		function update_real ($string, $relatives = array (RELATIVE_CURRENT))
+		function update_real ($string, $relatives = '')
 		{
 			global $phpgw, $phpgw_info;
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
@@ -2320,9 +2436,14 @@
 		/* Helper functions */
 	
 		/* This fetchs all available file system information for $string (not using the database) */
-		function get_real_info ($string, $relatives = array (RELATIVE_CURRENT))
+		function get_real_info ($string, $relatives = '')
 		{
 			global $phpgw, $phpgw_info;
+
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
 	
 			$p = $this->path_parts ($string, array ($relatives[0]));
 	
