@@ -22,21 +22,21 @@
 
   error_reporting(7);
 
-  /**************************************************************************\
-  * Quick verification of updated header.inc.php                             *
-  \**************************************************************************/
+  /****************************************************************************\
+  * Quick verification of updated header.inc.php                               *
+  \****************************************************************************/
   if ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]){
     echo "You need to port your settings to the new header.inc.php version.";
   }
 
-  /**************************************************************************\
-  * Load up all the base files                                               *
-  \**************************************************************************/
+  /****************************************************************************\
+  * Load up all the base files                                                 *
+  \****************************************************************************/
   include($phpgw_info["server"]["api_inc"] . "/phpgw_info.inc.php");
 
-  /**************************************************************************\
-  * Required classes                                                         *
-  \**************************************************************************/
+  /****************************************************************************\
+  * Required classes                                                           *
+  \****************************************************************************/
   /* Load selected database class */
   if (empty($phpgw_info["server"]["db_type"])){$phpgw_info["server"]["db_type"] = "mysql";}
   include($phpgw_info["server"]["api_inc"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
@@ -51,10 +51,10 @@
   include($phpgw_info["server"]["api_inc"] . "/phpgw_template.inc.php");
   include($phpgw_info["server"]["api_inc"] . "/phpgw_common.inc.php");
 
-  /**************************************************************************\
-  * Optional classes, which can be disabled for performance increases        *
-  *  - they are loaded after pulling in the config from the DB               *
-  \**************************************************************************/
+  /****************************************************************************\
+  * Optional classes, which can be disabled for performance increases          *
+  *  - they are loaded after pulling in the config from the DB                 *
+  \****************************************************************************/
   function load_optional()
   {
     global $phpgw,$phpgw_info;
@@ -90,16 +90,17 @@
     }
   } 
     
-  /**************************************************************************\
-  * Our API class starts here                                                *
-  \**************************************************************************/
+  /****************************************************************************\
+  * Our API class starts here                                                  *
+  \****************************************************************************/
   class phpgw
   {
     var $accounts;
     var $acl;
     var $auth;
     var $db;
-    var $debug = 0;		// This will turn on debugging information. (Not fully working)
+    var $debug = 0;		// This will turn on debugging information.
+				// (Not fully working)
     var $crypto;
     var $categories;
     var $common;
@@ -127,9 +128,9 @@
     function phpgw_()
     {
       global $phpgw_info, $sessionid, $login;
-      /**************************************************************************\
-      * Required classes                                                         *
-      \**************************************************************************/
+      /************************************************************************\
+      * Required classes                                                       *
+      \************************************************************************/
       $this->db           = new db;
       $this->db->Host     = $phpgw_info["server"]["db_host"];
       $this->db->Type     = $phpgw_info["server"]["db_type"];
@@ -159,9 +160,9 @@
          }
       }
 
-      /**************************************************************************\
-      * Continue adding the classes                                              *
-      \**************************************************************************/
+      /************************************************************************\
+      * Continue adding the classes                                            *
+      \************************************************************************/
       $this->common        = new common;
       $this->hooks         = new hooks;
 
@@ -218,11 +219,12 @@
       if (! $kp3)
          $kp3 = $phpgw_info["user"]["kp3"];
 
-      if (! $url) {                         // PHP won't allow you to set a var to a var
-         $url = $PHP_SELF;                  // or function for default values
+      if (! $url) {                 // PHP won't allow you to set a var to a var
+         $url = $PHP_SELF;          // or function for default values
       }
 
-      if (isset($phpgw_info["server"]["usecookies"]) && $phpgw_info["server"]["usecookies"]) {
+      if (isset($phpgw_info["server"]["usecookies"]) &&
+	  $phpgw_info["server"]["usecookies"]) {
          if ($extravars) {
             $url .= "?$extravars";
          }
@@ -230,7 +232,8 @@
         $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
         $url .= "&kp3=" . $kp3;
         $url .= "&domain=" . $phpgw_info["user"]["domain"];
-        // This doesn't belong in the API.  Its up to the app to pass this value. (jengo)
+        // This doesn't belong in the API.
+	// Its up to the app to pass this value. (jengo)
         if ($phpgw_info["flags"]["newsmode"]) {
           $url .= "&newsmode=on";
         }
@@ -240,7 +243,8 @@
         }
       }
 
-      // Note: The following code is slighty redundant, you should ALWAYS pass the full path (jengo)
+      // Note: The following code is slighty redundant,
+      // you should ALWAYS pass the full path (jengo)
 
       // next line adds index.php when one is assumed since
       // iis will not interpret urls like http://.../addressbook/?xyz=5
@@ -249,7 +253,8 @@
       $slash_check = strtolower(substr($url ,0,1));
       if($url_check != "http") {
         if($slash_check != "/") {
-          $url = $phpgw_info["server"]["hostname"].$phpgw_info["server"]["webserver_url"]."/".$url; 
+          $url = $phpgw_info["server"]["hostname"]
+		.$phpgw_info["server"]["webserver_url"]."/".$url; 
         } else{
           $url = $phpgw_info["server"]["hostname"].$url; 
         } 
@@ -304,18 +309,18 @@
     }
 
   }
-  /**************************************************************************\
-  * Our API class ends here                                                  *
-  \**************************************************************************/
-  /**************************************************************************\
-  * Direct functions, which are not part of the API class                    *
-  * for whatever reason.                                                     *
-  \**************************************************************************/
-
+  /****************************************************************************\
+  * Our API class ends here                                                    *
+  \****************************************************************************/
+  /****************************************************************************\
+  * Direct functions, which are not part of the API class                      *
+  * for whatever reason.                                                       *
+  \****************************************************************************/
   function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
   {
     global $phpgw;
-# TODO: check if $m1 is of type array. If so, use it instead of $m2-$mN (Stephan)
+    // # TODO: check if $m1 is of type array.
+    // If so, use it instead of $m2-$mN (Stephan)
     $vars = array( $m1, $m2, $m3, $m4, $m5, $m6, $m7, $m8, $m9, $m10 );
     $value = $phpgw->translation->translate("$key", $vars );
     return $value;
@@ -326,16 +331,16 @@
   function check_code($code)
   {
     global $phpgw;
-  
     return $phpgw->common->check_code($code);
   }
 
-  /**************************************************************************\
-  * These lines load up the API, fill up the $phpgw_info array, etc          *
-  \**************************************************************************/
+  /****************************************************************************\
+  * These lines load up the API, fill up the $phpgw_info array, etc            *
+  \****************************************************************************/
   $phpgw = new phpgw;
   $phpgw->phpgw_();
-  if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
+  if ($phpgw_info["flags"]["currentapp"] != "login" &&
+      $phpgw_info["flags"]["currentapp"] != "logout") {
      if (! $phpgw->session->verify()) {
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
         exit;
@@ -349,25 +354,30 @@
         $phpgw->utilities->utilities_();
      }
 
-    if (!isset($phpgw_info["flags"]["nocommon_preferences"]) || !$phpgw_info["flags"]["nocommon_preferences"]) {
-      if (!isset($phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) || !$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
+    if (!isset($phpgw_info["flags"]["nocommon_preferences"]) ||
+	!$phpgw_info["flags"]["nocommon_preferences"]) {
+      if (!isset($phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) ||
+	  !$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
          $phpgw->preferences->change("common","maxmatchs",15);
          $preferences_update = True;
       }
-      if (!isset($phpgw_info["user"]["preferences"]["common"]["theme"]) || !$phpgw_info["user"]["preferences"]["common"]["theme"]) {
+      if (!isset($phpgw_info["user"]["preferences"]["common"]["theme"]) ||
+	  !$phpgw_info["user"]["preferences"]["common"]["theme"]) {
          $phpgw->preferences->change("common","theme","default");
          $preferences_update = True;
       }
-      if (!isset($phpgw_info["user"]["preferences"]["common"]["dateformat"]) || !$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
+      if (!isset($phpgw_info["user"]["preferences"]["common"]["dateformat"]) ||
+	  !$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
          $phpgw->preferences->change("common","dateformat","m/d/Y");
          $preferences_update = True;
       }
-      if (!isset($phpgw_info["user"]["preferences"]["common"]["timeformat"]) || !$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
+      if (!isset($phpgw_info["user"]["preferences"]["common"]["timeformat"]) ||
+	  !$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
          $phpgw->preferences->change("common","timeformat",12);
          $preferences_update = True;
       }
-      if (!isset($phpgw_info["user"]["preferences"]["common"]["lang"]) || !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
-         #$phpgw->preferences->change("common","lang","en");
+      if (!isset($phpgw_info["user"]["preferences"]["common"]["lang"]) ||
+	  !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
 	 $phpgw->preferences->change("common","lang",$phpgw->common->getPreferredLanguage());
          $preferences_update = True;
       }
@@ -377,11 +387,11 @@
       unset($preferences_update);
     }
 
-     /**************************************************************************\
-     * These lines load up the themes                                           *
-     \**************************************************************************/
+     /*************************************************************************\
+     * These lines load up the themes                                          *
+     \*************************************************************************/
      include($phpgw_info["server"]["server_root"] . "/phpgwapi/themes/" .
-	        $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
+	     $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
 
      if ($phpgw_info["theme"]["bg_color"] == "") {
         /* Looks like there was a problem finding that theme. Try the default */
@@ -395,43 +405,47 @@
         }
      }
 
-     /**************************************************************************\
-     * If they are using frames, we need to set some variables                  *
-     \**************************************************************************/
+     /*************************************************************************\
+     * If they are using frames, we need to set some variables                 *
+     \*************************************************************************/
      if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
         || ($phpgw_info["server"]["useframes"] == "always")) {
         $phpgw_info["flags"]["navbar_target"] = "phpgw_body";
      }
 
-     /**************************************************************************\
-     * Verify that the users session is still active otherwise kick them out    *
-     \**************************************************************************/
-     if ($phpgw_info["flags"]["currentapp"] != "home" && $phpgw_info["flags"]["currentapp"] != "logout"
-        && $phpgw_info["flags"]["currentapp"] != "preferences" && $phpgw_info["flags"]["currentapp"] != "about") {
+     /*************************************************************************\
+     * Verify that the users session is still active otherwise kick them out   *
+     \*************************************************************************/
+     if ($phpgw_info["flags"]["currentapp"] != "home" &&
+	 $phpgw_info["flags"]["currentapp"] != "logout" &&
+	 $phpgw_info["flags"]["currentapp"] != "preferences" &&
+	 $phpgw_info["flags"]["currentapp"] != "about") {
 
         if (! $phpgw_info["user"]["apps"][$phpgw_info["flags"]["currentapp"]]) {
            $phpgw->common->phpgw_header();
-           echo "<p><center><b>" . lang("Access not permitted") . "</b></center>";
+           echo "<p><center><b>".lang("Access not permitted")."</b></center>";
            exit;
         }
      }
 
-     /**************************************************************************\
-     * Load the header unless the developer turns it off                        *
-     \**************************************************************************/
+     /*************************************************************************\
+     * Load the header unless the developer turns it off                       *
+     \*************************************************************************/
      if (! $phpgw_info["flags"]["noheader"]) {
         $phpgw->common->phpgw_header();
      }
 
-     /**************************************************************************\
-     * Load the app include files if the exists                                 *
-     \**************************************************************************/
+     /*************************************************************************\
+     * Load the app include files if the exists                                *
+     \*************************************************************************/
      /* Then the include file */
      if (file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
         include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
      }
 
-     if (! $phpgw_info["flags"]["noheader"] && !$phpgw_info["flags"]["noappheader"] && file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
+     if (!$phpgw_info["flags"]["noheader"] &&
+	 !$phpgw_info["flags"]["noappheader"] &&
+	 file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
         include($phpgw_info["server"]["app_inc"]."/header.inc.php");
      }
   }
