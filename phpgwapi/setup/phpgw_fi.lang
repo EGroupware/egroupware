@@ -179,7 +179,7 @@ el salvador	common	fi	EL SALVADOR
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
 enabled	common	fi	Käytössä
-end date	common	fi	Loppumisoäivä
+end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
 enlarge editor	htmlarea	fi	Suurenna editori
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware &nbsp; tai &nbsp; /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
@@ -332,7 +332,7 @@ malaysia	common	fi	MALESIA
 maldives	common	fi	MALEDIIVIT
 mali	common	fi	MALI
 malta	common	fi	MALTA
-manual	common	fi	Käsin
+manual	common	fi	Käyttöohje
 march	common	fi	Maaliskuu
 marshall islands	common	fi	MARSHALL-SAARET
 martinique	common	fi	MARTINIQUE
