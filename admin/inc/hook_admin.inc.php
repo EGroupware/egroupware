@@ -55,7 +55,7 @@
 	echo '<a href="' . $phpgw->link('/admin/applications.php') . '">' . lang('Applications')."</a><br>\n";
 	echo "<p>\n";
 
-	echo '<a href="' . $phpgw->link('/admin/categories.php') . '">' . lang('Global Categories')." coming soon</a><br>\n";
+	echo '<a href="' . $phpgw->link('/admin/categories.php') . '">' . lang('Global Categories')."</a><br>\n";
 	echo "<p>\n";
 
 	echo '<a href="' . $phpgw->link('/admin/mainscreen_message.php') . '">' . lang('Change main screen message') . "</a><br>\n";
