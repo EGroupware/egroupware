@@ -52,8 +52,9 @@
        . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
        . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
        . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
-       . "'%$query%' OR c.company_name like '%$query%')"
-       . " $ordermethod limit $limit");
+       . "'%$query%' OR c.company_name like '%$query%')");
+//       . "'%$query%' OR c.company_name like '%$query%')"
+//       . " $ordermethod limit $limit");
      } else {
      $phpgw->db->query("SELECT count(*) "
        . "from addressbook "
@@ -61,8 +62,9 @@
        . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
        . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
        . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-       . "'%$query%' OR ab_company like '%$query%')"
-       . " $ordermethod limit $limit");
+       . "'%$query%' OR ab_company like '%$query%')");
+//       . "'%$query%' OR ab_company like '%$query%')"
+//       . " $ordermethod limit $limit");
      }
 
     $phpgw->db->next_record();
