@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	iw	%1 כבר קיים כקובץ
+application	filemanager	iw	יישום
+back to file manager	filemanager	iw	חזור אל מנהל הקבצים
+cancel editing %1 without saving	filemanager	iw	בטל עריכת %1 בלי לשמור
+cannot create directory because it begins or ends in a space	filemanager	iw	לא יכול ליצור את המחיצה כי שמה מתחיל או נגמר ברווח
+cannot replace %1 because it is a directory	filemanager	iw	לא יכול להחליף את %1 כי היא מחיצה
+command sucessfully run	filemanager	iw	הרצתי את הפקודה בהצלחה
+comment	filemanager	iw	הערה
+comments cannot contain "%1"	filemanager	iw	הערה לא יכולה להכיל "%1"
+copied %1 to %2	filemanager	iw	העתקתי %1 אל %2
+copy to	filemanager	iw	העתק אל
+copy to:	filemanager	iw	העתק אל:
+could not copy %1 to %2	filemanager	iw	לא הצלחתי להעתיק את %1 אל %2
+could not copy file because no destination directory is given	filemanager	iw	לא יכולתי להעתיק את הקובץ כי לא צויין מחיצת יעד
+could not create %1	filemanager	iw	לא יכולתי ליצור %1
+could not create directory %1	filemanager	iw	לא הצלחתי ליצור מחיצה %1
+could not delete %1	filemanager	iw	לא הצלחתי למחוק את %1
+could not move %1 to %2	filemanager	iw	לא הצלחתי להעביר את %1 אל %2
+could not move file because no destination directory is given	filemanager	iw	לא יכולתי להעביר את הקובץ כי לא צויין מחיצת יעד
+could not rename %1 to %2	filemanager	iw	לא הצלחתי לשנות את השם של %1 ל- %2
+could not save %1	filemanager	iw	לא הצלחתי לשמור את %1
+create file	filemanager	iw	צור קובץ
+create folder	filemanager	iw	צור מחיתה
+created	filemanager	iw	נוצר
+created %1	filemanager	iw	נוצר %1
+created %1,%2	filemanager	iw	נוצר %1, %2
+created by	filemanager	iw	נוצר על ידי
+created directory %1	filemanager	iw	יצרתי מחיצה %1
+date	filemanager	iw	תאריך
+default number of upload fields to show	filemanager	iw	כמות מחדלית של שדות העלה להציג
+delete	filemanager	iw	מחק
+deleted %1	filemanager	iw	מחקתי %1
+directory	filemanager	iw	מחיצה
+directory %1 already exists	filemanager	iw	מחיצה %1 קיימת כבר
+directory %1 does not exist	filemanager	iw	מחיצה %1 לא קיימת
+directory names cannot contain "%1"	filemanager	iw	שם של מחיצה לא יכולה להכיל"%1"
+display attributes	filemanager	iw	תכונות תצוגה
+download	filemanager	iw	הורד
+edit	filemanager	iw	ערוך
+edit comments	filemanager	iw	ערוך הערות
+error running command	filemanager	iw	שגיאה בהרצת הפקודה
+execute	filemanager	iw	בצע
+failed to create directory	filemanager	iw	נכשלתי ביצירת המחיצה
+fake base dir did not exist, egroupware created a new one.	filemanager	iw	מחיצת בסיס מדומה לא היתה קיימת, eGroupWare יצר חדשה.
+file	filemanager	iw	קובץ
+file %1 already exists. please edit it or delete it first.	filemanager	iw	הקובץ %1 קיים כבר. נא לערוך אותו או מחק אותו קודם.
+file %1 could not be created.	filemanager	iw	לא התלחתי ליצור את הקובץ %1.
+file name	filemanager	iw	שם הקובץ
+file names cannot contain "%1"	filemanager	iw	שמות קבצים לא יכולים להכיל "%1"
+file names cannot contain \ or /	filemanager	iw	שמות קבצים לא יכולים להכיל \ או /
+filemanager	common	iw	מנהל הקבצים
+filemanager preferences	filemanager	iw	עדיפויות של מנהל הקבצים
+files	filemanager	iw	קבצים
+files in this directory	filemanager	iw	קבצים במחיצה זו
+folder	filemanager	iw	מחיצה
+folder up	filemanager	iw	מחיצה למעלה
+go home	filemanager	iw	לך הביתה
+go to	filemanager	iw	לך אל
+go to %1	filemanager	iw	לך ל-%1
+go to your home directory	filemanager	iw	לך אל ספרית הבית שלך
+go to:	filemanager	iw	לך אל:
+go up	filemanager	iw	לך למעלה
+home	filemanager	iw	בית
+location	filemanager	iw	מיקום
+locked	filemanager	iw	נעול
+mime type	filemanager	iw	סוג MIME
+modified	filemanager	iw	שונה
+modified by	filemanager	iw	שונה ע"י
+move to	filemanager	iw	העבר  אל
+move to:	filemanager	iw	העבר אל:
+moved %1 to %2	filemanager	iw	העברתי %1 אל %2;
+no files in this directory.	filemanager	iw	אין קבצים במחיצה זו
+no version history for this file/directory	filemanager	iw	אין היסטוריה של גירסאות עבור קובץ/מחיצה זו
+operation	filemanager	iw	פעולה
+other settings	filemanager	iw	הגדרות נוספות
+owner	filemanager	iw	בעלים
+please select a file to delete.	filemanager	iw	נא לבחור קובץ למחוק
+preview %1	filemanager	iw	תצוגה מקדימה של %1
+preview of %1	filemanager	iw	תצוגה מקדימה של %1
+quick jump to	filemanager	iw	קביצה מהירה אל
+reload	filemanager	iw	טען מחדש
+rename	filemanager	iw	שנה שם
+renamed %1 to %2	filemanager	iw	שינתי את שם %1 ל- %2
+replaced %1	filemanager	iw	החלפתי את %1
+save %1	filemanager	iw	שמור %1
+save %1, and go back to file listing	filemanager	iw	שמור %1, וחזור אל רשימת הקבצים
+save all	filemanager	iw	שמור הכל
+save changes	filemanager	iw	שמור שינוים
+saved %1	filemanager	iw	שמרתי %1
+show	filemanager	iw	הצג
+show ..	filemanager	iw	הצג ..
+show .files	filemanager	iw	הצג .קבצים
+show command line (experimental. dangerous.)	filemanager	iw	הצד שורת הפקודות (נסיוני. מסוכן)
+show help	filemanager	iw	הצג עזרה
+size	filemanager	iw	גודל
+sort by:	filemanager	iw	מיין לפי:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	iw	מנהל הקבצים העתידי, כרגע לצורכי בחינה בלבד. נא לשלוח דיווחי בגים.
+total files	filemanager	iw	סך כך הקבצים
+unknown mime-type defaults to text/plain when viewing	filemanager	iw	סוג MIME לא מוכר יצג כ-text/plain
+unused space	filemanager	iw	מקום פנוי
+up	filemanager	iw	למעלה
+update	filemanager	iw	עדכן
+updated comment for %1	filemanager	iw	הערה מעודכנת עבור %1
+upload	filemanager	iw	העלה
+upload fields	filemanager	iw	שדות העלה
+upload files	filemanager	iw	העלה קבצים
+use new experimental filemanager?	filemanager	iw	להשתמש במנהל הקבצים הנסיוני החדש?
+used space	filemanager	iw	מקום בשימוש
+users	filemanager	iw	משתשמים
+version	filemanager	iw	גירסא
+view documents in new window	filemanager	iw	הצג מסמכים בחלון חדש
+view documents on server (if available)	filemanager	iw	הצג מסמכים בשרת (אם זמין)
+who	filemanager	iw	מי
+you do not have access to %1	filemanager	iw	אין לך גישה אל %1
+your home dir did not exist, egroupware created a new one.	filemanager	iw	מחיצת הבית שלך לא היתה קיימת, eGroupWare יצר לך חדשה.
