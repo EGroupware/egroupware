@@ -16,12 +16,28 @@
 		global $phpgw, $phpgw_info, $treemenu;
 	}
 
+// Only Modify the $file variable.....
+	$file = Array(
+		'Settings'	=>	'settings.php',
+		'Other'		=> 'other.php'
+	);
+//Do not modify below this line
 	$font = $phpgw_info['theme']['font'];
 	$navbar = $phpgw_info['user']['preferences']['common']['navbar_format'];
-
+	$lang = strtoupper($phpgw_info['user']['preferences']['common']['lang']);
 	$treemenu[] = '..'.($navbar != 'text'?'<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">':'').($navbar != 'icons'?'<font face="'.$font.'">'.ucwords($appname).'</font>':'').'|'.$phpgw->link('/'.$appname.'/help/index.php');
-	$treemenu[] = '...<font face="'.$font.'">Overview</font>|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php');
-// Modify the $treemenu variables from here down.....
-	$treemenu[] = '...<font face="'.$font.'">Settings</font>|'.$phpgw->link('/'.$appname.'/help/settings.php');
-	$treemenu[] = '...<font face="'.$font.'">Other</font>|'.$phpgw->link('/'.$appname.'/help/other.php');
+
+	$help_file = check_help_file($appname,$lang,$appname.'.php');
+	if($help_file != '')
+	{
+		$treemenu[] = '...<font face="'.$font.'">Overview</font>|'.$phpgw->link($help_file);
+	}
+	while(list($title,$filename) = each($file))
+	{
+		$help_file = check_help_file($appname,$lang,$filename);
+		if($help_file != '')
+		{
+			$treemenu[] = '...<font face="'.$font.'">'.$title.'</font>|'.$phpgw->link($help_file);
+		}
+	}
 ?>
