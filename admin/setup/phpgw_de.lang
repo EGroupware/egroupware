@@ -36,11 +36,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	de	Admininistratorname
 administration	admin	de	Administration
 admins	admin	de	Administatoren
+advanced options	admin	de	erweiterte Optionen
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Versuchen sich anzumelden, soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Versuchen sich anzumelden soll eine IP-Adresse gesperrt werden (Vorgabe 3)?
+aliases	admin	de	Email-Alias
 all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
+alternate email address	admin	de	Alternative Emailadresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei Sitzungen anzeigen nicht angezeigt)
 appearance	admin	de	Aussehen
@@ -84,6 +87,7 @@ color	admin	de	Farbe
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
+cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
@@ -127,6 +131,7 @@ do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globa
 do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
+edit email settings	admin	de	Email Einstellungen bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
 edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
@@ -140,6 +145,8 @@ edit this group	admin	de	Diese Gruppe bearbeiten
 edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
+email account active	admin	de	Emailkonto aktiv
+email address	admin	de	Email-Adresse
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
@@ -195,6 +202,7 @@ icon	admin	de	Icon
 idle	admin	de	im Leerlauf
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
+in mbyte	admin	de	in MByte
 inbound	admin	de	eingehend
 install crontab	admin	de	Crontab installieren
 installed applications	common	de	Installierte Anwendungen
@@ -230,6 +238,7 @@ login shell	admin	de	Login-Komandointerpreter (Login-Shell)
 login time	admin	de	Login-Zeit
 loginid	admin	de	Login-ID
 mail settings	admin	de	EMail Einstellungen
+main email-address	admin	de	Stamm-Emailadresse
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
@@ -245,6 +254,7 @@ new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
+no alternate email address	admin	de	keine Aliases definiert
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!!!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
@@ -268,15 +278,20 @@ please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
 please select	admin	de	Bitte auswählen
+postfix with ldap	admin	de	Postfix mit LDAP
 preferences	admin	de	Einstellungen
 primary group	admin	de	primäre Gruppe
+qouta size in mbyte	admin	de	Quotagröße in MByte
+quota settings	admin	de	Quota-Einstellungen
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
+remove	admin	de	Entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe
 return to admin mainscreen	admin	de	zum Adminstrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
+route all mails to	admin	de	Alle Mails senden an
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
@@ -317,6 +332,9 @@ sorry, the follow users are still a member of the group %1	admin	de	Sorry, die f
 sort the entries	admin	de	Einträge sortieren
 ssl	admin	de	verschlüsselt (SSL)
 standard	admin	de	Standard
+standard imap server	admin	de	Standard IMAP Server
+standard pop3 server	admin	de	Standard POP3 Server
+standard smtp-server	admin	de	Standard SMTP Server
 start testjob!	admin	de	Testjob starten!
 submit changes	admin	de	Änderungen speichern
 submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
@@ -365,9 +383,9 @@ view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
+would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw info Array cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll eGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
 would you like egroupware to check for new application versions when admins login ?	admin	de	Soll eGroupWare auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
-would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw info Array cachen ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC

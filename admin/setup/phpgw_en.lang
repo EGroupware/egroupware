@@ -35,11 +35,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	en	Admin Name
 administration	admin	en	Administration
 admins	admin	en	Admins
+advanced options	admin	en	advanced options
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login, an account should be blocked (default 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login, an IP should be blocked (default 3) ?
+aliases	admin	en	Aliases
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All Users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
+alternate email address	admin	en	alternate email address
 anonymous user	admin	en	Anonymous user
 anonymous user (not shown in list sessions)	admin	en	Anonymous User (not shown in list sessions)
 appearance	admin	en	Appearance
@@ -83,6 +86,7 @@ color	admin	en	Color
 country selection	admin	en	Country Selection
 create group	admin	en	Create Group
 crontab only (recomended)	admin	en	crontab only (recomended)
+cyrus imap server	admin	en	Cyrus IMAP Server
 data	admin	en	Data
 day	admin	en	Day
 day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
@@ -101,6 +105,7 @@ delete the group	admin	en	delete the group
 delete this category	admin	en	delete this category
 delete this group	admin	en	delete this group
 delete this user	admin	en	delete this user
+deliver extern	admin	en	deliver extern
 deny access to access log	admin	en	Deny access to access log
 deny access to application registery	admin	en	Deny access to application registery
 deny access to applications	admin	en	Deny access to applications
@@ -126,6 +131,7 @@ do you want to delete all global subcategories ?	admin	en	Do you want to delete 
 do you want to move all global subcategories one level down ?	admin	en	Do you want to move all global subcategories one level down ?
 edit account	admin	en	Edit account
 edit application	admin	en	Edit application
+edit email settings	admin	en	edit email settings
 edit global category	admin	en	Edit global category
 edit global category for %1	admin	en	Edit global category for %1
 edit group	admin	en	Edit Group
@@ -139,6 +145,8 @@ edit this group	admin	en	edit this group
 edit this user	admin	en	edit this user
 edit user	admin	en	edit user
 edit user account	admin	en	Edit user account
+email account active	admin	en	email account active
+email address	admin	en	email address
 enable debug-messages	admin	en	Enable debug-messages
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup Window
@@ -174,6 +182,9 @@ find and register all application hooks	admin	en	Find and Register all Applicati
 for the times above	admin	en	for the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	for the times below (empty values count as '*', all empty = every minute)
 force selectbox	admin	en	Force Selectbox
+forward also to	admin	en	forward also to
+forward email's to	admin	en	forward email's to
+forward only	admin	en	forward only
 global categories	common	en	Global Categories
 group ?	admin	en	group ?
 group has been added	common	en	Group has been added
@@ -192,6 +203,7 @@ icon	admin	en	Icon
 idle	admin	en	idle
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+in mbyte	admin	en	in MByte
 inbound	admin	en	inbound
 install crontab	admin	en	Install crontab
 installed applications	common	en	Installed applications
@@ -214,6 +226,7 @@ ldap groups context	admin	en	LDAP groups context
 ldap host	admin	en	LDAP host
 ldap root password	admin	en	LDAP root password
 ldap rootdn	admin	en	LDAP rootdn
+leave empty for no quota	admin	en	leave empty for no quota
 leave the category untouched and return back to the list	admin	en	leave the category untouched and return back to the list
 leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list
 list config settings	admin	en	List config settings
@@ -226,6 +239,7 @@ login shell	admin	en	Login shell
 login time	admin	en	Login Time
 loginid	admin	en	LoginID
 mail settings	admin	en	Mail settings
+main email-address	admin	en	Main Email-Address
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id (e.g. 65535 or 1000000)
@@ -240,6 +254,7 @@ new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 next run	admin	en	Next run
 no algorithms available	admin	en	no algorithms available
+no alternate email address	admin	en	no alternate email address
 no jobs in the database !!!	admin	en	No jobs in the database !!!
 no login history exists for this user	admin	en	No login history exists for this user
 no matches found	admin	en	No matches found
@@ -263,15 +278,21 @@ please enter a name	admin	en	Please enter a name
 please enter a name for that server !	admin	en	Please enter a name for that server !
 please run setup to become current	admin	en	Please run setup to become current
 please select	admin	en	Please Select
+postfix with ldap	admin	en	Postfix with LDAP
 preferences	admin	en	Preferences
 primary group	admin	en	primary Group
+qmaildotmode	admin	en	qmaildotmode
+qouta size in mbyte	admin	en	qouta size in MByte
+quota settings	admin	en	quota settings
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
+remove	admin	en	remove
 remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group ?
 return to admin mainscreen	admin	en	return to admin mainscreen
 return to view account	admin	en	Return to view account
+route all mails to	admin	en	Route all Mails to
 run asynchronous services	admin	en	Run Asynchronous services
 save the category	admin	en	save the category
 save the category and return back to the list	admin	en	save the category and return back to the list
@@ -311,6 +332,9 @@ sorry, the follow users are still a member of the group %1	admin	en	Sorry, the f
 sort the entries	admin	en	sort the entries
 ssl	admin	en	ssl
 standard	admin	en	standard
+standard imap server	admin	en	standard IMAP server
+standard pop3 server	admin	en	standard POP3 server
+standard smtp-server	admin	en	standard SMTP-Server
 start testjob!	admin	en	Start TestJob!
 submit changes	admin	en	Submit Changes
 submit the search string	admin	en	Submit the search string
@@ -359,9 +383,10 @@ view sessions	admin	en	View sessions
 view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
+would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
+would you like egroupware to cache the phpgw info array ?	admin	en	Would you like eGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
-would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 xml-rpc	admin	en	XML-RPC

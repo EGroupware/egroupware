@@ -632,6 +632,22 @@
 					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 				);
 			}
+			
+			// NDEE210804
+			// added for different way of handling ldap entries inside account manager
+			// we show this only, if accounts are stored in ldap
+
+			if ($GLOBALS['phpgw_info']['server']['account_repository'] == "ldap")
+			{
+				$GLOBALS['menuData'][] = array(
+				'description'   => 'LDAP-MGR',
+				'url'           => '/index.php',
+				'extradata'     => 'menuaction=admin.uildap_mgr.editUserData'
+				);
+			}
+			//NDEE
+			
+			
 		}
 
 		function edit_user($cd='',$account_id='')
