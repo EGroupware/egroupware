@@ -147,7 +147,7 @@
 			return false;
 		}
 
-		function SetColor($r, $g, $b)
+		function SetColor($r, $g, $b, $set_transparent=False)
 		{
 			$key = "$r,$g,$b";
 			if (!IsSet($this->colormap[$key]))
@@ -158,6 +158,10 @@
 			else
 			{
 				$this->hColor = $this->colormap[$key];
+			}
+			if ($set_transparent)
+			{
+				ImageColorTransparent($this->hImage,$this->hColor);
 			}
 
 			return true;

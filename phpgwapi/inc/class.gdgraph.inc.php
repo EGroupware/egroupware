@@ -101,10 +101,10 @@
 			$this->img->width = $this->graph_width;
 			$this->img->height = $this->graph_height;
 			$this->img->Init();
-			$this->img->SetColor(255, 255, 255);
+			$this->img->SetColor(255, 255, 255, True);
 
 			// Draw the captions
-			$this->img->SetFont(2);
+			$this->img->SetFont(3);
 			$this->img->SetColor(0, 0, 0);
 			$this->img->MoveTo($this->graph_width / 2, 2);
 			$this->img->DrawText(array('text' => $this->title));
@@ -162,7 +162,7 @@
 
 			// Draw the x axis text
 			$this->img->SetColor(0, 0, 0);
-			$this->img->SetFont(1);
+			$this->img->SetFont(2);
 			$linespace = ($this->graph_width - $this->margin_left - $this->margin_right) / ($this->num_lines_x - 1);
 			reset($this->line_captions_x);
 			$i = 0;
@@ -171,17 +171,6 @@
 				$this->img->MoveTo($i * $linespace + $this->margin_left, $this->graph_height - $this->margin_bottom + 8);
 				$this->img->DrawText(array('text' => $text['date_formatted']));
 				$i++;
-			}
-
-			// Draw the y axis text
-			$linespace = ($this->graph_height - $this->margin_top - $this->margin_bottom) / ($this->num_lines_y - 1);
-			$space = 1;
-			for ($i = 0;$i<count($this->data);$i++)
-			{
-				$y = $this->graph_height - $this->margin_bottom - ($space * $linespace);
-				$this->img->MoveTo($this->margin_left - 6, $y);
-				$this->img->DrawText(array('text' => $this->data[$i]['title'],'justification' => 'right','margin_left' => $this->margin_left));
-				$space++;
 			}
 
 			// Draw the lines for the data
@@ -269,13 +258,26 @@
 					$x2 = $largest * $linespace + $this->margin_left;
 				}
 
-				for ($w = 0; $w < 7; $w++)
+				for ($w = -3; $w < 4; $w++)
 				{
 					$this->img->Line(1+$x1,$y1+$w,$x2,$y2+$w);
 				}
 				$color_index++;
 				$i++;
 			}
+			// Draw the y axis text
+			$this->img->SetColor(0, 0, 0);
+			$this->img->SetFont(2);
+			$linespace = ($this->graph_height - $this->margin_top - $this->margin_bottom) / ($this->num_lines_y - 1);
+			$space = 1;
+			for ($i = 0;$i<count($this->data);$i++)
+			{
+				$y = $this->graph_height - $this->margin_bottom - ($space * $linespace) - 7;
+				$this->img->MoveTo($this->margin_left - 6, $y);
+				$this->img->DrawText(array('text' => $this->data[$i]['title'],'justification' => 'right','margin_left' => $this->margin_left));
+				$space++;
+			}
+
 			$this->img->ToBrowser();
 			$this->img->Done();
 		}
