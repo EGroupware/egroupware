@@ -2,6 +2,7 @@
         - Fixed table locking in admin -> edit account
 	- Added capability to schedule others and not yourself to calendar.
 	- Fixed d/l'ing of files through filemanager.
+	- Enhanced Free/Busy calendar view.
 
 [0.9.6] - Fix user permissions where not being checked properly.
 

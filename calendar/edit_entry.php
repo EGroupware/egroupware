@@ -108,14 +108,17 @@
 
     $phpgw->template->parse("out","edit_entry_begin");
 
+// Brief Description
     $phpgw->template->set_var("field",lang("Brief Description"));
     $phpgw->template->set_var("data","<input name=\"name\" size=\"25\" value=\"".$cal_info->name."\">");
     $phpgw->template->parse("output","list",True);
-    
+
+// Full Description
     $phpgw->template->set_var("field",lang("Full Description"));
     $phpgw->template->set_var("data","<textarea name=\"description\" rows=\"5\" cols=\"40\" wrap=\"virtual\">".$cal_info->description."</textarea>");
     $phpgw->template->parse("output","list",True);
 
+// Date
     $phpgw->template->set_var("field",lang("Date"));
 
     $day_html = "<select name=\"day\">";
@@ -142,6 +145,7 @@
     $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
     $phpgw->template->parse("output","list",True);
 
+// Time
     $phpgw->template->set_var("field",lang("Time"));
 
     $amsel = "checked"; $pmsel = "";
@@ -161,10 +165,12 @@
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
+// Duration
     $phpgw->template->set_var("field",lang("Duration"));
     $phpgw->template->set_var("data","<input name=\"duration\" size=\"3\" value=\"".(!$cal_info->duration?0:$cal_info->duration)."\"> ".lang("minutes"));
     $phpgw->template->parse("output","list",True);
 
+// Priority
     $phpgw->template->set_var("field",lang("Priority"));
     $str = "<select name=\"priority\">";
     $str .= "<option value=\"1\"";
@@ -195,6 +201,7 @@
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
+// Groups
     $phpgw->template->set_var("field",lang("Groups"));
     $str = "<select name=\"n_groups[]\" multiple size=\"5\">";
     $user_groups = $phpgw->accounts->read_group_names();

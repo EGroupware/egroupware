@@ -38,6 +38,21 @@
 
   $date = $thisyear.$thismonth.$thisday;
 
+  if(isset($groups) && $groups) {
+    for($i=0;$i<count($groups);$i++) {
+      $phpgw->db->query("SELECT account_id FROM accounts WHERE account_groups LIKE '%,".$groups[$i].":%'");
+      while($phpgw->db->next_record()) {
+	$participating = False;
+	for($j=0;$j<count($participants);$j++) {
+	  if($participants[$j] == $phpgw->db->f("account_id")) {
+	    $participating = True;
+	  }
+	}
+	if(!$participating) $participants[] = $phpgw->db->f("account_id");
+      }
+    }
+  }
+
   switch($view) {
     case "free/busy" :
       echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),$phpgw->calendar->splittime("000000"),0,$participants);

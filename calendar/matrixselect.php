@@ -79,6 +79,7 @@
   $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
   $phpgw->template->parse("output","list",True);
 
+// View type
   $phpgw->template->set_var("field",lang("View"));
   $str = "<select name=\"view\">";
   $str .= "<option value=\"free/busy\">".lang("free/busy")."</option>\n";
@@ -86,8 +87,8 @@
   $str .= "</select>\n";
   $phpgw->template->set_var("data",$str);
   $phpgw->template->parse("output","list",True);
-  
 
+// Participants
   $phpgw->template->set_var("field",lang("Participants"));
   $db2 = $phpgw->db;
   $db2->query("select account_id,account_lastname,account_firstname "
@@ -111,6 +112,17 @@
   }
   $str .= "</select>";
   $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
+  $phpgw->template->set_var("data",$str);
+  $phpgw->template->parse("output","list",True);
+
+// Groups
+  $phpgw->template->set_var("field",lang("Groups"));
+  $str = "<select name=\"groups[]\" multiple size=\"5\">";
+  $user_groups = $phpgw->accounts->read_group_names();
+  for ($i=0;$i<count($user_groups);$i++) {
+    $str .= "<option value=\"" . $user_groups[$i][0] . "\">" . $user_groups[$i][1] . "</option>\n";
+  }
+  $str .= "</select>";
   $phpgw->template->set_var("data",$str);
   $phpgw->template->parse("output","list",True);
 
