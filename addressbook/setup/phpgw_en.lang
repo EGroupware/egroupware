@@ -103,6 +103,7 @@ ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
+load vcard	addressbook	en	Load VCard
 mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
