@@ -11,11 +11,9 @@
 
   /* $Id$ */
 
-
   $sql = "CREATE TABLE config (
-    config_name     varchar(25),
-    config_value    varchar(100),
-    UNIQUE (config_name)
+    config_name     varchar(25) NOT NULL UNIQUE,
+    config_value    varchar(100) NOT NULL
   )";
   $db->query($sql);
 

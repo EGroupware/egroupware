@@ -33,8 +33,8 @@
   $db->Halt_On_Error = "no";
 
   if (!isset($oldversion)){
-    $db->query("select app_version from applications where app_name='admin'");
-    $db->next_record();
+    @$db->query("select app_version from applications where app_name='admin'");
+    @$db->next_record();
     $oldversion = $db->f("app_version");
   }
   
@@ -201,10 +201,10 @@
           Header("Location: $PHP_SELF?action=regularversion");
         }
       }else{
-        $db->query("select * from config");
-        if ($db->num_rows() == 0){
-          $db->query("select * from accounts");
-          if ($db->num_rows() == 0){
+        @$db->query("select * from config");
+        if (@$db->num_rows() == 0){
+          @$db->query("select * from accounts");
+          if (@$db->num_rows() == 0){
             echo "<html><head><title>phpGroupWare Setup</title></head>\n";
             echo "<body bgcolor='#ffffff'>\n"; 
             echo "<table border=\"0\" align=\"center\">\n";
