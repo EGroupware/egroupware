@@ -13,6 +13,10 @@
 
 	class boapplications
 	{
+		var $public_functions = array(
+			'register_all_hooks' => True
+		);
+
 		var $so;
 
 		function boapplications()
@@ -53,5 +57,38 @@
 		function delete($app_name)
 		{
 			return $this->so->delete($app_name);
+		}
+
+		function register_hook($hook_app)
+		{
+			return $this->so->register_hook($hook_app);
+		}
+
+		function register_all_hooks()
+		{
+			$SEP = filesystem_separator();
+			$app_list = $this->get_list();
+			$hooks = CreateObject('phpgwapi.hooks');
+			while(list($app_name,$app) = each($app_list))
+			{			
+				$f = PHPGW_SERVER_ROOT . $SEP . $app_name . $SEP . 'setup' . $SEP . 'setup.inc.php';
+				if(@file_exists($f))
+				{
+					include($f);
+					while(list(,$hook) = each($setup_info[$app_name]['hooks']))
+					{
+						if(!$hooks->found_hooks[$hook][$appname])
+						{
+							$this->register_hook(
+								Array(
+									'app_name'	=> $app_name,
+									'hook'	=> $hook
+								)
+							);
+						}
+					}
+				}
+			}
+			Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
 		}
 	}

@@ -54,6 +54,7 @@
 	/* These need to be added still */
 	$file['View Access Log'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
 	$file['View Error Log']  = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log');
+	$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boapplications.register_all_hooks');
 	$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
 
 	/* Do not modify below this line */

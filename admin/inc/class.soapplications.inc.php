@@ -38,7 +38,7 @@
 
 		function get_list()
 		{
-			$this->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_applications WHERE app_enabled<3',__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				while ($this->db->next_record())
@@ -59,11 +59,11 @@
 			/* Yes, the sequence should work, but after a mass import in setup (new install)
 			  it does not work on pg
 			*/
-			$sql = "SELECT MAX(app_id) from phpgw_applications";
+			$sql = 'SELECT MAX(app_id) from phpgw_applications';
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
 			$app_id = $this->db->f(0) + 1;
-			$sql = "INSERT INTO phpgw_applications (app_id,app_name,app_title,app_enabled,app_order) VALUES("
+			$sql = 'INSERT INTO phpgw_applications (app_id,app_name,app_title,app_enabled,app_order) VALUES('
 				. $app_id . ",'" . addslashes($data['n_app_name']) . "','" . addslashes($data['n_app_title']) . "','"
 				. $data['n_app_status'] . "','" . $data['app_order'] . "')";
 
@@ -95,7 +95,7 @@
 
 		function app_order()
 		{
-			$this->db->query("SELECT (MAX(app_order)+1) AS max FROM phpgw_applications");
+			$this->db->query('SELECT (MAX(app_order)+1) AS max FROM phpgw_applications',__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f('max');
 		}
@@ -103,5 +103,12 @@
 		function delete($app_name)
 		{
 			$this->db->query("DELETE FROM phpgw_applications WHERE app_name='$app_name'",__LINE__,__FILE__);
+		}
+
+		function register_hook($app)
+		{
+			$this->db->query("INSERT INTO phpgw_hooks(hook_appname,hook_location,hook_filename) "
+				. "VALUES ('".$app['app_name']."','".$app['hook']."','hook_".$app['hook'].".inc.php')",__LINE__,__FILE__
+			);
 		}
 	}
