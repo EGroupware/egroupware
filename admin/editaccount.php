@@ -23,10 +23,11 @@
   	// creates the html for the user data
   	function createPageBody($_account_id)
   	{
-  		global $phpgw,$phpgw_info;
+			global $phpgw,$phpgw_info;
   		
 		$t = new Template($phpgw->common->get_tpl_dir("admin"));
-  		$t->set_file(array("form" => "account_form.tpl"));
+		$t->set_unknowns('remove');
+		$t->set_file(array("form" => "account_form.tpl"));
 
 		$account = CreateObject('phpgwapi.accounts',$_account_id);
 		$userData = $account->read_repository();
@@ -45,7 +46,7 @@
 		$t->set_var("lang_lastname",lang("Last Name"));
 		$t->set_var("lang_groups",lang("Groups"));
 		$t->set_var("lang_firstname",lang("First Name"));
-  		$t->set_var("lang_button",lang('Save'));
+		$t->set_var("lang_button",lang('Save'));
 
 		$t->set_var("n_loginid_value",$userData["account_lid"]);
 		$t->set_var("n_passwd_value",$n_passwd);
@@ -127,7 +128,7 @@
 	
 		$t->set_var("permissions_list",$appRightsOutput);
 
-		$t->pparse('out','form');
+		echo $t->finish($t->parse('out','form'));
 	}
 
 	// stores the userdata
@@ -518,8 +519,8 @@
   }       
   if (!$includedSomething) $t->set_var('gui_hooks','');
 
-  $t->set_var("lang_button",lang('Save'));
-  $t->pparse('out','form');
+	$t->set_var('lang_button',lang('Save'));
+	echo $t->finish($t->parse('out','form'));
 
   account_close();
   $phpgw->common->phpgw_footer();
