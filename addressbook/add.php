@@ -196,12 +196,14 @@
 			$fields['access'] = 'public';
 		}
 
-		if ($fields['cat_id'])
+		if (is_array($cat_id))
 		{
-			$fields['cat_id'] = is_array($cat_id) ? implode(',',$cat_id) : $cat_id;
-			// make sure commas surround each value
-			$fields['cat_id'] = ',' . $fields['cat_id'] . ',';
+			$fields['cat_id'] = count($cat_id) > 1 ? ','.implode(',',$cat_id).',' : $cat_id[0];
 		}
+		else
+		{
+			$fields['cat_id'] = $cat_id;
+		}					
 
 		addressbook_add_entry($phpgw_info['user']['account_id'],$fields,$fields['access'],$fields['cat_id']);
 		$ab_id = addressbook_get_lastid();
