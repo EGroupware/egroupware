@@ -594,8 +594,18 @@
 					/* exact value (filtering based on tid, etc...) */
 					if($name == 'phpgwcontactcatid')
 					{
-						$aquery .= '(|(' . $name . '=*,' . $value . ',*)'.
-								'(' . $name . '=' . $value . '))';
+						if (!is_object($GLOBALS['phpgw']->categories))
+						{
+							$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+						}
+						$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$value);
+
+						$aquery .= '(|';
+						foreach($cats as $cat)
+						{
+							$aquery .= '(' . $name . '=*,' . $cat . ',*)(' . $name . '=' . $cat . ')';
+						}
+						$aquery .= ')';
 					}
 					else
 					{
