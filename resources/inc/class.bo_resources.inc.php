@@ -262,7 +262,7 @@ class bo_resources
 	*/
 	function link_title( $resource )
 	{
-		if (!is_array($resource))
+		if (!is_array($resource) && $resource > 0)
 		{
 			$resource  = $this->so->read($resource);
 			$title = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
