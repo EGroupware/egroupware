@@ -193,8 +193,14 @@ class Template {
     return false;
   }
 
+	// This is short for finish parse
+	function fp($target, $handle, $append = False)
+	{
+		return $this->finish($this->parse($target, $handle, $append));
+	}
+
 	// This is a short cut for print finish parse
-	function pfp($target, $handle, $append = false)
+	function pfp($target, $handle, $append = False)
 	{
 		echo $this->finish($this->parse($target, $handle, $append));
 	}
@@ -336,17 +342,24 @@ class Template {
   /* public: halt(string $msg)
    * msg:    error message to show.
    */
-  function halt($msg) {
-    $this->last_error = $msg;
+	function halt($msg)
+	{
+		global $phpgw;
+
+		$this->last_error = $msg;
     
-    if ($this->halt_on_error != "no")
-      $this->haltmsg($msg);
+		if ($this->halt_on_error != 'no')
+		{
+			$this->haltmsg($msg);
+		}
     
-    if ($this->halt_on_error == "yes")
-      die("<b>Halted.</b>");
-    
-    return false;
-  }
+		if ($this->halt_on_error == 'yes')
+		{
+			echo('<b>Halted.</b>');
+		}
+
+		$phpgw->common->phpgw_exit(True);
+	}
   
   /* public, override: haltmsg($msg)
    * msg: error message to show.
