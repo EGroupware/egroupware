@@ -374,6 +374,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	en	The following applications need to be upgraded:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	en	The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
 there was a problem trying to connect to your ldap server. <br>	setup	en	There was a problem trying to connect to your LDAP server. <br>
