@@ -84,7 +84,7 @@
 		}
 
 		/**
-		* Get the the person data what you want. Wrapper function to be compatible with phpgroupware
+		* Get the the person data what you want. Wrapper function to stay compatible with phpgroupware.
 		*
 		* @author Lars Kneschke <lars@kneschke.de>
 		* @param array $fields The fields that you can see from person

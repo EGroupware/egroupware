@@ -285,7 +285,9 @@
 		}
 
 		/**
-		* returns an array of users and groups seperated, including all members of groups, which i.e. have acl access for an application
+		* returns a array of users and groups seperated, including all members of groups, which i.e. 
+		* have acl access for an application
+		* needed to stay compatible with phpgw
 		*
 		* @param $app_users (array, default to 0)
 		*/
