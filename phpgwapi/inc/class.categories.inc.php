@@ -538,7 +538,7 @@
 					if ($cats[$i]['level'] == 1)
 					{
 						$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['id'])
-										. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+										. "' WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 						$new_main = $cats[$i]['id'];
 					}
 					else

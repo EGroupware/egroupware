@@ -40,14 +40,14 @@
 			$this->read_sessiondata();
 
 			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
-			/* Might change this to '' at the end---> */
-			$start  = $GLOBALS['HTTP_POST_VARS']['start']  ? $GLOBALS['HTTP_POST_VARS']['start']  : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query  = $GLOBALS['HTTP_POST_VARS']['query']  ? $GLOBALS['HTTP_POST_VARS']['query']  : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']   ? $GLOBALS['HTTP_POST_VARS']['sort']   : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$order  = $GLOBALS['HTTP_POST_VARS']['order']  ? $GLOBALS['HTTP_POST_VARS']['order']  : $GLOBALS['HTTP_GET_VARS']['order'];
-			$cat_id = $GLOBALS['HTTP_POST_VARS']['cat_id'] ? $GLOBALS['HTTP_POST_VARS']['cat_id'] : $GLOBALS['HTTP_GET_VARS']['cat_id'];
 
-			if(!empty($start) || $start == '0' || $start == 0)
+			$start  = intval(get_var('start',array('POST','GET')));
+			$query  = get_var('query',array('POST','GET'));
+			$sort   = get_var('sort',array('POST','GET'));
+			$order  = get_var('order',array('POST','GET'));
+			$cat_id = intval(get_var('cat_id', array('POST','GET')));
+
+			if(!empty($start) || $start == 0)
 			{
 				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
 				$this->start = $start;
@@ -62,14 +62,17 @@
 			{
 				$this->cat_id = $cat_id;
 			}
-			if($cat_id == '0' || $cat_id == 0 || $cat_id == '')
+
+			if($cat_id == 0)
 			{
 				unset($this->cat_id);
 			}
+
 			if(isset($sort) && !empty($sort))
 			{
 				$this->sort = $sort;
 			}
+
 			if(isset($order) && !empty($order))
 			{
 				$this->order = $order;
@@ -125,8 +128,6 @@
 
 		function exists($data)
 		{
-			//$data['type']   = $data['type'] ? $data['type'] : '';
-			//$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
 			return $this->cats->exists($data);
 		}
 
@@ -142,7 +143,7 @@
 			}
 		}
 
-		function delete($cat_id,$drop_subs=False,$modify_subs=True)
+		function delete($cat_id,$drop_subs,$modify_subs)
 		{
 			$this->cats->delete($cat_id,$drop_subs,$modify_subs);
 		}

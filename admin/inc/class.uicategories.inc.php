@@ -474,7 +474,7 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this category ?'));
+				$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this global category ?'));
 
 				$exists = $this->bo->exists(array
 				(
@@ -488,12 +488,6 @@
 					$sub_select = '<input type="radio" name="subs" value="move">' . lang('Do you want to move all global subcategories one level down ?') . '<br>';
 					$sub_select .= '<input type="radio" name="subs" value="drop">' . lang('Do you want to delete all global subcategories ?');
 					$GLOBALS['phpgw']->template->set_var('sub_select',$sub_select);
-
-					/*	$GLOBALS['phpgw']->template->set_var('lang_drop_subs',lang('Do you also want to delete all global subcategories ?'));
-						$GLOBALS['phpgw']->template->set_var('drop_subs','<input type="checkbox" name="drop_subs" value="True">');
-
-						$GLOBALS['phpgw']->template->set_var('lang_modify_subs',lang('Do you want to move all global subcategories one level down ?'));
-						$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="modify_subs" value="True">'); */
 				}
 
 				$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
