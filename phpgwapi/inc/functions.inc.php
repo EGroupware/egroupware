@@ -107,7 +107,7 @@
 		{
 			if ($default_id == '')
 			{
-				return $phpgw_info['user']['account_id'];
+				return (isset($phpgw_info['user']['account_id'])?$phpgw_info['user']['account_id']:0);
 			}
 			elseif (gettype($default_id) == 'string')
 			{
@@ -215,7 +215,7 @@
 		}
 	}
 
-	if (isset($phpgw_domain[$phpgw_info['user']['domain']]))
+	if (@isset($phpgw_domain[$phpgw_info['user']['domain']]))
 	{
 		$phpgw_info['server']['db_host'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_host'];
 		$phpgw_info['server']['db_name'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_name'];
@@ -238,7 +238,7 @@
 	}
 	unset ($domain); // we kill this to save memory
 
-	print_debug('domain: '.$phpgw_info['user']['domain']);
+	@print_debug('domain: '.$phpgw_info['user']['domain']);
 
 	/****************************************************************************\
 	* These lines load up the API, fill up the $phpgw_info array, etc            *
@@ -308,7 +308,7 @@
 	{
 		if ($phpgw_info['flags']['currentapp'] == 'login')
 		{
-			if ($login != '')
+			if (@$login != '')
 			{
 				$login_array = explode("@",$login);
 				$login_id = $phpgw->accounts->name2id($login_array[0]);
@@ -337,7 +337,7 @@
 		define('PHPGW_APP_INC', $phpgw->common->get_inc_dir());
 		define('PHPGW_APP_TPL', $phpgw->common->get_tpl_dir());
 		define('PHPGW_IMAGES', $phpgw->common->get_image_path());
-		define('PHPGW_IMAGES_DIR', $phpgw->common->get_image_dir());
+		define('PHPGW_APP_IMAGES_DIR', $phpgw->common->get_image_dir());
 		define('PHPGW_ACL_READ',1);
 		define('PHPGW_ACL_ADD',2);
 		define('PHPGW_ACL_EDIT',4);

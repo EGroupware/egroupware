@@ -120,7 +120,7 @@
 		{
 			global $HTTP_ENV_VARS;
 
-			$iis = strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
+			$iis = @strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
 			
 			if ( !$url ) {
 				$url = $PHP_SELF;

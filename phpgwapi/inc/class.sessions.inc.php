@@ -97,7 +97,7 @@
 			$login_array = explode('@', $db->f('session_lid'));
 			$this->account_lid = $login_array[0];
 
-			if ($login_array[1] != '')
+			if (@$login_array[1] != '')
 			{
 				$this->account_domain = $login_array[1];
 			}
@@ -112,7 +112,7 @@
 			$phpgw_info['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
 // Thinking this might solve auth_http	problems
-			if($userid_array[1] == '') { $userid_array[1] = 'default'; }
+			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
 			$this->account_id = $phpgw->accounts->name2id($this->account_lid);
@@ -347,7 +347,7 @@
 			$this->user['account_id']  = $this->account_id;
 			$this->user['account_lid'] = $this->account_lid;
 			$this->user['userid']      = $this->account_lid;
-			$this->user['passwd']      = $this->passwd;
+			$this->user['passwd']      = @$this->passwd;
 			$this->hooks               = $phpgw->hooks->read();
 		}
 	
@@ -533,9 +533,9 @@
 			}
 			else
 			{
-				$url .= '?sessionid=' . $phpgw_info['user']['sessionid'];
+				$url .= '?sessionid=' . @$phpgw_info['user']['sessionid'];
 				$url .= '&kp3=' . $kp3;
-				$url .= '&domain=' . $phpgw_info['user']['domain'];
+				$url .= '&domain=' . @$phpgw_info['user']['domain'];
 				// This doesn't belong in the API.
 				// Its up to the app to pass this value. (jengo)
 				// Putting it into the app requires a massive number of updates in email app. 
