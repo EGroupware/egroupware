@@ -227,7 +227,7 @@ class calendar extends calendar_
 			$groups = $phpgw->accounts->memberships($owner);
 			while ($group = each($groups))
 			{
-				if (strpos(' '.$event->groups.' ',','.$group[1]['account_id'].','))
+				if (strpos(' '.implode($event->groups,',').' ',$group[1]['account_id']))
 				{
 					$is_private = False;
 				}
