@@ -1005,6 +1005,10 @@
 		*/
 		function column_data_implode($glue,$array,$use_key=True,$only=False,$column_definitions=False)
 		{
+			if (!is_array($array))	// this allows to give an SQL-string for delete or update
+			{
+				return $array;
+			}
 			if (!$column_definitions)
 			{
 				$column_definitions = $this->column_definitions;
@@ -1080,24 +1084,24 @@
 			}
 			if (isset($GLOBALS['phpgw_info']['apps']))	// this happens during the eGW startup, dont set it then !!!
 			{
-				$app_data = &$GLOBALS['phpgw_info']['apps'][$app];
+				$this->app_data = &$GLOBALS['phpgw_info']['apps'][$app];
 			}
-			if (!isset($app_data['table_defs']))
+			if (!isset($this->app_data['table_defs']))
 			{
 				$tables_current = PHPGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
 
 				if (!@file_exists($tables_current))
 				{
-					return $app_data['table_defs'] = False;
+					return $this->app_data['table_defs'] = False;
 				}
 				include($tables_current);
-				$app_data['table_defs'] = $phpgw_baseline;
+				$this->app_data['table_defs'] = &$phpgw_baseline;
 			}
-			if ($table && (!$app_data['table_defs'] || !isset($app_data['table_defs'][$table])))
+			if ($table && (!$this->app_data['table_defs'] || !isset($this->app_data['table_defs'][$table])))
 			{
 				return False;
 			}
-			return $table ? $app_data['table_defs'][$table] : $app_data['table_defs'];
+			return $table ? $this->app_data['table_defs'][$table] : $this->app_data['table_defs'];
 		}
 
 		/**
