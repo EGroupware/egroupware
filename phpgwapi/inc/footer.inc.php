@@ -24,25 +24,28 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["app_inc"],0,3));
-  if($d1 == "htt" || $d1 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
-    exit;
-  } unset($d1);
+	$d1 = strtolower(substr(PHPGW_APP_INC,0,3));
+	if($d1 == 'htt' || $d1 == 'ftp')
+	{
+		echo "Failed attempt to break in via an old Security Hole!<br>\n";
+		exit;
+	} unset($d1);
 
-  /**************************************************************************\
-  * Include the apps footer files if it exists                               *
-  \**************************************************************************/
-  if (file_exists ($phpgw_info["server"]["app_inc"]."/footer.inc.php") 
-   && $phpgw_info["flags"]["currentapp"] != "home"
-   && $phpgw_info["flags"]["currentapp"] != "login"
-   && $phpgw_info["flags"]["currentapp"] != "logout"
-   && (!isset($phpgw_info["flags"]["noappfooter"]) || !$phpgw_info["flags"]["noappfooter"])) {
-    include($phpgw_info["server"]["app_inc"]."/footer.inc.php");
-  }
+	/**************************************************************************\
+	* Include the apps footer files if it exists                               *
+	\**************************************************************************/
+	if (file_exists (PHPGW_APP_INC . '/footer.inc.php') &&
+		$phpgw_info['flags']['currentapp'] != 'home' &&
+		$phpgw_info['flags']['currentapp'] != 'login' &&
+		$phpgw_info['flags']['currentapp'] != 'logout' &&
+		(!isset($phpgw_info['flags']['noappfooter']) ||
+		!$phpgw_info['flags']['noappfooter']))
+	{
+		include(PHPGW_APP_INC . '/footer.inc.php');
+	}
 
-  parse_navbar_end();
-  $phpgw->db->disconnect();
+	parse_navbar_end();
+	$phpgw->db->disconnect();
   
 ?>
 </BODY>
