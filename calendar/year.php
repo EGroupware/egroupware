@@ -21,8 +21,10 @@
   $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
 
+  $view = "year";
+
   if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
+     echo '<body bgcolor="' . $phpgw_info["theme"]["bg_color"] . '">';
   }
 ?>
 
