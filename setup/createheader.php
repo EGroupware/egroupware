@@ -43,19 +43,19 @@
       // this dont work with PHP 3.0.10 and lower !
     
       $supported_db = array();
-      if(extension_loaded("mysql")) {
+      if (extension_loaded("mysql") || function_exists("mysql_connect")) {
          echo "You appear to have MySQL support enabled<br>\n";
          $supported_db[] = "mysql";
       } else {
          echo "No MySQL support found. Disabling<br>\n";
       }
-      if(extension_loaded("pgsql")) {
+      if (extension_loaded("pgsql") || function_exists("pg_connect")) {
          echo "You appear to have Postgres-DB support enabled<br>\n";
          $supported_db[]  = "pgsql";
       } else {
          echo "No Postgres-DB support found. Disabling<br>\n";
       }
-      if(extension_loaded("oci8")) {
+      if (extension_loaded("oci8")) {
         echo "You appear to have Oracle V8 (OCI) support enabled<br>\n";
         $supported_db[] = "oracle";
       } else {
