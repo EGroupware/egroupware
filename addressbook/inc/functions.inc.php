@@ -198,8 +198,7 @@
      <font color="#000000" face="" size="-1"><?php echo lang("Company Name"); ?>:</font>
     </td>
     <td>
-     <font size="-1">
-<?php echo $company; ?>
+     <font size="-1"><?php echo $company; ?>
 </font>
     </td>
     <td>
