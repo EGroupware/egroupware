@@ -298,19 +298,19 @@ class ActivityManager extends BaseManager {
       if($res['isInteractive'] == 'y') {
           $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
           if(!$cant) {
-            $errors[] = tra('Activity').': '.$res['name'].tra(' is interactive but has no role assigned');
+            $errors[] = tra('Activity %1 is interactive but has no role assigned', $res['name']);
           }
       } else {
         if( $res['type'] != 'end' && $res['isAutoRouted'] == 'n') {
           $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
             if(!$cant) {
-              $errors[] = tra('Activity').': '.$res['name'].tra(' is non-interactive and non-autorouted but has no role assigned');
+              $errors[] = tra('Activity %1 is non-interactive and non-autorouted but has no role assigned', $res['name']);
             }
         }
       }
       if($res['type']=='standalone') {
         if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$aid or actToId=$aid")) {
-           $errors[] = tra('Activity').': '.$res['name'].tra(' is standalone but has transitions');
+           $errors[] = tra('Activity %1 is standalone but has transitions', $res['name']);
         }
       }
 
@@ -323,7 +323,7 @@ class ActivityManager extends BaseManager {
     while($res = $result->fetchRow()) {      
         $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."user_roles where roleId=".$res['roleId']);
         if(!$cant) {
-          $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
+          $errors[] = tra('Role %1 is not mapped', $res['name']);
         }        
     }
     
@@ -379,21 +379,21 @@ class ActivityManager extends BaseManager {
       fclose($fp);
       if($res['type']=='standalone') {
           if(strstr($data,'$instance')) {
-            $errors[] = tra('Activity '.$res['name'].' is standalone and is using the $instance object');
+            $errors[] = tra('Activity %1 is standalone and is using the $instance object', $res['name']);
           }    
       } else {
         if($res['isInteractive']=='y') {
           if(!strstr($data,'$instance->complete()')) {
-            $errors[] = tra('Activity '.$res['name'].' is interactive so it must use the $instance->complete() method');
+            $errors[] = tra('Activity %1 is interactive so it must use the $instance->complete() method', $res['name']);
           }
         } else {
           if(strstr($data,'$instance->complete()')) {
-            $errors[] = tra('Activity '.$res['name'].' is non-interactive so it must not use the $instance->complete() method');
+            $errors[] = tra('Activity %1 is non-interactive so it must not use the $instance->complete() method', $res['name']);
           }
         }
         if($res['type']=='switch') {
           if(!strstr($data,'$instance->setNextActivity(')) { 
-            $errors[] = tra('Activity '.$res['name'].' is switch so it must use $instance->setNextActivity($actname) method');          
+            $errors[] = tra('Activity %1 is switch so it must use $instance->setNextActivity($actname) method', $res['name']);          
           }
         }
       }    
