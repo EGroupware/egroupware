@@ -108,12 +108,13 @@
 		@param $appname or $args['appname'] name of the app, which's hook to execute, if empty the current app is used
 		@param $args is passed to the hook, if its a new method-hook
 		@param $no_permission_check if True execute all hooks, not only the ones a user has rights to
+		@param $try_unregisterd If true, try to include old file-hook anyway (for setup)
 		@note $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		@returns False if no hook exists, True if an old hook exist and whatever the new method-hook returns
 		*/
-		function single($args, $appname = '', $no_permission_check = False)
+		function single($args, $appname = '', $no_permission_check = False,$try_unregistered = False)
 		{
-			//echo "<p>hooks::single("; print_r($args); echo ",'$appname')</p>\n";
+			//echo "<p>hooks::single("; print_r($args); echo ",'$appname','$no_permission_check','$try_unregistered')</p>\n";
 			if (is_array($args))
 			{
 				$location = $args['location'];
@@ -128,12 +129,16 @@
 			}
 
 			/* First include the ordered apps hook file */
-			if (isset($this->found_hooks[$appname][$location]))
+			if (isset($this->found_hooks[$appname][$location]) || $try_unregistered)
 			{
 				$parts = explode('.',$method = $this->found_hooks[$appname][$location]);
 				
 				if (count($parts) != 3 || ($parts[1] == 'inc' && $parts[2] == 'php'))
 				{
+					if ($try_unregistered && empty($methode))
+					{
+						$method = 'hook_'.$location.'.inc.php';
+					}
 					$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $method;
 					if (file_exists($f) &&
 						( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
