@@ -655,7 +655,7 @@
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
-			while (list($x_name,$x_value) = each($extra_fields))
+			while (list($x_name,$x_value) = @each($extra_fields))
 			{
 				if ($this->field_exists($id,$x_name))
 				{
