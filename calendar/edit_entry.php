@@ -273,9 +273,8 @@ function validate_and_submit() {
      . "<TD>\n<SELECT NAME=\"participants[]\" multiple size=\"$size\">\n";
 
   while ($phpgw->db->next_record()) {
-    echo "<option value=\"" . $phpgw->db->f("loginid") . "\"";  
-    if (($participants[$phpgw->db->f("account_lid")]
-	|| $phpgw->db->f("account_lid") == $loginid))
+    echo "<option value=\"" . $phpgw->db->f("account_lid") . "\"";  
+    if ($participants[$phpgw->db->f("account_lid")])
        echo " selected";
 
     // Change this to use accounts->display_full_name()
@@ -287,9 +286,9 @@ function validate_and_submit() {
     echo "</option>\n";
   }
 
-  echo "<input type=\"hidden\" name=\"participants[]\" value=\""
+  echo "</select><input type=\"hidden\" name=\"participants[]\" value=\""
      . $phpgw_info["user"]["userid"] ."\">"
-     . "</select></td></tr>\n";
+     . "</td></tr>\n";
 
 ?>
 
