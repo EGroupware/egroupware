@@ -106,23 +106,38 @@
 			// Check if the group account is already there.
 			// If so, set our group_id to that account's id for use below.
 			$acct_exist = $acct->name2id('Default');
-			if ($acct_exist) {
+			if ($acct_exist)
+			{
 				$defaultgroupid = $acct_exist;
 			}
 			$id_exist   = $acct->exists(intval($defaultgroupid));
 			// if not, create it, using our original groupid.
-			if(!$id_exist) {
-				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
-			} else {
+			$thisgroup_info = array(
+				'type'      => 'g',
+				'id'        => $defaultgroupid,
+				'lid'       => 'Default',
+				'passwd'    => $passwd,
+				'firstname' => 'Default',
+				'lastname'  => 'Group',
+				'status'    => 'A',
+				'expires'   => -1
+			);
+			if(!$id_exist)
+			{
+				$acct->create($thisgroup_info);
+			}
+			else
+			{
 				// Delete first, so ldap does not return an error, then recreate
 				$acct->delete($defaultgroupid);
-				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
+				$acct->create($thisgroup_info);
 			}
 
 			$acl = CreateObject('phpgwapi.acl',$defaultgroupid);
 			$acl->db = $phpgw_setup->db;
 			$acl->read_repository();
-			while ($app = each($s_apps)) {
+			while ($app = each($s_apps))
+			{
 				$acl->delete($app[1],'run',1);
 				$acl->add($app[1],'run',1);
 			}
@@ -153,7 +168,16 @@
 					// If not, create it now.
 					if(!$id_exist)
 					{
-						$accounts->create('u', $thisacctlid, 'x',$thisfirstname, $thislastname,'A',$thisacctid);
+						$thisaccount_info = array(
+							'type'      => 'u',
+							'lid'       => $thisacctlid,
+							'passwd'    => 'x',
+							'firstname' => $thisfirstname,
+							'lastname'  => $thislastname,
+							'status'    => 'A',
+							'expires'   => -1
+						);
+						$accounts->create($thisaccount_info);
 					}
 
 					// Insert default acls for this user.
