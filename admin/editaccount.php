@@ -61,7 +61,15 @@
 
      Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
      exit;
-  }		// if $submit
+  }                    // if $submit
+
+  if ($totalerrors) {
+     $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
+  } else {
+     $phpgw->template->set_var("error_messages","");
+  }
+
+  $phpgw->template->set_file(array("form" => "account_form.tpl"));
 
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
@@ -70,6 +78,83 @@
 
   $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
 
+  if ($phpgw_info["server"]["account_repository"] == "ldap") {
+      $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
+  } else {
+      $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
+  }
+
+  $phpgw->template->set_var("lang_action",lang("Edit user account"));
+
+  $phpgw->template->set_var("lang_loginid",lang("LoginID"));
+  $phpgw->template->set_var("n_loginid_value",$n_loginid);
+
+  $phpgw->template->set_var("lang_password",lang("Password"));
+  $phpgw->template->set_var("n_passwd_value",$n_passwd);
+
+  $phpgw->template->set_var("lang_reenter_password",lang("Re-Enter Password"));
+  $phpgw->template->set_var("n_passwd_2_value",$n_passwd_2);
+
+  $phpgw->template->set_var("lang_firstname",lang("First Name"));
+  $phpgw->template->set_var("n_firstname_value",$n_firstname);
+
+  $phpgw->template->set_var("lang_lastname",lang("Last Name"));
+  $phpgw->template->set_var("n_lastname_value",$n_lastname);
+
+  $phpgw->template->set_var("lang_groups",lang("Groups"));
+  $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
+
+  $group_select = '<select name="n_groups[]" multiple>';
+  $phpgw->db->query("select * from groups");
+  while ($phpgw->db->next_record()) {
+     $groups_select .= '<option value="' . $phpgw->db->f("group_id") . '"';
+     for ($i=0; $i<count($user_groups); $i++) {
+        if ($user_groups[$i][0] == $phpgw->db->f("group_id")) {
+           $groups_select .= " selected";
+        }
+     }
+     $groups_select .= ">" . $phpgw->db->f("group_name") . "</option>\n";
+  }
+  $group_select .= "</select>";
+  $phpgw->template->set_var("groups_select",$group_select);
+
+  $i = 0;
+  while ($permission = each($phpgw_info["apps"])) {
+     if ($permission[1]["enabled"]) {
+        $perm_display[$i][0] = $permission[0];
+        $perm_display[$i][1] = $permission[1]["title"];
+        $i++;
+     }
+  }
+
+  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="new_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td>";
+     $i++;
+
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="new_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td></tr>";
+     $i++;
+  }
+  $phpgw->template->set_var("permissions_list",$perm_html);
+
+  $phpgw->template->set_var("lang_button",lang("Edit"));
+
+  $phpgw->template->pparse("out","form");
+
+/*
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
       <input type="hidden" name="account_id" value="<? 
@@ -173,7 +258,7 @@
          </table>
         </center>
        </form>
-<?php
+<?php */
   account_close();
   $phpgw->common->phpgw_footer();
 ?>
