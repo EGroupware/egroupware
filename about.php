@@ -9,7 +9,6 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-
   /* $Id$ */
 
   $phpgw_info["flags"]["currentapp"] = "about";
