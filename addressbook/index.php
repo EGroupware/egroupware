@@ -133,7 +133,7 @@
 			      . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
 	                . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
 	                . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-	                . "'%$query%' OR ab_company like %$query%') $ordermethod limit $limit");
+	                . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
   } else {
      $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit $limit");
   }
