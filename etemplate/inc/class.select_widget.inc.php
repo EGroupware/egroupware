@@ -22,7 +22,8 @@
 	class select_widget
 	{
 		var $public_functions = array(
-			'pre_process' => True
+			'pre_process' => True,
+			'post_process' => True,
 		);
 		var $human_name = array(	// this are the names for the editor
 			'select-percent'  => 'Select Percentage',
@@ -36,6 +37,7 @@
 			'select-year'     => 'Select Year',
 			'select-month'    => 'Select Month',
 			'select-day'      => 'Select Day',
+			'select-dow'      => 'Select Day of week',
 			'select-number'   => 'Select Number',
 			'select-app'      => 'Select Application'
 		);
@@ -126,6 +128,8 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			list($rows,$type,$type2,$type3) = explode(',',$cell['size']);
+
+			$extension_data = $cell['type'];
 
 			switch ($cell['type'])
 			{
@@ -280,6 +284,65 @@
 					$cell['sel_options'] = $this->monthnames;
 					$value = intval($value);
 					break;
+					
+				case 'select-dow':
+					if (!defined('MCAL_M_SUNDAY'))
+					{
+						define('MCAL_M_SUNDAY',1);
+						define('MCAL_M_MONDAY',2);
+						define('MCAL_M_TUESDAY',4);
+						define('MCAL_M_WEDNESDAY',8);
+						define('MCAL_M_THURSDAY',16);
+						define('MCAL_M_FRIDAY',32);
+						define('MCAL_M_SATURDAY',64);
+						
+						define('MCAL_M_WEEKDAYS',62);
+						define('MCAL_M_WEEKEND',65);
+						define('MCAL_M_ALLDAYS',127);
+					}
+					$weekstart = $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts'];
+					$cell['sel_options'] = array(
+						MCAL_M_ALLDAYS	=> 'all days',
+						MCAL_M_WEEKDAYS	=> 'working days',
+						MCAL_M_WEEKEND	=> 'weekend',
+					);
+					if ($weekstart == 'Saturday') $cell['sel_options'][MCAL_M_SATURDAY] = 'saturday';
+					if ($weekstart != 'Monday') $cell['sel_options'][MCAL_M_SUNDAY] = 'sunday';
+					$cell['sel_options'] += array(
+						MCAL_M_MONDAY	=> 'monday',
+						MCAL_M_TUESDAY	=> 'tuesday',
+						MCAL_M_WEDNESDAY=> 'wednesday',
+						MCAL_M_THURSDAY	=> 'thursday',
+						MCAL_M_FRIDAY	=> 'friday',
+					);
+					if ($weekstart != 'Saturday') $cell['sel_options'][MCAL_M_SATURDAY] = 'saturday';
+					if ($weekstart == 'Monday') $cell['sel_options'][MCAL_M_SUNDAY] = 'sunday';
+					$value_in = $value;
+					$value = array();
+					$readonly = $cell['readonly'] || $readonlys;
+					foreach($cell['sel_options'] as $val => $lable)
+					{
+						if (($value_in & $val) == $val)
+						{
+							$value[] = $readonly ? lang($lable) : $val;
+							
+							if ($val == MCAL_M_ALLDAYS || 
+								$val == MCAL_M_WEEKDAYS && $value_in == MCAL_M_WEEKDAYS ||
+								$val == MCAL_M_WEEKEND && $value_in == MCAL_M_WEEKEND)
+							{
+								break;	// dont set the others
+							}			
+						}
+					}
+					if ($readonly)
+					{
+						$cell['type'] = 'lable';
+					}
+					else
+					{
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-select-dow';
+					}
+					break;
 
 				case 'select-day':
 					$type = 1;
@@ -383,5 +446,29 @@
 					break;
 			}
 			return $info;
+		}
+		
+		/**
+		 * postprocessing only used by select-dow so far
+		 */
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
+		{
+			switch ($extension_data)
+			{
+				case 'select-dow':
+					$value = 0;
+					if (!is_array($value_in)) $value_in = explode(',',$value_in);
+					foreach($value_in as $val)
+					{
+						$value |= $val;
+					}
+					//echo "<p>select_widget::post_process('$name',...,'$value_in'): value='$value'</p>\n";
+					break;
+				default:
+					$value = $value_in;
+					break;
+			}
+			//echo "<p>select_widget::post_process('$name',,'$extension_data',,,'$value_in'): value='$value'</p>\n";
+			return $value != null;
 		}
 	}

@@ -21,6 +21,7 @@ add table	etemplate	de	Tabelle zufügen
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
+all days	etemplate	de	alle Tage
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
@@ -223,6 +224,7 @@ select application	etemplate	de	Anwendung auswählen
 select category	etemplate	de	Kategorie auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
+select day of week	etemplate	de	Wochentag auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
 select month	etemplate	de	Monat auswählen
 select number	etemplate	de	Zahl auswählen
@@ -277,11 +279,13 @@ vbox	etemplate	de	VBox
 version	etemplate	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
+weekend	etemplate	de	Wochenende
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
 width	etemplate	de	Breite
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
 width, disabled	etemplate	de	Breite, Deaktiviert
+working days	etemplate	de	Werktage
 write <app>/setup/tables_current.inc.php	etemplate	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	etemplate	de	Sprachdatei
 write tables	etemplate	de	Tabelle Schreiben

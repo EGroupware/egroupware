@@ -20,7 +20,8 @@
 	@param $format: ''=timestamp or eg. 'Y-m-d H:i' for 2002-12-31 23:59
 	@param $options: &1 = year is int-input not selectbox, &2 = show a [Today] button, \
 		&4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
-		&8 = dont show time for readonly and type date-time if time is 0:00
+		&8 = dont show time for readonly and type date-time if time is 0:00, 
+		&16 = prefix r/o display with dow
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class date_widget
@@ -32,23 +33,29 @@
 		var $human_name = array(
 			'date'      => 'Date',		// just a date, no time
 			'date-time' => 'Date+Time',	// date + time
-			'date-timeonly' => 'Time'
+			'date-timeonly' => 'Time',	// time
+			'date-houronly' => 'Hour',	// hour
 		);
 
 		function date_widget($ui)
 		{
 			if ($ui == 'html')
 			{
-				$this->jscal = CreateObject('phpgwapi.jscalendar');
+				if (!is_object($GLOBALS['phpgw']->jscalendar))
+				{
+					$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+				}
+				$this->jscal = &$GLOBALS['phpgw']->jscalendar;
 			}
 			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			list($data_format,$options) = explode(',',$cell['size']);
-			$extension_data = $data_format;
 			$type = $cell['type'];
+			list($data_format,$options) = explode(',',$cell['size']);
+			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
+			$extension_data = $data_format;	
 
 			if (!$value)
 			{
@@ -119,10 +126,17 @@
 					3 => ' ',
 					4 => ':'
 				);
-				for ($str='',$n = $type == 'date-timeonly' ? 3 : 0; $n < count($format); ++$n)
+				for ($str='',$n = substr($type,-4) == 'only' ? 3 : 0; $n < count($format); ++$n)
 				{
-					$str .= ($str != '' ? $sep[$n] : '');
-					$str .= $value[$format[$n]];
+					if ($value[$format[$n]])
+					{
+						if (!$n && $options & 16 )
+						{
+							$str = lang(date('l',mktime(12,0,0,$value['m'],$value['d'],$value['Y']))).' ';
+						}
+						$str .= ($str != '' ? $sep[$n] : '') . $value[$format[$n]];
+					}
+					if ($type == 'date-houronly') ++$n;	// no minutes
 				}
 				$value = $str;
 				$cell['type'] = 'label';
@@ -158,7 +172,7 @@
 				'i' => 'Minute'
 			);
 			$row = array();
-			for ($i=0,$n=$type == 'date-timeonly'?3:0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
+			for ($i=0,$n= substr($type,-4) == 'only' ? 3 : 0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
 			{
 				$dcell = $tpl->empty_cell();
 				// test if we can use jsCalendar
@@ -169,8 +183,6 @@
 					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']));
 					$n = 2;				// no other fields
 					$options &= ~2;		// no set-today button
-					// register us for process_exec
-					$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-'.$cell['type'];
 				}
 				else
 				{
@@ -183,7 +195,7 @@
 				{
 					$dcell['label'] = ':';	// put a : between hour and minute
 				}
-				$dcell['no_lang'] = True;
+				$dcell['no_lang'] = 2;
 				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
 				
@@ -193,6 +205,7 @@
 					$dcell['name'] = 'today';
 					$dcell['label'] = 'Today';
 					$dcell['help'] = 'sets today as date';
+					$dcell['no_lang'] = True;
 					if (($js = $tmpl->java_script()))
 					{
 						$dcell['needed'] = True;	// to get a button
@@ -208,10 +221,11 @@
 					$dcell['type'] = 'html';
 					$dcell['name'] = 'space';
 					$value['space'] = ' &nbsp; &nbsp; ';
-					$dcell['no_lang'] = True;
 					$row[$tpl->num2chrs(++$i)] = &$dcell;
 					unset($dcell);
 				}
+				if ($type == 'date-houronly') $n++;	// no minutes
+
 				if ($n == 4 && $type != 'date' && $this->timeformat == '12')
 				{
 					$dcell = $tpl->empty_cell();
