@@ -10,6 +10,8 @@ are you sure you want to delete this category ?	preferences	en	Are you sure you 
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
+click to select a color	preferences	en	Click to select a color
+color	preferences	en	Color
 country	preferences	en	Country
 date format	preferences	en	Date format
 default	preferences	en	default
@@ -27,15 +29,16 @@ hours	preferences	en	hours
 how do you like to display accounts	preferences	en	How would you like to display accounts
 how do you like to select accounts	preferences	en	How would you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
-How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pulldown menu, callable by the icon on the far right side of the navbar.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pulldown menu, callable by the icon on the far right side of the navbar.
 how should phpgroupware display dates for you.	preferences	en	How should eGroupWare display dates for you.
+icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
 in which country are you. this is used to set certain defaults for you.	preferences	en	In which country are you. This is used to set certain defaults for you.
 interface/template selection	preferences	en	Interface/Template Selection
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
-Max number of icons in navbar	preferences	en	Max number of icons in navigation bar
+max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
 please, select a new theme	preferences	en	Please, select a new theme
@@ -50,11 +53,11 @@ should the number of active sessions be displayed for you all the time.	preferen
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should these help messages always display when modifying preferences, or only on request.
 show helpmessages by default	preferences	en	Show help messages by default
 show navigation bar as	preferences	en	Show navigation bar as
-show_more_apps	common	en	Show More Applications
 show number of current users	preferences	en	Show number of current users
 show text on navigation icons	preferences	en	Show text on navigation icons
+show_more_apps	common	en	Show More Applications
 text only	preferences	en	Text only
-The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection

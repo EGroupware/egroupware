@@ -22,19 +22,19 @@
 		</tr>
 </table>
 <table border="0" cellspacing="2" cellpadding="2" width="80%">
-	<tr bgcolor="{th_bg}">
-		<td bgcolor="{th_bg}">{sort_name}</td>
-		<td bgcolor="{th_bg}">{sort_description}</td>
+	<tr class="th">
+		<td>{sort_name}</td>
+		<td>{sort_description}</td>
 		{sort_data}
-		<td bgcolor="{th_bg}" align="center">{lang_app}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_sub}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_edit}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_delete}</td>
+		<td align="center">{lang_app}</td>
+		<td align=center>{lang_sub}</td>
+		<td align=center>{lang_edit}</td>
+		<td align=center>{lang_delete}</td>
 	</tr>
 
 <!-- BEGIN cat_list -->
 
-	<tr bgcolor="{tr_color}">
+	<tr bgcolor="{tr_color}" {color}>
 		<td>{name}</td>
 		<td>{descr}</td>
 		{td_data}
