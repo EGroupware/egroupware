@@ -121,7 +121,7 @@
 	{
 		section_start($appname,$GLOBALS['phpgw']->common->image($appname,'navbar','',True));
 
-		while(list($text,$url) = each($file))
+		while(is_array($file) && list($text,$url) = each($file))
 		{
 			section_item($url,lang($text));
 		}

@@ -11,7 +11,6 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	$GLOBALS['phpgw_info'] = array();
@@ -69,7 +68,7 @@
 				$GLOBALS['phpgw']->common->image($appname,'navbar','',True)
 			);
 
-			while(list($text,$url) = each($file))
+			while(is_array($file) && list($text,$url) = each($file))
 			{
 				section_item($url,lang($text));
 			}
