@@ -64,8 +64,9 @@ class so_sql
 		$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
 		if ($app && $table)
+		{
 			$this->setup_table($app,$table);
-
+		}
 		$this->init();
 
 		if ($this->debug)
@@ -97,20 +98,26 @@ class so_sql
 		$table_def = $phpgw_baseline[$table];
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
-		reset($table_def['fd']);
-		while (list($name,$def) = each($table_def['fd']))
+		foreach($table_def['fd'] as $name => $def)
 		{
 			if (in_array($name,$table_def['pk']))
+			{
 				$this->db_key_cols[$name] = $name;
+			}
 			else
+			{
 				$this->db_data_cols[$name] = $name;
+			}
 			$this->db_cols[$name] = $name;
 
 			if ($def['type'] == 'auto')
+			{
 				$this->autoinc_id = $name;
-
+			}
 			if (in_array($name,$table_def['uc']))
+			{
 				$this->db_uni_cols[$name] = $name;
+			}
 		}
 	}
 
@@ -121,28 +128,26 @@ class so_sql
 	@abstract merges in new values from the given new data-array
 	@param $new array in form col => new_value with values to set
 	*/
-	function so_sql_data_merge($new)
-	{
-		if (!is_array($new) || !count($new))
-			return;
-
-		for (reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
-			if (isset($new[$col]))
-				$this->data[$col] = $new[$col];
-
-		for (reset($this->non_db_cols); list($db_col,$col) = each($this->non_db_cols); )
-			if (isset($new[$col]))
-				$this->data[$col] = $new[$col];
-	}
-
-	/*!
-	@function data_merge
-	@abstract just an convinient alias for so_sql_data_merge, might be reimplemented in derived class
-	@parms as for so_sql_data_merge
-	*/
 	function data_merge($new)
 	{
-		$this->so_sql_data_merge($new);
+		if (!is_array($new) || !count($new))
+		{
+			return;
+		}
+		foreach($this->db_cols as $db_col => $col)
+		{
+			if (isset($new[$col]))
+			{
+				$this->data[$col] = $new[$col];
+			}
+		}
+		foreach($this->non_db_cols as $db_col => $col)
+		{
+			if (isset($new[$col]))
+			{
+				$this->data[$col] = $new[$col];
+			}
+		}
 	}
 
 	/*!
@@ -155,13 +160,15 @@ class so_sql
 	function db2data($data=0)
 	{
 		if ($intern = !is_array($data))
+		{
 			$data = $this->data;
-
+		}
 		// do the necessare changes here
 
 		if ($intern)
+		{
 			$this->data = $data;
-
+		}
 		return $data;
 	}
 
@@ -175,23 +182,25 @@ class so_sql
 	function data2db($data=0)
 	{
 		if ($intern = !is_array($data))
+		{
 			$data = $this->data;
-
+		}
 		// do the necessary changes here
 
 		if ($intern)
+		{
 			$this->data = $data;
-
+		}
 		return $data;
 	}
 
 	/*!
-	@function so_sql_init
+	@function init
 	@abstract initializes data with the content of key
 	@param $keys array with keys in form internalName => value
 	@result void
 	*/
-	function so_sql_init($keys=array())
+	function init($keys=array())
 	{
 		$this->data = array();
 
@@ -201,38 +210,33 @@ class so_sql
 	}
 
 	/*!
-	@function init
-	@abstract just an convinient alias for so_sql_init, might be reimplemented in derived class
-	@parms as for so_sql_init
-	*/
-	function init($keys=array())
-	{
-		$this->so_sql_init($keys);
-	}
-
-	/*!
-	@function so_sql_read
+	@function read
 	@abstract reads row matched by key and puts all cols in the data array
 	@param $keys array with keys in form internalName => value, may be a scalar value if only one key
 	@result data array if row could be retrived else False and data = array()
 	*/
-	function so_sql_read($keys)
+	function read($keys)
 	{
 		$this->init($keys);
 
 		$this->data2db();
-		for(reset($this->db_key_cols); list($db_col,$col) = each($this->db_key_cols); )
+		foreach ($this->db_key_cols as $db_col => $col)
 		{
 			if ($this->data[$col] != '')
+			{
 				$query .= ($query ? ' AND ':'')."$db_col='".addslashes($this->data[$col])."'";
+			}
 		}
 		if (!$query)	// no primary key in keys, lets try the data_cols for a unique key
-			for(reset($this->db_data_cols); list($db_col,$col) = each($this->db_data_cols); )
+		{
+			foreach($this->db_data_cols as $db_col => $col)
 			{
 				if ($this->data[$col] != '')
+				{
 					$query .= ($query ? ' AND ':'')."$db_col='".addslashes($this->data[$col])."'";
+				}
 			}
-
+		}
 		if (!$query)	// keys has no cols
 		{
 			$this->db2data();
@@ -242,22 +246,25 @@ class so_sql
 		$this->db->query($sql = "SELECT * FROM $this->table_name WHERE $query",__LINE__,__FILE__);
 
 		if ($this->debug)
-			echo "<p>so_sql_read(): sql = '$sql': ";
-
+		{
+			echo "<p>read(): sql = '$sql': ";
+		}
 		if (!$this->db->next_record())
 		{
 			if ($this->autoinc_id)
+			{
 				unset($this->data[$this->db_key_cols[$this->autoinc_id]]);
-
+			}
 			if ($this->debug) echo "nothing found !!!</p>\n";
 
 			$this->db2data();
 
 			return False;
 		}
-		for (reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
+		foreach ($this->db_cols as $db_col => $col)
+		{
 			$this->data[$col] = $this->db->f($db_col);
-
+		}
 		$this->db2data();
 
 		if ($this->debug)
@@ -268,22 +275,12 @@ class so_sql
 	}
 
 	/*!
-	@function read
-	@abstract just an convinient alias for so_sql_read, might be reimplemented in derived class
-	@parms as for so_sql_read
-	*/
-	function read($keys=array())
-	{
-		return $this->so_sql_read($keys);
-	}
-
-	/*!
-	@function so_sql_save
+	@function save
 	@abstracts saves the content of data to the db
 	@param $keys if given $keys are copied to data before saveing => allows a save as
 	@result 0 on success and errno != 0 else
 	*/
-	function so_sql_save($keys='')
+	function save($keys='')
 	{
 		$this->data_merge($keys);
 
@@ -294,60 +291,59 @@ class so_sql
 			$this->data = $data;
 		}
 		else
+		{
 			$new = !$this->data[$this->db_key_cols[$this->autoinc_id]];	// autoincrement idx is 0 => new
-
+		}
 		$this->data2db();
 
 		if ($new)	// prepare an insert
 		{
-			for(reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
+			foreach($this->db_cols as $db_col => $col)
 			{
-				$cols .= ($cols ? ',' : '') . $db_col;
-				$vals .= ($vals ? ',' : '') . ($this->data[$col] == '' ?
-					$this->empty_on_write : "'".addslashes($this->data[$col])."'");
+				if (!$this->autoinc_id || $db_col != $this->autoinc_id)	// not write auto-inc-id
+				{
+					$cols .= ($cols ? ',' : '') . $db_col;
+					$vals .= ($vals ? ',' : '') . ($this->data[$col] == '' ?
+						$this->empty_on_write : "'".addslashes($this->data[$col])."'");
+				}
 			}
 			$this->db->query($sql = "INSERT INTO $this->table_name ($cols) VALUES ($vals)",__LINE__,__FILE__);
 
 			if ($this->autoinc_id)
+			{
 				$this->data[$this->db_key_cols[$this->autoinc_id]] = $this->db->get_last_insert_id($this->table_name,$this->autoinc_id);
+			}
 		}
 		else //update existing row, preserv other cols not used here
 		{
-			for(reset($this->db_data_cols); list($db_col,$col) = each($this->db_data_cols); )
+			foreach($this->db_data_cols as $db_col => $col)
+			{
 				$vals .= ($vals ? ',':'') . "$db_col=".($this->data[$col] == '' ?
 						$this->empty_on_write : "'".addslashes($this->data[$col])."'");
-
+			}
 			$keys = '';
-			for(reset($this->db_key_cols); list($db_col,$col) = each($this->db_key_cols); )
+			foreach($this->db_key_cols as $db_col => $col)
+			{
 				$keys .= ($keys ? ',':'') . "$db_col='".addslashes($this->data[$col])."'";
-
+			}
 			$this->db->query($sql = "UPDATE $this->table_name SET $vals WHERE $keys",__LINE__,__FILE__);
 		}
 		if ($this->debug)
-			echo "<p>so_sql_save(): sql = '$sql'</p>\n";
-
+		{
+			echo "<p>save(): sql = '$sql'</p>\n";
+		}
 		$this->db2data();
 
 		return $this->db->errno;
 	}
 
 	/*!
-	@function save
-	@abstract just an convinient alias for so_sql_save, might be reimplemented in derived class
-	@parms as for so_sql_save
-	*/
-	function save($keys='')
-	{
-		return $this->so_sql_save($keys);
-	}
-
-	/*!
-	@function so_sql_delete
+	@function delete
 	@abstract deletes row representing keys in internal data or the supplied $keys if != ''
 	@param $keys if not '', array with col => value pairs to characterise the rows to delete
 	@result affected rows, should be 1 if ok, 0 if an error
 	*/
-	function so_sql_delete($keys='')
+	function delete($keys='')
 	{
 		if (!is_array($keys) || !count($keys))	// use internal data
 		{
@@ -357,35 +353,31 @@ class so_sql
 		else	// data and keys are supplied in $keys
 		{
 			$data = $keys; $keys = array();
-			for(reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
+			foreach($this->db_cols as $db_col => $col)
+			{
 				if (isset($data[$col]))
+				{
 					$keys[$db_col] = $col;
+				}
+			}
 		}
 		$data = $this->data2db($data);
 
-		for (reset($keys); list($db_col,$col) = each($keys); )
+		foreach($keys as $db_col => $col)
+		{
 			$query .= ($query ? ' AND ' : '') . $db_col . "='" . addslashes($data[$col]) . "'";
-
+		}
 		$this->db->query($sql = "DELETE FROM $this->table_name WHERE $query",__LINE__,__FILE__);
 
 		if ($this->debug)
-			echo "<p>so_sql_delete(): sql = '$sql'</p>\n";
-
+		{
+			echo "<p>delete(): sql = '$sql'</p>\n";
+		}
 		return $this->db->affected_rows();
 	}
 
 	/*!
-	@function delete
-	@abstract just an convinient alias for so_sql_delete, might be reimplemented in derived class
-	@parms as for so_sql_delete
-	*/
-	function delete($keys='')
-	{
-		return $this->so_sql_delete($keys);
-	}
-
-	/*!
-	@function so_sql_search
+	@function search
 	@abstract searches db for rows matching searchcriteria
 	@discussion '*' and '?' are replaced with sql-wildcards '%' and '_'
 	@param $criteria array of key and data cols
@@ -395,17 +387,19 @@ class so_sql
 	@param $empty False=empty criteria are ignored in query, True=empty have to be empty in row
 	@result array of matching rows (the row is an array of the cols) or False
 	*/
-	function so_sql_search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False)
+	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False)
 	{
 		$criteria = $this->data2db($criteria);
 
-		for (reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
+		foreach($this->db_cols as $db_col => $col)
 		{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
 			if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
-					$query .= ($query ? ' AND ' : ' WHERE ') . $db_col .
+			{
+				$query .= ($query ? ' AND ' : ' WHERE ') . $db_col .
 					($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
 					" LIKE '$wildcard".strtr(str_replace('_','\\_',addslashes($criteria[$col])),'*?','%_')."$wildcard'" :
 					"='".addslashes($criteria[$col])."'");
+			}
 		}
 		$this->db->query($sql = 'SELECT '.($only_keys ? implode(',',$this->db_key_cols) : '*').
 		   ($extra_cols != '' ? ",$extra_cols" : '')." FROM $this->table_name $query" .
@@ -413,7 +407,7 @@ class so_sql
 
 		if ($this->debug)
 		{
-			echo "<p>so_sql_search(only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty)<br>sql = '$sql'</p>\n";
+			echo "<p>search(only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty)<br>sql = '$sql'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
 		$arr = array();
@@ -421,46 +415,38 @@ class so_sql
 		for ($n = 0; $this->db->next_record(); ++$n)
 		{
 			$row = array();
-			for (reset($cols); list($db_col,$col) = each($cols); )
+			foreach($cols as $db_col => $col)
+			{
 				$row[$col] = $this->db->f($db_col);
-
+			}
 			$arr[] = $this->db2data($row);
 		}
 		return $n ? $arr : False;
 	}
 
 	/*!
-	@function search
-	@abstract just an convinient alias for so_sql_search, might be reimplemented in derived class
-	@parms as for so_sql_search
-	*/
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False)
-	{
-		return $this->so_sql_search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty);
-	}
-
-	/*!
-	@function so_sql_not_unique
-	@syntax so_sql_not_unique( $data='' )
+	@function not_unique
+	@syntax not_unique( $data='' )
 	@author ralfbecker
 	@abstract Check if values for unique keys are unique
 	@param $data data-set to check, defaults to $this->data
 	@result 0: all keys are unique, 1: first key not unique, 2: ...
 	*/
-	function so_sql_not_unique($data='')
+	function not_unique($data='')
 	{
 		if (!is_array($data))
+		{
 			$data = $this->data;
-
-		reset($this->db_uni_cols);
-		for ($n=1; list($db_col,$col) = each($this->db_uni_cols); ++$n)
+		}
+		$n = 1;
+		foreach($this->db_uni_cols as $db_col => $col)
 		{
 			if (list($other) = $this->search(array($db_col => $data[$col])))
 			{
-				reset($this->db_key_cols);
-				while (list($db_key_col,$key_col) = each($this->db_key_cols))
+				foreach($this->db_key_cols as $db_key_col => $key_col)
 				{
-					if ($data[$key_col] != $other[$key_col]) {
+					if ($data[$key_col] != $other[$key_col]) 
+					{
 						if ($this->debug)
 						{
 							echo "<p>not_unique in '$col' as for '$key_col': '${data[$key_col]}' != '${other[$key_col]}'</p>\n";
@@ -469,19 +455,8 @@ class so_sql
 					}
 				}
 			}
+			++$n;
 		}
 		return 0;
-	}
-
-	/*!
-	@function not_unique
-	@syntax not_unique( $data='' )
-	@author ralfbecker
-	@abstract just an convinient alias for so_sql_search, might be reimplemented in derived class
-	@parms as for so_sql_not_unique
-	*/
-	function not_unique($data='')
-	{
-		return $this->so_sql_not_unique($data);
 	}
 };
