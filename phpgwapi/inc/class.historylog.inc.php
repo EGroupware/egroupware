@@ -92,7 +92,7 @@
 
 			if (is_array($_only_show))
 			{
-				$only_show_filter = ' and ' . implode(' or ',$_only_show);
+				$only_show_filter = ' and (' . implode(' or ',$_only_show) . ')';
 			}
 
 			$this->db->query("select * from phpgw_history_log where history_appname='"
