@@ -3,9 +3,26 @@
 
 // for example usage, see the test_server.php file.
 
+/*  changelog:
+2001-07-05
+- detection of character encoding in Content-Type header. server
+will now call the soap_parser object with the specified encoding
+- server will now return the Content-Type header with the sender's encoding type specified
+must still learn more bout encoding, and figure out what i have to do to be able to
+make sure that my response is *actually* encoded correctly
+2001-07-21
+- force proper error reporting for windows compatibility
+2001-07-27
+- get_all_headers() check for windows compatibility
+
+*/
+
+// make errors handle properly in windows
+error_reporting(2039);
+
 class soap_server
 {
-	function soap_server($data='',$serviceNow=False)
+	function soap_server()
 	{
 		// create empty dispatch map
 		$this->dispatch_map = array();
@@ -13,23 +30,20 @@ class soap_server
 		$this->debug_str = '';
 		$this->headers = '';
 		$this->request = '';
-		$this->result = 'successful';
+		$this->xml_encoding = 'UTF-8';
 		$this->fault = false;
 		$this->fault_code = '';
 		$this->fault_str = '';
 		$this->fault_actor = '';
-
-		if($serviceNow == 1)
-		{
-			$this->service($data);
-		}
+		// for logging interop results to db
+		$this->result = 'successful';
 	}
 
 	// parses request and posts response
 	function service($data)
 	{
 		// $response is a soap_msg object
-		$response = $this->parseRequest($data);
+		$response = $this->parse_request($data);
 		$this->debug("parsed request and got an object of this class '".get_class($response)."'");
 		$this->debug("server sending...");
 		// pass along the debug string
@@ -50,8 +64,9 @@ class soap_server
 		}
 		$header[] = "Server: SOAPx4 Server v0.344359s\r\n";
 		$header[] = "Connection: Close\r\n";
-		$header[] = "Content-Type: text/xml; charset=UTF-8\r\n";
+		$header[] = "Content-Type: text/xml; charset=$this->xml_encoding\r\n";
 		$header[] = "Content-Length: ".strlen($payload)."\r\n\r\n";
+		reset($header);
 		foreach($header as $hdr)
 		{
 			header($hdr);
@@ -59,50 +74,46 @@ class soap_server
 		print $payload;
 	}
 
-	function parseRequest($data="")
+	function parse_request($data='')
 	{
 		global $HTTP_SERVER_VARS;
 
-		$this->debug("entering parseRequest() on ".date("H:i Y-m-d"));
+		$this->debug("entering parse_request() on ".date("H:i Y-m-d"));
 		$request_uri = $HTTP_SERVER_VARS["REQUEST_URI"];
 		$this->debug("request uri: $request_uri");
 		// get headers
-		$headers_array = getallheaders();
-		foreach($headers_array as $k=>$v)
+		// get headers
+		if(function_exists("getallheaders"))
 		{
-			$dump .= "$k: $v\r\n";
-		}
-		$dump .= "\r\n\r\n".$data;
-		$this->headers = $headers_array;
-		$this->request = $dump;
-
-		// get SOAPAction header -> methodname
-		if($headers_array["SOAPAction"])
-		{
-			$action = str_replace('"','',$headers_array["SOAPAction"]);
-			if(ereg("^urn:",$action))
+			$this->headers = getallheaders();
+			foreach($headers_array as $k=>$v)
 			{
-				$this->service = substr($action,4);
+				$dump .= "$k: $v\r\n";
 			}
-			elseif(ereg(".php",$action))
+			// get SOAPAction header
+			if($headers_array["SOAPAction"])
 			{
-				$this->service = ereg_replace('"|/','',substr(strrchr($action,".php"),4,strlen(strrchr($action,"/"))));
+				$this->SOAPAction = str_replace('"','',$headers_array["SOAPAction"]);
+				$this->service = $this->SOAPAction;
 			}
-			$this->debug("got service: $this->service");
+			// get character encoding
+			if(ereg("=",$headers_array["Content-Type"]))
+			{
+				$this->xml_encoding = str_replace("\"","",substr(strstr($headers_array["Content-Type"],"="),1));
+			}
+			elseif(ereg("^text/xml",$headers_array["Content-Type"]))
+			{
+				$this->xml_encoding = "us-ascii";
+			}
+			$this->debug("got encoding: $this->xml_encoding");
 		}
-		else
-		{
-			// throw a fault if no soapaction
-			$this->debug("ERROR: no SOAPAction header found");
-		}
-		// NOTE:::: throw a fault for no/bad soapaction here?
-
+		$this->request = $dump."\r\n\r\n".$data;
 		// parse response, get soap parser obj
 		$parser = CreateObject('phpgwapi.soap_parser',$data);
 		// get/set methodname
 		$this->methodname = $parser->root_struct_name;
 		$this->debug("method name: $this->methodname");
-
+		
 		// does method exist?
 		if(function_exists($this->methodname))
 		{
@@ -251,19 +262,32 @@ class soap_server
 							call_user_method($method,$obj);
 						}
 					}
-
-					/* create soap_val object w/ return values from method, use method signature to determine type */
-					if(get_class($method_response) != "soapval")
+					/* return fault */
+					if(get_class($method_response) == "soapmsg")
 					{
-						$return_val = CreateObject('phpgwapi.soapval',$method,$this->return_type,$method_response);
+						if(eregi("fault",$method_response->value->name))
+						{
+							$this->fault = True;
+						}
+						$return_msg = $method_response;
 					}
 					else
 					{
-						$return_val = $method_response;
+						/* return soapval object */
+						
+						if(get_class($method_response) == "soapval")
+						{
+							$return_val = $method_response;
+						/* create soap_val object w/ return values from method, use method signature to determine type */
+						}
+						else
+						{
+							$return_val = CreateObject('phpgwapi.soapval',$method,$this->return_type,$method_response);
+						}
+						$this->debug($return_val->debug_str);
+						/* response object is a soap_msg object */
+						$return_msg =  CreateObject('phpgwapi.soapmsg',$method."Response",array($return_val),$this->service);
 					}
-					$this->debug($return_val->debug_str);
-					/* response object is a soap_msg object */
-					$return_msg =  CreateObject('phpgwapi.soapmsg',$method."Response",array($return_val),$this->service);
 					if($this->debug_flag)
 					{
 						$return_msg->debug_flag = true;
@@ -400,7 +424,7 @@ class soap_server
 				"faultactor" => $this->fault_actor,
 				"faultdetail" => $this->fault_detail.$this->debug_str
 			),
-			"http://schemas.xmlphpgwapi.org/soap/envelope/"
+			"http://schemas.xmlsoap.org/soap/envelope/"
 		);
 	}
 

@@ -15,6 +15,19 @@ by Victor Zou (C) 2000-2001 <victor@gigaideas.com.cn>
 
 */
 
+/*  changelog:
+2001-07-04
+- abstract type system to support either 1999 or 2001 schema (arg, typing still needs much
+solidification.)
+- implemented proxy support, based on sample code from miles lott <milos@speakeasy.net>
+- much general cleanup of code & cleaned out what was left of original xml-rpc/gigaideas code
+- implemented a transport argument into send() that allows you to specify different transports
+(assuming you have implemented the function, and added it to the conditional statement in send()
+- abstracted the determination of charset in Content-type header
+2001-07-5
+- fixed more weird type/namespace issues
+*/
+
 // $path can be a complete endpoint url, with the other parameters left blank:
 // $soap_client = new soap_client("http://path/to/soap/server");
 class soap_client
@@ -68,7 +81,7 @@ class soap_client
 	function send($msg, $action, $timeout=0)
 	{
 		// where msg is an soapmsg
-		$msg->debug = $this->debug;
+		$msg->debug_flag = $this->debug_flag;
 		$this->action = $action;
 		return $this->sendPayloadHTTP10(
 			$msg,
@@ -124,13 +137,12 @@ class soap_client
 		// get reponse
 		while($data = fread($fp, 32768))
 		{
-	    	$incoming_payload .= $data;
+			$incoming_payload .= $data;
 		}
 
 		fclose($fp);
 		$this->incoming_payload = $incoming_payload;
 		// $response is a soapmsg object
-		//$msg->debug_flag = true;
 		$this->response = $msg->parseResponse($incoming_payload);
 		$this->debug($msg->debug_str);
 		return $this->response;

@@ -1,15 +1,16 @@
 <?php
 class soap_parser
 {
-	function soap_parser($xml='')
+	function soap_parser($xml='',$encoding='UTF-8')
 	{
 		global $soapTypes;
 
 		$this->soapTypes = $soapTypes;
 		$this->xml = $xml;
-		$this->xml_encoding = "UTF-8";
+		$this->xml_encoding = $encoding;
 		$this->root_struct = "";
 		// options: envelope,header,body,method
+		// determines where in the message we are (envelope,header,body,method)
 		$this->status = "";
 		$this->position = 0;
 		$this->pos_stat = 0;
@@ -215,7 +216,8 @@ class soap_parser
 		// get type if not set already
 		if($this->message[$pos]["type"] == "")
 		{
-			if($this->message[$pos]["cdata"] == "" && $this->message[$pos]["children"] != "")
+//			if($this->message[$pos]["cdata"] == "" && $this->message[$pos]["children"] != "")
+			if($this->message[$pos]["children"] != "")
 			{
 				$this->message[$pos]["type"] = "SOAPStruct";
 			}
@@ -282,7 +284,7 @@ class soap_parser
 		}
 		// set parent back to my parent
 		$this->parent = $this->message[$pos]["parent"];
-		//$this->debug("parsed $name end, eval_str = '".trim($this->message[$pos]["eval_str"])."' and children = ".$this->message[$pos]["children"]);
+		$this->debug("parsed $name end, type '".$this->message[$pos]["type"]."'eval_str = '".trim($this->message[$pos]["eval_str"])."' and children = ".$this->message[$pos]["children"]);
 	}
 
 	// element content handler

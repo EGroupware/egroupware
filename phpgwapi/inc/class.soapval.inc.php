@@ -2,7 +2,8 @@
 // soap value object
 class soapval
 {
-  	function soapval($name='',$type=False,$value=-1,$namespace=False,$type_namespace=False)
+//  	function soapval($name='',$type=False,$value=-1,$namespace=False,$type_namespace=False)
+  	function soapval($name='',$type=False,$value=0,$namespace=False,$type_namespace=False)
 	{
 		global $soapTypes, $typemap, $namespaces, $methodNamespace;
 
@@ -74,6 +75,7 @@ class soapval
 			}
 			$this->type_prefix = $namespaces[$type_namespace];
 		}
+
 		// if type namespace was not explicitly passed, and we're not in a method struct:
 		elseif(!$this->type_prefix && !isset($this->namespace))
 		{
@@ -218,7 +220,8 @@ class soapval
 							break;
 						}
 					}
-					elseif(is_array($k) && in_array($k,array_keys($this->soapTypes)))
+//					elseif(is_array($k) && in_array($k,array_keys($this->soapTypes)))
+					elseif(is_array($k,in_array($k,array_keys($this->soapTypes))))
 					{
 						$this->debug("got type '$type' for value '$v' from soapTypes array!");
 						$type = $k;
@@ -330,7 +333,7 @@ class soapval
 	function serialize()
 	{
 		return $this->serializeval($this);
-    }
+	}
 
 	function decode($soapval=false)
 	{
@@ -382,7 +385,8 @@ class soapval
 	{
 		if ($type)
 		{
-			global $namespaces,$soapTypes,$typemap;
+//			global $namespaces,$soapTypes,$typemap;
+			global $namespaces,$typemap;
 
 			foreach($typemap as $namespace => $types)
 			{

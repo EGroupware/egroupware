@@ -32,7 +32,7 @@ class soapmsg
 		{
 			$ns_string .= " xmlns:$v=\"$k\"";
 		}
-		return "<SOAP-ENV:Envelope $ns_string SOAP-ENV:encodingStyle=\"http://schemas.xmlphpgwapi.org/soap/encoding/\">\n"
+		return "<SOAP-ENV:Envelope $ns_string SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n"
 			. $payload . "</SOAP-ENV:Envelope>\n";
 	}
 
@@ -72,20 +72,29 @@ class soapmsg
 	{
 		$this->debug("Entering parseResponse()");
 		//$this->debug(" w/ data $data");
-		// get rid of headers here
-		$clean_data = ereg_replace("\r\n","\n", $data);
-		if(ereg("^.*\r\n\r\n",$data))
+		// strip headers here
+		//$clean_data = ereg_replace("\r\n","\n", $data);
+		if(ereg("^.*\r\n\r\n<",$data))
 		{
+			$this->debug("found proper seperation of headers and document");
 			$this->debug("getting rid of headers, stringlen: ".strlen($data));
-			$clean_data = ereg_replace("^.*\r\n\r\n","", $data);
+			$clean_data = ereg_replace("^.*\r\n\r\n<","<", $data);
 			$this->debug("cleaned data, stringlen: ".strlen($clean_data));
 		}
-		elseif(ereg("^.*\n\n",$data))
+		else
 		{
-			$this->debug("getting rid of headers, stringlen: ".strlen($data));
-			$clean_data = ereg_replace("^.*\n\n","", $data);
-			$this->debug("cleaned data, stringlen: ".strlen($clean_data));
+			// return fault
+			return CreateObject('phpgwapi.soapval',
+				'fault',
+				'SOAPStruct',
+				Array(
+					CreateObject('phpgwapi.soapval','faultcode','string','SOAP-MSG'),
+					CreateObject('phpgwapi.soapval','faultstring','string','HTTP Error'),
+					CreateObject('phpgwapi.soapval','faultdetail','string','HTTP headers were not immediately followed by \'\r\n\r\n\'')
+				)
+			);
 		}
+/*
 		// if response is a proper http response, and is not a 200
 		if(ereg("^HTTP",$clean_data) && !ereg("200$", $clean_data))
 		{
@@ -101,6 +110,7 @@ class soapmsg
 				)
 			);
 		}
+*/
 		$this->debug("about to create parser instance w/ data: $clean_data");
 		// parse response
 		$response = CreateObject('phpgwapi.soap_parser',$clean_data);
