@@ -370,6 +370,11 @@
 			$link_data['group_id'] = $group_id;		// reset it
 
 // --------------------------------- nextmatch ---------------------------
+
+		// no overload for the first loading
+		if($query_type)
+		{
+
 			$users = $this->search(array(
 				'type' => $group_id ? $group_id : $use,
 				'app' => $app,
@@ -379,6 +384,7 @@
 				'query' => $query,
 				'query_type' => $query_type,
 			));
+		} // querytype
 
 			$GLOBALS['phpgw']->template->set_var(array(
 				'left'  => $this->nextmatchs->left('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
@@ -396,21 +402,24 @@
 			$GLOBALS['phpgw']->template->set_var('lang_firstname', lang("firstname"));
 			$GLOBALS['phpgw']->template->set_var('lang_lastname', lang("lastname"));
 
-			foreach($users as $user)
+			if( is_array($users) )
 			{
-				$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+				foreach($users as $user)
+				{
+					$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
 
-// ---------------- template declaration for list records --------------------------
+	// ---------------- template declaration for list records --------------------------
 
-				$GLOBALS['phpgw']->template->set_var(array(
-					'lid'		=> $user['account_lid'],
-					'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
-					'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
-					'onclick'	=> "addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]')".
-						($single ? '; window.close()' : ''),
-				));
-				$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
+					$GLOBALS['phpgw']->template->set_var(array(
+						'lid'		=> $user['account_lid'],
+						'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
+						'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
+						'onclick'	=> "addOption('$element_id','".
+							$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]')".
+							($single ? '; window.close()' : ''),
+					));
+					$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
+				}
 			}
 
 			$GLOBALS['phpgw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
