@@ -40,26 +40,25 @@
         return $s;
      }
 
-    function return_array($type ='all',$start,$limit,$query = '',$sort = '',$order = '') {                                     
+    function return_array($type = 'all',$start,$limit,$query = '',$sort = '',$order = '') {
 
-	global $phpgw, $phpgw_info;                                                                                 
-                                                                                                                   
+	global $phpgw, $phpgw_info;
+
 	$filter = $this->filter($type);
+	if (!$sort) { $sort = "ASC";  }
 
-	if (!$sort) { $sort = "ASC";  }                                                                                 
-                                                                                                                   
-	if ($order) { $ordermethod = " order by $order $sort"; }                                                        
-	else { $ordermethod = " order by cat_parent asc"; }                                                              
-                                                                                                                   
-	if ($query) {                                                                                                    
+	if ($order) { $ordermethod = " order by $order $sort"; }
+	else { $ordermethod = " order by cat_parent asc"; }
+
+	if ($query) {
 	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
 		    . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod" . " "
-		    . $this->db->limit($start,$limit),__LINE__,__FILE__);                                
-	}                                                                                                    
-	else {                                                                                                          
+		    . $this->db->limit($start,$limit),__LINE__,__FILE__);
+	}
+	else {
 	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
 			. "$filter $ordermethod" . " "
-			. $this->db->limit($start,$limit),__LINE__,__FILE__);         
+	. $this->db->limit($start,$limit),__LINE__,__FILE__);
 	}                                                                                                             
                                                                                                                    
 	    $i = 0;
@@ -79,7 +78,8 @@
     function return_single($id = '')
     {
 
-        $this->db->query("select * from phpgw_categories where cat_id='$id'",__LINE__,__FILE__);
+        $this->db->query("select * from phpgw_categories where cat_id='$id' and "
+		       . "cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 	    
 	    $this->db->next_record(); {
             $cats[0]['id']          = $this->db->f('cat_id');
