@@ -25,7 +25,8 @@
 		'deleteaccount',
 		'settings',
 		'sidebox_menu',
-		'preferences'
+		'preferences',
+		'manual'
 	);
 
 	/* Dependencies for this app to work */
