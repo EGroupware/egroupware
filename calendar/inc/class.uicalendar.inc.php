@@ -102,6 +102,17 @@
 				return;
 			}
 
+			if($params['month'] == 0)
+			{
+				$params['month'] = 12;
+				$params['year'] = $params['year'] - 1;
+			}
+			elseif($params['month'] == 13)
+			{
+				$params['month'] = 1;
+				$params['year'] = $params['year'] + 1;
+			}
+
 			$this->bo->store_to_cache(
 				Array(
 					'smonth'	=> $params['month'],
@@ -114,7 +125,7 @@
 			$params['buttons']		= (!isset($params['buttons'])?'none':$params['buttons']);
 			$params['outside_month']	= (!isset($params['outside_month'])?True:$params['outside_month']);
 
-			$this->bo->read_holidays();
+			$this->bo->read_holidays($params['year']);
 
 			$date = $this->bo->datetime->makegmttime(0,0,0,$params['month'],$params['day'],$params['year']);
 			$month_ago = intval(date('Ymd',mktime(0,0,0,$params['month'] - 1,$params['day'],$params['year'])));
@@ -261,8 +272,6 @@
 
 		function get_month()
 		{
-			$this->bo->read_holidays();
-
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
 			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
@@ -275,6 +284,7 @@
 						'link'	=> 'day'
 					)
 				);
+				
 				$minical_next = $this->mini_calendar(
 					Array(
 						'day'	=> 1,
@@ -302,6 +312,8 @@
 				$print =	'';
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
+
+			$this->bo->read_holidays();
 
 			$var = Array(
 				'printer_friendly'		=>	$printer,

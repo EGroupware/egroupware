@@ -724,6 +724,7 @@
 				   		'readsess'	=> 1
 				   	)
 				   );
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 
 				if($event['id'])
@@ -801,10 +802,14 @@
 		}
 
 		/* Private functions */
-		function read_holidays()
+		function read_holidays($year=0)
 		{
+			if(!$year)
+			{
+				$year = $this->year;
+			}
 			$holiday = CreateObject('calendar.boholiday');
-			$holiday->prepare_read_holidays($this->year,$this->owner);
+			$holiday->prepare_read_holidays($year,$this->owner);
 			$this->cached_holidays = $holiday->read_holiday();
 			unset($holiday);
 		}
