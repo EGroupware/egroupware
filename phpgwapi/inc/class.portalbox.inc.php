@@ -28,12 +28,9 @@
 		//Set up the Object, reserving memory space for variables
 
 		var $outerwidth;
-		var $outerbordercolor;
 		var $outerborderwidth = 1;
-		var $titlebgcolor;
 		var $width;
 		var $innerwidth;
-		var $innerbgcolor;
 		var $controls;
 		var $header_background_image;
 		var $classname;
@@ -83,13 +80,10 @@
 		/*
 		This is the constructor for the object.
 		*/
-		function portalbox($title='', $primary='', $secondary='', $tertiary='')
+		function portalbox($title='')
 		{
 			$this->setvar('title',$title);
 			// echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
-			$this->setvar('titlebgcolor',$primary);
-			$this->setvar('innerbgcolor',$secondary);
-			$this->setvar('outerbordercolor',$tertiary);
 		}
 
 		function start_template()
@@ -110,15 +104,12 @@
 			$this->p->set_block('PORTAL','link_field','link_field');
 
 			$var = Array(
-				'outer_border'	=> $this->getvar('outerborderwidth'),
-				'outer_width'	=> $this->getvar('width'),
-				//'outer_bordercolor'	=> $this->getvar('outerbordercolor'),
-				//'outer_bgcolor'	=> $this->getvar('titlebgcolor'),
-				'title'	=> $this->getvar('title'),
-				'inner_width'	=> $this->getvar('width'),
-				//'inner_bgcolor'	=> $this->getvar('innerbgcolor'),
+				'outer_border'				=> $this->getvar('outerborderwidth'),
+				'outer_width'				=> $this->getvar('width'),
+				'title'						=> $this->getvar('title'),
+				'inner_width'				=> $this->getvar('width'),
 				'header_background_image'	=> $this->getvar('header_background_image'),
-				'control_link'	=> ''
+				'control_link'				=> ''
 			);
 			$this->p->set_var($var);
 			$this->p->set_var('row','',False);

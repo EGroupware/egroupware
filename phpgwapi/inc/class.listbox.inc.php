@@ -52,13 +52,13 @@
 			@reset($param);
 			while(list($key,$value) = each($param))
 			{
-				if($key != 'title' && $key != 'primary' && $key != 'secondary' && $key != 'tertiary')
+				if($key != 'title')
 				{
-//echo 'Setting '.$key.':'.$value."<br>\n";
+					//echo 'Setting '.$key.':'.$value."<br>\n";
 					$this->setvar($key,$value);
 				}
 			}
-			$this->portalbox($param['title'], $param['primary'], $param['secondary'], $param['tertiary']);
+			$this->portalbox($param['title']);
 			$this->start_template();
 		}
 
