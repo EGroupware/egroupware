@@ -61,13 +61,13 @@
         $error[$totalerrors++] = lang("The two passwords are not the same");
 
      if (count($new_permissions) == 0)
-        $error[$phpgw->templateotalerrors++] = lang("You must add at least 1 permission to this account");
+        $error[$totalerrors++] = lang("You must add at least 1 permission to this account");
         
      if (count($n_groups) == 0)
-        $error[$phpgw->templateotalerrors++] = lang("Account must belong to at least 1 group");
+        $error[$totalerrors++] = lang("Account must belong to at least 1 group");
 
      if (account_exsists($n_loginid)) {
-        $error[$phpgw->templateotalerrors++] = lang("That loginid has already been taken");
+        $error[$totalerrors++] = lang("That loginid has already been taken");
      }
 
      if (! $error) {
