@@ -15,6 +15,7 @@ action	admin	en	Action
 active	admin	en	Active
 add a single phrase	transy	en	Add a single phrase
 add	bookkeeping	en	Add
+add category	common	en	Add Category
 add	common	en	Add
 add_expense	bookkeeping	en	Add expense
 add global category	admin	en	Add global category
@@ -93,8 +94,8 @@ calendar preferences	common	en	Calendar preferences
 cancel	common	en	Cancel
 cannot display the requested article from the requested newsgroup	nntp	en	Cannot display the requested article from the requested newsgroup
 car phone	addressbook	en	Car Phone
-categories	bookkeeping	en	Categories
-category	bookkeeping	en	Category
+categories	common	en	Categories
+category	common	en	Category
 category description	admin	en	Category description
 category name	admin	en	Category name
 category x has been added !	admin	en	Category %1 has been added !
@@ -170,6 +171,8 @@ duration	calendar	en	Duration
 edit application	admin	en	Edit application
 edit	bookkeeping	en	Edit
 edit	common	en	Edit
+edit category	common	en	Edit Category
+edit categories	common	en	Edit Categories
 edit custom fields	preferences	en	edit custom fields
 edit_expense	bookkeeping	en	Edit expense
 edit group	admin	en	Edit Group
@@ -294,6 +297,7 @@ import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
 income	bookkeeping	en	Income
 installed applications	admin	en	Installed applications
+international	common	en	International
 inventory	common	en	Inventory
 ip	admin	en	IP
 i participate	calendar	en	I Participate
