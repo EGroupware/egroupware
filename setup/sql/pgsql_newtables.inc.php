@@ -123,8 +123,8 @@
     ab_company  varchar(255),
     ab_company_id int,
     ab_title    varchar(60),   
-    ab_address2 varchar(60)
-    ab_url      varchar(255),
+    ab_address2 varchar(60),
+    ab_url      varchar(255)
   )";
   $db->query($sql);
 
