@@ -401,8 +401,8 @@ class socalendar_ extends socalendar__
 			}
 			$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
-			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public) '
-				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].",".$event['priority'].",".$event['public'].")");
+			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
+				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].','.$event['priority'].','.$event['public'].','.$event['category'].')');
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
 			$event['id'] = $this->stream->f('cal_id');
