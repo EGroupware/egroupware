@@ -57,29 +57,40 @@
       return False;
     } 
     
-    function change_password($old_passwd, $new_passwd, $account_id="") {
-      global $phpgw_info, $phpgw;
+	function change_password($old_passwd, $new_passwd, $_account_id="") 
+	{
+		global $phpgw_info, $phpgw;
 
-      $ldap = $phpgw->common->ldapConnect();
+		if ("" == $_account_id)
+		{
+			$_account_id = $phpgw_info['user']['account_id'];
+		}
+		
+		$ds = $phpgw->common->ldapConnect();
+		$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
+		$allValues = ldap_get_entries($ds, $sri);
+	
 
-      $encrypted_passwd = $phpgw->common->encrypt_password($new_passwd);
-      $entry['userpassword'] = $encrypted_passwd;
-      #$entry['phpgw_lastpasswd_change'] = time();
-      $dn = $phpgw_info['user']['account_dn'];
-
-      if (!@ldap_modify($ldap, $dn, $entry)) return false;
-
-      return $encrypted_passwd;
-    }
-
-    function update_lastlogin($account_lid, $ip)
-    {
-       global $phpgw;
-
-       $now = time();
-       $phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
-   	                . "$ip', account_lastlogin='" . $now
-                       . "' where account_lid='$account_lid'",__LINE__,__FILE__);
-    }
-  }
+		$entry['userpassword'] = $phpgw->common->encrypt_password($new_passwd);
+		$dn = $allValues[0]["dn"];
+	
+		if (!@ldap_modify($ds, $dn, $entry)) 
+		{
+			return false;
+		}
+	
+		return $encrypted_passwd;
+	}
+	
+	function update_lastlogin($account_lid, $ip)
+	{
+		global $phpgw;
+		
+		$now = time();
+		
+		$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			. "$ip', account_lastlogin='" . $now
+			. "' where account_lid='$account_lid'",__LINE__,__FILE__);
+	}
+}
 ?>

@@ -142,7 +142,7 @@
 		if ($_userData['passwd'])
 		{
 			$auth = CreateObject('phpgwapi.auth');
-#			$auth->change_password($old_passwd, $_userData['passwd']);
+			$auth->change_password($old_passwd, $_userData['passwd'], $_userData['account_id']);
 		}
 
 		$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));

@@ -84,6 +84,7 @@
 	$entry["givenname"]	= $this->data["firstname"];
 	
 	ldap_modify($ds, $allValues[0]["dn"], $entry);
+	#print ldap_error($ds);
     }
     
     function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
@@ -205,4 +206,16 @@
        $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
        return $accountid;
     }
+	
+	function getDNforID($_account_id)
+	{
+		global $phpgw;
+		
+		$ds = $phpgw->common->ldapConnect();
+		
+		$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
+		$allValues = ldap_get_entries($ds, $sri);
+		
+		return $allValues[0]["dn"];
+	}
   }
