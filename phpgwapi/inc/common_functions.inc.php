@@ -254,6 +254,15 @@
 				{
 					$min_length = 1;
 				}
+
+				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_non_alpha']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_non_alpha'] == True)
+				{
+					$pass_verify_non_alpha = False;
+				}
+				else
+				{
+					$pass_verify_non_alpha = True;
+				}
 				
 				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers'] == True)
 				{
@@ -278,16 +287,25 @@
 					for ($i=0; $i != $password_length; $i++)
 					{
 						$cur_test_string = substr($string, $i, 1);
-						if (in_array($cur_test_string, $password_numbers))
+						if (in_array($cur_test_string, $password_numbers) || in_array($cur_test_string, $password_special_chars))
 						{
-							$pass_verify_num = True;
-						}
-						elseif (in_array($cur_test_string, $password_special_chars))
-						{
-							$pass_verify_special_char = True;
+							$pass_verify_non_alpha = True;
+							if (in_array($cur_test_string, $password_numbers))
+							{
+								$pass_verify_num = True;
+							}
+							elseif (in_array($cur_test_string, $password_special_chars))
+							{
+								$pass_verify_special_char = True;
+							}
 						}
 					}
 				
+					if ($pass_verify_num == False)
+					{
+						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one non-alpha character']=False;
+					}
+
 					if ($pass_verify_num == False)
 					{
 						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one numeric character']=False;

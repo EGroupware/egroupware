@@ -677,6 +677,20 @@
 					$error[$totalerrors] = lang('The two passwords are not the same');
 					$totalerrors++;
 				}
+
+				$temp_msgbox_data = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
+				unset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
+				if(!sanitize($_userData['account_passwd'],'password'))
+				{
+					reset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
+					while(list($key) = each($GLOBALS['phpgw_info']['flags']['msgbox_data']))
+					{
+						$error[$totalerrors] = lang($key);
+						$totalerrors++;
+					}
+				}
+				$GLOBALS['phpgw_info']['flags']['msgbox_data'] = $temp_msgbox_data;
+				unset($temp_msgbox_data);
 			}
 
 			if (!count($_userData['account_permissions']) && !count($_userData['account_groups'])) 
