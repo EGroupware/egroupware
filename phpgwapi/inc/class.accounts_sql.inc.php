@@ -50,17 +50,18 @@
 			$this->db->query("SELECT * FROM phpgw_accounts WHERE account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->data['userid']            = $this->db->f('account_lid');
-			$this->data['account_id']        = $this->db->f('account_id');
-			$this->data['account_lid']       = $this->db->f('account_lid');
-			$this->data['firstname']         = $this->db->f('account_firstname');
-			$this->data['lastname']          = $this->db->f('account_lastname');
-			$this->data['fullname']          = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
-			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
-			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
-			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
-			$this->data['status']            = $this->db->f('account_status');
-			$this->data['expires']           = $this->db->f('account_expires');
+			$this->data['userid']				= $this->db->f('account_lid');
+			$this->data['account_id']			= $this->db->f('account_id');
+			$this->data['account_lid']			= $this->db->f('account_lid');
+			$this->data['firstname']			= $this->db->f('account_firstname');
+			$this->data['lastname']				= $this->db->f('account_lastname');
+			$this->data['fullname']				= $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
+			$this->data['lastlogin']			= $this->db->f('account_lastlogin');
+			$this->data['lastloginfrom']		= $this->db->f('account_lastloginfrom');
+			$this->data['lastpasswd_change']	= $this->db->f('account_lastpwd_change');
+			$this->data['status']				= $this->db->f('account_status');
+			$this->data['expires']				= $this->db->f('account_expires');
+			$this->data['account_type']			= $this->db->f('account_type');
 
 			return $this->data;
 		}
