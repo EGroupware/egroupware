@@ -4,7 +4,12 @@
 		<xsl:variable name="select_action"><xsl:value-of select="select_action"/></xsl:variable>
 		<xsl:variable name="lang_submit"><xsl:value-of select="lang_submit"/></xsl:variable>
 		<form method="post" action="{$select_action}">
-			<select name="cat_id" class="forms" onChange="this.form.submit();" onMouseover="window.status='Select the category. To show all entries select NO CATEGORY.';return true;" onMouseout="window.status='';return true;">
+			<select name="cat_id" class="forms" onChange="this.form.submit();" onMouseout="window.status='';return true;">
+				<xsl:attribute name="onMouseover">
+					<xsl:text>window.status='</xsl:text>
+						<xsl:value-of select="lang_cat_statustext"/>
+					<xsl:text>'; return true;</xsl:text>
+				</xsl:attribute>
 				<option value=""><xsl:value-of select="lang_no_cat"/></option>
 					<xsl:apply-templates select="cat_list"/>
 			</select>
