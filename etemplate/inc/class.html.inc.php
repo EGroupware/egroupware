@@ -19,9 +19,9 @@ class html
 
 	function html()
 	{																// should be Ok for all HTML 4 compatible browsers
-		if (!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts))
+		if (!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
-			eregi('^([a-z_]+)/([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts);
+			eregi('^([a-z_]+)/([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts);
 		}
 		list(,$this->user_agent,$this->ua_version) = $parts;
 		$this->user_agent = strtolower($this->user_agent);
@@ -49,7 +49,7 @@ class html
 		}
 		if (0+$multiple > 0)
 		{
-			$options .= ' MULTIPLE SIZE='.(0+$multiple);
+			$options .= ' MULTIPLE SIZE="'.(0+$multiple).'"';
 			if (substr($name,-2) != '[]')
 			{
 				$name .= '[]';
@@ -91,7 +91,7 @@ class html
 			if (is_array($value)) $value = serialize($value);
 			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
-				$html .= "<INPUT TYPE=HIDDEN NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\">\n";
+				$html .= "<INPUT TYPE=\"HIDDEN\" NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\">\n";
 			}
 		}
 		return $html;
@@ -263,13 +263,13 @@ class html
 		{
 			$path = $name;		// name may already contain absolut path
 		}
-		if (!@is_readable($GLOBALS['DOCUMENT_ROOT'] . $path))
+		if (!@is_readable($_SERVER['DOCUMENT_ROOT'] . $path))
 		{
 			return $title;
 		}
 		if ($title)
 		{
-			$options .= " $this->prefered_img_title=\"$title\"";
+			$options .= " $this->prefered_img_title=\"".htmlentities($title).'"';
 		}
 		return "<IMG SRC=\"$path\" $options>";
 	}
