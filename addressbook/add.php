@@ -20,7 +20,7 @@
 	}
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	$phpgw_info["flags"]["enable_addressbook_class"] = True;
+	$phpgw_info["flags"]["enable_contacts_class"] = True;
 	include("../header.inc.php");
 
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
