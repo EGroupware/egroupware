@@ -135,9 +135,9 @@
 			{
 				$this->owner = intval($GLOBALS['owner']);
 			}
-			elseif(!isset($this->owner) || !$this->owner)
+			elseif(!@isset($this->owner) || !@$this->owner)
 			{
-				$this->owner = $GLOBALS['phpgw_info']['user']['account_id'];
+				$this->owner = intval($GLOBALS['phpgw_info']['user']['account_id']);
 			}
 
 			$this->prefs['common']    = $GLOBALS['phpgw_info']['user']['preferences']['common'];
@@ -783,7 +783,7 @@
 			}
 			else
 			{
-				return ($this->grants[$user] & $needed);
+				return ($this->grants[intval($user)] & $needed);
 			}
 		}
 
