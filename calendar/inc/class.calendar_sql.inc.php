@@ -876,7 +876,7 @@ class calendar_
 		while ($participant = each($event->participants))
 		{
 			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event->id.','.$participant[1].",'A')",__LINE__,__FILE__);
+				. 'VALUES('.$event->id.','.$participant[1].",'U')",__LINE__,__FILE__);
 		}
 
 		if($event->recur_type != RECUR_NONE)

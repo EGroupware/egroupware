@@ -296,30 +296,38 @@ class calendar extends calendar_
 		
 		$link = Array();
 //		$date = $this->gmtdate($datetime);
-		$date = $this->localdates($datetime);
+		$search_date_full = date('Ymd',$datetime);
+		$search_date_year = date('Y',$datetime);
+		$search_date_month = date('m',$datetime);
+		$search_date_day = date('d',$datetime);
+		$search_date_dow = date('w',$datetime);
+		$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
+//		$date = $this->localdates($datetime);
 		for ($i=0;$i<count($this->repeated_events);$i++)
 		{
 			$rep_events = $this->repeating_events[$i];
 			$id = $rep_events->id;
-			$start = $this->localdates($rep_events->datetime);
-			if($rep_events->rpt_use_end)
+			$event_beg_day = mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year);
+			$event_recur_time = mktime($rep_events->recur_enddate->hour,$rep_events->recur_enddate->min,$rep_events->recur_enddate->sec,$rep_events->recur_enddate->month,$rep_events->recur_enddate->mday,$rep_events->recur_enddate->year);
+//			$start = $this->localdates($rep_events->datetime);
+			if($event_recur_time != 0)
 			{
-				$enddate = $this->gmtdate($rep_events->rpt_end);
+				$end_recur_date = date('Ymd',$event_recur_time);
 			}
 			else
 			{
-				$enddate   = $this->makegmttime(0,0,0,1,1,2007);
+				$end_recur_date = date('Ymd',mktime(0,0,0,1,1,2007));
 			}
-			$full_event_date = date('Ymd',mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year));
+			$full_event_date = date('Ymd',$event_beg_day);
 			
 			// only repeat after the beginning, and if there is an rpt_end before the end date
-			if (($rep_events->rpt_use_end && ($date['full'] > $enddate['full'])) ||
-				($date['full'] < $full_event_date))
+			if (($rep_events->rpt_use_end && ($search_date_full > $end_recur_date)) ||
+				($search_date_full < $full_event_date))
 			{
 				continue;
 			}
 
-			if ($date['full'] == $full_event_date)
+			if ($search_date_full == $full_event_date)
 			{
 				$link[$this->repeating_event_matches++] = $id;
 			}
@@ -328,7 +336,7 @@ class calendar extends calendar_
 				switch($rep_events->recur_type)
 				{
 					case RECUR_DAILY:
-						if (floor(($date['bd'] - $start['bd'])/86400) % $rep_events->recur_interval)
+						if (floor(($search_beg_day - $event_beg_day)/86400) % $rep_events->recur_interval)
 						{
 							continue;
 						}
@@ -339,7 +347,7 @@ class calendar extends calendar_
 						break;
 					case RECUR_WEEKLY:
 						$check = 0;
-						switch($date['dow'])
+						switch($search_date_dow)
 						{
 							case 0:
 								$check = M_SUNDAY;
@@ -363,7 +371,7 @@ class calendar extends calendar_
 								$check = M_SATURDAY;
 								break;
 						}
-						if (floor(($date['bd'] - $start['bd'])/604800) % $rep_events->recur_interval)
+						if (floor(($search_beg_day - $event_beg_day)/604800) % $rep_events->recur_interval)
 						{
 							continue;
 						}
@@ -374,35 +382,35 @@ class calendar extends calendar_
 						}
 						break;
 					case RECUR_MONTHLY_WDAY:
-						if ((($date['year'] - $rep_events->start->year) * 12 + $date['month'] - $rep_events->start->month) % $rep_events->recur_interval)
+						if ((($search_date_year - $rep_events->start->year) * 12 + $search_date_month - $rep_events->start->month) % $rep_events->recur_interval)
 						{
 							continue;
 						}
 	  
-						if (($this->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $date['dow']) &&
-							(ceil($rep_events->start->mday/7) == ceil($date['day']/7)))
+						if (($this->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $this->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
+							(ceil($rep_events->start->mday/7) == ceil($search_date_day/7)))
 						{
 							$link[$this->repeating_event_matches++] = $id;
 						}
 						break;
 					case RECUR_MONTHLY_MDAY:
-						if ((($date['year'] - $rep_events->start->year) * 12 + $date['month'] - $rep_events->start->month) % $rep_events->recur_interval)
+						if ((($search_date_year - $rep_events->start->year) * 12 + $search_date_month - $rep_events->start->month) % $rep_events->recur_interval)
 						{
 							continue;
 						}
 				
-						if ($date['day'] == $rep_events->start->mday)
+						if ($search_date_day == $rep_events->start->mday)
 						{
 							$link[$this->repeating_event_matches++] = $id;
 						}
 						break;
 					case RECUR_YEARLY:
-						if (($date['year'] - $rep_events->start->year) % $rep_events->recur_interval)
+						if (($search_date_year - $rep_events->start->year) % $rep_events->recur_interval)
 						{
 							continue;
 						}
 				
-						if ($date['dm'] == date('dm',mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year)))
+						if (date('dm',$datetime) == date('dm',$event_beg_day))
 						{
 							$link[$this->repeating_event_matches++] = $id;
 						}

@@ -143,7 +143,7 @@
   $str = '';
   for($i=0;$i<count($cal_info->participants);$i++) {
     if($i) $str .= '<br>';
-    $str .= $phpgw->common->grab_owner_name($cal_info->participants[$i]);
+    $str .= $phpgw->common->grab_owner_name($cal_info->participants[$i]).' ('.$cal_info->status[$i].')';
   }
   display_item(lang('Participants'),$str);
 
