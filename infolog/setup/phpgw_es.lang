@@ -7,7 +7,6 @@ add	infolog	es	Agregar
 add sub	infolog	es	agregar Sub
 all	infolog	es	Todos
 are you sure you want to delete this entry	infolog	es	Esta seguro de querer borrar esta entrada?
-are you sure you want to delete this entry	infolog	es	Esta Ud. seguro que desea borrar esta entrada?
 attach file	infolog	es	Adjuntar Archivo
 back to Projectlist	infolog	en	Volver a la Lista de Proyectos
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog es	<b>Archivos adjuntos por enlace simbolico</b> en vez de uploads y descargas via archivo:/camino para clientes locales de red
@@ -66,7 +65,7 @@ owner	infolog	es	Due&ntilde;o
 own	infolog	es	propio
 own open	infolog	es	propio abierto
 own overdue	infolog	es	propio vencido
-own upcoming	infolog	es	propio 
+own upcoming	infolog	es	propio
 path on (web-)serverside<br>eg. /var/samba/Share	infolog	es	Camino en el servidor ej. /var/samba/Share
 pattern for search in addressbook	infolog	es	expresion a buscar en la Libreta de direcciones
 pattern for search in projects	infolog	es	expresion a buscar en Proyectos
