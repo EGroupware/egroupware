@@ -16,7 +16,9 @@
 <!-- END portal_box -->
 <!-- BEGIN portal_row -->
     <tr>
+	  <td>
 {output}
+	  </td>
     </tr>
 <!-- END portal_row -->
 <!-- BEGIN portal_listbox_header -->
