@@ -18,6 +18,7 @@
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
 	<xsl:variable name="navbar_format"><xsl:value-of select="navbar_format"/></xsl:variable>
+	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -41,7 +42,7 @@
 										<table cellspacing="0" cellpadding="0" width="100%">
 											<tr>
 												<xsl:apply-templates select="applications">
-													<xsl:with-param name="navbar_format" select="{$navbar_format}"/>
+													<xsl:with-param name="navbar_format" select="navbar_format"/>
 												</xsl:apply-templates>
 											</tr>
 										</table>
@@ -86,6 +87,9 @@
 								</xsl:when>
 								<xsl:when test="about">
 									<xsl:call-template name="about"/>
+								</xsl:when>
+								<xsl:when test="$app_tpl > 0">
+									<xsl:call-template name="$app_tpl"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>
