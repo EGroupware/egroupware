@@ -64,9 +64,8 @@
      }
      
      if (! $totalerrors) {
-        $phpgw->db->query("SELECT account_permissions, account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
+        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
         $phpgw->db->next_record();
-        $apps_before = $phpgw->db->f("account_permissions");
         $account_id = $phpgw->db->f("account_id");
 
         while ($permission = each($new_permissions)) {
@@ -75,14 +74,6 @@
           }
         }
         $apps_after = $phpgw->accounts->add_app("",True);
-        if($apps_before <> $apps_after) {
-          $after_apps = explode(":",$apps_after);
-          for ($i=1;$i<=count($after_apps);$i++) {
-            if (!strpos(" ".$apps_before." ",$after_apps)) {
-              $new_apps[] = $after_apps;
-            }
-          }
-        }
 
         $cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
                                  "firstname" => $n_firstname,   "lastname"       => $n_lastname,
@@ -93,32 +84,33 @@
        // If the user is logged in, it will force a refresh of the session_info
        $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
+
+
        // The following sets any default preferences needed for new applications..
        // This is smart enough to know if previous preferences were selected, use them.
-       if (count($new_apps)) {
-
-         $pref = new preferences($account_id);
-         $t = $pref->get_preferences();
+       
+       $pref = new preferences($account_id);
+       $t = $pref->get_preferences();
          
-         $docommit = False;
+       $docommit = False;
          
-         for ($j=0;$j<count($new_apps);$j++) {
-           if($new_apps[$j]=="admin")
-             $check = "common";
-           else
-             $check = $new_apps[$j];
-             
-           if (!count($t["$check"])) {
-             $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
-             $docommit = True;
-           }
+       while(list($key,$value) = each($phpgw_info["user"]["app_perms"])) {
+         if($value=="admin") {
+           $check = "common";
+         } else {
+           $check = $value;
+		 }
+         if (!count($t["$check"])) {
+           $phpgw->common->hook_single("add_def_pref", $value);
+           $docommit = True;
          }
-         if ($docommit) {
-	   $pref->commit();
-	 }
        }
        
-       // start inlcuding other admin tools
+       if ($docommit) {
+		 $pref->commit();
+	   }
+	   
+       // start including other admin tools
        while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
        {
          $phpgw->common->hook_single("update_user_data", $value);
