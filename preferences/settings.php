@@ -151,7 +151,7 @@
 <?php
   display_option("show current users on navigation bar","admin","show_currentusers",0);
   display_option("show new messages on main screen","email","mainscreen_showmail",0);
-  display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
+//  display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
 ?>        
        <tr>
         <td><?php echo lang("Default application"); ?></td>
@@ -231,12 +231,6 @@
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail","email");
         }
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig","email");
-     }
-
-     if ($phpgw_info["user"]["apps"]["addressbook"]) {
-        if ($mainscreen_showbirthdays) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays","addressbook");
-        }
      }
 
      $phpgw->db->unlock();

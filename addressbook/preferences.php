@@ -25,6 +25,9 @@
         while ($pref = each($ab_selected)) {
           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],$pref[0],"addressbook","addressbook_" . $pref[1]);
         }
+        if ($mainscreen_showbirthdays) {
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays","addressbook");
+        }
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      }
   }
@@ -39,7 +42,7 @@
   echo "<p><b>" . lang("select addressbook columns to display") . ":" . "</b><hr><p>";
 ?>
   <form method="POST" action="<?php echo $phpgw->link(); ?>">
-   <table border="0" align="center">
+   <table border="0" align="center" cellspacing="1" cellpadding="1">
     <?php
       // I need to create a common function to handle displaying multiable columns
     
@@ -65,8 +68,13 @@
          if ($j == count($abc)) {
             echo "</tr>";
          }
-      }      
+      }
+      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     ?>
+    <tr bgcolor="<?php echo $tr_color; ?>">
+     <td colspan="2"><?php echo lang("show current users on navigation bar"); ?></td>
+     <td><input type="checkbox" name="mainscreen_showbirthdays" value="True"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
+    </tr>
     <tr>
      <td colspan="3" align="center">
       <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
