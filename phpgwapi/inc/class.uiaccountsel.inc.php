@@ -381,8 +381,8 @@
 			));
 
 			$GLOBALS['phpgw']->template->set_var(array(
-				'left'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data+array('query'=>$query)),
-				'right' => $this->nextmatchs->right('/index.php',$start,$total,$link_data+array('query'=>$query)),
+				'left'  => $this->nextmatchs->left('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
+				'right' => $this->nextmatchs->right('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
 				'lang_showing' => ($group_id ? $GLOBALS['phpgw']->common->grab_owner_name($group_id).': ' : '').
 					($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query).': ' : '')
 					.$this->nextmatchs->show_hits($this->total,$start),
