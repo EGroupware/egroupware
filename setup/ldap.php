@@ -59,7 +59,7 @@
         $account_info[$i]["account_firstname"] = $info[$i]["sn"][0];
      }
   }
-  
+
   $phpgw_setup->db->query("select app_name,app_title from applications where app_enabled != '0' and "
            . "app_name != 'admin'",__LINE__,__FILE__);
   while ($phpgw_setup->db->next_record()) {
@@ -76,31 +76,22 @@
      }
 
      if (! $error) {
-        include($phpgw_info["server"]["api_inc"] . "/class.accounts_ldap.inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/class.accounts_shared.inc.php");
-        $accounts = new accounts;
-
-        while ($app = each($s_apps)) {
-          $permissions_string =  $accounts->add_app($app[1]);
-        }
-        $permissions_string       = $accounts->add_app("",True);
-        $admin_permissions_string = $permissions_string . "admin:";
-        
-        while ($admin = each($admins)) {
-           $s_admin[$admin[1]] = True;
-        }
-   
         while ($account = each($account_info)) {
-           if ($s_admin[$account[1]["account_id"]]) {
-              $np = $admin_permissions_string;
-           } else {
-              $np = $permissions_string;
-           }
-           // do some checks before we try to import the data
-           if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
-           $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
-                    . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
-                    . $account[1]["account_lid"] . "','x','$np',',1:0,','A','".time()."')",__LINE__,__FILE__);
+          // do some checks before we try to import the data
+          if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
+            @reset($s_apps);
+            while ($app = each($s_apps)) {
+              $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
+                   . " values('".$app[1]."','run',".$account[1]["account_id"].",'u',1)";
+              $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+            }
+            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
+                 . " values('admin','run',".$account[1]["account_id"].",'u',1)";
+            $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+
+            $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
+                     . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
+                     . $account[1]["account_lid"] . "','x','$np',',1:0,','A','".time()."')",__LINE__,__FILE__);
         }
         $setup_complete = True;
      }
@@ -159,7 +150,7 @@
      <select name="s_apps[]" multiple size="5">
       <?php
         while ($app = each($apps)) {
-          echo '<option value="' . $app[0] . '" selected>' . $app[1] . '</option>';
+          echo '<option value="' . $app[0] . '" selected>' . $app[1]["name"] . '</option>';
           echo "\n";
         }
       ?>
