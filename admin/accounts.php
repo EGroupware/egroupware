@@ -17,13 +17,13 @@
   if (! $start)
      $start = 0;
 
-  if (! $sort)
-     $sort = "desc";
-
   if ($order)
       $ordermethod = "order by $order $sort";
    else
       $ordermethod = "order by lastname,firstname,loginid asc";
+
+  if (! $sort)
+     $sort = "desc";
 
   if ($query) {
      $querymethod = " where firstname like '%$query%' OR lastname like '%$query%' OR loginid "

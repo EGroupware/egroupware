@@ -13,12 +13,43 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
-  echo "<p><center>" . lang_admin("User groups") . "<br><table border=0 width=35%>"
-     . "<tr bgcolor=" . $theme["th_bg"] . "><td>" . lang_common("Name") . "</td>"
+
+  if (! $start)
+     $start = 0;
+
+  if ($order)
+      $ordermethod = "order by $order $sort";
+   else
+      $ordermethod = "order by group_name asc";
+
+  if (! $sort)
+     $sort = "asc";
+
+  if ($query) {
+     $querymethod = " where group_name like '%$query%'";
+  }
+
+  $phpgw->db->query("select count(*) from groups $querymethod");
+  $phpgw->db->next_record();
+
+  $total = $phpgw->db->f(0);
+  $limit = $phpgw->nextmatchs->sql_limit($start);
+
+  echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'
+     . $phpgw_info["theme"][bg_color] . '">'
+     . '<td align="left">' . $phpgw->nextmatchs->left("groups.php",$start,$total)  . '</td>'
+     . '<td align="center">' . lang_admin("user groups") . '</td>'
+     . '<td align="right">' . $phpgw->nextmatchs->right("groups.php",$start,$total) . '</td>'
+     . '</tr></table>';
+
+  echo "<table border=0 width=45% align=center>"
+     . "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
+     . $phpgw->nextmatchs->show_sort_order($sort,"group_name",$order,"groups.php",
+				 lang_common("name")) . "</td>"
      . "<td> " . lang_common("Edit") . " </td> <td> " . lang_common("Delete")
      . " </td> </tr>";
 
-  $phpgw->db->query("select * from groups order by group_name");
+  $phpgw->db->query("select * from groups $querymethod $ordermethod limit $limit");
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 
@@ -32,10 +63,13 @@
        . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id"))
        . "\"> " . lang_common("Delete") . " </a></td>";
   }
-  echo "<form method=POST action=\"newgroup.php\">"
-     . $phpgw->session->hidden_var()
-     . "<tr><td colspan=5><input type=\"submit\" value=\"" . lang_common("Add") . "\"></td></tr>"
-     . "</form></table></center>";
+
+  echo "\n<form method=POST action=\"newgroups.php\">"
+     . $phpgw->session->hidden_var() . "</table></center>"
+     . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
+     . "value=\"" . lang_common("Add") . "\"></form><form action=\"groups.php\"></td>"
+     . $phpgw->session->hidden_var() . "<td align=right>" . lang_common("search") . "&nbsp;"
+     . "<input name=\"query\"></td></tr></form></table>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-?>
+
