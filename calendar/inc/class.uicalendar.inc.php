@@ -146,6 +146,13 @@
 				$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
 			}
 			$this->jscal = &$GLOBALS['phpgw']->jscalendar;
+
+			if(!isset($this->bo->prefs['calendar']['interval']))
+			{
+				$this->bo->prefs['calendar']['interval'] = 30;
+				$GLOBALS['phpgw']->preferences->add('calendar','interval',30);
+				$GLOBALS['phpgw']->preferences->save_repository();
+			}
 		}
 
 		/* Public functions */
@@ -750,6 +757,10 @@
 			{
 				echo '<center>'.lang('Sorry, this event does not exist').'.'.'</center>'."\n";
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+			if(isset($event['description']))
+			{
+				$event['description'] = str_replace(array("\n","\r"),array('<br/>',''),$event['description']);
 			}
 
 			$this->bo->repeating_events = Array();
@@ -3752,12 +3763,6 @@ return;
 			}
 			uasort($participants,'strnatcasecmp');	// sort them after their fullname
 
-			if(!isset($this->bo->prefs['calendar']['interval']))
-			{
-				$this->bo->prefs['calendar']['interval'] = 15;
-				$GLOBALS['phpgw']->preferences->add('calendar','interval',15);
-				$GLOBALS['phpgw']->preferences->save_repository();
-			}
 			$increment = $this->bo->prefs['calendar']['interval'];
 			$interval = (int)(60 / $increment);
 			$colspan  = $this->bo->prefs['calendar']['workdayends'] - $this->bo->prefs['calendar']['workdaystarts'];
