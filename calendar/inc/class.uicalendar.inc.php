@@ -2346,7 +2346,18 @@
 				$this->index();
 			}
 			
-			$participants 	= get_var("participants", array("GET", "POST"));
+			// Fetch participants
+			if( get_var("matrix", array("GET", "POST")) == 1 )
+			{
+				// fetch participants from session
+				$participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants_matrix"));
+			} else {
+				// fetch participatns from get and post var
+				$participants = get_var("participants", array("GET", "POST"));
+				// Defined - into session - who participates
+				$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
+			}
+
 			$date["year"] 	= get_var("year",  array("GET", "POST"));
 			$date["month"] 	= get_var("month", array("GET", "POST"));
 			$date["day"] 	= get_var("day",   array("GET", "POST"));
@@ -2382,10 +2393,7 @@
 				}
 				unset($acct);
 			}
-			$participants = array_keys($parts);	// get id's as values and a numeric index
-
-			// Defined - into session - who participates
-			$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
+			# $participants = array_keys($parts);	// get id's as values and a numeric index
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -2429,11 +2437,7 @@
 			echo '  '.$this->html->input_hidden('month',$this->bo->month);
 			echo '  '.$this->html->input_hidden('day',$this->bo->day);
 			echo '  '.$this->html->input_hidden('matrixtype',$_REQUEST['matrixtype']);
-			foreach($participants as $part)
-			{
-				$part = substr($part,0,2) == 'g_' ? 'g_'.(int) substr($part,2) : (int) $part;
-				echo '  '.$this->html->input_hidden('participants[]',$part);
-			}
+			echo '  '.$this->html->input_hidden('matrix', 1);
 			echo '  <input type="submit" name="refresh" value="'.lang('Refresh').'">'."\n";
 			echo ' </td><td>'."\n";
 			echo '  <input type="submit" name="cancel" value="'.lang('Cancel').'">'."\n";
@@ -3819,28 +3823,27 @@ return;
 			$pix = $GLOBALS['phpgw']->common->image('calendar','pix');
 
 			/* Make link */
-			$url_parts = "&participants[]=" . implode("&participants[]=", array_keys($param["participants"]));
 			if( get_var("sevendays", array("GET", "POST") ) )
 				$sevendays = "&sevendays=yes";
 
 			$_f_date = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0, $date["month"], ( $date["day"] - 1 ),$date["year"]);
 			$url_prevday = $GLOBALS['phpgw']->link('/index.php',
 								"menuaction=calendar.uicalendar.viewmatrix"
+							.	"&matrix=1"
 							.	"&year="  . $_f_date["year"]
 							.	"&month=" . $_f_date["month"]
 							.	"&day="   . $_f_date["day"]
 							.	"&matrixtype=" . get_var("matrixtype", array("POST", "GET"))
-							.	$url_parts
 							.	$sevendays
 							);
 			$_f_date = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0, $date["month"], ( $date["day"] + 1 ),$date["year"]);
 			$url_nextday = $GLOBALS['phpgw']->link('/index.php',
 								"menuaction=calendar.uicalendar.viewmatrix"
+							.	"&matrix=1"
 							.	"&year="  . $_f_date["year"]
 							.	"&month=" . $_f_date["month"]
 							.	"&day="   . $_f_date["day"]
 							.	"&matrixtype=" . get_var("matrixtype", array("POST", "GET"))
-							.	$url_parts
 							.	$sevendays
 							);
 			$str = 		'<table border="0" align="center" width="90%">'
