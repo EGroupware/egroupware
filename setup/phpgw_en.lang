@@ -638,7 +638,7 @@ users	common	en	users
 usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
-verdana notes	en	Verdana
+verdana	notes	en	Verdana
 very large	notes	en	Very Large
 very small	notes	en	Very Small
 video phone	addressbook	en	Video Phone
