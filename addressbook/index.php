@@ -41,6 +41,10 @@
 		}
 	}
 
+	if (!$cat_id) {
+		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
+	}
+
  	$extrafields = array(
 		"ophone"   => "ophone",
 		"address2" => "address2",
