@@ -53,7 +53,7 @@
 	*/
 	function parseobject($input)
 	{
-		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access','required','optional');
 		$new = explode("@",$input);
 		while (list($x,$y) = each($new))
 		{
@@ -100,7 +100,7 @@
 	*/
 	function parsesimpleobject($input)
 	{
-		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access','required','optional');
 		$input = ereg_replace ("@", "@#", $input);
 		$new = explode("@",$input);
 		if (count($new) < 3)
@@ -147,6 +147,18 @@
 	* This section handles processing most of the input params for             *
 	* limiting and selecting what to print                                     *
 	\**************************************************************************/
+
+	/* Prevents passing files[]=../../../secret_file or files[]=/etc/passwd */
+	if (is_array($GLOBALS['files']))
+	{
+		while (list($p, $fn) = each ($GLOBALS['files']))
+		{
+			if (ereg('\.\.', $fn) || ereg('^/', $fn))
+			{
+				unset($GLOBALS['files'][$p]);
+			}
+		}
+	}
 
 	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
 	{
@@ -291,6 +303,7 @@
 		while (list($key,$val) = each($matches))
 		{
 			preg_match_all("#@(.*)$#sUi",$val[1],$data);
+			$data[1][0] = ereg_replace ("\n([[:space:]]+)\*", "\n\\1", $data[1][0]);
 			$data[1][0] = ereg_replace ("@", "@#", $data[1][0]);
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
