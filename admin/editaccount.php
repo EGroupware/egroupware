@@ -64,7 +64,7 @@
 	if($apps_before <> $apps_after) {
 	  $after_apps = explode(":",$apps_after);
 	  for ($i=1;$i<=count($after_apps);$i++) {
-	    if (!strpos(" ".$apps_before." ",$after_apps) {
+	    if (!strpos(" ".$apps_before." ",$after_apps)) {
 	      $new_apps[] = $after_apps;
 	    }
 	  }
@@ -82,9 +82,9 @@
 	  if ($account_id <> $phpgw_info["user"]["account_id"]) {
 	    $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$account_id,__FILE__,__LINE__);
 	    $phpgw->db->next_record();
-	    $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value");
+	    $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
 	  } else {
-	    $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"]
+	    $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
 	  }
 	  $docommit = False;
 	  for ($j=0;$j<count($new_apps);$j++) {
