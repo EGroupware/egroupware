@@ -197,7 +197,11 @@
 			$file['Preferences'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 		}
 		$file += array(
-			'About '.$appname=>$GLOBALS['phpgw_info']['navbar']['about']['url'],
+			array(
+				'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
+				'no_lang' => True,
+				'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
+			),
 			'Logout'=>$GLOBALS['phpgw_info']['navbar']['logout']['url']
 		);		
 		
