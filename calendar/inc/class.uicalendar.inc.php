@@ -1,10 +1,11 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar                                                  *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar                                                    *
+  * http://www.eGroupWare.org                                                *
+  * Maintained and further developed by RalfBecker@outdoor-training.de       *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -311,6 +312,16 @@
 
 		function index($params='')
 		{
+			if (!$params)
+			{
+				foreach(array('date','year','month','day') as $field)
+				{
+					if (isset($_GET[$field]))
+					{
+						$params[$field] = $_GET[$field];
+					}
+				}
+			}
 			$GLOBALS['phpgw']->redirect($this->page('',$params));
 		}
 
@@ -2218,13 +2229,21 @@
 		{
 			if (empty($_POST['keywords']))
 			{
-				// If we reach this, it is because they didn't search for anything,
-				// attempt to send them back to where they where.
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',array(
-					'menuaction' => $_POST['from'],
-					'date' => $_POST['year'].$_POST['month'].$_POST['day']
-				)));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				// If we reach this, it is because they didn't search for anything
+				// or they used one of the selectboxes (year, month, week) in the search-result
+				// attempt to send them back to where they came from.
+
+				$vars['menuaction'] = isset($_POST['from']) && $_POST['from'] != 'calendar.uicalendar.search' ?
+					$_POST['from'] : 'calendar.uicalendar.index';
+
+				foreach(array('date','year','month','day') as $field)
+				{
+					if (isset($_POST[$field]))
+					{
+						$vars[$field] = $_POST[$field];
+					}
+				}
+				$GLOBALS['phpgw']->redirect_link('/index.php',$vars);
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -2370,7 +2389,15 @@
 			{
 				$page_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$page_app.'.ui'.$page_app.'.'.$_page.$params);
+			if (is_array($params))
+			{
+				$params['menuaction'] = $page_app.'.ui'.$page_app.'.'.$_page;
+			}
+			else
+			{
+				$params = 'menuaction='.$page_app.'.ui'.$page_app.'.'.$_page.$params;
+			}
+			return $GLOBALS['phpgw']->link('/index.php',$params);
 		}
 
 		function header()
