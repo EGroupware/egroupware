@@ -80,64 +80,35 @@
 
 		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->process->sql_to_array($table);
 		$GLOBALS['setup_tpl']->set_var('arr',$arr);
-		if(count($pk) > 1)
+		
+		foreach(array('pk','fk','ix','uc') as $kind)
 		{
-			$GLOBALS['setup_tpl']->set_var('pks', "'".implode("','",$pk)."'");
+			$GLOBALS['setup_tpl']->set_var($kind.'s',_arr2str($$kind));
 		}
-		elseif($pk && !empty($pk))
+	}
+	
+	function _arr2str($arr)
+	{
+		if (!is_array($arr)) return $arr;
+		
+		$str = '';
+		foreach($arr as $key => $val)
 		{
-			$GLOBALS['setup_tpl']->set_var('pks', "'" . $pk[0] . "'");
-		}
-		else
-		{
-			$GLOBALS['setup_tpl']->set_var('pks','');
-		}
+			if ($str) $str .= ',';
 
-		if(count($fk) > 1)
-		{
-			$GLOBALS['setup_tpl']->set_var('fks', "'" . implode("','",$fk) . "'");
+			if (!is_int($key))
+			{
+				$str .= "'$key' => ";
+			}
+			$str .= is_array($val) ? 'array('._arr2str($val).')' : "'$val'";
 		}
-		elseif($fk && !empty($fk))
-		{
-			$GLOBALS['setup_tpl']->set_var('fks', "'" . $fk[0] . "'");
-		}
-		else
-		{
-			$GLOBALS['setup_tpl']->set_var('fks','');
-		}
-
-		if(count($ix) > 1)
-		{
-			$GLOBALS['setup_tpl']->set_var('ixs', "'" . implode("','",$ix) . "'");
-		}
-		elseif($ix && !empty($ix))
-		{
-			$GLOBALS['setup_tpl']->set_var('ixs', "'" . $ix[0] . "'");
-		}
-		else
-		{
-			$GLOBALS['setup_tpl']->set_var('ixs','');
-		}
-
-		if(count($uc) > 1)
-		{
-			$GLOBALS['setup_tpl']->set_var('ucs', "'" . implode("','",$uc) . "'");
-		}
-		elseif($uc && !empty($uc))
-		{
-			$GLOBALS['setup_tpl']->set_var('ucs', "'" . $uc[0] . "'");
-		}
-		else
-		{
-			$GLOBALS['setup_tpl']->set_var('ucs','');
-		}
+		return $str;
 	}
 
 	function printout($template)
 	{
 		$download = get_var('download',array('POST','GET'));
 		$appname  = get_var('appname',array('POST','GET'));
-		$table    = get_var('table','GLOBALS');
 		$showall  = get_var('showall',array('POST','GET'));
 		$apps     = $GLOBALS['apps'] ? $GLOBALS['apps'] : '';
 
@@ -151,7 +122,6 @@
 		{
 			$url = $GLOBALS['apps'] ? 'applications.php' : 'sqltoarray.php';
 			$GLOBALS['setup_tpl']->set_var('appname',$appname);
-			$GLOBALS['setup_tpl']->set_var('table',$table);
 			$GLOBALS['setup_tpl']->set_var('lang_download',lang('Download'));
 			$GLOBALS['setup_tpl']->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['setup_tpl']->set_var('showall',$showall);
@@ -190,18 +160,9 @@
 			$term = ',';
 			$dlstring .= printout('sqlheader');
 
-			copyobj($GLOBALS['phpgw_setup']->db,$db);
-			$db->query('SHOW TABLES');
-			$i = 0;
-			$tbls = $db->num_rows();
-			while($db->next_record())
+			$GLOBALS['phpgw_setup']->db->connect();
+			foreach($GLOBALS['phpgw_setup']->db->Link_ID->MetaTables() as $table)
 			{
-				$i++;
-				if($i == $tbls)
-				{
-					$term = '';
-				}
-				$table = $db->f(0);
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
 			}
@@ -276,7 +237,7 @@
 
 		while(list($key,$data) = @each($setup_info))
 		{
-			if($data['tables'] && $data['title'])
+			if($data['tables'])
 			{
 				$setup_tpl->set_var('appname',$data['name']);
 				$setup_tpl->set_var('apptitle',$data['title']);
