@@ -78,10 +78,10 @@
       $acl = CreateObject('phpgwapi.acl');
       $security_equals = $acl->get_ids_for_location(intval($account_id), 1, 'phpgw_group');
       unset($acl);
-      if (!$security_equals) { return False; }
+      if ($security_equals == False) { return False; }
       for ($idx=0; $idx<count($security_equals); $idx++){
-        $name = $this->name2id($security_equals[$idx]);
-        $this->members[] = Array('account_id' => $security_equals[$idx], 'account_name' => "$name");
+        $name = $this->id2name(intval($security_equals[$idx]));
+        $this->members[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => "$name");
       }
       return $this->members;
     }
