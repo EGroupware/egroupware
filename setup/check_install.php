@@ -406,7 +406,7 @@
 			'T_footer' => 'footer.tpl',
 		));
 		$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')' : '');
 		echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
 		echo "<pre style=\"text-align: left;\">\n";;
 	}
