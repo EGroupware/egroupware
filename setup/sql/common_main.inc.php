@@ -30,7 +30,7 @@
     include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
     $included = True;
-    include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
+//    include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "oldversion";
   }
 

@@ -19,6 +19,7 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_sessions");
   $phpgw_setup->db->query("DROP TABLE phpgw_app_sessions");
   $phpgw_setup->db->query("DROP TABLE phpgw_acl");
+  $phpgw_setup->db->query("DROP TABLE phpgw_hooks");
   $phpgw_setup->db->query("DROP TABLE phpgw_access_log");
   $phpgw_setup->db->query("DROP TABLE profiles");
   $phpgw_setup->db->query("DROP TABLE addressbook");

@@ -11,8 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader"   => True,   "nonavbar" => True,
-  							 "currentapp" => "home", "noapi"    => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi"  => True);
   include("../header.inc.php");
   include("./inc/functions.inc.php");
 
