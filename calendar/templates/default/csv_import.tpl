@@ -59,15 +59,16 @@
 <!-- END imported -->
 
 <!-- BEGIN import -->
-<br><center>
-		<FORM {enctype} action="{action_url}" method="post">
-		<TABLE>
+<br/>
+<center>
+		<form {enctype} action="{action_url}" method="post">
+		<table>
 
 		{rows}
 
-		</TABLE>
+		</table>
 		{hiddenvars}
 		</form>
 
-</CENTER>
+</center>
 <!-- END import -->
