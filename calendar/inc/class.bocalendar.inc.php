@@ -1465,6 +1465,7 @@
 		function check_perms($needed,$event=0,$other=0)
 		{
 			$event_in = $event;
+
 			if (is_int($event) && $event == 0)
 			{
 				$owner = $other > 0 ? $other : $this->owner;
@@ -1486,19 +1487,20 @@
 				$owner = $event['owner'];
 				$private = $event['public'] == False || $event['public'] == 0;
 			}
+
 			$user = $GLOBALS['phpgw_info']['user']['account_id'];
+
 			$grants = $this->grants[$owner];
 
 			if (is_array($event) && $needed == PHPGW_ACL_READ)
 			{
-				// Check if the $user is one of the participants or has a read-grant from one of them
-				//
+				/* grant read access if the $user is one of the participants. */
 				if (isset($event['participants']) && is_array($event['participants']))
 				{
 					foreach($event['participants'] as $uid => $accept)
 					{
-						if ($this->grants[$uid] & PHPGW_ACL_READ || $uid == $user)
-							{
+						if ($uid == $user)
+						{
 							$grants |= PHPGW_ACL_READ;
 							break;
 						}
@@ -1508,12 +1510,13 @@
 
 			if ($GLOBALS['phpgw']->accounts->get_type($owner) == 'g' && $needed == PHPGW_ACL_ADD)
 			{
-				$access = False;	// a group can't be the owner of an event
+				$access = False; /* a group can't be the owner of an event. why not?! */
 			}
 			else
 			{
 				$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
 			}
+
 			//echo "<p>".function_backtrace()." check_perms($needed,$event_id,$other) for user $user and needed_acl $needed: event='$event[title]': owner=$owner, private=$private, grants=$grants ==> access=$access</p>\n";
 
 			return $access;
