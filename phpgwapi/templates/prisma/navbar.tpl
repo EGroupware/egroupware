@@ -1,9 +1,9 @@
 <!-- BEGIN navbar_header -->
+<div id="processing" style="position:absolute; left:300px; top:300px; width:300px; height:100px; z-index:1; background-color: white; layer-background-color: #white; border: 1px none #000000; visibility: hidden"><center><b>Wait ... And See</b><br><img src="/phpgwapi/templates/prisma/images/processing.gif"></center></div>
+
+		
 <div id="divLogo"><a href="{logo_url}" target="_top"><img src="{logo_file}" border="0" alt="eGroupWare"/></a></div>
-
 {app_extra_icons_div}
-
-
 <div id="divMain">
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -103,7 +103,6 @@
 	</table>	
 		</div>
 		</div>
-
 		<div class="sideboxSpace"></div>
 <!-- END extra_blocks_footer -->
 

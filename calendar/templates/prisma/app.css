@@ -187,14 +187,14 @@
 /* cal day-view's todo column
  */
 .calDayToDos {
-	width: 250px;
+	width: 240px;
 	text-align: center;
 }
 /* header row
 */
 .calDayTodosHeader {
 	margin: 0px; 
-	width: 250px;	
+	width: 240px;	
 	padding: 1px;
 	font-weight: bold;
 }
