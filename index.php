@@ -11,7 +11,13 @@
 	/* $Id$ */
 
 	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? @$GLOBALS['HTTP_GET_VARS']['sessionid'] : @$GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	if (!file_exists('header.inc.php'))
+	{
+		Header('Location: setup/index.php');
+		exit;
+	}
+
+	$GLOBALS['sessionid'] = get_var('sessionid',array('GET','COOKIE'));
 	if (! $GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
@@ -21,9 +27,9 @@
 	/*
 		This is the preliminary menuaction driver for the new multi-layered design
 	*/
-	if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+	if (@isset($_GET['menuaction']))
 	{
-		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+		list($app,$class,$method) = explode('.',$_GET['menuaction']);
 		if (! $app || ! $class || ! $method)
 		{
 			$invalid_data = True;
@@ -69,7 +75,7 @@
 	if ((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && ! $invalid_data)
 	{
 //		eval("\$GLOBALS['obj']->$method();");
-		execmethod($GLOBALS['HTTP_GET_VARS']['menuaction']);
+		execmethod($_GET['menuaction']);
 
 		if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
 		{
@@ -106,7 +112,7 @@
 		}
 		$GLOBALS['phpgw']->log->commit();
 
-		$phpgw->redirect($GLOBALS['phpgw']->link('/home.php'));
+		$GLOBALS['phpgw']->redirect_link('/home.php');
 		/*
 		$_obj = CreateObject('home.home');
 		$_obj->get_list();
