@@ -5,7 +5,7 @@
 a template defines the layout ofegroupware and it contains icons for each application.	preferences	da	En skabelon angiver opsætningen af eGroupWare og den indeholder ikonerne for hver applikation
 a theme defines the colors and fonts used by the template.	preferences	da	Et tema, præcisere farverne og skrifttyperne brugt af skabelonen
 acl grants have been updated	preferences	da	ACL rettighederne er blevet opdateret
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	da	Enhver liste i eGroupWare vil vise det antal resultater eller linier valgt.<br>For mange vil sløve siden, for få vil koste dig overblikket.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	da	Enhver liste i eGroupWare vil vise det antal resultater eller linier valgt.<br>For mange vil sløve siden, for få vil koste dig overblikket.
 are you sure you want to delete this category ?	preferences	da	Er du sikker på at du vil slette denne kategori?
 change your password	preferences	da	Skift Din Adgangskode
 change your profile	preferences	da	Redigér Din profil

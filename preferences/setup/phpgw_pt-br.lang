@@ -5,7 +5,7 @@
 a template defines the layout ofegroupware and it contains icons for each application.	preferences	pt-br	Um modelo define o layout do eGroupWare e contém os ícones de cada aplicativo.
 a theme defines the colors and fonts used by the template.	preferences	pt-br	Um tema define as cores e fontes utilizadas pelo modelo
 acl grants have been updated	preferences	pt-br	As permissões de acesso (ACL) foram atualizadas
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt-br	Todas as listas no eGroupWare utilizarão esta quantidade de linhas para a exibição por página. <br>Linhas demais podem deixar lenta a visualização, poucas linhas adificultam a visualização, teste várias possibilidades.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt-br	Todas as listas no eGroupWare utilizarão esta quantidade de linhas para a exibição por página. <br>Linhas demais podem deixar lenta a visualização, poucas linhas adificultam a visualização, teste várias possibilidades.
 are you sure you want to delete this category ?	preferences	pt-br	Tem certeza que deseja apagar essa categoria?
 autohide sidebox menu's	preferences	pt-br	Ocultar automáticamente menú lateral
 automatically hide the sidebox menu's?	preferences	pt-br	O menú lateral deve ser ocultado automáticamente?

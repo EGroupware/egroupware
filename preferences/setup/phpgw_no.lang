@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	no	En mal definerer utseende på eGroupWare og inneholder ikoner for hver applikasjon.
 a theme defines the colors and fonts used by the template.	preferences	no	Et tema bestemmer farger og skrifttype som brukes av malen.
 acl grants have been updated	preferences	no	ACL tilganger ble oppdatert
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	no	Alle utlistinger i eGroupWare vil vise dette antall innslag eller linjer per side.<br>For mange fører til sen sideoppdatering, for få reduserer oversiktsbildet.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	no	Alle utlistinger i eGroupWare vil vise dette antall innslag eller linjer per side.<br>For mange fører til sen sideoppdatering, for få reduserer oversiktsbildet.
 are you sure you want to delete this category ?	preferences	no	Er du sikker på at du vil slette denne kategorien?
 change your password	preferences	no	Endre passord
 change your profile	preferences	no	Endre din profil

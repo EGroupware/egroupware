@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	hu	Egy eGroupWare elrendezés minta definíció és az ikonokat tartalmaz minden program számára.
 a theme defines the colors and fonts used by the template.	preferences	hu	Egy téma definiálja a színeket és betütipusokat amiket a minta használ.
 acl grants have been updated	preferences	hu	ACL engedélyek frissítve
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Valamelyik lista mutatja az eGruopWare-ben ennek a bejegyzésnek a számát vagy a sorok számát laponként. <br>Túl sok megjelenítés lassítani fogja a kirajzolás sebességét.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Valamelyik lista mutatja az eGruopWare-ben ennek a bejegyzésnek a számát vagy a sorok számát laponként. <br>Túl sok megjelenítés lassítani fogja a kirajzolás sebességét.
 are you sure you want to delete this category ?	preferences	hu	Biztos vagy benne hogy törölni akarod ezt a kategóriát
 change your password	preferences	hu	Jelszó megváltoztatása
 change your profile	preferences	hu	Profil megváltoztatása

@@ -24,7 +24,7 @@
 	}
 
 	create_input_box('Max matches per page','maxmatchs',
-		'Any listing in phpGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.','',3);
+		'Any listing in eGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.','',3);
 	create_select_box('Interface/Template Selection','template_set',$_templates,
 		'A template defines the layout of eGroupWare and it contains icons for each application.');
 	create_select_box('Theme (colors/fonts) Selection','theme',$_themes,

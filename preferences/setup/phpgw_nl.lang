@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	nl	Een template definieerd de grafische vormgeving van eGroupWare.
 a theme defines the colors and fonts used by the template.	preferences	nl	Een thema definieerd de kleuren en lettertypes die worden gebruikt door een template
 acl grants have been updated	preferences	nl	ACL-toegang is bijgewerkt.
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	nl	Elk overzicht in eGroupWare zal dit aantal regels per pagina weergeven. <br/> Te veel kan het systeem traag maken, te weinig kan het onoverzichtelijk maken
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	nl	Elk overzicht in eGroupWare zal dit aantal regels per pagina weergeven. <br/> Te veel kan het systeem traag maken, te weinig kan het onoverzichtelijk maken
 are you sure you want to delete this category ?	preferences	nl	Weet u zeker dat u deze categorie wilt verwijderen
 change your password	preferences	nl	Verander uw wachtwoord
 change your profile	preferences	nl	Verander uw profiel

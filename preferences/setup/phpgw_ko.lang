@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	ko	템플릿의 정의는 eGroupWare 레이아웃 과 각 응용프로그램의 아이콘을 포함합니다.
 a theme defines the colors and fonts used by the template.	preferences	ko	테마는 템플릿에서 사용할 색과 글꼴을 정의합니다.
 acl grants have been updated	preferences	ko	ACL 허용이 업데이트 되었습니다.
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	eGroupWare에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	eGroupWare에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
 are you sure you want to delete this category ?	preferences	ko	정말 이 카테고리를 삭제할까요?
 change your password	preferences	ko	암호 변경
 change your profile	preferences	ko	프로필 변경

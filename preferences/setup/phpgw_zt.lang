@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	zt	樣版定義了eGroupWare的版面配置與應用程式圖示
 a theme defines the colors and fonts used by the template.	preferences	zt	佈景定義了樣板的顏色與字型
 acl grants have been updated	preferences	zt	ACL 授權已經更新
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zt	eGroupWare將會依據這個數字顯示大部份列表的資料筆數<br>數字太大可能會造成讀取速度緩慢
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zt	eGroupWare將會依據這個數字顯示大部份列表的資料筆數<br>數字太大可能會造成讀取速度緩慢
 are you sure you want to delete this category ?	preferences	zt	您確定要刪除這個分類？
 change your password	preferences	zt	變更您的密碼
 change your profile	preferences	zt	變更您的個人設定

@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	cs	Vzhled definuje rozlo¾ení eGroupware a ikony pro ka¾dou aplikaci
 a theme defines the colors and fonts used by the template.	preferences	cs	Téma urèuje barvy a písma pou¾itá ve vzhledu
 acl grants have been updated	preferences	cs	Práva ACL byla aktualizována
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Ka¾dý seznam v eGroupWare zobrazí nejvý¹e tolik záznamù èi øádek na stránku.<br>Pøíli¹ mnoho mù¾e zpomalit systém, pøíli¹ málo omezí Vá¹ rozhled
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Ka¾dý seznam v eGroupWare zobrazí nejvý¹e tolik záznamù èi øádek na stránku.<br>Pøíli¹ mnoho mù¾e zpomalit systém, pøíli¹ málo omezí Vá¹ rozhled
 are you sure you want to delete this category ?	preferences	cs	Opravdu chcete smazat tuto kategorii?
 change your password	preferences	cs	Zmìnit va¹e heslo
 change your profile	preferences	cs	Zmìnit profil

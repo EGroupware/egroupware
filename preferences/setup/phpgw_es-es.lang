@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
 a theme defines the colors and fonts used by the template.	preferences	es-es	Un tema define los colores y los tipos de letra usados en la plantilla
 acl grants have been updated	preferences	es-es	Los permisos de la ACL se han actualizado
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
 are you sure you want to delete this category ?	preferences	es-es	¿Seguro que desea borrar esta categoría?
 change your password	preferences	es-es	Cambiar su contraseña
 change your profile	preferences	es-es	Cambiar su perfil

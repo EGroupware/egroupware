@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sl	Predloga definira izgled eGroupWare-a in vsebuje ikone za vse aplikacije.
 a theme defines the colors and fonts used by the template.	preferences	sl	Tema definira barve in pisave, ki so uporabljene v predlogah.
 acl grants have been updated	preferences	sl	ACL pravice so bile spremenjene
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sl	Vsak seznam v eGW prika¾e to ¹tevilo vnosov oz. vrstic na stran.<br>Preveliko ¹tevilo upo&#269;asni vpogled strani, premajhno pa omeji vpogled na seznam.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sl	Vsak seznam v eGW prika¾e to ¹tevilo vnosov oz. vrstic na stran.<br>Preveliko ¹tevilo upo&#269;asni vpogled strani, premajhno pa omeji vpogled na seznam.
 are you sure you want to delete this category ?	preferences	sl	Ali si preprièan, da ¾eli¹ izbrisati to kategorijo?
 change your password	preferences	sl	Spremeni svoje geslo
 change your profile	preferences	sl	Spremeni svoj profil

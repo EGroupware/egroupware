@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	uk	Зразок визначає вигляд eGroupWare і має іконки для кожного приложення.
 a theme defines the colors and fonts used by the template.	preferences	uk	Тема визначає кольори та фонти, що використовуються зразком.
 acl grants have been updated	preferences	uk	ACL доступи змінено
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	uk	Кожен перелік в системі буде показувати вам цю кількість записів або рядків на сторінці.<br>Надто багато буде довго загружатись, надто мало буде заставляти Вас часто пролистувати.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	uk	Кожен перелік в системі буде показувати вам цю кількість записів або рядків на сторінці.<br>Надто багато буде довго загружатись, надто мало буде заставляти Вас часто пролистувати.
 are you sure you want to delete this category ?	preferences	uk	Ви впевнені, що хочете видалити цю категорію?
 change your password	preferences	uk	Змінити Ваш пароль
 change your profile	preferences	uk	Змінити Ваш профайл
