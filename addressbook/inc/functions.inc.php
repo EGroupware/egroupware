@@ -15,25 +15,65 @@
   // NOTE: This entire file needs to be rewritten.  There is a great deal of code not being used
   //       anymore. This should also be converted to templates while where at it (jengo)
 
-/*  $abc = array('company'   => 'company',	// AddressBook Columns and their descriptions
-               'firstname' => 'first name',
-               'lastname'  => 'last name',
-               'email'     => 'email',
-               'wphone'    => 'work phone',
-               'hphone'    => 'home phone',
-               'fax'       => 'fax',
-               'pager'     => 'pager',
-	       'title'     => 'title',
-               'mphone'    => 'mobile phone',
-               'ophone'    => 'other phone',
-               'street'    => 'street',
-               'city'      => 'city',
-               'state'     => 'state',
-               'zip'       => 'zip code',
-               'bday'      => 'birthday',
-               'url'       => 'URL'
-              );
-*/
+        $abc = array("FN"              => "full name",        //'firstname lastname'
+                     "SOUND"           => "",
+                     "ORG_Name"        => "company",  //company
+                     "ORG_Unit"        => "department",  //division
+                     "TITLE"           => "title",
+                     "N_Given"         => "first name",   //firstname
+                     "N_Family"        => "last name",  //lastname
+                     "N_Middle"        => "middle",
+                     "N_Prefix"        => "prefix",
+                     "N_Suffix"        => "suffix",
+                     "LABEL"           => "label",
+                     "ADR_Street"      => "street",
+                     "ADR_Locality"    => "city",   //city
+                     "ADR_Region"      => "state",     //state
+                     "ADR_PostalCode"  => "zip", //zip
+                     "ADR_CountryName" => "country",
+                     "ADR_Work"        => "",   //yn
+                     "ADR_Home"        => "",   //yn
+                     "ADR_Parcel"      => "", //yn
+                     "ADR_Postal"      => "", //yn
+                     "TZ"              => "timezone",
+                     "GEO"             => "",
+                     "A_TEL"           => "home phone",
+                     "A_TEL_Work"      => "",   //yn
+                     "A_TEL_Home"      => "",   //yn
+                     "A_TEL_Voice"     => "",  //yn
+                     "A_TEL_Msg"       => "",    //yn
+                     "A_TEL_Fax"       => "",    //yn
+                     "A_TEL_Prefer"    => "", //yn
+                     "B_TEL"           => "work phone",
+                     "B_TEL_Work"      => "",   //yn
+                     "B_TEL_Home"      => "",   //yn
+                     "B_TEL_Voice"     => "",  //yn
+                     "B_TEL_Msg"       => "",    //yn
+                     "B_TEL_Fax"       => "",    //yn
+                     "B_TEL_Prefer"    => "", //yn
+                     "C_TEL"           => "fax",
+                     "C_TEL_Work"      => "",   //yn
+                     "C_TEL_Home"      => "",   //yn
+                     "C_TEL_Voice"     => "",  //yn
+                     "C_TEL_Msg"       => "",    //yn
+                     "C_TEL_Fax"       => "",    //yn
+                     "C_TEL_Prefer"    => "", //yn
+                     "D_EMAIL"         => "email",
+                     "D_EMAILTYPE"     => "email type",   //'INTERNET','CompuServe',etc...
+                     "D_EMAIL_Work"    => "",  //yn
+                     "D_EMAIL_Home"    => "",  //yn
+                     "bday"            => "birthday",
+                     "url"             => "URL",
+		     "access"          => "access"
+                     );
+
+  function display_name($column) {
+    global $abc;
+    while($name = each($abc) ) {
+      if ($column == $name[0]) { return $name[1]; }
+    }
+  }
+  
   function form($format,$action,$title,$fields) { // used for add/edit
     global $phpgw, $phpgw_info;
      
