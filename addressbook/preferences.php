@@ -39,7 +39,7 @@
      echo "<p><center>" . $phpgw->common->error_list($errors) . "</center>";
   }
 
-  echo "<p><b>" . lang("select addressbook columns to display") . ":" . "</b><hr><p>";
+  echo "<p><b>" . lang("Addressbook preferences") . ":" . "</b><hr><p>";
 ?>
   <form method="POST" action="<?php echo $phpgw->link(); ?>">
    <table border="0" align="center" cellspacing="1" cellpadding="1">

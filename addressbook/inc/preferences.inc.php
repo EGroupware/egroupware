@@ -25,7 +25,7 @@
   section_start("Address Book",$img);
 
   $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/preferences.php");
-  echo "<A href=".$pg.">" . lang("Select columns to display") . "</A>";
+  echo "<A href=".$pg.">" . lang("Addressbook preferences") . "</A>";
 
   section_end(); 
 }

@@ -12,52 +12,15 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
-
+  if ($submit) {
+     $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);  
+  }
   $phpgw_info["flags"]["currentapp"] = "preferences";
-  include("../header.inc.php");
-  if ($phpgw_info["user"]["permissions"]["anonymous"]) {
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
-     exit;
-  } else if (! $submit) {
-     $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();
-  }
 
-  // This function is not going to be needed when email is moved into its own preferences section.
-  function display_option($text,$check,$option,$indent) {
-    global $phpgw, $phpgw_info;
-    if ($phpgw_info["user"]["apps"][$check]) {
-?>
-      <tr>
-       <td>
-        <?php
-         for ($i=0; $i < $indent; $i++, print '<blockquote>') {};
-         echo lang($text);
-         for ($i=0; $i < $indent; $i++, print '</blockquote>') {};
-         ?>
-       </td>
-       <td>
-        <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"][$check][$option]) echo " checked"; ?>>
-       </td>
-      </tr>
-<?php
-      if ($check == "email") {
-?>
-      <tr>
-       <td>
-        <?php echo lang("email signature"); ?>
-       </td>
-       <td>
-        <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["email"]["email_sig"]; ?></textarea>
-       </td>
-      </tr>
-<?php
-      }
-    }
-  }
+  include("../header.inc.php");
 
   if (! $submit) {
+  
      ?>
       <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>">
        <table border=0>
@@ -158,8 +121,6 @@
             }
             echo "></td></tr>";
          }
-
-         display_option("show new messages on main screen","email","mainscreen_showmail",0);
 ?>        
        <tr>
         <td><?php echo lang("Default application"); ?></td>
@@ -183,24 +144,10 @@
          </tr>
 
          <tr>
-          <td><?php echo lang("Default sorting order"); ?></td>
-	      <td><?php
-                $default_order_display[$phpgw_info["user"]["preferences"]["common"]["default_sorting"]] = " selected"; ?>
-                  <select name="default_sorting">
-             	   <option value="old_new"<?php echo $default_order_display["old_new"]; ?>>oldest -> newest</option>   
-             	   <option value="new_old"<?php echo $default_order_display["new_old"]; ?>>newest -> oldest</option>
-                  </select>
-              </td>
-             </tr>
-<?php
-//         }
-?>
-
-       <tr>
-        <td colspan="2" align="center">
-         <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
-        </td>
-       </tr>
+          <td colspan="2" align="center">
+           <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
+          </td>
+         </tr>
        </table>
       </form>
 
@@ -221,7 +168,6 @@
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"dateformat","common");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"timeformat","common");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"lang","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting","email");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_app","common");
 
      if ($navbar_text) {
@@ -232,13 +178,6 @@
         if ($show_currentusers) {
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"show_currentusers","common");
         }
-     }
-
-     if ($phpgw_info["user"]["apps"]["email"]) {
-        if ($mainscreen_showmail) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail","email");
-        }
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig","email");
      }
 
      $phpgw->db->unlock();
