@@ -15,11 +15,8 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  $phpgw->template->set_file(array("header"     => "currentusers.tpl",
-                                   "row"        => "currentusers.tpl",
-                                   "footer"     => "currentusers.tpl"));
-
-  $phpgw->template->set_block("header","row","footer","output");
+  $phpgw->template->set_file(array("list" => "currentusers.tpl",
+                                   "row"  => "currentusers_row.tpl"));
 
   if (! $start) {
      $start = 0;
@@ -29,13 +26,13 @@
   $phpgw->db->query("select count(*) from sessions",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
-  $phpgw->templateotal = $phpgw->db->f(0);
+  $total = $phpgw->db->f(0);
   $limit = $phpgw->nextmatchs->sql_limit($start);
 
   $phpgw->template->set_var("lang_current_users",lang("List of current users"));
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"][bg_color]);
-  $phpgw->template->set_var("left_next_matchs",$phpgw->nextmatchs->left("currentusers.php",$start,$phpgw->templateotal));
-  $phpgw->template->set_var("right_next_matchs",$phpgw->nextmatchs->right("currentusers.php",$start,$phpgw->templateotal));
+  $phpgw->template->set_var("left_next_matchs",$phpgw->nextmatchs->left("currentusers.php",$start,$total));
+  $phpgw->template->set_var("right_next_matchs",$phpgw->nextmatchs->right("currentusers.php",$start,$total));
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $phpgw->template->set_var("sort_loginid",$phpgw->nextmatchs->show_sort_order($sort,"session_lid",$order,
@@ -48,9 +45,6 @@
                             "currentusers.php",lang("idle")));
   $phpgw->template->set_var("lang_kill",lang("Kill"));
 
-  $phpgw->template->parse("out","header");
-
-
   if ($order) {
      $ordermethod = "order by $order $sort";
   } else {
@@ -61,8 +55,8 @@
 
   $i = 0;
   while ($phpgw->db->next_record()) {
-     $phpgw->templater_color = $phpgw->nextmatchs->alternate_row_color($phpgw->templater_color);
-     $phpgw->template->set_var("tr_color",$phpgw->templater_color);
+     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+     $phpgw->template->set_var("tr_color",$tr_color);
 
      if (ereg("@",$phpgw->db->f("session_lid"))) {
         $t = split("@",$phpgw->db->f("session_lid"));
@@ -83,14 +77,9 @@
     	$phpgw->template->set_var("row_kill","&nbsp;");
      }
 
-     if ($phpgw->db->num_rows() == 1) {
-        $phpgw->template->set_var("output","");
-     }
-     if ($phpgw->db->num_rows() != ++$i) {
-        $phpgw->template->parse("output","row",True);
-     }
+     $phpgw->template->parse("rows","row",True);
    }
 
-   $phpgw->template->pparse("out","footer");
+   $phpgw->template->pparse("out","list");
    $phpgw->common->phpgw_footer();
 ?>
