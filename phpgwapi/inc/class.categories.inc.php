@@ -22,6 +22,7 @@
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
 	/* $Id$ */
+	/* $Source$ */
 
 	/*!
 	@class categories
@@ -144,11 +145,11 @@
 					$public_user_list[] = $user;
 				}
 				reset($public_user_list);
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
 			}
 			else
 			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' ";
+				$grant_cats = " cat_owner='" . $this->account_id . "' or cat_owner='-1' ";
 			}
 
 			if ($parent_id)
@@ -223,11 +224,11 @@
 					$public_user_list[] = $user;
 				}
 				reset($public_user_list);
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
 			}
 			else
 			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' ";
+				$grant_cats = " cat_owner='" . $this->account_id . "' or cat_owner='-1' ";
 			}
 
 			if ($query)
@@ -407,6 +408,11 @@
 					{
 						$s .= '&lt;' . lang('Global') . '&gt;';
 					}
+					if ($cats[$i]['owner'] == '-1')
+					{
+						$s .= '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$this->app_name]['title'] . '&gt;';
+					}
+
 					$s .= '</option>' . "\n";
 				}
 				return $s;

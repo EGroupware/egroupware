@@ -1,16 +1,16 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - Admin - Global categories                                 *
-  * http://www.phpgroupware.org                                              *
-  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
-  * -----------------------------------------------                          *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare - Admin - Global categories                                 *
+	* http://www.phpgroupware.org                                              *
+	* Written by Bettina Gille [ceb@phpgroupware.org]                          *
+	* -----------------------------------------------                          *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	/* $Id$ */
+	/* $Source$ */
 
 	class bocategories
 	{
@@ -28,7 +28,14 @@
 
 		function bocategories()
 		{
-			$this->cats = CreateObject('phpgwapi.categories');
+			if ($GLOBALS['appname'])
+			{
+				$this->cats = CreateObject('phpgwapi.categories',-1,$GLOBALS['appname']);
+			}
+			else
+			{
+				$this->cats = CreateObject('phpgwapi.categories',$GLOBALS['phpgw_info']['user']['account_id'],'phpgw');
+			}
 
 			$this->read_sessiondata();
 

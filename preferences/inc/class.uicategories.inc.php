@@ -169,9 +169,9 @@
 				{
 					$appendix = '&lt;' . lang('Global') . '&gt;';
 				}
-				else
+				elseif ($cats[$i]['owner'] == '-1')
 				{
-					$appendix = '';
+					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$cats_app]['title'] . '&gt;';
 				}
 
 				$level = $cats[$i]['level'];
