@@ -42,8 +42,7 @@
 	}
 	else
 	{
-		$phpgw->log->message('W-VerifySession, could not verify session durring logout');
-		$phpgw->log->commit();
+		$phpgw->log->write(array('text'=>'W-VerifySession, could not verify session durring logout'));
 	}
 	Setcookie('sessionid');
 	Setcookie('kp3');
