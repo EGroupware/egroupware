@@ -61,7 +61,7 @@
 				}
 			}
 			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
-			if ($this->system_charset && substr($this->system_charset,0,3) != 'iso')
+			if ($this->system_charset && substr($this->system_charset,0,9) != 'iso-8859-1')
 			{
 				if ($this->mbstring = extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
 				{
@@ -73,7 +73,7 @@
 				}
 				else
 				{
-					if ($warnings) echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+					if ($warnings) echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
 				}
 			}
 		}
@@ -256,7 +256,7 @@
 			{
 				$to = $this->charset();
 			}
-			if ($from == $to || !$from || !$to)
+			if ($from == $to || !$from || !$to || !$data)
 			{
 				return $data;
 			}
@@ -271,6 +271,10 @@
 			if ($this->mbstring)
 			{
 				return mb_convert_encoding($data,$to,$from);
+			}
+			if (($data = iconv($from,$to,$date)))
+			{
+				return $data;
 			}
 			die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
 		}
@@ -448,7 +452,8 @@
 					if ($ctime != $ltime)
 					{
 						// update all langs
-						$this->install_langs(array_keys($this->get_installed_langs()));
+						$installed = $this->get_installed_langs();
+						$this->install_langs($installed ? array_keys($installed) : array());
 						break;
 					}
 				}
