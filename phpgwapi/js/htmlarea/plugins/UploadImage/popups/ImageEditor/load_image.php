@@ -36,6 +36,7 @@ include '../ImageManager/config.inc.php';
 
 // set this to whatever subdir you make
 $path = $BASE_ROOT.'/';
+//$path = $BASE_DIR.'/';
 
 //***************************************************************************
 
@@ -76,12 +77,14 @@ if(isset($params)) {
 //manipulate the images
 function manipulate($img_file, $action, $values)
 {
-    global $path, $save_file, $BASE_DIR;
+    global $path, $save_file, $BASE_DIR,$BASE_ROOT;
 
+	$img_location=$BASE_DIR.$BASE_ROOT.'/';
     //Load the Image Manipulation Driver
     $img = Image_Transform::factory(IMAGE_CLASS);
-    $img->load($BASE_DIR.$path.$img_file);
-//var_dump($_SERVER['DOCUMENT_ROOT'].$path.$img_file);
+
+	
+	$img->load($img_location.$img_file);
     switch ($action) {
         case 'crop':
             $img->crop(intval($values[0]),intval($values[1]),intval($values[2]),intval($values[3]));
@@ -105,15 +108,15 @@ function manipulate($img_file, $action, $values)
             $quality = intval($values[1]);
             if($quality <0)
                 $quality = 85;
-            $img->save($BASE_DIR.$path.$save_file, $values[0], $quality);
+            $img->save($img_location.$save_file, $values[0], $quality);
         }
         break;
     }
 
     //get the unique file name
-    $filename = $img->createUnique($BASE_DIR.$path);
+    $filename = $img->createUnique($img_location);
     //save the manipulated image 
-    $img->save($BASE_DIR.$path.$filename);
+    $img->save($img_location.$filename);
     $img->free();
 
     $imagesize = @getimagesize($filename);

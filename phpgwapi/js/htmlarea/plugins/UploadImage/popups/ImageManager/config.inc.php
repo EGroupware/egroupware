@@ -5,14 +5,23 @@
 //example, this is the actual file system path
 //of the web server document root. e.g.
 // Filesystem == /home/web/www.yourdomain.com 
-$BASE_DIR = $_SERVER['DOCUMENT_ROOT'];
+$BASE_DIR = $GLOBALS[UploadImageBaseDir];
+$BASE_URL = $GLOBALS[UploadImageBaseURL];
+$BASE_ROOT = $GLOBALS[UploadImageRelativePath];
+
+var_dump($BASE_DIR);
+var_dump($BASE_URL);
+var_dump($BASE_ROOT);
+
+//$BASE_DIR = $_SERVER['DOCUMENT_ROOT'];
+//$BASE_DIR = '/home/www';
 
 //the path where the browser sees the document root (i.e. http://www.yourdomain.com/)
-$BASE_URL = '/';
+//$BASE_URL = 'https://192.168.0.2/';
 
 //this is where the images will be stored relative to the $BASE_DIR (and $BASE_URL)
 //this directory MUST be readable AND writable by the web server.
-$BASE_ROOT = 'test'; 
+//$BASE_ROOT = ''; 
 
 //The image manipulation library to use, either GD or ImageMagick or NetPBM
 //valid definitions are 'GD' or 'IM' or 'NetPBM'.
@@ -38,7 +47,7 @@ if(strrpos($BASE_DIR, '/')!= strlen($BASE_DIR)-1)
 	$BASE_DIR .= '/';
 
 if(strrpos($BASE_URL, '/')!= strlen($BASE_URL)-1) 
-	$BASE_URL .= '/';
+$BASE_URL .= '/';
 
 //Built in function of dirname is faulty
 //It assumes that the directory nane can not contain a . (period)

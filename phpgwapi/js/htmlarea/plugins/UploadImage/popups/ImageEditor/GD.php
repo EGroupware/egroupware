@@ -79,7 +79,7 @@ Class Image_Transform_Driver_GD extends Image_Transform
     function load($image)
     {
         $this->uid = md5($_SERVER['REMOTE_ADDR']);
-        $this->image = $image;
+		$this->image = $image;
         $this->_get_image_details($image);
         $functionName = 'ImageCreateFrom' . $this->type;
         $this->imageHandle = $functionName($this->image);
@@ -413,7 +413,6 @@ Class Image_Transform_Driver_GD extends Image_Transform
                     imagesetpixel($this->imageHandle, $right, $j, $t); 
                     $left++; $right--; 
                 } 
-            
         }
 
         return true;

@@ -21,5 +21,6 @@ UploadImage.I18N = {
 	"Document title:":			"Document title:",
 	"OK":					"OK",
 	"Primary style-sheet:":			"Primary style-sheet:",
-	"Text color:":				"Text color:"
+	"Text color:":				"Text color:",
+	"Upload Image":				"Upload Image"
 };

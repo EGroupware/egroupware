@@ -58,7 +58,8 @@
 					 var id = fields[i];
 					 var el = MM_findObj(id);
 					 if(id == "f_url") 
-					 param[id] = "<? echo 'http://'.$_SERVER['SERVER_NAME']; ?>" + el.value;
+//					 param[id] = "<? echo 'http://'.$_SERVER['SERVER_NAME']; ?>" + el.value;
+					 param[id] = "" + el.value;
 					 else
 					 param[id] = el.value;
 			   }
