@@ -227,12 +227,11 @@
 			return $this->so->anzSubs( $info_id );
 		}
 
-		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$addr_id,
-									$proj_id,$info_id,$ordermethod,&$start,&$total)
+		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$action_id,
+									$ordermethod,&$start,&$total)
 		{
 			return $this->so->readIdArray($order,$sort,$filter,$cat_id,$query,
-								  					$action,$addr_id,$proj_id,$info_id,
-													$ordermethod,$start,$total);
+								  					$action,$action_id,$ordermethod,$start,$total);
 		}
 
 

@@ -304,15 +304,19 @@
 			return $url['path'] . $qstr;
 		}
 
-	 	function get_list($for_include=0)
+	 	function get_list($for_include=0,$action='',$action_id=0)
 		{
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
-			global $action,$addr_id,$proj_id,$info_id;
 
 			if (!$for_include)
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
+			}
+			if ($action == '')
+			{
+				$action = get_var('action',array('GET','POST'));
+				$action_id = get_var('action_id',array('GET','POST'));
 			}
 			$t = $this->template; $html = $this->html;
 
@@ -338,20 +342,20 @@
 			switch ($action)
 			{
 				case 'sp':        // Sub-List
-					$action_vars = array('action'=>'sp','info_id'=>$info_id);
+					$action_vars = array('action'=>'sp','info_id'=>$action_id);
 					$t->set_var(lang_info_action,lang('InfoLog - Subprojects from'));
 					break;
 			  case 'proj':
-					$action_vars += array( 'id_project' => $proj_id,
-												  'proj_id' => $proj_id);
-					$proj = $this->bo->readProj($proj_id);
+					$action_vars += array( 'id_project' => $action_id,
+												  'proj_id' => $action_id);
+					$proj = $this->bo->readProj($action_id);
 					$t->set_var(lang_info_action,lang('InfoLog').' - '.
 									$proj['title']);
 					break;
 			  case 'addr':
-					$action_vars += array( 'id_addr' => $addr_id,
-												  'addr_id' => $addr_id );
-					$addr = $this->bo->readAddr($addr_id);
+					$action_vars += array( 'id_addr' => $action_id,
+												  'addr_id' => $action_id );
+					$addr = $this->bo->readAddr($action_id);
 					$t->set_var(lang_info_action,lang('InfoLog').' - '.
 									$this->bo->addr2name($addr));
 					break;
@@ -394,8 +398,7 @@
 			// -------------- end header declaration -----------------
 
 			$ids = $this->bo->readIdArray($order,$sort,$filter,$cat_id,$query,
-								  					$action,$addr_id,$proj_id,$info_id,
-													$ordermethod,$start,$total);
+								  					$action,$action_id,$ordermethod,$start,$total);
 
 			$maxmatchs = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			if ($total > $maxmatchs)
@@ -420,14 +423,14 @@
 			{
 			  case 'sp':        // details of parent
 					$t->set_var( $this->infoHeaders(  ));
-					$t->set_var( $this->formatInfo( $info_id ));
+					$t->set_var( $this->formatInfo( $action_id ));
 					$t->parse('projdetailshandle','projdetails',True);
 					break;
 			  case 'addr':
-			  		$nm_extra = "&addr_id=$addr_id";
+			  		$nm_extra = "&action_id=$action_id";
 					break;
 			  case 'proj':
-			  		$nm_extra = "&proj_id=$proj_id";
+			  		$nm_extra = "&action_id=$action_id";
 					break;
 			}
 
@@ -503,7 +506,7 @@
 			  {
 					$t->set_var('viewsub', $html->a_href(
 						$this->icon('action','view'),'/index.php',
-						$this->menuaction()+array( 'info_id' => $id,
+						$this->menuaction()+array( 'action_id' => $id,
 						'filter' => $filter, 'action' => 'sp')));
 			  }
 			  else                           // else display ADD SUB-Icon
@@ -522,7 +525,7 @@
 					$t->set_var('viewparent',$html->a_href(
 						$this->icon('action','parent'),'/index.php',
 						$this->menuaction()+
-						array('info_id' => $parent,
+						array('action_id' => $parent,
 								'filter' => $filter,'action' => 'sp')));
 			  }
 

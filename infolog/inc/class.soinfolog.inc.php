@@ -232,8 +232,8 @@
 			return $this->db->f(0);
 		}
 
-		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$addr_id,
-									$proj_id,$info_id,$ordermethod,&$start,&$total)
+		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$action_id,
+									$ordermethod,&$start,&$total)
 		{
 			if ($order)
 			{
@@ -254,9 +254,9 @@
 			}
 			switch ($action)
 			{
-				case 'addr':	$filtermethod .= " AND info_addr_id=$addr_id ";
+				case 'addr':	$filtermethod .= " AND info_addr_id=$action_id ";
 									break;
-				case 'proj':	$filtermethod .= " AND info_proj_id=$proj_id ";
+				case 'proj':	$filtermethod .= " AND info_proj_id=$action_id ";
 									break;
 			}
 			if ($query)			  // we search in _from, _subject and _des for $query
@@ -264,7 +264,7 @@
 				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
 								 "like '%$query%' OR info_des like '%$query%') ";
 			}
-			$pid = 'AND info_id_parent='.($action == 'sp' ? $info_id : 0);  
+			$pid = 'AND info_id_parent='.($action == 'sp' ? $action_id : 0);
 
 			if (!$phpgw_info['user']['preferences']['infolog']['listNoSubs'] &&
 				 $action != 'sp')

@@ -18,8 +18,7 @@
 
 	/* echo "<p>hook_addressbook_view(ab_id=$ab_id)</p>"; */
 
-	$GLOBALS['addr_id'] = $GLOBALS['ab_id']; $GLOBALS['action'] = 'addr';
 	$infolog = CreateObject('infolog.uiinfolog');
-	$infolog->get_list(True);
+	$infolog->get_list(True,'addr',$GLOBALS['ab_id']);
 
 	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
