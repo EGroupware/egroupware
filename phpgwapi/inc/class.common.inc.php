@@ -1189,6 +1189,9 @@
 		*/
 		function phpgw_header()
 		{
+			// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+			header('Content-type: text/html; charset='.$GLOBALS['phpgw']->translation->charset());
+
 			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']
 				. '/head.inc.php');
 			$this->navbar(False);
