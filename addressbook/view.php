@@ -50,6 +50,15 @@
 		"view_footer" => "view_footer.tpl"
 	));
 
+	$customfields = array();
+	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
+		if ( substr($col,0,6) == 'extra_' ) {
+			$field = ereg_replace('extra_','',$col);
+			$field = ereg_replace(' ','_',$field);
+			$customfields[$field] = ucfirst($field);
+		}
+	}
+
 	while ($column = each($this->stock_contact_fields)) {
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
 			$phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
@@ -81,7 +90,7 @@
 		"address2" => "address2",
 		"address3" => "address3"
 	);
-	$qfields = $this->stock_contact_fields + $extrafields;
+	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
 	$fields  = addressbook_read_entry($ab_id,$qfields);
 
@@ -104,9 +113,13 @@
 		{
 			$t->set_var('display_col',display_name($colname[$column]));
 		}
-		else
+		elseif(display_name($column))
 		{
 			$t->set_var('display_col',display_name($column));
+		}
+		else
+		{
+			$t->set_var('display_col',ucfirst($column));
 		}
 		$ref = $data = "";
 		$coldata = $fields[0][$column];
