@@ -16,7 +16,7 @@
 		var $bo;
 		var $nextmatchs;
 		var $browser;
-		var $tempalte_dir;
+		var $template_dir;
 		var $help_info;
 
 		function uiphpwebhosting()
@@ -44,7 +44,7 @@
 		{
 			if($this->bo->path != $this->bo->homedir && $this->bo->path != $this->bo->fakebase && $this->bo->path != '/' && !$this->bo->vfs->acl_check($this->bo->path,Array(RELATIVE_NONE),PHPGW_ACL_READ))
 			{
-				$this->no_access_exists(lang('You do not have access to X',$this->bo->path));			
+				$this->no_access_exists(lang('You do not have access to %1',$this->bo->path));			
 			}
 			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
 			$this->bo->userinfo['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->bo->userinfo['working_id']);
@@ -107,27 +107,27 @@
 				$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE));
 				//$this->bo->vfs->override_acl = 0;
 			}
-//			elseif(preg_match("|^".$this->bo->fakebase."\/(.*)$|U",$this->bo->path,$this->bo->matches))
-//			{
-//				if (!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
-//				{
-//					//$this->bo->vfs->override_acl = 1;
-//					$this->bo->vfs->mkdir($this->bo->path,Array(RELATIVE_NONE));
-//					//$this->bo->vfs->override_acl = 0;
-//
-//					if($this->bo->debug)
-//					{
-//						echo 'DEBUG: ui.create_home_dir: PATH = '.$this->bo->path.'<br>'."\n";
-//						echo 'DEBUG: ui.create_home_dir(): matches[1] = '.$this->bo->matches[1].'<br>'."\n";
-//					}
-//					
-//					$group_id = $GLOBALS['phpgw']->accounts->name2id($this->bo->matches[1]);
-//					if($group_id)
-//					{
-//						$this->bo->vfs->set_attributes($this->bo->path,Array(RELATIVE_NONE),Array('owner_id' => $group_id, 'createdby_id' => $group_id));
-//					}
-//				}
-//			}
+			elseif(preg_match("|^".$this->bo->fakebase."\/(.*)$|U",$this->bo->path,$this->bo->matches))
+			{
+				if (!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
+				{
+					//$this->bo->vfs->override_acl = 1;
+					$this->bo->vfs->mkdir($this->bo->path,Array(RELATIVE_NONE));
+					//$this->bo->vfs->override_acl = 0;
+
+					if($this->bo->debug)
+					{
+						echo 'DEBUG: ui.create_home_dir: PATH = '.$this->bo->path.'<br>'."\n";
+						echo 'DEBUG: ui.create_home_dir(): matches[1] = '.$this->bo->matches[1].'<br>'."\n";
+					}
+					
+					$group_id = $GLOBALS['phpgw']->accounts->name2id($this->bo->matches[1]);
+					if($group_id)
+					{
+						$this->bo->vfs->set_attributes($this->bo->path,Array(RELATIVE_NONE),Array('owner_id' => $group_id, 'createdby_id' => $group_id));
+					}
+				}
+			}
 		}
 
 		function verify_path()
@@ -147,7 +147,7 @@
 				$this->bo->path != $this->bo->fakebase &&
 				!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
 			{
-				$this->no_access_exists(lang('Directory X does not exist',$this->bo->path));
+				$this->no_access_exists(lang('Directory %1 does not exist',$this->bo->path));
 			}
 		}
 

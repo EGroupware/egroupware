@@ -52,7 +52,7 @@
 		var $now;
 		var $matches;
 
-		var $debug = True;
+//		var $debug = True;
 		var $debug = False;
 
 		function bophpwebhosting()
@@ -197,7 +197,8 @@
 					. 'disppath: '.$this->disppath.'<br>'
 					. 'cwd: '.$this->cwd.'<br>'
 					. 'lesspath: '.$this->lesspath.'<br>'
-					. 'fakebase: '.$this->fakebase.'<p>'
+					. 'fakebase: '.$this->fakebase.'<br>'
+					. 'homedir: '.$this->homedir.'<p>'
 					. '<b>phpGW debug:</b><br>'
 					. 'real getabsolutepath: '.$this->vfs->getabsolutepath(False, False, False).'<br>'
 					. 'fake getabsolutepath: '.$this->vfs->getabsolutepath(False).'<br>'
