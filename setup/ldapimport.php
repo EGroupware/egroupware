@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if(!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -57,7 +57,7 @@
 	$applications        = $phpgw->applications;
 
 	$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	while($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 	}
@@ -75,12 +75,12 @@
 	// error message.
 
 	// connect to ldap server
-	if (! $ldap = $common->ldapConnect())
+	if(!$ldap = $common->ldapConnect())
 	{
 		$noldapconnection = True;
 	}
 
-	if ($noldapconnection)
+	if($noldapconnection)
 	{
 		Header('Location: config.php?error=badldapconnection');
 		exit;
@@ -90,9 +90,9 @@
 	$info = ldap_get_entries($ldap, $sr);
 	$tmp = '';
 
-	for ($i=0; $i<$info['count']; $i++)
+	for($i=0; $i<$info['count']; $i++)
 	{
-		if (! $phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
+		if(!$phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
 		{
 			$tmp = $info[$i]['uidnumber'][0];
 			$account_info[$tmp]['account_id']        = $info[$i]['uidnumber'][0];
@@ -103,16 +103,16 @@
 		}
 	}
 
-	if ($phpgw_info['server']['ldap_group_context'])
+	if($phpgw_info['server']['ldap_group_context'])
 	{
 		$srg = ldap_search($ldap,$config['ldap_group_context'],'(|(cn=*))',array('gidnumber','cn','memberuid'));
 		$info = ldap_get_entries($ldap, $srg);
 		$tmp = '';
 
-		for ($i=0; $i<$info['count']; $i++)
+		for($i=0; $i<$info['count']; $i++)
 		{
-			if (! $phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
-				! $account_info[$i][$info[$i]['cn'][0]])
+			if(!$phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
+				!$account_info[$i][$info[$i]['cn'][0]])
 			{
 				$tmp = $info[$i]['gidnumber'][0];
 				$group_info[$tmp]['account_id']        = $info[$i]['gidnumber'][0];
@@ -129,34 +129,41 @@
 	}
 
 	$GLOBALS['phpgw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_name",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	while($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = lang($GLOBALS['phpgw_setup']->db->f('app_name'));
 	}
 
-	if ($cancel)
+	$cancel = get_var('cancel','POST');
+	$submit = get_var('submit','POST');
+	$users  = get_var('users','POST');
+	$admins = get_var('admins','POST');
+	$s_apps = get_var('s_apps','POST');
+	$ldapgroups = get_var('ldapgroups','POST');
+
+	if($cancel)
 	{
-		Header("Location: ldap.php");
+		Header('Location: ldap.php');
 		exit;
 	}
 
-	if ($submit)
+	if($submit)
 	{
-		if (!count($admins))
+		if(!count($admins))
 		{
 			$error = '<br>You must select at least 1 admin';
 		}
 
-		if (!count($s_apps))
+		if(!count($s_apps))
 		{
 			$error .= '<br>You must select at least 1 application';
 		}
 
-		if (!$error)
+		if(!$error)
 		{
 			if($users)
 			{
-				while (list($key,$id) = each($users))
+				while(list($key,$id) = each($users))
 				{
 					$id_exist = 0;
 					$thisacctid    = $account_info[$id]['account_id'];
@@ -166,7 +173,7 @@
 					$thispasswd    = $account_info[$id]['account_passwd'];
 
 					// Do some checks before we try to import the data.
-					if (!empty($thisacctid) && !empty($thisacctlid))
+					if(!empty($thisacctid) && !empty($thisacctlid))
 					{
 						$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
 						copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
@@ -174,7 +181,7 @@
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
 						$acct_exist = $acct->name2id($thisacctlid);
-						if ($acct_exist)
+						if($acct_exist)
 						{
 							$thisacctid = $acct_exist;
 						}
@@ -207,9 +214,9 @@
 						// Only give them admin if we asked for them to have it.
 						// This is typically an exception to apps for run rights
 						//  as a group member.
-						for ($a=0;$a<count($admins);$a++)
+						for($a=0;$a<count($admins);$a++)
 						{
-							if ($admins[$a] == $thisacctlid)
+							if($admins[$a] == $thisacctlid)
 							{
 								$acl->delete('admin','run',1);
 								$acl->add('admin','run',1);
@@ -218,7 +225,7 @@
 
 						// Now make them a member of the 'Default' group.
 						// But, only if the current user is not the group itself.
-						if (!$defaultgroupid)
+						if(!$defaultgroupid)
 						{
 							$defaultgroupid = $accounts->name2id('Default');
 						}
@@ -234,9 +241,9 @@
 				}
 			}
 
-			if ($ldapgroups)
+			if($ldapgroups)
 			{
-				while (list($key,$groupid) = each($ldapgroups))
+				while(list($key,$groupid) = each($ldapgroups))
 				{
 					$id_exist = 0;
 					$thisacctid    = $group_info[$groupid]['account_id'];
@@ -255,7 +262,7 @@
 						// If so, we won't try to create it again.
 						$acct_exist = $groups->name2id($thisacctlid);
 						/* echo '<br<group: ' . $acct_exist; */
-						if ($acct_exist)
+						if($acct_exist)
 						{
 							$thisacctid = $acct_exist;
 						}
@@ -277,9 +284,9 @@
 						}
 
 						// Now make them a member of this group in phpgw.
-						while (list($key,$members) = each($thismembers))
+						while(list($key,$members) = each($thismembers))
 						{
-							if ($key == 'count')
+							if($key == 'count')
 							{
 								continue;
 							}
@@ -289,7 +296,7 @@
 							while(list($x,$y) = each($account_info))
 							{
 								/* echo '<br>checking: '.$y['account_lid']; */
-								if ($members == $y['account_lid'])
+								if($members == $y['account_lid'])
 								{
 									$tmpid = $acct->name2id($y['account_lid']);
 								}
@@ -323,7 +330,7 @@
 								$pref->account_id = (int)$tmpid;
 								$pref->read_repository();
 								@reset($s_apps);
-								while (list($key,$app) = each($s_apps))
+								while(list($key,$app) = each($s_apps))
 								{
 									$phpgw->hooks->single('add_def_pref',$app);
 								}
@@ -337,7 +344,7 @@
 						$acl->account_id = (int)$thisacctid;
 						$acl->read_repository();
 						@reset($s_apps);
-						while (list($key,$app) = each($s_apps))
+						while(list($key,$app) = each($s_apps))
 						{
 							$acl->delete($app,'run',1);
 							$acl->add($app,'run',1);
@@ -356,7 +363,7 @@
 				// Check if the group account is already there.
 				// If so, set our group_id to that account's id for use below.
 				$acct_exist = $groups->name2id('Default');
-				if ($acct_exist)
+				if($acct_exist)
 				{
 					$defaultgroupid = $acct_exist;
 				}
@@ -384,7 +391,7 @@
 				$acl->account_id = (int)$defaultgroupid;
 				$acl->read_repository();
 				@reset($s_apps);
-				while (list($key,$app) = each($s_apps))
+				while(list($key,$app) = each($s_apps))
 				{
 					$acl->delete($app,'run',1);
 					$acl->add($app,'run',1);
@@ -397,13 +404,13 @@
 
 	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Import'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 
-	if ($error)
+	if($error)
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
 		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
 	}
 
-	if ($setup_complete)
+	if($setup_complete)
 	{
 		echo '<br><center>'.lang('Import has been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
 		$GLOBALS['phpgw_setup']->html->show_footer();
@@ -418,7 +425,7 @@
 	$setup_tpl->set_block('ldap','submit','submit');
 	$setup_tpl->set_block('ldap','footer','footer');
 
-	while (list($key,$account) = each($account_info))
+	while(list($key,$account) = each($account_info))
 	{
 		$user_list .= '<option value="' . $account['account_id'] . '">'
 			. $common->display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'])
@@ -426,14 +433,14 @@
 	}
 
 	@reset($account_info);
-	while (list($key,$account) = each($account_info))
+	while(list($key,$account) = each($account_info))
 	{
 		$admin_list .= '<option value="' . $account['account_lid'] . '">'
 			. $common->display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'])
 			. '</option>';
 	}
 
-	while (list($key,$group) = each($group_info))
+	while(list($key,$group) = each($group_info))
 	{
 		$group_list .= '<option value="' . $group['account_id'] . '">'
 			. $group['account_lid']

@@ -125,6 +125,13 @@
 	}
 	$group_info = $newgroup;
 
+	$cancel = get_var('cancel','POST');
+	$submit = get_var('submit','POST');
+	$users  = get_var('users','POST');
+	$admins = get_var('admins','POST');
+	$s_apps = get_var('s_apps','POST');
+	$ldapgroups = get_var('ldapgroups','POST');
+
 	if($cancel)
 	{
 		Header('Location: ldap.php');
