@@ -572,6 +572,7 @@
 			$setup_tpl->set_var('lang_sesstype',lang('Sessions Type'));
 			$setup_tpl->set_var('lang_sesstypedescr',lang('What type of sessions management do you want to use (PHP4 session management may perform better)?'));
 			$setup_tpl->set_var('lang_enablemcrypt',lang('Enable MCrypt'));
+			$setup_tpl->set_var('lang_mcrypt_warning',lang('Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.'));
 			$setup_tpl->set_var('lang_mcryptversion',lang('MCrypt version'));
 			$setup_tpl->set_var('lang_mcryptversiondescr',lang('Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.'));
 			$setup_tpl->set_var('lang_mcryptiv',lang('MCrypt initialization vector'));

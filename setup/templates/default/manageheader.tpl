@@ -40,12 +40,13 @@
     <td>{lang_sesstypedescr}</td>
   </tr>
   <tr>
-    <td colspan=2><b>{lang_enablemcrypt}</b><br>
+    <td><b>{lang_enablemcrypt}</b><br>
       <select name="setting[enable_mcrypt]">
         <option value="True"{mcrypt_enabled_yes}>True
         <option value="False"{mcrypt_enabled_no}>False
       </select>
     </td>
+    <td>{lang_mcrypt_warning}</td>
   </tr>
   <tr>
     <td><b>{lang_mcryptversion}</b><br><input type="text" name="setting[mcrypt_version]" value="{mcrypt}"></td>

@@ -220,6 +220,7 @@ no mysql support found. disabling	setup	de	Keine Unterstützung für MySQL gefunde
 no oracle-db support found. disabling	setup	de	Keine Unterstützung für Oracle gefunden. Abgeschaltet
 no postgres-db support found. disabling	setup	de	Keine Unterstützung für Postgres gefunden. Abgeschaltet
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle mcrypt Algorithmen und Modi funktionieren mit eGroupWare. Wenn sie Probleme feststellen, versuchen sie es abzuschalten.
 not complete	setup	de	nicht komplett
 not completed	setup	de	Nicht komplett
 not ready for this stage yet	setup	de	Noch nicht fertig für diesen Schritt
@@ -246,7 +247,7 @@ please check for sql scripts within the application's directory	setup	de	Bitte s
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
 please configure phpgroupware for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren sie das %1.
-please fix the above errors (***) and %1continue to the header admin%2	setup	de	Bitte beheben sie die obigen Fehler (***) und machen Sie %1weiter mit dem Header Admin%2
+please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	de	Bitte beheben sie die obigen Fehler (%1) und Warnungen (%2) und machen Sie %3weiter mit dem Header Admin%4
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einlogen
 please login to phpgroupware and run the admin application for additional site configuration	setup	de	Bitte in phpGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.

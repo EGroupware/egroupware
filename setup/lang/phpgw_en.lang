@@ -218,6 +218,7 @@ no mysql support found. disabling	setup	en	No MySQL support found. Disabling
 no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
 no postgres-db support found. disabling	setup	en	No Postgres-DB support found. Disabling
 no xml support found. disabling	setup	en	No XML support found. Disabling
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
 not complete	setup	en	not complete
 not completed	setup	en	Not Completed
 not ready for this stage yet	setup	en	Not ready for this stage yet
@@ -244,7 +245,7 @@ please check for sql scripts within the application's directory	setup	en	Please 
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure phpgroupware for your environment	setup	en	Please configure phpGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.
-please fix the above errors (***) and %1continue to the header admin%2	setup	en	Please fix the above errors (***) and %1continue to the Header Admin%2
+please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	en	Please fix the above errors (%1) and warnings(%2) and %3continue to the Header Admin%4
 please install	setup	en	Please install
 please login	setup	en	Please login
 please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
