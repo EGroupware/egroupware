@@ -285,7 +285,7 @@
 
 			$this->session_flags = $session['session_flags'];
 
-			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
+			sessions_::split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
@@ -499,7 +499,7 @@
 			}
 
 			$this->clean_sessions();
-			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
+			sessions_::split_login_domain($login,$this->account_lid,$this->account_domain);
 
 			$now = time();
 
