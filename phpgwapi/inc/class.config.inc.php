@@ -53,16 +53,19 @@
 		{
 			$config_data = $this->config_data;
 
-			$this->db->lock('phpgw_config');
-			$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
-			while (list($name,$value) = each($config_data))
+			if ($config_data)
 			{
-				$name  = addslashes($name);
-				$value = addslashes($value);
-				$this->db->query("insert into phpgw_config (config_app,config_name,config_value) "
-					. "values ('" . $this->appname . "','" . $name . "','" . $value . "')",__LINE__,__FILE__);
+				$this->db->lock('phpgw_config');
+				$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
+				while (list($name,$value) = each($config_data))
+				{
+					$name  = addslashes($name);
+					$value = addslashes($value);
+					$this->db->query("insert into phpgw_config (config_app,config_name,config_value) "
+						. "values ('" . $this->appname . "','" . $name . "','" . $value . "')",__LINE__,__FILE__);
+				}
+				$this->db->unlock();
 			}
-			$this->db->unlock();
 		}
 
 		function delete_repository()
