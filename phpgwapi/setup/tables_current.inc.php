@@ -353,7 +353,7 @@
 	);
 
 	/* Try to fix this unfortunate case for mysql 3.22.X in php4 at least */
-	if(floor(phpversion()) == 4 && @$GLOBALS['phpgw_setup']->db->Type == 'mysql')
+	if(phpversion() >= 4.0.5 && @$GLOBALS['phpgw_setup']->db->Type == 'mysql')
 	{
 		$_ver_str = @mysql_get_server_info();
 		$_ver_arr = explode(".",$_ver_str);
