@@ -55,23 +55,35 @@
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
-			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
+			if($debug)
+			{
+				echo '<br>cmp_version(' . $str1 . ',' . $str2 . ')';
+				echo "<br>$regs[0] - $regs2[0]";
+			}
 
 			for($i=1;$i<5;$i++)
 			{
 				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
 				if($regs2[$i] == $regs[$i])
 				{
+					if($debug) { echo ' are equal...'; }
 					continue;
 				}
 				if($regs2[$i] > $regs[$i])
 				{
+					if($debug) { echo ', and a < b.  Returning 1.'; }
 					return 1;
 				}
 				elseif($regs2[$i] < $regs[$i])
 				{
+					if($debug) { echo ', and a > b.  Returning 0.'; }
 					return 0;
 				}
+			}
+			if($debug)
+			{
+				echo ' - all equal.  Returning NULL.';
+				return '';
 			}
 		}
 
@@ -86,7 +98,16 @@
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
-			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
+			if($debug)
+			{
+				echo '<br>cmp_version_long(' . $str1 . ',' . $str2 . ')';
+				echo "<br>$regs[0] - $regs2[0]";
+			}
+			if(!$regs[0])
+			{
+				if($debug) { echo '<br>calling cmp_version(' . $str1 . ',' . $str2 . ')'; }
+				return $this->cmp_version($str1,$str2,$debug);
+			}
 
 			for($i=1;$i<6;$i++)
 			{
@@ -99,16 +120,20 @@
 				}
 				if($regs2[$i] > $regs[$i])
 				{
-					if($debug) { echo ', and a > b'; }
+					if($debug) { echo ', and a < b.  Returning 1.'; }
 					return 1;
 				}
 				elseif($regs2[$i] < $regs[$i])
 				{
-					if($debug) { echo ', and a < b'; }
+					if($debug) { echo ', and a > b.  Returning 0.'; }
 					return 0;
 				}
 			}
-			if($debug) { echo ' - all equal.'; }
+			if($debug)
+			{
+				echo ' - all equal.  Returning NULL.';
+				return '';
+			}
 		}
 
 		// Convert an array into the format needed for the access column.
