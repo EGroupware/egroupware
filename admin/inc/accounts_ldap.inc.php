@@ -314,6 +314,7 @@
 
     $table_locks = array('preferences','todo','addressbook','accounts');
 
+    include($phpgw_info["server"]["server_root"]."/calendar/inc/functions.inc.php");
     $phpgw->calendar->delete($lid);
 
     $phpgw->db->lock($table_locks);
