@@ -235,28 +235,7 @@
 		for($i=0;$i<count($overlapping_events);$i++)
 		{
 			$over = $phpgw->calendar->fetch_event($cal_stream,$overlapping_events[$i]);
-			$overlap .= '<li>';
-			$private = $phpgw->calendar->is_private($over,$over->owner,'title');
-
-			if(strtoupper($private) == 'PRIVATE')
-			{
-				$overlap .= '(PRIVATE)';
-			}
-			else
-			{
-				if($over->rpt_type == RPT_NONE)
-				{
-					$overlap .= $phpgw->calendar->link_to_entry($over->id,$over->description,'circle.gif',' width="5" height="7"').$over->title;
-				}
-				else
-				{
-					$overlap .= $phpgw->calendar->link_to_entry($over->id,$over->description,'circle.gif',' width="5" height="7"','multi_1.gif',' width="5" height="7"').$over->title;
-				}
-			}
-
-			$over_start = mktime($over->start->hour,$over->start->min,$over->start->sec,$over->start->month,$over->start->mday,$over->start->year) - $tz_offset;
-			$over_end = mktime($over->end->hour,$over->end->min,$over->end->sec,$over->end->month,$over->end->mday,$over->end->year) - $tz_offset;
-			$overlap .= ' ('.$phpgw->common->show_date($over_start).' - '.$phpgw->common->show_date($over_end).')<br>';
+			$overlap .= '<li>'.$phpgw->calendar->link_to_entry($over,$event->start->month,$event->start->mday,$event->start->year);
 		}
 		if(strlen($overlap) > 0)
 		{
