@@ -86,3 +86,16 @@ Holiday	calendar	de	Feiertag
 Reset	calendar	de	Zurücksetzen
 Occurence	calendar	de	Wiederholung
 Observance Rule	calendar	de	Observance Rule
+You have not entered a title	calendar	de	Sie haben keinen Titel angegeben
+Choose the category	calendar	de	Kathegorie auswählen
+Participates	calendar	de	nimmt teil
+Scheduling Conflict	calendar	de	Terminüberschneidung
+Accepted	calendar	de	Zugesagt
+No Response	calendar	de	Keine Antwort
+Participant	calendar	de	Teilnehmer
+Accept	calendar	de	Zusagen
+Reject	calendar	de	Absagen
+Tentative	calendar	de	Vorläufige Zusage
+Calendar settings	calendar	de	Kalendar Einstellungen
+Do you wish to autoload calendar holidays files dynamically?	calendar	de	Sollen die Feiertage automatisch geladen werden?
+Location to autoload from	calendar	de	Wo sollen sie geladen werden
