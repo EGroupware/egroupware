@@ -550,7 +550,10 @@
         $currentver = "0.9.5pre2";
         update_version_table();
       }
-
+      if ($currentver == "0.9.5pre2") {
+        $currentver = "0.9.5";
+        update_version_table();
+      }
       if ($oldversion != $currentver){
         echo "  </tr><td>\n";
         echo "  <tr bgcolor=\"e6e6e6\">\n";
