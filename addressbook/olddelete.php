@@ -21,7 +21,7 @@
   include("../header.inc.php");
   
   if (! $ab_id) {
-     @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
+     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
   }
 
   if ($confirm != "true") {
@@ -29,7 +29,7 @@
      $phpgw->db->next_record();
 
      if ($phpgw->db->f("ab_owner") != $phpgw_info["user"]["account_id"])
-        @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
+        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
 
      ?>
         <body bgcolor=FFFFFF aLink=0000EE link=0000EE vlink=0000EE>
@@ -46,7 +46,7 @@
 
      $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["account_id"]
 		             . "' and ab_id='$ab_id'");
-     @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
+     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	    "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
   }
 ?>

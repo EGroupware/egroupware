@@ -36,24 +36,27 @@
   function form($format,$action,$title,$fields)
   {
       global $phpgw, $phpgw_info;
+     
+      $t = new Template($phpgw_info["server"]["app_tpl"]);
+      $t->set_file(array( "form"	=> "form.tpl"));
 
       $email        = $fields["email"];
       $firstname    = $fields["firstname"];
       $lastname     = $fields["lastname"];
       $title        = $fields["title"];
       $hphone       = $fields["hphone"];
-      $wphone	   = $fields["wphone"];
-      $fax	      = $fields["fax"];
-      $pager	    = $fields["pager"];
-      $mphone	   = $fields["mphone"];
-      $ophone	   = $fields["ophone"];
-      $street	   = $fields["street"];
+      $wphone       = $fields["wphone"];
+      $faxi         = $fields["fax"];
+      $pager        = $fields["pager"];
+      $mphone       = $fields["mphone"];
+      $ophone       = $fields["ophone"];
+      $street       = $fields["street"];
       $address2     = $fields["address2"];
-      $city	     = $fields["city"];
+      $city         = $fields["city"];
       $state        = $fields["state"];
-      $zip	      = $fields["zip"];
-      $bday	     = $fields["bday"];
-      $notes	    = $fields["notes"];
+      $zip          = $fields["zip"];
+      $bday         = $fields["bday"];
+      $notes        = $fields["notes"];
       $access       = $fields["access"];
       $ab_company   = $fields["company"];
       $company_id   = $fields["company_id"];
@@ -112,8 +115,7 @@
                       . "<option value=10 $temp_month[10]>October</option>"
                       . "<option value=11 $temp_month[11]>November</option>"
                       . "<option value=12 $temp_month[12]>December</option>"
-                      . "</select>"
-;
+                      . "</select>";
           $bday_day   = '<input maxlength="2" name="bday_day" value="' . $day . '" size="2">'
 ;
           $bday_year  = '<input maxlength="4" name="bday_year" value="' . $year . '" size="4">';
@@ -132,16 +134,12 @@
                    . "<option value=10>October</option>"
                    . "<option value=11>November</option>"
                    . "<option value=12>December</option>"
-                   . "</select>"
-;
-       $bday_day  = '<input name="bday_day" size="2" maxlength="2">'
-;
-       $bday_year = '<input name="bday_year" size="4" maxlength="4">'
-;
+                   . "</select>";
+       $bday_day  = '<input name="bday_day" size="2" maxlength="2">';
+       $bday_year = '<input name="bday_year" size="4" maxlength="4">';
     }
 
-    $notes	 = '<TEXTAREA cols="60" name="notes" rows="4">'
- . $notes . '</TEXTAREA>';
+    $notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
   } else {
      $notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
 		. $notes . "</TEXTAREA></form>";
@@ -160,216 +158,125 @@
 
   // test:
   //echo "Time track app status = " . $phpgw_info["apps"]["timetrack"]["enabled"];
+    #$url .= '<input name="url" value="';
 
-  ?>
+    if (! ereg("^http://",$url)) {
+      $url .= "http://". $url;
+    } 
+    #$url .= '">';
+    
+    $birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
+          . '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
 
-<table width="75%" border="0" align="center">
-  <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Last Name"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $lastname; ?>
-    </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("First Name"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $firstname; ?>
-    </font></td>
-  </tr>
-  <tr>
-    <td>
-     <font color="#000000" face="" size="-1"><?php echo lang("Title"); ?>:</font>
-    </td>
-    <td>
-      <font size="-1">
-      <?php echo $title; ?>
-    </font></td>
-    <td>
-     <font color="#000000" face="" size="-1"><?php echo lang("E-mail"); ?>:
-    </td>
-    <td>
-      <font size="-1">
-      <?php echo $email; ?>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-     <font color="#000000" face="" size="-1"><?php echo lang("Company Name"); ?>:</font>
-    </td>
-    <td>
-     <font size="-1"><?php echo $company; ?>
-</font>
-    </td>
-    <td>
-     <font color="#000000" face="" size="-1"><?php echo lang("URL"); ?>:</font>
-    </td>
-    <td>
-     <input name="url" value="<?php
-                                if (! ereg("^http://",$url)) {
-                                   echo "http://";
-                                }
-                                echo $url;
-                              ?>">
-    </td>
-    <td><font size="-1"></font></td>
-  </tr>
-  
-  <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Home Phone"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $hphone; ?>
-    </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Fax"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $fax; ?>
-    </font></td>
-  </tr>
-  <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Work Phone"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $wphone; ?>
-    </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Pager"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $pager; ?>
-    </font></td>
-  </tr>
-  <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Mobile"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $mphone; ?>
-    </font></td>
-    <td><font face="" size="-1" color="#000000"><?php echo lang("Other number"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $ophone; ?>
-    </font></td>
-  </tr>
-  <tr>
-    <td><font face="" size="-1"><?php echo lang("Street"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $street; ?>
-    </font></td>
-    <td><font face="" size="-1"><?php echo lang("Birthday"); ?>:</font></td>
-    <td>
-     <?php 
-       echo $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
-          . '<font face="' . $theme["font"] . '" size="-2">(e.g. 1969)</font>';
-     ?>
-   </td>
-  </tr>
-  <tr>
-    <td><font face="" size="-1"><?php echo lang("Line 2"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $address2; ?>
-    </font></td>
-    <td><font size="-1"></font></td>
-    <td><font size="-1"></font></td>
-  </tr>
-  <tr>
-    <td><font face="" size="-1"><?php echo lang("City"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $city; ?>
-    </font></td>
-    <td><font size="-1"></font></td>
-    <td><font size="-1"></font></td>
-  </tr>
-  <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("State"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $state; ?>
-    </font></td>
-    <td><font size="-1"></font></td>
-    <td><font size="-1"></font></td>
-  </tr>
-  <tr> 
-    <td><font face="" size="-1"><?php echo lang("ZIP Code"); ?>:</font></td>
-    <td>
-      <font size="-1">
-      <?php echo $zip; ?>
-    </font></td>
-    <td><font size="-1"></font></td>
-    <td><font size="-1"></font></td>
-  </tr>
-  <tr>
-    <td colspan="4"><font size="-1"></font></td>
-  </tr>
-  <tr>
-
-  <?php
     if ($format == "view") {
        if ($access != "private" && $access != "public") {
-	  echo "<td><font size=\"-1\">" . lang("Group access") . ":</font></td>"
-	     . "<td colspan=\"3\"><font size=\"-1\">"
+	  $access_link .= '<td><font size="-1">'.lang("Group access").':</font></td>'
+	     . '<td colspan="3"><font size="-1">'
 	     . $phpgw->accounts->convert_string_to_names($access);
        } else {
-	  echo "<td><font size=\"-1\">" . lang("access") . ":</font></td>"
-	     . "<td colspan=\"3\"><font size=\"-1\">"
+	  $access_link .=  '<td><font size="-1">'.lang("Access").':</font></td>'
+	     . '<td colspan="3"><font size="-1">'
 	     . $access;
        }
     } else {
-       ?>
-    <td><font size="-1"><?php echo lang("Access"); ?>:</font></td>
+          $access_link .= '<td><font size="-1">'.lang("Access").':</font></td>
     <td colspan="3">
       <font size="-1">
-
       <select name="access">
-       <option value="private"<?php
-        if ($access == "private") echo " selected"; ?>><?php echo lang("private"); ?></option>
-       <option value="public"<?php
-        if ($access == "public") echo " selected"; ?>><?php echo lang("Global Public"); ?></option>
-       <option value="group"<?php
+       <option value="private"';
+
+        if ($access == "private") $access_link .= ' selected>'.lang("private").'</option>';
+        else $access_link .= '>'.lang("private").'</option>';
+
+	$access_link .= '<option value="public"
+	';
+
+        if ($access == "public")
+          $access_link .= ' selected>'.lang("Global Public").'</option>';
+        else $access_link .= '>'.lang("Global Public").'</option>';
+        
+        $access_link .= '<option value="group"
+        ';
+
         if ($access != "public" && $access != "private" && $access != "")
-           echo " selected";
-        echo ">" . lang("Group Public") . "</option></select>";
+          $access_link .= ' selected>'.lang("Group Public").'</option></select>';
+        else
+          $access_link .= '>'.lang("Group Public").'</option></select>';
+
+        $access_link .= '</tr>
+        ';
     }
-    ?>
-    </tr>
-    <?php
+
       if ($format != "view") {
-         echo "<tr><td><font size=\"-1\">" . lang("Which groups")
-	    . ":</font></td><td colspan=\"3\"><select name=\"n_groups[]\" "
-	    . "multiple size=\"5\">";
+         $access_link .= '<tr><td><font size="-1">' . lang("Which groups")
+	    . ':</font></td><td colspan="3"><select name="n_groups[]" '
+	    . 'multiple size="5">';
 
         $user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
         for ($i=0;$i<count($user_groups);$i++) {
-            echo "<option value=\"" . $user_groups[$i][0] . "\"";
+            $access_link .= '<option value="'.$user_groups[$i][0].'"';
             if (ereg(",".$user_groups[$i][0].",",$access))
-               echo " selected";
+               $access_link .= ' selected';
 
-            echo ">" . $user_groups[$i][1] . "</option>\n";
+            $access_link .= '>'.$user_groups[$i][1].'</option>
+	    ';
         }
-        echo "</select></font></td></tr>";
+        $access_link .= '</select></font></td></tr>';
+	$t->set_var("lang_access",lang("access"));
+      } else {
+        $access_link = '';
+	$t->set_var("lang_access",'');
       }
 
     if ($format == "view")
-       echo "<tr><td><font size=\"-1\">" . lang("Created by") . ":</font></td>"
-	  . "<td colspan=\"3\"><font size=\"-1\">"
+       $create .= '<tr><td><font size="-1">'.lang("Created by").':</font></td>'
+	  . '<td colspan="3"><font size="-1">'
 	  . grab_owner_name($fields["owner"]);
-   
-  ?></font>
-    </td>
-  </tr>
-  <tr>
-    <td><font size="-1"><?php echo lang("Notes"); ?>:
-      
-    </font></td>
-    <td colspan="3">
-      <font size="-1">
-      <?php echo $notes; ?>
-    </font></td>
-  </tr>
-</table>
-<?php
+    else
+       $create = '';
+  
+  $t->set_var("lang_lastname",lang("Last Name"));
+  $t->set_var("lastname",$lastname);
+  $t->set_var("lang_firstname",lang("First Name"));
+  $t->set_var("firstname",$firstname);
+  $t->set_var("lang_company",lang("Company"));
+  $t->set_var("company",$company);
+  $t->set_var("lang_title",lang("Title"));
+  $t->set_var("title",$title);
+  $t->set_var("lang_email",lang("Email"));
+  $t->set_var("email",$email);
+  $t->set_var("lang_url",lang("url"));
+  $t->set_var("url",$url);
+  $t->set_var("lang_hphone",lang("Home Phone"));
+  $t->set_var("hphone",$hphone);
+  $t->set_var("lang_fax",lang("fax"));
+  $t->set_var("fax",$fax);
+  $t->set_var("lang_wphone",lang("Work Phone"));
+  $t->set_var("wphone",$wphone);
+  $t->set_var("lang_pager",lang("Pager"));
+  $t->set_var("pager",$pager);
+  $t->set_var("lang_mphone",lang("Mobile Phone"));
+  $t->set_var("mphone",$mphone);
+  $t->set_var("lang_ophone",lang("Other Phone"));
+  $t->set_var("ophone",$ophone);
+  $t->set_var("lang_street",lang("Street"));
+  $t->set_var("street",$street);
+  $t->set_var("lang_birthday",lang("Birthday"));
+  $t->set_var("birthday",$birthday);
+  $t->set_var("lang_address2",lang("Line 2"));
+  $t->set_var("address2",$address2);
+  $t->set_var("lang_city",lang("city"));
+  $t->set_var("city",$state);
+  $t->set_var("lang_state",lang("state"));
+  $t->set_var("state",$state);
+  $t->set_var("lang_zip",lang("Zip Code"));
+  $t->set_var("zip",$zip);
+  $t->set_var("access_link",$access_link);
+  $t->set_var("create",$create);
+  $t->set_var("lang_notes",lang("notes"));
+  $t->set_var("notes",$notes);
+
+  $t->parse("out","form");
+  $t->pparse("out","form");
 }
 ?>

@@ -19,9 +19,7 @@
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   $phpgw_info["flags"]["enable_addressbook_class"] = True;
   include("../header.inc.php");
-  
-  $t = new Template($phpgw_info["server"]["app_tpl"]);
-  $t->set_file(array( "add"	=> "add.tpl"));
+
 
   if ($AddVcard){
        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
@@ -103,12 +101,35 @@
             "cd=14"));
   }
 
-  $t->set_var("lang_ok",lang("ok"));
-  $t->set_var("lang_clear",lang("clear"));
-  $t->set_var("lang_cancel",lang("cancel"));
-  $t->set_var("cancel_link",'<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . '">');
-  $t->parse("out","add");
-  $t->pparse("out","add");
+?>
+    <TABLE border="0" cellPadding="0" cellSpacing="0" width="95%">
+      <TBODY> 
+      <TR> 
+        <TD> 
+          <TABLE border="0" cellPadding="1" cellSpacing="1">
+            <TBODY> 
+            <TR> 
+              <TD align="left"> 
+                <INPUT type="submit" name="submit" value="<?php echo lang("OK"); ?>">
+              </TD>
+              <TD align="left"> 
+                <INPUT name="reset" type="reset" value="<?php echo lang("Clear"); ?>">
+              </TD>
+              <TD align="left"> 
+                <a href="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . "\">" . lang("Cancel"); ?></a>
+              </TD>
+            </TR>
+            </TBODY> 
+          </TABLE>
+        </TD>
+      </TR>
+      </TBODY> 
+    </TABLE>
+  </FORM>
+</DIV>
+</BODY>
+</HTML>
 
+<?php
   $phpgw->common->phpgw_footer();
 ?>

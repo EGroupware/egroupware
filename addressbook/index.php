@@ -202,7 +202,7 @@
      </td>
     <td valign="top" width="5%">
      <font face="'.$phpgw_info["theme"]["font"].'" size="2">
-      '.$phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")).'
+      '.$phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")."&start=".$start."&sort=".$sort."&order=".$order).'
      </font>
     </td>
    </tr>
@@ -219,6 +219,8 @@
   $t->set_var("lang_vcard",lang("VCard"));
   $t->set_var("lang_edit",lang("Edit"));
   $t->set_var("start",$start);
+  $t->set_var("sort",$sort);
+  $t->set_var("order",$order);
   $t->set_var("filter",$filter);
   $t->set_var("qfield",$qfield);
   $t->set_var("query",$query);
