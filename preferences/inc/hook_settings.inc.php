@@ -82,6 +82,14 @@
 			$langs[$GLOBALS['phpgw']->db->f('lang')] = $db2->f('lang_name');
 		}
 	}
+	foreach ($langs as $key => $name)	// if we have a translation use it
+	{
+		$trans = lang($name);
+		if ($trans != $name . '*')
+		{
+			$langs[$key] = $trans;
+		}
+	}
 	create_select_box('Language','lang',$langs);
 
 	// preference.php handles this function

@@ -283,6 +283,19 @@
 			'ZW'=>'ZIMBABWE'
 		);
 
+		function sbox()
+		{
+			foreach ($this->country_array as $key => $name)
+			{
+				$translated = lang($name);
+				if ($translated != $name.'*')
+				{
+					$this->country_array[$key] = $translated;
+				}
+			}
+			asort($this->country_array);
+		}
+
 		function hour_formated_text($name, $selected = 0)
 		{
 			$s = '<select name="' . $name . '">';
