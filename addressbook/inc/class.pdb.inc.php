@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Palm Database Access                                  *
-  * This file written by Miles Lott <milos@speakeasy.net>                    *
+  * eGroupWare API - Palm Database Access                                    *
+  * This file written by Miles Lott <milos@groupwhere.org>                   *
   * Access to palm OS database structures (?)                                *
   * -------------------------------------------------------------------------*
   * Portions of code from ToPTIP                                             *
@@ -9,8 +9,7 @@
   *   This file is a translation of the txt2pdbdoc tool                      *
   *   written in C Paul J. Lucas (plj@best.com)                              *
   * -------------------------------------------------------------------------*
-  * This library may be part of the phpGroupWare API                         *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library may be part of the eGroupWare API                           *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

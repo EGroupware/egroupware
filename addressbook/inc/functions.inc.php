@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - addressbook                                               *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - addressbook                                                 *
+  * http://www.egroupware.org                                                *
   * Written by Joseph Engo <jengo@mail.com>                                  *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

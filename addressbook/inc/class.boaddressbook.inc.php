@@ -1,8 +1,8 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - addressbook                                               *
-  * http://www.phpgroupware.org                                              *
-  * Written by Miles Lott <milosch@phpgroupware.org>                         *
+  * eGroupWare - addressbook                                                 *
+  * http://www.egroupware.org                                                *
+  * Written by Miles Lott <milosch@groupwhere.org>                           *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
