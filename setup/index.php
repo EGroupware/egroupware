@@ -20,7 +20,7 @@
 
   /* Check header and authentication */
   $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
-  if ($phpgw_info["setup"]["stage"]["header"] != 10){
+  if ($phpgw_info["setup"]["stage"]["header"] != "10"){
     Header("Location: manageheader.php");
     exit;
   }elseif (!$phpgw_setup->auth("Config")){

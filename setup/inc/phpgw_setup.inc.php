@@ -40,7 +40,7 @@
 
       echo "<p><body bgcolor='#ffffff'>\n";
       echo "<table border=\"0\" align=\"center\">\n";
-      if ($phpgw_info["setup"]["stage"]["header"] == 10){
+      if ($phpgw_info["setup"]["stage"]["header"] == "10"){
         echo "  <tr bgcolor=\"486591\">\n";
         echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup/Config Admin Login</b></font></td>\n";
         echo "  </tr>\n";
@@ -134,17 +134,10 @@
         }else{
           return True;
         }
-      } elseif (isset($HeaderPW)) {
-        if ($HeaderPW != $phpgw_info["server"]["header_admin_password"] && $auth_type == "Header") {
-          setcookie("HeaderPW");  // scrub the old one
-          $phpgw_info["setup"]["HeaderLoginMSG"] = "Invalid session cookie (cookies must be enabled)";
-          return False;
-        }else{
-          return True;
-        }
       } elseif (isset($FormPW)) {
         if (isset($ConfigLogin)){
           if ($FormPW == $phpgw_domain[$FormDomain]["config_passwd"] && $auth_type == "Config") {
+            setcookie("HeaderPW");  // scrub the old one
             setcookie("ConfigPW",$FormPW);
             setcookie("ConfigDomain",$FormDomain);
             $ConfigDomain = $FormDomain;
@@ -161,6 +154,14 @@
             $phpgw_info["setup"]["HeaderLoginMSG"] = "Invalid password";
             return False;
           }
+        }
+      } elseif (isset($HeaderPW)) {
+        if ($HeaderPW != $phpgw_info["server"]["header_admin_password"] && $auth_type == "Header") {
+          setcookie("HeaderPW");  // scrub the old one
+          $phpgw_info["setup"]["HeaderLoginMSG"] = "Invalid session cookie (cookies must be enabled)";
+          return False;
+        }else{
+          return True;
         }
       } else {
         return False;

@@ -40,7 +40,7 @@
 	        $phpgw_setup->db->next_record();
   	      if ($phpgw_setup->db->f("config_value") <> $newsetting[1]) {
 	          $phpgw_setup->db->query("DELETE FROM newsgroups");
-   	        $phpgw_setup->db->query("DELETE FROM users_newsgroups");
+//   	        $phpgw_setup->db->query("DELETE FROM users_newsgroups");
    	      }
 	      }
    	  }

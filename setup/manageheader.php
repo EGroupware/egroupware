@@ -251,6 +251,11 @@
       }
       echo '<form action="index.php" method=post>';
       echo'<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
+      echo'<input type=hidden name="FormLogout" value="header">';
+//      echo'<input type=hidden name="FormLogout" value="config">';
+//      echo'<input type=hidden name="ConfigLogin" value="Login">';
+//      echo'<input type=hidden name="FormPW" value="'.$phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"].'">';
+//      echo'<input type=hidden name="FormDomain" value="'.$phpgw_info["server"]["default_domain"].'">';
       echo'<input type=submit name="junk" value="continue">';
       echo "</form>";
       echo "</body>";
