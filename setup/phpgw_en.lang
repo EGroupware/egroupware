@@ -84,8 +84,9 @@ calendar preferences	common	en	Calendar preferences
 cancel	common	en	Cancel
 cannot display the requested article from the requested newsgroup	nntp	en	Cannot display the requested article from the requested newsgroup
 car phone	addressbook	en	Car Phone
-categories	notes	en	categories
-categories for	notes	en	categories for
+category	common	en	Category
+categories	common	en	Categories
+categories for	common	en	Categories for
 cc	email	en	CC
 cell phone	addressbook	en	cell phone
 change	common	en	Change
@@ -198,6 +199,7 @@ generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 geo	addressbook	en	GEO
 georgia	notes	en	Georgia
+global	common	en	Global
 global categories	common	en	Global Categories
 global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
@@ -411,7 +413,7 @@ search	common	en	Search
 search results	calendar	en	Search Results
 section	email	en	Section
 select application	transy	en	Select application
-select category	notes	en	Select Category
+select category	common	en	Select Category
 select different theme	preferences	en	Select different Theme
 select headline news sites	common	en	Select Headline News sites
 select language to generate for	transy	en	Select language to generate for

@@ -85,8 +85,9 @@ cancel	common	de	Abbruch
 cancel	filemanager	de	Abbrechen
 cannot display the requested article from the requested newsgroup	nntp	de	Der gewünschte Artikel kann leider nicht angezeigt werden
 car phone	addressbook	de	Autotelefon
-categories	notes	de	Kategorien
-categories for	notes	de	Kategorien für
+category	common	de	Kategorie
+categories	common	de	Kategorien
+categories for	common	de	Kategorien für
 cc	email	de	Kopie
 cell phone	addressbook	de	Mobilfunk
 change	common	de	Ändern
@@ -197,6 +198,7 @@ full name	addressbook	de	vollständiger Name
 generate new lang.sql file	transy	de	Erzeuge neue lang.sql Datei
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
 georgia	notes	de	Georgia
+global	common	de	Globale
 global categories	common	de	Globale Kategorien
 global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
@@ -413,7 +415,7 @@ search results	calendar	de	Suchergebnisse
 section	admin	de	Abschnitt
 section	email	de	Sektion
 select application	transy	de	Anwendung auswählen
-select category	notes	de	Kategorie auswählen
+select category	common	de	Kategorie auswählen
 select different theme	preferences	de	anderes Schema wählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
