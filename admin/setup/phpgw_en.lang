@@ -78,6 +78,8 @@ change config settings	admin	en	Change config settings
 change main screen message	admin	en	Change main screen message
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
+click to select a color	admin	en	Click to select a color
+color	admin	en	Color
 country selection	admin	en	Country Selection
 create group	admin	en	Create Group
 crontab only (recomended)	admin	en	crontab only (recomended)
@@ -186,6 +188,7 @@ host information	admin	en	Host information
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries stay in the access log, before they get deleted (default 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	en	How many minutes should an account or IP be blocked (default 30) ?
+icon	admin	en	Icon
 idle	admin	en	idle
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?

@@ -79,6 +79,8 @@ change config settings	admin	de	Konfiguration der Anwendung ändern
 change main screen message	admin	de	Nachricht der Startseite ändern
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
+click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
+color	admin	de	Farbe
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
@@ -189,6 +191,7 @@ host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
+icon	admin	de	Icon
 idle	admin	de	im Leerlauf
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
