@@ -2065,15 +2065,15 @@
 					{
 						case MSG_DELETED:
 							$action_date = $old_event_date;
-							$body = 'Your meeting scehduled for '.$old_event_date.' has been canceled';
+							$body = lang ('Your meeting scheduled for') .' '. $old_event_date .' '. lang('has been canceled');
 							break;
 						case MSG_MODIFIED:
 							$action_date = $new_event_date;
-							$body = 'Your meeting that had been scheduled for '.$old_event_date.' has been rescheduled to '.$new_event_date;
+							$body = lang ('Your meeting that had been scheduled for').' '.$old_event_date.' '. lang('has been rescheduled to') .' '.$new_event_date;
 							break;
 						case MSG_ADDED:
 							$action_date = $new_event_date;
-							$body = 'You have a meeting scheduled for '.$new_event_date;
+							$body = lang ('You have a meeting scheduled for').' '. $new_event_date;
 							break;
 						case MSG_REJECTED:
 						case MSG_TENTATIVE:
@@ -2082,7 +2082,7 @@
 							$body = 'On '.$GLOBALS['phpgw']->common->show_date(time() - $new_tz_offset).' '.$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
 							break;
 					}
-					$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
+					$subject = lang('Calendar Event') . ' ('. lang($action) .') #'.$event_id.': '.$action_date.' (L)';
 					$returncode = $send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
 				}
 			}

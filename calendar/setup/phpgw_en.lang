@@ -4,6 +4,7 @@ a	calendar	en	a
 accept	calendar	en	Accept
 accepted	calendar	en	Accepted
 add alarm	calendar	en	Add Alarm
+added	calendar	en	Added
 alarm management	calendar	en	Alarm Management
 all day	calendar	en	All Day
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
@@ -11,16 +12,17 @@ are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry f
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
 brief description	calendar	en	Brief Description
 calendar	common	en	Calendar
-calendar preferences	common	en	Calendar preferences
 calendar - [iv]cal importer	calendar	en	Calendar - [iv]Cal Importer
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
+calendar event	calendar	en	Calendar Event
 calendar holiday management	admin	en	Calendar Holiday Management
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 days repeated	calendar	en	days repeated
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
+deleted	calendar	en	Deleted
 Display interval in Day View	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
@@ -43,12 +45,15 @@ go!	calendar	en	Go!
 grant calendar access	common	en	Grant Calendar Access
 group public only	calendar	en	Group Public Only
 ignore conflict	calendar	en	Ignore Conflict
+has been canceled	calendar	en	has been canceled
+has been rescheduled to	calendar	en	has been rescheduled to
 i participate	calendar	en	I Participate
 import	calendar	en	Import
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 minutes	calendar	en	minutes
 mo	calendar	en	M
+modified	calendar	en	Modified
 mon	calendar	en	Mon
 month	calendar	en	Month
 monthly (by date)	calendar	en	Monthly (by date)
@@ -112,9 +117,12 @@ year	calendar	en	Year
 yearly	calendar	en	Yearly
 you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
+you have a meeting scheduled for	calendar	en	You have a meeting scheduled for
 you have not entered a valid date	calendar	en	You have not entered a valid date
 you have not entered a title	calendar	en	You have not entered a title
 you have not entered a valid time of day	calendar	en	You have not entered a valid time of day
 you have not entered participants	calendar	en	You have not entered participants
 you must enter one or more search keywords	calendar	en	You must enter one or more search keywords
+your meeting scheduled for	calendar	en	Your meeting scheduled for 
+your meeting that was scheduled for	calendar	en	Your meeting that was scheduled for
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
