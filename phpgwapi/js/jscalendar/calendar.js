@@ -1447,6 +1447,12 @@ Calendar.prototype.parseDate = function (str, fmt) {
 			break;
 
 		    case "%b":
+			if (Calendar._SMN) {	// if we have short month-names, use them
+				for (j = 0; j < 12; ++j) {
+					if (Calendar._SMN[j].substr(0, a[i].length).toLowerCase() == a[i].toLowerCase()) { m = j; break; }
+				}
+				if (j < 12) break;
+			}
 		    case "%B":
 			for (j = 0; j < 12; ++j) {
 				if (Calendar._MN[j].substr(0, a[i].length).toLowerCase() == a[i].toLowerCase()) { m = j; break; }
