@@ -117,7 +117,7 @@ class socalendar_ extends socalendar__
 			$this->add_attribute('owner',intval($this->stream->f('owner')));
 			$this->add_attribute('id',intval($this->stream->f('cal_id')));
 			$this->set_class(intval($this->stream->f('is_public')));
-			$this->set_category(intval($this->stream->f('category')));
+			$this->set_category($this->stream->f('category'));
 			$this->set_title($GLOBALS['phpgw']->strip_html($this->stream->f('title')));
 			$this->set_description($GLOBALS['phpgw']->strip_html($this->stream->f('description')));
 			$this->add_attribute('uid',$GLOBALS['phpgw']->strip_html($this->stream->f('uid')));
@@ -380,31 +380,34 @@ class socalendar_ extends socalendar__
 		$this->stream->lock($locks);
 		if($event['id'] == 0)
 		{
-			if ($GLOBALS['phpgw_info']['server']['hostname'] != '')
+			if(!$event['uid'])
 			{
-				$id_suffix = $GLOBALS['phpgw_info']['server']['hostname'];
-			}
-			else
-			{
-				$id_suffix = $GLOBALS['phpgw']->common->randomstring(3).'local';
-			}
-			$parts = Array(
-				0 => 'title',
-				1 => 'description'
-			);
-			@reset($parts);
-			while(list($key,$field) = each($parts))
-			{
-				$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
-				if(!$GLOBALS['phpgw']->crypto->enabled)
+				if ($GLOBALS['phpgw_info']['server']['hostname'] != '')
 				{
-					$part[$key] = bin2hex(unserialize($part[$key]));
+					$id_suffix = $GLOBALS['phpgw_info']['server']['hostname'];
 				}
+				else
+				{
+					$id_suffix = $GLOBALS['phpgw']->common->randomstring(3).'local';
+				}
+				$parts = Array(
+					0 => 'title',
+					1 => 'description'
+				);
+				@reset($parts);
+				while(list($key,$field) = each($parts))
+				{
+					$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
+					if(!$GLOBALS['phpgw']->crypto->enabled)
+					{
+						$part[$key] = bin2hex(unserialize($part[$key]));
+					}
+				}
+				$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			}
-			$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
 			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
-				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].','.$event['priority'].','.$event['public'].','.$event['category'].')');
+				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].','.$event['priority'].','.$event['public'].",'".$event['category']."')");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
 			$event['id'] = $this->stream->f('cal_id');
@@ -429,11 +432,11 @@ class socalendar_ extends socalendar__
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event['priority'].', '
-				. 'category='.$event['category'].', '
+				. "category='".$event['category']."', "
 				. "cal_type='".$type."', "
 				. 'is_public='.$event['public'].', '
-				. "title='".addslashes($event['title'])."', "
-				. "description='".addslashes($event['description'])."', "
+				. "title='".$this->stream->db_addslashes($event['title'])."', "
+				. "description='".$this->stream->db_addslashes($event['description'])."', "
 				. "location='".$event['location']."', "
 				. 'reference='.$event['reference'].' '
 				. 'WHERE cal_id='.$event['id'];

@@ -164,33 +164,38 @@
 				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
 			}
 
-			if(isset($GLOBALS['date']))
+			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:(isset($GLOBALS['HTTP_POST_VARS']['date'])?$GLOBALS['HTTP_POST_VARS']['date']:''));
+			$year = (isset($GLOBALS['HTTP_GET_VARS']['year'])?$GLOBALS['HTTP_GET_VARS']['year']:(isset($GLOBALS['HTTP_POST_VARS']['year'])?$GLOBALS['HTTP_POST_VARS']['year']:''));
+			$month = (isset($GLOBALS['HTTP_GET_VARS']['month'])?$GLOBALS['HTTP_GET_VARS']['month']:(isset($GLOBALS['HTTP_POST_VARS']['month'])?$GLOBALS['HTTP_POST_VARS']['month']:''));
+			$day = (isset($GLOBALS['HTTP_GET_VARS']['day'])?$GLOBALS['HTTP_GET_VARS']['day']:(isset($GLOBALS['HTTP_POST_VARS']['day'])?$GLOBALS['HTTP_POST_VARS']['day']:''));
+			
+			if(isset($date))
 			{
-				$this->year = intval(substr($GLOBALS['date'],0,4));
-				$this->month = intval(substr($GLOBALS['date'],4,2));
-				$this->day = intval(substr($GLOBALS['date'],6,2));
+				$this->year = intval(substr($date,0,4));
+				$this->month = intval(substr($date,4,2));
+				$this->day = intval(substr($date,6,2));
 			}
 			else
 			{
-				if(isset($GLOBALS['year']))
+				if(isset($year))
 				{
-					$this->year = $GLOBALS['year'];
+					$this->year = $year;
 				}
 				elseif($this->year == 0)
 				{
 					$this->year = date('Y',time());
 				}
-				if(isset($GLOBALS['month']))
+				if(isset($month))
 				{
-					$this->month = $GLOBALS['month'];
+					$this->month = $month;
 				}
 				elseif($this->month == 0)
 				{
 					$this->month = date('m',time());
 				}
-				if(isset($GLOBALS['day']))
+				if(isset($day))
 				{
-					$this->day = $GLOBALS['day'];
+					$this->day = $day;
 				}
 				elseif($this->day == 0)
 				{
@@ -372,6 +377,7 @@
 		{
 			$l_cal = (@isset($params['cal']) && $params['cal']?$params['cal']:$GLOBALS['HTTP_POST_VARS']['cal']);
 			$l_participants = (@$params['participants']?$params['participants']:$GLOBALS['HTTP_POST_VARS']['participants']);
+			$l_categories = (@$params['categories']?$params['categories']:$GLOBALS['HTTP_POST_VARS']['categories']);
 			$l_start = (@isset($params['start']) && $params['start']?$params['start']:$GLOBALS['HTTP_POST_VARS']['start']);
 			$l_end = (@isset($params['end']) && $params['end']?$params['end']:$GLOBALS['HTTP_POST_VARS']['end']);
 			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
@@ -425,15 +431,15 @@
 					$l_cal['private'] = 'public';
 				}
 
-				if(!isset($l_cal['category']))
+				if(!isset($l_categories))
 				{
-					$l_cal['category'] = 0;
+					$l_categories = 0;
 				}
 
 				$is_public = ($l_cal['private'] == 'public'?1:0);
 				$this->so->event_init();
 				$this->add_attribute('uid',$l_cal['uid']);
-				$this->so->set_category($l_cal['category']);
+				$this->so->set_category(implode($l_categories,','));
 				$this->so->set_title($l_cal['title']);
 				$this->so->set_description($l_cal['description']);
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
@@ -532,8 +538,8 @@
 				$this->so->add_attribute('priority',$l_cal['priority']);
 				$event = $this->get_cached_event();
 
-				$event['title'] = addslashes($event['title']);
-				$event['description'] = addslashes($event['description']);
+				$event['title'] = $GLOBALS['phpgw']->db->db_addslashes($event['title']);
+				$event['description'] = $GLOBALS['phpgw']->db->db_addslashes($event['description']);
 				$this->store_to_appsession($event);
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
@@ -1647,166 +1653,6 @@
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $temp_dateformat;
-		}
-
-		function switch_status($status)
-		{
-			switch($status)
-			{
-				case 'U':
-					return 0;
-					break;
-				case 'A':
-					return 1;
-					break;
-				case 'R':
-					return 2;
-					break;
-				case 'T':
-					return 3;
-					break;
-			}
-		}
-
-		function export_ical($l_event_id=0)
-		{
-			$event_id = ($l_event_id?$l_event_id:$GLOBALS['HTTP_GET_VARS']['cal_id']);
-			
-			include(PHPGW_APP_INC.'/../setup/setup.inc.php');
-			$icalendar = CreateObject('calendar.boicalendar');
-			if(!is_array($event_id))
-			{
-				$ids[] = $event_id;
-			}
-			else
-			{
-				$ids = $event_id;
-			}
-
-			$ical = $icalendar->new_ical();
-
-			$icalendar->set_var($ical['prodid'],'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
-			$icalendar->set_var($ical['version'],'value','2.0');
-			$icalendar->set_var($ical['method'],'value',strtoupper('publish'));
-
-			while(list($key,$value) = each($ids))
-			{
-				$ical_event = Array();
-				$event = $this->so->read_entry($event_id);
-
-				$icalendar->set_var($ical_event['uid'],'value','phpGW/'.$event['id']);
-				$ical_event['priority'] = $event['priority'];
-				$ical_event['class'] = intval($event['public']);
-				$icalendar->set_var($ical_event['description'],'value',$event['title']);
-				$icalendar->set_var($ical_event['summary'],'value',$event['description']);
-				$icalendar->set_var($ical_event['location'],'value',$event['location']);
-				$icalendar->set_var($ical_event['uid'],'value',$event['uid']);
-				$dtstart_mktime = $this->maketime($event['start']) - $this->datetime->tz_offset;
-				$icalendar->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
-				$dtend_mktime = $this->maketime($event['end']) - $this->datetime->tz_offset;
-				$icalendar->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
-				$mod_mktime = $this->maketime($event['modtime']) - $this->datetime->tz_offset;
-				$icalendar->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
-				if($event['location'])
-				{
-					$icalendar->set_var($ical_event['location'],'value',$event['location']);
-				}
-				if(count($event['participants']) > 1)
-				{
-					$db = $GLOBALS['phpgw']->db;
-					@reset($event['participants']);
-					while(list($part,$status) = each($event['participants']))
-					{
-						$GLOBALS['phpgw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
-						$name = $fname.' '.$lname;
-						$owner_status = $icalendar->switch_partstat(intval($this->switch_status($event['participants'][$part])));
-						$owner_mailto = 'mpeters@satx.rr.com';
-						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$owner_mailto;
-						if($part == $event['owner'])
-						{
-							$str = 'ROLE=CHAIR;'.$str;
-						}
-						else
-						{
-							$str = 'ROLE=REQ-PARTICIPANT;'.$str;
-						}
-						$icalendar->parse_value($ical_event,'attendee',$str,'vevent');
-						if($part == $event['owner'])
-						{
-							$icalendar->parse_value($ical_event,'organizer',$str,'vevent');
-						}
-					}
-				}
-				if($event['recur_type'])
-				{
-					$str = '';
-					switch($event['recur_type'])
-					{
-						case MCAL_RECUR_DAILY:
-							$str .= 'FREQ=DAILY';
-							break;
-						case MCAL_RECUR_WEEKLY:
-							$str .= 'FREQ=WEEKLY';
-							if($event['recur_data'])
-							{
-								$str .= ';BYDAY=';
-								for($i=1;$i<MCAL_M_ALLDAYS;$i=$i*2)
-								{
-									if($i & $event['recur_data'])
-									{
-										switch($i)
-										{
-											case MCAL_M_SUNDAY:
-												$day[] = 'SU';
-												break;
-											case MCAL_M_MONDAY:
-												$day[] = 'MO';
-												break;
-											CASE MCAL_M_TUESDAY:
-												$day[] = 'TU';
-												break;
-											case MCAL_M_WEDNESDAY:
-												$day[] = 'WE';
-												break;
-											case MCAL_M_THURSDAY:
-												$day[] = 'TH';
-												break;
-											case MCAL_M_FRIDAY:
-												$day[] = 'FR';
-												break;
-											case MCAL_M_SATURDAY:
-												$day[] = 'SA';
-												break;
-										}
-									}
-								}
-								$str .= implode(',',$day);
-							}
-							break;
-						case MCAL_RECUR_MONTHLY_MDAY:
-							break;
-						case MCAL_RECUR_MONTHLY_WDAY:
-							break;
-						case MCAL_RECUR_YEARLY:
-							$str .= 'FREQ=YEARLY';
-							break;
-					}
-					if($event['recur_interval'])
-					{
-						$str .= ';INTERVAL='.$event['recur_interval'];
-					}
-					if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
-					{
-						$recur_mktime = $this->maketime($event['recur_enddate']) - $this->datetime->tz_offset;
-						$str .= ';UNTIL='.date('Ymd\THis\Z',$recur_mktime);
-					}
-					$icalendar->parse_value($ical_event,'rrule',$str,'vevent');
-				}
-				$ical_events[] = $ical_event;
-			}
-
-			$ical['event'] = $ical_events;
-			return $icalendar->build_ical($ical);
 		}
 
 		function get_alarms($event_id)

@@ -265,7 +265,7 @@
 					if(count($holiday) == 7)
 					{
 						$holiday['locale'] = $holiday[0];
-						$holiday['name'] = addslashes($holiday[1]);
+						$holiday['name'] = $GLOBALS['phpgw']->db->db_addslashes($holiday[1]);
 						$holiday['mday'] = intval($holiday[2]);
 						$holiday['month_num'] = intval($holiday[3]);
 						$holiday['occurence'] = intval($holiday[4]);

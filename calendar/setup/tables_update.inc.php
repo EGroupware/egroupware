@@ -877,4 +877,24 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.005';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+	$test[] = '0.9.13.005';
+	function calendar_upgrade0_9_13_005()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query('SELECT cal_id, category FROM phpgw_cal',__LINE__,__FILE__);
+		while($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$calendar_data[$GLOBALS['phpgw_setup']->oProc->f('cal_id')] = $GLOBALS['phpgw_setup']->oProc->f('category');
+		}
+
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_cal','category',array('type' => 'varchar', 'precision' => 30,'nullable' => True));
+
+		@reset($calendar_data);
+		while(list($cal_id,$category) = each($calendar_data))
+		{
+			$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_cal SET category='".$category."' WHERE cal_id=".$cal_id,__LINE__,__FILE__);		
+		}
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.006';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>

@@ -80,7 +80,7 @@
 
 		function test()
 		{
-			$print_events = False;
+			$print_events = True;
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -116,6 +116,7 @@
 					$this->print_test($event['location'],'Location','X-');
 					$this->print_test($event['sequence'],'Sequence','X-');
 					$this->print_test($event['priority'],'Priority','X-');
+					$this->print_test($event['categories'],'Categories','X-');
 					$this->print_test($event['dtstart'],'Date Start','X-');
 					$this->print_test($event['dtstamp'],'Date Stamp','X-');
 					$this->print_test($event['rrule'],'Recurrence','X-');
@@ -188,6 +189,7 @@
 
 			$var = Array(
 				'vcal_header'	=> '<p>&nbsp;<b>' . lang('Calendar - [iv]Cal Importer') . '</b><hr><p>',
+				'ical_lang'		=> lang('(i/v)Cal'),
 				'action_url'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.boicalendar.import'),
 				'lang_access'	=> lang('Access'),
 				'lang_groups'	=> lang('Which groups'),

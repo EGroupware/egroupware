@@ -1,4 +1,5 @@
 1 match found	calendar	en	1 match found
+(i/v)cal	calendar	en	(i/v)Cal
 a	calendar	en	a
 accept	calendar	en	Accept
 accepted	calendar	en	Accepted
@@ -11,6 +12,7 @@ are you sure you want to delete this holiday ?	calendar	en	Are you sure you want
 brief description	calendar	en	Brief Description
 calendar	common	en	calendar
 calendar preferences	common	en	Calendar preferences
+calendar - [iv]cal importer	calendar	en	Calendar - [iv]Cal Importer
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
 calendar holiday management	admin	en	Calendar Holiday Management
@@ -41,6 +43,7 @@ grant calendar access	common	en	Grant Calendar Access
 group public only	calendar	en	Group Public Only
 ignore conflict	calendar	en	Ignore Conflict
 i participate	calendar	en	I Participate
+load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 minutes	calendar	en	minutes
 mo	calendar	en	M

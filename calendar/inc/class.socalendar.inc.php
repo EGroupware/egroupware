@@ -134,8 +134,14 @@
 			{
 				$found = $this->cal->get_event_ids(True,$sql);
 			}
-
-			return $found;			
+			if(is_array($found))
+			{
+				return $found[0];
+			}
+			else
+			{
+				return False;
+			}
 		}
 
 		function add_entry(&$event)

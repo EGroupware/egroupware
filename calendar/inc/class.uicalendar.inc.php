@@ -645,7 +645,7 @@
   			unset($GLOBALS['phpgw_info']['flags']['noheader']);
    		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 	   	$GLOBALS['phpgw']->common->phpgw_header();
-	   	echo nl2br($this->bo->export_ical($cal_id));
+	   	echo nl2br(execmethod('calendar.boicalendar.export',$GLOBALS['HTTP_GET_VARS']['cal_id']));
 	   }
 
 		function add($cd=0,$readsess=0)
@@ -1105,6 +1105,8 @@
 				}
 			}
 
+			$num_users = count($users);
+
 			if ($num_users > 50)
 			{
 				$size = 15;
@@ -1461,19 +1463,16 @@
 			);
 			$this->output_template_array($p,'table_row','footer_row',$var);
 
-			$y = $this->bo->year;
-			$m = $this->bo->month;
-			$d = $this->bo->day;
 			unset($thisdate);
-			$thisdate = $this->bo->datetime->makegmttime(0,0,0,$m,$d,$y);
-			$sun = $this->bo->datetime->get_weekday_start($y,$m,$d) - $this->tz_offset - 7200;
+			$thisdate = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
+			$sun = $this->bo->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $this->tz_offset - 7200;
 
 			$str = '';
 			for ($i = -7; $i <= 7; $i++)
 			{
-				$begin = $sun + (3600 * 24 * 7 * $i);
-				$end = $begin + (3600 * 24 * 6);
-				$str .= '<option value="' . $GLOBALS['phpgw']->common->show_date($begin,'Ymd') . '"'.($begin <= $thisdate['raw'] && $end >= $thisdate['raw']?' selected':'')
+				$begin = $sun + (604800 * $i);
+				$end = $begin + 604799;
+				$str .= '<option value="' . $GLOBALS['phpgw']->common->show_date($begin,'Ymd') . '"'.($begin <= $thisdate && $end >= $thisdate?' selected':'')
 				   .'>' . lang($GLOBALS['phpgw']->common->show_date($begin,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($begin,'d') . '-'
 					. lang($GLOBALS['phpgw']->common->show_date($end,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($end,'d') . '</option>'."\n";
 			}
@@ -1491,9 +1490,9 @@
 			$this->output_template_array($p,'table_row','footer_row',$var);
 
 			$str = '';
-			for ($i = ($y - 3); $i < ($y + 3); $i++)
+			for ($i = ($this->bo->year - 3); $i < ($this->bo->year + 3); $i++)
 			{
-				$str .= '<option value="'.$i.'"'.($i == $y?' selected':'').'>'.$i.'</option>'."\n";
+				$str .= '<option value="'.$i.'"'.($i == $this->bo->year?' selected':'').'>'.$i.'</option>'."\n";
 			}
   
 			$var = Array(
@@ -2120,10 +2119,17 @@
 			if ($event['category'])
 			{
 				$this->cat->categories($this->bo->owner,'calendar');
-				$cat = $this->cat->return_single($event['category']);
+				$category = explode(',',$event['category']);
+				@reset($category);
+				while(list($key,$cat) = each($category))
+				{
+					$_cat = $this->cat->return_single($cat);
+					$cat_string[] = $_cat[0]['name'];
+				}
+				@reset($cat_string);
 				$var[] = Array(
 					'field'	=>	lang('Category'),
-					'data'	=>	$cat[0]['name']
+					'data'	=>	implode($cat_string,',')
 				);
 			}
 
@@ -2841,7 +2847,7 @@
 // Display Categories
 			$var[] = Array(
 				'field'	=> lang('Category'),
-				'data'	=> '<select name="cal[category]"><option value="0">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$event['category'],True).'</select>'
+				'data'	=> '<select name="categories" multiple size="5"><option value="0">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',explode(',',$event['category']),True).'</select>'
 			);
 
 // Location

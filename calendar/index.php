@@ -23,10 +23,10 @@
 		'nofooter'	=>	True
 	);
 
-	$phpgw_info['flags'] = $phpgw_flags;
+	$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
 	
 	include('../header.inc.php');
 
-	Header('Location: '.$phpgw->link('/index.php','menuaction=calendar.uicalendar.index'));
-	$phpgw->common->phpgw_exit();
+	Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.index&date='.date('Ymd')));
+	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>

@@ -81,7 +81,8 @@ class boicalendar
 {
 
 		var $public_functions = array(
-			'import'		=> True
+			'import'		=> True,
+			'export'		=> True
 		);
 
 
@@ -1718,17 +1719,17 @@ class boicalendar
 						{
 							for($i=0;$i<count($event[$value]);$i++)
 							{
-								$str .= $this->fold(strtoupper($value).$this->build_parameters($event[$value][$i],$value));
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event[$value][$i],$value));
 							}
 						}
 						else
 						{
-							$str .= $this->fold(strtoupper($value).$this->build_parameters($event[$value],$value));
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event[$value],$value));
 						}
 					}
 					elseif($value == 'dtstamp' || $value == 'created')
 					{
-						$str .= $this->fold(strtoupper($value).':'.gmdate('Ymd\THis\Z'));
+						$str .= $this->fold(strtoupper(str_replace('_','-',$value)).':'.gmdate('Ymd\THis\Z'));
 					}
 					break;
 				case 'uri':
@@ -1736,7 +1737,7 @@ class boicalendar
 					{
 						for($i=0;$i<count($event[$value]);$i++)
 						{
-							$str .= $this->fold(strtoupper($value).$this->build_parameters($event[$value][$i],$to_text));
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event[$value][$i],$to_text));
 						}
 					}
 					break;
@@ -1819,7 +1820,7 @@ class boicalendar
 							$temp_output = $this->build_parameters($event[$value][$j],$value);
 							if($temp_output)
 							{
-								$str .= $this->fold(strtoupper($value).$temp_output);
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$temp_output);
 							}
 						}
 					}
@@ -1828,7 +1829,7 @@ class boicalendar
 						$temp_output = $this->build_parameters($event[$value],$value);
 						if($temp_output)
 						{
-							$str .= $this->fold(strtoupper($value).$temp_output);
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$temp_output);
 						}
 					}
 					break;
@@ -2783,8 +2784,74 @@ class boicalendar
 		return $str;
 	}
 
-	function import()
-	{
+		function switch_to_phpgw_status($partstat)
+		{
+			switch($partstat)
+			{
+				case 0:
+					return 'U';
+					break;
+				case 1:
+					return 'A';
+					break;
+				case 2:
+					return 'R';
+					break;
+				case 3:
+					return 'T';
+					break;
+				default:
+					return 'U';
+					break;
+			}
+		}
+
+		function switch_phpgw_status($status)
+		{
+			switch($status)
+			{
+				case 'U':
+					return 0;
+					break;
+				case 'A':
+					return 1;
+					break;
+				case 'R':
+					return 2;
+					break;
+				case 'T':
+					return 3;
+					break;
+			}
+		}
+
+		function check_owner(&$event,$ical,$so_event)
+		{
+			if(!isset($event['participant'][$GLOBALS['phpgw_info']['user']['account_id']]))
+			{
+				if(isset($ical['organizer']) &&
+					$ical['organizer']['user'].'@'.$ical['organizer']['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address'])
+				{
+					$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
+					$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+				}
+				else
+				{
+					$attendee_count = count($ical['attendee']);
+
+					for($j=0;$j<$attendee_count;$j++)
+					{
+						if($ical['attendee'][$j]['user'].'@'.$ical['attendee'][$j]['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address'])
+						{
+							$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['attendee'][$j]['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+						}
+					}
+				}
+			}
+		}
+
+		function import_file()
+		{
 			if($GLOBALS['uploadedfile'] == 'none' || $GLOBALS['uploadedfile'] == '')
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
@@ -2803,26 +2870,52 @@ class boicalendar
 			$newfilename = md5($GLOBALS['uploadedfile'].", ".$uploadedfile_name.", "
 				. time() . getenv("REMOTE_ADDR") . $random_number );
 
-			copy($GLOBALS['uploadedfile'], $uploaddir . $newfilename);
+			$filename = $uploaddir . $newfilename;
+
+			copy($GLOBALS['uploadedfile'], $filename);
 //			$ftp = fopen($uploaddir . $newfilename . '.info','wb');
 //			fputs($ftp,$uploadedfile_type."\n".$uploadedfile_name."\n");
 //			fclose($ftp);
+			return $filename;
+		}
 
-			$filename = $uploaddir . $newfilename;
-			$fp=fopen($filename,'rt');
-			$mime_msg = explode("\n",fread($fp, filesize($filename)));
-			fclose($fp);
+		function import($mime_msg='')
+		{
+			if($GLOBALS['uploadedfile'] != 'none' && $GLOBALS['uploadedfile'] != '')
+			{
+				$filename = $this->import_file();
+				$fp=fopen($filename,'rt');
+				$mime_msg = explode("\n",fread($fp, filesize($filename)));
+				fclose($fp);
+				unlink($filename);
+			}
+			elseif(!$mime_msg)
+			{
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+						Array(
+							'menuaction'	=> 'calendar.uiicalendar.import',
+							'action'	=> 'GetFile'
+						)
+					)
+				);
+				$GLOBALS['phpwg']->common->phpgw_exit();				
+			}
 
-		$so_event = createobject('calendar.socalendar',
-			Array(
-				'owner'	=> 0,
-				'filter'	=> '',
-				'category'	=> ''
-			)
-		);
+			if(!is_object($GLOBALS['uicalendar']))
+			{
+				$so_event = createobject('calendar.socalendar',
+					Array(
+						'owner'	=> 0,
+						'filter'	=> '',
+						'category'	=> ''
+					)
+				);
+			}
+			else
+			{
+				$so_event = $GLOBALS['uicalendar']->bo->so;
+			}
 		
-			unlink($filename);
-	
 			$datetime_vars = Array(
 				'start'	=> 'dtstart',
 				'end'	=> 'dtend',
@@ -2839,6 +2932,9 @@ class boicalendar
 				's'	=> 'sec'
 			);
 
+			$GLOBALS['phpgw']->common->create_emailpreferences();
+			$users_email = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
+			$cats = CreateObject('phpgwapi.categories');
 			$ical = $this->parse($mime_msg);
 			$c_events = count($ical['event']);
 			for($i=0;$i<$c_events;$i++)
@@ -2850,15 +2946,11 @@ class boicalendar
 
 				if($uid_exists)
 				{
-					$event = $so_event->read_entry($uid_exists[0]);
-					if(!isset($event['participant'][$GLOBALS['phpgw_info']['user']['account_id']]))
-					{
-						
-						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
-						$event = $so_event->get_cached_event();
-						$so_event->add_entry($event);
-						$event = $so_event->get_cached_event();
-					}
+					$event = $so_event->read_entry($uid_exists);
+					$this->check_owner($event,$ical['event'][$i],$so_event);
+					$event = $so_event->get_cached_event();
+					$so_event->add_entry($event);
+					$event = $so_event->get_cached_event();
 				}
 				else
 				{
@@ -2909,13 +3001,51 @@ class boicalendar
 							$so_event->set_date($e_datevar,$event[$e_datevar]['year'],$event[$e_datevar]['month'],$event[$e_datevar]['mday'],$event[$e_datevar]['hour'],$event[$e_datevar]['min'],$event[$e_datevar]['sec']);
 						}
 					}
-					if(!isset($ical['event'][$i]['category']['value']) || !$ical['event'][$i]['category']['value'])
+					if(!isset($ical['event'][$i]['categories']['value']) || !$ical['event'][$i]['categories']['value'])
 					{
-						$so_event->add_attribute('category',0);
+						$so_event->set_category(0);
 					}
 					else
 					{
-						//categories -- with value
+						$ical_cats = Array();
+						if(strpos($ical['event'][$i]['categories']['value'],','))
+						{
+							$ical_cats = explode(',',$ical['event'][$i]['categories']['value']);
+						}
+						else
+						{
+							$ical_cats[] = $ical['event'][$i]['categories']['value'];
+						}
+
+						@reset($ical_cats);
+						while(list($key,$cat) = each($ical_cats))
+						{
+							if(!$cats->exists('appandmains',$cat))
+							{
+								$cats->add(
+									Array(
+										'name'	=> $cat,
+										'descr'	=> $cat,
+										'parent'	=> '',
+										'access'	=> 'private',
+										'data'	=> ''
+									)
+								);
+							}
+//							$temp_id = $cats->name2id($cat);
+//							echo 'Category Name : '.$cat.' : Category ID :'.$temp_id."<br>\n";
+//							$cat_id_nums[] = $temp_id;
+							$cat_id_nums[] = $cats->name2id($cat);
+						}
+						@reset($cat_id_nums);
+						if(count($cat_id_nums) > 1)
+						{
+							$so_event->set_category(implode($cat_id_nums,','));
+						}
+						else
+						{
+							$so_event->set_category($cat_id_nums[0]);
+						}
 					}
 
 					if(isset($ical['event'][$i]['rrule']))
@@ -2946,14 +3076,195 @@ class boicalendar
 				)
 			);
 			$GLOBALS['phpgw']->common->phpgw_exit();
-	}
+		}
 
-	function debug($str='')
-	{
-		if($this->debug_str)
+		function export($l_event_id=0)
 		{
-			echo $str."<br>\n";
+			$event_id = ($l_event_id?$l_event_id:$GLOBALS['HTTP_GET_VARS']['cal_id']);
+
+			$string_array = Array(
+				'summary'		=> 'description',
+				'location'		=> 'location',
+				'description'	=> 'title',
+				'uid'		=> 'uid'
+			);
+
+			$cats = CreateObject('phpgwapi.categories');
+			
+			include(PHPGW_APP_INC.'/../setup/setup.inc.php');
+			if(!is_array($event_id))
+			{
+				$ids[] = $event_id;
+			}
+			else
+			{
+				$ids = $event_id;
+			}
+
+			$ical = $this->new_ical();
+
+			$this->set_var($ical['prodid'],'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
+			$this->set_var($ical['version'],'value','2.0');
+			$this->set_var($ical['method'],'value',strtoupper('publish'));
+
+			if(!$GLOBALS['phpgw_info']['flags']['included_classes']['uicalendar'])
+			{
+				$so_event = createobject('calendar.socalendar',
+					Array(
+						'owner'	=> 0,
+						'filter'	=> '',
+						'category'	=> ''
+					)
+				);
+			}
+			else
+			{
+				$so_event = $GLOBALS['uicalendar']->bo->so;
+			}
+		
+			while(list($key,$value) = each($ids))
+			{
+				$ical_event = Array();
+				$event = $so_event->read_entry($value);
+
+				$ical_event['priority'] = $event['priority'];
+				$ical_event['class'] = intval($event['public']);
+				$dtstart_mktime = $so_event->maketime($event['start']) - $so_event->datetime->tz_offset;
+				$this->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
+				$dtend_mktime = $so_event->maketime($event['end']) - $so_event->datetime->tz_offset;
+				$this->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
+				$mod_mktime = $so_event->maketime($event['modtime']) - $so_event->datetime->tz_offset;
+				$this->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
+				@reset($string_array);
+				while(list($ical_value,$event_value) = each($string_array))
+				{
+					if($event[$event_value])
+					{
+						$this->set_var($ical_event[$ical_value],'value',$event[$event_value]);
+					}
+				}
+				
+				if ($event['category'])
+				{
+					$cats->categories(0,'calendar');
+					$category = explode(',',$event['category']);
+					@reset($category);
+					while(list($key,$cat) = each($category))
+					{
+						$_cat = $cats->return_single($cat);
+						$cat_string[] = $_cat[0]['name'];
+					}
+					@reset($cat_string);
+					$this->set_var($ical_event['categories'],'value',implode($cat_string,','));
+				}
+
+				if(count($event['participants']) > 1)
+				{
+					if(!is_object($db))
+					{
+						$db = $GLOBALS['phpgw']->db;
+					}
+					@reset($event['participants']);
+					while(list($part,$status) = each($event['participants']))
+					{
+						$GLOBALS['phpgw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
+						$name = $fname.' '.$lname;
+						$owner_status = $this->switch_partstat(intval($this->switch_phpgw_status($event['participants'][$part])));
+						$owner_mailto = 'mpeters@satx.rr.com';
+						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$owner_mailto;
+						if($part == $event['owner'])
+						{
+							$str = 'ROLE=CHAIR;'.$str;
+						}
+						else
+						{
+							$str = 'ROLE=REQ-PARTICIPANT;'.$str;
+						}
+						$this->parse_value($ical_event,'attendee',$str,'vevent');
+						if($part == $event['owner'])
+						{
+							$this->parse_value($ical_event,'organizer',$str,'vevent');
+						}
+					}
+				}
+				if($event['recur_type'])
+				{
+					$str = '';
+					switch($event['recur_type'])
+					{
+						case MCAL_RECUR_DAILY:
+							$str .= 'FREQ=DAILY';
+							break;
+						case MCAL_RECUR_WEEKLY:
+							$str .= 'FREQ=WEEKLY';
+							if($event['recur_data'])
+							{
+								$str .= ';BYDAY=';
+								for($i=1;$i<MCAL_M_ALLDAYS;$i=$i*2)
+								{
+									if($i & $event['recur_data'])
+									{
+										switch($i)
+										{
+											case MCAL_M_SUNDAY:
+												$day[] = 'SU';
+												break;
+											case MCAL_M_MONDAY:
+												$day[] = 'MO';
+												break;
+											CASE MCAL_M_TUESDAY:
+												$day[] = 'TU';
+												break;
+											case MCAL_M_WEDNESDAY:
+												$day[] = 'WE';
+												break;
+											case MCAL_M_THURSDAY:
+												$day[] = 'TH';
+												break;
+											case MCAL_M_FRIDAY:
+												$day[] = 'FR';
+												break;
+											case MCAL_M_SATURDAY:
+												$day[] = 'SA';
+												break;
+										}
+									}
+								}
+								$str .= implode(',',$day);
+							}
+							break;
+						case MCAL_RECUR_MONTHLY_MDAY:
+							break;
+						case MCAL_RECUR_MONTHLY_WDAY:
+							break;
+						case MCAL_RECUR_YEARLY:
+							$str .= 'FREQ=YEARLY';
+							break;
+					}
+					if($event['recur_interval'])
+					{
+						$str .= ';INTERVAL='.$event['recur_interval'];
+					}
+					if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
+					{
+						$recur_mktime = $so_event->maketime($event['recur_enddate']) - $so_event->datetime->tz_offset;
+						$str .= ';UNTIL='.date('Ymd\THis\Z',$recur_mktime);
+					}
+					$this->parse_value($ical_event,'rrule',$str,'vevent');
+				}
+				$ical_events[] = $ical_event;
+			}
+
+			$ical['event'] = $ical_events;
+			return $this->build_ical($ical);
+		}
+
+		function debug($str='')
+		{
+			if($this->debug_str)
+			{
+				echo $str."<br>\n";
+			}
 		}
 	}
-}
 ?>
