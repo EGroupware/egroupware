@@ -12,21 +12,34 @@
 
 	/* $Id$ */
 
-	/*!
-	@class link_widget
-	@author ralfbecker
-	@abstract link-to:   Widget to create links to an other entries of link-aware apps
-	@abstract link-list: Widget to shows the links to an entry and a Unlink Button for each link
-	@abstract link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
-	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no
-		render-function.
-	*/
+	/**
+	 * eTemplate Extension: several widgets as user-interface for the link-class
+	 *
+	 * 1) link-to:   Widget to create links to an other entries of link-aware apps
+	 * 2) link-list: Widget to shows the links to an entry and a Unlink Button for each link
+	 * 3) link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
+	 *
+	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
+	 *
+	 * @package etemplate
+	 * @subpackage extensions
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class link_widget
 	{
+		/** 
+		 * exported methods of this class
+		 * @var array
+		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True
 		);
+		/**
+		 * availible extensions and there names for the editor
+		 * @var array
+		 */
 		var $human_name = array(	// this are the names for the editor
 			'link-to'     => 'LinkTo',
 			'link-list'   => 'LinkList',
@@ -34,11 +47,29 @@
 		);
 		var $debug = False;
 
+		/**
+		 * Constructor of the extension
+		 *
+		 * @param string $ui '' for html
+		 */
 		function link_widget($ui)
 		{
 			$this->link = CreateObject('infolog.bolink');
 		}
 
+		/**
+		 * pre-processing of the extension
+		 *
+		 * This function is called before the extension gets rendered
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			if ($cell['type'] == 'link-to' && ($cell['readonly'] || $readonlys))
@@ -159,6 +190,23 @@
 			return True;	// extra Label is ok
 		}
 
+		/**
+		 * postprocessing method, called after the submission of the form
+		 *
+		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+		 * will return no data (if it has a preprocessing method). The framework insures that
+		 * the post-processing of all contained widget has been done before.
+		 *
+		 * Only used by select-dow so far
+		 *
+		 * @param string $name form-name of the widget
+		 * @param mixed &$value the extension returns here it's input, if there's any
+		 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+		 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+		 * @param object &$tmpl the eTemplate the widget belongs too
+		 * @param mixed &value_in the posted values (already striped of magic-quotes)
+		 * @return boolean true if $value has valid content, on false no content will be returned!
+		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$buttons = array('search','create','new','upload','attach');

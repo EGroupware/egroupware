@@ -28,15 +28,24 @@
 	 * Uses the adodb datelibary to overcome the windows-limitation to not allow dates before 1970
 	 *
 	 * @package etemplate
+	 * @subpackage extensions
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
 	class date_widget
 	{
+		/** 
+		 * exported methods of this class
+		 * @var array
+		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True
 		);
+		/**
+		 * availible extensions and there names for the editor
+		 * @var array
+		 */
 		var $human_name = array(
 			'date'      => 'Date',		// just a date, no time
 			'date-time' => 'Date+Time',	// date + time
@@ -46,6 +55,11 @@
 		var $dateformat;	// eg. Y-m-d, d-M-Y
 		var $timeformat;	// 12 or 24
 
+		/**
+		 * Constructor of the extension
+		 *
+		 * @param string $ui '' for html
+		 */
 		function date_widget($ui)
 		{
 			if ($ui == 'html')
@@ -60,6 +74,19 @@
 			$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
 		}
 
+		/**
+		 * pre-processing of the extension
+		 *
+		 * This function is called before the extension gets rendered
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$type = $cell['type'];
@@ -267,6 +294,23 @@
 			return True;	// extra Label is ok
 		}
 
+		/**
+		 * postprocessing method, called after the submission of the form
+		 *
+		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+		 * will return no data (if it has a preprocessing method). The framework insures that
+		 * the post-processing of all contained widget has been done before.
+		 *
+		 * Only used by select-dow so far
+		 *
+		 * @param string $name form-name of the widget
+		 * @param mixed &$value the extension returns here it's input, if there's any
+		 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+		 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+		 * @param object &$tmpl the eTemplate the widget belongs too
+		 * @param mixed &value_in the posted values (already striped of magic-quotes)
+		 * @return boolean true if $value has valid content, on false no content will be returned!
+		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			//echo "<p>date_widget::post_process('$name','$extension_data[type]','$extension_data[data_format]') value="; print_r($value); echo ", value_in="; print_r($value_in); echo "</p>\n";

@@ -16,7 +16,7 @@
 	 * template editor of the eTemplate package
 	 *
 	 * @package etemplate
-	 * @subpackage editor
+	 * @subpackage tools
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */

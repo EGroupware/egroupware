@@ -21,6 +21,7 @@
  * Of cause can you derife the class and call the constructor with params.
  *
  * @package etemplate
+ * @subpackage contrib
  * @author RalfBecker-AT-outdoor-training.de
  * @license GPL
  */

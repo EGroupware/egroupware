@@ -16,6 +16,7 @@
 	 * db-tools: creats and modifys eGroupWare schem-files (to be installed via setup)
 	 *
 	 * @package etemplate
+	 * @subpackage tools
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */

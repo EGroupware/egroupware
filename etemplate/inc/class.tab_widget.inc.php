@@ -12,28 +12,59 @@
 
 	/* $Id$ */
 
-	/*!
-	@class tab_widget
-	@author ralfbecker
-	@abstract widget that shows one row of tabs and an other row with the eTemplate of the selected tab
-	@discussion see the example in 'etemplate.tab_widget.test' (use show to view it)
-	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
-	*/
+	/**
+	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab
+	 *
+	 * See the example in 'etemplate.tab_widget.test' (use show to view it)
+	 *
+	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
+	 *
+	 * @package etemplate
+	 * @subpackage extensions
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class tab_widget
 	{
+		/** 
+		 * exported methods of this class
+		 * @var array
+		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True
 		);
+		/**
+		 * availible extensions and there names for the editor
+		 * @var string
+		 */
 		var $human_name = 'Tabs';	// this is the name for the editor
 
+		/**
+		 * Constructor of the extension
+		 *
+		 * @param string $ui '' for html
+		 */
 		function tab_widget($ui)
 		{
 		}
 
+		/**
+		 * pre-processing of the extension
+		 *
+		 * This function is called before the extension gets rendered
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$dom_enabled = 0;//$GLOBALS['phpgw_info']['etemplate']['dom_enabled'];
+			$dom_enabled = 0; //$GLOBALS['phpgw_info']['etemplate']['dom_enabled'];
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
 			$names = explode('|',$cell['name']);
@@ -141,6 +172,23 @@
 			return False;	// NO extra Label
 		}
 
+		/**
+		 * postprocessing method, called after the submission of the form
+		 *
+		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+		 * will return no data (if it has a preprocessing method). The framework insures that
+		 * the post-processing of all contained widget has been done before.
+		 *
+		 * Only used by select-dow so far
+		 *
+		 * @param string $name form-name of the widget
+		 * @param mixed &$value the extension returns here it's input, if there's any
+		 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+		 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+		 * @param object &$tmpl the eTemplate the widget belongs too
+		 * @param mixed &value_in the posted values (already striped of magic-quotes)
+		 * @return boolean true if $value has valid content, on false no content will be returned!
+		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			//echo "<p>tab_widget::post_process($name): value = "; _debug_array($value);
