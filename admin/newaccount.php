@@ -83,7 +83,7 @@
 				'phpgw_acl',
 				'phpgw_applications'
 			));
-			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status,$homedirectory,$loginshell);
+			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status, '', $homedirectory,$loginshell);
        
 			$account_id = $phpgw->accounts->name2id($account_lid);
 
