@@ -53,7 +53,7 @@ home country	addressbook	it	Nazione Abitazione
 home email	addressbook	it	Email Abitazione
 home email type	addressbook	it	Tipo di email a Casa
 home phone	addressbook	it	Telefono Abitazione
-home state	addressbook	it	Nazione Abitazione
+home state	addressbook	it	Provincia Abitazione
 home street	addressbook	it	Via Abitazione
 home zip code	addressbook	it	CAP Abitazione
 import contacts	addressbook	it	Importa Contatti
