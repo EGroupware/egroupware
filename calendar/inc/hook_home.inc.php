@@ -34,7 +34,7 @@
 			. lang(date("F",$phpgw->calendar->today["raw"])).' '.$phpgw->calendar->today["day"].', '.$phpgw->calendar->today["year"].'</tr></td>'
 			. '<tr><td bgcolor="'.$phpgw_info["theme"]["bg_text"].'" valign="top">';
 //		$phpgw->calendar->printer_friendly = True;
-		$now = $phpgw->calendar->makegmttime(0,0,0,$phpgw->calendar->today['month'],$phpgw->calendar->today['day'],$phpgw->calendar->today['year']);
+		$now = $phpgw->calendar->datetime->makegmttime(0,0,0,$phpgw->calendar->today['month'],$phpgw->calendar->today['day'],$phpgw->calendar->today['year']);
 		echo $phpgw->calendar->print_day_at_a_glance($now).'</td></tr></table>'."\n";
 //		$phpgw->calendar->printer_friendly = False;
 		echo "\n".'<!-- Calendar info --></table></td></tr>'."\n";
