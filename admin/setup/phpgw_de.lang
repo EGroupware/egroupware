@@ -137,6 +137,7 @@ edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+enabled - popup window	admin	de	Verfügbar, Popup Window
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite

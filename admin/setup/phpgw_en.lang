@@ -136,6 +136,7 @@ edit user	admin	en	edit user
 edit user account	admin	en	Edit user account
 enable debug-messages	admin	en	Enable debug-messages
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
+enabled - popup window	admin	en	Enabled - Popup Window
 enter a description for the category	admin	en	enter a description for the category
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption (requires mcrypt)
 enter the background color for the login page	admin	en	Enter the background color for the login page
