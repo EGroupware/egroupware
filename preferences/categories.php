@@ -31,6 +31,9 @@
 						'cat_list'   => 'listcats.tpl'));
 	$t->set_block('cat_list_t','cat_list','list');
 
+	$c = CreateObject('phpgwapi.categories');
+	$c->app_name = $cats_app;
+
 	$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
 				. '<input type="hidden" name="order" value="' . $order . '">' . "\n"
 				. '<input type="hidden" name="query" value="' . $query . '">' . "\n"
@@ -56,9 +59,6 @@
 	$t->set_var('doneurl',$phpgw->link('/preferences/index.php'));
 
 	if (! $start) { $start = 0; }
-
-	$c = CreateObject('phpgwapi.categories');
-	$c->app_name = $cats_app;
 
 	if ($global_cats)
 	{
@@ -101,6 +101,7 @@
 	}
 
 	$t->set_var('lang_app',lang($cats_app));
+	$t->set_var('lang_sub',lang('Add sub'));
 	$t->set_var('lang_edit',lang('Edit'));
 	$t->set_var('lang_delete',lang('Delete'));
 
@@ -113,7 +114,6 @@
 		$cat_id = $categories[$i]['id'];
 		$owner = $categories[$i]['owner'];
 		$level = $categories[$i]['level'];
-		$space = '&nbsp;&nbsp;';
 
 		if ($categories[$i]['app_name'] == 'phpgw')
 		{
@@ -126,6 +126,7 @@
 
 		if ($level > 0)
 		{
+			$space = '&nbsp;&nbsp;';
 			$spaceset = str_repeat($space,$level);
 			$name = $spaceset .$phpgw->strip_html($categories[$i]['name']) . $appendix;
 		}
@@ -157,6 +158,21 @@
 						'descr' => $descr));
 
 		$t->set_var('app_url',$phpgw->link('/' . $phpgw_info['flags']['currentapp'] . '/index.php','cat_id=' . $cat_id));
+
+		if ($cats_level || ($level == 0))
+		{
+			if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'] || $categories[$i]['app_name'] == 'phpgw')
+			{
+				$t->set_var('add_sub',$phpgw->link('/preferences/addcategory.php','cat_parent=' . $cat_id . '&cats_app=' . $cats_app . '&extra=' . $extra
+											. '&cats_level=' . $cats_level . '&global_cats=' . $global_cats));
+				$t->set_var('lang_sub_entry',lang('Add sub'));
+			}
+		}
+		else
+		{
+			$t->set_var('add_sub','');
+			$t->set_var('lang_sub_entry','&nbsp;');
+		}
 
 		if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'] && $categories[$i]['app_name'] != 'phpgw')
 		{

@@ -30,6 +30,7 @@
 				<td bgcolor="{th_bg}"><font face="{font}">{sort_description}</font></td>
 				{sort_data}
 				<td bgcolor="{th_bg}" align="center"><font face="{font}">{lang_app}</font></td>
+				<td bgcolor="{th_bg}" align=center><font face="{font}">{lang_sub}</font></td>
 				<td bgcolor="{th_bg}" align=center><font face="{font}">{lang_edit}</font></td>
 				<td bgcolor="{th_bg}" align=center><font face="{font}">{lang_delete}</font></td>
 			</tr>
@@ -41,6 +42,7 @@
 			<td><font face="{font}">{descr}</font></td>
 			{td_data}
 			<td align="center"><font face="{font}"><a href="{app_url}">{lang_app}</a></font></td>
+			<td align="center"><font face="{font}"><a href="{add_sub}">{lang_sub_entry}</a></font></td>
 			<td align="center"><font face="{font}"><a href="{edit}">{lang_edit_entry}</a></font></td>
 			<td align="center"><font face="{font}"><a href="{delete}">{lang_delete_entry}</a></font></td>
 		</tr>

@@ -22,6 +22,11 @@
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = 'phpgw';
 
+	if ($new_parent)
+	{
+		$cat_parent = $new_parent;
+	}
+
 	if ($submit)
 	{
 		$errorcount = 0;
@@ -48,22 +53,15 @@
 			}
 		}
 
-		if ($cat_main && $cat_parent)
-		{
-			$main = $c->id2name($cat_parent,'main');
-			if ($main != $cat_main)
-			{
-				$error[$errorcount++] = lang('You have selected an invalid main category !');
-			}
-		}
-
 		if (!$error)
 		{
-			$cat_name = addslashes($cat_name);
-			$cat_description = addslashes($cat_description);
-			$cat_access = 'public';
-
-			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
+			$c->add(array
+			(
+				'parent'	=> $cat_parent,
+				'descr'		=> $cat_description,
+				'name'		=> $cat_name,
+				'access'	=> 'public'
+			));
 		}
 	}
 
@@ -86,11 +84,8 @@
 	$t->set_var('actionurl',$phpgw->link('/admin/addcategory.php'));
 	$t->set_var('doneurl',$phpgw->link('/admin/categories.php'));
 	$t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
-	$t->set_var('lang_main',lang('Main category'));
-	$t->set_var('lang_new_main',lang('New main category'));
-	$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
 	$t->set_var('lang_parent',lang('Parent category'));
-	$t->set_var('lang_select_parent',lang('Choose the parent category'));
+	$t->set_var('lang_none',lang('None'));
 	$t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
 	$t->set_var('lang_name',lang('Name'));
 	$t->set_var('lang_descr',lang('Description'));

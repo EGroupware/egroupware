@@ -59,6 +59,7 @@
 	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 	$t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/admin/categories.php',lang('Name')));
 	$t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/admin/categories.php',lang('Description')));
+	$t->set_var('lang_sub',lang('Add sub'));
 	$t->set_var('lang_edit',lang('Edit'));
 	$t->set_var('lang_delete',lang('Delete'));
 
@@ -70,11 +71,11 @@
 		$t->set_var(tr_color,$tr_color);
 
 		$cat_id = $categories[$i]['id'];
-		$space = '&nbsp;&nbsp;';
 		$level = $categories[$i]['level'];
 
 		if ($level > 0)
 		{
+			$space = '&nbsp;&nbsp;';
 			$spaceset = str_repeat($space,$level);
 			$name = $spaceset . $phpgw->strip_html($categories[$i]['name']);
 		}
@@ -92,6 +93,10 @@
 
 		$t->set_var(array('name' => $name,
 						'descr' => $descr));
+
+		$t->set_var('add_sub',$phpgw->link('/admin/addcategory.php','cat_parent=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
+							. '&order=' . $order . '&filter=' . $filter));
+		$t->set_var('lang_sub_entry',lang('Add sub'));
 
 		$t->set_var('edit',$phpgw->link('/admin/editcategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
 										. '&order=' . $order . '&filter=' . $filter));

@@ -25,6 +25,7 @@
 			<tr bgcolor="{th_bg}">
 				<td width=20% bgcolor="{th_bg}">{sort_name}</td>
 				<td width=32% bgcolor="{th_bg}">{sort_description}</td>
+				<td width=8% bgcolor="{th_bg}" align="center">{lang_sub}</td>
 				<td width=8% bgcolor="{th_bg}" align="center">{lang_edit}</td>
 				<td width=8% bgcolor="{th_bg}" align="center">{lang_delete}</td>
 			</tr>
@@ -34,11 +35,12 @@
 			<tr bgcolor="{tr_color}">
 				<td>{name}</td>
 				<td>{descr}</td>
+				<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>
 				<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
 				<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>  
 			</tr>
 
-<!-- END cat_list -->  
+<!-- END cat_list -->
 
 <!-- BEGINN add   -->
 

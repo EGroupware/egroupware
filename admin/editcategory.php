@@ -35,6 +35,11 @@
 				. '<input type="hidden" name="filter" value="' . $filter . '">' . "\n"
 				. '<input type="hidden" name="cat_id" value="' . $cat_id . '">' . "\n";
 
+	if ($new_parent)
+	{
+		$cat_parent = $new_parent;
+	}
+
 	if ($submit)
 	{
 		$errorcount = 0;
@@ -61,22 +66,16 @@
 			}
 		}
 
-		if ($cat_main && $cat_parent)
-		{
-			$main = $c->id2name($cat_parent,'main');
-			if ($main != $cat_main)
-			{
-				$error[$errorcount++] = lang('You have selected an invalid main category !');
-			}
-		}
-
-		$cat_name = addslashes($cat_name);
-		$cat_description = addslashes($cat_description);
-		$cat_access = 'public';
-
 		if (! $error)
 		{
-			$c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access,$cat_main);
+			$c->edit(array
+			(
+				'access'	=> 'public',
+				'parent'	=> $cat_parent,
+				'descr'		=> $cat_description,
+				'name'		=> $cat_name,
+				'id'		=> $cat_id
+			));
 		}
 	}
 
@@ -99,7 +98,7 @@
 
 	$t->set_var('title_categories',lang('Edit global category'));
 	$t->set_var('lang_parent',lang('Parent category'));
-	$t->set_var('lang_select_parent',lang('Choose the parent category'));
+	$t->set_var('lang_none',lang('None'));
 	$t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
 	$t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
 									. '&order=' . $order . '&filter=' . $filter));
@@ -110,11 +109,7 @@
 	$t->set_var('lang_done',lang('Done'));
 	$t->set_var('lang_edit',lang('Edit'));
 	$t->set_var('lang_delete',lang('Delete'));
-	$t->set_var('lang_main',lang('Main category'));
-	$t->set_var('lang_new_main',lang('New main category'));
-	$t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main']));
 
-	$cat_id = $cats[0]['id'];
 	$t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
 	$t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
 	$t->set_var('category_list',$c->formated_list('select','all',$cats[0]['parent']));

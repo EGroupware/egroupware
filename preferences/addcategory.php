@@ -36,6 +36,11 @@
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = $cats_app;
 
+	if ($new_parent)
+	{
+		$cat_parent = $new_parent;
+	}
+
 	if ($submit)
 	{
 		$errorcount = 0;
@@ -62,20 +67,9 @@
 			}
 		}
 
-		if ($cat_main && $cat_parent) 
-		{
-			$main = $c->id2name($cat_parent,'main');
-			if ($main != $cat_main)
-			{
-				$error[$errorcount++] = lang('You have selected an invalid main category');
-			}		    
-		}
-
 		if (!$error)
 		{
-			$cat_name = addslashes($cat_name);
-			$cat_description = addslashes($cat_description);
-			if ($access)
+			if ($cat_access)
 			{
 				$cat_access = 'private';
 			}
@@ -84,7 +78,14 @@
 				$cat_access = 'public';
 			}
 
-			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
+			$c->add(array
+			(
+				'name'	=> $cat_name,
+				'descr'	=> $cat_description,
+				'parent'	=> $cat_parent,
+				'access'	=> $cat_access,
+				'data'		=> $cat_data
+			));
 		}
 	}
 
@@ -109,18 +110,8 @@
 	$t->set_var('user_name',$phpgw_info['user']['fullname']);
 	$t->set_var('hidden_vars',$hidden_vars);
 	$t->set_var('font',$phpgw_info['theme']['font']);
-
-	$t->set_var('lang_main',lang('Main category'));
-	$t->set_var('lang_new_main',lang('New main category'));
-
-	if ($global_cats)
-	{
-		$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main,True));
-	}
-	else
-	{
-		$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
-	}
+	$t->set_var('lang_parent',lang('Parent category'));
+	$t->set_var('lang_none',lang('None'));
 
 	if ($cats_level)
 	{
@@ -132,25 +123,30 @@
 		{
 			$category_list = $c->formated_list('select','all',$cat_parent);
 		}
-
-		$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Choose the parent category') . '</option>' . $category_list .'</select>');
-		$t->set_var('lang_parent',lang('Parent category'));
 	}
 	else
 	{
-		$t->set_var('lang_parent','');
-		$t->set_var('category_select','');
+		if ($global_cats)
+		{
+			$category_list = $c->formated_list('select','mains',$cat_parent,True);
+		}
+		else
+		{
+			$category_list = $c->formated_list('select','mains',$cat_parent);
+		}
 	}
+
+	$t->set_var('category_list',$category_list);
 
 	$t->set_var('lang_access',lang('Private'));
 
-	if ($access)
+	if ($cat_access)
 	{
-		$t->set_var('access', '<input type="checkbox" name="access" value="True" checked>');
+		$t->set_var('access', '<input type="checkbox" name="cat_access" value="True" checked>');
 	}
 	else
 	{
-		$t->set_var('access', '<input type="checkbox" name="access" value="True">');
+		$t->set_var('access', '<input type="checkbox" name="cat_access" value="True">');
 	}
 
 	$t->set_var('lang_name',lang('Name'));
@@ -160,7 +156,7 @@
 
 	if ($extra)
 	{
-		$t->set_var('td_data','<input name="cat_data" size="50" value="' . $cat_data . '">');
+		$t->set_var('td_data','<input name="cat_data" size="50" value="' . $phpgw->strip_html($cat_data) . '">');
 		$t->set_var('lang_data',lang($extra));
 	}
 	else
