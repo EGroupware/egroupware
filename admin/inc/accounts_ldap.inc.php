@@ -108,16 +108,8 @@
   function account_add($account_info)
   {
      global $phpgw_info, $phpgw, $ldap;
-
-     if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
-        $salt = $phpgw->common->randomstring(2);
-        $account_info["passwd"] = $phpgw->common->des_cryptpasswd($account_info["passwd"], $salt);
-     }
-
-     if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
-        $salt = $phpgw->common->randomstring(9);
-        $account_info["passwd"] = $phpgw->common->md5_cryptpasswd($account_info["passwd"], $salt);
-     }
+   
+     $account_info["passwd"] = $phpgw->common->encrypt_password($account_info["passwd"]);
 
      // This method is only temp.  We need to figure out the best way to assign uidnumbers and
      // guidnumbers.
