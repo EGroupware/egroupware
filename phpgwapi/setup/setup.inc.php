@@ -1,24 +1,21 @@
 <?php
+	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']    = 'phpgwapi';
 	$setup_info['phpgwapi']['title']   = 'phpgwapi';
 	$setup_info['phpgwapi']['version'] = '0.9.11';
 //	$setup_info['phpgwapi']['app_order'] = '6';
-	$tables = Array();
-	$tables[] = 'phpgw_sessions';
-	$tables[] = 'phpgw_preferences';
-	$tables[] = 'phpgw_acl';
-	$tables[] = 'phpgw_hooks';
-	$tables[] = 'phpgw_config';
-	$tables[] = 'phpgw_categories';
-	$tables[] = 'phpgw_applications';
-	$tables[] = 'phpgw_app_sessions';
-	$tables[] = 'phpgw_accounts';
-	$tables[] = 'phpgw_access_log';
-	$tables[] = 'phpgw_lang';
-	$tables[] = 'phpgw_languages';
-	$tables_string = implode (',', $tables);
-	$setup_info['phpgwapi']['tables'] = $tables_string;
-	$hooks = Array();
-	$hooks_string = implode (',', $hooks);
-	$setup_info['phpgwapi']['hooks'] = $hooks_string;
+
+	/* The tables this app creates */
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_sessions';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_preferences';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_acl';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_hooks';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_config';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_categories';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_applications';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_app_sessions';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_accounts';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_access_log';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_lang';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_languages';
 ?>
