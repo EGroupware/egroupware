@@ -127,8 +127,8 @@
 		/* send command to remote server */
 		function send($method_name, $args, $url, $debug=True)
 		{
-			$cmd = '$this->_send_' . $this->mode . '_' . $this->security . '($method_name, $args, $url, $debug);';
-			eval($cmd);
+			$cmd = '_send_' . ($this->mode ? $this->mode : 'xmlrpc') . '_' . $this->security;
+			$this->$cmd($method_name, $args, $url, $debug);
 			return $this->result;
 		}
 
