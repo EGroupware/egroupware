@@ -243,30 +243,32 @@ class bocal
 
 		if(count($event_ids) || count($rep_event_ids))
 		{
-			//foreach($event_ids+$rep_event_ids as $id)
-			foreach((array) $this->read($event_ids+$rep_event_ids,true) as $id => $event)
+			$db_events = (array) $this->read($event_ids+$rep_event_ids,true);
+			
+			foreach($db_events as $id => $event)
 			{
-				//$event = $this->read($id,True);	// = no ACL check, as other entries dont get reported !!!
+				if ($event['recur_type']) continue;	// done in 2. step, we need the exceptions first
 
-				// recuring events are handled later, remember them for later use, no new read necessary
-				if ($event['recur_type'])
-				{
-					$this->insert_all_repetitions($event,$start,$end,$events,$recur_exceptions[$id]);
-					$events_sorted = False;
-					continue;
-				}
 				// recur-exceptions have a reference to the original event
 				// we remember they are their for a certain date and id, to not insert their regular recurrence
 				if ($event['reference'])
 				{
 					for($ts = $event['start']['raw']; $ts < $event['end']['raw']; $ts += DAY_s)
 					{
-						$recur_exceptions[$event['reference']][(int)$this->date2string($ts)] = True;
+						$recur_exceptions[$event['reference']][(int)$this->date2string((int)$ts)] = True;
 					}
 					$recur_exceptions[$event['reference']][$event['end']['full']] = True;
 				}
-				$events[] = $event;
+				$events[] = &$db_events[$id];
+				unset($db_events[$id]);
 			}
+			foreach($db_events as $id => $event)
+			{
+				$this->insert_all_repetitions($event,$start,$end,$events,$recur_exceptions[$id]);
+				$events_sorted = False;
+			}
+			unset($db_events);
+
 			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
 			{
 				$this->debug_message('socalendar::search processed event_ids=%1, events=%2',False,$event_ids+$rep_event_ids,$events);
@@ -411,10 +413,18 @@ class bocal
 			$search_date_ymd = (int)$this->date2string($ts);
 
 			$have_exception = !is_null($recur_exceptions) && isset($recur_exceptions[$search_date_ymd]);
+			
+			if (!$have_exception)	// no execption by an edited event => check the deleted ones
+			{
+				foreach($event['recur_exception'] as $exception_ts)
+				{
+					$have_exception = $search_date_ymd == (int)$this->date2string($exception_ts);
+				}
+			}
 			if ($this->debug && ($this->debug > 3 || $this->debug == 'insert_all_repetions'))
 			{
-				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2]=%3',False,
-					$recur_exceptions,$search_date_ymd,$have_exception);
+				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
+					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
 			}
 			if ($have_exception)
 			{

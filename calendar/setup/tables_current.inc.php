@@ -61,9 +61,9 @@
 				'recur_data' => array('type' => 'int','precision' => '8','default' => '1'),
 				'recur_exception' => array('type' => 'varchar','precision' => '255','default' => '')
 			),
-			'pk' => array(),
+			'pk' => array('cal_id'),
 			'fk' => array(),
-			'ix' => array('cal_id'),
+			'ix' => array(),
 			'uc' => array()
 		),
 		'phpgw_cal_user' => array(

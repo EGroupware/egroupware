@@ -1135,4 +1135,28 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.004';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	$test[] = '1.0.0.004';
+	function calendar_upgrade1_0_0_004()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_repeats',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False),
+				'recur_type' => array('type' => 'int','precision' => '8','nullable' => False),
+				'recur_use_end' => array('type' => 'int','precision' => '8','default' => '0'),
+				'recur_enddate' => array('type' => 'int','precision' => '8'),
+				'recur_interval' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_data' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_exception' => array('type' => 'varchar','precision' => '255','default' => '')
+			),
+			'pk' => array('cal_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.005';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>
