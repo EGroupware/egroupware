@@ -218,7 +218,7 @@
 				fclose($fsetup);
 				$GLOBALS['phpgw_setup']->html->show_header('Saved header.inc.php', False, 'header');
 				echo '<form action="index.php" method="post">';
-				echo '<br>Created header.inc.php! ';
+ 				echo '<br>' . lang('Created header.inc.php!');
 				echo '<input type="hidden" name="FormLogout" value="header">';
 				echo '<input type="submit" name="junk" value="'.lang('Continue').'">';
 				echo '</form>';

@@ -1,21 +1,30 @@
+%1 records imported	addressbook	fi	%1 tietuetta tuotu
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fi	%1 tietuetta luettu (ei viel‰ tuotu, voit %2palata%3 takaisin ja poistaa valinnan Testaa tuontia)
+(e.g. 1969)	addressbook	fi	(esim. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fi	<b>Muunnostyyppi‰ &lt;none&gt; ei lˆydy.</b> Valitse muunnostyyppi
+@-eval() is only availible to admins!!!	addressbook	fi	@-eval() on vain yll‰pit‰jien k‰ytett‰viss‰!
+actions	addressbook	fi	Toimenpiteet
+add a single entry by passing the fields.	addressbook	fi	Lis‰‰ yksitt‰inen tietue antamalla kent‰t.
 add custom field	addressbook	fi	Lis‰‰ oma kentt‰
-addressbook	common	fi	Osoitekirja
 address book	common	fi	Osoitekirja
-addressbook preferences	addressbook	fi	Osoitekirjan asetukset
+address book - vcard in	addressbook	fi	Osoitekirja - VCard kohteessa
 address book - view	addressbook	fi	Osoitekirja - n‰yt‰
 address line 2	addressbook	fi	Osoite rivi 1
 address line 3	addressbook	fi	Osoite rivi 2
 address type	addressbook	fi	Osoitteen laji
+addressbook	common	fi	Osoitekirja
+addressbook preferences	addressbook	fi	Osoitekirjan asetukset
+addressbook-fieldname	addressbook	fi	Osoitekirja - kent‰n nimi
 addvcard	addressbook	fi	Lis‰‰ VCard
 alt. csv import	addressbook	fi	Alt. CSV Tuonti
 are you sure you want to delete this field?	addressbook	fi	Haluatko poistaa kent‰n?
 bbs phone	addressbook	fi	BBS-numero
 birthday	common	fi	Syntym‰p‰iv‰
+birthdays	common	fi	Syntym‰p‰iv‰t
 blank	addressbook	fi	Tyhj‰
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fi	<b>Muunnostyyppi‰ &lt;none&gt; ei lˆydy.</b> Valitse muunnostyyppi
+business	common	fi	Tyˆ
 business address type	addressbook	fi	Business Address Type
 business city	addressbook	fi	Kaupunki
-business	common	fi	Tyˆ
 business country	addressbook	fi	Maa
 business email	addressbook	fi	E-mail
 business email type	addressbook	fi	E-mail -tyyppi
@@ -26,29 +35,45 @@ business street	addressbook	fi	Katuosoite
 business zip code	addressbook	fi	Postinumero
 car phone	addressbook	fi	Autopuhelin
 cell phone	addressbook	fi	Matkapuhelin
+charset of file	addressbook	fi	Tiedoston merkistˆ
 city	common	fi	Kaupunki
 company	common	fi	Yritys
 company name	common	fi	Yrityksen nimi
-contact application	admin	fi	Yhteystietojen hallinta
+configuration	common	fi	Konfiguraatio
 contact	common	fi	Yhteystiedot
+contact application	admin	fi	Yhteystietojen hallinta
 contact settings	admin	fi	Yhteystiedot - asetukset
+copied by %1, from record #%2.	addressbook	fi	Kopioinut %1 tietueesta #%2.
 country	common	fi	Maa
+csv-fieldname	addressbook	fi	CSV-kent‰n nimi
+csv-filename	addressbook	fi	CSV-tiedoston nimi
+custom	addressbook	fi	Oma
 custom fields	addressbook	fi	Omat kent‰t
 debug output in browser	addressbook	fi	Virheenselvitys selaimessa
 default filter	addressbook	fi	Oletusrajaus
+delete a single entry by passing the id.	addressbook	fi	Poista tietue antamalla sen tunniste
 department	common	fi	Osasto
+domestic	addressbook	fi	Kotimainen
+download	addressbook	fi	Lataa
 download export file (uncheck to debug output in browser)	addressbook	fi	Lataa vientitiedosto (Ei kun virheenselvitys selaimessa)
 edit custom field	addressbook	fi	Muokkaa oma kentt‰
 edit custom fields	admin	fi	Muokka omia kentti‰
-enter the path to the export file here	addressbook	fi	Anna vientitiedoston sijainti
+empty for all	addressbook	fi	tyhj‰ kaikille
+enter the path to the exported file here	addressbook	fi	Anna viedyn tiedoston polku
 export contacts	addressbook	fi	Vie yhteystiedot
 export file name	addressbook	fi	Vie tiedostoon
+export from addressbook	addressbook	fi	Vie osoitekirjasta
 extra	addressbook	fi	Lis‰tiedot
-fax number	common	fi	Fax
+fax	addressbook	fi	Faksi
+fax number	common	fi	Faksi
+field %1 has been added !	addressbook	fi	Kentt‰ %1 on lis‰tty!
+field %1 has been updated !	addressbook	fi	Kentt‰ %1 on p‰ivitetty!
 field name	addressbook	fi	Kent‰n nimi
 fields to show in address list	addressbook	fi	Osoitelistan kent‰t
+fieldseparator	addressbook	fi	Kentt‰erotin
 full name	addressbook	fi	Koko nimi
 geo	addressbook	fi	GEO
+global categories	addressbook	fi	Yleiset luokat
 grant addressbook access	common	fi	Anna p‰‰sy osoitekirjaan
 home address type	addressbook	fi	Kotiosoitteen tyyppi
 home city	addressbook	fi	Kaupunki
@@ -59,17 +84,22 @@ home phone	addressbook	fi	Puhelin
 home state	addressbook	fi	Osavaltio
 home street	addressbook	fi	Katuosoite
 home zip code	addressbook	fi	Postinumero
+import	addressbook	fi	Tuonti
 import contacts	addressbook	fi	Tuo yhteystiedot
+import csv-file into addressbook	addressbook	fi	Tuo CSV-tiedosto osoitekirjaan
 import file	addressbook	fi	Tuo tiedostosta
+import from ldif, csv, or vcard	addressbook	fi	Tuo LDIF-, CSV- tai VCard-muodosta
 import from outlook	addressbook	fi	Tuo Outlookista
-In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	fi	Netscapessa: Avaa Addressbook ja valitse <b>File</b> -valikosta <b>Export</b> .<br>Syntyv‰ tiedosto on LDIF -muodoss.<P>Outlookissa: valitse Yhteystiedot -kansio, valitse <b>Tiedosto</b> -valikosta
-the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	fi	<b>Vie, Osoitteisto...</b> ja vie yhteystiedot comma separated text (CSV) -tiedostoksi.       <P>Palm Desktop 4.0 tai uudempi: avaa osoitekirja ja valitse <b>File</b> -valikosta <b>Export</b>. Syntyv‰ tiedosto on VCard -muodossa.<P>
+import next set	addressbook	fi	Tuo seuraava ryhm‰
+import_instructions	addressbook	fi	Netscapessa: Avaa Addressbook ja valitse <b>File</b> -valikosta <b>Export</b> .<br>Syntyv‰ tiedosto on LDIF -muodoss.<P>Outlookissa: valitse Yhteystiedot -kansio, valitse <b>Tiedosto</b> -valikosta
+international	addressbook	fi	Kansainv‰linen
 isdn phone	addressbook	fi	ISDN-numero
 label	addressbook	fi	Label
 ldap context for contacts	admin	fi	LDAP-konteksti
 ldap host for contacts	admin	fi	LDAP-palvelin
 ldap root dn for contacts	admin	fi	LDAP root dn
 ldap root pw for contacts	admin	fi	LDAP root pw
+ldif	addressbook	fi	LDIF
 line 2	addressbook	fi	Rivi 2
 mark records as private	addressbook	fi	Mark records as private
 message phone	addressbook	fi	Vastaajapalvelu
@@ -78,33 +108,59 @@ mobile	addressbook	fi	GSM
 mobile phone	addressbook	fi	Matkapuhelin
 modem phone	addressbook	fi	Modem Phone
 no vcard	addressbook	fi	Ei VCard
-none	addressbook	fi	ei mit‰‰n
+number of records to read (%1)	addressbook	fi	Luettavien tietueiden m‰‰r‰ (%1)
 other number	addressbook	fi	Muu numero
 other phone	addressbook	fi	Muu puhelin
 pager	common	fi	Hakulaite
 parcel	addressbook	fi	Paketti
 phone number	common	fi	Puhelinnumero
 phone numbers	common	fi	Puhelinnumerot
+please enter a name for that field !	addressbook	fi	Anna kent‰n nimi!
 postal	common	fi	Postal
+pref	addressbook	fi	etuliite
 prefix	addressbook	fi	Etuliite
 public key	addressbook	fi	Julkinen avain
+read a list of entries.	addressbook	fi	Lue tietueiden luettelo
+read a single entry by passing the id and fieldlist.	addressbook	fi	Lue yksitt‰inen tietue antamalla tunniste ja kentt‰luettelo.
 record access	addressbook	fi	Lukuoikeus
 record owner	addressbook	fi	Omistaja
 retrieve contacts	admin	fi	nouda kontaktit
+select all	addressbook	fi	Valitse kaikki
 select the type of conversion	addressbook	fi	Valitse muunnoksen tyyppi
+select the type of conversion:	addressbook	fi	Valitse muunnoksen tyyppi:
 select where you want to store	admin	fi	Minne haluat tallentaa
 show birthday reminders on main screen	addressbook	fi	N‰yt‰ syntym‰p‰iv‰muistutukset p‰‰n‰ytˆll‰
+startrecord	addressbook	fi	Aloitustietue
 state	common	fi	Osavaltio
 street	common	fi	Katuosoite
 successfully imported %1 records into your addressbook.	addressbook	fi	Tuotiin %1 tietuetta osoitekirjaan.
 suffix	addressbook	fi	J‰lkiliite
+test import (show importable records <u>only</u> in browser)	addressbook	fi	Testaa tuontia (n‰yt‰ tuotavat tieuteet <u>vain</u> selaimessa)
+that field name has been used already !	addressbook	fi	Kent‰n nimi on jo k‰ytˆss‰!
 this person's first name was not in the address book.	addressbook	fi	Etunime‰ ei ole osoitekirjassa.
+this person's last name was not in the address book.	addressbook	fi	Sukunime‰ ei ole osoitekirjassa.
+this person\'s first name was not in the address book.	addressbook	fi	Etunime‰ ei ole osoitekirjassa.
+this person\'s last name was not in the address book.	addressbook	fi	Sukunime‰ ei ole osoitekirjassa.
+this person\\\'s first name was not in the address book.	addressbook	fi	Etunime‰ ei ole osoitekirjassa.
+this person\\\'s last name was not in the address book.	addressbook	fi	Sukunime‰ ei ole osoitekirjassa.
+to many might exceed your execution-time-limit	addressbook	fi	liian moni saattaa ylitt‰‰ suoritusajan
 today is %1's birthday!	common	fi	T‰n‰‰n syntym‰p‰iv‰‰ns‰ viett‰‰ %1!
+today is %1\'s birthday!	common	fi	T‰n‰‰n syntym‰p‰iv‰‰ns‰ viett‰‰ %1!
+today is %1\\\'s birthday!	common	fi	T‰n‰‰n syntym‰p‰iv‰‰ns‰ viett‰‰ %1!
 tomorrow is %1's birthday.	common	fi	Huomenna syntym‰p‰iv‰‰ns‰ viett‰‰ %1.
+tomorrow is %1\'s birthday.	common	fi	Huomenna syntym‰p‰iv‰‰ns‰ viett‰‰ %1.
+tomorrow is %1\\\'s birthday.	common	fi	Huomenna syntym‰p‰iv‰‰ns‰ viett‰‰ %1.
+translation	addressbook	fi	K‰‰nnˆs
+update a single entry by passing the fields.	addressbook	fi	P‰ivit‰ yksitt‰ist‰ tietuetta antamalla kent‰t.
+use country list	addressbook	fi	K‰yt‰ maaluetteloa
 vcard	common	fi	VCard
 vcards require a first name entry.	addressbook	fi	VCard vaatii etunimen.
+vcards require a last name entry.	addressbook	fi	VCard vaatii sukunimen.
 video phone	addressbook	fi	Videopuhelin
 voice phone	addressbook	fi	Puhelin
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fi	VAROITUS!! LDAP soveltuu vain jos sit‰ ei k‰ytet‰ k‰ytt‰j‰tunnusten tallentamiseen!
 work phone	addressbook	fi	Tyˆpuhelin
+you must select a vcard. (*.vcf)	addressbook	fi	Valitse vcard -tiedosto. (*.vcf)
+you must select at least 1 column to display	addressbook	fi	Valitse ainakin yksi n‰ytett‰v‰ sarake
 zip code	common	fi	Postinumero
+zip_note	addressbook	fi	<p><b>Huom:</b> Tiedosto voi olla usean .csv-, .vcf- tai .ldif- tiedoston zip-paketti.  ƒl‰ kuitenkaan tuo useampaa tiedostotyyppi‰ kerralla.
