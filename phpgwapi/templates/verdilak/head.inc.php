@@ -34,6 +34,8 @@
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
 	$var = Array (
+		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'		=> lang('charset'),
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],

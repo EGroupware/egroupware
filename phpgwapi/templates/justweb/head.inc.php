@@ -32,6 +32,8 @@
 	$tpl->set_file(array('head' => 'head.tpl'));
 
 	$var = Array (
+		'img_icon'      => PHPGW_IMAGES . '/favicon.ico',
+		'img_shortcut'  => PHPGW_IMAGES . '/favicon.ico',
 		'webserver_url'	=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 		'home'		=> $GLOBALS['phpgw']->link('/index.php'),
 		'appt'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uicalendar.day')),
