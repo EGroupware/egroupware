@@ -95,7 +95,7 @@ class ADODB2_mysql extends ADODB_DataDict {
 		case 'I': return 'INTEGER';
 		case 'I1': return 'TINYINT';
 		case 'I2': return 'SMALLINT';
-		case 'I4': return 'MEDIUMINT';
+		case 'I4': return 'INTEGER';	// MEDIUMINT is actualy a I3
 		case 'I8': return 'BIGINT';
 		
 		case 'F': return 'DOUBLE';
