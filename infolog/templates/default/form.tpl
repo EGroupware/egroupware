@@ -30,6 +30,7 @@
           <td>{event_title}</td>
            <td colspan="3">{event} {event_nojs}</td>
          </tr>
+{linkto}
          <tr>
             <td colspan="4"><hr size="1"></td>
          </tr>

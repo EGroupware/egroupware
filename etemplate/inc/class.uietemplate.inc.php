@@ -53,6 +53,11 @@
 			$this->sbox = CreateObject('etemplate.sbox2');	// older version is in the api
 
 			$this->boetemplate($name,$load_via);
+
+			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			//echo "Version: $a.$b.$c.$d\n";
+			if ($this->stable = $a <= 0 && $b <= 9 && $c <= 14)
+				$this->class_conf = array();
 		}
 
 		/*!
@@ -98,7 +103,7 @@
 			$id = $this->appsession_id();
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
-			$html .= $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
+			$html .= ($this->stable ? $this->html->nextMatchStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script() .
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
 					array('etemplate_exec_id' => $id,'app' => $GLOBALS['phpgw_info']['flags']['currentapp']),
@@ -115,9 +120,7 @@
 				'method' => $method
 			),$id);
 
-			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			//echo "Version: $a.$b.$c.$d\n";
-			if ($a <= 0 && $b <= 9 && $c <= 14)
+			if ($this->stable)
 			{
 				echo parse_navbar() . $html;
 			}

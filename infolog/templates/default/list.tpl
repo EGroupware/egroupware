@@ -1,6 +1,6 @@
 <!-- BEGIN projdetails -->
  <table width=95% border=0 cellspacing=1 cellpadding=3>
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
    <td width="3%" class=list>{lang_type}</td>
    <td width="5%" class=list>{lang_status}</td>
    <td class=list>{lang_subject}</td>
@@ -9,7 +9,7 @@
    <td width="10%" class=list>{lang_owner}<br>{lang_datemodified}</td>
    <td width="10%" class=list>{lang_responsible}</td>
   </tr>
-  <tr bgcolor="{row_on}" valign="top">
+  <tr class="row_on" valign="top">
    <td class=list>{type}</td>
    <td class=list>{status}</td>
    <td class=list>{subject}<br>{des}{filelinks}</td>
@@ -21,7 +21,7 @@
 <!-- END projdetails -->
 
 <!-- BEGIN info_headers -->
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
    <td width="2%" class=list>{lang_type}</td>
    <td width="4%" class=list>{lang_status}</td>
    <td class=list>{lang_subject}</td>
@@ -34,7 +34,7 @@
 <!-- END info_headers -->
 
 <!-- BEGIN info_list -->
-  <tr bgcolor="{tr_color}" valign="top">
+  <tr class="{tr_color}" valign="top">
    <td class=list>{type}</td>
    <td class=list>{status}</td>
    <td class=list>{subject}<br>{des}{filelinks}</td>

@@ -26,16 +26,16 @@
 	</tr>
 </table>
 <table border="0" cellspacing="2" cellpadding="2" width="87%">
-	<tr bgcolor="{th_bg}">
-		<td bgcolor="{th_bg}">{sort_name}</td>
-		<td bgcolor="{th_bg}">{sort_description}</td>
+	<tr class="th">
+		<td class="th">{sort_name}</td>
+		<td class="th">{sort_description}</td>
 
 		{th_data}
 
-		<td bgcolor="{th_bg}" align="center">{lang_app}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_sub}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_edit}</td>
-		<td bgcolor="{th_bg}" align=center>{lang_delete}</td>
+		<td class="th" align="center">{lang_app}</td>
+		<td class="th" align=center>{lang_sub}</td>
+		<td class="th" align=center>{lang_edit}</td>
+		<td class="th" align=center>{lang_delete}</td>
 	</tr>
 
 	{rows}
@@ -60,7 +60,7 @@
 
 <!-- BEGIN cat_row -->
 
-	<tr bgcolor="{tr_color}">
+	<tr class="{tr_color}">
 		<td>{name}</td>
 		<td>{descr}</td>
 		{td_data}

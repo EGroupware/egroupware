@@ -5,7 +5,7 @@
       <hr noshade width="98%" align="center" size="1">
      <center>
          <table width=95% border=0 cellspacing=1 cellpadding=3>
-          <tr bgcolor="{th_bg}">
+          <tr class="th">
             <td width="5%" class=list>{lang_type}</td>
             <td width="5%" class=list>{lang_status}</td>
             <td class=list>{lang_subject}</td>
@@ -14,7 +14,7 @@
             <td width="10%" class=list>{lang_owner}</td>
             <td width="10%" class=list>{lang_responsible}</td>
           </tr>
-           <tr bgcolor="{th_bg}" valign="top">
+           <tr class="th" valign="top">
             <td class=list>{type}</td>
             <td class=list>{status}</td>
             <td class=list>{subject}<br>{des}{filelinks}</td>
