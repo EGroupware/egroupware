@@ -56,7 +56,7 @@
 
 		$can_edit = False;
 		
-		if(($cal_info->owner == $owner) || ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+		if(($cal_info->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
 		{
 			$can_edit = True;
 		}
