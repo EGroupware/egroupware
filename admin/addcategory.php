@@ -26,10 +26,11 @@
 	$errorcount = 0;
 
         if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-	if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
-	else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
-	if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
-
+	if (!$error) {
+	    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
+	    else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
+	    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
+	}
 	if (! $error) {
 	    $cat_name = addslashes($cat_name);
 	    $cat_description = addslashes($cat_description);
