@@ -181,7 +181,7 @@
 		echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
 	}
 
-	$phpgw->common->hook('',array('email','calendar','news'));  //,'addressbook'));
+	$phpgw->common->hook('',array('email','calendar','news','addressbook'));
 
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
