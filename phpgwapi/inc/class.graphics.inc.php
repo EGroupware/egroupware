@@ -1,4 +1,4 @@
-<?
+<?php
   /**************************************************************************\
   * phpGroupWare API - Graphical                                             *
   * This file written by Lars Kneschke <knecke@phpgroupware.org>             *
