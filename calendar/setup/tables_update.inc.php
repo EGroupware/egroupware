@@ -1048,7 +1048,8 @@
 				($config['mail_suffix'] ? $config['mail_suffix'] : 'local'))).
 			" WHERE uid LIKE '-@%' OR uid=''");
 
-		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.007';
+		// we dont need to do update 0.9.16.007, as UpdateSequenze is called now by RefreshTable
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
 
@@ -1058,5 +1059,16 @@
 	{
 		// re-run the update as very old entries only have an empty uid
 		return calendar_upgrade0_9_16_005();
+	}
+	
+	
+	$test[] = '0.9.16.007';
+	function calendar_upgrade0_9_16_007()
+	{
+		// update the sequenzes for refreshed tables (postgres only)
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_cal_holidays','hol_id');
+		
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
 ?>
