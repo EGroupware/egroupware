@@ -20,6 +20,16 @@
    </tr>
 
    <tr bgcolor="{row_off}">
+    <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
+    <td><input name="newsettings[site_username]" value="{value_site_username}"></td>
+   </tr>
+
+   <tr bgcolor="{row_on}">
+    <td>{lang_Enter_the_site_password_for_peer_servers}.</td>
+    <td><input type="password" name="newsettings[site_password]" value="{value_site_password}"></td>
+   </tr>
+
+   <tr bgcolor="{row_off}">
     <td>{lang_Show_'powered_by'_logo_on}:</td>
     <td>
      <select name="newsettings[showpoweredbyon]">
