@@ -47,7 +47,7 @@
 
     $exists = $c->exists('subs',$cat_name='',$cat_id);
     if ($exists==True) {
-        $t->set_var('lang_subs',lang('Do you want to delete also all subcategories ?'));
+        $t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
         $t->set_var('subs','<input type="checkbox" name="subs" value="True">');
     }
     else {
