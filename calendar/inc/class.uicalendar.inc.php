@@ -1850,16 +1850,18 @@
 			   $time_width = (intval($this->bo->prefs['common']['time_format']) == 12?10:7);
 			}
 
-			return 'A.minicalendar { color: #000000 }'."\n"
-				. '  A.bminicalendar { color: #336699; font-weight: bold; font-style: italic }'."\n"
-				. '  A.minicalendargrey { color: #999999 }'."\n"
-				. '  A.bminicalendargrey { color: #336699; font-weight: bold; font-style: italic }'."\n"
-				. '  A.minicalhol { color: #000000; background-color: '.$this->holiday_color.' }'."\n"
-				. '  A.bminicalhol { color: #336699; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n"
-				. '  A.minicalgreyhol { color: #999999; background-color: '.$this->holiday_color.' }'."\n"
-				. '  A.bminicalgreyhol { color: #999999; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n"
-				. '  .event { color: '.$this->theme['bg_text'].'; font-family: '.$this->theme['font'].'; font-weight: 100; font-size: 80%; line-height: 110%; vertical-align: middle; }'."\n"
-				. '  .time { width: '.$time_width.'%; background-color: '.$this->theme['navbar_bg'].'; border-color: '.$this->theme['navbar_text'].'; border-width: 1; color: '.$this->theme['bg_text'].'; font-family: '.$this->theme['font'].'; font-size: 65%; line-height: 100%; vertical-align: middle; }'."\n";
+			return 'A.minicalendar { color: #000000; font: xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalendar { color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalendargrey { color: #999999; font: xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalendargrey { color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalhol { background: '.$this->holiday_color.'; color: #000000; font: xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalhol { background: '.$this->holiday_color.'; color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalgreyhol { background: '.$this->holiday_color.'; color: #999999; font: xx-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalgreyhol { background: '.$this->holiday_color.'; color: #999999; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
+				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
+				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
+				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
+				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle; }'."\n";
 		}
 
 		function no_edit()
@@ -2708,7 +2710,9 @@
    	   $p->set_file($templates);
 			$p->set_block('day_cal','day','day');
 			$p->set_block('day_cal','day_row','day_row');
-			$p->set_block('day_cal','day_event','day_event');
+			$p->set_block('day_cal','day_event_on','day_event_on');
+			$p->set_block('day_cal','day_event_off','day_event_off');
+			$p->set_block('day_cal','day_event_holiday','day_event_holiday');
 			$p->set_block('day_cal','day_time','day_time');
 
 			if (! $this->bo->prefs['calendar']['workdaystarts'] &&
@@ -2835,43 +2839,21 @@
 			// squish events that use the same cell into the same cell.
 			// For example, an event from 8:00-9:15 and another from 9:30-9:45 both
 			// want to show up in the 8:00-9:59 cell.
-//			$rowspan = 0;
-//			$last_row = -1;
-//			for ($i=0;$i<24;$i++)
-//			{
-//				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
-//				{
-//					if ($rowspan > 1)
-//					{
-//						if (isset($time[$i][$j]) && strlen($time[$i]) > 0)
-//						{
-//							$rowspan_arr[$last_row] += $rowspan_arr[$i];
-//							if ($rowspan_arr[$i] <> 0)
-//							{
-//								$rowspan_arr[$last_row] -= 1;
-//							}
-//							$time[$last_row] .= $time[$i];
-//							$time[$i] = '';
-//							$rowspan_arr[$i] = 0;
-//						}
-//						$rowspan--;
-//					}
-//					elseif ($rowspan_arr[$i] > 1)
-//					{
-//						$rowspan = $rowspan_arr[$i];
-//						$last_row = $i;
-//					}
-//				}
-//			}
-
 			$holiday_names = $daily[$date_to_eval]['holidays'];
 			if(!$holiday_names)
 			{
-				$bgcolor = $GLOBALS['phpgw']->nextmatchs->alternate_row_color();
+				if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == $this->theme['row_on'])
+				{
+					$row_to_print = '_on';
+				}
+				else
+				{
+					$row_to_print = '_off';
+				}
 			}
 			else
 			{
-				$bgcolor = $this->theme['bg04'];
+				$row_to_print = '_holiday';
 				while(list($index,$name) = each($holiday_names))
 				{
 					$time[99][0] = '<center>'.$name.'</center>'.$time[99][0];
@@ -2880,11 +2862,9 @@
 
 			if (isset($time[99][0]))
 			{
-				$var = Array(
-					'event'		=> $time[99][0],
-					'bgcolor'	=> $bgcolor
-				);
-				$this->output_template_array($p,'item','day_event',$var);
+				$var['event'] = $time[99][0];
+
+				$this->output_template_array($p,'item','day_event'.$row_to_print,$var);
 
 				$var = Array(
 					'open_link'	=> '',
@@ -2910,16 +2890,30 @@
 						if (isset($time[$i][$j]))
 						{
 							$p->set_var('event',$time[$i][$j]);
-							$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
-							$p->parse('item','day_event',False);
+							if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == $this->theme['row_on'])
+							{
+								$row_to_print = '_on';
+							}
+							else
+							{
+								$row_to_print = '_off';
+							}
+							$p->parse('item','day_event'.$row_to_print,False);
 						}
 						$rowspan--;
 					}
 					elseif (!isset($time[$i][$j]))
 					{
 						$p->set_var('event','&nbsp;');
-						$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
-						$p->parse('item','day_event',False);
+						if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == $this->theme['row_on'])
+						{
+							$row_to_print = '_on';
+						}
+						else
+						{
+							$row_to_print = '_off';
+						}
+						$p->parse('item','day_event'.$row_to_print,False);
 					}
 					else
 					{
@@ -2929,8 +2923,15 @@
 							$p->set_var('extras',' rowspan="'.$rowspan.'"');
 						}
 						$p->set_var('event',$time[$i][$j]);
-						$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
-						$p->parse('item','day_event',False);
+						if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == $this->theme['row_on'])
+						{
+							$row_to_print = '_on';
+						}
+						else
+						{
+							$row_to_print = '_off';
+						}
+						$p->parse('item','day_event'.$row_to_print,False);
 					}
 			
 					$open_link = ' - ';
