@@ -29,9 +29,10 @@
 	*/
 	class etemplate extends boetemplate
 	{
-		var $debug;//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
+		var $debug;//'test.tabs2';//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
+		var $loop = 0;	// set by process_show if an other Exec-ProcessExec loop is needed
 
 		/*!
 		@function etemplate
@@ -77,7 +78,7 @@
 		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
 		@returns nothing
 		*/
-		function exec($method,$content,$sel_options='',$readonlys='',$preserv='')
+		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='')
 		{
 			if (!$sel_options)
 			{
@@ -91,23 +92,26 @@
 			{
 				$preserv = array();
 			}
+			if (!$changes)
+			{
+				$changes = array();
+			}
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$id = $this->save_appsession(array(
-				'name' => $this->name,
-				'template' => $this->template,
-				'lang' => $this->lang,
-				'group' => $this->group,
+			$id = $this->appsession_id();
+			$html = $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
+				$this->html->form($this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
+					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
+
+			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
+				'changes' => $changes,
 				'sel_options' => $sel_options,
 				'preserv' => $preserv,
+				'extension_data' => $GLOBALS['phpgw_info']['etemplate']['extension_data'],
 				'method' => $method
-			));
-
-			$html = $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
-				$this->html->form($this->show($content,$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
+			),$id);
 
 			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			//echo "Version: $a.$b.$c.$d\n";
@@ -133,20 +137,37 @@
 		function process_exec()
 		{
 			$session_data = $this->get_appsession($GLOBALS['HTTP_POST_VARS']['etemplate_exec_id']);
+			//echo "<p>process_exec($this->name) session_data ="; _debug_array($session_data);
 
 			$content = $GLOBALS['HTTP_POST_VARS']['exec'];
 			if (!is_array($content))
 			{
 				$content = array();
 			}
-			$this->read($session_data);
+			$this->init($session_data);
+			$GLOBALS['phpgw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
+
+			//echo "process_exec($this->name) content ="; _debug_array($content);
 			$this->process_show($content,$session_data['readonlys']);
 
-			// set application name so that lang, etc. works
-			list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$session_data['method']);
+			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
+			//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
+			$content = $this->complete_array_merge($session_data['changes'],$content);
+			//echo "process_exec($this->name) merge(changes,content) ="; _debug_array($content);
 
-			//echo "<p>uietemplate.process_exec: ExecMethod('${exec['method']}')</p>\n";
-			ExecMethod($session_data['method'],array_merge($content,$session_data['preserv']));
+			if ($this->loop)
+			{
+				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
+				$this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
+					$session_data['readonlys'],$session_data['preserv'],$content);
+			}
+			else
+			{
+				// set application name so that lang, etc. works
+				list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$session_data['method']);
+
+				ExecMethod($session_data['method'],$this->complete_array_merge($content,$session_data['preserv']));
+			}
 		}
 
 		/*!
@@ -166,8 +187,7 @@
 		@param $show_xxx row,col name/index for name expansion
 		@returns the generated HTML
 		*/
-		function show($content,$sel_options='',$readonlys='',$cname='cont',
-						$show_c=0,$show_row=0)
+		function show($content,$sel_options='',$readonlys='',$cname='cont',$show_c=0,$show_row=0)
 		{
 			if (!$sel_options)
 			{
@@ -190,7 +210,7 @@
 				'.col' => $this->num2chrs($show_c-1),
 				'.row' => $show_row
 			);
-         			reset($this->data);
+			reset($this->data);
 			if (isset($this->data[0]))
 			{
 				list($nul,$width) = each($this->data);
@@ -294,9 +314,12 @@
 			list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-			$value = $content[$name];
 
-			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
+			if (strstr($name,'|'))	// extension which uses whole content array
+			{
+				$value = $content;
+			}
+			elseif (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
 			{
 				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
 				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
@@ -325,7 +348,7 @@
 			if (!$this->types[$cell['type']] &&
 			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
 			{
-				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value);
+				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,$this);
 				$content[$name] = $value;	// set result for template
 			}
 			if ($cell['help'])
@@ -575,7 +598,7 @@
 						$cell['type'] == 'label' || $cell['type'] == 'image' || $cell['type'] == 'raw' ||
 						$cell['type'] == 'hrule';
 
-					if ($idx_cname == '' && $cell['type'] == 'template')	// only templates
+					if ($idx_cname == '' && $cell['type'] == 'template' || strstr($name,'|'))	// only templates or extensions
 					{
 						if ($readonly && !isset($readonlys['__ALL__']))		// can't unset whole content!!!
 						{
@@ -650,6 +673,10 @@
 			}
 			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
 			{
+				if (is_object($name))
+				{
+					$name = $name->name;
+				}
 				echo "<p>process_show_cell(c=$c, r=$r, name='$name',type='${cell['type']}') start: isset(value)=".(0+isset($value)).", value=";
 				if (is_array($value))
 				{
@@ -658,6 +685,28 @@
 				else
 				{
 					echo "'$value'</p>\n";
+				}
+			}
+			if ((isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)) &&
+				isset($this->extension[$cell['type']]->public_functions['post_process']))
+			{
+				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
+				{
+					echo "<p>value for $cell[type]::post_process: "; _debug_array($value);
+				}
+				$this->extension[$cell['type']]->post_process($cell,$value,$this);
+
+				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
+				{
+					echo "<p>value after $cell[type]::post_process: ";
+					if (is_array($value))
+					{
+						_debug_array($value);
+					}
+					else
+					{
+						echo "'$value'</p>";
+					}
 				}
 			}
 			switch ($cell['type'])
@@ -683,8 +732,13 @@
 					}
 					break;
 				case 'template':
-					$templ = new etemplate($name);
+					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($name);
 					$templ->process_show($value,$readonlys);
+					if ($templ->loop)
+					{
+						$this->loop = True;
+						echo "<p>".$this->name.": loop set in process_show(".$templ->name.")</p>\n";
+					}
 					break;
 				case 'select':
 				case 'select-cat':
@@ -695,13 +749,6 @@
 					}
 					break;
 				default: // do nothing, $value is correct as is
-					if ((isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)) &&
-					    isset($this->extension[$cell['type']]->public_functions['post_process']))
-					{
-						//echo "value for post_process: "; _debug_array($value);
-						$this->extension[$cell['type']]->post_process($cell,$value);
-						//echo "<p>value after post_process: '$value'";
-					}
 			}
 			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
 			{
