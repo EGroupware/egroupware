@@ -17,8 +17,9 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
-  $t = new Template($phpgw_info["server"]["template_dir"]);
 
+  $t = new Template($phpgw_info["server"]["template_dir"]);
+  //$t->set_unknowns("remove");
   $t->set_file(array("form"	=> "application_form.tpl"));
 
   if ($submit) {
@@ -45,11 +46,17 @@
   } else {
      $t->set_var("error","");
   }
+
   $t->set_var("session_hidden_var",$phpgw->session->hidden_var());
+  $t->set_var("form_action","newapplication.php");
   $t->set_var("lang_app_name",lang_admin("application name"));
   $t->set_var("lang_app_title",lang_admin("application title"));
   $t->set_var("lang_enabled",lang_admin("enabled"));
   $t->set_var("lang_add",lang_common("add"));
+
+  $t->set_var("app_name_value","");
+  $t->set_var("app_title_value","");
+  $t->set_var("app_enabled_checked","");
 
   $t->pparse("out","form");
 
