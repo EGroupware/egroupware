@@ -591,7 +591,7 @@
 					'account_expires_never' => $_POST['never_expires']
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
-				if ($userData['account_primary_group'] && !in_array($userData['account_primary_group'],$userData['account_groups']))
+				if ($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
 				{
 					$userData['account_groups'][] = intval($userData['account_primary_group']);
 				}
