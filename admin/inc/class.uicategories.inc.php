@@ -65,7 +65,7 @@
 				'start' => $this->start,
 				'query' => $this->query,
 				'sort'  => $this->sort,
-				'order' => $this->order,
+				'order' => $this->order
 			);
 			if(isset($this->cat_id))
 			{
