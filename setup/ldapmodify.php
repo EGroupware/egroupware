@@ -110,8 +110,7 @@
 		$group_info = array();
 	}
 
-	$GLOBALS['phpgw_setup']->db->query("SELECT app_name,app_title FROM phpgw_applications WHERE app_enabled != '0' AND app_enabled != '3' AND "
-		. "app_name != 'administration' ORDER BY app_title",__LINE__,__FILE__);
+	$GLOBALS['phpgw_setup']->db->query("SELECT app_name,app_title FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_title",__LINE__,__FILE__);
 	while ($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = $GLOBALS['phpgw_setup']->db->f('app_title');
@@ -377,15 +376,22 @@
 		$group_list .= '<option value="' . $group['gidnumber'][0] . '">' . $group['cn'][0]  . '</option>';
 	}
 
-	while (list($apptitle,$appname) = each($apps))
+	while(list($appname,$apptitle) = each($apps))
 	{
-		if ($apptitle != 'admin')
+		if($appname == 'admin' ||
+			$appname == 'skel' ||
+			$appname == 'backup' ||
+			$appname == 'netsaint' ||
+			$appname == 'developer_tools' ||
+			$appname == 'phpsysinfo' ||
+			$appname == 'eldaptir' ||
+			$appname == 'qmailldap')
 		{
-			$app_list .= '<option value="' . $apptitle . '" selected>' . $appname . '</option>';
+			$app_list .= '<option value="' . $appname . '">' . $apptitle . '</option>';
 		}
 		else
 		{
-			$app_list .= '<option value="' . $apptitle . '">' . $appname . '</option>';
+			$app_list .= '<option value="' . $appname . '" selected>' . $apptitle . '</option>';
 		}
 	}
 
