@@ -325,6 +325,11 @@
 				}
 			}
 			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
+			
+			if (!is_object($GLOBALS['phpgw']->bocalendar))
+			{
+				$GLOBALS['phpgw']->bocalendar =& $this;	// make the bocalendar object availible for the sidebox menu hook
+			}
 		}
 
 		function list_methods($_type='xmlrpc')
