@@ -605,17 +605,26 @@
 				$this->db->delete($this->recur_table,array('cal_id' => $event['id']),__LINE__,__FILE__);
 			}
 			// Custom fields
-			$this->db->delete($this->extra_table,array('cal_id' => $event['id']),__LINE__,__FILE__);
-
 			foreach($event as $name => $value)
 			{
-				if ($name[0] == '#' && strlen($value))
+				if ($name[0] == '#')
 				{
-					$this->db->insert($this->extra_table,array(
-						'cal_id'			=> $event['id'],
-						'cal_extra_name'	=> substr($name,1),
-						'cal_extra_value'	=> $value,
-					),False,__LINE__,__FILE__);
+					if (strlen($value))
+					{
+						$this->db->insert($this->extra_table,array(
+							'cal_extra_value'	=> $value,
+						),array(
+							'cal_id'			=> $event['id'],
+							'cal_extra_name'	=> substr($name,1),
+						),__LINE__,__FILE__);
+					}
+					else
+					{
+						$this->db->delete($this->extra_table,array(
+							'cal_id'			=> $event['id'],
+							'cal_extra_name'	=> substr($name,1),
+						),__LINE__,__FILE__);
+					}	
 				}
 			}
 			print_debug('Event Saved: ID #',$event['id']);
