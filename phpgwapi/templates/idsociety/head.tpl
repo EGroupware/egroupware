@@ -18,7 +18,7 @@
 -->
 </STYLE>
 <script language="javascript">
-<!--
+<!-- // hide
 function MM_preloadImages() {
     if (document.images) {
     var imgFiles = MM_preloadImages.arguments;
@@ -28,7 +28,7 @@ function MM_preloadImages() {
     preloadArray[i] = new Image;
     preloadArray[i++].src = imgFiles[j];
   } }}
-  -->
+// end hide -->
 </script>
 
 <TITLE>{website_title}</TITLE>
