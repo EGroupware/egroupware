@@ -309,7 +309,7 @@ template selection	admin	nl	Templateselectie
 text entry	admin	nl	Tekstinvoer
 that application name already exists.	admin	nl	Die toepassingsnaam bestaat reeds.
 that application order must be a number.	admin	nl	De invoer van de toepassingsvolgorde moet numeriek zijn.
-that loginid has already been taken	admin	nl	Die loginnaami is reeds in gebruik!
+that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 that name has been used already	admin	nl	Die naam is reeds in Gebruik!
 that server name has been used already !	admin	nl	Die servernaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
