@@ -11,6 +11,7 @@
 <link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
 <title>{website_title} - Login</title>
 <style type="text/css">
+/*
 #containerDiv
 {
 	position:absolute;
@@ -19,30 +20,35 @@
 	top:40%;
 	vertical-align:	bottom;
 }
-
+*/
 #centerBox
 {
-	position:relative;
-	width:100%;
+/*	position:relative;*/
+/*	width:100%;
 	top:-80px;
 	height:134px;
 	z-index:9;
+*/
 }
 
 #divMain
 {
-	background-color:white;
+/*	background-color:white;
 	margin-top: 5px;
 	padding:0px;
 	border-color:#7e7e7e;
 	border-width:1px;
-	border-style:none;
+	border-style:solid;
+*/
+	height:85%;
+
 }
 
+/*
 
 
 body { background: #ffffff; }
-
+*/
 </style>
 
 		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
@@ -75,8 +81,8 @@ body { background: #ffffff; }
 			</tr>
 		</table>
 	</div>
-<br>
-</div>
+<br/>
+<!--</div>-->
 <div id="containerDiv">
 <div id="centerBox">
 <center>{lang_message}</center>
@@ -142,7 +148,7 @@ document.login_form.login.focus();
 
 </div>
 </div>
-
+</div>
 <div style="bottom:10px;left:10px;position:absolute;visibility:hidden;">
 <img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
 <img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">
