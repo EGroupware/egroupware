@@ -1,0 +1,195 @@
+Template: phpgroupware/configuration/note
+Type: note
+Description: Package configuration note.
+ phpGroupWare can be and should be configured entirely via web, so, in the
+ following configuration steps, I'm going to prompt you for the passwords that
+ phpGroupWare uses for web configuration and some default values for the
+ application startup. Then you should point your browser to the phpGroupWare
+ setup, for example:
+ .
+ http://${site}/phpgroupware/setup
+ .
+ continue the configuration, fill the database and let phpGroupWare be aware of
+ the installed modules.
+
+Template: phpgroupware/installation/note_0_9_13_14RC1
+Type: note
+Description: Installation Note.
+ You can find new Upgrade/Install issues in
+ /usr/share/doc/phpgroupware/README.Debian. Please, read it.
+
+Template: phpgroupware/header/password
+Type: password
+Description: Please, insert phpGroupWare 'Header Admin' password:
+ 'Header Admin', is the section in which the phpGroupWare administrator can
+ define the information which will let the application to 'start' (i.e. DBMS
+ settings, directories location etc.)
+
+Template: phpgroupware/header/password/confirm
+Type: password
+Description: Please, retype the phpGroupWare 'Header Admin' password:
+ Please, insert the 'Header Admin' password again. If the password you are
+ going to retype mismatch the previous inserted one, I'll ask you to insert
+ them again.
+
+Template: phpgroupware/header/password/mismatch
+Type: text
+Description: Passwords mismatch.
+ The 'Header Admin' passwords you inserted mismatch. Please, try again.
+
+Template: phpgroupware/configuration/password
+Type: password
+Description: Please, insert the phpGroupWare 'Setup/Config Admin' password:
+ The 'Setup/Config Admin' is the section in which the phpGroupWare
+ administrator access the following facilities:
+ .
+  (1) Simple Application Management
+  (2) Configuration (general)
+  (3) Language Management
+  (4) Advanced Application Management
+
+Template: phpgroupware/configuration/password/confirm
+Type: password
+Description: Please, retype the phpGroupWare 'Setup/Config Admin' password:
+ Please insert the 'Setup/Config Admin' password again. If the password you
+ are going to retype mismatch the previous inserted one, I'll ask you to
+ insert them again.
+
+Template: phpgroupware/configuration/password/mismatch
+Type: text
+Description: Passwords mismatch.
+ The configuration passwords you inserted mismatch. Please, try again.
+
+Template: phpgroupware/webserver
+Type: select
+Choices: Apache, Apache-ssl, Both, None
+Description: Which Web Server are you running?
+ phpGroupWare supports any web server that php3/php4 does, but this
+ configuration process only supports Apache and Apache-SSL. Feel free to submit
+ any hint or patch that would help me in the setup of other Web Servers to
+ phpgroupware@packages.qa.debian.org or wwwconfig-common@packages.qa.debian.org
+
+Template: phpgroupware/db
+Type: text
+Description: phpGroupWare DB setup NOTE.
+ Now you should specify the DBMS settings. You must provide the host name on
+ which the DBMS server is installed, the type (i.e.  PostgresQL, MySql,
+ mSQL etc.), the DB name, the DBMS administrator user-name, etc.
+
+Template: phpgroupware/db/host
+Type: string
+Default: localhost
+Description: Please, insert phpGroupWare DB host name:
+ This should be the host-name or IP address that phpGroupWare will use to access
+ the DB.
+
+Template: phpgroupware/db/type
+Type: select
+Choices: PostgresQL, MySql, mSQL, Sybase, Oracle, MicrosoftSQL, ODBC Compliant , none
+Description: Please, select phpGroupWare DB type:
+ This is the name (and so the type) of The DBMS you will use.
+ .
+ NOTE: Debian only support PostgresQL and MySql for automatic system
+ configuration. Other DBMS are either no more, not yet supported or proprietary one.
+
+Template: phpgroupware/db/name
+Type: string
+Default: phpgroupware
+Description: Please, insert phpGroupWare DB name:
+ This is the name of the DB that phpGroupWare will use.
+
+Template: phpgroupware/db/user/name
+Type: string
+Default: phpgroupware
+Description: Please, insert the DBMS user-name to access the DB:
+ This is the user-name that phpGroupWare will use to access the DB.
+
+Template: phpgroupware/db/user/password
+Type: password
+Description: Please, insert the password to access the DB:
+ This is the password that phpGroupWare will use, along with user-name you
+ provided, to access the DB.
+
+Template: phpgroupware/db/user/password/confirm
+Type: password
+Description: Please, retype the password to access the DB:
+ Please insert the DB access password again. If the password you are going to
+ retype mismatch the previous inserted one, I'll ask you to insert them again.
+
+Template: phpgroupware/db/user/password/mismatch
+Type: text
+Description: Passwords mismatch.
+ The DB access passwords you inserted mismatch. Please, try again.
+
+Template: phpgroupware/db/admin/name
+Type: string
+Description: Please, insert the DBMS administrator user-name:
+ This user-name will be used to access the DBMS to create (if needed):
+ .
+  (1) The DB
+  (2) The new DBMS account that phpGroupWare will use to access the DB
+ .
+ It should be 'postgres' for PostgresQL or 'root' for MySql.
+
+Template: phpgroupware/db/admin/password
+Type: password
+Description: Please, insert the DBMS administrator password (if any):
+ This is the password that will be used along with the DBMS administrator
+ user-name.
+ .
+ NOTE: This password will not be asked twice, since it's not a new password.
+
+Template: phpgroupware/db/setup/skip
+Type: boolean
+Default: false
+Description: DB setup skipped.
+ DB setup will be skipped.
+
+Template: phpgroupware/db/setup/abort
+Type: note
+Description: Abort DB setup.
+ The DBMS type you selected is not supported; you should manually
+ create and drop the DB and the DBMS account that phpGroupWare need.
+ In any case I'll setup the configuration file
+ (/etc/phpgroupware/header.inc.php).
+
+Template: phpgroupware/postgres/error
+Type: note
+Description: Abort DB setup.
+ Sorry, but I'm unable to set up the PostgresQL configuration file to use it
+ at localhost. Error message say:
+ .
+ ${error}
+ .
+ You should manually check the configuration of your PostgresQL. You can try
+ to confgure phpGroupWare again later using the dpkg-reconfigure(1) command.
+
+Template: phpgroupware/postgres/remote
+Type: note
+Description: Abort DB setup.
+ Your PostgresQL server is not on localhost, so, by now, you need to create the
+ DBMS account and the DB by yourself.
+
+Template: phpgroupware/configuration/overwrite
+Type: boolean
+Default: false
+Description: Overwrite 'Header Admin' configuration?
+ With the informations you are going to provide, I can setup the 'Header
+ Admin' file (/etc/phpgroupware/header.inc.php). This may not be the most
+ tuned setup, but phpGroupWare will work with the average system. If you say
+ 'yes', I'll *ALWAYS* overwrite this file on any upgrade of this package. You
+ can safely answer 'yes' by now, and disable this option later with the
+ dpkg-reconfigure(1) commad.
+
+Template: phpgroupware/postrm
+Type: boolean
+Default: true
+Description: Delete *ALL*?
+ Datas subjected to this question are the DBMS account, the DB and the
+ phpGroupWare users ang group files. Do I have to delete *ALL* datas whenever
+ the the phpgroupware package will be completely removed from the system?
+
+Template: phpgroupware/debug
+Type: text
+Description: DEBUG.
+ ${debug}

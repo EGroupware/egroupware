@@ -1,0 +1,2 @@
+etc/phpgroupware/header.inc.php usr/share/phpgroupware/header.inc.php
+var/lib/phpgroupware/files usr/share/phpgroupware/files
