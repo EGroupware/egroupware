@@ -276,12 +276,12 @@
 		return $ab_id;
 	}
 
-	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id,$tid)
+	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id)
 	{
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_EDIT)
 		{
-			$this->update($id,$userid,$fields,$access,$cat_id,$tid);
+			$this->update($id,$userid,$fields,$access,$cat_id);
 		}
 		return;
 	}
@@ -289,12 +289,15 @@
 	// Folowing used for add/edit
 	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="")
 	{
-		global $phpgw, $phpgw_info,$referer;
+		global $phpgw,$phpgw_info,$referer;
 
 		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array('form' => 'form.tpl'));
 		//$t->set_block('form','add','add');
 		//$t->set_block('form','edit','edit');
+
+		$phpgw->config->read_repository();
+		$countrylist = $phpgw->config->config_data['countrylist'];
 
 		$email        = $fields['email'];
 		$emailtype    = $fields['email_type'];
@@ -610,6 +613,14 @@
 		$t->set_var('bzip',$bzip);
 		$t->set_var('lang_bcountry',lang('Business Country'));
 		$t->set_var('bcountry',$bcountry);
+		if ($countrylist)
+		{
+			$t->set_var('bcountry',$phpgw->country->form_select($bcountry,'bcountry'));
+		}
+		else
+		{
+			 $t->set_var('bcountry','<input name="bcountry" value="' . $bcountry . '">');
+		}
 		$t->set_var('lang_badrtype',lang('Address Type'));
 		$t->set_var('badrtype',$badrtype);
 
@@ -628,7 +639,14 @@
 		$t->set_var('lang_hzip',lang('Home Zip Code'));
 		$t->set_var('hzip',$hzip);
 		$t->set_var('lang_hcountry',lang('Home Country'));
-		$t->set_var('hcountry',$hcountry);
+		if ($countrylist)
+		{
+			$t->set_var('hcountry',$phpgw->country->form_select($hcountry,'hcountry'));
+		}
+		else
+		{
+			$t->set_var('hcountry','<input name="hcountry" value="' . $hcountry . '">');
+		}
 		$t->set_var('lang_hadrtype',lang('Address Type'));
 		$t->set_var('hadrtype',$hadrtype);
 
