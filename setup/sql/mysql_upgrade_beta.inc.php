@@ -1300,13 +1300,7 @@
 		$phpgw_setup->db->query("update phpgw_addressbook set tel_prefer='' where tel_prefer='n' OR tel_prefer='y'");
 		$phpgw_setup->db->query("update phpgw_addressbook set tel_video=''  where tel_video='n'  OR tel_video='y'");
 		$phpgw_setup->db->query("update phpgw_addressbook set tel_isdn=''   where tel_isdn='n'   OR tel_isdn='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set adr_one_type=''       where adr_one_type='n' OR adr_one_type='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_type=''       where adr_two_type='n' OR adr_two_type='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_region=''     where adr_two_region='n' OR adr_two_region='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_postalcode='' where adr_two_postalcode='n' OR adr_two_postalcode='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set email_home=''         where email_home='n' OR email_home='y'");
-		$phpgw_setup->db->query("update phpgw_addressbook set email_home_type=''    where email_home_type='n' OR  email_home_type='y'");
-		
+
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
 		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
@@ -1340,6 +1334,13 @@
 		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_parcel adr_two_region varchar(64)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_postal adr_two_postalcode varchar(64)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook add adr_two_countryname varchar(64)");
+
+		$phpgw_setup->db->query("update phpgw_addressbook set adr_one_type=''       where adr_one_type='n' OR adr_one_type='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_type=''       where adr_two_type='n' OR adr_two_type='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_region=''     where adr_two_region='n' OR adr_two_region='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set adr_two_postalcode='' where adr_two_postalcode='n' OR adr_two_postalcode='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set email_home=''         where email_home='n' OR email_home='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set email_home_type=''    where email_home_type='n' OR  email_home_type='y'");
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre18';
 	}
