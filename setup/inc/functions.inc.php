@@ -72,8 +72,10 @@
       echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
       echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
     }else{
+      reset($phpgw_domain);
+      $default_domain = each($phpgw_domain);
       echo "      <input type='password' name='FormPW' value=''>\n";
-      echo "      <input type='hidden' name='FormDomain' value='".$phpgw_info["server"]["default_domain"]."'>\n";
+      echo "      <input type='hidden' name='FormDomain' value='".$default_domain[0]."'>\n";
     }
     echo "      <input type='submit' name='Login' value='Login'>\n";
     echo "    </form></td>\n";
