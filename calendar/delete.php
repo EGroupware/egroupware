@@ -21,16 +21,16 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
-	$event = $phpgw->calendar->fetch_event($cal_stream,intval($id));
+	$phpgw->calendar->open('INBOX',$owner,'');
+	$event = $phpgw->calendar->fetch_event(intval($id));
 	if(($id > 0) && ($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
 	{
 		$thisyear = $event->start->year;
 		$thismonth = $event->start->month;
 		$thisday = $event->start->mday;
 
-		$phpgw->calendar->delete_event($cal_stream,intval($id));
-		$phpgw->calendar->expunge($cal_stream);
+		$phpgw->calendar->delete_event(intval($id));
+		$phpgw->calendar->expunge();
 	}
 
 	Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php','year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&owner='.$owner));
