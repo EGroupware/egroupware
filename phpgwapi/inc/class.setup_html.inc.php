@@ -113,6 +113,9 @@
 
 		function show_header($title='',$nologoutbutton=False, $logoutfrom='config', $configdomain='')
 		{
+			// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+			header('Content-type: text/html; charset='.lang('charset'));
+
 			$GLOBALS['setup_tpl']->set_var('charset',lang('charset'));
 			$style = array(
 				'th_bg'		=> '#486591',
