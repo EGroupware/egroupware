@@ -68,7 +68,7 @@
 
 	// added these to let the app work, need to templatize still
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
 		'T_footer' => 'footer.tpl',
@@ -122,7 +122,7 @@
 	{
 		case 'download':
 			check_form_values();
-			$header_template = CreateObject('phpgwapi.Template','../');
+			$header_template = CreateObject('setup.Template','../');
 			$b = CreateObject('phpgwapi.browser');
 			$b->content_header('header.inc.php','application/octet-stream');
 			/*
@@ -136,7 +136,7 @@
 			break;
 		case 'view':
 			check_form_values();
-			$header_template = CreateObject('phpgwapi.Template','../');
+			$header_template = CreateObject('setup.Template','../');
 			$GLOBALS['phpgw_setup']->html->show_header('Generated header.inc.php', False, 'header');
 			echo '<br>' . lang('Save this text as contents of your header.inc.php') . '<br><hr>';
 			$newheader = $GLOBALS['phpgw_setup']->html->generate_header();
@@ -152,7 +152,7 @@
 			break;
 		case 'write config':
 			check_form_values();
-			$header_template = CreateObject('phpgwapi.Template','../');
+			$header_template = CreateObject('setup.Template','../');
 			if(is_writeable('../header.inc.php') || (!file_exists('../header.inc.php') && is_writeable('../')))
 			{
 				$newheader = $GLOBALS['phpgw_setup']->html->generate_header();

@@ -29,7 +29,7 @@
 	// Does not return unless user is authorized
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 
 	$download = get_var('download',Array('GET','POST'));
 	$submit   = get_var('submit',Array('GET','POST'));

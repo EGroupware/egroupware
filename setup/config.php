@@ -31,7 +31,7 @@
 	}
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
 		'T_footer' => 'footer.tpl',
@@ -165,7 +165,7 @@
 	$cfg_apps = array('phpgwapi','admin','preferences');
 	while(list(,$cfg_app) = each($cfg_apps))
 	{
-		$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($cfg_app));
+		$t = CreateObject('setup.Template',$GLOBALS['phpgw']->common->get_tpl_dir($cfg_app));
 
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));

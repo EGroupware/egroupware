@@ -43,7 +43,7 @@
 	$phpgw->db = $GLOBALS['phpgw_setup']->db;
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'ldap'   => 'ldap.tpl',
 		'T_head' => 'head.tpl',
