@@ -428,19 +428,13 @@
 
 		function id2name($cat_id, $item = 'name')
 		{
-			if ($item == 'name')
+			switch($item)
 			{
-				$value = 'cat_name';
-			}
-			elseif ($item == 'owner')
-			{
-				$value = 'cat_owner';
-			}
-			elseif ($item == 'main')
-			{
-				$value = 'cat_main';
-			}
-			endif;
+				case 'name':	$value = 'cat_name';
+				case 'owner':	$value = 'cat_owner';
+				case 'main':	$value = 'cat_main';
+				return $value;
+			 }
 
 			$this->db->query("select $value from phpgw_categories where cat_id='"
 							. "$cat_id'",__LINE__,__FILE__);
