@@ -74,6 +74,18 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 	
+	$test[] = '0.9.14.501';
+	function phpgwapi_upgrade0_9_14_501()
+	{
+		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
+		// as 0.9.15.xxx are already used in HEAD
+		
+		// 0.9.15.001/2/3/4 are already included in 0.9.14.501
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.005';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+	
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -145,7 +157,7 @@
 		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_timeout',7200)");
 		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_app_timeout',86400)");
 
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.006';
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.007';	// as 0.9.15.006 is already included
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
