@@ -580,10 +580,8 @@
 		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{
-			$this->db->query("delete from $this->std_table where owner='" . $this->account_id . "' and "
-			. "id='$id'",__LINE__,__FILE__);
-			$this->db->query("delete from $this->ext_table where contact_id='$id' and contact_owner='"
-			. $this->account_id . "'",__LINE__,__FILE__);
+			$this->db->query("delete from $this->std_table where id='$id'",__LINE__,__FILE__);
+			$this->db->query("delete from $this->ext_table where contact_id='$id'",__LINE__,__FILE__);
 		}
 
 		// This is for the admin script deleteaccount.php
