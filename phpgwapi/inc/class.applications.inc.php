@@ -101,7 +101,7 @@
       reset($this->data);
       while($app = each($this->data)) {
         if(!$this->is_system_enabled($app[0])) { continue; }
-        $phpgw->acl->add_repository($app[0],'run',$this->account_id,'u',1);
+        $phpgw->acl->add_repository($app[0],'run',$this->account_id,1);
       }
       reset($this->data);
       return $this->data;
