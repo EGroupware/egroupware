@@ -159,14 +159,14 @@
 			{
 				$data = $encrypteddata;
 			}
+			$data = stripslashes($data);
+
 			if(!strpos(' '.$data,'O:8:"stdClass"'))
 			{
 				return unserialize($data);
 			}
 			else
 			{
-				$data = stripslashes($data);
-
 				return $data;
 			}
 		}
