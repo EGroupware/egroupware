@@ -132,10 +132,10 @@
 					$line_found = explode(':',chop($lines[$i]));
 				}
 			}
-			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
+			if($GLOBALS['phpgw']->common->cmp_version_long($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
 				echo '<p>There is a new version of eGroupWare available. <a href="'
-					. 'http://www.egroupware.org">http://www.egroupware.org</a>';
+					. 'http://www.egroupware.org">http://www.egroupware.org</a></p>';
 			}
 
 			$_found = False;
