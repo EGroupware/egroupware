@@ -1,1 +1,99 @@
-new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
+account active	admin	fr	Compte actif
+account has been created	common	fr	Le compte a été créé
+account has been deleted	common	fr	Le compte a été effacé
+account has been updated	common	fr	Le compte a été mis à jour
+account permissions	admin	fr	Permissions de compte
+account preferences	admin	fr	Préférences de compte
+action	admin	fr	Action
+add global category	admin	fr	Ajouter une catégorie globale
+add new account	admin	fr	Ajouter un nouveau compte
+add new application	admin	fr	Ajouter une nouvelle application
+allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
+all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
+anonymous user	admin	fr	Utilisateur anonyme
+application name	admin	fr	Nom d'application
+applications	admin	fr	Applications
+application title	admin	fr	Titre d'application
+are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir effacer ce compte ?
+are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir effacer cette application ?
+are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir effacer ce groupe ?
+are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir tuer cette session ?
+change main screen message	admin	fr	Changer le message de l'écran principal
+country selection	admin	fr	Sélection du pays
+create group	admin	fr	Créér un groupe
+default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
+display	admin	fr	Afficher
+do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
+edit application	admin	fr	Editer l'application
+edit global category	admin	fr	Editer la catégorie globale
+edit group	admin	fr	Editer le groupe
+edit user account	admin	fr	Editer le compte de l'utilisateur
+enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
+enter the title for your site	admin	fr	Entrez le titre pour votre site
+force selectbox	admin	fr	Forcer la boîte de sélection
+global categories	admin	fr	Catégories globales
+group ?	admin	fr	Groupe ?
+group has been added	common	fr	Le groupe a été ajouté
+group has been deleted	common	fr	Le groupe a été effacé
+group has been updated	common	fr	Le groupe a été mis à jour
+group name	admin	fr	Nom du groupe
+hide php information	admin	fr	Cacher les informations sur php
+home directory	admin	fr	Répertoire maison
+idle	admin	fr	Disponible
+installed applications	admin	fr	Applications installées
+interface	admin	fr	Interface
+ip	admin	fr	IP
+kill	admin	fr	Tuer
+last login	admin	fr	Dernière connection
+last login from	admin	fr	Dernière connection depuis
+last time read	admin	fr	Dernière lecture
+last x logins	admin	fr	Dernières %1 connections
+list of current users	admin	fr	Liste des utilisateurs actuels
+loginid	admin	fr	LoginID
+login screen	admin	fr	Ecran de connection
+login shell	admin	fr	Shell de connection
+login time	admin	fr	Heure de connection
+main screen message	admin	fr	Message de l'écran principal
+manager	admin	fr	Manager
+new group name	admin	fr	Nouveau nom de groupe
+new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser à blanc pour aucun changement ]
+no matchs found	admin	fr	Aucune occurence trouvée
+percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
+permissions	admin	fr	Permissions
+permissions this group has	admin	fr	Permissions attribuées à ce groupe
+php information	admin	fr	Informations PHP
+re-enter password	admin	fr	Ré-entrez le mot de passe
+remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
+selectbox	admin	fr	Boite de sélection
+select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
+select users for inclusion	admin	fr	Choisissez les utlisateurs à inclure
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fr	Choisissez à quel endroit cette application devra apparaître dans la barre de navigation, du plus bas (ou à gauche) au plus haut (ou à droite)
+show 'powered by' logo on	admin	fr	Montrer le logo 'exécuté par' sur
+site	admin	fr	Site
+site configuration	admin	fr	Configuration du site
+sorry, that group name has already been taking.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
+sorry, the follow users are still a member of the group x	admin	fr	Désolé, les utlisateurs suivants sont encore membres de ce groupe %1
+submit changes	admin	fr	Soumettre les changements
+template selection	admin	fr	Sélection du style
+text entry	admin	fr	Entrée de texte
+that loginid has already been taken	admin	fr	Ce LoginID a déjà été pris
+the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
+the two passwords are not the same	admin	fr	Les deux mots de passe ne sont pas identiques
+they must be removed before you can continue	admin	fr	Ils doivent être enlevés avant que vous puissiez continuer
+This category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente.
+total records	admin	fr	Enregistrements totaux
+use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
+use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
+user accounts	admin	fr	Comptes utilisateurs
+user groups	admin	fr	Groupes utilisateurs
+users choice	admin	fr	Choix des utilisateurs
+use theme	admin	fr	Utiliser le thème
+view access log	admin	fr	Voir la log d'accès
+view sessions	admin	fr	Voir les sessions
+would you like phpgroupWare to cache the phpgw info array ?	admin	fr	Aimeriez-vous que phpGroupWare cache le champ d'info phpgw ?
+would you like phpgroupWare to check for a new version<br>when admins login ?	admin	fr	Aimeriez-vous que phpGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les admins se connectent ?
+you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
+you must enter an application name and title.	admin	fr	Vous devez entrer un nom d'application et un titre.
+you must select a file type	admin	fr	Vous devez choisir un type de fichier
+You will need to remove the subcategories before you can delete the parent category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer la catégorie parente !
+userdata	admin	fr	Données utilisateur

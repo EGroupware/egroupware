@@ -1,401 +1,99 @@
-access	common	fr	Acc&egrave;s
-access not permitted	common	fr	Acc&egrave;s non permis
-acl	common	fr	Liste de Contrôle d'Accès
-active	common	fr	Actif
-add	common	fr	Ajouter
-add category	common	fr	Ajouter catégorie
-add x category for	common	fr	Ajouter %1 catégorie pour
-admin	common	fr	Admin
-administration	common	fr	Administration
-afghanistan	common	fr	AFGHANISTAN
-albania	common	fr	ALBANIA
-algeria	common	fr	ALGERIA
-all	common	fr	Tous
-american samoa	common	fr	AMERICAN SAMOA
-andorra	common	fr	ANDORRA
-angola	common	fr	ANGOLA
-anguilla	common	fr	ANGUILLA
-antarctica	common	fr	ANTARCTICA
-antigua and barbuda	common	fr	ANTIGUA AND BARBUDA
-april	common	fr	Avril
-argentina	common	fr	ARGENTINA
-armenia	common	fr	ARMENIA
-aruba	common	fr	ARUBA
-are you sure you want to delete this entry ?	common	fr	Etes vous certain de vouloir supprimer cette entr&eacute;e ?
-august	common	fr	Au&ucirc;t
-australia	common	fr	AUSTRALIA
-austria	common	fr	AUSTRIA
-autosave default category	common	fr	Sauvegarde automatique dans catégorie par défaut
-azerbaijan	common	fr	AZERBAIJAN
-bad login or password	common	fr	Mauvais login ou mot de passe
-bahamas	common	fr	BAHAMAS
-bahrain	common	fr	BAHRAIN
-bangladesh	common	fr	BANGLADESH
-barbados	common	fr	BARBADOS
-belarus	common	fr	BELARUS
-belgium	common	fr	BELGIUM
-belize	common	fr	BELIZE
-benin	common	fr	BENIN
-bermuda	common	fr	BERMUDA
-bhutan	common	fr	BHUTAN
-bolivia	common	fr	BOLIVIA
-bosnia and herzegovina	common	fr	BOSNIA AND HERZEGOVINA
-botswana	common	fr	BOTSWANA
-bouvet island	common	fr	BOUVET ISLAND
-brazil	common	fr	BRAZIL
-british indian ocean territory	common	fr	BRITISH INDIAN OCEAN TERRITORY
-brunei darussalam	common	fr	BRUNEI DARUSSALAM
-bulgaria	common	fr	BULGARIA
-burkina faso	common	fr	BURKINA FASO
-burundi	common	fr	BURUNDI
-cambodia	common	fr	CAMBODIA
-cameroon	common	fr	CAMEROON
-canada	common	fr	CANADA
-cancel	common	fr	Annuler
-cape verde	common	fr	CAPE VERDE
-categories	common	fr	Catégories
-categories for	common	fr	catégories pour
-category	common	fr	Catégorie
-category x has been added !	common	fr	Catégorie %1 ajoutée !
-category x has been updated !	common	fr	Catégorie %1 modifiée !
-cayman islands	common	fr	CAYMAN ISLANDS
-central african republic	common	fr	CENTRAL AFRICAN REPUBLIC
-chad	common	fr	CHAD
-change	common	fr	Changer
-charset	common	fr	iso-8859-1
-chile	common	fr	CHILE
-china	common	fr	CHINA
-choose the parent category	common	fr	Choisir la catégorie parente
-christmas island	common	fr	CHRISTMAS ISLAND
-clear	common	fr	Effacer
-clear form	common	fr	Effacer le formulaire
-cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
-colombia	common	fr	COLOMBIA
-comoros	common	fr	COMOROS
-congo	common	fr	CONGO
-congo, the democratic republic of the	common	fr	CONGO, THE DEMOCRATIC REPUBLIC OF THE
-cook islands	common	fr	COOK ISLANDS
-copy	common	fr	Copier
-costa rica	common	fr	COSTA RICA
-cote d ivoire	common	fr	COTE D IVOIRE
-create	common	fr	Cr&eacute;er
-created by	common	fr	Cr&eacute;&eacute; Par
-croatia	common	fr	CROATIA
-cuba	common	fr	CUBA
-currency	common	fr	Devise
-current users	common	fr	Utilisateurs courants
-cyprus	common	fr	CYPRUS
-czech republic	common	fr	CZECH REPUBLIC
-date	common	fr	Date
-date due	common	fr	Date butoir
-december	common	fr	D&eacute;cembre
-default category	common	fr	Catégorie par défaut
-delete	common	fr	Supprimer
-denmark	common	fr	DENMARK
-description	common	fr	Description
-disabled	common	fr	D&eacute;sactiv&eacute;
-djibouti	common	fr	DJIBOUTI
-dominica	common	fr	DOMINICA
-dominican republic	common	fr	DOMINICAN REPUBLIC
-done	common	fr	Fait
-do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
-east timor	common	fr	EAST TIMOR
-ecuador	common	fr	ECUADOR
-edit	common	fr	Editer
-edit category	common	fr	Editer Catégorie
-edit categories	common	fr	Editer Catégories
-edit x category for	common	fr	Editer %1 categorie pour
-egypt	common	fr	EGYPT
-el salvador	common	fr	EL SALVADOR
-e-mail	common	fr	E-Mail
-email	common	fr	E-Mail
-enabled	common	fr	Activ&eacute;
-end date	common	fr	Date de fin
-end time	common	fr	Heure de fin
-entry has been deleted sucessfully	common	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
-entry updated sucessfully	common	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
-equatorial guinea	common	fr	EQUATORIAL GUINEA
-eritrea	common	fr	ERITREA
-error	common	fr	Erreur
-error creating x x directory	common	fr	Erreur pendant la creation du répertoire %1%2
-error deleting x x directory	common	fr	Erreur pendant la suppression du répertoire %1%2
-error renaming x x directory	common	fr	Erreur pendant le renomage du répertoire %1%2
-estonia	common	fr	ESTONIA
-ethiopia	common	fr	ETHIOPIA
-falkland islands (malvinas)	common	fr	FALKLAND ISLANDS (MALVINAS)
-faroe islands	common	fr	FAROE ISLANDS
-february	common	fr	F&eacute;vrier
-fields	common	fr	Champs
-fiji	common	fr	FIJI
-files	common	fr	Fichiers
-filter	common	fr	Filtrer
-finland	common	fr	FINLAND
-first name	common	fr	Premier nom
-firstname	common	fr	Pr&eacute;nom
-france	common	fr	FRANCE
-french guiana	common	fr	FRENCH GUIANA
-french polynesia	common	fr	FRENCH POLYNESIA
-french southern territories	common	fr	FRENCH SOUTHERN TERRITORIES
-friday	common	fr	Vendredi
-ftp	common	fr	FTP
-gabon	common	fr	GABON
-gambia	common	fr	GAMBIA
-georgia	common	fr	GEORGIA
-germany	common	fr	GERMANY
-ghana	common	fr	GHANA
-gibraltar	common	fr	GIBRALTAR
-global	common	fr	Global
-global public	common	fr	Publique global
-grant access	common	fr	Autoriser accés
-greece	common	fr	GREECE
-greenland	common	fr	GREENLAND
-grenada	common	fr	GRENADA
-group access	common	fr	Acc&egrave;s par groupe
-group	common	fr	Groupe
-group public	common	fr	Publique par groupe
-groups	common	fr	Groupes
-guadeloupe	common	fr	GUADELOUPE
-guam	common	fr	GUAM
-guatemala	common	fr	GUATEMALA
-guinea	common	fr	GUINEA
-guinea-bissau	common	fr	GUINEA-BISSAU
-guyana	common	fr	GUYANA
-haiti	common	fr	HAITI
-heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
-holy see (vatican city state)	common	fr	HOLY SEE (VATICAN CITY STATE)
-honduras	common	fr	HONDURAS
-hong kong	common	fr	HONG KONG
-help	common	fr	Aide
-home	common	fr	Home
-hungary	common	fr	HUNGARY
-iceland	common	fr	ICELAND
-india	common	fr	INDIA
-indonesia	common	fr	INDONESIA
-iran, islamic republic of	common	fr	IRAN, ISLAMIC REPUBLIC OF
-iraq	common	fr	IRAQ
-ireland	common	fr	IRELAND
-israel	common	fr	ISRAEL
-italy	common	fr	ITALY
-it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recomendé d'executer \"setup\" pour mettre à jour vos tables vers la version courante.
-it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
-jamaica	common	fr	JAMAICA
-january	common	fr	Janvier
-japan	common	fr	JAPAN
-jordan	common	fr	JORDAN
-july	common	fr	Juillet
-june	common	fr	Juin
-kazakstan	common	fr	KAZAKSTAN
-kenya	common	fr	KENYA
-kiribati	common	fr	KIRIBATI
-korea, democratic peoples republic of	common	fr	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
-korea, republic of	common	fr	KOREA, REPUBLIC OF
-kuwait	common	fr	KUWAIT
-kyrgyzstan	common	fr	KYRGYZSTAN
-lao peoples democratic republic	common	fr	LAO PEOPLES DEMOCRATIC REPUBLIC
-last name	common	fr	Nom
-lastname	common	fr	Nom
-login	common	fr	Login
-logout	common	fr	Logout
-latvia	common	fr	LATVIA
-lebanon	common	fr	LEBANON
-lesotho	common	fr	LESOTHO
-liberia	common	fr	LIBERIA
-libyan arab jamahiriya	common	fr	LIBYAN ARAB JAMAHIRIYA
-liechtenstein	common	fr	LIECHTENSTEIN
-lithuania	common	fr	LITHUANIA
-luxembourg	common	fr	LUXEMBOURG
-macau	common	fr	MACAU
-macedonia, the former yugoslav republic of	common	fr	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
-madagascar	common	fr	MADAGASCAR
-main category	common	fr	Catégorie principale
-main screen	common	fr	Ecran principal
-malawi	common	fr	MALAWI
-malaysia	common	fr	MALAYSIA
-maldives	common	fr	MALDIVES
-mali	common	fr	MALI
-malta	common	fr	MALTA
-manual	common	fr	Manuel
-march	common	fr	Mars
-marshall islands	common	fr	MARSHALL ISLANDS
-martinique	common	fr	MARTINIQUE
-mauritania	common	fr	MAURITANIA
-mauritius	common	fr	MAURITIUS
-may	common	fr	Mai
-mayotte	common	fr	MAYOTTE
-medium	common	fr	Moyen
-message	common	fr	Message
-mexico	common	fr	MEXICO
-micronesia, federated states of	common	fr	MICRONESIA, FEDERATED STATES OF
-moldova, republic of	common	fr	MOLDOVA, REPUBLIC OF
-monaco	common	fr	MONACO
-monday	common	fr	Lundi
-mongolia	common	fr	MONGOLIA
-montserrat	common	fr	MONTSERRAT
-morocco	common	fr	MOROCCO
-mozambique	common	fr	MOZAMBIQUE
-myanmar	common	fr	MYANMAR
-name	common	fr	Nom
-namibia	common	fr	NAMIBIA
-nauru	common	fr	NAURU
-nepal	common	fr	NEPAL
-netherlands	common	fr	NETHERLANDS
-netherlands antilles	common	fr	NETHERLANDS ANTILLES
-new caledonia	common	fr	NEW CALEDONIA
-new entry added sucessfully	common	fr	Nouvelle entr&eacute;e ajout&eacute;e avec succ&egrave;s
-new main category	common	fr	Nouvelle catégorie principale
-new zealand	common	fr	NEW ZEALAND
-next	common	fr	Suivant
-nicaragua	common	fr	NICARAGUA
-niger	common	fr	NIGER
-nigeria	common	fr	NIGERIA
-niue	common	fr	NIUE
-no	common	fr	Non
-none	common	fr	Aucun
-norfolk island	common	fr	NORFOLK ISLAND
-northern mariana islands	common	fr	NORTHERN MARIANA ISLANDS
-norway	common	fr	NORWAY
-no subject	common	fr	Sans Sujet
-note	common	fr	Note
-notes	common	fr	Notes
-november	common	fr	Novembre
-october	common	fr	Octobre
-ok	common	fr	OK
-oman	common	fr	OMAN
-only yours	common	fr	seulement les votres
-open notify window	common	fr	Ouvrir une fenêtre de notification
-other	common	fr	Autre
-overview	common	fr	Vue d'ensemble
-owner	common	fr	Propriétaire
-pakistan	common	fr	PAKISTAN
-palau	common	fr	PALAU
-palestinian territory, occupied	common	fr	PALESTINIAN TERRITORY, OCCUPIED
-panama	common	fr	PANAMA
-papua new guinea	common	fr	PAPUA NEW GUINEA
-paraguay	common	fr	PARAGUAY
-parent category	common	fr	Catégorie Parente
-password	common	fr	Mot de passe
-password has been updated	common	fr	Le mot de passe a &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s
-personal	common	fr	Personel
-peru	common	fr	PERU
-philippines	common	fr	PHILIPPINES
-pitcairn	common	fr	PITCAIRN
-please enter a name	common	fr	Veuillez saisir un nom !
-please set your preferences for this application	common	fr	Veuillez définir vos préferences pour cette application
-poland	common	fr	POLAND
-portugal	common	fr	PORTUGAL
-powered by phpgroupware version x	common	fr	Utilise <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-preferences	common	fr	Pr&eacute;f&eacute;rences
-print	common	fr	Imprimer
-priority	common	fr	Priorit&eacute;
-private	common	fr	Priv&eacute;
-public	common	fr	public
-puerto rico	common	fr	PUERTO RICO
-qatar	common	fr	QATAR
-read	common	fr	Lire
-rename	common	fr	Renommer
-reunion	common	fr	REUNION
-romania	common	fr	ROMANIA
-russian federation	common	fr	RUSSIAN FEDERATION
-rwanda	common	fr	RWANDA
-saint helena	common	fr	SAINT HELENA
-saint kitts and nevis	common	fr	SAINT KITTS AND NEVIS
-saint lucia	common	fr	SAINT LUCIA
-saint pierre and miquelon	common	fr	SAINT PIERRE AND MIQUELON
-saint vincent and the grenadines	common	fr	SAINT VINCENT AND THE GRENADINES
-samoa	common	fr	SAMOA
-san marino	common	fr	SAN MARINO
-sao tome and principe	common	fr	SAO TOME AND PRINCIPE
-saturday	common	fr	Samedi
-saudi arabia	common	fr	SAUDI ARABIA
-save	common	fr	Sauver
-search	common	fr	Chercher
-select category	common	fr	selectionner la catégorie
-senegal	common	fr	SENEGAL
-september	common	fr	Septembre
-session has been killed	common	fr	La session a &eacute;t&eacute; tu&eacute;e
-seychelles	common	fr	SEYCHELLES
-show all	common	fr	Tout les éléments
-showing x	common	fr	%1 &eacute;l&eacute;ments
-showing x - x of x	common	fr	&eacute;l&eacute;ments %1 - %2 de %3
-sierra leone	common	fr	SIERRA LEONE
-singapore	common	fr	SINGAPORE
-slovakia	common	fr	SLOVAKIA
-slovenia	common	fr	SLOVENIA
-solomon islands	common	fr	SOLOMON ISLANDS
-somalia	common	fr	SOMALIA
-sorry, your login has expired	common	fr	D&eacute;sol&eacute;, votre login a expir&eacute;
-south africa	common	fr	SOUTH AFRICA
-south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
-spain	common	fr	SPAIN
-sri lanka	common	fr	SRI LANKA
-start date	common	fr	Date début
-start time	common	fr	Heure début
-status	common	fr	&Eacute;tat
-subject	common	fr	Sujet
-submit	common	fr	Envoyer
-sudan	common	fr	SUDAN
-sunday	common	fr	Dimanche
-suriname	common	fr	SURINAME
-svalbard and jan mayen	common	fr	SVALBARD AND JAN MAYEN
-swaziland	common	fr	SWAZILAND
-sweden	common	fr	SWEDEN
-switzerland	common	fr	SWITZERLAND
-syrian arab republic	common	fr	SYRIAN ARAB REPUBLIC
-taiwan, province of china	common	fr	TAIWAN, PROVINCE OF CHINA
-tajikistan	common	fr	TAJIKISTAN
-tanzania, united republic of	common	fr	TANZANIA, UNITED REPUBLIC OF
-thailand	common	fr	THAILAND
-this name has been used already	common	fr	Ce nom est déjà utilisé !
-thursday	common	fr	Jeudi
-time	common	fr	Heure
-time zone	common	fr	Fuseau horaire
-time zone offset	common	fr	D&eacute;calage du fuseau horaire
-title	common	fr	Titre
-togo	common	fr	TOGO
-tokelau	common	fr	TOKELAU
-tonga	common	fr	TONGA
-total	common	fr	Total
-trinidad and tobago	common	fr	TRINIDAD AND TOBAGO
-tuesday	common	fr	Mardi
-tunisia	common	fr	TUNISIA
-turkey	common	fr	TURKEY
-turkmenistan	common	fr	TURKMENISTAN
-turks and caicos islands	common	fr	TURKS AND CAICOS ISLANDS
-tuvalu	common	fr	TUVALU
-uganda	common	fr	UGANDA
-ukraine	common	fr	UKRAINE
-united arab emirates	common	fr	UNITED ARAB EMIRATES
-united kingdom	common	fr	UNITED KINGDOM
-united states	common	fr	UNITED STATES
-united states minor outlying islands	common	fr	UNITED STATES MINOR OUTLYING ISLANDS
-url	common	fr	Url
-uruguay	common	fr	URUGUAY
-updated	common	fr	Mis à jour
-user	common	fr	Utilisateur
-username	common	fr	Nom d'utilisateur
-users	common	fr	Utilisateurs
-uzbekistan	common	fr	UZBEKISTAN
-vanuatu	common	fr	VANUATU
-venezuela	common	fr	VENEZUELA
-viet nam	common	fr	VIET NAM
-view	common	fr	View
-virgin islands, british	common	fr	VIRGIN ISLANDS, BRITISH
-virgin islands, u.s.	common	fr	VIRGIN ISLANDS, U.S.
-wallis and futuna	common	fr	WALLIS AND FUTUNA
-wednesday	common	fr	Mercredi
-western sahara	common	fr	WESTERN SAHARA
-which groups	common	fr	Quels groupes
-written by:	common	fr	Ecrit par:
-yemen	common	fr	YEMEN
-yes	common	fr	Oui
-you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupeWare plus récente que celle définie pour la base de données.
-you have selected an invalid date	common	fr	Vous avez selectionné une date invalide !
-you have selected an invalid main category	common	fr	Vous avez selectionné une catégorie principale invalide !
-your search returned 1 match	common	fr	Votre recherche a retourn&eacute;e un r&eacute;sultat
-your search returned x matchs	common	fr	Votre recherche a retourn&eacute;e %1 r&eacutes;sultats
-your settings have been updated	common	fr	Vos pr&eacute;f&eacute;rences ont &eacute;t&eacute; mises &agrave; jour
-yugoslavia	common	fr	YUGOSLAVIA
-you have been successfully logged out	login	fr	Déconnexion réussie 
-your session could not be verified.	login	fr	Votre session n'est pas valide.
-zambia	common	fr	ZAMBIA
-zimbabwe	common	fr	ZIMBABWE
+account active	admin	fr	Compte actif
+account has been created	common	fr	Le compte a été créé
+account has been deleted	common	fr	Le compte a été effacé
+account has been updated	common	fr	Le compte a été mis à jour
+account permissions	admin	fr	Permissions de compte
+account preferences	admin	fr	Préférences de compte
+action	admin	fr	Action
+add global category	admin	fr	Ajouter une catégorie globale
+add new account	admin	fr	Ajouter un nouveau compte
+add new application	admin	fr	Ajouter une nouvelle application
+allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
+all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
+anonymous user	admin	fr	Utilisateur anonyme
+application name	admin	fr	Nom d'application
+applications	admin	fr	Applications
+application title	admin	fr	Titre d'application
+are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir effacer ce compte ?
+are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir effacer cette application ?
+are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir effacer ce groupe ?
+are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir tuer cette session ?
+change main screen message	admin	fr	Changer le message de l'écran principal
+country selection	admin	fr	Sélection du pays
+create group	admin	fr	Créér un groupe
+default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
+display	admin	fr	Afficher
+do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
+edit application	admin	fr	Editer l'application
+edit global category	admin	fr	Editer la catégorie globale
+edit group	admin	fr	Editer le groupe
+edit user account	admin	fr	Editer le compte de l'utilisateur
+enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
+enter the title for your site	admin	fr	Entrez le titre pour votre site
+force selectbox	admin	fr	Forcer la boîte de sélection
+global categories	admin	fr	Catégories globales
+group ?	admin	fr	Groupe ?
+group has been added	common	fr	Le groupe a été ajouté
+group has been deleted	common	fr	Le groupe a été effacé
+group has been updated	common	fr	Le groupe a été mis à jour
+group name	admin	fr	Nom du groupe
+hide php information	admin	fr	Cacher les informations sur php
+home directory	admin	fr	Répertoire maison
+idle	admin	fr	Disponible
+installed applications	admin	fr	Applications installées
+interface	admin	fr	Interface
+ip	admin	fr	IP
+kill	admin	fr	Tuer
+last login	admin	fr	Dernière connection
+last login from	admin	fr	Dernière connection depuis
+last time read	admin	fr	Dernière lecture
+last x logins	admin	fr	Dernières %1 connections
+list of current users	admin	fr	Liste des utilisateurs actuels
+loginid	admin	fr	LoginID
+login screen	admin	fr	Ecran de connection
+login shell	admin	fr	Shell de connection
+login time	admin	fr	Heure de connection
+main screen message	admin	fr	Message de l'écran principal
+manager	admin	fr	Manager
+new group name	admin	fr	Nouveau nom de groupe
+new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser à blanc pour aucun changement ]
+no matchs found	admin	fr	Aucune occurence trouvée
+percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
+permissions	admin	fr	Permissions
+permissions this group has	admin	fr	Permissions attribuées à ce groupe
+php information	admin	fr	Informations PHP
+re-enter password	admin	fr	Ré-entrez le mot de passe
+remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
+selectbox	admin	fr	Boite de sélection
+select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
+select users for inclusion	admin	fr	Choisissez les utlisateurs à inclure
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fr	Choisissez à quel endroit cette application devra apparaître dans la barre de navigation, du plus bas (ou à gauche) au plus haut (ou à droite)
+show 'powered by' logo on	admin	fr	Montrer le logo 'exécuté par' sur
+site	admin	fr	Site
+site configuration	admin	fr	Configuration du site
+sorry, that group name has already been taking.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
+sorry, the follow users are still a member of the group x	admin	fr	Désolé, les utlisateurs suivants sont encore membres de ce groupe %1
+submit changes	admin	fr	Soumettre les changements
+template selection	admin	fr	Sélection du style
+text entry	admin	fr	Entrée de texte
+that loginid has already been taken	admin	fr	Ce LoginID a déjà été pris
+the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
+the two passwords are not the same	admin	fr	Les deux mots de passe ne sont pas identiques
+they must be removed before you can continue	admin	fr	Ils doivent être enlevés avant que vous puissiez continuer
+This category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente.
+total records	admin	fr	Enregistrements totaux
+use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
+use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
+user accounts	admin	fr	Comptes utilisateurs
+user groups	admin	fr	Groupes utilisateurs
+users choice	admin	fr	Choix des utilisateurs
+use theme	admin	fr	Utiliser le thème
+view access log	admin	fr	Voir la log d'accès
+view sessions	admin	fr	Voir les sessions
+would you like phpgroupWare to cache the phpgw info array ?	admin	fr	Aimeriez-vous que phpGroupWare cache le champ d'info phpgw ?
+would you like phpgroupWare to check for a new version<br>when admins login ?	admin	fr	Aimeriez-vous que phpGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les admins se connectent ?
+you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
+you must enter an application name and title.	admin	fr	Vous devez entrer un nom d'application et un titre.
+you must select a file type	admin	fr	Vous devez choisir un type de fichier
+You will need to remove the subcategories before you can delete the parent category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer la catégorie parente !
+userdata	admin	fr	Données utilisateur

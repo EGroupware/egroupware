@@ -3,12 +3,15 @@ a	calendar	fr	un
 accept	calendar	fr	Accepte
 accepted	calendar	fr	Accepté
 all day	calendar	fr	Journée entière
-are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
+are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sur\nde vouloir\neffacer cette entrée ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sur\nde vouloir\neffacer cette entree ?\n\nCeci va effacer\ncette entree pour tous les utilisateurs.
 are you sure you want to delete this holiday ?	calendar	fr	Etes-vous sûr de vouloir effacer ces vacances ?
-brief description	calendar	fr	Brève description
+brief description	calendar	fr	Description brève
+calendar	common	fr	Calendrier
+calendar preferences	common	fr	Préférences du calendrier
 calendar - add	calendar	fr	Calendrier - Ajouter
 calendar - edit	calendar	fr	Calendrier - Editer
+calendar holiday management	admin	fr	Gestion du calendrier des vacances
 daily	calendar	fr	Journalier
 daily matrix view	calendar	fr	Vue journalière de la matrice
 days repeated	calendar	fr	Jours répétés
@@ -17,8 +20,11 @@ default calendar view	calendar	fr	Vue du calendrier par défaut
 display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
 display status of events	calendar	fr	Afficher le statut des évènements
 duration	calendar	fr	Durée
+edit series	calendar	fr	Editer toutes les occurences
+edit single	calendar	fr	Editer cette occurence
 end date/time	calendar	fr	Date/Heure de fin
 ends	calendar	fr	Finit
+export	calendar	fr	Export
 (for weekly)	calendar	fr	(Pour hebdomadaire)
 fr	calendar	fr	F
 free/busy	calendar	fr	Libre/occupé
@@ -29,11 +35,12 @@ generate printer-friendly version	calendar	fr	Générer une version imprimable
 global public and group public	calendar	fr	Public global et groupe public
 global public only	calendar	fr	Public global seulement
 go!	calendar	fr	Go!
+grant calendar access	common	fr	Régler les autorisations d'accès au calendrier
 group public only	calendar	fr	Groupe public seulement
 ignore conflict	calendar	fr	Ignorer le conflit
 i participate	calendar	fr	Je participe
 minutes	calendar	fr	minutes
-mo	calendar	fr	M
+mo	calendar	fr	L
 mon	calendar	fr	Lun
 month	calendar	fr	Mois
 monthly (by date)	calendar	fr	Mensuel (par date)
@@ -64,16 +71,17 @@ sat	calendar	fr	Sam
 scheduling conflict	calendar	fr	Conflit de planification
 search results	calendar	fr	Résultats de recherche
 send/Receive updates via email	calendar	fr	Envoyer/recevoir les mises à jour par EMail
+send updates via email	common	fr	Envoyer les mises à jour par EMail
 show day view on main screen	calendar	fr	Montrer la vue du jour sur la page principale
 show high priority events on main screen	calendar	fr	Montrer les évènements prioritaires sur la page principale
 sorry, the owner has just deleted this event	calendar	fr	Désolé, le propriétaire vient juste d'effacer cet évènement
 start date/time	calendar	fr	Date/heure de début
-su	calendar	fr	So
+su	calendar	fr	Di
 sun	calendar	fr	Dim
 tentative	calendar	fr	Tentative
-th	calendar	fr	T
+th	calendar	fr	J
 the following conflicts with the suggested time:<ul>x</ul>	calendar	fr	L'élément suivant entre en conflit avec l'heure suggérée:<ul>%1</ul>
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fr	Il y a eu une erreur en essayant de se connecter à votre serveur de News.<br>S'il vous plaît, contactez votre administrateur pour vérifier le nom du serveur de News, votre nom ou mot de passe.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fr	Il y a eu une erreur en essayant de se connecter à votre serveur de News.<br>SVP, contactez votre administrateur pour vérifier le nom du serveur de News, votre nom ou mot de passe.
 this month	calendar	fr	Ce mois
 this week	calendar	fr	Cette semaine
 this year	calendar	fr	Cette année
@@ -89,13 +97,16 @@ week	calendar	fr	Semaine
 weekday starts on	calendar	fr	La semaine démarre le
 weekly	calendar	fr	Hebdomadaire
 when creating new events default set to private	calendar	fr	A la création de nouveaux évènements mettre par défaut en privé
-work day ends on	calendar	fr	Jour de travail finit le
-work day starts on	calendar	fr	Jour de travail démarre le
+work day ends on	calendar	fr	Jour de travail finit à
+work day starts on	calendar	fr	Jour de travail démarre à
 x matches found	calendar	fr	%1 occurences trouvées
 year	calendar	fr	Année
 yearly	calendar	fr	Annuel
+you have 1 high priority event on your calendar today.	common	fr	Vous avez 1 évènement de haute priorité dans votre calendrier aujourd'hui.
+you have x high priority events on your calendar today.	common	fr	Vous avez %1 évènements de haute priorité dans votre calendrier aujourd'hui.
 you have not entered a valid date	calendar	fr	Vous n'avez pas entré une date correcte
 you have not entered a title	calendar	fr	Vous n'avez pas entré de titre
 you have not entered a valid time of day	calendar	fr	Vous n'avez pas entré une heure de la journée correcte
+you have not entered participants	calendar	fr	Vous n'avez pas sélectionné de participants
 you must enter one or more search keywords	calendar	fr	Vous devez entrer un ou plusieurs mots clés de recherche
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:
