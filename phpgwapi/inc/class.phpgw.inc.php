@@ -108,7 +108,7 @@
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         if ($login != ""){
           $login_array = explode("@",$login);
-          $login_id = $phpgw->accounts->name2id($login_array[0]);
+          $login_id = $this->accounts->name2id($login_array[0]);
           $this->accounts->accounts($login_id);
           $this->preferences->preferences($login_id);
         }

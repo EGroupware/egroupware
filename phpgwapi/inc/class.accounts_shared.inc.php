@@ -34,9 +34,7 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
-      elseif (gettype($account_id) == "string") { $account_id = $this->name2id($account_id); }
-      $this->account_id = $account_id;
+      if ($account_id == False){ $this->account_id = $account_id; }
     }
 
     function read()

@@ -105,9 +105,7 @@
        }
 
        $this->update_dla();
-echo "account_lid: ".$this->account_lid."<br>";
        $this->account_id = $phpgw->accounts->name2id($this->account_lid);
-echo "account_id: ".$this->account_id."<br>";
        $phpgw->acl->acl($this->account_id);
        $phpgw->accounts->accounts($this->account_id);
        $phpgw->preferences->preferences($this->account_id);
@@ -137,9 +135,6 @@ echo "account_id: ".$this->account_id."<br>";
     function read_repositories()
     {
       global $phpgw_info, $phpgw;
-//      if (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
-//      $this->account_id = $account_id;
-echo "step 1<br>";
       $phpgw->acl->acl($this->account_id);
       $phpgw->accounts->accounts($this->account_id);
       $phpgw->preferences->preferences($this->account_id);
