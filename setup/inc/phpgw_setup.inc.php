@@ -182,7 +182,7 @@
       $this->db->User       = $phpgw_domain[$ConfigDomain]["db_user"];
       $this->db->Password   = $phpgw_domain[$ConfigDomain]["db_pass"];
 
-      //$phpgw_schema_proc = new phpgw_schema_proc($phpgw_domain[$ConfigDomain]["db_type"]);
+      $phpgw_schema_proc = new phpgw_schema_proc($phpgw_domain[$ConfigDomain]["db_type"]);
     }
   
     function check_db()

@@ -22,7 +22,7 @@ class phpgw_schema_proc
 		include("./inc/phpgw_schema_proc_" . $dbms . ".inc.php");
 		eval("\$this->m_oTranslator = new phpgw_schema_proc_$dbms;");
 		global $phpgw_setup;
-		$this->m_odb = &$phpgw_setup->db;
+		$this->m_odb = $phpgw_setup->db;
 		
 		$this->m_aTables = array();
 	}
