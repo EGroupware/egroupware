@@ -45,7 +45,7 @@
 			$acct_type = $this->get_type($this->account_id);
 
 			/* search the dn for the given uid */
-			if ( ($acct_type == 'g') && $this->group_context )
+			if( ($acct_type == 'g') && $this->group_context )
 			{
 				$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$this->account_id);
 			}
@@ -73,7 +73,7 @@
 			$this->data['account_dn']  = $allValues[0]['dn'];
 			$this->data['fullname']    = $allValues[0]['cn'][0];
 
-			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
+			if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 			{
 				$this->data['homedirectory']  = $allValues[0]['homedirectory'][0];
 				$this->data['loginshell'] = $allValues[0]['loginshell'][0];
@@ -94,7 +94,7 @@
 			$acct_type = $this->get_type($this->account_id);
 
 			/* search the dn for the given u/gidnumber */
-			if ( ($acct_type == 'g') && $this->group_context )
+			if( ($acct_type == 'g') && $this->group_context )
 			{
 				$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$this->account_id);
 			}
@@ -108,11 +108,11 @@
 			
 			if($acct_type == 'u')
 			{
-				$entry['cn']                 = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+				$entry['cn']                = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
 			}
 			else
 			{
-				$entry['cn'] 	              = $this->data['firstname'];
+				$entry['cn']                = $this->data['firstname'];
 			}
 
 			$entry['sn']                    = $this->data['lastname'];
@@ -124,7 +124,7 @@
 			$entry['phpgwaccounttype']      = $this->data['type'];
 			$entry['phpgwaccountexpires']   = $this->data['expires'];
 
-			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
+			if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 			{
 				$entry['homedirectory'] = $this->data['homedirectory'];
 				$entry['loginshell']    = $this->data['loginshell'];
@@ -134,7 +134,7 @@
 			Changing the uid:  Need to delete and add new, since
 			PHP cannot change the dn for the entry.
 			*/
-			if ($acct_type == 'g')
+			if($acct_type == 'g')
 			{
 				$test = $allValues[0]['cn'][0];
 			}
@@ -142,18 +142,18 @@
 			{
 				$test = $allValues[0]['uid'][0];
 			}
-			if ($test != $this->data['account_lid'])
+			if($test != $this->data['account_lid'])
 			{
 				ldap_delete($this->ds,$allValues[0]['dn']);
 				unset($allValues[0]['dn']);
-				while (list($key,$val) = each($allValues[0]))
+				while(list($key,$val) = each($allValues[0]))
 				{
 					/* Don't include row count and headers */
-					if (is_string($key) && $key != 'count')
+					if(is_string($key) && $key != 'count')
 					{
-						if (is_array($val))
+						if(is_array($val))
 						{
-							if (count($val) == 1)
+							if(count($val) == 1)
 							{
 								if($val[0])
 								{
@@ -162,7 +162,7 @@
 							}
 							else
 							{
-								for ($i=0;$i<count($val);$i++)
+								for($i=0;$i<count($val);$i++)
 								{
 									if($val[$i])
 									{
@@ -179,7 +179,7 @@
 				}
 
 				/* Groups */
-				if ($this->data['account_type'] == 'g' && $this->group_context )
+				if($this->data['account_type'] == 'g' && $this->group_context )
 				{
 					$dn = 'cn='.$this->data['account_lid'].','.$this->group_context;
 					$entry['cn'] = $this->data['account_lid'];
@@ -189,10 +189,10 @@
 					$entry['objectclass'][1] = 'posixGroup';
 					$members = $this->member($this->data["account_id"]);
 					$entry['memberuid'] = array();
-					for ($i=0;$i<count($members);$i++)
+					for($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
-						if (!$this->isin_array($currname,$entry['memberuid']))
+						if(!@in_array($currname,$entry['memberuid']))
 						{
 							$entry['memberuid'][] = $currname;
 						}
@@ -217,7 +217,7 @@
 					$entry['objectclass'][5] = 'shadowAccount';
 					$entry['objectclass'][6] = 'phpgwAccount';
 
-					if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
+					if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 					{
 						$entry['homedirectory'] = $this->data['homedirectory'];
 						$entry['loginshell']    = $this->data['loginshell'];
@@ -229,14 +229,14 @@
 			/* Normal behavior for save_repository */
 			else
 			{
-				if ($this->data['account_type'] == 'g' && $this->group_context )
+				if($this->data['account_type'] == 'g' && $this->group_context )
 				{
 					$members = $this->member($this->data['account_id']);
 					$entry['memberuid'] = array();
-					for ($i=0;$i<count($members);$i++)
+					for($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
-						if (!$this->isin_array($currname,$entry['memberuid']))
+						if(!@in_array($currname,$entry['memberuid']))
 						{
 							$entry['memberuid'][] = $currname;
 						}
@@ -244,7 +244,7 @@
 					unset($entry['givenname']);
 					unset($entry['sn']);
 				}
-				while (list($key,$val) = each($entry))
+				while(list($key,$val) = each($entry))
 				{
 					$tmpentry = '';
 					if(is_array($val))
@@ -256,9 +256,9 @@
 						$tmpentry[$key] = trim($val); /* must trim! */
 					}
 					
-					if ($tmpentry[$key] && $key)
+					if($tmpentry[$key] && $key)
 					{
-						if (!$allValues[0][$key][0])
+						if(!$allValues[0][$key][0])
 						{
 							/* attribute was not in LDAP, add it */
 							ldap_mod_add($this->ds, $allValues[0]['dn'], $tmpentry);
@@ -271,9 +271,9 @@
 					}
 				}
 				/* If status is to be set inactive, insert a space here.  This is trimmed in read_repository. */
-				if (!$entry['phpgwaccountstatus'])
+				if(!$entry['phpgwaccountstatus'])
 				{
-					if (!$allValues[0]['phpgwaccountstatus'][0])
+					if(!$allValues[0]['phpgwaccountstatus'][0])
 					{
 						/* attribute was not in LDAP, add it */
 						ldap_mod_add($this->ds, $allValues[0]['dn'], array('phpgwaccountstatus' => ' '));
@@ -287,21 +287,11 @@
 			}
 		}
 
-		function isin_array($needle,$haystack='') 
-		{
-			if(gettype($haystack) != 'array')
-			{
-				return False;
-			}
-			for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++); 
-				return ($i!=count($haystack)); 
-		}
-
 		function delete($accountid = '')
 		{
 			$account_id = get_account_id($accountid);
 			$account_lid = $this->id2name($account_id);
-			
+
 			$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$account_id);
 			$allValues = ldap_get_entries($this->ds, $sri);
 
@@ -311,7 +301,7 @@
 				$allValues = ldap_get_entries($this->ds, $sri);
 			}
 
-			if ($allValues[0]['dn'])
+			if($allValues[0]['dn'])
 			{
 				$del = ldap_delete($this->ds, $allValues[0]['dn']);
 			}
@@ -319,21 +309,21 @@
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			if ($offset)
+			if($offset)
 			{
 				$limitclause = '';//$phpgw->db->limit($start,$offset);
 			}
-			elseif ($start && !$offset)
+			elseif($start && !$offset)
 			{
 				$limitclause = '';//$phpgw->db->limit($start);
 			}
 
-			if (! $sort)
+			if(!$sort)
 			{
 				$sort = '';//"desc";
 			}
 
-			if ($order)
+			if($order)
 			{
 				$orderclause = '';//"order by $order $sort";
 			}
@@ -342,17 +332,20 @@
 				$orderclause = '';//"order by account_lid,account_lastname,account_firstname asc";
 			}
 
-			if ($_type == 'both' || $_type == 'accounts')
+			if($_type == 'both' || $_type == 'accounts')
 			{
 				$sri = ldap_search($this->ds, $this->user_context, '(&(uidnumber=*)(phpgwaccounttype=u))');
 				$allValues = ldap_get_entries($this->ds, $sri);
-				while (list($null,$allVals) = @each($allValues))
+				while(list($null,$allVals) = @each($allValues))
 				{
 					settype($allVals,'array');
 					$test = @$allVals['uid'][0];
-					if (!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
+					if(!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
 					{
-						if(!$query || strpos(' '.$allVals['cn'][0],$query) || strpos(' '.$allVals['givenname'][0],$query) || strpos(' '.$allVals['sn'][0],$query))
+						if(!$query ||
+							strpos(' ' . $allVals['cn'][0],$query) ||
+							strpos(' ' . $allVals['givenname'][0],$query) ||
+							strpos(' ' . $allVals['sn'][0],$query))
 						{
 							$accounts[] = Array(
 								'account_id'        => $allVals['uidnumber'][0],
@@ -366,17 +359,20 @@
 					}
 				}
 			}
-			elseif ($_type == 'both' || $_type == 'groups')
+			elseif($_type == 'both' || $_type == 'groups')
 			{
 				$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=*)(phpgwaccounttype=g))');
 				$allValues = ldap_get_entries($this->ds, $sri);
-				while (list($null,$allVals) = @each($allValues))
+				while(list($null,$allVals) = @each($allValues))
 				{
 					settype($allVals,'array');
 					$test = $allVals['cn'][0];
-					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
+					if(!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
-						if(!$query || strpos(' '.$allVals['cn'][0],$query) || strpos(' '.$allVals['givenname'][0],$query) || strpos(' '.$allVals['sn'][0],$query))
+						if(!$query ||
+							strpos(' ' . $allVals['cn'][0],$query) ||
+							strpos(' ' . $allVals['givenname'][0],$query) ||
+							strpos(' ' . $allVals['sn'][0],$query))
 						{
 							$accounts[] = Array(
 								'account_id'        => $allVals['gidnumber'][0],
@@ -406,7 +402,7 @@
 			$sri = ldap_search($this->ds, $this->group_context, "(&(cn=$account_lid)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 			
-			if (@$allValues[0]['gidnumber'][0])
+			if(@$allValues[0]['gidnumber'][0])
 			{
 				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
 			}
@@ -415,7 +411,7 @@
 
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if (@$allValues[0]['uidnumber'][0])
+			if(@$allValues[0]['uidnumber'][0])
 			{
 				$name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]);
 			}
@@ -437,7 +433,7 @@
 			$sri = ldap_search($this->ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if (@$allValues[0]['cn'][0])
+			if(@$allValues[0]['cn'][0])
 			{
 				$id_list[$account_id] = $allValues[0]['cn'][0];
 				return $id_list[$account_id];
@@ -447,7 +443,7 @@
 			$sri = ldap_search($this->ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if (@$allValues[0]['uid'][0])
+			if(@$allValues[0]['uid'][0])
 			{
 				$id_list[$account_id] = $allValues[0]['uid'][0];
 				return $id_list[$account_id];
@@ -458,7 +454,7 @@
 
 		function get_type($accountid = '')
 		{
-			if (isset($this->account_type))
+			if(isset($this->account_type))
 			{
 				return $this->account_type;
 			}
@@ -475,7 +471,7 @@
 			$sri = ldap_search($this->ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if ($allValues[0]['phpgwaccounttype'][0])
+			if($allValues[0]['phpgwaccounttype'][0])
 			{
 				$allValues[0]['phpgwaccounttype'][0];
 				$account_type[$account_id] = $allValues[0]['phpgwaccounttype'][0];
@@ -486,7 +482,7 @@
 			$sri = ldap_search($this->ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if ($allValues[0]['phpgwaccounttype'][0])
+			if($allValues[0]['phpgwaccounttype'][0])
 			{
 				$account_type[$account_id] = $allValues[0]['phpgwaccounttype'][0];
 				return $account_type[$account_id];
@@ -497,7 +493,7 @@
 
 		/*
 		 * returns nonzero if $account exists in LDAP: 0: nowhere 1: user accounts, 2: group accounts, 3: both
-		 * $account can be an account_id (LDAP: uidnumber) or an account_lid (LDAP: uid) (is determinded by gettype($account) == 'integer')
+		 * $account can be an account_id (LDAP: uidnumber) or an account_lid (LDAP: uid) (is determinded by is_int($account))
 		 */
 		function exists($account)
 		{
@@ -529,7 +525,7 @@
 
 			$acct_type = $this->get_type($account);
 
-			if ($acct_type == 'g' && $this->group_context)
+			if($acct_type == 'g' && $this->group_context)
 			{
 				$sri = ldap_search($this->ds, $this->group_context, $ldapgroup . '=' . $account);
 				$groups = ldap_get_entries($this->ds, $sri);
@@ -537,11 +533,11 @@
 			$sri = ldap_search($this->ds, $this->user_context, $ldapacct . '=' . $account);
 			$users = ldap_get_entries($this->ds, $sri);
 
-			if ($users[0]['dn'])
+			if($users[0]['dn'])
 			{
 				$in += 1;
 			}
-			if ($groups[0]['dn'])
+			if($groups[0]['dn'])
 			{
 				$in += 2;
 			}
@@ -563,7 +559,7 @@
 		function create($account_info)
 		{
 			/* echo '<br>in create for account_lid: "'.$account_lid.'"'; */
-			if (empty($account_info['account_id']) || !$account_info['account_id'])
+			if(empty($account_info['account_id']) || !$account_info['account_id'])
 			{
 				$account_id = $this->get_nextid($account_info['account_type']);
 				/* echo '<br>using'.$account_id;exit; */
@@ -576,7 +572,7 @@
 			$entry['phpgwaccounttype']          = $account_info['account_type'];
 			$entry['phpgwaccountexpires']       = $account_info['account_expires'];
 
-			if ($account_info['account_type'] == 'g')
+			if($account_info['account_type'] == 'g')
 			{
 				$sri = ldap_search($this->ds, $this->group_context, 'cn=' . $account_info['account_lid']);
 			}
@@ -586,26 +582,26 @@
 			}
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'] && $account_info['account_type'] != 'g')
+			if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'] && $account_info['account_type'] != 'g')
 			{
 				$entry['homedirectory'] = $account_info['homedirectory'] && $account_info['homedirectory'] != $GLOBALS['phpgw_info']['server']['ldap_account_home'] ? $account_info['homedirectory'] : $GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_info['account_lid'];
 				$entry['loginshell'] = $account_info['loginshell'] ? $account_info['loginshell'] : $GLOBALS['phpgw_info']['server']['ldap_account_shell'];
 			}
 
-			if ($allValues[0]['dn'])
+			if($allValues[0]['dn'])
 			{
 				/* This should keep the password from being overwritten here on ldap import */
 				unset($entry['userpassword']);
 				$entry['gidnumber'] = $account_id;
 
-				while (list($key,$val) = each($entry))
+				while(list($key,$val) = each($entry))
 				{
 					$tmpentry = '';
 					$tmpentry[$key] = trim($val); /* must trim! */
 					/* echo '<br>'.$key.' '.$val; */
-					if ($tmpentry[$key])
+					if($tmpentry[$key])
 					{
-						if (!$allValues[0][$key][0])
+						if(!$allValues[0][$key][0])
 						{
 							/* attribute was not in LDAP, add it */
 							ldap_mod_add($this->ds, $allValues[0]["dn"], $tmpentry);
@@ -618,7 +614,7 @@
 					}
 				}
 
-				if ($account_info['account_type'] == 'g')
+				if($account_info['account_type'] == 'g')
 				{
 					$tmpentry['objectclass'][0] = 'top';
 					$tmpentry['objectclass'][1] = 'posixGroup';
@@ -645,7 +641,7 @@
 			else
 			{
 				/* Not already there, we will add it */
-				if ($account_info['account_type'] == 'g')
+				if($account_info['account_type'] == 'g')
 				{
 					$dn = 'cn='.$account_info['account_lid'] . ',' . $this->group_context;
 					unset($entry['homedirectory']);
@@ -666,7 +662,7 @@
 					$entry['givenname'] = $account_info['account_firstname'];
 					$entry['uid']       = $account_info['account_lid'];
 					$entry['uidnumber'] = $account_id;
-					if ($GLOBALS['phpgw_info']['server']['ldap_group_id'])
+					if($GLOBALS['phpgw_info']['server']['ldap_group_id'])
 					{
 						$entry['gidnumber'] = $GLOBALS['phpgw_info']['server']['ldap_group_id'];
 					}
@@ -703,7 +699,7 @@
 		{
 			return False;
 
-			if ($expiredate)
+			if($expiredate)
 			{
 				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
 			}
@@ -747,7 +743,7 @@
 				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
 			}
 
-			if ($default_acls == False)
+			if($default_acls == False)
 			{
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
 				$default_group_id  = $this->name2id($default_group_lid);
@@ -784,7 +780,7 @@
 			$acct_type = $this->get_type($account_id);
 
 			/* search the dn for the given uid */
-			if ( ($acct_type == 'g') && $this->group_context )
+			if( ($acct_type == 'g') && $this->group_context )
 			{
 				$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$account_id);
 			}
