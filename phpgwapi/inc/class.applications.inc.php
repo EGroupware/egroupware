@@ -76,6 +76,9 @@
           $this->account_id = $owner_id;
           $this->read_user_group_apps($this->account_id);
           $this->read_user_apps($this->account_id);
+          if($load_info) {
+            $phpgw_info["user"]["apps"] = $this->apps_enabled();
+          }
         }
       }
     }
@@ -121,18 +124,38 @@
       global $phpgw, $phpgw_info;
 
       $db2 = $phpgw->db;
-     
-      if ($this->is_type($lid,"integer")) {
-        $db2->query("select account_permissions from accounts where account_id=$lid",__LINE__,__FILE__);
+
+      if ($this->is_type($lid,"string")) {
+        $db2->query("select account_id from accounts where account_lid='$lid'",__LINE__,__FILE__);
+        if($db2->num_rows()) {
+          $db2->next_record();
+          $account_id = $db2->f("account_id");
+        } else {
+          return False;
+        }
+      } elseif ($this->is_type($lid,"integer")) {
+        $account_id = $lid;
       } else {
-        $db2->query("select account_permissions from accounts where account_lid='$lid'",__LINE__,__FILE__);
+        return False;
       }
+
+      $db2->query("SELECT * FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='u' AND acl_account=".$account_id,__LINE__,__FILE__);
       if($db2->num_rows()) {
+        while($db2->next_record()) {
+          $apps[] = $db2->f("acl_appname");
+        }
+      } else {
+        $db2->query("select account_permissions from accounts where account_id=$account_id",__LINE__,__FILE__);
         $db2->next_record();
-        $apps = explode(":",$db2->f("account_permissions"));
-if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Account Permissions - ".$db2->f("aaccount_permissions")." -->\n";
-        for ($i=1; $i<count($apps)-1; $i++) {
-if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading user app - ".$apps[$i]." -->\n";
+        $apps_perms = explode(":",$db2->f("account_permissions"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          $apps[] = $apps_perms[$i];
+        }
+      }
+      if(count($apps)) {
+//if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Account Permissions - ".$db2->f("aaccount_permissions")." -->\n";
+        for ($i=0; $i<count($apps); $i++) {
+//if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading user app - ".$apps[$i]." -->\n";
           if ($this->enabled[$apps[$i]] == 1) {
             $this->user_apps[$apps[$i]] = $apps[$i];
             $this->enabled[$apps[$i]] = 2;
@@ -146,7 +169,23 @@ if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading u
     {
       global $phpgw;
 
-      $groups = $phpgw->accounts->read_groups($lid);
+      $db2 = $phpgw->db;
+
+      if ($this->is_type($lid,"string")) {
+        $db2->query("select account_id from accounts where account_lid='$lid'",__LINE__,__FILE__);
+        if($db2->num_rows()) {
+          $db2->next_record();
+          $account_id = $db2->f("account_id");
+        } else {
+          return False;
+        }
+      } elseif ($this->is_type($lid,"integer")) {
+        $account_id = $lid;
+      } else {
+        return False;
+      }
+
+      $groups = $phpgw->accounts->read_groups($account_id);
 
       if($groups) {
         while ($group = each($groups)) {
@@ -161,15 +200,26 @@ if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading u
 
       $db2 = $phpgw->db;
 
-      $db2->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
-      $db2->next_record();
-
-      $apps = explode(":",$db2->f("group_apps"));
-      for ($i=1;$i<count($apps) - 1;$i++) {
-        if ($this->enabled[$apps[$i]] == 1) {
-          $this->group_apps[$group_id][$apps[$i]] = $apps[$i];
-          $this->enabled[$apps[$i]] = 2;
-          $this->app_perms[] = $apps[$i];
+      $db2->query("SELECT * FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id,__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        while($db2->next_record()) {
+          $apps[] = $db2->f("acl_appname");
+        }
+      } else {
+        $db2->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
+        $db2->next_record();
+        $apps_perms = explode(":",$db2->f("group_apps"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          $apps[] = $apps_perms[$i];
+        }
+      }
+      if(count($apps)) {
+        for ($i=0;$i<count($apps);$i++) {
+          if ($this->enabled[$apps[$i]] == 1) {
+            $this->group_apps[$group_id][$apps[$i]] = $apps[$i];
+            $this->enabled[$apps[$i]] = 2;
+            $this->app_perms[] = $apps[$i];
+          }
         }
       }
     }
@@ -280,6 +330,11 @@ if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading u
       if($group_id) {
         $db2 = $phpgw->db;
         $db2->query("UPDATE groups SET group_apps='".$this->group_app_string($group_id)."' WHERE group_id=".$group_id,__LINE__,__FILE__);
+        $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id,__LINE__,__FILE__);
+        reset($this->group_apps[$group_id]);
+        while($group = each($this->group_apps[$group_id])) {
+          $phpgw->acl->add($group[1],'run',$group_id,'g',1);
+        }
       }
     }
 
@@ -290,6 +345,11 @@ if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading u
       if($this->account_id) {
         $db2 = $phpgw->db;
         $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
+        $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='u' AND acl_account=".$this->account_id,__LINE__,__FILE__);
+        reset($this->user_apps);
+        while($user = each($this->user_apps)) {
+          $phpgw->acl->add($user[1],'run',$this->account_id,'u',1);
+        }
       }
     }
   }
