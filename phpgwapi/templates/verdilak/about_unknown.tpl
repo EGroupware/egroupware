@@ -8,5 +8,5 @@
   <td>&nbsp;</td>
  </tr>
  <tr>
-  <td align="center"><b>Sorry, no futher information is avaiable on this application.</b></td>
+  <td align="center"><b>Sorry, no further information is available on this application.</b></td>
  </tr>
