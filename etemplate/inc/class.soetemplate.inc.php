@@ -370,7 +370,6 @@
 
 			$tpl = new soetemplate;
 			$tpl->db->query($sql,__LINE__,__FILE__);
-
 			$result = array();
 			while ($tpl->db->next_record())
 			{
@@ -380,6 +379,12 @@
 					
 					$result[] = $tpl->as_array();
 				}
+			}
+			if ($this->debug)
+			{
+				echo "<p>soetemplate::search('$name') sql='$sql'</p>\n<pre>\n";
+				print_r($result);
+				echo "</pre>\n";
 			}
 			return $result;
 		}
