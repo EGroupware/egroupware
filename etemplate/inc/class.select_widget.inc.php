@@ -432,7 +432,7 @@
 						}
 						if ($cat['owner'] == '-1')
 						{
-							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
+							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
 						}
 						if ($tmpl->stable)
 						{
