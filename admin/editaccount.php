@@ -112,12 +112,12 @@
 
   $phpgw->common->header();
   $phpgw->common->navbar();
-
-  $account_status = $phpgw->db->f("status");
+  
   $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
 
   $phpgw->db->query("select * from accounts where con='$con'");
   $phpgw->db->next_record();
+  $account_status = $phpgw->db->f("status");
   ?>
 
      <form method="POST" action="editaccount.php">
@@ -197,6 +197,7 @@
                 $i++;
              }
 
+/*
           echo "<tr><td>" . lang_admin("Anonymous user") . "</td><td><input type=\""
 	     . "checkbox\" name=\"new_permissions[anonymous]\" value=\"True\"";
 	     if ($db_perms["anonymous"] || $new_permissions[anonymous])
@@ -208,6 +209,7 @@
 	     if ($db_perms["manager"] || $new_permissions[manager])
 		echo " checked";
 	     echo "></td></tr>";
+*/
    	 
           ?>
 

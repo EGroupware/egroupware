@@ -169,12 +169,14 @@
                 $i++;
              }
 
+/*
            // Just until we can get thing the $phpgw_info["apps"] then figured out
 	   echo "<tr><td>" . lang_admin("Anonymous user") . "</td> <td><input type=\""
 	      . "checkbox\" name=\"new_permissions[anonymous]\" value=\"Y\"></td>";
 
            echo "<td>" . lang_admin("Manager") . "</td> <td><input type=\""
 	      . "checkbox\" name=\"new_permissions[manager]\" value=\"Y\"></td></tr>";
+*/	      
 
            ?>
            <tr>
