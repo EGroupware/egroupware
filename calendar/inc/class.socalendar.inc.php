@@ -232,7 +232,7 @@
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
 				$db2 = $this->cal->stream;
-				$this->cal->stream->query('SELECT cal_id FROM phpgw_cal_user WHERE cal_login='.$account_id,__LINE__,__FILE__)
+				$this->cal->stream->query('SELECT cal_id FROM phpgw_cal_user WHERE cal_login='.$account_id,__LINE__,__FILE__);
 				while($this->cal->stream->next_record())
 				{
 					$id = $this->cal->stream->f('cal_id');
