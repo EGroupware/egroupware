@@ -90,6 +90,7 @@
 			$info = $this->bo->read($id);
 			$info['anzSubs'] = $this->bo->anzSubs($id);
 			$info += $this->formatInfo($info,$action,$action_id);
+			$info['info_des'] = nl2br($info['info_des']);
 
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
@@ -520,7 +521,7 @@
 				$links .= $this->html->a_href($name,'/index.php',
 					$this->menuaction('get_file') + array(
 						'info_id'    => $info['info_id'],
-						'filename'   => $name
+						'filename'   => str_replace('&','%26',$name)
 					),'target=_blank');
 				if ($comment) $links .= ' (' . $comment . ')';
 			}
