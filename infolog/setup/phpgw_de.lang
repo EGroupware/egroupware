@@ -1,6 +1,6 @@
-%1 records imported	infolog	de	%1 DatensÃ¤tze importiert
-%1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 DatensÃ¤tze gelesen (noch nicht importiert, sie kÃ¶nnen %2zurÃ¼ck%3 gehen und Test Import ausschalten)
-- subprojects from	infolog	de	- UntereintrÃ¤ge von
+%1 records imported	infolog	de	%1 Datensätze importiert
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+- subprojects from	infolog	de	- Untereinträge von
 0%	infolog	de	0%
 10%	infolog	de	10%
 20%	infolog	de	20%
@@ -11,31 +11,31 @@
 70%	infolog	de	70%
 80%	infolog	de	80%
 90%	infolog	de	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>DateianhÃ¤nge Ã¼ber Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/pfad fÃ¼r lokale Benutzer
-a short subject for the entry	infolog	de	einen kurzen Titel fÃ¼r diesen Eintrag
-abort without deleting	infolog	de	Abruch ohne zu LÃ¶schen
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>Dateianhänge über Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/pfad für lokale Benutzer
+a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
+abort without deleting	infolog	de	Abruch ohne zu Löschen
 accept	infolog	de	bei Annahme
 action	infolog	de	Befehle
-add	infolog	de	HinzufÃ¼gen
-add a file	infolog	de	Datei anhÃ¤ngen
+add	infolog	de	Hinzufügen
+add a file	infolog	de	Datei anhängen
 add a new entry	infolog	de	einen neuen Eintrag anlegen
 add a new note	infolog	de	eine neue Notiz anlegen
 add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
 add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Unterauftrag, -notiz, -anruf zu diesem Eintrag anlegen
 add a new todo	infolog	de	einen neuen Auftrag anlegen
-add file	infolog	de	Datei zufÃ¼gen
+add file	infolog	de	Datei zufügen
 add sub	infolog	de	neuen Untereintrag anlegen
-add:	infolog	de	HinzufÃ¼gen:
+add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
-all links and attachments	infolog	de	alle VerknÃ¼pfungen und AnhÃ¤nge
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hÃ¤ngen vom Type des Eintrags ab)
-applies the changes	infolog	de	Ã¼bernimmt die Ã„nderungen
-are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag lÃ¶schen wollen?
-are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag lÃ¶schen wollen?
-attach a file	infolog	de	Datei anhÃ¤ngen
-attach file	infolog	de	Datei anhÃ¤ngen
-back to main list	infolog	de	ZurÃ¼ck zur Gesamtliste
-back to projectlist	infolog	de	ZurÃ¼ck zur Gesamtliste
+all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
+applies the changes	infolog	de	übernimmt die Änderungen
+are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+attach a file	infolog	de	Datei anhängen
+attach file	infolog	de	Datei anhängen
+back to main list	infolog	de	Zurück zur Gesamtliste
+back to projectlist	infolog	de	Zurück zur Gesamtliste
 billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
@@ -43,14 +43,14 @@ cancel	infolog	de	Abbruch
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
 check to set startday	infolog	de	ankreutzen um Startdatum zu setzen
-click here to create the link	infolog	de	hier klicken um die VerknÃ¼pfung zu erzeugen
+click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erzeugen
 click here to start the search	infolog	de	hier klicken um die Suche zu starten
-close	infolog	de	SchlieÃŸen
+close	infolog	de	Schließen
 comment	infolog	de	Kommentar
 configuration	infolog	de	Konfiguration
-confirm	infolog	de	BestÃ¤tigung
+confirm	infolog	de	Bestätigung
 contact	infolog	de	Kontakt
-create new links	infolog	de	Neue VerknÃ¼pfung erzeugen
+create new links	infolog	de	Neue Verknüpfung erzeugen
 creates a new field	infolog	de	erstellt ein neues Feld
 creates a new status with the given values	infolog	de	erstellt einen neuen Status mit den angegebenen Werten
 creates a new typ with the given name	infolog	de	erstellt einen neuen Typ mit dem eingegebenen Namen
@@ -58,56 +58,56 @@ csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname
 csv-import	common	de	CSV-Import
 custom	infolog	de	Benutzerdefiniert
-custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der VerknÃ¼pfung zu verwenden
-custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der VerknÃ¼pfung zu verwenden
+custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der Verknüpfung zu verwenden
+custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
 custom fields	infolog	de	Benutzerdefinierte Felder
 custom fields, typ and status	common	de	Benutzerdefinierte Felder, Typen und Status
 custom regarding	infolog	de	benutzerdefinierter Bezug
-custom status for typ	infolog	de	Benutzerdefinierter Status fÃ¼r Typ
+custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
 datecreated	infolog	de	erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
-default filter for infolog	infolog	de	Standard-Filter fÃ¼r InfoLog
-default status for a new log entry	infolog	de	Vorgabe fÃ¼r den Status eines neuen Eintrags
+default filter for infolog	infolog	de	Standard-Filter für InfoLog
+default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
 delegation	infolog	de	Delegation
-delete	infolog	de	LÃ¶schen
-delete the entry	infolog	de	Eintrag lÃ¶schen
-delete this entry	infolog	de	diesen Eintrag lÃ¶schen
-deletes the selected typ	infolog	de	lÃ¶scht den ausgewÃ¤hlten Typ
-deletes this field	infolog	de	lÃ¶scht dieses Feld
-deletes this status	infolog	de	lÃ¶scht diesen Status
+delete	infolog	de	Löschen
+delete the entry	infolog	de	Eintrag löschen
+delete this entry	infolog	de	diesen Eintrag löschen
+deletes the selected typ	infolog	de	löscht den ausgewählten Typ
+deletes this field	infolog	de	löscht dieses Feld
+deletes this status	infolog	de	löscht diesen Status
 description	infolog	de	Beschreibung
-description can not exceed 8000 characters in length	infolog	de	Beschreibung darf nicht lÃ¤nger als 8000 Zeichen sein
+description can not exceed 8000 characters in length	infolog	de	Beschreibung darf nicht länger als 8000 Zeichen sein
 determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
-disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu lÃ¶schen
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	wollen Sie eine BestÃ¤tigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
+disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu löschen
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
 done	infolog	de	erledigt
 download	infolog	de	Datei laden
 duration	infolog	de	Dauer
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format <id>=[<angezeigter Wert>]
 edit	infolog	de	Bearbeiten
-edit or create categories for ingolog	infolog	de	Kategorien fÃ¼r InfoLog bearbeiten oder neu anlegen
+edit or create categories for ingolog	infolog	de	Kategorien für InfoLog bearbeiten oder neu anlegen
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	diesen Eintrag bearbeiten
 enddate	infolog	de	Enddatum
 enddate can not be before startdate	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
-enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der VerknÃ¼pfung zu verwenden
-enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/Emailadresse, leer lassen um die Daten der VerknÃ¼pfung zu verwenden
+enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/Emailadresse, leer lassen um die Daten der Verknüpfung zu verwenden
 enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
 enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
-existing links	infolog	de	Bestehende VerknÃ¼pfungen
+existing links	infolog	de	Bestehende Verknüpfungen
 fax	infolog	de	Fax
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
-for which types should this field be used	infolog	de	fÃ¼r welche Typen soll dieses Feld benutzt werden
+for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
 high	infolog	de	hoch
 id	infolog	de	Id
 import	infolog	de	Import
 info log	common	de	InfoLog
 infolog	common	de	InfoLog
-infolog - delete	infolog	de	InfoLog - LÃ¶schen
+infolog - delete	infolog	de	InfoLog - Löschen
 infolog - edit	infolog	de	InfoLog - Bearbeiten
 infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
 infolog - new	infolog	de	InfoLog - Anlegen
@@ -115,98 +115,98 @@ infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
-invalid filename	infolog	de	UngÃ¼ltiger Dateiname
+invalid filename	infolog	de	Ungültiger Dateiname
 label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
-last changed	infolog	de	letzte Ã„nderung
-last modified	infolog	de	zuletzt geÃ¤ndert
+last changed	infolog	de	letzte Änderung
+last modified	infolog	de	zuletzt geändert
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbroch ohne speichern
-length<br>rows	infolog	de	LÃ¤nge<br>Zeilen
-link	infolog	de	VerknÃ¼pfung
-links	infolog	de	VerknÃ¼pfungen
-links of this entry	infolog	de	VerknÃ¼pfungen dieses Eintrags
-list no subs/childs	infolog	de	UntereintrÃ¤ge nicht anzeigen
-longer textual description	infolog	de	lÃ¤ngere textliche Beschreibung
+length<br>rows	infolog	de	Länge<br>Zeilen
+link	infolog	de	Verknüpfung
+links	infolog	de	Verknüpfungen
+links of this entry	infolog	de	Verknüpfungen dieses Eintrags
+list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
-max length of the input [, length of the inputfield (optional)]	infolog	de	max. LÃ¤nge der Eingabe [, LÃ¤nge des Eingabefeldes (optional)]
+max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
 new name	infolog	de	neuer name
 new search	infolog	de	Neue Suche
 no - cancel	infolog	de	Nein - Abbruch
-no entries found, try again ...	infolog	de	Kein EintrÃ¤ge gefunden, nochmal versuchen ...
+no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
 no filter	infolog	de	kein Filter
-no links or attachments	infolog	de	keine VerknÃ¼pfungen oder AnhÃ¤nge
+no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
 none	infolog	de	keine
 normal	infolog	de	normal
 not	infolog	de	nicht
 not assigned	infolog	de	nicht zugewiesen
 note	infolog	de	Notiz
-number of records to read (<=200)	infolog	de	Anzahl DatensÃ¤tze lesen (<=200)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	de	Anzahl Zeilen fÃ¼r ein Mehrzeiliges Eingabefeld oder eines mehrfachen Auswahlfeldes
+number of records to read (<=200)	infolog	de	Anzahl Datensätze lesen (<=200)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	de	Anzahl Zeilen für ein Mehrzeiliges Eingabefeld oder eines mehrfachen Auswahlfeldes
 offer	infolog	de	Angebot
 ongoing	infolog	de	in Arbeit
-only the attachments	infolog	de	nur die AnhÃ¤nge
-only the links	infolog	de	nur die VerknÃ¼pfungen
+only the attachments	infolog	de	nur die Anhänge
+only the links	infolog	de	nur die Verknüpfungen
 open	infolog	de	offen
-optional note to the link	infolog	de	zusÃ¤tzliche Notiz zur VerknÃ¼fung
+optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 order	infolog	de	Reihenfolge
-overdue	infolog	de	Ã¼berfÃ¤llig
+overdue	infolog	de	überfällig
 own	infolog	de	eigene
 own open	infolog	de	eigene offen
-own overdue	infolog	de	eigene Ã¼berfÃ¤llig
-own upcoming	infolog	de	eigene zukÃ¼nftig
+own overdue	infolog	de	eigene überfällig
+own upcoming	infolog	de	eigene zukünftig
 owner	infolog	de	Erstellt von
 owner responsible	infolog	de	Ersteller Verantwortlich
 path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
-pattern for search in addressbook	infolog	de	Muster fÃ¼r Suche im Adressbuch
-pattern for search in projects	infolog	de	Muster fÃ¼r Suche des Projekts
+pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
+pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/Email
 phonecall	infolog	de	Telefonanruf
-priority	infolog	de	PrioritÃ¤t
+priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 re:	infolog	de	Re:
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. fÃ¼r lokale IP's<br>^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
-remove this link (not the entry itself)	infolog	de	Diese VerknÃ¼pfung lÃ¶sen (nicht den Eintrag selbst)
+remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	Auftrag an
-responsible user, priority, ...	infolog	de	Verantwortlicher, PrioritÃ¤ten, ...
+responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
 save	infolog	de	Speichern
-saves the changes made and leaves	infolog	de	speichert die Ã„nderungen und beendet
+saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
 saves this entry	infolog	de	diesen Eintrag speichern
 search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
-select	infolog	de	AuswÃ¤hlen
-select a category for this entry	infolog	de	eine Kategorie fÃ¼r diesen Eintrag auswÃ¤hlen
-select a priority for this task	infolog	de	eine PrioritÃ¤t fÃ¼r diesen Eintrag auswÃ¤hlen
-select a responsible user: a person you want to delegate this task	infolog	de	einen Verantwortlichen auswÃ¤hlen: eine Person der Sie diese Aufgabe delegieren wollen
-select a typ to edit it's status-values or delete it	infolog	de	einen Type auswÃ¤hlen um seine Statuswerte zu Ã¤ndern oder ihn zu lÃ¶schen
-select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswÃ¤hlen
-select an entry to link with	infolog	de	einen Eintrag zum VerkÃ¼pfen auswÃ¤hlen
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen EintrÃ¤ge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn sie keine (einzelne) Anwendung fÃ¼r die Startseite ausgewÃ¤hlt haben (in ihren Einstellungen).
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog UntereintrÃ¤ge in der normalen Ansicht anzeigen oder nicht. Sie kÃ¶nnen die UntereintrÃ¤ge immer Ã¼ber deren Haupteintrag anzeigen.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die VerknÃ¼pfungen zu anderen Anwendungen und/oder die Datei-AnhÃ¤nge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
+select	infolog	de	Auswählen
+select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
+select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
+select a responsible user: a person you want to delegate this task	infolog	de	einen Verantwortlichen auswählen: eine Person der Sie diese Aufgabe delegieren wollen
+select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
+select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
+select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in ihren Einstellungen).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein fÃ¼r Sie und Personen denen Sie privaten Zugriff Ã¼ber die ACL erlaubt haben
+should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
-show open entries: tasks/calls/notes on main screen	infolog	de	Nicht erledigte EintrÃ¤ge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
-start a new search, cancel this link	infolog	de	eine neue Suche starten, diese VerknÃ¼pfung abbrechen
+show open entries: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Endedatum
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
-sub	infolog	de	Unter-<br>eintrÃ¤ge
+sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
 task	infolog	de	Auftrag
-test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare DatensÃ¤tze <u>nur</u> im Browser)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 32 Zeichen), wenn er geÃ¤ndert wird, werden existierende Daten unzugÃ¤nglich
+test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 32 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschrÃ¤nken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukÃ¼nftige EintrÃ¤ge von Ihnen oder allen Benutzern anzuzeigen.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
 today	infolog	de	Heute
 todo	infolog	de	Auftrag
@@ -215,25 +215,25 @@ typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
 type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
-unlink	infolog	de	VerkÃ¼pfung lÃ¶sen
-upcoming	infolog	de	zukÃ¼nftig
-urgency	infolog	de	PrioritÃ¤t
+unlink	infolog	de	Verküpfung lösen
+upcoming	infolog	de	zukünftig
+urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
 use button to search for address	infolog	de	Button zum Suchen der Adresse verwenden
 use button to search for project	infolog	de	Button zum Suchen des Projekts verwenden
-valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gÃ¼ltiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-values for selectbox	infolog	de	Werte fÃ¼r die Auswahlbox
-view all subs of this entry	infolog	de	alle UntereintrÃ¤ge dieses Eintrag anzeigen
-view other subs	infolog	de	andere UntereintrÃ¤ge anzeigen
-view parent	infolog	de	Ã¼bergeordneter Eintrag anzeigen
-view subs	infolog	de	UntereintrÃ¤ge anzeigen
-view the parent of this entry and all his subs	infolog	de	Ã¼bergeordneter Eintrag mit allen seinen UntereintrÃ¤gen anzeigen
-view this linked entry in its application	infolog	de	diesen verknÃ¼pfen Eintrag in seiner Anwendung anzeigen
+valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
+values for selectbox	infolog	de	Werte für die Auswahlbox
+view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
+view other subs	infolog	de	andere Untereinträge anzeigen
+view parent	infolog	de	übergeordneter Eintrag anzeigen
+view subs	infolog	de	Untereinträge anzeigen
+view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
+view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
-will-call	infolog	de	ruft zurÃ¼ck
-yes - delete	infolog	de	Ja - LÃ¶schen
-you can't delete one of the stock types !!!	infolog	de	Sie kÃ¶nnen keinen der Standardtypen lÃ¶schen!!!
-you have entered an invalid ending date	infolog	de	Sie haben ein ungÃ¼ltiges Enddatum eingegeben
-you have entered an invalid starting date	infolog	de	Sie haben ein ungÃ¼ltiges Startdatum eingegeben
-you have to enter a name, to create a new typ!!!	infolog	de	Sie mÃ¼ssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
-you must enter a subject or a description	infolog	de	Sie mÃ¼ssen einen Titel oder eine Beschreibung eingeben
+will-call	infolog	de	ruft zurück
+yes - delete	infolog	de	Ja - Löschen
+you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
+you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben
+you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
+you have to enter a name, to create a new typ!!!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
+you must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben

@@ -1,16 +1,16 @@
-about %1	common	de	Ãœber %1
+about %1	common	de	Über %1
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
-account has been deleted	common	de	Benutzerkennung wurde gelÃ¶scht
+account has been deleted	common	de	Benutzerkennung wurde gelöscht
 account has been updated	common	de	Benutzerkennung wurde aktualisiert
 acl	common	de	ACL
 action	common	de	Aktion
 active	common	de	Aktiv
-add	common	de	HinzufÃ¼gen
-add %1 category for	common	de	%1 Kategorie hinzufÃ¼gen fÃ¼r
-add category	common	de	Kategorie hinzufÃ¼gen
-add sub	common	de	Untergeordnete hinzufÃ¼gen
+add	common	de	Hinzufügen
+add %1 category for	common	de	%1 Kategorie hinzufügen für
+add category	common	de	Kategorie hinzufügen
+add sub	common	de	Untergeordnete hinzufügen
 addressbook	common	de	Adressbuch
 admin	common	de	Admin
 administration	common	de	Administration
@@ -24,19 +24,19 @@ angola	common	de	ANGOLA
 anguilla	common	de	ANGUILLA
 antarctica	common	de	ANTARKTIS
 antigua and barbuda	common	de	ANTIGUA UND BARBUDA
-apply	common	de	Ãœbernehmen
+apply	common	de	Übernehmen
 april	common	de	April
-are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daÃŸ Sie diesen Eintrag lÃ¶schen wollen?
+are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 argentina	common	de	ARGENTIEN
 armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
 august	common	de	August
 australia	common	de	AUSTRALIEN
-austria	common	de	Ã–STERREICH
+austria	common	de	ÖSTERREICH
 author	common	de	Autor
 autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
-back	common	de	ZurÃ¼ck
+back	common	de	Zurück
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
@@ -66,23 +66,23 @@ canada	common	de	KANADA
 cancel	common	de	Abbruch
 cape verde	common	de	KAP VERDE
 categories	common	de	Kategorien
-categories for	common	de	Kategorien fÃ¼r
+categories for	common	de	Kategorien für
 category	common	de	Kategorie
-category %1 has been added !	common	de	Kategorie %1 wurde hinzugefÃ¼gt !
-category %1 has been updated !	common	de	Kategorie %1 wurde Ã¼berarbeitet !
+category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
+category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
 cayman islands	common	de	KAIMAN INSELN
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
-change	common	de	Ã¤ndern
-charset	common	de	UTF-8
+change	common	de	ändern
+charset	common	de	iso-8859-1
 chile	common	de	CHILE
 china	common	de	CHINA
-choose the category	common	de	Kategorie auswÃ¤hlen
-choose the parent category	common	de	WÃ¤hlen der Ã¼bergeordneten Kategorie
+choose the category	common	de	Kategorie auswählen
+choose the parent category	common	de	Wählen der übergeordneten Kategorie
 christmas island	common	de	WEIHNACHTS INSEL
-clear	common	de	ZurÃ¼cksetzen
-clear form	common	de	Eingaben lÃ¶schen
-close	common	de	SchlieÃŸen
+clear	common	de	Zurücksetzen
+clear form	common	de	Eingaben löschen
+close	common	de	Schließen
 cocos (keeling) islands	common	de	COCOS INSELN
 colombia	common	de	KOLUMBIEN
 comoros	common	de	KOMOREN
@@ -97,17 +97,17 @@ created	common	de	erstellt
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
 cuba	common	de	KUBA
-currency	common	de	WÃ¤hrung
+currency	common	de	Währung
 current	common	de	derzeit
 current users	common	de	Derzeit angemeldete Benutzer
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 date	common	de	Datum
-date due	common	de	fÃ¤llig am
+date due	common	de	fällig am
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
-delete	common	de	LÃ¶schen
-denmark	common	de	DÃ„NEMARK
+delete	common	de	Löschen
+denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
 details	common	de	Details
@@ -115,29 +115,29 @@ disabled	common	de	Deaktiviert
 display monday first	common	de	Montag zuerst anzeigen
 display sunday first	common	de	Sonntag zuerst anzeigen
 djibouti	common	de	DJIBOUTI
-do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelÃ¶scht werden ?
+do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 domain	common	de	Domain
-domain name for mail-address, eg. "%1"	common	de	Domainname fÃ¼r E-Mail Adresse, zB. "%1"
+domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, zB. "%1"
 domestic	common	de	Inland
 dominica	common	de	DOMINICA
-dominican republic	common	de	DOMÃ„NIKANISCHE REPUBLIK
+dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
 done	common	de	Fertig
 drag to move	common	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
 ecuador	common	de	EQUADOR
 edit	common	de	Editieren
-edit %1 category for	common	de	%1 Kategorie editieren fÃ¼r
+edit %1 category for	common	de	%1 Kategorie editieren für
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
-egypt	common	de	Ã„GYPTEN
+egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. "%1"
-enabled	common	de	VerfÃ¼gbar
+enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
-entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelÃ¶scht
+entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 equatorial guinea	common	de	EQUATORIAL GUINEA
 eritrea	common	de	ERITREA
@@ -163,15 +163,15 @@ firstname	common	de	Vorname
 fixme!	common	de	KORREGIER MICH!
 force selectbox	common	de	Auswahlfeld erzwingen
 france	common	de	FRANKREICH
-french guiana	common	de	FRANZÃ–SISCH GUIANA
-french polynesia	common	de	FRANZÃ–SISCH POLYNESIEN
+french guiana	common	de	FRANZÖSISCH GUIANA
+french polynesia	common	de	FRANZÖSISCH POLYNESIEN
 french southern territories	common	de	FRENCH SOUTHERN TERRITORIES
 friday	common	de	Freitag
 ftp	common	de	FTP
 fullname	common	de	Vor+Nachame
 gabon	common	de	GABON
 gambia	common	de	GAMBIA
-general menu	common	de	HauptmenÃ¼
+general menu	common	de	Hauptmenü
 georgia	common	de	GEORGIEN
 german	common	de	Deutsch
 germany	common	de	DEUTSCHLAND
@@ -180,20 +180,20 @@ gibraltar	common	de	GIBRALTAR
 global	common	de	Global
 global public	common	de	Global Public
 go today	common	de	Heute setzen
-grant access	common	de	Zugriff gewÃ¤hren
+grant access	common	de	Zugriff gewähren
 greece	common	de	GRIECHENLAND
-greenland	common	de	GRÃ–NLAND
+greenland	common	de	GRÖNLAND
 grenada	common	de	GRENADA
 group	common	de	Gruppe
 group access	common	de	Gruppenzugriff
-group has been added	common	de	Gruppe wurde zugefÃ¼gt
-group has been deleted	common	de	Gruppe wurde  gelÃ¶scht
+group has been added	common	de	Gruppe wurde zugefügt
+group has been deleted	common	de	Gruppe wurde  gelöscht
 group has been updated	common	de	Gruppe wurde  aktualisiert
 group name	common	de	Gruppenname
 group public	common	de	Group Public
 groups	common	de	Gruppen
-groups with permission for %1	common	de	Gruppen mit Berechtigung fÃ¼r %1
-groups without permission for %1	common	de	Gruppen ohne Berechtigung fÃ¼r %1
+groups with permission for %1	common	de	Gruppen mit Berechtigung für %1
+groups without permission for %1	common	de	Gruppen ohne Berechtigung für %1
 guadeloupe	common	de	GUADELOUPE
 guam	common	de	GUAM
 guatemala	common	de	GUATEMALA
@@ -204,7 +204,7 @@ haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 help	common	de	Hilfe
 high	common	de	Hoch
-highest	common	de	HÃ¶chste
+highest	common	de	Höchste
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
 honduras	common	de	HONDURAS
@@ -214,13 +214,13 @@ iceland	common	de	ISLAND
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
 international	common	de	International
-invalid ip address	common	de	UngÃ¼ltige IP Adresse
-invalid password	common	de	UngÃ¼ltiges Passwort
+invalid ip address	common	de	Ungültige IP Adresse
+invalid password	common	de	Ungültiges Passwort
 iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
 iraq	common	de	IRAQ
 ireland	common	de	IRELAND
 israel	common	de	ISRAEL
-it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geÃ¤ndert
+it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
 italy	common	de	ITALIEN
 jamaica	common	de	JAMAICA
@@ -231,7 +231,7 @@ july	common	de	Juli
 june	common	de	Juni
 kazakstan	common	de	KAZAKSTAN
 kenya	common	de	KENIA
-keywords	common	de	SchlÃ¼sselwort
+keywords	common	de	Schlüsselwort
 kiribati	common	de	KIRIBATI
 korea, democratic peoples republic of	common	de	KOREA, DEMOKRATISCHE VOLKSREPUBLIK
 korea, republic of	common	de	KOREA, REPUBLIK
@@ -260,7 +260,7 @@ low	common	de	Niedrig
 lowest	common	de	Niedrigst
 luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
-macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÃœHERE JUGOSLAVISCHE REPUBLIK
+macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
 mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
@@ -272,7 +272,7 @@ maldives	common	de	MALDIVEN
 mali	common	de	MALI
 malta	common	de	MALTA
 manual	common	de	Handbuch
-march	common	de	MÃ¤rz
+march	common	de	März
 marshall islands	common	de	MARSHALL ISLANDS
 martinique	common	de	MARTINIQUE
 mauritania	common	de	MAURITANIEN
@@ -280,7 +280,7 @@ mauritius	common	de	MAURITIUS
 may	common	de	Mai
 mayotte	common	de	MAYOTTE
 medium	common	de	Mittel
-menu	common	de	MenÃ¼
+menu	common	de	Menü
 message	common	de	Nachricht
 mexico	common	de	MEXICO
 micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
@@ -298,24 +298,24 @@ namibia	common	de	NAMIBIEN
 nauru	common	de	NAURU
 nepal	common	de	NEPAL
 netherlands	common	de	NIEDERLANDE
-netherlands antilles	common	de	NIEDERLÃ„NDISCHE ANTILLEN
+netherlands antilles	common	de	NIEDERLÄNDISCHE ANTILLEN
 never	common	de	Niemals
 new caledonia	common	de	NEU CALEDONIEN
-new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefÃ¼gt
+new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
 new main category	common	de	neue Hauptkategorie
 new value	common	de	Neuer Wert
 new zealand	common	de	NEUSEELAND
-next	common	de	NÃ¤chste
-next month (hold for menu)	common	de	NÃ¤chster Monat (halten fÃ¼r MenÃ¼)
-next page	common	de	NÃ¤chste Seite
-next year (hold for menu)	common	de	NÃ¤chstes Jahr (halten fÃ¼r MenÃ¼)
+next	common	de	Nächste
+next month (hold for menu)	common	de	Nächster Monat (halten für Menü)
+next page	common	de	Nächste Seite
+next year (hold for menu)	common	de	Nächstes Jahr (halten für Menü)
 nicaragua	common	de	NICARAGUA
 niger	common	de	NIGER
 nigeria	common	de	NIGERIA
 niue	common	de	NIUE
 no	common	de	Nein
-no entries found, try again ...	common	de	Keine EintrÃ¤ge gefunden, nochmal versuchen ...
-no history for this record	common	de	Keine Historie fÃ¼r diesen Datensatz
+no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
+no history for this record	common	de	Keine Historie für diesen Datensatz
 no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
 none	common	de	Keine
@@ -335,11 +335,11 @@ oman	common	de	OMAN
 on *nix systems please type: %1	common	de	Auf *nix systemen bitte %1 eingeben
 only private	common	de	nur private
 only yours	common	de	nur eigene
-open notify window	common	de	Benachrichtigungsfenster Ã¶ffnen
-open popup window	common	de	Popup Fenster Ã¶ffnen
+open notify window	common	de	Benachrichtigungsfenster öffnen
+open popup window	common	de	Popup Fenster öffnen
 original	common	de	Original
 other	common	de	Andere
-overview	common	de	Ãœberblick
+overview	common	de	Überblick
 owner	common	de	Besitzer
 pakistan	common	de	PAKISTAN
 palau	common	de	PALAU
@@ -348,15 +348,15 @@ panama	common	de	PANAMA
 papua new guinea	common	de	PAPUA NEU GUINEA
 paraguay	common	de	PARAGUAY
 parcel	common	de	Paket
-parent category	common	de	Ãœbergeordnete Kategorie
+parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
-password could not be changed	common	de	Passwort konnte nicht geÃ¤ndert werden
+password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
-pattern for search in addressbook	common	de	Muster fÃ¼r suche im Adressbuch
-pattern for search in calendar	common	de	Muster fÃ¼r suche im Kalendar
-pattern for search in projects	common	de	Muster fÃ¼r suche in Projekten
+pattern for search in addressbook	common	de	Muster für suche im Adressbuch
+pattern for search in calendar	common	de	Muster für suche im Kalendar
+pattern for search in projects	common	de	Muster für suche in Projekten
 permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
-personal	common	de	persÃ¶nlich
+personal	common	de	persönlich
 peru	common	de	PERU
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
@@ -364,35 +364,35 @@ pitcairn	common	de	PITCAIRN
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
-please select	common	de	Bitte wÃ¤hlen
+please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
-please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen fÃ¼r diese Anwendung !
+please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
 please wait...	common	de	Bitte warten...
 poland	common	de	POLEN
 portugal	common	de	PORTUGA
 postal	common	de	Postadresse
 powered by phpgroupware version %1	common	de	Powered by <a href="http://www.phpgw.de">phpGroupWare</a> version %1
 preferences	common	de	Einstellungen
-prev. month (hold for menu)	common	de	Vorheriger Monat (halten fÃ¼r MenÃ¼)
-prev. year (hold for menu)	common	de	Vorheriges Jahr (halten fÃ¼r MenÃ¼)
+prev. month (hold for menu)	common	de	Vorheriger Monat (halten für Menü)
+prev. year (hold for menu)	common	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
 print	common	de	Drucken
-priority	common	de	PrioritÃ¤t
+priority	common	de	Priorität
 private	common	de	Privat
 project	common	de	Projekt
-public	common	de	Ã¶ffentlich
+public	common	de	öffentlich
 puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
 read	common	de	Lesen
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
-reject	common	de	ZurÃ¼ckweisen
+reject	common	de	Zurückweisen
 rename	common	de	Umbenennen
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollstÃ¤ndige Lister der Benutzerkonten auf diesem System. Warnung: Die RÃ¼ckgabe kann sehr gross sein
-returns an array of todo items	common	de	Liefert ein array mit ToDo EintrÃ¤gen
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
+returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
 returns struct of users application access	common	de	Liefert Strucktur mit Benutzerzugriffsrechten auf Anwendungen
 reunion	common	de	REUNION
-romania	common	de	RUMÃ„NIEN
-russian federation	common	de	RUSSISCHE FÃ–DERATION
+romania	common	de	RUMÄNIEN
+russian federation	common	de	RUSSISCHE FÖDERATION
 rwanda	common	de	RWANDA
 saint helena	common	de	SANKT HELENA
 saint kitts and nevis	common	de	SAINT KITTS AND NEVIS
@@ -407,23 +407,23 @@ saudi arabia	common	de	SAUDIARABIEN
 save	common	de	Speichern
 search	common	de	Suchen
 section	common	de	Sektion
-select	common	de	AuswÃ¤hlen
-select category	common	de	Kategorie auswÃ¤hlen
-select date	common	de	Datum auswÃ¤hlen
-select group	common	de	Gruppe auswÃ¤hlen
-select one	common	de	Einen auswÃ¤hlen
-select user	common	de	Benutzer auswÃ¤hlen
+select	common	de	Auswählen
+select category	common	de	Kategorie auswählen
+select date	common	de	Datum auswählen
+select group	common	de	Gruppe auswählen
+select one	common	de	Einen auswählen
+select user	common	de	Benutzer auswählen
 send	common	de	Abschicken
 senegal	common	de	SENEGAL
 september	common	de	September
-server %1 has been added	common	de	Server %1 wurde zugefÃ¼gt
+server %1 has been added	common	de	Server %1 wurde zugefügt
 server name	common	de	Server Name
-session has been killed	common	de	Session wurde gelÃ¶scht
+session has been killed	common	de	Session wurde gelöscht
 setup	common	de	Setup
 seychelles	common	de	SEYCHELLEN
 show all	common	de	alle anzeigen
-showing %1	common	de	%1 EintrÃ¤ge
-showing %1 - %2 of %3	common	de	%1 - %2 von %3 EintrÃ¤gen
+showing %1	common	de	%1 Einträge
+showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 sierra leone	common	de	SIERRA LEONE
 singapore	common	de	SINGAPUR
 slovakia	common	de	SLOVAKEI
@@ -431,7 +431,7 @@ slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
 somalia	common	de	SOMALIA
 sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
-south africa	common	de	SÃœDAFRIKA
+south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	de	SPANIEN
 sri lanka	common	de	SRI LANKA
@@ -454,19 +454,19 @@ tajikistan	common	de	TAJIKISTAN
 tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
 thailand	common	de	THAILAND
 the api is current	common	de	Die API ist aktuell
-the api requires an upgrade	common	de	Die API benÃ¶tigt eine Aktualisierung
-the following applications require upgrades	common	de	Die folgenden Anwendungen benÃ¶tigen eine Aktualisierung
-the mail server returned	common	de	Der EMailserver liefert zurÃ¼ck
+the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
+the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
+the mail server returned	common	de	Der EMailserver liefert zurück
 this application is current	common	de	Diese Anwendung ist aktuell
-this application requires an upgrade	common	de	Diese Anwendung benÃ¶tigt eine Aktualisierung
+this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 time	common	de	Zeit
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
-to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, mÃ¼ssen sie folgendes setzen:
-to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurÃ¼ck zu gehen, <a href="%1">hier</a> anklicken
+to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
+to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
 toggle first day of week	common	de	ersten Tag der Woche wechseln
@@ -477,7 +477,7 @@ total	common	de	Gesamt
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
 tuesday	common	de	Dienstag
 tunisia	common	de	TUNISIEN
-turkey	common	de	TÃœRKEI
+turkey	common	de	TÜRKEI
 turkmenistan	common	de	TURKMENISTAN
 turks and caicos islands	common	de	TURKS AND CAICOS ISLANDS
 tuvalu	common	de	TUVALU
@@ -520,15 +520,15 @@ written by:	common	de	Geschrieben von:
 year	common	de	Jahr
 yemen	common	de	YEMEN
 yes	common	de	Ja
-you are required to change your password during your first login	common	de	Sie mÃ¼ssen Ihr Passwort bei der ersten Anmeldung Ã¤ndern
+you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you are running a newer version of phpgroupware than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
-you have not entered a valid date	common	de	Sie haben kein gÃ¼ltiges Datum eingegeben
-you have not entered a valid time of day	common	de	Sie haben keine gÃ¼ltige Uhrzeit eingegeben
+you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
+you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
 you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben
-you have selected an invalid date	common	de	Sie haben ein ungÃ¼ltiges Datum gewÃ¤hlt !
-you have selected an invalid main category	common	de	Sie haben eine ungÃ¼ltige Hauptkategorie gewÃ¤hlt !
+you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
+you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versandt

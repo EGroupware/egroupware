@@ -1,12 +1,12 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
-%1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausfÃ¼hrbar !!!
+%1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von BruteForce Angriffen
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
-account has been deleted	common	de	Konto wurde gelÃ¶scht
+account has been deleted	common	de	Konto wurde gelöscht
 account has been updated	common	de	Konto wurde aktualisiert
 account list	admin	de	Benutzerkonten anzeigen
 account permissions	admin	de	Zugriffsrechte
@@ -14,23 +14,23 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 acl manager	admin	de	ACL Manager
 acl rights	admin	de	ACL Rechte
 action	admin	de	Aktion
-add a category	admin	de	Eine Kategorie hinzufÃ¼gen
-add a group	admin	de	Eine Gruppe hinzufÃ¼gen
+add a category	admin	de	Eine Kategorie hinzufügen
+add a group	admin	de	Eine Gruppe hinzufügen
 add a new account.	admin	de	Neues Benutzerkonto anlegen
-add a subcategory	admin	de	Ein Unterkategorie hizufÃ¼gen
-add a user	admin	de	Einen Benutzer hinzufÃ¼gen
+add a subcategory	admin	de	Ein Unterkategorie hizufügen
+add a user	admin	de	Einen Benutzer hinzufügen
 add account	admin	de	Benutzerkonto anlegen
 add application	admin	de	Anwendung anlegen
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	de	Automatisch erzeuge Benutzer in diese Gruppe aufnehmen ('Default' wird versucht wenn sie hier nichts eintragen.)
 add global category	admin	de	Globale Kategorie hinzuf&uuml;gen
 add global category for %1	admin	de	Globale Kategorie f&uuml;r %1 hinzuf&uuml;gen
-add group	admin	de	Gruppe zufÃ¼fen
-add new account	admin	de	Neues Benutzerkonto hinzufÃ¼gen
-add new application	admin	de	Neue Anwendung hinzufÃ¼gen
-add peer server	admin	de	Server zu Serververbund hinzufÃ¼gen
-add sub-category	admin	de	Unterkategorie hinzufÃ¼gen
+add group	admin	de	Gruppe zufüfen
+add new account	admin	de	Neues Benutzerkonto hinzufügen
+add new application	admin	de	Neue Anwendung hinzufügen
+add peer server	admin	de	Server zu Serververbund hinzufügen
+add sub-category	admin	de	Unterkategorie hinzufügen
 admin email	admin	de	Email Administration
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	Email Adressen der Administratoren (mit Komma getrennt) die Ã¼ber eine Sperre benachrichtigt werden sollen (leer fÃ¼r keine Benachrichtigung)
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	Email Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen (leer für keine Benachrichtigung)
 admin name	admin	de	Admin Name
 administration	admin	de	Administration
 admins	admin	de	Administatoren
@@ -47,57 +47,57 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
-apply	admin	de	hinzufÃ¼gen
-are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 lÃ¶schen wollen ?
-are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto lÃ¶schen wollen ?
-are you sure you want to delete this application ?	admin	de	Sind Sie sicher das Sie diese Applikation lÃ¶schen mÃ¶chten ?
-are you sure you want to delete this category ?	common	de	Sind Sie sicher, dass Sie diese Kategorie lÃ¶schen wollen ?
-are you sure you want to delete this global category ?	admin	de	Sind Sie sicher das Sie diese globale Kategorie lÃ¶schen mÃ¶chten?
-are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie diese Gruppe lÃ¶schen wollen ?
-are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server lÃ¶schen wollen ?
+apply	admin	de	hinzufügen
+are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen ?
+are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen ?
+are you sure you want to delete this application ?	admin	de	Sind Sie sicher das Sie diese Applikation löschen möchten ?
+are you sure you want to delete this category ?	common	de	Sind Sie sicher, dass Sie diese Kategorie löschen wollen ?
+are you sure you want to delete this global category ?	admin	de	Sind Sie sicher das Sie diese globale Kategorie löschen möchten?
+are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie diese Gruppe löschen wollen ?
+are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden wollen ?
-async services last executed	admin	de	Asynchroner Dienst zuletzt ausgefÃ¼hrt
+async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuterter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst is noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ fÃ¼r FTP zu verwenden, statt dem default 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem default 'application/octet-stream'
 authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
-auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten fÃ¼r authentifizierte Benutzer anlegen
-back to the list	admin	de	ZurÃ¼ck zur Liste
+auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
+back to the list	admin	de	Zurück zur Liste
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
-calculate next run	admin	de	nÃ¤chste AusfÃ¼hrung berechnen
-can change password	admin	de	Darf Passwort Ã¤ndern
+calculate next run	admin	de	nächste Ausführung berechnen
+can change password	admin	de	Darf Passwort ändern
 cancel testjob!	admin	de	TestJob abbrechen!
 categories list	admin	de	Liste der Kategorien
 category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category list	admin	de	Kategorieliste
-change acl rights	admin	de	ACL Rechte Ã¤ndern
-change config settings	admin	de	Konfiguration der Anwendung Ã¤ndern
-change main screen message	admin	de	Nachricht der Startseite Ã¤ndern
-check ip address of all sessions	admin	de	IP-Adresse fÃ¼r alle Sessions Ã¼berprÃ¼fen
+change acl rights	admin	de	ACL Rechte ändern
+change config settings	admin	de	Konfiguration der Anwendung ändern
+change main screen message	admin	de	Nachricht der Startseite ändern
+check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
-country selection	admin	de	LÃ¤nderauswahl
+country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 data	admin	de	Daten
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 default	admin	de	Vorgabe
-default file system space per user	admin	de	Vorgabewert fÃ¼r Dateisystemplatz pro Benutzer
-default file system space per user/group ?	admin	de	Vorgabewert fÃ¼r Dateisystemplatz pro Benutzer/Gruppe verwenden?
+default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
+default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 deinstall crontab	admin	de	Crontab deinstallieren
-delete account	admin	de	Benutzerkonto lÃ¶schen
-delete all records	admin	de	Alle EintrÃ¤ge lÃ¶schen
-delete application	admin	de	Anwendung lÃ¶schen
-delete category	admin	de	Kategorie lÃ¶schen
-delete group	admin	de	Gruppe lÃ¶schen
-delete peer server	admin	de	Server von Serververbund lÃ¶schen
-delete the category	admin	de	Kategorie lÃ¶schen
-delete the group	admin	de	Gruppe lÃ¶schen
-delete this category	admin	de	Kategorie lÃ¶schen
-delete this group	admin	de	Gruppe lÃ¶schen
-delete this user	admin	de	Benutzer lÃ¶schen
+delete account	admin	de	Benutzerkonto löschen
+delete all records	admin	de	Alle Einträge löschen
+delete application	admin	de	Anwendung löschen
+delete category	admin	de	Kategorie löschen
+delete group	admin	de	Gruppe löschen
+delete peer server	admin	de	Server von Serververbund löschen
+delete the category	admin	de	Kategorie löschen
+delete the group	admin	de	Gruppe löschen
+delete this category	admin	de	Kategorie löschen
+delete this group	admin	de	Gruppe löschen
+delete this user	admin	de	Benutzer löschen
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten
@@ -111,19 +111,19 @@ deny access to peer servers	admin	de	Zugriff auf Serververbund verbieten
 deny access to phpinfo	admin	de	Zugriff auf phpinfo verbieten
 deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendung verbieten
 deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
-deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewÃ¤hren ?
-description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht lÃ¤nger als 255 Zeichen sein !
-disable "auto completion" of the login form	admin	de	Automatisches VervollstÃ¤ndigen der Logindaten abschalten
+deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewähren ?
+description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
+disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	Anzeigen
-do not delete the category and return back to the list	admin	de	Kategorie NICHT lÃ¶schen und zurÃ¼ck zur Liste gehen
+do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
-do you want to delete all global subcategories ?	admin	de	MÃ¶chten Sie alle Globale Unterkategorien lÃ¶schen ?
+do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen ?
 do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
-edit global category for %1	admin	de	Globale Kategorie fÃ¼r %1 bearbeiten
+edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit login screen message	admin	de	Nachricht der Login Seite bearbeiten
 edit main screen message	admin	de	Nachricht der Startseite bearbeiten
@@ -135,40 +135,40 @@ edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
-enabled - hidden from navbar	admin	de	VerfÃ¼gbar, aber nicht in der Navigationsleiste
-enter a description for the category	admin	de	Geben Sie eine Beschreibung fÃ¼r diese Kategorie ein
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	ZufÃ¤lligen Text fÃ¼r app_session<br>VerschlÃ¼sselung (braucht mcrypt)
-enter the background color for the login page	admin	de	Hintergrundfarbe fÃ¼r die Anmeldeseite
-enter the background color for the site title	admin	de	Hintergrundfarbe fÃ¼r den Title der phpGroupWare installation
+enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
+enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
+enter the background color for the site title	admin	de	Hintergrundfarbe für den Title der phpGroupWare installation
 enter the file name of your logo	admin	de	Dateiname ihres Logos
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	VollstÃ¤ndiger Pfad fÃ¼r temporÃ¤re Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	VollstÃ¤ndiger Pfad fÃ¼r Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server lÃ¤uft
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	de	URL zur phpGroupWare Installation.<br>Beispiel: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>keinen nachfolgenden Slash /</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle EintrÃ¤ge anzuzeigen, geben Sie keinen Begriff ein und drÃ¼cken Sie den Suchen Knopf nochmals
-enter the site password for peer servers	admin	de	Site Passwort fÃ¼r Peer Server
-enter the site username for peer servers	admin	de	Site Benutzername fÃ¼r Peer Server
+enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen Knopf nochmals
+enter the site password for peer servers	admin	de	Site Passwort für Peer Server
+enter the site username for peer servers	admin	de	Site Benutzername für Peer Server
 enter the title for your site	admin	de	Titel der phpGroupWare Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter your default ftp server	admin	de	Default FTP Server
 enter your http proxy server	admin	de	HTTP Proxy Server
 enter your http proxy server port	admin	de	HTTP Proxy Server Port
-error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des TestJob's, evtl. lÃ¤uft gar keiner !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des TestJobs, falsche Syntax oder es lÃ¤uft schon einer !!!
+error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des TestJob's, evtl. läuft gar keiner !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des TestJobs, falsche Syntax oder es läuft schon einer !!!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler !!!
 expires	admin	de	abgelaufen
-fallback (after each pageview)	admin	de	AusweichmÃ¶glichkeit (nach jedem Seitenaufbau)
+fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
 file space	admin	de	Dateiraum
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
 find and register all application hooks	admin	de	Suchen und registrieren der "hooks" aller Anwendungen
-for the times above	admin	de	fÃ¼r die darÃ¼ber angegebenen Zeiten
-for the times below (empty values count as '*', all empty = every minute)	admin	de	fÃ¼r die darunter angegebenen Zeiten (leere Felder zÃ¤hlen als '*', alles leer = jede Minute)
+for the times above	admin	de	für die darüber angegebenen Zeiten
+for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als '*', alles leer = jede Minute)
 force selectbox	admin	de	Auswahl erzwingen
 global categories	admin	de	Globale Kategorien
 group ?	admin	de	Gruppe ?
-group has been added	common	de	Gruppe wurde hinzugefÃ¼gt
-group has been deleted	common	de	Gruppe wurde gelÃ¶scht
+group has been added	common	de	Gruppe wurde hinzugefügt
+group has been deleted	common	de	Gruppe wurde gelöscht
 group has been updated	common	de	Gruppe wurde aktualisiert
 group list	admin	de	Liste der Gruppen
 group manager	admin	de	Gruppenmanager
@@ -177,10 +177,10 @@ hide php information	admin	de	PHP Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen EintrÃ¤ge im Zugangsprotokoll bleiben, bevor sie gelÃ¶scht werden (Vorgabe 90) ?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30) ?
 idle	admin	de	im Leerlauf
-if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL Eintrag fÃ¼r einen Benutzer oder oder eine Gruppe der er angehÃ¶rt gibt
+if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
 inbound	admin	de	eingehend
 install crontab	admin	de	Crontab installieren
@@ -193,23 +193,23 @@ kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
 language	admin	de	Sprache
 last %1 logins	admin	de	Letze %1 Logins
-last %1 logins for %2	admin	de	Letze %1 Logins fÃ¼r %2
+last %1 logins for %2	admin	de	Letze %1 Logins für %2
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
 last time read	admin	de	Zuletzt gelesen
-ldap accounts context	admin	de	LDAP Kontext fÃ¼r Benutzerkonten
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP Vorgabewert fÃ¼r Benutzerverzeichnisse (zB. /home fÃ¼r /home/username)
-ldap default shell (e.g. /bin/bash)	admin	de	LDAP Vorgabewert fÃ¼r Komandointerpreter (shell) (zB. /bin/bash)
-ldap encryption type	admin	de	LDAP VerschlÃ¼sselungstyp
-ldap groups context	admin	de	LDAP Kontext fÃ¼r Gruppen
+ldap accounts context	admin	de	LDAP Kontext für Benutzerkonten
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP Vorgabewert für Benutzerverzeichnisse (zB. /home für /home/username)
+ldap default shell (e.g. /bin/bash)	admin	de	LDAP Vorgabewert für Komandointerpreter (shell) (zB. /bin/bash)
+ldap encryption type	admin	de	LDAP Verschlüsselungstyp
+ldap groups context	admin	de	LDAP Kontext für Gruppen
 ldap host	admin	de	LDAP Host
 ldap root password	admin	de	LDAP Root Passwort
 ldap rootdn	admin	de	LDAP rootdn
-leave the category untouched and return back to the list	admin	de	Kategorie unverÃ¤ndert lassen und zur Liste zurÃ¼ckkehren
-leave the group untouched and return back to the list	admin	de	Gruppe unverÃ¤ndert lassen und zur Liste zurÃ¼ckkehren
+leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
+leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
-list of current users	admin	de	Liste der gegenwÃ¤rtigen Benutzer
+list of current users	admin	de	Liste der gegenwärtigen Benutzer
 login history	admin	de	Login Kontrolle
 login message	admin	de	Meldung der Login Seite
 login screen	admin	de	Login Seite
@@ -218,28 +218,28 @@ login time	admin	de	Login Zeit
 loginid	admin	de	LoginID
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
-maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum fÃ¼r Benutzer Id (zB. 65535 oder 1000000)
-maximum entries in click path history	admin	de	Max. Anzahl EintrÃ¤ge in der Click-Path-Historie
-message has been updated	admin	de	Nachricht wurde geÃ¤ndert
+maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer Id (zB. 65535 oder 1000000)
+maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
+message has been updated	admin	de	Nachricht wurde geändert
 method	admin	de	Methode
-minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum fÃ¼r Benutzer Id (zB.
+minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer Id (zB.
 minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
 never	admin	de	Nie
 new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change	admin	de	
-new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geÃ¤ndert werden soll ]
-next run	admin	de	nÃ¤chste AusfÃ¼hrung
-no algorithms available	admin	de	Kein Algorithmus verfÃ¼gbar
+new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+next run	admin	de	nächste Ausführung
+no algorithms available	admin	de	Kein Algorithmus verfügbar
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank !!!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
-no matches found	admin	de	Keine Ãœbereinstimmungen gefunden
-no modes available	admin	de	Kein Modus verfÃ¼gbar
-no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine Gruppe hinzuzufÃ¼gen
-no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufÃ¼gen
+no matches found	admin	de	Keine Übereinstimmungen gefunden
+no modes available	admin	de	Kein Modus verfügbar
+no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine Gruppe hinzuzufügen
+no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufügen
 no permission to create groups	admin	de	Sie haben keine aureichenden Rechte um eine Gruppe zu erstellen
-note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfÃ¼gbar, wenn PHP mit CURL-UnterstÃ¼tzung erzeugt wurde
+note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung erzeugt wurde
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
 path information	admin	de	Pfad-Information
@@ -248,33 +248,33 @@ peer servers	admin	de	Server Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
 percent this user has logged out	admin	de	Prozentsatz wieoft sich dieser Benutzer abgemeldet hat
 permissions	admin	de	Zugriffsrechte
-permissions this group has	admin	de	Zugriffsrechte fÃ¼r diese Gruppe
+permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 phpinfo	admin	de	PHP Informationen
 please enter a name	admin	de	Bitte einen Namen eingeben
-please enter a name for that server !	admin	de	Bitte einen Namen fÃ¼r diesen Server eingeben !
-please run setup to become current	admin	de	Bitte Setup ausfÃ¼hren um die Installation zu aktualisieren
-please select	admin	de	Bitte auswÃ¤hlen
+please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben !
+please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
+please select	admin	de	Bitte auswählen
 preferences	admin	de	Einstellungen
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "hooks" der Anwendungen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe
-return to admin mainscreen	admin	de	zum AdminstrationsmenÃ¼ zurÃ¼ckkehren
-return to view account	admin	de	ZurÃ¼ck zum Anzeigen des Benutzerkontos
-run asynchronous services	admin	de	Asynchrone Dienste ausfÃ¼hren
+return to admin mainscreen	admin	de	zum Adminstrationsmenü zurückkehren
+return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
+run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
-save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurÃ¼ckkehren
+save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
 section	admin	de	Abschnitt
 security	admin	de	Sicherheit
-select group managers	admin	de	Gruppenmanager auswÃ¤hlen
-select permissions this group will have	admin	de	WÃ¤hlen Sie die Zugriffsrechte fÃ¼r diese Gruppe.
-select the parent category. if this is a main category select no category	admin	de	Eine Ã¼bergeordnete Kategorie auswÃ¤hlen. Wenn das eine Hauptkategorie ist, KEINE KATEGORIE auswÃ¤hlen.
-select users for inclusion	admin	de	Benutzer fÃ¼r diese Gruppe auswÃ¤hlen
+select group managers	admin	de	Gruppenmanager auswählen
+select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
+select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn das eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
+select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select where you want to store/retrieve filesystem information	admin	de	Wo wollen Sie Datei Informationen ablegen / lesen
 select where you want to store/retrieve user accounts	admin	de	Wo wollen Sie die Benutzerkonten speichern
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
@@ -285,7 +285,7 @@ server password	admin	de	Server Passwort
 server type(mode)	admin	de	Server Typ (Modus)
 server url	admin	de	Server URL
 server username	admin	de	Server Benutzername
-set preference values.	admin	de	Einstellungswert wurde geÃ¤ndert
+set preference values.	admin	de	Einstellungswert wurde geändert
 show 'powered by' logo on	admin	de	Zeige 'powered by' Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
 show current action	admin	de	aktuelle Aktion anzeigen
@@ -298,13 +298,13 @@ soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
 sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
 sorry, the follow users are still a member of the group %1	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
-sort the entries	admin	de	EintrÃ¤ge sortieren
-ssl	admin	de	verschlÃ¼sselt (SSL)
+sort the entries	admin	de	Einträge sortieren
+ssl	admin	de	verschlüsselt (SSL)
 standard	admin	de	standard
 start testjob!	admin	de	TestJob starten!
-submit changes	admin	de	Ã„nderungen speichern
+submit changes	admin	de	Änderungen speichern
 submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
-template selection	admin	de	Auswahl der BenutzeroberflÃ¤che
+template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
 that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
 that application order must be a number.	admin	de	Die Anwendungsreihenfolge muss eine Zahl sein.
@@ -312,26 +312,26 @@ that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
 that name has been used already	admin	de	Dieser Name wird bereits verwendet
 that server name has been used already !	admin	de	Dieser Server Name wird bereits verwendet !
 the api is current	admin	de	Die API ist aktuell
-the api requires an upgrade	admin	de	Die API benÃ¶tigt ein Upgrade
-the login and password can not be the same	admin	de	Benutzername und Passwort dÃ¼rfen nicht identisch sein
-the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich lÃ¤nger als 8 Zeichen sein
+the api requires an upgrade	admin	de	Die API benötigt ein Upgrade
+the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
+the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich länger als 8 Zeichen sein
 the testjob sends you a mail everytime it is called.	admin	de	Der TestJob sendet Ihnen jedesmal eine Mail wenn er aufgerufen wird.
-the two passwords are not the same	admin	de	Die beiden PasswÃ¶rter stimmen nicht Ã¼berein
+the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Der unten angezeigten Benutzer sind Mitglied der Gruppe %1
-they must be removed before you can continue	admin	de	Sie mÃ¼ssen zuvor aus dieser entfernt werden
+they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 this application is current	admin	de	Diese Anwendung ist aktuell
-this application requires an upgrade	admin	de	Diese Anwednung benÃ¶tigt ein Upgrade
+this application requires an upgrade	admin	de	Diese Anwednung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelÃ¶scht werden in Sekunden (Vorgabe 86400 = 1 Tag)
+timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
 times	admin	de	Zeiten
 top	admin	de	oben
-total records	admin	de	Anzahl DatensÃ¤tze insgesamt
+total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens
-trust relationship	admin	de	VertrauensverhÃ¤ltnis
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows steht im Moment nur die AusweichmÃ¶glichkeit zur VerfÃ¼gung. Bei der AusweichmÃ¶glichkeit werden die Jobs nur nach jedem Seitenaufbau Ã¼berprÃ¼ft !!!
+trust relationship	admin	de	Vertrauensverhältnis
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows steht im Moment nur die Ausweichmöglichkeit zur Verfügung. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft !!!
 use cookies to pass sessionid	admin	de	SitzungsId in einem Cookie speichern
-use pure html compliant code (not fully working yet)	admin	de	VollstÃ¤ndig HTML kompatiblen Code verwenden (nicht vollstÃ¤ndig implementiert)
+use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use theme	admin	de	Benutztes Farbschema
 user accounts	admin	de	Benutzerkonten
 user data	admin	de	Benutzerdaten
@@ -345,22 +345,22 @@ view error log	admin	de	Fehler-Protokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
-who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle DatensÃ¤tze, die dem zu lÃ¶schenden Benutzer gehÃ¶ren, Ã¼bertragen werden?
+who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare prÃ¼fen ob eine neue Version vorhanden ist,<br> wenn sich der Administrator einlogt ?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich der Administrator einlogt ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC
-you have entered an invalid expiration date	admin	de	Sie haben ein ungÃ¼ltiges Ablaufdatum angegeben
-you must add at least 1 permission or group to this account	admin	de	Sie mÃ¼ssen mindestens ein Zugriffsrecht oder eine Gruppe fÃ¼r diesen Benutzer angeben
-you must add at least 1 permission to this account	admin	de	Sie mÃ¼ssen diesem Konto mindestens eine Berechtigung zuteilen
-you must enter a group name.	admin	de	Sie mÃ¼ssen einen Gruppennamen angeben.
-you must enter a lastname	admin	de	Sie mÃ¼ssen einen Nachname angeben
-you must enter a loginid	admin	de	Sie mÃ¼ssen einen Benutzername angeben
-you must enter an application name and title.	admin	de	Sie mÃ¼ssen der Anwendung einen Namen und einen Titel geben.
-you must enter an application name.	admin	de	Sie mÃ¼ssen der Anwendung einen Namen geben.
-you must enter an application title.	admin	de	Sie mÃ¼ssen der Anwendung einen Titel geben.
-you must select a file type	admin	de	Sie mÃ¼ssen einen Dateityp auswÃ¤hlen
-you will need to remove the subcategories before you can delete this category	admin	de	Sie mÃ¼ssen erst die Unterkategorien lÃ¶schen bevor Sie diese Kategorie lÃ¶schen kÃ¶nnen !
-primary Group	admin	de	primÃ¤re Gruppe
+you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
+you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
+you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
+you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
+you must enter a lastname	admin	de	Sie müssen einen Nachname angeben
+you must enter a loginid	admin	de	Sie müssen einen Benutzername angeben
+you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
+you must enter an application name.	admin	de	Sie müssen der Anwendung einen Namen geben.
+you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
+you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
+you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können !
+primary Group	admin	de	primäre Gruppe
