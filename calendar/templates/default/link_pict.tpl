@@ -3,7 +3,7 @@
 {picture}
 <!-- END link_pict -->
 <!-- BEGIN link_open -->
-<a href="{link_link}" onMouseOver="window.status='{lang_view}'; return true;" onMouseOut="window.status=''; return true;" title="{desc} - {location}">
+<a href="{link_link}" onMouseOver="window.status='{lang_view}'; return true;" onMouseOut="window.status=''; return true;" title="{desc} - {location}"><br>
 <!-- END link_open -->
 <!-- BEGIN pict -->
  <img src="{pic_image}" width="{width}" height="{height}" title="{title}" border="0" />
