@@ -124,6 +124,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
 no	etemplate	en	No
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 note	etemplate	en	Note

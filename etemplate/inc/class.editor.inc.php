@@ -28,7 +28,8 @@
 			'imported'   => "eTemplate '%s' imported, use Save to put it in the database",
 			'no_filename'=> 'no filename given or selected via Browse...',
 			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
-			'exported'   => "eTemplate '%s' written to '%s'"
+			'exported'   => "eTemplate '%s' written to '%s'",
+			'newer_version' => "newer version '%s' exists !!!"
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -100,7 +101,7 @@
 			{
 				each($this->etemplate->data);
 			}
-			$no_button = array('values' => True,'edit' => True);
+			$no_button = array();
 			while (list($row,$cols) = each($this->etemplate->data))
 			{
 				if ($this->etemplate->rows <= 1)
@@ -305,6 +306,14 @@
 			// Execute the action resulting from the submit-button
 			if ($content['read'])
 			{
+				if ($content['version'] != '')
+				{
+					$save_version = $content['version'];
+					unset($content['version']);
+					$this->etemplate->read($content);
+					$newest_version = $this->etemplate->version;
+					$content['version'] = $save_version;
+				}
 				if (!$this->etemplate->read($content))
 				{
 					$content['version'] = '';	// trying it without version
@@ -324,6 +333,10 @@
 							$msg = $this->messages['not_found'];
 						}
 					}
+				}
+				elseif ($newest_version != '' && $this->etemplate->version != $newest_version)
+				{
+					$msg = sprintf($this->messages['newer_version'],$newest_version);
 				}
 			}
 			elseif ($content['delete'])
@@ -565,6 +578,15 @@
 			    isset($post_vars['name']) && !$this->etemplate->read($post_vars))
 			{
 				$msg = $this->messages['not_found'];
+
+				if (isset($post_vars['name']))
+				{
+					$post_vars['version'] = '';	// trying it without version
+					if ($this->etemplate->read($post_vars))
+					{
+						$msg = $this->messages['other_version'];
+					}
+				}
 			}
 			if (!$msg && isset($post_vars['delete']))
 			{
@@ -579,14 +601,6 @@
 			$content = $this->etemplate->as_array() + array('msg' => $msg);
 
 			$show = new etemplate('etemplate.editor.show');
-			$no_buttons = array(
-				'save' => True,
-				'show' => True,
-				'dump' => True,
-				'langfile' => True,
-				'size' => True,
-				'export_xml' => True
-			);
 			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{
 				$cont = $post_vars['cont'];
@@ -610,7 +624,7 @@
 					$content['cont'][$olds["@$r"]] = $vals["A$r"];
 				}
 			}
-			$show->exec('etemplate.editor.show',$content,array(),$no_buttons,array('olds' => $vals),'');
+			$show->exec('etemplate.editor.show',$content,array(),'',array('olds' => $vals),'');
 		}
 
 		/*!
