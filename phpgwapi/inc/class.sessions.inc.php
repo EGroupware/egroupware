@@ -349,7 +349,7 @@
 				. 'and loginid = "'.$this->account_id.'" and app = "'.$appname.'" '
 				. 'and location = "'.$location.'"',__LINE__,__FILE__);
 			}
-<<<<<<< class.sessions.inc.php
+
 			return $data;
 		}
 	}
@@ -362,59 +362,14 @@
 		$sessionData = unserialize($serializedData);
 		
 		if (is_array($sessionData))
-=======
-
-			/* This allows the user to put "" as the value. */
-      if ($data == '##NOTHING##') {
-      		$phpgw->db->query('select content from phpgw_app_sessions where'
-													 ." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-								 					." and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
-
-	        $phpgw->db->next_record();
-	        $data = $phpgw->db->f('content');
-	        $data = $phpgw->common->decrypt($data);
-	        return $data;
-      } else {
-	      $phpgw->db->query('select content from phpgw_app_sessions where '
-												. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."' "
-												. "and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
-	      if ($phpgw->db->num_rows()==0) {
-    				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
-		      	$phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
-														. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
-														. "','".$location."','".$data."')",__LINE__,__FILE__);
-	      } else {
-	      		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
-		      	$phpgw->db->query("update phpgw_app_sessions set content = '".$data."' "
-														. "where sessionid = '".$this->sessionid."' "
-														. "and loginid = '".$this->account_id."' and app = '".$appname."' "
-														. "and location = '".$location."'",__LINE__,__FILE__);
-	      }
-        return $data;
-      }
-    }
-
-		function restore()
->>>>>>> 1.33
 		{
 			reset($sessionData);
 			while(list($key,$value) = each($sessionData))
 			{
-<<<<<<< class.sessions.inc.php
 				global $$key;
 				$$key = $value;
 				$this->variableNames[$key]="registered";
 				#print "restored: ".$key.", $value<br>";
-=======
-				reset($sessionData);
-				while(list($key,$value) = each($sessionData))
-				{
-					global $$key;
-					$$key = $value;
-					$this->variableNames[$key]='registered';
-					#print 'restored: '.$key.', '.$value.'<br>';
-				}
->>>>>>> 1.33
 			}
 		}
 	}
