@@ -17,6 +17,8 @@
 	- Fixed pgsql upgrade from beta path.
 	- Fixed chronological ordering of calendar events.
 	- Changed javascript validation to server side upon submitting calendar events.
+	- Merged patch for parsing of non-compliant rfc822 email addresses.
+	  Thanks bwulf
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
