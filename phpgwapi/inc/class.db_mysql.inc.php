@@ -579,6 +579,10 @@
 
 		function table_names()
 		{
+			if (!$this->Link_ID)
+			{
+				return array();
+			}
 			$return = Array();
 			$this->query('SHOW TABLES',__LINE__,__FILE__);
 			$i=0;
