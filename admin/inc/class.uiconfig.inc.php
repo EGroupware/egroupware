@@ -22,24 +22,24 @@
 			{
 				case 'admin':
 				case 'preferences':
-				$appname = 'preferences';
-				$config_appname = 'phpgwapi';
-				break;
+					$appname = 'preferences';
+					$config_appname = 'phpgwapi';
+					break;
 				case 'addressbook':
 				case 'calendar':
 				case 'email':
 				case 'nntp':
-				/*
-				Other special apps can go here for now, e.g.:
-				case 'bogusappname':
-				*/
-				$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
-				$config_appname = 'phpgwapi';
-				break;
+					/*
+					Other special apps can go here for now, e.g.:
+					case 'bogusappname':
+					*/
+					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+					$config_appname = 'phpgwapi';
+					break;
 				default:
-				$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
-				$config_appname = $appname;
-				break;
+					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+					$config_appname = $appname;
+					break;
 			}
 
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($appname));
