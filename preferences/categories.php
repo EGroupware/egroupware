@@ -31,6 +31,7 @@
 			. "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
 			. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
+    $t->set_var('font',$phpgw_info["theme"]["font"]);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Categories for'));
     $t->set_var('lang_action',lang('Category list'));
@@ -71,6 +72,7 @@
     $t->set_var('th_bg',$phpgw_info["theme"][th_bg]);
     $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/preferences/categories.php',lang('Name'),"&cats_app=$cats_app"));
     $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/preferences/categories.php',lang('Description'),"&cats_app=$cats_app"));
+    $t->set_var('sort_data',$phpgw->nextmatchs->show_sort_order($sort,'cat_data',$order,'/preferences/categories.php',lang('Data'),"&cats_app=$cats_app"));
     $t->set_var('lang_app',lang($cats_app));
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
@@ -90,15 +92,20 @@
     $descr = $phpgw->strip_html($categories[$i]['description']);
     if (! $descr) { $descr  = '&nbsp;'; }
 
+    $data = $categories[$i]['data'];
+    if (! $data) { $data  = '&nbsp;'; }
+
     if ($categories[$i]['parent'] == 0) {
     $name = '<font color=FF0000><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
     $descr = '<font color=FF0000><b>' . $descr . '</b></font>';
+    $data = '<font color=FF0000><b>' . $data . '</b></font>';
     }
 
-//-------------------------- template declaration for list records ---------------------------                                                                                                               
-                                                                                                                                                            
+//-------------------------- template declaration for list records ---------------------------
+
     $t->set_var(array('name' => $name,
-                      'descr' => $descr));
+                     'descr' => $descr,
+		      'data' => $data));
 
 
     $t->set_var('app_url',$phpgw->link('/' . $phpgw_info['flags']['currentapp'] . '/index.php',"cat_id=$cat_id"));

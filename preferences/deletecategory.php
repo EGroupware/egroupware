@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Addressbook                                               *
+  * phpGroupWare - Categories                                                *
   * (http://www.phpgroupware.org)                                            *
   * Written by Bettina Gille [ceb@phpgroupware.org]                          *    
   * -----------------------------------------------                          *
@@ -20,17 +20,17 @@
     $phpgw_info['flags']['noappheader'] = True;
     $phpgw_info['flags']['noappfooter'] = True;
 
-    include("../header.inc.php");
+    include('../header.inc.php');
 
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
 
     if (! $cat_id) {
-    Header('Location: ' . $phpgw->link('/preferences/categories.php'));
+    Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app"));
     }
 
     if ($confirm) {
-    $c->delete($cat_id);    
+    $c->delete($cat_id);
     Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app"));
     }
     else {
@@ -40,7 +40,7 @@
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
     $t->set_file(array('category_delete' => 'delete.tpl'));
     $t->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
-
+    $t->set_var('font',$phpgw_info["theme"]["font"]);
     $nolinkf = $phpgw->link('/preferences/categories.php',"cat_id=$cat_id&cats_app=$cats_app");
     $nolink = "<a href=\"$nolinkf\">" . lang('No') ."</a>";
     $t->set_var("nolink",$nolink);

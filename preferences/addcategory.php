@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Addressbook                                               *
+  * phpGroupWare - Categories                                                *
   * http://www.phpgroupware.org                                              *
   * Written by Bettina Gille [ceb@phpgroupware.org]                          *
   * -----------------------------------------------                          *
@@ -56,22 +56,25 @@
     if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category $cat_name has been added !")); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
+
+    $t->set_var('font',$phpgw_info["theme"]["font"]);
     $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
     $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('font',$font);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
     $t->set_var('title_categories',lang('Add category for'));
     $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
-    $t->set_var('lang_choose',lang('Choose the category'));
+    $t->set_var('lang_parent',lang('Parent category'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('lang_access',lang('Private'));
+    $t->set_var('lang_data',lang('Data'));
     if ($access) { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
     else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
-    $t->set_var('lang_name',lang('Category name'));
-    $t->set_var('lang_descr',lang('Category description'));
+    $t->set_var('lang_name',lang('Name'));
+    $t->set_var('lang_descr',lang('Description'));
     $t->set_var('cat_name',$cat_name);
     $t->set_var('cat_description',$cat_description);
+    $t->set_var('cat_data',$cat_data);
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_reset',lang('Clear Form'));
     $t->set_var('lang_done',lang('Done'));

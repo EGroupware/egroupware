@@ -27,8 +27,8 @@
 
     if (! $cat_id) {
      Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"                                                                                                             
-					. "&filter=$filter"));
-          }
+					. "&filter=$filter&cats_app=$cats_app"));
+    }
 
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
     $t->set_file(array('form' => 'category_form.tpl'));
@@ -67,7 +67,7 @@
 
     $cat_parent = $cats[0]['parent'];
     $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
-    $t->set_var('font',$font);
+    $t->set_var('font',$phpgw_info["theme"]["font"]);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Edit category for'));
     $t->set_var('lang_action',lang('Edit category'));
@@ -75,8 +75,10 @@
     $t->set_var('actionurl',$phpgw->link('/preferences/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/preferences/deletecategory.php'));
     $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('lang_name',lang('Category name'));
-    $t->set_var('lang_descr',lang('Category description'));
+    $t->set_var('lang_parent',lang('Parent category'));
+    $t->set_var('lang_name',lang('Name'));
+    $t->set_var('lang_descr',lang('Description'));
+    $t->set_var('lang_data',lang('Data'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('lang_access',lang('Private'));
     if ($cats[0]['access']=='private') { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
@@ -86,6 +88,7 @@
 
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
+    $t->set_var('cat_data',$cats[0]['data']);
 
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
