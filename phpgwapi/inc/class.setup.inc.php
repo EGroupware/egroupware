@@ -559,27 +559,11 @@
 				return False;
 			}
 
-			$this->db->query("SELECT COUNT(hook_appname) FROM phpgw_hooks WHERE hook_appname='".$appname."'");
-			$this->db->next_record();
-			if($this->db->f(0))
+			if (!is_object($this->hooks))
 			{
-				$this->deregister_hooks($appname);
+				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
 			}
-
-			//echo "ADDING hooks for: " . $setup_info[$appname]['name'];
-			if(is_array($setup_info[$appname]['hooks']))
-			{
-				while(list($key,$hook) = each($setup_info[$appname]['hooks']))
-				{
-					$this->db->query("INSERT INTO phpgw_hooks "
-						. "(hook_appname,hook_location,hook_filename) "
-						. "VALUES ("
-						. "'" . $setup_info[$appname]['name']       . "',"
-						. "'" . $hook . "',"
-						. "'" . "hook_" . $hook . ".inc.php" . "');"
-					);
-				}
-			}
+			$this->hooks->register_hooks($appname,$setup_info[$appname]['hooks']);
 		}
 
 		/*!
@@ -589,34 +573,7 @@
 		*/
 		function update_hooks($appname)
 		{
-			$setup_info = $GLOBALS['setup_info'];
-
-			if(!$appname)
-			{
-				return False;
-			}
-
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5'))
-			{
-				/* No phpgw_hooks table yet. */
-				return False;
-			}
-
-			$this->db->query("SELECT COUNT(*) FROM phpgw_hooks WHERE hook_appname='".$appname."'");
-			$this->db->next_record();
-			if(!$this->db->f(0))
-			{
-				return False;
-			}
-
-			if($setup_info[$appname]['version'])
-			{
-				if(is_array($setup_info[$appname]['hooks']))
-				{
-					$this->deregister_hooks($appname);
-					$this->register_hooks($appname);
-				}
-			}
+			$this->register_hooks($appname);
 		}
 
 		/*!
@@ -636,9 +593,13 @@
 			{
 				return False;
 			}
-
+			
 			//echo "DELETING hooks for: " . $setup_info[$appname]['name'];
-			$this->db->query("DELETE FROM phpgw_hooks WHERE hook_appname='". $appname ."'");
+			if (!is_object($this->hooks))
+			{
+				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
+			}
+			$this->hooks->register_hooks($appname);
 		}
 
 		/*!
@@ -649,22 +610,11 @@
 		 */
 		function hook($location, $appname='')
 		{
-			if(!$appname)
+			if (!is_object($this->hooks))
 			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
 			}
-			$SEP = filesystem_separator();
-
-			$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
-			if(file_exists($f))
-			{
-				include($f);
-				return True;
-			}
-			else
-			{
-				return False;
-			}
+			return $this->hooks->single($locaton,$appname);
 		}
 
 		/*

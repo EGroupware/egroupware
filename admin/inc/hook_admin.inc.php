@@ -62,7 +62,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('appreg_access',1,'admin'))
 	{
-		$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boapplications.register_all_hooks');
+		$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))

@@ -17,7 +17,8 @@
 			'get_list' => True,
 			'add'      => True,
 			'edit'     => True,
-			'delete'   => True
+			'delete'   => True,
+			'register_all_hooks' => True
 		);
 
 		var $bo;
@@ -337,6 +338,17 @@
 			$GLOBALS['phpgw']->template->set_var('no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list') . '">' . lang('No') . '</a>');
 			$GLOBALS['phpgw']->template->set_var('yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.delete&app_name=' . urlencode($app_name) . "&confirm=True") . '">' . lang('Yes') . '</a>');
 			$GLOBALS['phpgw']->template->pparse('out','body');
+		}
+		
+		function register_all_hooks()
+		{
+			if (!is_object($GLOBALS['phpgw']->hooks))
+			{
+				$GLOBALS['phpgw']->hooks = CreateObject('phpgwapi.hooks');
+			}
+			$GLOBALS['phpgw']->hooks->register_all_hooks();
+			
+			$GLOBALS['phpgw']->redirect_link('/admin/index.php');
 		}
 	}
 ?>
