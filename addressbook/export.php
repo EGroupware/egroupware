@@ -54,7 +54,7 @@
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
-		$t->set_var("export_text",lang("Export from Addressbook to CSV or LDIF"));
+		$t->set_var("export_text",lang("Export from Addressbook"));
 		$t->set_var("action_url",$phpgw->link("/addressbook/export.php"));
 		$t->set_var("filename",lang("Export file name"));
 		$t->set_var("conv",$conv);
