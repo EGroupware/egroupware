@@ -35,6 +35,7 @@ bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
+based on	common	en	Based on
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
 belize	common	en	BELIZE
@@ -411,7 +412,7 @@ wallis and futuna	common	en	WALLIS AND FUTUNA
 wednesday	common	en	Wednesday
 western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
-written by:	common	en	Written by:
+written by	common	en	Written by
 yemen	common	en	YEMEN
 yes	common	en	Yes
 you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.

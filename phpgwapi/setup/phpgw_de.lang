@@ -33,6 +33,7 @@ bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
+based on	common	de	Basierend auf
 belarus	common	de	BELORUSSLAND (WEI&Szlig;RUSSLAND)
 belgium	common	de	BELGIEN
 belize	common	de	BELIZE
@@ -205,7 +206,7 @@ users	common	de	Benutzer
 view	common	de	Anzeigen
 wednesday	common	de	Mittwoch
 which groups	common	de	Welche Gruppen
-written by:	common	de	Geschrieben von:
+written by	common	de	Geschrieben von
 yes	common	de	ja
 you are running a newer version of phpGroupWare than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.  
 you have selected an invalid date	common	de	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
