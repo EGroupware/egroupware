@@ -248,7 +248,7 @@
 			return $headers;
 		}
 
-		function get_referer($vars)
+		function get_referer($vars='')
 		{
 			if(!$vars)
 			{
