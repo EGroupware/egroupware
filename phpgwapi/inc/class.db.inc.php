@@ -1189,7 +1189,7 @@
 						break;
 					case 'mysql':
 						// use replace if primary keys are included
-						if (count(array_intersect(array_keys($where),$table_def['pk'])) == count($table_def['pk']))
+						if (count(array_intersect(array_keys($where),(array)$table_def['pk'])) == count($table_def['pk']))
 						{
 							$cmd = 'REPLACE';
 							break;
