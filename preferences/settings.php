@@ -27,23 +27,25 @@
        <tr>
         <td><?php echo lang("max matchs per page"); ?>: </td>
         <td>
-         <input name="maxmatchs" value="<?php
+         <input name="settings[maxmatchs]" value="<?php
            echo $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]; ?>" size="2">
         </td>
        </tr>
        <tr>
-        <td><?php echo lang("Show text on navigation icons"); ?>: </td>
+        <td><?php echo lang("Show navigation bar as"); ?>: </td>
         <td>
-         <input type="checkbox" name="navbar_text"<?php
-           if ($phpgw_info["user"]["preferences"]["common"]["navbar_text"])
-              echo " checked";
-           ; ?>>
+         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["navbar_format"]] = " selected"; ?>
+         <select name="settings[navbar_format]">
+          <option value="icons"<?php echo $selected["icons"] . ">" . lang("icons only"); ?></option>
+          <option value="icons_and_text"<?php echo $selected["icons_and_text"] . ">" . lang("icons and text"); ?></option>
+          <option value="text"<?php echo $selected["text"] . ">" . lang("text only"); ?></option>
+         </select>
         </td>
        </tr>
        <tr>
         <td><?php echo lang("time zone offset"); ?>: </td>
         <td>
-         <select name="tz_offset"><?php
+         <select name="settings[tz_offset]"><?php
            for ($i = -23; $i<24; $i++) {
                echo "<option value=\"$i\"";
                if ($i == $phpgw_info["user"]["preferences"]["common"]["tz_offset"])
@@ -62,7 +64,7 @@
         <td><?php echo lang("date format"); ?>:</td>
         <td>
          <?php $df[$phpgw_info["user"]["preferences"]["common"]["dateformat"]] = " selected"; ?>
-         <select name="dateformat">
+         <select name="settings[dateformat]">
           <option value="m/d/Y"<?php echo $df["m/d/Y"]; ?>>m/d/y</option>
           <option value="m-d-Y"<?php echo $df["m-d-Y"]; ?>>m-d-y</option>
           <option value="m.d.Y"<?php echo $df["m.d.Y"]; ?>>m.d.y</option>
@@ -85,7 +87,7 @@
         <td><?php echo lang("time format"); ?>:</td>
         <td><?php
             $timeformat_select[$phpgw_info["user"]["preferences"]["common"]["timeformat"]] = " selected";
-            echo "<select name=\"timeformat\">"
+            echo "<select name=\"settings[timeformat]\">"
                . "<option value=\"12\"$timeformat_select[12]>12 Hour</option>"
                . "<option value=\"24\"$timeformat_select[24]>24 Hour</option>"
 	       . "</select>\n";
@@ -95,7 +97,7 @@
        <tr>
          <td><?php echo lang("language"); ?></td>
          <td>
-          <select name="lang">
+          <select name="settings[lang]">
           <?php
             $phpgw->db->query("select preference_value from preferences where preference_owner='"
                             . $phpgw_info["user"]["account_id"] . "' and preference_name='lang' and "
@@ -124,6 +126,7 @@
          </td>
        </tr>
        <?php
+         // This one is specialized, so we do it manually
          if ($phpgw_info["user"]["apps"]["admin"]) {
             echo '<tr><td>' . lang("show current users on navigation bar") . '</td><td>'
                . '<input type="checkbox" name="show_currentusers" value="True"';
@@ -136,7 +139,7 @@
        <tr>
         <td><?php echo lang("Default application"); ?></td>
         <td>
-         <select name="default_app">
+         <select name="settings[default_app]">
           <option value="">&nbsp;</option>
            <?php
  			$db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["userid"]);
@@ -162,7 +165,7 @@
               $phpgw_info["user"]["preferences"]["common"]["currency"] = '$';
            }
          ?>
-         <input name="currency" value="<?php echo $phpgw_info["user"]["preferences"]["common"]["currency"]; ?>">
+         <input name="settings[currency]" value="<?php echo $phpgw_info["user"]["preferences"]["common"]["currency"]; ?>">
         </td>
        </tr>
 
@@ -180,18 +183,11 @@
 
      $phpgw->db->lock("preferences");
 
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"maxmatchs","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"tz_offset","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"dateformat","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"timeformat","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"lang","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"default_app","common");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"currency","common");
-
-     if ($navbar_text) {
-        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"navbar_text","common");
+     while ($setting = each($settings)) {
+        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],$setting[0],"common",$setting[1]);
      }
 
+     // This one is specialized, so we do it manually
      if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
            $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"show_currentusers","common");
