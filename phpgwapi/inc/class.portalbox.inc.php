@@ -47,7 +47,7 @@
 
 		/* This is the constructor for the object. */
 
-		function portalbox()
+		function portalbox($reset = False)
 		{
 			$this->title = '';
 			$this->app_name = '';
@@ -62,9 +62,12 @@
 			$this->extrabox = '';
 			$this->xextrabox = '';
 			$this->listbox = '';
-
-			$this->output;
 			$this->data = array();
+
+			if (!$reset)
+			{
+				$this->output;
+			}
 		}
 
 		/*

@@ -45,10 +45,12 @@
 		*/
 		function listbox()
 		{
+			$this->portalbox();
 		}
 
 		function set_params($param)
 		{
+			$this->portalbox(True);
 			@reset($param);
 			while(list($key,$value) = each($param))
 			{
@@ -87,8 +89,7 @@
 		function draw($extra_data='')
 		{
 			$this->start_template();
-
-			if(count($this->data))
+			if(is_array($this->data) && !empty($this->data))
 			{
 				for ($x = 0; $x < count($this->data); $x++)
 				{
@@ -115,8 +116,7 @@
 			{
 				$this->start_template();
 			}
-
-			if(count($this->data))
+			if(is_array($this->data) && !empty($this->data))
 			{
 				for ($x = 0; $x < count($this->data); $x++)
 				{
