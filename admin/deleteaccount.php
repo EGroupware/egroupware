@@ -24,6 +24,8 @@
 
   // I didn't active this code until all tables are up to date using the owner field
   // The calendar isn't update to date.  (jengo)
+  // NOTE: This is so I don't forget, add a double explode() to the app_tables field
+  //       to say what the name of the owner field is.
   function delete_users_records($account_id, $permissions)
   {
      global $phpgw;
