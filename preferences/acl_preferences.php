@@ -272,11 +272,14 @@
 		}
 	}
 
-	$extra_parms = '&s_users='.$s_users.'&s_groups='.$s_groups.'&maxm='.$maxm.'&totalentries='.$totalentries.'&total='.($start + $total).'&owner='.$owner;
+	$extra_parms = '&acl_app=' . $acl_app
+		. '&s_users='.$s_users.'&s_groups='.$s_groups
+		. '&maxm=' . $maxm . '&totalentries=' . $totalentries
+		. '&total=' . ($start + $total) . '&owner='.$owner;
 
 	$var = Array(
-		'nml'		=> $phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms),
-		'nmr'		=> $phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms),
+		'nml'		=> $phpgw->nextmatchs->left('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
+		'nmr'		=> $phpgw->nextmatchs->right('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
 		'search_value'	=> (isset($query) && $query?$query:''),
 		'search'	=> lang('search'),
 		'processed'	=> urlencode(serialize($processed))
