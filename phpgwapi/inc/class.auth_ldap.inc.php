@@ -123,7 +123,7 @@
 			}
 			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 	
-			return $encrypted_passwd;
+			return $entry['userpassword'];
 		}
 
 		/* This data needs to be updated in LDAP, not SQL (jengo) */
