@@ -1,12 +1,25 @@
+%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
+(shift-)click or drag to change value	jscalendar	zt	
+- click on any of the time parts to increase it	jscalendar	zt	
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zt	
+- or click and drag for faster selection.	jscalendar	zt	
+- or shift-click to decrease it	jscalendar	zt	
+- use the %1, %2 buttons to select month	jscalendar	zt	
+- use the %1, %2 buttons to select year	jscalendar	zt	
 00 (disable)	admin	zt	00 (關閉)
 13 (ntp)	admin	zt	13 (ntp)
 80 (http)	admin	zt	80 (http)
+about	common	zt	關於
 about %1	common	zt	關於 %1
+about the calendar	jscalendar	zt	關於這個行事曆
+about this editor	htmlarea	zt	關於編輯器
 access	common	zt	存取權限
 access not permitted	common	zt	存取遭拒
 account has been created	common	zt	帳號已經建立
 account has been deleted	common	zt	帳號已經刪除
 account has been updated	common	zt	帳號已經更新
+account is expired	common	zt	帳號已經到期
 acl	common	zt	控管權限
 action	common	zt	動作
 active	common	zt	啟用
@@ -21,6 +34,7 @@ afghanistan	common	zt	AFGHANISTAN
 albania	common	zt	ALBANIA
 algeria	common	zt	ALGERIA
 all	common	zt	所有
+alphabet	common	zt	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	zt	AMERICAN SAMOA
 andorra	common	zt	ANDORRA
 angola	common	zt	ANGOLA
@@ -29,6 +43,7 @@ antarctica	common	zt	ANTARCTICA
 antigua and barbuda	common	zt	ANTIGUA AND BARBUDA
 apply	common	zt	同意
 april	common	zt	四月
+are you sure you want to delete these entries ?	common	zt	您確定要刪除這些資料？
 are you sure you want to delete this entry ?	common	zt	您確定要刪除此筆資料？
 argentina	common	zt	ARGENTINA
 armenia	common	zt	ARMENIA
@@ -37,14 +52,19 @@ august	common	zt	八月
 australia	common	zt	AUSTRALIA
 austria	common	zt	AUSTRIA
 author	common	zt	作者
+autohide sidebox menus	common	zt	自動隱藏其他選單
+automatically hide the sidebox menus?	common	zt	自動隱藏其他選單？
 autosave default category	common	zt	自動儲存預設分類目錄
 azerbaijan	common	zt	AZERBAIJAN
 back	common	zt	上一頁
+back to user login	common	zt	回到首頁
+background color	htmlarea	zt	背景顏色
 bad login or password	common	zt	錯誤的使用者代碼或密碼
 bahamas	common	zt	BAHAMAS
 bahrain	common	zt	BAHRAIN
 bangladesh	common	zt	BANGLADESH
 barbados	common	zt	BARBADOS
+bcc	common	zt	密件副本
 belarus	common	zt	BELARUS
 belgium	common	zt	BELGIUM
 belize	common	zt	BELIZE
@@ -52,6 +72,7 @@ benin	common	zt	BENIN
 bermuda	common	zt	BERMUDA
 bhutan	common	zt	BHUTAN
 blocked, too many attempts	common	zt	被鎖定了，嘗試太多次
+bold	htmlarea	zt	粗體
 bolivia	common	zt	BOLIVIA
 bosnia and herzegovina	common	zt	BOSNIA AND HERZEGOVINA
 botswana	common	zt	BOTSWANA
@@ -60,6 +81,7 @@ brazil	common	zt	BRAZIL
 british indian ocean territory	common	zt	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	zt	BRUNEI DARUSSALAM
 bulgaria	common	zt	BULGARIA
+bulleted list	htmlarea	zt	
 burkina faso	common	zt	BURKINA FASO
 burundi	common	zt	BURUNDI
 calendar	common	zt	行事曆
@@ -74,10 +96,12 @@ category	common	zt	類別
 category %1 has been added !	common	zt	已新增分類 %1 ！
 category %1 has been updated !	common	zt	已更新分類 %1 ！
 cayman islands	common	zt	CAYMAN ISLANDS
+cc	common	zt	副本
 central african republic	common	zt	CENTRAL AFRICAN REPUBLIC
 chad	common	zt	CHAD
 change	common	zt	更換
 charset	common	zt	big5
+check installation	common	zt	檢查系統安裝狀態
 chile	common	zt	CHILE
 china	common	zt	CHINA
 choose the category	common	zt	選擇分類
@@ -85,14 +109,19 @@ choose the parent category	common	zt	選擇上一層分類
 christmas island	common	zt	CHRISTMAS ISLAND
 clear	common	zt	清除
 clear form	common	zt	清除表單
+click	common	zt	點選
+click or mouse over to show menus	common	zt	點選或是移動滑鼠來顯示選單
+click or mouse over to show menus?	common	zt	點選或是移動滑鼠來顯示選單？
 close	common	zt	關閉
 cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
 colombia	common	zt	COLOMBIA
 comoros	common	zt	COMOROS
+company	common	zt	公司
 congo	common	zt	CONGO
 congo, the democratic republic of the	common	zt	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	zt	COOK ISLANDS
 copy	common	zt	複製
+copy selection	htmlarea	zt	複製選取的
 costa rica	common	zt	COSTA RICA
 cote d ivoire	common	zt	COTE D IVOIRE
 create	common	zt	建立
@@ -101,22 +130,30 @@ croatia	common	zt	CROATIA
 cuba	common	zt	CUBA
 currency	common	zt	貨幣
 current	common	zt	現在
+current style	htmlarea	zt	目前樣式
 current users	common	zt	線上使用者
+cut selection	htmlarea	zt	剪下選取的
 cyprus	common	zt	CYPRUS
 czech republic	common	zt	CZECH REPUBLIC
 date	common	zt	日期
 date due	common	zt	到期日期
+date selection:	jscalendar	zt	選擇日期：
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zt	時間服務埠。<br>如果使用13埠，在送出之前記得檢查您的防火牆設定。<br>(Port: 13 / Host: 129.6.15.28)
 december	common	zt	十二月
+decrease indent	htmlarea	zt	減少邊緣
 default category	common	zt	預設分類
 delete	common	zt	移除
 denmark	common	zt	DENMARK
 description	common	zt	說明
 detail	common	zt	詳細
 details	common	zt	詳細
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	
+disable internet explorer png-image-bugfix	common	zt	停用 IE png-image-bugfix
+disable slider effects	common	zt	停用切換效果
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	
 disabled	common	zt	停用
-display monday first	common	zt	星期一在首
-display sunday first	common	zt	星期日在首
+display monday first	jscalendar	zt	星期一在首
+display sunday first	jscalendar	zt	星期日在首
 djibouti	common	zt	DJIBOUTI
 do you also want to delete all subcategories ?	common	zt	您確定要刪除所有的子分類？
 domain	common	zt	網址
@@ -125,7 +162,7 @@ domestic	common	zt	國內的
 dominica	common	zt	DOMINICA
 dominican republic	common	zt	DOMINICAN REPUBLIC
 done	common	zt	完成
-drag to move	common	zt	拖曳移動
+drag to move	jscalendar	zt	拖曳移動
 e-mail	common	zt	E-Mail
 east timor	common	zt	EAST TIMOR
 ecuador	common	zt	ECUADOR
@@ -133,6 +170,8 @@ edit	common	zt	編輯
 edit %1 category for	common	zt	編輯分類 %1 給
 edit categories	common	zt	編輯分類
 edit category	common	zt	編輯分類
+egroupware api version %1	common	zt	eGroupWare API 版本 %1
+egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare: 使用者鎖定 '%1', IP %2
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
 email	common	zt	E-Mail
@@ -140,6 +179,8 @@ email-address of the user, eg. "%1"	common	zt	使用者的電子郵件, 例： "%1"
 enabled	common	zt	啟用
 end date	common	zt	結束日期
 end time	common	zt	結束時間
+enlarge editor	htmlarea	zt	放大編輯器
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	
 entry has been deleted sucessfully	common	zt	資料已成功移除
 entry updated sucessfully	common	zt	資料已成功更新
 equatorial guinea	common	zt	EQUATORIAL GUINEA
@@ -164,6 +205,7 @@ first name of the user, eg. "%1"	common	zt	使用者的名, 例如： "%1"
 first page	common	zt	第一頁
 firstname	common	zt	名
 fixme!	common	zt	修正！
+font color	htmlarea	zt	字型顏色
 force selectbox	common	zt	強制使用選取方塊
 france	common	zt	FRANCE
 french guiana	common	zt	FRENCH GUIANA
@@ -181,7 +223,7 @@ ghana	common	zt	GHANA
 gibraltar	common	zt	GIBRALTAR
 global	common	zt	全區
 global public	common	zt	全區共用
-go today	common	zt	前往今天
+go today	jscalendar	zt	前往今天
 grant access	common	zt	存取權限開放
 greece	common	zt	GREECE
 greenland	common	zt	GREENLAND
@@ -205,16 +247,25 @@ guyana	common	zt	GUYANA
 haiti	common	zt	HAITI
 heard island and mcdonald islands	common	zt	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	zt	協助
+help using editor	htmlarea	zt	協助使用編輯器
 high	common	zt	高
 highest	common	zt	最高
 holy see (vatican city state)	common	zt	HOLY SEE (VATICAN CITY STATE)
 home	common	zt	首頁
+home email	common	zt	主要信箱
 honduras	common	zt	HONDURAS
-hong kong	common	zt	HONG KONG
+hong kong	common	zt	香港
+horizontal rule	htmlarea	zt	合併規則
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	
 hungary	common	zt	HUNGARY
 iceland	common	zt	ICELAND
+increase indent	htmlarea	zt	增加邊緣
 india	common	zt	INDIA
 indonesia	common	zt	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	zt	在 %3 插入 %1 的 %2 筆聯絡人位址
+insert image	htmlarea	zt	插入圖片
+insert table	htmlarea	zt	插入表格
+insert web link	htmlarea	zt	插入連結
 international	common	zt	國際
 invalid ip address	common	zt	錯誤的IP位址
 invalid password	common	zt	錯誤的密碼
@@ -224,13 +275,18 @@ ireland	common	zt	IRELAND
 israel	common	zt	ISRAEL
 it has been more then %1 days since you changed your password	common	zt	距離您上次更改密碼已經 %1 天了
 it is recommended that you run setup to upgrade your tables to the current version	common	zt	建議您執行設定程式將資料表升級至目前的版本。
-italy	common	zt	ITALY
+italic	common	zt	斜體
+italy	common	zt	義大利
 jamaica	common	zt	JAMAICA
 january	common	zt	一月
 japan	common	zt	JAPAN
 jordan	common	zt	JORDAN
 july	common	zt	七月
 june	common	zt	六月
+justify center	htmlarea	zt	置中
+justify full	htmlarea	zt	全螢幕
+justify left	htmlarea	zt	靠左
+justify right	htmlarea	zt	靠右
 kazakstan	common	zt	KAZAKSTAN
 kenya	common	zt	KENYA
 keywords	common	zt	關鍵字
@@ -250,7 +306,7 @@ lebanon	common	zt	LEBANON
 lesotho	common	zt	LESOTHO
 liberia	common	zt	LIBERIA
 libyan arab jamahiriya	common	zt	LIBYAN ARAB JAMAHIRIYA
-license	about	zt	版權
+license	common	zt	版權
 liechtenstein	common	zt	LIECHTENSTEIN
 list	common	zt	列表
 lithuania	common	zt	LITHUANIA
@@ -267,7 +323,7 @@ madagascar	common	zt	MADAGASCAR
 mail domain, eg. "%1"	common	zt	郵件網址, 例： "%1"
 main category	common	zt	主要分類
 main screen	common	zt	主畫面
-maintainer	about	zt	維護者
+maintainer	common	zt	維護者
 malawi	common	zt	MALAWI
 malaysia	common	zt	MALAYSIA
 maldives	common	zt	MALDIVES
@@ -279,6 +335,7 @@ marshall islands	common	zt	MARSHALL ISLANDS
 martinique	common	zt	MARTINIQUE
 mauritania	common	zt	MAURITANIA
 mauritius	common	zt	MAURITIUS
+max number of icons in navbar	common	zt	導覽列最多顯示圖示數量
 may	common	zt	五月
 mayotte	common	zt	MAYOTTE
 medium	common	zt	中等
@@ -308,9 +365,9 @@ new main category	common	zt	新的主要分類
 new value	common	zt	新數值
 new zealand	common	zt	NEW ZEALAND
 next	common	zt	下一個
-next month (hold for menu)	common	zt	下一個月(在選單中)
+next month (hold for menu)	jscalendar	zt	下一個月(在選單中)
 next page	common	zt	下一頁
-next year (hold for menu)	common	zt	下一年(在選單中)
+next year (hold for menu)	jscalendar	zt	下一年(在選單中)
 nicaragua	common	zt	NICARAGUA
 niger	common	zt	NIGER
 nigeria	common	zt	NIGERIA
@@ -334,14 +391,17 @@ ok	common	zt	確定
 old value	common	zt	原始值
 oman	common	zt	OMAN
 on *nix systems please type: %1	common	zt	在*nix系統請輸入：%1
+on mouse over	common	zt	
 only private	common	zt	只有私人的
 only yours	common	zt	屬於您的資料
 open notify window	common	zt	開啟警示視窗
 open popup window	common	zt	開啟彈出式視窗
+ordered list	htmlarea	zt	已排序清單
 original	common	zt	原本的
 other	common	zt	其它
 overview	common	zt	總覽
 owner	common	zt	擁有者
+page was generated in %1 seconds	common	zt	網頁花費 %1 秒產生
 pakistan	common	zt	PAKISTAN
 palau	common	zt	PALAU
 palestinian territory, occupied	common	zt	PALESTINIAN TERRITORY, OCCUPIED
@@ -353,6 +413,8 @@ parent category	common	zt	上一層分類
 password	common	zt	密碼
 password could not be changed	common	zt	無法修改密碼
 password has been updated	common	zt	已成功更新密碼
+paste from clipboard	htmlarea	zt	從剪貼簿貼上
+path	htmlarea	zt	路徑
 path to user and group files has to be outside of the webservers document-root!!!	common	zt	使用者與群組的檔案路徑必須要在網站伺服器的網頁跟目錄之外！
 pattern for search in addressbook	common	zt	在通訊錄的搜尋模式
 pattern for search in calendar	common	zt	在行事曆的搜尋模式
@@ -376,8 +438,9 @@ portugal	common	zt	PORTUGAL
 postal	common	zt	郵遞區號
 powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版。
 preferences	common	zt	喜好設定
-prev. month (hold for menu)	common	zt	上一個月(在選單中)
-prev. year (hold for menu)	common	zt	上一年(在選單中)
+preferences for the idots template set	common	zt	idots樣板的設定
+prev. month (hold for menu)	jscalendar	zt	上一個月(在選單中)
+prev. year (hold for menu)	jscalendar	zt	上一年(在選單中)
 previous page	common	zt	上一頁
 print	common	zt	列印
 priority	common	zt	優先權
@@ -388,6 +451,7 @@ puerto rico	common	zt	PUERTO RICO
 qatar	common	zt	QATAR
 read	common	zt	讀取
 read this list of methods.	common	zt	讀取這個方法的列表
+redoes your last action	htmlarea	zt	重新執行最後一個動作
 reject	common	zt	拒絕
 rename	common	zt	更名
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zt	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
@@ -411,11 +475,14 @@ save	common	zt	儲存
 search	common	zt	搜尋
 section	common	zt	選擇
 select	common	zt	選擇
+select all %1 %2 for %3	common	zt	選擇 %3 的所有 %1 %2
 select category	common	zt	選擇分類
 select date	common	zt	選擇日期
 select group	common	zt	選擇群組
+select home email address	common	zt	選擇家用信箱
 select one	common	zt	選擇一個
 select user	common	zt	選擇使用者
+select work email address	common	zt	選擇工作用信箱
 send	common	zt	送出
 senegal	common	zt	SENEGAL
 september	common	zt	九月
@@ -423,8 +490,14 @@ server %1 has been added	common	zt	伺服器 %1 已經完成新增
 server name	common	zt	伺服器名稱
 session has been killed	common	zt	連線已被中斷
 setup	common	zt	安裝
+setup main menu	common	zt	
 seychelles	common	zt	SEYCHELLES
 show all	common	zt	顯示全部
+show all categorys	common	zt	
+show menu	common	zt	
+show page generation time	common	zt	
+show page generation time on the bottom of the page?	common	zt	
+show_more_apps	common	zt	
 showing %1	common	zt	顯示 %1
 showing %1 - %2 of %3	common	zt	顯示 %1 - %2 之 %3
 sierra leone	common	zt	SIERRA LEONE
@@ -441,11 +514,14 @@ sri lanka	common	zt	SRI LANKA
 start date	common	zt	開始日期
 start time	common	zt	開始時間
 status	common	zt	狀態
+strikethrough	htmlarea	zt	
 subject	common	zt	主題
 submit	common	zt	送出
+subscript	htmlarea	zt	
 substitutions and their meanings:	common	zt	替代項目與他們的意義：
 sudan	common	zt	SUDAN
 sunday	common	zt	星期日
+superscript	htmlarea	zt	
 suriname	common	zt	SURINAME
 svalbard and jan mayen	common	zt	SVALBARD AND JAN MAYEN
 swaziland	common	zt	SWAZILAND
@@ -465,14 +541,17 @@ this application requires an upgrade	common	zt	這個應用程式需要升級
 this name has been used already	common	zt	這個名字已被使用！
 thursday	common	zt	星期四
 time	common	zt	時間
+time selection:	jscalendar	zt	
 time zone	common	zt	時區
 time zone offset	common	zt	時區時差
 title	common	zt	標題
+to	common	zt	
 to correct this error for the future you will need to properly set the	common	zt	為了在未來修正這個錯誤，您必須正確的設定
 to go back to the msg list, click <a href= %1 >here</a>	common	zt	點選<a href="%1">這裡</a>回到訊息清單
 today	common	zt	今天
 todays date, eg. "%1"	common	zt	今天日期, 例： "%1"
-toggle first day of week	common	zt	鎖定每星期的第一天
+toggle first day of week	jscalendar	zt	鎖定每星期的第一天
+toggle html source	htmlarea	zt	
 togo	common	zt	TOGO
 tokelau	common	zt	TOKELAU
 tonga	common	zt	TONGA
@@ -487,6 +566,8 @@ turks and caicos islands	common	zt	TURKS AND CAICOS ISLANDS
 tuvalu	common	zt	TUVALU
 uganda	common	zt	UGANDA
 ukraine	common	zt	UKRAINE
+underline	htmlarea	zt	
+undoes your last action	htmlarea	zt	
 united arab emirates	common	zt	UNITED ARAB EMIRATES
 united kingdom	common	zt	UNITED KINGDOM
 united states	common	zt	UNITED STATES
@@ -518,11 +599,13 @@ wednesday	common	zt	星期三
 welcome	common	zt	歡迎光臨
 western sahara	common	zt	WESTERN SAHARA
 which groups	common	zt	哪個群組
-wk	common	zt	星期
+wk	jscalendar	zt	星期
+work email	common	zt	工作信箱
 written by:	common	zt	作者：
 year	common	zt	年
 yemen	common	zt	YEMEN
 yes	common	zt	是
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	您目前在文字模式，使用[<>]按鈕來切換所見即所得編輯器。
 you are required to change your password during your first login	common	zt	您必須在第一次登入時修改您的密碼
 you are running a newer version of phpgroupware than your database is setup for	common	zt	您現在所使用的 phpGroupWare 版本比您的資料庫設定的版本還新。
 you have been successfully logged out	login	zt	您已經成功登出。
