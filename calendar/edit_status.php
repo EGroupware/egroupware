@@ -20,16 +20,8 @@
 	$event = $phpgw->calendar->fetch_event($id);
 
 	reset($event->participants);
-	$participating = False;
-	for($j=0;$j<count($event->participants);$j++)
-	{
-		if($event->participants[$j] == $owner)
-		{
-			$participating = True;
-		}
-	}
 
-	if($participating == False)
+	if(!$event->participants[$owner])
 	{
 		echo '<center>The user '.$phpgw->common->grab_owner_name($owner).' is not participating in this event!</center>';
 		$phpgw->common->footer();
@@ -42,8 +34,6 @@
 		$phpgw->common->footer();
 		$phpgw->common->phpgw_exit();
 	}
-
-	reset($event->participants);
 
 	$freetime = $phpgw->calendar->datetime->localdates(mktime(0,0,0,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset);
 	echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$event->participants);
