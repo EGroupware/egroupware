@@ -16,7 +16,7 @@
 		'enable_nextmatchs_class'  => True,
 		'noappheader'              => True,
 		'noappfooter'              => True
-  	);
+	);
 
 	/*
 	// header from calendar-app resets $owner
@@ -98,11 +98,11 @@
 	unset($acct);
 	$acl = CreateObject('phpgwapi.acl',intval($owner));
 	$acl->read_repository();
-  
+
 	if ($submit)
 	{
 		$to_remove = unserialize(urldecode($processed));
-		
+
 		for($i=0;$i<count($to_remove);$i++)
 		{
 			$acl->delete($phpgw_info['flags']['currentapp'],$to_remove[$i]);
@@ -174,7 +174,7 @@
 		$s_groups = 0;
 		$s_users = 0;
 	}
-  
+
 	if(!isset($s_groups))
 	{
 		$s_groups = 0;
@@ -206,9 +206,9 @@
 
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array (
-		'preferences'	=> 'preference_acl.tpl',
-		'row_colspan'	=> 'preference_colspan.tpl',
-		'acl_row'	=> 'preference_acl_row.tpl'
+		'preferences' => 'preference_acl.tpl',
+		'row_colspan' => 'preference_colspan.tpl',
+		'acl_row'     => 'preference_acl_row.tpl'
 	);
 
 	$p->set_file($templates);
@@ -218,7 +218,8 @@
 		$p->set_var('errors',lang('ACL grants have been updated'));
 	}
 
-	$common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
+	$common_hidden_vars =
+		  '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
 		. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
 		. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
 		. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
@@ -227,14 +228,14 @@
 		. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
 
 	$var = Array(
-		'errors'			=> '',
-		'title'				=> '<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').': '.$owner_name.'</b><hr><p>',
-		'action_url'			=> $phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
-		'bg_color'			=> $phpgw_info['theme']['th_bg'],
-		'submit_lang'			=> lang('submit'),
-		'common_hidden_vars_form'	=> $common_hidden_vars
+		'errors'      => '',
+		'title'       => '<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').': '.$owner_name.'</b><hr><p>',
+		'action_url'  => $phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
+		'bg_color'    => $phpgw_info['theme']['th_bg'],
+		'submit_lang' => lang('submit'),
+		'common_hidden_vars_form' => $common_hidden_vars
 	);
-	
+
 	$p->set_var($var);
 
 	if(isset($query_result) && $query_result)
@@ -245,12 +246,12 @@
 	$p->set_var('common_hidden_vars',$common_hidden_vars);
 
 	$var = Array(
-		'read_lang'	=> lang('Read'),
-		'add_lang'	=> lang('Add'),
-		'edit_lang'	=> lang('Edit'),
-		'delete_lang'	=> lang('Delete')
+		'read_lang'   => lang('Read'),
+		'add_lang'    => lang('Add'),
+		'edit_lang'   => lang('Edit'),
+		'delete_lang' => lang('Delete')
 	);
-	
+
 	$p->set_var($var);
 	$p->set_var('private_lang',lang('Private'));
 
@@ -264,7 +265,7 @@
 		{
 			$group = $groups[$k];
 			$go = True;
-			
+
 			if($query)
 			{
 				if(!strpos(' '.$group['account_lid'].' ',$query))
@@ -272,7 +273,7 @@
 					$go = False;
 				}
 			}
-			
+
 			if($go)
 			{
 				$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -316,8 +317,8 @@
 					}
 				}
 
-				if($go && $user['account_id'] != $owner)			// Need to be $owner not $phpgw_info['user']['account_id']
-				{				// or the admin can't get special grants from a group
+				if($go && $user['account_id'] != $owner)	// Need to be $owner not $phpgw_info['user']['account_id']
+				{	// or the admin can't get special grants from a group
 					$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 					display_row($tr_color,'u_',$user['account_id'],$phpgw->common->display_fullname($user['account_lid'],$user['account_firstname'],$user['account_lastname']),$is_group);
 					$s_users++;
@@ -338,13 +339,13 @@
 		. '&total=' . ($start + $total) . '&owner='.$owner;
 
 	$var = Array(
-		'nml'		=> $phpgw->nextmatchs->left('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
-		'nmr'		=> $phpgw->nextmatchs->right('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
-		'search_value'	=> (isset($query) && $query?$query:''),
-		'search'	=> lang('search'),
-		'processed'	=> urlencode(serialize($processed))
+		'nml'          => $phpgw->nextmatchs->left('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
+		'nmr'          => $phpgw->nextmatchs->right('/preferences/acl_preferences.php',$start,$totalentries,$extra_parms),
+		'search_value' => (isset($query) && $query?$query:''),
+		'search'       => lang('search'),
+		'processed'    => urlencode(serialize($processed))
 	);
-	
+
 	$p->set_var($var);
 
 	$p->pfp('out','preferences');
