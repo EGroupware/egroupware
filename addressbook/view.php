@@ -53,6 +53,7 @@
 		while ($column = each($columns_to_display)) {
 			$colname[$column[0]] = $column[1];
 		}
+		$noprefs=  " - " . lang("Please set your preferences for this app");
 	}
 
 	// merge in extra fields
@@ -67,7 +68,7 @@
 	
 	$record_owner  = $fields[0]["owner"];
 
-	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
+	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . $noprefs . "</b><hr><p>";
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
 
 	reset($columns_to_display);
