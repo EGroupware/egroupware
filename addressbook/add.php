@@ -44,11 +44,11 @@
 
 	if ($AddVcard)
 	{
-		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
+		Header('Location: ' . $phpgw->link('/addressbook/vcardin.php'));
 	}
 	else if ($add_email)
 	{
-		$named = explode(" ", $name);
+		$named = explode(' ', $name);
 		for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
 		if ($names[2])
 		{
@@ -80,7 +80,7 @@
 		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 		$addnew = unserialize(rawurldecode($fields));
 		$addnew['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew['owner']).", record #".$addnew['id'].".";
-		$addnew['owner'] = $phpgw_info["user"]["account_id"];
+		$addnew['owner'] = $phpgw_info['user']['account_id'];
 		$addnew['id']    = '';
 
 		if ($addnew['tid']) { addressbook_add_entry($addnew['owner'],$addnew,'','',$addnew['tid']); }
@@ -93,15 +93,15 @@
 	}
 	else
 	{
-		if (! $bday_month && ! $bday_day && ! $bday_year)
+		if (!$bday_month && !$bday_day && !$bday_year)
 		{
-			$bday = "";
+			$bday = '';
 		}
 		else
 		{
 			if (strlen ($bday_day) == 1)
 			{
-				$bday_day = "0".$bday_day;
+				$bday_day = '0' . $bday_day;
 			}
 			$bday = "$bday_month/$bday_day/$bday_year";
 		}
@@ -118,9 +118,9 @@
 		$fields['n_middle']				= $middle;
 		$fields['n_prefix']				= $prefix;
 		$fields['n_suffix']				= $suffix;
-		if ($prefix) { $pspc = " "; }
-		if ($middle) { $mspc = " "; } else { $nspc = " "; }
-		if ($suffix) { $sspc = " "; }
+		if ($prefix) { $pspc = ' '; }
+		if ($middle) { $mspc = ' '; } else { $nspc = ' '; }
+		if ($suffix) { $sspc = ' '; }
 		$fields['fn']					= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
 		$fields['email']				= $email;
 		$fields['email_type']			= $email_type;
