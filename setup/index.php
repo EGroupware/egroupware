@@ -17,23 +17,21 @@
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("./inc/functions.inc.php");
-  /* processing and discovery phase */
+
+  /* Check header and authentication */
   $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
   if ($phpgw_info["setup"]["stage"]["header"] != 10){
     Header("Location: manageheader.php");
     exit;
-  }else{
-    if (!$phpgw_setup->auth("Config")){
+  }elseif (!$phpgw_setup->auth("Config")){
       $phpgw_setup->show_header("Please login",True);
       $phpgw_setup->login_form();
       exit;
-    }else{ /* authentication settled. Moving to the database portion. */
+  }else{ /* If authentication is sucessful, we load the database. */
       $phpgw_setup->loaddb();
-      $phpgw_info["setup"]["stage"]["db"] = $phpgw_setup->check_db();
-      $phpgw_info["setup"]["stage"]["config"] = $phpgw_setup->check_config();
-    }
   }
 
+  /* Database actions */
   switch($action){
     case "Delete all my tables and data":
       $subtitle = "Deleting Tables";
@@ -71,6 +69,7 @@
 
   echo "<table border=\"1\" width=\"100%\" cellspacing=\"0\" cellpadding=\"2\">";
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 1 - database management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  $phpgw_info["setup"]["stage"]["db"] = $phpgw_setup->check_db();
   switch($phpgw_info["setup"]["stage"]["db"]){
     case 1:
       echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="index.php" method=post>Your database does not exist.<br> <input type=submit value="Create one now"></form></td></tr>';
@@ -175,6 +174,7 @@
   }
 
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 2 - Configuration</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  $phpgw_info["setup"]["stage"]["config"] = $phpgw_setup->check_config();
   switch($phpgw_info["setup"]["stage"]["config"]){
     case 1:
       echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Please configure phpGroupWare for your environment.';
