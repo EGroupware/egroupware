@@ -176,7 +176,7 @@ function cat_id( $cats )
 			if ($def = $defaults[$csv_field]) {
 				list( $info,$trans ) = explode($PSep,$def,2);
 				$t->set_var('trans',$trans);
-				$t->set_var('info_fields',str_replace($info.'">',$info.'" selected>',$info_name_options));
+				$t->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
 			} else {		
 				$t->set_var('trans','');
 				$t->set_var('info_fields',$info_name_options);
