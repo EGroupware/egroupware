@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 
 	/* Authorize the user to use setup app and load the database */
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if(!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -52,7 +52,7 @@
 	));
 
 	$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	while($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 	}
@@ -68,12 +68,12 @@
 	$acct            = $phpgw->accounts;
 
 	/* connect to ldap server */
-	if (! $ldap = $common->ldapConnect())
+	if(!$ldap = $common->ldapConnect())
 	{
 		$noldapconnection = True;
 	}
 
-	if ($noldapconnection)
+	if($noldapconnection)
 	{
 		Header('Location: config.php?error=badldapconnection');
 		exit;
@@ -83,24 +83,24 @@
 	$info = ldap_get_entries($ldap, $sr);
 	$tmp = '';
 
-	for ($i=0; $i<$info['count']; $i++)
+	for($i=0; $i<$info['count']; $i++)
 	{
-		if (! $phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
+		if(!$phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
 		{
 			$account_info[$info[$i]['uidnumber'][0]] = $info[$i];
 		}
 	}
 
-	if ($phpgw_info['server']['ldap_group_context'])
+	if($phpgw_info['server']['ldap_group_context'])
 	{
 		$srg = ldap_search($ldap,$config['ldap_group_context'],'(|(cn=*))',array('gidnumber','cn','memberuid'));
 		$info = ldap_get_entries($ldap, $srg);
 		$tmp = '';
 
-		for ($i=0; $i<$info['count']; $i++)
+		for($i=0; $i<$info['count']; $i++)
 		{
-			if (! $phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
-				! $account_info[$i][$info[$i]['cn'][0]])
+			if(!$phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
+				!$account_info[$i][$info[$i]['cn'][0]])
 			{
 				$group_info[$info[$i]['gidnumber'][0]] = $info[$i];
 			}
@@ -112,12 +112,12 @@
 	}
 
 	$GLOBALS['phpgw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_name",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	while($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = lang($GLOBALS['phpgw_setup']->db->f('app_name'));
 	}
 
-	if ($cancel)
+	if($cancel)
 	{
 		Header("Location: ldap.php");
 		exit;
@@ -125,15 +125,15 @@
 
 	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Modify'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 	$setup_complete = False;
-	if (isset($_POST['submit']))
+	if(isset($_POST['submit']))
 	{
 		$acl = CreateObject('phpgwapi.acl');
 		copyobj($GLOBALS['phpgw_setup']->db,$acl->db);
-		if (isset($_POST['ldapgroups']))
+		if(isset($_POST['ldapgroups']))
 		{
 			$groups = CreateObject('phpgwapi.accounts');
 			copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
-			while (list($key,$groupid) = each($_POST['ldapgroups']))
+			while(list($key,$groupid) = each($_POST['ldapgroups']))
 			{
 				$id_exist = 0;
 				$entry = array();
@@ -145,7 +145,7 @@
 				$thisdn        = $group_info[$groupid]['dn'];
 
 				/* Do some checks before we try to import the data. */
-				if (!empty($thisacctid) && !empty($thisacctlid))
+				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$groups->account_id = (int)$thisacctid;
 
@@ -194,7 +194,7 @@
 					{
 						foreach($thismembers as $key => $members)
 						{
-							if ($key == 'count')
+							if($key == 'count')
 							{
 								continue;
 							}
@@ -204,7 +204,7 @@
 							while(list($x,$y) = each($account_info))
 							{
 								/* echo '<br>checking: '.$y['account_lid']; */
-								if ($members == $y['account_lid'])
+								if($members == $y['account_lid'])
 								{
 									$tmpid = $y['account_id'];
 								}
@@ -232,8 +232,8 @@
 					$phpgw_info['user']['account_id'] = $thisacctid;
 					$acl->account_id = (int)$thisacctid;
 					$acl->read_repository();
-					@reset($s_apps);
-					while (list($key,$app) = @each($s_apps))
+					@reset($_POST['s_apps']);
+					while(list($key,$app) = @each($_POST['s_apps']))
 					{
 						$acl->delete($app,'run',1);
 						$acl->add($app,'run',1);
@@ -248,7 +248,7 @@
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
 			copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
-			while (list($key,$id) = each($_POST['users']))
+			while(list($key,$id) = each($_POST['users']))
 			{
 				$id_exist = 0;
 				$thisacctid  = $account_info[$id]['uidnumber'][0];
@@ -257,7 +257,7 @@
 				$thisdn      = $account_info[$id]['dn'];
 
 				/* Do some checks before we try to import the data. */
-				if (!empty($thisacctid) && !empty($thisacctlid))
+				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$accounts->account_id = (int)$thisacctid;
 					$sr = ldap_search($ldap,$config['ldap_context'],'uid='.$thisacctlid);
@@ -314,7 +314,7 @@
 					if(empty($_POST['ldapgroups']))
 					{
 						@reset($_POST['s_apps']);
-						while (list($key,$app) = @each($_POST['s_apps']))
+						while(list($key,$app) = @each($_POST['s_apps']))
 						{
 							$acl->delete($app,'run',1);
 							$acl->add($app,'run',1);
@@ -329,9 +329,9 @@
 					This is typically an exception to apps for run rights
 					as a group member.
 					*/
-					for ($a=0;$a<count($_POST['admins']);$a++)
+					for($a=0;$a<=count($_POST['admins']);$a++)
 					{
-						if ($admins[$a] == $thisacctid)
+						if($_POST['admins'][$a] == $thisacctid)
 						{
 							$acl->delete('admin','run',1);
 							$acl->add('admin','run',1);
@@ -345,13 +345,13 @@
 		$setup_complete = True;
 	}
 
-	if (isset($_GET['error']))
+	if(isset($_GET['error']))
 	{
 		/* echo '<br><center><b>Error:</b> '.$error.'</center>'; */
 		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$_GET['error']);
 	}
 
-	if ($setup_complete)
+	if($setup_complete)
 	{
 		echo '<br><center>'.lang('Modifications have been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'<br><center>';
 		$GLOBALS['phpgw_setup']->html->show_footer();
@@ -367,7 +367,7 @@
 	$setup_tpl->set_block('ldap','footer','footer');
 
 	$user_list = '';
-	while (list($key,$account) = @each($account_info))
+	while(list($key,$account) = @each($account_info))
 	{
 		$user_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . ' (' . $account['uid'][0] . ')</option>';
 	}
@@ -380,7 +380,7 @@
 	}
 
 	$group_list = '';
-	while (list($key,$group) = @each($group_info))
+	while(list($key,$group) = @each($group_info))
 	{
 		$group_list .= '<option value="' . $group['gidnumber'][0] . '">' . utf8_decode($group['cn'][0])  . '</option>';
 	}
