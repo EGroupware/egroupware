@@ -42,6 +42,15 @@
 		$submit              = True;
 	}
 
+	if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.15.002'))
+	{
+		$langtbl = 'lang';
+	}
+	else
+	{
+		$langtbl = 'phpgw_lang';
+	}
+
 	if ($HTTP_POST_VARS['submit'])
 	{
 		$lang_selected = $HTTP_POST_VARS['lang_selected'];
@@ -61,7 +70,7 @@
 				if ($upgrademethod == 'addonlynew')
 				{
 					//echo "<br>Test: addonlynew - select count(*) from lang where lang='$lang'";
-					$phpgw_setup->db->query("SELECT COUNT(*) FROM lang WHERE lang='$lang'",__LINE__,__FILE__);
+					$phpgw_setup->db->query("SELECT COUNT(*) FROM $langtbl WHERE lang='$lang'",__LINE__,__FILE__);
 					$phpgw_setup->db->next_record();
 
 					if ($phpgw_setup->db->f(0) == 0)
@@ -102,7 +111,7 @@
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$phpgw_setup->db->query("SELECT COUNT(*) FROM lang WHERE message_id='$message_id' and lang='$phpgw_setup->db_lang'",__LINE__,__FILE__);
+								$phpgw_setup->db->query("SELECT COUNT(*) FROM $langtbl WHERE message_id='$message_id' and lang='$phpgw_setup->db_lang'",__LINE__,__FILE__);
 								$phpgw_setup->db->next_record();
 
 								if ($phpgw_setup->db->f(0) == 0)
@@ -116,8 +125,8 @@
 							{
 								if($message_id && $content)
 								{
-									// echo "<br>adding - insert into lang values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
-									$phpgw_setup->db->query("INSERT into lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
+									// echo "<br>adding - insert into $langtbl values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+									$phpgw_setup->db->query("INSERT into $langtbl VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
 								}
 							}
 						}

@@ -26,6 +26,7 @@
 	class phpgw_setup_lang extends phpgw_setup_process
 	{
 		var $langarray;
+		var $langtbl = 'phpgw_lang';
 
 		/*!
 		@function setup_lang
@@ -35,6 +36,11 @@
 		function phpgw_setup_lang()
 		{
 			$ConfigLang = @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : @$GLOBALS['HTTP_POST_VARS']['ConfigLang'];
+
+			if($this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
+			{
+				$this->langtbl = 'lang';
+			}
 
 			if(!$ConfigLang)
 			{
@@ -119,7 +125,7 @@
 			{
 				echo '<br>get_langs(): checking db...' . "\n";
 			}
-			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM lang",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM $this->langtbl",__LINE__,__FILE__);
 			$langs = array();
 
 			while($GLOBALS['phpgw_setup']->db->next_record())
@@ -144,11 +150,11 @@
 			{
 				echo '<br>drop_langs(): Working on: ' . $appname;
 			}
-			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM lang WHERE app_name='$appname'",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM $this->langtbl WHERE app_name='$appname'",__LINE__,__FILE__);
 			$GLOBALS['phpgw_setup']->db->next_record();
 			if($GLOBALS['phpgw_setup']->db->f(0))
 			{
-				$GLOBALS['phpgw_setup']->db->query("DELETE FROM lang WHERE app_name='$appname'",__LINE__,__FILE__);
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM $this->langtbl WHERE app_name='$appname'",__LINE__,__FILE__);
 				return True;
 			}
 			return False;
@@ -199,7 +205,7 @@
 						$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
 						$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 
-						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM lang WHERE message_id='$message_id' and lang='"
+						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM $this->langtbl WHERE message_id='$message_id' and lang='"
 							. $GLOBALS['phpgw_setup']->db_lang . "'",__LINE__,__FILE__);
 						$GLOBALS['phpgw_setup']->db->next_record();
 
@@ -209,9 +215,9 @@
 							{
 								if($DEBUG)
 								{
-									echo "<br>add_langs(): adding - INSERT INTO lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+									echo "<br>add_langs(): adding - INSERT INTO $this->langtbl VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
 								}
-								$GLOBALS['phpgw_setup']->db->query("INSERT INTO lang VALUES ('$message_id','$app_name','"
+								$GLOBALS['phpgw_setup']->db->query("INSERT INTO $this->langtbl VALUES ('$message_id','$app_name','"
 									. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
 							}
 						}

@@ -66,12 +66,12 @@
 	create_select_box('Country','country',$sbox->country_array);
 
 	$db2 = $GLOBALS['phpgw']->db;
-	$GLOBALS['phpgw']->db->query("select distinct lang from lang",__LINE__,__FILE__);
+	$GLOBALS['phpgw']->db->query("select distinct lang from phpgw_lang",__LINE__,__FILE__);
 	while ($GLOBALS['phpgw']->db->next_record())
 	{
 //		$phpgw_info['installed_langs'][$phpgw->db->f('lang')] = $phpgw->db->f('lang');
 
-		$db2->query("select lang_name from languages where lang_id = '"
+		$db2->query("select lang_name from phpgw_languages where lang_id = '"
 			. $GLOBALS['phpgw']->db->f('lang') . "'",__LINE__,__FILE__);
 		$db2->next_record();
 

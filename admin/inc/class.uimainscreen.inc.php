@@ -60,7 +60,7 @@
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 
 				$select_lang = '<select name="select_lang">';
-				$GLOBALS['phpgw']->db->query("SELECT lang,languages.lang_name,languages.lang_id FROM lang,languages WHERE "
+				$GLOBALS['phpgw']->db->query("SELECT lang,languages.lang_name,languages.lang_id FROM phpgw_lang,phpgw_languages WHERE "
 					. "lang.lang=languages.lang_id GROUP BY lang,languages.lang_name,"
 					. "languages.lang_id ORDER BY lang");
 				while ($GLOBALS['phpgw']->db->next_record())

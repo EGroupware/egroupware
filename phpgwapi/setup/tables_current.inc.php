@@ -136,7 +136,7 @@
 			'fk' => array(),
 			'uc' => array()
 		),
-		'languages' => array(
+		'phpgw_languages' => array(
 			'fd' => array(
 				'lang_id' => array('type' => 'varchar', 'precision' => 2, 'nullable' => false),
 				'lang_name' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
@@ -147,7 +147,7 @@
 			'fk' => array(),
 			'uc' => array()
 		),
-		'lang' => array(
+		'phpgw_lang' => array(
 			'fd' => array(
 				'message_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false, 'default' => ''),
 				'app_name' => array('type' => 'varchar', 'precision' => 100, 'nullable' => false, 'default' => 'common'),

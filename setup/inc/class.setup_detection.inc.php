@@ -316,12 +316,23 @@
 		function check_lang()
 		{
 			$this->db->Halt_On_Error = 'no';
-			if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			if($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
 			{
 				return '';
 			}
 
-			$this->db->query("select distinct lang from lang;");
+			if($this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
+			{
+				$langtbl  = 'lang';
+				$langstbl = 'languages';
+			}
+			else
+			{
+				$langtbl  = 'phpgw_lang';
+				$langstbl = 'phpgw_languages';
+			}
+
+			$this->db->query("SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
 			if ($this->db->num_rows() == 0)
 			{
 				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
@@ -329,14 +340,14 @@
 			}
 			else
 			{
-				while (@$this->db->next_record())
+				while(@$this->db->next_record())
 				{
 					$GLOBALS['phpgw_info']['setup']['installed_langs'][$this->db->f('lang')] = $this->db->f('lang');
 				}
-				reset ($GLOBALS['phpgw_info']['setup']['installed_langs']);
-				while (list ($key, $value) = each ($GLOBALS['phpgw_info']['setup']['installed_langs']))
+				reset($GLOBALS['phpgw_info']['setup']['installed_langs']);
+				while(list($key, $value) = each($GLOBALS['phpgw_info']['setup']['installed_langs']))
 				{
-					$sql = "select lang_name from languages where lang_id = '".$value."';";
+					$sql = "SELECT lang_name FROM $langstbl WHERE lang_id = '".$value."';";
 					$this->db->query($sql);
 					$this->db->next_record();
 					$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $this->db->f('lang_name');

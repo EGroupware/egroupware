@@ -56,7 +56,7 @@
 				{
 					$userlang = 'en';
 				}
-				$sql = "SELECT message_id,content FROM lang WHERE lang LIKE '" . $userlang
+				$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $userlang
 					. "' AND (app_name LIKE '" . $GLOBALS['phpgw_info']['flags']['currentapp']
 					. "' OR app_name LIKE 'common' OR app_name LIKE 'all')";
 
@@ -109,7 +109,7 @@
 			{
 				$userlang = 'en';
 			}
-			$sql = "SELECT message_id,content FROM lang WHERE lang LIKE '".$userlang."' AND app_name LIKE '".$app."'";
+			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '".$userlang."' AND app_name LIKE '".$app."'";
 			$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
 			$count = $GLOBALS['phpgw']->db->num_rows();
