@@ -105,6 +105,8 @@
            } else {
               $np = $permissions_string;
            }
+           // do some checks before we try to import the data
+           if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
            $db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
                     . "account_groups,account_status) values ('" . $account[1]["account_id"] . "','"
                     . $account[1]["account_lid"] . "','x','$np',',1:0,','A')",__LINE__,__FILE__);
