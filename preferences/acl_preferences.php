@@ -18,38 +18,66 @@
 		'noappfooter'              => True
   	);
 
+	// header from calendar-app resets $owner
+	if(isset($owner))
+	{
+		$save_my_owner = $owner;
+	}
+
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	function check_acl($label,$id,$acl,$rights,$right)
+	if(isset($save_my_owner) && $phpgw_info['user']['apps']['admin'])
+	{
+		$owner = $save_my_owner;
+		unset($save_my_owner);
+	}
+	else
+	{
+		echo '<center>'.lang('You do not have permission to set ACL\'s in this mode!').'</center>';
+		$phpgw->common->phpgw_footer();
+	}
+
+	function check_acl($label,$id,$acl,$rights,$right,$is_group=False)
 	{
 		global $phpgw_info, $p;
 
 		$p->set_var($acl,$label.$phpgw_info['flags']['currentapp'].'['.$id.']['.$right.']');
-		if ($rights & $right)
+		if ($is_group)
 		{
-			$p->set_var($acl.'_selected',' checked');
+			// This is so you can't select it in the GUI
+			$p->set_var($acl.'_selected',' disabled');
 		}
 		else
 		{
-			$p->set_var($acl.'_selected','');
+			$p->set_var($acl.'_selected',(($rights & $right)?' checked':''));
 		}
 	}
-  
 
-	function display_row($bg_color,$label,$id,$name)
+	function display_row($bg_color,$label,$id,$name,$is_group)
 	{
-		global $phpgw_info, $acl, $p;
+		global $phpgw, $phpgw_info, $acl, $p;
 
 		$p->set_var('row_color',$bg_color);
 		$p->set_var('user',$name);
 		$rights = $acl->get_rights($id,$phpgw_info['flags']['currentapp']);
+// vv This is new
+		$grantors = $acl->get_ids_for_location($id,$rights,$phpgw_info['flags']['currentapp']);
+		$is_group_set = False;
+		while(list($key,$grantor) = each($grantors))
+		{
+			if($phpgw->accounts->get_type($grantor) == 'g')
+			{
+				$is_group_set = True;
+			}
+		}
+// ^^ This is new
 
-		check_acl($label,$id,'read',$rights,PHPGW_ACL_READ);
-		check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
-		check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
-		check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE);
-		check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
+		check_acl($label,$id,'read',$rights,PHPGW_ACL_READ,($is_group_set && ($rights & PHPGW_ACL_READ) && !$is_group?$is_group_set:False));
+		check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD,($is_group_set && ($rights & PHPGW_ACL_ADD && !$is_group)?$is_group_set:False));
+		check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT,($is_group_set && ($rights & PHPGW_ACL_EDIT && !$is_group)?$is_group_set:False));
+		check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE,($is_group_set && ($rights & PHPGW_ACL_DELETE && !$is_group)?$is_group_set:False));
+		check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE,$is_group);
 
 		$p->parse('row','acl_row',True);
 	}
@@ -62,6 +90,11 @@
 	$acct = CreateObject('phpgwapi.accounts',$owner);
 	$groups = $acct->get_list('groups');
 	$users = $acct->get_list('accounts');
+	$owner_name = $acct->id2name($owner);		// get owner name for title
+	if($is_group = $acct->get_type($owner) == 'g')
+	{
+		$owner_name = lang('Group').' ('.$owner_name.')';
+	}
 	unset($acct);
 	$acl = CreateObject('phpgwapi.acl',intval($owner));
 	$acl->read_repository();
@@ -90,6 +123,12 @@
 			{
 				$totalacl += $right;
 			}
+
+			if($is_group)
+			{
+				$totalacl &= ~PHPGW_ACL_PRIVATE;			// Don't allow group-grants to grant private
+			}
+
 			$acl->add($phpgw_info['flags']['currentapp'],$group_id,$totalacl);
 		}
 
@@ -108,6 +147,12 @@
 			{
 				$totalacl += $right;
 			}
+
+			if($is_group)
+			{
+				$totalacl &= ~ PHPGW_ACL_PRIVATE;			// Don't allow group-grants to grant private
+			}
+
 			$acl->add($phpgw_info['flags']['currentapp'],$user_id,$totalacl);
 		}
 		$acl->save_repository();
@@ -176,7 +221,7 @@
 
 	$var = Array(
 		'errors'			=> '',
-		'title'				=> '<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
+		'title'				=> '<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').': '.$owner_name.'</b><hr><p>',
 		'action_url'			=> $phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
 		'bg_color'			=> $phpgw_info['theme']['th_bg'],
 		'submit_lang'			=> lang('submit'),
@@ -224,7 +269,7 @@
 			if($go)
 			{
 				$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-				display_row($tr_color,'g_',$group['account_id'],$group['account_lid']);
+				display_row($tr_color,'g_',$group['account_id'],$group['account_lid'],$is_group);
 				$s_groups++;
 				$processed[] = $group['account_id'];
 				$total++;
@@ -264,10 +309,10 @@
 					}
 				}
 
-				if($go && $user['account_id'] != $phpgw_info['user']['account_id'])
-				{
+				if($go && $user['account_id'] != $owner)			// Need to be $owner not $phpgw_info['user']['account_id']
+				{				// or the admin can't get special grants from a group
 					$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-					display_row($tr_color,'u_',$user['account_id'],$phpgw->common->display_fullname($user['account_lid'],$user['account_firstname'],$user['account_lastname']));
+					display_row($tr_color,'u_',$user['account_id'],$phpgw->common->display_fullname($user['account_lid'],$user['account_firstname'],$user['account_lastname']),$is_group);
 					$s_users++;
 					$processed[] = $user['account_id'];
 					$total++;

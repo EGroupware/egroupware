@@ -81,12 +81,12 @@
 		{
 			global $phpgw, $phpgw_info;
 			$sql = 'select * from phpgw_acl where (acl_account in ('.$this->account_id.', 0'; 
-//			$equalto = $phpgw->accounts->security_equals($this->account_id);
-//			if (is_array($equalto) && count($equalto) > 0){
-//				for ($idx = 0; $idx < count($equalto); ++$idx){
-//					$sql .= ",".$equalto[$idx][0];
-//				}
-//			}
+
+			$groups = $this->get_location_list_for_id('phpgw_group', 1, $this->account_id);
+			while($groups && list($key,$value) = each($groups))
+			{
+				$sql .= ','.$value;
+			}
 			$sql .= '))';
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$count = $this->db->num_rows();
@@ -565,9 +565,10 @@
 
 			$sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
 				. "acl_location in ";
-			$security = "('". $phpgw_info['user']['account_id'] ."'";
+//			$security = "('". $phpgw_info['user']['account_id'] ."'";
+			$security = "('". $this->account_id ."'";
 			$myaccounts = CreateObject('phpgwapi.accounts');
-			$my_memberships = $myaccounts->memberships();
+			$my_memberships = $myaccounts->memberships($this->account_id);
 			@reset($my_memberships);
 			while($my_memberships && list($key,$group) = each($my_memberships))
 			{
@@ -589,12 +590,36 @@
 //				}
 
 				if(!isset($accounts[$grantor]))
+				// cache the group-members for performance
 				{
-					$accounts[$grantor] = 0;
+					// if $grantor is a group, get its members
+					$members = $this->get_ids_for_location($grantor,1,'phpgw_group');
+					if(!$members)
+					{
+						$accounts[$grantor] = Array($grantor);
+						$is_group[$grantor] = False;
+					}
+					else
+					{
+						$accounts[$grantor] = $members;
+						$is_group[$grantor] = True;
+					}
 				}
-				$accounts[$grantor] |= $rights;
+				if(@$is_group[$grantor])
+				{
+					// Don't allow to override private!
+					$rights &= (~ PHPGW_ACL_PRIVATE);
+				}
+				while(list($nul,$grantors) = each($accounts[$grantor]))
+				{
+					if(!isset($grants[$grantors]))
+					{
+						$grants[$grantors] = 0;
+					}
+					$grants[$grantors] |= $rights;
+				}
 			}
-			return $accounts;
+			return $grants;
 		}
 	} //end of acl class
 ?>

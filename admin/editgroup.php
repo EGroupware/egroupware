@@ -14,10 +14,32 @@
 	$phpgw_info = array();
 	if ($submit)
 	{
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_flags = Array(
+			'currentapp'	=> 'admin',
+			'enable_nextmatchs_class'	=> True,
+			'noheader'	=> True,
+			'nonavbar'	=> True
+		);
 	}
-	$phpgw_info["flags"]["currentapp"] = "admin";
-	include("../header.inc.php");
+	else
+	{
+		$phpgw_flags = Array(
+			'currentapp'	=> 'admin',
+			'enable_nextmatchs_class'	=> True
+		);
+	}
+	$phpgw_info['flags'] = $phpgw_flags;
+	include('../header.inc.php');
+
+	$apps_with_acl = Array(
+		'addressbook'	=> True,
+		'todo'		=> True,
+		'calendar'	=> True,
+		'notes'		=> True,
+		'projects'	=> True,
+		'phonelog'	=> True,
+		'infolog'	=> True
+	);
 
 	function is_odd($n)
 	{
@@ -34,7 +56,7 @@
 
 	if (! $group_id)
 	{
-		Header("Location: " . $phpgw->link("/admin/groups.php"));
+		Header('Location: ' . $phpgw->link('/admin/groups.php'));
 	}
 
 	if ($submit)
@@ -47,7 +69,7 @@
 		{
 			if ($group->exists($n_group))
 			{
-				$error = lang("Sorry, that group name has already been taken.");
+				$error = lang('Sorry, that group name has already been taken.');
 			}
 		}
 
@@ -229,11 +251,11 @@
 			. '</option>'."\n";
 	}
 	$p->set_var('user_list',$user_list);
-	$p->set_var("lang_permissions",lang("Permissions this group has"));
+	$p->set_var('lang_permissions',lang('Permissions this group has'));
 
 	$i = 0;
-	reset($phpgw_info["apps"]);
-	$sorted_apps = $phpgw_info["apps"];
+	reset($phpgw_info['apps']);
+	$sorted_apps = $phpgw_info['apps'];
 	@asort($sorted_apps);
 	@reset($sorted_apps);
 	while ($permission = each($sorted_apps))
@@ -246,35 +268,41 @@
 		}
 	}
 
-	$perm_html = "";
-	for ($i=0;$i<200;)
-	{     // The $i<200 is only used for a brake
-		if (! $perm_display[$i][1]) break;
-		$perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
-			. '<td><input type="checkbox" name="n_group_permissions['
+	$perm_html = '';
+	$tr_color = $phpgw_info['theme']['row_off'];
+	for ($i=0;$perm_display[$i][1];$i++)
+	{
+		$app = $perm_display[$i][0];
+		if(!($i & 1))
+		{
+			$tr_color = $phpgw->nextmatchs->alternate_row_color();
+			$perm_html .= '<tr bgcolor="'.$tr_color.'">';
+		}
+		$perm_html .= '<td width="40%">' . lang($perm_display[$i][1]) . '</td>'
+			. '<td width="5%"><input type="checkbox" name="n_group_permissions['
 			. $perm_display[$i][0] . ']" value="True"';
-		if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]])
+		if ($n_group_permissions[$app] || $db_perms[$app])
 		{
-			$perm_html .= " checked";
+			$perm_html .= ' checked';
 		}
-		$perm_html .= "></td>";
-		$i++;
-
-		if ($i == count($perm_display) && is_odd(count($perm_display)))
+		$perm_html .= '></td><td width="5%">';
+		if($apps_with_acl[$app])
 		{
-			$perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+			$perm_html .= '<a href="'.$phpgw->link('/preferences/acl_preferences.php','acl_app='.$app.'&owner='.$group_id).'" target="_blank"><img src="'.$phpgw->common->image('admin','dot.gif').'" border="0" hspace="3" align="absmiddle" alt="'.lang('Grant Access').'"></a>';
 		}
-
-		if (! $perm_display[$i][1]) break;
-		$perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
-			. '<td><input type="checkbox" name="n_group_permissions['
-			. $perm_display[$i][0] . ']" value="True"';
-		if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]])
+		else
 		{
-			$perm_html .= " checked";
+			$perm_html .= '&nbsp;';
 		}
-		$perm_html .= "></td></tr>\n";
-		$i++;
+		$perm_html .= '</td>';
+		if($i & 1)
+		{
+			$perm_html .= '</tr>';
+		}
+	}
+	if($i & 1)
+	{
+		$perm_html .= '<td colspan="4">&nbsp;</td></tr>';
 	}
 
 	$p->set_var("permissions_list",$perm_html);	
