@@ -374,7 +374,7 @@
 			}
 			else
 			{
-				$fwhere .= ' AND ';
+				$fwhere .= ') ';
 			}
 
 
@@ -431,11 +431,11 @@
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
 					. $limit,__LINE__,__FILE__);
 			}  else  {
-				$this->db3->query("SELECT id,lid,tid,owner,access $t_fields FROM $this->std_table " . $fwhere
+				$this->db3->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod,__LINE__,__FILE__);
 				$this->total_records = $this->db3->num_rows();
 
-				$this->db->query("SELECT id,lid,tid,owner,access $t_fields FROM $this->std_table " . $fwhere
+				$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
 			}
 
