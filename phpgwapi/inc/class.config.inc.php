@@ -30,13 +30,12 @@
 
 		function config($appname = '')
 		{
-			global $phpgw, $phpgw_info;
 			if (! $appname)
 			{
-				$appname = $phpgw_info['flags']['currentapp'];
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			$this->db      = $phpgw->db;
+			$this->db      = $GLOBALS['phpgw']->db;
 			$this->appname = $appname;
 		}
 

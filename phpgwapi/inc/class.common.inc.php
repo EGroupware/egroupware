@@ -41,9 +41,6 @@
 	*/
 	class common
 	{
-		var $phpgw;
-		var $iv = '';
-		var $key = '';
 		var $crypto;
 		var $debug_info;		// An array with debugging info from the API
 		
@@ -1022,7 +1019,6 @@
 		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		function hook($location, $order = '', $no_permission_check = False)
 		{
-			global $phpgw, $phpgw_info;
 			if ($order == '')
 			{
 				settype($order,'array');
@@ -1088,7 +1084,6 @@
 		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		function hook_single($location, $appname = '', $no_permission_check = False)
 		{
-			global $phpgw, $phpgw_info, $PHP_VERSION;
 			if (! $appname)
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
