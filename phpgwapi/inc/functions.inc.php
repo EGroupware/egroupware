@@ -576,7 +576,7 @@
 	}
 
 	magic_quotes_runtime(false);
-	@print_debug('sane environment');
+	@print_debug('sane environment','messageonly','api');
 
 	/****************************************************************************\
 	* Multi-Domain support                                                       *
@@ -647,7 +647,7 @@
 	}
 	unset ($domain); // we kill this to save memory
 
-	@print_debug('domain: '.$GLOBALS['phpgw_info']['user']['domain']);
+	@print_debug('domain',$GLOBALS['phpgw_info']['user']['domain'],'api');
 
 	 /****************************************************************************\
 	 * These lines load up the API, fill up the $phpgw_info array, etc            *
@@ -741,7 +741,7 @@
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
 	//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
-	print_debug('main class loaded');
+	print_debug('main class loaded', 'messageonly','api');
 	if (! isset($GLOBALS['phpgw_info']['flags']['included_classes']['error']) ||
 		! $GLOBALS['phpgw_info']['flags']['included_classes']['error'])
 	{
