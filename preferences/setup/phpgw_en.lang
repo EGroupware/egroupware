@@ -1,7 +1,10 @@
+%1 - preferences	preferences	en	%1 - Preferences
 12 hour	preferences	en	12 hour
 24 hour	preferences	en	24 hour
-%1 - Preferences	preferences	en	%1 - Preferences
+a template defines the layout of phpgroupware and it contains icons vor each application.	preferences	en	A template defines the layout of phpGroupWare and it contains icons vor each application.
+a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
 acl grants have been updated	preferences	en	ACL grants have been updated
+any listing in phpgw will show you this number or entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in phpGW will show you this number or entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
@@ -9,12 +12,18 @@ date format	preferences	en	Date format
 default application	preferences	en	Default application
 default preferences	preferences	en	Default Preferences
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	en	Do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.
 edit custom fields	preferences	en	edit custom fields
 enter your new password	preferences	en	Enter your new password
 error: there was a problem finding the preference file for %1 in %2	preferences	en	Error: There was a problem finding the preference file for %1 in %2
 forced preferences	preferences	en	Forced Preferences
+help off	preferences	en	Help off
+hours	preferences	en	hours
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
+how should phpgroupware display dates for you.	preferences	en	How should phpGroupWare display dates for you.
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
+in which country are you. this is used to set certain defaults for you.	preferences	en	In which country are you. This is used to set certain defaults for you.
 interface/template selection	preferences	en	Interface/Template Selection
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
@@ -23,16 +32,23 @@ please, select a new theme	preferences	en	Please, select a new theme
 re-enter your password	preferences	en	Re-Enter your password
 select different theme	preferences	en	Select different Theme
 select one	preferences	en	Select one
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
+should the help messages always be shown when you enter the preferences or only on request.	preferences	en	Should the help messages always be shown when you enter the preferences or only on request.
+should the number of active sessions be displayed for you all the time.	preferences	en	Should the number of active sessions be displayed for you all the time.
 show current users on navigation bar	preferences	en	Show current users on navigation bar
+show helpmessages by default	preferences	en	Show helpmessages by default
 show navigation bar as	preferences	en	Show navigation bar as
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
-this server is located in the %1 timezone	preferences	en	 This server is located in the %1 timezone
+this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).	preferences	en	This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).
+this server is located in the %1 timezone	preferences	en	This server is located in the %1 timezone
 time format	preferences	en	Time format
 users choice	preferences	en	Users choice
-%1 - preferences	preferences	en	%1 - Preferences
+which currency symbole or name should be used in phpgroupware.	preferences	en	Which currency symbole or name should be used in phpGroupWare.
+you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
+you do not have permission to set acl\'s in this mode!	preferences	en	You do not have permission to set ACL\'s in this mode!
 you must enter a password	preferences	en	You must enter a password
 your current theme is: %1	preferences	en	your current theme is: %1
 your preferences	preferences	en	Your Preferences
