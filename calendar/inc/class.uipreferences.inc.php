@@ -115,7 +115,7 @@
 			$user = $GLOBALS['phpgw_info']['user']['account_id'];
 			$groups = $GLOBALS['phpgw']->accounts->membership($user);
 			$str =  '<option value="-1"'.(intval($this->bo->prefs['calendar']['planner_start_with_group'])==-1?' selected':'').'>none</option>'."\n";
-			while (list($key,$group) = each($groups))
+			while (list($key,$group) = @each($groups))
 			{
 				$str .= '<option value="'.$group['account_id'].'"'.(intval($this->bo->prefs['calendar']['planner_start_with_group'])==$group['account_id']?' selected':'').'>'.$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']).'</option>'."\n";
 			}
