@@ -1,4 +1,5 @@
-%1 email addresses inserted	common	fr	%1 adresses email ont été inséré
+%1 email addresses inserted	common	fr	%1 adresses email ont été insérée(s)
+%1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un logiciel de GroupWare multi-utilisateur basé sur les technologies Web et PHP
 (shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou 'drag' pour changer la valeur
 - click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
@@ -9,6 +10,8 @@
 - use the %1, %2 buttons to select year	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner l'année
 00 (disable)	admin	fr	00 (non actif)
 13 (ntp)	admin	fr	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis jour
+3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis mois
 80 (http)	admin	fr	80 (http)
 about	common	fr	A propos
 about %1	common	fr	A propos de %1
@@ -34,6 +37,7 @@ afghanistan	common	fr	AFGHANISTAN
 albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
 all	common	fr	Tous
+all fields	common	fr	tous les champs
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	fr	SAMOA AMERICAINES
 andorra	common	fr	ANDORRE
@@ -52,6 +56,8 @@ august	common	fr	Août
 australia	common	fr	AUSTRALIE
 austria	common	fr	AUTRICHE
 author	common	fr	Auteur
+autohide sidebox menus	common	fr	Cacher automatiquement la barre de menu latérale
+automatically hide the sidebox menus?	common	fr	Cacher automatiquement la barre de menu latérale ?
 autosave default category	common	fr	Sauvegarde automatique dans catégorie par défaut
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
@@ -143,7 +149,12 @@ denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
+disable the execution of bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution du bugfixscript pour Internet Explorer 5.5 et plus afin d'afficher la tranparence dans les images PNG?
+disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
+disable slider effects	common	fr	Désactiver les effets de glisse
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
 disabled	common	fr	Désactivé
+display %s first	jscalendar	fr	Affiche %s en premier
 display monday first	jscalendar	fr	Affiche Lundi en premier
 display sunday first	jscalendar	fr	Affiche Dimanche en premier
 djibouti	common	fr	DJIBOUTI
@@ -163,6 +174,7 @@ edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 egroupware api version %1	common	fr	eGroupWare version API %1
+egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	EMail
@@ -171,6 +183,7 @@ enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
 enlarge editor	htmlarea	fr	Elargir l'éditeur
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Pas de slash final</b>
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
@@ -181,6 +194,7 @@ error deleting %1 %2 directory	common	fr	Erreur à l'effacement du répertoire %1 
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 estonia	common	fr	ESTONIE
 ethiopia	common	fr	ETHIOPIE
+exact	common	fr	exacte
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	FAROE ISLANDS
 fax number	common	fr	Numéro de Fax
@@ -301,6 +315,7 @@ libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 list	common	fr	Liste
+list members	common	fr	Liste les membres
 lithuania	common	fr	LITHUANIE
 local	common	fr	Local
 login	common	fr	Login
@@ -382,13 +397,16 @@ ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
+on mouse over	common	fr	Sur le relachement du clic de la souris
 only private	common	fr	Seulement privés
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
+open popup window	common	fr	Ouvrir une fenêtre de popup
 original	common	fr	Original
 other	common	fr	Autre
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
+page	common	fr	Page
 page was generated in %1 seconds	common	fr	La page a été générée en %1 secondes
 pakistan	common	fr	PAKISTAN
 palau	common	fr	PALAU
@@ -403,6 +421,7 @@ password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 paste from clipboard	htmlarea	fr	Coller depuis la presse-papiers
 path	htmlarea	fr	Chemin
+path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
 pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
 pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
 pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
@@ -424,6 +443,7 @@ portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
 powered by phpgroupware version %1	common	fr	Motorisé par <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	fr	Préférences
+preferences for the idots template set	common	fr	Préférences pour l´application du template idots
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
@@ -438,6 +458,7 @@ read	common	fr	Lire
 read this list of methods.	common	fr	Lire cette liste de méthodes.
 redoes your last action	htmlarea	fr	Répète votre dernière action
 reject	common	fr	Rejetter
+remove selected accounts	common	fr	effacer les comptes sélectionnés
 rename	common	fr	Renommer
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
 returns an array of todo items	common	fr	Retourne une matrice d'objets à faire
@@ -458,6 +479,7 @@ saturday	common	fr	Samedi
 saudi arabia	common	fr	ARABIE SAOUDITE
 save	common	fr	Sauver
 search	common	fr	Chercher
+search or select accounts	common	fr	Chercher ou sélectionner des comptes
 section	common	fr	Section
 select	common	fr	Sélectionner
 select all %1 %2 for %3	common	fr	Sélectionner tout %11 %2 pour %3
@@ -468,6 +490,7 @@ select home email address	common	fr	Sélectionner l'email Maison
 select one	common	fr	Sélectionner un
 select user	common	fr	Sélectionner l'utilisateur
 select work email address	common	fr	Sélectionner l'email Bureau
+selection	common	en	Sélection
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
@@ -497,6 +520,7 @@ spain	common	fr	ESPAGNE
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date début
 start time	common	fr	Heure début
+start with	common	fr	Débute à
 status	common	fr	Etat
 strikethrough	htmlarea	fr	Rayé
 subject	common	fr	Sujet
