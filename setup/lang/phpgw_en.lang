@@ -70,6 +70,7 @@ checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
+click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
 completed	setup	en	Completed
 config password	setup	en	Config Password
 config username	setup	en	Config Username
@@ -263,6 +264,7 @@ one week	setup	en	one week
 only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
 only add new phrases	setup	en	Only add new phrases
 or	setup	en	or
+or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	en	Or we can attempt to create the database for you:
 password needed for configuration	setup	en	Password needed for configuration
@@ -275,8 +277,7 @@ please check for sql scripts within the application's directory	setup	en	Please 
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure egroupware for your environment	setup	en	Please configure eGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.
-please fix the above errors (%1) and warnings(%2) and	setup	en	Please fix the above errors (%1) and warnings(%2) and
-please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	en	Please fix the above errors (%1) and warnings(%2) and %3continue to the Header Admin%4
+please fix the above errors (%1) and warnings(%2)	setup	en	Please fix the above errors (%1) and warnings(%2)
 please install	setup	en	Please install
 please login	setup	en	Please login
 please login to egroupware and run the admin application for additional site configuration	setup	en	Please login to eGroupWare and run the admin application for additional site configuration
@@ -304,6 +305,7 @@ requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
 return to setup	setup	en	Return to Setup
+run installation tests	setup	en	Run installation tests
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	en	safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
 sample configuration not found. using built in defaults	setup	en	Sample configuration not found. using built in defaults
 save	setup	en	Save
@@ -360,6 +362,7 @@ text entry	setup	en	Text Entry
 the %1 extension is needed, if you plan to use a %2 database.	setup	en	The %1 extension is needed, if you plan to use a %2 database.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	en	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	en	The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
@@ -403,6 +406,8 @@ view	setup	en	View
 warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
+welcome to the egroupware installation	setup	en	Welcome to the eGroupWare Installation
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP4 session management may perform better)?
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with eGroupWare?
 world readable	setup	en	world readable

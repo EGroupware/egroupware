@@ -417,9 +417,19 @@
 			'T_footer' => 'footer.tpl',
 		));
 		$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')' : '');
-		echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
-		echo "<pre style=\"text-align: left;\">\n";;
+		if (@$_GET['intro']) {
+			$GLOBALS['phpgw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
+			echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
+			echo lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.');
+			echo ,'<br /><br />'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.');
+			echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
+			$setup_tpl->pparse('out','T_footer');
+			exit;
+		} else {
+			$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')' : '');
+			echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
+			echo "<pre style=\"text-align: left;\">\n";;
+		}
 	}
 	else
 	{
@@ -442,7 +452,9 @@
 		{
 			if (!$Ok)
 			{
-				echo '<h3>'.lang('Please fix the above errors (%1) and warnings(%2) and %3continue to the Header Admin%4',$error_icon,$warning_icon,'<a href="manageheader.php">','</a>')."</h3>\n";
+				echo '<h3>'.lang('Please fix the above errors (%1) and warnings(%2)',$error_icon,$warning_icon)."</h3>\n";
+				echo '<h3><a href="check_install.php">'.lang('Click here to re-run the installation tests')."</a></h3>\n";
+				echo '<h3>'.lang('or %1Continue to the Header Admin%2','<a href="manageheader.php">','</a>')."</h3>\n";
 			}
 			else
 			{
@@ -454,7 +466,7 @@
 			echo '<h3>';
 			if (!$Ok)
 			{
-				echo lang('Please fix the above errors (%1) and warnings(%2) and',$error_icon,$warning_icon).' ';
+				echo lang('Please fix the above errors (%1) and warnings(%2)',$error_icon,$warning_icon).'. ';
 			}
 			echo '<a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 		}

@@ -55,7 +55,7 @@
 	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 //		Header('Location: manageheader.php');
-		Header('Location: check_install.php');
+		Header('Location: check_install.php?intro=1');
 		exit;
 	}
 	elseif(!$GLOBALS['phpgw_setup']->auth('Config'))

@@ -72,6 +72,7 @@ checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zum Setup zurück zu kommen.
 click here	setup	de	Hier klicken
+click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
 completed	setup	de	Abgeschlossen
 config password	setup	de	Konfigurationspasswort
 config username	setup	de	Konfigurationsbenutzername
@@ -166,9 +167,9 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
-header admin login	setup	de	Headerverwaltungs-Login
-header password	setup	de	Headerverwaltungspasswort
-header username	setup	de	Headerverwaltungsbenutzername
+header admin login	setup	de	Login Headerverwaltung
+header password	setup	de	Passwort der Headerverwaltung
+header username	setup	de	Benutzername der Headerverwaltung
 historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
@@ -267,6 +268,7 @@ one week	setup	de	eine Woche
 only add languages that are not in the database already	setup	de	Nur Sprachen hinzufügen, die noch nicht in der Datenbank sind
 only add new phrases	setup	de	Nur neue Begriffe hinzufügen
 or	setup	de	oder
+or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 password needed for configuration	setup	de	Passwort wird für die Konfiguration benötgt
@@ -279,8 +281,7 @@ please check for sql scripts within the application's directory	setup	de	Bitte s
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren Sie das %1.
-please fix the above errors (%1) and warnings(%2) and	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2) und gehen Sie dann
-please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2) und machen Sie %3weiter mit der Headerverwaltung%4
+please fix the above errors (%1) and warnings(%2)	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2)
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einloggen
 please login to egroupware and run the admin application for additional site configuration	setup	de	Bitte in eGroupWare einloggen und für weitere Konfigurationseinstellungen die Administrationsanwendung aufrufen
@@ -308,6 +309,7 @@ requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manu
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
 return to setup	setup	de	Zurück zum Setup
+run installation tests	setup	de	Installationstests starten
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, was ist generell gut, da es Ihre Installation sicherer macht.
 sample configuration not found. using built in defaults	setup	de	Beispiel Konfiguration nicht gefunden, benutze eingebaute Voreinstellungen
 save	setup	de	Speichern
@@ -364,6 +366,7 @@ text entry	setup	de	Texteingabe
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (php extension) wird benötigt, wenn Sie die %2 Datenbank einsetzen wollen.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	de	Die imap Erweiterung (php extension) wird von den beiden Email Applikationen benötigt (auch wenn Sie das POP3-Protokoll verwenden).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
@@ -408,6 +411,8 @@ view	setup	de	Anzeigen
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
+welcome to the egroupware installation	setup	de	Herzlich willkommen zur eGroupWare Installation
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP4 Session-Management hat eine bessere Performance)?
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit eGroupWare verwenden?
 world readable	setup	de	lesbar von jedem (world readable)
