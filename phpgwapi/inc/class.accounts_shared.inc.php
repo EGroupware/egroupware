@@ -131,8 +131,8 @@
 		*/
 		function get_nextid($account_type='u')
 		{
-			if ($GLOBALS['phpgw_info']['server']['account_min_id']) { $min = $GLOBALS['phpgw_info']['server']['account_min_id']; }
-			if ($GLOBALS['phpgw_info']['server']['account_max_id']) { $max = $GLOBALS['phpgw_info']['server']['account_max_id']; }
+			$min = $GLOBALS['phpgw_info']['server']['account_min_id'] ? $GLOBALS['phpgw_info']['server']['account_min_id'] : 0;
+			$max = $GLOBALS['phpgw_info']['server']['account_max_id'] ? $GLOBALS['phpgw_info']['server']['account_max_id'] : 0;
 
 			if ($account_type == 'g')
 			{
@@ -142,23 +142,25 @@
 			{
 				$type = 'accounts';
 			}
-			$nextid = $GLOBALS['phpgw']->common->last_id($type,$min,$max);
+			$nextid = intval($GLOBALS['phpgw']->common->last_id($type,$min,$max));
 
 			/* Loop until we find a free id */
 			$free = 0;
 			while (!$free)
 			{
+				$account_lid = '';
 				//echo '<br>calling search for id: '.$nextid;
 				if ($this->exists($nextid))
 				{
-					$nextid = $GLOBALS['phpgw']->common->next_id($type,$min,$max);
+					$nextid = intval($GLOBALS['phpgw']->common->next_id($type,$min,$max));
 				}
 				else
 				{
-					/* echo '<br>calling search for lid: '.$account_lid; */
+					$account_lid = $this->id2name($nextid);
+					/* echo '<br>calling search for lid: '.$account_lid . '(from account_id=' . $nextid . ')'; */
 					if ($this->exists($account_lid))
 					{
-						$nextid = $GLOBALS['phpgw']->common->next_id($type,$min,$max);
+						$nextid = intval($GLOBALS['phpgw']->common->next_id($type,$min,$max));
 					}
 					else
 					{

@@ -519,7 +519,8 @@
 
 			if(gettype($account) == 'integer')
 			{
-				$ldapname = 'cn';
+				$ldapgroup = 'gidnumber';
+				$ldapacct  = 'uidnumber';
 				/* If data is cached, use it. */
 				if(@isset($by_id[$account]))
 				{
@@ -528,7 +529,8 @@
 			}
 			else
 			{
-				$ldapname = 'gidnumber';
+				$ldapgroup = 'cn';
+				$ldapacct  = 'uid';
 				/* If data is cached, use it. */
 				if(@isset($by_lid[$account]))
 				{
@@ -537,14 +539,14 @@
 			}
 
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$acct_type = $this->get_type($account_id);
+			$acct_type = $this->get_type($account);
 
 			if ($acct_type == 'g' && $this->group_context)
 			{
-				$sri = ldap_search($ds, $this->group_context, $ldapname . '=' . $account);
+				$sri = ldap_search($ds, $this->group_context, $ldapgroup . '=' . $account);
 				$groups = ldap_get_entries($ds, $sri);
 			}
-			$sri = ldap_search($ds, $this->user_context, 'uid=' . $account);
+			$sri = ldap_search($ds, $this->user_context, $ldapacct . '=' . $account);
 			$users = ldap_get_entries($ds, $sri);
 
 			if ($users[0]['dn'])
@@ -556,7 +558,7 @@
 				$in += 2;
 			}
 			/* This sets up internal caching for this function */
-			if($ldapname == 'gidnumber')
+			if($ldapgroup == 'gidnumber')
 			{
 				$by_id[$account] = $in;
 				$by_lid[$this->id2name($account)] = $in;
