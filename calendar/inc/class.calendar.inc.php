@@ -107,8 +107,8 @@ class calendar extends calendar_
 // NOT PART OF THE ORIGINAL MCAL SPECS.
 	function time_compare($a_hour,$a_minute,$a_second,$b_hour,$b_minute,$b_second)
 	{
-		$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),0,0,0);
-		$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),0,0,0);
+		$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),0,0,70);
+		$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),0,0,70);
 		if($a_time == $b_time)
 		{
 			return 0;
