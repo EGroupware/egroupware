@@ -40,7 +40,8 @@
 		<input type="hidden" name="FormDomain" value="{default_domain_zero}">
 		<!-- END B_single_domain -->
 {lang_select}
-		<input type="submit" name="ConfigLogin" value="Login">
+		<input type="hidden" name="ConfigLogin" value="Login">
+		<input type="submit" name="submit" value="Login">
 		</form>
 	</td>
 </tr>

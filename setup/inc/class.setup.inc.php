@@ -35,21 +35,19 @@
 				/* This is to fix the reading of this value immediately after the cookie was set on login */
 				$ConfigDomain = $HTTP_POST_VARS['FormDomain'];
 			}
-			$phpgw_domain = $GLOBALS['phpgw_domain'];
-			$phpgw_info   = $GLOBALS['phpgw_info'];
 
 			/* Database setup */
-			if (!isset($phpgw_info['server']['api_inc']))
+			if (!isset($GLOBALS['phpgw_info']['server']['api_inc']))
 			{
-				$phpgw_info['server']['api_inc'] = PHPGW_SERVER_ROOT . '/phpgwapi/inc';
+				$GLOBALS['phpgw_info']['server']['api_inc'] = PHPGW_SERVER_ROOT . '/phpgwapi/inc';
 			}
-			include($phpgw_info['server']['api_inc'] . '/class.db_'.$phpgw_domain[$ConfigDomain]['db_type'].'.inc.php');
+			include($GLOBALS['phpgw_info']['server']['api_inc'] . '/class.db_'.$GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'].'.inc.php');
 			$this->db	        = new db;
-			$this->db->Host     = $phpgw_domain[$ConfigDomain]['db_host'];
-			$this->db->Type     = $phpgw_domain[$ConfigDomain]['db_type'];
-			$this->db->Database = $phpgw_domain[$ConfigDomain]['db_name'];
-			$this->db->User     = $phpgw_domain[$ConfigDomain]['db_user'];
-			$this->db->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
+			$this->db->Host     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_host'];
+			$this->db->Type     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'];
+			$this->db->Database = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_name'];
+			$this->db->User     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_user'];
+			$this->db->Password = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_pass'];
 		}
 
 		/*!
@@ -60,9 +58,6 @@
 		function auth($auth_type = "Config")
 		{
 			global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
-
-			$phpgw_domain = $GLOBALS['phpgw_domain'];
-			$phpgw_info   = $GLOBALS['phpgw_info'];
 
 			$FormLogout   = $HTTP_GET_VARS['FormLogout']    ? $HTTP_GET_VARS['FormLogout']    : $HTTP_POST_VARS['FormLogout'];
 			$ConfigLogin  = $HTTP_POST_VARS['ConfigLogin']  ? $HTTP_POST_VARS['ConfigLogin']  : $HTTP_COOKIE_VARS['ConfigLogin'];
@@ -97,12 +92,12 @@
 			}
 			elseif (isset($ConfigPW))
 			{
-				if ($ConfigPW != $phpgw_domain[$ConfigDomain]["config_passwd"] && $auth_type == 'Config')
+				if ($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]["config_passwd"] && $auth_type == 'Config')
 				{
 					setcookie('ConfigPW');  // scrub the old one
 					setcookie('ConfigDomain');  // scrub the old one
 					setcookie('ConfigLang');
-					$phpgw_info['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
 					return False;
 				}
 				else
@@ -114,7 +109,7 @@
 			{
 				if (isset($ConfigLogin))
 				{
-					if ($FormPW == $phpgw_domain[$FormDomain]['config_passwd'] && $auth_type == 'Config')
+					if ($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'] && $auth_type == 'Config')
 					{
 						setcookie('HeaderPW');  // scrub the old one
 						setcookie('ConfigPW',$FormPW);
@@ -125,13 +120,13 @@
 					}
 					else
 					{
-						$phpgw_info['setup']['ConfigLoginMSG'] = 'Invalid password';
+						$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
 						return False;
 					}
 				}
 				elseif (isset($HeaderLogin))
 				{
-					if ($FormPW == $phpgw_info['server']['header_admin_password'] && $auth_type == 'Header')
+					if ($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 					{
 						setcookie('HeaderPW',$FormPW);
 						return True;
@@ -145,7 +140,7 @@
 			}
 			elseif (isset($HeaderPW))
 			{
-				if ($HeaderPW != $phpgw_info['server']['header_admin_password'] && $auth_type == 'Header')
+				if ($HeaderPW != $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 				{
 					setcookie('HeaderPW');  // scrub the old one
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
@@ -374,7 +369,6 @@
 			{
 				return False;
 			}
-			global $phpgw_info,$setup_info;
 
 			if ($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
@@ -387,7 +381,7 @@
 
 			if ($tableschanged == True)
 			{
-				$phpgw_info['setup']['tableschanged'] = True;
+				$GLOBALS['phpgw_info']['setup']['tableschanged'] = True;
 			}
 			if ($setup_info[$appname]['currentver'])
 			{

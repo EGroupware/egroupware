@@ -18,7 +18,8 @@
 	<td>
 		<form action="manageheader.php" method="POST" name="admin">
 		<input type="password" name="FormPW" value="">
-		<input type="submit" name="HeaderLogin" value="Login">
+		<input type="hidden" name="HeaderLogin" value="Login">
+		<input type="submit" name="Submit" value="Login">
 		</form>
 	</td>
 </tr>
