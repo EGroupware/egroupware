@@ -116,43 +116,25 @@ while (list ($num, $group_array) = each ($memberships))
 }
 
 ###
-# We determine if they're in their home directory or a group's directory
-# If they request a group's directory, we ensure they have access to the group,
-# and the group has access to the app
+# We determine if they're in their home directory or a group's directory,
+# and set the VFS working_id appropriately
 ###
 
 if ((preg_match ("+^$fakebase\/(.*)(\/|$)+U", $path, $matches)) && $matches[1] != $userinfo["account_lid"])
 {
 	$phpgw->vfs->working_id = $phpgw->accounts->name2id ($matches[1]);
-
-	reset ($memberships);
-	while (list ($num, $group_array) = each ($memberships))
-	{
-		if ($matches[1] == $group_array["account_name"])
-		{
-			$group_ok = 1;
-			break;
-		}
-	}
-	if (!$group_ok)
-	{
-		echo $phpgw->common->error_list (array ("You do not have access to group/directory $matches[1]"));
-		html_break (2);
-		html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
-		html_page_close ();
-	}
-
-	if (!$membership_applications[$matches[1]][$appname]["enabled"])
-	{
-		echo $phpgw->common->error_list (array ("The group $matches[1] does not have access to $appname"));
-		html_break (2);
-		html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
-		html_page_close ();
-	}
 }
 else
 {
 	$phpgw->vfs->working_id = $userinfo["username"];
+}
+
+if ($path != $homedir && $path != $fakebase && $path != "/" && !$phpgw->vfs->acl_check ($path, array (RELATIVE_NONE), PHPGW_ACL_READ))
+{
+	echo $phpgw->common->error_list (array ("You do not have access to $path"));
+	html_break (2);
+	html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
+	html_page_close ();
 }
 
 $userinfo["working_id"] = $phpgw->vfs->working_id;
@@ -165,7 +147,9 @@ $userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
 
 if (($path == $homedir) && !$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
 {
+	$phpgw->vfs->override_acl = 1;
 	$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
+	$phpgw->vfs->override_acl = 0;
 }
 elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
 {
@@ -186,7 +170,7 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 {
 	if (!$phpgw->vfs->file_exists ($path, array (RELATIVE_NONE)))
 	{
-		html_text_error ("Directory $dir does not exist", 1);
+		echo $phpgw->common->error_list (array ("Directory $path does not exist"));
 		html_break (2);
 		html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
 		html_break (2);
@@ -208,7 +192,8 @@ if ($path == $fakebase)
 		$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
 	}
 
-	$files_array[] = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
+	$ls_array = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
+	$files_array[] = $ls_array[0];
 	$numoffiles++;
 
 	reset ($memberships);
@@ -229,7 +214,8 @@ if ($path == $fakebase)
 			$phpgw->vfs->set_attributes ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), array ("owner_id" => $group_array["account_id"], "createdby_id" => $group_array["account_id"]));
 		}
 
-		$files_array[] = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+		$ls_array = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+		$files_array[] = $ls_array[0];
 
 		$numoffiles++;
 	}
@@ -725,6 +711,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		reset ($dirs);
 		while (list ($num, $dir) = each ($dirs))
 		{
+			if (!$dir["directory"])
+			{
+				continue;
+			}
+			
 			###
 			# So we don't display //
 			###
@@ -977,7 +968,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 			html_page_close ();
 		}
 
-		if ($file_size[$i] != 0)
+		if ($file_size[$i] > 0)
 		{
 			###
 			# Check to see if the file exists in the database
@@ -1250,7 +1241,9 @@ elseif ($newdir && $createdir)
 			html_link ("$appname/index.php?path=$disppath/$createdir", "Go to $disppath/$createdir");
 		}
 		else
+		{
 			echo $phpgw->common->error_list (array ("Could not create $disppath/$createdir"));
+		}
 	}
 
 	html_break (2);
