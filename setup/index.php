@@ -14,7 +14,6 @@
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
-  include($phpgw_info["server"]["include_root"]."/globalconfig.inc.php");
 
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
   
@@ -30,7 +29,24 @@
       include($phpgw_info["server"]["api_dir"] . "/phpgw_db_mysql.inc.php");
   }
 
-  echo "db server: ".$phpgw_info["server"]["db_host"];
+  $db	            = new db;
+  $db->Host	    = $phpgw_info["server"]["db_host"];
+  $db->Type	    = $phpgw_info["server"]["db_type"];
+  $db->Database   = $phpgw_info["server"]["db_name"];
+  $db->User	    = $phpgw_info["server"]["db_user"];
+  $db->Password   = $phpgw_info["server"]["db_pass"];
 
+  $db->query("select * from config");
+  if ($db->num_rows() == 0){
+    $db->query("select * from accounts");
+    if ($db->num_rows() == 0){
+      echo "You appear to be running a new install of phpGroupWare<br>\n";
+    }else{
+      echo "You appear to be running a pre-beta version of phpGroupWare<br>\n";
+      echo "We are not providing an upgrade path at this time, please backup your tables and drop them, so that this script can recreate them.<br>\n";
+    }
+  }else{
+    echo "Your database seems to be current. Would you like to configure the environment now?<br>\n"; 
+  }
 
 ?>
