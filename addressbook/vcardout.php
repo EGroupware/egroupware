@@ -40,6 +40,17 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 
+	// First, make sure they have permission to this entry
+	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
+	$perms = $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ);
+
+	if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
+	{
+		Header("Location: "
+			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+		$phpgw->common->phpgw_exit();
+	}
+
  	$extrafields = array("address2" => "address2");
 	$qfields = $this->stock_contact_fields + $extrafields;
 
