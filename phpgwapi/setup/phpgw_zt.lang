@@ -40,8 +40,8 @@ addressbook	common	zt	通訊錄
 admin	common	zt	系統管理
 administration	common	zt	系統管理
 afghanistan	common	zt	AFGHANISTAN
-albania	common	zt	ALBANIA
-algeria	common	zt	ALGERIA
+albania	common	zt	阿爾巴尼亞
+algeria	common	zt	阿爾吉利亞
 align	htmlarea-TableOperations	zt	對齊
 all	common	zt	所有
 all fields	common	zt	所有欄位
@@ -62,7 +62,7 @@ argentina	common	zt	ARGENTINA
 armenia	common	zt	ARMENIA
 aruba	common	zt	ARUBA
 august	common	zt	八月
-australia	common	zt	AUSTRALIA
+australia	common	zt	澳洲
 austria	common	zt	AUSTRIA
 author	common	zt	作者
 autohide sidebox menus	common	zt	自動隱藏其他選單
@@ -107,7 +107,7 @@ c_ell properties...	htmlarea-ContextMenu	zt	欄位設定...
 calendar	common	zt	行事曆
 cambodia	common	zt	CAMBODIA
 cameroon	common	zt	CAMEROON
-canada	common	zt	CANADA
+canada	common	zt	加拿大
 cancel	common	zt	取消
 cape verde	common	zt	CAPE VERDE
 caption	htmlarea-TableOperations	zt	標題
@@ -129,7 +129,7 @@ chec_k link...	htmlarea-ContextMenu	zt	檢查連結...
 check installation	common	zt	檢查系統安裝狀態
 check now	common	zt	立刻檢查
 chile	common	zt	CHILE
-china	common	zt	CHINA
+china	common	zt	中國大陸
 choose list style type (for ordered lists)	htmlarea-ListType	zt	選擇清單樣式類型(排序的清單)
 choose the category	common	zt	選擇分類
 choose the parent category	common	zt	選擇上一層分類
@@ -142,7 +142,7 @@ click or mouse over to show menus?	common	zt	點選或是移動滑鼠來顯示�
 close	common	zt	關閉
 cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	zt	展開的框線
-colombia	common	zt	COLOMBIA
+colombia	common	zt	哥倫比亞
 color	htmlarea-TableOperations	zt	顏色
 comoros	common	zt	COMOROS
 company	common	zt	公司
@@ -159,7 +159,7 @@ create	common	zt	建立
 create a link	htmlarea-ContextMenu	zt	建立一個連結
 created by	common	zt	建立者
 croatia	common	zt	CROATIA
-cuba	common	zt	CUBA
+cuba	common	zt	古巴
 currency	common	zt	貨幣
 current	common	zt	現在
 current style	htmlarea	zt	目前樣式
@@ -184,7 +184,7 @@ delete column	htmlarea-TableOperations	zt	刪除欄位
 delete row	htmlarea-TableOperations	zt	刪除列
 delete the current column	htmlarea-ContextMenu	zt	刪除目前欄位
 delete the current row	htmlarea-ContextMenu	zt	刪除目前列
-denmark	common	zt	DENMARK
+denmark	common	zt	丹麥
 description	common	zt	說明
 detail	common	zt	詳細
 details	common	zt	詳細
@@ -205,11 +205,11 @@ document title:	common	zt	文件標題：
 domain	common	zt	網址
 domain name for mail-address, eg. "%1"	common	zt	電子郵件信箱的網址, 例如： "%1"
 domestic	common	zt	國內的
-dominica	common	zt	DOMINICA
-dominican republic	common	zt	DOMINICAN REPUBLIC
+dominica	common	zt	多明尼加
+dominican republic	common	zt	多明尼加共和國
 done	common	zt	完成
 drag to move	jscalendar	zt	拖曳移動
-e-mail	common	zt	E-Mail
+e-mail	common	zt	電子郵件
 east timor	common	zt	EAST TIMOR
 ecuador	common	zt	ECUADOR
 edit	common	zt	編輯
@@ -221,7 +221,7 @@ egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare: 使用者�
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
 element...	htmlarea-ContextMenu	zt	元件...
-email	common	zt	E-Mail
+email	common	zt	電子郵件
 email-address of the user, eg. "%1"	common	zt	使用者的電子郵件, 例： "%1"
 enabled	common	zt	啟用
 end date	common	zt	結束日期
@@ -249,7 +249,7 @@ fiji	common	zt	FIJI
 files	common	zt	檔案
 filter	common	zt	篩選
 finished list of mispelled words	htmlarea-SpellChecker	zt	完成列出拼錯的字
-finland	common	zt	FINLAND
+finland	common	zt	芬蘭
 first name	common	zt	名
 first name of the user, eg. "%1"	common	zt	使用者的名, 例如： "%1"
 first page	common	zt	第一頁
@@ -259,7 +259,7 @@ float	htmlarea-TableOperations	zt	浮點數
 font color	htmlarea	zt	字型顏色
 force selectbox	common	zt	強制使用選取方塊
 frames	htmlarea-TableOperations	zt	框架
-france	common	zt	FRANCE
+france	common	zt	法國
 french guiana	common	zt	FRENCH GUIANA
 french polynesia	common	zt	FRENCH POLYNESIA
 french southern territories	common	zt	FRENCH SOUTHERN TERRITORIES
@@ -273,9 +273,9 @@ georgia	common	zt	GEORGIA
 germany	common	zt	GERMANY
 ghana	common	zt	GHANA
 gibraltar	common	zt	GIBRALTAR
-global	common	zt	全區
-global public	common	zt	全區共用
-go today	jscalendar	zt	前往今天
+global	common	zt	全域
+global public	common	zt	全域共用
+go today	jscalendar	zt	回到今天
 grant access	common	zt	存取權限開放
 greece	common	zt	GREECE
 greenland	common	zt	GREENLAND
@@ -307,8 +307,8 @@ help using editor	htmlarea	zt	協助使用編輯器
 high	common	zt	高
 highest	common	zt	最高
 holy see (vatican city state)	common	zt	HOLY SEE (VATICAN CITY STATE)
-home	common	zt	首頁
-home email	common	zt	主要信箱
+home	common	zt	首頁(住家)
+home email	common	zt	家用信箱
 honduras	common	zt	HONDURAS
 hong kong	common	zt	香港
 horizontal rule	htmlarea	zt	合併規則
@@ -323,7 +323,7 @@ htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperati
 hungary	common	zt	HUNGARY
 i will open it in a new page.	htmlarea-SpellChecker	zt	在新視窗開啟
 i_nsert row before	htmlarea-ContextMenu	zt	在插入列之前
-iceland	common	zt	ICELAND
+iceland	common	zt	冰島
 ignore	htmlarea-SpellChecker	zt	忽略
 ignore all	htmlarea-SpellChecker	zt	全部忽略
 image url	htmlarea-TableOperations	zt	圖片網址
@@ -351,7 +351,7 @@ international	common	zt	國際
 invalid ip address	common	zt	錯誤的IP位址
 invalid password	common	zt	錯誤的密碼
 iran, islamic republic of	common	zt	IRAN, ISLAMIC REPUBLIC OF
-iraq	common	zt	IRAQ
+iraq	common	zt	伊拉克
 ireland	common	zt	IRELAND
 israel	common	zt	ISRAEL
 it has been more then %1 days since you changed your password	common	zt	距離您上次更改密碼已經 %1 天了
@@ -360,7 +360,7 @@ italic	common	zt	斜體
 italy	common	zt	義大利
 jamaica	common	zt	JAMAICA
 january	common	zt	一月
-japan	common	zt	JAPAN
+japan	common	zt	日本
 jordan	common	zt	JORDAN
 july	common	zt	七月
 jun	common	zt	六月
@@ -374,8 +374,8 @@ kazakstan	common	zt	KAZAKSTAN
 kenya	common	zt	KENYA
 keywords	common	zt	關鍵字
 kiribati	common	zt	KIRIBATI
-korea, democratic peoples republic of	common	zt	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
-korea, republic of	common	zt	KOREA, REPUBLIC OF
+korea, democratic peoples republic of	common	zt	北韓
+korea, republic of	common	zt	南韓
 kuwait	common	zt	KUWAIT
 kyrgyzstan	common	zt	KYRGYZSTAN
 language	common	zt	語言
@@ -408,7 +408,7 @@ lower latin letters	htmlarea-ListType	zt	小寫拉丁字母
 lower roman numbers	htmlarea-ListType	zt	小寫羅馬字母
 lowest	common	zt	最低
 luxembourg	common	zt	LUXEMBOURG
-macau	common	zt	MACAU
+macau	common	zt	澳門
 macedonia, the former yugoslav republic of	common	zt	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	zt	MADAGASCAR
 mail domain, eg. "%1"	common	zt	郵件網址, 例： "%1"
@@ -434,7 +434,7 @@ medium	common	zt	中等
 menu	common	zt	選單
 merge cells	htmlarea-TableOperations	zt	合併
 message	common	zt	訊息
-mexico	common	zt	MEXICO
+mexico	common	zt	墨西哥
 micronesia, federated states of	common	zt	MICRONESIA, FEDERATED STATES OF
 middle	htmlarea-TableOperations	zt	中間
 modify url	htmlarea-ContextMenu	zt	修改網址
@@ -458,7 +458,7 @@ new caledonia	common	zt	NEW CALEDONIA
 new entry added sucessfully	common	zt	成功新增資料
 new main category	common	zt	新的主要分類
 new value	common	zt	新數值
-new zealand	common	zt	NEW ZEALAND
+new zealand	common	zt	紐西蘭
 next	common	zt	下一個
 next month (hold for menu)	jscalendar	zt	下一個月(在選單中)
 next page	common	zt	下一頁
@@ -525,8 +525,8 @@ pattern for search in projects	common	zt	在專案管理的搜尋模式
 percent	htmlarea-TableOperations	zt	百分比
 permissions to the files/users directory	common	zt	檔案/使用者資料夾的權限
 personal	common	zt	個人
-peru	common	zt	PERU
-philippines	common	zt	PHILIPPINES
+peru	common	zt	祕魯
+philippines	common	zt	菲律賓
 phone number	common	zt	電話
 pitcairn	common	zt	PITCAIRN
 pixels	htmlarea-TableOperations	zt	畫素
@@ -544,7 +544,7 @@ please wait.  calling spell checker.	htmlarea-SpellChecker	zt	檢查中，請等
 please wait...	common	zt	請等待...
 please wait: changing dictionary to	htmlarea-SpellChecker	zt	切換字典中，請等待
 pliz weit ;-)	htmlarea-SpellChecker	zt	請等待
-poland	common	zt	POLAND
+poland	common	zt	波瀾
 portugal	common	zt	PORTUGAL
 postal	common	zt	郵遞區號
 powered by egroupware version %1	common	zt	系統為 <a href="http://www.egroupware.org">eGroupWare</a> 版本 %1
@@ -602,6 +602,7 @@ save	common	zt	儲存
 search	common	zt	搜尋
 search %1 '%2'	common	zt	搜尋 %1 '%2'
 search or select accounts	common	zt	搜尋或是選擇帳號
+search or select multiple accounts	common	zt	搜尋或是選擇多個帳號
 section	common	zt	選擇
 select	common	zt	選擇
 select all %1 %2 for %3	common	zt	選擇 %3 的所有 %1 %2
@@ -609,6 +610,7 @@ select category	common	zt	選擇分類
 select date	common	zt	選擇日期
 select group	common	zt	選擇群組
 select home email address	common	zt	選擇家用信箱
+select multiple accounts	common	zt	選擇多個帳號
 select one	common	zt	選擇一個
 select user	common	zt	選擇使用者
 select work email address	common	zt	選擇工作用信箱
@@ -700,7 +702,7 @@ time	common	zt	時間
 time selection:	jscalendar	zt	選取的時間：
 time zone	common	zt	時區
 time zone offset	common	zt	時區時差
-title	common	zt	標題
+title	common	zt	標題(職稱)
 to	common	zt	到
 to correct this error for the future you will need to properly set the	common	zt	為了在未來修正這個錯誤，您必須正確的設定
 to go back to the msg list, click <a href= %1 >here</a>	common	zt	點選<a href="%1">這裡</a>回到訊息清單

@@ -95,6 +95,7 @@ cyrus imap server	admin	zt	Cyrus IMAP伺服器
 data	admin	zt	資料
 day	admin	zt	日
 day of week<br>(0-6, 0=sun)	admin	zt	星期幾<br>(0-6, 0=星期日)
+db backup and restore	admin	zt	資料庫備份與還原
 default	admin	zt	預設
 default file system space per user	admin	zt	預設各使用者可使用的檔案空間
 default file system space per user/group ?	admin	zt	預設各使用者／群組可使用的檔案空間？
@@ -116,6 +117,7 @@ deny access to application registery	admin	zt	禁止存取應用程式註冊設�
 deny access to applications	admin	zt	無法存取應用程式
 deny access to asynchronous timed services	admin	zt	無法存取非同步時間服務
 deny access to current sessions	admin	zt	禁止存取目前作業程序
+deny access to db backup and restore	admin	zt	無法存取資料庫備份與還原
 deny access to error log	admin	zt	禁止存取錯誤紀錄
 deny access to global categories	admin	zt	無法存取全域類別
 deny access to groups	admin	zt	無法存取群組
@@ -203,7 +205,7 @@ group manager	admin	zt	群組管理員
 group name	admin	zt	群組名稱
 hide php information	admin	zt	隱藏 PHP 資訊
 home directory	admin	zt	家目錄
-host information	admin	zt	Host information
+host information	admin	zt	主機資訊
 hour<br>(0-23)	admin	zt	小時<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zt	存取紀錄應該保留幾天內的事件後刪除(預設90)？
 how many minutes should an account or ip be blocked (default 30) ?	admin	zt	帳號鎖定將持續幾分鐘(預設30)？

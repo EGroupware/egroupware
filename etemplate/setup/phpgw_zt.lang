@@ -21,6 +21,7 @@ add table	etemplate	zt	新增表格
 align	etemplate	zt	對齊
 alignment of label and input-field in table-cell	etemplate	zt	標題與表格輸入文字對齊方式
 alignment of the v/hbox containing table-cell	etemplate	zt	V/HBox的對齊方式
+all days	etemplate	zt	全部日數
 am	etemplate	zt	上午
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zt	索引欄位可以提高搜尋資料的速度(但是會佔用硬碟的空間！)
 application	etemplate	zt	應用程式
@@ -223,6 +224,7 @@ select application	etemplate	zt	應用程式
 select category	etemplate	zt	類別
 select country	etemplate	zt	國家
 select day	etemplate	zt	日期
+select day of week	etemplate	zt	選一週的一天
 select if content of field should not be translated (label gets always translated)	etemplate	zt	如果內容或儲存格不希望被翻譯(標籤都是會被翻譯的)
 select month	etemplate	zt	月份
 select number	etemplate	zt	數字
@@ -277,11 +279,13 @@ vbox	etemplate	zt	VBox
 version	etemplate	zt	版本
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	zt	版本編號，格式：major.minor.revision.number (例如 0.9.13.001 所有數字用0來填滿)
 view this linked entry in its application	etemplate	zt	在應用程式中顯示這個被連結的事件
+weekend	etemplate	zt	週末
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	zt	超出的內容要如何處理： 顯示(預設)，隱藏，捲動，自動(由瀏覽器決定)
 width	etemplate	zt	寬度
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	zt	欄位寬度(%或是畫素)，停用欄位：[! = not]<value>[=<check>] 例如： '!@data' 如果沒有內容就停用
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	zt	表格或DIV標籤標籤的寬度(%或是畫素)
 width, disabled	etemplate	zt	寬度，停用
+working days	etemplate	zt	工作日
 write <app>/setup/tables_current.inc.php	etemplate	zt	寫入<app>/setup/tables_current.inc.php
 write langfile	etemplate	zt	寫入語言檔
 write tables	etemplate	zt	寫入表格

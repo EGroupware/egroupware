@@ -67,6 +67,7 @@ defines the size in minutes of the lines in the day view.	calendar	zt	定義行�
 delete a single entry by passing the id.	calendar	zt	刪除這個事件並且略過這個ID
 delete an entire users calendar.	calendar	zt	刪除整個使用者的行事曆
 delete selected contacts	calendar	zt	刪除聯繫
+delete selected participants	calendar	zt	刪除參與者
 delete series	calendar	zt	刪除連鎖項目
 delete single	calendar	zt	刪除單一項目
 deleted	calendar	zt	刪除日期
@@ -78,7 +79,6 @@ display interval in day view	calendar	zt	每日顯示的間隔
 display mini calendars when printing	calendar	zt	列印時顯示小行事曆
 display status of events	calendar	zt	顯示事件的狀態
 displayed view	calendar	zt	已顯示模式
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	在歡迎畫面顯示您的預設行事曆瀏覽模式？
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入egroupWare第一個看到或是按下您的首頁按鈕的頁面)
 do you want a weekview with or without weekend?	calendar	zt	您是否希望週曆包含週末？
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
@@ -86,6 +86,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	zt	您希望動態新增行事曆的假日嗎？
 download	calendar	zt	下載
 duration	calendar	zt	期間
+duration of the meeting	calendar	zt	會議期間
 edit series	calendar	zt	編輯全系列約會
 edit single	calendar	zt	編輯單一約會
 email notification	calendar	zt	電子郵件提醒
@@ -95,6 +96,7 @@ enable	calendar	zt	啟用
 enabled	calendar	zt	啟用
 end date/time	calendar	zt	結束日期時間
 enddate	calendar	zt	結束日期
+enddate / -time of the meeting, eg. for more then one day	calendar	zt	結束日期 / 會議的時間，例如超過一天的會議
 ends	calendar	zt	結束日期
 enter output filename: ( .vcs appended )	calendar	zt	輸入輸出檔名：(記得加上副檔名.vcs)
 event details follow	calendar	zt	事件細節
@@ -106,11 +108,13 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	zt	外部參與者
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zt	無法傳送尋給'%1'#%2 標題='%3'，傳送者='%4'！
 fieldseparator	calendar	zt	欄位分隔字元
+find free timeslots where the marked participants are availible for the given timespan	calendar	zt	找尋指定人員的行程是否有空檔
 firstname of person to notify	calendar	zt	需要通知的人名
 format of event updates	calendar	zt	事件更新的格式
 fr	calendar	zt	五
 free/busy	calendar	zt	有空/忙錄
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	zt	狀態：不知名的使用者'%1'，錯誤的密碼或是目前無法登入！
+freetime search	calendar	zt	時間空檔查詢
 frequency	calendar	zt	頻率
 fri	calendar	zt	五
 full description	calendar	zt	完整敘述
@@ -130,9 +134,11 @@ holiday management	calendar	zt	假日管理
 holiday-management	calendar	zt	假日管理
 holidays	calendar	zt	假日
 hours	calendar	zt	小時
+how far to search (from startdate)	calendar	zt	搜尋的期間(從開始日期)
 i participate	calendar	zt	我要參與
 ical / rfc2445	calendar	zt	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	zt	如果選擇的假日剛好是週末，系統會自動移到星期一。
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zt	如果您在此並未設定密碼，知道網址的人就能夠讀取。
 if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	zt	如果您沒有在這裡設定密碼，所有的人都可以看到您的資訊！
 ignore conflict	calendar	zt	忽略重疊的約會
 import	calendar	zt	匯入
@@ -152,6 +158,7 @@ list all categories.	calendar	zt	顯示所有分類
 load [iv]cal	calendar	zt	Load [iv]Cal
 location	calendar	zt	約會位置
 location to autoload from	admin	zt	自動讀取的位置
+make freebusy information available to not loged in persons?	calendar	zt	將行程資訊開放給未登入的人？
 make freebusy information availible to not loged in persons?	calendar	zt	讓未登入的使用者瀏覽您目前是有空或是忙碌中？
 matrixview	calendar	zt	基礎瀏覽
 minutes	calendar	zt	分鐘
@@ -167,6 +174,7 @@ monthview	calendar	zt	月行事曆
 needs javascript to be enabled !!!	calendar	zt	您必須啟用瀏覽器的javascript功能
 new entry	calendar	zt	新增資料
 new name must not exist and not be empty!!!	calendar	zt	新的名稱必須未存在或是不能夠空白！
+new search with the above parameters	calendar	zt	透過上面的參數從新搜尋
 next day	calendar	zt	下一天
 no filter	calendar	zt	沒有規則
 no matches found	calendar	zt	沒有找到符合的結果
@@ -193,7 +201,12 @@ on any time change too	calendar	zt	任何時間改變
 on invitation / cancelation only	calendar	zt	只有邀請與取消
 on participant responses too	calendar	zt	參與者回應時
 on time change of more than 4 hours too	calendar	zt	在改變超過四小時後
+one month	calendar	zt	一個月
+one week	calendar	zt	一星期
+one year	calendar	zt	一年
+only the initial date of that recuring event is checked!	calendar	zt	只有選取重複事件的初始日期！
 open todo's:	calendar	zt	未完成的待辦事項
+or enddate / -time	calendar	zt	或結束日期 / 時間
 order	calendar	zt	順序
 overlap holiday	calendar	zt	重疊的假日
 participant	calendar	zt	與會者
@@ -241,6 +254,7 @@ sat	calendar	zt	六
 scheduling conflict	calendar	zt	約會重疊
 search results	calendar	zt	搜尋結果
 select a %1	calendar	zt	選了一個 %1
+select a time	calendar	zt	選擇一個時間
 selected contacts (%1)	calendar	zt	選擇的聯絡人(%1)
 send updates via email	common	zt	透過電子郵件傳送最新消息
 send/receive updates via email	calendar	zt	透過電子郵件傳送/接收最新消息
@@ -271,6 +285,8 @@ specifies the the number of intervals shown in the planner view.	calendar	zt	指
 start date/time	calendar	zt	開始日期/時間
 start- and enddates	calendar	zt	開始與結束日期
 startdate	calendar	zt	開始日期
+startdate / -time	calendar	zt	開始日期 / 時間
+startdate and -time of the search	calendar	zt	搜尋的開始日期 / 時間
 startrecord	calendar	zt	開始紀錄
 su	calendar	zt	日
 submit to repository	calendar	zt	送出到儲藏庫中
@@ -295,7 +311,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	zt	本月
 this week	calendar	zt	本週
 this year	calendar	zt	今年
+three month	calendar	zt	一季
 thu	calendar	zt	四
+til	calendar	zt	到
+timeframe	calendar	zt	時段
+timeframe to search	calendar	zt	搜尋的時段
 title	calendar	zt	標題
 title of the event	calendar	zt	事件標題
 title-row	calendar	zt	事件-列
@@ -308,14 +328,18 @@ translation	calendar	zt	翻譯
 tu	calendar	zt	二
 tue	calendar	zt	二
 two dayview	calendar	zt	兩天模式
+two weeks	calendar	zt	兩週
 update a single entry by passing the fields.	calendar	zt	透過第送的欄位更新一個單一事件
 updated	calendar	zt	更新日期
 use end date	calendar	zt	有結束日期
+use the selected time and close the popup	calendar	zt	使用指定的時間並且關閉彈出視窗
 view this entry	calendar	zt	檢視此筆資料
 we	calendar	zt	三
 wed	calendar	zt	三
 week	calendar	zt	星期
 weekday starts on	calendar	zt	星期開始日
+weekdays	calendar	zt	週日數
+weekdays to use in search	calendar	zt	搜尋的週日數
 weekly	calendar	zt	每週
 weekview	calendar	zt	週行事曆
 weekview including weekend	calendar	zt	週曆包含週末

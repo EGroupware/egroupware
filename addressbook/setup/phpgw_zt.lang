@@ -23,19 +23,19 @@ birthday	common	zt	生日
 birthdays	common	zt	生日
 blank	addressbook	zt	空白
 business	common	zt	公司
-business address type	addressbook	zt	公司住址資料
-business city	addressbook	zt	公司所在縣/市
-business country	addressbook	zt	公司所在國家/地區
-business email	addressbook	zt	公司電子郵件
-business email type	addressbook	zt	公司電子郵件類型
-business fax	addressbook	zt	公司傳真
-business phone	addressbook	zt	公司電話
-business state	addressbook	zt	公司所在省/市
-business street	addressbook	zt	公司所在街道
-business zip code	addressbook	zt	公司郵遞區號
+business address type	addressbook	zt	住址類型
+business city	addressbook	zt	縣/市
+business country	addressbook	zt	國家/地區
+business email	addressbook	zt	電子郵件
+business email type	addressbook	zt	電子郵件類型
+business fax	addressbook	zt	傳真
+business phone	addressbook	zt	電話
+business state	addressbook	zt	省/市
+business street	addressbook	zt	地址
+business zip code	addressbook	zt	郵遞區號
 car phone	addressbook	zt	車用電話
 cell phone	addressbook	zt	行動電話
-charset of file	addressbook	zt	檔案字元設定
+charset of file	addressbook	zt	檔案字元編碼設定
 city	common	zt	縣市
 company	common	zt	公司
 company name	common	zt	公司名稱
@@ -75,15 +75,15 @@ full name	addressbook	zt	全名
 geo	addressbook	zt	GEO
 global categories	addressbook	zt	全域類別
 grant addressbook access	common	zt	允許存取通訊錄
-home address type	addressbook	zt	住家住址資料
-home city	addressbook	zt	住家所在縣/市
-home country	addressbook	zt	住家所在國家/地區
-home email	addressbook	zt	住家電子郵件
-home email type	addressbook	zt	住家電子郵件類型
-home phone	addressbook	zt	住家電話
-home state	addressbook	zt	住家所在省/市
-home street	addressbook	zt	住家所在街道
-home zip code	addressbook	zt	住家郵遞區號
+home address type	addressbook	zt	住址
+home city	addressbook	zt	縣/市
+home country	addressbook	zt	國家/地區
+home email	addressbook	zt	電子郵件
+home email type	addressbook	zt	電子郵件類型
+home phone	addressbook	zt	電話
+home state	addressbook	zt	省/市
+home street	addressbook	zt	地址
+home zip code	addressbook	zt	郵遞區號
 import	addressbook	zt	匯入
 import contacts	addressbook	zt	匯入聯絡人
 import csv-file into addressbook	addressbook	zt	將CSV檔案匯入通訊錄
@@ -94,7 +94,6 @@ import from outlook	addressbook	zt	從Outlook匯入
 import multiple vcard	addressbook	zt	匯入多重名片檔
 import next set	addressbook	zt	匯入下一個
 import_instructions	addressbook	zt	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
-<p>Palm Desktop 4.0 或是更新的版本，在瀏覽通訊錄資料時在<b>檔案</b>功能選擇 <b>匯出</b>，匯出的資料是 VCard 格式。
 international	addressbook	zt	國際
 isdn phone	addressbook	zt	ISDN電話
 label	addressbook	zt	概述
@@ -123,8 +122,8 @@ phone number	common	zt	電話號碼
 phone numbers	common	zt	電話號碼
 please enter a name for that field !	addressbook	zt	請輸入欄位名稱！
 postal	common	zt	郵政信箱
-pref	addressbook	zt	主
-prefix	addressbook	zt	稱謂
+pref	addressbook	zt	主要
+prefix	addressbook	zt	稱謂(前置)
 public key	addressbook	zt	公鑰
 read a list of entries.	addressbook	zt	讀取項目清單。
 read a single entry by passing the id and fieldlist.	addressbook	zt	從id及欄位清單讀取一筆資料。
@@ -138,9 +137,9 @@ select where you want to store	admin	zt	選擇您想存放的位置
 show birthday reminders on main screen	addressbook	zt	在主畫面顯示生日提示
 startrecord	addressbook	zt	開始記錄
 state	common	zt	省/市
-street	common	zt	街道
+street	common	zt	地址
 successfully imported %1 records into your addressbook.	addressbook	zt	成功匯入 %1 筆通訊錄資料
-suffix	addressbook	zt	暱稱
+suffix	addressbook	zt	稱謂(後置)
 test import (show importable records <u>only</u> in browser)	addressbook	zt	測試匯入？（在瀏覽器中<u>只顯示</u>可匯入的紀錄）
 that field name has been used already !	addressbook	zt	這個欄位名稱已經被使用！
 this person's first name was not in the address book.	addressbook	zt	這個人的名字沒有在通訊錄中。
