@@ -353,16 +353,30 @@
 		/*!
 		@function create_email_preferences
 		@abstract create email preferences
-		@discussion This fills the global $phpgw_info array with the required email preferences for this user
 		@param $account_id -optional defaults to : phpgw_info['user']['account_id']
+		@discussion 
+		(old) This fills the global $phpgw_info array with the required email preferences for this user
+		(old was changed: new) fills a local copy of ['email'][] prefs array which is then returned to the calling
+		proc, which the calling proc generally tacks onto the global $phpgw_info array as such:
+			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences();
+		which fills an array based at:
+			$GLOBALS['phpgw_info']['user']['preferences']['email']
+		Most times, this function used the existence, or lack thereof, of certain custom preferences read from the
+		repository as an indication of whether to use server defaults or that specified user custom preference.
+		This means that generally there is not a "pref not set" value, instead an unspecified preference generally
+		does not exist in the repository. This can be an issue when, for example, a new user first uses then email
+		app, if that user never went to the prefs page and specifically set "use sent folder" then, perhaps unknown
+		to that user, the users sent mail is NOT being sent to a "sent" folder.
+		ISSUE: unset = no preference. However, when reading the preferences for the FIRST time ever for a user,
+		and a preference "use sent folder" does not exist (is not set), we do not know if (a) the user purposely does NOT
+		want to use the sent folder, or (b) the user has never actually been to the preferences page, and does not know
+		that "use sent folder" is an option that is not enabled.
 		*/	
 		function create_email_preferences($accountid='')
 		{
-
 			$default_trash_folder = 'Trash';
 			$default_sent_folder = 'Sent';
-
-
+			
 			$account_id = get_account_id($accountid);
 			// If the current user is not the request user, grab the preferences
 			// and reset back to current user.
@@ -446,14 +460,17 @@
 				if ((isset($prefs['email']['mail_folder']))
 				&& ($prefs['email']['mail_folder'] != ''))
 				{
-					// using custom AND an string exists, so "mail_folder" is that string stored in the custom prefs by the user
+					// using custom AND a string exists, so "mail_folder" is that string stored in the custom prefs by the user
 					// DO NOTING - VALID OPTION VALUE for $prefs['email']['mail_folder']
 				}
 				else
 				{
 					// using Custom Prefs BUT this text box was left empty by the user on submit, so no value stored
 					// BUT since we are using custom prefs, "mail_folder" MUST BE AN EMPTY STRING
-					// which is an acceptable, valid preference, overriding any value which may have been set in ["server"]["mail_folder"]
+					// which is an acceptable, valid preference, overriding any value which
+					// may have been set in ["server"]["mail_folder"]
+					// This is one of the few instances in the preference class where an empty, unspecified value
+					// actually does NOT get deleted from the repository.
 					$prefs['email']['mail_folder'] = '';
 				}
 			}
