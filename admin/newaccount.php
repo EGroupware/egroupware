@@ -56,9 +56,8 @@
         $phpgw->db->next_record();
         $apps = explode(":",$phpgw->db->f("account_permissions"));
         $phpgw->common->hook_single("add_def_pref", "admin");
-        for ($i=1;$i<=sizeof($apps);$i++) {
-           $appname = $apps[$i];
-           $phpgw->common->hook_single("add_def_pref", $appname);
+        for ($i=1;$i<sizeof($apps) - 1;$i++) {
+           $phpgw->common->hook_single("add_def_pref", $apps[$i]);
         }
         $phpgw->preferences->commit_newuser($n_loginid);
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
