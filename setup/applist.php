@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 	include('./inc/xml_functions.inc.php');
 
-	// Check header and authentication
+	/* Check header and authentication */
 	if (!$phpgw_setup->auth('Config'))
 	{
 		Header('Location: index.php');
