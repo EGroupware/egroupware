@@ -25,6 +25,7 @@
     app_enabled  int,
     app_order    int,
     app_tables   varchar(255),
+    app_version  varchar(20) NOT NULL default '0.0',
     unique(app_name)
   )";
   $db->query($sql);

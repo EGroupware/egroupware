@@ -12,7 +12,7 @@
   /* $Id$ */
 
   function add_default_server_config(){
-    global $db;
+    global $db, $newversion;
     $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
     $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
     $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
@@ -94,18 +94,18 @@
   }else{
     add_default_server_config();
   }
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('admin', 'Administration', 1, 1, NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('tts', 'Trouble Ticket System', 0, 2, NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('inv', 'Inventory', 0, 3, NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('chat', 'Chat', 0, 4, NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('headlines', 'Headlines', 0, 5, 'news_sites,news_headlines,users_headlines')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('filemanager', 'File manager', 1, 6, NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('addressbook', 'Address Book', 1, 7, 'addressbook')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('todo', 'ToDo List', 1, 8, 'todo')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('calendar', 'Calendar', 1, 9, 'webcal_entry,webcal_entry_users,webcal_entry_groups,webcal_repeats')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('email', 'Email', 1, 10,NULL)");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('nntp', 'NNTP', 1, 11, 'newsgroups,users_newsgroups')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('cron_apps', 'cron_apps', 0, 0, NULL)");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('admin', 'Administration', 1, 1, NULL, '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('tts', 'Trouble Ticket System', 0, 2, NULL, '0.0.0')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('inv', 'Inventory', 0, 3, NULL, '0.0.0')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('chat', 'Chat', 0, 4, NULL, '0.0.0')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('headlines', 'Headlines', 0, 5, 'news_sites,news_headlines,users_headlines', '0.0.0')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('filemanager', 'File manager', 1, 6, NULL, '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('addressbook', 'Address Book', 1, 7, 'addressbook', '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('todo', 'ToDo List', 1, 8, 'todo', '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('calendar', 'Calendar', 1, 9, 'webcal_entry,webcal_entry_users,webcal_entry_groups,webcal_repeats', '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('email', 'Email', 1, 10,NULL, '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('nntp', 'NNTP', 1, 11, 'newsgroups,users_newsgroups', '$newversion')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('cron_apps', 'cron_apps', 0, 0, NULL, '$newversion')");
   
   $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A')");
   

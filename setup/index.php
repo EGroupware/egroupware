@@ -11,6 +11,9 @@
 
   /* $Id$ */
 
+  /* !!! This needs to be changed each time we do an update !!! */
+  $newversion = "0.9.1";
+
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
 
@@ -109,10 +112,12 @@
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>At your request, this script is going to take the evil action of dropping your existing tables and re-creating them in the new format.</td>\n";
       echo "  </tr>\n";
+      $db->Halt_On_Error = "report";
       include ("droptables_".$phpgw_info["server"]["db_type"].".inc.php");
       include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
       include ("default_records.inc.php");
       include ("lang_records.inc.php");
+      $db->Halt_On_Error = "no";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
       echo "  </tr>\n";
@@ -134,9 +139,11 @@
       echo "  </tr>\n";
       echo "</table>\n";
       $currentver = $oldversion;
+      $db->Halt_On_Error = "report";
       include ("upgradetables_".$phpgw_info["server"]["db_type"].".inc.php");
 //      include ("default_records.inc.php");
       include ("lang_records.inc.php");
+      $db->Halt_On_Error = "no";
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
@@ -161,9 +168,11 @@
           echo "  <tr bgcolor=\"e6e6e6\">\n";
           echo "    <td>You appear to be running a new install of phpGroupWare, so the tables will be created for you.</td>\n";
           echo "  </tr>\n";
+          $db->Halt_On_Error = "report";
           include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
           include ("default_records.inc.php");
           include ("lang_records.inc.php");
+          $db->Halt_On_Error = "no";
           echo "  <tr bgcolor=\"486591\">\n";
           echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
           echo "  </tr>\n";

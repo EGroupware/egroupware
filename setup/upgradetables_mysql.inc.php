@@ -94,7 +94,7 @@
     }
   }
   function v9072000to0_9_1(){
-    global $currentver, $db;
+    global $currentver, $newversion, $db;
     if ($currentver == "9072000"){
 
       $db->query("alter table accounts     change con               account_id             int(11)     DEFAULT '0' NOT NULL auto_increment");
@@ -108,8 +108,9 @@
       $db->query("alter table accounts     change lastloginfrom     account_lastloginfrom  varchar(255)");
       $db->query("alter table accounts     change lastpasswd_change account_lastpwd_change int(11)");
       $db->query("alter table accounts     change status            account_status         enum('A','L') DEFAULT 'A' NOT NULL");
-      $db->query("alter table applications add    app_order                                int");
-      $db->query("alter table applications add    app_tables                               varchar(255)");
+      $db->query("alter table applications add    app_order         int");
+      $db->query("alter table applications add    app_tables        varchar(255)");
+      $db->query("alter table applications add    app_version       varchar(20) not null default '0.0'");
       $db->query("alter table preferences  change owner             preference_owner       varchar(20)");
       $db->query("alter table preferences  change name              preference_name        varchar(50)");
       $db->query("alter table preferences  change value             preference_value       varchar(50)");
@@ -133,7 +134,6 @@
       $db->query("update applications set app_order=10,app_tables=NULL where app_name='email'");
       $db->query("update applications set app_order=11,app_tables='newsgroups,users_newsgroups' where app_name='nntp'");
       $db->query("update applications set app_order=0,app_tables=NULL where app_name='cron_apps'");
-
       $sql = "CREATE TABLE config ("
         ."config_name     varchar(25) NOT NULL,"
         ."config_value    varchar(100),"
@@ -190,5 +190,7 @@
   v8212000to9052000();
   v9052000to9072000();
   v9072000to0_9_1();
+  $db->query("update applications set app_version='$newversion' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
+
   echo "</table>\n";
 ?>
