@@ -256,7 +256,8 @@
 
 			if (is_array($b))
 			{
-				foreach ($b as $id => $cont)
+				@reset($b);
+				while(list($id,$cont) = @each($b))
 				{
 					$b[$id] = $cont->scalarval();
 				}
@@ -266,11 +267,13 @@
 			if (is_object($b))
 			{
 				$t = get_object_vars($b);
-				foreach ($t as $id => $cont)
+				@reset($t);
+				while(list($id,$cont) = @each($t))
 				{
 					$t[$id] = $cont->scalarval();
 				}
-				foreach ($t as $id => $cont)
+				@reset($t);
+				while(list($id,$cont) = @each($t))
 				{
 					eval('$b->'.$id.' = $cont;');
 				}
