@@ -3,7 +3,7 @@
 	<xsl:template name="app_header">
 		<table border="0" cellpadding="2" cellspacing="4" width="98%" align="center">
 			<tr>
-				<td><b><xsl:value-of select="appname"/></b></td>
+				<td class="appheader"><xsl:value-of select="appname"/></td>
 			</tr>
 			<xsl:apply-templates select="function_msg"/>
 		</table>
@@ -12,6 +12,6 @@
 
 	<xsl:template match="function_msg">
 		<tr>
-			<td><b><xsl:value-of select="."/></b></td>
+			<td class="functionmsg"><xsl:value-of select="."/></td>
 		</tr>
 	</xsl:template>
