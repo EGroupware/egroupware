@@ -26,6 +26,7 @@
 	{
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$GLOBALS['date'] = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
+		$GLOBALS['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
 		$cal = CreateObject('calendar.uicalendar');
 		$extra_data = "\n".'<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
 			. $cal->mini_calendar(
