@@ -65,26 +65,26 @@
 				'fn'                  => 'cn',        // 'prefix given middle family suffix'
 				'n_given'             => 'givenname',   // firstname
 				'n_family'            => 'sn',  // lastname
-				'n_middle'            => 'middlename',
-				'n_prefix'            => 'prefix',
-				'n_suffix'            => 'suffix',
-				'sound'               => 'audio',
-				'bday'                => 'birthday',
+				'n_middle'            => 'phpgwmiddlename',
+				'n_prefix'            => 'phpgwprefix',
+				'n_suffix'            => 'phpgwsuffix',
+				'sound'               => 'phpgwaudio',
+				'bday'                => 'phpgwbirthday',
 				'note'                => 'description',
-				'tz'                  => 'tz',
-				'geo'                 => 'geo',
-				'url'                 => 'url',
-				'pubkey'              => 'publickey',
+				'tz'                  => 'phpgwtz',
+				'geo'                 => 'phpgwgeo',
+				'url'                 => 'phpgwurl',
+				'pubkey'              => 'phpgwpublickey',
 
 				'org_name'            => 'o',  // company
 				'org_unit'            => 'ou',  // division
 				'title'               => 'title',
 
-				'adr_one_street'      => 'streetaddress',
-				'adr_one_locality'    => 'locality', 
+				'adr_one_street'      => 'street',
+				'adr_one_locality'    => 'l', 
 				'adr_one_region'      => 'st', 
 				'adr_one_postalcode'  => 'postalcode',
-				'adr_one_countryname' => 'countryname',
+				'adr_one_countryname' => 'co',
 				'adr_one_type'        => 'phpgwadronetype', // address is domestic/intl/postal/parcel/work/home
 				'label'               => 'phpgwaddresslabel', // address label
 
@@ -97,30 +97,30 @@
 
 				'tel_work'            => 'telephonenumber',
 				'tel_home'            => 'homephone',
-				'tel_voice'           => 'voicetelephonenumber',
+				'tel_voice'           => 'phpgwvoicetelephonenumber',
 				'tel_fax'             => 'facsimiletelephonenumber', 
-				'tel_msg'             => 'msgtelephonenumber',
-				'tel_cell'            => 'cellphone',
-				'tel_pager'           => 'pagertelephonenumber',
-				'tel_bbs'             => 'bbstelephonenumber',
-				'tel_modem'           => 'modemtelephonenumber',
-				'tel_car'             => 'mobiletelephonenumber',
-				'tel_isdn'            => 'isdnphonenumber',
-				'tel_video'           => 'videophonenumber',
-				'tel_prefer'          => 'preferphone', // home, work, voice, etc
+				'tel_msg'             => 'phpgwmsgtelephonenumber',
+				'tel_cell'            => 'phpgwcelltelephonenumber',
+				'tel_pager'           => 'phpgwpagertelephonenumber',
+				'tel_bbs'             => 'phpgwbbstelephonenumber',
+				'tel_modem'           => 'phpgwmodemtelephonenumber',
+				'tel_car'             => 'phpgwmobiletelephonenumber',
+				'tel_isdn'            => 'phpgwisdnphonenumber',
+				'tel_video'           => 'phpgwvideophonenumber',
+				'tel_prefer'          => 'phpgwpreferphone', // home, work, voice, etc
 				'email'               => 'mail',
-				'email_type'          => 'mailtype', //'INTERNET','CompuServe',etc...
-				'email_home'          => 'mailhome',
-				'email_home_type'     => 'mailhometype' //'INTERNET','CompuServe',etc...
+				'email_type'          => 'phpgwmailtype', //'INTERNET','CompuServe',etc...
+				'email_home'          => 'phpgwmailhome',
+				'email_home_type'     => 'phpgwmailhometype' //'INTERNET','CompuServe',etc...
 			);
 
 			$this->non_contact_fields = array(
 				'id'     => 'uidnumber',
 				'lid'    => 'uid',
-				'tid'    => 'phpgwtypeid',
-				'cat_id' => 'phpgwcatid',
-				'access' => 'phpgwaccess',
-				'owner'  => 'phpgwowner'
+				'tid'    => 'phpgwcontacttypeid',
+				'cat_id' => 'phpgwcontactcatid',
+				'access' => 'phpgwcontactaccess',
+				'owner'  => 'phpgwcontactowner'
 			);
 
 			/* Used to flag an address as being:
@@ -192,11 +192,10 @@
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
 			$return_fields[0]['lid']    = $ldap_fields[0]['uid'][0];
-			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwtypeid'][0];
-			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwowner'][0];
-			$return_fields[0]['access'] = $ldap_fields[0]['phpgwaccess'][0];
-			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcatid'][0];
-
+			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwcontacttypeid'][0];
+			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
+			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
+			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
 			if (gettype($stock_fieldnames) == 'array')
 			{
 				while(list($name,$value)=each($stock_fieldnames))
@@ -263,10 +262,10 @@
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
 			$return_fields[0]['lid']    = $ldap_fields[0]['uid'][0];
-			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwtypeid'][0];
-			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwowner'][0];
-			$return_fields[0]['access'] = $ldap_fields[0]['phpgwaccess'][0];
-			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcatid'][0];
+			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwcontacttypeid'][0];
+			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
+			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
+			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
 
 			if (gettype($stock_fieldnames) == 'array')
 			{
@@ -351,18 +350,18 @@
 			}
 			else
 			{
-				$filterfields += array('phpgwtypeid' => 'n');
+				$filterfields += array('phpgwcontacttypeid' => 'n');
 				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwtypeid=n#"; }
 			}	
 
 			if (is_array($this->grants))
 			{
-				$filterfields += array('phpgwaccess' => 'public');
+				$filterfields += array('phpgwcontactaccess' => 'public');
 				$grants = $this->grants;
 				while (list($user) = each($grants))
 				{
 					if ($DEBUG) { echo "<br>DEBUG - Grant from owner: ".$user; }
-					$filterfields += array('phpgwowner' => $user);
+					$filterfields += array('phpgwcontactowner' => $user);
 				}
 			}
 			//if ($DEBUG) {
@@ -441,7 +440,7 @@
 			}
 			else
 			{
-				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwowner=*');
+				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner=*');
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				$this->total_records = ldap_count_entries($this->ldap, $sri);
 
@@ -483,15 +482,21 @@
 				if ($i<$this->total_records && $ldap_fields[$i]['uid'][0])
 				{
 					//echo '<br>j:'.$j;
+					//echo '<br>i:'.$i;
 					// unique id, lid for group/account records,
 					// type id (g/u) for groups/accounts, and
 					// id of owner/parent for the record
 					$return_fields[$j]['id']     = $ldap_fields[$i]['uidnumber'][0];
 					$return_fields[$j]['lid']    = $ldap_fields[$i]['uid'][0];
-					$return_fields[$j]['tid']    = $ldap_fields[$i]['phpgwtypeid'][0];
-					$return_fields[$j]['owner']  = $ldap_fields[$i]['phpgwowner'][0];
-					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwaccess'][0];
-					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcatid'][0];
+					$return_fields[$j]['tid']    = $ldap_fields[$i]['phpgwcontacttypeid'][0];
+					$return_fields[$j]['owner']  = $ldap_fields[$i]['phpgwcontactowner'][0];
+					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
+					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatId'][0];
+					//echo '<br>uidnumber: "'.$ldap_fields[$i]['uidnumber'][0].'"';
+					//echo '<br>tid: "'.$ldap_fields[$i]['phpgwcontacttypeid'][0].'"';
+					//echo '<br>owner: "'.$ldap_fields[$i]['phpgwcontactowner'][0].'"';
+					//echo '<br>access: "'.$ldap_fields[$i]['phpgwcontactaccess'][0].'"';
+					//echo '<br>catid: "'.$ldap_fields[$i]['phpgwcontactcatid'][0].'"';
 
 					if (gettype($stock_fieldnames) == 'array')
 					{
@@ -553,30 +558,36 @@
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
-					$ldap_fields[$value] = $stock_fields[$name];
+					if ($stock_fields[$name] != '')
+					{
+						$ldap_fields[$value] = $stock_fields[$name];
+					}
 				}
 			}
 
 			$time = gettimeofday();
 			$ldap_fields['uid'] = time().$time['usec'].':'.$ldap_fields['givenname'];
-			
-			$dn = 'uid=' . $ldap_fields['uid'].',' . $phpgw_info['server']['ldap_contact_context'];
-			$ldap_fields['phpgwtypeid']    = $tid;
-			$ldap_fields['phpgwowner']     = $owner;
-			$ldap_fields['phpgwaccess']    = $access;
-			$ldap_fields['phpgwcatid']     = $cat_id;
-			$ldap_fields['uidnumber']      = $this->nextid;
-			$ldap_fields['objectclass'][0] = 'person';
-			$ldap_fields['objectclass'][1] = 'organizationalPerson';
-			$ldap_fields['objectclass'][2] = 'inetOrgPerson';
-			$ldap_fields['objectclass'][3] = 'phpgwContact';
 
-			/*
+			$dn = 'uid=' . $ldap_fields['uid'].',' . $phpgw_info['server']['ldap_contact_context'];
+			$ldap_fields['phpgwcontacttypeid']    = $tid;
+			$ldap_fields['phpgwcontactowner']     = $owner;
+			$ldap_fields['phpgwcontactaccess']    = $access;
+			$ldap_fields['phpgwcontactcatid']     = $cat_id;
+			$ldap_fields['uidnumber']      = $this->nextid;
+			//$ldap_fields['objectclass'][0] = 'person';
+			$ldap_fields['objectclass'][0] = 'organizationalPerson';
+			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
+			$ldap_fields['objectclass'][2] = 'phpgwContact';
+/*
+			@reset($ldap_fields);
 			while (list($name,$value) = each($ldap_fields) ) {
-				echo '<br>fieldname ="'.$name.'", value ="'.$value.'"';
+				if ($value)
+				{
+					echo '<br>fieldname ="'.$name.'", value ="'.$value.'"';
+				}
 			}
 			exit;
-			*/
+*/
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
 			//$this->db->unlock();
@@ -659,79 +670,90 @@
 					// Verify objectclasses are there
 					if (empty($ldap_fields[0]['objectclass']))
 					{
-						$stock_fields['objectclass'][0] = 'person';
-						$stock_fields['objectclass'][1] = 'organizationalPerson';
-						$stock_fields['objectclass'][2] = 'inetOrgPerson';
-						$stock_fields['objectclass'][3] = 'phpgwContact';
+						//$stock_fields['objectclass'][0] = 'person';
+						$stock_fields['objectclass'][0] = 'organizationalPerson';
+						$stock_fields['objectclass'][1] = 'inetOrgPerson';
+						$stock_fields['objectclass'][2] = 'phpgwContact';
 						$err = ldap_modify($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
 					}
 					elseif (!$ldap_fields[0]['objectclass'])
 					{
-						$stock_fields['objectclass'][0] = 'person';
-						$stock_fields['objectclass'][1] = 'organizationalPerson';
-						$stock_fields['objectclass'][2] = 'inetOrgPerson';
-						$stock_fields['objectclass'][3] = 'phpgwContact';
+						//$stock_fields['objectclass'][0] = 'person';
+						$stock_fields['objectclass'][0] = 'organizationalPerson';
+						$stock_fields['objectclass'][1] = 'inetOrgPerson';
+						$stock_fields['objectclass'][2] = 'phpgwContact';
 						$err = ldap_mod_add($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
 					}
 
 					// Verify owner
 					$stock_fields['owner']  = $owner;
-					if (empty($ldap_fields[0]['phpgwowner']))
+					if (empty($ldap_fields[0]['phpgwcontactowner']))
 					{
-						$err = ldap_modify($this->ldap,$dn,array('phpgwowner'  => $stock_fields['owner']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner'  => $stock_fields['owner']));
 					}
-					elseif (!$ldap_fields[0]['phpgwowner'])
+					elseif (!$ldap_fields[0]['phpgwcontactowner'])
 					{
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['owner']));
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactowner' => $stock_fields['owner']));
 					}
 
 					// Verify access
 					$stock_fields['access'] = $access;
-					if (empty($ldap_fields[0]['phpgwaccess']))
+					if (empty($ldap_fields[0]['phpgwcontactaccess']))
 					{
-						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess'  => $stock_fields['access']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactaccess'  => $stock_fields['access']));
 					}
-					elseif (!$ldap_fields[0]['phpgwaccess'])
+					elseif (!$ldap_fields[0]['phpgwcontactaccess'])
 					{
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['access']));
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactaccess' => $stock_fields['access']));
 					}
 
 					// Verify cat_id
 					$stock_fields['cat_id']  = $cat_id;
-					if (empty($ldap_fields[0]['phpgwcatid']))
+					if (empty($ldap_fields[0]['phpgwcontactcatid']))
 					{
-						$err = ldap_modify($this->ldap,$dn,array('phpgwcatid'  => $stock_fields['cat_id']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactcatid'  => $stock_fields['cat_id']));
 					}
-					elseif (!$ldap_fields[0]['phpgwcatid'])
+					elseif (!$ldap_fields[0]['phpgwcontactcatid'])
 					{
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcatid' => $stock_fields['cat_id']));
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactcatid' => $stock_fields['cat_id']));
 					}
 
 					// Verify tid
 					$stock_fields['tid'] = $tid;
-					if (empty($ldap_fields[0]['phpgwtypeid']))
+					if (empty($ldap_fields[0]['phpgwcontacttypeid']))
 					{
-						$err = ldap_modify($this->ldap,$dn,array('phpgwtypeid'  => $stock_fields['tid']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcontacttypeid'  => $stock_fields['tid']));
 					}
-					elseif (!$ldap_fields[0]['phpgwtypeid'])
+					elseif (!$ldap_fields[0]['phpgwcontacttypeid'])
 					{
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwtypeid' => $stock_fields['tid']));
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontacttypeid' => $stock_fields['tid']));
 					}
 
 					// OK, just mod the data already
 					$allfields = $stock_fieldnames + $nonfields;
 					while ( list($fname,$fvalue) = each($allfields) )
 					{
-						if ($ldap_fields[0][$fvalue])
+						//if ($ldap_fields[0][$fvalue])
+						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
-						elseif (!$ldap_fields[0][$fvalue])
+						//elseif (!$ldap_fields[0][$fvalue])
+						elseif (!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
-							//echo "<br>".$fname." not there";
+							//echo "<br>".$fname." not there - '".$fvalue."'";
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
+						elseif ($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
+						{
+							//echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
+							// NOTE: we use the ldap_fields because we need to send the
+							// _ORIGINAL_ contents as the value. see:
+							// http://www.php.net/manual/en/function.ldap-mod-del.php
+							$err = ldap_mod_del($this->ldap,$dn,array($fvalue => $ldap_fields[0][$fvalue][0]));
+						}
+						// Else we have nothing to do.
 					}
 				}
 
@@ -770,13 +792,13 @@
 				return False;
 			}
 
-			$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwowner='.$old_owner);
+			$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner='.$old_owner);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = "";
-			while (list($null,$entry) =  each($ldap_fields))
+			while (list($null,$entry) = each($ldap_fields))
 			{
-				$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $new_owner));
+				$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner' => $new_owner));
 			}
 
 			$this->db->query("update $this->ext_table set contact_owner='$new_owner' WHERE contact_owner=$owner",__LINE__,__FILE__);
@@ -820,7 +842,7 @@
 
 			if ($owner)
 			{
-				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwowner='.$owner);
+				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner='.$owner);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = '';
