@@ -76,7 +76,7 @@
     global $currentver, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3" || ereg ("^0\.9\.3pre", $currentver)){
+    if ($currentver == "0.9.2" || ereg ("^0\.9\.3pre", $currentver)){
        if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	      update_owner("addressbook","ab_owner");
       	update_owner("todo","todo_owner");
@@ -304,14 +304,19 @@
     }
   }
 
-  function v0_9_3to0_9_4()
-  {
-     $currentver = "0.9.4pre1";
-     update_version_table();
+  function v0_9_3to0_9_4(){
+    global $currentver, $phpgw_info, $db;
 
-     echo "  <tr bgcolor=\"e6e6e6\">\n";
-     echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
-     echo "  </tr>\n";  
+    // The 0.9.3pre1 is only temp until release
+    if ($currentver == "0.9.3" || ereg ("^0\.9\.4pre", $currentver)){
+      if ($currentver == "0.9.3") {
+         $currentver = "0.9.4pre1";
+         update_version_table();
+      }
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from 0.9.3 to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+    }
   }
 
   v0_9_1to0_9_2();
