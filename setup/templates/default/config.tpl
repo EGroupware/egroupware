@@ -133,6 +133,10 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
+   <tr class="row_off">
+    <td colspan="2"><b>{lang_ldap_note}</b></td>
+   </tr>
+
    <tr class="row_on">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
