@@ -132,6 +132,52 @@
     <td><input name="newsettings[mail_suffix]" value="<?php echo $current_config["mail_suffix"]; ?>"></td>
    </tr>
 
+   <tr>
+    <td>Mail server login type:</td>
+    <td>
+     <select name="newsettings[mail_login_type]">
+      <option value="standard">standard</option>
+      <option value="vmailmgr">vmailmgr</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr>
+    <td>Enter your SMTP server hostname:</td>
+    <td><input name="newsettings[smtp_server]" value="<?php echo $current_config["smtp_server"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your SMTP server port:</td>
+    <td><input name="newsettings[smtp_port]" value="<?php echo $current_config["smtp_port"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your NNTP server hostname:</td>
+    <td><input name="newsettings[nntp_server]" value="<?php echo $current_config["nntp_server"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your NNTP server port:</td>
+    <td><input name="newsettings[nntp_port]" value="<?php echo $current_config["nntp_port"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your NNTP sender:</td>
+    <td><input name="newsettings[nntp_sender]" value="<?php echo $current_config["nntp_sender"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your NNTP organization:</td>
+    <td><input name="newsettings[nntp_organization]" value="<?php echo $current_config["nntp_organization"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your NNTP admins email address:</td>
+    <td><input name="newsettings[nntp_admin]" value="<?php echo $current_config["nntp_admin"]; ?>"></td>
+   </tr>
+
+
   
    <tr>
     <td colspan="2" align="center"><input type="submit" name="submit" value="Submit"></td>
