@@ -186,7 +186,7 @@
       $this->accounts      = new accounts;
       $this->translation   = new translation;
       $this->common        = new common;
-      $this->preferences   = new preferences;
+      $this->preferences   = new preferences($phpgw_info["user"]["account_id"]);
       $this->acl           = new acl;
       $this->hooks         = new hooks;
 

@@ -21,7 +21,7 @@
        //echo "accounts_const called<br>line: $line<br>$file";
 
        $phpgw->accounts->phpgw_fillarray();
-       $phpgw->preferences->read_preferences();
+       $preferences  = new preferences($phpgw_info["user"]["account_id"]);
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
        $this->apps   = $this->read_apps($phpgw_info["user"]["userid"]);
        
@@ -47,6 +47,8 @@
        $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
        $phpgw_info_temp["server"]      = $phpgw_info["server"];
        $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
+       $p = new preferences($phpgw_info["user"]["account_id"]);
+       $phpgw_info_temp["user"]["preferences"] = $p->preferences;
        $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
                                                                  // database for security.
 
@@ -190,33 +192,37 @@
 
   class preferences
   {
+    var $account_id;
+    var $preferences;
 
-    function read_preferences()
+    function preferences($account_id)
     {
-      global $phpgw, $phpgw_info;
+      global $phpgw;
+      $db2 = $phpgw->db;      
+      $this->account_id = $account_id;
 
-      $phpgw->db->query("select preference_value from preferences where preference_owner='"
-                      . $phpgw_info["user"]["account_id"] . "'",__LINE__,__FILE__);
-      $phpgw->db->next_record();
-      $phpgw_info["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
+      $db2->query("select preference_value from preferences where preference_owner='"
+                . $this->account_id . "'",__LINE__,__FILE__);
+      $db2->next_record();
+      $this->preferences = unserialize($db2->f("preference_value"));
     }
 
-    // This should be called when you are doing changing the $phpgw_info["user"]["preferences"]
-    // array
+    // This should be called when you are done makeing changes to the preferences
     function commit($line = "",$file = "")
     {
        //echo "<br>commit called<br>Line: $line<br>File: $file";
     
-       global $phpgw_info, $phpgw;
+       global $phpgw, $phpgw_info;
        $db = $phpgw->db;
 
-       $db->query("delete from preferences where preference_owner='" . $phpgw_info["user"]["account_id"]
-                . "'",__LINE__,__FILE__);
+       $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
        $db->query("insert into preferences (preference_owner,preference_value) values ('"
-                . $phpgw_info["user"]["account_id"] . "','" . serialize($phpgw_info["user"]["preferences"])
-                . "')",__LINE__,__FILE__);
-       $phpgw->accounts->sync(__LINE__,__FILE__);
+                . $this->account_id . "','" . serialize($this->preferences) . "')",__LINE__,__FILE__);
+
+       if ($phpgw_info["user"]["account_id"] == $this->account_id) {
+          $phpgw->accounts->sync(__LINE__,__FILE__);
+       }
     }
 
     // Add a new preference.
@@ -229,64 +235,20 @@
           $value = $$var;
        }
  
-       $phpgw_info["user"]["preferences"][$app_name][$var] = $value;
+       $this->preferences[$app_name][$var] = $value;
     }
     
     function delete($app_name,$var)
     {
-      global $phpgw_info;
-      unset($phpgw_info["user"]["preferences"][$app_name][$var]);    
+       $this->change($app_name,$var,"");
     }
 
     // This will kill all preferences within a certain app
     function reset($app_name)
     {
-      global $phpgw_info;
-      $phpgw_info["user"]["preferences"][$app_name] = array();
+       $this->preferences[$app_name] = array();
     }
 
-    // This will commit preferences for a new user
-    function commit_newuser($n_loginid) {
-       global $phpgw;
-     
-       $db = $phpgw->db;
-       $db->lock(array("accounts"));
-       $db->query("SELECT account_id FROM accounts WHERE account_lid='".$n_loginid."'");
-       $db->next_record();
-       $id = $db->f("account_id");
-       $db->unlock();
-       $this->commit_user($id);
-    }
-
-    // This will commit preferences for a new user
-    function commit_user($id) {
-       global $phpgw_newuser, $phpgw;
-     
-       $db = $phpgw->db;
-       $db->lock(array("preferences"));
-       $db->query("SELECT * FROM preferences WHERE preference_owner='$id'",__LINE__,__FILE__);
-       if($db->num_rows()) {
-	 $db->query("UPDATE preferences SET preference_value = '". serialize($phpgw_newuser["user"]["preferences"])
-             . "' WHERE preference_owner=".$id,__LINE__,__FILE__);
-       } else {
-	 $db->query("insert into preferences (preference_owner,preference_value) values ("
-		. $id.",'".serialize($phpgw_newuser["user"]["preferences"])."')",__LINE__,__FILE__);
-       }
-       $db->unlock();
-       unset($phpgw_newuser);
-    }
-
-    // This will add all preferences within a certain app for a new user
-    function add_newuser($app_name,$var,$value="") {
-       global $phpgw_newuser;
-     
-       if (! $value) {
-          global $$var;
-          $value = $$var;
-       }
- 
-       $phpgw_newuser["user"]["preferences"][$app_name][$var] = $value;
-    }
   } //end of preferences class
 
 
