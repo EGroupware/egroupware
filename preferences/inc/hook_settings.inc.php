@@ -57,8 +57,8 @@
 	create_select_box('Date format','dateformat',$date_formats);
 
 	$time_formats = array(
-		'12' => '12 hour',
-		'24' => '24 hour'
+		'12' => lang('12 hour'),
+		'24' => lang('24 hour')
 	);
 	create_select_box('Time format','timeformat',$time_formats);
 
@@ -89,18 +89,18 @@
 	{
 		// The 'True' is *NOT* being used as a constant, don't change it
 		$yes_and_no = array(
-			'True' => 'Yes',
-			''     => 'No'
+			'True' => lang('Yes'),
+			''     => lang('No')
 		);
 		create_select_box('Show current users on navigation bar','show_currentusers',$yes_and_no);
 	}
 
 	reset($GLOBALS['phpgw_info']['user']['apps']);
-	while (list($permission) = each($GLOBALS['phpgw_info']['user']['apps']))
+	while (list($app) = each($GLOBALS['phpgw_info']['user']['apps']))
 	{
-		if ($GLOBALS['phpgw_info']['apps'][$permission]['status'] != 2)
+		if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $app)
 		{
-			$user_apps[$permission] = $permission;
+			$user_apps[$app] = $GLOBALS['phpgw_info']['apps'][$app]['title'] ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app);
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps);
