@@ -14,7 +14,7 @@
 	$imgpath = $phpgw->common->image($appname,'navbar.gif');
 	section_start($appname,$imgpath);
 
-	section_item($phpgw->link('/info/csv_import.php'),lang('CSV-Import'));
+	section_item($phpgw->link('/infolog/csv_import.php'),lang('CSV-Import'));
 
 	section_end();
 ?>

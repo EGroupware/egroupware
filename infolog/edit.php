@@ -3,7 +3,7 @@
 	* phpGroupWare - Info Log                                                 *
 	* http://www.phpgroupware.org                                              *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* based on info written by Joseph Engo <jengo@phpgroupware.org>            *
+	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -14,7 +14,7 @@
 	/* $Id$ */
 
 	$phpgw_info['flags'] = array(
-		'currentapp'              => 'info',
+		'currentapp'              => 'infolog',
 		'noheader'                => True,
 		'nofooter'                => True,
 		'nonavbar'                => True,
@@ -23,11 +23,11 @@
 	include('../header.inc.php');
 
 	if ((!isset($info_id) || !$info_id) && !$action)	{
-			Header('Location: ' . $phpgw->link('/info/index.php',sprintf('sort=%s&order=%s&query=%s&start=%s'
-				. '&filter=%s&cat_id=%s',$sort,$order,$query,$start,$filter,$cat_id)));
+			Header('Location: ' . $phpgw->link('/infolog/index.php',"sort=$sort&order=$order&query=$query&start=$start&".
+																					  "filter=$filter&cat_id=$cat_id"));
 	}
 
-	$phpgw->info = createobject('info.info');
+	$phpgw->infolog = createobject('infolog.infolog');
 
 	if ($submit) {
 		if (strlen($des) >= 8000) {
@@ -81,7 +81,7 @@
 		}
 
 		if (! is_array($error)) {
-			$phpgw->info->write(array(
+			$phpgw->infolog->write(array(
 				'type'		=> $type,
 				'from'		=> $from,
 				'addr'		=> $addr,
@@ -102,32 +102,32 @@
 			));
 	
 			if (!$addrsearch && !$projectsearch) {
-				Header('Location: ' . $phpgw->link('/info/index.php', "cd=15&sort=$sort&order=$order&query=$query&".
+				Header('Location: ' . $phpgw->link('/infolog/index.php', "cd=15&sort=$sort&order=$order&query=$query&".
 						"start=$start&filter=$filter&cat_id=$cat_id"));
 			}			
 		}
 	}
-	$phpgw->info->read( $info_id );
+	$phpgw->infolog->read( $info_id );
 	if ($info_id && $action == 'sp') {	// new SubProject
-		if (!$phpgw->info->check_access($info_id,PHPGW_ACL_ADD)) {
-			Header('Location: ' . $phpgw->link('/info/index.php',"sort=$sort&order=$order&query=$query&start=$start&filter=$filter"));
+		if (!$phpgw->infolog->check_access($info_id,PHPGW_ACL_ADD)) {
+			Header('Location: ' . $phpgw->link('/infolog/index.php',"sort=$sort&order=$order&query=$query&start=$start&filter=$filter"));
 			$phpgw->common->phpgw_exit();
 		}
-		$parent = $phpgw->info->data;
-		$phpgw->info->data['info_id'] = $info_id = 0;
-		$phpgw->info->owner = $phpgw_info['user']['account_id'];
-		$phpgw->info->data['info_id_parent'] = $parent['info_id'];
+		$parent = $phpgw->infolog->data;
+		$phpgw->infolog->data['info_id'] = $info_id = 0;
+		$phpgw->infolog->owner = $phpgw_info['user']['account_id'];
+		$phpgw->infolog->data['info_id_parent'] = $parent['info_id'];
 		if ($parent['info_type'] == 'task' && $parent['info_status'] == 'offer') {
-			$phpgw->info->data['info_type'] = 'confirm';
-			$phpgw->info->data['info_responsible'] = $parent['info_owner'];	// confirmation to parent
+			$phpgw->infolog->data['info_type'] = 'confirm';
+			$phpgw->infolog->data['info_responsible'] = $parent['info_owner'];	// confirmation to parent
 		}
-		$phpgw->info->data['info_status'] = 'ongoing';
-		$phpgw->info->data['info_confirm'] = 'not';
-		$phpgw->info->data['info_subject'] = lang('Re:').' '.$parent['info_subject'];
-		$phpgw->info->data['info_des'] = '';
+		$phpgw->infolog->data['info_status'] = 'ongoing';
+		$phpgw->infolog->data['info_confirm'] = 'not';
+		$phpgw->infolog->data['info_subject'] = lang('Re:').' '.$parent['info_subject'];
+		$phpgw->infolog->data['info_des'] = '';
 	} else {
-		if ($info_id && !$phpgw->info->check_access($info_id,PHPGW_ACL_EDIT)) {
-			Header('Location: ' . $phpgw->link('/info/index.php',"sort=$sort&order=$order&query=$query&start=$start&filter=$filter"));
+		if ($info_id && !$phpgw->infolog->check_access($info_id,PHPGW_ACL_EDIT)) {
+			Header('Location: ' . $phpgw->link('/infolog/index.php',"sort=$sort&order=$order&query=$query&start=$start&filter=$filter"));
 			$phpgw->common->phpgw_exit();
 		}
 	}		
@@ -138,17 +138,17 @@
 	. '<input type="hidden" name="start" value="' . $start . '">'
 	. '<input type="hidden" name="filter" value="' . $filter . '">'
 	. '<input type="hidden" name="info_id" value="' . $info_id. '">'
-	. '<input type="hidden" name="id_parent" value="' . ($id_parent = $phpgw->info->data['info_id_parent']). '">'	
+	. '<input type="hidden" name="id_parent" value="' . ($id_parent = $phpgw->infolog->data['info_id_parent']). '">'	
 	. '<input type="hidden" name="action" value="' . $action. '">';
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$phpgw->db->query("select * from info where info_id='$info_id'");
+	$phpgw->db->query("select * FROM infolog where info_id='$info_id'");
 	$phpgw->db->next_record();
 
-	$pri_selected[$phpgw->info->data['info_pri']] = ' selected';
-	$status_selected[$phpgw->info->data['info_status']] = ' selected';
+	$pri_selected[$phpgw->infolog->data['info_pri']] = ' selected';
+	$status_selected[$phpgw->infolog->data['info_status']] = ' selected';
 
 	$phpgw->template->set_file(array('info_edit' => 'form.tpl'));
      
@@ -172,29 +172,29 @@
 			$info_action = 'Info Log - Edit'; break;
 	}
 	$phpgw->template->set_var('lang_info_action',lang($info_action).($addrsearch?' - '.lang('Search for:')." '$addrsearch'":''));
-	$phpgw->template->set_var($phpgw->info->setStyleSheet( ));
+	$phpgw->template->set_var($phpgw->infolog->setStyleSheet( ));
 	$phpgw->template->set_var('lang_category',lang('Category'));
 	$phpgw->template->set_var('lang_none',lang('None'));
-	$phpgw->template->set_var('cat_list',$phpgw->categories->formated_list('select','all',$phpgw->info->data['info_cat'],'True'));
+	$phpgw->template->set_var('cat_list',$phpgw->categories->formated_list('select','all',$phpgw->infolog->data['info_cat'],'True'));
 
-	$phpgw->template->set_var('actionurl',$phpgw->link('/info/edit.php'));
+	$phpgw->template->set_var('actionurl',$phpgw->link('/infolog/edit.php'));
 	$phpgw->template->set_var('common_hidden_vars',$common_hidden_vars);
 
 	$phpgw->template->set_var('lang_owner',lang('Owner'));
-	$phpgw->template->set_var('owner_info',$phpgw->info->accountInfo($phpgw->info->data['info_owner']));
+	$phpgw->template->set_var('owner_info',$phpgw->infolog->accountInfo($phpgw->infolog->data['info_owner']));
 	$phpgw->template->set_var('lang_type',lang('Type'));
-	$phpgw->template->set_var('type_list',$phpgw->info->getEnum('type',$phpgw->info->data['info_type'],$phpgw->info->enums['type']));
+	$phpgw->template->set_var('type_list',$phpgw->infolog->getEnum('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
 
 	$phpgw->template->set_var('lang_prfrom', lang('From'));
-	$phpgw->template->set_var('fromval', $phpgw->strip_html($phpgw->info->data['info_from']));
+	$phpgw->template->set_var('fromval', $phpgw->strip_html($phpgw->infolog->data['info_from']));
 	$phpgw->template->set_var('lang_praddr', lang('Phone/Email'));
-	$phpgw->template->set_var('addrval', $phpgw->strip_html($phpgw->info->data['info_addr']));
+	$phpgw->template->set_var('addrval', $phpgw->strip_html($phpgw->infolog->data['info_addr']));
 
 	$phpgw->template->set_var('lang_search', lang('Search'));
 	$phpgw->template->set_var('lang_prproject', lang('Project'));
 	$phpgw->template->set_var('lang_proj_prompt', lang('Pattern for Search in Projects'));
 	
-	if (($proj_id = $phpgw->info->data['info_proj_id']) || $projectsearch) {
+	if (($proj_id = $phpgw->infolog->data['info_proj_id']) || $projectsearch) {
 		$projects = createobject('projects.projects');
 
 		if ($projectsearch) {
@@ -224,7 +224,7 @@
 	$phpgw->template->set_var('lang_praddrbook', lang('Addressbook'));
 	$phpgw->template->set_var('lang_addr_prompt', lang('Pattern for Search in Addressbook'));
 	
-	if (($addr_id = $phpgw->info->data['info_addr_id']) || $addrsearch) {
+	if (($addr_id = $phpgw->infolog->data['info_addr_id']) || $addrsearch) {
 		$contacts = createobject('phpgwapi.contacts');
 
 		if ($addrsearch) {
@@ -232,7 +232,7 @@
 			if (count($addrs)) {
 				$addrbook = '<select name="addr_id">';
 				while (list( $key,$addr ) = each( $addrs )) {
-					$addrbook .= '<option value="'.$addr['id'].'">'.$phpgw->info->addr2name( $addr )."\n";
+					$addrbook .= '<option value="'.$addr['id'].'">'.$phpgw->infolog->addr2name( $addr )."\n";
 				}
 				$addrbook .= '<option value="0">'.lang('none')."\n";
 				$addrbook .= '</select>';			
@@ -242,7 +242,7 @@
 		} else {		// read name/company from addressbook entry info_addr_id
 			list( $addr ) = $contacts->read_single_entry( $addr_id );
 			if (count($addr)) {
-				$addrbook = $phpgw->info->addr2name( $addr ).'<input type="hidden" name="addr_id" value="' . $addr_id . '">';
+				$addrbook = $phpgw->infolog->addr2name( $addr ).'<input type="hidden" name="addr_id" value="' . $addr_id . '">';
 			}			
 		}
 	}
@@ -252,25 +252,25 @@
 	$phpgw->template->set_var('addrbook', $addrbook);
 			
 	$phpgw->template->set_var('lang_prsubject', lang('Subject'));
-	$phpgw->template->set_var('subjectval', $phpgw->strip_html($phpgw->info->data['info_subject']));
+	$phpgw->template->set_var('subjectval', $phpgw->strip_html($phpgw->infolog->data['info_subject']));
 	$phpgw->template->set_var('lang_prdesc', lang('Description'));
-	$phpgw->template->set_var('descval', $phpgw->strip_html($phpgw->info->data['info_des']));
+	$phpgw->template->set_var('descval', $phpgw->strip_html($phpgw->infolog->data['info_des']));
 
 	// get month/day/year fields for startdate and enddate
-	if ($phpgw->info->data['info_startdate'] == 0) {
+	if ($phpgw->infolog->data['info_startdate'] == 0) {
 		$sday = $smonth = $syear = 0;
 	} else {
-		$sday = date('d',$phpgw->info->data['info_startdate']);
-		$smonth = date('m',$phpgw->info->data['info_startdate']);
-		$syear = date('Y',$phpgw->info->data['info_startdate']);
+		$sday = date('d',$phpgw->infolog->data['info_startdate']);
+		$smonth = date('m',$phpgw->infolog->data['info_startdate']);
+		$syear = date('Y',$phpgw->infolog->data['info_startdate']);
 	}
 
-	if ($phpgw->info->data['info_enddate'] == 0) {
+	if ($phpgw->infolog->data['info_enddate'] == 0) {
 		$eday = $emonth = $eyear = 0;
 	} else {
-		$eday = date('d',$phpgw->info->data['info_enddate']);
-		$emonth = date('m',$phpgw->info->data['info_enddate']);
-		$eyear = date('Y',$phpgw->info->data['info_enddate']);
+		$eday = date('d',$phpgw->infolog->data['info_enddate']);
+		$emonth = date('m',$phpgw->infolog->data['info_enddate']);
+		$eyear = date('Y',$phpgw->infolog->data['info_enddate']);
 	}
      
 	// get an instance of select box class
@@ -288,25 +288,25 @@
 	$phpgw->template->set_var('days',lang('days'));
 
 	$phpgw->template->set_var('lang_status',lang('Status'));
-	$phpgw->template->set_var('status_list',$phpgw->info->getEnum('status',$phpgw->info->data['info_status'],$phpgw->info->enums['status']));
+	$phpgw->template->set_var('status_list',$phpgw->infolog->getEnum('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
 
 	$phpgw->template->set_var('lang_priority',lang('Priority'));
-	$phpgw->template->set_var('priority_list',$phpgw->info->getEnum('pri',$phpgw->info->data['info_pri'],$phpgw->info->enums['priority']));
+	$phpgw->template->set_var('priority_list',$phpgw->infolog->getEnum('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
 
 	$phpgw->template->set_var('lang_confirm',lang('Confirm'));
-	$phpgw->template->set_var('confirm_list',$phpgw->info->getEnum('confirm',$phpgw->info->data['info_confirm'],$phpgw->info->enums['confirm']));
+	$phpgw->template->set_var('confirm_list',$phpgw->infolog->getEnum('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
 
 	$phpgw->template->set_var('lang_responsible',lang('Responsible'));
-	$phpgw->template->set_var('responsible_list',$phpgw->info->getAccount('responsible',$phpgw->info->data['info_responsible']));
+	$phpgw->template->set_var('responsible_list',$phpgw->infolog->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
 
 	$phpgw->template->set_var('lang_access_type',lang('Private'));
-	$phpgw->template->set_var('access_list', '<input type="checkbox" name="access" value="True"' . ($phpgw->info->data['info_access'] == 'private'?' checked':'') . '>');
+	$phpgw->template->set_var('access_list', '<input type="checkbox" name="access" value="True"' . ($phpgw->infolog->data['info_access'] == 'private'?' checked':'') . '>');
      
-	$phpgw->template->set_var('delete_action',$phpgw->link('/info/delete.php'));
+	$phpgw->template->set_var('delete_action',$phpgw->link('/infolog/delete.php'));
 
 	$phpgw->template->set_var('edit_button','<input type="submit" name="submit" value="' . lang('Save') . '">');
     
-	if (!$action && $phpgw->info->check_access($info_id,PHPGW_ACL_DELETE)) {
+	if (!$action && $phpgw->infolog->check_access($info_id,PHPGW_ACL_DELETE)) {
 		$phpgw->template->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
 	}
 	$phpgw->template->set_var('edithandle','');

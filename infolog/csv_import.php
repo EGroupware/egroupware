@@ -12,14 +12,14 @@
 
   /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = "info";
-	$phpgw_info["flags"]["enable_contacts_class"] = True;
+	$phpgw_info['flags']['currentapp'] = 'infolog';
+	$phpgw_info['flags']['enable_contacts_class'] = True;
 	include("../header.inc.php");
 
-	$phpgw->info = createobject('info.info');
+	$phpgw->infolog = createobject('infolog.infolog');
 
-	$t = new Template($phpgw_info["server"]["app_tpl"]); // $t->unknows = 'keep'; $t->debug = 1;
-	$t->set_file(array("import" => "csv_import.tpl"));
+	$t = new Template($phpgw_info['server']['app_tpl']); // $t->unknows = 'keep'; $t->debug = 1;
+	$t->set_file(array('import' => 'csv_import.tpl'));
 	$t->set_block('import','filename','filenamehandle');
 	$t->set_block('import','fheader','fheaderhandle');
 	$t->set_block('import','fields','fieldshandle');
@@ -32,8 +32,8 @@
 	if ($action == 'download' && (!$fieldsep || !$csvfile || !($fp=fopen($csvfile,"r")))) {
 		$action = '';
 	}		
-	$t->set_var("action_url",$phpgw->link("/info/csv_import.php"));
-	$t->set_var( $phpgw->info->setStyleSheet( ));
+	$t->set_var("action_url",$phpgw->link("/infolog/csv_import.php"));
+	$t->set_var( $phpgw->infolog->setStyleSheet( ));
 	$t->set_var("lang_info_action",lang("Import CSV-File into Info Log"));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
@@ -307,7 +307,7 @@ function cat_id( $cats )
 			if (!isset($values['datecreated'])) $values['datecreated'] = $values['startdate'];
 			
 			if (!$debug) {
-				$phpgw->info->write($values);
+				$phpgw->infolog->write($values);
 			}			
 		}		
 		$log .= "\t</tr>\n</table>\n";

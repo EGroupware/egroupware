@@ -3,7 +3,7 @@
 	* phpGroupWare - Info Log                                                  *
 	* http://www.phpgroupware.org                                              *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* based on todo written by Joseph Engo <jengo@phpgroupware.org>            *
+	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -14,21 +14,21 @@
 	/* $Id$ */
 
 	$phpgw_info['flags'] = array(
-		'currentapp'              => 'info', 
+		'currentapp'              => 'infolog', 
 		'enable_nextmatchs_class' => True,
 		'enable_categories_class' => True
 	);
 	include('../header.inc.php');
 
-	$phpgw->info = createobject('info.info');
+	$phpgw->infolog = createobject('infolog.infolog');
 	$db = $phpgw->db;
 	$db2 = $phpgw->db;
 
-	$phpgw->template = new Template($phpgw->common->get_tpl_dir('info'));
+	$phpgw->template = new Template($phpgw->common->get_tpl_dir('infolog'));
 	$phpgw->template->set_file(array( 'info_list_t' => 'list.tpl' ));
 	$phpgw->template->set_block('info_list_t','info_list','list');
 
-	$grants = $phpgw->acl->get_grants('info');
+	$grants = $phpgw->acl->get_grants('infolog');
   
 	$common_hidden_vars =
 			'<input type="hidden" name="sort" value="' . $sort . '">'
@@ -48,21 +48,21 @@
 			break;
 		case 'proj':
 			$common_hidden_vars	.= '<input type="hidden" name="proj_id" value="' . $proj_id . '">';
-			$proj = $phpgw->info->readProj($proj_id);
+			$proj = $phpgw->infolog->readProj($proj_id);
 			$phpgw->template->set_var(lang_info_action,lang('Info Log').' - '.$proj['title']);
 			break;
 		case 'addr':
 			$common_hidden_vars	.= '<input type="hidden" name="addr_id" value="' . $addr_id . '">';
-			$addr = $phpgw->info->readAddr($addr_id);
-			$phpgw->template->set_var(lang_info_action,lang('Info Log').' - '.$phpgw->info->addr2name($addr));
+			$addr = $phpgw->infolog->readAddr($addr_id);
+			$phpgw->template->set_var(lang_info_action,lang('Info Log').' - '.$phpgw->infolog->addr2name($addr));
 			break;
 		default:
 			$phpgw->template->set_var(lang_info_action,lang('Info Log'));
 			break;
 	}	
-	$phpgw->template->set_var($phpgw->info->setStyleSheet( ));
-	$phpgw->template->set_var(actionurl,$phpgw->link('/info/edit.php?action=new'));
-	$phpgw->template->set_var('cat_form',$phpgw->link('/info/index.php'));
+	$phpgw->template->set_var($phpgw->infolog->setStyleSheet( ));
+	$phpgw->template->set_var(actionurl,$phpgw->link('/infolog/edit.php?action=new'));
+	$phpgw->template->set_var('cat_form',$phpgw->link('/infolog/index.php'));
 	$phpgw->template->set_var('lang_category',lang('Category'));
 	$phpgw->template->set_var('lang_all',lang('All'));
 	$phpgw->template->set_var('lang_select',lang('Select'));
@@ -72,7 +72,7 @@
 	// ===========================================
 	// list header variable template-declarations
 	// ===========================================
-	$phpgw->template->set_var( $phpgw->info->infoHeaders( 1,$sort,$order ));
+	$phpgw->template->set_var( $phpgw->infolog->infoHeaders( 1,$sort,$order ));
 	$phpgw->template->set_var(h_lang_sub,lang('Sub'));
 	$phpgw->template->set_var(h_lang_action,lang('Action'));
 	// -------------- end header declaration -----------------
@@ -89,7 +89,7 @@
 	if (!$filter) 	{
 		$filter = 'none';
 	}
-	$filtermethod = $phpgw->info->aclFilter($filter);
+	$filtermethod = $phpgw->infolog->aclFilter($filter);
 	
 	if ($cat_id) {
 		$filtermethod .= " AND info_cat='$cat_id' "; 
@@ -100,10 +100,10 @@
 	if ($query) $sql_query = "AND (info_from like '%$query%' OR info_subject like '%$query%' OR info_des like '%$query%') ";
 
 	$pid = 'AND info_id_parent='.($action == 'sp' ? $info_id : 0);  
-	if ($phpgw->info->listChilds && $action != 'sp')
+	if ($phpgw->infolog->listChilds && $action != 'sp')
 	   $pid = '';
 	
-	$db->query("SELECT COUNT(*) FROM info WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
+	$db->query("SELECT COUNT(*) FROM infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
 	$db->next_record();
 	$total = $db->f(0);
 
@@ -126,8 +126,8 @@
 	
 	switch ($action) {
 		case 'sp':		// details of parent
-			$phpgw->template->set_var( $phpgw->info->infoHeaders(  ));
-			$phpgw->template->set_var( $phpgw->info->formatInfo( $info_id ));
+			$phpgw->template->set_var( $phpgw->infolog->infoHeaders(  ));
+			$phpgw->template->set_var( $phpgw->infolog->formatInfo( $info_id ));
 			$phpgw->template->parse('projdetailshandle','projdetails',True);
 			break;
 		case 'addr':
@@ -139,7 +139,7 @@
 	// ===========================================
 	// nextmatch variable template-declarations
 	// ===========================================
-	$next_matchs = $phpgw->nextmatchs->show_tpl('/info/index.php',$start,$total,
+	$next_matchs = $phpgw->nextmatchs->show_tpl('/infolog/index.php',$start,$total,
 						 "&order=$order&filter=$filter&sort=$sort&query=$query&action=$action&info_id=$info_id&cat_id=$cat_id",
 						 '95%',$phpgw_info['theme']['th_bg']);
 	$phpgw->template->set_var(next_matchs,$next_matchs);
@@ -147,13 +147,13 @@
 
 	$limit = $db->limit($start);
 
-	$db->query($q="SELECT * FROM info WHERE $filtermethod $pid $sql_query $ordermethod $limit",__LINE__,__FILE__);
+	$db->query($q="SELECT * FROM infolog WHERE $filtermethod $pid $sql_query $ordermethod $limit",__LINE__,__FILE__);
 	
 	while ($db->next_record()) {
 		// ========================================
 		// check if actual project has subprojects
 		// ========================================
-		$db2->query("select count(*) as cnt from info where info_id_parent=" .$db->f('info_id'),__LINE__,__FILE__);
+		$db2->query("select count(*) as cnt FROM infolog where info_id_parent=" .$db->f('info_id'),__LINE__,__FILE__);
 		$db2->next_record();
 		if ($db2->f('cnt') > 0) {
 			$subproact = 1;
@@ -164,20 +164,20 @@
 
 		$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
 
-		$phpgw->template->set_var( $phpgw->info->formatInfo( $db->Record,$proj_id,$addr_id ));
+		$phpgw->template->set_var( $phpgw->infolog->formatInfo( $db->Record,$proj_id,$addr_id ));
 
-		if ($phpgw->info->check_access($db->f('info_id'),PHPGW_ACL_EDIT)) {
-			$phpgw->template->set_var('edit','<a href="' . $phpgw->link('/info/edit.php','info_id=' . $db->f('info_id')
+		if ($phpgw->infolog->check_access($db->f('info_id'),PHPGW_ACL_EDIT)) {
+			$phpgw->template->set_var('edit','<a href="' . $phpgw->link('/infolog/edit.php','info_id=' . $db->f('info_id')
 				. '&sort=' . $sort . '&order=' . $order . '&query=' . $query . '&start=' . $start . '&filter=' . $filter)
-				. '">' . $phpgw->info->icon('action','edit') . '</a>');
+				. '">' . $phpgw->infolog->icon('action','edit') . '</a>');
 		} else {
 			$phpgw->template->set_var('edit','');
 		}
 
-		if ($phpgw->info->check_access($db->f('info_id'),PHPGW_ACL_DELETE)) {
-			$phpgw->template->set_var('delete','<a href="' . $phpgw->link('/info/delete.php','info_id=' . $db->f('info_id')
+		if ($phpgw->infolog->check_access($db->f('info_id'),PHPGW_ACL_DELETE)) {
+			$phpgw->template->set_var('delete','<a href="' . $phpgw->link('/infolog/delete.php','info_id=' . $db->f('info_id')
 				. '&sort=' . $sort . '&order=' . $order . '&query=' . $query . '&start=' . $start . '&filter=' . $filter)
-				. '">' . $phpgw->info->icon('action','delete') . '</a>');
+				. '">' . $phpgw->infolog->icon('action','delete') . '</a>');
 		} else {
 			$phpgw->template->set_var('delete','');
 		}
@@ -186,17 +186,17 @@
 		$phpgw->template->set_var('viewparent', '');
 
 		if ($subproact > 0) {	// if subprojects exist, display VIEW SUB icon
-			$phpgw->template->set_var('viewsub', '<a href="' . $phpgw->link('/info/index.php','info_id=' . $db->f('info_id')
-					. "&filter=$filter&action=sp") . '">' . $phpgw->info->icon('action','view') . '</a>');
+			$phpgw->template->set_var('viewsub', '<a href="' . $phpgw->link('/infolog/index.php','info_id=' . $db->f('info_id')
+					. "&filter=$filter&action=sp") . '">' . $phpgw->infolog->icon('action','view') . '</a>');
 		} else {			  			// else display ADD SUB-Icon
-			if ($phpgw->info->check_access($db->f('info_id'),PHPGW_ACL_ADD)) {
-				 $phpgw->template->set_var('subadd', '<a href="' . $phpgw->link('/info/edit.php','info_id=' . $db->f('info_id') .
-											  '&filter=' . $filter . '&action=sp') . '">' . $phpgw->info->icon('action','new') . '</a>');
+			if ($phpgw->infolog->check_access($db->f('info_id'),PHPGW_ACL_ADD)) {
+				 $phpgw->template->set_var('subadd', '<a href="' . $phpgw->link('/infolog/edit.php','info_id=' . $db->f('info_id') .
+											  '&filter=' . $filter . '&action=sp') . '">' . $phpgw->infolog->icon('action','new') . '</a>');
 			}			
       }	 							// if parent --> display VIEW SUBS of Parent
 		if ($db->f('info_id_parent') && $action != 'sp') {
-			$phpgw->template->set_var('viewparent', '<a href="' . $phpgw->link('/info/index.php','info_id=' . $db->f('info_id_parent') .
-					"&filter=$filter&action=sp") . '">' . $phpgw->info->icon('action','parent') . '</a>');
+			$phpgw->template->set_var('viewparent', '<a href="' . $phpgw->link('/infolog/index.php','info_id=' . $db->f('info_id_parent') .
+					"&filter=$filter&action=sp") . '">' . $phpgw->infolog->icon('action','parent') . '</a>');
 		}
 		
 		$phpgw->template->parse('list','info_list',True);
@@ -209,14 +209,14 @@
       
 	if ($action) {
 		$phpgw->template->set_var('lang_back2projects', '<br><a href="' . 
-											$phpgw->link('/info/index.php',"filter=$filter").
+											$phpgw->link('/infolog/index.php',"filter=$filter").
 											'">'.lang('Back to Projectlist').'</a>');
 	}
 
 	// get actual date and year for matrixview arguments
 /*	$year = date('Y');
 	$month = date('m');
-	$phpgw->template->set_var('lang_matrixviewhref', '<br><a href="' . $phpgw->link('/info/graphview.php',"month=$month&year=$year&filter=$filter").
+	$phpgw->template->set_var('lang_matrixviewhref', '<br><a href="' . $phpgw->link('/infolog/graphview.php',"month=$month&year=$year&filter=$filter").
 																	 '">'.lang('View Matrix of actual Month').'</a>'); */
 	// ============================================
 	// template declaration for Add Form

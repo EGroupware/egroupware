@@ -1,7 +1,9 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Info                                                      *
+	* phpGroupWare - InfoLog                                                   *
 	* http://www.phpgroupware.org                                              *
+	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -11,7 +13,7 @@
 
 	/* $Id$ */
 
-	class info
+	class infolog
 	{
 		var $db,$db2;
 		var $grants;
@@ -19,11 +21,11 @@
 		var $enums;
 		var $data = array( );
 
-		function info( $info_id = 0) {
+		function infolog( $info_id = 0) {
 			global $phpgw;
 			$this->db     = $phpgw->db;
 			$this->db2    = $phpgw->db;			// for getAccounts and accountInfo
-			$this->grants = $phpgw->acl->get_grants('info');
+			$this->grants = $phpgw->acl->get_grants('infolog');
 			$this->enums = array( 'priority' => array( 'urgent' => 'urgent','high' => 'high','normal' => 'normal','low' => 'low' ),
 										 'status'	=> array( 'offer' => 'offer','ongoing' => 'ongoing','call' => 'call',
 										 							 'will-call' => 'will-call','done' => 'done','billed' => 'billed' ),
@@ -183,13 +185,13 @@
 			$subject = "<span class=$css_class>";
 			
 			if ($p_id != ($proj_id = $info['info_proj_id']) && $proj = $this->readProj($proj_id)) {
-				$subject .= '<b><a href="'.$phpgw->link('/info/index.php',"filter=$filter&action=proj&proj_id=$proj_id").
+				$subject .= '<b><a href="'.$phpgw->link('/infolog/index.php',"filter=$filter&action=proj&proj_id=$proj_id").
 								'">'.$proj['title'].'</a></b>';
 			}
 			if ($a_id != ($addr_id = $info['info_addr_id']) && $addr = $this->readAddr($addr_id)) {
 				if ($proj) $subject .= '<br>';
 				$addr = $this->addr2name( $addr );
-				$subject .= '<b><a href="'.$phpgw->link('/info/index.php',"filter=$filter&action=addr&addr_id=$addr_id").
+				$subject .= '<b><a href="'.$phpgw->link('/infolog/index.php',"filter=$filter&action=addr&addr_id=$addr_id").
 								"\">$addr</a></b>";
 			}
 			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from))) {
@@ -214,17 +216,17 @@
 					$enddate = "<span class=overdue>$enddate</span>";
 			}
 			if (!($responsible = $info['info_responsible']) && $info['info_status'] == 'offer') {
-				$responsible = $phpgw->info->icon('status','offer');
+				$responsible = $phpgw->infolog->icon('status','offer');
 			} else {
-				$responsible = $phpgw->info->accountInfo($responsible);			
+				$responsible = $phpgw->infolog->accountInfo($responsible);			
 			}			
-			$owner = $phpgw->info->accountInfo($info['info_owner']);
+			$owner = $phpgw->infolog->accountInfo($info['info_owner']);
 			if ($info['info_access'] == 'private')
 				$owner = "<span class=private>$owner</span>";
 				
 			return array(
-				'type'        => $phpgw->info->icon('type',$info['info_type']),
-				'status'		  => $phpgw->info->icon('status',$info['info_status']),
+				'type'        => $phpgw->infolog->icon('type',$info['info_type']),
+				'status'		  => $phpgw->infolog->icon('status',$info['info_status']),
 				'pri'         => lang($info['info_pri']),
 				'subject'     => $subject,
 				'des'			  => $info['info_des'],
@@ -244,7 +246,7 @@
 			for ( ;$f = $h = current($fields); $f = next($fields)) {
 				$lang = lang(ucfirst( $f ));
 				if ($do_sort_header) {
-					$headers['sort_'.$f] = $phpgw->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/info/index.php',$lang);
+					$headers['sort_'.$f] = $phpgw->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/infolog/index.php',$lang);
 				} else {
 					$headers['lang_'.$f] = $lang;				
 				}
@@ -321,7 +323,7 @@
 	
 		function read($info_id) {								// did _not_ ensure ACL, has to be done by the calling code
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
-										(!$this->db->query("select * from info where info_id='$info_id'") ||	!$this->db->next_record())) 
+										(!$this->db->query("select * FROM infolog where info_id='$info_id'") ||	!$this->db->next_record())) 
 			{
 				$this->init( );
 				return False;
@@ -348,7 +350,7 @@
 				
 		function delete($info_id) {							// did _not_ ensure ACL, has to be done by the calling code
 			global $phpgw_info;
-			$this->db->query("delete from info where info_id='$info_id' or info_id_parent='"
+			$this->db->query("delete FROM infolog where info_id='$info_id' or info_id_parent='"
 				. "$info_id' AND ((info_access='public' and info_owner != '"
 				. $phpgw_info['user']['account_id'] . "') or (info_owner='"
 				. $phpgw_info['user']['account_id'] . "'))" ,__LINE__,__FILE__);
@@ -389,7 +391,7 @@
 			if ($values['info_id']) {
 				$query = 'update info set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
 			} else {
-				$query = 'insert into info set '.$query;
+				$query = 'insert INTO infolog set '.$query;
 				/*
 				 * need to set $this->data['info_id'] with assigned autoincrement id
 				 */

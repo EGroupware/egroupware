@@ -29,10 +29,10 @@
 
 	section_start(ucfirst($appname),$imgpath);
 
-	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app=info'),
+	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app=infolog'),
 					 lang('Grant InfoLog Access'));
 
-	section_item($phpgw->link('/preferences/categories.php','cats_app=info'),
+	section_item($phpgw->link('/preferences/categories.php','cats_app=infolog'),
 					 lang('InfoLog categories'));
 					 
 	section_end(); 
