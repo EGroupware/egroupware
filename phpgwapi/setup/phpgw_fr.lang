@@ -1,370 +1,401 @@
-powered by phpgroupware version	common	fr	Propuls&eacute; par phpGroupWare version
-(for weekly)	common	fr	(pour hebdomadaire)
-1 match found	common	fr	1 r&eacute;sultat trouv&eacute;
-1 message has been deleted	common	fr	1 message a été effacé
-a	common	fr	A
 access	common	fr	Acc&egrave;s
-access type	common	fr	Type d'acc&egrave;s
-account active	common	fr	Compte actif
-account has been created	common	fr	Le compte a &eacute;t&eacute; cr&eacute;&eacute;
-account has been deleted	common	fr	Le compte a &eacute;t&eacute; supprim&eacute;
-account has been updated	common	fr	Le compte a &eacute;t&eacute; mis &agrave; jour
-account preferences	common	fr	Pr&eacute;f&eacute;rences de compte
+access not permitted	common	fr	Acc&egrave;s non permis
+acl	common	fr	Liste de Contrôle d'Accès
 active	common	fr	Actif
 add	common	fr	Ajouter
-add a single phrase	common	fr	Ajouter une seule ligne
-add new account	common	fr	Ajouter un nouveau compte
-add new application	common	fr	Ajouter une nouvelle application
-add new phrase	common	fr	Ajouter une nouvelle phrase
-addsub	common	fr	AjouterSoustraire
+add category	common	fr	Ajouter catégorie
+add x category for	common	fr	Ajouter %1 catégorie pour
 admin	common	fr	Admin
 administration	common	fr	Administration
+afghanistan	common	fr	AFGHANISTAN
+albania	common	fr	ALBANIA
+algeria	common	fr	ALGERIA
 all	common	fr	Tous
-all records and account information will be lost!	common	fr	Tous les enregistrements et le compte vont &ecirc;tre perdus !
-anonymous user	common	fr	Utilisateur anonyme
-any	common	fr	N'importe quel
-application	common	fr	Application
-application name	common	fr	Nom d'application
-application title	common	fr	Titre d'application
-applications	common	fr	Applications
+american samoa	common	fr	AMERICAN SAMOA
+andorra	common	fr	ANDORRA
+angola	common	fr	ANGOLA
+anguilla	common	fr	ANGUILLA
+antarctica	common	fr	ANTARCTICA
+antigua and barbuda	common	fr	ANTIGUA AND BARBUDA
 april	common	fr	Avril
-are you sure you want to delete this account ?	common	fr	Voulez-vous vraiment supprimer ce compte ?
-are you sure you want to delete this application ?	common	fr	Etes vous sur de vouloir effacer cette application ?
-are you sure you want to delete this entry	common	fr	&Ecirc;tes-vous certain de vouloir supprimer cette entr&eacute;e ?
+argentina	common	fr	ARGENTINA
+armenia	common	fr	ARMENIA
+aruba	common	fr	ARUBA
 are you sure you want to delete this entry ?	common	fr	Etes vous certain de vouloir supprimer cette entr&eacute;e ?
-are you sure you want to delete this group ?	common	fr	Voulez-vous vraiment supprimer ce groupe ?
-are you sure you want to delete this news site ?	common	fr	Voulez-vous vraiment supprimer ce site de news ?
-are you sure you want to kill this session ?	common	fr	Voulez-vous vraiment tuer cette session ?
-are you sure\nyou want to\ndelete this entry ?	common	fr	&ecirc;tes vous certain\nde vouloir\nsupprimer cette entr&eacute; ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	common	fr	&Eacute;tes vous certain\nde vouloir\nsupprimer cette entr&eacute;e ?\n\nCeci d&eacute;truira\ncette entr&eacute;e pour tous les utilisateurs.
 august	common	fr	Au&ucirc;t
-author	common	fr	Auteur
-available groups	common	fr	Groups disponibles
+australia	common	fr	AUSTRALIA
+austria	common	fr	AUSTRIA
+autosave default category	common	fr	Sauvegarde automatique dans catégorie par défaut
+azerbaijan	common	fr	AZERBAIJAN
 bad login or password	common	fr	Mauvais login ou mot de passe
-base url	common	fr	URL de base
-birthday	common	fr	Anniversaire
-brief description	common	fr	Description R&eacute;sum&eacute;
+bahamas	common	fr	BAHAMAS
+bahrain	common	fr	BAHRAIN
+bangladesh	common	fr	BANGLADESH
+barbados	common	fr	BARBADOS
+belarus	common	fr	BELARUS
+belgium	common	fr	BELGIUM
+belize	common	fr	BELIZE
+benin	common	fr	BENIN
+bermuda	common	fr	BERMUDA
+bhutan	common	fr	BHUTAN
+bolivia	common	fr	BOLIVIA
+bosnia and herzegovina	common	fr	BOSNIA AND HERZEGOVINA
+botswana	common	fr	BOTSWANA
+bouvet island	common	fr	BOUVET ISLAND
+brazil	common	fr	BRAZIL
+british indian ocean territory	common	fr	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	fr	BRUNEI DARUSSALAM
+bulgaria	common	fr	BULGARIA
+burkina faso	common	fr	BURKINA FASO
+burundi	common	fr	BURUNDI
+cambodia	common	fr	CAMBODIA
+cameroon	common	fr	CAMEROON
+canada	common	fr	CANADA
 cancel	common	fr	Annuler
-cc	common	fr	CC
+cape verde	common	fr	CAPE VERDE
+categories	common	fr	Catégories
+categories for	common	fr	catégories pour
+category	common	fr	Catégorie
+category x has been added !	common	fr	Catégorie %1 ajoutée !
+category x has been updated !	common	fr	Catégorie %1 modifiée !
+cayman islands	common	fr	CAYMAN ISLANDS
+central african republic	common	fr	CENTRAL AFRICAN REPUBLIC
+chad	common	fr	CHAD
 change	common	fr	Changer
-change your password	common	fr	Modifez votre mot de passe
-change your profile	common	fr	Changer votre profile
-change your settings	common	fr	Modifiez vos pr&eacute;f&eacute;rences
 charset	common	fr	iso-8859-1
-city	common	fr	Ville
+chile	common	fr	CHILE
+china	common	fr	CHINA
+choose the parent category	common	fr	Choisir la catégorie parente
+christmas island	common	fr	CHRISTMAS ISLAND
 clear	common	fr	Effacer
-clear form	common	fr	Effarcer le Formulaire
-clipboard_contents	common	fr	Contenus du presse-papier
-company name	common	fr	Nom d'entreprise
-completed	common	fr	Termin&eacute;
-compose	common	fr	Composer
+clear form	common	fr	Effacer le formulaire
+cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
+colombia	common	fr	COLOMBIA
+comoros	common	fr	COMOROS
+congo	common	fr	CONGO
+congo, the democratic republic of the	common	fr	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	fr	COOK ISLANDS
 copy	common	fr	Copier
-copy_as	common	fr	Copier vers
+costa rica	common	fr	COSTA RICA
+cote d ivoire	common	fr	COTE D IVOIRE
 create	common	fr	Cr&eacute;er
-create group	common	fr	Cr&eacute;er un groupe
-create lang.sql file	common	fr	Cr&eacute;er le fichier lang.sql
-create new language set	common	fr	Cr&eacute;er nouvelle table de langue
 created by	common	fr	Cr&eacute;&eacute; Par
+croatia	common	fr	CROATIA
+cuba	common	fr	CUBA
+currency	common	fr	Devise
 current users	common	fr	Utilisateurs courants
-current_file	common	fr	Fichier courant
-daily	common	fr	Quotidien
+cyprus	common	fr	CYPRUS
+czech republic	common	fr	CZECH REPUBLIC
 date	common	fr	Date
 date due	common	fr	Date butoir
-date format	common	fr	Format de date
-days datedue	common	fr	Application par defaut
-days repeated	common	fr	Jours r&eacute;p&eacute;t&eacute;s
 december	common	fr	D&eacute;cembre
-default application	common	fr	Application par defaut
-default sorting order	common	fr	Ordre de tri par defaut
+default category	common	fr	Catégorie par défaut
 delete	common	fr	Supprimer
+denmark	common	fr	DENMARK
 description	common	fr	Description
 disabled	common	fr	D&eacute;sactiv&eacute;
-display	common	fr	Afficher
-display missing phrases in lang set	common	fr	Afficher les phrases manquantes dans la table de langage
+djibouti	common	fr	DJIBOUTI
+dominica	common	fr	DOMINICA
+dominican republic	common	fr	DOMINICAN REPUBLIC
 done	common	fr	Fait
-download	common	fr	T&eacutel&eacute;charger
-do_delete	common	fr	Supprimer
-duration	common	fr	Dur&eacute;e
-e-mail	common	fr	E-Mail
+do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
+east timor	common	fr	EAST TIMOR
+ecuador	common	fr	ECUADOR
 edit	common	fr	Editer
-edit application	common	fr	Editer l'applcation
-edit group	common	fr	Editer groupe
+edit category	common	fr	Editer Catégorie
+edit categories	common	fr	Editer Catégories
+edit x category for	common	fr	Editer %1 categorie pour
+egypt	common	fr	EGYPT
+el salvador	common	fr	EL SALVADOR
+e-mail	common	fr	E-Mail
 email	common	fr	E-Mail
 enabled	common	fr	Activ&eacute;
-enabled - hidden from navbar	common	fr	Activ&eacute; - cach&eacute; de la barre de navigation
-enter your new password	common	fr	Entrer votre mot de passe
+end date	common	fr	Date de fin
+end time	common	fr	Heure de fin
 entry has been deleted sucessfully	common	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
 entry updated sucessfully	common	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
+equatorial guinea	common	fr	EQUATORIAL GUINEA
+eritrea	common	fr	ERITREA
 error	common	fr	Erreur
-err_saving_file	common	fr	Erreur en sauvant sur le disque
-exit	common	fr	Sortir
-fax	common	fr	Fax
+error creating x x directory	common	fr	Erreur pendant la creation du répertoire %1%2
+error deleting x x directory	common	fr	Erreur pendant la suppression du répertoire %1%2
+error renaming x x directory	common	fr	Erreur pendant le renomage du répertoire %1%2
+estonia	common	fr	ESTONIA
+ethiopia	common	fr	ETHIOPIA
+falkland islands (malvinas)	common	fr	FALKLAND ISLANDS (MALVINAS)
+faroe islands	common	fr	FAROE ISLANDS
 february	common	fr	F&eacute;vrier
+fields	common	fr	Champs
+fiji	common	fr	FIJI
 files	common	fr	Fichiers
 filter	common	fr	Filtrer
-first name	common	fr	Pr&eacute;nom
-folder	common	fr	Dossier
-forward	common	fr	Transf&eacute;rer
-fr	common	fr	V
-frequency	common	fr	Fr&eacute;quence
-fri	common	fr	Ven
+finland	common	fr	FINLAND
+first name	common	fr	Premier nom
+firstname	common	fr	Pr&eacute;nom
+france	common	fr	FRANCE
+french guiana	common	fr	FRENCH GUIANA
+french polynesia	common	fr	FRENCH POLYNESIA
+french southern territories	common	fr	FRENCH SOUTHERN TERRITORIES
 friday	common	fr	Vendredi
-from	common	fr	De
 ftp	common	fr	FTP
-full description	common	fr	Description Compl&egrave;te
-generate new lang.sql file	common	fr	G&eacute;n&eacute;rer un nouveau fichier lang.sql
-generate printer-friendly version	common	fr	G&eacute;n&eacute;rer une version imprimable
-global public	common	fr	Publique
-go!	common	fr	Go!
+gabon	common	fr	GABON
+gambia	common	fr	GAMBIA
+georgia	common	fr	GEORGIA
+germany	common	fr	GERMANY
+ghana	common	fr	GHANA
+gibraltar	common	fr	GIBRALTAR
+global	common	fr	Global
+global public	common	fr	Publique global
+grant access	common	fr	Autoriser accés
+greece	common	fr	GREECE
+greenland	common	fr	GREENLAND
+grenada	common	fr	GRENADA
 group access	common	fr	Acc&egrave;s par groupe
-group has been added	common	fr	Le groupe a &eacute;t&eacute; ajout&eacute;
-group has been deleted	common	fr	Le groupe a &eacute;t&eacute; supprim&eacute;
-group has been updated	common	fr	Le groupe a &eacute;t&eacute;Group mis &agrave; jour
-group name	common	fr	Nom de groupe
+group	common	fr	Groupe
 group public	common	fr	Publique par groupe
 groups	common	fr	Groupes
-groupsfile_perm_error	common	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 770
-group_files	common	fr	Fichiers de groupe
+guadeloupe	common	fr	GUADELOUPE
+guam	common	fr	GUAM
+guatemala	common	fr	GUATEMALA
+guinea	common	fr	GUINEA
+guinea-bissau	common	fr	GUINEA-BISSAU
+guyana	common	fr	GUYANA
+haiti	common	fr	HAITI
+heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
+holy see (vatican city state)	common	fr	HOLY SEE (VATICAN CITY STATE)
+honduras	common	fr	HONDURAS
+hong kong	common	fr	HONG KONG
 help	common	fr	Aide
-high	common	fr	Haut
 home	common	fr	Home
-home phone	common	fr	T&eacute;l&eacute;phone Personnel
-idle	common	fr	inactivit&eacute;
-if applicable	common	fr	Si applicable
-ignore conflict	common	fr	Ignorer Conflit
-image	common	fr	Image
-imap server type	common	fr	Type de Serveur IMAP
-import lang set	common	fr	Importer table de langage
-instcommoned applications	common	fr	Applications instcommonées
-ip	common	fr	IP
+hungary	common	fr	HUNGARY
+iceland	common	fr	ICELAND
+india	common	fr	INDIA
+indonesia	common	fr	INDONESIA
+iran, islamic republic of	common	fr	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	fr	IRAQ
+ireland	common	fr	IRELAND
+israel	common	fr	ISRAEL
+italy	common	fr	ITALY
+it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recomendé d'executer \"setup\" pour mettre à jour vos tables vers la version courante.
 it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
+jamaica	common	fr	JAMAICA
 january	common	fr	Janvier
+japan	common	fr	JAPAN
+jordan	common	fr	JORDAN
 july	common	fr	Juillet
 june	common	fr	Juin
-kill	common	fr	Tuer
-language	common	fr	Langage
+kazakstan	common	fr	KAZAKSTAN
+kenya	common	fr	KENYA
+kiribati	common	fr	KIRIBATI
+korea, democratic peoples republic of	common	fr	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	fr	KOREA, REPUBLIC OF
+kuwait	common	fr	KUWAIT
+kyrgyzstan	common	fr	KYRGYZSTAN
+lao peoples democratic republic	common	fr	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	fr	Nom
-last page	common	fr	derni&egrave;re page
-last time read	common	fr	Heure de derni&egrave;re lecture
-last updated	common	fr	Modifi&eacute; en dernier
-last x logins	common	fr	Les %1 derniers logins
-line 2	common	fr	ligne 2
-list of current users	common	fr	liste des utilisateurs connect&eacute;s en ce moment
-listings displayed	common	fr	Affichage en listing
+lastname	common	fr	Nom
 login	common	fr	Login
-login time	common	fr	Heure d'entr&eacute;e
-loginid	common	fr	LoginID
 logout	common	fr	Logout
-low	common	fr	Faible
-mail server	common	fr	Serveur Mail
-mail server type	common	fr	Type de Serveur Mail
-manager	common	fr	Manager
+latvia	common	fr	LATVIA
+lebanon	common	fr	LEBANON
+lesotho	common	fr	LESOTHO
+liberia	common	fr	LIBERIA
+libyan arab jamahiriya	common	fr	LIBYAN ARAB JAMAHIRIYA
+liechtenstein	common	fr	LIECHTENSTEIN
+lithuania	common	fr	LITHUANIA
+luxembourg	common	fr	LUXEMBOURG
+macau	common	fr	MACAU
+macedonia, the former yugoslav republic of	common	fr	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	fr	MADAGASCAR
+main category	common	fr	Catégorie principale
+main screen	common	fr	Ecran principal
+malawi	common	fr	MALAWI
+malaysia	common	fr	MALAYSIA
+maldives	common	fr	MALDIVES
+mali	common	fr	MALI
+malta	common	fr	MALTA
+manual	common	fr	Manuel
 march	common	fr	Mars
-max matchs per page	common	fr	Nombre max d'entit&eacute;s par page
+marshall islands	common	fr	MARSHALL ISLANDS
+martinique	common	fr	MARTINIQUE
+mauritania	common	fr	MAURITANIA
+mauritius	common	fr	MAURITIUS
 may	common	fr	Mai
+mayotte	common	fr	MAYOTTE
 medium	common	fr	Moyen
 message	common	fr	Message
-message x	common	fr	Message %1
-messages	common	fr	Messages
-minutes	common	fr	Minutes
-minutes between reloads	common	fr	Minutes entre chaque recharge
-mo	common	fr	L
-mobile	common	fr	T&eacute;l&eacute;phone Portable
-mon	common	fr	Lun
+mexico	common	fr	MEXICO
+micronesia, federated states of	common	fr	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	fr	MOLDOVA, REPUBLIC OF
+monaco	common	fr	MONACO
 monday	common	fr	Lundi
-month	common	fr	Mois
-monthly (by date)	common	fr	Mensuel (par date)
-monthly (by day)	common	fr	Mensuel (par jour)
-move selected messages into	common	fr	D&eacute;placer Les Messages Selectionn&eacute;s Dans
+mongolia	common	fr	MONGOLIA
+montserrat	common	fr	MONTSERRAT
+morocco	common	fr	MOROCCO
+mozambique	common	fr	MOZAMBIQUE
+myanmar	common	fr	MYANMAR
 name	common	fr	Nom
-new entry	common	fr	Nouvelle entr&eacute;e
+namibia	common	fr	NAMIBIA
+nauru	common	fr	NAURU
+nepal	common	fr	NEPAL
+netherlands	common	fr	NETHERLANDS
+netherlands antilles	common	fr	NETHERLANDS ANTILLES
+new caledonia	common	fr	NEW CALEDONIA
 new entry added sucessfully	common	fr	Nouvelle entr&eacute;e ajout&eacute;e avec succ&egrave;s
-new group name	common	fr	Nouveau nom de groupe
-new message	common	fr	Nouveau message
-new password [ leave blank for no change	common	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
-new phrase has been added	common	fr	Une nouvelle phrase a &eacute;t&eacute; rajoutée
-new_file	common	fr	Nouveau fichier
+new main category	common	fr	Nouvelle catégorie principale
+new zealand	common	fr	NEW ZEALAND
 next	common	fr	Suivant
-next page	common	fr	Page suivante
+nicaragua	common	fr	NICARAGUA
+niger	common	fr	NIGER
+nigeria	common	fr	NIGERIA
+niue	common	fr	NIUE
 no	common	fr	Non
-no matches found.	common	fr	Aucune correspondance trouv&eacute;e.
-no subject	common	fr	Pas De Sujet
-non-standard	common	fr	Non standard
 none	common	fr	Aucun
-normal	common	fr	Normal
-note: this feature does *not* change your email password. this will need to be done manucommony.	common	fr	Note: Ceci ne change pas le mot de passe de votre email. Ceci doit &ecirc;tre fait manuellement.
+norfolk island	common	fr	NORFOLK ISLAND
+northern mariana islands	common	fr	NORTHERN MARIANA ISLANDS
+norway	common	fr	NORWAY
+no subject	common	fr	Sans Sujet
+note	common	fr	Note
 notes	common	fr	Notes
 november	common	fr	Novembre
-no_file_name	common	fr	Aucun nom de fichier sp&eacute;cifi&eacute;
 october	common	fr	Octobre
 ok	common	fr	OK
-on *nix systems please type: x	common	fr	Sur les systemes *nix tapez: %1
+oman	common	fr	OMAN
 only yours	common	fr	seulement les votres
-original	common	fr	original
-other number	common	fr	Autre num&eacute;ro
-pager	common	fr	Pager
-participants	common	fr	Participants
+open notify window	common	fr	Ouvrir une fenêtre de notification
+other	common	fr	Autre
+overview	common	fr	Vue d'ensemble
+owner	common	fr	Propriétaire
+pakistan	common	fr	PAKISTAN
+palau	common	fr	PALAU
+palestinian territory, occupied	common	fr	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	fr	PANAMA
+papua new guinea	common	fr	PAPUA NEW GUINEA
+paraguay	common	fr	PARAGUAY
+parent category	common	fr	Catégorie Parente
 password	common	fr	Mot de passe
 password has been updated	common	fr	Le mot de passe a &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s
-percent of users that logged out	common	fr	Pourcentage d'utilisateurs qui se sont d&eacute;logu&eacute;s
-permissions	common	fr	Permissions
-permissions this group has	common	fr	Permissions de ce groupe
-permissions to the files/users directory	common	fr	Permissions pour le repertoire fichiers/utilisateurs
-phrase in english	common	fr	Phrase en anglais
-phrase in new language	common	fr	Phrase dans une nouvelle langue
-phpgroupware login	common	fr	login phpGroupWare
-please select a message first	common	fr	Veuillez d'abord selectionner un message
-please x by hand	common	fr	veuillez %1 a la main
-please, select a new theme	common	fr	Choisissez un nouveau theme
+personal	common	fr	Personel
+peru	common	fr	PERU
+philippines	common	fr	PHILIPPINES
+pitcairn	common	fr	PITCAIRN
+please enter a name	common	fr	Veuillez saisir un nom !
+please set your preferences for this application	common	fr	Veuillez définir vos préferences pour cette application
+poland	common	fr	POLAND
+portugal	common	fr	PORTUGAL
 powered by phpgroupware version x	common	fr	Utilise <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	fr	Pr&eacute;f&eacute;rences
-previous	common	fr	Pr&eacute;c&eacute;dent
-previous page	common	fr	page pr&eacute;c&eacute;dente
 print	common	fr	Imprimer
-printer friendly	common	fr	Version imprimable
 priority	common	fr	Priorit&eacute;
 private	common	fr	Priv&eacute;
-private_files	common	fr	Fichiers priv&eacutes;s
-re-edit event	common	fr	Re-Editer L'Evenement
-re-enter password	common	fr	Re-saisissez le mot de passe
-re-enter your password	common	fr	Re-rentrer votre mot de passe
-record access	common	fr	Acces a l'enrengistrement
-record owner	common	fr	Proprietaire de l'enrengistrement
-remove common users from this group	common	fr	Retirer tous les utilisateurs de ce groupe
+public	common	fr	public
+puerto rico	common	fr	PUERTO RICO
+qatar	common	fr	QATAR
+read	common	fr	Lire
 rename	common	fr	Renommer
-rename_to	common	fr	Renomer vers
-repeat day	common	fr	Jour de r&eacute;p&eacute;tition
-repeat end date	common	fr	Date de fin de r&eacute;p&eacute;tition
-repeat type	common	fr	Type de r&eacute;p&eacute;tition
-repetition	common	fr	R&eacute;p&eacute;tition
-reply	common	fr	R&eacute;pondre
-reply common	common	fr	R&eacute;pondre &agrave; tous
-sa	common	fr	S
-sat	common	fr	Sam
+reunion	common	fr	REUNION
+romania	common	fr	ROMANIA
+russian federation	common	fr	RUSSIAN FEDERATION
+rwanda	common	fr	RWANDA
+saint helena	common	fr	SAINT HELENA
+saint kitts and nevis	common	fr	SAINT KITTS AND NEVIS
+saint lucia	common	fr	SAINT LUCIA
+saint pierre and miquelon	common	fr	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	fr	SAINT VINCENT AND THE GRENADINES
+samoa	common	fr	SAMOA
+san marino	common	fr	SAN MARINO
+sao tome and principe	common	fr	SAO TOME AND PRINCIPE
 saturday	common	fr	Samedi
+saudi arabia	common	fr	SAUDI ARABIA
 save	common	fr	Sauver
 search	common	fr	Chercher
-search results	common	fr	R&eacute;sultats de la recherche
-section	common	fr	Section
-select application	common	fr	selectionner l'apllication
-select different theme	common	fr	Choisissez un theme diff&eacute;rent
-select headline news sites	common	fr	Choisissez les site d'Headlines
-select language to generate for	common	fr	Selectionner la langue a utiliser
-select permissions this group will have	common	fr	Selectionner les permissions qu'aura ce groupe
-select users for inclusion	common	fr	Selectionner les utilisateurs pour inclusion
-select which application for this phrase	common	fr	Selectionner l'application pour cette phrase
-select which language for this phrase	common	fr	Selectionner la langue pour cette phrase
-send	common	fr	Envoyer
-send deleted messages to the trash	common	fr	Messages a effacer envoyés a la corbeille
+select category	common	fr	selectionner la catégorie
+senegal	common	fr	SENEGAL
 september	common	fr	Septembre
 session has been killed	common	fr	La session a &eacute;t&eacute; tu&eacute;e
-show common	common	fr	Montrer tout
-show common groups	common	fr	Montrer tous les groupes
-show birthday reminders on main screen	common	fr	Montrer les anniversaires sur la page d'accueil
-show current users on navigation bar	common	fr	Montrer les utlisteurs connect&eacute;s sur la barre de navigation
-show groups containing	common	fr	Monter les groupes contenant
-show high priority events on main screen	common	fr	Montrer les &eacute;v&eacute;nements de haute priorit&eacute; sur la page d'accueil
-show new messages on main screen	common	fr	Montrer les nouveaux messages sur la page d'accueil
-show text on navigation icons	common	fr	Montrer le texte sur les icones de navigation
+seychelles	common	fr	SEYCHELLES
+show all	common	fr	Tout les éléments
 showing x	common	fr	%1 &eacute;l&eacute;ments
 showing x - x of x	common	fr	&eacute;l&eacute;ments %1 - %2 de %3
-site	common	fr	Site
-size	common	fr	Taille
-sorry, that group name has already been taking.	common	fr	Desolé, ce nom de groupe est déja pris
-sorry, the follow users are still a member of the group x	common	fr	Desolé, les utilisateurs qui suivent sont encore membres du groupe %1
-sorry, there was a problem processing your request.	common	fr	D&eacute;sol&eacute;, il y a eut un probl&egrave;me lors du traitement de votre requ&ecirc;te.
+sierra leone	common	fr	SIERRA LEONE
+singapore	common	fr	SINGAPORE
+slovakia	common	fr	SLOVAKIA
+slovenia	common	fr	SLOVENIA
+solomon islands	common	fr	SOLOMON ISLANDS
+somalia	common	fr	SOMALIA
 sorry, your login has expired	common	fr	D&eacute;sol&eacute;, votre login a expir&eacute;
-source language	common	fr	Langage Source
-specify_file_name	common	fr	Vous devez donner un nom au fichier que vous d&eacute;sirez cr&eacute;er
-state	common	fr	Etat
+south africa	common	fr	SOUTH AFRICA
+south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	fr	SPAIN
+sri lanka	common	fr	SRI LANKA
+start date	common	fr	Date début
+start time	common	fr	Heure début
 status	common	fr	&Eacute;tat
-street	common	fr	Rue
-su	common	fr	D
 subject	common	fr	Sujet
 submit	common	fr	Envoyer
-submit changes	common	fr	Soumettre modifications
-sun	common	fr	Dim
+sudan	common	fr	SUDAN
 sunday	common	fr	Dimanche
-switch current folder to	common	fr	Changer Le Dossier Courant Vers
-target language	common	fr	Langage Cible
-th	common	fr	J
-that loginid has already been taken	common	fr	Ce login est d&eacute;j&agrave; utlis&eacute;
-that site has already been entered	common	fr	Ce site a d&eacute;j&agrave; &eacute;t&eacute; entr&eacute;
-the following conflicts with the suggested time:<ul>x</ul>	common	fr	Les entr&eacute;es suivantes entrent en conflit avec l'heure propos&eacute;e :<ul>%1</ul>
-the login and password can not be the same	common	fr	Le login et le mot de passe ne peuvent pas &ecirc;tre identiques
-the two passwords are not the same	common	fr	Les deux mots de passe ne sont pas identiques
-they must be removed before you can continue	common	fr	Ils doivent être enlevés avant de continuer
-this folder is empty	common	fr	Ce dossier est vide
-this month	common	fr	Ce mois
-this server is located in the x timezone	common	fr	Ce serveur est situ&eacute dans la zone de temps %1
-this week	common	fr	Cette semaine
-threads	common	fr	Threads
-thu	common	fr	Jeu
+suriname	common	fr	SURINAME
+svalbard and jan mayen	common	fr	SVALBARD AND JAN MAYEN
+swaziland	common	fr	SWAZILAND
+sweden	common	fr	SWEDEN
+switzerland	common	fr	SWITZERLAND
+syrian arab republic	common	fr	SYRIAN ARAB REPUBLIC
+taiwan, province of china	common	fr	TAIWAN, PROVINCE OF CHINA
+tajikistan	common	fr	TAJIKISTAN
+tanzania, united republic of	common	fr	TANZANIA, UNITED REPUBLIC OF
+thailand	common	fr	THAILAND
+this name has been used already	common	fr	Ce nom est déjà utilisé !
 thursday	common	fr	Jeudi
 time	common	fr	Heure
-time format	common	fr	Format d'heure
-time zone offset	common	fr	D&eacute;calage de la zone horaire
+time zone	common	fr	Fuseau horaire
+time zone offset	common	fr	D&eacute;calage du fuseau horaire
 title	common	fr	Titre
-to	common	fr	A
-to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur vous devriez dans le future mettre correctement le
-today	common	fr	Aujourd'hui
+togo	common	fr	TOGO
+tokelau	common	fr	TOKELAU
+tonga	common	fr	TONGA
 total	common	fr	Total
-total records	common	fr	Nombre total d'enregistrements
-tu	common	fr	M
-tue	common	fr	Mar
+trinidad and tobago	common	fr	TRINIDAD AND TOBAGO
 tuesday	common	fr	Mardi
-undisclosed recipients	common	fr	Undisclosed Recipients
-undisclosed sender	common	fr	Undisclosed Sender
-update	common	fr	Mettre &agrave; jour
-updated	common	fr	Mis &agrave; jour
-upload	common	fr	Upload
-urgency	common	fr	Priorit&eacute;
+tunisia	common	fr	TUNISIA
+turkey	common	fr	TURKEY
+turkmenistan	common	fr	TURKMENISTAN
+turks and caicos islands	common	fr	TURKS AND CAICOS ISLANDS
+tuvalu	common	fr	TUVALU
+uganda	common	fr	UGANDA
+ukraine	common	fr	UKRAINE
+united arab emirates	common	fr	UNITED ARAB EMIRATES
+united kingdom	common	fr	UNITED KINGDOM
+united states	common	fr	UNITED STATES
+united states minor outlying islands	common	fr	UNITED STATES MINOR OUTLYING ISLANDS
 url	common	fr	Url
-use cookies	common	fr	Utiliser les cookies
-use custom settings	common	fr	Utiliser les parametres personels
-use end date	common	fr	Utiliser la date de fin
-user accounts	common	fr	Comptes utilisateurs
-user groups	common	fr	Groupes d'utilisateurs
+uruguay	common	fr	URUGUAY
+updated	common	fr	Mis à jour
+user	common	fr	Utilisateur
 username	common	fr	Nom d'utilisateur
 users	common	fr	Utilisateurs
-usersfile_perm_error	common	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/users/.<BR> Sur un system *nix tappez: chmod 770
-view	common	fr	Voir
-view access log	common	fr	Voir les log d'acc&egrave;s
-view sessions	common	fr	Voir les sessions
-view this entry	common	fr	Voir cette entr&eacute;e
-view/edit/delete common phrases	common	fr	Voir/editer/effacer toutes les phrases
-we	common	fr	Me
-wed	common	fr	Mer
+uzbekistan	common	fr	UZBEKISTAN
+vanuatu	common	fr	VANUATU
+venezuela	common	fr	VENEZUELA
+viet nam	common	fr	VIET NAM
+view	common	fr	View
+virgin islands, british	common	fr	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	fr	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	fr	WALLIS AND FUTUNA
 wednesday	common	fr	Mercredi
-week	common	fr	Semaine
-weekday starts on	common	fr	Le premier jour de la semaine est
-weekly	common	fr	Hebdomadaire
+western sahara	common	fr	WESTERN SAHARA
 which groups	common	fr	Quels groupes
-work day ends on	common	fr	La journ&eacute;e de travaille finit &agrave;
-work day starts on	common	fr	La journ&eacute;e de travaille commence &agrave;
-work phone	common	fr	T&eacute;l&eacute;phone Professionnel
-x matches found	common	fr	%1 r&eacute;sultats trouv&eacute;
-x messages have been deleted	common	fr	%1 messages ont &eacute;t&eacute;s effac&eacute;s
-year	common	fr	Ann&eacute;e
-yearly	common	fr	Annuel
+written by:	common	fr	Ecrit par:
+yemen	common	fr	YEMEN
 yes	common	fr	Oui
-you are required to change your password during your first login	common	fr	Vous devez changer votre mot de passe a votre premiere connection
-you have 1 new message!	common	fr	Vous avez un nouveau message !
-you have been successfully logged out	common	fr	Vous avez &eacute;t&eacute; d&eacute;logu&eacute; avec succ&egrave;
-you have entered an invailed date	common	fr	vous avez entr&eacute; une date invalide
-you have not entered a\nbrief description	common	fr	Vous n'avez pas saisi\nde Description R&eacute;sum&eacute;
-you have not entered a\nvalid time of day.	common	fr	Vous n'avez pas saisi\nune heure valide.
-you have x new messages!	common	fr	Vous avez %1 nouveaux messages!
-you must add at least 1 permission to this account	common	fr	Vous devez ajouter au moins une permission a ce compte
-you must enter a password	common	fr	Vous devez entrer un mot de passe
-you must enter an application name and title.	common	fr	vous devez entrer un nom d'application et de titre
-you must enter one or more search keywords	common	fr	Vous devez entrer au moins un mot clef pour la recherche
-you must select a file type	common	fr	Vous devez entrer un type de fichier
-your current theme is: x	common	fr	</b>
-your message has been sent	common	fr	Votre message a &eacute;t&eacute; envoy&eacute;
+you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupeWare plus récente que celle définie pour la base de données.
+you have selected an invalid date	common	fr	Vous avez selectionné une date invalide !
+you have selected an invalid main category	common	fr	Vous avez selectionné une catégorie principale invalide !
 your search returned 1 match	common	fr	Votre recherche a retourn&eacute;e un r&eacute;sultat
 your search returned x matchs	common	fr	Votre recherche a retourn&eacute;e %1 r&eacutes;sultats
-your session could not be verified.	common	fr	Votre session ne peut etre verifi&eacute;e.
 your settings have been updated	common	fr	Vos pr&eacute;f&eacute;rences ont &eacute;t&eacute; mises &agrave; jour
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	common	fr	La plage horaire <B> %1 - %2 </B> que vous proposez entre en conflit avec les entr&eacute;es suivantes du calendrier :
-zip code	common	fr	Code Postal
+yugoslavia	common	fr	YUGOSLAVIA
+you have been successfully logged out	login	fr	Déconnexion réussie 
+your session could not be verified.	login	fr	Votre session n'est pas valide.
+zambia	common	fr	ZAMBIA
+zimbabwe	common	fr	ZIMBABWE
