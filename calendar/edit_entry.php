@@ -56,8 +56,7 @@ if ($id > 0) {
     while ($phpgw->db->next_record()) {
       $participants[$phpgw->db->f("cal_login")] = 1;
     }
-    $phpgw->db->query("select * from webcal_entry_repeats where cal_id='$id"
-		. "'");
+    $phpgw->db->query("select * from webcal_entry_repeats where cal_id=$id");
 
     $phpgw->db->next_record();
     $rpt_type = $phpgw->db->f("cal_type");
@@ -108,9 +107,9 @@ function validate_and_submit() {
 }
 </SCRIPT>
 </HEAD>
-<BODY BGCOLOR="<?php echo $BGCOLOR; ?>">
+<BODY BGCOLOR="#C0C0C0">
 
-<H2><FONT COLOR="<?php echo $H2COLOR;?>"><?php 
+<H2><FONT COLOR="#000000"><?php 
     if ($id)
        echo lang("Calendar - Edit");
     else
@@ -241,7 +240,7 @@ function validate_and_submit() {
  <TD><SELECT NAME="n_groups[]" multiple size="5">
   <?php
     if ($id > 0) {
-       $phpgw->db->query("select groups from webcal_entry_groups where cal_id='$id'");
+       $phpgw->db->query("select groups from webcal_entry_groups where cal_id=$id");
        $phpgw->db->next_record();
        $db_groups = $phpgw->db->f("groups");
     }

@@ -206,7 +206,7 @@ if (! $error) {
 	         . "cal_end,cal_days,cal_frequency) values($id,'$rpt_type',"
 	         . "$end,'$days',$freq)");
   }
-  $phpgw->db->query("insert into webcal_entry_groups values ('$id','"
+  $phpgw->db->query("insert into webcal_entry_groups values ($id,'"
 	      . $phpgw->accounts->array_to_string($access,$n_groups) . "') ");
 
   

@@ -66,47 +66,47 @@
 </STYLE>
 </HEAD>
 
-<TABLE BORDER=0 WIDTH=100%>
-<TR>
+<table border="0" width="100%">
+<tr>
 <?php
   if (! $friendly) {
-     echo "<TD ALIGN=\"left\">";
+     echo "<td align=\"left\">";
      display_small_month($prevmonth,$prevyear,True);
   }
 ?>
 
-<TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
+<td align="middle"><font size="+2" color="#000000"><B>
 <?php
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
   print lang(strftime("%B",$m)) . " " . $thisyear;
 ?>
-</B></FONT>
-<FONT COLOR="<?php echo $H2COLOR;?>" SIZE="+1">
+</b></font>
+<font color="#000000" size="+1">
 <br>
 <?php
   echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
 ?>
-</FONT></TD>
+</font></td>
 <?php
   if (! $friendly) {
-     echo '<TD ALIGN="right">';
+     echo "<td align=\"right\">";
      display_small_month($nextmonth,$nextyear,True);
   }
 ?>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<TABLE WIDTH=100% BORDER=0 bordercolor=FFFFFF cellspacing=2 cellpadding=2>
+<table width="100%" border="0" bordercolor="#FFFFFF" cellspacing="2" cellpadding="2">
 
-<TR>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sun"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Mon"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Tue"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Wed"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Thu"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Fri"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sat"); ?></FONT></TH>
-</TR>
+<tr>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sun"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Mon"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Tue"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Wed"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Thu"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Fri"); ?></font></th>
+<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sat"); ?></font></th>
+</tr>
 
 <?php
   /* Pre-Load the repeated events for quckier access */
@@ -130,41 +130,41 @@
   for ($i = $sun; date("Ymd",$i) <= date("Ymd",$monthend); $i += (24 * 3600 * 7) ) {
     $CELLBG = $phpgw->nextmatchs->alternate_row_color($CELLBG);
 
-    echo "<TR>\n";
+    echo "<tr>\n";
     for ($j = 0; $j < 7; $j++) {
       $date = $i + ($j * 24 * 3600);
       if (date("Ymd",$date) >= date("Ymd",$monthstart) &&
          date("Ymd",$date) <= date("Ymd",$monthend) ) {
-         echo "<TD VALIGN=\"top\" WIDTH=75 HEIGHT=75 ID=\"tablecell\"";
+         echo "<td valign=\"top\" width=\"75\" height=\"75\" id=\"tablecell\"";
          if (date("Ymd",$date) == date("Ymd",$today)) {
-            echo " BGCOLOR=\"".$phpgw_info["theme"]["cal_today"]."\">";
+            echo " bgcolor=\"".$phpgw_info["theme"]["cal_today"]."\">";
          } else {
-            echo " BGCOLOR=\"$CELLBG\">";
+            echo " bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">";
          }
 
          print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
 
          $thirsday=$i+24*3600*4;
          if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Sunday" && $j == 0) {
-            echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' .(int)((date("z",$thirsday)+7)/7) . '</a></font>';
+            echo "<font size=\"-2\"><a href=\"".$phpgw->link("week.php","date=".date("Ymd",$date))."\">week " .(int)((date("z",$thirsday)+7)/7) . "</a></font>";
          }
          if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Monday" && $j == 1) {
-            echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' . (int)((date("z",$thirsday)+7)/7) . '</a></font>';
+            echo "<font size=\"-2\"><a href=\"".$phpgw->link("week.php","date=" . date("Ymd",$date)) . "\">week " . (int)((date("z",$thirsday)+7)/7) . "</a></font>";
          }
 
-         echo "</TD>\n";
+         echo "</td>\n";
       } else {
-         echo "<TD></TD>\n";
+         echo "<td></td>\n";
       }
     }
-    print "</TR>\n";
+    print "</tr>\n";
   }
 
 ?>
 
-</TABLE>
-<P>
-<P>
+</table>
+<p>
+<p>
 
 <?php
   if (! $friendly) {
@@ -172,10 +172,9 @@
      if ($thisyear)
         $param .= "year=$thisyear&month=$thismonth&";
 
-     $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	. "status = '" . lang("Generate printer-friendly version"). "'";
-     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
-     echo "[". lang("Printer Friendly") . "]</A>";
+     $param .= "friendly=1";
+     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\" target=\"cal_printer_friendly\" onMouseOver=\"window.status='"
+	  .lang("Generate printer-friendly version")."'>[" . lang("Printer Friendly") . "]</a>";
      $phpgw->common->phpgw_footer();
   }
 ?>
