@@ -16,11 +16,19 @@
                                "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  echo "<center>" . lang("Address book");
   //echo "<br>Time track = " . $phpgw_info["apps"]["timetrack"]["enabled"];
 
   if (! $start)
      $start = 0;
+
+  $t = new Template($phpgw_info["server"]["app_tpl"]);
+  $t->set_file(array( "addressbook_header"	=> "header.tpl",
+		      "searchfilter"		=> "searchfilter.tpl",
+		      "body"			=> "list.tpl",
+		      "addressbook_footer"	=> "footer.tpl" ));
+
+#  $t->set_block("addressbook_header","searchfilter","body",
+#  		      "addressbook_footer","output");
 
   $limit =$phpgw->nextmatchs->sql_limit($start);
 
@@ -70,10 +78,11 @@
     $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) == 1)
-        echo "<br>" . lang("your search returned 1 match");
+        $t->set_var(searchreturn,lang("your search returned 1 match"));
      else
-        echo "<br>" . lang("your search returned x matchs",$phpgw->db->f(0));
+        $t->set_var(searchreturn,lang("your search returned x matchs",$phpgw->db->f(0)));
   } else {
+     $t->set_var(searchreturn,"");
      $phpgw->db->query("select count(*) from addressbook where $filtermethod",__LINE__,__FILE__);
      $phpgw->db->next_record();
   }
@@ -86,54 +95,26 @@
   //$phpgw->db->next_record();
 
   if ($phpgw->db->f(0) > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"])
-     echo "<br>" . lang("showing x - x of x",($start + 1),
-			   ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]),$phpgw->db->f(0));
+     $t->set_var(lang_showing,lang("showing x - x of x",($start + 1),($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]),$phpgw->db->f(0)));
   else
-     echo "<br>" . lang("showing x",$phpgw->db->f(0)); 
-?>
+     $t->set_var(lang_showing,lang("showing x",$phpgw->db->f(0)));
+  
+  $t->set_var("search_filter",$phpgw->nextmatchs->show_tpl("index.php",$start,$phpgw->db->f(0),"&order=$order&filter=$filter&sort=$sort&query=$query", "75%", $phpgw_info["theme"]["th_bg"]));
 
-<?php
- $phpgw->nextmatchs->show("index.php",$start,$phpgw->db->f(0),"&order=$order&filter=$filter&sort="
-		              . "$sort&query=$query", "75%", $phpgw_info["theme"]["th_bg"]);
-?>
-
-  <table width=75% border=0 cellspacing=1 cellpadding=3>
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
-    <?php
-       while ($column = each($abc)) {
-          if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
-	      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
-             echo '<td height="21">';
-             echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-             echo $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
-             echo '</font></td>';
-             echo "\n";
+  while ($column = each($abc)) {
+    if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
+      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+      $cols .= '<td height="21">';
+      $cols .= '<font size="-1" face="Arial, Helvetica, sans-serif">';
+      $cols .= $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
+      $cols .= '</font></td>';
+      $cols .= "\n";
              
-             // To be used when displaying the rows
-             $columns_to_display[$column[0]] = True;
-          }
-       }
-    ?>
+      // To be used when displaying the rows
+      $columns_to_display[$column[0]] = True;
+    }
+  }
 
-      <td width="3%" height="21">
-       <font face="Arial, Helvetica, sans-serif" size="-1">
-         <?php echo lang("View"); ?>
-       </font>
-      </td>
-      <td width="3%" height="21">
-       <font face="Arial, Helvetica, sans-serif" size="-1">
-         Vcard
-       </font>
-      </td>
-      <td width="5%" height="21">
-       <font face="Arial, Helvetica, sans-serif" size="-1">
-         <?php echo lang("Edit"); ?>
-       </font>
-      </td>
-    </tr>
-  </form>
-
-<?php
   if (isset($query) && $query) {
      if (isset($phpgw_info["apps"]["timetrack"]["enabled"]) &&
 	 $phpgw_info["apps"]["timetrack"]["enabled"]) {
@@ -162,121 +143,99 @@
        $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
     }
   }		// else $query
-
+  $rows="";
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    echo '<tr bgcolor="#' . $tr_color . '">';
+    $rows .= '<tr bgcolor="#'.$tr_color . '">';
     
     $ab_id = $phpgw->db->f("ab_id");
     
-       while ($column = each($columns_to_display)) {
-          if ($column[0] == "company") {
+    while ($column = each($columns_to_display)) {
+      if ($column[0] == "company") {
         if ($phpgw_info["apps"]["timetrack"]["enabled"]) {        
-        $field   = $phpgw->db->f("company_name");
-             } else {
-             $field = $phpgw->db->f("ab_company");
-             }
-          } else {
-          $field = $phpgw->db->f("ab_" . $column[0]);
-          }
+          $field   = $phpgw->db->f("company_name");
+        } else {
+          $field = $phpgw->db->f("ab_company");
+        }
+      } else {
+        $field = $phpgw->db->f("ab_" . $column[0]);
+      }
 
-/*  
-       while ($column = each($columns_to_display)) {                                                                                     
-       if ($phpgw_info["apps"]["timetrack"]["enabled"]) {                                                                             
-          if ($column[0] == "company") {                                                                                              
-             $field   = $phpgw->db->f("company_name");                                                                                
-          } else {                                                                                                                    
-             $field = $phpgw->db->f("ab_company");                                                                                    
-          }                                                                                                                           
-       } else {                                                                                                                       
-          $field = $phpgw->db->f("ab_" . $column[0]);                                                                                 
-       }   */
+      $field = htmlentities($field);
 
-       $field = htmlentities($field);
-
-       // Some fields require special formating.       
-       if ($column[0] == "url") {
-          if (! ereg("^http://",$field)) {
-             $data = "http://" . $field;
-          }
-          echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-             . '<a href="' . $field . '" target="_new">' . $field. '</a>&nbsp;</font></td>';
-       } else if ($column[0] == "email") {
+      // Some fields require special formating.       
+      if ($column[0] == "url") {
+        if (! ereg("^http://",$field)) {
+          $data = "http://" . $field;
+        }
+        $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+          . '<a href="' . $field . '" target="_new">' . $field. '</a>&nbsp;</font></td>';
+        } else if ($column[0] == "email") {
           if ($phpgw_info["user"]["apps"]["email"]) {
-             echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-                . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
-                                            "to=" . urlencode($field)) . '" target="_new">' . $field . '</a>&nbsp;</font></td>';
+          $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+             . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
+                                         "to=" . urlencode($field)) . '" target="_new">' . $field . '</a>&nbsp;</font></td>';
           } else {
-             echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-                . '<a href="mailto:' . $field . '">' . $field. '</a>&nbsp;</font></td>';
+          $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+             . '<a href="mailto:' . $field . '">' . $field. '</a>&nbsp;</font></td>';
           }
-       } else {
-          echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-             . $field . '&nbsp;</font></td>';
-       }
-       
+      } else {
+        $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+          . $field . '&nbsp;</font></td>';
+      }
+      #echo '</tr>';
     }
     reset($columns_to_display);		// If we don't reset it, our inside while won't loop
-    ?>
-    <td valign="top" width="3%">
- 	<font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size="2">
-      <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
-								 . "$filter&query=$query&sort=$sort");
-	  ?>"> <?php echo lang("View"); ?> </a>
+    $rows .= '<td valign="top" width="3%">
+ 	<font face="'.$phpgw_info["theme"]["font"].'" size="2">
+      <a href="'. $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
+								 . "$filter&query=$query&sort=$sort").'
+	  ">'.lang("View").'</a>
      </font>
     </td>
      <td valign=top width=3%>
-      <font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size=2>
-        <a href="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&start=$start&order=$order&filter="
-                . "$filter&query=$query&sort=$sort");
-        ?>">Vcard</a>
+      <font face="'.$phpgw_info["theme"]["font"].'" size=2>
+        <a href="'.$phpgw->link("vcardout.php","ab_id=$ab_id&start=$start&order=$order&filter="
+                . "$filter&query=$query&sort=$sort").'
+        ">'.lang("VCard").'</a>
       </font>
      </td>
     <td valign="top" width="5%">
-     <font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size="2">
-      <?php echo $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")); ?>
+     <font face="'.$phpgw_info["theme"]["font"].'" size="2">
+      '.$phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")).'
      </font>
     </td>
    </tr>
-   <?php
+';
   }
 
-?>
-  </table>
+  $t->set_var("lang_addressbook",lang("Address book"));
+  $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $t->set_var("th_font",$phpgw_info["theme"]["font"]);
+  $t->set_var("th_text",$phpgw_info["theme"]["th_text"]);
+  $t->set_var("lang_add",lang("Add"));
+  $t->set_var("lang_addvcard",lang("Add VCard"));
+  $t->set_var("lang_view",lang("View"));
+  $t->set_var("lang_vcard",lang("VCard"));
+  $t->set_var("lang_edit",lang("Edit"));
+  $t->set_var("start",$start);
+  $t->set_var("filter",$filter);
+  $t->set_var("qfield",$qfield);
+  $t->set_var("query",$query);
+  $t->set_var("actionurl",$phpgw->link("add.php"));
+  $t->set_var("start",$start);
+  $t->set_var("filter",$filter);
+  $t->set_var("cols",$cols);
+  $t->set_var("rows",$rows);
 
-  <form method="POST" action="<?php echo $phpgw->link("add.php"); ?>">
-<?php if(isset($sort) && $sort) { ?>
-   <input type="hidden" name="sort" value="<?php echo $sort; ?>">
-<?php } ?>
-<?php if(isset($order) && $order) { ?>
-   <input type="hidden" name="order" value="<?php echo $order; ?>">
-<?php } ?>
-<?php if(isset($query) && $query) { ?>
-   <input type="hidden" name="query" value="<?php echo $query; ?>">
-<?php } ?>
-   <input type="hidden" name="start" value="<?php echo $start; ?>">
-<?php if(isset($filter) && $filter) { ?>
-   <input type="hidden" name="filter" value="<?php echo $filter; ?>">
-<?php } ?>
-  <table width="75%" border="0" cellspacing="0" cellpadding="4">
-    <tr> 
-      <td width="4%"> 
-        <div align="right"> 
-          <input type="submit" name="Add" value="<?php echo lang("Add"); ?>">
-        </div>
-      </td>
-      <td width="8%">
-        <div align="right">
-         <input type="submit" name="AddVcard" value="Add Vcard">
-        </div>
-      </td>
-      <td width="64%">&nbsp;</td>
-      <td width="24%">&nbsp;</td>
-    </tr>
-  </table>
-  </form>
-</center>
+  $t->parse("out","addressbook_header");
+  $t->pparse("out","addressbook_header");
+  $t->parse("out","searchfilter");
+  $t->pparse("out","searchfilter");
+  $t->parse("out","body");
+  $t->pparse("out","body");
+  $t->parse("out","addressbook_footer");
+  $t->pparse("out","addressbook_footer");
 
-<?php
   $phpgw->common->phpgw_footer();
 ?>
