@@ -671,7 +671,18 @@
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
 			//$ldap_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;		
 
-			/* _debug_array($ldap_fields); */
+			// a hack!!
+			// there should be some validate function in this class
+			if(empty($ldap_fields['sn']))
+			{
+				$ldap_fields['sn'] = $ldap_fields['cn'];
+			}
+			if(empty($ldap_fields['cn']))
+			{
+				$ldap_fields['cn'] = $ldap_fields['sn'];
+			}
+			
+			// _debug_array($ldap_fields); exit;
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
 			if (count($extra_fields))
