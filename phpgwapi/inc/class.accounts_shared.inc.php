@@ -141,12 +141,13 @@
 
 			if ($account_type == 'g')
 			{
-				$nextid = $phpgw->common->last_id('groups',$min,$max);
+				$type = 'groups';
 			}
 			else
 			{
-				$nextid = $phpgw->common->last_id('accounts',$min,$max);
+				$type = 'accounts';
 			}
+			$nextid = $phpgw->common->last_id($type,$min,$max);
 
 			/* Loop until we find a free id */
 			$free = 0;
@@ -155,14 +156,14 @@
 				//echo '<br>calling search for id: '.$nextid;
 				if ($this->exists($nextid))
 				{
-					$nextid = $phpgw->common->next_id('accounts',$min,$max);
+					$nextid = $phpgw->common->next_id($type,$min,$max);
 				}
 				else
 				{
 					/* echo '<br>calling search for lid: '.$account_lid; */
 					if ($this->exists($account_lid))
 					{
-						$nextid = $phpgw->common->next_id('accounts',$min,$max);
+						$nextid = $phpgw->common->next_id($type,$min,$max);
 					}
 					else
 					{
