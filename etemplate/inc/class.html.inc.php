@@ -326,16 +326,25 @@ class html
 
 	/*!
 	@function themeStyles
-	@abstract returns simple stylesheet for nextmatch row-colors
+	@abstract returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
 	@result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
 	*/
 	function themeStyles()
 	{
-		return $this->style(
-			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
+		return $this->style($this->theme2css());
+	}
+
+	/*!
+	@function theme2css
+	@abstract returns simple stylesheet for nextmatch row-colors
+	@result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
+	*/
+	function theme2css()
+	{
+		return 
+			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; font-weight: bold; }\n".
 			".row_on,.th_bright { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
-			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n"
-		);
+			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n";
 	}
 
 	function style($styles)
