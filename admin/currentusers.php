@@ -82,7 +82,6 @@
      }
    }
 
-<?php
-  $t->pparse("out","footer");
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+   $t->pparse("out","footer");
+   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 ?>
