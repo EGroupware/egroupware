@@ -221,7 +221,7 @@
 		}
 
 		// Echo content headers for file downloads
-		function content_header($fn="")
+		function content_header($fn="",$mime="application/octetstream",$nocache=True)
 		{
 			if ($fn)
 			{
@@ -233,10 +233,16 @@
 				{
 					$attachment = " attachment;";
 				}
+
+				// Show this for all
 				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
-				header('Content-type: application/octetstream');
-				header('Pragma: no-cache');
-				header('Expires: 0');
+				header('Content-type: '.$mime);
+
+				if ($nocache)
+				{
+					header('Pragma: no-cache');
+					header('Expires: 0');
+				}
 			}
 		}
 	}
