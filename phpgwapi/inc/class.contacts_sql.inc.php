@@ -611,7 +611,7 @@
 
 			$SQL="INSERT INTO $this->std_table (owner,access,cat_id,tid,$lid[0]"
 			. implode(",",$this->stock_contact_fields)
-			. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]"
+			. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]";
 			$this->db->query($SQL,__LINE__,__FILE__);
 
 			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
