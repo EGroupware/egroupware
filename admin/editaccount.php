@@ -21,18 +21,17 @@
   	include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
   	
   	// creates the html for the user data
-  	function createPageBody($account_id)
+  	function createPageBody($_account_id)
   	{
   		global $phpgw,$phpgw_info;
   		
 		$t = new Template($phpgw->common->get_tpl_dir("admin"));
   		$t->set_file(array("form" => "account_form.tpl"));
 
-		$account = CreateObject('phpgwapi.accounts',$account_id);
-	
-		$userData = $account->read_repository($account_id);
+		$account = CreateObject('phpgwapi.accounts',$_account_id);
+		$userData = $account->read_repository();
 
-		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=".$userData["account_id"]));
+		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=$_account_id"));
 				
 		$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 		$t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
@@ -62,6 +61,67 @@
 		}
 		$t->set_var("n_firstname_value",$userData["firstname"]);
 		$t->set_var("n_lastname_value",$userData["lastname"]);
+
+		// create list of available app
+		$i = 0;
+		
+		$availableApps = $phpgw_info["apps"];
+		@asort($availableApps);
+		@reset($availableApps);
+		while ($application = each($availableApps)) 
+		{
+			if ($application[1]["enabled"]) 
+			{
+				$perm_display[$i]['appName']        = $application[0];
+				$perm_display[$i]['translatedName'] = $application[1]["title"];
+				$i++;
+			}
+		}
+
+		// create apps output
+		$apps = CreateObject('phpgwapi.applications',intval($_account_id));
+		$db_perms = $apps->read_account_specific();
+		
+		@reset($db_perms);
+		
+		// The $i<200 is only used for a brake
+		for ($i=0;$i<200;) 
+		{
+			if (! $perm_display[$i]['translatedName']) break;
+			$perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i]['translatedName']) . '</td>'
+					. '<td><input type="checkbox" name="new_permissions['
+					. $perm_display[$i]['appName'] . ']" value="True"';
+			if ($new_permissions[$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
+			{
+				$perm_html .= " checked";
+			}
+			$perm_html .= "></td>";
+			$i++;
+			
+			if ($i == count($perm_display) && is_odd(count($perm_display))) 
+			{
+				$perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+			}
+
+     if (! $perm_display[$i]['translatedName']) break;
+     $perm_html .= '<td>' . lang($perm_display[$i]['translatedName']) . '</td>'
+                 . '<td><input type="checkbox" name="new_permissions['
+                 . $perm_display[$i]['appName'] . ']" value="True"';
+     if ($new_permissions[$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td></tr>\n";
+     $i++;
+  }
+
+  $t->set_var("permissions_list",$perm_html);	
+		
+		
+		
+		
+		
+		
+		
 
 		$t->pparse('out','form');
 	}
