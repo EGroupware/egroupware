@@ -26,7 +26,7 @@ default calendar filter	calendar	fr	Filtre de calendrier par défaut
 default calendar view	calendar	fr	Vue du calendrier par défaut
 deleted	calendar	fr	Effacé
 do you wish to autoload calendar holidays files dynamically?	admin	fr	Voulez-vous auto-charger les fichiers de vacances calendrier dynamiquement?
-Display interval in Day View	calendar	fr	Afficher l'intervalle dans la vue journalière
+display interval in day view	calendar	fr	Afficher l'intervalle dans la vue journalière
 display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
 display status of events	calendar	fr	Afficher le statut des événements
 duration	calendar	fr	Durée
@@ -67,6 +67,7 @@ monthly	calendar	fr	Mensuel
 new entry	calendar	fr	Nouvelle entrée
 no matches found.	calendar	fr	Aucune occurrence trouvée.
 no response	calendar	fr	Pas de réponse
+number of intervals per day in planner view	calendar	fr	Nombre d'intervalles par jour dans la vue planning
 participant	calendar	fr	Participant
 participants	calendar	fr	Participants
 participates	calendar	fr	Participe
@@ -77,6 +78,7 @@ private and global public	calendar	fr	Public privé et global
 private and group public	calendar	fr	Public privé et groupe
 private only	calendar	fr	Privé seulement
 re-edit event	calendar	fr	Remodifier l'événement
+receive extra information in event mails	calendar	fr	Recevoir des informations supplémentaires dans les EMails d'évènements
 refresh	calendar	fr	Rafraîchir
 reject	calendar	fr	Rejette
 rejected	calendar	fr	Rejeté
