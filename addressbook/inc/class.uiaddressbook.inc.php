@@ -561,7 +561,10 @@
 			$add_email = $GLOBALS['HTTP_POST_VARS']['add_email'] ? $GLOBALS['HTTP_POST_VARS']['add_email'] : $GLOBALS['HTTP_GET_VARS']['add_email'];
 
 			$named = explode(' ', $name);
-			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
+			for ($i=count($named);$i>=0;$i--)
+			{
+				$names[$i] = $named[$i];
+			}
 			if ($names[2])
 			{
 				$fields['n_given']  = $names[0];
@@ -573,12 +576,16 @@
 				$fields['n_given']  = $names[0];
 				$fields['n_family'] = $names[1];
 			}
+			$fields['n_given']  = $fields['n_given'] ? $fields['n_given'] : ' ';
+			$fields['n_family'] = $fields['n_family'] ? $fields['n_family'] : ' ';
+			$fields['fn']       = $fields['n_given'] . ' '  . $fields['n_family'];
 			$fields['email']    = $add_email;
 			$fields['access']   = 'private';
 			$fields['tid']      = 'n';
 			$referer = urlencode($referer);
 
 			$fields['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+//			_debug_array($fields);exit;
 			$this->bo->add_entry($fields);
 			$ab_id = $this->bo->get_lastid();
 
