@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$test[] = "0.9.3pre1";
-	function upgrade0_9_3pre1()
+	function calendar_upgrade0_9_3pre1()
 	{
 		global $phpgw_info;
 		v0_9_2to0_9_3update_owner("webcal_entry","cal_create_by");
@@ -21,7 +21,7 @@
 	}
 
 	$test[] = "0.9.4pre2";
-	function upgrade0_9_4pre2()
+	function calendar_upgrade0_9_4pre2()
 	{
 		global $phpgw_info, $oProc;
 	
@@ -31,7 +31,7 @@
 	}
 
 	$test[] = "0.9.7pre1";
-	function upgrade0_9_7pre1()
+	function calendar_upgrade0_9_7pre1()
 	{
 		global $phpgw_info, $oProc;
 		$db2 = $oProc->m_odb;
@@ -159,7 +159,7 @@
 	}
 
 	$test[] = "0.9.7pre2";
-	function upgrade0_9_7pre2()
+	function calendar_upgrade0_9_7pre2()
 	{
 		global $oldversion, $phpgw_info, $phpgw_setup, $oProc, $oDelta;
 		$db2 = $oProc->m_odb;
