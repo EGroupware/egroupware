@@ -15,53 +15,53 @@
   // NOTE: This entire file needs to be rewritten.  There is a great deal of code not being used
   //       anymore. This should also be converted to templates while where at it (jengo)
 
-        $abc = array("FN"              => "full name",        //'firstname lastname'
-                     "SOUND"           => "",
-                     "ORG_Name"        => "company name",  //company
-                     "ORG_Unit"        => "department",  //division
-                     "TITLE"           => "title",
-                     "N_Given"         => "first name",   //firstname
-                     "N_Family"        => "last name",  //lastname
-                     "N_Middle"        => "middle",
-                     "N_Prefix"        => "prefix",
-                     "N_Suffix"        => "suffix",
-                     "LABEL"           => "label",
-                     "ADR_Street"      => "street",
-                     "ADR_Locality"    => "city",   //city
-                     "ADR_Region"      => "state",     //state
-                     "ADR_PostalCode"  => "zip", //zip
-                     "ADR_CountryName" => "country",
-                     "ADR_Work"        => "",   //yn
-                     "ADR_Home"        => "",   //yn
-                     "ADR_Parcel"      => "", //yn
-                     "ADR_Postal"      => "", //yn
-                     "TZ"              => "timezone",
-                     "GEO"             => "geo",
-                     "A_TEL"           => "home phone",
-                     "A_TEL_Work"      => "",   //yn
-                     "A_TEL_Home"      => "",   //yn
-                     "A_TEL_Voice"     => "",  //yn
-                     "A_TEL_Msg"       => "",    //yn
-                     "A_TEL_Fax"       => "",    //yn
-                     "A_TEL_Prefer"    => "", //yn
-                     "B_TEL"           => "work phone",
-                     "B_TEL_Work"      => "",   //yn
-                     "B_TEL_Home"      => "",   //yn
-                     "B_TEL_Voice"     => "",  //yn
-                     "B_TEL_Msg"       => "",    //yn
-                     "B_TEL_Fax"       => "",    //yn
-                     "B_TEL_Prefer"    => "", //yn
-                     "C_TEL"           => "fax",
-                     "C_TEL_Work"      => "",   //yn
-                     "C_TEL_Home"      => "",   //yn
-                     "C_TEL_Voice"     => "",  //yn
-                     "C_TEL_Msg"       => "",    //yn
-                     "C_TEL_Fax"       => "",    //yn
-                     "C_TEL_Prefer"    => "", //yn
-                     "D_EMAIL"         => "email",
-                     "D_EMAILTYPE"     => "email type",   //'INTERNET','CompuServe',etc...
-                     "D_EMAIL_Work"    => "",  //yn
-                     "D_EMAIL_Home"    => "",  //yn
+        $abc = array("fn"              => "full name",        //'firstname lastname'
+                     "sound"           => "",
+                     "org_name"        => "company name",  //company
+                     "org_unit"        => "department",  //division
+                     "title"           => "title",
+                     "n_given"         => "first name",   //firstname
+                     "n_family"        => "last name",  //lastname
+                     "n_middle"        => "middle",
+                     "n_prefix"        => "prefix",
+                     "n_suffix"        => "suffix",
+                     "label"           => "label",
+                     "adr_street"      => "street",
+                     "adr_locality"    => "city",   //city
+                     "adr_region"      => "state",     //state
+                     "adr_postalcode"  => "zip", //zip
+                     "adr_countryname" => "country",
+                     "adr_work"        => "",   //yn
+                     "adr_home"        => "",   //yn
+                     "adr_parcel"      => "", //yn
+                     "adr_postal"      => "", //yn
+                     "tz"              => "timezone",
+                     "geo"             => "geo",
+                     "a_tel"           => "home phone",
+                     "a_tel_work"      => "",   //yn
+                     "a_tel_home"      => "",   //yn
+                     "a_tel_voice"     => "",  //yn
+                     "a_tel_msg"       => "",    //yn
+                     "a_tel_fax"       => "",    //yn
+                     "a_tel_prefer"    => "", //yn
+                     "b_tel"           => "work phone",
+                     "b_tel_work"      => "",   //yn
+                     "b_tel_home"      => "",   //yn
+                     "b_tel_voice"     => "",  //yn
+                     "b_tel_msg"       => "",    //yn
+                     "b_tel_fax"       => "",    //yn
+                     "b_tel_prefer"    => "", //yn
+                     "c_tel"           => "fax",
+                     "c_tel_work"      => "",   //yn
+                     "c_tel_home"      => "",   //yn
+                     "c_tel_voice"     => "",  //yn
+                     "c_tel_msg"       => "",    //yn
+                     "c_tel_fax"       => "",    //yn
+                     "c_tel_prefer"    => "", //yn
+                     "d_email"         => "email",
+                     "d_emailtype"     => "email type",   //'INTERNET','CompuServe',etc...
+                     "d_email_work"    => "",  //yn
+                     "d_email_home"    => "",  //yn
                      "bday"            => "birthday",
                      "url"             => "URL",
 		     "access"          => "access"
@@ -81,32 +81,33 @@
     $t = new Template($phpgw->common->get_tpl_dir("addressbook"));
     $t->set_file(array( "form"	=> "form.tpl"));
 
-    $email        = $fields["D_EMAIL"];
-    $emailtype    = $fields["D_EMAILTYPE"];
-    $firstname    = $fields["N_Given"];
-    $middle       = $fields["N_Middle"];
-    $prefix       = $fields["N_Prefix"];
-    $suffix       = $fields["N_Suffix"];
-    $lastname     = $fields["N_Family"];
-    $title        = $fields["TITLE"];
-    $hphone       = $fields["A_TEL"];
-    $wphone       = $fields["B_TEL"];
-    $fax          = $fields["C_TEL"];
+    $email        = $fields["d_email"];
+    $emailtype    = $fields["d_emailtype"];
+    $firstname    = $fields["n_given"];
+    $middle       = $fields["n_middle"];
+    $prefix       = $fields["n_prefix"];
+    $suffix       = $fields["n_suffix"];
+    $lastname     = $fields["n_family"];
+    $title        = $fields["title"];
+    $hphone       = $fields["a_tel"];
+    $wphone       = $fields["b_tel"];
+    $fax          = $fields["c_tel"];
     $pager        = $fields["pager"];
     $mphone       = $fields["mphone"];
     $ophone       = $fields["ophone"];
-    $street       = $fields["ADR_Street"];
+    $street       = $fields["adr_street"];
     $address2     = $fields["address2"];
-    $city         = $fields["ADR_Locality"];
-    $state        = $fields["ADR_Region"];
-    $zip          = $fields["ADR_PostalCode"];
-    $country      = $fields["ADR_CountryName"];
-    $timezone     = $fields["TZ"];
+    $city         = $fields["adr_locality"];
+    $state        = $fields["adr_region"];
+    $zip          = $fields["adr_postalcode"];
+    $country      = $fields["adr_countryname"];
+    $timezone     = $fields["tz"];
     $bday         = $fields["bday"];
     $notes        = $fields["notes"];
-    $company      = $fields["ORG_Name"];
-    $department   = $fields["ORG_Unit"];
+    $company      = $fields["org_name"];
+    $department   = $fields["org_unit"];
     $url          = $fields["url"];
+    $access       = $fields["access"];
 
     if ($format != "view") {
       $email 	 = "<input name=\"email\" value=\"$email\">";
@@ -243,7 +244,7 @@
     $birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
           . '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
 
-    if ($format == "view") {
+    if ($format == "Edit") {
        if ($access != "private" && $access != "public") {
 	  $access_link .= '<td><font size="-1">'.lang("Group access").':</font></td>'
 	     . '<td colspan="3"><font size="-1">'
