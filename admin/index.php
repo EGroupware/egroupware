@@ -57,13 +57,13 @@
   }
 
 if ( $SHOW_INFO > 0 ) {
-  echo "<p><a href=\"".$phpgw->link($PHP_SELF, "SHOW_INFO=0")."\">Hide PHP Information</a>";
+  echo "<p><a href=\"".$phpgw->link("", "SHOW_INFO=0")."\">Hide PHP Information</a>";
   echo "<hr>\n";
   phpinfo();
   echo "<hr>\n";
 }
 else {
-  echo "<p><a href=\"".$phpgw->link($PHP_SELF, "SHOW_INFO=1")."\">PHP Information</a>";
+  echo "<p><a href=\"".$phpgw->link("", "SHOW_INFO=1")."\">PHP Information</a>";
 }
   $phpgw->common->phpgw_footer();
 ?>
