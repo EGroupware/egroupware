@@ -301,11 +301,14 @@
 				$style = $this->html->style($this->style);
 				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
 			}
-			list(,,$border) = explode(',',$this->size);
+			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'));
 
-			return "\n\n<!-- BEGIN $this->name -->\n$style\n".
-				$this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING')).
-				"<!-- END $this->name -->\n\n";
+			list($width,$height,,,,,$overflow) = explode(',',$this->size);
+			if (!empty($overflow)) {
+				$div_style=' STYLE="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow\"";
+				$html = $this->html->div($html,$div_style);
+			}
+			return "\n\n<!-- BEGIN $this->name -->\n$style\n".$html."<!-- END $this->name -->\n\n";
 		}
 
 		/*!

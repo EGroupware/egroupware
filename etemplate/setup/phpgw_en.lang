@@ -22,6 +22,7 @@
 @help	etemplate	en	@help
 @label	etemplate	en	@label
 a pattern to be searched for	etemplate	en	a pattern to be searched for
+access	etemplate	en	Access
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
@@ -30,10 +31,14 @@ an indexed column speeds up querys using that column (cost space on the disk !!!
 application	etemplate	en	Application
 birtday	etemplate	en	Birtday
 birthday	etemplate	en	Birthday
+border	etemplate	en	Border
+border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
 cancel	etemplate	en	Cancel
 cancel, discarding changes	etemplate	en	Cancel, discarding changes
 category	etemplate	en	Category
+cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
+cellspacing for the table-tag	etemplate	en	Cellspacing for the table-tag
 center	etemplate	en	Center
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
@@ -45,6 +50,7 @@ columnname	etemplate	en	ColumnName
 companyname	etemplate	en	Companyname
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
+css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
 date	etemplate	en	Date
@@ -109,6 +115,7 @@ go to the previous page of entries	etemplate	en	go to the previous page of entri
 group/-user	etemplate	en	Group/-User
 height	etemplate	en	Height
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
 help	etemplate	en	Help
 hier kommt text rein	etemplate	en	Hier kommt text rein
 horizontal rule	etemplate	en	Horizontal Rule
@@ -156,6 +163,10 @@ number of colums the field/cell should span or 'all' for the remaining columns, 
 of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
 options	etemplate	en	Options
+options:	etemplate	en	Options:
+overflow	etemplate	en	Overflow
+padding	etemplate	en	Padding
+padding for the table-tag	etemplate	en	Padding for the table-tag
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
@@ -203,6 +214,8 @@ shows / allows you to enter values into the etemplate for testing	etemplate	en	s
 shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
 shows/displays the template for testing, does not save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
 size	etemplate	en	Size
+spacing	etemplate	en	Spacing
+spacing for the table-tag	etemplate	en	Spacing for the table-tag
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
 start new search for the above pattern	etemplate	en	start new search for the above pattern
@@ -215,6 +228,7 @@ telefonnumber	etemplate	en	Telefonnumber
 template	etemplate	en	Template
 template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
+test	etemplate	en	Test
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
 textfeld:	etemplate	en	Textfeld:
@@ -232,9 +246,11 @@ upload	etemplate	en	Upload
 value	etemplate	en	Value
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when was the company founded	etemplate	en	when was the company founded
 width	etemplate	en	Width
 width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
 width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
 width, height, border	etemplate	en	Width, Height, Border
 width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding

@@ -15,15 +15,14 @@
 	$phpgw_baseline = array(
 		'phpgw_etemplate' => array(
 			'fd' => array(
-				'et_name' => array('type' => 'char','precision' => '80','nullable' => False),
-				'et_template' => array('type' => 'char','precision' => '20','default' => '','nullable' => False),
-				'et_lang' => array('type' => 'char','precision' => '5','default' => '','nullable' => False),
-				'et_group' => array('type' => 'int','precision' => '4','default' => '0','nullable' => False),
-				'et_version' => array('type' => 'char','precision' => '20','default' => '','nullable' => False),
-				'et_data' => array('type' => 'text','nullable' => True),
-				'et_size' => array('type' => 'char','precision' => '128','nullable' => True),
-				'et_style' => array('type' => 'text','nullable' => True),
-				'et_modified' => array('type' => 'int','precision' => '4','default' => '0','nullable' => False)
+				'et_name' => array('type' => 'char','precision' => 80,'nullable' => False),
+				'et_template' => array('type' => 'char','precision' => 20,'nullable' => False,'default' => ''),
+				'et_lang' => array('type' => 'char', 'precision' => 5,'nullable' => False,'default' => ''),
+				'et_group' => array('type' => 'int', 'precision' => 4,'nullable' => False, 'default' => 0),
+				'et_version' => array('type' => 'char','precision' => 20,'nullable' => False,'default' => ''),
+				'et_data' => array('type' => 'varchar', 'precision' => 32000,'nullable' => True),
+				'et_size' => array('type' => 'char','precision' => 20,'nullable' => True),
+				'et_style' => array('type' => 'varchar', 'precision' => 32000,'nullable' => True)
 			),
 			'pk' => array('et_name','et_template','et_lang','et_group','et_version'),
 			'fk' => array(),
@@ -31,3 +30,5 @@
 			'uc' => array()
 		)
 	);
+
+?>

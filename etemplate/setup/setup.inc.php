@@ -14,7 +14,7 @@
 
 	$setup_info['etemplate']['name']      = 'etemplate';
 	$setup_info['etemplate']['title']     = 'eTemplates';
-	$setup_info['etemplate']['version']   = '0.9.13.001';
+	$setup_info['etemplate']['version']   = '0.9.15.001';
 	$setup_info['etemplate']['app_order'] = 8;	// just behind the developers-tools
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;

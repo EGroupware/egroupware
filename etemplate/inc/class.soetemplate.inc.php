@@ -61,7 +61,8 @@
 		var $db_data_cols = array(
 			'et_data' => 'data',
 			'et_size' => 'size',
-			'et_style' => 'style'
+			'et_style' => 'style',
+			'et_modified' => 'modified'
 		);
 		var $db_cols;
 
@@ -258,7 +259,7 @@
 
 			if ($this->name == '' || $app == '' || $name == '' || !@file_exists($file) || !($f = @fopen($file,'r')))
 			{
-				if ($this->debug == 1 || $this->debug == $this->name)
+				if ($this->debug == 1 || $this->name != '' && $this->debug == $this->name)
 				{
 					echo "<p>Can't open '$file' !!!</p>\n";
 				}
@@ -333,7 +334,10 @@
 			$result = array();
 			while ($this->db->next_record())
 			{
-				$result[] = $this->db->Record;
+				if ($this->db->f('et_lang') != '##')	// exclude or import-time-stamps
+				{
+					$result[] = $this->db->Record;
+				}
 			}
 			return $result;
 		}
@@ -493,6 +497,10 @@
 						}
 					}
 				}
+			}
+			if (!$this->modified)
+			{
+				$this->modified = time();
 			}
 			$data = $this->as_array(1);
 			$data['data'] = serialize($this->compress_array($data['data']));
@@ -693,7 +701,7 @@
 		*/
 		function import_dump($app)
 		{
-			include(PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
+			include($path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
 			$templ = new etemplate($app);
 
 			for ($n = 0; isset($templ_data[$n]); ++$n)
@@ -703,6 +711,10 @@
 					$templ->$name = $templ_data[$n][$name];
 				}
 				$templ->data = unserialize(stripslashes($templ->data));
+				if (!$templ->modified)
+				{
+					$templ->modified = filemtime($path);
+				}
 				$templ->save();
 			}
 			return "$n new eTemplates imported for Application '$app'";
@@ -730,10 +742,10 @@
 			if ($time = @filemtime($path))
 			{
 				$templ = new soetemplate(".$app",'','##');
-				if ($templ->lang != '##' || $templ->data[0] < $time) // need to import
+				if ($templ->lang != '##' || $templ->modified < $time) // need to import
 				{
 					$ret = $this->import_dump($app);
-					$templ->data = array($time);
+					$templ->modified = $time;
 					$templ->save(".$app",'','##');
 				}
 			}

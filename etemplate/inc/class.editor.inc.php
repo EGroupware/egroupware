@@ -36,6 +36,21 @@
 			'right' => 'Right',
 			'center' => 'Center'
 		);
+		var $options = array(
+			'width',
+			'height',
+			'border',
+			'class',
+			'spaceing',
+			'padding',
+			'overflow'
+		);
+		var $overflows = array(
+			'' => 'visible',
+			'hidden' => 'hidden',
+			'scroll' => 'scroll',
+			'auto' => 'auto'
+		);
 		var $extensions = '';
 
 		var $public_functions = array
@@ -95,6 +110,12 @@
 				'cols' => $this->etemplate->cols,
 				'msg' => $msg
 			);
+			$options = explode(',',$this->etemplate->size);
+			reset($this->options);
+			while (list($n,$opt) = each($this->options))
+			{
+				$content['options'][$opt] = $options[$n];
+			}
 			$cols_spanned = array();
 			reset($this->etemplate->data);
 			if (isset($this->etemplate->data[0]))
@@ -160,7 +181,8 @@
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
 					'type' => $types,
-					'align' => $this->aligns
+					'align' => $this->aligns,
+					'overflow' => $this->overflows
 				),
 				$no_button,$cols_spanned + array('**extensions**' => $this->extensions));
 		}
@@ -178,11 +200,18 @@
 			}
 			$this->extensions = $content['**extensions**']; unset($content['**extensions**']);
 			$this->etemplate->init($content);
-			$this->etemplate->size = $content['size'];
-			$this->etemplate->style = $content['style'];
 
 			$opts = array();
+			reset($this->options);
+			while (list(,$opt) = each($this->options))
+			{
+				$opts[$opt] = $content['options'][$opt];
+			}
+			$this->etemplate->size = ereg_replace(',*$','',implode(',',$opts));
+			$this->etemplate->style = $content['style'];
+
 			$names = array('width','height','class');
+			$opts = array();
 			while (list(,$opt) = each($names))
 			{
 				if (is_array($content[$opt]))
@@ -363,6 +392,10 @@
 			}
 			elseif ($content['save'])
 			{
+				if (!$this->etemplate->modified_set || !$this->etemplate->modified)
+				{
+					$this->etemplate->modified = time();
+				}
 				$ok = $this->etemplate->save($content['name'],$content['template'],$content['lang'],$content['group'],$content['version']);
 				$msg = $this->messages[$ok ? 'saved' : 'error_writing'];
 			}
@@ -459,6 +492,8 @@
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
 			$imported = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
+			$this->etemplate->modified = filemtime($f);
+			$this->etemplate->modified_set = 'xul-import';
 
 			if (is_array($imported))
 			{
