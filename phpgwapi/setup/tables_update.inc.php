@@ -954,4 +954,14 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.008';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.99.008';
+	function phpgwapi_upgrade0_9_99_008()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('es-es','Spanish / Spain','Yes')");
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('es-mx','Spanish / Mexico','Yes')");
+		$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_languages where lang_id='es'");
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.009';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

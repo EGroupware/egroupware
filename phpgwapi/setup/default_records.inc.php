@@ -37,7 +37,8 @@
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('el','Greek','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('en','English / US','Yes')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('eo','Esperanto','No')");
-	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('es','Spanish','Yes')");
+	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('es-es','Spanish / Spain','Yes')");
+	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('es-mx','Spanish / Mexico','Yes')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('et','Estonian','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('eu','Basque','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('fa','Persian','No')");
