@@ -73,18 +73,16 @@
 
 		function import()
 		{
-			global $convert,$download,$tsvfile,$private,$conv_type,$fcat_id;
-
-			if ($convert)
+			if ($_POST['convert'])
 			{
-				$buffer = $this->bo->import($tsvfile,$conv_type,$private,$fcat_id);
+				$buffer = $this->bo->import($tsvfile,$_POST['conv_type'],$_POST['private'],$_POST['fcat_id']);
 
-				if ($download == '')
+				if ($_POST['download'] == '')
 				{
-					if($conv_type == 'Debug LDAP' || $conv_type == 'Debug SQL' )
+					if($_POST['conv_type'] == 'Debug LDAP' || $_POST['conv_type'] == 'Debug SQL' )
 					{
 						// filename, default application/octet-stream, length of file, default nocache True
-						$GLOBALS['phpgw']->browser->content_header($tsvfilename,'',strlen($buffer));
+						$GLOBALS['phpgw']->browser->content_header($_POST['tsvfilename'],'',strlen($buffer));
 						echo $buffer;
 					}
 					else
@@ -159,11 +157,9 @@
 
 		function export()
 		{
-			global $convert,$tsvfilename,$cat_id,$download,$conv_type;
-
-			if ($convert)
+			if ($_POST['convert'])
 			{
-				if ($conv_type == 'none')
+				if ($_POST['conv_type'] == 'none')
 				{
 					$GLOBALS['phpgw_info']['flags']['noheader'] = False;
 					$GLOBALS['phpgw_info']['flags']['noheader'] = True;
@@ -175,12 +171,12 @@
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 
-				$buffer = $this->bo->export($conv_type,$cat_id);
+				$buffer = $this->bo->export($_POST['conv_type'],$_POST['cat_id']);
 
-				if(($download == 'on') || ($conv_type == 'Palm_PDB') )
+				if(($_POST['download'] == 'on') || ($_POST['conv_type'] == 'Palm_PDB') )
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
-					$this->browser->content_header($tsvfilename,'application/x-octet-stream',strlen($buffer));
+					$this->browser->content_header($_POST['tsvfilename'],'application/x-octet-stream',strlen($buffer));
 					echo $buffer;
 				}
 				else
