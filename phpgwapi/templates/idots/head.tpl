@@ -1,6 +1,12 @@
 <!-- BEGIN head --><?xml version="1.0" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "XHTML1-f.dtd" >
+<!--
+this can used only, when it's sure that Opera does not have problems with selectboxes
+
 <html xmlns="http://www.w3.org/TR/1999/REC-html-in-xml" xml:lang="en" lang="en" >
+-->
+<html>
+
 	<head>
 		<title>{website_title}</title>
 		<meta http-equiv="content-type" content="text/html; charset={charset}" />
