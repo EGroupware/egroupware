@@ -3,7 +3,7 @@ security is a really big concern.  I am *NOT* saying that you shouldn't be
 concerned about it, but, until the system is thoughly tested.  I would not
 recommend it.
 
-Becuase of the current methods that the email system works.  It is required
+Because of the current methods that the email system works.  It is required
 that the users password is in the sessions table.  IMAP needs the password
 to verify the user.  This is one of the main reasons for the stalesessions
 program.  I do not like keeping passwords in any medium that is not encryped.
