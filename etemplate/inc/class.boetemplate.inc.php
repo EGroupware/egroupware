@@ -30,23 +30,25 @@
 		var $types = array(
 			'label'	=> 'Label',			// Label $cell['label'] is (to be translated) textual content
 			'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
-			'int'		=> 'Integer',		// like text, but only numbers (size = [min][,max])
+			'int'	=> 'Integer',		// like text, but only numbers (size = [min][,max])
 			'float'	=> 'Floating Point', // --------------- " --------------------------
 			'textarea'=> 'Textarea',	// Multiline Text Input (size = [rows][,cols])
 			'htmlarea' => 'Formatted Text (HTML)',
 			'checkbox'=> 'Checkbox',
 			'radio'	=> 'Radiobutton',	// Radiobutton (size = value if checked)
-			'button'	=> 'Submitbutton',
+			'button'=> 'Submitbutton',
 			'hrule'	=> 'Horizontal Rule',
-			'template'=> 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
+			'template' => 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
 			'image'	=> 'Image',			// label = url, name=link or method, help=alt or title
 			'date'	=> '', 				// Datefield, size='' timestamp or size=format like 'm/d/Y'
-			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
-												// if size > 1 then multiple selections, size lines showed
+			'select'=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
+										// if size > 1 then multiple selections, size lines showed
 			'html'	=> 'Html',			// Raw html in $content[$cell['name']]
 			'file'	=> 'FileUpload',	// show an input type='file', set the local name as ${name}_path
 			'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
 			'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols 
+			'groupbox' => 'GroupBox',	// a box with a label containing other elements to group them (html: fieldset)
+//			'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
 			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
 		);
 		/**

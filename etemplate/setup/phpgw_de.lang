@@ -77,6 +77,7 @@ deletes this index	etemplate	de	Löscht diesen Index
 discard changes	etemplate	de	verwirft Änderungen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
+displayed in the top line of the groupbox (legend)	etemplate	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 documentation	etemplate	de	Dokumentation
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
@@ -126,6 +127,7 @@ go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gege zum letzten Eintrag
 go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
+groupbox	etemplate	de	Gruppierung
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist

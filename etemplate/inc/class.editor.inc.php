@@ -144,6 +144,9 @@
 							case 'deck':
 								$cell['cell_tpl'] = '.vbox';
 								break;
+							case 'groupbox':
+								$cell['cell_tpl'] = '.groupbox';
+								break;
 						}
 						$content[$col.$row] = $cell;
 					}
@@ -220,7 +223,9 @@
 					case 'vbox':
 					case 'hbox':
 					case 'deck':
-						if ($cell['size'] < 2)
+					case 'groupbox':
+						// default size for all boxes is 2, minimum size is 1 for a groupbox and 2 for the others
+						if ($cell['size'] < 2 && ($cell['type'] != 'groupbox' || !$cell['size']))
 						{
 							$cell['size'] = 2;
 						}

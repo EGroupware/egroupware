@@ -77,6 +77,7 @@ deletes this index	etemplate	en	Deletes this index
 discard changes	etemplate	en	discard changes
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
+displayed in the top line of the groupbox (legend)	etemplate	en	displayed in the top line of the groupbox (legend)
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
 documentation	etemplate	en	Documentation
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
@@ -126,6 +127,7 @@ go to the first entry	etemplate	en	go to the first entry
 go to the last entry	etemplate	en	go to the last entry
 go to the next page of entries	etemplate	en	go to the next page of entries
 go to the previous page of entries	etemplate	en	go to the previous page of entries
+groupbox	etemplate	en	GroupBox
 hbox	etemplate	en	HBox
 height	etemplate	en	Height
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty

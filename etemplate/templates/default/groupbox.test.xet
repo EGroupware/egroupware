@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.groupbox.test" template="" lang="" group="" version="">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<groupbox>
+					<caption label="Selection grouping"/>
+					<radio options="1" label="%s selection #1 or" id="selection"/>
+					<radio options="2" label="%s selection #2" id="selection"/>
+				</groupbox>
+			</row>
+		</rows>
+	</grid>
+</overlay>

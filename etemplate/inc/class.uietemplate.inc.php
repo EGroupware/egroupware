@@ -54,10 +54,7 @@
 
 			$this->boetemplate($name,$load_via);
 
-			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			//echo "Version: $a.$b.$c.$d\n";
 			$this->xslt = is_object($GLOBALS['phpgw']->xslttpl);
-			$this->stable = !$this->xslt;	// for backward compatibility
 		}
 
 		/**
@@ -900,6 +897,7 @@
 					break;
 				case 'vbox':
 				case 'hbox':
+				case 'groupbox':
 					$rows = array();
 					$box_row = 1;
 					$box_col = 'A';
@@ -909,7 +907,7 @@
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl);
 						if ($h != '' && $h != '&nbsp;')
 						{
-							if ($cell['type'] == 'vbox')
+							if ($cell['type'] != 'hbox')
 							{
 								$box_row = $n;
 							}
@@ -930,11 +928,18 @@
 					}
 					if ($box_anz > 1)	// a single cell is NOT placed into a table
 					{
-						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".
-							$this->html->table($rows,$this->html->formatOptions($cell_options,',CELLPADDING,CELLSPACING').
-							($cell['align'] && $type == 'vbox' ? ' WIDTH="100%"' : '')).	// alignment only works if table has full width
-							"\n\n<!-- END $cell[type] -->\n\n";
+						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',CELLPADDING,CELLSPACING').
+							($cell['align'] && $type != 'hbox' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
 					}
+					if ($cell['type'] == 'groupbox')
+					{
+						$html = $this->html->fieldset($html,$label);
+					}
+					if ($box_anz > 1)	// a single cell is NOT placed into a table
+					{
+						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".$html."\n\n<!-- END $cell[type] -->\n\n";
+					}
+					$extra_label = False;
 					break;
 				case 'deck':
 					for ($n = 1; $n <= $cell_options && (empty($value) || $value != $cell[$n]['name']); ++$n) ;

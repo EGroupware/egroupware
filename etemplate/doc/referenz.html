@@ -651,6 +651,24 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
+	<td><b>GroupBox</b></td>
+	<td>
+		&lt;groupbox><br>
+		&nbsp; &lt;caption label="Legend"/><br>
+		&nbsp; &lt;widget ...><br>
+		&nbsp; &lt;widget ...><br>
+		&lt;/groupbox><p>
+	</td>
+	<td>yes</td>
+	<td>groupbox</td>
+	<td>
+		container to <b>group other widgets</b> by putting a border around them.<br>
+		The upper line may contain a legend. The widgets are ordered vertical, like a VBox.
+		Disabled child-cells are completly left out (no empty cells or rows get generated).<p>
+		<b>Options</b> <i>in the editor</i>: the number of cells in the box (does NOT need to be set in xml).
+	</td>
+</tr>
+<tr>
 	<td><b>Tabs</b></td>
 	<td>
 		&lt;tabbox id="name"><br>

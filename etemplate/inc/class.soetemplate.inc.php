@@ -43,6 +43,8 @@
 		var $version;	// like 0.9.13.001
 		var $size;		// witdh,height,border of table
 		var $style;		// embeded CSS style-sheet
+		var $children;	// array with children
+		var $data;		// depricated: first grid of the children
 		var $db,$db_name = 'phpgw_etemplate'; // DB name
 		var $db_key_cols = array(
 			'et_name' => 'name',
@@ -186,7 +188,7 @@
 		/**
 		 * initialises all internal data-structures of the eTemplate and sets the keys
 		 *
-		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $name string name of the eTemplate or array with the values for all keys and possibly data
 		 * @param $template string template-set or '' for the default one
 		 * @param $lang string language or '' for the default one
 		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
@@ -196,10 +198,12 @@
 		 */
 		function init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
-			reset($this->db_cols);
-			while (list($db_col,$col) = each($this->db_cols))
+			// unset children and data as they are referenzes to each other
+			unset($this->children); unset($this->data);
+			
+			foreach($this->db_cols as $db_col => $col)
 			{
-				$this->$col = is_array($name) ? $name[$col] : $$col;
+				if ($col != 'data') $this->$col = is_array($name) ? $name[$col] : $$col;
 			}
 			if ($this->template == 'default')
 			{
@@ -211,21 +215,30 @@
 			}
 			$this->tpls_in_file = is_array($name) ? $name['tpls_in_file'] : 0;
 
-			if (is_array($name) && isset($name['data']))
+			if (is_array($name)  && isset($name['data']))
 			{
-				$this->set_rows_cols();
-				return;	// data already set
+				// data/children are in $name['data']
+				$this->children = is_array($name['data']) ? $name['data'] : unserialize(stripslashes($name['data']));
+
+				$this->fix_old_template_format();
 			}
-			$this->size = $this->style = '';
-			$this->data = array(0 => array());
-			$this->rows = $rows < 0 ? 1 : $rows;
-			$this->cols = $cols < 0 ? 1 : $cols;
-			for ($row = 1; $row <= $rows; ++$row)
+			else
 			{
-				for ($col = 0; $col < $cols; ++$col)
+				$this->size = $this->style = '';
+				$this->data = array(0 => array());
+				$this->rows = $rows < 0 ? 1 : $rows;
+				$this->cols = $cols < 0 ? 1 : $cols;
+				for ($row = 1; $row <= $rows; ++$row)
 				{
-					$this->data[$row][$this->num2chrs($col)] = $this->empty_cell();
+					for ($col = 0; $col < $cols; ++$col)
+					{
+						$this->data[$row][$this->num2chrs($col)] = $this->empty_cell();
+					}
 				}
+				$this->children[0]['type'] = 'grid';
+				$this->children[0]['data'] = &$this->data;
+				$this->children[0]['rows'] = &$this->rows;
+				$this->children[0]['cols'] = &$this->cols;
 			}
 		}
 
@@ -448,30 +461,74 @@
 		 */
 		function db2obj()
 		{
-			for (reset($this->db_cols); list($db_col,$name) = each($this->db_cols); )
-			{
-				$this->$name = $this->db->f($db_col);
-			}
-			$this->data = unserialize(stripslashes($this->data));
-			if (!is_array($this->data)) $this->data = array();
+			// unset children and data as they are referenzes to each other
+			unset($this->children); unset($this->data);
 
-			if ($this->name[0] != '.')
+			foreach ($this->db_cols as $db_col => $name)
 			{
-				reset($this->data); each($this->data);
-				while (list($row,$cols) = each($this->data))
+				if ($name != 'data') 
 				{
-					while (list($col,$cell) = each($cols))
+					$this->$name = $this->db->f($db_col);
+				}
+				else
+				{
+					$this->children = unserialize(stripslashes($this->db->f($db_col)));
+				}
+			}
+			$this->fix_old_template_format();
+		}
+		
+		/**
+		 *  test if we have an old/original template-format and fixes it to the new format
+		 */
+		function fix_old_template_format()
+		{
+			if (!is_array($this->children)) $this->children = array();
+			
+			if (!isset($this->children[0]['type']))
+			{
+				// old templates are treated as having one children of type grid (the original template)
+				$this->data = &$this->children;
+				unset($this->children);
+
+				$this->children[0]['type'] = 'grid';
+				$this->children[0]['data'] = &$this->data;
+				$this->children[0]['rows'] = &$this->rows;
+				$this->children[0]['cols'] = &$this->cols;
+
+				// that code fixes a bug in very old templates, not sure if it's still needed
+				if ($this->name[0] != '.' && is_array($this->data))
+				{
+					reset($this->data); each($this->data);
+					while (list($row,$cols) = each($this->data))
 					{
-						if (is_array($cell['type']))
+						while (list($col,$cell) = each($cols))
 						{
-							$this->data[$row][$col]['type'] = $cell['type'][0];
-							//echo "corrected in $this->name cell $col$row attribute type<br>\n";
+							if (is_array($cell['type']))
+							{
+								$this->data[$row][$col]['type'] = $cell['type'][0];
+								//echo "corrected in $this->name cell $col$row attribute type<br>\n";
+							}
+							if (is_array($cell['align']))
+							{
+								$this->data[$row][$col]['align'] = $cell['align'][0];
+								//echo "corrected in $this->name cell $col$row attribute align<br>\n";
+							}
 						}
-						if (is_array($cell['align']))
-						{
-							$this->data[$row][$col]['align'] = $cell['align'][0];
-							//echo "corrected in $this->name cell $col$row attribute align<br>\n";
-						}
+					}
+				}
+			}
+			else
+			{
+				// for the moment we make $this->data as a referenz to the first grid
+				foreach($this->children as $key => $child)
+				{
+					if ($child['type'] == 'grid')
+					{
+						$this->data = &$this->children[$key]['data'];
+						$this->rows = &$this->children[$key]['rows'];
+						$this->cols = &$this->children[$key]['cols'];
+						break;
 					}
 				}
 			}
@@ -493,7 +550,7 @@
 			{
 				return $arr;
 			}
-			while (list($key,$val) = each($arr))
+			foreach($arr as $key => $val)
 			{
 				if (is_array($val))
 				{
@@ -510,25 +567,27 @@
 		/**
 		 * returns obj-data/-vars as array
 		 *
+		 * the returned array ($data_too > 0) can be used with init to recreate the template 
+		 *
 		 * @param $data_too int 0 = no data array, 1 = data array too, 2 = serialize data array
-		 * @return array
+		 * @return array with template-data
 		 */
 		function as_array($data_too=0)
 		{
 			$arr = array();
-			reset($this->db_cols);
-			while (list($db_col,$col) = each($this->db_cols))
+			foreach($this->db_cols as $db_col => $col)
 			{
-				if ($col != 'data' || $data_too)
+				if ($col == 'data' && $data_too)
+				{
+					$arr['data'] = $data_too == 2 ? serialize($this->children) : $this->children;
+				}
+				else
 				{
 					$arr[$col] = $this->$col;
 				}
 			}
-			if ($data_too == 2)
+			if ($this->tpls_in_file) 
 			{
-				$arr['data'] = serialize($arr['data']);
-			}
-			if ($this->tpls_in_file) {
 				$arr['tpls_in_file'] = $this->tpls_in_file;
 			}
 			return $arr;
@@ -579,8 +638,9 @@
 			}
 			$this->delete();	// so we have always a new insert
 
-			if ($this->name[0] != '.')		// correct up old messed up templates
+			if ($this->name[0] != '.')		// correct old messed up templates
 			{
+if (!is_array($this->data)) { $db = &$this->db; unset($this->db); echo function_backtrace()."\ndata is no array in<pre>".print_r($this,true)."</pre>\n"; $this->db = &$db; unset($db); }
 				reset($this->data); each($this->data);
 				while (list($row,$cols) = each($this->data))
 				{
@@ -673,9 +733,9 @@
 			for ($n = 0; $this->db->next_record(); ++$n)
 			{
 				$str = '$templ_data[] = array(';
-				for (reset($this->db_cols); list($db_col,$name) = each($this->db_cols); )
+				foreach ($this->db_cols as $db_col => $name)
 				{
-					$str .= "'$name' => '".$this->db->db_addslashes($this->db->f($db_col))."',";
+					$str .= "'$name' => '".addslashes($this->db->f($db_col))."',";
 				}
 				$str .= ");\n\n";
 				fwrite($f,$str);
@@ -782,7 +842,7 @@
 		{
 			if (!$additional)
 			{
-				$addtional = array();
+				$additional = array();
 			}
 			list($app) = explode('.',$app);
 
@@ -807,7 +867,7 @@
 				//echo "writeLangFile: additional ="; _debug_array($additional);
 				foreach($additional as $msg)
 				{
-					$to_trans[trim(strtolower($msg))] = $msg;
+					if (!is_array($msg)) $to_trans[trim(strtolower($msg))] = $msg;
 				}
 			}
 			unset($to_trans['']);
@@ -862,13 +922,10 @@
 			include($path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
 			$templ = new etemplate($app);
 
-			for ($n = 0; isset($templ_data[$n]); ++$n)
+			foreach($templ_data as $data)
 			{
-				for (reset($this->db_cols); list($db_col,$name) = each($this->db_cols); )
-				{
-					$templ->$name = $templ_data[$n][$name];
-				}
-				$templ->data = unserialize(stripslashes($templ->data));
+				$templ->init($data);
+
 				if (!$templ->modified)
 				{
 					$templ->modified = filemtime($path);
@@ -910,5 +967,28 @@
 				}
 			}
 			return $ret;
+		}
+		
+		/**
+		 * prints/echos the template's content, eg. for debuging
+		 * @param boolean $backtrace = true give a function backtrace
+		 * @param boolean $no_db_obj = true dump the db-obj too
+		 */
+		function echo_tmpl($backtrace=true,$no_db_obj=true)
+		{
+			if ($backtrace) echo "<p>".function_backtrace(1)."</p>\n";
+
+			if ($no_db_obj)
+			{
+				$db = &$this->db;
+				unset($this->db);
+			}
+			_debug_array($this);
+			
+			if ($no_db_obj)
+			{
+				$this->db = &$db;
+				unset($db);
+			}
 		}
 	};

@@ -218,8 +218,18 @@
 					$attr_widget->set_attribute('type',$cell['type']);
 				}
 				break; 
+			case 'groupbox':
+				if ($cell['label'])
+				{
+					$caption = new xmlnode('caption');
+					$caption->set_attribute('label',$cell['label']);
+					$widget->add_node($caption);
+					unset($cell['label']);
+				}
+				// fall-through
 			case 'vbox':
 			case 'hbox':
+			case 'deck':
 				list($anz,$options) = split(',',$cell['size'],2);
 				for ($n = 1; $n <= $anz; ++$n)
 				{
@@ -543,6 +553,8 @@
 						break; 
 					case 'vbox':
 					case 'hbox':
+					case 'deck':
+					case 'groupbox':
 						if ($type == 'open')
 						{
 							$box[$node['level']] = $attr;
@@ -554,6 +566,12 @@
 							unset($cell['anz']);
 							$this->add_cell($etempl,$cell,$box,$col,$node['level']);
 							unset($box[$node['level']]);
+						}
+						break;
+					case 'caption':	// caption of (group)box
+						if (isset($box[$node['level']-1]))
+						{
+							$box[$node['level']-1]['label'] = $attr['label'];
 						}
 						break;
 					case 'textbox':
