@@ -362,7 +362,7 @@
 
 			if (is_array($filter_obj))
 			{
-				$str .= '<select name="filter">'."\n";
+				$str .='<select name="filter" onChange="this.form.submit()">'."\n";
 
 				$indexlimit = count($filter_obj);
 

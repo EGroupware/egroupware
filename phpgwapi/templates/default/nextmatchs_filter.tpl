@@ -1,1 +1,1 @@
-<td width="14%">{select}<input type="submit" value="{lang_filter}"></td>
+<td width="14%">{select}<noscript><input type="submit" value="{lang_filter}"></noscript></td>
