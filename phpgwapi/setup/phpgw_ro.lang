@@ -1,0 +1,100 @@
+align	htmlarea-TableOperations	ro	Aliniere
+all four sides	htmlarea-TableOperations	ro	Toate părţile
+alternate style-sheet:	htmlarea-FullPage	ro	Template CSS alternativ:
+background	htmlarea-TableOperations	ro	Fundal
+background color:	htmlarea-FullPage	ro	Culoare de fundal:
+baseline	htmlarea-TableOperations	ro	Baseline
+border	htmlarea-TableOperations	ro	Chenar
+borders	htmlarea-TableOperations	ro	Chenare
+bottom	htmlarea-TableOperations	ro	Jos
+charset	common	ro	utf-8
+cancel	common	ro	Renunţă
+caption	htmlarea-TableOperations	ro	Titlu de tabel
+cell properties	htmlarea-TableOperations	ro	Proprietăţile celulei
+center	htmlarea-TableOperations	ro	Centru
+char	htmlarea-TableOperations	ro	Caracter
+collapsed borders	htmlarea-TableOperations	ro	Chenare asimilate
+color	htmlarea-TableOperations	ro	Culoare
+delete cell	htmlarea-TableOperations	ro	Şterge celula
+delete column	htmlarea-TableOperations	ro	Şterge coloana
+delete row	htmlarea-TableOperations	ro	Şterge rândul
+description	htmlarea-TableOperations	ro	Descriere
+dictionary	htmlarea-SpellChecker	ro	Dicţionar
+doctype:	htmlarea-FullPage	ro	DOCTYPE:
+document properties	htmlarea-FullPage	ro	Proprietăţile documentului
+document title:	htmlarea-FullPage	ro	Titlul documentului:
+fg color	htmlarea-TableOperations	ro	Culoare text
+finished list of mispelled words	htmlarea-SpellChecker	ro	Am terminat lista de cuvinte greşite
+float	htmlarea-TableOperations	ro	Poziţie
+frames	htmlarea-TableOperations	ro	Chenare
+height	htmlarea-TableOperations	ro	Înălţimea
+how many columns would you like to merge?	htmlarea-TableOperations	ro	Câte coloane vrei să uneşti?
+how many rows would you like to merge?	htmlarea-TableOperations	ro	Câte linii vrei să uneşti?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	ro	HTMLArea refuză cu laşitate să şteargă ultima celulă din rând.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	ro	HTMLArea refuză cu laşitate să şteargă ultima coloamă din tabela.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	ro	HTMLArea refuză cu laşitate să şteargă ultimul rând din tabela.
+i will open it in a new page.	htmlarea-SpellChecker	ro	O voi deschide într-o altă fereastră.
+ignore	htmlarea-SpellChecker	ro	Ignoră
+ignore all	htmlarea-SpellChecker	ro	Ignoră toate
+image url	htmlarea-TableOperations	ro	URL-ul imaginii
+insert cell after	htmlarea-TableOperations	ro	Inserează o celulă la dreapta
+insert cell before	htmlarea-TableOperations	ro	Inserează o celulă la stânga
+insert column after	htmlarea-TableOperations	ro	Inserează o coloană la dreapta
+insert column before	htmlarea-TableOperations	ro	Inserează o coloană la stânga
+insert row after	htmlarea-TableOperations	ro	Inserează un rând după
+insert row before	htmlarea-TableOperations	ro	Inserează un rând înainte
+justify	htmlarea-TableOperations	ro	Justify
+layout	htmlarea-TableOperations	ro	Aranjament
+left	htmlarea-TableOperations	ro	Stânga
+margin	htmlarea-TableOperations	ro	Margine
+merge cells	htmlarea-TableOperations	ro	Uneşte celulele
+middle	htmlarea-TableOperations	ro	Mijloc
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	ro	Nu am găsit nici un cuvânt greşit cu acest dicţionar.
+no rules	htmlarea-TableOperations	ro	Fără linii
+no sides	htmlarea-TableOperations	ro	Fără părţi
+none	htmlarea-TableOperations	ro	Nimic
+ok	common	ro	Acceptă
+original word	htmlarea-SpellChecker	ro	Cuvântul original
+padding	htmlarea-TableOperations	ro	Spaţiere
+percent	htmlarea-TableOperations	ro	procente
+pixels	htmlarea-TableOperations	ro	pixeli
+please click into some cell	htmlarea-TableOperations	ro	Vă rog să daţi click într-o celulă
+please confirm that you want to open this link	htmlarea-SpellChecker	ro	Vă rog confirmaţi că vreţi să deschideţi acest link
+please wait.  calling spell checker.	htmlarea-SpellChecker	ro	Vă rog aşteptaţi.  Apelez spell-checker-ul.
+please wait: changing dictionary to	htmlarea-SpellChecker	ro	Vă rog aşteptaţi.  Schimb dicţionarul cu
+pliz weit ;-)	htmlarea-SpellChecker	ro	va rog ashteptatzi ;-)
+primary style-sheet:	htmlarea-FullPage	ro	Template CSS principal:
+re-check	htmlarea-SpellChecker	ro	Scanează
+replace	htmlarea-SpellChecker	ro	Înlocuieşte
+replace all	htmlarea-SpellChecker	ro	Înlocuieşte toate
+replace with	htmlarea-SpellChecker	ro	Înlocuieşte cu
+right	htmlarea-TableOperations	ro	Dreapta
+row properties	htmlarea-TableOperations	ro	Proprietăţile liniei
+rules	htmlarea-TableOperations	ro	Linii
+rules will appear between all rows and columns	htmlarea-TableOperations	ro	Vor apărea linii între toate rândurile şi coloanele
+rules will appear between columns only	htmlarea-TableOperations	ro	Vor apărea doar linii verticale
+rules will appear between rows only	htmlarea-TableOperations	ro	Vor apărea doar linii orizontale
+spacing	htmlarea-TableOperations	ro	Între celule
+spacing and padding	htmlarea-TableOperations	ro	Spaţierea
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	ro	Am terminat, nu am detectat nici o greşeală.  Acum închid fereastra...
+spell-check	htmlarea-SpellChecker	ro	Detectează greşeli
+split cell	htmlarea-TableOperations	ro	Împarte celula
+split column	htmlarea-TableOperations	ro	Împarte coloana
+split row	htmlarea-TableOperations	ro	Împarte rândul
+style [css]	htmlarea-TableOperations	ro	Stil [CSS]
+suggestions	htmlarea-SpellChecker	ro	Sugestii
+summary	htmlarea-TableOperations	ro	Sumar
+table properties	htmlarea-TableOperations	ro	Proprietăţile tabelei
+text align	htmlarea-TableOperations	ro	Aliniere
+text color:	htmlarea-FullPage	ro	Culoare text:
+the bottom side only	htmlarea-TableOperations	ro	Doar partea de jos
+the left-hand side only	htmlarea-TableOperations	ro	Doar partea din stânga
+the right and left sides only	htmlarea-TableOperations	ro	Partea din stânga şi cea din dreapta
+the right-hand side only	htmlarea-TableOperations	ro	Doar partea din dreapta
+the top and bottom sides only	htmlarea-TableOperations	ro	Partea de sus si cea de jos
+the top side only	htmlarea-TableOperations	ro	Doar partea de sus
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	ro	Doriţi să renunţaţi la modificări şi să închid spell-checker-ul?
+top	htmlarea-TableOperations	ro	Sus
+unset color	htmlarea-TableOperations	ro	Dezactivează culoarea
+vertical align	htmlarea-TableOperations	ro	Aliniere pe verticală
+width	htmlarea-TableOperations	ro	Lăţime
