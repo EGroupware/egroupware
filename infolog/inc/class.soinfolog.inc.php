@@ -523,11 +523,11 @@
 			  $filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
 			}
 			$join = '';
+			if ($query['query']) $query['search'] = $query['query'];	// allow both names
 			if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 			{
-				$query['search'] = $this->db->db_addslashes($query['query']);
-				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
-								 "LIKE '%$query%' OR info_des LIKE '%$query%' OR info_extra_value LIKE '%$query%') ";
+				$pattern = "'%".$this->db->db_addslashes($query['search'])."%'";
+				$sql_query = "AND (info_from like $pattern OR info_subject LIKE $pattern OR info_des LIKE $pattern OR info_extra_value LIKE $pattern) ";
 				$join = 'LEFT JOIN phpgw_infolog_extra ON phpgw_infolog.info_id=phpgw_infolog_extra.info_id';
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
