@@ -27,17 +27,18 @@
 		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 	$GLOBALS['phpgw']->common->phpgw_header();
-	echo parse_navbar();
 
 	$infolog = createobject('infolog.uiinfolog');
 
-	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
-	$t->set_file(array('import' => 'csv_import.tpl'));
-	$t->set_block('import','filename','filenamehandle');
-	$t->set_block('import','fheader','fheaderhandle');
-	$t->set_block('import','fields','fieldshandle');
-	$t->set_block('import','ffooter','ffooterhandle');
-	$t->set_block('import','imported','importedhandle');
+	$t = $GLOBALS['phpgw']->template; //CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
+	$t->set_file(array('import_t' => 'csv_import.tpl'));
+	$t->set_block('import_t','filename');
+	$t->set_block('import_t','fheader');
+	$t->set_block('import_t','fields');
+	$t->set_block('import_t','ffooter');
+	$t->set_block('import_t','imported');
+	$t->set_block('import_t','import');
+
 	
 	// $t->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
 	// $t->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
@@ -136,7 +137,7 @@ function cat_id($cats)
 		$t->set_var('enctype','ENCTYPE="multipart/form-data"');
 		$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
-		$t->parse('filenamehandle','filename');
+		$t->parse('rows','filename');
 		break;
 
 	case 'download':
@@ -151,7 +152,7 @@ function cat_id($cats)
 		$t->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
 		$t->set_var('submit',lang('Import'));
 		$t->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-		$t->parse('fheaderhandle','fheader');
+		$t->parse('rows','fheader');
 		$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n".
 							'<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
 
@@ -175,9 +176,10 @@ function cat_id($cats)
 									'cat_id' 	=> 'Categorie id(s), to set use @cat_id(Cat1,Cat2)',
 									'addr_id'	=>	'Addressbook id, to set use @addr_id(nlast,nfirst,org)' );
 
-		/* this are settings to import from Lotus Organizer
+		// the next line is used in the help-text too
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
 
+		/* this are settings to import from Lotus Organizer
 		$defaults += array(	'Land'			=> "addr$PSep.*[(]+([0-9]+)[)]+$ASep+${VPre}1 (${CPre}Ortsvorwahl$CPos) ${CPre}Telefon$CPos$PSep${CPre}Telefon$CPos",
 									'Notiz'			=> 'des',
 									'Privat'			=> "access${PSep}1${ASep}private${PSep}public",
@@ -209,13 +211,13 @@ function cat_id($cats)
 				$t->set_var('trans','');
 				$t->set_var('info_fields',$info_name_options);
 			}
-			$t->parse('fieldshandle','fields',True);
+			$t->parse('rows','fields',True);
 		}
 		$t->set_var('lang_start',lang('Startrecord'));
 		$t->set_var('start',$start);
 		$t->set_var('lang_max',lang('Number of records to read (<=200)'));
 		$t->set_var('max',200);
-		$t->parse('ffooterhandle','ffooter');
+		$t->parse('rows','ffooter',True);
 		fclose($fp);
 		$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/info_log_import_'.basename($csvfile);
 		rename($old,$csvfile);
@@ -275,8 +277,7 @@ function cat_id($cats)
 		}
 
 		$GLOBALS['phpgw']->preferences->read_repository();
-		$test = $GLOBALS['phpgw']->preferences->add('infolog','cvs_import',$defaults);
-		echo "add('infolog','cvs_import',defaults) ="; _debug_array($test);
+		$GLOBALS['phpgw']->preferences->add('infolog','cvs_import',$defaults);
 		$GLOBALS['phpgw']->preferences->save_repository(True);
 
 		$log = "<table border=1>\n\t<tr><td>#</td>\n";
@@ -349,11 +350,11 @@ function cat_id($cats)
 																$anz,'<a href="javascript:history.back()">','</a>' ) :
 														lang( '%1 records imported',$anz ));
 		$t->set_var('log',$log);
-		$t->parse('importedhandle','imported');
+		$t->parse('rows','imported');
 		break;
 	}
 	$t->set_var('hiddenvars',$hiddenvars);
-	$t->pfp('out','import',True);
+	$t->pfp('out','import');
 	$GLOBALS['phpgw']->common->phpgw_footer();
 
 ?>

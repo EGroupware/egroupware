@@ -1,10 +1,3 @@
-{info_css}<p class=action>{lang_info_action}<br>
-<hr noshade width="98%" align="center" size="1">
-<center>
-
-		<FORM {enctype} action="{action_url}" method="post">
-      <TABLE>
-
 <!-- BEGIN filename -->
 	  		<TR>
 	    		<TD>{lang_csvfile}</td>
@@ -47,19 +40,30 @@
 			</TR>
 			<tr><td colspan=3>&nbsp;<p>
 				{help_on_trans}
-			</td></tr>			
+			</td></tr>
 <!-- END ffooter -->
 
 <!-- BEGIN imported -->
 			<tr>
 				<td colspan=2 align=center>
-					{log}<p>					
-					{anz_imported}					
+					{log}<p>
+					{anz_imported}
 				</td>
 			</TR>
 <!-- END imported -->
 
+<!-- BEGIN import -->
+{info_css}<p class=action>{lang_info_action}<br>
+<hr noshade width="98%" align="center" size="1">
+<center>
+		<FORM {enctype} action="{action_url}" method="post">
+		<TABLE>
+
+		{rows}
+
 		</TABLE>
-		{hiddenvars}</form>
+		{hiddenvars}
+		</form>
 
 </CENTER>
+<!-- END import -->
