@@ -27,18 +27,16 @@
 	{
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info;
-
 			$domain = yp_get_default_domain();
-			if( !empty($phpgw_info['server']['nis_domain']) )
+			if( !empty($GLOBALS['phpgw_info']['server']['nis_domain']) )
 			{
-				$domain = $phpgw_info['server']['nis_domain'];
+				$domain = $GLOBALS['phpgw_info']['server']['nis_domain'];
 			}
 
 			$map = "passwd.byname";
-			if( !empty($phpgw_info['server']['nis_map']) )
+			if( !empty($GLOBALS['phpgw_info']['server']['nis_map']) )
 			{
-				$map = $phpgw_info['server']['nis_map']);
+				$map = $GLOBALS['phpgw_info']['server']['nis_map']);
 			}
 			$entry = yp_match( $domain, $map, $username );
 
@@ -62,11 +60,9 @@
 
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
-
 			$account_id = get_account_id($account_id);
 
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}
