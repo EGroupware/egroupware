@@ -291,14 +291,12 @@
     // set $account_id to uidnumber for sql
     $account_id = $allValues[0]["uidnumber"][0];    
 
-    $phpgw->db->query("select account_lid from accounts where account_id=$account_id",__LINE__,__FILE__);
-    $phpgw->db->next_record();
-    $lid = $phpgw->db->f(0);
+    $lid = $phpgw->accounts->id2name($account_id);
 
     $table_locks = array('preferences','todo','addressbook','accounts');
 
     $cal = CreateObject('calendar.calendar');
-    $cal->delete($lid);
+    $cal->delete(string($lid));
 
     $phpgw->db->lock($table_locks);
 

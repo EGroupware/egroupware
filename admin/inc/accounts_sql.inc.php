@@ -145,14 +145,12 @@
      global $phpgw_info;
 
      
-     $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
-     $phpgw->db->next_record();
-     $lid = $phpgw->db->f(0);
+     $lid = $phpgw->accounts->id2name($account_id);
 
      $table_locks = array('preferences','todo','addressbook','accounts');
 
      $cal = CreateObject('calendar.calendar');
-     $cal->delete($lid);
+     $cal->delete(string($lid));
 
      $phpgw->db->lock($table_locks);
 
