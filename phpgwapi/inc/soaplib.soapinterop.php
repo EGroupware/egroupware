@@ -19,18 +19,17 @@
 
 	/* $Id$ */
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'hello',
 		array('string'),
 		array('string')
 	);
 	function hello($serverid)
 	{
-		global $phpgw_info;
-		return CreateObject('soap.soapval','return','string',$phpgw_info['server']['site_title']);
+		return CreateObject('soap.soapval','return','string',$GLOBALS['phpgw_info']['server']['site_title']);
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoString',
 		array('string'),
 		array('string')
@@ -40,7 +39,7 @@
 		return CreateObject('soap.soapval','return','string',$inputString);
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoStringArray',
 		array('array'),
 		array('array')
@@ -50,7 +49,7 @@
 		return $inputStringArray;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoInteger',
 		array('int'),
 		array('int')
@@ -60,7 +59,7 @@
 		return $inputInteger;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoIntegerArray',
 		array('array'),
 		array('array')
@@ -70,7 +69,7 @@
 		return $inputIntegerArray;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoFloat',
 		array('float'),
 		array('float')
@@ -80,7 +79,7 @@
 		return $inputFloat;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoFloatArray',
 		array('array'),
 		array('array')
@@ -90,7 +89,7 @@
 		return $inputFloatArray;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoStruct',
 		array('SOAPStruct'),
 		array('SOAPStruct')
@@ -100,7 +99,7 @@
 		return $inputStruct;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoStructArray',
 		array('array'),
 		array('array')
@@ -110,7 +109,7 @@
 		return $inputStructArray;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoVoid',
 		array(),
 		array()
@@ -119,7 +118,7 @@
 	{
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoBase64',
 		array('base64'),
 		array('base64')
@@ -129,7 +128,7 @@
 		return base64_encode(base64_decode($b_encoded));
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'echoDate',
 		array('timeInstant'),
 		array('timeInstant')
@@ -139,13 +138,13 @@
 		return $timeInstant;
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'system_auth',
 		array('string','string','string'),
 		array('array')
 	);
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'system_auth_verify',
 		array('string','string','string'),
 		array('array')

@@ -21,9 +21,9 @@
 
 	include('./header.inc.php');
 
-	$server = CreateObject('phpgwapi.soap_server');
-	/* _debug_array($server);exit; */
-	//include(PHPGW_API_INC . '/soaplib.soapinterop.php');
+	$GLOBALS['server'] = CreateObject('phpgwapi.soap_server');
+	/* _debug_array($GLOBALS['server']);exit; */
+	/* include(PHPGW_API_INC . '/soaplib.soapinterop.php'); */
 
 	$headers = getallheaders();
 
@@ -37,23 +37,33 @@
 
 		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
 		{
-			$server->authed = True;
+			$GLOBALS['server']->authed = True;
 		}
 		elseif($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
 		{
-			$server->authed = True;
+			$GLOBALS['server']->authed = True;
 		}
 	}
 
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'system_login',
-		array('string','string','string'),
-		array('array')
+		array('soapstruct'),
+		array('soapstruct')
 	);
-	$server->add_to_map(
+	$GLOBALS['server']->add_to_map(
 		'system_logout',
-		array('string','string'),
-		array('array')
+		array('soapstruct'),
+		array('soapstruct')
 	);
-	$server->service($HTTP_RAW_POST_DATA);
+
+	if(function_exists('system_listapps'))
+	{
+		$GLOBALS['server']->add_to_map(
+			'system_listApps',
+			array(),
+			array('soapstruct')
+		);
+	}
+
+	$GLOBALS['server']->service($HTTP_RAW_POST_DATA);
 ?>

@@ -40,13 +40,13 @@
 		function soapmsg($method,$params,$method_namespace='http://testuri.org',$new_namespaces=False)
 		{
 			// globalize method namespace
-			global $methodNamespace;
-			$methodNamespace = $method_namespace;
+			$GLOBALS['methodNamespace'] = $method_namespace;
+			$namespaces = $GLOBALS['namespaces'];
+
 			// make method struct
 			$this->value = CreateObject('phpgwapi.soapval',$method,"struct",$params,$method_namespace);
 			if(is_array($new_namespaces))
 			{
-				global $namespaces;
 				$i = count($namespaces);
 				@reset($new_namespaces);
 				while(list($null,$v) = @each($new_namespaces))
@@ -63,7 +63,7 @@
 
 		function make_envelope($payload)
 		{
-			global $namespaces;
+			$namespaces = $GLOBALS['namespaces'];
 			@reset($namespaces);
 			while(list($k,$v) = @each($namespaces))
 			/* foreach($namespaces as $k => $v) */

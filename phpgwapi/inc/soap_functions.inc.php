@@ -103,22 +103,20 @@
 		{
 			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string',$username));
 		}
-		$r = CreateObject('phpgwapi.soapmsg','system_loginResponse',$rtrn);
-		return $r;
+		return $rtrn;
 	}
 
 	function system_logout($m1,$m2)
 	{
 		$sessionid   = $m1;
 		$kp3         = $m2;
-
-		$username = $GLOBALS['phpgw']->session->account_lid;
-		$later = $GLOBALS['phpgw']->session->destroy();
+		
+		$later = $GLOBALS['phpgw']->session->destroy($sessionid,$kp3);
 
 		if($later)
 		{
 			$rtrn = array(
-				CreateObject('phpgwapi.soapval','GOODBYE','string',$username)
+				CreateObject('phpgwapi.soapval','GOODBYE','string','XOXO')
 			);
 		}
 		else
@@ -127,7 +125,31 @@
 				CreateObject('phpgwapi.soapval','OOPS','string','WHAT?')
 			);
 		}
-		$r = CreateObject('phpgwapi.soapmsg','system_logoutResponse',$rtrn);
-		return $r;
+		return $rtrn;
 	}
+
+	/*
+	function system_listApps()
+	{
+		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		$apps = array();
+		if($GLOBALS['phpgw']->db->num_rows())
+		{
+			while ($GLOBALS['phpgw']->db->next_record())
+			{
+				$name   = $GLOBALS['phpgw']->db->f('app_name');
+				$title  = $GLOBALS['phpgw']->db->f('app_title');
+				$status = $GLOBALS['phpgw']->db->f('app_enabled');
+				$version= $GLOBALS['phpgw']->db->f('app_version');
+				$apps[$name] = array(
+					CreateObject('phpgwapi.soapval','title','string',$title),
+					CreateObject('phpgwapi.soapval','name','string',$name),
+					CreateObject('phpgwapi.soapval','status','string',$status),
+					CreateObject('phpgwapi.soapval','version','string',$version)
+				);
+			}
+		}
+		return $apps;
+	}
+	*/
 ?>
