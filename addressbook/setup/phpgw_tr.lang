@@ -1,0 +1,158 @@
+%1 records imported	addressbook	tr	%1 kay?t al?nd?
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	tr	%1 kay?t okundu (henüz al?nmad?, %2geri%3 gidebilir ve Test Al?m?'ndaki seçimi kald?rabilirsiniz)
+(e.g. 1969)	addressbook	tr	(örn. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	tr	<b>Tip de?i?imi yok &lt;hiç&gt; bulunamad?.</b> Lütfen listeden bir de?i?im tipi seçin
+@-eval() is only availible to admins!!!	addressbook	tr	@-eval() yaln?zca adminlere mevcuttur!!!
+actions	addressbook	tr	Hareketler
+add a single entry by passing the fields.	addressbook	tr	Alanlar? geçerek yaln?zca tek giri? yap?n?z.
+add custom field	addressbook	tr	Özel Alan Ekle
+address book	common	tr	Adres Defteri
+address book - vcard in	addressbook	tr	Adres defteri - VCard al?m?
+address book - view	addressbook	tr	Adres defteri - görüntüle
+address line 2	addressbook	tr	Adres Sat?r? 2
+address line 3	addressbook	tr	Adres Sat?r? 3
+address type	addressbook	tr	Adres Tipi
+addressbook	common	tr	Adresdefteri
+addressbook preferences	addressbook	tr	Adresdefteri seçenekleri
+addressbook-fieldname	addressbook	tr	Adresdefteri-Alan ad?
+addvcard	addressbook	tr	VCard Ekle
+alt. csv import	addressbook	tr	Alt. CSV Al?m?
+are you sure you want to delete this field?	addressbook	tr	Bu alan? silmek istedi?inize emin misiniz?
+bbs phone	addressbook	tr	BBS Telefonu
+birthday	common	tr	Do?um Günü
+birthdays	common	tr	Do?um Günleri
+blank	addressbook	tr	Bo?luk
+business	common	tr	??
+business address type	addressbook	tr	?? Adresi Tipi
+business city	addressbook	tr	?? Kent
+business country	addressbook	tr	?? Ülke
+business email	addressbook	tr	?? e-posta
+business email type	addressbook	tr	?? e-posta Tipi
+business fax	addressbook	tr	?? Faks
+business phone	addressbook	tr	?? Telefon
+business state	addressbook	tr	?? Eyalet
+business street	addressbook	tr	?? Sokak
+business zip code	addressbook	tr	?? Posta Kodu
+car phone	addressbook	tr	Araç Telefonu
+cell phone	addressbook	tr	Cep Telefonu
+charset of file	addressbook	tr	Dosya karakter seti
+city	common	tr	Kent
+company	common	tr	?irket
+company name	common	tr	?irket Ad?
+configuration	common	tr	Ayarlar
+contact	common	tr	Ki?i
+contact application	admin	tr	Ki?i Uygulamas?
+contact settings	admin	tr	Ki?i Ayarlar?
+copied by %1, from record #%2.	addressbook	tr	#%2 . kay?ttan %1 kopyaland?
+country	common	tr	Ülke
+csv-fieldname	addressbook	tr	CSV-Alan ad?
+csv-filename	addressbook	tr	CSV-Dosya ad?
+custom	addressbook	tr	Özel
+custom fields	addressbook	tr	Özel Alanlar
+debug output in browser	addressbook	tr	Hata ay?klamay? taray?c?da göster
+default filter	addressbook	tr	Ayarl? Filtre
+delete a single entry by passing the id.	addressbook	tr	ID ileterek tek giri? sil
+department	common	tr	Depatman
+domestic	addressbook	tr	Yurt içi
+download	addressbook	tr	?ndir
+download export file (uncheck to debug output in browser)	addressbook	tr	Verme dosyas?n? indir (Hata ay?klamay? taray?c?da göstermek için seçimi kald?r?n)
+edit custom field	addressbook	tr	Özel Alan? Düzelt
+edit custom fields	admin	tr	Özel Alan? Düzelt
+empty for all	addressbook	tr	hepsi için bo?alt
+enter the path to the exported file here	addressbook	tr	Verilen dosyan?n yolunu buraya girin
+export contacts	addressbook	tr	Ki?ileri Ver
+export file name	addressbook	tr	Dosya Ad? Ver
+export from addressbook	addressbook	tr	Adresdefteri'nden ver
+extra	addressbook	tr	Ekstra
+fax	addressbook	tr	Faks
+fax number	common	tr	Faks Numaras?
+field %1 has been added !	addressbook	tr	Alan %1 eklendi!
+field %1 has been updated !	addressbook	tr	Alan %1 güncellendi!
+field name	addressbook	tr	Alan Ad?
+fields to show in address list	addressbook	tr	Adres listesinde gösterilecek alanlar
+fieldseparator	addressbook	tr	Alan ay?r?c?
+full name	addressbook	tr	Tam Ad
+geo	addressbook	tr	GEO
+global categories	addressbook	tr	Global Kategoriler
+grant addressbook access	common	tr	Adresdefteri Eri?im Hakk? Ver
+home address type	addressbook	tr	Ev Adresi Tipi
+home city	addressbook	tr	Ev Kent
+home country	addressbook	tr	Ev Ülke
+home email	addressbook	tr	Ev e-posta
+home email type	addressbook	tr	Ev e-posta tipi
+home phone	addressbook	tr	Ev Telefon
+home state	addressbook	tr	Ev Eyalet
+home street	addressbook	tr	Ev Sokak
+home zip code	addressbook	tr	Ev Posta Kodu
+import	addressbook	tr	Al
+import contacts	addressbook	tr	Ki?ileri Al
+import csv-file into addressbook	addressbook	tr	CSV-Dosyas?n? Adresdefterine al
+import file	addressbook	tr	Dosya al
+import from ldif, csv, or vcard	addressbook	tr	LDIF, CSV, veya VCard'dan al
+import from outlook	addressbook	tr	Outlook'tan Al
+import next set	addressbook	tr	Bir sonraki seti al
+import_instructions	addressbook	tr	Netscape'de, Adresdefteri'ni aç?n ve <b>Dosya</b> menüsünden <b>Ver</b>'i seçin. Verilen dosya LDIF format?nda olacakt?r.<p>Veya, Outlook'ta, <b>Dosya</b> menüsünden <b>Al ve Ver...</b>'u seçin ve ki?ilerinizi Virgülle Ayr?lm?? Tekst (CSV) dosyas? olarak verin.<p>Veya, Palm Desktop 4.0 veya daha üzer,nde adresdefterinize girin ve <b>Dosya</b> menüsünden <b>Ver</b>'i seçin. Verilen dosya VCard format?nda olacakt?r.
+international	addressbook	tr	Uluslararas?
+isdn phone	addressbook	tr	ISDN Telefon
+label	addressbook	tr	Etiket
+ldap context for contacts	admin	tr	Ki?iler için LDAP içerik
+ldap host for contacts	admin	tr	Ki?iler için LDAP sunucu
+ldap root dn for contacts	admin	tr	Ki?iler için LDAP root dn
+ldap root pw for contacts	admin	tr	Ki?iler için LDAP root pw
+ldif	addressbook	tr	LDIF
+line 2	addressbook	tr	2. Sat?r
+mark records as private	addressbook	tr	Kay?tlar? özel olarak i?aretle
+message phone	addressbook	tr	Telefon Mesaj?
+middle name	addressbook	tr	Orta ad?
+mobile	addressbook	tr	Cep
+mobile phone	addressbook	tr	Cep Telefonu
+modem phone	addressbook	tr	Modem Telefon
+no vcard	addressbook	tr	VCard Yok
+number of records to read (%1)	addressbook	tr	Okunacak kay?t say?s? (%1)
+other number	addressbook	tr	Di?er Numara
+other phone	addressbook	tr	Di?er Telefon
+pager	common	tr	Ça?r?
+parcel	addressbook	tr	Parsel
+phone number	common	tr	Telefon Numaras?
+phone numbers	common	tr	Telefon Numaralar?
+please enter a name for that field !	addressbook	tr	Lütfen bu alan için bir isim girin !
+postal	common	tr	Posta kodu
+pref	addressbook	tr	pref
+prefix	addressbook	tr	Prefiks
+public key	addressbook	tr	Aç?k Anahtar
+read a list of entries.	addressbook	tr	Bir giri? listesi oku.
+read a single entry by passing the id and fieldlist.	addressbook	tr	?d ve alanlistesi'ni geçerek tek bir giri? okuyun.
+record access	addressbook	tr	Kay?t ?zni
+record owner	addressbook	tr	Kay?t Sahibi
+retrieve contacts	admin	tr	ki?ileri getir
+select all	addressbook	tr	Tümünü seç
+select the type of conversion	addressbook	tr	Çeviri tipini seç
+select the type of conversion:	addressbook	tr	Çeviri tipini seç:
+select where you want to store	admin	tr	Nereye saklamak istedi?ini seç
+show birthday reminders on main screen	addressbook	tr	Do?umgünü hat?rlatmalar?n? ana ekranda göster
+startrecord	addressbook	tr	Kay?daba?la
+state	common	tr	Eyalet
+street	common	tr	Sokak
+successfully imported %1 records into your addressbook.	addressbook	tr	Adfrtesdefterinize kay?tlar?n %1'i ba?ar?yla girildi
+suffix	addressbook	tr	suffix
+test import (show importable records <u>only</u> in browser)	addressbook	tr	Test giri? (girilebilir kay?tlar? <u>yaln?zca</u> taray?c?da göster)
+that field name has been used already !	addressbook	tr	Bu alan ismi daha önce kullan?lm??t?r !
+this person's first name was not in the address book.	addressbook	tr	Bu ki?inin ilk ad? adres defterinde bulunmamaktad?r.
+this person's last name was not in the address book.	addressbook	tr	Bu ki?inin soyad? adres defterinde bulunmamaktad?r.
+to many might exceed your execution-time-limit	addressbook	tr	çok fazla olursa kullan?m-zaman-s?n?r?n?z? a?abilirsiniz.
+today is %1's birthday!	common	tr	Bugün %1'in do?umgünü!
+tomorrow is %1's birthday.	common	tr	Yar?n %1'in do?umgünü>
+translation	addressbook	tr	Çeviri
+update a single entry by passing the fields.	addressbook	tr	Tek bir giri?i alanlar? geçerek güncelle
+use country list	addressbook	tr	Ülke Listesini kullan
+vcard	common	tr	VCard
+vcards require a first name entry.	addressbook	tr	VCardlar ilk ad?n giri?ini gerektirmektedir.
+vcards require a last name entry.	addressbook	tr	VCardlar soyad?nismin giri?ini gerektirmektedir.
+video phone	addressbook	tr	Video Telefon
+voice phone	addressbook	tr	Ses Telefonu
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	tr	UYARI!! LDAP yaln?zca ki?ileri hesap saklama için KULLANMIYORSANIZ geçerlidir.
+work phone	addressbook	tr	?? Telefonu
+you must select a vcard. (*.vcf)	addressbook	tr	Bir VCard seçmelisiniz. (*.vcf)
+you must select at least 1 column to display	addressbook	tr	Göstermek için en az 1 kolon seçmelisiniz
+zip code	common	tr	Posta Kodu
+zip_note	addressbook	tr	<p><b>Not:</b> Dosya .csv, .vcf veya .ldif dosyalar?n?n bir zipli dosya koleksiyonu olabilir. Ancak giri? içinde dosya tiplerini kar??t?rmay?n.
