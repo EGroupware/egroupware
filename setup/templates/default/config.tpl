@@ -139,6 +139,7 @@
       <option value="sql"{selected_auth_type_sql}>SQL</option>
       <option value="sqlssl"{selected_auth_type_sqlssl}>SQL / SSL</option>
       <option value="ldap"{selected_auth_type_ldap}>LDAP</option>
+      <option value="ads"{selected_auth_type_ads}>ADS</option>
       <option value="mail"{selected_auth_type_mail}>Mail</option>
       <option value="http"{selected_auth_type_http}>HTTP</option>
       <option value="nis"{selected_auth_type_nis}>NIS</option>
