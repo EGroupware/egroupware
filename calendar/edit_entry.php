@@ -260,18 +260,18 @@
 		}
 	}
 
-	if ($num_users > 50)
-	{
-		$size = 15;
-	}
-	elseif ($num_users > 5)
-	{
-		$size = 5;
-	}
-	else
-	{
-		$size = $num_users;
-	}
+//	if ($num_users > 50)
+//	{
+//		$size = 15;
+//	}
+//	elseif ($num_users > 5)
+//	{
+//		$size = 5;
+//	}
+//	else
+//	{
+//		$size = $num_users;
+//	}
 	$str = "\n".'   <select name="participants[]" multiple size="5">'."\n";
 	for ($l=0;$l<count($event->participants);$l++)
 	{
