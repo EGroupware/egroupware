@@ -3,55 +3,89 @@
 #######################
 
 * Joseph Engo (aka jengo) <jengo@phpgroupware.org>
-- project leader/administrator
-- works on core services session management, permissions, groups class, etc...
-- wrote the following applications:
---- initial development of Addressbook, ToDolist, Inventory
---- Developer Tools, Voting Both, News Admin
---- Contacts class
---- Email (Adapted from Aeromail, which was written by Mark Cushman <mark@cushman.net> http://the.cushman.net/)
---- Calendar (Adapted from WebCalendar, which was written by Craig Knudsen <cknudsen@radix.net> http://www.radix.net/~cknudsen)
+  This is the man who started it all. Joseph provides project direction and works on core services such as the phpgwAPI
+  ($phpgw-> class and $phpgw[] array for application developers).
+  Jengo wrote/works_on the following areas:
+
+	* phpgwAPI, designed/developed layout and structure.
+	* Developer Tools, Voting Both, News Admin and many other applications
+	* initial development of Addressbook, ToDoList and Inventory
+	* initial development of Email, adapted from Aeromail, which was written by Mark Cushman at http://the.cushman.net/.
+	* initial development of Calendar, adapted from WebCalendar, which was written by Craig Knudsen at http://www.radix.net/~cknudsen.
+	* He continues in development and project direction.
+
 
 * Dan Kuykendall (aka Seek3r) <dan@kuykendall.org>
-- project leader/administrator
-- works on core services such as the $phpgw[] array for application developers.
-- hosts website, and offers commercial support thru Clear River Technologies (http://www.clearrivertech.com)
-- wrote the following applications:
---- former Filemanager (Based on filemanager, which was written by Lacey Pevey <lpevey@mailhost.tcs.tulane.edu> http://px.sklar.com/code.html?code_id=258)
---- Chat (original work)
+  Dan is on of the project administrators/supervisors. He provides project direction, along with documentation. He works on core
+  services such as the phpgwAPI ($phpgw-> class and $phpgw[] array for application developers). Dan also hosts this website, and
+  offers commercial support through Clear River Technologies. He wrote/works_on the following areas:
 
-* Mark A Peters (aka skeeter) <mpeters@satx.rr.com>
-- project leader/administrator
-- maintains calendar application
-- works on core API
-- developes/maintains the headlines and nntp application
-- helps with almost all other applications as well
+	* phpgwAPI, designed/developed layout and structure.
+	* Documentation, wrote and maintained the developer documentation, re-wrote the old install, faq and howto docs.
+	* former Filemanager, based on filemanager, written by Lacey Pevey . This application is replaced by phpWebhosting now. http://px.sklar.com/code.html?code_id=258)
+	* improved Email, which is now maintained by Angles.
+	* Chat, (worked on design).
+	* TTS, brought into the project and redesigned several pieces
+	* He continues in development and project direction.
+
+
+* Mark A Peters (aka skeeter) <skeeter@phpgroupware.org>
+  Skeeter joined the developer team to work on NNTP. He followed up with fixes for all parts of the phpgwAPI, then proceeded by
+  taking over the calendar app. Skeeter works on core services and phpgwAPI classes. He is one of the project administrators and
+  continues in development and project direction.
+  Skeeter wrote/works_on the following areas:
+
+	* phpgwAPI, including ACL, accounts, XMLRPC, and LDAP support.
+	* Calendar, including the addition of (i/v)cal support.
+	* NNTP - Original work. The code is able to read from NNTP servers at this point.
+
 
 * Bettina Gille [ceb] [ceb@phpgroupware.org]
-- project leader/administrator
-- developes/maintains the xml/xslt based framework
-- developes/maintains the categories class
-- developes/maintains the funkwerk layout and the application/framework images 
-- developes/maintains the categories class
-- works on core API
-- developes/maintains the projects, inventory, stocks, notes, backup, todo, cart, img and netsaint <http://www.netsaint.org/> applications
+  ceb works on core services and phpgwAPI classes, developes | designes the XML based framework of phpGroupWare.
+  She maintains different applications to support the management of projects, work hours and products, accountancy
+  and statistics. An other set of her tools provide the configuration of services and data backups. ceb made the icons 
+  for the applications and core functions. She is one of the project leaders | administrators and continues in development
+  and project direction.
+  ceb wrote | works on the following areas:
+
+	* phpgwAPI, including XML, user interface, categories and graphical classes | functions
+	* support functions | files for user interface and categories
+	* projects, backup, netsaint - a graphically config application for the <a href="http://www.netsaint.org/" target="_blank">netsaint network monitor</a>, shopping cart - original work
+	* many other applications, e.g. inventory, stock quotes, to do list, notes
+
 
 #######################
 ### more developers ###
 #######################
 
 * Ralf Becker (ralfbecker) <ralfbecker@outdoor-training.de>
-- developes/maintains the etemplates and infolog application
+  Ralf joined the team in 2001. He works on eTemplate classes to create the user interface of phpGroupWare for different clients 
+  and maintains the modules InfoLog (RCM like application) and eTemplate (editor to create template- and database_tableconfig files).
+  Ralf wrote/works_on the following areas:
+
+	* InfoLog, eTemplate - original work
+	* Contributions to applications: interactive CVS import for addressbook, calendar planner
+	* Helped to add group acl to the phpgwAPI acl class
+
 
 * Lars Kneschke (aka knecke) <lars@kneschke.de>
-- works on LDAP support for accounts and authentication
-- former project leader of the old phpGroupWare Apps project.
-- works on core API
-- ported Squirrelmail <http://www.squirrelmail.org/> to phpgroupware
-- devlopes/maintains the qmailldap application
+  Knecke joined the developer team to help with LDAP support. He was the project leader for the phpGroupWare Apps project.
+  Knecke wrote/works_on the following areas:
+
+	* LDAP Support - has worked with Jengo on LDAP support for accounts and authentication.
+	* Squirrelmail - porting
+	* FeLaMiMail, QmailLDAP - original work
+
 
 * Dave Hall (aka skwashd) <dave.hall@mbox.com.au>
-- Project Manager of the release branches
+  Project Manager of the release branches.
+  Dave does the following tasks:
+
+	* maintains the bug -,patch - and support request sections of the project page on savannah
+	* assigns items from these sections to developers and reminds developers to update their bug descriptions
+	* Creates testplans for release candidates and assigns testcases to volunteers
+	* works on release bugfixes
+
 
 ##############################
 ### application developers ###
@@ -63,15 +97,26 @@
 - Works on improving DBMS support
 - Ported his application, DCL, to phpgroupware
 
+
 * Tony Puglisi (aka Angles) <devel@aminvestments.com>
-- developes Anglemail
-- maintained the EMail application
-- rewrote mail classes for better standards compliance
-- worked in the past on the idsociety template to make it work in older browsers
+  Tony is a fan of the idsociety template and joined to make it work in older browsers. In the process he has helped give phpGroupWare
+  a very polished look and feel. He currently works on:
+
+	* Anglemail | Email, including support for multiple accounts, filters, etc
+
+	* He likes: Clapton, MTV, OOP, IT, AC/DC, and 100% abstraction between logic and layout.
+	* He dislikes: obfuscated enigmatic code, wrapped in a class, and referenced by a pointer.
+
 
 * Jason Wies (aka Zone) <jason@xc.net>
-- Rewrote vfs class in the API
-- Wrote phpwebhosting application as proof of concept for the vfs
+  Creator of the VFS (Virtual File System), author of phpwebhosting, and maintainer of all things file and document related.
+  Knowledgeable about most parts of phpGroupWare, makes various fixes and features as needed.
+  Zone wrote/works_on the following areas:
+
+	* Designed and created VFS (Virtual File System)
+	* phpwebhosting - original work
+	* Improvements to registration app, including customization features
+
 
 ###################
 ### Translators ###

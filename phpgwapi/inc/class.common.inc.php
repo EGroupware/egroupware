@@ -1112,7 +1112,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
 					{
-						$var['prefs_img'] = $this->image('phpgwapi','preferences2');
+						$var['prefs_img'] = $this->image('preferences','preferences2');
 						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('preferences','preferences2','_over');
 					}
 					else

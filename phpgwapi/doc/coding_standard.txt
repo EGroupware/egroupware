@@ -72,12 +72,13 @@
 
 11) Associative arrays must be written in the following manner:
 
-	$array = array(
-		'var'  => 'value',
-		'var2' => 'value2'
+	$array = array
+	(
+		'var'	=> 'value',
+		'var2'	=> 'value2'
 	);
 
-	Note that spaces are preferred around the '=>'.
+	Note that tabs are preferred around the '=>'.
 
 12) Use the long format for <?php.  Do NOT use <?.
 
@@ -101,3 +102,4 @@ if ($a)
 
 14) Use lower case for variable and function names.  No stubbly-case (mixed-case) code.
 
+15) Thanks for following these rules :)
