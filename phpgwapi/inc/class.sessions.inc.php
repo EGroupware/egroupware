@@ -191,10 +191,12 @@
 									 . "'",__LINE__,__FILE__);
 		}
 
-		function create($login,$passwd)
+		function create($login,$passwd,$passwd_type)
 		{
-			$this->login  = $login;
-			$this->passwd = $passwd;
+			$this->login       = $login;
+			$this->passwd      = $passwd;
+			$this->passwd_type = $passwd_type;
+
 			$this->clean_sessions();
 			$login_array = explode('@', $login);
 			$this->account_lid = $login_array[0];
@@ -214,7 +216,7 @@
 				return False;
 			}
 
-			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $passwd))
+			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type))
 			{
 				return False;
 				exit;

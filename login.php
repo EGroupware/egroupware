@@ -151,7 +151,7 @@
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','code=5'));
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['login'],$GLOBALS['HTTP_POST_VARS']['passwd']);
+		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['HTTP_POST_VARS']['login'],$GLOBALS['HTTP_POST_VARS']['passwd'],$GLOBALS['HTTP_POST_VARS']['passwd_type']);
 
 		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{

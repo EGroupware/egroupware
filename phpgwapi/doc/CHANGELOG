@@ -18,6 +18,9 @@
 		for new accounts.
 	- Added global config option to deny users to access grants, usefull for ISPs
 	- Merged patch for NIS auth - Thanks Dylan Adams <l0n@users.sourceforge.net>
+	- login.php will now accept md5 passwords, if you not using email and have javascript
+		enabled on your browser.  Clear text passwords won't be sent over the wire.  The javascript
+		portion isn't complete yet, but will be before 0.9.14 is released.  (REMOVE ME ONCE COMPLETE)
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)

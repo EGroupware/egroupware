@@ -28,12 +28,22 @@
 	{
 		var $previous_login = -1;
 
-		function authenticate($username, $passwd)
+		function authenticate($username, $passwd, $passwd_type)
 		{
 			$db = $GLOBALS['phpgw']->db;
 
+			if ($passwd_type == 'text')
+			{
+				$_passwd = md5($passwd);
+			}
+
+			if ($passwd_type == 'md5')
+			{
+				$_passwd = $passwd;
+			}
+
 			$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
-				. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
+				. "account_pwd='" . $_passwd . "' AND account_status ='A'",__LINE__,__FILE__);
 			$db->next_record();
 
 			if ($db->f('account_lid'))
