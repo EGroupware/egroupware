@@ -153,6 +153,16 @@
       }
     }
 
+    function is_system_enabled($appname)
+    {
+      return $this->get_var("enabled",$appname) >= 1;
+    }
+
+    function is_user_enabled($appname)
+    {
+      return $this->get_var("enabled",$appname) == 2;
+    }
+    
     function group_app_string($group_id)
     {
       return ":".implode(":",$this->get_var("group_apps",$group_id)).":";
