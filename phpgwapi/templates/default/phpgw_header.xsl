@@ -4,6 +4,7 @@
 	<xsl:variable name="phpgw_css_file" select="phpgw_css_file"/>
 	<xsl:variable name="theme_css_file" select="theme_css_file"/>
 	<xsl:variable name="current_app" select="current_app"/>
+	<xsl:variable name="app_tpl" select="app_tpl"/>
 		<html>
 			<head>
 				<meta name="author" content="phpGroupWare http://www.phpgroupware.org"/>
@@ -23,6 +24,11 @@
 							<xsl:choose>
 								<xsl:when test="$current_app = 'help'">
 									<xsl:call-template name="help"/>
+								</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="$app_tpl != ''">
+									<xsl:call-template name="app_data"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>

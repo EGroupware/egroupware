@@ -1341,14 +1341,20 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			$var['app_java_script'] = $var['app_css'] = $var['app_java_script_url'] = $var['app_css_url'] = '';
 
-			if (isset($_GET['menuaction']) && isset($GLOBALS['phpgw_info']['flags']['etemplate_app']))
+			if (isset($_GET['menuaction']))
 			{
 				list($app,$class,$method) = explode('.',$_GET['menuaction']);
-				$class = CreateObject("$app.$class");
+
+				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
+				{
+					$var['app_css'] = $GLOBALS[$class]->css();
+				}
+
+				/*$class = CreateObject("$app.$class");
 				if (isset($class->public_functions['css']))
 				{
 					$var['app_css'] = $class->css();
-				}
+				}*/
 				if (isset($class->public_functions['java_script']))
 				{
 					$var['app_java_script'] = $class->java_script();
@@ -1557,67 +1563,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			return '';
 		}
 
-		/*!
-		@function phpgw_header
-		@abstract load the phpgw header
-		*/
-		function phpgw_header($forceheader = True, $forcenavbar = True)
-		{
-			/* So far I dont have use for $forceheader and $forcenavbar */
-			/* I only allow this to be run once by using the constant */
-
-			/* not longer needed für xslttpl and would require to load the phpgw template
-			if(!defined('PHPGW_HEADER_RAN'))
-			{
-				define('PHPGW_HEADER_RAN',True);
-				$this->get_css_url();
-				$this->load_phpgw_body_tags();
-				$GLOBALS['phpgw']->template->set_var('phpgw_msgbox',$this->msgbox());
-				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
-				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
-			}
-			*/
-		}
-
-		/*!
-		@function phpgw_appheader
-		@abstract load header.inc.php for an application
-		*/
-		function phpgw_appheader()
-		{
-			if (!is_array(MENUACTION))
-			{
-				list($app,$class,$method) = explode('.',MENUACTION);
-				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
-				{
-					$GLOBALS[$class]->header();
-				}
-			}
-			elseif (file_exists(PHPGW_APP_INC . '/header.inc.php'))
-			{
-				include(PHPGW_APP_INC . '/header.inc.php');
-			}
-		}
-		/*!
-		@function phpgw_appfooter
-		@abstract load footer.inc.php for an application
-		*/
-		function phpgw_appfooter()
-		{
-			if (!is_array(MENUACTION))
-			{
-				list($app,$class,$method) = explode('.',MENUACTION);
-				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
-				{
-					$GLOBALS[$class]->footer();
-				}
-			}
-			elseif (file_exists(PHPGW_APP_INC . '/footer.inc.php'))
-			{
-				include(PHPGW_APP_INC . '/footer.inc.php');
-			}
-		}
-
 		function start_xslt_capture()
 		{
 			if (!isset($GLOBALS['phpgw_info']['xslt_capture']))
@@ -1643,12 +1588,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 		}
-
-		/* Note: does nothing any more under XSLT
-		 */
-		function phpgw_footer()
-		{
-		}
 		
 		function phpgw_final()
 		{
@@ -1658,16 +1597,14 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if (!$GLOBALS['phpgw_info']['flags']['noframework'])
 				{
-					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+					$cur_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+					if($cur_app != 'home' && $cur_app != 'login' && $cur_app != 'logout')
 					{
 						if($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
 						{
 							$this->start_xslt_capture();	// if index already turned it off
 						}
-						$this->phpgw_appfooter();
 					}
 
 					if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
@@ -1675,8 +1612,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						$this->stop_xslt_capture();
 					}
 
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login'&&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout')
+					if ($cur_app != 'login'&& $cur_app != 'logout')
 					{
 						$this->framework();
 					}
@@ -2474,5 +2410,52 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				return intval($id);
 			}
 		}
+
+		/* THIS FUNCTION IS NOT LONGER USED! */
+		function phpgw_header($forceheader = True, $forcenavbar = True)
+		{
+			/* not longer needed für xslttpl and would require to load the phpgw template */
+		}
+
+		/* THIS FUNCTION IS NOT LONGER USED! */
+		function phpgw_appheader()
+		{
+			/*if (!is_array(MENUACTION))
+			{
+				list($app,$class,$method) = explode('.',MENUACTION);
+				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
+				{
+					$GLOBALS[$class]->header();
+				}
+			}
+			elseif (file_exists(PHPGW_APP_INC . '/header.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/header.inc.php');
+			}*/
+		}
+
+		/* THIS FUNCTION IS NOT LONGER USED! */
+		function phpgw_appfooter()
+		{
+			/*if (!is_array(MENUACTION))
+			{
+				list($app,$class,$method) = explode('.',MENUACTION);
+				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+				{
+					$GLOBALS[$class]->footer();
+				}
+			}
+			elseif (file_exists(PHPGW_APP_INC . '/footer.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/footer.inc.php');
+			}*/
+		}
+
+		/* Note: does nothing any more under XSLT
+		 */
+		function phpgw_footer()
+		{
+		}
+
 	}//end common class
 
