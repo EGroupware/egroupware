@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.0.00.004
+%define version 1.0.00.005
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -517,6 +517,12 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
+* Wed Sep 08 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.005-1
+- Bugfix release
+
+* Thu Aug 24 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.004-2
+- Bugfix for Email after security patch
+
 * Mon Aug 23 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.004-1
 - Security release fixes several XSS problems
 
