@@ -107,6 +107,28 @@
 		}
 
 		/*!
+		@funtion return_all_children
+		@abstract returns array with id's of all children from $cat_id and $cat_id itself!
+		@param $cat_id integer cat-id to search for
+		@returns array of cat-id's
+		*/
+		function return_all_children($cat_id)
+		{
+			$all_children = array($cat_id);
+
+			$children = $this->return_array('subs',0,False,'','','',True,$cat_id,-1,'id');
+			if (is_array($children) && count($children))
+			{
+				foreach($children as $child)
+				{
+					$all_children = array_merge($all_children,$this->return_all_children($child['id']));
+				}
+			}
+			//echo "<p>categories::return_all_children($cat_id)=(".implode(',',$all_children).")</p>\n";
+			return $all_children;
+		}
+
+		/*!
 		@function return_array
 		@abstract return an array populated with categories
 		@param $type string defaults to 'all'
@@ -139,7 +161,7 @@
 				$sort = 'ASC';
 			}
 
-			if ($order)
+			if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/')))
 			{
 				$ordermethod = " ORDER BY $order $sort";
 			}
@@ -182,7 +204,7 @@
 
 			if($lastmod && $lastmod >= 0)
 			{
-				$querymethod .= ' AND last_mod > ' . $lastmod;
+				$querymethod .= ' AND last_mod > ' . (int)$lastmod;
 			}
 
 			if($column)
@@ -228,7 +250,7 @@
 				{
 					$cats[] = array
 					(
-						"$column" => $this->db->f(0)
+						$column => $this->db->f(0)
 					);
 				}
 				else
@@ -271,7 +293,7 @@
 				$sort = 'ASC';
 			}
 
-			if ($order)
+			if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/')))
 			{
 				$ordermethod = " ORDER BY $order $sort";
 			}
