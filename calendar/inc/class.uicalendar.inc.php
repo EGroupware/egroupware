@@ -83,7 +83,6 @@
 			'header' => True,
 			'footer' => True,
 			'css'		=> True,
-			'accounts_popup' => True
 		);
 
 		function uicalendar()
@@ -3774,11 +3773,6 @@
 			return '<table width="100%"><tr align="center">'."\n".$str.'</tr></table>'."\n";
 		}
 
-		function accounts_popup()
-		{
-			$GLOBALS['phpgw']->accounts->accounts_popup('calendar');
-		}
-
 		function edit_form($param)
 		{
 			if(!is_array($param))
@@ -3821,7 +3815,6 @@
 				'font'			=> $this->theme['font'],
 				'bg_color'		=> $this->theme['bg_text'],
 				'action_url'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
-				'accounts_link'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.accounts_popup'),
 				'common_hidden'	=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
 					. '<input type="hidden" name="cal[owner]" value="'.$event['owner'].'">'."\n"
 					. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
@@ -3972,47 +3965,14 @@
 // Participants
 			if(!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
 			{
-				$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
-				$users = Array();
-				$this->build_part_list($users,$accounts,$event['owner']);
-
-				$str = '';
-				@asort($users);
-				@reset($users);
-
-				switch($GLOBALS['phpgw_info']['user']['preferences']['common']['account_selection'])
+				if (!is_object($GLOBALS['phpgw']->uiaccountsel))
 				{
-					case 'popup':
-						while (is_array($event['participants']) && list($id) = each($event['participants']))
-						{
-							if($id != (int)$event['owner'])
-							{
-								$str .= '<option value="' . $id.$event['participants'][$id] . '"'.($event['participants'][$id]?' selected':'').'>('.$GLOBALS['phpgw']->accounts->get_type($id)
-										.') ' . $GLOBALS['phpgw']->common->grab_owner_name($id) . '</option>' . "\n";
-							}
-						}
-						$var['participants'] = array
-						(
-							'field'	=> '<input type="button" value="' . lang('Participants') . '" onClick="accounts_popup();">' . "\n"
-									. '<input type="hidden" name="accountid" value="' . $accountid . '">',
-							'data'	=> "\n".'   <select name="participants[]" multiple size="7">' . "\n" . $str . '</select>'
-						);
-						break;
-					default:
-						foreach($users as $id => $user_array)
-						{
-							if($id != (int)$event['owner'])
-							{
-								$str .= '    <option value="' . $id.$event['participants'][$id] . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
-							}
-						}
-						$var['participants'] = array
-						(
-							'field'	=> lang('Participants'),
-							'data'	=> "\n".'   <select name="participants[]" multiple size="7">'."\n".$str.'   </select>'
-						);
-						break;
+					$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
 				}
+				$var['participants'] = array(
+					'field'	=> lang('Participants'),
+					'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_select_participants',$event['participants'],'calendar',7,$event['owner']),
+				);
 /*
 // External Participants
 
