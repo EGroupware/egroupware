@@ -361,13 +361,10 @@
        	} elseif ($appname == "logout") {
              $output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
        	} elseif ($appname == "about") {
-       	   if ($phpgw_info["flags"]["currentapp"] != "home" && $phpgw_info["flags"]["currentapp"] != "preferences") {
+       	   if ($phpgw_info["flags"]["currentapp"] != "home" && $phpgw_info["flags"]["currentapp"] != "preferences" && $phpgw_info["flags"]["currentapp"] != "about") {
        	      $about_app = "app=" . $phpgw_info["flags"]["currentapp"];
        	   }
              $output_text = "<A href=\"" . $phpgw->link($urlbasename."/about.php",$about_app);
-// This might be fixable so that the size of the popup window can be limited. I havent been able to get it to work at this point -Seek3r
-//     	    $output_text = "<SCRIPT> function launchabout() {window.open(\"".$phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php")."\", \"phpGroupWare About Window\", \"width=400,height=300,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes\");}</SCRIPT>";
-//     	    $output_text .= '<a href="javascript:launchabout()';
           } elseif ($appname == "print") {
              $output_text = "<A href=\"javascript:window.print();\"";
 // Changed by Skeeter 03 Dec 00 2000 GMT
@@ -501,7 +498,7 @@
           }
     
           $this->show_icon(&$tpl,$td_width,"preferences","Preferences");
-          if ($phpgw_info["flags"]["currentapp"] == "home" || $phpgw_info["flags"]["currentapp"] == "preferences") {
+          if ($phpgw_info["flags"]["currentapp"] == "home" || $phpgw_info["flags"]["currentapp"] == "preferences" || $phpgw_info["flags"]["currentapp"] == "about") {
              $app = "phpGroupWare";
           } else {
              $app = $phpgw_info["flags"]["currentapp"];
