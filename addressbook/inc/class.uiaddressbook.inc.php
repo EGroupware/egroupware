@@ -920,8 +920,7 @@
 					{
 						if($GLOBALS['phpgw_info']['user']['apps']['email'])
 						{
-							$ref='<a href="' . $GLOBALS['phpgw']->link('/email/compose.php','to='
-								. urlencode($coldata)) . '" target="_new">';
+							$ref = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=email.uicompose.compose&to=' . urlencode($coldata)) . '" target="_new">';
 						}
 						else
 						{
