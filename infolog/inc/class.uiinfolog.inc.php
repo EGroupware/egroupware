@@ -134,7 +134,7 @@
 					array(
 						'menuaction' => 'projects.uiprojects.view_project',
 						'action' => 'mains',
-						'project_it' => $proj_id
+						'project_id' => $proj_id
 					) : $this->menuaction() + array(
 						'filter' => $filter,
 						'action' => 'proj',
