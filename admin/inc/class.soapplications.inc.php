@@ -38,7 +38,7 @@
 
 		function get_list()
 		{
-			$this->db->query('SELECT * FROM phpgw_applications WHERE app_enabled<3',__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_applications WHERE app_enabled!=3',__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				while ($this->db->next_record())

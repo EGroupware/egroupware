@@ -197,7 +197,7 @@
 		function getPreferredLanguage()
 		{
 			// create a array of languages the user is accepting
-			$userLanguages = explode(',',$GLOBALS['HTTP_ACCEPT_LANGUAGE']);
+			$userLanguages = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$supportedLanguages = $this->getInstalledLanguages();
 
 			// find usersupported language
@@ -1102,6 +1102,12 @@
 					$GLOBALS['phpgw_info']['navbar'][$app]['url']   = $GLOBALS['phpgw']->link('/' . $app . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$app]['name']  = $app;
 
+					// create popup target
+					if ($data['status'] == 4)
+					{
+						$GLOBALS['phpgw_info']['navbar'][$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this,this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
+					}
+
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
 						$GLOBALS['phpgw_info']['navbar'][$app]['icon']  = $this->image($app,Array('navbar','nonav'));
@@ -1121,7 +1127,7 @@
 			}
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'about')
 			{
-				$app = $app_title = 'phpGroupWare';
+				$app = $app_title = 'eGroupWare';
 			}
 			else
 			{

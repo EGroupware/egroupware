@@ -243,7 +243,8 @@
 			$selected[$n_app_status] = ' selected';
 			$status_html = '<option value="0"' . $selected[0] . '>' . lang('Disabled') . '</option>'
 				. '<option value="1"' . $selected[1] . '>' . lang('Enabled') . '</option>'
-				. '<option value="2"' . $selected[2] . '>' . lang('Enabled - Hidden from navbar') . '</option>';
+				. '<option value="2"' . $selected[2] . '>' . lang('Enabled - Hidden from navbar') . '</option>'
+				. '<option value="4"' . $selected[4] . '>' . lang('Enabled - Popup Window') . '</option>';
 			$this->display_row(lang('Status'),'<select name="n_app_status">' . $status_html . '</select>');
 
 			if (!$app_order)
@@ -348,7 +349,8 @@
 			$selected[$n_app_status] = ' selected';
 			$status_html = '<option value="0"' . $selected[0] . '>' . lang('Disabled') . '</option>'
 				. '<option value="1"' . $selected[1] . '>' . lang('Enabled') . '</option>'
-				. '<option value="2"' . $selected[2] . '>' . lang('Enabled - Hidden from navbar') . '</option>';
+				. '<option value="2"' . $selected[2] . '>' . lang('Enabled - Hidden from navbar') . '</option>'
+				. '<option value="4"' . $selected[4] . '>' . lang('Enabled - Popup Window') . '</option>';
 
 			$this->display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
 			$this->display_row(lang("Select which location this app should appear on the navbar, lowest (left) to highest (right)"),'<input name="app_order" value="' . $app_order . '">');
