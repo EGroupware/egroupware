@@ -3,13 +3,13 @@
        <hr clear="all">
        <font size="-1">
        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
+        <tr valign="top">
 {table_row}
 	</tr>
        </table>
 <!-- END footer_table -->
 <!-- BEGIN footer_row -->
-         <td valign="top" width="33%">
+         <td width="33%">
           <font size="-1">
            <form action="{action_url}" method="post" name="{form_name}">
             <B>{label}:</B>

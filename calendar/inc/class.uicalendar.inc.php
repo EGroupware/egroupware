@@ -1003,7 +1003,7 @@
 			$GLOBALS['phpgw']->browser	= CreateObject('phpgwapi.browser');
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
-			if(!isset($_POST['output_file']) || !$_POST['output_file'])
+			if(!isset($_REQUEST['output_file']) || !$_REQUEST['output_file'])
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -1019,6 +1019,10 @@
 
 				$extra_field_text = '';
 				$extra_field_text = "\n".lang('Enter Output Filename: ( .vcs appended )')."\n".'   <input name="output_file" size="25" maxlength="80" value="">'."\n";
+				if (isset($_POST['output_file']))
+				{
+					$extra_field_text .= '<font color="red">'.lang('please enter a filename !!!')."</font>\n";
+				}
 				if(isset($_POST['cal_id']))
 					$extra_field_text .= '   <input type="hidden" name="cal_id" value="'.$_POST['cal_id'].'">'."\n";
 
@@ -1060,18 +1064,18 @@
 			{
 				unset($cal_ids);
 				$cal_ids        = Array();
-				$output_filename = $_POST['output_file'];
+				$output_filename = $_REQUEST['output_file'];
 				if (!preg_match('/\.vcs$/i',$output_filename))
 				{
 					$output_filename .= '.vcs';
 				}
-				if(isset($_POST['custom_start']) && $_POST['custom_start']) 
+				if(isset($_REQUEST['custom_start']) && $_REQUEST['custom_start']) 
 				{
-					$start_date = $jscal->input2date($_POST['custom_start'],False);
+					$start_date = $jscal->input2date($_REQUEST['custom_start'],False);
 					
-					if(isset($_POST['custom_stop']) && $_POST['custom_stop'])
+					if(isset($_REQUEST['custom_stop']) && $_REQUEST['custom_stop'])
 					{
-						$stop_date = $jscal->input2date($_POST['custom_stop'],False);
+						$stop_date = $jscal->input2date($_REQUEST['custom_stop'],False);
 					} 
 					else 
 					{
@@ -2695,40 +2699,33 @@
 				'action_extra_field'	=> ''
 			);
 			$this->output_template_array($p,'b_row','form_button',$var);
+			$p->parse('table_row','blank_row',True);
 
 			if($menuaction != 'calendar.uicalendar.view')
 			{
-				$extra_field    = Array();
-				if($menuaction == 'calendar.uicalendar.year')
+				switch($menuaction)
 				{
-					$start_string                   = mktime(0,0,0,1,1,$this->bo->year);
-					$stop_string                    = mktime(0,0,0,12,31,$this->bo->year);
-					$extra_field['custom_start']    = date('Y/m/d',$start_string);
-					$extra_field['custom_stop']     = date('Y/m/d',$stop_string);
+					case 'calendar.uicalendar.year':
+						$start_string                   = mktime(0,0,0,1,1,$this->bo->year);
+						$stop_string                    = mktime(0,0,0,12,31,$this->bo->year);
+						break;
+					case 'calendar.uicalendar.month':
+						$start_string                   = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
+						$stop_string                    = mktime(0,0,0,$this->bo->month+1,0,$this->bo->year);
+						break;
+					case 'calendar.uicalendar.week':
+						$stop_string = $start_string    = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
+						$stop_string += 7*24*60*60-1;
+						break;
+					case 'calendar.uicalendar.day':
+						$stop_string = $start_string    = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
+						break;
 				}
 
-				if($menuaction == 'calendar.uicalendar.month')
-				{
-					$start_string                   = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
-					$stop_string                    = mktime(0,0,0,$this->bo->month+1,0,$this->bo->year);
-					$extra_field['custom_start']    = date('Y/m/d',$start_string);
-					$extra_field['custom_stop']     = date('Y/m/d',$stop_string);
-				}
-
-				if($menuaction == 'calendar.uicalendar.week')
-				{
-					$start_string                   = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
-					$extra_field['custom_start']    = date('Y/m/d',$start_string);
-					$extra_field['custom_stop']     = date('Y/m/d',$start_string+(7*24*60*60));
-				}
-
-				if($menuaction == 'calendar.uicalendar.day')
-				{
-					$start_string                   = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
-					$extra_field['custom_start']    = date('Y/m/d',$start_string);
-					$extra_field['custom_stop']     = date('Y/m/d',$start_string);
-				}
-
+				$extra_field = Array(	
+					'custom_start' => $GLOBALS['phpgw']->common->show_date($start_string,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+					'custom_stop'  => $GLOBALS['phpgw']->common->show_date($stop_string,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+				);
 				$var = Array(
 					'submit_button'         => lang('Submit'),
 					'action_url_button'     => $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.export'),
@@ -2736,11 +2733,10 @@
 					'action_confirm_button' => '',
 					'action_extra_field'    => $this->html->input_hidden($extra_field)
 				);
+				$p->set_var('b_row','');
 				$this->output_template_array($p,'b_row','form_button',$var);
+				$p->parse('table_row','blank_row',True);
 			}
-
-			$p->parse('table_row','blank_row',True);
-
 			$p->pparse('out','footer_table');
 			unset($p);
 		}
@@ -3172,7 +3168,7 @@
 					'month_day'	=> 'month_day.tpl'
 				)
 			);
-			$p->set_block('month_header','monthly_header','monthly_header');
+			$p->set_block('month_header','monthly_row','monthly_row');
 			$p->set_block('month_header','month_column','month_column');
 			$p->set_block('month_day','month_daily','month_daily');
 			$p->set_block('month_day','day_event','day_event');
@@ -3274,11 +3270,11 @@
 						$p->set_var('events','');
 					} */
 				}
-				$p->parse('column_header','month_column',True);
+				$p->parse('column_row','month_column',True);
 				$p->set_var('column_data','');
 			}
 			$this->bo->owner = $temp_owner;
-			return $p->fp('out','monthly_header');
+			return $p->fp('out','monthly_row');
 		}
 
 		function display_month($month,$year,$showyear,$owner=0)

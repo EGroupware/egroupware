@@ -16,13 +16,13 @@
   <td>
   <table><tr valign="top">
   <td>
-  <div style="padding-top:15px; padding-right: 2px">
+  <div style="padding-right: 2px">
   	<input style="font-size:10px" type="submit" value="{submit_button}"></div></form>
   </td>
   <td>{cancel_button}</td>
   </tr></table>
   </td>
-  <td align="right">{delete_button}</td>
+  <td valign="top" align="right">{delete_button}</td>
  </tr>
 </table>
 </font>

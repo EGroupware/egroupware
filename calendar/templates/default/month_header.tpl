@@ -5,6 +5,11 @@
 {column_header}</tr>
 <!-- END monthly_header -->
 
+<!-- BEGIN monthly_row -->
+<tr class="calendar_m_w_table_row" colspan="{cols}" width="{col_width}%">
+{column_row}</tr>
+<!-- END monthly_row -->
+
 <!-- BEGIN column_title -->
 <th class="calendar_weekview_daytitle" width="14.28%">{col_title}</th>
 <!-- END column_title -->

@@ -212,6 +212,11 @@ A.bminicalgreyhol
 	border: 0px #000000 solid;
 }
 
+.calendar_m_w_table_row
+{
+	height: 80px;
+}
+
 .calendar_m_w_tablecell
 {
 	vertical-align: top;
