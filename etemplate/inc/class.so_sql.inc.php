@@ -48,7 +48,6 @@ class so_sql
 	var $data;		// holds the content of all db_cols
 	var $debug = 0;
 	var $empty_on_write = 'NULL';
-	var $non_db_cols = array();
 
 	/*!
 	@function so_sql
@@ -217,6 +216,12 @@ class so_sql
 	*/
 	function read($keys)
 	{
+		if (!is_array($keys))
+		{
+			$pk = array_keys($this->db_key_cols);
+			if ($pk) $keys = array($pk[0] => $keys);
+		}	
+		
 		$this->init($keys);
 
 		$this->data2db();
@@ -324,7 +329,7 @@ class so_sql
 			$keys = '';
 			foreach($this->db_key_cols as $db_col => $col)
 			{
-				$keys .= ($keys ? ',':'') . "$db_col='".addslashes($this->data[$col])."'";
+				$keys .= ($keys ? ' AND ':'') . "$db_col='".addslashes($this->data[$col])."'";
 			}
 			$this->db->query($sql = "UPDATE $this->table_name SET $vals WHERE $keys",__LINE__,__FILE__);
 		}
@@ -393,19 +398,26 @@ class so_sql
 	{
 		if (!is_array($criteria))
 		{
-			$query = ' WHERE '.$criteria;
+			$query = $criteria ? ' WHERE '.$criteria : '';
 		}
 		else
 		{
 			$criteria = $this->data2db($criteria);
 			foreach($this->db_cols as $db_col => $col)
 			{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
-				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
+				if (array_key_exists($col,$criteria) && ($empty || $criteria[$col] != ''))
 				{
-					$query .= ($query ? " $op " : ' WHERE ') . $db_col .
+					if ($criteria[$col] === NULL)
+					{
+						$query .= ($query ? " $op " : ' WHERE ') . "$db_col IS NULL";
+					}	
+					else
+					{
+						$query .= ($query ? " $op " : ' WHERE ') . $db_col .
 						($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
 						" LIKE '$wildcard".strtr(str_replace('_','\\_',addslashes($criteria[$col])),'*?','%_')."$wildcard'" :
 						"='".addslashes($criteria[$col])."'");
+					}
 				}
 			}
 		}
