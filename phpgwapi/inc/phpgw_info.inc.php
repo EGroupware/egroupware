@@ -97,8 +97,8 @@
  
     $phpgw_info["server"]["app_root"]   = $phpgw->common->get_app_dir();
     $phpgw_info["server"]["app_inc"]    = $phpgw->common->get_inc_dir();
-    $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
     $phpgw_info["server"]["app_tpl"]    = $phpgw->common->get_tpl_dir();
+    $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
   
     /* ********This sets the user variables******** */
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"
