@@ -20,7 +20,7 @@
 
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 	$GLOBALS['phpgw']->help->set_params(array('app_name'	=> 'addressbook',
-												'title'		=> lang('addressbook overview'),
+												'title'		=> lang('addressbook') . ' - ' . lang('overview'),
 												'controls'	=> array('down' => 'list.php')));
 
 	$values['overview']	= array

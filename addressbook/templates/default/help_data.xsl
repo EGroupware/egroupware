@@ -67,6 +67,9 @@
 				<td><xsl:value-of disable-output-escaping="yes" select="item_6"/></td>
 			</tr>
 			<tr>
+				<td colspan="2"><u><xsl:value-of disable-output-escaping="yes" select="h_data"/></u></td>
+			</tr>
+			<tr>
 				<td valign="top" align="right">7</td>
 				<td><xsl:value-of disable-output-escaping="yes" select="item_7"/></td>
 			</tr>

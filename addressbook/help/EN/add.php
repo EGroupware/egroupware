@@ -19,7 +19,7 @@
 	include('../../../header.inc.php');
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 	$GLOBALS['phpgw']->help->set_params(array('app_name'	=> 'addressbook',
-												'title'		=> lang('add'),
+												'title'		=> lang('addressbook') . ' - ' . lang('add'),
 												'controls'	=> array('up' => 'list.php')));
 
 	$values['add'] = array
