@@ -46,7 +46,7 @@ Windows is supported, but there is no documentation for it currently.
 <LI>MySQL 3.22.25 or PostgreSQL 7.0.x</LI>
 <LI>Courier-IMAP 0.33+</LI>
 </UL>
-<P>We have reports of it working on Windows NT, but no details at this time.
+<P>We have reports of it working on Windows NT and OS/2.
 <H2>2.3 Tested Systems</H2>
 
 <P>After you have met the system requirements, unpack the tarball in the html 
@@ -57,26 +57,18 @@ doc directory there is a file called create_tables.(name of your database)
 
 <P>We will assume that you are using the database named phpgroupware.
 <P><CODE>$ mysql phpgroupware -u username -p &lt; create_tables.mysql</CODE>
+Then add the language entries (used for translation purposes).
+<P><CODE>$ mysql phpgroupware -u username -p &lt; lang.sql</CODE>
 <H3>Installation with PostgreSQL</H3>
 
 <P>We will assume that you are using the database named phpgroupware.
 <P><CODE>$ psql -d phpgroupware -U username &lt; create_tables.pgsql</CODE>
+Then add the language entries (used for translation purposes).
+<P><CODE>$ psql -d phpgroupware -U username &lt; lang.sql</CODE>
 <H2>2.4 Configure phpGroupWare</H2>
 
 <P>Change to the inc directory. <BR>
-Edit the file called config.inc.php to point to the location of your include files.
-<BLOCKQUOTE><CODE>
-Some people might prefer to install their include files in a directory which is not world viewable.  
-For this, you will need to move everything except config.inc.php into another directory 
-and point config.inc.php to that directory.  For most installations, the current location 
-of these file should be fine.
-</CODE></BLOCKQUOTE>
-
-Edit globalconfig.inc.php to reflect your system settings.  You can choose which programs 
-you would like to have available to your system.<BR>
-For example, if you do not have access to a IMAP server, you can change 
-<CODE>$installed["email"] = "Y"; </CODE> to <CODE>$installed["email"] = "N";</CODE><BR>
-This would make this program unavaiable to all users regardless of their permissions.
+Edit globalconfig.inc.php to reflect your system settings.
 <P>If you are using the email system you will need to create a temporary directory 
 where file uploads will be stored.  For security reasons, you should <CODE>chown
 nobody.nobody</CODE> and <CODE>chmod 700</CODE> to that directory.  Depending on your system configuration.  
@@ -99,13 +91,8 @@ directory.
 <LI>Users always forget to logout. This way the session doesn't sit around forever, creating a possible security risk. </LI>
 <LI>The email system requires plain text passwords which are stored in the sessions table.</LI>
 </UL>
-<P>This file is not required, you can simply uncomment the lines indicated in session.class in update_dla(). 
-This will require an extra query during every transaction which could cause performance 
-problems.  Also, if there are no logins in a few days, they will sit around and 
-wait for someone to login before they are deleted.  If you go this route, you 
-will need to edit the number of seconds until they are deleted.  It defaults to 2 hours 
-(7200 secs).  If you choose to use the cron program, simply edit the settings 
-for your database and uncomment the line for your database type.
+<P>This file is not required, you can simply disable cron_apps in the admin -> applications section
+to clean out the sessions table durring login and logout.
 <P>stale_uploads.pl - This will delete file attachments for messages that where not 
 completed.  If a users browser crashes, internet connection dies, etc, their
 files will sit there forever unless deleted.  You could add a few lines to 

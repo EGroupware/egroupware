@@ -83,8 +83,7 @@
 
   +o  Courier-IMAP 0.33+
 
-  We have reports of it working on Windows NT, but no details at this
-  time.
+  We have reports of it working on Windows NT and OS/2.
 
   22..33..  TTeesstteedd SSyysstteemmss
 
@@ -99,33 +98,24 @@
 
   We will assume that you are using the database named phpgroupware.
 
-  $ mysql phpgroupware -u username -p < create_tables.mysql
+  $ mysql phpgroupware -u username -p < create_tables.mysql Then add the
+  language entries (used for translation purposes).
+
+  $ mysql phpgroupware -u username -p < lang.sql
 
   22..33..22..  IInnssttaallllaattiioonn wwiitthh PPoossttggrreeSSQQLL
 
   We will assume that you are using the database named phpgroupware.
 
-  $ psql -d phpgroupware -U username < create_tables.pgsql
+  $ psql -d phpgroupware -U username < create_tables.pgsql Then add the
+  language entries (used for translation purposes).
+
+  $ psql -d phpgroupware -U username < lang.sql
 
   22..44..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
   Change to the inc directory.
-  Edit the file called config.inc.php to point to the location of your
-  include files.
-
-       Some people might prefer to install their include files in a directory
-       which is not world viewable.  For this, you will need to move every-
-       thing except config.inc.php into another directory and point con-
-       fig.inc.php to that directory.  For most installations, the current
-       location of these file should be fine.
-
-
-  Edit globalconfig.inc.php to reflect your system settings.  You can
-  choose which programs you would like to have available to your system.
-  For example, if you do not have access to a IMAP server, you can
-  change $installed["email"] = "Y";  to $installed["email"] = "N";
-  This would make this program unavaiable to all users regardless of
-  their permissions.
+  Edit globalconfig.inc.php to reflect your system settings.
 
   If you are using the email system you will need to create a temporary
   directory where file uploads will be stored.  For security reasons,
@@ -135,6 +125,10 @@
   administrator to do this for you if you do not have root access.
 
   If you do not have access to root, create this file and run it.
+
+
+
+
 
     <?php
       if (mkdir("/path/to/temp/directory",0700)) {
@@ -155,15 +149,9 @@
   +o  The email system requires plain text passwords which are stored in
      the sessions table.
 
-  This file is not required, you can simply uncomment the lines
-  indicated in session.class in update_dla().  This will require an
-  extra query during every transaction which could cause performance
-  problems.  Also, if there are no logins in a few days, they will sit
-  around and wait for someone to login before they are deleted.  If you
-  go this route, you will need to edit the number of seconds until they
-  are deleted.  It defaults to 2 hours (7200 secs).  If you choose to
-  use the cron program, simply edit the settings for your database and
-  uncomment the line for your database type.
+  This file is not required, you can simply disable cron_apps in the
+  admin -> applications section to clean out the sessions table durring
+  login and logout.
 
   stale_uploads.pl - This will delete file attachments for messages that
   where not completed.  If a users browser crashes, internet connection
@@ -194,8 +182,6 @@
   To subscribe, go to http://sourceforge.net/mail/?group_id=7305
   <http://sourceforge.net/mail/?group_id=7305>
 
-
-
   33..33..  HHiissttoorryy
 
   This document was started by Joseph Engo and reworked by Dan
@@ -209,7 +195,6 @@
   +o  Created by Jengo, wasn't in SGML HOWTO format.
 
   v1.0 (July 6, 2000)
-
 
   +o  Built proper SGML version.
 
@@ -232,6 +217,21 @@
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

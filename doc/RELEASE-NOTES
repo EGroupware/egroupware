@@ -3,4 +3,12 @@ has changed.
 
 The inventory program has a new field called mstock.
 
-There is a new translation support system, you need to add the lang table, which can be found at the end of the create_table script
+There is a new translation support system, you need to add the lang table
+The sql commands to do so can be found at the end of the create_table script
+You also need to dump in the new doc/lang.sql file
+
+on MySQL
+$ mysql phpgroupware -u username -p < doc/lang.sql</tt>
+
+on postgresql
+$ psql -d phpgroupware -U username < doc/lang.sql</tt>

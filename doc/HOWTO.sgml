@@ -66,11 +66,15 @@
 <p>
   We will assume that you are using the database named phpgroupware.<p>
   <tt>$ mysql phpgroupware -u username -p < create_tables.mysql</tt>
+  Then add the language entries (used for translation purposes).<p>
+  <tt>$ mysql phpgroupware -u username -p < lang.sql</tt>
 </p>
 <sect2>Installation with PostgreSQL
 <p>
   We will assume that you are using the database named phpgroupware.<p>
   <tt>$ psql -d phpgroupware -U username < create_tables.pgsql</tt>
+  Then add the language entries (used for translation purposes).<p>
+  <tt>$ psql -d phpgroupware -U username < lang.sql</tt>
 </p>
 <sect1>Configure phpGroupWare
 <p>
