@@ -25,18 +25,6 @@
   }
 
   if (($con) && (! $confirm)) {
-     $t = new Template($phpgw_info["server"]["template_dir"]);
-     $t->set_file(array("form"			=> "delete_common.tpl",
-			    "message_row"	=> "delete_common.tpl"));
-     $t->set_var("yes","yes");
-     $t->set_var("no","no");
-
-     $t->set_var("message_display",lang_admin("Are you sure you want to delete this account ?"));
-     $t->set_var("message_display",lang_admin("All records and account information will be lost!"));
-     $t->parse("messages","message_row");
-     $t->pparse("out","form");
-
-/*
      ?>
      <center>
       <table border=0 with=65%>
@@ -60,8 +48,7 @@
        </tr>
       </table>
      </center>
-     <?php
-*/
+     <?
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }
 
@@ -78,8 +65,8 @@
      }
 
      $table_locks = array('preferences','todo','addressbook','accounts','users_headlines',
-				  'webcal_entry','webcal_entry_user','webcal_entry_repeats',
-				  'webcal_entry_groups');
+                                  'webcal_entry','webcal_entry_user','webcal_entry_repeats',
+                                  'webcal_entry_groups');
      $phpgw->db->lock($table_locks);
 
      for ($i=0; $i<count($cal_id); $i++) {
@@ -101,7 +88,8 @@
 
      $sep = $phpgw->common->filesystem_separator();
 
-     $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+     $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "users"
+              . $sep;
 
      if (! @rmdir($basedir . $lid)) {
         $cd = 34;
