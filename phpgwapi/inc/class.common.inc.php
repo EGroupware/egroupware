@@ -1003,6 +1003,8 @@
 				$order[] = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
+			$GLOBALS['order_seq'] = -1;
+
 			/* First include the ordered apps hook file */
 			reset ($order);
 			while (list(,$appname) = each($order))
@@ -1011,6 +1013,7 @@
 				if (file_exists($f) &&
 					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
 				{
+					$GLOBALS['order_seq']++;
 					include($f);
 				}
 
@@ -1030,6 +1033,7 @@
 						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 						if (file_exists($f))
 						{
+							$GLOBALS['order_seq']++;
 							include($f);
 						}
 					}		// if
@@ -1046,6 +1050,7 @@
 						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 						if (file_exists($f))
 						{
+							$GLOBALS['order_seq']++;
 							include($f);
 						}
 					}		// if
