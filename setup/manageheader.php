@@ -355,7 +355,7 @@
 		  </select></td>
 		  <td>Do you want persistent connections (higher performance, but eats memory)</td></tr>
 
-        <tr><td><b>DB Type</b><br><select name="setting[sessions_type]">
+        <tr><td><b>Sessions Type</b><br><select name="setting[sessions_type]">
       <?php
 		$selected = '';
 		$found_dbtype = false;
