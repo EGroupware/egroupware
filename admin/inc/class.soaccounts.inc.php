@@ -16,7 +16,7 @@
 		{
 		}
 
-		function account_total($query)
+		function account_total($account_type,$query='')
 		{
 			if ($query)
 			{
@@ -24,7 +24,7 @@
 					. "'%$query%' OR account_lid LIKE '%$query%') ";
 			}
 
-			$GLOBALS['phpgw']->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='u'".$querymethod,__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='".$account_type."'".$querymethod,__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
 
 			return $GLOBALS['phpgw']->db->f(0);

@@ -14,6 +14,7 @@
 		var $public_functions = array(
 			'add_user'	=> True,
 			'delete_user'	=> True,
+			'edit_group'	=> True,
 			'edit_user'	=> True
 		);
 
@@ -24,9 +25,9 @@
 			$this->so = createobject('admin.soaccounts');
 		}
 
-		function account_total($query)
+		function account_total($account_type,$query='')
 		{
-			return $this->so->account_total($query);
+			return $this->so->account_total($account_type,$query);
 		}
 
 		function delete_user()
@@ -227,6 +228,166 @@
 				Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 				$GLOBALS['phpgw']->common->phpgw_exit();				
 			}
+		}
+
+		function edit_group()
+		{
+			$account_id = ($GLOBALS['HTTP_POST_VARS']['account_id']?$GLOBALS['HTTP_POST_VARS']['account_id']:0);
+			$group_name = ($GLOBALS['HTTP_POST_VARS']['n_group']?$GLOBALS['HTTP_POST_VARS']['n_group']:'');
+			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['n_group_permissions']?$GLOBALS['HTTP_POST_VARS']['n_group_permissions']:Array());
+			$group_users = ($GLOBALS['HTTP_POST_VARS']['n_users']?$GLOBALS['HTTP_POST_VARS']['n_users']:Array());
+			
+			$group = CreateObject('phpgwapi.accounts',intval($account_id));
+			$group->read_repository();
+			$old_group_name = $group->id2name($account_id);
+
+			if($group_name != $old_group_name)
+			{
+				if ($group->exists($group_name))
+				{
+					$error = lang('Sorry, that group name has already been taken.');
+					$ui = createobject('admin.uiaccounts');
+					$ui->edit_group($account_id,$errors);
+					$GLOBALS['phpgw']->common->phpgw_exit();
+				}
+			}
+
+		/*
+			if (preg_match ("/\D/", $account_file_space_number))
+			{
+				$error = lang ('File space must be an integer');
+			}
+		*/
+
+			// Lock tables
+			$GLOBALS['phpgw']->db->lock(
+				Array(
+					'phpgw_accounts',
+					'phpgw_preferences',
+					'phpgw_config',
+					'phpgw_applications',
+					'phpgw_hooks',
+					'phpgw_sessions',
+					'phpgw_acl'
+				)
+			);
+
+			// Set group apps
+			$apps = CreateObject('phpgwapi.applications',intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+			$apps_before = $apps->read_account_specific();
+			$apps->update_data(Array());
+			$new_apps = Array();
+			if(isset($group_permissions))
+			{
+				reset($group_permissions);
+				while($app = each($group_permissions))
+				{
+					if($app[1])
+					{
+						$apps->add($app[0]);
+						if(!@$apps_before[$app[0]] || @$apps_before == False)
+						{
+							$new_apps[] = $app[0];
+						}
+					}
+				}
+			}
+			$apps->save_repository();
+
+			// Set new account_lid, if needed
+			if($old_group_name <> $group_name)
+			{
+				$group->data['account_lid'] = $group_name;
+			}
+
+			// Set group acl
+			$acl = CreateObject('phpgwapi.acl',$account_id);
+			$acl->read_repository();
+			$old_group_list = $acl->get_ids_for_location($account_id,1,'phpgw_group');
+			@reset($old_group_list);
+			while($old_group_list && $user_id = each($old_group_list))
+			{
+				$acl->delete_repository('phpgw_group',$account_id,$user_id[1]);
+			}
+
+			for ($i=0; $i<count($group_users);$i++)
+			{
+				$acl->add_repository('phpgw_group',$account_id,$group_users[$i],1);
+
+				// If the user is logged in, it will force a refresh of the session_info
+				$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
+					."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name(intval($group_users[$i]))
+					. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
+
+				// The following sets any default preferences needed for new applications..
+				// This is smart enough to know if previous preferences were selected, use them.
+				$docommit = False;
+				if($new_apps)
+				{
+					$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',intval($group_users[$i]));
+					$t = $GLOBALS['pref']->read_repository();
+
+					for ($j=1;$j<count($new_apps) - 1;$j++)
+					{
+						if($new_apps[$j]=='admin')
+						{
+							$check = 'common';
+						}
+						else
+						{
+							$check = $new_apps[$j];
+						}
+						if (!$t[$check])
+						{
+							$GLOBALS['phpgw']->common->hook_single('add_def_pref', $new_apps[$j]);
+							$docommit = True;
+						}
+					}
+				}
+				if ($docommit)
+				{
+					$GLOBALS['pref']->save_repository();
+				}
+
+				// This is down here so we are sure to catch the acl changes
+				// for LDAP to update the memberuid attribute
+				$group->save_repository();
+			}
+
+		/*
+			// Update any other options here, since the above save_repository () depends
+			// on a group having users
+			$group->data['file_space'] = $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'];
+			$group->save_repository();
+		*/
+
+			if ($old_group_name <> $group_name)
+			{
+				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
+				if (! @rename($basedir . $old_group_name, $basedir . $group_name))
+				{
+					$cd = 39;
+				}
+				else
+				{
+					$cd = 33;
+				}
+			}
+			else
+			{
+				$cd = 33;
+			}
+
+			$GLOBALS['phpgw']->db->unlock();
+
+			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> 'admin.uiaccounts.list_groups',
+						'cd'	=> $cd
+					)
+				)
+			);
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function edit_user()
