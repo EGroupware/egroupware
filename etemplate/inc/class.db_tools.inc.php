@@ -724,13 +724,13 @@
 				}
 				rename($file,$old_file);
 			}
-			$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*')[^']*('.*)","\\1$new"."\\2",$fcontent);
+			$fnew = preg_replace('/(.*\\$'."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*)'[^']*'(.*)/i","\\1'$new'\\2",$fcontent);
 			
 			if ($tables != '')
 			{
 				if ($setup_info[$app]['tables'])	// if there is already tables array, update it
 				{
-					$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fwas=$fnew);
+					$fnew = preg_replace('/(.*\\$'."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*/i","\\1$tables",$fwas=$fnew);
 
 					if ($fwas == $fnew)	// nothing changed => tables are in single lines
 					{
@@ -739,7 +739,7 @@
 						$stage = 0;	// 0 = before, 1 = in, 2 = after tables section
 						foreach($fwas as $line)
 						{
-							if (eregi("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\]\\[[ \\t]*\\][ \\t]*=[ \\t]*)'",$line,$parts))
+							if (preg_match('/(.*\\$'."setup_info\\['$app'\\]\\['tables'\\]\\[[ \\t]*\\][ \\t]*=[ \\t]*)'/i",$line,$parts))
 							{
 								if ($stage == 0)	// first line of tables-section
 								{
