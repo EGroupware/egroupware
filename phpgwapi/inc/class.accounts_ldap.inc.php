@@ -808,6 +808,20 @@
 			return;
 		}
 
+		function get_account_data($account_id)
+		{
+			$this->account_id = $account_id;
+			$this->read_repository();
+
+			$data[$this->data['account_id']]['lid']			= $this->data['account_lid'];
+			$data[$this->data['account_id']]['firstname']	= $this->data['firstname'];
+			$data[$this->data['account_id']]['lastname']	= $this->data['lastname'];
+			$data[$this->data['account_id']]['fullname']	= $this->data['fullname'];
+			$data[$this->data['account_id']]['type']		= $this->data['account_type'];
+
+			return $data;
+		}
+
 		function getDNforID($_accountid = '')
 		{
 			$_account_id = get_account_id($_accountid);
