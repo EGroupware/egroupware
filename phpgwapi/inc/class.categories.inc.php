@@ -513,14 +513,6 @@
 					'selected'	=> $sel_cat
 				);
 			}
-
-			for ($i=0;$i<count($cat_list);$i++)
-			{
-				if ($cat_list[$i]['selected'] != 'selected')
-				{
-					unset($cat_list[$i]['selected']);
-				}
-			}
 			return $cat_list;
 		}
 
