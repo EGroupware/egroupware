@@ -24,6 +24,7 @@ add note	notes	de	Notiz hinzufügen
 add sub	todo	de	Teilprojekt hinzufügen
 add ticket 	tts	de	Ticket hinzufügen
 add to addressbook	email	de	Zum Addressbuch hinzufügen
+additional notes    tts    de    Zusätzliche Anmerkungen
 address book	common	de	Adressbuch
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adreßzeile 2
@@ -57,6 +58,8 @@ are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 arial	notes	de	Arial
 assign to	tts	de	zuweisen an
+assigned from    tts    de    Zugewiesen von
+assigned to	tts	de	Zugewiesen an
 august	common	de	August
 author	nntp	de	Autor
 available groups	nntp	de	verfügbare Gruppen
@@ -103,6 +106,8 @@ city	addressbook	de	Stadt
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 clipboard_contents	filemanager	de	Clipboard Inhalt
+close    tts    de    Schließen
+close date    tts    de    Geschlossen am
 company	common	de	Firma
 company name	addressbook	de	Firma
 completed	todo	de	fertig
@@ -126,6 +131,7 @@ daily matrix view	calendar	de	Matrix-Ansicht des Tages
 date	common	de	Datum
 date due	todo	de	fällig am
 date format	preferences	de	Datumsformat
+date opened    tts    de    Angelegt am
 days datedue	todo	de	Tage bis zur Fälligkeit
 days repeated	calendar	de	wiederholte Tage
 december	common	de	Dezember
@@ -137,6 +143,7 @@ delete	common	de	Löschen
 department	addressbook	de	Abteilung
 description	common	de	Beschreibung
 detail	tts	de	Detail
+details	tts	de	Details
 disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
 display missing phrases in lang set	transy	de	Im Sprachset fehlende Phrasen anzeigen
@@ -158,6 +165,7 @@ email	common	de	E-Mail
 email account name	email	de	Name des E-Mail Kontos
 email address	email	de	E-Mail Adresse
 email password	email	de	E-Mail Passwort
+edit project administrator list    projects    de    Liste der Projektadministratoren editieren
 email signature	common	de	E-Mail Signatur
 email type	common	de	E-Mail Typ
 enabled	admin	de	Verfügbar
@@ -182,6 +190,7 @@ file_upload	filemanager	de	Datei Upload
 files	common	de	Dateien
 filter	common	de	Filter
 first name	common	de	Vorname
+firstname	common	de	Vorname
 first page	common	de	erste Seite
 folder	email	de	Ordner
 forum	common	de	Forum
@@ -204,6 +213,7 @@ global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
 global public only	common	de	nur öffentliche
 go!	calendar	de	Go!
+grab new news sites    common    de    Neue Sites für Schlagzeilen suchen
 grant addressbook access	common	de	Berechtigungen für Adressbuchzugriffe
 grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
 grant todo access	common	de	Berechtigungen für Aufgabenlisten-Zugriffe
@@ -219,6 +229,7 @@ group_files	filemanager	de	Gruppen Dateien
 groups	common	de	Gruppen
 groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, müssen die korrekten Zugriffsrechte für die Verzeichnisse files/groups erstellt werden.<BR> Auf *nix Systemen dient dazu folgender Befehl: chmod 770
 headline preferences	common	de	Schlagzeilen Einstellungen
+headline site management    admin    de    Schlagzeilen Management
 headline sites	admin	de	Sites für Schlagzeilen
 headlines	common	de	Schlagzeilen
 help	common	de	Hilfe
@@ -247,6 +258,7 @@ import contacts	addressbook	de	Kontakte importieren
 import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
+in progress    tts    de    in Bearbeitung
 installed applications	admin	de	Installierte Anwendungen
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 international	addressbook	de	international
@@ -265,6 +277,7 @@ large	notes	de	Groß
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
 last name	common	de	Name
+lastname	common	de	Name
 last page	common	de	letzte Seite
 last time read	admin	de	Zuletzt gelesen
 last updated	todo	de	Zuletzt geändert
@@ -347,6 +360,8 @@ october	common	de	Oktober
 ok	common	de	OK
 on *nix systems please type: x 	common	de	Auf *nix Systemen  bitte eingeben: %1
 only yours	common	de	nur eigene
+open date    tts    de    Angelegt am
+opened by    tts    de    Angelegt von
 or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
 or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
@@ -382,13 +397,16 @@ previous	email	de	Vorige
 previous page	common	de	vorige Seite
 print	common	de	Drucken
 printer friendly	calendar	de	Drucker-freundlich
+prio    tts    de    Prio
 priority	common	de	Priorität
 private	common	de	Privat
 private and global public	common	de	private und öffentliche
 private and group public	common	de	private und Gruppen
 private only	common	de	nur private
 private_files	filemanager	de	private Dateien
+project administration    common    de    Projektadministration
 project description	todo	de	Beschreibung
+projects    common    de    Projekte
 public	common	de	öffentlich
 public key	addressbook	de	öffentlicher Schlüssel
 re-edit event	calendar	de	Event erneut bearbeiten
@@ -418,10 +436,12 @@ section	email	de	Sektion
 select application	transy	de	Anwendung auswählen
 select category	common	de	Kategorie auswählen
 select different theme	preferences	de	anderes Schema wählen
+select groups    projects    de    Gruppen auswählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
+select users    projects    de    Benutzer auswählen
 select which application for this phrase	transy	de	Wählen sie die Applikation für diese Phrase
 select which language for this phrase	transy	de	Wählen sie die Sprache für diese Phrase
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
@@ -488,6 +508,9 @@ this week 	calendar	de	Diese Woche
 threads	nntp	de	Threads
 thu	calendar	de	Do
 thursday	common	de	Donnerstag
+ticket    tts    de    Ticket
+tickets open x    tts    de    offene tickets: %1
+tickets total x    tts    de    Tickets insgesamt: %1
 time	common	de	Zeit
 time created	notes	de	wann erstellt
 time format	preferences	de	Zeitformat
@@ -499,8 +522,7 @@ to	email	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler für die Zukunft zu beheben, korrigieren Sie die Einstellungen
 today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
-todo	common	de	Beschreibung
-todo	preferences	de	Aufgabenliste
+todo	common	de	Aufgabenliste
 todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
 todo list - add sub-project	todo	de	ToDo-List: Teilprojekt hinzufügen
@@ -516,7 +538,7 @@ tue	calendar	de	Di
 tuesday	common	de	Dienstag
 undisclosed recipients	email	de	Verborgene Empfänger
 undisclosed sender	email	de	Verborgener Absender
-update	nntp	de	Aktualisieren
+update	common	de	Aktualisieren
 updated	common	de	Updated
 upload	filemanager	de	Upload
 urgency	todo	de	Dringlichkeit
@@ -528,6 +550,7 @@ user	common	de	Benutzer
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
 username	login	de	Benutzername
+username / group    projects    de    Benutzername / Gruppe
 users	common	de	Benutzer
 vcard	addressbook	de	VCard
 vcard	common	de	Visitenkarte
@@ -539,6 +562,7 @@ video phone	addressbook	de	Bildtelefon
 view	common	de	Anzeigen
 view access log	admin	de	Access Log anzeigen
 view all tickets	tts	de	Alle Tickets anzeigen
+view job detail    tts    de    Detailansicht
 view matrix of actual month	todo	de 	Matrix des aktuellen Monats anzeigen
 view only open tickets	tts	de	Nur offene Tickets anzeigen
 view sessions	admin	de	Sitzungen anzeigen
