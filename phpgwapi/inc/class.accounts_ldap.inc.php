@@ -232,7 +232,7 @@
 		{
 			global $phpgw_info, $phpgw;
 
-			if (!$account_id) { $account_id =  mt_rand (100, 600000); }
+			if (!$account_id) { $account_id =  mt_rand (100, 65535); }
 			// auto_increment/serial in the db won't necessarily work for ldap, nor would
 			// randomization.  Need to check for lastid in ldap, then create newid for sql and ldap
 
