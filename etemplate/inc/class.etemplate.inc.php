@@ -13,7 +13,7 @@
 	/* $Id$ */
 
 	$ui = ''; // html UI, which UI to use, should come from api and be in $GLOBALS['phpgw']???
-	if ($_ENV['DISPLAY'])
+	if ($_ENV['DISPLAY'] && isset($_SERVER['_']))
 	{
 		$ui = '_gtk';
 	}
