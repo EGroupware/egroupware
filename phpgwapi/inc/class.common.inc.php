@@ -1167,6 +1167,28 @@
     			}
 			$tpl->set_var('app_css', $app_css);
 			
+			// search for app specific css file
+			if(@isset($GLOBALS['phpgw_info']['flags']['currentapp']))
+			{
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				
+				if(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP .
+					       'templates' . SEP . $GLOBALS['phpgw_info']['server']['template_set'] . 
+					       SEP . 'app.css'))
+				{
+					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['phpgw_info']['server']['webserver_url']
+					."/$appname/templates/".$GLOBALS['phpgw_info']['server']['template_set']
+					."/app.css".'" type=text/css rel=StyleSheet>');
+				}
+				elseif(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP .
+					       'templates' . SEP . 'default' . 
+					       SEP . 'app.css'))
+				{
+					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['phpgw_info']['server']['webserver_url']
+					."/$appname/templates/default/app.css".'" type=text/css rel=StyleSheet>');
+				}
+			}
+			
 			return $tpl->subst('css');			
 		}
 		/**
