@@ -616,7 +616,7 @@ class calendar extends calendar_
 		}
 	}
 
-	function mini_calendar($day,$month,$year,$link='')
+	function mini_calendar($day,$month,$year,$link='',$buttons="none")
 	{
 		global $phpgw, $phpgw_info, $view;
 
@@ -648,18 +648,43 @@ class calendar extends calendar_
 		}
 
 		$var = Array(
-			'img_root'			=>	$this->phpgwapi_template_dir,
 			'cal_img_root'		=>	$this->image_dir,
 			'bgcolor'			=>	$phpgw_info['theme']['bg_color'],
 			'bgcolor1'			=>	$phpgw_info['theme']['bg_color'],
 			'month'				=>	$month,
-			'prevmonth'			=>	$phpgw->link('/calendar/month.php','date='.$month_ago.'&owner='.$this->owner),
-			'nextmonth'			=>	$phpgw->link('/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner),
 			'bgcolor2'			=>	$phpgw_info['theme']['cal_dayview']
 		);
 
 		$p->set_var($var);
-		
+
+		switch(strtolower($buttons))
+		{
+			case 'right':
+				$var = Array(
+					'nextmonth'			=>	'<a href="'.$phpgw->link('/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner).'"><img src="'.$this->phpgwapi_template_dir.'/right.gif" border="0"></a>'
+				);
+				break;
+			case 'left':
+				$var = Array(
+					'prevmonth'			=>	'<a href="'.$phpgw->link('/calendar/month.php','date='.$month_ago.'&owner='.$this->owner).'"><img src="'.$this->phpgwapi_template_dir.'/left.gif" border="0"></a>'
+				);					
+				break;
+			case 'both':
+				$var = Array(
+					'prevmonth'			=>	'<a href="'.$phpgw->link('/calendar/month.php','date='.$month_ago.'&owner='.$this->owner).'"><img src="'.$this->phpgwapi_template_dir.'/left.gif" border="0"></a>',
+					'nextmonth'			=>	'<a href="'.$phpgw->link('/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner).'"><img src="'.$this->phpgwapi_template_dir.'/right.gif" border="0"></a>'
+				);
+				break;
+			case 'none':
+			default:
+				$var = Array(
+					'prevmonth'			=>	'',
+					'nextmonth'			=>	''
+				);
+				break;
+		}
+		$p->set_var($var);
+
 		for($i=0;$i<7;$i++)
 		{
 			$p->set_var('dayname','<b>' . substr(lang($this->days[$i]),0,2) . '</b>');
