@@ -1,13 +1,16 @@
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch
-	- Fixed repeating entries being saved properly.
-	- Added ability for admin to edit any calendar event.
-	- Fixed entries showing improperly on wrong date.
-	- Fixed file uploads through filemanager.
-	- Fixed repeating entries Month select box.
-	- Fixed calendar week selector starting on Monday on footer.
-	- Fixed buggy calendar saving when no groups are selected with group access.
-	- Fixed submitting of calendar entry when javascript turned off.
+        - Fixed repeating entries being saved properly.
+        - Added ability for admin to edit any calendar event.
+        - Fixed entries showing improperly on wrong date.
+        - Fixed file uploads through filemanager.
+        - Fixed repeating entries Month select box.
+        - Fixed calendar week selector starting on Monday on footer.
+        - Fixed buggy calendar saving when no groups are selected with group access.
+        - Fixed submitting of calendar entry when javascript turned off.
+        - Fixed calendar preferences not updating properly
+        - Fixed denylogin form not display and converted it to a template.
+
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
