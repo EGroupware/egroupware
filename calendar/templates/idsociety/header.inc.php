@@ -23,6 +23,8 @@
 		return '<a href="'.$link.'"><img src="'.PHPGW_IMAGES.'/'.$image.'" alt="'.$alt.'" border="0"></a>';
 	}
 
+	$tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$tpl->set_unknowns('remove');
 	$templates = Array(
 		'head_tpl'	=> 'head.tpl',
 		'form_button_dropdown'	=> 'form_button_dropdown.tpl',
