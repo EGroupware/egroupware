@@ -8,6 +8,8 @@ account preferences 	common	de	Einstellungen der Benutzerkonten
 acl	common	de	ACL
 active	common	de	Aktiv
 add	common	de	Hinzufügen
+add category	common	de	Kategorie hinzufügen
+add x category for	common	de	%1 Kategorie hinzufügen für
 address book	common	de	Adressbuch
 addressbook	common	de	Adressbuch
 addressbook preferences	common	de	Adressbuch Einstellungen
@@ -48,6 +50,7 @@ e-mail	common	de	E-Mail
 e-mail preferences	common	de	E-Mail Einstellungen
 edit	common	de	Editieren
 email	common	de	E-Mail
+edit category	common	de	Kategorie editieren
 edit categories	common	de	Kategorien editieren
 edit x category for	common	de	%1 Kategorie editieren f&uuml;r
 email signature	common	de	E-Mail Signatur
@@ -199,6 +202,7 @@ you have 1 high priority event on your calendar today.	common	de	Sie haben heute
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!
 you have messages!	common	de	Sie haben Nachrichten!
 you have no new messages	common	de	Keine neuen Nachrichten
+you have selected an invalid date	common	en	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you have x new messages!	common	de	Sie haben %1 neue Nachrichten!

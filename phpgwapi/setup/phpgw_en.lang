@@ -8,6 +8,7 @@ account preferences	common	en	Account Preferences
 acl	common	en	ACL
 active	common	en	Active
 add	common	en	Add
+add category	common	en	Add category
 add x category for	common	en	Add %1 category for
 address book	common	en	Address Book
 addressbook	common	en	Addressbook
@@ -61,14 +62,15 @@ domestic	common	en	Domestic
 done	common	en	Done
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 edit	common	en	Edit
+edit category	common	en	Edit category
 edit categories	common	en	Edit Categories
 edit x category for	common	en	Edit %1 category for
 e-mail	common	en	E-Mail
 email	common	en	E-Mail
 e-mail preferences	common	en	E-Mail preferences
 email type	common	en	E-Mail Type
-end date	common	en	End Date
-end time	common	en	end time
+end date	common	en	End date
+end time	common	en	End time
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
 error	common	en	Error
@@ -83,6 +85,7 @@ file manager	common	en	File manager
 files	common	en	Files
 filter	common	en	Filter
 first name	common	en	First name
+firstname	common	en	Firstname
 first page	common	en	first page
 forum	common	en	Forum
 friday	common	en	Friday
@@ -111,6 +114,7 @@ january	common	en	January
 july	common	en	July
 june	common	en	June
 last name	common	en	Last name
+lastname	common	en	Lastname
 last page	common	en	last page
 login	common	en	Login
 logout	common	en	Logout
@@ -174,8 +178,8 @@ show all	common	en	show all
 showing x	common	en	showing %1
 showing x - x of x	common	en	showing %1 - %2 of %3
 sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
-start date	common	en	Start Date
-start time	common	en	Start Time
+start date	common	en	Start date
+start time	common	en	Start time
 status	common	en	Status
 subject	common	en	Subject
 submit	common	en	Submit
@@ -196,6 +200,7 @@ translation management	common	en	Translation Management
 tuesday	common	en	Tuesday
 updated	common	en	Updated
 user	common	en	User
+username	common	en	Username
 users	common	en	users
 vcard	common	en	VCard
 view	common	en	View
@@ -207,6 +212,7 @@ you have 1 high priority event on your calendar today.	common	en	You have 1 high
 you have 1 new message!	common	en	You have 1 new message!
 you have messages!	common	en	You have messages!
 you have no new messages	common	en	You have no new messages
+you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
 you have x new messages!	common	en	You have %1 new messages!

@@ -11,6 +11,7 @@ account preferences	common	ja	アカウントユーザ設定
 acl	common	ja	許可設定
 active	common	ja	アクティブ
 add	common	ja	追加
+add category	common	ja	カテゴリ追加
 add x category for	common	ja	%1 カテゴリ追加
 address book	common	ja	アドレス帳
 addressbook	common	ja	アドレス帳
@@ -72,6 +73,8 @@ download	common	ja	ダウンロード
 e-mail	common	ja	電子メール
 e-mail preferences	common	ja	電子メールユーザ設定
 edit	common	ja	訂正
+edit categories	common	ja	カテゴリ訂正
+edit category	common	ja	カテゴリ訂正
 edit x category for	common	ja	%1 カテゴリ訂正
 email	common	ja	電子メール
 email type	common	ja	電子メールタイプ
