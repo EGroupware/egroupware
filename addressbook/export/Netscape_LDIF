@@ -83,7 +83,7 @@
 		// Tack on some extra values
 		function export_end_record($buffer) {
 			$buffer[$this->id]["dn"]                          = 'cn='.$buffer[$this->id]["cn"].',mail='.$buffer[$this->id]["mail"];
-			$buffer[$this->id]["xmozillauseconferenceserver"] = "";
+			$buffer[$this->id]["xmozillauseconferenceserver"] = "0";
 			$buffer[$this->id]["xmozillanickname"]            = "";
 			$buffer[$this->id]["xmozillausehtmlmail"]         = "False";
 			if ($buffer[$this->id]["ophone"]) {
@@ -108,7 +108,7 @@
 				$entries .= "xmozillauseconferenceserver: " . $buffer[$i]["xmozillauseconferenceserver"] . "\n";
 				$entries .= "xmozillanickname: "            . $buffer[$i]["xmozillanickname"] . "\n";
 				$entries .= "xmozillausehtmlmail: "         . $buffer[$i]["xmozillausehtmlmail"] . "\n";
-				$entries .= "xmozillaanyphone: "            . $buffer[$this->id]["xmozillaanyphone"] . "\n";
+				$entries .= "xmozillaanyphone: "            . $buffer[$i]["xmozillaanyphone"] . "\n";
 				$entries .= "objectClass: person\n";
 				$entries .= "objectClass: account\n";
 				$entries .= "objectClass: organizationalPerson\n";
