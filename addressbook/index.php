@@ -46,10 +46,11 @@
   // insert acl stuff here
 
   $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
-  //$extra = 1; // filtering to be done on extra fields
-  //"access='$filter'"
 
-  $entries = $this->read($start,$offset,$columns_to_display,$query,$sort,$order);
+  if ($filter == "none") { $filter = ""; }
+  else                   { $filter = "access=$filter"; }
+
+  $entries = $this->read($start,$offset,$columns_to_display,$query,$filter,$sort,$order);
 
   $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
                    $start, $this->total_records,
