@@ -25,9 +25,9 @@
 
     <tr bgcolor="{tr_color2}">
      <td>{lang_homedir}</td>
-     <td>{account_home}&nbsp;</td>
+     <td>{homedirectory}&nbsp;</td>
      <td>{lang_shell}</td>
-     <td>{account_shell}&nbsp;</td>
+     <td>{loginshell}&nbsp;</td>
     </tr>
     {password_fields}
  

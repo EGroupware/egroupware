@@ -83,7 +83,7 @@
 				'phpgw_acl',
 				'phpgw_applications'
 			));
-			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status);
+			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status,$homedirectory,$loginshell);
        
 			$account_id = $phpgw->accounts->name2id($account_lid);
 
@@ -173,11 +173,22 @@
 	}
 
 	$phpgw->template->set_unknowns('remove');
-	$phpgw->template->set_file(array(
-		'form'              => 'account_form.tpl',
-		'form_passwordinfo' => 'account_form_password.tpl',
-		'form_buttons_'     => 'account_form_buttons.tpl',
-	));
+
+	if ($phpgw_info["server"]["ldap_extra_attributes"] && $phpgw_info['server']['account_repository'] == 'ldap') {
+		$phpgw->template->set_file(array(
+			'form'              => 'account_form_ldap.tpl',
+			'form_passwordinfo' => 'account_form_password.tpl',
+			'form_buttons_'     => 'account_form_buttons.tpl'
+		));
+	}
+	else
+	{
+		$phpgw->template->set_file(array(
+			'form'              => 'account_form.tpl',
+			'form_passwordinfo' => 'account_form_password.tpl',
+			'form_buttons_'     => 'account_form_buttons.tpl',
+		));
+	}
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
@@ -211,7 +222,14 @@
 
 	$phpgw->template->set_var('lang_password',lang('Password'));
 	$phpgw->template->set_var('account_passwd',$account_passwd);
-  
+
+	if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+		$phpgw->template->set_var("lang_homedir",lang("home directory"));
+		$phpgw->template->set_var("lang_shell",lang("shell"));
+		$phpgw->template->set_var("homedirectory",'<input name="homedirectory" value="' . $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid . '">');
+		$phpgw->template->set_var("loginshell",'<input name="loginshell" value="' . $phpgw_info["server"]["ldap_account_shell"] . '">');
+	}
+
 	$phpgw->template->set_var('lang_reenter_password',lang('Re-Enter Password'));
 	$phpgw->template->set_var('account_passwd_2',$account_passwd_2);
 	$phpgw->template->parse('password_fields','form_passwordinfo',True);

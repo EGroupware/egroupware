@@ -34,6 +34,22 @@
    <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
+    <td>If using LDAP, do you want to store homedirectory and loginshell attributes for new accounts?:</td>
+    <td><input type="checkbox" name="newsettings[ldap_extra_attributes]" value="True"<?php echo ($current_config["ldap_extra_attributes"]?" checked":""); ?>></td>
+   </tr>
+   <tr bgcolor="e6e6e6">
+    <td>&nbsp;&nbsp;&nbsp;LDAP Default homedirectory prefix (e.g. /home for /home/username):</td>
+    <td><input name="newsettings[ldap_account_home]" value="<?php echo $current_config["ldap_account_home"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>&nbsp;&nbsp;&nbsp;LDAP Default shell (e.g. /bin/bash):</td>
+    <td><input name="newsettings[ldap_account_shell]" value="<?php echo $current_config["ldap_account_shell"]; ?>"></td>
+   </tr>
+
+   <?php $selected = array(); ?>
+
+   <tr bgcolor="e6e6e6">
     <td>Auto create account records for authenticated users:</td>
     <td><input type="checkbox" name="newsettings[auto_create_acct]" value="True"<?php echo ($current_config["auto_create_acct"]?" checked":""); ?>></td>
    </tr>

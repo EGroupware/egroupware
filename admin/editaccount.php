@@ -26,11 +26,22 @@
   
 		$t = new Template($phpgw->common->get_tpl_dir('admin'));
 		$t->set_unknowns('remove');
-		$t->set_file(array(
-			'form'              => 'account_form.tpl',
-			'form_passwordinfo' => 'account_form_password.tpl',
-			'form_buttons_'     => 'account_form_buttons.tpl',
-		));
+
+		if ($phpgw_info["server"]["ldap_extra_attributes"] && ($phpgw_info['server']['account_repository'] == 'ldap')) {
+			$t->set_file(array(
+				'form'              => 'account_form_ldap.tpl',
+				'form_passwordinfo' => 'account_form_password.tpl',
+				'form_buttons_'     => 'account_form_buttons.tpl'
+			));
+		}
+		else
+		{
+			$t->set_file(array(
+				'form'              => 'account_form.tpl',
+				'form_passwordinfo' => 'account_form_password.tpl',
+				'form_buttons_'     => 'account_form_buttons.tpl',
+			));
+		}
 
 		if ($_userData)
 		{
@@ -76,6 +87,13 @@
 		$t->parse('form_buttons','form_buttons_',True);
 
 		$t->set_var('account_lid','<input name="account_lid" value="' . $userData['account_lid'] . '">');
+
+		if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+			$t->set_var("lang_homedir",lang("home directory"));
+			$t->set_var("lang_shell",lang("shell"));
+			$t->set_var("homedirectory",'<input name="homedirectory" value="' . $userData['homedirectory']. '">');
+			$t->set_var("loginshell",'<input name="loginshell" value="' . $userData['loginshell']. '">');
+		}
 
 		$t->set_var('account_passwd',$account_passwd);
 		$t->set_var('account_passwd_2',$account_passwd_2);
@@ -263,7 +281,7 @@
 
 		if ($_userData['old_loginid'] != $_userData['account_lid']) 
 		{
-			if (account_exsists($_userData['account_loginid']))
+			if (account_exists($_userData['account_loginid']))
 			{
 				$error[$totalerrors] = lang('That loginid has already been taken');
 				$totalerrors++;
@@ -314,7 +332,9 @@
 			'account_id'          => $account_id,
 			'account_passwd_2'    => $account_passwd_2,
 			'account_groups'      => $account_groups,
-			'account_permissions' => $account_permissions
+			'account_permissions' => $account_permissions,
+			'homedirectory'       => $homedirectory,
+			'loginshell'          => $loginshell
 		);
 		
 		if (!$errors = userDataInvalid($userData)) 
