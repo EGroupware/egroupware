@@ -579,7 +579,11 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		{
 			$path = $name;		// name may already contain absolut path
 		}
-		if (!@is_readable(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$path)))
+		if(!$GLOBALS['phpgw_info']['server']['webserver_url'])
+		{
+			$base_path = "./";
+		}
+		if (!@is_readable($base_path . str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$path)))
 		{
 			// if the image-name is a percentage, use a progressbar
 			if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
