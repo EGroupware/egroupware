@@ -821,7 +821,7 @@
 			{
 				$cal_id = $GLOBALS['HTTP_GET_VARS']['cal_id'];
 				$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
-				
+
 				if(!$this->bo->can_user_edit($event))
 				{
 					Header('Location: '.$this->page('view','&cal_id='.$cal_id));
@@ -1243,13 +1243,13 @@
 		{
 
 		if(floor(phpversion()) == 4)
-		{ 
+		{
 			eval('
 
 			unset($GLOBALS[\'phpgw_info\'][\'flags\'][\'noheader\']);
 			unset($GLOBALS[\'phpgw_info\'][\'flags\'][\'nonavbar\']);
 			$GLOBALS[\'phpgw\']->common->phpgw_header();
-			
+
 			$html = CreateObject(\'calendar.html\');
 //			$html = CreateObject(\'infolog.html\');
 			$sbox = CreateObject(\'phpgwapi.sbox\');
@@ -1259,7 +1259,7 @@
 				14 => 1,
 				15 => 1,
 				16 => 1,
-				17 => 1, 
+				17 => 1,
 				18 => 2,
 				19 => 2,
 				20 => 2,
@@ -1299,7 +1299,7 @@
 			);
 			$firstday = intval(date(\'Ymd\',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
 			$lastday = intval(date(\'Ymd\',mktime(0,0,0,$this->bo->month,$days,$this->bo->year)));
-			
+
 			$this->bo->remove_doubles_in_cache($firstday,$lastday);
 
 			$rows = array();
@@ -1311,10 +1311,8 @@
 				{
 					echo \'<!-- For Date : \'.$v.\' : Count of items : \'.count($daily).\' -->\'."\n";
 				}
-				for($g=0;$g<count($daily);$g++)
+				while (list($nul,$event) = @each($daily))
 				{
-					$event = $daily[$g];
-
 					$view = $html->link(\'/index.php\',
 						array(
 							\'menuaction\' => \'calendar.uicalendar.view\',
@@ -1322,31 +1320,46 @@
 						)
 					);
 
-					$start_cell = $intervals_per_day * ($event[\'start\'][\'mday\'] - 1);
-					$start_cell += $interval[$event[\'start\'][\'hour\']];
-
-					$end_cell = $intervals_per_day * ($event[\'end\'][\'mday\'] - 1);
-					$end_cell += $interval[$event[\'end\'][\'hour\']];
+					if ($event[\'start\'][\'month\'] == $this->bo->month &&
+						 $event[\'start\'][\'year\']  == $this->bo->year)	// event starts in actual month ?
+					{
+						$start_cell = $intervals_per_day * ($event[\'start\'][\'mday\'] - 1);
+						$start_cell += $interval[$event[\'start\'][\'hour\']];
+					}
+					else
+					{
+						$start_cell = 0;
+					}
+					if ($event[\'end\'][\'month\'] == $this->bo->month &&
+						 $event[\'end\'][\'year\']  == $this->bo->year)	// event ends in actual month ?
+					{
+						$end_cell = $intervals_per_day * ($event[\'end\'][\'mday\'] - 1);
+						$end_cell += $interval[$event[\'end\'][\'hour\']];
+					}
+					else
+					{
+						$end_cell = $last_cell;
+					}
+					if ($c = $event[\'category\'])
+					{
+						list($cat)   = $this->planner_category($event[\'category\']);
+						if ($cat[\'parent\'])
+						{
+							list($pcat) = $this->planner_category($c = $cat[\'parent\']);
+						}
+						else
+						{
+							$pcat = $cat;
+						}
+					}
+					else
+					{
+						$cat = $pcat = array( \'name\' => lang(\'none\'));
+					}
 
 					$i = 0;					// search for row of parent category
 					do {
 						++$i;
-						if ($c = $event[\'category\'])
-						{
-							$cat   = $this->planner_category($event[\'category\']);
-							if ($cat[\'parent\'])
-							{
-								$pcat = $this->planner_category($c = $cat[\'parent\']);
-							}
-							else
-							{
-								$pcat = $cat;
-							}
-						}
-						else
-						{
-							$cat = $pcat = array( \'name\' => lang(\'none\'));
-						}
 						$k = $c.\'_\'.$i;
 						$ka = \'.nr_\'.$k;
 						if (!isset($rows[$k]))
@@ -1378,7 +1391,6 @@
 					{
 						$opt .= "colspan=".(1 + $end_cell - $start_cell);
 					}
-
 					if ($bgcolor=$cat[\'color\'])
 					{
 						$opt .= \' bgcolor="\'.$bgcolor.\'"\';
@@ -1439,7 +1451,7 @@
 			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
 
 			$sb = CreateObject('phpgwapi.sbox');
-	
+
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -1470,7 +1482,7 @@
 					$sb->getDays('day',intval($GLOBALS['phpgw']->common->show_date($datetime,'d')))
 				)
 			);
-	
+
 // View type
 			$var[] = Array(
 				'field'	=>	lang('View'),
