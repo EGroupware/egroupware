@@ -104,7 +104,7 @@
 
   echo $columns_html . '<tr><td colspan="4">&nbsp;</td></tr>';
   echo "<tr><td><b>" . lang("Record owner") . "</b></td><td>"
-     . $phpgw->common->grab_owner_name($phpgw->db->f("ab_owner")) . "</td><td><b>"
+     . $phpgw->common->grab_owner_name($owner) . "</td><td><b>"
      . lang("Record Access") . "</b></td><td>";
      
   if ($access != "private" && $access != "public") {
