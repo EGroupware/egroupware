@@ -16,9 +16,11 @@
 	$phpgw_info['flags']['currentapp'] = 'calendar';
 	include('../header.inc.php');
 
-	$icsfile=PHPGW_APP_INC.'/vcal1.ics';
+	@set_time_limit(0);
+
+	$icsfile=PHPGW_APP_INC.'/small_test.ics';
 	$fp=fopen($icsfile,'r');
-	$contents = explode("\n",fread ($fp, filesize($icsfile)));
+	$contents = explode("\n",fread($fp, filesize($icsfile)));
 	fclose($fp);
 
 	$vcal = CreateObject('calendar.vCalendar');
@@ -28,6 +30,18 @@
 	echo "Product ID = ".$vcalendar->prodid->value."<br>\n";
 	echo "Method = ".$vcalendar->method->value."<br>\n";
 	echo "Version = ".$vcalendar->version->value."<br>\n";
+
+	for($i=0;$i<count($vcalendar->timezone);$i++)
+	{
+		echo "<br>\nTIMEZONE<br>\n";
+		if($vcalendar->timezone[$i]->tzdata)
+		{
+			for($j=0;$j<count($vcalendar->timezone[$i]->tzdata);$j++)
+			{
+				echo "TZDATA #$j<br>\n";
+			}
+		}
+	}	
 
 	for($i=0;$i<count($vcalendar->event);$i++)
 	{
@@ -43,6 +57,13 @@
 		if($vcalendar->event[$i]->description->altrep)
 		{
 			echo "Description (Alt Rep) = ".$vcalendar->event[$i]->description->altrep."<br>\n";
+		}
+		if($vcalendar->event[$i]->description->x_type)
+		{
+			for($j=0;$j<count($vcalendar->event[$i]->description->x_type);$j++)
+			{
+				echo "Description (X-".$vcalendar->event[$i]->description->x_type[$j]->name.") = ".$vcalendar->event[$i]->description->x_type[$j]->value."<br>\n";
+			}
 		}
 		if($vcalendar->event[$i]->summary->value)
 		{
@@ -61,15 +82,25 @@
 		}
 		echo "Sequence = ".$vcalendar->event[$i]->sequence."<br>\n";
 		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[$i]->dtstart->hour,$vcalendar->event[$i]->dtstart->min,$vcalendar->event[$i]->dtstart->sec,$vcalendar->event[$i]->dtstart->month,$vcalendar->event[$i]->dtstart->mday,$vcalendar->event[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
+		if($vcalendar->event[$i]->dtstart->tzid)
+		{
+			echo "Date Start TZID : ".$vcalendar->event[$i]->dtstart->tzid."<br>\n";
+		}
 		if($vcalendar->event[$i]->rrule)
 		{
-			echo "Recurrence : Frequency = ".$vcalendar->event[$i]->rrule->freq." Count = ".$vcalendar->event[$i]->rrule->count."<br>\n";
+			for($j=0;$j<count($vcalendar->event[$i]->rrule);$j++)
+			{
+				echo "Recurrence : Frequency = ".$vcalendar->event[$i]->rrule[$j]->freq." Count = ".$vcalendar->event[$i]->rrule[$j]->count."<br>\n";
+			}
 		}
 		echo "Class = ".$vcalendar->event[$i]->class->value."<br>\n";
-		echo "Organizer = ".$vcalendar->event[$i]->organizer->mailto->user.'@'.$vcalendar->event[$i]->organizer->mailto->host."<br>\n";
-		if($vcalendar->event[$i]->organizer->dir)
+		if($vcalendar->event[$i]->organizer)
 		{
-			echo "Organizer Dir     = ".$vcalendar->event[$i]->organizer->dir."<br>\n";
+			echo "Organizer = ".$vcalendar->event[$i]->organizer->mailto->user.'@'.$vcalendar->event[$i]->organizer->mailto->host."<br>\n";
+			if($vcalendar->event[$i]->organizer->dir)
+			{
+				echo "Organizer Dir     = ".$vcalendar->event[$i]->organizer->dir."<br>\n";
+			}
 		}
 		for($j=0;$j<count($vcalendar->event[$i]->attendee);$j++)
 		{
@@ -78,7 +109,7 @@
 			{
 				echo "Attendee[$j] Dir     = ".$vcalendar->event[$i]->attendee[$j]->dir."<br>\n";
 			}
-			echo "Attendee[$j] Address = ".$vcalendar->event[$i]->attendee[$j]->mailto->user.'@'.$vcalendar->event[0]->attendee[$j]->mailto->host."<br>\n";
+			echo "Attendee[$j] Address = ".$vcalendar->event[$i]->attendee[$j]->mailto->user.'@'.$vcalendar->event[$i]->attendee[$j]->mailto->host."<br>\n";
 			echo "Attendee[$j] Role    = ".$vcal->switch_role($vcalendar->event[$i]->attendee[$j]->role)."<br>\n";
 			echo "Attendee[$j] RSVP    = ".$vcal->switch_rsvp($vcalendar->event[$i]->attendee[$j]->rsvp)."<br>\n";
 //			echo "Attendee[$j] RSVP    = ".$vcalendar->event[$i]->attendee[$j]->rsvp."<br>\n";
