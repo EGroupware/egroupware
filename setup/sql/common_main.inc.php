@@ -18,13 +18,13 @@
   }
 
   if ($currentver == "drop"){
-    include("sql/".$phpgw_info["server"]["db_type"]."_droptables.inc.php");
+    include("./sql/".$phpgw_info["server"]["db_type"]."_droptables.inc.php");
     $currentver = "new";
   }
   if ($currentver == "new") {
-    include("sql/".$phpgw_info["server"]["db_type"]."_newtables.inc.php");
-    include("sql/common_default_records.inc.php");
-    include("sql/common_lang_records.inc.php");
+    include("./sql/".$phpgw_info["server"]["db_type"]."_newtables.inc.php");
+    include("./sql/common_default_records.inc.php");
+    include("./sql/common_lang_records.inc.php");
   }
   echo "<table border=\"0\" align=\"center\">\n";
   echo "  <tr bgcolor=\"486591\">\n";
@@ -32,10 +32,10 @@
   echo "  </tr>\n";
   
   if ($currentver == "7122000" || $currentver == "8032000" || $currentver == "8072000" || $currentver == "8212000" || $currentver == "9052000" || $currentver == "9072000") {
-    include("sql/".$phpgw_info["server"]["db_type"]."_upgrade_prebeta.inc.php");
+    include("./sql/".$phpgw_info["server"]["db_type"]."_upgrade_prebeta.inc.php");
   }
   
-  include("sql/".$phpgw_info["server"]["db_type"]."_upgrade_beta.inc.php");
+  include("./sql/".$phpgw_info["server"]["db_type"]."_upgrade_beta.inc.php");
   
   if (!$tablechanges == True){
     echo "  <tr bgcolor=\"e6e6e6\">\n";

@@ -251,7 +251,7 @@
     $didupgrade = True;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6" || $currentver == "0.9.3pre7") {
        if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	      update_owner("addressbook","ab_owner");
       	update_owner("todo","todo_owner");
@@ -315,6 +315,46 @@
        $db->query("drop table users_headlines");
        $currentver = "0.9.3pre9";
        update_version_table();
+    }
+
+    if ($currentver == "0.9.3pre9") {
+       $sql = "CREATE TABLE news_msg (
+    con	        int(11)      NOT NULL,
+    msg	        int(11)      NOT NULL,
+    uid	        varchar(255) DEFAULT '',
+    udate       int(11)      DEFAULT 0,
+    path        varchar(255) DEFAULT '',
+    fromadd     varchar(255) DEFAULT '',
+    toadd       varchar(255) DEFAULT '',
+    ccadd       varchar(255) DEFAULT '',
+    bccadd      varchar(255) DEFAULT '',
+    reply_to    varchar(255) DEFAULT '',
+    sender      varchar(255) DEFAULT '',
+    return_path varchar(255) DEFAULT '',
+    subject     varchar(255) DEFAULT '',
+    message_id  varchar(255) DEFAULT '',
+    reference   varchar(255) DEFAULT '',
+    in_reply_to varchar(255) DEFAULT '',
+    follow_up_to varchar(255) DEFAULT '',
+    nntp_posting_host varchar(255) DEFAULT '',
+    nntp_posting_date varchar(255) DEFAULT '',
+    x_complaints_to varchar(255) DEFAULT '',
+    x_trace     varchar(255) DEFAULT '',
+    x_abuse_info varchar(255) DEFAULT '',
+    x_mailer    varchar(255) DEFAULT '',
+    organization varchar(255) DEFAULT '',
+    content_type varchar(255) DEFAULT '',
+    content_description	varchar(255) DEFAULT '',
+    content_transfer_encoding varchar(255) DEFAULT '',
+    mime_version varchar(255) DEFAULT '',
+    msgsize     int(11)      DEFAULT 0,
+    msglines    int(11)      DEFAULT 0,
+    body        text     NOT NULL,
+    primary key(con,msg)
+  )";
+        $db->query($sql);
+	$currentver = "0.9.3pre10";
+	update_version_table();
     }
       
     echo "  <tr bgcolor=\"e6e6e6\">\n";
