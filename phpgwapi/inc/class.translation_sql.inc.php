@@ -24,66 +24,81 @@
 
   /* $Id$ */
 
-  class translation
-  {
+	class translation
+	{
+		function translate($key, $vars=false ) 
+		{
+			if ( ! $vars ) $vars = array();
+			global $phpgw, $phpgw_info, $lang;
+			$ret = $key;
+			if (!isset($lang) || !$lang)
+			{
+				if (isset($phpgw_info['user']['preferences']['common']['lang']) &&
+					$phpgw_info['user']['preferences']['common']['lang'])
+				{
+					$userlang = $phpgw_info['user']['preferences']['common']['lang'];
+				}
+				else
+				{
+					$userlang = 'en';
+				}
+				$sql = "select message_id,content from lang where lang like '".$userlang."' ".
+					"and (app_name like '".$phpgw_info['flags']['currentapp']."' or app_name like 'common' or app_name like 'all')";
 
-    function translate($key, $vars=false ) 
-    {
-      if ( ! $vars ) $vars = array();
-      global $phpgw, $phpgw_info, $lang;
-      $ret = $key;
-      if (!isset($lang) || !$lang) {
-        if (isset($phpgw_info["user"]["preferences"]["common"]["lang"]) &&
-	    $phpgw_info["user"]["preferences"]["common"]["lang"]) {
-          $userlang = $phpgw_info["user"]["preferences"]["common"]["lang"];
-        }else{
-          $userlang = "en";
-        }
-        $sql = "select message_id,content from lang where lang like '".$userlang."' ".
-               "and (app_name like '".$phpgw_info["flags"]["currentapp"]."' or app_name like 'common' or app_name like 'all')";
-               
-        if (strcasecmp ($phpgw_info["flags"]["currentapp"], "common")>0){
-          $sql .= " order by app_name asc";
-        }else{
-          $sql .= " order by app_name desc";
-        }
+				if (strcasecmp ($phpgw_info['flags']['currentapp'], 'common')>0)
+				{
+					$sql .= ' order by app_name asc';
+				}
+				else
+				{
+					$sql .= ' order by app_name desc';
+				}
 
-        $phpgw->db->query($sql,__LINE__,__FILE__);
-        $phpgw->db->next_record();
-        $count = $phpgw->db->num_rows();
-        for ($idx = 0; $idx < $count; ++$idx) {
-           $lang[strtolower ($phpgw->db->f("message_id"))] = $phpgw->db->f("content");
-           $phpgw->db->next_record();
-        }
-      }
-      if (isset($lang[strtolower ($key)]) && $lang[strtolower ($key)]){
-         $ret = $lang[strtolower ($key)];
-      }else{
-         $ret = $key."*";
-      }
-      $ndx = 1;
-      while( list($key,$val) = each( $vars ) ) {
-     	$ret = preg_replace( "/%$ndx/", $val, $ret );
-     	++$ndx;
-      }
-      return $ret;
-    }
-  
-    function add_app($app) 
-    {
-      global $phpgw, $phpgw_info, $lang;
-      if ($phpgw_info["user"]["preferences"]["common"]["lang"]){
-        $userlang = $phpgw_info["user"]["preferences"]["common"]["lang"];
-      }else{
-        $userlang = "en";
-      }
-      $sql = "select message_id,content from lang where lang like '".$userlang."' and app_name like '".$app."'";
-      $phpgw->db->query($sql,__LINE__,__FILE__);
-      $phpgw->db->next_record();
-      $count = $phpgw->db->num_rows();
-      for ($idx = 0; $idx < $count; ++$idx) {
-        $lang[strtolower ($phpgw->db->f("message_id"))] = $phpgw->db->f("content");
-        $phpgw->db->next_record();
-      }
-    }
-  }
+				$phpgw->db->query($sql,__LINE__,__FILE__);
+				$phpgw->db->next_record();
+				$count = $phpgw->db->num_rows();
+				for ($idx = 0; $idx < $count; ++$idx)
+				{
+					$lang[strtolower ($phpgw->db->f('message_id'))] = $phpgw->db->f('content');
+					$phpgw->db->next_record();
+				}
+			}
+			if (isset($lang[strtolower ($key)]) && $lang[strtolower ($key)])
+			{
+				$ret = $lang[strtolower ($key)];
+			}
+			else
+			{
+				$ret = $key."*";
+			}
+			$ndx = 1;
+			while( list($key,$val) = each( $vars ) )
+			{
+				$ret = preg_replace( "/%$ndx/", $val, $ret );
+				++$ndx;
+			}
+			return $ret;
+		}
+
+		function add_app($app) 
+		{
+			global $phpgw, $phpgw_info, $lang;
+			if ($phpgw_info['user']['preferences']['common']['lang'])
+			{
+				$userlang = $phpgw_info['user']['preferences']['common']['lang'];
+			}
+			else
+			{
+				$userlang = 'en';
+			}
+			$sql = "select message_id,content from lang where lang like '".$userlang."' and app_name like '".$app."'";
+			$phpgw->db->query($sql,__LINE__,__FILE__);
+			$phpgw->db->next_record();
+			$count = $phpgw->db->num_rows();
+			for ($idx = 0; $idx < $count; ++$idx)
+			{
+				$lang[strtolower ($phpgw->db->f('message_id'))] = $phpgw->db->f('content');
+				$phpgw->db->next_record();
+			}
+		}
+	}
