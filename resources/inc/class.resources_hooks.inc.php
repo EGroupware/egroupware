@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - resources Admin-, Preferences- and SideboxMenu-Hooks        *
+	* eGroupWare - resources hooks                                             *
 	* http://www.eGroupWare.org                                                *
 	* Originally written by Ralf Becker <RalfBecker@outdoor-training.de>       *
 	* Changes for resources by Cornelius Weiﬂ <egw@von-und-zu-weiss.de>        *
@@ -14,9 +14,9 @@
 
 	/* $Id$ */
 
-class admin_prefs_sidebox_hooks
+class resources_hooks
 {
-	function all_hooks($args)
+	function admin_prefs_sidebox($args)
 	{
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
