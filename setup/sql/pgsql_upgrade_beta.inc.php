@@ -1452,6 +1452,9 @@
 		global $phpgw_info, $phpgw_setup;
 		$db1 = $phpgw_setup->db;
 
+		$phpgw_setup->db->query("drop sequence phpgw_addressbook_id_seq");
+		$phpgw_setup->db->query("create sequence phpgw_addressbook_temp_id_seq_");
+
 		$sql="CREATE TABLE phpgw_addressbook_temp (
 		   id    serial,
 		   lid   varchar(32),
@@ -1503,6 +1506,7 @@
 		   email_type varchar(32) DEFAULT 'INTERNET',
 		   email_home varchar(64),
 		   email_home_type varchar(32) DEFAULT 'INTERNET',
+		   PRIMARY KEY (id),
 		   UNIQUE id (id)
 		)";
 
@@ -1545,6 +1549,7 @@
 
 		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
 		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook_temp RENAME TO phpgw_addressbook",__LINE__,__FILE__);
+		$phpgw_setup->db->query("ALTER SEQUENCE phpgw_addressbook_temp_id_seq RENAME TO phpgw_addressbook_id_seq",__LINE__,__FILE__);
 
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
 		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
