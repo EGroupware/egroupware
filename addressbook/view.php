@@ -205,8 +205,11 @@
 	{
 		while (list($key,$thiscat) = each($cats))
 		{
-			$catinfo = $cat->return_single($thiscat);
-			$catname .= $catinfo[0]['name'] . '; ';
+			if ($thiscat)
+			{
+				$catinfo = $cat->return_single($thiscat);
+				$catname .= $catinfo[0]['name'] . '; ';
+			}
 		}
 		if (!$cat_id)
 		{
