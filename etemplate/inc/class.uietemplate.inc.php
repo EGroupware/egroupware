@@ -33,6 +33,7 @@
 		var $debug; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
+		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 
 		/*!
 		@function etemplate
@@ -276,7 +277,9 @@
 						$width[$col] = 0;
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
-					$row_data[".$col"] .= $this->html->formatOptions($cell['span'],',CLASS');
+					list(,$cl) = explode(',',$cell['span']);
+					$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
+					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
 				}
 				$rows[$row] = $row_data;
 
@@ -286,6 +289,7 @@
 				{
 					$cl .= $nmr_alternate++ & 1; // alternate color
 				}
+				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
 				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
 				$rows[".$row"] .= $this->html->formatOptions($class,',VALIGN');
 			}
