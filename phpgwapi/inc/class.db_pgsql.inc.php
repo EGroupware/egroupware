@@ -61,12 +61,14 @@ class db {
 	  }
   }
 
-  function limit($start,$offset)
+  function limit($start)
   {
+     global $phpgw_info;
+
      if ($start == 0) {
-        $s = "limit $offset";
+        $s = "limit " . $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
      } else {
-        $s = "limit $offset,$start";
+        $s = "limit " . $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] . ",$start";
      }
      return $s;
   }
