@@ -1,4 +1,5 @@
 <!-- BEGIN setup_demo -->
+<form method="POST" action="{action_url}">
 <table border="0" width="90%" cellspacing="0" cellpadding="2">
   <tr>
     <td>
@@ -12,7 +13,6 @@
   </tr>
   <tr>
     <td>
-      <form method="POST" action="{action_url}">
 	<table border="0">
           <tr>
             <td>{adminusername}</td>
@@ -43,8 +43,8 @@
             <td><input type="submit" name="cancel" value="{lang_cancel}"> </td>
           </tr>
         </table>
-      </form>
     </td>
   </tr>
 </table>
+</form>
 <!-- END setup_demo -->
