@@ -470,35 +470,38 @@
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	function xmlrpc_decode($xmlrpc_val)
+	if (!function_exists('xmlrpc_decode'))
 	{
-		$kind = @$xmlrpc_val->kindOf();
-
-		if($kind == 'scalar')
+		function xmlrpc_decode($xmlrpc_val, $encoding = '')
 		{
-			return $xmlrpc_val->scalarval();
-		}
-		elseif($kind == 'array')
-		{
-			$size = $xmlrpc_val->arraysize();
-			$arr = array();
+			$kind = @$xmlrpc_val->kindOf();
 
-			for($i = 0; $i < $size; $i++)
+			if($kind == 'scalar')
 			{
-				$arr[]=xmlrpc_decode($xmlrpc_val->arraymem($i));
+				return $xmlrpc_val->scalarval();
 			}
-			return $arr; 
-		}
-		elseif($kind == 'struct')
-		{
-			$xmlrpc_val->structreset();
-			$arr = array();
-
-			while(list($key,$value)=$xmlrpc_val->structeach())
+			elseif($kind == 'array')
 			{
-				$arr[$key] = xmlrpc_decode($value);
+				$size = $xmlrpc_val->arraysize();
+				$arr = array();
+	
+				for($i = 0; $i < $size; $i++)
+				{
+					$arr[]=xmlrpc_decode($xmlrpc_val->arraymem($i));
+				}
+				return $arr; 
 			}
-			return $arr;
+			elseif($kind == 'struct')
+			{
+				$xmlrpc_val->structreset();
+				$arr = array();
+
+				while(list($key,$value)=$xmlrpc_val->structeach())
+				{
+					$arr[$key] = xmlrpc_decode($value);
+				}
+				return $arr;
+			}
 		}
 	}
 
@@ -514,43 +517,46 @@
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	function xmlrpc_encode($php_val)
+	if (!function_exists('xmlrpc_encode'))
 	{
-		$type = gettype($php_val);
-		$xmlrpc_val = CreateObject('phpgwapi.xmlrpcval');
-
-		switch($type)
+		function xmlrpc_encode($php_val)
 		{
-			case 'array':
-			case 'object':
-				$arr = array();
-				while (list($k,$v) = each($php_val))
-				{
-					$arr[$k] = xmlrpc_encode($v);
-				}
-				$xmlrpc_val->addStruct($arr);
-				break;
-			case 'integer':
-				$xmlrpc_val->addScalar($php_val, xmlrpcInt);
-				break;
-			case 'double':
-				$xmlrpc_val->addScalar($php_val, xmlrpcDouble);
-				break;
-			case 'string':
-				$xmlrpc_val->addScalar($php_val, xmlrpcString);
-				break;
-			// <G_Giunta_2001-02-29>
-			// Add support for encoding/decoding of booleans, since they are supported in PHP
-			case 'boolean':
-				$xmlrpc_val->addScalar($php_val, xmlrpcBoolean);
-				break;
-			// </G_Giunta_2001-02-29>
-			case 'unknown type':
-			default:
-				$xmlrpc_val = false;
-				break;
+			$type = gettype($php_val);
+			$xmlrpc_val = CreateObject('phpgwapi.xmlrpcval');
+
+			switch($type)
+			{
+				case 'array':
+				case 'object':
+					$arr = array();
+					while (list($k,$v) = each($php_val))
+					{
+						$arr[$k] = xmlrpc_encode($v);
+					}
+					$xmlrpc_val->addStruct($arr);
+					break;
+				case 'integer':
+					$xmlrpc_val->addScalar($php_val, xmlrpcInt);
+					break;
+				case 'double':
+					$xmlrpc_val->addScalar($php_val, xmlrpcDouble);
+					break;
+				case 'string':
+					$xmlrpc_val->addScalar($php_val, xmlrpcString);
+					break;
+				// <G_Giunta_2001-02-29>
+				// Add support for encoding/decoding of booleans, since they are supported in PHP
+				case 'boolean':
+					$xmlrpc_val->addScalar($php_val, xmlrpcBoolean);
+					break;
+				// </G_Giunta_2001-02-29>
+				case 'unknown type':
+				default:
+					$xmlrpc_val = false;
+					break;
+			}
+			return $xmlrpc_val;
 		}
-		return $xmlrpc_val;
 	}
 
 	// listMethods: either a string, or nothing
