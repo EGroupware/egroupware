@@ -67,5 +67,18 @@
 			global $phpgw_info, $phpgw;
 			return False;
 		}
+
+		// Since there account data will still be stored in SQL, this should be safe to do. (jengo)
+		function update_lastlogin($account_id, $ip)
+		{
+			global $phpgw;
+
+			$account_id = get_account_id($account_id);
+
+			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+				. "$ip', account_lastlogin='" . time()
+				. "' where account_id='$account_id'",__LINE__,__FILE__);
+		}
+
 	}
 ?>
