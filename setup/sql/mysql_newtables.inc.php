@@ -248,10 +248,11 @@
   $phpgw_setup->db->query($sql);  
 
 	$sql = "CREATE TABLE phpgw_cal_holidays (
+	   hol_id int(11) NOT NULL auto_increment,
 		locale char(2) NOT NULL,
 		name varchar(50) NOT NULL,
 		date_time int(11) DEFAULT '0' NOT NULL,
-		PRIMARY KEY (locale,name)
+		PRIMARY KEY (hol_id)
 	)";
 	$phpgw_setup->db->query($sql);
 		

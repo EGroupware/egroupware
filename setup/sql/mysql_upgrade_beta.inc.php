@@ -1610,6 +1610,24 @@
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
 	}
+	
+	$test[] = '0.9.11.006';
+	function upgrade0_9_11_006()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("drop table phpgw_cal_holidays",__LINE__,__FILE__);
+		$sql = "CREATE TABLE phpgw_cal_holidays (
+		   hol_id int(11) NOT NULL auto_increment,
+			locale char(2) NOT NULL,
+			name varchar(50) NOT NULL,
+			date_time int(11) DEFAULT '0' NOT NULL,
+			PRIMARY KEY (hol_id)
+		)";
+		$phpgw_setup->db->query($sql);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.007';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

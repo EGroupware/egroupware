@@ -199,7 +199,7 @@
 		cal_type		varchar(10),
 		is_public	int DEFAULT 1 NOT NULL,
 		title		varchar(80) NOT NULL,
-		desription	text
+		description	text
 	)";
   $phpgw_setup->db->query($sql);
 
@@ -221,10 +221,10 @@
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_cal_holidays (
+    hol_id	serial,
     locale		char(2) NOT NULL,
     name		varchar(50) NOT NULL,
-    date_time	int4 DEFAULT 0 NOT NULL,
-    PRIMARY KEY (locale,name)
+    date_time	int4 DEFAULT 0 NOT NULL
   )";
   $phpgw_setup->db->query($sql);
 

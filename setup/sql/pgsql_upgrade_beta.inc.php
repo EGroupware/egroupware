@@ -2089,6 +2089,60 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
 	}
 
+	$test[] = '0.9.11.006';
+	function upgrade0_9_11_006()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("create table phpgw_cal_temp as select * from phpgw_cal",__LINE__,__FILE__);
+		$sql = "CREATE TABLE phpgw_cal (
+			cal_id		serial,
+			owner		int DEFAULT 0 NOT NULL,
+			category	int DEFAULT 0 NOT NULL,
+			groups	varchar(255),
+			datetime	int4,
+			mdatetime	int4,
+			edatetime	int4,
+			priority		int DEFAULT 2 NOT NULL,
+			cal_type		varchar(10),
+			is_public	int DEFAULT 1 NOT NULL,
+			title		varchar(80) NOT NULL,
+			description	text
+		)";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("SELECT * FROM phpgw_cal_temp",__LINE__,__FILE__);
+		while($phpgw_setup->db->next_record())
+		{
+			$id = $phpgw_setup->db->f('cal_id');
+			$owner = $phpgw_setup->db->f('owner');
+			$groups = $phpgw_setup->db->f('groups');
+			$datetime = $phpgw_setup->db->f('datetime');
+			$mdatetime = $phpgw_setup->db->f('mdatetime');
+			$edatetime = $phpgw_setup->db->f('edatetime');
+			$priority = $phpgw_setup->db->f('priority');
+			$type = $phpgw_setup->db->f('cal_type');
+			$public = $phpgw_setup->db->f('is_public');
+			$title = $phpgw_setup->db->f('title');
+			$description = $phpgw_setup->db->f('desription');
+			$phpgw_setup->db->query("INSERT INTO phpgw_cal(cal_id,owner,category,groups,datetime,mdatetime,edatetime,priority,cal_type,is_public,title,description)
+				values($id,$owner,0,'$groups',$datetime,$mdatetime,$edatetime,$priority,'$type',$public,'$title','$description')",__LINE__,__FILE__);
+		}
+
+		$phpgw_setup->db->query("drop table phpgw_cal_temp",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop table phpgw_cal_holidays",__LINE__,__FILE__);
+
+		$sql = "CREATE TABLE phpgw_cal_holidays (
+			hol_id	serial,
+			locale		char(2) NOT NULL,
+			name		varchar(50) NOT NULL,
+			date_time	int4 DEFAULT 0 NOT NULL
+		)";
+      $phpgw_setup->db->query($sql);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.007';
+	}
 
     reset ($test);
     while (list ($key, $value) = each ($test)){
