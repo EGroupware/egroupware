@@ -1,6 +1,7 @@
 <!-- $Id$ -->
-<!- BEGIN hr -->
  <tr>
-  <hr>
+  <td colspan="2">
+   {hr_text}
+  </td>
  </tr>
-<!-- END hr -->
+

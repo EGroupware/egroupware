@@ -18,25 +18,25 @@
   						'currentapp'				=> 'calendar',
   						'enable_nextmatchs_class'	=> True
   );
-  $phpgw_info["flags"] = $phpgw_flags;
+  $phpgw_info['flags'] = $phpgw_flags;
   
   include('../header.inc.php');
 
   if(! ($rights & PHPGW_ACL_READ))
   {
-    echo lang('You do not have permission to read this record');
+    echo lang('You do not have permission to read this record!');
     $phpgw->common->phpgw_exit();    
   }
 
   if ($id < 1)
   {
-    echo lang("Invalid entry id.");
+    echo lang('Invalid entry id.');
     $phpgw->common->phpgw_exit();
   }
 
   function add_day(&$repeat_days,$day)
   {
-    if($repeat_days) $repeat_days .= ", ";
+    if($repeat_days) $repeat_days .= ', ';
     $repeat_days .= $day;
   }
 
@@ -64,18 +64,17 @@
 
   reset($cal_info->participants);
   $participating = False;
-  while($participant = each($cal_info->participants))
+  for($j=0;$j<count($cal_info->participants);$j++)
   {
-    if($participant[1] == $owner)
+    if($cal_info->participants[$j] == $owner)
     {
       $participating = True;
-      break;
     }
   }
   
-  if($cal_info->owner != $phpgw_info['user']['account_id'] || $participating == False)
+  if($participating == False)
   {
-    echo lang('You do not have permission to read this record');
+    echo lang('You do not have permission to read this record.');
     $phpgw->common->phpgw_exit();
   }
   
@@ -89,7 +88,7 @@
   );
   $phpgw->template->set_file($templates);
 
-  $phpgw->template->set_block('view_begin','list','view_end','form_button');
+//  $phpgw->template->set_block('view_begin','list','view_end','form_button');
 
   $phpgw->template->set_var('bg_text',$phpgw_info['theme']['bg_text']);
   $phpgw->template->set_var('name',$cal_info->name);
@@ -195,7 +194,7 @@
     display_item(lang('Repetition'),$str);
   }
 
-  if ($rights & PHPGW_ACL_EDIT)
+  if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_EDIT))
   {
     $phpgw->template->set_var('action_url_button',$phpgw->link('edit_entry.php','id='.$id.'&owner='.$owner));
     $phpgw->template->set_var('action_text_button','  '.lang('Edit').'  ');
@@ -207,7 +206,7 @@
     $phpgw->template->set_var('edit_button','');
   }
 
-  if ($rights & PHPGW_ACL_DELETE)
+  if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_DELETE))
   {
     $phpgw->template->set_var('action_url_button',$phpgw->link('delete.php','id='.$id.'&owner='.$owner));
     $phpgw->template->set_var('action_text_button',lang('Delete'));

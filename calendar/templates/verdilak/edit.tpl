@@ -7,6 +7,11 @@
 <form action="{action_url}" method="post" name="addform">
 {common_hidden}
 <table border="0" width="75%">
+ <tr>
+  <td colspan="2">
+   <hr>
+  </td>
+ </tr>
 <!-- END edit_entry_begin -->
 
 {output}

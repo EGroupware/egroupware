@@ -14,110 +14,112 @@
 
   /* $Id$ */
 
-  class calendar_
-  {
-    var $stream;
-    var $user;
+class calendar_
+{
+	var $stream;
+	var $user;
 
-    var $printer_friendly = False;
-    var $owner;
-    var $rights;
+	var $printer_friendly = False;
+	var $owner;
+	var $rights;
     
-    var $cal_event;
-    var $today = Array('raw','day','month','year','full','dow','dm','bd');
-    var $repeated_events;
-    var $checked_events;
-    var $re = 0;
-    var $checkd_re = 0;
-    var $sorted_re = 0;
-    var $hour_arr = Array();
-    var $rowspan_arr = Array();
-    var $days = Array();
-    var $first_hour;
-    var $last_hour;
-    var $rowspan;
-    var $weekstarttime;
-    var $daysinweek = 7;
-    var $filter;
-    var $tempyear;
-    var $tempmonth;
-    var $tempday;
+	var $cal_event;
+	var $today = Array('raw','day','month','year','full','dow','dm','bd');
+	var $repeated_events;
+	var $checked_events;
+	var $re = 0;
+	var $checkd_re = 0;
+	var $sorted_re = 0;
+	var $hour_arr = Array();
+	var $rowspan_arr = Array();
+	var $days = Array();
+	var $first_hour;
+	var $last_hour;
+	var $rowspan;
+	var $weekstarttime;
+	var $daysinweek = 7;
+	var $filter;
+	var $tempyear;
+	var $tempmonth;
+	var $tempday;
 
-    function open($calendar='',$user='',$passwd='',$options='')
-    {
-      global $phpgw, $phpgw_info;
+	function open($calendar='',$user='',$passwd='',$options='')
+	{
+		global $phpgw, $phpgw_info;
 
-      $this->stream = $phpgw->db;
-      if($user=='')
-      {
-        $this->user = $phpgw_info['user']['account_id'];
-      }
-      elseif(is_int($user)) 
-      {
-        $this->user = $user;
-      }
-      elseif(is_string($user))
-      {
-        $this->user = $phpgw->accounts->name2id($user);
-      }
-      return $this->stream;
-    }
-
-    function popen($calendar='',$user='',$passwd='',$options='')
-    {
-	  return $this->open($calendar,$user,$passwd,$options);
+		$this->stream = $phpgw->db;
+		if($user=='')
+		{
+			$this->user = $phpgw_info['user']['account_id'];
+		}
+		elseif(is_int($user)) 
+		{
+			$this->user = $user;
+		}
+		elseif(is_string($user))
+		{
+			$this->user = $phpgw->accounts->name2id($user);
+		}
+		
+		return $this->stream;
 	}
 
-    function reopen($calendar,$options='')
-    {
-      return $this->stream;
-    }
+	function popen($calendar='',$user='',$passwd='',$options='')
+	{
+		return $this->open($calendar,$user,$passwd,$options);
+	}
+
+	function reopen($calendar,$options='')
+	{
+		return $this->stream;
+	}
 
 	function close($mcal_stream,$options='')
 	{
-	  return True;
+		return True;
 	}
 
 	function create_calendar($stream='',$calendar='')
 	{
-	  return $calendar;
+		return $calendar;
 	}
 
-    function rename_calendar($stream='',$old_name='',$new_name='')
-    {
-      return $new_name;
-    }
+	function rename_calendar($stream='',$old_name='',$new_name='')
+	{
+		return $new_name;
+	}
     
-    function delete_calendar($stream='',$calendar='')
-    {
-      return $calendar;
-    }
+	function delete_calendar($stream='',$calendar='')
+	{
+		return $calendar;
+	}
 
 	function fetch_event($mcal_stream,$event_id,$options='')
 	{
-	  if(!isset($this->stream))
-	  {
-	    return False;
-	  }
+		if(!isset($this->stream))
+		{
+			return False;
+		}
 	  
-      $this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
 
-      $this->stream->query('SELECT * FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
-      if($this->stream->num_rows() > 0)
-      {
-        $this->cal_event = CreateObject('calendar.calendar_item');
-        $this->stream->next_record();
-        // Load the calendar event data from the db into the cal_event structure
-        // Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
-      }
-      else
-      {
-        $this->cal_event = False;
-      }
+		$this->stream->query('SELECT * FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
+		
+		if($this->stream->num_rows() > 0)
+		{
+			$this->cal_event = CreateObject('calendar.calendar_item');
+			$this->stream->next_record();
+			// Load the calendar event data from the db into the cal_event structure
+			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
+		}
+		else
+		{
+			$this->cal_event = False;
+		}
       
-	  $this->stream->unlock();
+		$this->stream->unlock();
 	  
-	  return $this->cal_event;
+		return $this->cal_event;
 	}
 
 // End of ICal style support.......
@@ -133,7 +135,7 @@
 			}
          else
 			{
-				if (! $phpgw_info['user']['preferences']['calendar']['defaultfilter'])
+				if (!isset($phpgw_info['user']['preferences']['calendar']['defaultfilter']))
 				{
 					$phpgw->preferences->add('calendar','defaultfilter','all');
 					$phpgw->preferences->save_repository(True);
@@ -668,8 +670,8 @@
 			$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 			$p->set_unknowns('remove');
 			$p->set_file(array('link_pict' => 'link_pict.tpl'));
-			$p->set_block('link_pict','link_pict');
-			$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$id));
+//			$p->set_block('link_pict','link_pict');
+			$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$id.'&owner='.$this->owner));
 			$p->set_var('lang_view',lang('View this entry'));
 			$p->set_var('pic_image',$phpgw->common->get_image_path('calendar').'/'.$pic);
 			$p->set_var('description',$description);
@@ -1062,20 +1064,10 @@
 					
 					if($this->check_perms(PHPGW_ACL_ADD) == True)
 					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day']).'">';
-					}
-					
-					$str .= '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" ';
-            
-					if($this->check_perms(PHPGW_ACL_ADD) == True)
-					{
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
+						$str .= '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" ';
 						$str .= 'alt="'.lang('New Entry').'" ';
-					}
-            
-					$str .= 'border="0" align="right">';
-            
-					if($this->check_perms(PHPGW_ACL_ADD) == True)
-					{
+						$str .= 'border="0" align="right">';
 						$str .= '</a>';
 					}
             
@@ -1709,15 +1701,15 @@
 
 		$this->read_repeated_events($owner);
 
-		$p = new Template($phpgw->common->get_tpl_dir('calendar'));
+		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 		$p->set_unknowns('remove');
 
 		$templates = Array(
 									'day_cal'			=>	'day_cal.tpl',
 									'mini_week'			=> 'mini_week.tpl',
-									'day_row_99'		=>	'day_row_99.tpl',
+//									'day_row'			=>	'day_row.tpl',
 									'day_row_event'	=> 'day_row_event.tpl',
-									'day_row_time'		=>	'day_tow_time.tpl'
+									'day_row_time'		=>	'day_row_time.tpl'
 		);
       $p->set_file($templates);
       
@@ -2066,8 +2058,8 @@
 		}
 
 		$query = 'UPDATE calendar_entry SET cal_owner='.$owner.", cal_name='".addslashes($calinfo->name)."', "
-			. "cal_description='".addslashes($calinfo->description)."', cal_datetime=".$date.', '
-			. 'cal_mdatetime='.$today.', cal_edatetime='.$enddate.', '
+			. "cal_description='".addslashes($calinfo->description)."', cal_datetime=".$date['raw'].', '
+			. 'cal_mdatetime='.$today['raw'].', cal_edatetime='.$enddate['raw'].', '
 			. 'cal_priority='.$calinfo->priority.", cal_type='".$rpt_type."' ";
 
 		if(($calinfo->access == 'public' || $calinfo->access == 'group') && count($calinfo->groups))
@@ -2092,7 +2084,7 @@
 		while ($participant = each($calinfo->participants))
 		{
 			$phpgw->db->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
-				. "VALUES($calid,".$participant[1].",'A')",__LINE__,__FILE__);
+				. 'VALUES('.$calid.','.$participant[1].",'A')",__LINE__,__FILE__);
 		}
 
 		if(strcmp($calinfo->rpt_type,'none') <> 0)
@@ -2136,7 +2128,7 @@
 			else
 			{
 				$db2->query("UPDATE calendar_entry_repeats SET cal_type='".$calinfo->rpt_type."', cal_use_end=".$use_end.', '
-					."cal_end='".$end."', cal_days='".$days."', cal_frequency=".$freq.' '
+					."cal_end='".$end['raw']."', cal_days='".$days."', cal_frequency=".$freq.' '
 					.'WHERE cal_id='.$calid,__LINE__,__FILE__);
 			}
 		}
