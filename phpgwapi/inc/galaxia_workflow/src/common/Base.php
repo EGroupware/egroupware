@@ -22,6 +22,10 @@ class Base extends Observable {
 	// copied from tikilib.php
 	function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
 		$this->convert_query($query);
+
+		// Galaxia needs to be call ADOdb in associative mode
+		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
+
 		if ($numrows == -1 && $offset == -1)
 			$result = $this->db->Execute($query, $values);
 		else
