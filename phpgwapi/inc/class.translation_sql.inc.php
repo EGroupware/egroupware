@@ -377,14 +377,17 @@
 							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
 						}
 					}
-					$charset = @$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang);
+					$charset = strtolower(@$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang));
 					//echo "<p>lang='$lang', charset='$charset', system_charset='$this->system_charset')</p>\n";
 					//echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
 					foreach($raw as $app_name => $ids)
 					{
 						foreach($ids as $message_id => $content)
 						{
-							$content = $this->convert($content,$charset,$this->system_charset);
+							if ($this->system_charset)
+							{
+								$content = $this->convert($content,$charset,$this->system_charset);
+							}
 							$addit = False;
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 							if ($upgrademethod == 'addmissing')
