@@ -83,10 +83,10 @@
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</a>");
     $phpgw->template->parse("out","index_t");
     $phpgw->template->pparse("out","index_t");
-    $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
     $phpgw->template->parse("out","index_t");
     $phpgw->template->pparse("out","index_t");
   }
+  $phpgw->common->phpgw_footer();
 ?>

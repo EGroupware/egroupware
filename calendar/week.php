@@ -120,10 +120,10 @@
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</A>");
     $phpgw->template->parse("out","week_t");
     $phpgw->template->pparse("out","week_t");
-    $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
     $phpgw->template->parse("out","week_t");
     $phpgw->template->pparse("out","week_t");
   }
+  $phpgw->common->phpgw_footer();
 ?>

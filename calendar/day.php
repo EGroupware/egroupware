@@ -92,10 +92,10 @@
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
     $phpgw->template->parse("out","day_t");
     $phpgw->template->pparse("out","day_t");
-    $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
     $phpgw->template->parse("out","day_t");
     $phpgw->template->pparse("out","day_t");
   }
+  $phpgw->common->phpgw_footer();
 ?>

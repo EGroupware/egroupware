@@ -134,5 +134,4 @@
   $phpgw->template->pparse("out","matrix_query_end");
 
   $phpgw->common->phpgw_footer();
-
 ?>
