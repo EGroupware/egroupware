@@ -20,7 +20,7 @@
  
   /* processing and discovery phase */
   check_header();
-  if ( $stage >= 1.2){
+  if ( $stage >= 1.3){
     if (!auth()){
       show_header("Please login",True);
       loginForm($login_msg);
