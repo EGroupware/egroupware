@@ -54,7 +54,13 @@
       $newheader = $phpgw_setup->generate_header();
       echo "<pre>";
       echo htmlentities($newheader);
-      echo "</pre></body></html>";
+      echo "</pre><hr>";
+      echo "<form action=\"index.php\" method=post>";
+      echo "<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>";
+      echo "<input type=hidden name=\"FormLogout\" value=\"header\">";
+      echo "<input type=submit name=\"junk\" value=\"continue\">";
+      echo "</form>";
+      echo "</body></html>";
       break;
     case "write config":
       include("./inc/phpgw_template.inc.php");
@@ -244,19 +250,19 @@
     
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
         echo '<input type=submit name="action" value="write config">';
-        echo' or <input type=submit name="action" value="download"> or <input type=submit name="action" value="view"> the file.</form>';
+        echo ' or <input type=submit name="action" value="download"> or <input type=submit name="action" value="view"> the file.</form>';
       }else{
         echo 'Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can ';
-        echo'<input type=submit name="action" value="download">or <input type=submit name="action" value="view"> the file.</form>';
+        echo '<input type=submit name="action" value="download">or <input type=submit name="action" value="view"> the file.</form>';
       }
       echo '<form action="index.php" method=post>';
-      echo'<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
-      echo'<input type=hidden name="FormLogout" value="header">';
-//      echo'<input type=hidden name="FormLogout" value="config">';
-//      echo'<input type=hidden name="ConfigLogin" value="Login">';
-//      echo'<input type=hidden name="FormPW" value="'.$phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"].'">';
-//      echo'<input type=hidden name="FormDomain" value="'.$phpgw_info["server"]["default_domain"].'">';
-      echo'<input type=submit name="junk" value="continue">';
+      echo '<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
+      echo '<input type=hidden name="FormLogout" value="header">';
+//      echo '<input type=hidden name="FormLogout" value="config">';
+//      echo '<input type=hidden name="ConfigLogin" value="Login">';
+//      echo '<input type=hidden name="FormPW" value="'.$phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"].'">';
+//      echo '<input type=hidden name="FormDomain" value="'.$phpgw_info["server"]["default_domain"].'">';
+      echo '<input type=submit name="junk" value="continue">';
       echo "</form>";
       echo "</body>";
       echo "</html>";
