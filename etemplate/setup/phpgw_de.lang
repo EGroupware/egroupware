@@ -12,6 +12,7 @@ add table	etemplate	de	Tabelle zufügen
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
+am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
@@ -42,8 +43,12 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	de	CSS class der Tabelle
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
+date+time	etemplate	de	Datum+Uhrzeit
+datum	etemplate	de	Datum
+day	etemplate	de	Tag
 db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stelt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
 db-tools	etemplate	de	DB-Tools
+deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
 delete	etemplate	de	Löschen
 delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
@@ -71,7 +76,6 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
@@ -99,12 +103,12 @@ go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
-height of row (in % or pixel), disable row: [! = not	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
 height, disabled	etemplate	de	Höhe, Deaktiviert
 help	etemplate	de	Hilfe
 horizontal rule	etemplate	de	Waagrechte Linie
+hour	etemplate	de	Stunde
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn eine Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 image	etemplate	de	Grafik
@@ -121,7 +125,6 @@ insert new row in front of first line	etemplate	de	Neue Zeile vor dieser einfüge
 integer	etemplate	de	Ganzzahl
 key	etemplate	de	Schlüssel
 label	etemplate	de	Beschriftung
-label:[bold	Array	de	Array
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
 lang	etemplate	de	Sprache
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhänige Template ('' ließt die bevorzugte Sprache, benutze 'default' für das standard Template '')
@@ -132,11 +135,12 @@ link	etemplate	de	Verknüpfung
 linklist	etemplate	de	ListeVerknüpfungen
 linkto	etemplate	de	VerküpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+minute	etemplate	de	Minute
+month	etemplate	de	Monat
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
-name of the etemplate, should be in form application.function[.subtemplate	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
@@ -155,6 +159,7 @@ options	etemplate	de	Optionen
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
 please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
+pm	etemplate	de	Nachmittag
 precision	etemplate	de	Genauigkeit
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
@@ -177,6 +182,7 @@ select access	etemplate	de	Zugriff auswählen
 select account	etemplate	de	Benutzer auswählen
 select an app first !!!	etemplate	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
 select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswählen
+select an application	etemplate	de	Anwendung auswählen
 select an application, (*) = uninstalled	etemplate	de	Anwendung auswählen, (*) = nicht installiert
 select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
 select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
@@ -186,6 +192,7 @@ select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
 select month	etemplate	de	Monat auswählen
+select number	etemplate	de	Zahl auswählen
 select one ...	etemplate	de	Eine auswählen ...
 select percentage	etemplate	de	Prozente auswählen
 select priority	etemplate	de	Priorität auswählen
@@ -213,6 +220,7 @@ template deleted	etemplate	de	Template gelöscht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
+time	etemplate	de	Uhrzeit
 to start the db-tools	etemplate	de	startet die DB-Tools
 to start the etemplate editor	etemplate	de	startet den eTemplate Editor
 to start the search	etemplate	de	startet die Suche
@@ -230,7 +238,6 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
 width	etemplate	de	Breite
-width of col (in % or pixel), disable col: [! = not	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
 width, disabled	etemplate	de	Breite, Deaktiviert
@@ -240,3 +247,4 @@ write tables	etemplate	de	Tabelle Schreiben
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das setup Verzeichnis der Anwendung
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
+year	etemplate	de	Jahr

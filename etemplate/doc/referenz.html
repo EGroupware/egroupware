@@ -181,11 +181,15 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>no</td>
 	<td>label</td>
 	<td>
-		Displayed in front of each widget (if not empty) or the widget is replacing a '%s' in the label
-		itself. Eg. '%s Name' to have the label Name behind a checkbox.
+		The label is displayed by default in front (for radiobuttons behind) each widget (if not empty).
+		If you want to specify a different position, use a '%s' in the label, which gets replaced by
+		the widget itself. Eg. '%s Name' to have the label Name behind a checkbox.
 		The label can contain variables, as descript for name.
 		If the label starts with a '@' it is replaced by the value of the content-array at this
-		index (with the '@'-removed and after expanding the variables).
+		index (with the '@'-removed and after expanding the variables).<br>
+		<b>Note</b>: The label gets always translated, if its longer than 1 char! If this is not 
+		disired, use a label widget, place the not-to-translate label in the content-array 
+		<u>and</u> check NoTranslation or set the xml attribute no_lang.
 	</td>
 </tr>
 <tr>
@@ -531,12 +535,16 @@ implement only a subset of XUL. Here are the main differences:</p>
 		xml: <b>type</b>: can be set to get several predefined select-contents, in that case you dont need to set
 			the content as descripted above (if set it too its in front of the predefined rows): <br>
 			<b>select-cat</b>: Select a phpgw category<br>
-			<b>select-account</b>: Select a user and/or group, determined by the options-field:
+			<b>select-account</b>: Select a user and/or group, determined by the options-field:<br>
 				,{accounts(default)|groups|both},{0(only lid)|1(only names/default)|2(both)}<br>
 			<b>select-percent, select-priority, select-access, select-country, select-state</b>: as you expect
 				by the name<br>
 			<b>select-year, select-month, select-day</b>: options for year: ,start,end (start and end can be a number of
-				years from now or if > 100 a absolut year) 
+				years from now or if > 100 a absolut year)<br>
+			<b>select-number</b>: Select a number out of a range specified by the options-field:<br>
+				,{start (default=1)},{end (incl., default=10)},{decrement (default=1)}<br>
+			<b>select-app</b>: Select an application, availible options: 
+				,{''=user enabled(default)|installed|all)}
 	</td>
 </tr>
 <tr>
@@ -555,18 +563,28 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Date</b></td>
 	<td>
-		&lt;date options="Y-m-d,1"/><br>
+		&lt;date options="Y-m-d,1"/><p>
+		&lt;date type="date-time"/><p>
+		&lt;date type="date-timeonly" options="H:i"/>
 	</td>
 	<td>no</td>
 	<td>date</td>
 	<td>
-		<b>Dateinput</b> via selectboxes or a field for the year<br>
+		<b>Date-/Time-input</b> via selectboxes or a field for the year<br>
 		The order of the input-fields is determined by the prefs of the user.<br>
-		<b>Options</b>: [date-storage-format][,year-no-selectbox]<br>
-		<b>date-storage-format</b> is the format, in which the date is stored in the variable: empty means 
-		an unix-timestamp, or a string containing the letters <b>Y</b>, <b>m</b> and <b>d</b> plus separators, 
-		eg. 'Y-m-d': 2002-12-31.<br>
-		<b>year-no-selectbox</b> if true an int-widget (input-field) is used instead of a select-year widget.<br>
+		<b>Options</b>: [datetime-storage-format][,&1=year-no-selectbox|&2=today-button]<br>
+		<b>datetime-storage-format</b> is the format, in which the date is stored in the variable: 
+		empty means an unix-timestamp (in GMT), or a string containing the letters <b>Y</b>, <b>m</b>, 
+		<b>d</b>, <b>H</b>, <b>i</b> plus separators, eg. 'Y-m-d': 2002-12-31. The storage format 
+		for times is always 24h or timestamp with date 1.1.1970 (if no date used). (This has nothing
+		to do with the format of the display, which is only determined by the users preferences.)<br>
+		<b>year-no-selectbox</b> if set (&1) an int-widget (input-field) is used instead of a 
+		select-year widget.<br>
+		<b>today-button</b>: if set (&2) a [Today] button is displayed which sets the fields to 
+		the up-to-date date (via javascript)<br>
+		<b>Sub-widgets</b>: <b>date-time</b>: a date and a time and <b>date-timeonly</b>: only a time<br>
+		These widgets allow the input of times too or only, they use 12h am/pm or 24h format as 
+		specified in the user prefs.<br>
 		<i>If readonly is set, this widget can be used to display a date, without the need to convert it.</i>
 	</td>
 </tr>
