@@ -3168,11 +3168,13 @@
 				'bg_color'		=> $this->theme['bg_text'],
 				'calendar_action'	=> ($event['id']?lang('Calendar - Edit'):lang('Calendar - Add')),
 				'action_url'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
-				'common_hidden'		=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
-         							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
-         							. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
-         							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
-         							  (@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
+				'common_hidden'	=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
+										. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
+										. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
+										. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
+										  (@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":''))
+										. (@isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && $GLOBALS['phpgw_info']['server']['deny_user_grants_access']?
+										  '<input type="hidden" name="participants[]" value="'.$this->bo->owner.'">'."\n":''),
 				'errormsg'		=> ($param['cd']?$GLOBALS['phpgw']->common->check_code($param['cd']):'')
 			);
 			$p->set_var($vars);
@@ -3275,39 +3277,42 @@
 			);
 
 // Participants
-			$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
-			$users = Array();
-			$this->build_part_list($users,$accounts,$this->bo->owner);
-    
-			$str = '';
-			@asort($users);
-			@reset($users);
-			while (list($id,$user_array) = each($users))
+			if(!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
 			{
-				if($id != intval($this->bo->owner))
+				$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
+				$users = Array();
+				$this->build_part_list($users,$accounts,$this->bo->owner);
+    
+				$str = '';
+				@asort($users);
+				@reset($users);
+				while (list($id,$user_array) = each($users))
 				{
-					$str .= '    <option value="' . $id . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
+					if($id != intval($this->bo->owner))
+					{
+						$str .= '    <option value="' . $id . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
+					}
 				}
-			}
-			$var[] = Array(
-				'field'	=> lang('Participants'),
-				'data'	=> "\n".'   <select name="participants[]" multiple size="5">'."\n".$str.'   </select>'
-			);
+				$var[] = Array(
+					'field'	=> lang('Participants'),
+					'data'	=> "\n".'   <select name="participants[]" multiple size="5">'."\n".$str.'   </select>'
+				);
 
 // I Participate
-			if((($event['id'] > 0) && isset($event['participants'][$this->bo->owner])) || !$event['id'])
-			{
-				$checked = ' checked';
+				if((($event['id'] > 0) && isset($event['participants'][$this->bo->owner])) || !$event['id'])
+				{
+					$checked = ' checked';
+				}
+				else
+				{
+					$checked = '';
+				}
+				$var[] = Array(
+					'field'	=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner).' '.lang('Participates'),
+					'data'	=> '<input type="checkbox" name="participants[]" value="'.$this->bo->owner.'"'.$checked.'>'
+				);
 			}
-			else
-			{
-				$checked = '';
-			}
-			$var[] = Array(
-				'field'	=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner).' '.lang('Participates'),
-				'data'	=> '<input type="checkbox" name="participants[]" value="'.$this->bo->owner.'"'.$checked.'>'
-			);
-
+			
 			for($i=0;$i<count($var);$i++)
 			{
 				$this->output_template_array($p,'row','list',$var[$i]);
