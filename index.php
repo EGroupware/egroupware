@@ -50,10 +50,10 @@
 		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
 	}
 
-	$obj = CreateObject(sprintf('%s.%s',$app,$class));
-	if ((is_array($obj->public_functions) && $obj->public_functions[$method]) && ! $invalid_data)
+	$GLOBALS['obj'] = CreateObject(sprintf('%s.%s',$app,$class));
+	if ((is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions[$method]) && ! $invalid_data)
 	{
-		eval("\$obj->$method();");
+		eval("\$GLOBALS['obj']->$method();");
 	}
 	else
 	{
@@ -72,3 +72,4 @@
 	}
 
 	$GLOBALS['phpgw']->common->phpgw_footer();
+?>
