@@ -41,6 +41,6 @@
 	);
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'etemplate',
-		 'versions' => Array('0.9.13', '0.9.14','0.9.15')
+		 'versions' => Array('0.9.15')
 	);
 ?>
