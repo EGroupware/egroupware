@@ -165,7 +165,7 @@
 			'pk' => array(),
 			'fk' => array(),
 			'ix' => array(),
-			'uc' => array()
+			'uc' => array('appname')
 		),
 		'phpgw_categories' => array(
 			'fd' => array(
