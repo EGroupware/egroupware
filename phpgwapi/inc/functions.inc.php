@@ -394,7 +394,7 @@
 		{
 			define('PHPGW_FRAME_PART','start');
 		}
-$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
+//$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
 		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&	
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] && 
 			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') || 
