@@ -12,8 +12,82 @@
 
 	/* $Id$ */
 
-	$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
+	include ('../phpgwapi/inc/class.Template.inc.php');
 
+	function parseobject($input)
+	{
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
+		$new = explode("@",$input);
+		while (list($x,$y) = each($new))
+		{
+			if (!isset($object) || trim($new[0]) == $object)
+			{
+				$t = trim($new[0]);
+				$t = trim(ereg_replace('#'.'function'.' ','',$t));
+				reset($types);
+				while(list($z,$type) = each($types))
+				{
+					if(ereg('#'.$type.' ',$y))
+					{
+						$xkey = $type;
+						$out = $y;
+						$out = trim(ereg_replace('#'.$type.' ','',$out));
+						break;
+					}
+					else
+					{
+						$xkey = 'unknown';
+						$out = $y;
+					}
+				}
+				if($out != $new[0])
+				{
+					$output[$t][$xkey][] = $out;
+				}
+			}
+		}
+		return Array('name' => $t, 'value' => $output[$t]);
+	}
+
+	function parsesimpleobject($input)
+	{
+		
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
+		$input = ereg_replace ("@", "@#", $input);
+		$new = explode("@",$input);
+		unset ($new[0], $new[1]);
+		while (list($x,$y) = each($new))
+		{
+			if (!isset($object) || trim($new[0]) == $object)
+			{
+				$t = trim($new[0]);
+				reset($types);
+				while(list($z,$type) = each($types))
+				{
+					if(ereg('#'.$type.' ',$y))
+					{
+						$xkey = $type;
+						$out = $y;
+						$out = trim(ereg_replace('#'.$type.' ','',$out));
+						break;
+					}
+					else
+					{
+						$xkey = 'unknown';
+						$out = $y;
+					}
+				}
+				if($out != $new[0])
+				{
+					$output[$t][$xkey][] = $out;
+				}
+			}
+		}
+		return Array('name' => $t, 'value' => $output[$t]);
+	}
+
+	
+	
 	$app = $GLOBALS['HTTP_GET_VARS']['app'];
 	$fn  = $GLOBALS['HTTP_GET_VARS']['fn'];
 
@@ -59,8 +133,9 @@
 
 	while (list($p,$fn) = each($files))
 	{
-		$matches = $elements = $data = array();
-		$string = $t = $out = $class = $xkey = $new = '';
+		$matches = $elements = $data = $class = array();
+		$string = $t = $out = $xkey = $new = '';
+		//$string = $t = $out = $class = $xkey = $new = '';
 		$file = '../'.$app.'/inc/' . $fn;
 		echo '<br>Looking at: ' . $file . "\n";
 
@@ -73,48 +148,80 @@
 
 		preg_match_all("#\*\!(.*)\*/#sUi",$string,$matches,PREG_SET_ORDER);
 
+		/* Now that I have the list of found inline docs, I need to figure out which group they belong to. */
+		$idx = 0;
+		$ssmatches = $matches;
+		reset($ssmatches);
+		while (list($sskey,$ssval) = each($ssmatches))
+		{
+			if (preg_match ("/@class_start/i", $ssval[1]))
+			{
+				$ssval[1] = ereg_replace ("@", "@#", $ssval[1]);
+				$ssval[1] = explode("@",$ssval[1]);
+				$ssresult = trim(ereg_replace ("#class_start", "", $ssval[1][1]));
+				$sstype = 'class';
+				unset($matches[$idx][1][0], $matches[$idx][1][1]);
+				$matches_starts[$sstype.' '.$ssresult] = $matches[$idx][1];
+				unset($matches[$idx]);
+			}
+			elseif (preg_match ("/@class_end $ssresult/i", $ssval[1]))
+			{
+				unset($ssresult);
+				unset($matches[$idx]);
+			}
+			elseif (preg_match ("/@collection_start/i", $ssval[1]))
+			{
+				$ssval[1] = ereg_replace ("@", "@#", $ssval[1]);
+				$ssval[1] = explode("@",$ssval[1]);
+				$ssresult = trim(ereg_replace ("#collection_start", "", $ssval[1][1]));
+				$sstype = 'collection';
+				unset($matches[$idx][1][0], $matches[$idx][1][1]);
+				$matches_starts[$sstype.' '.$ssresult] = $matches[$idx][1];
+				unset($matches[$idx]);
+			}
+			elseif (preg_match ("/@collection_end $ssresult/i", $ssval[1]))
+			{
+				unset($ssresult);
+				unset($matches[$idx]);
+			}
+			else
+			{
+				if (isset($ssresult))
+				{
+					$startstop[$idx] = $sstype.' '.$ssresult;
+				}
+				else
+				{
+					$startstop[$idx] = 'some_lame_string_that_wont_be_used_by_a_function';
+				}
+			}
+			$idx = $idx + 1;
+		}
+		unset($ssmatches, $sskey, $ssval, $ssresult, $sstype, $idx);
+		reset($startstop);
 		while (list($key,$val) = each($matches))
 		{
 			preg_match_all("#@(.*)$#sUi",$val[1],$data);
-			$new = explode("@",$data[1][0]);
-			while (list($x,$y) = each($new))
+			$data[1][0] = ereg_replace ("@", "@#", $data[1][0]);
+			$returndata = parseobject($data[1][0]);
+			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				if (!isset($object) || trim($new[0]) == $object)
-				//if (trim($new[0]) == $object)
+				$class[$returndata['name']] = $returndata['value'];
+			}
+			else
+			{
+				if (isset($matches_starts[$startstop[$key]]))
 				{
-					$t = trim($new[0]);
-					if(!$key)
-					{
-						$class = $t;
-					}
-					$t = trim(ereg_replace('function','',$t));
-
-					reset($types);
-					while(list($z,$type) = each($types))
-					{
-						if(ereg($type,$y))
-						{
-							$xkey = $type;
-							$out = $y;
-							$out = ereg_replace($type,'',$out);
-							break;
-						}
-						else
-						{
-							$xkey = 'unknown';
-							$out = $y;
-						}
-					}
-
-					if($out != $new[0])
-					{
-						$elements[$class][$t][$xkey][] = $out;
-					}
+					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
+					$class[$startstop[$key]][0] = $returndoc['value'];
+					//$class[$startstop[$key]][0] = $matches_starts[$startstop[$key]];
 				}
+				$class[$startstop[$key]][$returndata['name']] = $returndata['value'];
 			}
 		}
+
 		echo '<br><pre>';
-		print_r($elements);
+		print_r($class);
 		//        var_dump($elements);
 		echo '</pre>' . "\n";
 	}

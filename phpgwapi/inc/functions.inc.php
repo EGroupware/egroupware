@@ -39,6 +39,10 @@
 	 * Direct functions, which are not part of the API class                      *
 	 * because they are require to be availble at the lowest level.               *
 	 \****************************************************************************/
+	/*!
+	 @collection_start direct functions
+	 @abstract Direct functions, which are not part of the API class because they are require to be availble at the lowest level.
+	*/
 
 	/*!
 	 @function sanitize
@@ -405,7 +409,7 @@
 	}
 
 	/*!
-	 @function get_account_id()
+	 @function get_account_id
 	 @abstract Return a properly formatted account_id.
 	 @author skeeter
 	 @discussion This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
@@ -446,7 +450,7 @@
 	}
 
 	/*!
-	 @function filesystem_separator()
+	 @function filesystem_separator
 	 @abstract sets the file system seperator depending on OS
 	 @result file system separator
 	*/
@@ -487,6 +491,10 @@
 			echo 'debug: '.$text.'<br>';
 		}
 	}
+
+	/*!
+	 @collection_end direct functions
+	*/
 
 	//	print_debug('core functions are done');
 	/****************************************************************************\
