@@ -107,7 +107,7 @@
 						.")"
 						,__LINE__,__FILE__);
 
-			$db->query('select max(log_id) lid from phpgw_log');
+			$db->query('select max(log_id)  as lid from phpgw_log');
 			$db->next_record();
 			$log_id = $db->f('lid');
 			$db->unlock();
