@@ -22,15 +22,14 @@
 
 		function bocategories($cats_app='')
 		{
-			$this->cats           = CreateObject('phpgwapi.categories');
-			$this->cats->app_name = $cats_app;
+			$this->cats           =& CreateObject('phpgwapi.categories','',$cats_app);
 
 			$this->read_sessiondata($cats_app);
 
-			$start  = $GLOBALS['HTTP_POST_VARS']['start']  ? $GLOBALS['HTTP_POST_VARS']['start']  : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query  = $GLOBALS['HTTP_POST_VARS']['query']  ? $GLOBALS['HTTP_POST_VARS']['query']  : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']   ? $GLOBALS['HTTP_POST_VARS']['sort']   : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$order  = $GLOBALS['HTTP_POST_VARS']['order']  ? $GLOBALS['HTTP_POST_VARS']['order']  : $GLOBALS['HTTP_GET_VARS']['order'];
+			$start  = $_POST['start']  ? $_POST['start']  : $_GET['start'];
+			$query  = $_POST['query']  ? $_POST['query']  : $_GET['query'];
+			$sort   = $_POST['sort']   ? $_POST['sort']   : $_GET['sort'];
+			$order  = $_POST['order']  ? $_POST['order']  : $_GET['order'];
 
 			if(!empty($start) || $start == '0' || $start == 0)
 			{
@@ -54,13 +53,13 @@
 		function save_sessiondata($data, $cats_app)
 		{
 			$colum = $cats_app . '_cats';
-			$GLOBALS['phpgw']->session->appsession('session_data',$column,$data);
+			$GLOBALS['egw']->session->appsession('session_data',$column,$data);
 		}
 
 		function read_sessiondata($cats_app)
 		{
 			$colum = $cats_app . '_cats';
-			$data = $GLOBALS['phpgw']->session->appsession('session_data',$column);
+			$data = $GLOBALS['egw']->session->appsession('session_data',$column);
 
 			$this->start  = $data['start'];
 			$this->query  = $data['query'];
