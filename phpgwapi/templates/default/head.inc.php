@@ -19,10 +19,11 @@
      $bodyheader = 'BGCOLOR="' . $phpgw_info["theme"]["bg_color"] . '"';
   }
 
-  $tpl = $phpgw->template; //CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+  $tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
   $tpl->set_unknowns("remove");
   $tpl->set_file(array("head" => "head.tpl"));
   $tpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tpl->set_var("body_tags",$bodyheader);
   echo $tpl->finish($tpl->parse("out","head"));
+  unset($tpl);
 ?>
