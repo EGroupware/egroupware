@@ -28,6 +28,8 @@
         - Added in a few preformace tweaks that will use serialize() and unserialize() for
           preferences, config
         - Changed a few of the icons to our news ones.
+	- Fixed 12 am/pm problem in calendar.
+	- Added default filter to calendar preferences.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account

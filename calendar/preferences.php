@@ -22,6 +22,7 @@
      $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
      $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdayends","calendar");
      $phpgw->preferences->change($phpgw_info["user"]["account_id"],"defaultcalendar","common");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"defaultfilter","calendar");
      if ($mainscreen_showevents) {
         $phpgw->preferences->change($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
      } else {
@@ -120,6 +121,30 @@
      <option value="index.php"<?php echo $selected["index.php"] . ">" . lang("Monthly"); ?></option>
      <option value="week.php"<?php echo $selected["week.php"]  . ">" . lang("Weekly"); ?></option>
      <option value="day.php"<?php echo $selected["day.php"] . ">" . lang("Daily"); ?></option>
+    </select>
+   </td>
+  </tr>
+  <?php
+    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+  ?>
+  <tr bgcolor="<?php echo $tr_color; ?>">
+   <td><?php echo lang("default calendar filter"); ?></td>
+   <td align="center">
+    <select name="defaultfilter">
+     <?php
+       $selected = array();
+       $selected[$phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"]] = " selected";
+       if (! isset($phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"]) || $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"] == "private") {
+          $selected["private"] = " selected";
+       }
+     ?>
+     <option value="all"<?php echo $selected["all"].">".lang("all"); ?></option>
+     <option value="private"<?php echo $selected["private"]. ">".lang("private only"); ?></option>
+     <option value="public"<?php echo $selected["public"].">".lang("global public only"); ?></option>
+     <option value="group"<?php echo $selected["group"].">".lang("group public only"); ?></option>
+     <option value="private+public"<?php echo $selected["private+public"].">".lang("private and global public"); ?></option>
+     <option value="private+group"<?php echo $selected["private+group"].">".lang("private and group public"); ?></option>
+     <option value="public+group"<?php echo $selected["public+group"].">".lang("global public and group public") ?></option>
     </select>
    </td>
   </tr>

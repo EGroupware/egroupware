@@ -6,6 +6,8 @@
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
      $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
 
+  if(!isset($filter) || !$filter) 
+    $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
   if (isset($date) && strlen($date) > 0) {
      $thisyear  = substr($date, 0, 4);
      $thismonth = substr($date, 4, 2);

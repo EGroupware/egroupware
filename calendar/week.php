@@ -116,7 +116,7 @@
   $phpgw->template->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$owner));
 
   if (!$friendly) {
-    $param = "year=".$thisyear."&month=".$thismonth."&day=".$thisday."&friendly=1";
+    $param = "year=".$thisyear."&month=".$thismonth."&day=".$thisday."&friendly=1&filter=".$filter;
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</A>");
     $phpgw->template->parse("out","week_t");

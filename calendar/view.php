@@ -67,8 +67,8 @@
     $phpgw->template->parse("output","list",True);
   }
 
-  $phpgw->template->set_var("field",lang("Date"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime,$phpgw_info["user"]["preferences"]["common"]["dateformat"]));
+  $phpgw->template->set_var("field",lang("Start Date/Time"));
+  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime));
   $phpgw->template->parse("output","list",True);
 
   // save date so the trailer links are for the same time period
@@ -76,23 +76,9 @@
   $thismonth	= (int)$cal_info->month;
   $thisday 	= (int)$cal_info->day;
 
-  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-    $format = "h:i:s a";
-  } else {
-    $format = "H:i:s";
-  }
-
-  if(intval($phpgw->common->show_date($cal_info->datetime,"H")) || intval($phpgw->common->show_date($cal_info->datetime,"i"))) {
-    $phpgw->template->set_var("field",lang("Time"));
-    $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime,$format));
-    $phpgw->template->parse("output","list",True);
-  }
-
-  if(($cal_info->datetime <> $cal_info->edatetime) && (intval($phpgw->common->show_date($cal_info->datetime,"Hi")) <> 0 && intval($phpgw->common->show_date($cal_info->edatetime,"Hi")) <> 2359)) {
-    $phpgw->template->set_var("field",lang("End Time"));
-    $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->edatetime,$format));
-    $phpgw->template->parse("output","list",True);
-  }
+  $phpgw->template->set_var("field",lang("End Date/Time"));
+  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->edatetime));
+  $phpgw->template->parse("output","list",True);
 
   $phpgw->template->set_var("field",lang("Priority"));
   $phpgw->template->set_var("data",$pri[$cal_info->priority]);
