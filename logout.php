@@ -38,6 +38,7 @@
 					unlink($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid'] . SEP . $file);
 				}
 			}
+			closedir($dh);
 			rmdir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
 		}
 		$GLOBALS['phpgw']->hooks->process('logout');
