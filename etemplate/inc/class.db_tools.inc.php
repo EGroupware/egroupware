@@ -942,7 +942,7 @@
 						if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
 							 serialize($old_norm['fd'][$col]) != serialize($new_norm['fd'][$col])) // column definition altered
 						{
-							$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t". : '').
+							$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t" : '').
 								"\$GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
 							$update .= $this->write_array($col_def,2) . ');' . ($do_refresh ? '*/' : '') . "\n";
 						}
