@@ -24,7 +24,7 @@
   /* $Id$ */
 
   /*
-     addressbook_extra (
+     phpgw_addressbook_extra (
        contact_id          int,
        contact_owner       int,
        contact_name        varchar(255),
@@ -37,8 +37,10 @@
   class contacts_
   {
      var $db;
+     var $std_table="phpgw_addressbook";
+     var $ext_table="phpgw_addressbook_extra";
      var $account_id;
-     var $stock_contact_fields;         // This is an array of all the fields in the addressbook table
+     var $stock_contact_fields;         // This is an array of all the fields in the phpgw_addressbook table
      var $email_types;                  // VCard email type array
      var $total_records;                // This will contain numrows for data retrieved
 
@@ -127,7 +129,7 @@
 
         $this->db2 = $this->db;
  
-        $this->db->query("select id,lid,tid,owner $t_fields from addressbook WHERE id='$id'");
+        $this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
         $this->db->next_record();
        
         $return_fields[0]["id"]     = $this->db->f("id"); // unique id
@@ -139,7 +141,7 @@
             $return_fields[0][$f_name] = $this->db->f($f_name);
           }
         }
-        $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
+        $this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='"
                            . $this->db->f("id") . "'",__LINE__,__FILE__);
         while ($this->db2->next_record()) {
           // If its not in the list to be returned, don't return it.
@@ -213,25 +215,25 @@
         $this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
         if ($query) {
-            $this->db3->query("SELECT * from addressbook WHERE (n_family like '"
+            $this->db3->query("SELECT * from $this->std_table WHERE (n_family like '"
                      . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
                      . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
                      . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
                      . "'%$query%' OR org_name like '%$query%') " . $ordermethod,__LINE__,__FILE__);
             $this->total_records = $this->db3->num_rows();
 
-            $this->db->query("SELECT * from addressbook WHERE (n_family like '"
+            $this->db->query("SELECT * from $this->std_table WHERE (n_family like '"
                      . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
                      . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
                      . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
                      . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod . " "
 		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }  else  {
-           $this->db3->query("select id,lid,tid,owner $t_fields from addressbook "
+           $this->db3->query("select id,lid,tid,owner $t_fields from $this->std_table "
                        . $filtermethod,__LINE__,__FILE__);
            $this->total_records = $this->db3->num_rows();
 	
-           $this->db->query("select id,lid,tid,owner $t_fields from addressbook "
+           $this->db->query("select id,lid,tid,owner $t_fields from $this->std_table "
                        . $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }
 
@@ -248,7 +250,7 @@
               reset($stock_fieldnames);
            }
 
-           $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
+           $this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='"
                            . $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
            while ($this->db2->next_record()) {
               // If its not in the list to be returned, don't return it.
@@ -268,19 +270,19 @@
         list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
         //$this->db->lock(array("contacts"));
-        $this->db->query("insert into addressbook (owner,"
+        $this->db->query("insert into $this->std_table (owner,"
                        . implode(",",$this->stock_contact_fields)
                        . ") values ('$owner','"
                        . implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
-        $this->db->query("select max(id) from addressbook",__LINE__,__FILE__);
+        $this->db->query("select max(id) from $this->std_table ",__LINE__,__FILE__);
         $this->db->next_record();
         $id = $this->db->f(0);
         //$this->db->unlock();
 
         if (count($extra_fields)) {
            while (list($name,$value) = each($extra_fields)) {
-              $this->db->query("insert into addressbook_extra values ('$id','" . $this->account_id . "','"
+              $this->db->query("insert into $this->ext_table values ('$id','" . $this->account_id . "','"
                              . addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
            }
         }
@@ -288,7 +290,7 @@
 
      function field_exists($id,$field_name)
      {
-        $this->db->query("select count(*) from addressbook_extra where contact_id='$id' and contact_name='"
+        $this->db->query("select count(*) from $this->ext_table where contact_id='$id' and contact_name='"
                        . addslashes($field_name) . "'",__LINE__,__FILE__);
         $this->db->next_record();
         return $this->db->f(0);
@@ -296,20 +298,20 @@
 
      function add_single_extra_field($id,$owner,$field_name,$field_value)
      {
-        $this->db->query("insert into addressbook_extra values ($id,'$owner','" . addslashes($field_name)
+        $this->db->query("insert into $this->ext_table values ($id,'$owner','" . addslashes($field_name)
                        . "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
      }
 
      function delete_single_extra_field($id,$field_name)
      {
-        $this->db->query("delete from addressbook_extra where contact_id='$id' and contact_name='"
+        $this->db->query("delete from $this->ext_table where contact_id='$id' and contact_name='"
                        . addslashes($field_name) . "'",__LINE__,__FILE__);
      }
 
      function update($id,$owner,$fields)
      {
         // First make sure that id number exists
-        $this->db->query("select count(*) from addressbook where id='$id'",__LINE__,__FILE__);
+        $this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
         $this->db->next_record();
         if (! $this->db->f(0)) {
            return False;
@@ -324,7 +326,7 @@
            if ($field_s == ",") {
               unset($field_s);
            }
-           $this->db->query("update addressbook set owner='$owner' $fields_s where "
+           $this->db->query("update $this->std_table set owner='$owner' $fields_s where "
                           . "id='$id'",__LINE__,__FILE__);
         }
 
@@ -333,7 +335,7 @@
               if (! $x_value) {
                  $this->delete_single_extra_field($id,$x_name);
               } else {
-                 $this->db->query("update addressbook_extra set contact_value='" . addslashes($x_value)
+                 $this->db->query("update $this->ext_table set contact_value='" . addslashes($x_value)
                                 . "',contact_owner='$owner' where contact_name='" . addslashes($x_name)
                                 . "' and contact_id='$id'",__LINE__,__FILE__);
               }
@@ -346,9 +348,9 @@
      // This is where the real work of delete() is done
      function delete_($id)
      {
-        $this->db->query("delete from addressbook where owner='" . $this->account_id . "' and "
+        $this->db->query("delete from $this->std_table where owner='" . $this->account_id . "' and "
                        . "id='$id'",__LINE__,__FILE__);
-        $this->db->query("delete from addressbook_extra where contact_id='$id' and contact_owner='"
+        $this->db->query("delete from $this->ext_table where contact_id='$id' and contact_owner='"
                        . $this->account_id . "'",__LINE__,__FILE__);
      }
 
