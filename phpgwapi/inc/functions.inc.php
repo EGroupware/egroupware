@@ -167,7 +167,14 @@
 
 	function _debug_array($array)
 	{
-		echo '<pre>'; print_r($array); echo '</pre>';
+		if(floor(phpversion()) == 4)
+		{
+			echo '<pre>'; print_r($array); echo '</pre>';
+		}
+		else
+		{
+			echo '<pre>'; var_dump($array); echo '</pre>';
+		}
 	}
 
 	function print_debug($text='')
