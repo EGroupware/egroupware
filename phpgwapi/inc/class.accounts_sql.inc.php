@@ -181,11 +181,15 @@
 
 		function exists($account_lid)
 		{
-			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='" . $account_lid
-				. "'",__LINE__,__FILE__);
-			$this->db->next_record();
+			if(gettype($account_lid) == 'integer')
+			{
+				$account_id = $account_lid;
+				settype($acount_lid,'string');
+				$account_lid = $this->id2name($account_id);
+			}
 
-			return $this->db->f(0);
+			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			return $this->db->num_rows() > 0;
 		}
 
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status)
