@@ -73,7 +73,7 @@ class calendar extends calendar_
       
 		if(!isset($this->rights))
 		{
-			$this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+			$this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + PHPGW_ACL_PRIVATE;
 		}
 
 		$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
@@ -214,7 +214,7 @@ class calendar extends calendar_
 		global $phpgw, $phpgw_info;
 
 		$is_private  = False;
-		if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(16) == True)
+		if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(PHPGW_ACL_PRIVATE) == True)
 		{
 		}
 		elseif ($event->public == False)
@@ -871,7 +871,7 @@ class calendar extends calendar_
 						
 						$description = $this->is_private($lr_events,$owner,'description');
 
-						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 						{
 							$var = Array(
 								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
@@ -925,7 +925,7 @@ class calendar extends calendar_
 							$end_time = '';
 						}
 						
-						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 						{
 							$close_view_link = '</a>';
 						}
@@ -1092,7 +1092,7 @@ class calendar extends calendar_
 
 		$description = $this->is_private($event,$this->owner,'description');
 		
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$time[$ind] .= '<a href="'.$phpgw->link('/calendar/view.php',
 								  'id='.$event->id.'&owner='.$this->owner)
@@ -1134,7 +1134,7 @@ class calendar extends calendar_
 		$time[$ind] .= '] ';
 		$time[$ind] .= '<img src="'.$this->image_dir.'/circle.gif" border="0" alt="' . $description . '">';
 
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$time[$ind] .= '</a>';
 		}

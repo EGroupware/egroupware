@@ -34,7 +34,7 @@
 	if(!isset($owner) || !$owner || ($owner == $phpgw_info['user']['account_id']))
 	{
 		$owner = $phpgw_info['user']['account_id'];
-		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + PHPGW_ACL_PRIVATE;
 	}
 	else
 	{
@@ -44,13 +44,13 @@
 			if ($rights == 0)
 			{
 				$owner = $phpgw_info['user']['account_id'];
-				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + PHPGW_ACL_PRIVATE;
 			}
 		}
 		else
 		{
 			$owner = $phpgw_info['user']['account_id'];
-			$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+			$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + PHPGW_ACL_PRIVATE;
 		}
 	}
 
