@@ -1,0 +1,85 @@
+<chapter id="trobleshooting">
+        	<title>Trouble Shooting</title>
+        		<warning>
+        			<para>
+           				phpGroupWare is still Beta software, expect some bugs
+					along the way. If you run into a problem not discussed here, contact us
+					through one of the methods listed on the website.
+				</para>
+			</warning>
+				<para>
+					The phpGroupWare developers can most often be seen hanging out in <emphasis>#phpGroupWare</emphasis>
+					on <emphasis>irc.openprojects.net</emphasis> if you require real-time help.
+				</para>
+				<para>				
+					Also check the FAQ in this directory for additional common questions,
+					it is available as FAQ.sgml, FAQ.txt and FAQ.html
+				</para>
+<sect1 id="trob1">
+	<title>I get "Unable to open mailbox" when using the email application</title>
+		<para>
+			At the time of this writing (2000-09-27) you must use the same
+			username and password in phpGroupWare that you use to log into
+			your mail server. If you change your password and it still isn't working,
+			try logging out of phpGroupWare (the rightmost icon in the navigation bar)
+			and then log back in.
+		</para>
+                <para>
+			An preference page to edit the email settings is being developed, and should
+			appear shortly after the first beta release.
+		</para>
+</sect1>
+<sect1 id="trob2">
+	<title>It seems to hang when I try to read my mail</title>
+		<para>
+			This is often a problem if you are using POP3 instead of IMAP, and you have
+			more than a few hundred messages in your mailbox.
+		</para>
+		<para>
+			By default, php is set up to time-out a request that takes over 30 seconds
+			to complete. phpGroupWare must do a lot of work the first time your POP3 mailbox
+			is opened, and every time you get new mail, which may take more than the 30
+			second timeout.
+		</para>
+                <para>
+			You can either clean up your mailbox with another mail program, or
+			add the line
+			<programlisting>
+set_time_limit(0);
+			</programlisting>
+			to the top of the inc/phpgwapi/phpgw_msg_pop3.inc.php file, just before
+			the line <classname>class msg extends msg_common</classname>
+                </para>
+                <para>
+			If you choose to edit the file, be patient when loading a large POP3
+			mailbox - the author tested against a mailbox with 2500 messages in it,
+			but it took 15 minutes to load the page. We highly suggest you use IMAP
+			if you expect to have more than a few hundred messages in your mailbox.
+		</para>
+</sect1>
+<sect1 id="trob3">
+	<title>When I log in I see the directory listing instead of a web page</title>
+		<para>You are using Apache, this often means you need to add
+	              <classname>.php</classname> to the <classname>DirectoryIndex</classname> line in your httpd.conf file.
+	              For example:
+		      <programlisting>
+DirectoryIndex index.php index.php3 index.html index.htm index.cgi
+		      </programlisting>
+		</para>
+</sect1>
+<sect1 id="trob4">
+	<title>I get garbage that looks like code when I go to the phpGroupWare URL</title>
+		<para>
+			This is often because you have php3 installed,
+			which does not map <classname>.php</classname> to the PHP engine.
+                        For PHP3:
+			<programlisting>
+AddType             application/x-httpd-php3 .php3 .php
+			</programlisting>
+For PHP4:
+			<programlisting>
+AddType             application/x-httpd-php .php3 .php
+			</programlisting>
+		</para>
+</sect1>
+</chapter>	        	
