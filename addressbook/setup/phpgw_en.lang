@@ -88,6 +88,8 @@ import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts
 import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
 import file	addressbook	en	Import File
+import from	addressbook	en	Import from
+import multiple vcard	addressbook	en	Import Multiple VCard
 import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
 import from outlook	addressbook	en	Import from Outlook
 import next set	addressbook	en	Import next set
@@ -107,6 +109,7 @@ middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
+multiple vcard	addressbook	en	Multiple VCard
 no vcard	addressbook	en	No VCard
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 other number	addressbook	en	Other Number
