@@ -306,7 +306,7 @@
 		*/
 		function verify_basic_settings()
 		{
-			if (gettype($GLOBALS['phpgw_info']['user']['preferences']) != 'array')
+			if (!@is_array($GLOBALS['phpgw_info']['user']['preferences']))
 			{
 				 $GLOBALS['phpgw_info']['user']['preferences'] = array();
 			}
