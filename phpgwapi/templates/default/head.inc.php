@@ -19,7 +19,8 @@
 
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
-	$tpl->set_file(array('head' => 'head.tpl'));
+	$tpl->set_file(array('_head' => 'head.tpl'));
+	$tpl->set_block('_head','head');
 
 	$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 	$app = $app ? ' ['.(isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app)).']':'';

@@ -14,4 +14,4 @@
 {java_script}
 </HEAD>
 <BODY {body_tags}>
-<!-- END Head -->
+<!-- END head -->

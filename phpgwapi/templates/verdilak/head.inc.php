@@ -20,7 +20,8 @@
 
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
-	$tpl->set_file(array('head' => 'head.tpl'));
+	$tpl->set_file(array('_head' => 'head.tpl'));
+	$tpl->set_block('_head','head');
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',

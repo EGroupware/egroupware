@@ -32,5 +32,5 @@ function MM_preloadImages()
 {java_script}
 <TITLE>{website_title}</TITLE>
 </HEAD>
-<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END Head -->
+<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END head -->
 <BODY {body_tags} 

@@ -15,4 +15,4 @@
 <TITLE>{website_title}</TITLE>
 </HEAD>
 <BODY {body_tags}>
-<!-- END Head -->
+<!-- END head -->

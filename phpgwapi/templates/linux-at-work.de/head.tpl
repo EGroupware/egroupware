@@ -28,3 +28,4 @@ function pageInit()
 <TITLE>{website_title} - {app_name}</TITLE>
 </HEAD>
 <BODY onLoad="pageInit()">
+<!-- END head -->

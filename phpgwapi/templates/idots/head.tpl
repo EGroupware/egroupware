@@ -22,4 +22,4 @@
 	</head>
 	<!-- we don't need body tags anymore, do we?) we do!!! onload!! LK -->
 	<body {body_tags}>
-<!-- END Head -->
+<!-- END head -->
