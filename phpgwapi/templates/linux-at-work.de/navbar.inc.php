@@ -143,8 +143,13 @@
 	{
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
-
+		
 		$tpl->set_file(array('footer' => 'footer.tpl'));
+
+		// as of Dec 10, 2001 this powered by code is somewhat broken
+		// can cause a loop of error message about power bottom being invalid
+		// needs repair (ed: Angles)
+		/*
 		$tpl->set_block('footer','B_powered_bottom','V_powered_bottom');
 
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
@@ -163,7 +168,8 @@
 		{
 			$tpl->set_var('V_powered_bottom','');
 		}
-
+		*/
+		
 		$GLOBALS['phpgw']->common->hook('navbar_end');
 		$tpl->pfp('out','footer');
 	}

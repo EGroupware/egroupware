@@ -122,7 +122,7 @@
 			
 			if ( !$url )
 			{
-				$url = $PHP_SELF;
+				$url = $GLOBALS['PHP_SELF'];
 			}
 			if ( $iis )
 			{
