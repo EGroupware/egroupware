@@ -115,9 +115,20 @@
 </tr>
 <!-- END extra_block_row -->
 
+<!-- BEGIN extra_block_row_raw -->
+		<tr class="divSideboxEntry">
+<td colspan="2" class="textSidebox">{lang_item}</td>
+</tr>
+<!-- END extra_block_row_raw -->
+
+<!-- BEGIN extra_block_row_no_link -->
+		<tr class="divSideboxEntry">
+<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox">{lang_item}</td>
+</tr>
+<!-- END extra_block_row_no_link -->
 
 <!-- BEGIN extra_block_spacer -->
-<tr class="divSideboxEntry"> 
+<tr class="divSideboxEntry">
 	<td colspan="2" height="8" class="textSidebox">&nbsp;</td>
 </tr>
 <!-- END extra_block_spacer -->

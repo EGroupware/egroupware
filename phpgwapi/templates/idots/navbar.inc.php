@@ -24,6 +24,8 @@
 		$GLOBALS['idots_tpl']->set_block('navbar','navbar_header','navbar_header');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row','extra_block_row');
+		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
+		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row_no_link','extra_block_row_no_link');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
 		$GLOBALS['idots_tpl']->set_block('navbar','sidebox_hide_header','sidebox_hide_header');
@@ -353,7 +355,7 @@ href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBAL
 					if(isset($item_link['icon']))
 					{
 						$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
-						$var['icon_or_star'] = '<img style="margin:0px 2px 0px 2px" src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
+						$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px" src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>' : False;
 					}
 					$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 					$var['item_link'] = $item_link['link'];
@@ -368,7 +370,13 @@ href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBAL
 					$var['item_link'] = $item_link;
 				}
 				$GLOBALS['idots_tpl']->set_var($var);
-				$GLOBALS['idots_tpl']->pparse('out','extra_block_row');
+
+				$block = 'extra_block_row';
+				if ($var['item_link'] === False)
+				{
+					$block .= $var['icon_or_star'] === False ? '_raw' : '_no_link';
+				}
+				$GLOBALS['idots_tpl']->pparse('out',$block);
 			}
 		}
 
