@@ -19,8 +19,20 @@
 	);
 	include('../header.inc.php');
 
+	if (isset($_FILES['csvfile']['tmp_name']))
+	{
+		$csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/addrbook_import_'.basename($csvfile);
+		$GLOBALS['phpgw']->session->appsession('csvfile','',$csvfile);
+		$_POST['action'] = move_uploaded_file($_FILES['csvfile']['tmp_name'],$csvfile) ?
+			'download' : '';
+	}
+	else
+	{
+		$csvfile = $GLOBALS['phpgw']->session->appsession('csvfile');
+	}
 	if ($_POST['cancel'])
 	{
+		@unlink($csvfile);
 		$GLOBALS['phpgw']->redirect_link('/addressbook/index.php');
 	}
 	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
@@ -35,8 +47,6 @@
 	$GLOBALS['phpgw']->template->set_block('import','fields','fieldshandle');
 	$GLOBALS['phpgw']->template->set_block('import','ffooter','ffooterhandle');
 	$GLOBALS['phpgw']->template->set_block('import','imported','importedhandle');
-
-	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
 
 	if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
@@ -134,7 +144,6 @@
 			$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
 			$GLOBALS['phpgw']->template->set_var('csvfile',$csvfile);
 			$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
-			$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
 			$GLOBALS['phpgw']->template->parse('filenamehandle','filename');
 			break;
@@ -214,15 +223,10 @@
 			$GLOBALS['phpgw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
 			$GLOBALS['phpgw']->template->parse('ffooterhandle','ffooter');
 			fclose($fp);
-			if ($_POST['action'] == 'download')
-			{
-				$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/addrbook_import_'.basename($csvfile);
-				rename($old,$csvfile);
-			}
+
 			$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
 				'action'  => 'import',
 				'fieldsep'=> $_POST['fieldsep'],
-				'csvfile' => $csvfile,
 				'charset' => $_POST['charset']
 			));
 			$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
@@ -266,7 +270,6 @@
 			$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
 				'action'  => 'continue',
 				'fieldsep'=> $_POST['fieldsep'],
-				'csvfile' => $csvfile,
 				'charset' => $_POST['charset'],
 				'start'   => $_POST['start']+(!$_POST['debug'] ? $_POST['max'] : 0),
 				'max'     => $_POST['max'],
@@ -419,8 +422,7 @@
 				}
 				if (is_array($auto_fn))	// autocreate full name
 				{
-					reset($auto_fn);
-					while (list($idx,$name) = each($auto_fn))
+					foreach($auto_fn as $name)
 					{
 						$values['fn'] .= ($values['fn'] != '' && $values[$name] != '' ? ' ' : '') . $values[$name];
 					}
