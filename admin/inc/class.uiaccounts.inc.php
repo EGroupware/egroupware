@@ -31,7 +31,7 @@
 
 		function uiaccounts()
 		{
-			$this->bo = createobject('admin.boaccounts');
+			$this->bo = createobject('admin.boaccounts',True);
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
 		}
 
@@ -45,6 +45,10 @@
 
 		function list_groups()
 		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',1,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
+			}
 
 			$GLOBALS['cd'] = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:0);
 			
@@ -62,7 +66,16 @@
 			$p->set_block('groups','row','row');
 			$p->set_block('groups','row_empty','row_empty');
 
-			$total = $this->bo->account_total('g',$query);
+			if ($GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
+			{
+				$total = $this->bo->account_total('g');
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, '', $total);
+			}
+			else
+			{
+				$total = $this->bo->account_total('g',$query);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
+			}
 
 			$url = $GLOBALS['phpgw']->link('/index.php');
 
@@ -76,8 +89,6 @@
 		 		'header_delete'	=> lang('Delete')
 		 	);
 		 	$p->set_var($var);
- 	
-			$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
 
 			if (!count($account_info))
 			{
@@ -86,28 +97,70 @@
 			}
 			else
 			{
+				if (! $GLOBALS['phpgw']->acl->check('group_access',8,'admin'))
+				{
+					$can_view = True;
+				}
+
+				if (! $GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
+				{
+					$can_edit = True;
+				}
+
+				if (! $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
+				{
+					$can_delete = True;
+				}
+
 				while (list($null,$account) = each($account_info))
 				{
 					$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 					$var = Array(
 						'tr_color'	=> $tr_color,
 						'group_name'	=> (!$account['account_lid']?'&nbsp;':$account['account_lid']),
-						'edit_link'		=> $this->row_action('edit','group',$account['account_id']),
 						'delete_link'	=> $this->row_action('delete','group',$account['account_id'])
 					);
 					$p->set_var($var);
-					$p->parse('rows','row',True);
+
+					if ($can_edit)
+					{
+						$p->set_var('edit_link',$this->row_action('edit','group',$account['account_id']));
+					}
+					else
+					{
+						$p->set_var('edit_link','&nbsp;');
+					}
+
+					if ($can_delete)
+					{
+						$p->set_var('delete_link',$this->row_action('delete','group',$account['account_id']));
+					}
+					else
+					{
+						$p->set_var('delete_link','&nbsp;');
+					}
+
+					$p->fp('rows','row',True);
 
 				}
 			}
 			$var = Array(
 				'new_action'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_group'),
-				'lang_add'		=> lang('add'),
 				'search_action'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
-				'lang_search'	=> lang('search')
 			);
 			$p->set_var($var);
-			$p->pparse('out','list');
+
+			if (! $GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
+			{
+				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
+			}
+
+			if (! $GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
+			{
+				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query">');
+			}
+
+			$p->pfp('out','list');
 		}
 
 		function list_users($param_cd='')
@@ -137,7 +190,16 @@
 			$p->set_block('accounts','row','row');
 			$p->set_block('accounts','row_empty','row_empty');
 
-			$total = $this->bo->account_total('u',$query);
+			if ($GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
+			{
+				$total = $this->bo->account_total('u');
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,'');
+			}
+			else
+			{
+				$total = $this->bo->account_total('u',$query);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query);
+			}
 
 			$url = $GLOBALS['phpgw']->link('/index.php');
 
@@ -168,8 +230,6 @@
 			{
 				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query">');
 			}
-
-			$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query);
 
 			if (! count($account_info))
 			{
@@ -238,6 +298,12 @@
 
 		function add_group()
 		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
+			{
+				$this->list_groups();
+				return False;
+			}
+
 			$group_info = Array(
 				'account_id'		=> $GLOBALS['HTTP_GET_VARS']['account_id'],
 				'account_name'	=> '',
@@ -261,9 +327,10 @@
 
 		function delete_group()
 		{
-			if (!@isset($GLOBALS['HTTP_GET_VARS']['account_id']) || !@$GLOBALS['HTTP_GET_VARS']['account_id'])
+			if (!@isset($GLOBALS['HTTP_GET_VARS']['account_id']) || !@$GLOBALS['HTTP_GET_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$this->list_groups();
+				return False;
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -377,6 +444,12 @@
 
 		function edit_group($cd='',$account_id='')
 		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
+			{
+				$this->list_groups();
+				return False;
+			}
+
 			$cdid = $cd;
 			settype($cd,'integer');
 			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
@@ -386,10 +459,10 @@
 			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:intval($accountid));
 			
 			// todo
-			// not needed if i use the same file for new users too
-			if (!$account_id)
+			// not needed if i use the same file for new groups too
+			if (! $account_id)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$this->list_groups();
 			}
 			else
 			{

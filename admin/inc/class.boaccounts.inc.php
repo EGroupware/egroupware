@@ -13,6 +13,8 @@
 
 	class boaccounts
 	{
+		var $ui;
+		var $so;
 		var $public_functions = array(
 			'add_group'	=> True,
 			'add_user'	=> True,
@@ -22,11 +24,16 @@
 			'edit_user'	=> True
 		);
 
-		var $so;
-
-		function boaccounts()
+		function boaccounts($dont_load_ui = False)
 		{
 			$this->so = createobject('admin.soaccounts');
+
+			// This is to prevent an infinite loop which ends up segfaulting PHP and will drive
+			// you crazy for hours tring to track it down. (jengo)
+			if (! $dont_load_ui)
+			{
+				$this->ui = createobject('admin.uiaccounts');
+			}
 		}
 
 		function account_total($account_type,$query='')
@@ -36,10 +43,10 @@
 
 		function delete_group()
 		{
-			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'])
+			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$this->ui->list_groups();
+				return False;
 			}
 			
 			$account_id = intval($GLOBALS['HTTP_POST_VARS']['account_id']);
@@ -74,23 +81,17 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-					Array(
-						'menuaction'	=> 'admin.uiaccounts.list_groups',
-						'cd'	=> $cd
-					)
-				)
-			);
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$this->ui->list_accounts();
+			return False;
+
 		}
 
 		function delete_user()
 		{
-			if(isset($GLOBALS['HTTP_POST_VARS']['cancel']))
+			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
 			{
-				Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
-
+				$this->ui->list_users();
+				return False;
 			}
 			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])
 			{
@@ -127,19 +128,19 @@
 					$cd = 29;
 				}
 
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-						Array(
-							'menuaction'	=> 'admin.uiaccounts.list_users',
-							'cd'		=> $cd
-						)
-					)
-				);
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$this->ui->list_users();
+				return False;
 			}
 		}
 
 		function add_group()
 		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
+			{
+				$this->ui->list_groups();
+				return False;
+			}
+
 			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
 			$account_user = Array();
 			@reset($temp_users);
@@ -250,18 +251,18 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-					Array(
-						'menuaction'	=> 'admin.uiaccounts.list_groups',
-						'cd'	=> $cd
-					)
-				)
-			);
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$this->ui->list_groups();
+			return False;
 		}
 
 		function add_user()
 		{
+			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
+			{
+				$this->ui->list_users();
+				return False;
+			}
+
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$userData = array(
@@ -386,14 +387,8 @@
 						$GLOBALS['phpgw']->common->hook_single('add_user_data', $value);
 					}
 */
-					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-							Array(
-								'menuaction'	=> 'admin.uiaccounts.list_users',
-								'cd'	=> $cd
-							)
-						)
-					);
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$this->ui->list_users();
+					return False;
 				}
 				else
 				{
@@ -403,13 +398,19 @@
 			}
 			else
 			{
-				Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
-				$GLOBALS['phpgw']->common->phpgw_exit();				
+				$this->ui->list_users();
+				return False;
 			}
 		}
 
 		function edit_group()
 		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
+			{
+				$this->ui->list_groups();
+				return False;
+			}
+
 			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
 			$account_user = Array();
 			@reset($temp_users);
@@ -566,18 +567,18 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-					Array(
-						'menuaction'	=> 'admin.uiaccounts.list_groups',
-						'cd'	=> $cd
-					)
-				)
-			);
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$this->ui->list_groups();
+			return False;
 		}
 
 		function edit_user()
 		{
+			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
+			{
+				$this->ui->list_users();
+				return False;
+			}
+
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$userData = array(
@@ -608,31 +609,19 @@
 					$menuClass = CreateObject('admin.uimenuclass');
 					if (!$menuClass->createHTMLCode('edit_user'))
 					{
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-								Array(
-									'menuaction'	=> 'admin.uiaccounts.list_users',
-									'cd'		=> $cd
-								)
-							)
-						);
-						$GLOBALS['phpgw']->common->phpgw_exit();
+						$this->ui->list_users();
+						return False;
 					}
 					else
 					{
-						$linkdata = Array(
-							'menuaction'	=> 'admin.uiaccounts.edit_user',
-							'cd'	=> $cd,
-							'account_id'	=> $GLOBALS['HTTP_GET_VARS']['account_id']
-						);
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php', $linkdata));
-
-						$GLOBALS['phpgw']->common->phpgw_exit();
+						$this->ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
+						return False;
 					}
 				}
 				else
 				{
-					$ui = createobject('admin.uiaccounts');
-					$ui->create_edit_user($userData['account_id'],$userData,$errors);
+//					$ui = createobject('admin.uiaccounts');
+					$this->ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
 			}
 		}

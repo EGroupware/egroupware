@@ -51,7 +51,6 @@
 
 			while (is_array($GLOBALS['acl_manager']) && list($app,$locations) = each($GLOBALS['acl_manager']))
 			{
-
 				$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.gif',$app.'.gif'));
 				$this->template->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 				$this->template->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
@@ -68,32 +67,29 @@
 					$this->template->fp('rows','app_row_noicon',True);
 				}
 
-				if (is_array($locations['deny']))
-				{
-					$link_values = array(
-						'menuaction' => 'admin.uiaclmanager.access_form',
-						'location'   => urlencode(base64_encode('deny')),
-						'acl_app'    => $app,
-						'account_id' => $GLOBALS['account_id']
-					);
-
-					$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
-					$this->template->set_var('lang_location',lang('Deny access'));
-					$this->template->fp('rows','link_row',True);
-				}
-
 				while (is_array($locations) && list($loc,$value) = each($locations))
 				{
-					$link_values = array(
-						'menuaction' => 'admin.uiaclmanager.access_form',
-						'location'   => urlencode(base64_encode($loc)),
-						'acl_app'    => $app,
-						'account_id' => $GLOBALS['account_id']
-					);
+					$total_rights = 0;
+					while (list($k,$v) = each($value['rights']))
+					{
+						$total_rights += $v;
+					}
+					reset($value['rights']);
 
-					$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
-					$this->template->set_var('lang_location',lang($value['name']));
-					$this->template->fp('rows','link_row',True);
+					// If all of there rights are denied, then they shouldn't even see the option
+					if ($total_rights != $GLOBALS['phpgw']->acl->get_rights($loc,$app))
+					{
+						$link_values = array(
+							'menuaction' => 'admin.uiaclmanager.access_form',
+							'location'   => urlencode(base64_encode($loc)),
+							'acl_app'    => $app,
+							'account_id' => $GLOBALS['account_id']
+						);
+	
+						$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
+						$this->template->set_var('lang_location',lang($value['name']));
+						$this->template->fp('rows','link_row',True);
+					}
 				}
 
 				$this->template->parse('rows','spacer_row',True);
@@ -124,23 +120,29 @@
 			);
 
 			$acl    = createobject('phpgwapi.acl',$GLOBALS['account_id']);
+			$acl->read_repository();
 
 			$this->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php',$link_values));
 			$this->template->set_var('lang_title',lang('ACL Manager'));
 
+			$total = 0;
 			while (list($name,$value) = each($acl_manager['rights']))
 			{
 				$grants = $acl->get_rights($location,$GLOBALS['acl_app']);
 
-				$s .= '<option value="' . $value . '"';
-				$s .= (($grants & $value)?' selected':'');
-				$s .= '>' . lang($name) . '</option>';
+				if (! $GLOBALS['phpgw']->acl->check($location,$value,$GLOBALS['acl_app']))
+				{
+					$s .= '<option value="' . $value . '"';
+					$s .= (($grants & $value)?' selected':'');
+					$s .= '>' . lang($name) . '</option>';
+					$total++;
+				}
 			}
 
 			$size = 7;
-			if (count($acl_manager['rights']) < 7)
+			if ($total < 7)
 			{
-				$size = count($acl_manager['rights']);
+				$size = $total;
 			}
 			$this->template->set_var('select_values','<select name="acl_rights[]" multiple size="' . $size . '">' . $s . '</select>');
 			$this->template->set_var('lang_submit',lang('Submit'));

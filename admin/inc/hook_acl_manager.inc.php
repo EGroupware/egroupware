@@ -37,7 +37,7 @@
 			'Group list'    => 1,
 			'Search groups' => 2,
 			'Add group'     => 4,
-			'View group'    => 8,
+//			'View group'    => 8,			// Will be added in the future
 			'Edit group'    => 16,
 			'Delete group'  => 32
 		)

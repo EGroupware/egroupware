@@ -23,12 +23,12 @@
   <tr>
    <td align="left">
     <form method="POST" action="{new_action}">
-     <input type="submit" value="{lang_add}">
+     {input_add}
     </form>
    </td>
-   <td align="right">{lang_search}&nbsp;
+   <td align="right">
     <form method="POST" action="{search_action}">
-     <input name="query">
+     {input_search}
     </form>
    </td>
   </tr>
