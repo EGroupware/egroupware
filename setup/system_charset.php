@@ -87,7 +87,7 @@
 			if ($diagnostics) echo "<p><b>$app</b>: ";
 
 			if (!isset($data['tables']) || !count($data['tables']) ||
-			    $GLOBALS['phpgw_setup']->app_registered($app) &&
+			    !$GLOBALS['phpgw_setup']->app_registered($app) ||
 				!($table_definitions = $db2->get_table_definitions($app)))
 			{
 				if ($diagnostics) echo "skipping (no tables or not installed)</p>\n";
