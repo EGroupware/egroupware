@@ -1201,7 +1201,7 @@
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
 
-	function _check_script_tag(&$var)
+	function _check_script_tag(&$var,$name='')
 	{
 		if (is_array($var))
 		{
@@ -1209,12 +1209,13 @@
 			{
 				if (is_array($val))
 				{
-					_check_script_tag($var[$key]);
+					_check_script_tag($var[$key],$name.'['.$key.']');
 				}
 				else
 				{
 					if (preg_match('/<\/?[^>]*(script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 					{
+						//echo "<p>*** _check_script_tag($name): unset($name [$key]) ***</p>\n";
 						unset($var[$key]);
 					}
 				}
@@ -1237,7 +1238,8 @@
 		}
 		if (is_array($GLOBALS[$where]))
 		{
-			_check_script_tag($GLOBALS[$where]);
+			_check_script_tag($GLOBALS[$where],$where);
+			reset($GLOBALS[$where]);	// in case some stupid old code expects the array-pointer to be at the start of the array
 		}
 	}
 ?>
