@@ -1,4 +1,5 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 (shift-)click or drag to change value	common	en	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	common	en	- Click on any of the time parts to increase it
 - hold mouse button on any of the above buttons for faster selection.	common	en	- Hold mouse button on any of the above buttons for faster selection.
@@ -9,8 +10,8 @@
 00 (disable)	admin	en	00 (disable)
 13 (ntp)	admin	en	13 (ntp)
 80 (http)	admin	en	80 (http)
+about	common	en	About
 about %1	common	en	About %1
-about the calendar	common	en	About the calendar
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 account has been created	common	en	Account has been created
@@ -159,6 +160,7 @@ edit	common	en	Edit
 edit %1 category for	common	en	Edit %1 category for
 edit categories	common	en	Edit Categories
 edit category	common	en	Edit category
+egroupware api version %1	common	en	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
@@ -280,7 +282,7 @@ lebanon	common	en	LEBANON
 lesotho	common	en	LESOTHO
 liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
-license	phpgwapi	en	License
+license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 list	common	en	List
 lithuania	common	en	LITHUANIA
@@ -297,7 +299,7 @@ madagascar	common	en	MADAGASCAR
 mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
-maintainer	phpgwapi	en	Maintainer
+maintainer	common	en	Maintainer
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
 maldives	common	en	MALDIVES

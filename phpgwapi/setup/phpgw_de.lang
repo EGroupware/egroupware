@@ -1,16 +1,17 @@
 %1 email addresses inserted	common	de	%1 Email Adressen eingefügt
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1eGroupWare%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
 (shift-)click or drag to change value	common	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
-- click on any of the time parts to increase it	common	de	
-- hold mouse button on any of the above buttons for faster selection.	common	de	
-- or click and drag for faster selection.	common	de	
-- or shift-click to decrease it	common	de	
+- click on any of the time parts to increase it	common	de	- Auf Uhrzeit clicken um sie zu erhöhen
+- hold mouse button on any of the above buttons for faster selection.	common	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Knöpfe
+- or click and drag for faster selection.	common	de	- oder clicken und ziehen für eine schnelle Auswahl
+- or shift-click to decrease it	common	de	- oder Umschalten-click um sie zu verkleinern
 - use the %1, %2 buttons to select month	common	de	- Benutzen Sie die %1, %2 Buttons um das Monat auszuwählen
 - use the %1, %2 buttons to select year	common	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 13 (ntp)	admin	de	13 (ntp)
 80 (http)	admin	de	80 (http)
+about	common	de	Über
 about %1	common	de	Über %1
-about the calendar	common	de	Über den Kalender
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
@@ -131,7 +132,7 @@ czech republic	common	de	TSCHECHISCHE REPUBLIK
 date	common	de	Datum
 date due	common	de	fällig am
 date selection:	common	de	Datum auswählen:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
@@ -162,6 +163,7 @@ edit	common	de	Editieren
 edit %1 category for	common	de	%1 Kategorie editieren für
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
+egroupware api version %1	common	de	eGroupWare API Version %1
 egroupware: login blocked for user '%1', ip %2	common	de	eGroupWare: Anmelden gesperrt für Benutzer '%1', IP %2
 egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
@@ -284,7 +286,7 @@ lebanon	common	de	LIBANON
 lesotho	common	de	LESOTHO
 liberia	common	de	LYBIEN
 libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
-license	phpgwapi	de	Lizenz
+license	common	de	Lizenz
 liechtenstein	common	de	LIECHTENSTEIN
 list	common	de	Liste
 lithuania	common	de	LITAUEN
@@ -301,7 +303,7 @@ madagascar	common	de	MADAGASCAR
 mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
-maintainer	phpgwapi	de	Maintainer
+maintainer	common	de	Maintainer
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
 maldives	common	de	MALDIVEN
