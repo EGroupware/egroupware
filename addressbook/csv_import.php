@@ -329,7 +329,8 @@
 								}
 								if($val[0] == '@')
 								{
-									$val = 'return '.substr($val,1).';';
+									// removing the $ to close security hole of showing vars, which contain eg. passwords
+									$val = 'return '.substr(str_replace('$','',$val),1).';';
 									// echo "<p>eval('$val')=";
 									$val = eval($val);
 									// echo "'$val'</p>";
