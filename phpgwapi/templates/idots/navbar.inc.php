@@ -34,8 +34,9 @@
 		$applications = '';
 	
 		//	== 'icons_and_text')
-		
-		$max_icons=7; // must be detected with javascript or must be a preference
+			
+		$max_icons=$GLOBALS['phpgw_info']['user']['preferences']['common']['max_icons']; 
+		if(!$max_icons) $max_icons=7;
 		
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
@@ -44,7 +45,7 @@
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
 
-				if($i<=$max_icons)
+				if($i<$max_icons)
 				{
 					$app_icons .= '<td height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
 					
