@@ -18,6 +18,6 @@
      <td class="cal_holiday"{extras}>{event}</td>
 <!-- END day_event_holiday -->
 <!-- BEGIN day_time -->
-     <td class="th"><nobr>{open_link}{time}{close_link}</nobr></td>
+     <td class="th" nowrap width="10%">{open_link}{time}{close_link}</td>
 <!-- END day_time -->
 

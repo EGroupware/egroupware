@@ -2066,7 +2066,7 @@
 		}
 
 		function planner_pad_rows()
-	   {
+		{
 			$rows = &$this->planner_rows;
 
 			if ($this->bo->sortby == 'user')
@@ -2110,7 +2110,7 @@
 		}
 
 		function planner_print_rows()
-	   {
+		{
 			$class = 'class="th"';
 			$intervals_per_day = $this->bo->prefs['calendar']['planner_intervals_per_day'];
 
@@ -2129,7 +2129,7 @@
 					'._hdr2' => $class
 				)+$this->planner_rows,
 				'width="100%" cols="'.(1+$this->planner_days_in_end_month*$intervals_per_day).'"');
-	   }
+		}
 
 		function planner_process_interval()
 		{
@@ -3604,6 +3604,15 @@
 			return $p->fp('out','view_event');
 		}
 
+		function nm_on_off()
+		{
+			if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == 'row_on')
+			{
+				return '_on';
+			}
+			return '_off';
+		}
+
 		function print_day($params)
 		{
 			if(!is_array($params))
@@ -3675,62 +3684,54 @@
 			print_debug('Date to Eval',$date_to_eval);
 			if($daily[$date_to_eval]['appts'])
 			{
-				$day_start = mktime(intval($this->bo->prefs['calendar']['workdaystarts']-1),0,0,$params['month'],$params['day'],$params['year']);
+				$day_start = mktime(intval($this->bo->prefs['calendar']['workdaystarts']),-intval($this->bo->prefs['calendar']['interval']),0,$params['month'],$params['day'],$params['year']);
 				$day_end = mktime(intval($this->bo->prefs['calendar']['workdayends']),0,1,$params['month'],$params['day'],$params['year']);
-				$starttime = 0;
-				$endtime = 0;
+				$last_starttime = $starttime = 0;
+				$last_endtime = $endtime = 0;
 				$events = $this->bo->cached_events[$date_to_eval];
-				$c_events = count($events);
 				print_debug('Date',$date_to_eval);
-				print_debug('Count',$c_events);
-				for($i=0;$i<$c_events;$i++)
+				print_debug('Count',count($events));
+				$last_ind = -1;
+				foreach($events as $event)
 				{
-					$starttime = $this->bo->maketime($events[$i]['start']);
-					$endtime = $this->bo->maketime($events[$i]['end']);
+					if ($event['recur_type'])	// calculate start- + end-datetime for recuring events
+					{
+						$this->bo->set_recur_date($event,$date_to_eval);
+					}
+					$starttime = $this->bo->maketime($event['start']);
+					$endtime = $this->bo->maketime($event['end']);
 					
-					if($events[$i]['recur_type'] == MCAL_RECUR_NONE)
+					$interval_start = 0; 
+					if ($starttime < $day_start)
 					{
 						$ind = 0;
-						$interval_start = 0; 
-						if ($starttime < $day_start)
-						{
-							$ind = 0;
-						}
-						elseif ($starttime >= $day_end)
-						{
-							$ind = 99;
-						}
-						else
-						{
-							$ind = intval($events[$i]['start']['hour']);
-							$interval_start = intval($events[$i]['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
-							print_debug('Start Time Minutes',$events[$i]['start']['min']);
-							print_debug('Interval',$interval_start);
-						}
+					}
+					elseif ($starttime >= $day_end)
+					{
+						$ind = 99;
 					}
 					else
 					{
-						$ind = intval($events[$i]['start']['hour']);
-						$interval_start = intval($events[$i]['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
+						$ind = intval($event['start']['hour']);
+						$interval_start = intval($event['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
+						print_debug('Start Time Minutes',$event['start']['min']);
+						print_debug('Interval',$interval_start);
 					}
-
 					if(($ind < intval($this->bo->prefs['calendar']['workdaystarts'])) || ($ind > intval($this->bo->prefs['calendar']['workdayends'])))
 					{
 						$ind = $ind < intval($this->bo->prefs['calendar']['workdaystarts']) ? 0 : 99;
 						$interval_start = 0;
 					}
 
-					if((($ind <> 99) && ($ind <> 0)) && (($starttime <> 0) && ($endtime <> 0)))
+					print_debug('IND before',$ind);
+					if($ind <= date('H',$last_endtime-1) && $last_ind >= 0)	// -1 to allow events to end on a full hour, without blocking the next hour-slot
 					{
-						print_debug('IND before',$ind);
-						if($ind <= date('H',$last_endtime-1) && $last_ind)	// -1 to allow events to end on a full hour, without blocking the next hour-slot
-						{
-							$ind = $last_ind;
-							$interval_start = $last_interval_start;
-						}
-						print_debug('IND after',$ind);
+						$ind = $last_ind;
+						$interval_start = $last_interval_start;
 					}
-					$time[$ind][$interval_start] .= $this->link_to_entry($events[$i],$params['month'],$params['day'],$params['year']);
+					print_debug('IND after',$ind);
+
+					$time[$ind][$interval_start] .= $this->link_to_entry($event,$params['month'],$params['day'],$params['year']);
 
 					print_debug('IND',$ind);
 					print_debug('TIME',$time[$ind][$interval_start]);
@@ -3743,7 +3744,7 @@
 					{
 						$endtime = $day_end;
 					}
-					if ($starttime <> $endtime)
+					if ($starttime != $endtime)
 					{
 						$rowspan = $rowspan_arr[$ind][$interval_start];
 						if($rowspan == 0 || $last_endtime <= $starttime)
@@ -3756,7 +3757,8 @@
 						}
 						$mins = (int)((($endtime - $starttime) / 60) % 60);
 
-						if(($mins <> 0 && $mins <= intval(60 / intval($this->bo->prefs['calendar']['interval']))) || ($mins == 0 && date('i',$endtime) > intval($this->bo->prefs['calendar']['interval'])))
+						if($mins != 0 && $mins <= intval(60 / intval($this->bo->prefs['calendar']['interval'])) || 
+						   $mins == 0 && date('i',$endtime) > intval($this->bo->prefs['calendar']['interval']))
 						{
 							$rowspan += 1;
 						}
@@ -3769,10 +3771,7 @@
 					}
 					$last_ind = $ind;
 					$last_interval_start = $interval_start;
-					if ($rowspan <= 1 || !$last_starttime)
-					{
-						$last_starttime = $starttime;
-					}
+					$last_starttime = $starttime;
 					$last_endtime = $endtime;
 					print_debug('Time',$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $GLOBALS['phpgw']->datetime->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $GLOBALS['phpgw']->datetime->tz_offset));
 					print_debug('Start',$ind);
@@ -3786,14 +3785,7 @@
 			$holiday_names = $daily[$date_to_eval]['holidays'];
 			if(!$holiday_names)
 			{
-				if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == $this->theme['row_on'])
-				{
-					$row_to_print = '_on';
-				}
-				else
-				{
-					$row_to_print = '_off';
-				}
+				$row_to_print = $this->nm_on_off();
 			}
 			else
 			{
@@ -3804,30 +3796,13 @@
 				}
 			}
 
-			$rowspan = intval($rowspan_arr[0][0]);
-			// events before workdaystart
-			if (isset($time[0][0]))
+			$rowspan = 0;
+			$i = isset($time[0][0]) ? 0 : (int)$this->bo->prefs['calendar']['workdaystarts'];
+			$i_end = isset($time[99][0]) ? 99 : (int)$this->bo->prefs['calendar']['workdayends'];
+			while ($i <= $i_end)
 			{
-				$var = array('event' => $time[0][0]);
-				if ($rowspan > 1)
-				{
-					$var['extras'] = ' rowspan="'.$rowspan.'"';
-				}
-				$this->output_template_array($p,'item','day_event'.$row_to_print,$var);
-
-				$var = Array(
-					'open_link'	=> '',
-					'time'		=> '&nbsp;',
-					'close_link'	=> ''
-				);
-				$this->output_template_array($p,'item','day_time',$var);
-				$p->parse('row','day_row',True);
-				$p->set_var('item','');
-			}
-			// events between workdaystart and -end
-			for ($i=(int)$this->bo->prefs['calendar']['workdaystarts'];$i<=(int)$this->bo->prefs['calendar']['workdayends'];$i++)
-			{
-				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
+				$j_end = $i ? 60 / intval($this->bo->prefs['calendar']['interval']) : 1;
+				for($j = 0; $j < $j_end; $j++)
 				{
 					$dtime = $this->bo->build_time_for_display(($i * 10000) + (($j *intval($this->bo->prefs['calendar']['interval'])) * 100));
 					$p->set_var('extras','');
@@ -3839,14 +3814,7 @@
 						if (isset($time[$i][$j]))
 						{
 							$p->set_var('event',$time[$i][$j]);
-							if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == 'row_on')
-							{
-								$row_to_print = '_on';
-							}
-							else
-							{
-								$row_to_print = '_off';
-							}
+							$row_to_print = $this->nm_on_off();
 							$p->parse('item','day_event'.$row_to_print,False);
 						}
 						$rowspan--;
@@ -3854,14 +3822,7 @@
 					elseif (!isset($time[$i][$j]))
 					{
 						$p->set_var('event','&nbsp;');
-						if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == 'row_on')
-						{
-							$row_to_print = '_on';
-						}
-						else
-						{
-							$row_to_print = '_off';
-						}
+						$row_to_print = $this->nm_on_off();
 						$p->parse('item','day_event'.$row_to_print,False);
 					}
 					else
@@ -3872,68 +3833,60 @@
 							$p->set_var('extras',' rowspan="'.$rowspan.'"');
 						}
 						$p->set_var('event',$time[$i][$j]);
-						if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == 'row_on')
-						{
-							$row_to_print = '_on';
-						}
-						else
-						{
-							$row_to_print = '_off';
-						}
+						$row_to_print = $this->nm_on_off();
 						$p->parse('item','day_event'.$row_to_print,False);
 					}
 			
-					$open_link = ' - ';
-					$close_link = '';
-
-					if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
+					if (0 < $i && $i < 99)
 					{
-						$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
-						if ($this->bo->prefs['common']['timeformat'] == '12' && $i > 12)
+						$open_link = ' - ';
+						$close_link = '';
+
+						if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
 						{
-							$new_hour += 12;
+							$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
+							if ($this->bo->prefs['common']['timeformat'] == '12' && $i > 12)
+							{
+								$new_hour += 12;
+							}
+
+							$open_link .= '<a href="'.$this->page('add','&date='.$date_to_eval.'&hour='.$new_hour.'&minute='.substr($dtime,strpos($dtime,':')+1,2)).'">';
+
+							$close_link = '</a>';
 						}
 
-						$open_link .= '<a href="'.$this->page('add','&date='.$date_to_eval.'&hour='.$new_hour.'&minute='.substr($dtime,strpos($dtime,':')+1,2)).'">';
-
-						$close_link = '</a>';
+						$var = Array(
+							'open_link'	=> $open_link,
+							'time'		=> (intval(substr($dtime,0,strpos($dtime,':')))<10?'0'.$dtime:$dtime),
+							'close_link'	=> $close_link
+						);
 					}
-
-					$var = Array(
-						'open_link'	=> $open_link,
-						'time'		=> (intval(substr($dtime,0,strpos($dtime,':')))<10?'0'.$dtime:$dtime),
-						'close_link'	=> $close_link
-					);
-
+					else
+					{
+						$var = Array(
+							'open_link'	=> '',
+							'time'		=> '&nbsp;',
+							'close_link'	=> ''
+						);
+					}
 					$this->output_template_array($p,'item','day_time',$var);
 					$p->parse('row','day_row',True);
 					$p->set_var('event','');
 					$p->set_var('item','');
 				}
-			}	// end for
-			// events after workdayend
-			if (isset($time[99][0]))
-			{
-				$var = array('event' => $time[99][0]);
-				if($GLOBALS['phpgw']->nextmatchs->alternate_row_color() == 'row_on')
+				if ($i == 0)
 				{
-					$row_to_print = '_on';
+					$i = (int)$this->bo->prefs['calendar']['workdaystarts'];
+				}
+				elseif ($i == (int)$this->bo->prefs['calendar']['workdayends'])
+				{
+					$i = 99;
 				}
 				else
 				{
-					$row_to_print = '_off';
+					++$i;
 				}
-				$this->output_template_array($p,'item','day_event'.$row_to_print,$var);
-
-				$var = Array(
-					'open_link'	=> '',
-					'time'		=> '&nbsp;',
-					'close_link'	=> ''
-				);
-				$this->output_template_array($p,'item','day_time',$var);
-				$p->parse('row','day_row',True);
-				$p->set_var('item','');
-			}
+			}	// end for
 			return $p->fp('out','day');
 		}	// end function
 

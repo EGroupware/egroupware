@@ -18,7 +18,7 @@
       {day_events}
      </table>
     </td>
-    <td valign="top" align="right">
+    <td align="right">
      {small_calendar}
     </td>
    </tr>
