@@ -151,7 +151,7 @@
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			global $phpgw;
+			global $phpgw,$phpgw_info;
 
 			if ($offset)
 			{
