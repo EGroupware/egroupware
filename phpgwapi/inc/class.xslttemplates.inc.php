@@ -95,9 +95,9 @@
 					$rootdir=$this->rootdir;
 				}
 				
-				if (substr($filename, 0, 1) != '/')
+				if (substr($filename, 0, 1) != SEP)
 				{
-					$new_filename = $rootdir.'/'.$filename;
+					$new_filename = $rootdir . SEP . $filename;
 				}
 				else
 				{
@@ -290,7 +290,8 @@
 				$arguments = array('/_xml' => $this->xmldata, '/_xsl' => $this->xsldata);
 				$html = xslt_process($xsltproc,'arg:/_xml','arg:/_xsl',NULL,$arguments);
 			}
-			else // PHP 4.0.6 -- works okay
+			else /* PHP 4.0.6 -- works okay
+					no, it doesnt work at all :) [ceb] */
 			{
 				xslt_process($this->xsldata, $this->xmldata,$html);
 			}
