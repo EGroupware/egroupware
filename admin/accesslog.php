@@ -86,7 +86,7 @@
   $phpgw->db->next_record();
   $total = $phpgw->db->f(0);
 
-  $phpgw->db->query("select count(*) from access_log where lo!='0'");
+  $phpgw->db->query("select count(*) from access_log where lo!=''");
   $phpgw->db->next_record();
   $loggedout = $phpgw->db->f(0);
 
