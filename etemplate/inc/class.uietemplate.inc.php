@@ -862,8 +862,8 @@ document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','
 ';
 			}
 
-			// here are going all the necesarry functions if javascript is definitve enabled
-			if ($this->java_script(False))
+			// here are going all the necesarry functions if javascript is enabled
+			if ($this->java_script(True))
 			{
 				$js .= '<script language="JavaScript">
 function set_element(form,name,value)
