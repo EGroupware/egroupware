@@ -11,13 +11,14 @@ calendar	common	ja	カレンダー
 calendar preferences	common	ja	カレンダーユーザ設定
 calendar - add	calendar	ja	カレンダー - 追加
 calendar - edit	calendar	ja	カレンダー - 編集
-calendar holiday management	calendar	ja	休日設定
+calendar holiday management	admin	ja	休日設定
 countries	calendar	ja	国一覧
 daily	calendar	ja	日単位
 daily matrix view	calendar	ja	日程表示
 days repeated	calendar	ja	曜日
 default calendar filter	calendar	ja	カレンダーの初期選択
 default calendar view	calendar	ja	カレンダーの初期表示
+display mini calendars when printing	calendar	ja	印刷用の時、小カレンダを表示
 display status of events	calendar	ja	イベント状況表示
 duration	calendar	ja	継続時間
 end date/time	calendar	ja	終了日時
@@ -48,6 +49,7 @@ monthlybydate	calendar	ja	月単位(日)
 monthlybyday	calendar	ja	月単位(曜日)
 new entry	calendar	ja	項目追加
 no matches found.	calendar	ja	見つかりません。
+no matchs found	calendar	ja	見つかりません。
 no response	calendar	ja	返答なし
 observance rule	calendar	ja	休日のルールを適用
 occurence	calendar	ja	曜日指定
@@ -75,10 +77,12 @@ sat	calendar	ja	土
 scheduling conflict	calendar	ja	予定を確認
 search results	calendar	ja	検索結果
 select country for including holidays	calendar	ja	休日データ選択
+send/receive updates via email	calendar	ja	更新情報を電子メールで受取る
 show day view on main screen	calendar	ja	今日の予定をメイン画面に表示
 show high priority events on main screen	calendar	ja	優先度が高いイベントをメイン画面に表示
 start date/time	calendar	ja	開始日時
 su	calendar	ja	日
+submit to repository	calendar	ja	転送
 sun	calendar	ja	日
 tentative	calendar	ja	仮承諾
 th	calendar	ja	木

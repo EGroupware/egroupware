@@ -16,6 +16,7 @@ are you sure you want to delete this group ?	admin	ja	このグループを削除してもよ
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してもよろしいですか。
 change main screen message	admin	ja	メイン画面メッセージ変更
 city	admin	ja	市区町村
+country selection	admin	ja	国の選択
 create group	admin	ja	グループ作成
 default category	admin	ja	既定のカテゴリ
 delete all records	admin	ja	削除する
@@ -29,6 +30,8 @@ edit main screen message	admin	ja	メイン画面メッセージ訂正
 edit user account	admin	ja	アカウント訂正
 enabled	admin	ja	可能
 enabled - hidden from navbar	admin	ja	可能 - ナビゲーション非表示
+enter the title for your site	admin	ja	タイトル名
+expires	admin	ja	有効期限
 forecast	admin	ja	天気予報
 forecast zone	admin	ja	天気予報
 fzone	admin	ja	fzone
@@ -39,6 +42,7 @@ home directory	admin	ja	home directory
 id	admin	ja	ID
 idle	admin	ja	アイドル
 installed applications	admin	ja	アプリケーション一覧
+interface	admin	ja	インタフェース
 ip	admin	ja	IP
 kill	admin	ja	切断
 language	admin	ja	言語
@@ -63,15 +67,19 @@ percent of users that logged out	admin	ja	ユーザのログアウト率
 permissions	admin	ja	パーミッション
 permissions this group has	admin	ja	利用可能アプリケーション
 php information	admin	ja	PHPインフォメーション
+phpinfo	admin	ja	PHPインフォメーション
 re-enter password	admin	ja	パスワード再入力
 region	admin	ja	地域
 regions	admin	ja	地域
 remove all users from this group	admin	ja	このグループの全てのユーザを削除します。
 section	admin	ja	表示場所
+selectbox	admin	ja	セレクトボックス
 select permissions this group will have	admin	ja	利用可能アプリケーション
 select users for inclusion	admin	ja	所属するユーザ
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ja	ナビゲーションバーの位置（数が小さいと左に配置）
+show 'powered by' logo on	admin	ja	powered by ロゴ表示位置
 site	admin	ja	Site
+site configuration	admin	ja	サイト環境設定
 sorry, that group name has already been taking.	admin	ja	グループ名は既に存在します。
 sorry, the follow users are still a member of the group x	admin	ja	%1 がグループのメンバーになっています。
 station	admin	ja	位置
@@ -79,17 +87,24 @@ stations	admin	ja	位置
 status	admin	ja	状態
 submit changes	admin	ja	変更
 table	admin	ja	テーブル
+template selection	admin	ja	テンプレート選択
+text entry	admin	ja	テキスト入力
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
 the login and password can not be the same	admin	ja	ログインIDとパスワードが同じです。
 they must be removed before you can continue	admin	ja	削除できません。
 total records	admin	ja	合計
+use pure html compliant code (not fully working yet)	admin	ja	純粋なHTMLを利用（完全に動作しません）
+use cookies to pass sessionid	admin	ja	セッションにcookieを使用
+use theme	admin	ja	テーマ選択
 update	admin	ja	更新
 user accounts	admin	ja	ユーザアカウント
+users choice	admin	ja	ユーザ選択
 user groups	admin	ja	ユーザグループ
 view access log	admin	ja	アクセスログ参照
 view sessions	admin	ja	セッション参照
 view user account	admin	ja	ユーザアカウント表示
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、phpGroupWareの<br>バージョンチェックを行う
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。
 you must add at least 1 permission to this account	admin	ja	利用可能アプリケーションを指定してください。
 you must enter a group name.	admin	ja	グループ名を入力して下さい。
