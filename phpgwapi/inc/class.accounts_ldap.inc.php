@@ -62,10 +62,6 @@
        return $this->data;
     }
 
-    function update_data($data)
-    {
-    }
-    
     function save_repository()
     {
        global $phpgw_info, $phpgw;
@@ -179,7 +175,6 @@
     	
     	if (gettype($account_id) == "string") 
     	{
-    		$account_id = $this->name2id($account_id);
     		$sql = "SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_id."'";
     	}
     	else
