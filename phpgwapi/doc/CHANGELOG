@@ -17,6 +17,7 @@
 		set user preferences, admins can force preference, or set the defaults
 		for new accounts.
 	- Added global config option to deny users to access grants, usefull for ISPs
+	- Merged patch for NIS auth - Thanks Dylan Adams <l0n@users.sourceforge.net>
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
