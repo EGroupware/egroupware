@@ -32,7 +32,16 @@
   $this = CreateObject("phpgwapi.contacts");
 
   if (! $submit) {
-    $fields = $this->read_single_entry($ab_id,$this->stock_addressbook_fields);
+    // merge in what are now extra fields
+    $extrafields = array ("pager" => "pager",
+                          "mphone" => "mphone",
+			  "ophone" => "ophone",
+			  "address2" => "address2",
+			  "bday" => "bday",
+			  "url" => "url",
+			  "notes" => "notes");
+    $qfields = $this->stock_contact_fields + $extrafields;
+    $fields = $this->read_single_entry($ab_id,$qfields);
     form("","edit.php","Edit",$fields[0]);
   } else {
     if ($url == "http://") {
@@ -47,28 +56,27 @@
       $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
-    $fields["company"]    = $company;
-    $fields["company_id"] = $company_id;
-    $fields["firstname"]  = $firstname;
-    $fields["lastname"]   = $lastname;
-    $fields["email"]      = $email;
-    $fields["title"]      = $title;
-    $fields["wphone"]     = $wphone;
-    $fields["hphone"]     = $hphone;
-    $fields["fax"]        = $fax;
-    $fields["pager"]      = $pager;
-    $fields["mphone"]     = $mphone;
-    $fields["ophone"]     = $ophone;
-    $fields["street"]     = $street;
-    $fields["address2"]   = $address2;
-    $fields["city"]       = $city;
-    $fields["state"]      = $state;
-    $fields["zip"]        = $zip;
-    $fields["bday"]       = $bday;
-    $fields["url"]        = $url;
-    $fields["notes"]      = $notes;
+    $fields["ORG_Name"]       = $company;
+    $fields["N_Given"]        = $firstname;
+    $fields["N_Family"]       = $lastname;
+    $fields["D_EMAIL"]        = $email;
+    $fields["TITLE"]          = $title;
+    $fields["A_TEL"]          = $wphone;
+    $fields["B_TEL"]          = $hphone;
+    $fields["C_TEL"]          = $fax;
+    $fields["pager"]          = $pager;
+    $fields["mphone"]         = $mphone;
+    $fields["ophone"]         = $ophone;
+    $fields["ADR_Street"]     = $street;
+    $fields["address2"]       = $address2;
+    $fields["ADR_Locality"]   = $city;
+    $fields["ADR_Region"]     = $state;
+    $fields["ADR_PostalCode"] = $zip;
+    $fields["bday"]           = $bday;
+    $fields["url"]            = $url;
+    $fields["notes"]          = $notes;
 
-    $this->update($ab_id,$phpgw_info["user"]["account_id"],$access,$fields);
+    $this->update($ab_id,$phpgw_info["user"]["account_id"],$fields);
     
     Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
       . "$filter&start=$start"));
