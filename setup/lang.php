@@ -16,23 +16,9 @@
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
      include("../header.inc.php");
 
-     $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
-  
-     // Authorize the user to use setup app
-     include("inc/setup_auth.inc.php");
-     // Does not return unless user is authorized
-
-     /* Database setup */
-     include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
-
-     $db	            = new db;
-     $db->Host	      = $phpgw_info["server"]["db_host"];
-     $db->Type	      = $phpgw_info["server"]["db_type"];
-     $db->Database      = $phpgw_info["server"]["db_name"];
-     $db->User	      = $phpgw_info["server"]["db_user"];
-     $db->Password      = $phpgw_info["server"]["db_pass"];
-     //$db->Halt_On_Error = "report";
-     //$db->Halt_On_Error = "no";
+     // Authorize the user to use setup app and load the database
+     include("./inc/setup_auth.inc.php");
+     //Does not return unless user is authorized
 
      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
      echo "<body bgcolor='#ffffff'>\n";
@@ -136,7 +122,4 @@
 <?php
     echo '<center><input type="submit" name="submit" value="Install"></center>';
   }
-
   }
-
-

@@ -15,25 +15,13 @@
   							 "currentapp" => "home", "noapi"    => True);
   include("../header.inc.php");
 
-  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
+  // Authorize the user to use setup app and load the database
+  include("./inc/setup_auth.inc.php");
+  // Does not return unless user is authorized
   include($phpgw_info["server"]["api_dir"] . "/phpgw_common.inc.php");
 
   $common = new common;
  
-  // Authorize the user to use setup app
-  include("./inc/setup_auth.inc.php");
-  // Does not return unless user is authorized
-
-  /* Database setup */
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
-
-  $db	          = new db;
-  $db->Host	    = $phpgw_info["server"]["db_host"];
-  $db->Type	    = $phpgw_info["server"]["db_type"];
-  $db->Database    = $phpgw_info["server"]["db_name"];
-  $db->User	    = $phpgw_info["server"]["db_user"];
-  $db->Password    = $phpgw_info["server"]["db_pass"];
-
   $db->query("select config_name,config_value from config where config_name like 'ldap%'",__LINE__,__FILE__);
   while ($db->next_record()) {
      $config[$db->f("config_name")] = $db->f("config_value");

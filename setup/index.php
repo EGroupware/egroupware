@@ -19,9 +19,7 @@
   include("../header.inc.php");
   include("../version.inc.php");  // To set the current core version
 
-  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
-
-  // Authorize the user to use setup app
+  // Authorize the user to use setup app and load the database
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 
@@ -344,6 +342,11 @@
   echo "<p>When you are done installing and upgrading applications, you should ";
   echo "continue to the <a href='config.php'>Configuration Page</a>";
   echo "<br>or skip to <a href='lang.php'>Configure multi-language support</a>.\n";
+  echo "<br><br>or for a drastic measure, you can delete all your tables and data and recreate the new empty tables.\n";
+  echo "      <form method=\"POST\" action=\"$PHP_SELF\">\n";
+  echo "      <input type=\"submit\" name=\"action\" value=\"Delete my old tables\">\n";
+  echo "      </form>\n";
+
 ?>
 </body>
 </html>

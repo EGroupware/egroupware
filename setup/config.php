@@ -15,9 +15,7 @@
   							 "currentapp" => "home", "noapi"    => True);
   include("../header.inc.php");
 
-  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
- 
-  // Authorize the user to use setup app
+  // Authorize the user to use setup app and load the database
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 

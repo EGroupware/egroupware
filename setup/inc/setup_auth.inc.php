@@ -15,9 +15,10 @@
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
 
-  function setup_header($title = "")
-  {
-    global $phpgw_info;
+  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
+
+  function setup_header($title = ""){
+    global $phpgw_info, $PHP_SELF;
 
     echo '<title>phpGroupWare setup ' . $title . '</title><BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" '
       . 'marginright="0" marginbottom="0"><table border="0" width="100%"><tr>'
@@ -30,9 +31,8 @@
     echo "</td></tr></table>";
   }
 
-  function loginForm($err="")
-  {
- 	global $phpgw_info, $phpgw_domain, $SetupDomain, $SetupPW, $PHP_SELF;
+  function loginForm($err=""){
+   	global $phpgw_info, $phpgw_domain, $SetupDomain, $SetupPW, $PHP_SELF;
  	
  	  setup_header("Please login");
     echo "<p><body bgcolor='#ffffff'>\n";
@@ -59,48 +59,56 @@
  	  echo "</body></html>\n";
   }
 
-  if (!isset($phpgw_domain)) {
-    setup_header("Upgrade your header.inc.php");
-    echo "<br><b>You will need to upgrade your header.inc.php before you can continue with this setup</b>";
-    exit;
-  }
-  reset($phpgw_domain);
-  $default_domain = each($phpgw_domain);
-  $phpgw_info["server"]["default_domain"] = $default_domain[0];
-  unset ($default_domain); // we kill this for security reasons
+//  function loaddb(){
+//    global $phpgw_domain, $FormLogout, $FormDomain, $SetupPW, $SetupDomain, $db, $PHP_SELF;
 
-  if (isset($FormLogout)) {
-    setcookie("SetupPW");  // scrub the old one
-    setcookie("SetupDomain");  // scrub the old one
-    loginForm("You have sucessfully logged out");
-    exit;
-  } elseif (isset($SetupPW)) {
-    if ($SetupPW != $phpgw_domain[$SetupDomain]["config_passwd"]) {
+    /* This code makes sure the newer multi-domain supporting header.inc.php is being used */
+    if (!isset($phpgw_domain)) {
+      setup_header("Upgrade your header.inc.php");
+      echo "<br><b>You will need to upgrade your header.inc.php before you can continue with this setup</b>";
+      exit;
+    }
+  
+    /* Based on authentication, the database will be loaded */
+    reset($phpgw_domain);
+    $default_domain = each($phpgw_domain);
+    $phpgw_info["server"]["default_domain"] = $default_domain[0];
+    unset ($default_domain); // we kill this for security reasons
+  
+    if (isset($FormLogout)) {
       setcookie("SetupPW");  // scrub the old one
       setcookie("SetupDomain");  // scrub the old one
-      loginForm("Invalid session cookie (cookies must be enabled)");
+      loginForm("You have sucessfully logged out");
+      exit;
+    } elseif (isset($SetupPW)) {
+      if ($SetupPW != $phpgw_domain[$SetupDomain]["config_passwd"]) {
+        setcookie("SetupPW");  // scrub the old one
+        setcookie("SetupDomain");  // scrub the old one
+        loginForm("Invalid session cookie (cookies must be enabled)");
+        exit;
+      }
+    } elseif (isset($FormPW)) {
+      if ($FormPW == $phpgw_domain[$FormDomain]["config_passwd"]) {
+        setcookie("SetupPW",$FormPW);
+        setcookie("SetupDomain",$FormDomain);
+        $SetupDomain = $FormDomain;
+      }else{
+        loginForm("Invalid password.");
+        exit;
+      }
+    } else {
+      loginForm();
       exit;
     }
-  } elseif (isset($FormPW)) {
-    if ($FormPW == $phpgw_domain[$FormDomain]["config_passwd"]) {
-      setcookie("SetupPW",$FormPW);
-      setcookie("SetupDomain",$FormDomain);
-      $SetupDomain = $FormDomain;
-    }else{
-      loginForm("Invalid password.");
-      exit;
-    }
-  } else {
-    loginForm();
-    exit;
-  }
-
-  /* Database setup */
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_domain[$SetupDomain]["db_type"].".inc.php");
-  $db	          = new db;
-  $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
-  $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];
-  $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
-  $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
-  $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
+  
+    /* Database setup */
+    include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_domain[$SetupDomain]["db_type"].".inc.php");
+    $db	          = new db;
+    $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
+    $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];
+    $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
+    $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
+    $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
+//  }
+//  loaddb();
 ?>

@@ -307,11 +307,7 @@
 
     // The 0.9.3pre1 is only temp until release
     if ($currentver == "0.9.3" || ereg ("^0\.9\.4pre", $currentver)){
-      if ($currentver == "0.9.3") {
-        $currentver = "0.9.4pre1";
-        update_version_table();
-      }
-      if ($currentver == "0.9.4pre1") {
+      if ($currentver == "0.9.4pre1" || $currentver == "0.9.3") {
           $sql = "CREATE TABLE notes (
                    note_id        int(20) NOT NULL auto_increment, 
                    note_owner     int(11),
@@ -325,7 +321,7 @@
         update_version_table();
       }
       if ($currentver == "0.9.4pre2") {
-	$db->query("alter table webcal_entry change cal_create_by cal_owner int(11) NOT NULL");
+	      $db->query("alter table webcal_entry change cal_create_by cal_owner int(11) NOT NULL");
         $currentver = "0.9.4pre3";
         update_version_table();
       }
@@ -343,16 +339,32 @@
       if ($currentver == "0.9.4pre4") {
    	    $sql = "ALTER TABLE todo ADD todo_startdate int(11) not null";
    	    $db->query($sql);
-		
 	      $sql = "alter table sessions change session_lid session_lid varchar(255)";
 	      $db->query($sql);	
-		
 	      $currentver = "0.9.4pre5";
 	      update_version_table();
       }
-
+      if ($currentver == "0.9.4pre5") {
+        $currentver = "0.9.4";
+        update_version_table();
+      }
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.3 to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+    }
+  }
+
+  function v0_9_4to0_9_5(){
+    global $currentver, $phpgw_info, $db;
+
+    // The 0.9.4pre1 is only temp until release
+    if ($currentver == "0.9.4" || ereg ("^0\.9\.5pre", $currentver)){
+      if ($currentver == "0.9.4") {
+        $currentver = "0.9.4pre1";
+        update_version_table();
+      }
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from 0.9.4 to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
@@ -360,5 +372,6 @@
   v0_9_1to0_9_2();
   v0_9_2to0_9_3();
   v0_9_3to0_9_4();
+//  v0_9_4to0_9_5();
   
 ?>
