@@ -63,7 +63,7 @@
 					//echo '<br>'.$i.': '.$name.' => '.$value;
 					$entry[$i][$name] = $value;
 				}
-				$entry[$i]['d_email_type'] = 'INTERNET';
+				$entry[$i]['d_emailtype'] = 'INTERNET';
 				//echo '<br>';
 				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
 			}
