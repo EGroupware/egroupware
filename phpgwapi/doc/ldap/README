@@ -9,7 +9,8 @@ They should be copied to /etc/openldap and added to
 
 include		/etc/openldap/phpgw.oc.conf
 include		/etc/openldap/phpgw.at.conf
-
+include		/etc/openldap/phpgwcontact.oc.conf
+include		/etc/openldap/phpgwcontact.at.conf
 
 Openldap 2.X, possibly others:
 
