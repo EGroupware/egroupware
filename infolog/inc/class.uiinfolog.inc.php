@@ -59,11 +59,11 @@
 				'none'				=>	lang('no Filter'),
 				'done'				=>	lang('done'),
 				'own'					=>	lang('own'),
-				'own+open+today'	=>	lang('own open'),
-				'own+open+overdue'=>	lang('own overdue'),
-				'own+upcoming'		=>	lang('own upcoming'),
-				'open+today'		=>	lang('open'),
-				'open+overdue'		=>	lang('overdue'),
+				'own-open-today'	=>	lang('own open'),
+				'own-open-overdue'=>	lang('own overdue'),
+				'own-upcoming'		=>	lang('own upcoming'),
+				'open-today'		=>	lang('open'),
+				'open-overdue'		=>	lang('overdue'),
 				'upcoming'			=>	lang('upcoming')
 			);
 
@@ -217,12 +217,13 @@
 						$phpgw_info['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
 				'owner'       => $owner,
-				'datecreated' => $phpgw->common->show_date($info['info_datecreated']							,$phpgw_info['user']['preferences']['common']['dateformat']),
+				'datecreated' => $phpgw->common->show_date($info['info_datecreated'],
+						$phpgw_info['user']['preferences']['common']['dateformat']),
 				'responsible' => $responsible
 			);            
 		}
 
-		function infoHeaders( $do_sort_header=0,$sort=0,$order=0)
+		function infoHeaders( $do_sort_header=0,$sort=0,$order=0,$cat_id=0)
 		{
 			global $phpgw,$phpgw_info;
 			
@@ -242,7 +243,7 @@
 			while (list($f,$lang) = each($fields))
 			{
 				$lang = lang($lang);
-				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,'&menuaction=infolog.uiinfolog.get_list') : $lang;            
+				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,"&cat_id=$cat_id") : $lang;
 			}
 			return $headers;         
 		}
@@ -300,7 +301,7 @@
 			{
 				case 'sp':        // Sub-List
 					$action_vars = array('action'=>'sp','info_id'=>$info_id);
-				  $t->set_var(lang_info_action,lang('InfoLog - Subprojects from'));
+					$t->set_var(lang_info_action,lang('InfoLog - Subprojects from'));
 					break;
 			  case 'proj':
 					$action_vars += array( 'id_project' => $proj_id,
@@ -349,7 +350,7 @@
 			// ===========================================
 			// list header variable template-declarations
 			// ===========================================
-			$t->set_var( $this->infoHeaders( !$for_include,$sort,$order ));
+			$t->set_var( $this->infoHeaders( !$for_include,$sort,$order,$cat_id ));
 			$t->set_var(h_lang_sub,lang('Sub'));
 			$t->set_var(h_lang_action,lang('Action'));
 			// -------------- end header declaration -----------------
