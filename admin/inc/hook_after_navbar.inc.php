@@ -39,7 +39,10 @@
 					$_app_title    = $setup_info[$app_name]['title'];
 					unset($setup_info);
 
-					$api_str = '<br>' . lang('The API requires an upgrade');
+					if($app_name == 'phpgwapi')
+					{
+						$api_str = '<br>' . lang('The API requires an upgrade');
+					}
 					/* echo $app_name . ',' . $_db_version . ',' . $_file_version; */
 					if(!$GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
 					{
