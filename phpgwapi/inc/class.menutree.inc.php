@@ -269,7 +269,7 @@
 
 			$str = '';
 
-			for($cnt=0;$cnt<$c_tree - 1;$cnt++)
+			for($cnt=0;$cnt<$c_tree;$cnt++)
 			{
 				if(!$visible[$cnt])
 				{
@@ -383,7 +383,7 @@
 						$str .= '<td><a href="'.$src.$extra_param.$params.'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
 					}
 				}
-				elseif(isset($tree[$cnt+1][0]))
+				else
 				{
 					/*************************/
 					/* Tree Leaf             */
