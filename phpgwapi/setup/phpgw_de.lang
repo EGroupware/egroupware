@@ -37,6 +37,7 @@ afghanistan	common	de	AFGHANISTAN
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
 all	common	de	alle
+all fields	common	de	alle Felder
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 american samoa	common	de	AMERICANISCH SAMOA
 andorra	common	de	ANDORRA
@@ -198,6 +199,7 @@ error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses 
 error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
 ethiopia	common	de	ETHIOPIEN
+exact	common	de	exakt
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
@@ -317,6 +319,7 @@ libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
 license	common	de	Lizenz
 liechtenstein	common	de	LIECHTENSTEIN
 list	common	de	Liste
+list members	common	de	Mitglieder anzeigen
 lithuania	common	de	LITAUEN
 local	common	de	lokal
 login	common	de	Anmelden
@@ -411,6 +414,7 @@ original	common	de	Original
 other	common	de	Andere
 overview	common	de	Überblick
 owner	common	de	Besitzer
+page	common	de	Seite
 page was generated in %1 seconds	common	de	Seite wurde erstellt in %1 sekunden
 pakistan	common	de	PAKISTAN
 palau	common	de	PALAU
@@ -462,6 +466,7 @@ read	common	de	Lesen
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
 redoes your last action	htmlarea	de	Letzte Aktion wiederholen
 reject	common	de	Zurückweisen
+remove selected accounts	common	de	Ausgewähle Benutzer entfernen
 rename	common	de	Umbenennen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
@@ -482,6 +487,8 @@ saturday	common	de	Samstag
 saudi arabia	common	de	SAUDI ARABIEN
 save	common	de	Speichern
 search	common	de	Suchen
+search %1 '%2'	common	de	Suche %1 '%2'
+search or select accounts	common	de	Auswählen oder Suchen von Benutzern
 section	common	de	Sektion
 select	common	de	Auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
@@ -492,6 +499,7 @@ select home email address	common	de	private Email-Adresse auswählen
 select one	common	de	Einen auswählen
 select user	common	de	Benutzer auswählen
 select work email address	common	de	geschäftl. Email-Addresse auswählen
+selection	common	de	Auswahl
 send	common	de	Abschicken
 senegal	common	de	SENEGAL
 september	common	de	September
@@ -522,6 +530,7 @@ spain	common	de	SPANIEN
 sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
 start time	common	de	Startzeit
+start with	common	de	begint mit
 status	common	de	Status
 strikethrough	htmlarea	de	Durchstreichen
 subject	common	de	Betreff
@@ -637,4 +646,3 @@ your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 yugoslavia	common	de	JUGOSLAVIEN
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
-Page	common	de	Seite

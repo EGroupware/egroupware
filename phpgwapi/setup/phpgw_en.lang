@@ -37,6 +37,7 @@ afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
+all fields	common	en	all fields
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	en	AMERICAN SAMOA
 andorra	common	en	ANDORRA
@@ -193,6 +194,7 @@ error deleting %1 %2 directory	common	en	Error deleting %1 %2 directory
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory
 estonia	common	en	ESTONIA
 ethiopia	common	en	ETHIOPIA
+exact	common	en	exact
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	fax number
@@ -312,6 +314,7 @@ libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 list	common	en	List
+list members	common	en	List members
 lithuania	common	en	LITHUANIA
 local	common	en	Local
 login	common	en	Login
@@ -404,6 +407,7 @@ original	common	en	Original
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
+page	common	en	Page
 page was generated in %1 seconds	common	en	Page was generated in %1 seconds
 pakistan	common	en	PAKISTAN
 palau	common	en	PALAU
@@ -455,6 +459,7 @@ read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
 redoes your last action	htmlarea	en	Redoes your last action
 reject	common	en	Reject
+remove selected accounts	common	en	remove selected accounts
 rename	common	en	Rename
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	en	Returns an array of todo items
@@ -475,6 +480,8 @@ saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
 save	common	en	Save
 search	common	en	Search
+search %1 '%2'	common	en	Search %1 '%2'
+search or select accounts	common	en	Search or select accounts
 section	common	en	Section
 select	common	en	Select
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
@@ -485,6 +492,7 @@ select home email address	common	en	Select home email address
 select one	common	en	Select one
 select user	common	en	Select user
 select work email address	common	en	Select work email address
+selection	common	en	Selection
 send	common	en	Send
 senegal	common	en	SENEGAL
 september	common	en	September
@@ -515,6 +523,7 @@ spain	common	en	SPAIN
 sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
+start with	common	en	start with
 status	common	en	Status
 strikethrough	htmlarea	en	Strikethrough
 subject	common	en	Subject
