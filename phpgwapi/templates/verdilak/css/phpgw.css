@@ -59,7 +59,7 @@ table.login
 .portal_text
 {
 	font-weight: bold;
-	background: url(../images/bg_filler.png);
+	background-image: url(../images/bg_filler.png);
 }
 
 .small_text
