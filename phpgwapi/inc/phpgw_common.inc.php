@@ -146,10 +146,13 @@
 
     // This function is used if the developer wants to stop a running app in the middle of execution
     // We may need to do some clean up before hand
-    function phpgw_exit()
+    function phpgw_exit($call_footer = False)
     {
        global $phpgw;
-       
+
+       if ($call_footer) {
+          $this->phpgw_footer();
+       }  
        $phpgw->db->disconnect();
        exit;
     }
