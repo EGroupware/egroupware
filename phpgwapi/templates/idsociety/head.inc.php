@@ -18,7 +18,7 @@
 	}
 	else
 	{
-		$csshover = 'A:hover{ text-decoration:none; color: "' .$phpgw_info['theme']['hovlink'] .'" }';
+		$csshover = 'A:hover{ text-decoration:none; color: ' .$phpgw_info['theme']['hovlink'] .'; }';
 	};
 
 	$bodyheader = 'BGCOLOR="'.$phpgw_info['theme']['bg_color'].'" ALINK="'.$phpgw_info['theme']['alink'].'" LINK="'.$phpgw_info['theme']['link'].'" VLINK="'.$phpgw_info['theme']['vlink'].'"';
@@ -34,6 +34,9 @@
 	$tpl->set_var('font_family',$phpgw_info['theme']['font']);
 	$tpl->set_var('website_title',$phpgw_info['server']['site_title']);
 	$tpl->set_var('body_tags',$bodyheader);
+	$tpl->set_var('css_link',$phpgw_info['theme']['link']);
+	$tpl->set_var('css_alink',$phpgw_info['theme']['alink']);
+	$tpl->set_var('css_vlink',$phpgw_info['theme']['vlink']);
 	$tpl->set_var('css_hovlink',$csshover);
 	$tpl->pfp('out','head');
 	unset($tpl);

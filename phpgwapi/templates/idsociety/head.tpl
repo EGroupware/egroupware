@@ -9,12 +9,12 @@
 <STYLE type="text/css">
 <!--
   a { text-decoration:none; }
-  A:link{ text-decoration:none }
-  A:visted{ text-decoration:none }
-  A:active{ text-decoration:none }
+  A:link{ text-decoration:none; color: {css_link}; }
+  A:visted{ text-decoration:none; color: {css_vlink}; }
+  A:active{ text-decoration:none; color: {css_alink}; }
   {css_hovlink}
   body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "{font_family}" }
-  .tablink { color: "#000000"; }
+  .tablink { color: #000000; }
 -->
 </STYLE>
 <script language="javascript">
