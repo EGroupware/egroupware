@@ -1287,19 +1287,19 @@
 		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_msg");
 		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_fax");
 
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_home=''   where tel_home='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_work=''   where tel_work='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_cell=''   where tel_cell='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_voice=''  where tel_voice='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_fax=''    where tel_fax='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_car=''    where tel_car='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_pager=''  where tel_pager='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_msg=''    where tel_msg='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_bbs=''    where tel_bbs='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_modem=''  where tel_modem='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_prefer='' where tel_prefer='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_video=''  where tel_video='n'");
-		$phpgw_setup->db->query("update phpgw_addressbook set tel_isdn=''   where tel_isdn='n'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_home=''   where tel_home='n'   OR tel_home='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_work=''   where tel_work='n'   OR tel_work='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_cell=''   where tel_cell='n'   OR tel_cell='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_voice=''  where tel_voice='n'  OR tel_voice='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_fax=''    where tel_fax='n'    OR tel_fax='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_car=''    where tel_car='n'    OR tel_car='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_pager=''  where tel_pager='n'  OR tel_pager='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_msg=''    where tel_msg='n'    OR tel_msg='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_bbs=''    where tel_bbs='n'    OR tel_bbs='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_modem=''  where tel_modem='n'  OR tel_modem='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_prefer='' where tel_prefer='n' OR tel_prefer='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_video=''  where tel_video='n'  OR tel_video='y'");
+		$phpgw_setup->db->query("update phpgw_addressbook set tel_isdn=''   where tel_isdn='n'   OR tel_isdn='y'");
 
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
 		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
