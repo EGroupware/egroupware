@@ -86,6 +86,7 @@ var $last_column_size;
 			{
 				die("menutree.inc : Unable to open file ".$treefile);
 			}
+			settype($treefile,'array');
 			$treefile = array();
 			while($buffer = fgets($fd, 4096))
 			{
@@ -101,6 +102,7 @@ var $last_column_size;
 		{
 			$ta = explode("\n",$treefile);
 		}
+		reset($ta);
 		while (list($null,$buffer) = each($ta))
 		{
 			$cnt++;
@@ -109,7 +111,10 @@ var $last_column_size;
 			$node=explode('|',$tmp); 
 			$tree[$cnt][1]=chop($node[0]);
 			$tree[$cnt][2]=chop($node[1]);
-			$tree[$cnt][3]=chop($node[2]);
+			if(count($node)>2)
+			{
+				$tree[$cnt][3]=chop($node[2]);
+			}
 			$tree[$cnt][4]=0;
 			if(count($node) == 5)
 			{
@@ -165,11 +170,11 @@ var $last_column_size;
 		/*********************************************/
     
 		$lastlevel=$maxlevel;
-		for ($i=$c_tree - 1; $i>=0; $i -= 1)
+		for ($i=$c_tree - 1; $i>=1; $i -= 1)
 		{
-			if($tree[$i][0] < $tree[$i+1][0])
+			if($tree[$i][0] < $tree[$i + 1][0])
 			{
-				for($j=$tree[$i][0]+1; $j <= $maxlevel; $j++)
+				for($j=$tree[$i][0] + 1; $j <= $maxlevel; $j++)
 				{
 					$levels[$j]=0;
 				}
@@ -263,6 +268,7 @@ var $last_column_size;
 				break;
 		}
 
+		$str = '';
 
 		for($cnt=0;$cnt<$c_tree - 1;$cnt++)
 		{
@@ -277,7 +283,7 @@ var $last_column_size;
 			$params='p=';
 			for($i=0;$i<=$c_tree;$i++)
 			{
-				if(($expand[$i]==1) && ($cnt!=$i) || ($expand[$i]==0 && $cnt==$i))
+				if(($expand[$i]==1) && ($cnt!=$i) || (($expand[$i]==0 && $cnt==$i) && ($tree[$cnt+1][0]>$tree[$cnt][0])))
 				{
 					if($params != 'p=')
 					{
