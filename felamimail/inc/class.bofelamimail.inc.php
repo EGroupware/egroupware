@@ -453,13 +453,13 @@
 
 			if(is_array($list))
 			{
-				// return always the inbox
-				$folders['INBOX'] = 'INBOX';
+				#_debug_array($list);
 				reset($list);
+				$folders = array();
 				while (list($key, $val) = each($list))
 				{
 					// remove the {host:port/imap/...} part
-					$folderNameIMAP = $this->decodeFolderName(preg_replace("/{.*}/","",$val->name));
+					$folderNameIMAP = $this->decodeFolderName(preg_replace("/{.*}/",'',$val->name));
 					$folderParts = explode(".",$folderNameIMAP);
 					reset($folderParts);
 					$displayName = "";
@@ -479,6 +479,8 @@
 				}
 				#exit;
 				ksort($folders,SORT_STRING);
+				// return always the inbox
+				$folders = array_merge(array('INBOX' => 'INBOX'),$folders);
 				reset($folders);
 				return $folders;
 			}

@@ -60,6 +60,135 @@
 		}
 
 		/**
+		* create a folder tree
+		*
+		* this function will create a foldertree based on javascript
+		*
+		* @param _folders array containing the list of folders
+		* @param _selected string containing the selected folder
+		* @param _topFolderName string containing the top folder name
+		* @param _topFolderDescription string containing the description for the top folder
+		*
+		* @returns the html code, to be added into the template
+		*/
+		function createHTMLFolder($_folders, $_selected, $_formName, $_valueName, $_topFolderName, $_topFolderDescription)
+		{
+			$folderImageDir = substr($GLOBALS['phpgw']->common->image('phpgwapi','foldertree_line.gif'),0,-19);
+			
+			// careful! "d = new..." MUST be on a new line!!!
+			$folder_tree_new = "<script type='text/javascript'>d = new dTree('d','".$folderImageDir."');d.config.inOrder=true;d.config.closeSameLevel=true;";
+			
+			$allFolders = array();
+
+			// create a list of all folders, also the ones which are not subscribed
+ 			foreach($_folders as $key => $value)
+			{
+				$folderParts = explode('.',$key);
+				$partCount = count($folderParts);
+				$string = '';
+				for($i = 0; $i < $partCount; $i++)
+				{
+					if(!empty($string)) $string .= '.';
+					$string .= $folderParts[$i];
+					$allFolders[$string] = $folderParts[$i];
+				}
+			}
+
+			// keep track of the last parent id
+			$parentStack	= array();
+			$counter	= 0;
+			$folder_name	= $_topFolderName;
+			$folder_title	= $_topFolderDescription;
+			$folder_icon = $folderImageDir."foldertree_base.gif";
+			// and put the current counter on top
+			array_push($parentStack, 0);
+			$parent = -1;
+			#$folder_tree_new .= "d.add(0,-1,'$folder_name','javascript:void(0);','','','$folder_title');";
+			if($_selected == '--topfolderselected--')
+			{
+				$folder_name = "<font style=\"background-color: #dddddd\">$folder_name</font>";
+			}
+			$folder_tree_new .= "d.add(0,-1,'$folder_name','#','document.$_formName.$_valueName.value=\'--topfolderselected--\'; document.$_formName.submit();','','$folder_title');\n";
+
+			$counter++;
+			
+			foreach($allFolders as $key => $value)
+			{
+				$countedDots = substr_count($key,".");
+				#print "$value => $counted_dots<br>";
+				
+
+				// hihglight currently selected mailbox
+				if ($_selected == $key)
+				{
+					$folder_name = "<font style=\"background-color: #dddddd\">$value</font>";
+					$openTo = $counter;
+				}
+				else
+				{
+					$folder_name = $value;
+				}
+
+				$folder_title = $value;
+				if ($key == 'INBOX')
+				{
+					$folder_icon = $folderImageDir."foldertree_felamimail_sm.png";
+					$folderOpen_icon = $folderImageDir."foldertree_felamimail_sm.png";
+				}
+				else
+				{
+					$folder_icon = $folderImageDir."foldertree_folder.gif";
+					$folderOpen_icon = '';
+				}
+
+				// we are on the same level
+				if($countedDots == count($parentStack) -1)
+				{
+					// remove the last entry
+					array_pop($parentStack);
+					// get the parent
+					$parent = end($parentStack);
+					// and put the current counter on top
+					array_push($parentStack, $counter);
+				}
+				// we go one level deeper
+				elseif($countedDots > count($parentStack) -1)
+				{
+					// get the parent
+					$parent = end($parentStack);
+					array_push($parentStack, $counter);
+				}
+				// we go some levels up
+				elseif($countedDots < count($parentStack))
+				{
+					$stackCounter = count($parentStack);
+					while(count($parentStack) > $countedDots)
+					{
+						array_pop($parentStack);
+					}
+					$parent = end($parentStack);
+					// and put the current counter on top
+					array_push($parentStack, $counter);
+				}
+
+				// some special handling for the root icon
+				// the first icon requires $parent to be -1
+				if($parent == '')
+					$parent = 0;
+				
+				// Node(id, pid, name, url, urlClick, urlOut, title, target, icon, iconOpen, open) {
+				$folder_tree_new .= "d.add($counter,$parent,'$folder_name','#','document.$_formName.$_valueName.value=\'$key\'; document.$_formName.submit();','','$key','','$folder_icon','$folderOpen_icon');\n";
+				$counter++;
+			}
+
+			$folder_tree_new.= "document.write(d);
+			d.openTo('$openTo','true');
+			</script>";
+			
+			return $folder_tree_new;
+		}
+
+		/**
 		* create multiselectbox
 		*
 		* this function will create a multiselect box. Hard to describe! :)
