@@ -43,6 +43,7 @@ file names cannot contain \\ or /	filemanager	en	File names cannot contain \\ or
 file x already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file x could not be created.	filemanager	en	File %1 could not be created.
 files	filemanager	en	Files
+filemanager	common	en	Filemanager
 folder	filemanager	en	Folder
 go to	filemanager	en	Go To
 go to x	filemanager	en	Go to %1

@@ -1077,6 +1077,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
 
+			$cur_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
 			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
 			{
 				case 'idsociety':
@@ -1117,14 +1119,14 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
 					{
 						$var['prefs_img'] = $this->image('phpgwapi','preferences2');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','preferences2','_over');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('preferences','preferences2','_over');
 					}
 					else
 					{
-						$var['prefs_img'] = $this->image_on('phpgwapi','preferences2','_over');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('phpgwapi','preferences2');
+						$var['prefs_img'] = $this->image_on('preferences','preferences2','_over');
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('preferences','preferences2');
 					}
-					$var['prefs_img_hover'] = $this->image_on('phpgwapi','preferences2','_over');
+					$var['prefs_img_hover'] = $this->image_on('preferences','preferences2','_over');
 
 					$var['logout_img'] = $this->image('phpgwapi','log_out2');
 					$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','log_out2','_over');
@@ -1139,6 +1141,17 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					{
 						$var['about_img'] = $this->image_on('phpgwapi','question_mark2','_over');
 						$var['about_img_hover'] = $this->image('phpgwapi','question_mark2');
+					}
+
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'manual')
+					{
+						$var['manual_img']			= $this->image('manual','manual');
+						$var['manual_img_hover']	= $this->image_on('manual','manual','_over');
+					}
+					else
+					{
+						$var['manual_img']			= $this->image_on('manual','manual','_over');
+						$var['manual_img_hover']	= $this->image('manual','manual');
 					}
 
 					$var['logo_img'] = $this->image('phpgwapi','logo2');
@@ -1161,11 +1174,39 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['logout_img']	= $this->image('phpgwapi','tab_logout');
 					$var['about_img']	= $this->image('phpgwapi','tab_help');
 					break;
+				case 'funkwerk':
+					$var['about_img']	= '!';
+					$var['manual_img']	= '?';
+
+					switch ($cur_app)
+					{
+						case 'home':
+							$var['top_css_home'] = 'top_menu_selected';
+							$var['top_css'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							break;
+						case 'preferences':
+							$var['top_css_prefs'] = 'top_menu_selected';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							break;
+						case 'about':
+							$var['top_css_about'] = 'top_menu_selected';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_manual'] = 'top_menu';
+							break;
+						case 'manual':
+							$var['top_css_manual'] = 'top_menu_selected';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = 'top_menu';
+							break;
+						default:
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							break;
+					}
+					break;
 				default:
 					$var['home_img']	= $GLOBALS['phpgw_info']['navbar']['home']['icon'];
 					$var['prefs_img']	= $GLOBALS['phpgw_info']['navbar']['preferences']['icon'];
 					$var['logout_img']	= $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
-					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon']; 
+					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon'];
+					$var['manual_img']	= $GLOBALS['phpgw_info']['navbar']['manual']['icon'];
 					break;
 			}
 
@@ -1173,16 +1214,19 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['prefs_link']			= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 			$var['logout_link']			= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
 			$var['about_link']			= $GLOBALS['phpgw_info']['navbar']['about']['url'];
+			$var['manual_link']			= $GLOBALS['phpgw_info']['navbar']['manual']['url'];
 
 			$var['home_title']			= $GLOBALS['phpgw_info']['navbar']['home']['title'];
 			$var['prefs_title']			= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
 			$var['logout_title']		= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
 			$var['about_title']			= $GLOBALS['phpgw_info']['navbar']['about']['title'];
+			$var['manual_title']		= $GLOBALS['phpgw_info']['navbar']['manual']['title'];
 
 			$var['home_statustext']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
 			$var['prefs_statustext']	= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
 			$var['logout_statustext']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
 			$var['about_statustext']	= $GLOBALS['phpgw_info']['navbar']['about']['title'];
+			$var['manual_statustext']	= $GLOBALS['phpgw_info']['navbar']['manual']['title'];
 
 			if (isset($GLOBALS['phpgw_ifo']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
@@ -1200,7 +1244,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			while (list($app,$data) = each($GLOBALS['phpgw_info']['navbar']))
 			{
-				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
+				if ($app == $cur_app)
+				{
+					$app_css = 'left_selected';
+				}
+				else
+				{
+					$app_css = 'left';
+				}
+
+				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual')
 				{
 					$var['applications'][] = array
 					(
@@ -1209,7 +1262,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						'img_src_over'	=> $data['icon_hover'],
 						'url'			=> $data['url'],
 						'name'			=> str_replace('-','_',$app),
-						'statustext'	=> $data['title']
+						'statustext'	=> $data['title'],
+						'css'			=> $app_css 
 					);
 
 					if($data['icon_hover'] != '')
@@ -1231,7 +1285,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
 				    $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
 				{
-					if ($app == 'home' || $app == 'preferences' || $app == 'about' || $app == 'logout')
+					if ($app == 'home' || $app == 'preferences' || $app == 'about' || $app == 'logout' || $app == 'manual')
 					{
 						$base_tabs[$app] = array
 						(
@@ -1320,7 +1374,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($value);
 			unset($newarray);
 
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety')
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety' || $GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
 			{
 				$navbar = True;
 			}
@@ -1338,7 +1392,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
-					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= lang($data['title']);
+					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $data['title'];
 					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
 
@@ -1355,12 +1409,18 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 
+			/* apps for the top menu */
 			$GLOBALS['phpgw_info']['navbar']['preferences']['title']		= lang('preferences');
 			$GLOBALS['phpgw_info']['navbar']['preferences']['url']			= $GLOBALS['phpgw']->link('/preferences/index.php');
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']			= $this->image('preferences',Array('navbar','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']	= $this->image_on('preferences',Array('navbar','nonav'),'-over');
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
+			$GLOBALS['phpgw_info']['navbar']['manual']['title']				= lang('manual');
+			$GLOBALS['phpgw_info']['navbar']['manual']['url']				= $GLOBALS['phpgw']->link('/manual/index.php');
+			$GLOBALS['phpgw_info']['navbar']['manual']['icon']				= $this->image('manual',Array('navbar','nonav'));
+			$GLOBALS['phpgw_info']['navbar']['manual']['icon_hover']		= $this->image_on('manual',Array('navbar','nonav'),'-over');
+
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home') //|| $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
 			{
 				$app = 'phpGroupWare';
 			}
@@ -1370,8 +1430,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			/* We handle this here becuase its special */
-
-			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about');
+			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about x',$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');

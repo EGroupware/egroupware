@@ -10,10 +10,19 @@
 	<xsl:variable name="prefs_link"><xsl:value-of select="prefs_link"/></xsl:variable>
 	<xsl:variable name="logout_link"><xsl:value-of select="logout_link"/></xsl:variable>
 	<xsl:variable name="about_link"><xsl:value-of select="about_link"/></xsl:variable>
+	<xsl:variable name="manual_link"><xsl:value-of select="manual_link"/></xsl:variable>
+	<xsl:variable name="about_img"><xsl:value-of select="about_img"/></xsl:variable>
+	<xsl:variable name="manual_img"><xsl:value-of select="manual_img"/></xsl:variable>
 	<xsl:variable name="home_statustext"><xsl:value-of select="home_statustext"/></xsl:variable>
 	<xsl:variable name="prefs_statustext"><xsl:value-of select="prefs_statustext"/></xsl:variable>
 	<xsl:variable name="logout_statustext"><xsl:value-of select="logout_statustext"/></xsl:variable>
 	<xsl:variable name="about_statustext"><xsl:value-of select="about_statustext"/></xsl:variable>
+	<xsl:variable name="manual_statustext"><xsl:value-of select="manual_statustext"/></xsl:variable>
+	<xsl:variable name="top_css_home"><xsl:value-of select="top_css_home"/></xsl:variable>
+	<xsl:variable name="top_css_prefs"><xsl:value-of select="top_css_prefs"/></xsl:variable>
+	<xsl:variable name="top_css_about"><xsl:value-of select="top_css_about"/></xsl:variable>
+	<xsl:variable name="top_css_manual"><xsl:value-of select="top_css_manual"/></xsl:variable>
+	<xsl:variable name="top_css"><xsl:value-of select="top_css"/></xsl:variable>
 	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
 		<html>
 			<head>
@@ -32,7 +41,7 @@
 				<!-- BEGIN top_part -->
 				<table width="100%" height="100%" cellspacing="2" cellpadding="2" valign="top">
 					<tr>
-						<td width="131" height="30" valign="bottom" class="top_top">[phpGroupWare]</td>
+						<td width="131" height="30" valign="bottom" class="top_top"><a href="" target="blank" onMouseover="window.status='phpGroupWare --> home'; return true;" onMouseout="window.status=''; return true;" class="left">[phpGroupWare]</a></td>
 						<td height="30" width="19%" valign="bottom" class="user_info">[<xsl:value-of select="user_info_name"/>]</td>
 						<xsl:choose>
 							<xsl:when test="current_users">
@@ -49,10 +58,11 @@
 						<td colspan="4" class="top_bottom">
 							<table cellpadding="2" cellspacing="2">
 								<tr class="top_bottom">
-									<td class="top_link"><a href="{$home_link}" onMouseOver="window.status='{$home_statustext}'; return true;" onMouseOut="window.status='';return true;" class="top_link">[<xsl:value-of select="home_title"/>]</a></td>
-									<td class="top_link"><a href="{$prefs_link}" onMouseOver="window.status='{$prefs_statustext}'; return true;" onMouseOut="window.status='';return true;" class="top_link">[<xsl:value-of select="prefs_title"/>]</a></td>
-									<td class="top_link"><a href="{$logout_link}" onMouseOver="window.status='{$logout_statustext}'; return true;" onMouseOut="window.status='';return true;" class="top_link">[<xsl:value-of select="logout_title"/>]</a></td>
-									<td class="top_link"><a href="{$about_link}" onMouseOver="window.status='{$about_statustext}'; return true;" onMouseOut="window.status='';return true;" class="top_link">[<xsl:value-of select="about_title"/>]</a></td>
+									<td class="top_menu"><a href="{$home_link}" onMouseOver="window.status='{$home_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_home}">[<xsl:value-of select="home_title"/>]</a></td>
+									<td class="top_menu"><a href="{$prefs_link}" onMouseOver="window.status='{$prefs_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_prefs}">[<xsl:value-of select="prefs_title"/>]</a></td>
+									<td class="top_menu"><a href="{$logout_link}" onMouseOver="window.status='{$logout_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css}">[<xsl:value-of select="logout_title"/>]</a></td>
+									<td class="top_menu"><a href="{$about_link}" onMouseOver="window.status='{$about_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_about}">[<xsl:value-of select="about_img"/>]</a></td>
+									<td class="top_menu"><a href="{$manual_link}" onMouseOver="window.status='{$manual_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_manual}">[<xsl:value-of select="manual_img"/>]</a></td>
 								</tr>
 							</table>
 						</td>
@@ -127,12 +137,13 @@
 	<xsl:template match="applications">
 	<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
 	<xsl:variable name="statustext"><xsl:value-of select="statustext"/></xsl:variable>
+	<xsl:variable name="css"><xsl:value-of select="css"/></xsl:variable>
 		<tr>
 			<td height="30" width="131" valign="bottom" class="left">
 				<table class="left_app">
 					<tr>
 						<td class="left_app">
-							<a href="{$url}" onMouseOver="window.status='{$statustext}'; return true;" onMouseOut="window.status='';return true;" class="left">[<xsl:value-of select="title"/>]</a>
+							<a href="{$url}" onMouseOver="window.status='{$statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$css}">[<xsl:value-of select="title"/>]</a>
 						</td>
 					</tr>
 				</table>

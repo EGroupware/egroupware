@@ -95,7 +95,7 @@
 					$rootdir=$this->rootdir;
 				}
 				
-				if (substr($filename, 0, 1) != SEP)
+				if (substr($filename, 0, 1) != SEP && substr($filename, 1, 1) != ':')
 				{
 					$new_filename = $rootdir . SEP . $filename;
 				}

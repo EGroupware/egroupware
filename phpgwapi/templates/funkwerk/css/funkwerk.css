@@ -28,7 +28,7 @@ td.left
 	background-color: #660000;
 }
 
-.top_link
+.top_menu
 {
 	background-color: #0000A0;
 }
@@ -55,13 +55,20 @@ a:link,a:active,a:visited,a:hover
 	color: #0000A0;
 }
 
-a:link.top_link,a:active.top_link,a:visited.top_link
+a:link.top_menu,a:active.top_menu,a:visited.top_menu
 {
 	color: #FFFFFF;
 	font-weight: bold;
 }
 
-a:hover.top_link
+a:hover.top_menu
+{
+	font-weight: bold;
+	color: #660000;
+	background-color: #FFE000;
+}
+
+a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected
 {
 	font-weight: bold;
 	color: #660000;
@@ -75,6 +82,13 @@ a:link.left,a:active.left,a:visited.left
 }
 
 a:hover.left
+{
+	font-weight: bold;
+	color: #660000;
+	background-color: #FFE000;
+}
+
+a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
 {
 	font-weight: bold;
 	color: #660000;

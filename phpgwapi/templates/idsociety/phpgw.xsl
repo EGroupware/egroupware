@@ -12,18 +12,22 @@
 	<xsl:variable name="prefs_link"><xsl:value-of select="prefs_link"/></xsl:variable>
 	<xsl:variable name="logout_link"><xsl:value-of select="logout_link"/></xsl:variable>
 	<xsl:variable name="about_link"><xsl:value-of select="about_link"/></xsl:variable>
+	<xsl:variable name="manual_link"><xsl:value-of select="manual_link"/></xsl:variable>
 	<xsl:variable name="home_img_hover"><xsl:value-of select="home_img_hover"/></xsl:variable>
 	<xsl:variable name="prefs_img_hover"><xsl:value-of select="prefs_img_hover"/></xsl:variable>
 	<xsl:variable name="logout_img_hover"><xsl:value-of select="logout_img_hover"/></xsl:variable>
 	<xsl:variable name="about_img_hover"><xsl:value-of select="about_img_hover"/></xsl:variable>
+	<xsl:variable name="manual_img_hover"><xsl:value-of select="manual_img_hover"/></xsl:variable>
 	<xsl:variable name="home_img"><xsl:value-of select="home_img"/></xsl:variable>
 	<xsl:variable name="prefs_img"><xsl:value-of select="prefs_img"/></xsl:variable>
 	<xsl:variable name="logout_img"><xsl:value-of select="logout_img"/></xsl:variable>
 	<xsl:variable name="about_img"><xsl:value-of select="about_img"/></xsl:variable>
+	<xsl:variable name="manual_img"><xsl:value-of select="manual_img"/></xsl:variable>
 	<xsl:variable name="home_title"><xsl:value-of select="home_title"/></xsl:variable>
 	<xsl:variable name="prefs_title"><xsl:value-of select="prefs_title"/></xsl:variable>
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
+	<xsl:variable name="manual_title"><xsl:value-of select="manual_title"/></xsl:variable>
 	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
 		<html>
 			<head>
@@ -77,7 +81,8 @@
 												<td><a href="{$home_link}" onMouseOver="nine.src='{$home_img_hover}'" onMouseOut="nine.src='{$home_img}'"><img src="{$home_img}" border="0" name="nine" alt="{$home_title}" title="{$home_title}"/></a></td>
 												<td><a href="{$prefs_link}" onMouseOver="ten.src='{$prefs_img_hover}'" onMouseOut="ten.src='{$prefs_img}'"><img src="{$prefs_img}" border="0" name="ten" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
 												<td><a href="{$logout_link}" onMouseOver="eleven.src='{$logout_img_hover}'" onMouseOut="eleven.src='{$logout_img}'"><img src="{$logout_img}" border="0" name="eleven" alt="{$logout_title}" title="{$logout_title}"/></a></td>
-												<td><a href="{$about_link}" onMouseOver="help.src='{$about_img_hover}'" onMouseOut="help.src='{$about_img}'"><img src="{$about_img}" border="0" name="help" alt="{$about_title}" title="{$about_title}"/></a></td>
+												<td><a href="{$about_link}" onMouseOver="about.src='{$about_img_hover}'" onMouseOut="about.src='{$about_img}'"><img src="{$about_img}" border="0" name="about" alt="{$about_title}" title="{$about_title}"/></a></td>
+												<td><a href="{$manual_link}" onMouseOver="manual.src='{$manual_img_hover}'" onMouseOut="manual.src='{$manual_img}'"><img src="{$manual_img}" border="0" name="manual" alt="{$manual_title}" title="{$manual_title}"/></a></td>
 											</tr>
 										</table>
 									</td>

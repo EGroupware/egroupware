@@ -292,8 +292,10 @@
 			{
 				while ($this->db->next_record())
 				{
-					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array(
-						'title'		=> str_replace('- ','-',ucwords(str_replace('_','- ',$this->db->f('app_name')))),
+					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array
+					(
+						//'title'	=> str_replace('- ','-',ucwords(str_replace('_','- ',$this->db->f('app_name')))),
+						'title'		=> lang($this->db->f('app_name')),
 						'name'		=> $this->db->f('app_name'),
 						'enabled'	=> True,
 						'status'	=> $this->db->f('app_enabled'),
