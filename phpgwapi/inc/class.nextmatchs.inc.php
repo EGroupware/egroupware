@@ -35,8 +35,6 @@
 
 		function nextmatchs()
 		{
-			global $phpgw_info, $menuaction;
-
 			$this->template = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$this->template->set_file(array(
 				'_nextmatchs' => 'nextmatchs.tpl'
@@ -51,19 +49,19 @@
 			$this->template->set_block('_nextmatchs','search_filter');
 			$this->template->set_block('_nextmatchs','cats_search_filter');
 
-			if(isset($phpgw_info['user']['preferences']['common']['maxmatchs'])
-			&& intval($phpgw_info['user']['preferences']['common']['maxmatchs']) > 0)
+			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'])
+			&& intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) > 0)
 			{
-				$this->maxmatches = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+				$this->maxmatches = intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']);
 			}
 			else
 			{
 				$this->maxmatches = 15;
 			}
 
-			if(isset($menuaction))
+			if(isset($GLOBALS['menuaction']))
 			{
-				$this->action = $menuaction;
+				$this->action = $GLOBALS['menuaction'];
 			}
 		}
 
@@ -76,9 +74,7 @@
 		*/
 		function set_icon($align,$img,$label)
 		{
-			global $phpgw, $phpgw_info;
-
-			switch(strtolower($phpgw_info['user']['account_lid']))
+			switch(strtolower($GLOBALS['phpgw_info']['user']['account_lid']))
 			{
 				case 'ceb':
 				$border = 2;
@@ -90,7 +86,7 @@
 
 			$var = array(
 				'align'		=> $align,
-				'img'		=> $phpgw->common->image('phpgwapi',$img),
+				'img'		=> $GLOBALS['phpgw']->common->image('phpgwapi',$img),
 				'label'		=> lang($label),
 				'border'	=> $border
 			);
@@ -105,8 +101,6 @@
 		*/
 		function page($extravars='')
 		{
-			global $phpgw;
-
 			if($extravars && is_string($extravars) && substr($extravars,0,1)!='&')
 			{
 				$extras = '&'.$extravars;
@@ -121,7 +115,7 @@
 				$extras = implode($t_extras,'&');
 			}
 
-			return $phpgw->link('/index.php','menuaction='.$this->action.$extras);
+			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$this->action.$extras);
 		}
 
 		/*!
@@ -134,31 +128,29 @@
 		*/
 		function set_link($align,$img,$link,$alt,$extravars)
 		{
-			global $phpgw, $phpgw_info;
-
 			$hidden = '';
 			while(list($var,$value) = each($extravars))
 			{
-				if(((is_int($value) && $value == 0) || $value))
+				if((is_int($value) && $value == 0) || $value)
 				{
-					if(is_int($value))
-					{
-						$param = intval($value);
-					}
-					else
-					{
+//					if(is_int($value))
+//					{
+//						$param = intval($value);
+//					}
+//					else
+//					{
 						$param = '"'.$value.'"';
-					}
+//					}
 					$hidden .= '     <input type="hidden" name="'.$var.'" value='.$param.'>'."\n";
 				}
 			}
 			$border = 0;
 			$var = Array(
 				'align'		=> $align,
-				'action'	=> ($this->action?$this->page():$phpgw->link($link)),
+				'action'	=> ($this->action?$this->page():$GLOBALS['phpgw']->link($link)),
 				'form_name'	=> $img,
 				'hidden'	=> substr($hidden,0,strlen($hidden)-1),
-				'img'		=> $phpgw->common->image('phpgwapi',$img),
+				'img'		=> $GLOBALS['phpgw']->common->image('phpgwapi',$img),
 				'label'		=> $alt,
 				'border'	=> $border,
 				'start'		=> $extravars['start']
@@ -182,7 +174,7 @@
 		*/
 		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
 		{
-			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			global $filter, $qfield, $start, $order, $sort;
 			$start = $localstart;
 
 			$cats	= CreateObject('phpgwapi.categories');
@@ -191,7 +183,7 @@
 			$extravars = $this->split_extras($extravars,$extra);
 
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'lang_category'	=> lang('Category'),
 				'lang_all'		=> lang('All'),
 				'lang_select'	=> lang('Select'),
@@ -202,9 +194,9 @@
 				'start_value'	=> $start,
 				'order_value'	=> $order,
 				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($query)),
+				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
 				'table_width'	=> $twidth,
-				'th_bg'			=> $phpgw_info['theme']['th_bg'],
+				'th_bg'			=> $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'left'			=> $this->left($sn,$start,$total,$extra),
 				'search'		=> ($showsearch?$this->search($search_obj):''),
 				'filter'		=> ($filter_obj?$this->filter($filter_obj,$yours):''),
@@ -282,14 +274,14 @@
 		*/
 		function left($scriptname,$start,$total,$extradata = '')
 		{
-			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
+			global $filter, $qfield, $order, $sort;
 
 			$extravars = Array(
 				'order'		=> $order,
 				'filter'	=> $filter,
 				'q_field'	=> $qfield,
 				'sort'		=> $sort,
-				'query'		=> urlencode(stripslashes($query))
+				'query'		=> urlencode(stripslashes($GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
@@ -337,38 +329,14 @@
 		*/
 		function right($scriptname,$start,$total,$extradata = '')
 		{
-			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-
-			/*
-			$extravars = Array();
-			if ((isset($order)) && ($order != ''))
-			{
-				$extravars['order'] = $order;
-			}
-			if ((isset($filter)) && ($filter != ''))
-			{
-				$extravars['filter'] = $filter;
-			}
-			if ((isset($q_field)) && ($q_field != ''))
-			{
-				$extravars['q_field'] = $qfield;
-			}
-			if ((isset($sort)) && ($sort != ''))
-			{
-				$extravars['sort'] = $sort;
-			}
-			if ((isset($query)) && ($query != ''))
-			{
-				$extravars['query'] = urlencode(stripslashes($query));
-			}
-			*/
+			global $filter, $qfield, $order, $sort;
 
 			$extravars = Array(
 				'order'		=> $order,
 				'filter'	=> $filter,
 				'q_field'	=> $qfield,
 				'sort'		=> $sort,
-				'query'		=> urlencode(stripslashes($query))
+				'query'		=> urlencode(stripslashes($GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
@@ -406,18 +374,18 @@
 		*/
 		function search_filter($search_obj=0,$filter_obj=1,$yours=0,$link='',$extra='')
 		{
-			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			global $filter, $qfield, $start, $order, $sort;
 
 			$start = $localstart;
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'filter_value'	=> $filter,
 				'qfield'	=> $qfield,
 				'start_value'	=> $start,
 				'order_value'	=> $order,
 				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($query)),
-				'th_bg'		=> $phpgw_info['theme']['th_bg'],
+				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
+				'th_bg'		=> $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'search'	=> $this->search($search_obj),
 				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
@@ -432,12 +400,12 @@
 		*/
 		function cats_search_filter($search_obj=0,$filter_obj=1,$yours=0,$cat_id=0,$cat_field='fcat_id',$link='',$extra='')
 		{
-			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			global $filter, $qfield, $start, $order, $sort;
 
 			$start = $localstart;
 			$cats	= CreateObject('phpgwapi.categories');
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'lang_category'	=> lang('Category'),
 				'lang_all'	=> lang('All'),
 				'lang_select'	=> lang('Select'),
@@ -448,8 +416,8 @@
 				'start_value'	=> $start,
 				'order_value'	=> $order,
 				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($query)),
-				'th_bg'		=> $phpgw_info['theme']['th_bg'],
+				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
+				'th_bg'		=> $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'search'	=> $this->search($search_obj),
 				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
@@ -464,9 +432,7 @@
 		*/
 		function search($search_obj=0)
 		{
-			global $query;
-
-			$_query = stripslashes($query);
+			$_query = stripslashes($GLOBALS['query']);
 
 			// If the place a " in there search, it will mess everything up
 			// Our only option is to remove it
@@ -492,17 +458,15 @@
 		*/
 		function filterobj($filtertable, $idxfieldname, $strfieldname)
 		{
-			global $phpgw;
-
 			$filter_obj = array(array('none','show all'));
 			$index = 0;
 
-			$phpgw->db->query("SELECT $idxfieldname, $strfieldname from $filtertable",__LINE__,__FILE__);
-			while($phpgw->db->next_record())
+			$GLOBALS['phpgw']->db->query("SELECT $idxfieldname, $strfieldname from $filtertable",__LINE__,__FILE__);
+			while($GLOBALS['phpgw']->db->next_record())
 			{
 				$index++;
-				$filter_obj[$index][0] = $phpgw->db->f($idxfieldname);
-				$filter_obj[$index][1] = $phpgw->db->f($strfieldname);
+				$filter_obj[$index][0] = $GLOBALS['phpgw']->db->f($idxfieldname);
+				$filter_obj[$index][1] = $GLOBALS['phpgw']->db->f($strfieldname);
 			}
 
 			return $filter_obj;
@@ -515,7 +479,7 @@
 		*/
 		function searchby($search_obj)
 		{
-			global $qfield, $phpgw, $phpgw_info;
+			global $qfield;
 
 			$str = '';
 			if (is_array($search_obj))
@@ -541,13 +505,13 @@
 		*/
 		function filter($filter_obj,$yours=0)
 		{
-			global $filter, $phpgw, $phpgw_info;
+			global $filter;
 
 			if (is_long($filter_obj))
 			{
 				if ($filter_obj == 1)
 				{
-					//  $user_groups = $phpgw->accounts->membership($phpgw_info['user']['account_id']);
+					//  $user_groups = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
 					$indexlimit = count($user_groups);
 
 					if ($yours)
@@ -603,21 +567,19 @@
 		*/
 		function alternate_row_color($currentcolor = '')
 		{
-			global $phpgw_info;
-
 			if (! $currentcolor)
 			{
 				global $tr_color;
 				$currentcolor = $tr_color;
 			}
 
-			if ($currentcolor == $phpgw_info['theme']['row_on'])
+			if ($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
 			{
-				$tr_color = $phpgw_info['theme']['row_off'];
+				$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
 			}
 			else
 			{
-				$tr_color = $phpgw_info['theme']['row_on'];
+				$tr_color = $GLOBALS['phpgw_info']['theme']['row_on'];
 			}
 
 			return $tr_color;
@@ -647,7 +609,7 @@
 		*/
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
-			global $phpgw, $filter, $qfield, $start, $query;
+			global $phpgw, $filter, $qfield, $start;
 
 			if (($order == $var) && ($sort == 'ASC'))
 			{
@@ -667,9 +629,9 @@
 				$extra = $this->extras_to_string($extra);
 			}
 
-			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes($query)).$extra;
+			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes($GLOBALS['query'])).$extra;
 
-			$link = ($this->action?$this->page($extravar):$phpgw->link($program,$extravar));
+			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
 			if ($build_a_href)
 			{
@@ -694,8 +656,6 @@
 		*/
 		function show_sort_order_imap($old_sort,$new_sort,$default_order,$order,$program,$text,$extra='')
 		{
-			global $phpgw;
-
 			if (is_array($extra))
 			{
 				$extra = $this->extras_to_string($extra);
@@ -725,7 +685,7 @@
 
 			$extravar = 'order='.$our_order.'&sort='.$new_sort.$extra;
 
-			$link = ($this->action?$this->page($extravar):$phpgw->link($program,$extravar));
+			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 			return '<a href="' .$link .'">' .$text .'</a>';
 		}
 
