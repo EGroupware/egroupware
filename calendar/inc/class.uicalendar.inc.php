@@ -46,7 +46,7 @@
 
 		var $planner_end_month;
 		var $planner_end_year;
-		var $planner_days_in_end_month; 
+		var $planner_days_in_end_month;
 
 		var $planner_intervals = array(	// conversation hour and interval depending on intervals_per_day
 					//                                  1 1 1 1 1 1 1 1 1 1 2 2 2 2
@@ -91,7 +91,7 @@
 		{
 			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$GLOBALS['phpgw']->browser    = CreateObject('phpgwapi.browser');
-			
+
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
 
 			$this->bo = CreateObject('calendar.bocalendar',1);
@@ -1234,7 +1234,7 @@
 		function day()
 		{
 			$this->bo->read_holidays();
-			
+
 			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
 				$minical = $this->mini_calendar(
@@ -3287,12 +3287,12 @@
 			$day_end = mktime(intval($this->bo->prefs['calendar']['workdayends']),0,1,$params['month'],$params['day'],$params['year']);
 			$daily = $this->set_week_array($GLOBALS['phpgw']->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
 			print_debug('Date to Eval',$date_to_eval);
+			$events_to_show = array();
 			if($daily[$date_to_eval]['appts'])
 			{
 				$events = $this->bo->cached_events[$date_to_eval];
 				print_debug('Date',$date_to_eval);
 				print_debug('Count',count($events));
-				$events_to_show = array();
 				foreach($events as $event)
 				{
 					if ($this->bo->rejected_no_show($event))
@@ -3309,28 +3309,31 @@
 						'content'   => $this->link_to_entry($event,$params['month'],$params['day'],$params['year'])
 					);
 				}
-				//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
-				$other = $GLOBALS['phpgw']->hooks->process(array(
-					'location'  => 'calendar_include_events',
-					'year'      => $params['year'],
-					'month'     => $params['month'],
-					'day'       => $params['day'],
-					'owner'     => $this->bo->owner	// num. id of the user, not necessary current user
-				));
+			}
+			//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
+			$other = $GLOBALS['phpgw']->hooks->process(array(
+				'location'  => 'calendar_include_events',
+				'year'      => $params['year'],
+				'month'     => $params['month'],
+				'day'       => $params['day'],
+				'owner'     => $this->bo->owner	// num. id of the user, not necessary current user
+			));
 
-				if (is_array($other))
+			if (is_array($other))
+			{
+				foreach($other as $evts)
 				{
-					foreach($other as $evts)
+					if (is_array($evts))
 					{
-						if (is_array($evts))
-						{
-							$events_to_show = array_merge($events_to_show,$evts);
-						}
+						$events_to_show = array_merge($events_to_show,$evts);
 					}
-					usort($events_to_show,create_function('$a,$b','return $a[\'starttime\']-$b[\'starttime\'];'));
-					//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
 				}
+				usort($events_to_show,create_function('$a,$b','return $a[\'starttime\']-$b[\'starttime\'];'));
+				//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
+			}
 
+			if (count($events_to_show))
+			{
 				$last_slot_end = -1;
 				foreach($events_to_show as $event)
 				{
