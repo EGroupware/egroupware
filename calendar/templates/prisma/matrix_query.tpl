@@ -13,23 +13,23 @@ function removeSelectedOptions(id)
     {
 	if (openerSelectBox.options[i].selected) 
 	{
-	    alert (i);
 	    openerSelectBox.removeChild(openerSelectBox[i]);
-	    openerSelectBox.options[i--] = null	    
+	    //openerSelectBox.options[i--] = null	    
         }
     }
 }
-function bobo()
+function selectAll(id)
 {
-    openerSelectBox = document.getElementById('uicalendar_matrix_users');
+    openerSelectBox = document.getElementById(id);
 
     if (openerSelectBox == null) 
 	window.close();
 
+    
     for (i=0; i < openerSelectBox.length; i++) 
-    {
-    	    alert (i);
-    }
+	openerSelectBox.options[i].selected = 1 ;
+
+    document.matrixform.submit();
 }
 
 -->																				
@@ -41,10 +41,14 @@ function bobo()
   <td colspan="2" align="center"><b>{title}</b></td>
  </tr>
  {rows}
+ <tr bgcolor="#EEEEEE">
+    <td align="right">{delete_participants}&nbsp;:</td>
+    <td align="left"><a href="#" onClick="javascript:removeSelectedOptions('uicalendar_matrix_users')"><img  src="/calendar/templates/prisma/images/delete.png" border="0"></a></td>
+ </tr>
+ 
  <tr>
   <td colspan="2" align="center">
-  <img src="" onClick="javascript:removeSelectedOptions('uicalendar_matrix_users')" width="100" height="100">  
-    <input type="submit" value="{submit_button}">
+    <input type="button" value="{submit_button}" onClick="javascript:selectAll('uicalendar_matrix_users')">
   </td>
  </tr>
 </table>
