@@ -1,0 +1,205 @@
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	zh	<br><center>汇入完成！点选<a href="index.php">此处</a>回到设定画面。</center>
+actions	setup	zh	动作
+Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	zh	新增自动建立使用者到这个群组［若留空白则使用「Default」］
+admin first name	setup	zh	管理者名
+admin last name	setup	zh	管理者姓
+admin password	setup	zh	管理者密码
+admin username	setup	zh	管理者帐号
+Admins	setup	zh	管理者
+all applications	setup	zh	所有的应用程式
+All Users	setup	zh	所有使用者
+app details	setup	zh	应用程式详细内容
+app install/remove/upgrade	setup	zh	应用程式安装  移除  升级
+application data	setup	zh	应用程式资料
+application management	setup	zh	应用程式管理
+application name and status	setup	zh	应用程式名称及状态
+application name and status information	setup	zh	应用程式名称及状态资讯
+application title	setup	zh	应用程式标题
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	zh	跟据您的要求，系统现在将会尝试建立资料库以及相关资料库的使用权组态。
+at your request, this script is going to attempt to install all the applications for you	setup	zh	跟据您的要求，系统现在将会尝试自动安装所有的应用程式。
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	zh	跟据您的要求，系统现在将会尝试将所有旧版本的应用程式升级。
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	zh	跟据您的要求，系统现在将会尝试将您的资料表升级成新的架构。
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	zh	跟据您的要求，系统现在将会将您原始的资料表及其中的资料完全移除，并以新的资料表格式重新建立资料表。
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	zh	跟据您的要求，系统现在将会移除所有的应用程式并移除所有的资料表及其中的资料。
+Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	zh	尝试使用正确的 FTP 档案格式，而非预设的「application/octet-stream」
+Authentication / Accounts	setup	zh	认证／帐号
+Auto create account records for authenticated users	setup	zh	自动建立所有授权使用者的帐号资料
+available version	setup	zh	可使用的版本
+backupwarn	setup	zh	但是我们<u>强烈建议您备份您的资料表</u>，以免系统自动作业时损伤到您的资料，<br><strong>这个自动作业程式很容意造成资料的损伤</strong>，<br><em>请在进行任何动作前完整备份您的资料！</em>
+because it depends upon	setup	zh	因为此应用程式被关联到
+because it is not a user application, or access is controlled via acl	setup	zh	因为此应用程式不是一个使用者端的应用程式，或是由权限控管存取权限。
+because it requires manual table installation, <br>or the table definition was incorrect	setup	zh	因为此应用程式它需要手动安装资料表或是资料表的定义不正确。
+because it was manually disabled	setup	zh	因为此应用程式已经被手动停用了。
+because of a failed upgrade or install	setup	zh	因为此应用程式升级或安装失败。
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	zh	因为升级失败，或是资料库比此应用程式的版本还要新。
+because the enable flag for this app is set to 0, or is undefined	setup	zh	因为此应用程式的启用设定值被设定为 0 或是为被设定。
+cancel	setup	zh	取消
+charset	setup	zh	gb18030
+check ip address of all sessions	setup	zh	检查所有连线的网路位址
+click here	setup	zh	点选此处
+configuration	setup	zh	组态设定
+configuration completed	setup	zh	组态设定完成
+configure now	setup	zh	组态设定中
+Country Selection	setup	zh	选择国别
+create	setup	zh	建立
+create database	setup	zh	建立资料库
+create one now	setup	zh	马上建立
+creating tables	setup	zh	正在建立资料表
+current version	setup	zh	目前的版本
+currently installed languages: %1 <br>	setup	zh	目前已安装的语言：%1 <br>
+db root password	setup	zh	资料库 ROOT 密码
+db root username	setup	zh	资料库 ROOT 帐号
+Default file system space per user/group ?	setup	zh	预设各使用者／群组可使用的档案空间？
+delete all my tables and data	setup	zh	移除所有的资料表及资料
+delete all old languages and install new ones	setup	zh	移除所有旧的语言资讯档并安装新的语言资讯档
+deleting tables	setup	zh	正在移除资料表
+demo server setup	setup	zh	示  伺服器安装
+Deny all users access to grant other users access to their entries ?	setup	zh	不允许任何使用者将自己的资料开放给其它使用者存取？
+deregistered	setup	zh	取消注册
+details for admin account	setup	zh	管理者帐号详细内容
+domain	setup	zh	网域
+dont touch my data	setup	zh	不要动我的资料
+edit current configuration	setup	zh	编辑目前的组态设定
+Enter some random text for app_session <br>encryption (requires mcrypt)	setup	zh	输入用於连线加密的任意字串［需要安装 MCRYPT］<br>
+Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	zh	输入暂存档案存放的完整路径：<br>［如：/tmp、C:\TEMP］
+Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	zh	输入使用者或群组档案存放的完整路径：<br>［如：/files、E:\FILES］
+Enter the hostname of the machine on which this server is running	setup	zh	输入这个伺服器主机的主机名称
+Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	zh	输入 phpGroupWare 的网页位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>结尾无斜线</b>
+Enter the site password for peer servers	setup	zh	输入对接伺服器的主机密码
+Enter the site username for peer servers	setup	zh	输入对接伺服器的主机名称
+Enter the title for your site	setup	zh	输入网站标题
+Enter your default FTP server	setup	zh	输入预设的档案传输伺服器主机名称
+Enter your HTTP proxy server	setup	zh	输入网页代理伺服器主机名称
+Enter your HTTP proxy server port	setup	zh	输入网页代理伺服器主机埠
+export sql users to ldap	setup	zh	将 SQL 使用者资料汇出至 LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	zh	第一次安装请选择「汇入」；要转换现存於 SQL 中的帐号资料到 LDAP请选择「汇出」
+go back	setup	zh	回到上一页
+has a version mismatch	setup	zh	版本不符
+hooks deregistered	setup	zh	取消附挂注册
+hooks registered	setup	zh	附挂注册
+Host information	setup	zh	主机资讯
+however, the application is otherwise installed	setup	zh	但是此应用程式已安装过
+If no ACL records for user or any group the user is a member of	setup	zh	如果使用者没有任何权限设定或是不属於任何群组，则将该使用者的群组视为
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh	如果应用程式没有任何定义好的资料表，可使用「升级」功能修正此问题。
+If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	zh	如果您使用 LDAP，您希望能管理使用者的家目录及登入环境变数吗？
+if you did not receive any errors, your applications have been	setup	zh	如果您没有看到任何错误讯息，您的应用程式已经
+if you did not receive any errors, your tables have been	setup	zh	如果您没有看到任何错误讯息，您的资料表已经
+import ldap users/groups	setup	zh	汇入 LDAP 使用者／群组
+insanity	setup	zh	建议不使用
+install	setup	zh	安装
+install Applications	setup	zh	安装应用程式
+install language	setup	zh	安装语言
+installed	setup	zh	安装
+is broken	setup	zh	损坏
+is disabled	setup	zh	被停用
+ldap account import/export	setup	zh	LDAP 使用者帐号汇入／汇出
+LDAP accounts context	setup	zh	LDAP 使用者帐号内容
+LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	zh	LDAP 预设家目录前置目录［如：/home/username 的前置目录为 /home］
+LDAP Default shell (e.g. /bin/bash)	setup	zh	LDAP 预设登入命令处理器［如：/bin/bash］
+LDAP encryption type	setup	zh	LDAP 加密类型
+ldap export users	setup	zh	LDAP 汇出使用者
+LDAP groups context	setup	zh	LDAP 群组内容
+LDAP host	setup	zh	LDAP 主机
+ldap import users	setup	zh	LDAP 汇入使用者
+LDAP root password	setup	zh	LDAP 管理者密码
+LDAP rootdn	setup	zh	LDAP 主要端点［rootdn］
+logout	setup	zh	登出
+makesure	setup	zh	确认您的资料库已经安装完成、使用者帐号权限设定完成
+manage applications	setup	zh	管理应用程式
+manage languages	setup	zh	管理语言
+Maximum account id (e.g. 65535 or 1000000)	setup	zh	使用者帐号编码最大值［如：65535 或 1000000］
+Minimum account id (e.g. 500 or 100, etc.)	setup	zh	使用者帐号编码最小值［如：500 或 100］
+multi-language support setup	setup	zh	多国语言设定
+mysqlinstr	setup	zh	在 MySQL 中建立资料库的方法：<br>登入 MySQL 系统 -<br><i>[user@server user]# mysql -u root -p</i><br>建立空的资料库并授权使用者使用 -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	zh	尚未完成
+not ready for this stage yet	setup	zh	先前的步骤尚未执行。
+note: you will be able to customize this later	setup	zh	备注：稍後您还可以做更动。
+ok	setup	zh	正常
+once the database is setup correctly	setup	zh	资料库设定正确
+only add languages that are not in the database already	setup	zh	只新增未在资料库中的语言
+only add new phrases	setup	zh	只加入新的词句
+passwords did not match, please re-enter	setup	zh	密码不符，请重新输入
+Path information	setup	zh	路径资讯
+pgsqlinstr	setup	zh	在 PostgreSQL 中建立资料库的方法：<br>起用 PostgreSQL 系统<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>建立空的资料库 -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	zh	请检查应用程式目录下的 SQL 命令档
+please configure phpGroupWare for your environment	setup	zh	请为您现在的环境设定 phpGroupWare 的相关组态
+please install	setup	zh	请安装
+please login to phpgroupware and run the admin application for additional site configuration	setup	zh	请登入 phpGroupWare 并执行管理者应用程式设定其馀的组态设定
+possible solutions	setup	zh	可能的解决方法
+potential problem	setup	zh	可能的问题
+Preferences	setup	zh	喜好设定
+problem resolution	setup	zh	Problem resolution
+process	setup	zh	处理程序
+re-check my database	setup	zh	再次确认资料库
+re-check my installation	setup	zh	再次确认软体安装
+re-enter password	setup	zh	重新输入密码
+registered	setup	zh	注册
+remove	setup	zh	移除
+requires reinstall or manual repair	setup	zh	需要重新安装或是手动修复
+requires upgrade	setup	zh	需要升级
+resolve	setup	zh	Resolve
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	zh	选择一个应用程式，输入版本编号并开始设定应用程式到这个版本。<br>若您没有输入版本编号，系统只会安装这个应用程式的基本系统资料表。<br><blink>这个动作将不会移除任何应用程式的资料表！</blink>
+select the default applications to which your users will have access	setup	zh	选择您的使用者预设使用的应用程式
+select the desired action(s) from the available choices	setup	zh	在现有的选项中选择所需的动作
+Select where you want to store/retrieve filesystem information	setup	zh	选择您欲储存／取得的档案系统资讯
+Select where you want to store/retrieve user accounts	setup	zh	选择您欲储存／取得使用者帐号的方式
+select which group(s) will be exported (group membership will be maintained)	setup	zh	选择您欲汇出的群组［群组使用者将不会做任何更动］
+select which group(s) will be imported (group membership will be maintained)	setup	zh	选择您欲汇入的群组［群组使用者将不会做任何更动］
+select which languages you would like to use	setup	zh	选择您欲使用的语言
+select which method of upgrade you would like to do	setup	zh	选择您欲使用的升级方式
+select which user(s) will be exported	setup	zh	选择您欲汇出的使用者
+select which user(s) will be imported	setup	zh	选择您欲汇入的使用者
+select which user(s) will have admin privileges	setup	zh	选择拥有管理者权限的使用者
+select your old version	setup	zh	选择旧的版本
+Selectbox	setup	zh	勾选方块
+setup	setup	zh	Setup
+Show 'powered by' logo on	setup	zh	显示「powered by」图示位置
+some or all of its tables are missing	setup	zh	遗失部份或所有的资料表
+status	setup	zh	状态
+step 1 - simple application management	setup	zh	步骤一、基本应用程式管理
+step 2 - configuration	setup	zh	步骤二、组态设定
+step 3 - language management	setup	zh	步骤叁、语言管理
+step 4 - advanced application management	setup	zh	步骤四、进阶应用程式管理
+submit	setup	zh	送出
+table change messages	setup	zh	资料表更动讯息
+tables dropped	setup	zh	资料表已移除
+tables installed, unless there are errors printed above	setup	zh	资料表已安装，若有错误则显示讯息於上
+tables upgraded	setup	zh	资料表已升级
+target version	setup	zh	目标版本
+Text Entry	setup	zh	文字记录
+the table definition was correct, and the tables were installed	setup	zh	资料表定义正确且资料表已正确安装
+the tables	setup	zh	资料表
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	zh	无法正确连结到 LDAP 伺服器主机。<br>请检查 LDAP 伺服器主机的设定。
+this program will help you upgrade or install different languages for phpGroupWare	setup	zh	这个程式将协助您升级或安装 phpGroupWare 内不同的语言
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	zh	这个部份将协助您从 phpGroupWare 的资料表汇出使用者及群组设定到 LDAP 主机中
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	zh	这个部份将协助您从 phpGroupWare 的资料表汇入使用者及群组设定到 LDAP 主机中
+this stage is completed<br>	setup	zh	这个步骤已经完成<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	zh	这个动作将会建立一个管理者帐号及叁个示  帐号。<br>使用者代码及密码分别为：demo/guest、demo2/guest 及 demo3/guest。<br><b>！！！这个动作将会移除所有的帐号！！！</b><br>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zh	设定一个管理者帐号及叁个示  帐号。<br><b>这个动作将会移除所有的帐号</b>
+uninstall all applications	setup	zh	移除所有应用程式
+uninstalled	setup	zh	已经移除
+upgrade	setup	zh	升级
+upgraded	setup	zh	已经升级
+upgrading tables	setup	zh	正在升级资料表内容
+Use cookies to pass sessionid	setup	zh	使用 COOKIE 传递连线代码
+Use pure HTML compliant code (not fully working yet)	setup	zh	使用标准 HTML 原始码（尚未完全支援）
+Users Choice	setup	zh	使用者的选择
+version mismatch	setup	zh	版本不符
+we will automatically update your tables/records to %1	setup	zh	我们将自动帮您更新您的资料表及资料到 %1
+Would you like phpGroupWare to cache the phpgw info array ?	setup	zh	您希望 phpGroupWare 将系统资讯存到存取缓冲区内吗？
+Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	zh	您希望 phpGroupWare 自动於管理者登入时检查是否有最新版本？
+Would you like to show each application's upgrade status ?	setup	zh	您希望显示每一个应用程式升级的资讯吗？
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	您目前安装的为测试版本的 phpGroupWare。<br>目前已经不再支援这个版本，建议您先升级到 0.9.10 版［最後一个测试版本］ <br>再升级到现在的版本。
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	zh	您目前所使用的 PHP 版本太旧，<br>建议您升级到较新的版本，<br>因为旧版本的 PHP 可能会造成 phpGroupWare 运作不正常。<br><br>建议您至少升级到 3.0.16 版
+you appear to be running version %1 of phpGroupWare	setup	zh	您目前所使用的 phpGroupWare 版本为 %1
+you are ready for this stage, but this stage is not yet written.<br>	setup	zh	您已经准备好要使用这个步骤，但这个步骤尚未开发完成。<br>
+you do not have any languages installed. please install one now <br>	setup	zh	您目前没有安装任何的语言，请安装至少一种语言。<br>
+you must enter a username for the admin	setup	zh	您必须输入管理者的帐号名称
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	您应该要移除并重新安装应用程式或试着手动安装
+your applications are current	setup	zh	您的应用程式目前状态
+your database does not exist	setup	zh	找不到您的资料库系统。
+your database is working, but you dont have any applications installed	setup	zh	您的资料库正常运作中，但没有安装任何应用程式。
+your tables are current	setup	zh	您的资料表目前状态
+your tables may be altered and you may lose data	setup	zh	您的资料表已经被更动过并有可能遗失部份资料
+your tables will be dropped and you will lose data	setup	zh	您的资料表将会被完全移除，您也将会遗失所有的资料。
+
