@@ -25,9 +25,10 @@
     
 		$acl = CreateObject('phpgwapi.acl',intval($owner));
 		$acl_list = $acl->read_repository();
+
 		for ($k=0;$k<count($acl_list);$k++)
 		{
-			if ($apps_list[$k]['appname'] == 'admin')
+			if ($acl_list[$k]['appname'] == 'admin')
 			{
 				return True;
 			}
@@ -36,6 +37,7 @@
 		for ($k=0;$k<count($memberships);$k++)
 		{
 			$apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
+			asort($apps_list);
 
 			if (is_array($apps_list))
 			{
