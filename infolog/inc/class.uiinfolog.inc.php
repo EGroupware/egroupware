@@ -130,7 +130,7 @@
 			$ids = $this->bo->search($query['order'],$query['sort'],$query['filter'],$query['cat_id'],
 				$query['search'],$query['action'],$query['action_id'],$query['ordermethod'],
 				$query['start'],$total);
-			
+
 			if (!is_array($ids))
 			{
 				$ids = array( );
@@ -169,9 +169,13 @@
 				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
 				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
 			}
+			if ($values['nm']['add'])
+			{
+				$values['add'] = $values['nm']['add'];
+				unset($values['nm']['add']);
+			}
 			if ($values['add'] || $values['cancel'] || isset($values['nm']['rows']) || isset($values['main']))
 			{
-
 				if ($values['add'])
 				{
 					list($type) = each($values['add']);
@@ -314,9 +318,9 @@
 								$content['info_link_id'] = $link['link_id'];
 
 								$this->bo->write(array(
-									'info_id' => $content['info_id'],
+									'info_id'      => $content['info_id'],
 									'info_link_id' => $content['info_link_id'],
-									'info_from' => $content['info_from']
+									'info_from'    => $content['info_from']
 								),False);
 							}
 						}
