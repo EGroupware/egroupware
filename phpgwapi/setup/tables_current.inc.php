@@ -274,7 +274,7 @@
 		),
 		'phpgw_log_msg' => array(
 			'fd' => array(
-				'log_msg_log_id' 	=> array('type' => 'auto', 		'precision' => 4,	'nullable' => False),
+				'log_msg_log_id' 	=> array('type' => 'int', 		'precision' => 4,	'nullable' => False),
 				'log_msg_seq_no'	=> array('type' => 'int',  		'precision' => 4,	'nullable' => False),
 				'log_msg_date'		=> array('type' => 'timestamp',	'nullable' => False),
 				'log_msg_tx_fid'	=> array('type' => 'varchar',	'precision' => 4,	'nullable' => True),
