@@ -32,6 +32,10 @@
 
   if ($submit) {
      $totalerrors = 0;
+
+     if (! $app_order) {
+        $app_order = 0;
+     }
   
      $phpgw->db->query("select count(*) from applications where app_name='"
      				. addslashes($n_app_name) . "'",__LINE__,__FILE__);
@@ -53,8 +57,8 @@
      
      if (! $totalerrors) {
         $phpgw->db->query("insert into applications (app_name,app_title,app_enabled,app_order) values('"
-			            . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "',"
-			            . "$n_app_status,$app_order)",__LINE__,__FILE__);
+			            . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
+			            . "$n_app_status','$app_order')",__LINE__,__FILE__);
 
         $phpgw->db->query("SELECT preference_owner, preference_value FROM preferences");
 	if($phpgw->db->num_rows()) {
@@ -67,7 +71,7 @@
 	      }
 	    } elseif(!$phpgw_info["user"]["preferences"][$n_app_name]) {
 	      $phpgw->common->hook_single("add_def_pref", $n_app_name);
-	      $phpgw_info["user"]["preferences"]["$n_app_name"] = $phpgw_newuser["user"]["preferences"]["$n_app_name"];
+	      $phpgw_info["user"]["preferences"][$n_app_name] = $phpgw_newuser["user"]["preferences"][$n_app_name];
 	      unset($phpgw_newuser);
 	      $phpgw->preferences->commit();
 	    }
