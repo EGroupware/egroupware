@@ -58,7 +58,7 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      $this->account_id = get_account_id($account_id);
+      $this->account_id = get_account_id($account_id,$phpgw_info['user']['account_id']);
     }
 
     /**************************************************************************\
@@ -465,7 +465,7 @@ It should use the values in the $this->data
 
 		$db2 = $this->db;
 
-		$account_id = get_account_id($accountid);
+		$account_id = get_account_id($accountid,$this->account_id);
 		$memberships = $phpgw->accounts->memberships($account_id);
 		$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 			. 'acl_account in ';
