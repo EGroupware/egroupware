@@ -371,7 +371,11 @@
 						$setup_tpl->set_var('lang_delete',lang('Delete'));
 						$setup_tpl->set_var('db_domain',$key);
 						$setup_tpl->set_var('db_host',$GLOBALS['phpgw_domain'][$key]['db_host']);
-						$setup_tpl->set_var('db_port',$GLOBALS['phpgw_domain'][$key]['db_port']);
+						/* Set default here if the admin didn't set a port yet */
+						$setup_tpl->set_var('db_port',$GLOBALS['phpgw_domain'][$key]['db_port']
+							? $GLOBALS['phpgw_domain'][$key]['db_port']
+							: @$default_db_ports[$GLOBALS['phpgw_domain'][$key]['db_type']]
+						);
 						$setup_tpl->set_var('db_name',$GLOBALS['phpgw_domain'][$key]['db_name']);
 						$setup_tpl->set_var('db_user',$GLOBALS['phpgw_domain'][$key]['db_user']);
 						$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_domain'][$key]['db_pass']);
