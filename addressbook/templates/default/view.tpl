@@ -31,21 +31,21 @@
 <!-- END view_footer -->
 <!-- BEGIN view_buttons -->
 <center>
- <TABLE border="0" cellpadding="1" cellspacing="1">
-  <TR> 
-   <TD>
+ <table border="0" cellpadding="1" cellspacing="1">
+  <tr> 
+   <td>
      {edit_button}
-   </TD>
-   <TD>
+   </td>
+   <td>
      {copy_button}
-   </TD>
-   <TD>
+   </td>
+   <td>
      {vcard_button}
-   </TD>
-   <TD>
+   </td>
+   <td>
      {done_button}
-   </TD>
-  </TR>
- </TABLE>
+   </td>
+  </tr>
+ </table>
 </center>
 <!-- END view_buttons -->

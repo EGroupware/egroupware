@@ -15,7 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-		'Preferences'	=> $phpgw->link('/addressbook/preferences.php'),
+		'Preferences'	=> $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
 		'Grant Access'	=> $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
 		'Edit Categories'	=> $phpgw->link('/preferences/categories.php','cats_app='.$appname . '&cats_level=True&global_cats=True'),
 		'Edit custom fields'	=> $phpgw->link('/addressbook/fields.php')

@@ -232,5 +232,58 @@
 		{
 			return $this->so->delete_entry($ab_id);
 		}
+
+		function save_preferences($prefs,$other,$qfields,$fcat_id)
+		{
+			global $phpgw;
+			$phpgw->preferences->read_repository();
+			if (is_array($prefs))
+			{
+/*				_debug_array($prefs);exit; */
+				while (list($pref,$x) = each($qfields))
+				{
+					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
+					if ($prefs[$pref] == 'on')
+					{
+						$phpgw->preferences->add('addressbook',$pref,'addressbook_on');
+					}
+					else
+					{
+						$phpgw->preferences->delete('addressbook',$pref);
+					}
+				}
+			}
+
+			if(is_array($other))
+			{
+				$phpgw->preferences->delete('addressbook','mainscreen_showbirthdays');
+	 			if ($other['mainscreen_showbirthdays'])
+				{
+					$phpgw->preferences->add('addressbook','mainscreen_showbirthdays');
+				}
+
+				$phpgw->preferences->delete('addressbook','default_filter');
+	 			if ($other['default_filter'])
+				{
+					$phpgw->preferences->add('addressbook','default_filter');
+				}
+
+				$phpgw->preferences->delete('addressbook','autosave_category');
+	 			if ($other['autosave_category'])
+				{
+					$phpgw->preferences->add('addressbook','autosave_category',True);
+				}
+			}
+
+			if($fcat_id)
+			{
+				$phpgw->preferences->delete('addressbook','default_category');
+				$phpgw->preferences->add('addressbook','default_category',$fcat_id);
+			}
+
+			$phpgw->preferences->save_repository(True);
+			/* _debug_array($prefs);exit; */
+			Header('Location: ' . $phpgw->link('/preferences/index.php'));
+		}
 	}
 ?>
