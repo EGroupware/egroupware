@@ -371,10 +371,12 @@
 				/* this was not listing private entries when show all was selected */
 				/* $filterfields += array('phpgwcontactaccess' => 'public'); */
 				$grants = $this->grants;
-				while(list($user) = each($grants))
+				if ($DEBUG) { echo '<br>DEBUG - My user id is: ' . $this->account_id; }
+				while (list($user) = each($grants))
 				{
-					if($DEBUG) { echo '<br>DEBUG - Grant from owner: '.$user; }
-					$filterfields += array('phpgwcontactowner' => $user);
+					if ($DEBUG) { echo '<br>DEBUG - Grant from owner: '.$user; }
+					/* I know this looks silly... */
+					@$filterfields['phpgwcontactowner'][] = array('phpgwcontactowner' => $user);
 				}
 			}
 			/*
@@ -401,48 +403,27 @@
 				echo "<br>DEBUG - ORDER by $order";
 			}
 
+			$ldap_fields = array();
+			$myfilter = '';
+
 			if($query)
 			{
-				$ldap_fields = array();
-				$total = 0;
-
 				reset($this->stock_contact_fields);
-				$lquery = '(&(|'; /* $lquery = '(|'; */
-				while(list($name,$value) = each($this->stock_contact_fields) )
-				{
-					$lquery .= '(' . $value . '=*' . $query . '*)';
-				}
-				$lquery .= ')(phpgwcontactowner=*))'; /* $lquery .= ')'; */
-				/* echo $lquery; exit; */
-
-				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], "$lquery");
-
-				/* append the results */
-				$ldap_fields += ldap_get_entries($this->ldap, $sri);
-
-				/* add the # rows to our total */
-				$total = $total + ldap_count_entries($this->ldap, $sri);
-				/* _debug_array($ldap_fields);exit; */
-
-				if($filterfields)
-				{
-					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
-				}
-
-				$this->total_records = count($ldap_fields);
-				/* echo '<br>total="'.$this->total_records.'"'; */
+				$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
 			}
 			else
 			{
-				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'phpgwcontactowner=*');
-				$ldap_fields = ldap_get_entries($this->ldap, $sri);
-				$this->total_records = ldap_count_entries($this->ldap, $sri);
-
-				if($filterfields)
-				{
-					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
-				}
+				$myfilter = $this->makefilter($filterfields,'','',$DEBUG);
 			}
+
+			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], $myfilter);
+
+			$ldap_fields = ldap_get_entries($this->ldap, $sri);
+			/* _debug_array($ldap_fields);exit; */
+
+			$this->total_records = ldap_count_entries($this->ldap, $sri);
+			/* echo '<br>total="'.$this->total_records.'"'; */
+			if($DEBUG) { echo '<br>Query returned "'.$this->total_records.'" records.'; }
 
 			/* Use shared sorting routines, based on sort and order */
 			if($sort == 'ASC')
@@ -513,6 +494,116 @@
 				}
 			}
 			return $return_fields;
+		}
+
+		/* Used by read() above to build the ldap filter string */
+		function makefilter($qarray,$extra='',$query='', $DEBUG=False)
+		{
+			if(!is_array($qarray))
+			{
+				return $qarray;
+			}
+
+			if(is_array($extra))
+			{
+				if($DEBUG) { echo '<br>Searching...'; }
+				reset($extra);
+				while(list($name,$value) = each($extra))
+				{
+					$qarray[] = array($value => $query);
+				}
+			}
+			elseif($extra)
+			{
+				$tmp = split('=',$extra);
+				$qarray[] = array($tmp[0] => $tmp[1]);
+			}
+
+			@ksort($qarray);
+
+			$aquery = '(&';
+			$oquery = '(|';
+			$hasor = False;
+
+			while(list($name,$value) = @each($qarray))
+			{
+				if(is_array($value))
+				{
+					while(list($x,$y) = each($value))
+					{
+						if($y == '*')
+						{
+							$oquery .= '(' . $x . '=*)';
+							$hasor = True;
+						}
+						elseif(is_array($y))
+						{
+							/* This was most likely created from acl grants in read() above */
+							while(list($a,$b) = each($y))
+							{
+								$tmp .= '(' . $a . '=' . $b . ')';
+							}
+						}
+						else
+						{
+							$oquery .= '(' . $x . '=*' . $y . '*)';
+							$hasor = True;
+						}
+					}
+				}
+				elseif($value == $query)
+				{
+					/* searching */
+					$oquery .= '(' . $name . '=*' . $value . '*)';
+					$hasor = True;
+				}
+				else
+				{
+					/* exact value (filtering based on tid, etc...) */
+					if($name == $lastname)
+					{
+						$aquery .= '(' . $name . '=' . $value . ')';
+					}
+					else
+					{
+						$aquery .= '(' . $name . '=' . $value . ')';
+					}
+				}
+
+				if($tmp)
+				{
+					if(strstr($tmp,')('))
+					{
+						$aquery .= '(|' . $tmp . ')';
+					}
+					else
+					{
+						$aquery .= $tmp;
+					}
+					unset($tmp);
+				}
+			}
+			$aquery .= ')';
+			$oquery .= ')';
+			if(!$hasor)
+			{
+				$oquery = '';
+				$fquery = $aquery;
+			}
+			else
+			{
+				$fquery = '(&' . $aquery . $oquery . ')';
+			}
+
+			if($DEBUG)
+			{
+				echo '<br>AND query:  "' . $aquery . '"';
+				echo '<br>OR query:   "' . $oquery . '"';
+				echo '<br>Full query: "' . $fquery . '"';
+				echo '<br>Will search in "' . $GLOBALS['phpgw_info']['server']['ldap_contact_context'] . '"';
+			}
+
+			return $fquery;
 		}
 
 		function add($owner,$fields,$access='private',$cat_id='0',$tid='n')
