@@ -24,7 +24,7 @@
   }
   $phpgw_setup->loaddb();
 
-     include($phpgw_info["server"]["api_inc"]."/phpgw_common.inc.php");
+     include($phpgw_info["server"]["api_inc"]."/class.common.inc.php");
      $common = new common;
      $sep = $common->filesystem_separator();
   } else {
