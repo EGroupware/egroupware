@@ -813,7 +813,7 @@
 			if ($phpgw_info["flags"]["newsmode"])
 			{
 				$phpgw_info["user"]["preferences"]["email"]["mail_server_type"] = "nntp";
-			}		
+			}
 		}
 
 

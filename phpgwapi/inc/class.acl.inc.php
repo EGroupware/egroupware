@@ -294,12 +294,11 @@ It should use the values in the $this->data
     * These are the generic functions. Not specific to $this->account_id       *
     \**************************************************************************/
 
-    function add_repository($app, $location, $account_id, $account_type, $rights)
+    function add_repository($app, $location, $account_id, $rights)
     {
       $this->delete_repository($app, $location, $account_id);
-      $sql = 'insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)';
-      $sql .= " values ('" . $app . "','" . $location . "','" . $account_id . "','" . $account_type
-      	. "','" . $rights . "')";
+      $sql = 'insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)';
+      $sql .= " values ('" . $app . "','" . $location . "','" . $account_id . "','" . $rights . "')";
       $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
