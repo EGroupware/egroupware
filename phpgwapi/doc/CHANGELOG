@@ -6,6 +6,11 @@
         - Added new template set (just web)
           Thanks Shawn J. Wallace
         - Created in mini-calendar for the verdilak layout
+        - XHTML 4.01 compliance
+        - Fixed all user preferences (within that user) getting overwritten when any app makes
+          a change to them.
+        - Fixed E-Mail display inline graphics
+        - Fixed free/busy displaying incorrect title date
 
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch
