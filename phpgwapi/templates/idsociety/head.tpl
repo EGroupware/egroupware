@@ -8,12 +8,13 @@
 <META NAME="keywords" CONTENT="phpGroupWare">
 <STYLE type="text/css">
 <!--
-    a { text-decoration:none; }
-    A:link{ text-decoration:none }
-    A:visted{ text-decoration:none }
-    A:active{ text-decoration:none }
-    body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: {font_family} }
-    .tablink { color: #000000; }
+  a { text-decoration:none; }
+  A:link{ text-decoration:none }
+  A:visted{ text-decoration:none }
+  A:active{ text-decoration:none }
+  {css_hovlink}
+  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "{font_family}" }
+  .tablink { color: "#000000"; }
 -->
 </STYLE>
 <script language="javascript">
@@ -32,5 +33,5 @@ function MM_preloadImages() {
 
 <TITLE>{website_title}</TITLE>
 </HEAD>
-<BODY {body_tags}>
-<!-- END Head -->
+<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END Head -->
+<BODY {body_tags} 

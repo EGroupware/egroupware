@@ -1,4 +1,12 @@
-<body bgcolor="AAAAAA" marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" onLoad="MM_preloadImages('{app_images}','{img_root}/log_out_over.gif','{img_root}/preferences_over.gif','{img_root}/help-over.gif','{img_root}/welcome_over.gif')">
+ marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" 
+ onLoad="MM_preloadImages('{app_images}',
+'{img_root}/log_out_over.gif',
+'{img_root}/preferences_over.gif',
+'{img_root}/help-over.gif',
+'{img_root}/welcome_over.gif')">
+  <!-- the above is the continuation and finishing if the < body > element started in head.tpl
+  the margin items could be merged into head, as head already supplies some
+  the variables for onLoad are set in navbar -->
 
 <table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
@@ -11,7 +19,7 @@
 
     <TR>
      <TD><img src="{img_root}/right_nav_bar.gif" border="0" name="one"></TD>
-    <TR>
+    </tr>
 
 {applications}
 
