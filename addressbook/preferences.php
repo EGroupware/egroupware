@@ -10,7 +10,6 @@
   \**************************************************************************/
 
   /* $Id$ */
-
   $phpgw_info["flags"] = array("noheader" => True, 
                                "nonavbar" => True, 
                                "currentapp" => "addressbook", 

@@ -11,6 +11,12 @@
 
   /* $Id$ */
 
+  $d1 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
+  if($d1 == "htt" || $d1 == "ftp" ) {
+    echo "Failed attempt to break in via an old Security Hole!<br>\n";
+    exit;
+  } unset($d1);
+
   function update_version_table($tableschanged = True){
     global $currentver, $phpgw_info, $db, $tablechanges;
     if ($tableschanged == True){$tablechanges = True;}
