@@ -1,4 +1,4 @@
-%1 records imported	infolog	pl	% 1 rekord zaimportowano
+%1 records imported	infolog	pl	%1 rekord zaimportowano
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	pl	
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pl	
 accept	infolog	pl	Akceptuj
@@ -84,8 +84,6 @@ search for:	infolog	pl	Szukaj dla
 select	infolog	pl	Wybór
 show full usernames	infolog	pl	Wy¶wietlaj pe³n± nazwê u¿ytkownika
 show open events: tasks/calls/notes on main screen	infolog	pl	Wy¶wietlaj otwarte zdarzenia na stronie g³ównej
-showing x	infolog	pl	Wy¶wietlono %1
-showing x - x of x	infolog	pl	Wy¶wietlono %1 - %2 z %3
 startdate	infolog	pl	Pocz±tek
 startrecord	infolog	pl	
 status	infolog	pl	Status

@@ -1,7 +1,5 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
-%s $row_cont[info_addr]	infolog	en	%s $row_cont[info_addr]
-%s today	infolog	en	%s Today
 - subprojects from	infolog	en	- Subprojects from
 0%	infolog	en	0%
 10%	infolog	en	10%
@@ -158,8 +156,6 @@ select an entry to link with	infolog	en	Select an entry to link with
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
 show full usernames	infolog	en	Show full usernames
 show open events: tasks/calls/notes on main screen	infolog	en	Show open Events: Tasks/Calls/Notes on main screen
-showing x	infolog	en	showing %1
-showing x - x of x	infolog	en	showing %1 - %2 of %3
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Startdate
 startdate enddate	infolog	en	Startdate Enddate

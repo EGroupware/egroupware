@@ -1,7 +1,5 @@
 %1 records imported	infolog	fr	%1 enregistrements importés
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous devriez %2revenir%3 et décocher Tester l'import)
-%s $row_cont[info_addr]	infolog	fr	%s $row_cont[info_addr]
-%s today	infolog	fr	%s Aujourd'hui
 - subprojects from	infolog	fr	- Sous-projets de
 0%	infolog	fr	0%
 10%	infolog	fr	10%
@@ -158,8 +156,6 @@ select an entry to link with	infolog	fr	Choisissez une entrée vers laquelle lier
 should this entry only be visible to you and people you grant privat access via the acl	infolog	fr	Cette entrée ne doit-elle être visible que par vous et les personnes à qui vous avez donné l'accès privé par l'ACL
 show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
 show open events: tasks/calls/notes on main screen	infolog	fr	Montrer les évènements ouverts: tâches/appels/notes sur l'écran principal
-showing x	infolog	fr	Montre %1
-showing x - x of x	infolog	fr	éléments %1 - %2 de %3
 start a new search, cancel this link	infolog	fr	Démarre une nouvelle recherche, annule ce lien
 startdate	infolog	fr	Date de départ
 startdate enddate	infolog	fr	Date de départ date de fin

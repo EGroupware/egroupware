@@ -1,7 +1,5 @@
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
-%s $row_cont[info_addr	infolog	de	
-%s today	infolog	de	%s Heute
 - subprojects from	infolog	de	- Untereinträge von
 0%	infolog	de	0%
 10%	infolog	de	10%
@@ -159,8 +157,6 @@ select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show open events: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
-showing x	infolog	de	%1 Einträge
-showing x - x of x	infolog	de	Einträge %1 - %2 von %3
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Endedatum
