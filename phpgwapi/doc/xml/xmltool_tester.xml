@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<myarr>
+  <red>base color</red>
+  <yellow>base color</yellow>
+  <blue>base color</blue>
+  <green>
+    <mix>yellow</mix>
+    <mix>blue</mix>
+  </green>
+  <orange>
+    <mix>yellow</mix>
+    <mix>red</mix>
+    <wax>
+      <count>one</count>
+      <count>two</count>
+      <count>three</count>
+    </wax>
+    <wax>
+      <count>four</count>
+      <count>five</count>
+      <count>six</count>
+    </wax>
+  </orange>
+  <jack>
+    <jill>
+      <harry>
+        <met>
+          <sally>hello</sally>
+          <joe></joe>
+        </met>
+      </harry>
+    </jill>
+  </jack>
+  <somenode>
+		<![CDATA[PHP_SERIALIZED_OBJECT:O:7:"xmltool":10:{s:9:"node_type";s:4:"node";s:8:"comments";a:0:{}s:10:"xmlversion";s:3:"1.0";s:7:"doctype";a:0:{}s:9:"root_node";N;s:4:"name";s:5:"PHPGW";s:4:"data";N;s:9:"data_type";N;s:10:"attributes";a:0:{}s:12:"indentstring";s:2:"  ";}]]>
+	</somenode>
+</myarr>
