@@ -1,0 +1,139 @@
+account active	admin	zh	启用帐号
+account has been created	common	zh	成功新增帐号
+account has been deleted	common	zh	成功移除帐号
+account has been updated	common	zh	成功更新帐号
+account permissions	admin	zh	帐号权限
+account preferences	admin	zh	帐号喜好设定
+action	admin	zh	动作
+add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	zh	新增自动建立使用者到这个群组［若留空白则使用「Default」］
+add global category	admin	zh	新增全区分类
+add new account	admin	zh	新增帐号
+add new application	admin	zh	新增应用程式
+admins	admin	zh	系统管理
+all records and account information will be lost!	admin	zh	所有的帐号资料及纪录将会消失！
+all users	admin	zh	所有使用者
+allow anonymous access to this app	admin	zh	允许匿名使用者存取此应用程式
+anonymous user	admin	zh	匿名使用者
+application name	admin	zh	应用程式名称
+application title	admin	zh	应用程式标题
+applications	admin	zh	应用程式
+are you sure you want to delete this account ?	admin	zh	您确定要移除此帐号吗？
+are you sure you want to delete this application ?	admin	zh	您确定要移除此应用程式吗？
+are you sure you want to delete this group ?	admin	zh	您确定要移除此群组吗？
+are you sure you want to kill this session ?	admin	zh	您确定要结束此连线吗？
+attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	zh	尝试使用正确的 FTP 档案格式，而非预设的「application/octet-stream」
+authentication / accounts	admin	zh	认证／帐号
+auto create account records for authenticated users	admin	zh	自动建立所有授权使用者的帐号资料
+change main screen message	admin	zh	变更主画面讯息
+check ip address of all sessions	admin	zh	检查所有连线的网路位址
+country selection	admin	zh	选择国家
+create group	admin	zh	新增群组
+default file system space per user	admin	zh	预设各使用者可使用的档案空间
+default file system space per user/group ?	admin	zh	预设各使用者／群组可使用的档案空间？
+deny all users access to grant other users access to their entries ?	admin	zh	不允许任何使用者将自己的资料开放给其它使用者存取？
+display	admin	zh	显示
+do you also want to delete all global subcategories ?	admin	zh	您确定要移除所有的全区子分类吗？
+edit application	admin	zh	编辑应用程式
+edit global category	admin	zh	编辑全区分类
+edit group	admin	zh	编辑群组
+edit user account	admin	zh	编辑使用者帐号
+enabled - hidden from navbar	admin	zh	启用，但不显示在功能列中
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	输入用於连线加密的任意字串［需要安装 MCRYPT］<br>
+enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	zh	输入暂存档案存放的完整路径：<br>［如：/tmp、C:\TEMP］
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	zh	输入使用者或群组档案存放的完整路径：<br>［如：/files、E:\FILES］
+enter the hostname of the machine on which this server is running	admin	zh	输入这个伺服器主机的主机名称
+enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	zh	输入 phpGroupWare 的网页位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>结尾无斜线</b>
+enter the site password for peer servers	admin	zh	输入对接伺服器的主机密码
+enter the site username for peer servers	admin	zh	输入对接伺服器的主机名称
+enter the title for your site	admin	zh	输入此网站的标题
+enter your default FTP server	admin	zh	输入预设的档案传输伺服器主机名称
+enter your HTTP proxy server	admin	zh	输入网页代理伺服器主机名称
+enter your HTTP proxy server port	admin	zh	输入网页代理伺服器主机埠
+force selectbox	admin	zh	固定勾选方块
+global categories	admin	zh	全区分类
+group ?	admin	zh	群组？
+group has been added	common	zh	成功新增群组
+group has been deleted	common	zh	成功移除群组
+group has been updated	common	zh	成功更新群组
+group name	admin	zh	群组名称
+hide php information	admin	zh	隐藏 PHP 资讯
+home directory	admin	zh	家目录
+host information	admin	zh	Host information
+idle	admin	zh	  置时间
+if no acl records for user or any group the user is a member of	admin	zh	If no ACL records for user or any group the user is a member of
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+installed applications	common	zh	已安装之应用程式
+interface	admin	zh	介面
+ip	admin	zh	网路位址
+kill	admin	zh	终止
+last login	admin	zh	上次登入时间
+last login from	admin	zh	上次登入来源
+last time read	admin	zh	上次读取时间
+last %1 logins	admin	zh	最後 %1 次登入
+ldap accounts context	admin	zh	LDAP 使用者帐号内容
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAP 预设家目录前置目录［如：/home/username 的前置目录为 /home］
+ldap default shell (e.g. /bin/bash)	admin	zh	LDAP 预设登入命令处理器［如：/bin/bash］
+ldap encryption type	admin	zh	LDAP 加密类型
+ldap groups context	admin	zh	LDAP 群组内容
+ldap host	admin	zh	LDAP 主机
+ldap root password	admin	zh	LDAP 管理者密码
+ldap rootdn	admin	zh	LDAP 主要端点［rootdn］
+list of current users	admin	zh	线上使用者列表
+login screen	admin	zh	登入画面
+login shell	admin	zh	登入命令处理器
+login time	admin	zh	登入时间
+loginid	admin	zh	登入代码
+main screen message	admin	zh	主画面讯息
+manager	admin	zh	管理者
+maximum account id (e.g. 65535 or 1000000)	admin	zh	使用者帐号编码最大值［如：65535 或 1000000］
+minimum account id (e.g. 500 or 100, etc.)	admin	zh	使用者帐号编码最小值［如：500 或 100］
+new group name	admin	zh	新的群组名称
+new password [ leave blank for no change ]	admin	zh	新的密码（空白时不更动）
+no matches found	admin	zh	没有找到符合的资料
+path information	admin	zh	Path information
+peer servers	admin	zh	对接伺服器
+percent of users that logged out	admin	zh	使用者登出比例
+permissions	admin	zh	权限
+permissions this group has	admin	zh	群组权限
+phpinfo	admin	zh	PHP 资讯
+preferences	admin	zh	喜好设定
+re-enter password	admin	zh	再次输入密码
+remove all users from this group	admin	zh	移除此群组中所有的使用者
+select permissions this group will have	admin	zh	选择此群组的权限
+select users for inclusion	admin	zh	选择属於此群组的使用者
+select where you want to store/retrieve filesystem information	admin	zh	选择您欲储存／取得档案系统资讯的位置
+select where you want to store/retrieve user accounts	admin	zh	选择您欲储存／取得档案使用者帐号讯的位置
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh	此应用程式於功能列中之位置（数字较小者列於左方，较大者列於右方）
+selectbox	admin	zh	勾选方块
+show 'powered by' logo on	admin	zh	显示「powered by」图示位置
+site	admin	zh	网站
+site configuration	admin	zh	网站设定
+sorry, that group name has already been taking.	admin	zh	很抱歉，该群组名称已被使用了
+sorry, the follow users are still a member of the group %1	admin	zh	很抱歉，下列使用者仍然属於群组 %1
+submit changes	admin	zh	送出更新资料
+template selection	admin	zh	选择画面配置
+text entry	admin	zh	文字资料
+that loginid has already been taken	admin	zh	该使用者代码已被使用了
+the login and password can not be the same	admin	zh	使用者密码不可和使用者代码相同
+the two passwords are not the same	admin	zh	请确认两次都输入同样的密码
+they must be removed before you can continue	admin	zh	您必须将其他资料移除後才能继续
+this category is currently being used by applications as a parent category	admin	zh	此分类正被其他的应用程式使用中
+total records	admin	zh	所有纪录
+use cookies to pass sessionid	admin	zh	使用 COOKIE 传递连线代码
+use pure html compliant code (not fully working yet)	admin	zh	使用标准 HTML 原始码（尚未完全支援）
+use theme	admin	zh	使用布景主题
+user accounts	admin	zh	使用者管理
+user groups	admin	zh	使用者群组管理
+userdata	admin	zh	使用者资料
+users choice	admin	zh	使用者的选择
+view access log	admin	zh	列出存取记录
+view error log	admin	zh	列出错误记录
+view sessions	admin	zh	列出连线
+would you like phpgroupWare to cache the phpgw info array ?	admin	zh	您希望 phpGroupWare 将系统资讯存到存取缓冲区内吗？
+would you like phpgroupWare to check for a new version<br>when admins login ?	admin	zh	您希望 phpGroupWare 自动於管理者登入时检查是否有最新版本？
+would you like to show each application's upgrade status ?	admin	zh	您希望显示每一个应用程式升级的资讯吗？
+you must add at least 1 permission or group to this account	admin	zh	您必须至少授权此帐号一项权限或将此帐号归於一个群组下。
+you must enter an application name and title.	admin	zh	您必须输入应用程式名称及标头。
+you must select a file type	admin	zh	您必须选择一种档案型态。
+you will need to remove the subcategories before you can delete the parent category	admin	zh	您需要将所有子分类移除後才可以移除上一层之分类！
+
