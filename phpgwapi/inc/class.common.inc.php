@@ -1258,4 +1258,34 @@
        system("grep -r '^[ \t]*function' *");
        echo '</pre>';
     }    
+
+    // This will return a value for the next id an app may need to insert values into ldap.
+		/*!
+		@function next_id
+		@abstract return the next higher value for an integer, and increment it in the db.
+		*/
+	function next_id($appname)
+	{
+		global $phpgw;
+
+		if (!$appname) {
+			return -1;
+		}
+
+		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'");
+		while( $phpgw->db->next_record() ) {
+			$id = $phpgw->db->f("id");
+		}
+
+		if (empty($id) || !$id) {
+			$id = 1;
+			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")");
+			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'");
+		} else {
+			$id = $id + 1;
+			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'");
+		}
+
+		return intval($id);
+	}
   }//end common class

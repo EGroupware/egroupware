@@ -1322,6 +1322,20 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre18';
 	}
 
+    $test[] = '0.9.10pre18';
+    function upgrade0_9_10pre18() {
+        global $phpgw_info, $phpgw_setup;
+
+        $sql = "create table phpgw_nextid (
+           appname varchar(25),
+           id      int(8),
+		   UNIQUE (appname)
+          )";
+
+        $phpgw_setup->db->query($sql);
+        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre19';
+    }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
