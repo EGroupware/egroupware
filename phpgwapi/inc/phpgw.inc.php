@@ -183,8 +183,8 @@
       $this->session       = new sessions;
 
       if ($phpgw_info["flags"]["currentapp"] == "login") {
-	$log = explode("@",$login);
-	$this->preferences   = new preferences($log[0]);
+        $log = explode("@",$login);
+        $this->preferences   = new preferences($log[0]);
       }else{
         if (! $this->session->verify()) {
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
@@ -192,9 +192,7 @@
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
-        $this->preferences->preference = $phpgw_info["user"]["preferences"];
-        $this->preferences->account_id = $phpgw_info["user"]["account_id"];
-
+        $this->preferences = new preferences($phpgw_info["user"]["account_id"]);
      }
 
       $this->translation   = new translation;
