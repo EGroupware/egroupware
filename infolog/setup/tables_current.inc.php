@@ -28,7 +28,7 @@
 				'info_cat' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'info_datecreated' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'info_startdate' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
-				'info_enddata' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
+				'info_enddate' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'info_id_parent' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'info_pri' => array('type' => 'varchar', 'precision' => 10),
 				'info_time' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
