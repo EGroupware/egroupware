@@ -417,7 +417,7 @@
 		global $passed_icon, $warning_icon;
 		$available = (function_exists('imagecopyresampled')  || function_exists('imagecopyresized'));
 		
-		echo ($available ? $passed_icon : $warning_icon).' '.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."</span>\n";
+		echo ($available ? $passed_icon : $warning_icon).' '.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."<br/></span>\n";
 		
 		if (!$available)
 		{
