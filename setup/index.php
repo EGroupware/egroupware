@@ -110,8 +110,8 @@
             Login to mysql -<br>
             <i>[user@server user]# mysql -u root -p</i><br>
             Create the empty database and grant user permissions -<br>
-            <i>mysql> create database phpgroupware;</i><br>
-            <i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i><br>
+            <i>mysql> create database <?php echo $phpgw_domain[$ConfigDomain]["db_name"]; ?>;</i><br>
+            <i>mysql> grant all on <?php echo $phpgw_domain[$ConfigDomain]["db_name"]; ?>.* to phpgroupware@localhost identified by 'password';</i><br>
           ";
           break;
         case "pgsql":
@@ -120,7 +120,7 @@
             Start the postmaster<br>
             <i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>
             Create the empty database -<br>
-            <i>[user@server user]# createdb phpgroupware</i><br>
+            <i>[user@server user]# createdb <?php echo $phpgw_domain[$ConfigDomain]["db_name"]; ?></i><br>
           ";
           break;
       }
