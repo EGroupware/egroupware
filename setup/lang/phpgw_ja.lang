@@ -1,9 +1,12 @@
 actions	setup	ja	Æ°ºî
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ja	¼«Æ°ºîÀ®»þ¤Î¥°¥ë¡¼¥× &nbsp; (»ØÄê¤Ê¤·¤Î¾ì¹ç 'default')
+admins	setup	ja	´ÉÍý¼Ô
 admin first name	setup	ja	À«
 admin last name	setup	ja	Ì¾
 admin password	setup	ja	¥Ñ¥¹¥ï¡¼¥É
 admin username	setup	ja	¥æ¡¼¥¶ID
 all applications	setup	ja	¤Ç¡¢¤¹¤Ù¤Æ¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤òºîÀ®¤·¤Þ¤¹¡£
+all users	setup	ja	Á´¤Æ¤Î¥æ¡¼¥¶
 app details	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¾ÜºÙ
 app install/remove/upgrade	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÄÉ²Ã/¹¹¿·/ºï½ü
 application data	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¾ðÊó
@@ -17,6 +20,9 @@ at your request, this script is going to attempt to upgrade your old application
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	¸Å¤¤¥Æ¡¼¥Ö¥ë¤ò¸½ºß¤Î¥Õ¥©¡¼¥Þ¥Ã¥È¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Þ¤·¤¿¡£
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ja	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
 at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë¤Ç¡¢¥Æ¡¼¥Ö¥ë¤È¥Ç¡¼¥¿¤òºï½ü¤·¤Þ¤·¤¿
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP ¤ÎMIME¥¿¥¤¥×¤Ç &nbsp; 'application/octet-stream' &nbsp; ¤ÎÂå¤ï¤ê¤Ë<br>Àµ¤·¤¤¥¿¥¤¥×¤ò»È¤¦
+authentication / accounts	setup	ja	Ç§¾Ú/¥¢¥«¥¦¥ó¥È¾ðÊó
+auto create account records for authenticated users	setup	ja	Ç§¾Ú¤·¤¿¥æ¡¼¥¶¾ðÊó¤ò¼«Æ°Åª¤ËºîÀ®¤¹¤ë
 available version	setup	ja	ºÇ¿·¤Î<BR>¥Ð¡¼¥¸¥ç¥ó
 backupwarn	setup	ja	<br>¤·¤«¤·¡¢¤³¤Î½èÍý¤¬¡¢¤¢¤Ê¤¿¤Î¥Ç¡¼¥¿¤òÇË²õ¤·¤Æ¤·¤Þ¤Ã¤¿¾ì¹ç¤ËÈ÷¤¨¤Æ¡¢<u>¥Ç¡¼¥¿¥Ð¥Ã¥¯¥¢¥Ã¥×¤ò¤ª´«¤á¤·¤Þ¤¹¡£<br></u><em>Àè¤Ë¿Ê¤àÁ°¤Ë¡¢¥Ç¡¼¥¿¤Î¥Ð¥Ã¥¯¥¢¥Ã¥×¤ò¹Ô¤Ã¤Æ²¼¤µ¤¤¡£</em>
 because it depends upon	setup	ja	ÍýÍ³¤Ï¼¡¤Î¤È¤ª¤ê¤Ç¤¹
@@ -27,10 +33,13 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤¬ÍøÍÑ²ÄÇ½¤È¤Ê¤Ã¤Æ¤¤¤Þ¤»¤ó¡£
 cancel	setup	ja	¥­¥ã¥ó¥»¥ë
 charset	setup	ja	EUC-JP
+check ip address of all sessions	setup	ja	Á´¤Æ¤Î¥»¥Ã¥·¥ç¥ó¤Ç IP ¥¢¥É¥ì¥¹¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
 click here	setup	ja	¤³¤³¤ò¥¯¥ê¥Ã¥¯¤¹¤ë
 configuration completed	setup	ja	´Ä¶­ÀßÄê¤Ï´°Î»¤·¤Þ¤·¤¿¡£
 configuration	setup	ja	´Ä¶­ÀßÄê
 configure now	setup	ja	´Ä¶­ÀßÄê
+country selection	setup	ja	¹ñ¤ÎÁªÂò
+create demo accounts	setup	ja	¥Ç¥âÍÑ¥¢¥«¥¦¥ó¥ÈºîÀ®
 create one now	setup	ja	ºîÀ®
 create	setup	ja	ºîÀ®
 create database	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤·¤Þ¤·¤¿
@@ -42,18 +51,34 @@ delete all my tables and data	setup	ja	¤¹¤Ù¤Æ¤Î¥Æ¡¼¥Ö¥ë¤È¥Ç¡¼¥¿¤òºï½ü¤·¤Þ¤¹
 delete all old languages and install new ones	setup	ja	¸½ºß¤Î¸À¸ì¤ò¤¹¤Ù¤Æºï½ü¤·¤Æ¡¢ÁªÂò¤·¤¿¸À¸ì¤ò¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë
 deleting tables	setup	ja	¥Æ¡¼¥Ö¥ë¤òºï½ü¤·¤Þ¤·¤¿
 demo server setup	setup	ja	¥Ç¥â¥µ¡¼¥Ð¥»¥Ã¥È¥¢¥Ã¥×
+deny all users access to grant other users access to their entries ?	setup	ja	Â¾¤Î¥æ¡¼¥¶¾ðÊó¤Ø¤Î¥¢¥¯¥»¥¹¤òÁ´¤Æ¤Î¥æ¡¼¥¶¤Ëµö²Ä¤·¤Ê¤¤
 deregistered	setup	ja	ÅÐÏ¿²ò½ü¤·¤Þ¤·¤¿
 details for admin account	setup	ja	´ÉÍý¼Ô¥¢¥«¥¦¥ó¥È¤Î¾ÜºÙ¾ðÊó
 domain	setup	ja	¥É¥á¥¤¥ó
 edit current configuration	setup	ja	´Ä¶­ÀßÄê
+enter some random text for app session <br>encryption (requires mcrypt)	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥»¥Ã¥·¥ç¥ó°Å¹æ²½¤Î¤¿¤á¤Î<br>Ç¤°Õ¥Æ¥­¥¹¥ÈÆþÎÏ(mcrypt »þÉ¬Í×)
+enter the full path for temporary files.<br>Examples: /tmp, c:\temp	setup	ja	¥Æ¥ó¥Ý¥é¥ê¥Õ¥¡¥¤¥ë¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br>Îã¡§/tmp ¤ä C:\TEMP ¤Ê¤É
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	ja	¥Õ¥¡¥¤¥ë¥Þ¥Í¡¼¥¸¥ã¤Î¥Õ¥¡¥¤¥ëÊÝÂ¸Àè¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br>Îã¡§/files ¤ä E:\FILES ¤Ê¤É
+enter the hostname of the machine on which this server is running	setup	ja	phpGroupWare ¤¬Æ°ºî¤¹¤ë¥Û¥¹¥ÈÌ¾
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	ja	phpGroupWare ¤Î URL<BR>Îã¡§http://www.itheart.com/phpgroupware &nbsp; ¤ä &nbsp; /phpgroupware ¤Ê¤É<BR><b>ºÇ¸å¤Ï¥¹¥é¥Ã¥·¥å¤ò»ØÄê¤·¤Ê¤¤¤³¤È</b>
+enter the site username for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ð¤Î¥æ¡¼¥¶Ì¾
+enter the site password for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ð¤Î¥Ñ¥¹¥ï¡¼¥É
+enter the title for your site	setup	ja	¥¿¥¤¥È¥ëÌ¾
 export sql users to ldap	setup	ja	LDAP ¤Ø SQL¤Î¥æ¡¼¥¶¤ò¥¨¥¯¥¹¥Ý¡¼¥È¤·¤Þ¤¹
+enter your default ftp server	setup	ja	´ûÄê¤Î FTP ¥µ¡¼¥Ð
+enter your http proxy server	setup	ja	HTTP &nbsp; ¥×¥í¥­¥·¥µ¡¼¥Ð
+enter your http proxy server port	setup	ja	HTTP &nbsp; ¥×¥í¥­¥·¥µ¡¼¥Ð¥Ý¡¼¥È
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ja	¿·µ¬¥¤¥ó¥¹¥È¡¼¥ë¤Î¾ì¹ç¤Ï¡¢¥¤¥ó¥Ý¡¼¥È¤òÁªÂò¤·¤Æ²¼¤µ¤¤¡£´ûÂ¸¤Î SQL ¥¢¥«¥¦¥ó¥È¤ò LDAP ¤ËÊÑ´¹¤¹¤ë¾ì¹ç¤Ï¡¢¥¨¥¯¥¹¥Ý¡¼¥È¤òÁªÂò¤·¤Æ²¼¤µ¤¤¡£
+force selectbox	setup	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
 go back	setup	ja	Ìá¤ë
 has a version mismatch	setup	ja	¥Ð¡¼¥¸¥ç¥ó¤¬°Û¤Ê¤ê¤Þ¤¹
 hooks deregistered	setup	ja	¥Õ¥Ã¥¯¤òÅÐÏ¿²ò½ü¤·¤Þ¤·¤¿¡£
 hooks registered	setup	ja	¥Õ¥Ã¥¯¤òÅÐÏ¿¤·¤Þ¤·¤¿¡£
+host information	setup	ja	¥Û¥¹¥È¾ðÊó
 however, the application is otherwise installed	setup	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÂ¾¤ÎÉôÊ¬¤Ï¥¤¥ó¥¹¥È¡¼¥ë¤·¤Þ¤·¤¿¡£
+if no acl records for user or any group the user is a member of	setup	ja	ACL¤Ë¥æ¡¼¥¶¤ä¥°¥ë¡¼¥×¤Î¾ðÊó¤¬¤Ê¤¤¾ì¹ç¤Î½èÍý
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¹¹¿·¤òÁªÂò¤·¤ÆÌäÂê¤ò²ò·è¤·¤Æ¤¯¤À¤µ¤¤¡£
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ja	LDAP ÍøÍÑ»þ¤Î¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê¤È¥í¥°¥¤¥ó¥·¥§¥ë¤Î¾ðÊó
 if you did not receive any errors, your applications have been	setup	ja	¥¨¥é¡¼¤Ï¸«¤Ä¤«¤ê¤Þ¤»¤ó¤Ç¤·¤¿¡£
 if you did not receive any errors, your tables have been	setup	ja	¥¨¥é¡¼¤Ï¸«¤Ä¤«¤ê¤Þ¤»¤ó¤Ç¤·¤¿¡£
 import ldap users/groups	setup	ja	LDAP ¥æ¡¼¥¶/¥°¥ë¡¼¥× ¥¤¥ó¥Ý¡¼¥È
@@ -66,12 +91,22 @@ is broken	setup	ja	²õ¤ì¤Æ¤¤¤Þ¤¹
 is disabled	setup	ja	»ÈÍÑ¤Ç¤­¤Þ¤»¤ó
 ldap account import/export	setup	ja	LDAP ¥¢¥«¥¦¥ó¥È ¥¤¥ó¥Ý¡¼¥È/¥¨¥¯¥¹¥Ý¡¼¥È
 ldap accounts configuration	setup	ja	LDAP ¥¢¥«¥¦¥ó¥ÈÀßÄê
+ldap accounts context	setup	ja	LDAP ¥¢¥«¥¦¥ó¥È¥³¥ó¥Æ¥­¥¹¥È
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	´ûÄê¤Î¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê¥×¥ì¥Õ¥£¥Ã¥¯¥¹<br> &nbsp; &nbsp; (Îã¡§/home ¤Ê¤é¤Ð /home/uername ¤È¤Ê¤ê¤Þ¤¹)
+ldap default shell (e.g. /bin/bash)	setup	ja	´ûÄê¤Î¥·¥§¥ë &nbsp; (Îã¡§/bin/bash¤Ê¤É)
+ldap encryption type	setup	ja	LDAP °Å¹æ²½¥¿¥¤¥×
 ldap export users	setup	ja	LDAP ¥¨¥¯¥¹¥Ý¡¼¥È¥æ¡¼¥¶
+ldap groups context	setup	ja	LDAP ¥°¥ë¡¼¥×¥³¥ó¥Æ¥­¥¹¥È
+ldap host	setup	ja	LDAP ¥Û¥¹¥ÈÌ¾
 ldap import users	setup	ja	LDAP ¥¤¥ó¥Ý¡¼¥È¥æ¡¼¥¶
+ldap rootdn	setup	ja	LDAP rootdn
+ldap root password	setup	ja	LDAP ¥ë¡¼¥È¥Ñ¥¹¥ï¡¼¥É
 logout	setup	ja	¥í¥°¥¢¥¦¥È
 makesure	setup	ja	¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎºîÀ®¤È¥¢¥«¥¦¥ó¥È¤Ë¸¢¸Â¤òÍ¿¤¨¤Þ¤¹
 manage applications	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÀßÄê
 manage languages	setup	ja	¸À¸ì´Ä¶­ÀßÄê
+maximum account id (e.g. 65535 or 1000000)	setup	ja	ºÇÂç¥æ¡¼¥¶ID &nbsp; (Îã¡§65536 ¤ä 1000000 ¤Ê¤É)
+minimum account id (e.g. 500 or 100, etc.)	setup	ja	ºÇ¾®¥æ¡¼¥¶ID &nbsp; (Îã¡§ 500 ¤ä 100 ¤Ê¤É)
 multi-language support setup	setup	ja	¸À¸ì´Ä¶­ÀßÄê
 mysqlinstr	setup	ja	 MySQL¤Ç¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤¹¤ë¤Ë¤Ï:<br>mysql ¤Ë¥í¥°¥¤¥ó -<br><i>[user@server user]# mysql -u root -p</i><br>¶õ¤Î¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤·¡¢¥¢¥«¥¦¥ó¥È¤Ë¸¢¸Â¤òÉÕÍ¿¤¹¤ë -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 not complete	setup	ja	´°Î»¤·¤Æ¤¤¤Þ¤»¤ó¡£
@@ -83,6 +118,7 @@ only add languages that are not in the database already	setup	ja	¿·¤·¤¤¸À¸ì¤¹¤Ù¤
 only add new phrases	setup	ja	¿·¤·¤¤¥Õ¥ì¡¼¥º¤ÎÄÉ²Ã
 or we can attempt to create the database for you:	setup	ja	¤Þ¤¿¤Ï¡¢¤³¤Î½èÍý¤Ç¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤¹¤ë¤³¤È¤¬²ÄÇ½¤Ç¤¹
 passwords did not match, please re-enter	setup	ja	¥Ñ¥¹¥ï¡¼¥É¤Ë¸í¤ê¤¬¤¢¤ê¤Þ¤¹¡£ºÆÅÙÆþÎÏ¤·¤Æ²¼¤µ¤¤
+path information	setup	ja	¥Ñ¥¹¾ðÊó
 pgsqlinstr	setup	ja	PostgreSQL¤Ç¥Ç¡¼¥¿¥Ù¡¼¥¹¤òºîÀ®¤¹¤ë¤Ë¤Ï:<br>postmaster ¤Îµ¯Æ°<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>¶õ¤Î¥Ç¡¼¥¿¥Ù¡¼¥¹ºîÀ® -<br><i>[user@server user]# createdb phpgroupware</i>
 please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
 please configure phpGroupWare for your environment	setup	ja	Please configure phpGroupWare for your environment
@@ -91,6 +127,7 @@ please login	setup	ja	¥í¥°¥¤¥ó
 please login to phpgroupware and run the admin application for additional site configuration	setup	ja	phpGroupWare ¤Ë¥í¥°¥¤¥ó¤·¤Æ¡¢admin ¥¢¥×¥ê¥±¡¼¥·¥ç¥óÆâ¤Î³Æ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥µ¥¤¥È´Ä¶­ÀßÄê¤ò¼Â¹Ô¤·¤Æ²¼¤µ¤¤
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
+preferences	setup	ja	¥æ¡¼¥¶ÀßÄê¾ðÊó
 problem resolution	setup	ja	²ò·èÊýË¡
 re-check my installation	setup	ja	¥¤¥ó¥¹¥È¡¼¥ë³ÎÇ§
 re-enter password	setup	ja	¥Ñ¥¹¥ï¡¼¥ÉºÆÆþÎÏ
@@ -101,15 +138,20 @@ requires upgrade	setup	ja	Requires upgrade
 resolve	setup	ja	³ÎÇ§
 select the default applications to which your users will have access	setup	ja	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÀßÄêÆ°ºî¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
+select where you want to store/retrieve filesystem information	setup	ja	¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¾ðÊó¤Î³ÊÇ¼/¸¡º÷¾ì½ê
+select where you want to store/retrieve user accounts	setup	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È¤Î³ÊÇ¼/¸¡º÷¾ì½ê
 select which group(s) will be exported (group membership will be maintained)	setup	ja	Select which group(s) will be exported (group membership will be maintained)
 select which group(s) will be imported (group membership will be maintained)	setup	ja	Select which group(s) will be imported (group membership will be maintained)
 select which languages you would like to use	setup	ja	¸À¸ì¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 select which method of upgrade you would like to do	setup	ja	¸À¸ì´Ä¶­ÀßÄê¤ÎÊýË¡¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
+select which type of authentication you are using	setup	ja	Ç§¾Ú¥¿¥¤¥×
 select which user(s) will be exported	setup	ja	Select which user(s) will be exported
 select which user(s) will be imported	setup	ja	Select which user(s) will be imported
 select which user(s) will have admin privileges	setup	ja	Select which user(s) will have admin privileges
 select your old version	setup	ja	Select your old version
+selectbox	setup	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
 setup	setup	ja	¥»¥Ã¥È¥¢¥Ã¥×
+show 'powered by' logo on	setup	ja	powered by ¥í¥´É½¼¨°ÌÃÖ
 some or all of its tables are missing	setup	ja	É¬Í×¤Ê¥Æ¡¼¥Ö¥ë¤¬Â¸ºß¤·¤Þ¤»¤ó¡£
 status	setup	ja	¾õÂÖÉ½¼¨
 step 1 - simple application management	setup	ja	Step 1 - ¥Æ¡¼¥Ö¥ëºîÀ®
@@ -121,6 +163,7 @@ table change messages	setup	ja	¥Æ¡¼¥Ö¥ëÊÑ¹¹¥á¥Ã¥»¡¼¥¸
 tables dropped	setup	ja	¥Æ¡¼¥Ö¥ë¤òºï½ü¤·¤Þ¤·¤¿
 tables installed, unless there are errors printed above	setup	ja	¤ò¥¤¥ó¥¹¥È¡¼¥ë¤·¤Þ¤·¤¿¡£¥¨¥é¡¼É½¼¨¤¬¤Ê¤±¤ì¤Ð´°Î»¤Ç¤¹¡£
 tables upgraded	setup	ja	¥Æ¡¼¥Ö¥ë¤ò¹¹¿·¤·¤Þ¤·¤¿
+text entry	setup	ja	¥Æ¥­¥¹¥ÈÆþÎÏ
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
 the tables	setup	ja	the tables
 this program will help you upgrade or install different languages for phpGroupWare	setup	ja	phpGroupWare ¤Ç¤Î¡¢¸À¸ì´Ä¶­¤òÀßÄê¤·¤Þ¤¹¡£
@@ -134,8 +177,14 @@ uninstalled	setup	ja	¥¢¥ó¥¤¥ó¥¹¥È¡¼¥ë
 upgraded	setup	ja	¥¢¥Ã¥×¥°¥ì¡¼¥É
 upgrade	setup	ja	¹¹¿·
 upgrading tables	setup	ja	Upgrading Tables
+use pure html compliant code (not fully working yet)	setup	ja	½ã¿è¤ÊHTML¤òÍøÍÑ¡Ê´°Á´¤ËÆ°ºî¤·¤Þ¤»¤ó¡Ë
+use cookies to pass sessionid	setup	ja	cookie¤Î¥»¥Ã¥·¥ç¥óid¤ò»ÈÍÑ
+users choice	setup	ja	¥æ¡¼¥¶ÁªÂò
 version mismatch	setup	ja	Version Mismatch
 we will automatically update your tables/records to x	setup	ja	¥»¥Ã¥È¥¢¥Ã¥×¤Ï¡¢%1 ÍÑ¤Î¥Æ¡¼¥Ö¥ë¤ä¥Ç¡¼¥¿¤Ë¼«Æ°¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Þ¤¹¡£
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	ja	´ÉÍý¼Ô¤Ç¥í¥°¥¤¥ó»þ¡¢phpGroupWare¤Î¥Ð¡¼¥¸¥ç¥ó¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+would you like phpgroupware to cache the phpgw info array ?	setup	ja	phpGroupWare ¤Î¥­¥ã¥Ã¥·¥å¤Ëphpgw info ÇÛÎó¤òÍøÍÑ¤¹¤ë
+would you like to show each application's upgrade status ?	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥¢¥Ã¥×¥°¥ì¡¼¥É¾õ¶·É½¼¨
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	ja	PHP¤Î¥Ð¡¼¥¸¥ç¥ó¤¬¸Å¤¤¤è¤¦¤Ç¤¹¡£<br>¥Ð¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤ò¤ª´«¤á¤·¤Þ¤¹¡£<br>¸Å¤¤¥Ð¡¼¥¸¥ç¥ó¤Î PHP ¤Ç¤Ï¡¢phpGroupWare ¤Î¤¹¤Ù¤Æ¤Îµ¡Ç½¤¬Àµ³Î¤ËÆ°ºî¤·¤Þ¤»¤ó¡£<br><br>Ver 3.0.16 °Ê¹ß¤Ë¥Ð¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤·¤Æ¤¯¤À¤µ¤¤¡£
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running version x of phpGroupWare	setup	ja	¸½ºß¡¢phpGroupWare Ver. %1 ¤¬Æ°ºî¤·¤Æ¤¤¤ë¤È»×¤ï¤ì¤Þ¤¹¡£

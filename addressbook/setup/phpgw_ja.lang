@@ -87,6 +87,7 @@ that field name has been used already !	addressbook	ja	¹àÌÜÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤
 this person's first name was not in the address book.	addressbook	ja	¥¢¥É¥ì¥¹Ä¢¤ËÌ¾Á°¤¬¤¢¤ê¤Ş¤»¤ó¡£
 today is x's birthday!	common	ja	º£Æü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
 tommorow is x's birthday.	common	ja	ÌÀÆü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
+url	addressbook	ja	URL
 vcard	common	ja	VCard
 vcards require a first name entry.	addressbook	ja	VCard ¤Ë¤Ï¡¢Ì¾Á°¤¬É¬Í×¤Ç¤¹¡£
 video phone	addressbook	ja	¥Ó¥Ç¥ªÅÅÏÃ
