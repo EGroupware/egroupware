@@ -70,8 +70,8 @@ $jsLongDateFormat = '%a, '.($dayFirst ? '%e' : '%b').($dateformat[1] == '.' ? '.
  *   ifFormat      | date format that will be stored in the input field
  *   daFormat      | the date format that will be used to display the date in displayArea
  *   singleClick   | (true/false) wether the calendar is in single click mode or not (default: true)
- *   mondayFirst   | (true/false) if true Monday is the first day of week, Sunday otherwise (default: true)
- *   align         | alignment (default: "Bl"); if you don't know what's this see the calendar documentation
+ *   firstDay      | numeric: 0 to 6.  "0" means display Sunday first, "1" means display Monday first, etc.
+ *   align         | alignment (default: "Br"); if you don't know what's this see the calendar documentation
  *   range         | array with 2 elements.  Default: [1900, 2999] -- the range of years available
  *   weekNumbers   | (true/false) if it's true (default) the calendar will display week numbers
  *   flat          | null or element ID; if not null the calendar will be a flat calendar having the parent with the given ID
@@ -83,12 +83,18 @@ $jsLongDateFormat = '%a, '.($dayFirst ? '%e' : '%b').($dateformat[1] == '.' ? '.
  *   date          | the date that the calendar will be initially displayed to
  *   showsTime     | default: false; if true the calendar will include a time selector
  *   timeFormat    | the time format; can be "12" or "24", default is "12"
+ *   electric      | if true (default) then given fields/date areas are updated for each move; otherwise they're updated only on close
+ *   step          | configures the step of the years in drop-down boxes; default: 2
+ *   position      | configures the calendar absolute position; default: null
+ *   cache         | if "true" (but default: "false") it will reuse the same calendar object, where possible
+ *   showOthers    | if "true" (but default: "false") it will show days from other months too
  *
  *  None of them is required, they all have default values.  However, if you
  *  pass none of "inputField", "displayArea" or "button" you'll get a warning
  *  saying "nothing to setup".
  */
 ?>
+//<pre>
 Calendar.setup = function (params) {
 	function param_default(pname, def) { if (typeof params[pname] == "undefined") { params[pname] = def; } };
 
@@ -96,15 +102,14 @@ Calendar.setup = function (params) {
 	param_default("displayArea",    null);
 	param_default("button",         null);
 	param_default("eventName",      "click");
-//	param_default("ifFormat",       "%Y/%m/%d");
-	param_default("ifFormat",      "<?php echo $jsDateFormat; ?>");
-//	param_default("daFormat",       "%Y/%m/%d");
-	param_default("daFormat",      "<?php echo $jsDateFormat; ?>");
+	param_default("ifFormat",      "<?php /* was "%Y/%m/%d" */ echo $jsDateFormat; ?>");
+	param_default("daFormat",      "<?php /* was "%Y/%m/%d" */ echo $jsDateFormat; ?>");
 	param_default("singleClick",    true);
 	param_default("disableFunc",    null);
 	param_default("dateStatusFunc", params["disableFunc"]);	// takes precedence if both are defined
-//	param_default("mondayFirst",    true);
-	param_default("mondayFirst",   <?php echo $GLOBALS['phpgw_info']['user']['preferences']['common']['weekdaysstarts'] != 'sunday' ? 'true' : 'false'; ?>);
+	param_default("firstDay",       <?php // was 0 defaults to "Sunday" first
+	$day2int = array('Sunday'=>0,'Monday'=>1,'Tuesday'=>2,'Wednesday'=>3,'Thursday'=>4,'Friday'=>5,'Saturday'=>6);
+	echo (int) @$day2int[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts']]; ?>); // <?php echo $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts']."\n"; ?>
 	param_default("align",          "Bl");
 	param_default("range",          [1900, 2999]);
 	param_default("weekNumbers",    true);
@@ -115,8 +120,12 @@ Calendar.setup = function (params) {
 	param_default("onUpdate",       null);
 	param_default("date",           null);
 	param_default("showsTime",      false);
-//	param_default("timeFormat",     "24");
-	param_default("timeFormat",     "<?php echo $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat']; ?>");
+	param_default("timeFormat",     "<?php /* was 24 */ echo $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat']; ?>");
+	param_default("electric",       true);
+	param_default("step",           2);
+	param_default("position",       null);
+	param_default("cache",          true);
+	param_default("showOthers",     true); <?php /* was false */ ?>
 
 	var tmp = ["inputField", "displayArea", "button"];
 	for (var i in tmp) {
@@ -130,35 +139,36 @@ Calendar.setup = function (params) {
 	}
 
 	function onSelect(cal) {
-		if (cal.params.flat) {
-			if (typeof cal.params.flatCallback == "function") {
-				cal.params.flatCallback(cal);
-			} else {
+		var p = cal.params;
+		var update = (cal.dateClicked || p.electric);
+		if (update && p.flat) {
+			if (typeof p.flatCallback == "function")
+				p.flatCallback(cal);
+			else
 				alert("No flatCallback given -- doing nothing.");
-			}
 			return false;
 		}
-		if (cal.params.inputField) {
-			cal.params.inputField.value = cal.date.print(cal.params.ifFormat);
+		if (update && p.inputField) {
+			p.inputField.value = cal.date.print(p.ifFormat);
+			if (typeof p.inputField.onchange == "function")
+				p.inputField.onchange();
 		}
-		if (cal.params.displayArea) {
-			cal.params.displayArea.innerHTML = cal.date.print(cal.params.daFormat);
-		}
-		if (cal.params.singleClick && cal.dateClicked) {
+		if (update && p.displayArea)
+			p.displayArea.innerHTML = cal.date.print(p.daFormat);
+		if (update && p.singleClick && cal.dateClicked)
 			cal.callCloseHandler();
-		}
-		if (typeof cal.params.onUpdate == "function") {
-			cal.params.onUpdate(cal);
-		}
+		if (update && typeof p.onUpdate == "function")
+			p.onUpdate(cal);
 	};
 
 	if (params.flat != null) {
-		params.flat = document.getElementById(params.flat);
+		if (typeof params.flat == "string")
+			params.flat = document.getElementById(params.flat);
 		if (!params.flat) {
 			alert("Calendar.setup:\n  Flat specified but can't find parent.");
 			return false;
 		}
-		var cal = new Calendar(params.mondayFirst, params.date, params.onSelect || onSelect);
+		var cal = new Calendar(params.firstDay, params.date, params.onSelect || onSelect);
 		cal.showsTime = params.showsTime;
 		cal.time24 = (params.timeFormat == "24");
 		cal.params = params;
@@ -176,8 +186,8 @@ Calendar.setup = function (params) {
 		var dateFmt = params.inputField ? params.ifFormat : params.daFormat;
 		var mustCreate = false;
 		var cal = window.calendar;
-		if (!window.calendar) {
-			window.calendar = cal = new Calendar(params.mondayFirst,
+		if (!(cal && params.cache)) {
+			window.calendar = cal = new Calendar(params.firstDay,
 							     params.date,
 							     params.onSelect || onSelect,
 							     params.onClose || function(cal) { cal.hide(); });
@@ -186,8 +196,12 @@ Calendar.setup = function (params) {
 			cal.weekNumbers = params.weekNumbers;
 			mustCreate = true;
 		} else {
+			if (params.date)
+				cal.setDate(params.date);
 			cal.hide();
 		}
+		cal.showsOtherMonths = params.showOthers;
+		cal.yearStep = params.step;
 		cal.setRange(params.range[0], params.range[1]);
 		cal.params = params;
 		cal.setDateStatusHandler(params.dateStatusFunc);
@@ -196,7 +210,10 @@ Calendar.setup = function (params) {
 			cal.create();
 		cal.parseDate(dateEl.value || dateEl.innerHTML);
 		cal.refresh();
-		cal.showAtElement(params.displayArea || params.inputField, params.align);
+		if (!params.position)
+			cal.showAtElement(params.button || params.displayArea || params.inputField, params.align);
+		else
+			cal.showAt(params.position[0], params.position[1]);
 		return false;
 	};
 };
@@ -210,33 +227,41 @@ Calendar.setup = function (params) {
 // Encoding: any
 // Distributed under the same terms as the calendar itself.
 
-// full day names
 Calendar._DN = new Array
-("<?php echo lang('Sunday') ?>",
- "<?php echo lang('Monday'); ?>",
- "<?php echo lang('Tuesday'); ?>",
- "<?php echo lang('Wednesday'); ?>",
- "<?php echo lang('Thursday'); ?>",
- "<?php echo lang('Friday'); ?>",
- "<?php echo lang('Saturday'); ?>",
- "<?php echo lang('Sunday'); ?>");
+(<?php // full day names
+foreach($day2int as $name => $n)
+{
+	echo "\n \"".lang($name).'"'.($n < 6 ? ',' : '');
+}
+?>);
 
-// please note eGW does NOT use the short month-names atm.
+Calendar._SDN = new Array
+(<?php // short day names
+foreach($day2int as $name => $n)
+{
+	echo "\n \"".substr(lang($name),0,(int)lang('3 number of chars for day-shortcut')).'"'.($n < 6 ? ',' : '');
+}
+?>);
+Calendar._SDN_len = <?php echo (int) lang('3 number of chars for day-shortcut'); ?>2;
 
-// full month names
 Calendar._MN = new Array
-("<?php echo lang('January'); ?>",
- "<?php echo lang('February'); ?>",
- "<?php echo lang('March'); ?>",
- "<?php echo lang('April'); ?>",
- "<?php echo lang('May'); ?>",
- "<?php echo lang('June'); ?>",
- "<?php echo lang('July'); ?>",
- "<?php echo lang('August'); ?>",
- "<?php echo lang('September'); ?>",
- "<?php echo lang('October'); ?>",
- "<?php echo lang('November'); ?>",
- "<?php echo lang('December'); ?>");
+(<?php // full month names
+$monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
+foreach($monthnames as $n => $name)
+{
+	echo "\n \"".lang($name).'"'.($n < 11 ? ',' : '');
+}
+?>);
+
+Calendar._SMN = new Array
+(<?php // short month names
+$monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
+foreach($monthnames as $n => $name)
+{
+	echo "\n \"".substr(lang($name),0,(int)lang('3 number of chars for month-shortcut')).'"'.($n < 11 ? ',' : '');
+}
+?>);
+Calendar._SMN_len = <?php echo (int) lang('3 number of chars for month-shortcut'); ?>2;
 
 // tooltips
 Calendar._TT = {};
@@ -267,8 +292,16 @@ Calendar._TT["NEXT_YEAR"] = "<?php echo lang('Next year (hold for menu)'); ?>";
 Calendar._TT["SEL_DATE"] = "<?php echo lang('Select date'); ?>";
 Calendar._TT["DRAG_TO_MOVE"] = "<?php echo lang('Drag to move'); ?>";
 Calendar._TT["PART_TODAY"] = " (<?php echo lang('today'); ?>)";
-Calendar._TT["MON_FIRST"] = "<?php echo lang('Display Monday first'); ?>";
-Calendar._TT["SUN_FIRST"] = "<?php echo lang('Display Sunday first'); ?>";
+
+// the following is to inform that "%s" is to be the first day of week
+// %s will be replaced with the day name.
+Calendar._TT["DAY_FIRST"] = "<?php echo lang('Display %s first'); ?>";
+
+// This may be locale-dependent.  It specifies the week-end days, as an array
+// of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
+// means Monday, etc.
+Calendar._TT["WEEKEND"] = "0,6";
+
 Calendar._TT["CLOSE"] = "<?php echo lang('Close'); ?>";
 Calendar._TT["TODAY"] = "<?php echo lang('Today'); ?>";
 Calendar._TT["TIME_PART"] = "<?php echo lang('(Shift-)Click or drag to change value'); ?>";
@@ -280,3 +313,4 @@ Calendar._TT["DEF_DATE_FORMAT"] = "<?php echo $jsDateFormat; ?>";
 Calendar._TT["TT_DATE_FORMAT"] = "<?php echo $jsLongDateFormat; ?>";
 
 Calendar._TT["WK"] = "<?php echo lang('Wk'); ?>";
+Calendar._TT["TIME"] = "<?php echo lang('Time'); ?>:";
