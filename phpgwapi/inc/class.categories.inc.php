@@ -18,9 +18,17 @@
      var $cats;
      var $db;
      
-     function categories($account_id,$app_name)
+     function categories($account_id = "",$app_name = "")
      {
-        global $phpgw;
+        global $phpgw, $phpgw_info;
+
+        if (! $account_id) {
+           $account_id = $phpgw_info["user"]["account_id"];
+        }
+        if (! $app_name) {
+           $app_name   = $phpgw_info["flags"]["currentapp"];
+        }
+
         $this->account_id = $account_id;
         $this->app_name   = $app_name;
         $this->db         = $phpgw->db;

@@ -128,7 +128,7 @@
       $sep = filesystem_separator();
       $template_root = $this->common->get_tpl_dir();
 
-      if (is_dir($template_root)) {          
+      if (is_dir($template_root)) {
         $this->template = CreateObject("phpgwapi.Template", $template_root);
       }
     } 
