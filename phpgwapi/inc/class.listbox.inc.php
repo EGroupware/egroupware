@@ -43,10 +43,6 @@
 		*/
 		function listbox($param)
 		{
-			$this->setvar('outerwidth',300);
-			$this->setvar('innerwidth',300);
-			$this->setvar('width',300);
-
 			@reset($param);
 			while(list($key,$value) = each($param))
 			{
@@ -57,7 +53,25 @@
 				}
 			}
 			$this->portalbox($param['title']);
-			//$this->start_template();
+
+			if($param['app_id'])
+			{
+				$app_id = $this->getvar('app_id');
+
+				$var = Array
+				(
+					'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
+					'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
+					'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
+					'question' => Array('url' => '/set_box.php', 'app' => $app_id),
+					'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
+				);
+
+				while(list($key,$value) = each($var))
+				{
+					$this->set_controls($key,$value);
+				}
+			}
 		}
 
 		/*

@@ -27,11 +27,8 @@
 		//Set up the Object, reserving memory space for variables
 
 		var $app_name;
-		var $outerwidth;
-		var $width;
-		var $innerwidth;
+		var $app_id;
 		var $controls;
-		var $header_background_image;
 		var $up;
 		var $down;
 		var $close;
@@ -39,7 +36,7 @@
 		var $edit;
 
 		var $output;
-		var $data = Array();
+		var $data = array();
 
 		// Textual variables
 		var $title;
@@ -85,7 +82,7 @@
 
 		function start_template($extra = '')
 		{
-			if ($extra)
+			if ($extra && $this->getvar('app_name'))
 			{
 				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->getvar('app_name'),'default') . SEP . 'extrabox'));
 			}
@@ -96,10 +93,8 @@
 
 			$this->output = array
 			(
-				'outer_width'				=> $this->getvar('width'),
 				'title'						=> $this->getvar('title'),
-				'inner_width'				=> $this->getvar('width'),
-				'header_background_image'	=> $this->getvar('header_background_image')
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler.png')
 			);
 		}
 
@@ -117,9 +112,8 @@
 		{
 			if($data=='' && !count($this->data))
 			{
-				$data = ' ';
+				$data = '';
 			}
-
 			$this->output['extrabox'] = $data;
 		}
 
@@ -127,7 +121,7 @@
 		{
 			if($data=='' && !count($this->data))
 			{
-				$data = ' ';
+				$data = '';
 			}
 			$this->output['xextrabox'] = $data;
 		}
