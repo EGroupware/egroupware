@@ -31,12 +31,6 @@
 
 		function authenticate($username, $passwd)
 		{
-			/*
-			error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
-			these are just "warnings" and can be ignored.....
-			*/
-			error_reporting(0);
-
 			if (ereg('[()|&=*,<>!~]',$username))
 			{
 				return False;
@@ -60,7 +54,7 @@
 				return False;
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
-			$attributes	= array('uid', 'dn');
+			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber');
 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
 			{
 				$filter = "(&(uid=$username)(phpgwaccountstatus=A))";
@@ -69,8 +63,10 @@
 			{
 				$filter = "(uid=$username)";
 			}
+
 			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
+
 			if ($allValues['count'] > 0)
 			{
 				if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
@@ -96,16 +92,29 @@
 					if ($GLOBALS['phpgw_info']['server']['account_repository'] != 'ldap')
 					{
 						$account = CreateObject('phpgwapi.accounts',$username,'u');
+						if (!$account->account_id && $GLOBALS['phpgw_info']['server']['auto_create_acct'])
+						{
+							// create a global array with all availible info about that account
+							$GLOBALS['auto_create_acct'] = array();
+							foreach(array(
+								'givenname' => 'firstname',
+								'sn'        => 'lastname',
+								'uidnumber' => 'id',
+								'mail'      => 'email',
+								'gidnumber' => 'primary_group',
+							) as $ldap_name => $acct_name)
+							{
+								$GLOBALS['auto_create_acct'][$acct_name] =
+									$GLOBALS['phpgw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
+							}
+							return True;
+						}
 						$data = $account->read_repository();
 						return $data['status'] == 'A';
 					}
 					return True;
 				}
 			}
-
-			/* Turn error reporting back to normal */
-			error_reporting(7);
-
 			/* dn not found or password wrong */
 			return False;
 		}
@@ -131,20 +140,6 @@
 			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 	
 			return $entry['userpassword'];
-		}
-
-		/* This data needs to be updated in LDAP, not SQL (jengo) */
-		function old_update_lastlogin($account_id, $ip)
-		{
-			$GLOBALS['phpgw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
-
-			$now = time();
-
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
-				. "$ip', account_lastlogin='" . $now
-				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}
 
 		function update_lastlogin($_account_id, $ip)

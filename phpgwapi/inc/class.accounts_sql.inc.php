@@ -9,7 +9,7 @@
 	* Copyright (C) 2003 Joseph Engo, Bettina Gille                            *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org                                                * 
+	* http://www.egroupware.org                                                *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -277,11 +277,19 @@
 			return $ret_val;
 		}
 
-		function create($account_info,$default_prefs=True)
+		function create($account_info)
 		{
-			$this->db->query('INSERT INTO phpgw_accounts (account_lid,account_type,account_pwd,'
+			if (isset($account_info['account_id']) && (!(int)$account_info['account_id'] || $this->id2name($account_info['account_id'])))
+			{
+				// account_id already used => discard it
+				unset($account_info['account_id']);
+			}
+			$this->db->query('INSERT INTO phpgw_accounts ('.(isset($account_info['account_id'])?'account_id,':'')
+				. 'account_lid,account_type,account_pwd,'
 				. 'account_firstname,account_lastname,account_status,account_expires,person_id,'
-				. "account_primary_group) VALUES ('".$this->db->db_addslashes($account_info['account_lid'])
+				. 'account_primary_group) VALUES ('
+				. (isset($account_info['account_id'])?(int)$account_info['account_id'].',':'')
+				. "'" . $this->db->db_addslashes($account_info['account_lid'])
 				. "','" . $this->db->db_addslashes($account_info['account_type'])
 				. "','" . $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'], True)
 				. "', '" . $this->db->db_addslashes($account_info['account_firstname'])
@@ -293,12 +301,6 @@
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
 
-/* default prefs dont need to be set anymore
-			if($accountid && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
-			{
-				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
-			}
-*/
 			return $accountid;
 		}
 
@@ -329,21 +331,40 @@
 					$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 				}
 			}
+			$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
+				$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) == 'g' ?
+				(int) $GLOBALS['auto_create_acct']['primary_group'] : 0;
 
 			$acct_info = array(
+				'account_id'        => (int) $GLOBALS['auto_create_acct']['id'],
 				'account_lid'       => $accountname,
 				'account_type'      => 'u',
 				'account_passwd'    => $passwd,
-				'account_firstname' => '',
-				'account_lastname'  => '',
+				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'],
+				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'],
 				'account_status'    => $account_status,
-				'account_expires'   => $expires
+				'account_expires'   => $expires,
+				'account_primary_group' => $primary_group,
 			);
 
 			$this->db->transaction_begin();
-			$this->create($acct_info,$default_prefs);
+			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
-
+			// if we have a primary_group, add it as "regular" eGW group (via ACL) too
+			if ($accountid && $primary_group)
+			{
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
+					. $primary_group . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
+			}
+			// if we have an mail address set it as email pref
+			if ($accountid && @$GLOBALS['auto_create_acct']['email'])
+			{
+				$GLOBALS['phpgw']->acl->acl($accountid);	// needed als preferences::save_repository calls acl
+				$GLOBALS['phpgw']->preferences->preferences($accountid);
+				$GLOBALS['phpgw']->preferences->read_repository();
+				$GLOBALS['phpgw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
+				$GLOBALS['phpgw']->preferences->save_repository();
+			}
 			if ($default_acls == False)
 			{
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
@@ -365,9 +386,7 @@
 						'addressbook',
 						'calendar',
 						'email',
-						'notes',
-						'todo',
-						'phpwebhosting',
+						'infolog',
 						'manual'
 					) as $app)
 					{
