@@ -119,7 +119,6 @@ when creating new events default set to private	calendar	en	When creating new ev
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 x matches found	calendar	en	%1 matches found
-year	calendar	en	Year
 yearly	calendar	en	Yearly
 you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
