@@ -46,11 +46,14 @@
 		$accounts =  $account->get_list();
 
 		for($i=0;$i<count($accounts);$i++) {
-			echo $account->get_type($accounts[$i]["account_id"]);
+			//echo $account->get_type($accounts[$i]["account_id"]);
 			if ($account->get_type($accounts[$i]["account_id"]) == "g") {
 				$groups_select .= '<option value="' . $accounts[$i]["account_id"] . '"';
-				for ($j=0; $j<count($user_groups); $j++) {
-					if ($user_groups[$j][0] == $accounts[$i]["account_id"]) {
+				$members = $account->members($accounts[$i]["account_id"]);
+				if (!$members) { $members = array(); }
+				while (list($name,$value) = each($members)) {
+					//echo $value;
+					if ($value == $accounts[$i]["account_id"]) {
 						$groups_select .= " selected";
 					}
 				}
