@@ -981,7 +981,7 @@
 			{
 				if (!$only || $only === True && isset($column_definitions[$key]) || is_array($only) && in_array($key,$only))
 				{
-					$keys[] = $key;
+					$keys[] = $this->name_quote($key);
 
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 
@@ -999,7 +999,7 @@
 					}
 					else
 					{
-						$values[] = ($use_key===True ? $key.'=' : '') . $this->quote($data,$column_type);
+						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type);
 					}
 				}
 			}
