@@ -150,6 +150,8 @@
 
 	$t->pfp('out','body');
 
+	$t->set_var('lang_submit', lang('submit'));
+	$t->set_var('lang_cancel', lang('cancel'));
 	$t->pfp('out','footer');
 	$phpgw->common->phpgw_footer();
 ?>
