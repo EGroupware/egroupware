@@ -1,4 +1,5 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
+%1 is not executable by the webserver !!!	common	en	%1 is not executable by the webserver !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 (shift-)click or drag to change value	jscalendar	en	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it
@@ -617,6 +618,7 @@ you have not entered participants	common	en	You have not entered participants
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have successfully logged out	common	en	You have successfully logged out
+you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent
 your search returned %1 matchs	common	en	your search returned %1 matches

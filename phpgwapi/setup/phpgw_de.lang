@@ -1,4 +1,5 @@
 %1 email addresses inserted	common	de	%1 Email Adressen eingefügt
+%1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1eGroupWare%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
 (shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
 - click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit clicken um sie zu erhöhen
@@ -9,8 +10,8 @@
 - use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 13 (ntp)	admin	de	13 (ntp)
-3 number of chars for day-shortcut	common	de	2
-3 number of chars for month-shortcut	common	de	3
+3 number of chars for day-shortcut	jscalendar	de	2
+3 number of chars for month-shortcut	jscalendar	de	3
 80 (http)	admin	de	80 (http)
 about	common	de	Über
 about %1	common	de	Über %1
@@ -626,6 +627,7 @@ you have not entered participants	common	de	Sie haben keine Teilnehmer eingegebe
 you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
 you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
+you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Grupper '%2' hinzufügen.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versandt
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
