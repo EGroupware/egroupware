@@ -78,7 +78,7 @@
 			{
 				if (!is_array($var))
 				{
-					if ($var == 'messageonly')
+					if ($var != 'messageonly')
 					{
 						if (!DEBUG_DATATYPES)
 						{
