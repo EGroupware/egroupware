@@ -12,6 +12,9 @@
 
 	/* $Id$ */
 
-	$ui = 'ui'; // html UI, which UI to use, should come from api and be in $GLOBALS['phpgw']???
-
-	include(PHPGW_API_INC . "/../../etemplate/inc/class.${ui}etemplate.inc.php");
+	$ui = ''; // html UI, which UI to use, should come from api and be in $GLOBALS['phpgw']???
+	if ($_ENV['DISPLAY'])
+	{
+		$ui = '_gtk';
+	}
+	include(PHPGW_API_INC . "/../../etemplate/inc/class.uietemplate$ui.inc.php");
