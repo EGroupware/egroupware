@@ -54,8 +54,8 @@
         echo "  <tr bgcolor=\"e6e6e6\">\n";
         echo "    <td><form action='index.php' method='POST'>\n";
         if (count($phpgw_domain) > 1){
-          echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value='phpgroupware.org'></td></tr>\n";
-          echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value='changeme'></td></tr></table>\n";
+          echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
+          echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
         }else{
           reset($phpgw_domain);
           $default_domain = each($phpgw_domain);
@@ -73,7 +73,7 @@
       echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$phpgw_info["setup"]["HeaderLoginMSG"]."</font></td></tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td><form action='manageheader.php' method='POST'>\n";
-      echo "      <input type='password' name='FormPW' value='changethis'>\n";
+      echo "      <input type='password' name='FormPW' value=''>\n";
       echo "      <input type='submit' name='HeaderLogin' value='Login'>\n";
       echo "    </form></td>\n";
       echo "  </tr>\n";
@@ -243,11 +243,11 @@
         $this->db->next_record();
         $configed = $this->db->f("config_value");
         if ($configed){
-          $phpgw_info["setup"]["header_msg"] = "Stage 3 (Configuration OK)";
-          return 10;
-        }else{
           $phpgw_info["setup"]["header_msg"] = "Stage 3 (Needs Configuration)";
           return 1;
+        }else{
+          $phpgw_info["setup"]["header_msg"] = "Stage 3 (Configuration OK)";
+          return 10;
         }
       }
     }

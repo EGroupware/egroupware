@@ -29,6 +29,9 @@
       $phpgw_info["setup"]["stage"]["db"] = $phpgw_setup->check_db();
       $phpgw_info["setup"]["stage"]["config"] = $phpgw_setup->check_config();
     }
+  }else{
+    Header("Location: manageheader.php");
+    exit;
   }
 
   switch($action){
@@ -84,7 +87,9 @@
   $phpgw_info["server"]["app_images"] = "templates/default/images";
 
   echo '<table border="1" width="100%" cellspacing="0" cellpadding="2">';
-  echo '  <tr><td align="left" WIDTH="20%" bgcolor="486591"><font color="fefefe">Step 1 - header.inc.php</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  
+/*
+  echo '  <tr><td align="left" WIDTH="20%" bgcolor="486591"><font color="fefefe">Step 0 - header.inc.php</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"]["header"] <= 1) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="./manageheader.php" method=post>You have not created your header.inc.php yet.<br> <input type=submit value="Create one now"></form></td></tr>';
   }elseif ($phpgw_info["setup"]["stage"]["header"] == 2 || $phpgw_info["setup"]["stage"] == 3) {
@@ -93,7 +98,8 @@
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td><form action="./manageheader.php" method=post>
     Your header.inc.php is in place and current.<br> <input type=submit value="Edit existing header.inc.php"></form></td></tr>';
   }
-  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 2 - database management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+*/
+  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 1 - database management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"]["header"] < 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($phpgw_info["setup"]["stage"]["db"] <= 1) {
@@ -185,7 +191,7 @@
     echo '</form>';
     echo '</td></tr>';
   }
-  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - Configuration</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 2 - Configuration</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"]["db"] < 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($phpgw_info["setup"]["stage"]["config"] <= 1) {
@@ -197,7 +203,7 @@
     echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Edit Current Configuration\"></form>";
     echo '</td></tr>';
   }
-  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"]["config"] < 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($phpgw_info["setup"]["stage"]["lang"] <= 1) {
@@ -205,7 +211,7 @@
   }elseif ($phpgw_info["setup"]["stage"]["lang"] == 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="O" border="0"></td><td>This stage is completed<br></td></tr>';
   }
-  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 5 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($phpgw_info["setup"]["stage"]["lang"] < 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($phpgw_info["setup"]["stage"]["apps"] <= 1) {

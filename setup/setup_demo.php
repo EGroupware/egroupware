@@ -8,7 +8,7 @@
 
   // Authorize the user to use setup app and load the database
   // Does not return unless user is authorized
-  if (!auth()){
+  if (!$phpgw_setup->auth("Config")){
     Header("Location: index.php");
     exit;
   }
