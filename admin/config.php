@@ -104,6 +104,7 @@
 				$t->set_var($value,$current_config[$newval]);
 				break;
 			case "checked":
+				$newval = ereg_replace(' ','_',$newval);
 				if ($current_config[$newval])
 				{
 					$t->set_var($value,' checked');
