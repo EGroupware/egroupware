@@ -33,6 +33,7 @@ business street	addressbook	de	geschäftl. Straße
 business zip code	addressbook	de	geschäftl. PLZ
 car phone	addressbook	de	Autotelefon
 cell phone	addressbook	de	Mobilfunk
+charset of file	addressbook	de	Zeichensatz der Datei
 city	common	de	Stadt
 company	common	de	Firma
 company name	common	de	Firmenname
@@ -53,6 +54,7 @@ domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
+empty for all	addressbook	de	leer für alle
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Addressbuch
@@ -83,6 +85,7 @@ import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Addressbuch
 import file	addressbook	de	Datei importieren
 import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder VCard
 import from outlook	addressbook	de	Aus Outlook importieren
+import next set	addressbook	de	Nächsten Satz importieren
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN Tel.
 label	addressbook	de	Adreßetikett
@@ -98,7 +101,7 @@ mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobil-Telefon
 modem phone	addressbook	de	Modem
 no vcard	addressbook	de	Keine VCard
-number of records to read (<=200)	addressbook	de	Nummer der einzulesenden Datensätze (<= 200)
+number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
 on	addressbook	de	an
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
@@ -132,6 +135,7 @@ test import (show importable records <u>only</u> in browser)	addressbook	de	Test
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt !
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch.
+to many might exceed your execution-time-limit	addressbook	de	zu viel können ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung

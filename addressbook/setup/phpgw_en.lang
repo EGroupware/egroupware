@@ -33,6 +33,7 @@ business street	addressbook	en	Business Street
 business zip code	addressbook	en	Business Postal Code
 car phone	addressbook	en	Car Phone
 cell phone	addressbook	en	cell phone
+charset of file	addressbook	en	Charset of file
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
@@ -53,6 +54,7 @@ domestic	addressbook	en	Domestic
 download	addressbook	en	Download
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
+empty for all	addressbook	en	empty for all
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
@@ -82,6 +84,7 @@ import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
 import file	addressbook	en	Import File
 import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
 import from outlook	addressbook	en	Import from Outlook
+import next set	addressbook	en	Import next set
 international	addressbook	en	International
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
@@ -97,7 +100,7 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 no vcard	addressbook	en	No VCard
-number of records to read (<=200)	addressbook	en	Number of records to read (<=200)
+number of records to read (%1)	addressbook	en	Number of records to read (%1)
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
 pager	common	en	Pager
@@ -124,8 +127,10 @@ test import (show importable records <u>only</u> in browser)	addressbook	en	Test
 that field name has been used already !	addressbook	en	That field name has been used already !
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
+to many might exceed your execution-time-limit	addressbook	en	to many might exceed your execution-time-limit
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
+translation	addressbook	en	Translation
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 use country list	addressbook	en	Use Country List
 vcard	common	en	VCard
