@@ -1,0 +1,68 @@
+add profile	sl	dodaj profil
+admin dn	sl	Upravljal&#269;ev dn
+admin password	sl	Upravljal&#269;evo geslo
+admin passwort	sl	Upravljal&#269;evo geslo
+admin username	sl	Upravljal&#269;evo uporabni¹ko ime
+advanced options	sl	Napredne nastavitve
+alternate email address	sl	Alternativen enaslov
+cyrus imap server	sl	Cyrus IMAP stre¾nik
+cyrus imap server administration	sl	Upravljanje Cyrus IMAP stre¾nika
+default		sl	privzeto
+deliver extern		sl	zunanja dostava
+do you really want to delete this profile		sl	Ali res ¾elite izbrisati ta profil?
+domainname	sl	ime domene
+edit email settings	sl	uredi nastavitve epo¹te
+email account active	sl	nabiralnik epo¹te je aktiven
+email address		sl	enaslov
+enable cyrus imap server administration	sl	omogo&#269;i upravljanje Cyrus IMAP stre¾nika
+enable sieve	sl	omogo&#269;i sita
+enter your default mail domain (from: user@domain)	sl	vnesi privzeto domeno (oblika: uporabnik@domena)
+forward also to		sl	posreduj tudi
+forward email's to	sl	posreduj sporo&#269;ila k
+forward only		sl	samo posreduj
+imap admin password	sl	Geslo upravljalca IMAPa
+imap admin user		sl	IMAP upravljalec
+imap server hostname or ip address		sl	Ime ali IP IMAP stre¾nika
+imap server logintyp	sl	Na&#269;in prijave na IMAP stre¾nik
+imap server port	sl	Vrata IMAP stre¾nika
+imap/pop3 server name	sl	Ime IMAP/POP3 stre¾nika
+in mbyte		sl	v MB
+ldap basedn		sl	Osnovni dn LDAP
+ldap server		sl	LDAP stre¾nik
+ldap server accounts dn	sl	DN ra&#269;unov LDAP stre¾nika
+ldap server admin dn	sl	DN upravljalcev LDAP stre¾nika
+ldap server admin password	sl	Geslo upravljalca LDAP stre¾nika
+ldap server hostname or ip address	sl	Ime ali IP LDAP stre¾nika
+ldap settings	sl	LDAP nastavitve
+leave empty for no quota	sl	pusti prazno za brez omejitve
+mail settings	sl	Nastavitve epo¹te
+name of organisation	sl	ime organizacije
+no alternate email address	sl	ni alternativnega enaslova
+no forwarding email address	sl	ni enaslova za posredovanje
+pop3 server hostname or ip address	sl	Ime ali IP POP3 stre¾nika
+pop3 server port	sl	Vrata POP3 stre¾nika
+postfix with ldap	sl	Kon&#269;nica pri LDAP
+profile list	sl	seznam profilov
+profile name	sl	ime profila
+qmaildotmode	sl	na&#269;in qmaildot
+qouta size in mbyte	sl	Omejitev v MB
+quota settings	sl	Nastavitve omejitev
+remove	sl	odstrani
+select type of imap/pop3 server	sl	Izberite tip IMAP/POP3 stre¾nika
+select type of smtp server	sl	Izberite tip SMTP stre¾nika
+sieve server hostname or ip address	sl	IP ali naslov stre¾nika za sito
+sieve server port	sl	Vrata stre¾nika za sito
+sieve settings		sl	Nastavitve sita
+smtp server name	sl	ime SMTP stre¾nika
+smtp-server hostname or ip address	sl	Ime ali IP SMTP stre¾nika
+smtp-server port	sl	Vrata SMTP stre¾nika
+standard	sl	standarden
+standard imap server	sl	standardni IMAP stre¾nik
+standard pop3 server	sl	standardni POP3 stre¾nik
+standard smtp-server	sl	standardni SMTP stre¾nik
+use ldap defaults	sl	uporabi privzeto za LDAP
+use smtp auth		sl	Uporabi SMTP avtentikacijo
+use tls authentication	sl	Uporabi TLS avtentikacijo
+use tls encryption	sl	Uporabi TLS enkripcijo
+users can define their own emailaccounts	sl	Uporabniki lahko definirajo lastne epo¹tne predale
+virtual mail manager	sl	Virtualni upravljalec epo¹te
