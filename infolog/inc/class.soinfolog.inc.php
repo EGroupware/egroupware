@@ -303,7 +303,7 @@
 			if (!($new_owner = intval($new_owner)))
 			{
 				$db2 = $this->db;	// we need an extra result-set
-				$db2->db->query("SELECT info_id FROM phpgw_infolog WHERE info_owner=$owner",__LINE__,__FILE__);
+				$db2->query("SELECT info_id FROM phpgw_infolog WHERE info_owner=$owner",__LINE__,__FILE__);
 				while($db2->next_record())
 				{
 					$this->delete($this->db->f(0),False);
