@@ -33,6 +33,10 @@
 			$this->t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
 			$this->lastid					= "";
 			$this->editmode					= false;
+			// nextmatchs
+			$this->start					= 0;
+			$this->nextmatchs				= CreateObject('phpgwapi.nextmatchs');
+
 
 
 			// Handle the Edit Table Button
@@ -124,24 +128,40 @@
 				}
 
 			} // Values already filled...
+			reset($this->fields_inc);
+			while(list($cno,$cname)=each($this->fields_inc))
+			{
+				$this->column[$cname]=$cno;
+			};
 		} 
 
 		function list_log()
 		{
 			global $phpgw, $phpgw_info;
 /*
+$phpgw->log->write('I-TestWrite, write: %1','This message should appear in log');
 $phpgw->log->message('I-TestMsg, msg: %1','This message should appear in log');
 $phpgw->log->error('I-TestInfo, info: %1','This Informational should not be in log');
 $phpgw->log->clearstack();
 $phpgw->log->error('I-TestInfo, info: %1','This Informational should be in log');
 $phpgw->log->error('W-TestWarn, warn: %1','This is a test Warning');
 $phpgw->log->error('E-TestError, err: %1','This is a test Error');
-$phpgw->log->error('F-Abend, abort: %1','Force abnormal termination');
+//$phpgw->log->error('F-Abend, abort: %1','Force abnormal termination');
 $phpgw->log->commit();  // commit error stack to log...
 */
-
 			$this->t->set_file(array('log_list_t' => 'log.tpl'));
+/*
+// --------------------------------- nextmatch ---------------------------
 
+			$left = $this->nextmatchs->left('/admin/log.php',$this->start,$this->this->total_records,'&menuaction=admin.uilog.list_log');
+			$right = $this->nextmatchs->right('/admin/log.php',$this->start,$this->this->total_records,'&menuaction=admin.uilog.list_log');
+			$this->t->set_var('left',$left);
+			$this->t->set_var('right',$right);
+
+			$this->t->set_var('search_log',$this->nextmatchs->show_hits($this->bolog->total_records,$this->start));
+
+// -------------------------- end nextmatch ------------------------------------
+*/
 
 			// Get list of Possible Columns
 			$header = $this->bolog->get_error_cols_e();
@@ -185,9 +205,14 @@ $phpgw->log->commit();  // commit error stack to log...
 			$header['log_msg_code']['title'] = 'Code';
 			$header['log_msg_text']['title'] = 'Error Msg';
 
+			// Set up Grouping, Suppression...
+			$header['_groupby']=array('log_id'=>1);
+			$header['_supres']=array('log_id'=>1,'log_severity'=>1,'log_date_e'=>1,'log_app'=>1,'log_full_name'=>1);
+
+
 			// Hack Get All Rows
 			$rows = $this->bolog->get_error_e(array('orderby'=>array('log_id','log_msg_log_id')));
-
+			$norows = count($rows);
 			$header['_edittable']=$this->editmode;
 			$table = $this->html->hash_table($rows,$header,$this, 'format_row');
 			$this->t->set_var('event_list',$table);
@@ -198,32 +223,17 @@ $phpgw->log->commit();  // commit error stack to log...
 
 		function format_row($rno, $row)
 		{
-			if ($rno == 0)
+						
+			switch($row[$this->column['log_severity']]['value'])
 			{
-				$this->lastid = '';
-			}
-			
-			if ($this->lastid != $row['log_id'])
-			{
-				$this->lastid = $row['log_id'];
-			}
-			else
-			{
-				$row['log_id'] = '&nbsp ';
-				$row['log_severity'] = '&nbsp ';
-				$row['log_date_e'] = '&nbsp ';
-				$row['log_app'] = '&nbsp ';
-				$row['log_full_name'] = '&nbsp ';
-			}
-			switch($row['log_severity'])
-			{
-				case 'I': $lcolor = 'C0FFC0'; break;
-				case 'W': $lcolor = 'FFFFC0'; break;
-				case 'E': $lcolor = 'FFC0C0'; break;
-				case 'F': $lcolor = 'FF0909'; break;
+				
+				case 'I': $row[$this->column['log_severity']]['bgcolor'] = 'C0FFC0'; break;
+				case 'W': $row[$this->column['log_severity']]['bgcolor'] = 'FFFFC0'; break;
+				case 'E': $row[$this->column['log_severity']]['bgcolor'] = 'FFC0C0'; break;
+				case 'F': $row[$this->column['log_severity']]['bgcolor'] = 'FF0909'; break;
 			}
 
-			switch($row['log_msg_severity'])
+			switch($row[$this->column['log_msg_severity']]['value'])
 			{
 				case 'I': $color = 'C0FFC0'; break;
 				case 'W': $color = 'FFFFC0'; break;
@@ -231,25 +241,16 @@ $phpgw->log->commit();  // commit error stack to log...
 				case 'F': $color = 'FF0909'; break;
 			}
 			reset($this->fields_inc);
-			while(list(,$fld) = each($this->fields_inc))
+			while(list($cno,$fld) = each($this->fields_inc))
 			{
 				if (substr($fld,0,7) == 'log_msg')
 				{
-					$c = $color;
+					$row[$cno]['bgcolor'] = $color;
 				}
 				else
 				{
-					if ($fld == 'log_severity' && $row['log_severity'] != '&nbsp ')
-					{
-						$c = $lcolor;
-					}
-					else
-					{
-						$c = "FFFFFF";
-					}
-				};
-				$parms = 'bgcolor="' . $c . '"'; 
-				$row['_'.$fld] = $parms;
+//					$row[$cno]['bgcolor'] = $lcolor;
+				}
 			}				
 			return $row;
 		}
