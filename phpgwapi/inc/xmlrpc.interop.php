@@ -17,15 +17,15 @@
 	// send me an integer and i'll sell you a state
 
 	$stateNames = array(
-		"Alabama", "Alaska", "Arizona", "Arkansas", "California",
-		"Colorado", "Columbia", "Connecticut", "Delaware", "Florida",
-		"Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
-		"Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
-		"Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
-		"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina",
-		"North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
-		"South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
-		"Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+		'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+		'Colorado', 'Columbia', 'Connecticut', 'Delaware', 'Florida',
+		'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas',
+		'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan',
+		'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+		'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina',
+		'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+		'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+		'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 	);
 
 	$findstate_sig = array(array(xmlrpcString, xmlrpcInt));
@@ -36,12 +36,12 @@ in an alphabetic order.';
 
 	function findstate($m)
 	{
-		$err="";
+		$err='';
 		// get the first param
 		$sno=$m->getParam(0);
 		// if it's there and the correct type
 
-		if (isset($sno) && ($sno->scalartyp()=="int"))
+		if (isset($sno) && ($sno->scalartyp()=='int'))
 		{
 			// extract the value of the state number
 			$snv=$sno->scalarval();
@@ -59,7 +59,7 @@ in an alphabetic order.';
 		else
 		{
 			// parameter mismatch, complain
-			$err="One integer parameter required";
+			$err='One integer parameter required';
 		}
 
 		// if we generated an error, create an error return response
@@ -82,7 +82,7 @@ in an alphabetic order.';
 	{
 		$s=$m->getParam(0);
 		$t=$m->getParam(1);
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),"int"));
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),'int'));
 	}
 
 	$addtwodouble_sig=array(array(xmlrpcDouble, xmlrpcDouble, xmlrpcDouble));
@@ -92,7 +92,7 @@ in an alphabetic order.';
 	{
 		$s=$m->getParam(0);
 		$t=$m->getParam(1);
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),"double"));
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),'double'));
 	}
 
 	$stringecho_sig=array(array(xmlrpcString, xmlrpcString));
@@ -127,7 +127,7 @@ in an alphabetic order.';
 		// as a normal string. this is to test base64 encoding
 		// is working as expected
 		$incoming=$m->getParam(0);
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$incoming->scalarval(), "string"));
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$incoming->scalarval(), 'string'));
 	}
 
 	$bitflipper_sig=array(array(xmlrpcArray, xmlrpcArray));
@@ -169,8 +169,8 @@ in an alphabetic order.';
 	{
 		// don't even ask me _why_ these come padded with
 		// hyphens, I couldn't tell you :p
-		$a=ereg_replace("-", "", $a);
-		$b=ereg_replace("-", "", $b);
+		$a=ereg_replace('-', '', $a);
+		$b=ereg_replace('-', '', $b);
 
 		if ($GLOBALS['agesorter_arr'][$a]==$agesorter[$b])
 		{
@@ -203,7 +203,7 @@ And the array will be returned with the entries sorted by their numbers.
 		$v = CreateObject('phpgwapi.xmlrpcval');
 		$agar = array();
 
-		if (isset($sno) && $sno->kindOf()=="array")
+		if (isset($sno) && $sno->kindOf()=='array')
 		{
 			$max = $sno->arraysize(); 
 			// TODO: create debug method to print can work once more
@@ -211,14 +211,14 @@ And the array will be returned with the entries sorted by their numbers.
 			for($i=0; $i<$max; $i++)
 			{
 				$rec = $sno->arraymem($i);
-				if ($rec->kindOf()!="struct")
+				if ($rec->kindOf()!='struct')
 				{
-					$err = "Found non-struct in array at element $i";
+					$err = 'Found non-struct in array at element ' . $i;
 					break;
 				}
 				// extract name and age from struct
-				$n = $rec->structmem("name");
-				$a = $rec->structmem("age");
+				$n = $rec->structmem('name');
+				$a = $rec->structmem('age');
 				// $n and $a are xmlrpcvals, 
 				// so get the scalarval from them
 				$agar[$n->scalarval()] = $a->scalarval();
@@ -233,10 +233,10 @@ And the array will be returned with the entries sorted by their numbers.
 			{
 				// recreate each struct element
 				$outAr[] = CreateObject('phpgwapi.xmlrpcval',array(
-					"name" => CreateObject('phpgwapi.xmlrpcval',$key),
-					"age"  => CreateObject('phpgwapi.xmlrpcval',$val, "int")
+					'name' => CreateObject('phpgwapi.xmlrpcval',$key),
+					'age'  => CreateObject('phpgwapi.xmlrpcval',$val, 'int')
 					),
-					"struct"
+					'struct'
 				);
 			}
 			// add this array to the output value
@@ -244,7 +244,7 @@ And the array will be returned with the entries sorted by their numbers.
 		}
 		else
 		{
-			$err = "Must be one parameter, an array of structs";
+			$err = 'Must be one parameter, an array of structs';
 		}
 
 		if ($err)
@@ -299,29 +299,29 @@ text is a string, it contains the body of the message.
 		{
 			$err = "Error, no 'From' field specified";
 		}
-		$msghdr  = "From: " . $mFrom->scalarval() . "\n";
-		$msghdr .= "To: ". $mTo->scalarval() . "\n";
+		$msghdr  = 'From: ' . $mFrom->scalarval() . "\n";
+		$msghdr .= 'To: '. $mTo->scalarval() . "\n";
 
-		if ($mCc->scalarval()!="")
+		if ($mCc->scalarval()!='')
 		{
-			$msghdr .= "Cc: " . $mCc->scalarval(). "\n";
+			$msghdr .= 'Cc: ' . $mCc->scalarval(). "\n";
 		}
-		if ($mBcc->scalarval()!="")
+		if ($mBcc->scalarval()!='')
 		{
-			$msghdr .= "Bcc: " . $mBcc->scalarval(). "\n";
+			$msghdr .= 'Bcc: ' . $mBcc->scalarval(). "\n";
 		}
-		if ($mMime->scalarval()!="")
+		if ($mMime->scalarval()!='')
 		{
-			$msghdr .= "Content-type: " . $mMime->scalarval() . "\n";
+			$msghdr .= 'Content-type: ' . $mMime->scalarval() . "\n";
 		}
 
-		$msghdr .= "X-Mailer: XML-RPC for PHP mailer 1.0";
+		$msghdr .= 'X-Mailer: XML-RPC for PHP mailer 1.0';
 
 		if ($err == '')
 		{
-			if (!mail("", $mSub->scalarval(), $mBody->scalarval(), $msghdr))
+			if (!mail('', $mSub->scalarval(), $mBody->scalarval(), $msghdr))
 			{
-				$err = "Error, could not send the mail.";
+				$err = 'Error, could not send the mail.';
 			}
 		}
 
@@ -331,7 +331,7 @@ text is a string, it contains the body of the message.
 		}
 		else
 		{
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"true", xmlrpcBoolean));
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval','true', xmlrpcBoolean));
 		}
 	}
 
@@ -354,7 +354,7 @@ text is a string, it contains the body of the message.
 				}
 			}
 		}
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$numcurly, "int"));
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$numcurly, 'int'));
 	}
 
 	$v1_easyStruct_sig = array(array(xmlrpcInt, xmlrpcStruct));
@@ -363,11 +363,11 @@ text is a string, it contains the body of the message.
 	function v1_easyStruct($m)
 	{
 		$sno   = $m->getParam(0);
-		$moe   = $sno->structmem("moe");
-		$larry = $sno->structmem("larry");
-		$curly = $sno->structmem("curly");
+		$moe   = $sno->structmem('moe');
+		$larry = $sno->structmem('larry');
+		$curly = $sno->structmem('curly');
 		$num   = $moe->scalarval() + $larry->scalarval() + $curly->scalarval();
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$num, "int"));
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$num, 'int'));
 	}
 
 	$v1_echoStruct_sig=array(array(xmlrpcStruct, xmlrpcStruct));
@@ -398,7 +398,7 @@ text is a string, it contains the body of the message.
 				$m->getParam(4),
 				$m->getParam(5)
 			),
-			"array"
+			'array'
 		));
 	}
 
@@ -422,11 +422,11 @@ text is a string, it contains the body of the message.
 		$sno=$m->getParam(0);
 		$v=$sno->scalarval();
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',array(
-				"times10"   => CreateObject('phpgwapi.xmlrpcval',$v*10, "int"),
-				"times100"  => CreateObject('phpgwapi.xmlrpcval',$v*100, "int"),
-				"times1000" => CreateObject('phpgwapi.xmlrpcval',$v*1000, "int")
+				'times10'   => CreateObject('phpgwapi.xmlrpcval',$v*10, 'int'),
+				'times100'  => CreateObject('phpgwapi.xmlrpcval',$v*100, 'int'),
+				'times1000' => CreateObject('phpgwapi.xmlrpcval',$v*1000, 'int')
 			),
-			"struct"
+			'struct'
 		));
 	}
 
@@ -436,14 +436,14 @@ text is a string, it contains the body of the message.
 	function v1_nestedStruct($m)
 	{
 		$sno=$m->getParam(0);
-		$twoK=$sno->structmem("2000");
-		$april=$twoK->structmem("04");
-		$fools=$april->structmem("01");
-		$curly=$fools->structmem("curly");
-		$larry=$fools->structmem("larry");
-		$moe=$fools->structmem("moe");
+		$twoK=$sno->structmem('2000');
+		$april=$twoK->structmem('04');
+		$fools=$april->structmem('01');
+		$curly=$fools->structmem('curly');
+		$larry=$fools->structmem('larry');
+		$moe=$fools->structmem('moe');
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',
-			$curly->scalarval() + $larry->scalarval() + $moe->scalarval(), "int"
+			$curly->scalarval() + $larry->scalarval() + $moe->scalarval(), 'int'
 		));
 	}
 
@@ -466,7 +466,7 @@ text is a string, it contains the body of the message.
 				case '<':
 					$lt++;
 					break;
-				case "\"":
+				case '"':
 					$qu++;
 					break;
 				case "'":
