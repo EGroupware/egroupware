@@ -1,0 +1,533 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+  <title>phpGroupware: eTemplate-Referenz</title>
+<STYLE type="text/css">
+<!--
+pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-width: thin; border-style: solid; border-color: black; white-space: pre; }
+span { color: darkblue; font-family: sans-serife; }
+li { margin-top: 5px; }
+body { background-color: white; color: black; }
+-->
+</STYLE>
+</head>
+<body>
+<h1>eTemplate-Referenz - Templates and Dialog-Editor for phpGroupware</h1>
+<h3>by Ralf Becker <a href="mailto:RalfBecker@outdoor-training.de">RalfBecker@outdoor-training.de</a></h3>
+<p>A referenz documentation about the new eTemplates and the <a href="#referenz">syntax and parameters</a>
+of the several widgets.</p>
+<hr>
+<h1>Introduction - The concept of the eTemplates</h1>
+<p>As I already covered this in the <a href="etemplate.html">Tutorial</a>, I like would suggest to have a look
+there if your are not familiar with the overal concept.</p>
+<p>There are two possibilities now to create an eTemplate:</p>
+<ol>
+	<li>Use the eTemplate-Editor (as descript in the <a href="etemplate.html">Tutorial</a>) to interactivly
+		design your template.
+	<li>Write a xml-file in a Syntax similar to XUL (the mozilla UI-interface definition language) and import
+		it into the database with the eTemplate-Editor
+</ol>
+<hr>
+<h1>The xml-interface to the eTemplates</h1>
+<p>The eTemplates-Editor can import and export now eTemplates as xml-files. Here is short example showing
+an eTemplate from the example app in the <a href="etemplate.html">Tutorial</a>
+(here are screenshots of the template in the <a href="editor.gif">editor</a> and the
+<a href="show.gif">show-function</a>):</p>
+<pre>
+&lt;?xml version="1.0"?>
+&lt;overlay>
+  &lt;grid id="et_media.edit" template="" lang="" group="" version="" width="100%">
+    &lt;columns>
+      &lt;column/>
+      &lt;column/>
+      &lt;column/>
+      &lt;column/>
+    &lt;/columns>
+    &lt;rows>
+      &lt;row>
+        &lt;description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+      &lt;/row>
+      &lt;row>
+        &lt;hrule span="all"/>
+      &lt;/row>
+      &lt;row>
+        &lt;description span="all"/>
+      &lt;/row>
+      &lt;row>
+        &lt;description value="Name"/>
+        &lt;textbox size="100" maxlength="100" span="all" id="name" statustext="here goes the name of the publication / record"/>
+      &lt;/row>
+      &lt;row>
+        &lt;description value="Author"/>
+        &lt;textbox size="100" maxlength="100" span="all" id="author" statustext="please use Name, First Name"/>
+      &lt;/row>
+      &lt;row>
+        &lt;description value="Type"/>
+        &lt;menulist>
+          &lt;menupopup span="all" id="type" statustext="select the type fitting most"/>
+        &lt;/menulist>
+      &lt;/row>
+      &lt;row>
+        &lt;description value="Description"/>
+        &lt;textbox ="" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/>
+      &lt;/row>
+      &lt;row>
+        &lt;description span="all"/>
+      &lt;/row>
+      &lt;row>
+        &lt;button label="Read" id="read" statustext="reads or searches for entries matching the criteria above"/>
+        &lt;button label="Save" id="save" statustext="saves the change to the db"/>
+        &lt;button label="Cancel" id="cancel" statustext="clears the form, without changing anything"/>
+        &lt;button label="Delete" id="delete" statustext="deletes an entry"/>
+      &lt;/row>
+    &lt;/rows>
+  &lt;/grid>
+&lt;/overlay>
+</pre>
+<p>The tags / widget-names and attributes / parameters used are as close as possible to XUL. For more
+information about XUL refer to <a href="http://www.xulplanet.com">www.xulplanet.com</a> or the Mozilla docs
+<a href="http://www.mozilla.org/xpfe/xulref/">www.mozilla.org/xpfe/xulref/</a>.</p>
+<p>Please keep in mind that the xml-files used to store the eTemplates are only similar to XUL and
+implement only a subset of XUL. Here are the main differences:</p>
+<ul>
+	<li>only certain widgets and widget attributes are implemented
+	<li>xul-files can contain the actual content or refer to it via a datasources (RDF's) and use a
+		different template syntax to fill in content from a variable: &lt;label value="?label"/><br>
+		eTemplates get there content from an array passed to the exec or show-function of the template-object
+		and referenz to the content by the id / name-field of each widget.
+	<li>xul-files can contain an unlimited number of nested elements, where as the eTemplates xml-root-node
+		has to be a xul-grid and can not contain other grids or boxes as element.
+		<i>This limitation might be removed in the near future, for now you have to use the non-xul-element
+		&lt;template id="app.template_name"/> us load an other template by its name.</i>
+</ul>
+<p>Like XUL the eTemplate-xml-files are quite strict with the xml-syntax:</p>
+<ul>
+	<li>All tags and attributes must be written in lowercase
+	<li>All strings must be double quoted, like id="string"
+	<li>Every XUL widget must use close tags (either &lt;tag>&lt;/tag> or &lt;tag/>) to be well-formed
+	<li>All attributes must have a value, no &lt;tag attr> it has to be &lt;tag attr="">
+</ul>
+<hr>
+<a name="referenz"></a>
+<h1>Syntax and Parameter Referenz</h1>
+<h2>Standard parametes / attributes for <a href="#widgets">all widgets</a></h2>
+<table border=1>
+<tr>
+	<th>Name in Editor</th>
+	<th>xml attr</th>
+	<th>xul</th>
+	<th>internal name</th>
+	<th>description of the attribut<th>
+</tr>
+<tr>
+	<td><b>Type</b></td>
+	<td>no attr,<br>this is<br>the tag</td>
+	<td>yes</td>
+	<td>type</td>
+	<td>
+		The type of the widget. It has to be either the name of a standard eTemplate-widget or of
+		an already existing <a href="#extensions">extension</a>.
+	</td>
+</tr>
+<tr>
+	<td><b>Name</b></td>
+	<td>id</td>
+	<td>yes</td>
+	<td>name</td>
+	<td>
+		A string to locate the content for the widget in the content array (index) to show the dialog
+		and for the returned content.
+		Can be left blank or be obmitted as xml-attribut if the widget needs no content.<p>
+		The name can contain the following variables, which gets expanded before they are used as
+		array index (for an example see the <a href="etemplate.html">Tutorial</a>):<br>
+		<table>
+		<tr>
+			<td><b>$c</b></td>
+			<td>the column-number (starting with 0, if you have a header, data-cells start at 1)</td>
+		</tr><tr>
+			<td><b>$col</b></td>
+			<td>the column-letter: 'A', 'B', 'C', ...</td>
+		</tr><tr>
+			<td><b>$row</b></td>
+			<td>the row-number (starting with 0, if you have a header, data-cells start at 1)</td>
+		</tr><tr>
+			<td><b>$cont</b></td>
+			<td>the content-array the (sub-)template, on auto-repeated row's this could eg. be
+				used to generate button-names with id-values in it: "del[$cont[id]]" expands to "del[123]",
+				if $cont = array('id' => 123)</td>
+		</tr><tr>
+			<td><b>$row_cont</b></td>
+			<td>the sub-array indexed by $row of the content-array, on auto-repeated row's this could eg. be
+				used to generate button-names with id-values in it: "del[$row_cont[id]]" expands to "del[123]",
+				if $cont = array('1' => array('id' => 123),'2' => array('id' => 456)) and $row = 1</td>
+		</tr><tr>
+			<td><b>$c_<br>$col_<br>$row_</b></td>
+			<td>are the respective values of the previous template-inclusion,
+			eg. the column-headers in the eTemplate-editor are templates itself,
+			to show the column-name in the header you can not use $col as it will
+			be constant as it is always the same col in the header-template,
+			what you want is the value of the previous template-inclusion.</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td><b>Label</b></td>
+	<td>label</td>
+	<td>no</td>
+	<td>label</td>
+	<td>
+		Displayed in front of each widget (if not empty) or the widget is replacing a '%s' in the label
+		itself. Eg. '%s Name' to have the label Name behind a checkbox.
+		If the label starts with a '@' it is replaced by the value of the content-array at this
+		index (with the '@'-removed).
+	</td>
+</tr>
+<tr>
+	<td><b>Help</b></td>
+	<td>statustext</td>
+	<td>yes</td>
+	<td>help</td>
+	<td>
+		This text / help-message is displayed in the status-bar of the browser when the widget gets focus
+		(or as tooltip for buttons or general in gtk).
+		If the user has JavaScript switched off, the help-texts get NOT submitted, as this is detected.
+		If the helptext starts with a '@' it is replaced by the value of the content-array at this
+		index (with the '@'-removed).
+	</td>
+</tr>
+<tr>
+	<td><b>Size</b></td>
+	<td>?</td>
+	<td>?</td>
+	<td>size</td>
+	<td>
+		This attribute controls certain aspects of the different widgets. It's meaning and xml / xul-values
+		are document with the widgets.
+	</td>
+</tr>
+<tr>
+	<td><b>NoTranslation</b></td>
+	<td>no_lang</td>
+	<td>no</td>
+	<td>no_lang</td>
+	<td>
+		If checked the content of the widget gets NOT translated.<br>
+		The label of a widget get always translated.
+	</td>
+</tr>
+<tr>
+	<td><b>needed</b></td>
+	<td>needed</td>
+	<td>no</td>
+	<td>needed</td>
+	<td>
+		If checked (xml-attr: needed="1") the etemplates will reprompt the user if he left
+		the widget / field empty.<br>
+		<i>This is not yet implemented, but should be filled if applicable.</i>
+	</td>
+</tr>
+<tr>
+	<td><b>Readonly</b></td>
+	<td>readonly</td>
+	<td>yes</td>
+	<td>readonly</td>
+	<td>
+		If checked (xml-attr: readonly="true") the widget will NOT be editable.
+		If it is not supported by the browser, the etemplate-class makes shure that no
+		changes / content is transmitted back to the app.
+		Only applicable to widgets with input capabilities. Readonly Buttons get removed
+		from the dialog, like they where disabled.
+		The readonly attribute could be set on runtime via a readonly-array sublied to
+		the exec or show function of the class, the value on index=name/id has to be true
+		to make a widget readonly.
+	</td>
+</tr>
+<tr>
+	<td><b>Disabled</b></td>
+	<td>disabled</td>
+	<td>yes</td>
+	<td>disabled</td>
+	<td>
+		If checked (xml-attr: disabled="true") the widget will NOT be shown.
+		For buttons this could be archived on runtime via setting them readonly.
+	</td>
+</tr>
+<tr>
+	<td><b>onChange</b></td>
+	<td>onchange</td>
+	<td>?</td>
+	<td>onchange</td>
+	<td>
+		If checked (xml-attr: onchange="1") and the contet of the widget is changed by
+		the user, the form will be submitted.
+		Via xml or by a program other values can be set (not in the editor at the moment and
+		this is not compatible with the phpGTK implementation of the eTemplates).
+	</td>
+</tr>
+<tr>
+	<td><b>Span, Class</b></td>
+	<td>span<br>class</td>
+	<td>span: no<br>class: yes</td>
+	<td>span</td>
+	<td>
+		In the editor and internaly this field contains two comma-separated values:<p>
+		<b>span</b>: how many cell a widget should span (default is one), the special value
+		of 'all' can be used to indicate it should span all remaining cells of a row.
+		This is not supported by xul-grid's at the moment, but is planned to be.<p>
+		<b>class</b>: the CSS class for the widget.
+	</td>
+</tr>
+<tr>
+	<td><b>Align</b></td>
+	<td>align</td>
+	<td>yes</td>
+	<td>align</td>
+	<td>
+		Can be set to 'left' (default), 'center' or 'right'.
+	</td>
+</tr>
+<tr>
+	<td><b>Width</b><br>column-attr.</td>
+	<td>width</td>
+	<td>yes</td>
+	<td>row[0][#]</td>
+	<td>
+		Can be set to a percentage (eg. '10%'), a number of pixels or ...
+	</td>
+</tr>
+<tr>
+	<td><b>Height</b><br>row-attr.</td>
+	<td>height</td>
+	<td>yes</td>
+	<td>row[0][h#]</td>
+	<td>
+		Can be set to a percentage (eg. '10%'), a number of pixels or ...
+	</td>
+</tr>
+<tr>
+	<td><b>Class, Valign</b><br>row-attr.</td>
+	<td>class<br>valign</td>
+	<td>both: yes</td>
+	<td>row[0][c#]</td>
+	<td>
+		In the editor and internaly this field contains two comma-separated values:<p>
+		<b>class</b>: the CSS class for the row, there are 4 predefined css-classes:
+		nmh: next-match-header-background, nmr: alternating next-match-row-background which
+		gets replaced by the etemplate class with nmr0 or nmr1.<p>
+		<b>valign</b>: vertical alignment of the widgets in the row: 'top', 'middle' (default)
+		or 'bottom'
+	</td>
+</tr>
+</table>
+
+<a name="widgets">
+<h2>standard widgets and extensions of the eTemplates</h2>
+<table border=1>
+<tr>
+	<th>Widget Name in Editor</th>
+	<th>xml tag</th>
+	<th>xul</th>
+	<th>internal name</th>
+	<th>description of the widget<th>
+</tr>
+<tr>
+	<td><b>Label</b></td>
+	<td>&lt;description/></td>
+	<td>yes</td>
+	<td>label</td>
+	<td>
+		<b>a textual label</b><br>
+		The content is taken from the content-array but it can have an own label from
+		the label attribute too.<p>
+		<b>Size</b>: if it contains a 'i' and/or a 'b' the content (not the label) is rendered
+		in italic and/or bold.
+	</td>
+</tr>
+<tr>
+	<td><b>Text</b></td>
+	<td>&lt;textbox/></td>
+	<td>yes</td>
+	<td>text</td>
+	<td>
+		<b>a single-line input field for text</b><br>
+		In the html-UI this is rendered as &lt;input ...><p>
+		<b>Size</b> has 2 comma-separated fields:<br>
+		xml: <b>size</b>: the length in chars of the input-field<br>
+		xml: <b>maxlength</b>: the maximum length of the input
+	</td>
+</tr>
+<tr>
+	<td><b>Integer</b></td>
+	<td>&lt;textbox<br>type="integer"/></td>
+	<td>?</td>
+	<td>integer</td>
+	<td>
+		<b>a input-field to enter an integer</b><br>
+		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
+		but the will come in the near future.</i><p>
+		<b>Size</b> has 3 comma-separated fields:<br>
+		xml: <b>min</b>: minimum value, default none<br>
+		xml: <b>max</b>: maximum value, default none<br>
+		xml: <b>size</b>: the length in chars of the input-field, default 5
+	</td>
+</tr>
+<tr>
+	<td><b>Float</b></td>
+	<td>&lt;textbox<br>type="float"/></td>
+	<td>?</td>
+	<td>float</td>
+	<td>
+		<b>a input-field to enter a float</b><br>
+		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
+		but the will come in the near future.</i><p>
+		<b>Size</b> has 3 comma-separated fields:<br>
+		xml: <b>min</b>: minimum value, default none<br>
+		xml: <b>max</b>: maximum value, default none<br>
+		xml: <b>size</b>: the length in chars of the input-field, default 5
+	</td>
+</tr>
+<tr>
+	<td><b>Textarea</b></td>
+	<td>&lt;textbox<br>multiline="true"/></td>
+	<td>yes</td>
+	<td>textarea</td>
+	<td>
+		<b>a multiline input-field for text</b><br>
+		In the html-UI this is rendered as &lt;textarea ...>.<p>
+		<b>Size</b> has 2 comma-separated fields:<br>
+		xml: <b>cols</b>: the width of the field in chars<br>
+		xml: <b>rows</b>: the number of rows
+	</td>
+</tr>
+<tr>
+	<td><b>Checkbox</b></td>
+	<td>&lt;checkbox/></td>
+	<td>yes</td>
+	<td>checkbox</td>
+	<td>
+		<b>a widget that can be checked or unchecked</b><br>
+		In the html-UI this is rendered as &lt;input type="checkbox" ...>.
+	</td>
+</tr>
+<tr>
+	<td><b>Radiobutton</b></td>
+	<td>&lt;radio/></td>
+	<td>?</td>
+	<td>radio</td>
+	<td>
+		<b>a widget in a group of which only one can be checked</b><br>
+		In the html-UI this is rendered as &lt;input type="radio" ...><br>
+		Unlike XUL (and like html) the radio-buttons are grouped by giving them the same name / id.
+		If it is checked, the value is set to what is entered in <b>Size</b>. If the value of the
+		content array at index name/id matches size the radiobutton is marked 'checked'.
+	</td>
+</tr>
+<tr>
+	<td><b>Submitbutton</b></td>
+	<td>&lt;button/></td>
+	<td>yes</td>
+	<td>button</td>
+	<td>
+		<b>a button to submit the form / end the dialog</b><br>
+		In the html-UI this is rendered as &lt;input type="submit" ...><br>
+		If <b>onchanged</b> is set and the user has JavaScript enabled
+		the button is renderd as a link around the label and a hidden
+		input to set if the link is clicked.
+	</td>
+</tr>
+<tr>
+	<td><b>Horizonatal Rule</b></td>
+	<td>&lt;hrule/></td>
+	<td>no</td>
+	<td>hrule</td>
+	<td>
+		<b>a horizontal rule / line</b><br>
+		In the html-UI this is rendered as &lt;hr ...><br>
+		<b>Size</b> can contain a width of the rule, default is 100%
+	</td>
+</tr>
+<tr>
+	<td><b>Template</b></td>
+	<td>&lt;grid/></td>
+	<td>yes</td>
+	<td>template</td>
+	<td>
+		<b>a separate eTemplate to be loaded into this cell</b><br>
+		<b>Name</b> xml: <b>id</b>: the name of the etemplate to load<br>
+		<b>Size</b> xml: <b>content</b>: if set, the template uses an own sub-array
+		of the content array indexed by the value of size (if not the full
+		content-array is used). Variables like $row can be used as descript
+		for the general attribute Name.
+	</td>
+</tr>
+<tr>
+	<td><b>Image</b></td>
+	<td>&lt;image/></td>
+	<td>yes</td>
+	<td>image</td>
+	<td>
+		<b>shows an image</b><br>
+		<b>Label</b> xml: <b>src</b>: the name of the image to load, the image is search in the apps template-dirs<br>
+		<b>Name</b> xml: <b>id</b>: if set, a link to that methode = app.class.method is put around the image
+	</td>
+</tr>
+<tr>
+	<td><b>Selectbox</b></td>
+	<td>
+		&lt;menulist><br>
+		&nbsp; &lt;menupopup/><br>
+		&lt;/menulist><br>
+	</td>
+	<td>yes</td>
+	<td>select</td>
+	<td>
+		<b>shows a selectbox</b><br>
+		The content of the selectbox / the options have to be in an array which can be in 2 locations:
+		<ol>
+			<li>in $content["options-$name"]
+			<li>or in an separate array only for select-box-options under the index name, this array is passed
+				to the exec or show function of the etemplate-class
+		</ol>
+		<b>Size</b> xml: <b>size</b>: if set and > 1 the selectbox is a multiselection with size lines<br>
+	</td>
+</tr>
+<tr>
+	<td><b>Tabs</b></td>
+	<td>
+		&lt;tabbox><br>
+		&nbsp; &lt;tabs><br>
+		&nbsp; &nbsp; &lt;tab/><br>
+		&nbsp; &lt;/tabs><br>
+		&nbsp; &lt;tabpanels><br>
+		&nbsp; &nbsp; &lt;grid/><br>
+		&nbsp; &lt;/tabpanels><br>
+		&lt;/tabbox>
+	</td>
+	<td>yes</td>
+	<td>tab</td>
+	<td>
+		<b>shows a tab-widget</b><br>
+		The tab-widget is implemented as an extension, as html does not have a tab-widget.<p>
+		The following fields / attributes are in the Editor and internaly in the class separeted by '|', in the
+		xml/xul-file the are attributes of each tab- or grid-tag:<br>
+		<b>Label</b> xml: <b>label</b>: the labels of the tabs<br>
+		<b>Help</b> xml: <b>statustext</b>: of the tabs<br>
+		<b>Name</b> xml: <b>id</b>: the names/ids of the eTemplates/grid's to fill the bodies of the tabs
+	</td>
+</tr>
+</table>
+<p>
+<hr>
+<a name="extensions">
+<h1>How to implement new widgets / extensions to the eTemplates?</h1>
+<p>The eTemplates have an interface to extend them with new widgets. These widgets are php-classes, can use
+eTemplates to define the UI of the new widget and are stored in the eTemplate's inc-dir or the inc-dir of a
+phpGroupWare application. The editor and the etemplate-class autoload the existing extensions.</p>
+
+<i>I will made more documentation about the interface availible soon.</i>
+
+<h2>please <a href="mailto:RalfBecker@outdoor-training.de">contact me</a> if you have further questions or comments about the eTemplates</h2>
+
+</body>
+</html>
