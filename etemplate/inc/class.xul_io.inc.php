@@ -57,6 +57,10 @@
 				),
 				'select' => array(
 					'.name' => 'menulist,menupopup'
+				),
+				'template' => array(
+					'.name' => 'grid',
+					'size'  => 'content'
 				)
 			);
 			$this->xul2widget = array(
@@ -96,6 +100,8 @@
 				echo "<p>etempl->data = "; _debug_array($etempl->data);
 			}
 			$doc = new xmldoc();
+
+			$xul_overlay = new xmlnode('overlay');
 
 			$xul_grid = new xmlnode('grid');
 			$xul_grid->set_attribute('id',$etempl->name);
@@ -143,7 +149,7 @@
 					if (isset($widgetattr2xul['.set']))	// set default-attr for type
 					{
 						$attrs = explode(',',$widgetattr2xul[1]);
-						while (list(,$attr) = each($attr))
+						while (list(,$attr) = each($attrs))
 						{
 							list($attr,$val) = explode('=',$attr);
 							$widget->set_attribute($attr,$val);
@@ -187,7 +193,9 @@
 				$styles->set_text($etempl->style);
 				$xul_grid->add_node($styles);
 			}
-			$doc->add_root($xul_grid);
+			$xul_overlay->add_node($xul_grid);
+
+			$doc->add_root($xul_overlay);
 			$xml = $doc->dump_mem();
 
 			if ($this->debug)
@@ -228,6 +236,10 @@
 				{
 					$attr['name'] = $attr['id']; unset($attr['id']);
 				}
+				if ($tag == 'grid' && $type == 'complete')
+				{
+					$tag = 'template';
+				}
 				if ($tag != 'textbox')
 				{
 					$attr['type'] = $this->xul2widget[$tag] ? $this->xul2widget[$tag] : $tag;
@@ -239,13 +251,13 @@
 				switch ($tag)
 				{
 					case 'grid':
+						if ($node['level'] > 2)	// level 1 is the overlay
+						{
+							return "Can't import nested $node[tag]'s !!!";
+						}
 						if ($type != 'open')
 						{
 							break;
-						}
-						if ($node['level'] > 1)
-						{
-							return "Can't import nested $node[type]'s !!!";
 						}
 						$etempl->init($attr);
 						$size_opts = array('padding','spacing','class','border','height','width');
@@ -280,6 +292,7 @@
 						break;
 					case 'styles':
 						$etempl->style = $node['value'];
+						break;
 					case 'textbox':
 						if ($attr['multiline'])
 						{
@@ -302,9 +315,16 @@
 						}
 						// fall-through
 					default:
-						if ($tag == 'label')
+						switch ($tag)
 						{
-							$attr['label'] = $attr['value']; unset($attr['value']);
+							case 'label':
+								$attr['label'] = $attr['value'];
+								unset($attr['value']);
+								break;
+							case 'template':
+								$attr['size'] = $attr['content'];
+								unset($attr['content']);
+								break;
 						}
 						$attr['help'] = $attr['statustext']; unset($attr['statustext']);
 						$spanned = $attr['span'] == 'all' ? $etempl->cols - $col : $attr['span'];
