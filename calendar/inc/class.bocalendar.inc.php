@@ -368,13 +368,13 @@
 			return $this->so->list_events_keyword($keywords);
 		}
 
-		function update($params)
+		function update($params='')
 		{
-			$l_cal = ($params['cal']?$params['cal']:$GLOBALS['HTTP_POST_VARS']['cal']);
-			$l_participants = ($params['participants']?$params['participants']:$GLOBALS['HTTP_POST_VARS']['participants']);
-			$l_start = ($params['start']?$params['start']:$GLOBALS['HTTP_POST_VARS']['start']);
-			$l_end = ($params['end']?$params['end']:$GLOBALS['HTTP_POST_VARS']['end']);
-			$l_recur_enddate = ($params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
+			$l_cal = (@isset($params['cal']) && $params['cal']?$params['cal']:$GLOBALS['HTTP_POST_VARS']['cal']);
+			$l_participants = (@$params['participants']?$params['participants']:$GLOBALS['HTTP_POST_VARS']['participants']);
+			$l_start = (@isset($params['start']) && $params['start']?$params['start']:$GLOBALS['HTTP_POST_VARS']['start']);
+			$l_end = (@isset($params['end']) && $params['end']?$params['end']:$GLOBALS['HTTP_POST_VARS']['end']);
+			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
 
 			$send_to_ui = True;
 			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
