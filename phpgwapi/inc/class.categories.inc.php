@@ -395,8 +395,8 @@
 			{
 				for ($i=0;$i<count($cats);$i++)
 				{
-					$s .= '<option value="' . $cats[$i]['id'] . '"';
-					if (in_array($cats[$i]['id'],$selected))
+					$s .= '<option value="' . $cats[$i]['cat_id'] . '"';
+					if (in_array($cats[$i]['cat_id'],$selected))
 					{
 						$s .= ' selected';
 					}
@@ -432,12 +432,12 @@
 					{
 						$image_set = '&nbsp;';
 
-						if (in_array($cats[$i]['id'],$selected))
+						if (in_array($cats[$i]['cat_id'],$selected))
 						{
 							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','roter_pfeil') . '">';
 						}
 
-						if (($cats[$i]['level'] == 0) && !in_array($cats[$i]['id'],$selected))
+						if (($cats[$i]['level'] == 0) && !in_array($cats[$i]['cat_id'],$selected))
 						{
 							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','grauer_pfeil') . '">';
 						}
@@ -446,7 +446,7 @@
 
 						$s .= '<tr>' . "\n";
 						$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['id']) . '">'
+						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['cat_id']) . '">'
 							. $GLOBALS['phpgw']->strip_html($cats[$i]['name'])
 							. '</a></td>' . "\n"
 							. '</tr>' . "\n";
@@ -487,7 +487,7 @@
 				while (is_array($cats) && list(,$cat) = each($cats))
 				{
 					$sel_cat = '';
-					if (in_array($cat['id'],$selected))
+					if (in_array($cat['cat_id'],$selected))
 					{
 						$sel_cat = 'selected';
 					}
@@ -510,7 +510,7 @@
 
 					$cat_list[] = array
 					(
-						'id'		=> $cat['id'],
+						'cat_id'	=> $cat['cat_id'],
 						'name'		=> $name,
 						'selected'	=> $sel_cat
 					);
@@ -546,7 +546,7 @@
 			$values['descr']	= $this->db->db_addslashes($values['descr']);
 			$values['name']		= $this->db->db_addslashes($values['name']);
 
-			if (isset($values['id']))
+			if (isset($values['cat_id']))
 			{
 				$id_col = 'cat_id,';
 				$id_val = $values['cat_id'].',';

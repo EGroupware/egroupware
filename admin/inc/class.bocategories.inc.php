@@ -135,11 +135,11 @@
 		{
 			if ($data['global_cats'])
 			{
-				return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent'],True);
+				return $this->cats->formated_list($data['select'],$data['all'],$data['parent'],True);
 			}
 			else
 			{
-				return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent']);
+				return $this->cats->formated_list($data['select'],$data['all'],$data['parent']);
 			}
 		}
 

@@ -52,7 +52,7 @@
 <table width="50%" border="0" cellspacing="2" cellpadding="2">
 	<tr valign="bottom">
 		<td height="50" align="center">
-			<input type="hidden" name="values[old_parent]" value="{cat_parent}">
+			<input type="hidden" name="values[old_parent]" value="{old_parent}">
 			<input type="submit" name="submit" value="{lang_save}"></form></td>
 		<td height="50" align="center">
 			<form method="POST" action="{deleteurl}">
