@@ -76,6 +76,16 @@
 			$this->t->set_var('lang_reset',lang('Clear Form'));
 		}
 
+
+		function cat_data($edata,$data)
+		{
+			for ($j=0;$j<count($edata);$j++)
+			{
+				$td_data .= '<td>' . $data[$edata[$j]] . '</td>' . "\n";
+			}
+			return $td_data;
+		}
+
 		function index()
 		{
 			global $cats_app, $extra, $global_cats, $cats_level;
@@ -189,11 +199,7 @@
 					}
 					else
 					{
-						for ($j=0;$j<count($edata);$j++)
-						{
-							$td_data .= '<td>' . $data[$edata[$j]] . '</td>' . "\n";
-						}
-						$this->t->set_var('td_data',$td_data);
+						$this->t->set_var('td_data',$this->cat_data($edata,$data));
 					}
 				}
 
@@ -274,7 +280,7 @@
 			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
 			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
 			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-//			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
+			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
 			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
@@ -297,7 +303,6 @@
 
 				$values = array
 				(
-					'id'		=> '',
 					'parent'	=> $cat_parent,
 					'descr'		=> $cat_description,
 					'name'		=> $cat_name,
@@ -354,7 +359,6 @@
 			if ($extra)
 			{
 				$edata = explode(',',$extra);
-				$cat_data = array();
 				for($i=0;$i<count($edata);$i++)
 				{
 					$this->t->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $cat_data[$edata[$i]] . '">');

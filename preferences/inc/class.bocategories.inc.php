@@ -124,7 +124,7 @@
 			}
 			else
 			{
-				if (!$values['cat_parent'])
+				if (!$values['parent'])
 				{
 					$exists = $this->exists(array
 					(
@@ -145,7 +145,7 @@
 
 				if ($exists == True)
 				{
-					$error[] = lang('That name has been used already');
+					$error[] = lang('This name has been used already');
 				}
 			}
 
