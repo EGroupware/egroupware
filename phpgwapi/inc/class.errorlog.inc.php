@@ -28,23 +28,26 @@
 									);
 		
 		
-		function message($etext,$p0='',$p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='')
+		function message($parms)
 		{
-			$parms = array($p0,$p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9);
+			$etext =$parms['text'];
+			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
 			CreateObject('phpgwapi.error',$etext,$parms,1);
 		}
 		
 		
-		function error($etext,$p0='',$p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='')
+		function error($parms)
 		{
-			$parms = array($p0,$p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9);
+			$etext =$parms['text'];
+			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
 			CreateObject('phpgwapi.error',$etext,$parms,'');
 		}
 
 
-		function write($etext,$p0='',$p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='')
+		function write($parms)
 		{
-			$parms = array($p0,$p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9);
+			$etext =$parms['text'];
+			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
 			$save = $this->errorstack;
 			$this->$errorstack = array();
 			CreateObject('phpgwapi.error',$etext,$parms,1);
@@ -52,8 +55,9 @@
 			$this->errorstack = $save;
 		}
 		
-		function iserror($ecode)
+		function iserror($parms)
 		{
+			$ecode = $parms['code'];
 			$errorstack = $this->errorstack;
 			reset($errorstack);
 			while(list(,$err)=each($errorstack))
