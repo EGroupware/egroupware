@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - EditableTemplates - Buiseness Objects                       *
+	* eGroupWare - EditableTemplates - Business Objects                       *
 	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
@@ -14,13 +14,15 @@
 
 	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
 
-	/*!
-	@class boetemplate
-	@author ralfbecker
-	@abstract Buiseness Objects for eTemplates
-	@discussion Not so much so far, as the most logic is still in the UI-class
-	@param $types,$alings converts internal names/values to (more) human readible ones
-	*/
+	/**
+	 * Business Object for eTemplates, extending the Storage Object
+	 *
+	 * Not so much so far, as the most logic is still in the UI-class
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class boetemplate extends soetemplate
 	{
 		var $extensions = array();
@@ -47,27 +49,16 @@
 			'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols 
 			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
 		);
-		/*!
-		@function boetemplate
-		@abstract constructor of class
-		@param $name     name of etemplate or array with name and other keys
-		@param $load_via name/array with keys of other etemplate to load in order to get $name
-		@discussion Calls the constructor of soetemplate
-		*/
+		/**
+		 * constructor of class
+		 *
+		 * Calls the constructor of soetemplate
+		 *
+		 * @param $name string/array name of etemplate or array with name and other keys
+		 * @param $load_via string/array name or array with keys of other etemplate to load in order to get $name
+		 */
 		function boetemplate($name='',$load_via='')
 		{
-			$this->public_functions += array(
-				'set_row_attribute' => True,
-				'disable_row' => True,
-				'set_column_attribute' => True,
-				'disable_column' => True,
-				'disable_cells' => True,
-				'set_cell_attribute' => True,
-				'get_cell_attribute' => True,
-				'get_array' => True,
-				'set_array' => True,
-				'unset_array' => True
-			);
 			$this->soetemplate();
 
 			$tname = &$name;
@@ -84,32 +75,32 @@
 			}
 		}
 
-		/*!
-		@function expand_name
-		@syntax expand_name( $name,$c,$row,$c_='',$row_='',$cont='' )
-		@author ralfbecker
-		@abstract allows a few variables (eg. row-number) to be used in field-names
-		@discussion This is mainly used for autorepeat, but other use is possible.
-		@discussion You need to be aware of the rules PHP uses to expand vars in strings, a name
-		@discussion of "Row$row[length]" will expand to 'Row' as $row is scalar, you need to use
-		@discussion "Row${row}[length]" instead. Only one indirection is allowd in a string by php !!!
-		@discussion Out of that reason we have now the variable $row_cont, which is $cont[$row] too.
-		@discussion Attention !!!
-		@discussion Using only number as index in field-names causes a lot trouble, as depending
-		@discussion on the variable type (which php determines itself) you used filling and later
-		@discussion accessing the array it can by the index or the key of an array element.
-		@discussion To make it short and clear, use "Row$row" or "$col$row" not "$row" or "$row$col" !!!
-		@param $name the name to expand
-		@param $c is the column index starting with 0 (if you have row-headers, data-cells start at 1)
-		@param $row is the row number starting with 0 (if you have col-headers, data-cells start at 1)
-		@param $c_, $row_ are the respective values of the previous template-inclusion,
-		@param            eg. the column-headers in the eTemplate-editor are templates itself,
-		@param            to show the column-name in the header you can not use $col as it will
-		@param            be constant as it is always the same col in the header-template,
-		@param            what you want is the value of the previous template-inclusion.
-		@param $cont content array of the template, you might use it to generate button-names with
-		@param       id values in it: "del[$cont[id]]" expands to "del[123]" if $cont = array('id' => 123)
-		*/
+		/**
+		 * allows a few variables (eg. row-number) to be used in field-names
+		 *
+		 * This is mainly used for autorepeat, but other use is possible.
+		 * You need to be aware of the rules PHP uses to expand vars in strings, a name
+		 * of "Row$row[length]" will expand to 'Row' as $row is scalar, you need to use
+		 * "Row${row}[length]" instead. Only one indirection is allowd in a string by php !!!
+		 * Out of that reason we have now the variable $row_cont, which is $cont[$row] too.
+		 * Attention !!!
+		 * Using only number as index in field-names causes a lot trouble, as depending
+		 * on the variable type (which php determines itself) you used filling and later
+		 * accessing the array it can by the index or the key of an array element.
+		 * To make it short and clear, use "Row$row" or "$col$row" not "$row" or "$row$col" !!!
+		 *
+		 * @param $name sring the name to expand
+		 * @param $c int is the column index starting with 0 (if you have row-headers, data-cells start at 1)
+		 * @param $row int is the row number starting with 0 (if you have col-headers, data-cells start at 1)
+		 * @param $c_, $row_ int are the respective values of the previous template-inclusion,
+		 * 	eg. the column-headers in the eTemplate-editor are templates itself,
+		 * 	to show the column-name in the header you can not use $col as it will
+		 * 	be constant as it is always the same col in the header-template,
+		 * 	what you want is the value of the previous template-inclusion.
+		 * @param $cont array content of the template, you might use it to generate button-names with id values in it:
+		 * 	"del[$cont[id]]" expands to "del[123]" if $cont = array('id' => 123)
+		 * @return string the expanded name
+		 */
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
 			$is_index_in_content = $name[0] == '@';
@@ -133,29 +124,29 @@
 			return $name;
 		}
 
-		/*!
-		@function autorepeat_idx
-		@abstract Checks if we have an row- or column autorepeat and sets the indexes for $content, etc.
-		@discussion Autorepeat is important to allow a variable numer of rows or cols, eg. for a list.
-		@discussion The eTemplate has only one (have to be the last) row or column, which gets
-		@discussion automaticaly repeated as long as content is availible. To check this the content
-		@discussion has to be in an sub-array of content. The index / subscript into content is
-		@discussion determined by the content of size for templates or name for regular fields.
-		@discussion An autorepeat is defined by an index which contains variables to expand.
-		@discussion (vor variable expansion in names see expand_names). Usually I use the keys
-		@discussion $row: 0, 1, 2, 3, ... for only rows, $col: '@', 'A', 'B', 'C', ... for only cols or
-		@discussion $col$row: '@0','A0',... '@1','A1','B1',... '@2','A2','B2',... for both rows and cells.
-		@discussion In general everything expand_names can generate is ok - see there.
-		@discussion As you usually have col- and row-headers, data-cells start with '1' or 'A' !!!
-		@syntax autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False)
-		@param $cell array with data of cell: name, type, size, ...
-		@param $c,$r col/row index starting from 0
-		@param &$idx returns the index in $content and $readonlys (NOT $sel_options !!!)
-		@param &$idx_cname returns the basename for the form-name: is $idx if only one value
-		@param       (no ',') is given in size (name (not template-fields) are always only one value)
-		@param $check_col boolean to check for col- or row-autorepeat
-		@result true if cell is autorepeat (has index with vars / '$') or false otherwise
-		*/
+		/**
+		 * Checks if we have an row- or column autorepeat and sets the indexes for $content, etc.
+		 *
+		 * Autorepeat is important to allow a variable numer of rows or cols, eg. for a list.
+		 * The eTemplate has only one (have to be the last) row or column, which gets
+		 * automaticaly repeated as long as content is availible. To check this the content
+		 * has to be in an sub-array of content. The index / subscript into content is
+		 * determined by the content of size for templates or name for regular fields.
+		 * An autorepeat is defined by an index which contains variables to expand.
+		 * (vor variable expansion in names see expand_names). Usually I use the keys
+		 * $row: 0, 1, 2, 3, ... for only rows, $col: '@', 'A', 'B', 'C', ... for only cols or
+		 * $col$row: '@0','A0',... '@1','A1','B1',... '@2','A2','B2',... for both rows and cells.
+		 * In general everything expand_names can generate is ok - see there.
+		 * As you usually have col- and row-headers, data-cells start with '1' or 'A' !!!
+		 *
+		 * @param $cell array with data of cell: name, type, size, ...
+		 * @param $c,$r int col/row index starting from 0
+		 * @param &$idx string returns the index in $content and $readonlys (NOT $sel_options !!!)
+		 * @param &$idx_cname string returns the basename for the form-name: is $idx if only one value
+		 * @param       (no ',') is given in size (name (not template-fields) are always only one value)
+		 * @param $check_col boolean to check for col- or row-autorepeat
+		 * @return boolean true if cell is autorepeat (has index with vars / '$') or false otherwise
+		 */
 		function autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False)
 		{
 			$org_idx = $idx = $cell[ $cell['type'] == 'template' ? 'size' : 'name' ];
@@ -194,12 +185,9 @@
 			return $Ok;
 		}
 
-		/*!
-		@function appsession_id
-		@syntax appsession_id( )
-		@author ralfbecker
-		@abstract creates a new appsession-id via microtime()
-		*/
+		/**
+		 *  creates a new appsession-id via microtime()
+		 */
 		function appsession_id()
 		{
 			list($msec,$sec) = explode(' ',microtime());
@@ -208,12 +196,12 @@
 			return $id;
 		}
 
-		/*!
-		@functin appsession
-		@syntax appsession($location = 'default', $appname = '', $data = '##NOTHING##')
-		@abstract db-sessions appsession function
-		@note It is used to overcome the problem with overflowing php4-sessions
-		*/
+		/**
+		 * db-sessions appsession function, not longer used !!!
+		 *
+		 * It was used to overcome the problem with overflowing php4-sessions, which seems to not exist any more !!!
+		 * @depricated
+		 */
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 		{
 			// use the version from the sessions-class if we use db-sessions
@@ -289,19 +277,18 @@
 			return $data;
 		}
 
-		/*!
-		@function save_appsession
-		@syntax save_appsession( $data,$id='' )
-		@author ralfbecker
-		@abstract saves content,readonlys,template-keys, ... via the appsession function
-		@discussion As a user may open several windows with the same content/template wie generate a location-id from microtime
-		@discussion which is used as location for appsession to descriminate between the different windows. This location-id
-		@discussion is then saved as a hidden-var in the form. The above mentions session-id has nothing to do / is different
-		@discussion from the session-id which is constant for all windows opened in one session.
-		@param $data the data to save
-		@param $id the id to use or '' to generate a new id
-		@result the location-id
-		*/
+		/**
+		 * saves content,readonlys,template-keys, ... via the appsession function
+		 *
+		 * As a user may open several windows with the same content/template wie generate a location-id from microtime
+		 * which is used as location for appsession to descriminate between the different windows. This location-id
+		 * is then saved as a hidden-var in the form. The above mentions session-id has nothing to do / is different
+		 * from the session-id which is constant for all windows opened in one session.
+		 *
+		 * @param $data array the data to save
+		 * @param $id string the id to use or '' to generate a new id
+		 * @return string location-id
+		 */
 		function save_appsession($data,$id='')
 		{
 			if (!$id)
@@ -313,14 +300,12 @@
 			return $id;
 		}
 
-		/*!
-		@function get_appsession
-		@syntax get_appsession( $id )
-		@author ralfbecker
-		@abstract gets content,readonlys,template-keys, ... back from the appsession function
-		@param $id the location-id
-		@result the session-data
-		*/
+		/**
+		 * gets content,readonlys,template-keys, ... back from the appsession function
+		 *
+		 * @param $id the location-id
+		 * @return array with session-data
+		 */
 		function get_appsession($id)
 		{
 			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
@@ -334,28 +319,26 @@
 			return $data;
 		}
 
-		/*!
-		@function get_cell_attribute
-		@syntax get_cell_attribute( $name,$attr )
-		@author ralfbecker
-		@abstract gets an attribute in a named cell
-		@result the attribute or False if named cell not found
-		*/
+		/**
+		 * gets an attribute in a named cell
+		 *
+		 * @param $name string cell-name
+		 * @param $attr string attribute-name
+		 * @return mixed the attribute or False if named cell not found
+		 */
 		function get_cell_attribute($name,$attr)
 		{
 			return $this->set_cell_attribute($name,$attr,NULL);
 		}
 
-		/*!
-		@function set_cell_attribute
-		@syntax set_cell_attribute( $name,$attr,$val )
-		@author ralfbecker
-		@abstract set an attribute in a named cell if val is not NULL else return the attribute
-		@param $name sting name of the cell
-		@param $attr attribute-name
-		@param $val if not NULL sets attribute else returns it
-		@result the number of changed cells or False, if none changed
-		*/
+		/**
+		 * set an attribute in a named cell if val is not NULL else return the attribute
+		 *
+		 * @param $name sting cell-name
+		 * @param $attr attribute-name
+		 * @param $val mixed if not NULL sets attribute else returns it
+		 * @return mixed number of changed cells or False, if none changed
+		 */
 		function set_cell_attribute($name,$attr,$val)
 		{
 			//echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val')</p>\n";
@@ -415,29 +398,26 @@
 			return $n;
 		}
 
-		/*!
-		@function disable_cells
-		@syntax disable_cells( $name )
-		@author ralfbecker
-		@abstract disables all cells with name == $name
-		*/
+		/**
+		 *  disables all cells with name == $name
+		 *
+		 * @param $name sting cell-name
+		 * @return mixed number of changed cells or False, if none changed
+		 */
 		function disable_cells($name)
 		{
 			return $this->set_cell_attribute($name,'disabled',True);
 		}
 		
-		/*!
-		@function set_row_attributes
-		@syntax set_row_attibutes( $n,$height=0,$class=0,$valign=0,$disabled=0 )
-		@author ralfbecker
-		@abstract set one or more attibutes for row $n
-		@param $n is numerical row-number starting with 1 (!)
-		@param $height in percent or pixel or '' for no height
-		@param $class name of css class (without the leading '.') or '' for no class
-		@param $valign alignment (top,middle,bottom) or '' for none
-		@param $disabled True or expression or False to disable or enable the row
-		@param Only the number 0 means dont change the attribute !!!
-		*/
+		/**
+		 * set one or more attibutes for row $n
+		 *
+		 * @param $n int numerical row-number starting with 1 (!)
+		 * @param $height string percent or pixel or '' for no height
+		 * @param $class string name of css class (without the leading '.') or '' for no class
+		 * @param $valign string alignment (top,middle,bottom) or '' for none
+		 * @param $disabled boolean True or expression or False to disable or enable the row (Only the number 0 means dont change the attribute !!!)
+		 */
 		function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0)
 		{
 			list($old_height,$old_disabled) = explode(',',$this->data[0]["h$n"]);
@@ -450,29 +430,24 @@
 				($valign ? ','.$valign : '');
 		}
 
-		/*!
-		@function disable_row
-		@syntax disable_row( $n,$enable=False )
-		@author ralfbecker
-		@abstract disables row $n
-		@param $n is numerical row-number starting with 1 (!)
-		@param $enable can be used to re-enable a row if set to True
-		*/
+		/**
+		 * disables row $n
+		 *
+		 * @param $n int numerical row-number starting with 1 (!)
+		 * @param $enable boolean can be used to re-enable a row if set to True
+		 */
 		function disable_row($n,$enable=False)
 		{
 			$this->set_row_attributes($n,0,0,0,!$enable);
 		}
 
-		/*!
-		@function set_column_attributes
-		@syntax set_column_attibutes( $n,$width=0,$disabled=0 )
-		@author ralfbecker
-		@abstract set one or more attibutes for column $c
-		@param $c is numerical column-number starting with 0 (!), or the char-code starting with 'A'
-		@param $width in percent or pixel or '' for no height
-		@param $disabled True or expression or False to disable or enable the column
-		@param Only the number 0 means dont change the attribute !!!
-		*/
+		/**
+		 * set one or more attibutes for column $c
+		 *
+		 * @param $c int/string numerical column-number starting with 0 (!), or the char-code starting with 'A'
+		 * @param $width string percent or pixel or '' for no height
+		 * @param $disabled boolean True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
+		 */
 		function set_column_attributes($c,$width=0,$disabled=0)
 		{
 			if (is_numeric($c))
@@ -485,27 +460,23 @@
 				($disabled ? ','.$disabled : '');
 		}
 
-		/*!
-		@function disable_column
-		@syntax disable_column( $c,$enable=False )
-		@author ralfbecker
-		@abstract disables column $c
-		@param $c is numerical column-number starting with 0 (!), or the char-code starting with 'A'
-		@param $enable can be used to re-enable a column if set to True
+		/**
+		 * disables column $c
+		 * @param $c int/string numerical column-number starting with 0 (!), or the char-code starting with 'A'
+		 * @param $enable can be used to re-enable a column if set to True
 		*/
 		function disable_column($c,$enable=False)
 		{
 			$this->set_column_attributes($c,0,!$enable);
 		}
 
-		/*!
-		@function loadExtension
-		@syntax loadExtension( $type )
-		@author ralfbecker
-		@abstact trys to load the Extension / Widget-class from the app or etemplate
-		@param $name name of the extension, the classname should be class.${name}_widget.inc.php
-		@discussion the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
-		*/
+		/**
+		 * trys to load the Extension / Widget-class from the app or etemplate
+		 *
+		 * @param $name string name of the extension, the classname should be class.${name}_widget.inc.php
+		 *	the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
+		 * @return string/boolean human readable name or false if not found/loadable
+		 */
 		function loadExtension($type)
 		{
 			list($class,$app) = explode('.',$type);
@@ -534,11 +505,10 @@
 
 		function haveExtension($type,$function='')
 		/*
-		@function haveExtension
-		@syntax haveExtension($type)
-		@author ralfbecker
-		@abstract checks if extension is loaded and load it if it isnt
-		*/
+		 *  checks if extension is loaded and load it if it isnt
+		 *
+		 * @return boolean
+		 */
 		{
 			return ($GLOBALS['phpgw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
 			        ($function == '' || $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->public_functions[$function]);
@@ -546,16 +516,15 @@
 
 		function extensionPreProcess($type,$name,&$value,&$cell,&$readonlys)
 		/*
-		@function extensionPreProcess
-		@syntax extensionPreProcess(&$cell,&$value,&$readonlys)
-		@param $type of the extension
-		@param $name form-name of this widget/field (used as a unique index into extension_data)
-		@param &$cell table-cell on which the extension operates
-		@param &$value value of the extensions content(-array)
-		@param &$readonlys value of the extensions readonly-setting(-array)
-		@abstract executes the pre_process-function of the extension $cell[]type]
-		@author ralfbecker
-		*/
+		 * executes the pre_process-function of the extension $cell[]type]
+		 *
+		 * @param $type string type of the extension
+		 * @param $name string form-name of this widget/field (used as a unique index into extension_data)
+		 * @param &$cell array table-cell on which the extension operates
+		 * @param &$value mixed value of the extensions content(-array)
+		 * @param &$readonlys array value of the extensions readonly-setting(-array)
+		 * @return mixed the return-value of the extensions preprocess function
+		 */
 		{
 			if (!$this->haveExtension($type))
 			{
@@ -567,15 +536,13 @@
 
 		function extensionPostProcess($type,$name,&$value,$value_in)
 		/*
-		@function extensionPostProcess
-		@syntax extensionPostProcess(&$cell,&$value)
-		@param $type of the extension
-		@param $name form-name of this widget/field (used as a unique index into extension_data)
-		@param &$value value of the extensions content(-array)
-		@abstract executes the post_process-function of the extension $cell[type]
-		@returns True if a value should be returned (default for no postprocess fkt.), else False
-		@author ralfbecker
-		*/
+		 * executes the post_process-function of the extension $cell[type]
+		 *
+		 * @param $type string name of the extension
+		 * @param $name string form-name of this widget/field (used as a unique index into extension_data)
+		 * @param &$value mixed value of the extensions content(-array)
+		 * @return boolean True if a value should be returned (default for no postprocess fkt.), else False
+		 */
 		{
 			if (!$this->haveExtension($type,'post_process'))
 			{
@@ -588,11 +555,9 @@
 
 		function extensionRender($type,$name,&$value,&$cell,$readonly)
 		/*
-		@function extensionRender
-		@syntax extensionRender(&$cell,$form_name,&$value,$readonly)
-		@abstract executes the render-function of the extension $cell[type]
-		@author ralfbecker
-		*/
+		 * executes the render-function of the extension $cell[type]
+		 * @return mixed return-value of the render function
+		 */
 		{
 			if (!$this->haveExtension($type,'render'))
 			{
@@ -602,13 +567,13 @@
 				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
-		/*!
-		@function isset_array
-		@syntax isset_array( $arr,$idx )
-		@author ralfbecker
-		@abstract checks if idx, which may contain multiple subindex (eg.'x[y][z]'), is set in array
-		@author ralfbecker
-		*/
+		/**
+		 * checks if $idx is set in array $arr
+		 *
+		 * @param $arr array
+		 * @param $idx string may contain multiple subindex (eg.'x[y][z]')
+		 * @return boolean
+		 */
 		function isset_array($arr,$idx)
 		{
 			$idxs = explode('[',str_replace(']','',$idx));
@@ -625,21 +590,20 @@
 			return isset($pos[$last_idx]);
 		}
 
-		/*!
-		@function set_array
-		@abstract sets $arr[$idx] = $val
-		@author ralfbecker
-		@syntax set_array( &$arr,$idx,$val )
-		@param $arr array the array to search, referenz as a referenz gets returned
-		@param $idx string the index, may contain sub-indices like a[b], see example below
-		@discussion This works for non-trival indexes like 'a[b][c]' too: $arr['a']['b']['c'] = $val;
-		@author ralfbecker
-		*/
+		/**
+		 * sets $arr[$idx] = $val
+		 *
+		 * This works for non-trival indexes like 'a[b][c]' too: $arr['a']['b']['c'] = $val;
+		 *
+		 * @param &$arr array the array to search
+		 * @param $idx string the index, may contain sub-indices like a[b], see example below
+		 * @param $val mixed
+		 */
 		function set_array(&$arr,$idx,$val)
 		{
 			if (!is_array($arr))
 			{
-				die('set_array() $arr is no array');
+				die('set_array() $arr is no array<br>'.function_backtrace());
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
 			$pos = &$arr;
@@ -650,22 +614,22 @@
 			$pos = $val;
 		}
 
-		/*!
-		@function get_array
-		@abstract return a var-param to $arr[$idx]
-		@author ralfbecker
-		@syntax get_array( &$arr,$idx,$referenz_into=False )
-		@param $arr array the array to search, referenz as a referenz gets returned
-		@param $idx string the index, may contain sub-indices like a[b], see example below
-		@param $referenz_into boolean default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
-		@example $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
-		@discussion This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
-		*/
-		function &get_array(&$arr,$idx,$referenz_into=False)
+		/**
+		 * return a reference to $arr[$idx]
+		 *
+		 * This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
+		 * $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
+		 *
+		 * @param $arr array the array to search, referenz as a referenz gets returned
+		 * @param $idx string the index, may contain sub-indices like a[b], see example below
+		 * @param $reference_into boolean default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
+		 * @return mixed reference to $arr[$idx] or false if $idx is not set and not $reference_into
+		 */
+		function &get_array(&$arr,$idx,$reference_into=False)
 		{
 			if (!is_array($arr))
 			{
-				die('set_array() $arr is no array');
+				die('set_array() $arr is no array<br>'.function_backtrace());
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
 			$pos = &$arr;
@@ -680,21 +644,20 @@
 			return $pos;
 		}
 
-		/*!
-		@function unset_array
-		@abstract unsets $arr[$idx]
-		@author ralfbecker
-		@syntax unset_array( &$arr,$idx )
-		@param $arr array the array to search, referenz as a referenz gets returned
-		@param $idx string the index, may contain sub-indices like a[b], see example below
-		@example unset_array($arr,'a[b]'); is equivalent to unset($arr['a']['b']);
-		@discussion This works for non-trival indexes like 'a[b][c]' too
-		*/
+		/**
+		 * unsets $arr[$idx]
+		 *
+		 * This works for non-trival indexes like 'a[b][c]' too
+		 * unset_array($arr,'a[b]'); is equivalent to unset($arr['a']['b']);
+		 *
+		 * @param $arr array the array to search, referenz as a referenz gets returned
+		 * @param $idx string the index, may contain sub-indices like a[b], see example below
+		 */
 		function unset_array(&$arr,$idx)
 		{
 			if (!is_array($arr))
 			{
-				die('set_array() $arr is no array');
+				die('set_array() $arr is no array<br>'.function_backtrace());
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
 			$last_idx = array_pop($idxs);
@@ -706,31 +669,42 @@
 			unset($pos[$last_idx]);
 		}
 
-		/*!
-		@function complete_array_merge
-		@syntax complete_array_merge( $old,$new )
-		@author ralfbecker
-		@abstract merges $old and $new, content of $new has precedence over $old
-		@discussion THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays.
-		*/
+		/**
+		 * merges $old and $new, content of $new has precedence over $old
+		 *
+		 * THIS IS NOT THE SAME AS PHP4's functions: 
+		 * - array_merge, as it calls itself recursive for values which are arrays.
+		 * - array_merge_recursive accumulates values with the same index and $new does NOT overwrite $old
+		 *
+		 * @param $old array
+		 * @param $new array
+		 * @return array the merged array
+		 */
 		function complete_array_merge($old,$new)
 		{
-			@reset($new);
-			while (list($k,$v) = @each($new))
+			if (is_array($new))
 			{
-				if (!is_array($v) || !isset($old[$k]))
+				foreach($new as $k => $v)
 				{
-					$old[$k] = $v;
-				}
-				else
-				{
-					$old[$k] = $this->complete_array_merge($old[$k],$v);
+					if (!is_array($v) || !isset($old[$k]))
+					{
+						$old[$k] = $v;
+					}
+					else
+					{
+						$old[$k] = $this->complete_array_merge($old[$k],$v);
+					}
 				}
 			}
 			return $old;
 		}
 
 
+		/**
+		 * generated a file-name from an eTemplates, name, template(-set) and lang
+		 *
+		 * @return string
+		 */
 		function cache_name($name='',$template='default',$lang='default')
 		{
 			if (empty($name))
@@ -755,16 +729,20 @@
 			return $cname;
 		}
 
-		/*!
-		@function store_in_cache()
-		@abstract stores the etemplate in the cache in phpgw_info
-		*/
+		/**
+		 *  stores the etemplate in the cache in phpgw_info
+		 */
 		function store_in_cache()
 		{
 			//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
 			$GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
 		}
 
+		/*
+		 * returns true if a given eTemplate is in the cache
+		 *
+		 * @return boolean
+		 */
 		function in_cache($name,$template='default',$lang='default',$group=0,$version='')
 		{
 			$cname = $this->cache_name($name,$template,$lang);
@@ -783,6 +761,13 @@
 			return $cname;
 		}
 
+		/*
+		 * reads the content of an eTemplate from the cache into the current object
+		 *
+		 * same as read but only via the cache
+		 *
+		 * @return boolean true if the eTemplate was found in the cache
+		 */
 		function read_from_cache($name,$template='default',$lang='default',$group=0,$version='')
 		{
 			//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
@@ -795,13 +780,19 @@
 			return False;
 		}
 
-		/*!
-		@function read
-		@abstract Reads an eTemplate from the cache or database / filesystem (and updates the cache)
-		@param as discripted in soetemplate::read
-		@param $load_via name/array of keys of etemplate to load in order to get $name (only as second try!)
-		@result True if a fitting template is found, else False
-		*/
+		/**
+		 * reads an eTemplate from the cache or database / filesystem (and updates the cache)
+		 *
+		 * reimplementation of soetemplate::read to use and/or update the cache
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @param $load_via mixed name/array of keys of etemplate to load in order to get $name (only as second try!)
+		 * @return boolean True if a fitting template is found, else False
+		 */
 		function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
 		{
 			if (is_array($name)) {
@@ -816,7 +807,8 @@
 				return False;
 			}
 			$parent = is_array($load_via) ? $load_via['name'] : $load_via;
-         if (strstr($pname,'.') === False && !empty($parent))
+
+         	if (strstr($pname,'.') === False && !empty($parent))
 			{
 				$pname = $parent . '.' . $pname;
 			}
@@ -837,13 +829,19 @@
 			return True;
 		}
 
-		/*!
-		@function save
-		@abstract saves eTemplate-object to db and update the cache
-		@params keys see soetemplate::save
-		@result the number of affected rows, 1 should be ok, 0 somethings wrong
-		*/
-		function save($name='',$template='.',$lang='.',$group='',$version='.')
+		/**
+		 * saves eTemplate-object to db and update the cache
+		 *
+		 * reimplementation of soetemplate::save to update the cache
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set or '' for the default one
+		 * @param $lang string language or '' for the default one
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @return the number of affected rows, 1 should be ok, 0 somethings wrong
+		 */
+		function save($name='',$template='.',$lang='.',$group=0,$version='.')
 		{
 			if ($result = soetemplate::save($name,$template,$lang,$group,$version))
 			{
@@ -851,4 +849,4 @@
 			}
 			return $result;
 		}
-	};
+	}

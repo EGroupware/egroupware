@@ -12,7 +12,6 @@
 
 	/* $Id$ */
 
-
 	if (!function_exists('var2xml'))
 	{
 		if (file_exists(PHPGW_API_INC.'class.xmltool.inc.php'))
@@ -25,6 +24,15 @@
 		}
 	}
 
+	/**
+	 * XUL/XML Import & Export for eTemplates
+	 *
+	 * used only internaly
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class xul_io
 	{
 		var $widget2xul;
@@ -616,5 +624,3 @@
 			return $imported;
 		}
 	}
-
-?>

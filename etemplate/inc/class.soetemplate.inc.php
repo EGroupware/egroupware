@@ -12,38 +12,29 @@
 
 	/* $Id$ */
 
-	/*!
-	@class soetemplate
-	@author ralfbecker
-	@abstract Storage Objects: Everything to store and retrive the eTemplates.
-	@discussion eTemplates are stored in the db in table 'phpgw_etemplate' and gets distributed
-	@discussion through the file 'etemplates.inc.php' in the setup dir of each app. That file gets
-	@discussion automatically imported in the db, whenever you show a eTemplate of the app. For
-	@discussion performace reasons the timestamp of the file is stored in the db, so 'new'
-	@discussion eTemplates need to have a newer file. The distribution-file is generated with the
-	@discussion function dump, usually by pressing a button in the editor.
-	@discussion writeLangFile writes an lang-file with all Labels, incorporating an existing one.
-	@discussion Beside a name eTemplates use the following keys to find the most suitable template
-	@discussion for an user (in order of precedence):
-	@discussion  1) User-/Group-Id (not yet implemented)
-	@discussion  2) preferd languages of the user (templates for all langs have $lang='')
-	@discussion  3) selected template: verdilak, ... (the default is called '' in the db, not default)
-	@discussion  4) a version-number of the form, eg: '0.9.13.001' (filled up with 0 same size)
-	*/
+	/**
+	 * Storage Objects: Everything to store and retrive and eTemplate.
+	 *
+	 * eTemplates are stored in the db in table 'phpgw_etemplate' and gets distributed
+	 * through the file 'etemplates.inc.php' in the setup dir of each app. That file gets
+	 * automatically imported in the db, whenever you show a eTemplate of the app. For
+	 * performace reasons the timestamp of the file is stored in the db, so 'new'
+	 * eTemplates need to have a newer file. The distribution-file is generated with the
+	 * function dump, usually by pressing a button in the editor.
+	 * writeLangFile writes an lang-file with all Labels, incorporating an existing one.
+	 * Beside a name eTemplates use the following keys to find the most suitable template
+	 * for an user (in order of precedence):
+	 *  1) User-/Group-Id (not yet implemented)
+	 *  2) preferd languages of the user (templates for all langs have $lang='')
+	 *  3) selected template: verdilak, ... (the default is called '' in the db, not default)
+	 *  4) a version-number of the form, eg: '0.9.13.001' (filled up with 0 same size)
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class soetemplate
 	{
-		var $public_functions = array(
-			'init'	=> True,
-			'empty_cell' => True,
-			'new_cell' => True,
-			'read'	=> True,
-			'search'	=> True,
-			'save'	=> True,
-			'delete'	=> True,
-			'dump2setup'	=> True,
-			'import_dump'	=> True,
-			'writeLangFile' => True
-		);
 		var $debug;		// =1 show some debug-messages, = 'app.name' show messages only for eTemplate 'app.name'
 		var $name;		// name of the template, e.g. 'infolog.edit'
 		var $template;	// '' = default (not 'default')
@@ -68,13 +59,20 @@
 		);
 		var $db_cols;
 
-		/*!
-		@function soetemplate
-		@abstract constructor of the class
-		@syntax soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=2,$cols=2)
-		@param as read
-		*/
-		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=2,$cols=2)
+		/**
+		 * constructor of the class
+		 *
+		 * calls init or read depending on a name for the template is given
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @param $rows int initial size of the template, default 1, only used if no name given !!!
+		 * @param $cols int initial size of the template, default 1, only used if no name given !!!
+		 */
+		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->db_cols = $this->db_key_cols + $this->db_data_cols;
@@ -85,17 +83,16 @@
 			}
 			else
 			{
-				$this->read($name,$template,$lang,$group,$version,$rows,$cols);
+				$this->read($name,$template,$lang,$group,$version);
 			}
 		}
 
-		/*!
-		@function num2chrs
-		@abstract generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
-		@syntax num2chrs($num)
-		@param $num index to generate name from 1 => 'A'
-		@result the name
-		*/
+		/**
+		 * generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
+		 *
+		 * @param $num int numerical index to generate name from 1 => 'A'
+		 * @return string the name
+		 */
 		function num2chrs($num)
 		{
 			$min = ord('A');
@@ -109,12 +106,13 @@
 			return $chrs;
 		}
 
-		/*!
-		@function empty_cell
-		@abstracts constructor for a new / empty cell (nothing fancy so far)
-		@syntax empty_cell()
-		@result the cell
-		*/
+		/**
+		 * constructor for a new / empty cell
+		 *
+		 * nothing fancy so far
+		 *
+		 * @return array the cell
+		 */
 		function empty_cell($type='label',$name='')
 		{
 			return array(
@@ -123,16 +121,15 @@
 			);
 		}
 
-		/*!
-		@function new_cell
-		@abstract constructs a new cell in a give row or the last row, not existing rows will be created
-		@syntax new_cell( $row=False )
-		@param int $row row-number starting with 1 (!)
-		@param string $type type of the cell
-		@param string $label label for the cell
-		@param string $name name of the cell (index in the content-array)
-		@param array $attributes other attributes for the cell
-		@returns a reference to the new cell, use $new_cell = &$tpl->new_cell(); (!)
+		/**
+		 * constructs a new cell in a give row or the last row, not existing rows will be created
+		 *
+		 * @param int $row row-number starting with 1 (!)
+		 * @param string $type type of the cell
+		 * @param string $label label for the cell
+		 * @param string $name name of the cell (index in the content-array)
+		 * @param array $attributes other attributes for the cell
+		 * @return a reference to the new cell, use $new_cell = &$tpl->new_cell(); (!)
 		*/
 		function &new_cell($row=False,$type='label',$label='',$name='',$attributes=False)
 		{
@@ -169,11 +166,9 @@
 			return $cell;
 		}
 
-		/*!
-		@function set_rows_cols()
-		@abstract initialises rows & cols from the size of the data-array
-		@syntax set_rows_cols()
-		*/
+		/**
+		 * initialises internal vars rows & cols from the size of the data-array
+		 */
 		function set_rows_cols()
 		{
 			$this->rows = count($this->data) - 1;
@@ -188,14 +183,17 @@
 			}
 		}
 
-		/*!
-		@function init
-		@abstract initialises all internal data-structures of the eTemplate and sets the keys
-		@syntax init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
-		@param $name name of the eTemplate or array with the keys or all data
-		@param $template,$lang,$group,$version see class
-		@param $rows,$cols initial size of the template
-		*/
+		/**
+		 * initialises all internal data-structures of the eTemplate and sets the keys
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set or '' for the default one
+		 * @param $lang string language or '' for the default one
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @param $rows int initial size of the template, default 1
+		 * @param $cols int initial size of the template, default 1
+		 */
 		function init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
 			reset($this->db_cols);
@@ -231,16 +229,16 @@
 			}
 		}
 
-		/*!
-		@function read
-		@abstract Reads an eTemplate from the database
-		@syntax read($name,$template='default',$lang='default',$group=0,$version='')
-		@param as discripted with the class, with the following exeptions
-		@param $template as '' loads the prefered template 'default' loads the default one '' in the db
-		@param $lang as '' loads the pref. lang 'default' loads the default one '' in the db
-		@param $group is NOT used / implemented yet
-		@result True if a fitting template is found, else False
-		*/
+		/**
+		 * reads an eTemplate from the database
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @return boolean True if a fitting template is found, else False
+		 */
 		function read($name,$template='default',$lang='default',$group=0,$version='')
 		{
 			$this->init($name,$template,$lang,$group,$version);
@@ -307,12 +305,10 @@
 			return True;
 		}
 
-		/*!
-		@function readfile
-		@abstract Reads an eTemplate from the filesystem, the keys are already set by init in read
-		@syntax readfile()
-		@result True if a template is found, else False
-		*/
+		/**
+		 * Reads an eTemplate from the filesystem, the keys are already set by init in read
+		 * @return boolean True if a template was found, else False
+		 */
 		function readfile()
 		{
 			list($app,$name) = split("\.",$this->name,2);
@@ -383,17 +379,16 @@
 			return True;
 		}
 
-		/*!
-		@function search
-		@syntax search($name,$template='default',$lang='default',$group=0,$version='')
-		@author ralfbecker
-		@abstract Lists the eTemplates matching the given criteria
-		@param as discripted with the class, with the following exeptions
-		@param $template as '' loads the prefered template 'default' loads the default one '' in the db
-		@param $lang as '' loads the pref. lang 'default' loads the default one '' in the db
-		@param $group is NOT used / implemented yet
-		@result array of arrays with the template-params
-		*/
+		/**
+		 * Lists the eTemplates matching the given criteria
+		 *
+		 * @param $name string name of the eTemplate or array with the values for all keys
+		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param $version string version of the eTemplate
+		 * @return array of arrays with the template-params
+		 */
 		function search($name,$template='default',$lang='default',$group=0,$version='')
 		{
 			if ($this->name)
@@ -448,11 +443,9 @@
 			return $result;
 		}
 
-		/*!
-		@function db2obj
-		@abstract copies all cols into the obj and unserializes the data-array
-		@syntax db2obj()
-		*/
+		/**
+		 * copies all cols into the obj and unserializes the data-array
+		 */
 		function db2obj()
 		{
 			for (reset($this->db_cols); list($db_col,$name) = each($this->db_cols); )
@@ -485,16 +478,15 @@
 			$this->set_rows_cols();
 		}
 
-		/*!
-		@function compress_array
-		@syntax compress_array( $arr )
-		@author ralfbecker
-		@abstract to save space in the db all empty values in the array got unset
-		@discussion The never-'' type field ensures a cell does not disapear completely.
-		@discussion Calls it self recursivly for arrays / the rows
-		@param $arr the array to compress
-		@result the compressed array
-		*/
+		/**
+		 * to save space in the db all empty values in the array got unset
+		 *
+		 * The never empty type field ensures a cell does not disapear completely.
+		 * Calls it self recursivly for arrays / the rows
+		 *
+		 * @param $arr the array to compress
+		 * @return array
+		 */
 		function compress_array($arr)
 		{
 			if (!is_array($arr))
@@ -515,13 +507,12 @@
 			return $arr;
 		}
 
-		/*!
-		@function as_array
-		@abstract returns obj-data as array
-		@syntax as_array($data_too=0)
-		@param $data_too 0 = no data array, 1 = data array too, 2 = serialize data array
-		@result the array
-		*/
+		/**
+		 * returns obj-data/-vars as array
+		 *
+		 * @param $data_too int 0 = no data array, 1 = data array too, 2 = serialize data array
+		 * @return array
+		 */
 		function as_array($data_too=0)
 		{
 			$arr = array();
@@ -543,13 +534,11 @@
 			return $arr;
 		}
 
-		/*!
-		@function save
-		@abstract saves eTemplate-object to db, can be used as saveAs by giving keys as params
-		@syntax save($name='',$template='.',$lang='.',$group='',$version='.')
-		@params keys see class
-		@result the number of affected rows, 1 should be ok, 0 somethings wrong
-		*/
+		/**
+		 * saves eTemplate-object to db, can be used as saveAs by giving keys as params
+		 *
+		 * @return int number of affected rows, 1 should be ok, 0 somethings wrong
+		 */
 		function save($name='',$template='.',$lang='.',$group='',$version='.')
 		{
 			if (is_array($name))
@@ -630,12 +619,11 @@
 			return $this->db->affected_rows();
 		}
 
-		/*!
-		@function delete
-		@abstract Deletes the eTemplate from the db, object itself is unchanged
-		@syntax delete()
-		@result the number of affected rows, 1 should be ok, 0 somethings wrong
-		*/
+		/**
+		 * Deletes the eTemplate from the db, object itself is unchanged
+		 *
+		 * @return int number of affected rows, 1 should be ok, 0 somethings wrong
+		 */
 		function delete()
 		{
 			foreach ($this->db_key_cols as $db_col => $col)
@@ -647,13 +635,12 @@
 			return $this->db->affected_rows();
 		}
 
-		/*!
-		@function dump2setup
-		@abstract dumps all eTemplates to <app>/setup/etemplates.inc.php for distribution
-		@syntax dump2setup($app)
-		@param $app app- or template-name
-		@result the number of templates dumped as message
-		*/
+		/**
+		 * dumps all eTemplates to <app>/setup/etemplates.inc.php for distribution
+		 *
+		 * @param $app string app- or template-name contain app
+		 * @return string translated message with number of dumped templates or error-message (webserver has no write access)
+		 */
 		function dump2setup($app)
 		{
 			list($app) = explode('.',$app);
@@ -724,13 +711,13 @@
 			}
 		}
 
-		/*!
-		@function getToTranslate
-		@abstract extracts all texts: labels and helptexts from an eTemplate-object
-		@discussion some extensions use a '|' to squezze multiple texts in a label or help field
-		@syntax getToTranslate()
-		@result array with messages as key AND value
-		*/
+		/**
+		 * extracts all texts: labels and helptexts from an eTemplate-object
+		 *
+		 * some extensions use a '|' to squezze multiple texts in a label or help field
+		 *
+		 * @return array with messages as key AND value
+		 */
 		function getToTranslate()
 		{
 			$to_trans = array();
@@ -754,13 +741,12 @@
 			return $to_trans;
 		}
 
-		/*!
-		@function getToTranslateApp
-		@abstract Read all eTemplates of an app an extracts the texts to an array
-		@syntax getToTranslateApp($app)
-		@param $app name of the app
-		@result the array with texts
-		*/
+		/**
+		 * Read all eTemplates of an app an extracts the texts to an array
+		 *
+		 * @param $app string name of the app
+		 * @return array with texts
+		 */
 		function getToTranslateApp($app)
 		{
 			$to_trans = array();
@@ -783,16 +769,15 @@
 			return $to_trans;
 		}
 
-		/*!
-		@function writeLangFile
-		@abstract Write new lang-file using the existing one and all text from the eTemplates
-		@syntax writeLangFile($app,$lang='en',$additional='')
-		@param $app app- or template-name
-		@param $lang language the messages in the template are, defaults to 'en'
-		@param $additional extra texts to translate, if you pass here an array with all messages and
-		@param             select-options they get writen too (form is <unique key> => <message>)
-		@result message with number of messages written (total and new)
-		*/
+		/**
+		 * Write new lang-file using the existing one and all text from the eTemplates
+		 *
+		 * @param $app string app- or template-name
+		 * @param $lang string language the messages in the template are, defaults to 'en'
+		 * @param $additional array extra texts to translate, if you pass here an array with all messages and
+		 * 	select-options they get writen too (form is <unique key> => <message>)
+		 * @return string translated message with number of messages written (total and new), or error-message
+		 */
 		function writeLangFile($app,$lang='en',$additional='')
 		{
 			if (!$additional)
@@ -866,13 +851,12 @@
 			return lang("%1 (%2 new) Messages writen for Application '%3' and Languages '%4'",$n,$new,$app,$lang);
 		}
 
-		/*!
-		@function import_dump
-		@abstract Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
-		@syntax import_dump($app)
-		@param $app app name
-		@result message with number of templates imported
-		*/
+		/**
+		 * Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
+		 *
+		 * @param $app string app name
+		 * @return string translated message with number of templates imported
+		 */
 		function import_dump($app)
 		{
 			include($path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
@@ -894,14 +878,15 @@
 			return lang("%1 new eTemplates imported for Application '%2'",$n,$app);
 		}
 
-		/*!
-		@function test_import
-		@abstract test if new template-import necessary for app and does the import
-		@discussion Get called on every read of a eTemplate, caches the result in phpgw_info.
-		@discussion The timestamp of the last import for app gets written into the db.
-		@syntax test_import($app)
-		@param $app app- or template-name
-		*/
+		/**
+		 * test if new template-import necessary for app and does the import
+		 *
+		 * Get called on every read of a eTemplate, caches the result in phpgw_info.
+		 * The timestamp of the last import for app gets written into the db.
+		 *
+		 * @param $app string app- or template-name
+		 * @return string translated message with number of templates imported
+		 */
 		function test_import($app)	// should be done from the setup-App
 		{
 			list($app) = explode('.',$app);
