@@ -166,7 +166,6 @@ site configuration	admin	en	Site configuration
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
-status	admin	en	Status
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
 submit changes	admin	en	Submit Changes
 template selection	admin	en	Template Selection
