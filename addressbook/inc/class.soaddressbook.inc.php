@@ -21,15 +21,23 @@
 
 		function soaddressbook()
 		{
-			global $phpgw,$phpgw_info,$owner;
+			if(!isset($GLOBALS['owner']))
+			{
+				$GLOBALS['owner'] = 0;
+			}
+			$owner = $GLOBALS['owner'];
 
-			if(!isset($owner)) { $owner = 0; } 
+			$this->contacts = CreateObject('phpgwapi.contacts');
+			$grants = $this->contacts->grants;
+			/* _debug_array($GLOBALS['phpgw_info']); */
+			/* _debug_array($grants); */
 
-			$grants = $phpgw->acl->get_grants('addressbook');
 			if(!isset($owner) || !$owner)
 			{
-				$owner = $phpgw_info['user']['account_id'];
+				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
+				/* echo $owner; */
 				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+				/* echo $rights; */
 			}
 			else
 			{
@@ -38,15 +46,14 @@
 					$rights = $grants[$owner];
 					if (!($rights & PHPGW_ACL_READ))
 					{
-						$owner = $phpgw_info['user']['account_id'];
+						$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 						$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
 					}
 				}
 			}
-			$this->rights   = $rights;
-			$this->grants   = $grants;
-			$this->owner    = $owner;
-			$this->contacts = CreateObject('phpgwapi.contacts');
+			$this->rights = $rights;
+			$this->grants = $grants;
+			$this->owner  = $owner;
 		}
 
 		function read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order)
