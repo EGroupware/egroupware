@@ -31,26 +31,6 @@
      }
      return $searchline;
   }
-
-  function descryptpass($userpass, $random)
-  {
-    $lcrypt = "{crypt}";
-    $password = crypt($userpass);
-    $ldappassword = sprintf("%s%s", $lcrypt, $password);
- 
-    return $ldappassword;
-  }
-
-  function md5cryptpass($userpass, $random)
-  {
-    $bsalt = "$1$";
-    $lcrypt = "{crypt}";
-    $modsalt = sprintf("%s%s", $bsalt, $random);
-    $password = crypt($userpass, $modsalt);
-    $ldappassword = sprintf("%s%s", $lcrypt, $password);
-  
-    return $ldappassword;
-  }
   
   // Not the best method, but it works for now.
   function account_total()
@@ -106,12 +86,12 @@
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
         $salt = $phpgw->common->randomstring(2);
-        $account_info["passwd"] = descryptpass($account_info["passwd"], $salt);
+        $account_info["passwd"] = $phpgw->common->des_cryptpasswd($account_info["passwd"], $salt);
      }
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
         $salt = $phpgw->common->randomstring(9);
-        $account_info["passwd"] = md5cryptpass($account_info["passwd"], $salt);
+        $account_info["passwd"] = $phpgw->common->md5_cryptpasswd($account_info["passwd"], $salt);
      }
 
      // This method is only temp.  We need to figure out the best way to assign uidnumbers and

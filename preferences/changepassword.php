@@ -52,11 +52,13 @@ if (! $submit) {
     </table>
    </form>
    <br>
-   <pre><?php echo lang("note: This feature does *not* change your email password. This will "
-            		   . "need to be done manually."); ?>
-   </pre>
-<?php
-  $phpgw->common->phpgw_footer();
+   <?php
+     if ($phpgw_info["server"]["auth_type"] != "ldap") {
+        echo "<pre>" . lang("note: This feature does *not* change your email password. This will "
+            	   	   . "need to be done manually.") . "</pre>";
+     }
+     $phpgw->common->phpgw_footer();
+     
 } else {
    if ($n_passwd != $n_passwd_2)
       $error = lang("the two passwords are not the same");
@@ -70,14 +72,41 @@ if (! $submit) {
       exit;
    }
 
-   $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
-	              . "account_lastpwd_change='" . time() . "' where account_lid='"
-	              . $phpgw_info["user"]["userid"] . "'");
+   if ($phpgw_info["server"]["auth_type"] == "sql") {
+      $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "' "
+	                  . "where account_lid='" . $phpgw_info["user"]["userid"] . "'");
+   }
+
+   if ($phpgw_info["server"]["auth_type"] == "ldap") {
+      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
+
+      if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
+         echo "<p><b>Error binding to LDAP server.  Check your config</b>";
+         exit;
+      }
+
+      if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
+         $salt = $phpgw->common->randomstring(2);
+         $n_passwd = $phpgw->common->des_cryptpasswd($n_passwd, $salt);
+      }
+      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
+         $salt = $phpgw->common->randomstring(9);
+         $n_passwd = $phpgw->common->md5_cryptpasswd($n_passwd, $salt);
+      }
+      $entry["userpassword"] = $n_passwd;
+
+      $dn = sprintf("uid=%s, %s", $phpgw_info["user"]["userid"],$phpgw_info["server"]["ldap_context"]);
+      @ldap_modify($ldap, $dn, $entry);
+   }
 
    // Since they are logged in, we need to change the password in sessions
-   // in case they decied to check there mail.
+   // in case they decied to check there mail.   
    $phpgw->db->query("update sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd)
-	              . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
+	               . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
+
+   // Update there last password change
+   $phpgw->db->query("update accounts set account_lastpwd_change='" . time() . "' where account_id='"
+   				. $phpgw_info["user"]["account_id"] . "'");
 
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
 	. "/preferences/","cd=18"));
