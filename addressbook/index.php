@@ -138,7 +138,7 @@
 			if ($column[0] == "url") {
 				$ref='<a href="'.$coldata.'" target="_new">';
 				$data=$coldata.'</a>';
-			} elseif ($column[0] == "email") {
+			} elseif ($column[0] == "d_email") {
 				if ($phpgw_info["user"]["apps"]["email"]) {
 					$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
 				} else {
