@@ -14,13 +14,13 @@
     <div style="float: right; border: 1px solid #aaa; background-color: #eee; padding: 3px; margin-left: 10px; margin-bottom: 10px;">
       <table cellspacing="0" cellpadding="0" border="0">
         <tr>
-          <td class="label">Version:</td><td>3.0</td>
+          <td class="label">Version:</td><td><% $version %></td>
         </tr>
         <tr>
-          <td class="label">Release:</td><td>beta (<a href="release-notes.html">release notes</a>)</td>
+          <td class="label">Release:</td><td><% $release %> (<a href="release-notes.html">release notes</a>)</td>
         </tr>
         <tr>
-          <td class="label bline">Compiled at:</td><td class="bline">Aug 11, 2003 [21:30] GMT</td>
+          <td class="label bline">Compiled at:</td><td class="bline"><% $time %></td>
         </tr>
         <tr>
           <td class="label">SourceForge page:</td><td><a href="http://sf.net/projects/itools-htmlarea/">http://sf.net/projects/itools-htmlarea/</a></td>
@@ -37,30 +37,41 @@
 
     <p>
       HTMLArea is copyright <a
-      href="http://interactivetools.com">InteractiveTools.com</a> and
+      href="http://interactivetools.com">InteractiveTools.com</a> and <a
+      href="http://dynarch.com">Dynarch.com</a> and it is
       released under a BSD-style license.  HTMLArea is created and developed
       upto version 2.03 by InteractiveTools.com.  Version 3.0 developed by
-      <a href="http://students.infoiasi.ro/~mishoo/">Mihai Bazon</a> for
-      InteractiveTools.  It contains code sponsored by other companies as
-      well.
+      <a href="http://dynarch.com/mishoo/">Mihai Bazon</a> for
+      InteractiveTools.  It contains code sponsored by third-party companies as well.
+      Please see our About Box for details about who sponsored what plugins.
     </p>
 
     <h2>Online demos</h2>
 
     <ul>
 
-      <li><a href="example.html">HTMLArea standard</a> -- contains the core
+      <li><a href="examples/core.html">HTMLArea standard</a> -- contains the core
         editor.</li>
 
-      <li><a href="example-table-operations.html">HTMLArea + tables</a> --
-        loads the <tt>TableOperations</tt> plugin, sponsored by <a
-          href="http://bloki.com">Zapatec Inc.</a></li>
+      <li><a href="examples/table-operations.html">HTMLArea + tables</a> --
+        loads the <tt>TableOperations</tt> plugin which provides some extra
+        editing features for tables.</li>
 
-      <li><a href="example-spell-checker.html">HTMLArea + spell checher</a>
-        -- loads the <tt>SpellChecker</tt> plugin, sponsored by <a
-          href="http://americanbible.org">American Bible Society</a>.</li>
+      <li><a href="examples/spell-checker.html">HTMLArea + spell checher</a>
+        -- loads the <tt>SpellChecker</tt> plugin which provides what its
+        name says: a spell checker.  This one requires additional support on
+        the server-side.</li>
 
-      <li><a href="example-fully-loaded.html">HTMLArea fully loaded</a> ;-)</li>
+      <li><a href="examples/full-page.html">HTMLArea Full HTML Editor</a> --
+        loads the <tt>FullPage</tt> plugin which allows you to edit a full
+        HTML page, including &lt;title&gt;, &lt;!DOCTYPE...&gt; and some
+        other options.</li>
+
+      <li><a href="examples/context-menu.html">HTMLArea with Context
+          Menu</a> -- this plugin provides a nice and useful context menu.</li>
+
+      <li><a href="examples/fully-loaded.html">HTMLArea fully loaded</a> --
+        all of the above. ;-)</li>
 
     </ul>
 
@@ -78,14 +89,15 @@
     <pre style="margin-left: 2em"
 >
 cd /var/www/html
-unzip /path/to/archive/HTMLArea-3.0-beta.zip
-mv HTMLArea-3.0-beta htmlarea
+unzip /path/to/archive/<% $basename %>.zip
+mv <% $basename %> htmlarea
 find htmlarea/ -type f -exec chmod 644 {} \;
 find htmlarea/ -type d -exec chmod 755 {} \;
 find htmlarea/ -name "*.cgi" -exec chmod 755 {} \;</pre>
 
     <p>
-      <strong>Notes.</strong> You may chose to symlink "htmlarea" to "HTMLArea-3.0-beta", in which case your server needs to be configured to
+      <strong>Notes.</strong> You may chose to symlink "htmlarea" to "<%
+      $basename %>", in which case your server needs to be configured to
       "<tt>FollowSymLinks</tt>".  You need to make sure that *.cgi files are
       interpreted as CGI scripts.  If you want to use the SpellChecker
       plugin you need to have a recent version of Perl installed (I
@@ -146,7 +158,7 @@ find htmlarea/ -name "*.cgi" -exec chmod 755 {} \;</pre>
     latest news.</p>
 
     <p>Sometimes I post news about the latest developments on <a
-    href="http://students.infoiasi.ro/~mishoo/">my personal homepage</a>.</p>
+    href="http://dynarch.com/mishoo/">my personal homepage</a>.</p>
 
     <h2>"It doesn't work, what's wrong?"</h2>
 
@@ -178,13 +190,21 @@ find htmlarea/ -name "*.cgi" -exec chmod 755 {} \;</pre>
     get back into the public HTMLArea distribution) I'll be cheaper. ;-)</p>
 
     <hr />
-    <address><a href="http://students.infoiasi.ro/~mishoo/">Mihai Bazon</a></address>
+    <address><a href="http://dynarch.com/mishoo/">Mihai Bazon</a></address>
 <!-- Created: Sun Aug  3 14:11:26 EEST 2003 -->
-<!-- hhmts start -->
-Last modified on Tue Aug 12 00:23:26 2003
-<!-- hhmts end -->
+<!-- hhmts start --> Last modified: Wed Jan 28 11:54:47 EET 2004 <!-- hhmts end -->
 <!-- doc-lang: English -->
   </body>
 </html>
 
+<%ARGS>
+  $project => 'HTMLArea'
+  $version => '3.0'
+  $release => 'rc1'
+  $basename => 'HTMLArea-3.0-rc1'
+</%ARGS>
 
+<%INIT>;
+use POSIX qw(strftime);
+my $time = strftime '%b %e, %Y [%H:%M] GMT', gmtime;
+</%INIT>

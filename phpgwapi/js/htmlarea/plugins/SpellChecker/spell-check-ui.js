@@ -1,14 +1,10 @@
 // Spell Checker Plugin for HTMLArea-3.0
-// Implementation by Mihai Bazon.  Sponsored by www.americanbible.org
+// Sponsored by www.americanbible.org
+// Implementation by Mihai Bazon, http://dynarch.com/mishoo/
 //
-// htmlArea v3.0 - Copyright (c) 2002 interactivetools.com, inc.
+// (c) dynarch.com 2003.
+// Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
-//
-// A free WYSIWYG editor replacement for <textarea> fields.
-// For full source code and docs, visit http://www.interactivetools.com/
-//
-// Version 3.0 developed by Mihai Bazon for InteractiveTools.
-//	     http://students.infoiasi.ro/~mishoo
 //
 // $Id$
 
@@ -71,13 +67,15 @@ function cancelClicked() {
 
 function replaceWord(el) {
 	var replacement = document.getElementById("v_replacement").value;
-	modified = (el.innerHTML != replacement);
+	var this_word_modified = (el.innerHTML != replacement);
+	if (this_word_modified)
+		modified = true;
 	if (el) {
 		el.className = el.className.replace(/\s*HA-spellcheck-(hover|fixed)\s*/g, " ");
 	}
 	el.className += " HA-spellcheck-fixed";
 	el.__msh_fixed = true;
-	if (!modified) {
+	if (!this_word_modified) {
 		return false;
 	}
 	el.innerHTML = replacement;

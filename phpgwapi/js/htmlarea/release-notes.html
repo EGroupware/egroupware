@@ -1,15 +1,74 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>HTMLArea-3.0-beta release notes</title>
+    <title><% $basename %> release notes</title>
   </head>
 
   <body>
 
-    <h1>HTMLArea-3.0-beta release notes</h1>
+    <h1><% $basename %> release notes</h1>
 
-    <p>This release was compiled on Aug 11, 2003 [21:30] GMT.</p>
+    <p>This release was compiled on <% $time %>.</p>
 
+    <h2>3.0-rc1</h2>
+
+    <p>Changes since 3.0-Beta:</p>
+
+    <ul>
+      <li>
+        ContextMenu plugin (provides a nice context menu with common
+        operations, including table ops, link ops, etc.)
+      </li>
+      <li>
+        CSS plugin (provides an easy way to insert/change CSS classes)
+      </li>
+      <li>
+        FullPage plugin (allows HTMLArea to edit a whole HTML file,
+        not only the content within &lt;body&gt;.)
+      </li>
+      <li>
+        Better plugin support (they register information about
+        themselves with the editor; can register event handlers for
+        the editor, etc.)
+      </li>
+      <li>
+        New about box ;-)
+      </li>
+      <li>
+        Word cleaner (can be enabled to automatically kill Word crap
+        on paste (see Config.killWordOnPaste); otherwise accessible by
+        pressing CTRL-0 in the editor; a toolbar button will come up
+        soon)
+      </li>
+      <li>
+        Image preview in "insert image" dialog.  Also allows
+        modification of current image, if selected.
+      </li>
+      <li>
+        New "insert link" dialog, allows target and title
+        specification, allows editing links.
+      </li>
+      <li>
+        Implemented support for text direction (left-to-right or
+        right-to-left).
+      </li>
+      <li>
+        <a href="ChangeLog">Full CVS ChangeLog</a> is now
+        automatically generated from the CVS logs.
+      </li>
+      <li>
+        Lots of bug fixes!
+      </li>
+    </ul>
+
+    <p>I don't have the power to go through the <a
+href="http://sourceforge.net/tracker/?atid=525656&group_id=69750&func=browse">bug
+system</a> at SourceForge
+    now.  Some of the bugs reported there may be fixed; I'll update
+    their status, some other time.  If you reported bugs there and now
+    find them to be fixed, please let me know.</p>
+
+    <h2>3.0-Beta</h2>
 
     <p>Changes since 3.0-Alpha:</p>
 
@@ -35,7 +94,7 @@
       <li>Cut, copy, paste, undo, redo buttons.</li>
 
     </ul>
-
+<%doc>
     <h2>Rationale for Beta</h2>
 
     <p>Why was this released as "Beta"?  The code is quite stable and it
@@ -67,16 +126,23 @@
       <li><strong>Documentation</strong>.</li>
 
     </ol>
-
-
+</%doc>
     <hr />
-    <address><a href="http://students.infoiasi.ro/~mishoo/">Mihai Bazon</a></address>
+    <address><a href="http://dynarch.com/mishoo/">Mihai Bazon</a></address>
 <!-- Created: Sun Aug  3 16:55:08 EEST 2003 -->
-<!-- hhmts start -->
-Last modified on Sun Aug 10 19:31:39 2003
-<!-- hhmts end -->
+<!-- hhmts start --> Last modified: Wed Jan 28 12:53:03 EET 2004 <!-- hhmts end -->
 <!-- doc-lang: English -->
   </body>
 </html>
 
+<%ARGS>
+  $project => 'HTMLArea'
+  $version => '3.0'
+  $release => 'rc1'
+  $basename => 'HTMLArea-3.0-rc1'
+</%ARGS>
 
+<%INIT>;
+use POSIX qw(strftime);
+my $time = strftime '%b %e, %Y [%H:%M] GMT', gmtime;
+</%INIT>

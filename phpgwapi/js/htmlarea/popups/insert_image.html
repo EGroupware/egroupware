@@ -1,4 +1,4 @@
-<html style="width: 398; height: 218">
+<html>
 
 <head>
   <title>Insert Image</title>
@@ -6,17 +6,27 @@
 <script type="text/javascript" src="popup.js"></script>
 
 <script type="text/javascript">
-var preview_window = null;
+
+window.resizeTo(400, 100);
 
 function Init() {
   __dlg_init();
+  var param = window.dialogArguments;
+  if (param) {
+      document.getElementById("f_url").value = param["f_url"];
+      document.getElementById("f_alt").value = param["f_alt"];
+      document.getElementById("f_border").value = param["f_border"];
+      document.getElementById("f_align").value = param["f_align"];
+      document.getElementById("f_vert").value = param["f_vert"];
+      document.getElementById("f_horiz").value = param["f_horiz"];
+      window.ipreview.location.replace(param.f_url);
+  }
   document.getElementById("f_url").focus();
 };
 
 function onOK() {
   var required = {
-    "f_url": "You must enter the URL",
-    "f_alt": "Please enter the alternate text"
+    "f_url": "You must enter the URL"
   };
   for (var i in required) {
     var el = document.getElementById(i);
@@ -35,23 +45,16 @@ function onOK() {
     var el = document.getElementById(id);
     param[id] = el.value;
   }
-  if (preview_window) {
-    preview_window.close();
-  }
   __dlg_close(param);
   return false;
 };
 
 function onCancel() {
-  if (preview_window) {
-    preview_window.close();
-  }
   __dlg_close(null);
   return false;
 };
 
 function onPreview() {
-  alert("FIXME: preview needs rewritten:\n  show the image inside this window instead of opening a new one.");
   var f_url = document.getElementById("f_url");
   var url = f_url.value;
   if (!url) {
@@ -59,40 +62,7 @@ function onPreview() {
     f_url.focus();
     return false;
   }
-  var img = new Image();
-  img.src = url;
-  var win = null;
-  if (!document.all) {
-    win = window.open("about:blank", "ha_imgpreview", "toolbar=no,menubar=no,personalbar=no,innerWidth=100,innerHeight=100,scrollbars=no,resizable=yes");
-  } else {
-    win = window.open("about:blank", "ha_imgpreview", "channelmode=no,directories=no,height=100,width=100,location=no,menubar=no,resizable=yes,scrollbars=no,toolbar=no");
-  }
-  preview_window = win;
-  var doc = win.document;
-  var body = doc.body;
-  if (body) {
-    body.innerHTML = "";
-    body.style.padding = "0px";
-    body.style.margin = "0px";
-    var el = doc.createElement("img");
-    el.src = url;
-
-    var table = doc.createElement("table");
-    body.appendChild(table);
-    table.style.width = "100%";
-    table.style.height = "100%";
-    var tbody = doc.createElement("tbody");
-    table.appendChild(tbody);
-    var tr = doc.createElement("tr");
-    tbody.appendChild(tr);
-    var td = doc.createElement("td");
-    tr.appendChild(td);
-    td.style.textAlign = "center";
-
-    td.appendChild(el);
-    win.resizeTo(el.offsetWidth + 30, el.offsetHeight + 30);
-  }
-  win.focus();
+  window.ipreview.location.replace(url);
   return false;
 };
 </script>
@@ -131,7 +101,7 @@ form { padding: 0px; margin: 0px; }
 <body onload="Init()">
 
 <div class="title">Insert Image</div>
-
+<!--- new stuff --->
 <form action="" method="get">
 <table border="0" width="100%" style="padding: 0px; margin: 0px">
   <tbody>
@@ -203,14 +173,19 @@ title="Vertical padding" />
 <div class="space"></div>
 
 </fieldset>
-
-<div style="margin-top: 85px; text-align: right;">
-<hr />
-<button type="button" name="ok" onclick="return onOK();">OK</button>
-<button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
-</div>
-
+<br clear="all" />
+<table width="100%" style="margin-bottom: 0.2em">
+ <tr>
+  <td valign="bottom">
+    Image Preview:<br />
+    <iframe name="ipreview" id="ipreview" frameborder="0" style="border : 1px solid gray;" height="200" width="300" src=""></iframe>
+  </td>
+  <td valign="bottom" style="text-align: right">
+    <button type="button" name="ok" onclick="return onOK();">OK</button><br>
+    <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+  </td>
+ </tr>
+</table>
 </form>
-
 </body>
 </html>
