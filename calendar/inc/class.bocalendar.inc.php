@@ -2029,6 +2029,7 @@
 			}
 
 			$cache_start = (int)(sprintf("%04d%02d%02d",$syear,$smonth,$sday));
+			$cached_event=$this->get_cached_event();
 			if($c_cached_ids)
 			{
 				for($i=0;$i<$c_cached_ids;$i++)
@@ -2122,6 +2123,7 @@
 				}
 			}
 			//echo "store_to_cache(".print_r($params,True).")=<pre>".print_r($retval,True)."</pre>\n";
+			$this->so->cal->event = $cached_event;
 			return $retval;
 		}
 
