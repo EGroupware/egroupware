@@ -1,18 +1,32 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	en	
+a short subject for the entry	infolog	en	a short subject for the entry
+abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	accept
 action	infolog	en	Action
 add	infolog	en	Add
 add a file	infolog	en	Add a file
+add a new entry	infolog	en	Add a new Entry
+add a new note	infolog	en	Add a new Note
+add a new phonecall	infolog	en	Add a new Phonecall
+add a new sub-task, -note, -call to this entry	infolog	en	Add a new sub-task, -note, -call to this entry
+add a new todo	infolog	en	Add a new ToDo
+add file	infolog	en	Add file
 add sub	infolog	en	add Sub
+add:	infolog	en	Add:
 all	infolog	en	All
+are you shure you want to delete this entry ?	infolog	en	Are you shure you want to delete this entry ?
 are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
+attach a file	infolog	en	Attach a file
 attach file	infolog	en	Attach file
+back to main list	infolog	en	Back to main list
 back to projectlist	infolog	en	Back to Projectlist
 billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
+cancel	infolog	en	Cancel
+categories	infolog	en	Categories
 category	infolog	en	Category
 click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
@@ -20,21 +34,40 @@ close	infolog	en	Close
 comment	infolog	en	Comment
 configuration	infolog	en	Konfiguration
 confirm	infolog	en	confirm
+contact	infolog	en	Contact
+create new links	infolog	en	Create new links
 csv-fieldname	infolog	en	CSV-Fieldname
 csv-filename	infolog	en	CSV-Filename
 csv-import	common	en	CSV-Import
+custom contact-address, leave empty to use information from most recent link	infolog	en	Custom contact-address, leave empty to use information from most recent link
+custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact-information, leave emtpy to use information from most recent link
+custom regarding	infolog	en	Custom regarding
 datecreated	infolog	en	date created
+dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
 default filter for infolog	infolog	en	Default Filter for InfoLog
+delegation	infolog	en	Delegation
+delete	infolog	en	Delete
+delete the entry	infolog	en	Delete the entry
+delete this entry	infolog	en	delete this entry
 description	infolog	en	Description
 description can not exceed 8000 characters in length	infolog	en	Description can not exceed 8000 characters in length
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	do you want a confirmation of the responsible on: accepting, finishing the task or both
 done	infolog	en	done
 download	infolog	en	Download
 duration	infolog	en	Duration
+edit	infolog	en	Edit
+edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
+edit the entry	infolog	en	Edit the entry
+edit this entry	infolog	en	Edit this entry
 enddate	infolog	en	Enddate
 enddate can not be before startdate	infolog	en	Enddate can not be before startdate
+enter a custom contact, leave empty if linked entry should be used	infolog	en	enter a custom contact, leave empty if linked entry should be used
+enter a custom phone/email, leave empty if linked entry should be used	infolog	en	enter a custom phone/email, leave empty if linked entry should be used
+enter a textual description of the log-entry	infolog	en	enter a textual description of the log-entry
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
+existing links	infolog	en	Existing links
 fax	infolog	en	Fax
 fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
@@ -53,8 +86,13 @@ infolog preferences	common	en	InfoLog preferences
 infolog-fieldname	infolog	en	Info Log-Fieldname
 invalid filename	infolog	en	Invalid filename
 last changed	infolog	en	last changed
+last modified	infolog	en	Last modified
+leave without saveing the entry	infolog	en	leave without saveing the entry
 link	infolog	en	Link
+links	infolog	en	Links
+links of this entry	infolog	en	Links of this entry
 list no subs/childs	infolog	en	List no Subs/Childs
+longer textual description	infolog	en	longer textual description
 new search	infolog	en	New search
 no - cancel	infolog	en	No - Cancel
 no entries found, try again ...	infolog	en	no entries found, try again ...
@@ -74,6 +112,7 @@ own open	infolog	en	own open
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
 owner	infolog	en	Owner
+owner responsible	infolog	en	Owner Responsible
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 pattern for search in addressbook	infolog	en	
 pattern for search in projects	infolog	en	pattern for search in Projects
@@ -88,25 +127,37 @@ reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local 
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 responsible	infolog	en	Responsible
+responsible user, priority, ...	infolog	en	responsible user, priority, ...
+save	infolog	en	Save
+saves this entry	infolog	en	Saves this entry
 search	infolog	en	Search
 search for:	infolog	en	Search for:
 select	infolog	en	Select
+select a category for this entry	infolog	en	select a category for this entry
+select a priority for this task	infolog	en	select a priority for this task
+select a responsible user: a person you want to delegate this task	infolog	en	select a responsible user: a person you want to delegate this task
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
+should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
 show full usernames	infolog	en	Show full usernames
 show open events: tasks/calls/notes on main screen	infolog	en	Show open Events: Tasks/Calls/Notes on main screen
 showing x	infolog	en	showing %1
 showing x - x of x	infolog	en	showing %1 - %2 of %3
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Startdate
+startdate enddate	infolog	en	Startdate Enddate
 startrecord	infolog	en	Startrecord
+status	infolog	en	Status
 sub	infolog	en	Sub
 subject	infolog	en	Subject
 task	infolog	en	ToDo
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
+til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phonecall be finished
 today	infolog	en	Today
+todo	infolog	en	ToDo
 translation	infolog	en	Translation
 type	infolog	en	Type
+type of the log-entry: note, phonecall or todo	infolog	en	Type of the log-entry: Note, Phonecall or ToDo
 unlink	infolog	en	Unlink
 upcoming	infolog	en	upcoming
 urgency	infolog	en	urgency
@@ -114,8 +165,12 @@ urgent	infolog	en	urgent
 use button to search for address	infolog	en	use Button to search for Address
 use button to search for project	infolog	en	use Button to search for Project
 valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
+view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	view other Subs
+view parent	infolog	en	View parent
 view subs	infolog	en	view Subs
+view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all his subs
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)
 will-call	infolog	en	will call
 yes - delete	infolog	en	Yes - Delete
 you have entered an invalid ending date	infolog	en	You have entered an invalid ending date
