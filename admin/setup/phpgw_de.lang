@@ -6,9 +6,10 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 account permissions	admin	de	Zugriffsrechte
 action	admin	de	Aktion
 add global category	admin	de	Globale Kategorie hinzuf&uuml;gen
-add new account	admin	de	Neues Konto hinzufügen
+add global category for x	admin	de	Globale Kategorie f&uuml;r %1 hinzuf&uuml;gen
+add new account	admin	de	Neues Konto hinzuf&uuml;gen
 add new application	admin	de	Neue Anwendung hinzufügen
-all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
+all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Kontoinformationen sind dann verloren!
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 anonymous user 	admin	de	Anonymer Benutzer
 application name	admin	de	Name der Anwendung
@@ -25,6 +26,7 @@ display	admin	de	Bezeichnung
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
+edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste

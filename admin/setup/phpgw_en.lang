@@ -10,6 +10,7 @@ action	admin	en	Action
 add a new account.	admin	en	Add a new account.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 add global category	admin	en	Add global category
+add global category for x	admin	en	Add global category for %1
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add peer server	admin	en	Add Peer Server
@@ -55,6 +56,7 @@ display	admin	en	Display
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global subcategories ?
 edit application	admin	en	Edit application
 edit global category	admin	en	Edit global category
+edit global category for x	admin	en	Edit global category for %1
 edit group	admin	en	Edit Group
 edit login screen message	admin	en	Edit login screen message
 edit main screen message	admin	en	Edit main screen message

@@ -113,7 +113,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('%1 global categories',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title'] . '&nbsp;' . lang('global categories'));
 			}
 			else
 			{
@@ -185,15 +185,37 @@
 				$this->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 				$this->template->set_var('lang_sub_entry',lang('Add sub'));
 
-				$link_data['cat_id'] = $id;
-				$link_data['menuaction'] = 'admin.uicategories.edit';
-				$this->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$link_data));
-				$this->template->set_var('lang_edit_entry',lang('Edit'));
+				if ($GLOBALS['appname'] && $categories[$i]['app_name'] == $GLOBALS['appname'])
+				{
+					$show_edit_del = True;
+				}
+				elseif(!$GLOBALS['appname'] && $categories[$i]['app_name'] == 'phpgw')
+				{
+					$show_edit_del = True;
+				}
+				else
+				{
+					$show_edit_del = False;
+				}
 
-				$link_data['menuaction'] = 'admin.uicategories.delete';
-				$this->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',$link_data));
-				$this->template->set_var('lang_delete_entry',lang('Delete'));
+				if ($show_edit_del)
+				{
+					$link_data['cat_id'] = $id;
+					$link_data['menuaction'] = 'admin.uicategories.edit';
+					$this->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$link_data));
+					$this->template->set_var('lang_edit_entry',lang('Edit'));
 
+					$link_data['menuaction'] = 'admin.uicategories.delete';
+					$this->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',$link_data));
+					$this->template->set_var('lang_delete_entry',lang('Delete'));
+				}
+				else
+				{
+					$this->template->set_var('edit','');
+					$this->template->set_var('lang_edit_entry','&nbsp;');
+					$this->template->set_var('delete','');
+					$this->template->set_var('lang_delete_entry','&nbsp;');
+				}
 				$this->template->fp('list','cat_list',True);
 			}
 
@@ -232,7 +254,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('Add global category for %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',lang('Add global category for x',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
 			}
 			else
 			{
@@ -343,7 +365,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('Edit global category for %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',lang('Edit global category for x',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
 			}
 			else
 			{
