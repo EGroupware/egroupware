@@ -27,7 +27,18 @@
 	$t->set_file(array("add" => "add.tpl"));
 	
 	$this = CreateObject("phpgwapi.contacts");
-	
+
+	// Read in user custom fields, if any
+	$phpgw->preferences->read_repository();
+	$customfields = array();
+	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+		if ( substr($col,0,6) == 'extra_' ) {
+			$field = ereg_replace('extra_','',$col);
+			$field = ereg_replace(' ','_',$field);
+			$customfields[$field] = ucfirst($field);
+		}
+	}
+
 	if ($AddVcard){
 		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
 	} else if ($add_email) {
@@ -97,6 +108,13 @@
 			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
 		}
 		$fields["adr_two_type"]         = substr($typed,0,-1);
+
+		reset($customfields);
+		while (list($name,$val) = each($customfields)) {
+			$cust = '';
+			eval("if (\$name\) { \$cust \.= \$\$name; }");
+			if ($cust) { $fields[$name] = $cust; }
+		}
 
 		$fields["tz"]					= $timezone;
 		$fields["bday"]					= $bday;

@@ -30,11 +30,11 @@
 	echo '<a href="' . $phpgw->link('/addressbook/preferences.php') . '">'
 		. lang('Addressbook preferences') . '</a><br>';
 
-	echo '<a href="' . $phpgw->link('/addressbook/fields.php') . '">'
-		. lang('Edit custom fields (NOT WORKING)') . '</a><br>';
-
 	echo '<a href="' . $phpgw->link('/addressbook/acl_preferences.php') . '">'
-		. lang('Grant Addressbook Access') . '</a>';
+		. lang('Grant Addressbook Access') . '</a><br>';
+
+	echo '<a href="' . $phpgw->link('/addressbook/fields.php') . '">'
+		. lang('Edit custom fields') . '</a>';
 
 	section_end(); 
 }

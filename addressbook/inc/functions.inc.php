@@ -33,53 +33,55 @@
 	// this cleans up the fieldnames for display
 	function display_name($column) {
 		$abc = array(
-			"fn"				=> "full name",        //'firstname lastname'
-			"sound"				=> "",
-			"org_name"			=> "company name",  //company
-			"org_unit"			=> "department",  //division
-			"title"				=> "title",
-			"n_prefix"			=> "prefix",
-			"n_given"			=> "first name",   //firstname
-			"n_middle"			=> "middle name",
-			"n_family"			=> "last name",  //lastname
-			"n_suffix"			=> "suffix",
+			"fn"                  => "full name",
+			"sound"               => "",
+			"org_name"            => "company name",
+			"org_unit"            => "department",
+			"title"               => "title",
+			"n_prefix"            => "prefix",
+			"n_given"             => "first name",
+			"n_middle"            => "middle name",
+			"n_family"            => "last name",
+			"n_suffix"            => "suffix",
 			"label"               => "label",
 			"adr_one_street"      => "business street",
-			"adr_one_locality"    => "business city",   //city
-			"adr_one_region"      => "business state",     //state
-			"adr_one_postalcode"  => "business zip code", //zip
+			"adr_one_locality"    => "business city",
+			"adr_one_region"      => "business state",
+			"adr_one_postalcode"  => "business zip code",
 			"adr_one_countryname" => "business country",
+			"adr_one_type"        => "",
 			"adr_two_street"      => "home street",
-			"adr_two_locality"    => "home city",   //city
-			"adr_two_region"      => "home state",     //state
-			"adr_two_postalcode"  => "home zip code", //zip
+			"adr_two_locality"    => "home city",
+			"adr_two_region"      => "home state",
+			"adr_two_postalcode"  => "home zip code",
 			"adr_two_countryname" => "home country",
-			"tz"				=> "time zone",
-			"geo"				=> "geo",
-			"tel_work"		    => "business phone",   //yn
-			"tel_home"		    => "home phone",   //yn
-			"tel_voice"		    => "voice phone",  //yn
-			"tel_msg"			=> "message phone",    //yn
-			"tel_fax"			=> "fax",    //yn
-			"tel_pager"			=> "pager",
-			"tel_cell"          => "mobile phone",
-			"tel_bbs"			=> "bbs phone",
-			"tel_modem"			=> "modem phone",
-			"tel_isdn"			=> "isdn phone",
-			"tel_car"			=> "car phone",
-			"tel_video"			=> "video phone",
+			"adr_two_type"        => "",
+			"tz"                  => "time zone",
+			"geo"                 => "geo",
+			"tel_work"            => "business phone",
+			"tel_home"            => "home phone",
+			"tel_voice"           => "voice phone",
+			"tel_msg"             => "message phone",
+			"tel_fax"             => "fax",
+			"tel_pager"           => "pager",
+			"tel_cell"            => "mobile phone",
+			"tel_bbs"             => "bbs phone",
+			"tel_modem"           => "modem phone",
+			"tel_isdn"            => "isdn phone",
+			"tel_car"             => "car phone",
+			"tel_video"           => "video phone",
 
-			"tel_prefer"		=> "prefer", //yn
-			"email"			    => "business email",
-			"email_type"		=> "business email type",   //'INTERNET','CompuServe',etc...
-			"email_home"		=> "home email",  //yn
-			"email_home_type"   => "home email type",
-			"address2"			=> "address line 2",
-			"address3"          => "address line 3",
-			"bday"				=> "birthday",
-			"url"				=> "url",
-			"pubkey"            => "public key",
-			"note"				=> "notes"
+			"tel_prefer"          => "prefer",
+			"email"               => "business email",
+			"email_type"          => "business email type",
+			"email_home"          => "home email",
+			"email_home_type"     => "home email type",
+			"address2"            => "address line 2",
+			"address3"            => "address line 3",
+			"bday"                => "birthday",
+			"url"                 => "url",
+			"pubkey"              => "public key",
+			"note"                => "notes"
 		);
 
 		while($name = each($abc) ) {
@@ -128,7 +130,8 @@
 		return;
 	}
 
-	function addressbook_form($format,$action,$title="",$fields="") { // used for add/edit
+	// Folowing used for add/edit
+	function addressbook_form($format,$action,$title="",$fields="",$customfields="") {
 		global $phpgw, $phpgw_info;
      
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
@@ -186,6 +189,22 @@
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
 		$pubkey       = $fields["pubkey"];
+
+		if ($customfields) {
+			while(list($name,$value) = each($customfields)) {
+				$custom .= '
+  <tr>
+    <td></td>
+	<td><font color="#000000" face="" size="-1">'.$value.':</font></td>
+    <td>
+	  <font size="-1">
+	  <INPUT name="' . $name . '" value="' . $fields[$name] . '">
+      </font></td>
+	</td>
+  </tr>
+';
+			}
+		}
 
 		$this = CreateObject("phpgwapi.contacts");
 
@@ -419,7 +438,7 @@
 		$t->set_var("bcountry",$bcountry);
 		$t->set_var("lang_badrtype",lang("Address Type"));
 		$t->set_var("badrtype",$badrtype);
-		
+
 		$t->set_var("lang_hphone",lang("Home Phone"));
 		$t->set_var("hphone",$hphone);
 		$t->set_var("lang_hemail",lang("Home Email"));
@@ -444,7 +463,14 @@
 		$t->set_var("notes",$notes);
 		$t->set_var("lang_pubkey",lang("Public Key"));
 		$t->set_var("pubkey",$pubkey);
-		
+
+		if ($customfields) {
+			$t->set_var("lang_custom",lang("Custom Fields").':');
+		} else {
+			$t->set_var("lang_custom",'');
+		}
+		$t->set_var("custom",$custom);
+
 		$t->parse("out","form");
 		$t->pparse("out","form");
 	} //end form function

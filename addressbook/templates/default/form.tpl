@@ -336,5 +336,11 @@
       {notes}
     </font></td>
   </tr>
+  <tr>
+	<td><font color="#000000" face="" size="-1">{lang_custom}</font></td>
+	<td></td>
+	<td></td>
+  </tr>
+{custom} 
 </table>
 <!-- END addressbook entry form -->

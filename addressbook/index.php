@@ -28,18 +28,33 @@
 		"addressbook_footer"	=> "footer.tpl" ));
 
 	$this = CreateObject("phpgwapi.contacts");
+
+	// Read in user custom fields, if any
+	$phpgw->preferences->read_repository();
+	$customfields = array();
+	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+		if ( substr($col,0,6) == 'extra_' ) {
+			$field = ereg_replace('extra_','',$col);
+			$field = ereg_replace(' ','_',$field);
+			$customfields[$field] = ucfirst($field);
+		}
+	}
+
  	$extrafields = array(
 		"ophone"   => "ophone",
 		"address2" => "address2",
 		"address3" => "address3"
 	);
-	$qfields = $this->stock_contact_fields + $extrafields;
+	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
 	// create column list and the top row of the table based on user prefs
 	while ($column = each($qfields)) {
-		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) &&
-			$phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) {
+		$test = strtolower($column[1]);
+		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$test]) &&
+			$phpgw_info["user"]["preferences"]["addressbook"][$test]) {
 			$showcol = display_name($column[0]);
+			// This must be a custom field
+			if (!$showcol) { $showcol = $column[1]; }
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);
@@ -78,10 +93,12 @@
 			"n_family" => "n_family",
 			"org_name" => "org_name"
 		);
+		$columns_to_display = $columns_to_display + $customfields;
 		// No prefs,. so cols above may have been set to "" or a bunch of <td></td>
 		$cols="";
 		while ($column = each($columns_to_display)) {
 			$showcol = display_name($column[0]);
+			if (!$showcol) { $showcol = $column[1]; }
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);

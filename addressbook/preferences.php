@@ -15,7 +15,7 @@
 		"noheader" => True, 
 		"nonavbar" => True, 
 		"currentapp" => "addressbook", 
-		"enable_addressbook_class" => True,
+		"enable_contacts_class" => True,
 		"enable_nextmatchs_class" => True
 	);
                                
@@ -29,7 +29,18 @@
 		"address3" => "address3"
 	);
 
-	$qfields = $this->stock_contact_fields + $extrafields;
+	$phpgw->preferences->read_repository();
+	$customfields = array();
+	if ($phpgw_info["user"]["preferences"]["addressbook"]) {
+		while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+			if ( substr($col,0,6) == 'extra_' ) {
+				$field = ereg_replace('extra_','',$col);
+				$customfields[$field] = ucfirst($field);
+			}
+		}
+	}
+
+	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
 	if ($submit) {
 		$totalerrors = 0;
@@ -80,6 +91,7 @@
 		// echo "<br>test: $col - $i $j - " . count($abc);
 		$i++; $j++;
 		$showcol = display_name($descr);
+		if (!$showcol) { $showcol = $descr; }
 		// yank the *'s prior to testing for a valid column description
 		$coltest = ereg_replace("\*","",$showcol);
 		if ($coltest) {

@@ -33,6 +33,17 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 
+	// Read in user custom fields, if any
+	$phpgw->preferences->read_repository();
+	$customfields = array();
+	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+		if ( substr($col,0,6) == 'extra_' ) {
+			$field = ereg_replace('extra_','',$col);
+			$field = ereg_replace(' ','_',$field);
+			$customfields[$field] = ucfirst($field);
+		}
+	}
+
 	if (!$submit) {
 		// not checking acl here, only on submit - that ok?
 		// merge in extra fields
@@ -41,9 +52,10 @@
 			"address2" => "address2",
 			"address3" => "address3"
 		);
-		$qfields = $this->stock_contact_fields + $extrafields;
+
+		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
-		addressbook_form("","edit.php","Edit",$fields[0]);
+		addressbook_form("","edit.php","Edit",$fields[0],$customfields);
 	} else {
 		if ($url == "http://") {
 			$url = "";
@@ -109,6 +121,13 @@
 			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
 		}
 		$fields["adr_two_type"]         = substr($typed,0,-1);
+
+		reset($customfields);
+		while (list($name,$val) = each($customfields)) {
+			$cust = '';
+			eval("if (\$name\) { \$cust \.= \$\$name; }");
+			if ($cust) { $fields[$name] = $cust; }
+		}
 
 		$fields["tz"]					= $timezone;
 		$fields["bday"]					= $bday;
