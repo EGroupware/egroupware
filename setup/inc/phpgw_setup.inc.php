@@ -311,7 +311,7 @@
 
     function app_status($appname = ""){
       global $phpgw_info;
-      $this->execute_script("version");
+      $this->get_versions();
       reset ($phpgw_info["server"]["versions"]);
 
       $this->db->query("select * from applications");
@@ -328,32 +328,43 @@
           }else{
               $phpgw_info["setup"][$key]["status"] = "current";
           }
-echo "phpgw_info[setup][$key][status]: ".$phpgw_info["setup"][$key]["status"]."<br>";
+          echo "phpgw_info[setup][$key][status]: ".$phpgw_info["setup"][$key]["status"]."<br>";
         }
       }
 
     }
   
-    function execute_script($script, $appname = ""){
-      global $phpgw_info, $phpgw_domain, $current_config, $newsetting, $phpgw_setup;
-      if ($appname == ""){
-        $d = dir($phpgw_info["server"]["server_root"]);
-        while($entry=$d->read()) {
-          if ($script == "version"){
-            $f = $phpgw_info["server"]["server_root"]."/".$entry."/version.inc.php";
-            if (file_exists ($f)){include($f); }
-          }else{
-            $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
-            if (file_exists ($f)){include($f);}
-          }
-        }
-        $d->close();
-      }else{
+    function execute_script($script, $order = ""){
+      global $phpgw_info, $phpgw_domain, $current_config, $newsetting, $phpgw_setup, $SERVER_NAME;
+      if ($order != "" && gettype($order) != "array"){ $order = array($order); }
+      if ($order == ""){$order = array();}
+      /* First include the ordered setup script file */
+      reset ($order);
+      while (list (, $appname) = each ($order)){
         $f = $phpgw_info["server"]["server_root"]."/".$appname."/setup/".$script.".inc.php";
-        if (file_exists ($f)){include($f);}
+    	  if (file_exists($f)) {include($f);}
+        $completed_scripts[$appname] = True;
+      }
+      /* Then add the rest */
+      $d = dir($phpgw_info["server"]["server_root"]);
+      while ($entry=$d->read()){
+        if ($entry != "" && $completed_scripts[$appname] != True){
+          $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
+      	  if (file_exists($f)) {include($f);}
+        }
       }
     }
   
+    function get_versions(){
+      global $phpgw_info, $phpgw_domain, $current_config, $newsetting, $phpgw_setup, $SERVER_NAME;
+      $d = dir($phpgw_info["server"]["server_root"]);
+      while($entry=$d->read()) {
+        $f = $phpgw_info["server"]["server_root"]."/".$entry."/version.inc.php";
+        if (file_exists ($f)){include($f); }
+      }
+      $d->close();
+    }
+
     function update_app_version($appname, $tableschanged = True){
       global $phpgw_info;
       if ($tableschanged == True){$phpgw_info["setup"]["tableschanged"] = True;}

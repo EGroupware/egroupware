@@ -222,16 +222,16 @@
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&
-	  $phpgw_info["server"]["usecookies"]) {
-         if ($extravars) {
-            $url .= "?$extravars";
-         }
+	      $phpgw_info["server"]["usecookies"]) {
+        if ($extravars) {
+          $url .= "?$extravars";
+        }
       } else {
         $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
         $url .= "&kp3=" . $kp3;
         $url .= "&domain=" . $phpgw_info["user"]["domain"];
         // This doesn't belong in the API.
-	// Its up to the app to pass this value. (jengo)
+	      // Its up to the app to pass this value. (jengo)
         if ($phpgw_info["flags"]["newsmode"]) {
           $url .= "&newsmode=on";
         }
@@ -241,22 +241,17 @@
         }
       }
 
-      // Note: The following code is slighty redundant,
-      // you should ALWAYS pass the full path (jengo)
-
-      // next line adds index.php when one is assumed since
-      // iis will not interpret urls like http://.../addressbook/?xyz=5
-/*      $url = str_replace("/?", "/index.php?", $url);
-      $html_check = strtolower(substr($url ,0,4));
+      $url = str_replace("/?", "/index.php?", $url);
+      $webserver_url_count = strlen($phpgw_info["server"]["webserver_url"]);
       $slash_check = strtolower(substr($url ,0,1));
-      if($url_check != "http") {
+      
+      if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
         if($slash_check != "/") {
-          $url = $phpgw_info["server"]["hostname"]
-		.$phpgw_info["server"]["webserver_url"]."/".$url; 
+          $url = $phpgw_info["server"]["webserver_url"]."/".$url; 
         } else{
-          $url = $phpgw_info["server"]["hostname"].$url; 
+          $url = $phpgw_info["server"]["webserver_url"].$url; 
         } 
-      } */
+      } 
       return $url;
     }  
 

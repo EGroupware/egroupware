@@ -26,7 +26,7 @@
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('site_title', 'phpGroupWare')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('hostname', 'local.machine.name')");
-    $phpgw_setup->db->query("insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware')");
+    $phpgw_setup->db->query("insert into config (config_name, config_value) values ('webserver_url', 'http://www.domain.com/phpgroupware')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('auth_type', 'sql')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('ldap_host', 'localhost')");
     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('ldap_context', 'ou=People,dc=my-domain,dc=com')");

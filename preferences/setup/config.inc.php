@@ -6,6 +6,11 @@
     <td colspan="2"><font color="fefefe">&nbsp;<b>Preferences</b></font></td>
    </tr>
 
+   <tr bgcolor="e6e6e6">
+    <td>Enter the title for your site.</td>
+    <td><input name="newsettings[site_title]" value="<?php echo $current_config["site_title"]; ?>"></td>
+   </tr>
+
    <?php $selected[$current_config["showpoweredbyon"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Showed powered by logo on:</td>
