@@ -111,11 +111,11 @@
 			$var = Array(
 				'outer_border'	=> $this->getvar('outerborderwidth'),
 				'outer_width'	=> $this->getvar('width'),
-				'outer_bordercolor'	=> $this->getvar('outerbordercolor'),
-				'outer_bgcolor'	=> $this->getvar('titlebgcolor'),
+				//'outer_bordercolor'	=> $this->getvar('outerbordercolor'),
+				//'outer_bgcolor'	=> $this->getvar('titlebgcolor'),
 				'title'	=> $this->getvar('title'),
 				'inner_width'	=> $this->getvar('width'),
-				'inner_bgcolor'	=> $this->getvar('innerbgcolor'),
+				//'inner_bgcolor'	=> $this->getvar('innerbgcolor'),
 				'header_background_image'	=> $this->getvar('header_background_image'),
 				'control_link'	=> ''
 			);
