@@ -26,7 +26,10 @@
 	/*!
 	@class hooks
 	@abstract class which gives ability for applications to set and use hooks to communicate with each other
-	@discussion Author: Seek3r
+  	@author	Dan Kuykendall
+	@copyright LGPL
+	@package phpgwapi
+  	@access	public
 	*/
 	class hooks
 	{
@@ -60,8 +63,8 @@
 		@function process
 		@abstract process the hooks
 		@discussion not currently being used
-		@param $type 
-		@param $where
+		@param \$type 
+		@param \$where
 		*/
 		function process($type,$where = "")
 		{

@@ -26,6 +26,16 @@
 	 /* $Id$ */
 	
 	 /****************************************************************************\
+	 * If running in PHP3, then load up the support functions file for            *
+	 * transparent support.                                                       *
+	 \****************************************************************************/
+
+    if (floor(phpversion()) == 3)
+    {
+		include(PHPGW_API_INC.'/php3_support_functions.inc.php');
+    }
+
+	 /****************************************************************************\
 	 * Direct functions, which are not part of the API class                      *
 	 * because they are require to be availble at the lowest level.               *
 	 \****************************************************************************/
