@@ -19,6 +19,7 @@
 
   if ($submit) {
      $phpgw->preferences->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"calendar");
+     $phpgw->preferences->preferences_delete("byappvar",$phpgw_info["user"]["account_id"],"common|defaultcalendar");
 
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
@@ -48,7 +49,7 @@
   </tr>
   <?php $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color); ?>
   <tr bgcolor="<?php echo $tr_color; ?>">
-   <td><?php echo lang("show high priority events on main screen"); ?> ?</td>
+   <td><?php echo lang("show day view on main screen"); ?> ?</td>
    <td align="center"><input type="checkbox" name="mainscreen_showevents" value="Y" <?php
 	 if ($phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"] == "Y") echo " checked"; 
    ?>>
@@ -107,15 +108,17 @@
    <td><?php echo lang("default calendar view"); ?></td>
    <td align="center">
     <select name="defaultcalendar">
-     <option value="year.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "year.php") " selected"; ?>>Yearly</option>
-<?php
-   echo "<option value=\"index.php\"";
-   if(!isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "index.php")
-     echo " selected";
-   echo ">Monthly</option>";
-?>
-     <option value="week.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "week.php") " selected"; ?>>Weekly</option>
-     <option value="day.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "day.php") " selected"; ?>>Daily</option>
+     <?php
+       $selected = array();
+       $selected[$phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]] = " selected";
+       if (! isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "index.php") {
+          $selected["index.php"] = " selected";
+       }
+     ?>
+     <option value="year.php"<?php echo $selected["year.php"] . ">" . lang("Yearly"); ?></option>
+     <option value="month.php"<?php echo $selected["month.php"] . ">" . lang("Monthly"); ?></option>
+     <option value="week.php"<?php echo $selected["week.php"]  . ">" . lang("Weekly"); ?></option>
+     <option value="day.php"<?php echo $selected["day.php"] . ">" . lang("Daily"); ?></option>
     </select>
    </td>
   </tr>
