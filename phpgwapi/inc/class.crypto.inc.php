@@ -20,7 +20,7 @@
   * along with this library; if not, write to the Free Software Foundation,  *
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
-	
+
 	/* $Id$ */
 
 	class crypto
@@ -34,7 +34,6 @@
 		var $td = False; /* Handle for mcrypt */
 		var $iv = '';
 		var $key = '';
-		var $debug = False;
 
 		function crypto($vars='')
 		{
@@ -167,7 +166,7 @@
 				{
 					echo '<br>' . time() . ' crypto->encrypt() data: ---->>>>' . $data;
 				}
-	
+
 				switch ($this->mcrypt_version)
 				{
 					case 'old':
