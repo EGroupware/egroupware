@@ -20,6 +20,13 @@
 
 require_once(PHPGW_API_INC.'/class.phpmailer.inc.php');
 
+/**
+ * New eGW send-class. It implements the old interface (msg-method) on top of PHPMailer.
+ *
+ * The configuration is read from Admin >> Site configuration and it does NOT depend on one of the email-apps anymore.
+ *
+ * @author RalfBecker@outdoor-training.de
+ */
 class send extends PHPMailer 
 {
 	var $err    = array();
@@ -80,7 +87,7 @@ class send extends PHPMailer
 	 */
 	function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 	{
-		echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
+		//echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
 		$this->ClearAll();	// reset everything to its default, we might be called more then once !!!
 	
 		if ($service != 'email')
@@ -136,7 +143,7 @@ class send extends PHPMailer
 		$this->Subject = $subject;
 		$this->Body = $body;
 	
-		echo "PHPMailer = <pre>".print_r($this,True)."</pre>\n";
+		//echo "PHPMailer = <pre>".print_r($this,True)."</pre>\n";
 		if (!$this->Send())
 		{
 			$this->err = array(
