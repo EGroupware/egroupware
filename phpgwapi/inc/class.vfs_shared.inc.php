@@ -957,13 +957,13 @@
 
 			/* This is needed because of substr's handling of negative lengths */
 			$baselen = strlen ($base);
-			$lastslashpos = strrpos ($string, $base_sep);
-			$lastslashpos < $baselen ? $length = 0 : $length = $lastslashpos - $baselen;
+			$lastslashpos = @strrpos ($string, $base_sep);
+			$length = $lastslashpos < $baselen ? 0 : $lastslashpos - $baselen;
 
 			$extra_path = $rarray['fake_extra_path'] = $rarray['real_extra_path'] = substr ($string, strlen ($base), $length);
 			if($string[1] != ':')
 			{
- 				$name = $rarray['fake_name'] = $rarray['real_name'] = substr ($string, strrpos ($string, $base_sep) + 1);
+ 				$name = $rarray['fake_name'] = $rarray['real_name'] = substr ($string, @strrpos ($string, $base_sep) + 1);
 			}
 			else
 			{
@@ -979,7 +979,7 @@
 					$rarray['fake_leading_dirs'] = $base . $extra_path;
 					$rarray['real_leading_dirs'] = $opp_base . $extra_path;
 				}
-				elseif (strrpos ($rarray['fake_full_path'], $sep) == 0)
+				elseif (@strrpos ($rarray['fake_full_path'], $sep) == 0)
 				{
 					/* If there is only one $sep in the path, we don't want to strip it off */
 					$rarray['fake_leading_dirs'] = $sep;
