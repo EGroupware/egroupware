@@ -14,7 +14,7 @@
    </tr>
    
    <tr bgcolor="e6e6e6">
-    <td>Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware<br></td>
+    <td>Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b></td>
     <td><input name="newsettings[webserver_url]" value="<?php echo $current_config["webserver_url"]; ?>" size="40"></td>
    </tr>
 
