@@ -125,9 +125,34 @@
 		$passwd = $PHP_AUTH_PW;
 	}
 
+	# Apache + mod_ssl style SSL certificate authentication
+	# Certificate (chain) verification occurs inside mod_ssl
+	if ($phpgw_info['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]) && !isset($cd))
+	{
+		$sslattribs = explode("/",$HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]);
+    		while ($sslattrib = next($sslattribs))
+		{
+       			list($key,$val) = explode("=",$sslattrib);
+       			$sslattributes[$key] = $val;
+     		}                                                             
+                if (isset($sslattributes["Email"]))
+		{
+			$submit = True;
+
+			# login will be set here if the user logged out and uses a different username with
+			# the same SSL-certificate.
+			if (!isset($login)&&isset($sslattributes["Email"])) {
+		           $login  = $sslattributes["Email"];
+			   # not checked against the database, but delivered to authentication module
+			   $passwd = $HTTP_SERVER_VARS["SSL_CLIENT_S_DN"];
+			}
+		}
+		unset ($key,$val,$sslattributes);
+	}
+
 	if (isset($submit) && $submit)
 	{
-		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER))
+		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]))
 		{
 			$phpgw->redirect($phpgw->link('/login.php','code=5'));
 		}
