@@ -1,0 +1,161 @@
+A:link 
+{
+	COLOR: #000000; 
+	TEXT-DECORATION: none
+}
+
+A:visited 
+{
+	COLOR: #000000; 
+	TEXT-DECORATION: none
+}
+
+A:hover 
+{
+	COLOR: #ff9933; TEXT-DECORATION: underline
+}
+
+A:active 
+{
+	COLOR: #000000; 
+	TEXT-DECORATION: underline
+}
+
+INPUT 
+{
+	FONT-SIZE: 12px; 
+	font-COLOR: #000000; 
+	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+}
+
+SELECT 
+{
+	FONT-SIZE: 12px; 
+	COLOR: #000000; 
+	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+}
+
+BODY 
+{
+	FONT-SIZE: 12px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+FORM 
+{
+	FONT-SIZE: 12px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+TABLE 
+{
+	FONT-SIZE: 12px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.sideboxcontent 
+{
+	PADDING-RIGHT: 5px; 
+	PADDING-LEFT: 5px; 
+	FONT-SIZE: 12px; 
+	PADDING-BOTTOM: 5px; 
+	WIDTH: 160px; 
+	COLOR: #000000; 
+	LINE-HEIGHT: 20px; 
+	PADDING-TOP: 5px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.mainnote 
+{
+	FONT-SIZE: 12px; 
+	COLOR: #000000; 
+	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+}
+
+.articlecontent 
+{
+	PADDING-RIGHT: 10px; 
+	PADDING-LEFT: 10px; 
+	FONT-SIZE: 12px; 
+	PADDING-BOTTOM: 10px; 
+	COLOR: #000000; 
+	LINE-HEIGHT: 20px; 
+	PADDING-TOP: 10px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.sideboxtext 
+{
+	FONT-SIZE: 12px; 
+	LINE-HEIGHT: 18px; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.toppannel 
+{
+/*	BACKGROUND-IMAGE: url(../images/panel.png); 
+	BACKGROUND-REPEAT: repeat-x
+*/
+}
+
+.copyright 
+{
+	font-size: 9px;
+	color: #000000;
+}
+
+.title 
+{
+	PADDING-LEFT: 5px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 12px; 
+	COLOR: #000000; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.box 
+{
+	BORDER-RIGHT: #BA7B30 1px solid; 
+	BORDER-TOP: #BA7B30 1px solid; 
+	BORDER-LEFT: #BA7B30 1px solid; 
+	BORDER-BOTTOM: #BA7B30 1px solid
+}
+
+.content 
+{
+	FONT-SIZE: 12px; 
+	COLOR: #000000; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.sideboxtitle 
+{
+	BACKGROUND-POSITION: center 50%; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 12px; 
+	BACKGROUND-IMAGE: url(../images/boxbg.gif); 
+	COLOR: #FFFFFF; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+
+.sidebox 
+{
+	BORDER-RIGHT: #BA7B30 1px solid; 
+	BORDER-TOP: #BA7B30 1px solid; 
+	BORDER-LEFT: #BA7B30 1px solid; 
+	WIDTH: 160px; 
+	BORDER-BOTTOM: #BA7B30 1px solid
+}
+
+.articletitle 
+{
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 12px; 
+	BACKGROUND-IMAGE: url(../images/greypanel.gif); 
+	COLOR: #FFFFFF; 
+	TEXT-INDENT: 5pt; 
+	BACKGROUND-REPEAT: repeat-x; 
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+	HEIGHT: 20px
+}
