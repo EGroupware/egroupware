@@ -399,7 +399,6 @@ INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'your current the
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'please, select a new theme','preferences','en','Please, select a new theme');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'note: this feature does *not* change your email password. this will need to be done manually.','preferences','en','Note: This feature does *not* change your email password. This will need to be done manually.');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'monitor newsgroups','preferences','en','Monitor Newsgroups');
-INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'monitor newsgroups','preferences','en','Monitor Newsgroups');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'todo list - add','todo','en','todo list - add');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'todo list - edit','todo','en','Todo list - edit');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'todo list','todo','en','Todo list');
@@ -414,5 +413,4 @@ INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'clear form','tod
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'date due','todo','en','Date Due');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'created by','todo','en','Created By');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'you have entered an invailed date','todo','en','you have entered an invailed date');
-INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'are you sure you want to delete this entry','todo','en','Are you sure you want to delete this entry?');
 INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'are you sure you want to delete this entry','todo','en','Are you sure you want to delete this entry?');
