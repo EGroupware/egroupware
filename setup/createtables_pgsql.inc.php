@@ -119,11 +119,11 @@
     ab_state	varchar(255),
     ab_zip		varchar(255),
     ab_bday		varchar(255),
-    ab_notes	TEXT,
-    ab_company	varchar(255)
-    ab_company_id int(10) unsigned,
+    ab_notes	varchar(255),
+    ab_company	varchar(255),
+    ab_company_id int,
     ab_title varchar(60),   
-    ab_address2 varchar(60),
+    ab_address2 varchar(60)
   )";
   $db->query($sql);
 
@@ -152,7 +152,7 @@
     cal_type	varchar(10),
     cal_access	varchar(10),
     cal_name	varchar(80) NOT NULL,
-    cal_description TEXT
+    cal_description varchar(255)
   )";
   $db->query($sql);
 
