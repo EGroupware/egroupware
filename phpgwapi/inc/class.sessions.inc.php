@@ -25,7 +25,6 @@
 
   class sessions
   {
-		var $use_cache = True;		// If you want to cache the phpgw_info array
     var $login;
     var $passwd;
     var $account_id;
@@ -73,9 +72,7 @@
        $this->sessionid = $sessionid;
        $this->kp3       = $kp3;
 
-       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
-       $phpgw->common->key .= $this->sessionid;
-       $phpgw->common->key .= $this->kp3;
+       $phpgw->common->key  = $this->kp3;
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
 
        $cryptovars[0] = $phpgw->common->key;      
@@ -129,6 +126,7 @@
        }
 
        $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
+       $phpgw_info["user"]["password"]		= $this->appsession("password","phpgwapi");
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
           return False;
@@ -194,16 +192,13 @@
       $this->sessionid		= md5($phpgw->common->randomstring(10));
       $this->kp3          = md5($phpgw->common->randomstring(15));
 
-      $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
-      $phpgw->common->key .= $this->sessionid;
-      $phpgw->common->key .= $this->kp3;
+      $phpgw->common->key  = $this->kp3;
       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-      $cryptovars[0] = $phpgw->common->key;      
-      $cryptovars[1] = $phpgw->common->iv;      
+      $cryptovars[0] = $phpgw->common->key;
+      $cryptovars[1] = $phpgw->common->iv;
       $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
- 
-      if ($phpgw_info["server"]["usecookies"]) {
+       if ($phpgw_info["server"]["usecookies"]) {
          Setcookie("sessionid",$this->sessionid);
          Setcookie("kp3",$this->kp3);
          Setcookie("domain",$this->account_domain);
@@ -223,8 +218,8 @@
 					$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info);
 			}
 
-			// This is going to be stored by appsessions in its own record
-//    $this->passwd = $phpgw->common->encrypt($passwd);
+			// If they are not useing cache, we need to store it somewhere
+			$this->passwd = $this->appsession("password","phpgwapi",$passwd);
 
       $phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
                       . "','".$login."','" . $this->getuser_ip() . "','"
