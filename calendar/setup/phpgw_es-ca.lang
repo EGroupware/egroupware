@@ -1,0 +1,326 @@
+%1 %2 in %3	calendar	es-ca	%1 %2 en %3
+%1 matches found	calendar	es-ca	%1 resultats trobats
+%1 records imported	calendar	es-ca	%1 registres importats
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-ca	%1 registres llegits (encara sense importar, podeu tornar enrere i desmarcar Prova d'Importació)
+(for weekly)	calendar	es-ca	(per semanal)
+(i/v)cal	calendar	es-ca	(i/v)Cal
+1 match found	calendar	es-ca	1 resultat trobat
+a	calendar	es-ca	a
+accept	calendar	es-ca	Acceptar
+accepted	calendar	es-ca	Acceptat
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	es-ca	Acció que causà la notificació: Afegit, Cancel.lat, Acceptat, Rebutjat, ...
+add a single entry by passing the fields.	calendar	es-ca	Afegir una entrada simple passant els camps:
+add alarm	calendar	es-ca	Afegir alarma
+add contact	calendar	es-ca	Afegir contacte
+added	calendar	es-ca	Afegit
+address book	calendar	es-ca	Llibreta d'adreces
+alarm	calendar	es-ca	Alarma
+alarm for %1 at %2 in %3	calendar	es-ca	Alarma per %1 a les %2 en %3
+alarm management	calendar	es-ca	Gestió d'alarmes
+alarm-management	calendar	es-ca	Gestió d'alarmes
+alarms	calendar	es-ca	Alarmes
+all day	calendar	es-ca	Tot el dia
+are you sure you want to delete this country ?	calendar	es-ca	Esteu segurs d'esborrar aquest pais?
+are you sure you want to delete this holiday ?	calendar	es-ca	Esteu segurs d'esborrar aquesta festa?
+are you sure\nyou want to\ndelete these alarms?	calendar	es-ca	¿Está seguronde querernborrar estas alarmas?
+are you sure\nyou want to\ndelete this entry ?	calendar	es-ca	¿Está seguronde querernborrar esta entrada?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	es-ca	¿Está seguronde querernborrar esta entrada?nnEsto borraránla entrada para todos los usuarios.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	es-ca	¿Está seguronde querernborrar esta ocurrencia?nnEsto borraránla entrada para todos los usuarios.
+are you surenyou want tondelete these alarms?	calendar	es-ca	¿Está seguronde querernborrar estas alarmas?
+are you surenyou want tondelete this entry ?	calendar	es-ca	¿Está seguronde querernborrar esta entrada?
+are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	es-ca	¿Está seguronde querernborrar esta entrada?nnEsto borraránla entrada para todos los usuarios.
+are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	es-ca	¿Está seguronde querernborrar esta ocurrencia?nnEsto borraránla entrada para todos los usuarios.
+before the event	calendar	es-ca	abans de la cita
+brief description	calendar	es-ca	Descripció breu
+business	calendar	es-ca	Negocis
+calendar	common	es-ca	Calendari
+calendar - [iv]cal importer	calendar	es-ca	Calendari - Importador [iv]Cal
+calendar - add	calendar	es-ca	Calendari - Afegir
+calendar - edit	calendar	es-ca	Calendari - Editar
+calendar event	calendar	es-ca	Cita de calendari
+calendar holiday management	admin	es-ca	Gestió de festius
+calendar preferences	calendar	es-ca	Preferències - Calendari
+calendar settings	admin	es-ca	Calendari - Valors establerts
+calendar-fieldname	calendar	es-ca	Calendari - Nom de camp
+canceled	calendar	es-ca	Cancel.lat
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	es-ca	Canviar totes les cites de $params['old_owner'] a $params['new_owner'].
+change status	calendar	es-ca	Canviar estat
+charset of file	calendar	es-ca	Joc de caracters de l'arxiu
+click %1here%2 to return to the calendar.	calendar	es-ca	Premeu %1aquí%2 per tornar al calendari.
+configuration	calendar	es-ca	Configuració
+countries	calendar	es-ca	Paisos
+country	calendar	es-ca	País
+created by	calendar	es-ca	Creat per
+csv-fieldname	calendar	es-ca	CSV- Nom de camp
+csv-filename	calendar	es-ca	CSV- Nom d'arxiu
+custom fields	calendar	es-ca	Camps personalitzats
+custom fields and sorting	common	es-ca	Camps personalitzats i clasificació
+daily	calendar	es-ca	Diari
+daily matrix view	calendar	es-ca	Vista matricial del dia
+days	calendar	es-ca	dies
+days repeated	calendar	es-ca	dies repetits
+dayview	calendar	es-ca	Vista diària
+default appointment length (in minutes)	calendar	es-ca	Duració per defecte de les cites (en minuts)
+default calendar filter	calendar	es-ca	Filtre per defecte del calendari
+default calendar view	calendar	es-ca	Vista per defecte del calendari
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	es-ca	Duració per defecte de les noves cites creades. La duració és en minuts, ex. 60 = 1 hora.
+defines the size in minutes of the lines in the day view.	calendar	es-ca	Defineix el tamany en minuts de les linies de la vista de diari.
+delete a single entry by passing the id.	calendar	es-ca	Esborrar una entrada simple passant l'id.
+delete an entire users calendar.	calendar	es-ca	Esborrar un calendari d'usuari sencer.
+delete selected contacts	calendar	es-ca	Esborrar contactes seleccionats
+delete series	calendar	es-ca	Esborrar series
+delete single	calendar	es-ca	Esborrar individual
+deleted	calendar	es-ca	Esborrat
+description	calendar	es-ca	Descripció
+disable	calendar	es-ca	Desactivar
+disabled	calendar	es-ca	desactivat
+display interval in day view	calendar	es-ca	Mostrar interval en vista diaria
+display mini calendars when printing	calendar	es-ca	Mostrar minicalendaris al imprimir
+display status of events	calendar	es-ca	Mostrar estat de les cites
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-ca	Muestra la vista predeterminada del calendario en la página de inicio de eGroupWare
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	es-ca	Mostrar la vista predeterminada a la plana d'inici (la plana que es veu al entrar a eGroupWare o al clicar a l'icona d'inici)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-ca	Voleu que us notifiquin les cites noves o modificades? Se us notificarà dels vostres propis canvis.<br>Podeu limitar les notificacions a només certs canvis. Cada element inclou tota la notificació llistada anteriorment. Totes les modificacions inclouen canvis de títol, participants, pero no les respostes dels participants. Si l'amo d'una cita demanà qualsevol notificació, sempre tindrà les respostes del participant, com les acceptacions o rebuigos.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-ca	Voleu rebre regularment per correu un resumn de les vostres cites?<br>El resum s'enviarà al vostre correu electrònic habitual el mateix dia pel matí o el dilluns per a resums setmanals.<br>Només s'envia si hi han cites en aquest día o setmana.
+do you wish to autoload calendar holidays files dynamically?	admin	es-ca	Voleu carregar automàticament al calendari els arxius de festes?
+download	calendar	es-ca	Descarregar
+duration	calendar	es-ca	Duració
+edit series	calendar	es-ca	Editar sèries
+edit single	calendar	es-ca	Editar Individual
+email notification	calendar	es-ca	Notificació per correu
+email notification for %1	calendar	es-ca	Notificació per correu per a %1
+empty for all	calendar	es-ca	buit per a tots
+enable	calendar	es-ca	Activar
+enabled	calendar	es-ca	activat
+end date/time	calendar	es-ca	Data/Hora final
+enddate	calendar	es-ca	Data final
+ends	calendar	es-ca	acaba
+enter output filename: ( .vcs appended )	calendar	es-ca	Entreu el nom d'arxiu de sortida (s'afegeix .vcs)
+event details follow	calendar	es-ca	Segueixen els detalls de la cita
+exceptions	calendar	es-ca	Excepcions
+export	calendar	es-ca	Exportar
+export a list of entries in ical format.	calendar	es-ca	Exportar una llista d'entrades en format iCal.
+extended	calendar	es-ca	Extés
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	es-ca	Les actualizacions exteses sempre inclouen tots els detalls de les cites. Els de tipus iCal poden importar-se mitjançant altres aplicacions de tipus calendari.
+external participants	calendar	es-ca	Participants externs
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	es-ca	Errada a l'enviar missatge a '%1' num.%2 assumpte='%3', remitent='%4'
+fieldseparator	calendar	es-ca	Separador de camps
+firstname of person to notify	calendar	es-ca	Nom de pila de la persona a notificar
+format of event updates	calendar	es-ca	Format de les actualitzacions de cites
+fr	calendar	es-ca	Dv
+free/busy	calendar	es-ca	Lliure/Ocupat
+frequency	calendar	es-ca	Frequència
+fri	calendar	es-ca	Div
+full description	calendar	es-ca	Descripció completa
+fullname of person to notify	calendar	es-ca	Nom complet de la persona a la que notificar
+generate printer-friendly version	calendar	es-ca	Generar versió per a imprimir
+global categories	calendar	es-ca	Categorías globales
+global public and group public	calendar	es-ca	Públic Global y grup públic
+global public only	calendar	es-ca	Només Públic global
+go!	calendar	es-ca	Endavant!
+grant calendar access	common	es-ca	Atorgar accés al calendari
+group planner	calendar	es-ca	Planificació de grup
+group public only	calendar	es-ca	Només Grup públic
+here is your requested alarm.	calendar	es-ca	Aquesta és l'alarma demanada.
+high priority	calendar	es-ca	prioritat alta
+holiday	calendar	es-ca	Festiu
+holiday management	calendar	es-ca	Gestió de festius
+holiday-management	calendar	es-ca	Gestió de festius
+holidays	calendar	es-ca	Festius
+hours	calendar	es-ca	hores
+i participate	calendar	es-ca	Participo
+ical / rfc2445	calendar	es-ca	iCal / rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	es-ca	Si els festius marcats cauen en cap de setmana, passen al dilluns següent.
+ignore conflict	calendar	es-ca	Ignorar conflicte
+import	calendar	es-ca	Importar
+import csv-file	common	es-ca	Importar arxiu CSV
+import csv-file into calendar	calendar	es-ca	
+interval	calendar	es-ca	Interval
+intervals in day view	calendar	es-ca	Intervals a la vista de dia
+intervals per day in planner view	calendar	es-ca	Intervals per dia en la vista del planificador
+invalid entry id.	calendar	es-ca	Id de entrada no vàlid
+last	calendar	es-ca	últim
+lastname of person to notify	calendar	es-ca	Cognom de la persona a la que notificar
+length shown<br>(emtpy for full length)	calendar	es-ca	Tamany mostrat<br>(buit per al tamany sencer)
+length<br>(<= 255)	calendar	es-ca	Tamany<br>(<=255)
+load [iv]cal	calendar	es-ca	Carregar [iv]Cal
+location	calendar	es-ca	Lloc
+location to autoload from	admin	es-ca	Lloc des d'on carregar automàticament
+matrixview	calendar	es-ca	Vista matricial
+minutes	calendar	es-ca	minuts
+mo	calendar	es-ca	Dl
+modified	calendar	es-ca	Modificat
+modify list of external participants	calendar	es-ca	Modificar llista de participants externs
+mon	calendar	es-ca	Dll
+month	calendar	es-ca	Mes
+monthly	calendar	es-ca	Mensual
+monthly (by date)	calendar	es-ca	Mensual (per data)
+monthly (by day)	calendar	es-ca	Mensual (per dia)
+monthview	calendar	es-ca	Vista mensual
+new entry	calendar	es-ca	Nova entrada
+new name must not exist and not be empty!!!	calendar	es-ca	El nou nom no pot existir ja i tampoc pot quedar en blanc !!
+no matches found	calendar	es-ca	No s'han trobat resultats
+no matches found.	calendar	es-ca	No se encontraron coincidencias.
+no response	calendar	es-ca	Sense resposta
+notification messages for added events	calendar	es-ca	Missatges de notificació per a cites afegides
+notification messages for canceled events	calendar	es-ca	Missatges de notificació per a cites cancel.lades
+notification messages for modified events	calendar	es-ca	Missatges de notificació per a cites modificades
+notification messages for your alarms	calendar	es-ca	Missatges de notificació per les vostres alarmes
+notification messages for your responses	calendar	es-ca	Missatges de notificació per les vostres respostes
+number of intervals per day in planner view	calendar	es-ca	Nombre d'intervals per dia a la vista del planificador
+number of months	calendar	es-ca	Nombre de mesos
+number of records to read (%1)	calendar	es-ca	Nombre de registres a llegir (%1)
+number of records to read (<=200)	calendar	es-ca	
+observance rule	calendar	es-ca	Regla d'observació
+occurence	calendar	es-ca	Repetició
+old startdate	calendar	es-ca	Data d'inici anterior
+olddate	calendar	es-ca	Data anterior
+on %1 %2 %3 your meeting request for %4	calendar	es-ca	El %1 %2 %3 la vostra solicitut de reunió per %4
+on all changes	calendar	es-ca	en tots els canvis
+on all modification, but responses	calendar	es-ca	en todes les modificacions, excepte les respostes
+on any time change too	calendar	es-ca	també en qualsevol canvi d'hora
+on invitation / cancelation only	calendar	es-ca	només en invitació / cancel.lació
+on participant responses too	calendar	es-ca	també en respostes dels participants
+on time change of more than 4 hours too	calendar	es-ca	també en un canvi d'hora superior a 4 hores
+open todo's:	calendar	es-ca	Tasques pendents
+order	calendar	es-ca	Ordre
+overlap holiday	calendar	es-ca	encavalcar festiu
+participant	calendar	es-ca	Participant
+participants	calendar	es-ca	Participants
+participates	calendar	es-ca	Participa
+people holiday	calendar	es-ca	festa popular
+permission denied	calendar	es-ca	Permís denegat
+planner	calendar	es-ca	Planificador
+planner by category	calendar	es-ca	Planificador per categories
+planner by user	calendar	es-ca	Planificador per usuari
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	es-ca	Si us plau, confirmeu, accepteu, rebutgeu o examinu els canvis a l'entrada corresponent del vostre calendari
+preselected group for entering the planner	calendar	es-ca	Grup preseleccionat per entrar al planificador
+print calendars in black & white	calendar	es-ca	Imprimir calendari en blanc i negre
+print the mini calendars	calendar	es-ca	Imprimir minicalendaris
+printer friendly	calendar	es-ca	Versió per imprimir
+privat	calendar	es-ca	Privat
+private and global public	calendar	es-ca	Privat i públic global
+private and group public	calendar	es-ca	Privat i grup públic
+private only	calendar	es-ca	Només privat
+re-edit event	calendar	es-ca	Tornar a editar la cita
+read a list of entries.	calendar	es-ca	Llegir una llista d'entrades
+read a single entry by passing the id and fieldlist.	calendar	es-ca	Llegir una entrada individual passant l'id i llista de camps.
+read this list of methods.	calendar	es-ca	Llegir aquesta llista de mètodes
+receive email updates	calendar	es-ca	Rebre actualitzacions de correu
+receive extra information in event mails	calendar	es-ca	Rebre informació extra als correus de les cites
+receive summary of appointments	calendar	es-ca	Rebre resumn de les cites
+recurring event	calendar	es-ca	cita recurrent
+refresh	calendar	es-ca	Refrescar
+reinstate	calendar	es-ca	Restablir
+rejected	calendar	es-ca	Rebutjat
+repeat day	calendar	es-ca	Repetir dia
+repeat end date	calendar	es-ca	Repetir data final
+repeat type	calendar	es-ca	Repetir tipus
+repeating event information	calendar	es-ca	Informació repetitiva de cites
+repetition	calendar	es-ca	Repetició
+repetitiondetails (or empty)	calendar	es-ca	Detalls de la repetició (o buit)
+reset	calendar	es-ca	Restablir
+rule	calendar	es-ca	Regla
+sa	calendar	es-ca	Ds
+sat	calendar	es-ca	Dis
+scheduling conflict	calendar	es-ca	Conflicte de calendari
+search results	calendar	es-ca	Resultats de la recerca
+selected contacts (%1)	calendar	es-ca	Contactes seleccionats (%1)
+send updates via email	common	es-ca	Enviar actualitzacions per correu electrònic
+send/receive updates via email	calendar	es-ca	Enviar i rebre actualitzacions per correu electrònic
+set a year only for one-time / non-regular holidays.	calendar	es-ca	Establir l'any per als festius únics / no regulars.
+set new events to private	calendar	es-ca	Establir noves cites com a privades
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-ca	S'han de mostrar les invitacions que heu rebutjat al calendari?<br>Només podeu acceptar-les després (per exemple, quan s'elimini el conflicte de planificació), si encara es veuen al vostre calendari!
+should new events created as private by default ?	calendar	es-ca	Establir noves cites com a privades per defecte?
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	es-ca	S'han de mostrar o imprimir els minicalendaris en la versió d'impresió?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	es-ca	S'ha de mostrar la versió d'impresió en blanc i negre o en color (com a la vista normal)?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-ca	S'ha de mostrar l'estat de cada cita (acceptar, rebutjar, etc) entre claudàtors[] darrere del nom de cada participant?
+show day view on main screen	calendar	es-ca	Mostrar la vista del dia a la pantalla principal
+show default view on main screen	calendar	es-ca	Mostrar la vista predeterminada a la pantalla principal
+show high priority events on main screen	calendar	es-ca	Mostrar cites d'alta prioritat a la pantalla principal
+show invitations you rejected	calendar	es-ca	Mostar invitacions que heu rebutjat
+show list of upcoming events	calendar	es-ca	Mostrar la llista de properes cites
+single event	calendar	es-ca	cita individual
+sorry, the owner has just deleted this event	calendar	es-ca	El propietari acaba d'esborrar aquesta cita
+sorry, this event does not exist	calendar	es-ca	Aquesta cita no existeix
+sorry, this event does not have exceptions defined	calendar	es-ca	Aquesta cita no té excepcions definides
+sort by	calendar	es-ca	Ordenar per
+specifies the the number of intervals shown in the planner view.	calendar	es-ca	Especifica el nombre d'intervals mostrats a la vista del planificador.
+start date/time	calendar	es-ca	Data/Hora d'inici
+start- and enddates	calendar	es-ca	Dates d'inici i fi
+startdate	calendar	es-ca	Data d'inici
+startrecord	calendar	es-ca	Registre inicial
+su	calendar	es-ca	Dg
+submit to repository	calendar	es-ca	Enviar al repositori
+sun	calendar	es-ca	Diu
+tentative	calendar	es-ca	Tentatiu
+test import (show importable records <u>only</u> in browser)	calendar	es-ca	Prova d'Importació (mostrar registres importables <u>només</u> al navegador)
+text	calendar	es-ca	Text
+th	calendar	es-ca	Dj
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	es-ca	El següent és en conflicte amb l'hora proposada:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	es-ca	L'usuari %1 no participa en aquesta cita!
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	es-ca	S'ha detectat un error intentant connectar al vostre servidor de noticies.<br>Si us plau contacteu amb el vostre administrador per comprovar els noms de servidor de noticies i d'usuari i la contrasenya.
+this day is shown as first day in the week or month view.	calendar	es-ca	Aquest dia es mostrarà como a primer dia a les vistes de setmana o de mes.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	es-ca	Aixó defineix el final de la vista del dia. Les cites posteriors a aquesta hora es mostren sota la vista del dia.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	es-ca	Aixó defineix l'inici de la vista del dia. Les cites anteriors a aquesta hora es mostren sobre la vista del dia.<br>Aquesta hora s'usa també com a hora predeterminada per a noves cites.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	es-ca	Aquest grup és el predeterminat al entrar al planificador. Podeu canviar-ho al planificador quan volgueu.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	es-ca	Aixó es produeix principalment per una configuració errónia del servidor SMTP. Notifiqueu-lo al vostre administrador.
+this message is sent for canceled or deleted events.	calendar	es-ca	Aquest missatge s'envia quan una cita s'esborra o es cancel.la.
+this message is sent for modified or moved events.	calendar	es-ca	Aquest missatge s'envia al modificar o moure cites.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	es-ca	Aquest missatge s'envia a cada participant de les cites de les que sou l'amo, qui ha demanat notificacions sobre noves cites.<br>Podeu usar certes variables a les que substitueixen les dades de la cita. La primera linia es el assumpte del correu electrònic.
+this message is sent when you accept, tentative accept or reject an event.	calendar	es-ca	Aquest missatge s'envia quan accepteu, accepteu l'intent o rebutgeu una cita.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	es-ca	Aquest missatge s'envia quan establiu una alarma per una cita en concret. Incluiu tota la informació necessària.
+this month	calendar	es-ca	Aquest mes
+this week	calendar	es-ca	Aquesta setmana
+this year	calendar	es-ca	Aquest any
+thu	calendar	es-ca	Dij
+title	calendar	es-ca	Titol
+title of the event	calendar	es-ca	Títol de la cita
+title-row	calendar	es-ca	Fila del títol
+to many might exceed your execution-time-limit	calendar	es-ca	Quan temps es pot excedir del límit d'execució
+to-firstname	calendar	es-ca	Para-Nom
+to-fullname	calendar	es-ca	Para-Nom complet
+to-lastname	calendar	es-ca	Para-Cognom
+today	calendar	es-ca	Avui
+translation	calendar	es-ca	Traducció
+tu	calendar	es-ca	Dt
+tue	calendar	es-ca	Dma
+update a single entry by passing the fields.	calendar	es-ca	Actualitzar una entrada individual passant els camps.
+updated	calendar	es-ca	Actualitzat
+use end date	calendar	es-ca	Usar data final
+view this entry	calendar	es-ca	Veure aquesta entrada
+we	calendar	es-ca	Dc
+wed	calendar	es-ca	Dmc
+week	calendar	es-ca	Setmana
+weekday starts on	calendar	es-ca	La setmana comença en
+weekly	calendar	es-ca	Setmanal
+weekview	calendar	es-ca	Vista setmanal
+when creating new events default set to private	calendar	es-ca	Crear noves cites com a privades
+which events do you want to see when you enter the calendar.	calendar	es-ca	Quines cites voleu veure al entrar al calendari?
+which of calendar view do you want to see, when you start calendar ?	calendar	es-ca	Quina vista del calendari voleu veure quan entreu al calendari?
+work day ends on	calendar	es-ca	La jornada laboral acaba a les
+work day starts on	calendar	es-ca	La jornada laboral comença a les
+workdayends	calendar	es-ca	Final del dia laborable
+year	calendar	es-ca	Año
+yearly	calendar	es-ca	Anual
+yearview	calendar	es-ca	Vista anual
+you can either set a year or a occurence, not both !!!	calendar	es-ca	Podeu indicar un any o una repetició, però no ambdós !!!
+you can only set a year or a occurence !!!	calendar	es-ca	Només podeu indicar un any o una repetició !!!
+you do not have permission to add alarms to this event !!!	calendar	es-ca	No teniu permís per afegir alarmes a aquesta cita!!!
+you do not have permission to delete this alarm !!!	calendar	es-ca	No teniu permís per esborrar aquesta alarma!
+you do not have permission to enable/disable this alarm !!!	calendar	es-ca	No teniu permís per activar/desactivar aquesta alarma!
+you do not have permission to read this record!	calendar	es-ca	No teniu permís per llegir aquest registre!
+you have %1 high priority events on your calendar today.	common	es-ca	Teniu %1 cites de prioritat alta al vostre calendari avui.
+you have 1 high priority event on your calendar today.	common	es-ca	Teniu 1 cita de prioritat alta al vostre calendari avui.
+you have a meeting scheduled for %1	calendar	es-ca	Teniu una reunió programada per %1
+you have not entered a title	calendar	es-ca	No heu entrat un títol
+you have not entered a valid date	calendar	es-ca	Heu entrat una data incorrecta
+you have not entered a valid time of day	calendar	es-ca	Heu entrat una hora incorrecta
+you have not entered a\nbrief description	calendar	es-ca	Ud. no ha ingresado una\nBrief descripción
+you have not entered a\nvalid time of day.	calendar	es-ca	Ud. no ha ingresado una\nvalid hora valida.
+you have not entered participants	calendar	es-ca	No heu inclós participants
+you must enter one or more search keywords	calendar	es-ca	Heu d'entrar una o més paraules de recerca
+you must select a [iv]cal. (*.[iv]cs)	calendar	es-ca	Heu de triar un [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	es-ca	Heu d'establir un dia o una repetició !!!
+your meeting scheduled for %1 has been canceled	calendar	es-ca	S'ha cancel.lat la vostra reunió programada per %1
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-ca	La vostra reunió programada per %1 ha estat reprogramada a %2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-ca	Les vostres hores proposades de <B> %1 - %2 </B> estàn en conflicte amb les següents entrades del calendari:
