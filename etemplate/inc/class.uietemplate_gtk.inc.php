@@ -38,6 +38,7 @@
 			'raw' => True,
 			'template' => True
 		);
+		var $font_width=8;
 
 		/*!
 		@function etemplate
@@ -191,6 +192,7 @@
 					case 'int':
 					case 'float':
 					case 'text':
+					case 'textarea':
 						$set['var'] = $widget->get_chars(0,-1);
 						break;
 					case 'checkbox':
@@ -216,7 +218,6 @@
 							}
 						}
 						break;
-					case 'textarea':
 					case 'date':
 				}
 				echo " = '$set[var]'\n";
@@ -308,7 +309,18 @@
 				else
 				{
 					$height = $this->data[0]["h$row"];
-					$class = $this->data[0]["c$row"];
+					list($class,$valign) = explode(',',$this->data[0]["c$row"]);
+					switch($valign)
+					{
+						case 'top':
+							$valign = 0.0;
+							break;
+						case 'bottom':
+							$valign = 1.0;
+							break;
+						default:
+							$valign = 0.5;
+					}
 				}
 				$row_data = array();
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
@@ -326,7 +338,8 @@
 					$col = $this->num2chrs($c);
 
 					//$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span);
-					$widget = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$result);
+					$widget = &$this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$result);
+
 					if (($colspan = $span == 'all' ? $this->cols-$c : 0+$span) < 1)
 					{
 						$colspan = 1;
@@ -334,7 +347,23 @@
 					if ($widget)
 					{
 						$widget->show();
-						$table->attach($widget, $c, $c+$colspan, $r, $r+1,GTK_FILL,GTK_FILL,0,0);
+						if ($align = ($cell['align'] || $valign))
+						{
+							switch ($cell['align'])
+							{
+								case 'center':
+									$align = 0.5;
+									break;
+								case 'right':
+									$align = 1.0;
+									break;
+								default:
+									$align = 0.0;
+							}
+							$align = &new GtkAlignment($align,$valign,$cell['type'] == 'hrule' ? 1.0 : 0.0,0.0);
+							$align->add($widget);
+						}
+						$table->attach($align ? $align : $widget, $c, $c+$colspan, $r, $r+1,GTK_FILL,GTK_FILL,0,0);
 					}
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
@@ -448,6 +477,10 @@
 					if ($value)
 					{
 						$widget = &new GtkLabel($value);
+						if ($cell['align'] != 'center')
+						{
+							$widget->set_justify($cell['align'] == 'right' ? GTK_JUSTIFY_RIGHT : GTK_JUSTIFY_LEFT);
+						}
 					}
 					break;
 				case 'raw':
@@ -478,11 +511,15 @@
 						$widget->set_max_length($max);
 					}
 					$widget->set_editable(!$readonly);
+					if ($len)
+					{
+						$widget->set_usize($len*$this->font_width,0);
+					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					//$html .= $this->html->textarea($form_name,$value,$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
 					$widget = &new GtkText(null,null);
-					//$widget->set_text($value);
+					$widget->insert_text($value,strlen($value));
 					$widget->set_editable(!$readonly);
 					break;
 /*				case 'date':
@@ -595,12 +632,17 @@
 						$sel_options = $content["options-$name"];
 					}
 					//$html .= $this->sbox->getArrayItem($form_name.'[]',$value,$sel_options,$cell['no_lang'],$options,$cell['size']);
-					if (!$cell['no_lang'])
+
+					reset($sel_options);
+					for ($maxlen=0; list($key,$val) = each($sel_options); )
 					{
-						reset($sel_options);
-						while (list($key,$val) = each($sel_options))
+						if (!$cell['no_lang'])
 						{
 							$sel_options[$key] = lang($val);
+						}
+						if (($len = strlen($sel_options[$key])) > $maxlen)
+						{
+							$maxlen = $len;
 						}
 					}
 					$widget = &new GtkCombo();
@@ -608,6 +650,7 @@
 					$entry = $widget->entry;
 					$entry->set_text($sel_options[$value]);
 					$entry->set_editable(False);
+					$entry->set_usize($maxlen*$this->font_width,0);
 					break;
 /*				case 'select-percent':
 					$html .= $this->sbox->getPercentage($form_name,$value,$options);
@@ -644,6 +687,7 @@
 */				default:
 					//$html .= '<i>unknown type</i>';
 					$widget = &new GtkLabel('unknown type: '.$cell['type']);
+					$widget->set_justify(GTK_JUSTIFY_LEFT);
 					break;
 			}
 			if ($widget && !$readonly && !$this->no_result[$cell['type']])
