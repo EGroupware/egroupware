@@ -235,8 +235,19 @@ href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBAL
 				$var['messages'] = $api_messages . '<br>' . checkcode($cd);
 			}
 
-			$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
+			if (substr($GLOBALS['phpgw_info']['server']['login_logo_file'],0,4) == 'http')
+			{
+				$var['logo_file'] = $GLOBALS['phpgw_info']['server']['login_logo_file'];
+			}
+			else
+			{
+				$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
+			}
 			$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+			if (substr($var['logo_url'],0,4) != 'http')
+			{
+				$var['logo_url'] = 'http://'.$var['logo_url'];
+			}
 			$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 
 			$GLOBALS['idots_tpl']->set_var($var);
