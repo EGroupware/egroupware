@@ -268,7 +268,7 @@
 
      // If they don't have permissions to the headlines,
      // we don't need to lock the table.
-     if ($phpgw_info["user"]["permissions"]["headlines"]) {
+     if ($phpgw_info["user"]["apps"]["headlines"]) {
         $phpgw->db->lock(array("preferences","users_headlines"));
      } else {
         $phpgw->db->lock("preferences");
@@ -286,26 +286,26 @@
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"navbar_text");
      }
 
-     if ($phpgw_info["user"]["permissions"]["admin"]) {
+     if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"show_currentusers");
         }
      }
 
-     if ($phpgw_info["user"]["permissions"]["email"]) {
+     if ($phpgw_info["user"]["apps"]["email"]) {
         if ($mainscreen_showmail) {
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail");
         }
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig");
      }
 
-     if ($phpgw_info["user"]["permissions"]["addressbook"]) {
+     if ($phpgw_info["user"]["apps"]["addressbook"]) {
         if ($mainscreen_showbirthdays) {
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays");
         }
      }
 
-     if ($phpgw_info["user"]["permissions"]["calendar"]) {
+     if ($phpgw_info["user"]["apps"]["calendar"]) {
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"weekdaystarts");
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdaystarts");
         $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdayends");
@@ -314,7 +314,7 @@
         }
      }
 
-     if ($phpgw_info["user"]["permissions"]["headlines"]) {
+     if ($phpgw_info["user"]["apps"]["headlines"]) {
         include($phpgw_info["server"]["server_root"] . "/headlines/inc/functions.inc.php");
 	   headlines_update($phpgw_info["user"]["userid"],$headlines);
      }
