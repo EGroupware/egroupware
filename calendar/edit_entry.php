@@ -169,7 +169,7 @@ function validate_and_submit() {
   }
   $year_html .= "</select>";
 
-  echo $phpgw->preferences->dateformatorder($year_html,$month_html,$day_html);
+  echo $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
 ?>
 
  </TD>
@@ -244,7 +244,7 @@ function validate_and_submit() {
        $db_groups = $phpgw->db->f("groups");
     }
 
-    $user_groups = $phpgw->groups->read_names();
+    $user_groups = $phpgw->accounts->read_group_names();
     for ($i=0;$i<count($user_groups);$i++) {
 	echo "<option value=\"" . $user_groups[$i][0] . "\"";
 	if (ereg(",".$user_groups[$i][0].",",$db_groups))
@@ -356,7 +356,7 @@ function validate_and_submit() {
   }
   $year_html .= "</select>";
 
-  echo $phpgw->preferences->dateformatorder($year_html,$month_html,$day_html);
+  echo $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
 ?>
 
  </td>

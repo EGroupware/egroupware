@@ -207,7 +207,7 @@ if (! $error) {
 	         . "$end,'$days',$freq)");
   }
   $phpgw->db->query("insert into webcal_entry_groups values ('$id','"
-	      . $phpgw->groups->array_to_string($access,$n_groups) . "') ");
+	      . $phpgw->accounts->array_to_string($access,$n_groups) . "') ");
 
   
   Header("Location: ".$phpgw->link("index.php","year=$year&month=$month&cd=14"));
