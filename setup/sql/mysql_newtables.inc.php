@@ -292,7 +292,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

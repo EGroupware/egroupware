@@ -1088,14 +1088,14 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
 	}
 
-       $test[] = '0.9.10pre10';
-        function upgrade0_9_10pre10()
+	$test[] = '0.9.10pre11';
+	function upgrade0_9_10pre11()
         {
                 global $phpgw_info, $phpgw_setup;
 
                 $phpgw_setup->db->query("create table phpgw_temp as select * from notes",__LINE__,__FILE__);
 
-		$phpgw_setup->db->query("drop sequence notes_note_id_seq");
+		$phpgw_setup->db->query("drop sequence notes_note_id_seq",__LINE__,__FILE__);
 
                 $phpgw_setup->db->query("drop table notes",__LINE__,__FILE__);
 
