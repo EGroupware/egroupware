@@ -41,6 +41,7 @@
 		'deleteaccount',
 		'view_user' => 'admin.uiaccounts.edit_view_user_hook',
 		'edit_user' => 'admin.uiaccounts.edit_view_user_hook',
+		'group_manager' => 'admin.uiaccounts.edit_group_hook',
 		'sidebox_menu'
 	);
 

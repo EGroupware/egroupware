@@ -12,6 +12,7 @@
 
 	class uiaccounts
 	{
+		//(regis) maybe some of them should be deleted?
 		var $public_functions = array
 		(
 			'list_groups'		=> True,
@@ -24,6 +25,7 @@
 			'edit_user_hook'	=> True,
 			'edit_group'		=> True,
 			'view_user'			=> True,
+			'edit_group_hook' => True,
 			'edit_view_user_hook' => True,
 			'group_manager'		=> True,
 		);
@@ -592,6 +594,24 @@
 			$t->set_var($var);
 			$t->pparse('out','form');
 		}
+
+		 // (regis) why only for users, it works with groups as well so I add it
+		 // I use it on the workflow app to add monitoring rights for some users
+		 // and we could have history of connexions for members groups.
+		function edit_group_hook() // (regis) why only for users, it works with groups as well so I add it
+		{
+			if ($_GET['account_id'] && 	// can't set it on add
+			    !$GLOBALS['phpgw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+			{
+				$GLOBALS['menuData'][] = array(
+					'description' => 'ACL Rights',
+					'url'         => '/index.php',
+					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
+				);
+			}
+			
+		}
+
 
 		function edit_group($cd='',$account_id='')
 		{
