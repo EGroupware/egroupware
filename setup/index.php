@@ -16,7 +16,7 @@
 	 forward them right to index.php.  Create a session for them and have a nice little intro
 	 page explaining what to do from there (ie, create there own account)
 	*/
-	$DEBUG = False;
+	$GLOBALS['DEBUG'] = False;
 
 	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
@@ -82,13 +82,13 @@
 		$setup_info = $phpgw_setup->get_versions();
 		$setup_info = $phpgw_setup->get_db_versions($setup_info);
 		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
-		if($DEBUG)
+		if($GLOBALS['DEBUG'])
 		{
 			_debug_array($setup_info);
 		}
 	}
 
-	if ($DEBUG) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }
+	if ($GLOBALS['DEBUG']) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }
 	// begin DEBUG code
 	//$GLOBALS['phpgw_info']['setup']['stage']['db'] = 0;
 	//$action = 'Upgrade';
@@ -243,13 +243,13 @@
 				case 'new':
 					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
 					$setup_info = $phpgw_setup->upgrade_exclude($setup_info);
-					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG,True);
-					$included = True;
+					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$GLOBALS['DEBUG'],True);
+					$GLOBALS['included'] = True;
 					include('lang.php');
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 				case 'oldversion':
-					$setup_info = $phpgw_setup->process_pass($setup_info,'upgrade',$DEBUG);
+					$setup_info = $phpgw_setup->process_pass($setup_info,'upgrade',$GLOBALS['DEBUG']);
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 			}

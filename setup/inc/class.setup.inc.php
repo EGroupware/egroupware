@@ -326,7 +326,7 @@
 				$appstbl = 'phpgw_applications';
 			}
 
-			if($GLOBALS['DEBUG'])
+			if(@$GLOBALS['DEBUG'])
 			{
 				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $appstbl;
 				// _debug_array($setup_info[$appname]);
@@ -336,13 +336,13 @@
 			$this->db->next_record();
 			if ($this->db->f(0))
 			{
-				if($GLOBALS['DEBUG'])
+				if(@$GLOBALS['DEBUG'])
 				{
 					echo '... app previously registered.';
 				}
 				return True;
 			}
-			if($GLOBALS['DEBUG'])
+			if(@$GLOBALS['DEBUG'])
 			{
 				echo '... app not registered';
 			}
@@ -610,11 +610,19 @@
 			$newa = ereg_replace('pre','.',$a);
 			$newb = ereg_replace('pre','.',$b);
 			$testa = explode('.',$newa);
+			if(@$testa[1] == '')
+			{
+				$testa[1] = 0;
+			}
 			if(@$testa[3] == '')
 			{
 				$testa[3] = 0;
 			}
 			$testb = explode('.',$newb);
+			if(@$testb[1] == '')
+			{
+				$testb[1] = 0;
+			}
 			if(@$testb[3] == '')
 			{
 				$testb[3] = 0;
@@ -696,9 +704,9 @@
 				$testa[3] = 0;
 			}
 			$testb = explode('.',$newb);
-			if($testa[3] == '')
+			if($testb[3] == '')
 			{
-				$testa[3] = 0;
+				$testb[3] = 0;
 			}
 			$less = 0;
 

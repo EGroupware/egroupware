@@ -109,13 +109,13 @@
 	//var_dump($setup_info);exit;
 	@ksort($setup_info);
 
-	if ($HTTP_POST_VARS['cancel'])
+	if(@$HTTP_POST_VARS['cancel'])
 	{
 		Header("Location: index.php");
 		exit;
 	}
 
-	if ($HTTP_POST_VARS['submit'])
+	if(@$HTTP_POST_VARS['submit'])
 	{
 		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
@@ -220,7 +220,7 @@
 		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	}
 
-	if($HTTP_GET_VARS['detail'])
+	if(@$HTTP_GET_VARS['detail'])
 	{
 		$detail = $HTTP_GET_VARS['detail'];
 		@ksort($setup_info[$detail]);
@@ -258,7 +258,7 @@
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
-	elseif ($HTTP_GET_VARS['resolve'])
+	elseif (@$HTTP_GET_VARS['resolve'])
 	{
 		$resolve  = $HTTP_GET_VARS['resolve'];
 		$version  = $HTTP_GET_VARS['version'];
@@ -366,9 +366,10 @@
 		$setup_tpl->pparse('out','app_header');
 
 		@reset ($setup_info);
+		$i = 0;
 		while (list ($key, $value) = each ($setup_info))
 		{
-			if($value['name'])
+			if(@$value['name'])
 			{
 				if ($i)
 				{
@@ -379,7 +380,7 @@
 					$i = 1;
 				}
 				$setup_tpl->set_var('apptitle',$value['title']);
-				$setup_tpl->set_var('currentver',$value['currentver']);
+				$setup_tpl->set_var('currentver',@$value['currentver']);
 				$setup_tpl->set_var('version',$value['version']);
 				$setup_tpl->set_var('bg_color',$bgcolor[$i]);
 
@@ -424,7 +425,7 @@
 					case 'U':
 						$setup_tpl->set_var('instimg','incomplete.gif');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
-						if (!$value['currentver'])
+						if (!@$value['currentver'])
 						{
 							if ($value['tables'] && $phpgw_setup->check_app_tables($value['name'],True))
 							{

@@ -736,7 +736,7 @@
 		@function post_process
 		@abstract commit above processing to the db
 		*/
-		function post_process($tables,$DEBUG)
+		function post_process($tables,$DEBUG=False)
 		{
 			if (!$tables)
 			{

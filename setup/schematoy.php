@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$DEBUG = True;
+	$GLOBALS['DEBUG'] = True;
 
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
@@ -127,7 +127,7 @@
 
 			// Drop newest tables
 			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
-			$GLOBALS['phpgw_setup']->process_droptables($terror,$DEBUG);
+			$GLOBALS['phpgw_setup']->process_droptables($terror,$GLOBALS['DEBUG']);
 			$terror[$appname]['tables'] = array();
 
 			// Reset tables field to baseline table names
@@ -145,13 +145,13 @@
 			{
 				echo '<br>Processing ' . $terror[$appname]['name'] . ' to ' . $version[$appname];
 
-				$terror = $GLOBALS['phpgw_setup']->process_droptables($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_droptables($terror,$GLOBALS['DEBUG']);
 				$GLOBALS['phpgw_setup']->deregister_app($terror[$appname]['name']);
 
-				$terror = $GLOBALS['phpgw_setup']->process_baseline($terror,$DEBUG);
-				$terror = $GLOBALS['phpgw_setup']->process_test_data($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_baseline($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['phpgw_setup']->process_test_data($terror,$GLOBALS['DEBUG']);
 
-				$terror = $GLOBALS['phpgw_setup']->process_upgrade($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_upgrade($terror,$GLOBALS['DEBUG']);
 			}
 			else
 			{

@@ -58,24 +58,30 @@
 				/* one of these tables exists. checking for post/pre beta version */
 				if ($newapps)
 				{
-					$this->db->query('select * from phpgw_applications');
+					$this->db->query('select * from phpgw_applications',__LINE__,__FILE__);
 					while (@$this->db->next_record())
 					{
 						$setup_info[$this->db->f('app_name')]['currentver'] = $this->db->f('app_version');
 						$setup_info[$this->db->f('app_name')]['enabled'] = $this->db->f('app_enabled');
 					}
 					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
-					if (!$setup_info['phpgwapi']['currentver'])
+					$tmp = $setup_info['phpgwapi']['version']; /* save the file version */
+					if (!@$setup_info['phpgwapi']['currentver'])
 					{
-						$tmp = $setup_info['phpgwapi']['version']; /* save the file version */
 						$setup_info['phpgwapi']['currentver'] = $setup_info['admin']['currentver'];
 						$setup_info['phpgwapi']['version'] = $setup_info['admin']['currentver'];
 						$setup_info['phpgwapi']['enabled'] = $setup_info['admin']['enabled'];
 						// _debug_array($setup_info['phpgwapi']);exit;
+// There seems to be a problem here.  If ['phpgwapi']['currentver'] is set,
+// The GLOBALS never gets set.
 						$GLOBALS['setup_info'] = $setup_info;
 						$this->register_app('phpgwapi');
-						$setup_info['phpgwapi']['version'] = $tmp; /* restore the file version */
 					}
+					else
+					{
+						$GLOBALS['setup_info'] = $setup_info;
+					}
+					$setup_info['phpgwapi']['version'] = $tmp; /* restore the file version */
 				}
 				elseif ($oldapps)
 				{
@@ -111,18 +117,18 @@
 			{
 				//echo '<br>'.$setup_info[$key]['name'].'STATUS: '.$setup_info[$key]['status'];
 				/* Only set this if it has not already failed to upgrade - Milosch */
-				if (!( ($setup_info[$key]['status'] == 'F') || ($setup_info[$key]['status'] == 'C') ))
+				if (!( (@$setup_info[$key]['status'] == 'F') || (@$setup_info[$key]['status'] == 'C') ))
 				{
 					//if ($setup_info[$key]['currentver'] > $setup_info[$key]['version'])
-					if ($this->amorethanb($setup_info[$key]['currentver'],$setup_info[$key]['version']))
+					if ($this->amorethanb($setup_info[$key]['currentver'],@$setup_info[$key]['version']))
 					{
 						$setup_info[$key]['status'] = 'V';
 					}
-					elseif ($setup_info[$key]['currentver'] == $setup_info[$key]['version'])
+					elseif (@$setup_info[$key]['currentver'] == @$setup_info[$key]['version'])
 					{
 						$setup_info[$key]['status'] = 'C';
 					}
-					elseif ($this->alessthanb($setup_info[$key]['currentver'],$setup_info[$key]['version']))
+					elseif ($this->alessthanb(@$setup_info[$key]['currentver'],@$setup_info[$key]['version']))
 					{
 						$setup_info[$key]['status'] = 'U';
 					}
@@ -245,7 +251,7 @@
 			$this->db->Halt_On_Error = 'no';
 			// _debug_array($setup_info);
 
-			if (isset($setup_info['phpgwapi']['currentver']))
+			if (!isset($setup_info['phpgwapi']['currentver']))
 			{
 				$setup_info = $this->get_db_versions($setup_info);
 			}
@@ -368,9 +374,10 @@
 		*/
 		function check_app_tables($appname,$any=False)
 		{
+			$none = 0;
 			$setup_info = $GLOBALS['setup_info'];
 
-			if($setup_info[$appname]['tables'])
+			if(@$setup_info[$appname]['tables'])
 			{
 				/* Make a copy, else we send some callers into an infinite loop */
 				$copy = $setup_info;
@@ -382,10 +389,16 @@
 				}
 				while(list($key,$val) = @each($copy[$appname]['tables']))
 				{
-					if ($GLOBALS['DEBUG']) { echo '<br>check_app_tables(): Checking: ' . $appname . ',table: ' . $val; }
+					if ($GLOBALS['DEBUG'])
+					{
+						echo '<br>check_app_tables(): Checking: ' . $appname . ',table: ' . $val;
+					}
 					if(!$this->isinarray($val,$tables))
 					{
-						if ($GLOBALS['DEBUG']) { echo '<br>check_app_tables(): ' . $val . ' missing!'; }
+						if ($GLOBALS['DEBUG'])
+						{
+							echo '<br>check_app_tables(): ' . $val . ' missing!';
+						}
 						if (!$any)
 						{
 							return False;
@@ -399,7 +412,10 @@
 					{
 						if ($any)
 						{
-							if ($GLOBALS['DEBUG']) { echo '<br>check_app_tables(): Some tables installed'; }
+							if ($GLOBALS['DEBUG'])
+							{
+								echo '<br>check_app_tables(): Some tables installed';
+							}
 							return True;
 						}
 					}
@@ -407,12 +423,18 @@
 			}
 			if ($none && $any)
 			{
-				if ($GLOBALS['DEBUG']) { echo '<br>check_app_tables(): No tables installed'; }
+				if ($GLOBALS['DEBUG'])
+				{
+					echo '<br>check_app_tables(): No tables installed';
+				}
 				return False;
 			}
 			else
 			{
-				if ($GLOBALS['DEBUG']) { echo '<br>check_app_tables(): All tables installed'; }
+				if ($GLOBALS['DEBUG'])
+				{
+					echo '<br>check_app_tables(): All tables installed';
+				}
 				return True;
 			}
 		}

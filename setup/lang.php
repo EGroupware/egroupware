@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$phpgw_info = array();
-	if (!$included)
+	if (!@$GLOBALS['included'])
 	{
 		$GLOBALS['phpgw_info']['flags'] = array(
 			'noheader' => True,
@@ -32,6 +32,9 @@
 
 		include(PHPGW_API_INC.'/class.common.inc.php');
 		$common = new common;
+
+		$newinstall          = False;
+		
 		// this is not used
 		//$sep = $common->filesystem_separator();
 	}
@@ -42,8 +45,8 @@
 		$submit              = True;
 	}
 
-	$setup_info = $phpgw_setup->get_versions();
-	$setup_info = $phpgw_setup->get_db_versions($setup_info);
+	$setup_info_temp = $phpgw_setup->get_versions();
+	$setup_info = $phpgw_setup->get_db_versions($setup_info_temp);
 
 	if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.15.002'))
 	{
@@ -56,7 +59,7 @@
 		$langstbl = 'phpgw_languages';
 	}
 
-	if ($HTTP_POST_VARS['submit'])
+	if (@$HTTP_POST_VARS['submit'])
 	{
 		$lang_selected = $HTTP_POST_VARS['lang_selected'];
 		$upgrademethod = $HTTP_POST_VARS['upgrademethod'];
@@ -65,7 +68,7 @@
 		{
 			if ($upgrademethod == 'dumpold')
 			{
-				$phpgw_setup->db->query("DELETE FROM lang",__LINE__,__FILE__);
+				$phpgw_setup->db->query('DELETE FROM '.$langtbl,__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
 			}
 			while (list($null,$lang) = each($lang_selected))
@@ -130,8 +133,8 @@
 							{
 								if($message_id && $content)
 								{
-									// echo "<br>adding - insert into $langtbl values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
-									$phpgw_setup->db->query("INSERT into $langtbl VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
+									// echo "<br>adding - insert into $langtbl(message_id,app_name,lang,content) values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+									$phpgw_setup->db->query("INSERT into $langtbl(message_id,app_name,lang,content) VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
 								}
 							}
 						}
@@ -141,7 +144,7 @@
 			$phpgw_setup->db->transaction_commit();
 		}
 
-		if(!$included)
+		if(!@$GLOBALS['included'])
 		{
 			Header('Location: index.php');
 			exit;
@@ -149,13 +152,13 @@
 	}
 	else
 	{
-		if ($HTTP_POST_VARS['cancel'])
+		if (@$HTTP_POST_VARS['cancel'])
 		{
 			Header('Location: index.php');
 			exit;
 		}
 
-		if (!$included)
+		if (!@$GLOBALS['included'])
 		{
 			$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 			$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -176,13 +179,12 @@
 			$hidden_var1 = $newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
 
 			$select_box_desc = lang('Select which languages you would like to use');
-			$select_box = '';
+			$select_box_langs = '';
 			$phpgw_setup->db->query("select lang_id,lang_name from $langstbl where available='Yes'");
 			while ($phpgw_setup->db->next_record())
 			{
-				$select_box_langs = 
-					$select_box_langs 
-					.'<option value="' . $phpgw_setup->db->f('lang_id') . '">'
+				$select_box_langs .= 
+					'<option value="' . $phpgw_setup->db->f('lang_id') . '">'
 					. $phpgw_setup->db->f('lang_name') . '</option>'
 					."\n";
 			}

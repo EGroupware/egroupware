@@ -37,7 +37,7 @@
 		{
 			$ConfigLang = @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : @$GLOBALS['HTTP_POST_VARS']['ConfigLang'];
 
-			if($this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
+			if($this->alessthanb(@$GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
 			{
 				$this->langtbl = 'lang';
 			}
