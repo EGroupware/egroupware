@@ -1,17 +1,19 @@
 %1 email addresses inserted	common	it	%1 indirizzi email inseriti
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
-(shift-)click or drag to change value	common	it	(Shift-)Click o drag per cambiare valore
-- click on any of the time parts to increase it	common	it	- Premi su ogni parte della data per aumentarla
-- hold mouse button on any of the above buttons for faster selection.	common	it	- Premi il bottone del mouse button on uno dei pulsanti sottostanti per una selezione veloce.
-- or click and drag for faster selection.	common	it	- o click e drag per una selezione rapida.
-- or shift-click to decrease it	common	it	- or Shift-click per diminuirlo
-- use the %1, %2 buttons to select month	common	it	- Usa il bottone %1, %2 per selezionare il mese
-- use the %1, %2 buttons to select year	common	it	- Usa il bottone %1, %2 per selezionare l'anno
+(shift-)click or drag to change value	jscalendar	it	(Shift-)Click o drag per cambiare valore
+- click on any of the time parts to increase it	jscalendar	it	- Premi su ogni parte della data per aumentarla
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Premi il bottone del mouse button on uno dei pulsanti sottostanti per una selezione veloce.
+- or click and drag for faster selection.	jscalendar	it	- o click e drag per una selezione rapida.
+- or shift-click to decrease it	jscalendar	it	- or Shift-click per diminuirlo
+- use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
+- use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
 13 (ntp)	admin	it	13 (ntp)
 80 (http)	admin	it	80 (http)
 about	common	it	About
 about %1	common	it	About %1
+about the calendar	jscalendar	it	Informazioni sull'Agenda
+about this editor	htmlarea	it	Informazioni su quest'Editor
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
 account has been created	common	it	Account creato
@@ -32,6 +34,7 @@ afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 all	common	it	Tutto
+alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	it	AMERICAN SAMOA
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
@@ -50,11 +53,12 @@ australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
 author	common	it	Autore
 autohide sidebox menu's	common	it	Nascondi automaticamente i menu laterali
-automacally hide the sidebox menu's?	common	it	Nascondi automaticamente i menu laterali?
+automatically hide the sidebox menu's?	common	it	Nascondi automaticamente i menu laterali?
 autosave default category	common	it	Categoria default per il salvataggio automatico
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al login utenti
+background color	htmlarea	it	Colore di Sfondo
 bad login or password	common	it	Nome utente o password sbagliati
 bahamas	common	it	BAHAMAS
 bahrain	common	it	BAHRAIN
@@ -68,6 +72,7 @@ benin	common	it	BENIN
 bermuda	common	it	BERMUDA
 bhutan	common	it	BHUTAN
 blocked, too many attempts	common	it	Bloccato, troppi tentativi
+bold	htmlarea	it	Grassetto
 bolivia	common	it	BOLIVIA
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
@@ -76,6 +81,7 @@ brazil	common	it	BRASILE
 british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
 brunei darussalam	common	it	BRUNEI DARUSSALAM
 bulgaria	common	it	BULGARIA
+bulleted list	htmlarea	it	Elenco Puntato
 burkina faso	common	it	BURKINA FASO
 burundi	common	it	BURUNDI
 calendar	common	it	Agenda
@@ -115,6 +121,7 @@ congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
+copy selection	htmlarea	it	Copia la selezione
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 create	common	it	Crea
@@ -123,14 +130,17 @@ croatia	common	it	CROAZIA
 cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
+current style	htmlarea	it	Stile corrente
 current users	common	it	Utenti attivi
+cut selection	htmlarea	it	Taglia la selezione
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
 date due	common	it	Data richiesta
-date selection:	common	it	Selezione data:
+date selection:	jscalendar	it	Selezione data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Datetime port.<br>Per usare la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
+decrease indent	htmlarea	it	Riduci Rientro
 default category	common	it	Categoria Predefinita
 delete	common	it	Elimina
 denmark	common	it	DANIMARCA
@@ -142,8 +152,8 @@ disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bug
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
 disabled	common	it	Disabilitato
-display monday first	common	it	Visualizza prima Lunedì
-display sunday first	common	it	Visualizza prima Domenica
+display monday first	jscalendar	it	Visualizza prima Lunedì
+display sunday first	jscalendar	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sottocategorie?
 domain	common	it	Dominio
@@ -152,7 +162,7 @@ domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
-drag to move	common	it	Trascina per spostare
+drag to move	jscalendar	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
 ecuador	common	it	EQUADOR
@@ -169,6 +179,8 @@ email-address of the user, eg. "%1"	common	it	Indirizzo email per l'utente, es. 
 enabled	common	it	Abilitato
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
+enlarge editor	htmlarea	it	Ingrandisci l'Editor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>Senza la barra finale</b>
 entry has been deleted sucessfully	common	it	L'annotazione è stata cancellata correttamente
 entry updated sucessfully	common	it	L'annotazione è stata aggiornata correttamente
 equatorial guinea	common	it	GUINEA EQUATORIALE
@@ -193,6 +205,7 @@ first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	FIXME!
+font color	htmlarea	it	Colore Carattere
 force selectbox	common	it	Forza Menu a discesa
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
@@ -210,7 +223,7 @@ ghana	common	it	GHANA
 gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
-go today	common	it	Vai a Oggi
+go today	jscalendar	it	Vai a Oggi
 grant access	common	it	Permetti Accesso
 greece	common	it	GRECIA
 greenland	common	it	GROENLANDIA
@@ -234,6 +247,7 @@ guyana	common	it	GUIANA
 haiti	common	it	HAITI
 heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
 help	common	it	Aiuto
+help using editor	htmlarea	it	Help utilizzo editor
 high	common	it	Alta
 highest	common	it	Più Alta
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
@@ -241,12 +255,17 @@ home	common	it	Home
 home email	common	it	email di casa
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
+horizontal rule	htmlarea	it	Linea Orrizzontale
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizzionali vanno in un menu pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
+increase indent	htmlarea	it	Aumenta Rientro
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
+insert image	htmlarea	it	Inserisci Immagine
+insert table	htmlarea	it	Inserisci Tabella
+insert web link	htmlarea	it	Inserisci Link
 international	common	it	Internazionale
 invalid ip address	common	it	Indirizzo IP sbagliato
 invalid password	common	it	Password sbagliata
@@ -256,6 +275,7 @@ ireland	common	it	IRLANDA
 israel	common	it	ISRAELE
 it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
 it is recommended that you run setup to upgrade your tables to the current version	common	it	&Egrave; raccomandato eseguire il setup per aggiornare le tabelle alla versione attuale.
+italic	common	it	Corsivo
 italy	common	it	ITALIA
 jamaica	common	it	GIAMAICA
 january	common	it	Gennaio
@@ -263,6 +283,10 @@ japan	common	it	GIAPPONE
 jordan	common	it	GIORDANIA
 july	common	it	Luglio
 june	common	it	Giugno
+justify center	htmlarea	it	Centrato
+justify full	htmlarea	it	Giustificato
+justify left	htmlarea	it	Allinea a Sinistra
+justify right	htmlarea	it	Allinea a Destra
 kazakstan	common	it	KAZAKISTAN
 kenya	common	it	KENIA
 keywords	common	it	Keywords
@@ -341,9 +365,9 @@ new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
 next	common	it	Avanti
-next month (hold for menu)	common	it	Mese successivo (premi per menu)
+next month (hold for menu)	jscalendar	it	Mese successivo (premi per menu)
 next page	common	it	Pagina successiva
-next year (hold for menu)	common	it	Anno successivo (premi per menu)
+next year (hold for menu)	jscalendar	it	Anno successivo (premi per menu)
 nicaragua	common	it	NICARAGUA
 niger	common	it	NIGER
 nigeria	common	it	NIGERIA
@@ -372,6 +396,7 @@ only private	common	it	solo privati
 only yours	common	it	solo tuoi
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apro finestra popup
+ordered list	htmlarea	it	Elenco Numerato
 original	common	it	Originale
 other	common	it	Altro
 overview	common	it	Overview
@@ -388,6 +413,8 @@ parent category	common	it	Categoria padre
 password	common	it	Password
 password could not be changed	common	ir	La oassword non può essere cambiato
 password has been updated	common	it	La password è stata modificata
+paste from clipboard	htmlarea	it	Incolla dagli appunti
+path	htmlarea	it	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il path per i files degli utenti e dei gruppi DEVE ESSERE ESTERNA alladocument-root del webserver!!!
 pattern for search in addressbook	common	it	Pattern per la Ricerca nella Rubrica
 pattern for search in calendar	common	it	Pattern per la Ricerca nell'Agenda
@@ -410,8 +437,9 @@ portugal	common	it	PORTOGALLO
 postal	common	it	Postale
 powered by phpgroupware version %1	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
 preferences	common	it	Preferenze
-prev. month (hold for menu)	common	it	Mese precedente (premi per menu)
-prev. year (hold for menu)	common	it	Anno precedente (premi per menu)
+preferences for the idots template set	common	it	Preferenze per il template idots
+prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
+prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
 previous page	common	it	Pagina precedente
 print	common	it	Stampa
 priority	common	it	Priorità
@@ -422,6 +450,7 @@ puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 read	common	it	Leggi
 read this list of methods.	common	it	Legge questa lista di metodi.
+redoes your last action	htmlarea	it	Ripeti l'ultima azione
 reject	common	it	Rifiuta
 rename	common	it	Rinomina
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
@@ -447,7 +476,7 @@ section	common	it	Sezione
 select	common	ir	Seleziona
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
-select date	common	it	Selezione data
+select date	jscalendar	it	Selezione data
 select group	common	it	Selezione gruppo
 select home email address	common	it	Selezione indirizzo email di casa
 select one	common	it	Seleziona uno
@@ -483,11 +512,14 @@ sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
 status	common	it	Status
+strikethrough	htmlarea	it	Barrato
 subject	common	it	Oggetto
 submit	common	it	Invia
+subscript	htmlarea	it	Pepice
 substitutions and their meanings:	common	it	Sostituzione dei significati:
 sudan	common	it	SUDAN
 sunday	common	it	Domenica
+superscript	htmlarea	it	Apice
 suriname	common	it	SURINAME
 svalbard and jan mayen	common	it	SVALBARD E JAN MAYEN
 swaziland	common	it	SWAZILAND
@@ -507,8 +539,8 @@ this application requires an upgrade	common	it	Questa applicazione richiede un a
 this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
 time	common	it	Ora
+time selection:	jscalendar	it	Selezione Ora:
 time zone	common	it	Fuso orario
-time selection:	common	it	Selezione Ora:
 time zone offset	common	it	Differenza di fuso orario
 title	common	it	Titolo
 to	common	it	To
@@ -516,7 +548,8 @@ to correct this error for the future you will need to properly set the	common	it
 to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, premi <a href="%1">qui</a>
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
-toggle first day of week	common	it	Togli il primo giorno della settimana
+toggle first day of week	jscalendar	it	Togli il primo giorno della settimana
+toggle html source	htmlarea	it	Nascoli il sorgente HTML
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
@@ -531,6 +564,8 @@ turks and caicos islands	common	it	ISOLE TURKS E CAICOS
 tuvalu	common	it	TUVALU
 uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
+underline	htmlarea	it	Sottolineato
+undoes your last action	htmlarea	it	Annulla l'ultima azione
 united arab emirates	common	it	EMIRATI ARABI UNITI
 united kingdom	common	it	REGNO UNITO
 united states	common	it	STATI UNITI
@@ -562,12 +597,13 @@ wednesday	common	it	Mercoledì
 welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
-wk	common	it	wk
+wk	jscalendar	it	wk
 work email	common	it	email di lavoro
 written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in TEXT MODE.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
 you are required to change your password during your first login	common	it	Ti sarà richiesto di cambiare la password al primo login
 you are running a newer version of phpGroupWare than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
