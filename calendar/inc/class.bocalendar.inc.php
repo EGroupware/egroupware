@@ -757,6 +757,12 @@
 			}
 			print_debug('ID',$l_cal['id']);
 
+			// don't wrap to the next day for no time
+			if ($l_end['hour'] == 24 || $l_end['min'] == 0) {
+				$l_end['hour'] = 23;
+				$l_end['min'] = 59;
+            }
+
 			if(isset($_GET['readsess']))
 			{
 				$event = $this->restore_from_appsession();
