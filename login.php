@@ -115,7 +115,8 @@
     // If there is something wrong with this code TELL ME!
     // Commenting out the code will not fix it. (jengo)
     if (isset($last_loginid)) {
-       $phpgw->preferences->read_preferences("common",$last_loginid); 
+       $pref = new preferences($last_loginid);
+       $phpgw_info["user"]["preferences"] = $pref;
        #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
        $phpgw->translation->add_app("login");
        $phpgw->translation->add_app("loginscreen");
