@@ -45,8 +45,11 @@
   if ($submit) {
      $totalerrors = 0;
 
-     if (strlen($n_loginid) > 8)
-        $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
+     if ($phpgw_info["server"]["auth_type"] == "ldap") {
+        if (strlen($n_loginid) > 8) {
+           $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
+        }
+     }
   
      if (! $n_loginid)
         $error[$totalerrors++] = lang("You must enter a loginid");
