@@ -23,7 +23,6 @@
 			'get_file'    => True,
 			'add_file'    => True,
 			'admin'       => True,
-			'preferences' => True,
 			'writeLangFile' => True
 		);
 		var $icons;
@@ -1500,77 +1499,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->template->fp('phpgw_body','info_admin');
-			}
-		}
-
-		function preferences( )
-		{
-			$prefs = array(
-				'homeShowEvents'	=> 'Show open Events: Tasks/Calls/Notes on main screen',
-				'defaultFilter'	=>	'Default Filter for InfoLog',
-				'listNoSubs'		=> 'List no Subs/Childs',
-				'longNames'			=> 'Show full usernames'
-			);
-			$allowed_values = array (
-				'defaultFilter' => $this->filters
-			);
-
-			$GLOBALS['phpgw']->preferences->read_repository();
-
-			if ($GLOBALS['HTTP_POST_VARS']['save'])
-			{
-				while (list($pref,$lang) = each($prefs))
-				{
-					$GLOBALS['phpgw']->preferences->add('infolog',$pref);
-				}
-				$GLOBALS['phpgw']->preferences->save_repository(True);
-
-				Header('Location: '.$GLOBALS['phpgw']->link('/preferences/index.php'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
-			}
-			$GLOBALS['phpgw']->common->phpgw_header();
-
-			$GLOBALS['phpgw']->template->set_file(array('info_prefs_t' => 'preferences.tpl'));
-			$GLOBALS['phpgw']->template->set_block('info_prefs_t','pref_line');
-			$GLOBALS['phpgw']->template->set_block('info_prefs_t','info_prefs');
-
-			$vars = Array(
-				'title' => lang('InfoLog preferences'),
-				'text' => '&nbsp;',
-				'action_url' => $this->html->link('/index.php',$this->menuaction('preferences')),
-				'bg_h_color' => 'th',
-				'save_button' => $this->html->submit_button('save','Save')
-			);
-			$GLOBALS['phpgw']->template->set_var($vars);
-
-			for ($n=0; list($pref,$lang) = each($prefs); ++$n)
-			{
-				$GLOBALS['phpgw']->template->set_var('bg_nm_color',$n & 1 ? 'row_off':'row_on');
-				$GLOBALS['phpgw']->template->set_var('field',lang($lang));
-
-				if (is_array($allowed_values[$pref]))
-				{
-					if (!is_object($sbox)) $sbox = CreateObject('phpgwapi.sbox2');
-
-					$GLOBALS['phpgw']->template->set_var('data',$sbox->getArrayItem($pref,
-									$GLOBALS['phpgw_info']['user']['preferences']['infolog'][$pref],
-									$allowed_values[$pref],1));
-				}
-				else
-				{
-					$GLOBALS['phpgw']->template->set_var('data',$this->html->checkbox($pref,
-								$GLOBALS['phpgw_info']['user']['preferences']['infolog'][$pref]));
-				}
-				$GLOBALS['phpgw']->template->parse('pref_lines','pref_line',True);
-			}
-			if ($this->tmpl->stable)
-			{
-				echo parse_navbar();
-				$GLOBALS['phpgw']->template->pfp('phpgw_body','info_prefs');
-			}
-			else
-			{
-				$GLOBALS['phpgw']->template->fp('phpgw_body','info_prefs');
 			}
 		}
 		
