@@ -34,8 +34,9 @@
 		}
 	}
 
-  if ($submit) {
-     $totalerrors = 0;
+	if ($submit)
+	{
+		$totalerrors = 0;
 
 		if ($phpgw_info['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
 		{
@@ -44,7 +45,7 @@
 				$error[$totalerrors++] = lang('The loginid can not be more then 8 characters');
 			}
 		}
-  
+
 		if (! $account_lid)
 		{
 			$error[$totalerrors++] = lang('You must enter a loginid');
@@ -112,7 +113,7 @@
 				'account_expires'   => $account_expires
 			);
 			$phpgw->accounts->create($account_info);
-       
+
 			$account_id = $phpgw->accounts->name2id($account_lid);
 
 			$apps = CreateObject('phpgwapi.applications',array($account_id,'u'));
@@ -137,12 +138,13 @@
 					}
 				}
 			}
-        
+
 			$apps->account_type = 'u';
 			$apps->account_id = $account_id;
 			$apps->account_apps = Array(Array());
 
-			if ($account_permissions) {
+			if ($account_permissions)
+			{
 				@reset($account_permissions);
 				while ($app = each($account_permissions))
 				{
@@ -162,14 +164,16 @@
 			$phpgw->db->query("insert into phpgw_acl values ('preferences','changepassword','$account_id','1')",__LINE__,__FILE__);
 
 			// Assign user to groups
-			if ($account_groups) {
+			if ($account_groups)
+			{
 				for ($i=0;$i<count($account_groups);$i++)
 				{
 					$phpgw->acl->add_repository('phpgw_group',$account_groups[$i],$account_id,1);
 				}
 			}
 
-			if ($apps_after) {
+			if ($apps_after)
+			{
 				$pref = CreateObject('phpgwapi.preferences',$account_id);
 				$phpgw->common->hook_single('add_def_pref','admin');
 				while ($apps = each($apps_after))
@@ -188,15 +192,15 @@
 			$phpgw->db->unlock();
 
 /*
-       // start inlcuding other admin tools
-       while($app = each($apps_after))
-       {
-         $phpgw->common->hook_single('add_user_data', $value);
-       }       
+			// start inlcuding other admin tools
+			while($app = each($apps_after))
+			{
+				$phpgw->common->hook_single('add_user_data', $value);
+			}
 */
-        Header('Location: ' . $phpgw->link('/admin/accounts.php','cd='.$cd));
-        $phpgw->common->phpgw_exit();
-     }
+			Header('Location: ' . $phpgw->link('/admin/accounts.php','cd='.$cd));
+			$phpgw->common->phpgw_exit();
+		}
 	}
 	else
 	{
@@ -234,7 +238,7 @@
 	$phpgw->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 	$phpgw->template->set_var('tr_color1',$phpgw_info['theme']['row_on']);
 	$phpgw->template->set_var('tr_color2',$phpgw_info['theme']['row_off']);
-  
+
 	$phpgw->template->set_var('form_action',$phpgw->link('/admin/newaccount.php'));
 	$phpgw->template->set_var('lang_loginid',lang('LoginID'));
 
@@ -284,7 +288,7 @@
 	// groups list
 	$groups_select = '<select name="account_groups[]" multiple>';
 
-	$groups =  $phpgw->accounts->get_list('groups');
+	$groups = $phpgw->accounts->get_list('groups');
 
 	while (list(,$group) = each($groups))
 	{
@@ -373,10 +377,10 @@
 	// check if we have something included, when not ne need to set
 	// {gui_hooks} to ""
 	//  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
-	//  }       
+	//  }
 
 	$phpgw->template->set_var('lang_button',Lang('Add'));
 	$phpgw->template->pfp('out','form');
-  
+
 	$phpgw->common->phpgw_footer();
 ?>

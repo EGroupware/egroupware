@@ -40,7 +40,7 @@
 			$error = '<br>' . lang('You must enter a group name.');
 		}
 		else
-		{     
+		{
 			if ($phpgw->accounts->exists($n_group))
 			{
 				$error = '<br>' . lang('Sorry, that group name has already been taken.');
