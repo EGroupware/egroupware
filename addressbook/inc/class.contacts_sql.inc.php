@@ -370,11 +370,11 @@
 			while(list($name,$value)=each($stock_fields)) {
 				$std .= "a.".$name.",";
 			}
-			$std = substr($std,0,-1);
+			//$std = substr($std,0,-1);
 			while(list($name,$value)=each($extra_fields)) {
 				$ext .= "b.".$name.",";
 			}
-			$ext = substr($ext,0,-1);
+			//$ext = substr($ext,0,-1);
 			if (!empty($fieldlist2)) {
 				$filtertemp = " AND " . $filterlist2 . " ";
 			}
@@ -382,7 +382,10 @@
 			if ($DEBUG && $filtertemp) {
 				echo "<br>DEBUG - Filtering with: #" . $filtertemp . "#";
 			}
-			
+
+			$qfields = $std . $ext;
+			$qfields = substr($qfields,0,-1);
+
 			if ($query) {
 				$squery = " AND (n_family like '%$query%' OR n_middle like '"
 					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
@@ -392,8 +395,8 @@
 					. "org_name like '%$query%')";
 			}
 			
-			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'. $std . ',' 
-				. $ext . ' FROM '.$this->std_table.' AS a, '
+			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'
+				. $qfields . ' FROM '.$this->std_table.' AS a, '
 				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
 				. $squery . $ordermethod;
 
