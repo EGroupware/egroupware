@@ -6,6 +6,7 @@
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
 <META name="AUTHOR" content="dGroupWare http://www.eGroupWare.org">
 <META NAME="description" CONTENT="{website_title} login screen, working environment powered by eGroupWare">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 <META NAME="keywords" CONTENT="{website_title} login screen, eGroupWare, groupware, groupware suite">
 
 <TITLE>{website_title} - {lang_login}</TITLE>

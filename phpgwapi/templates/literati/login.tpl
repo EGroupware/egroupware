@@ -4,6 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
 <META name="AUTHOR" content="eGroupware http://www.phpgroupware.org">
 <META NAME="description" CONTENT="eGroupware login screen">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 <META NAME="keywords" CONTENT="eGroupware login screen">
 <link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">	
 <TITLE>{website_title} - Login</TITLE>

@@ -1,6 +1,7 @@
 <!-- BEGIN login_form -->
 <html>
 <head>
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
  <title>{website_title} - Login</title>
 </head>
 

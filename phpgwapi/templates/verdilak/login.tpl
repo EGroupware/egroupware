@@ -4,9 +4,10 @@
 <HEAD>
 
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<META NAME="description" CONTENT="phpGroupWare login screen">
-<META NAME="keywords" CONTENT="phpGroupWare login screen">
+<META name="AUTHOR" content="phpGroupWare http://www.egroupware.org">
+<META NAME="description" CONTENT="eGroupWare login screen">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+<META NAME="keywords" CONTENT="eGroupWare login screen">
 
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>

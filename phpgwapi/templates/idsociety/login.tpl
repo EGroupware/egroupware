@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
 <meta name="description" content="phpGroupWare">
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 <meta name="keywords" content="phpGroupWare login screen">
 <style type="text/css">
   a { text-decoration:none; }
