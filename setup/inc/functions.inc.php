@@ -35,7 +35,7 @@
 
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
-		echo 'phpGroupWare now requires PHP 4.1 or greater.<br>';
+		echo 'eGroupWare now requires PHP 4.1 or greater.<br>';
 		echo 'Please contact your System Administrator';
 		exit;
 	}

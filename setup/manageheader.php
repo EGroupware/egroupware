@@ -142,6 +142,7 @@
 			check_form_values();
 			$header_template = CreateObject('setup.Template','../');
 			$GLOBALS['phpgw_setup']->html->show_header('Generated header.inc.php', False, 'header');
+			echo '<table width="90%"><tr><td>';
 			echo '<br>' . lang('Save this text as contents of your header.inc.php') . '<br><hr>';
 			$newheader = $GLOBALS['phpgw_setup']->html->generate_header();
 			echo '<pre>';
@@ -152,7 +153,8 @@
 			echo '<input type="hidden" name="FormLogout" value="header">';
 			echo '<input type="submit" name="junk" value="'.lang('Continue').'">';
 			echo '</form>';
-			echo '</body></html>';
+			echo '</td></tr></table>';
+			$GLOBALS['phpgw_setup']->html->show_footer();
 			break;
 		case 'write':
 			check_form_values();
@@ -182,7 +184,7 @@
 			break;
 		default:
 			$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['HeaderFormMSG'], False, 'header');
-
+			
 			$detected = '';
 
 			if (!get_var('ConfigLang',array('POST','COOKIE')))
@@ -190,7 +192,7 @@
 				$detected .= '<br><form action="manageheader.php" method="Post">Please Select your language '.lang_select(True,'en')."</form>\n";
 			}
 
-			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="{ border: 1px solid #000000; }">' . "\n";
+			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' . "\n";
 
 			$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['phpgw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
 			$manual = '<a href="../doc/en_US/html/admin/" target="manual">'.lang('phpGroupWare Administration Manual').'</a>';
@@ -540,7 +542,11 @@
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 			$setup_tpl->set_var('lang_continue',lang('Continue'));
 
+		
 			$setup_tpl->pfp('out','manageheader');
+	
+			$GLOBALS['phpgw_setup']->html->show_footer();
+		
 			break; // ending the switch default
 	}
 ?>

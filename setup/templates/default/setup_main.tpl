@@ -1,6 +1,6 @@
 <!-- begin setup_main.tpl -->
 <!-- begin the db section -->
-<table border="0" width="100%" cellspacing="0" cellpadding="2" style="{ border: 1px solid #000000; }">
+<table border="0" width="90%" cellspacing="0" cellpadding="2">
 <tr class="th">
 	<td align="left" colspan="2">{db_step_text}</td>
 </tr>

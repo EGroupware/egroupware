@@ -1,6 +1,11 @@
 <!-- BEGIN manageheader -->
+
+<table border="0" width="90%" cellspacing="0" cellpadding="0" align="center">
+<tbody><tr><td>
+
 {detected}
-  <tr class="th">
+
+	<tr class="th">
     <th colspan="2">{lang_settings}</th>
   </tr>
    <form action="manageheader.php" method="post">
@@ -116,3 +121,8 @@
     <td>{lang_passforconfig}</td>
   </tr>
 <!-- END domain -->
+
+</td></tr>
+</tbody>
+
+</table>

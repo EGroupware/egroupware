@@ -26,7 +26,7 @@ function check_all(which)
     <td align="center">{description}</td>
   </tr>
 </table>
-<table width="70%" cellspacing="0" cellpadding="2" style="{ border: 1px solid #000000; }">
+<table width="90%" cellspacing="0" cellpadding="2">
 <!-- END header -->
 
 <!-- BEGIN app_header -->

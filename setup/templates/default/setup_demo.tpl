@@ -1,15 +1,15 @@
 <!-- BEGIN setup_demo -->
-<table border="1" width="100%" cellspacing="0" cellpadding="2">
+<table border="0" width="90%" cellspacing="0" cellpadding="2">
   <tr>
-    <td>{description}</td>
+    <td>{description}	<br/><br/>	</td>
   </tr>
   <tr>
-    <td align="left" bgcolor="#486591"><font color="#fefefe">{detailadmin}</td>
+    <td align="left" bgcolor="#cccccc">{detailadmin}</td>
   </tr>
   <tr>
     <td>
       <form method="POST" action="{action_url}">
-        <table border="0">
+	<table border="0">
           <tr>
             <td>{adminusername}</td>
             <td><input type="text" name="username"></td>

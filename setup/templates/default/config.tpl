@@ -3,7 +3,7 @@
 <!-- BEGIN header -->
  
 <form method="POST" action="{action_url}">
-<table align="center" cellspacing="0" style="{border: 1px solid #FFFFFF;}">
+<table align="center" cellspacing="0" border="5" width="90%" >
    <tr class="th">
     <td colspan="2">&nbsp;{title}</td>
    </tr>
