@@ -184,9 +184,18 @@
 				}
 			}
 
+			if ($this->app_name == 'manual')
+			{
+				$logo_img = $GLOBALS['phpgw']->common->image('phpgwapi','logo','',True);
+			}
+			else
+			{
+				$logo_img = $GLOBALS['phpgw']->common->image($this->app_name,'navbar','',True);
+			}
+
 			$this->output['help_values'][] = array
 			(
-				'img'			=> $GLOBALS['phpgw']->common->image($this->app_name,'navbar','',True),
+				'img'			=> $logo_img,
 				'title'			=> $this->title,
 				'lang_version'	=> lang('version'),
 				'version'		=> $this->app_version,

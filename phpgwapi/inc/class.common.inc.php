@@ -1256,7 +1256,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$app_css = 'left';
 				}
 
-				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'help')
+				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'help' && $app != 'manual')
 				{
 					$var['applications'][] = array
 					(
@@ -1266,7 +1266,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						'url'			=> $data['url'],
 						'name'			=> str_replace('-','_',$app),
 						'statustext'	=> $data['title'],
-						'css'			=> $app_css 
+						'css'			=> $app_css
 					);
 
 					if($data['icon_hover'] != '')
@@ -1317,7 +1317,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['current_app'] = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
 			$menuaction	= get_var('menuaction',Array('GET'));
-			$xslt_app	= get_var('xslt_app',Array('GET'));
 
 			if ($menuaction && $GLOBALS['phpgw_info']['flags']['xslt_app'])
 			{

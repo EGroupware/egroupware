@@ -13,7 +13,7 @@
 					<xsl:value-of select="title"/>&nbsp;
 					<xsl:choose>
 						<xsl:when test="version != ''">
-							<xsl:value-of select="lang_version"/>:&nbsp;<xsl:value-of select="version"/>
+							<xsl:value-of select="lang_version"/>&nbsp;<xsl:value-of select="version"/>
 						</xsl:when>
 					</xsl:choose>
 				</td>
