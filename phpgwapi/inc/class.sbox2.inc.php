@@ -83,7 +83,7 @@
 					$ret[$name] = "<select name=\"id_$name\">\n";
 					while (list( $id,$text ) = each( $content ))
 					{
-						$ret[$name] .= "<option value=\"$id\">" . $phpgw->strip_html($text) . "\n";
+						$ret[$name] .= "<option value=\"$id\">" . $GLOBALS['phpgw']->strip_html($text) . "\n";
 					}
 					$ret[$name] .= '<option value="0">'.lang('none')."\n";
 					$ret[$name] .= '</select>';
@@ -128,7 +128,7 @@
 			{
 				$name = $addr['org_name'].': '.$name;
 			}
-			return $phpgw->strip_html($name);
+			return $GLOBALS['phpgw']->strip_html($name);
 		}
 
 		/*
@@ -329,7 +329,7 @@
 			if (!is_array($account_data))
 			{
 				$accounts = createobject('phpgwapi.accounts',$id);
-				$accounts->db = $phpgw->db;
+				$accounts->db = $GLOBALS['phpgw']->db;
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
@@ -351,7 +351,7 @@
 		function getAccount($name,$id,$longnames=0)
 		{
 			$accounts = createobject('phpgwapi.accounts');
-			$accounts->db = $phpgw->db;
+			$accounts->db = $GLOBALS['phpgw']->db;
 			$accs = $accounts->get_list('accounts'); 
 
 			$aarr = Array(lang('not assigned'));
@@ -375,7 +375,7 @@
 				$month = date('m',$date);
 				$year = date('Y',$date);
 			}
-			return $phpgw->common->dateformatorder($this->getYears($n_year,$year),
+			return $GLOBALS['phpgw']->common->dateformatorder($this->getYears($n_year,$year),
 				$this->getMonthText($n_month,$month),
 				$this->getDays($n_day,$day));
 		}
