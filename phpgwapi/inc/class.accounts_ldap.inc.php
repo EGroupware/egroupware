@@ -92,6 +92,7 @@
 
 		function save_repository()
 		{
+			#_debug_array($this->data);
 			$acct_type = $this->get_type($this->account_id);
 
 			/* search the dn for the given u/gidnumber */
@@ -107,47 +108,13 @@
 
 			$this->data['account_type'] = $allValues[0]['phpgwaccounttype'][0];
 
-			// get a copy of the DN
-			$updatedValues = $allValues;
-			
-			if($acct_type == 'u')
-			{
-				$entry['cn']                 = utf8_encode(sprintf("%s %s", $this->data['firstname'], $this->data['lastname']));
-			}
-			else
-			{
-				$entry['cn'] 	              = utf8_encode($this->data['firstname']);
-			}
-
-			$entry['sn']			= utf8_encode($this->data['lastname']);
-			$entry['givenname']		= utf8_encode($this->data['firstname']);
-			$entry['phpgwaccountlastlogin']	= $this->data['lastlogin'];
-			$entry['phpgwaccountlastloginfrom'] = $this->data['lastloginfrom'];
-			$entry['phpgwlastpasswdchange']	= $this->data['lastpasswd_change'];
-			$entry['phpgwaccountstatus']	= $this->data['status'];
-			$entry['phpgwaccounttype']	= $this->data['type'];
-			$entry['phpgwaccountexpires']	= $this->data['expires'];
-			$entry['gid']			= $this->data['account_primary_group'];
-			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
-			{
-				$entry['homedirectory'] = $this->data['homedirectory'];
-				$entry['loginshell']    = $this->data['loginshell'];
-			}
-			else
-			{
-				// the posixaccount schema requires this
-				$entry['homedirectory'] = '/home/'.$this->data['account_lid'];
-				$entry['loginshell']	= '/bin/false';
-			}
-
-
 			if($acct_type == 'u')
 			{
 				// data for posixaccount
 				$newData['cn']				= utf8_encode(sprintf("%s %s", 
 										$this->data['firstname'], 
 										$this->data['lastname']));
-				$newData['uid']				= $allValues[0]['uid'][0];
+				$newData['uid']				= utf8_encode($this->data['account_lid']);
 				if($this->data['lastname'])
 					$newData['sn']			= utf8_encode($this->data['lastname']);
 				if($this->data['firstname'])
@@ -164,7 +131,7 @@
 					$entry['loginshell']		= '/bin/false';
 				}
 				if($this->data['account_primary_group'])
-					$newData['gidNumber']			= $this->data['account_primary_group'];
+					$newData['gidnumber']			= $this->data['account_primary_group'];
 				if($this->data['lastlogin'])
 					$newData['phpgwaccountlastlogin']	= $this->data['lastlogin'];
 				if($this->data['lastloginfrom'])
@@ -177,14 +144,22 @@
 					$newData['phpgwaccountstatus']		= array();
 				if($this->data['expires'])
 					$newData['phpgwaccountexpires']		= $this->data['expires'];
+
+				$newAccountID					= $newData['uid'];
+				$oldAccountID					= $newData['uid'];
 			}
 			else
 			{
 				// data for posixgroup
-				$newData['cn']				= utf8_encode($this->data['firstname']);
+				$newData['cn']				= utf8_encode($this->data['account_lid']);
+				$newData['gidnumber']			= $this->data['account_id'];
+				$newGroupID				= $newData['cn'];
+				$oldGroupID				= $newData['cn'];
 			}
 			if($this->data['type'])
 				$newData['phpgwaccounttype']		= $this->data['type'];
+
+			
 
 			/*
 			Changing the uid:  Need to delete and add new, since
@@ -198,95 +173,66 @@
 			{
 				$test = $allValues[0]['uid'][0];
 			}
-			if ($test != $this->data['account_lid'])
+			if (utf8_decode($test) != $this->data['account_lid'])
 			{
-				ldap_delete($this->ds,$allValues[0]['dn']);
-				unset($allValues[0]['dn']);
-				while (list($key,$val) = each($allValues[0]))
+				$oldData 	= $allValues[0];
+				$oldDN		= $oldData['dn'];
+				// remove all unneeded fields
+				unset($oldData['dn']);
+				unset($oldData['count']);
+				foreach($oldData as $key => $value)
 				{
-					/* Don't include row count and headers */
-					if (is_string($key) && $key != 'count')
+					if(is_numeric($key))
 					{
-						if (is_array($val))
+						// remove the key, its no ldap key
+						unset($oldData[$key]);
+					}
+					else
+					{
+						// remove the count key
+						if($oldData[$key]['count'] == 1)
 						{
-							if (count($val) == 1)
-							{
-								if($val[0])
-								{
-									$entry[$key] = $val[0];
-								}
-							}
-							else
-							{
-								for ($i=0;$i<count($val);$i++)
-								{
-									if($val[$i])
-									{
-										$entry[$key][$i] = $val[$i];
-									}
-								}
-							}
+							$oldData[$key] = $value[0];
 						}
 						else
 						{
-							$entry[$key] = $val;
+							unset($oldData[$key]['count']);
 						}
 					}
 				}
 
+				$oldAccountID	= $oldData['uid'];
+				$oldGroupID	= $oldData['cn'];
+				
+				// merge the old data with the new one
+				$newData = array_merge($oldData, $newData);
+				
 				/* Groups */
 				if ($this->data['account_type'] == 'g' && $this->group_context )
 				{
-					$dn = 'cn='.$this->data['account_lid'].','.$this->group_context;
-					$entry['cn'] = utf8_encode($this->data['account_lid']);
-					$entry['gidnumber'] = $this->data['account_id'];
-					/* $entry["objectclass"] = ''; */
-					$entry['objectclass'][0] = 'top';
-					$entry['objectclass'][1] = 'posixGroup';
+					$newDN = 'cn='.$this->data['account_lid'].','.$this->group_context;
 					$members = $this->member($this->data['account_id']);
-					$entry['memberuid'] = array();
+					$newData['memberuid'] = array();
 					for ($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
 						if (!$this->isin_array($currname,$entry['memberuid']))
 						{
-							$entry['memberuid'][] = $currname;
+							$newData['memberuid'][] = $currname;
 						}
 					}
 				}
 				/* Accounts */
 				else
 				{
-					$dn = 'uid='.$this->data['account_lid'].','.$this->user_context;
-					$entry['uidnumber']		= $this->data['account_id'];
-					$entry['cn']			= utf8_encode(sprintf("%s %s", $this->data['firstname'], $this->data['lastname']));
-					$entry['uid']			= $this->data['account_lid'];
-					$entry['gid']			= $this->data['account_primary_group'];
-					$entry['givenname']		= utf8_encode($this->data['firstname']);
-					$entry['sn']			= utf8_encode($this->data['lastname']);
-					$entry['objectclass']		= array();
-					$entry['objectclass'][0] 	= 'top';
-					$entry['objectclass'][1]	= 'person';
-					$entry['objectclass'][2] 	= 'organizationalPerson';
-					$entry['objectclass'][3] 	= 'inetOrgPerson';
-					$entry['objectclass'][4] 	= 'posixAccount';
-					$entry['objectclass'][5] 	= 'shadowAccount';
-					$entry['objectclass'][6] 	= 'phpgwAccount';
-
-					if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
-					{
-						$entry['homedirectory'] = $this->data['homedirectory'];
-						$entry['loginshell']    = $this->data['loginshell'];
-					}
-					else
-					{
-						// the posixaccount schema requires this
-						$entry['homedirectory'] = '/home/'.$this->data['account_lid'];
-						$entry['loginshell']	= '/bin/false';
-					}
+					$newDN = 'uid='.$this->data['account_lid'].','.$this->user_context;
 				}
-				/* print_r($entry); exit;*/
-				ldap_add($this->ds, $dn, $entry);
+				// delete the old account
+				ldap_delete($this->ds,$oldDN);
+
+				// add the new account
+				#_debug_array($newData);
+				ldap_add($this->ds, $newDN, $newData);
 			}
 			/* Normal behavior for save_repository 
 			   update Account */
@@ -310,12 +256,15 @@
 				// modify the DN
 				ldap_modify($this->ds, $allValues[0]['dn'], $newData);
 				
+			}
+			
+			if ($this->data['account_type'] == 'u')
+			{
 				// lets check for groups, the user needs to be removed
-				$accountID = $newData['uid'];
 				
 				// first lets search for the groups, the user is currently member of
 				// and from which he needs to be removed
-				$filter 	= "(&(objectclass=posixgroup)(memberuid=$accountID))";
+				$filter 	= "(&(objectclass=posixgroup)(memberuid=$oldAccountID))";
 				$justThese 	= array('memberuid','gidnumber');
 				$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
 				if($sri)
@@ -328,7 +277,8 @@
 						{
 							#_debug_array($key);
 							#_debug_array($this->data['account_groups']);
-							if(!in_array($key['gidnumber'][0],$this->data['account_groups']))
+							// delete the old accountid from any group
+							if($newAccountID != $oldAccountID)
 							{
 								$dn = $key['dn'];
 								$newData = array();
@@ -336,10 +286,27 @@
 								unset($newData['memberuid']['count']);
 								// remove the uid from memberuid
 								$newData['memberuid'] = array_flip($newData['memberuid']); 
-								unset($newData['memberuid'][$accountID]);
+								unset($newData['memberuid'][$oldAccountID]);
 								$newData['memberuid'] = array_values(array_unique(array_flip($newData['memberuid'])));
 								ldap_mod_replace($this->ds, $dn, $newData);
 								#print ldap_error($this->ds);
+								
+							}
+							else
+							{
+								if(!in_array($key['gidnumber'][0],$this->data['account_groups']))
+								{
+									$dn = $key['dn'];
+									$newData = array();
+									$newData['memberuid'] = $key['memberuid'];
+									unset($newData['memberuid']['count']);
+									// remove the uid from memberuid
+									$newData['memberuid'] = array_flip($newData['memberuid']); 
+									unset($newData['memberuid'][$oldAccountID]);
+									$newData['memberuid'] = array_values(array_unique(array_flip($newData['memberuid'])));
+									ldap_mod_replace($this->ds, $dn, $newData);
+									#print ldap_error($this->ds);
+								}
 							}
 						}
 					}
@@ -351,7 +318,7 @@
 					// search for the group
 					$filter 	= 'gidnumber='.$value;
 					$justThese 	= array('memberuid');
-					$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$value, $justThese);
+					$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
 					if($sri)
 					{
 						$allValues = ldap_get_entries($this->ds, $sri);
@@ -365,7 +332,7 @@
 								$newData = array();
 								$newData['memberuid'] = $allValues[0]['memberuid'];
 								unset($newData['memberuid']['count']);
-								$newData['memberuid'][]	= $accountID;
+								$newData['memberuid'][]	= $newAccountID;
 								$newData['memberuid'] = array_values(array_unique($newData['memberuid']));
 								ldap_mod_replace($this->ds, $dn, $newData);
 							}
@@ -375,7 +342,7 @@
 							// this group has no members
 							$dn = $allValues[0]['dn'];
 							$newData = array();
-							$newData['memberuid'][] = $accountID;
+							$newData['memberuid'][] = $newAccountID;
 							ldap_mod_replace($this->ds, $dn, $newData);
 						}
 					}
@@ -398,13 +365,22 @@
 			$account_id = get_account_id($accountid);
 			$account_lid = $this->id2name($account_id);
 			
-			$sri = ldap_search($this->ds, $this->group_context, 'gidnumber='.$account_id);
-
+			$filter = 'gidnumber='.$account_id;
+			$sri = ldap_search($this->ds, $this->group_context, $filter);
+			if($sri)
+			{
+				$allValues = ldap_get_entries($this->ds, $sri);
+			}
+			
 			if(!$allValues[0]['dn'])
 			{
 				$sri = ldap_search($this->ds, $this->user_context, 'uid='.$account_lid);
-				$allValues = ldap_get_entries($this->ds, $sri);
-				$accountID = $allValues['0']['uid'][0];
+				if($sri)
+				{
+					$allValues = ldap_get_entries($this->ds, $sri);
+					$accountID = $allValues['0']['uid'][0];
+					$wasAccount = True;
+				}
 			}
 
 			if ($allValues[0]['dn'])
@@ -412,27 +388,30 @@
 				$del = ldap_delete($this->ds, $allValues[0]['dn']);
 			}
 			
-			// remove the user from any group he is member of
-			$filter 	= "(&(objectclass=posixgroup)(memberuid=$accountID))";
-			$justThese 	= array('memberuid','gidnumber');
-			$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
-			if($sri)
+			if($wasAccount)
 			{
-				$allValues = ldap_get_entries($this->ds, $sri);
-				if($allValues['count'] > 0)
+				// remove the user from any group he is member of
+				$filter 	= "(&(objectclass=posixgroup)(memberuid=$accountID))";
+				$justThese 	= array('memberuid','gidnumber');
+				$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
+				if($sri)
 				{
-					unset($allValues['count']);
-					foreach($allValues as $key)
+					$allValues = ldap_get_entries($this->ds, $sri);
+					if($allValues['count'] > 0)
 					{
-						$dn = $key['dn'];
-						$newData = array();
-						$newData['memberuid'] = $key['memberuid'];
-						unset($newData['memberuid']['count']);
-						// remove the uid from memberuid
-						$newData['memberuid'] = array_flip($newData['memberuid']); 
-						unset($newData['memberuid'][$accountID]);
-						$newData['memberuid'] = array_unique(array_flip($newData['memberuid']));
-						ldap_mod_replace($this->ds, $dn, $newData);
+						unset($allValues['count']);
+						foreach($allValues as $key)
+						{
+							$dn = $key['dn'];
+							$newData = array();
+							$newData['memberuid'] = $key['memberuid'];
+							unset($newData['memberuid']['count']);
+							// remove the uid from memberuid
+							$newData['memberuid'] = array_flip($newData['memberuid']); 
+							unset($newData['memberuid'][$accountID]);
+							$newData['memberuid'] = array_unique(array_flip($newData['memberuid']));
+							ldap_mod_replace($this->ds, $dn, $newData);
+						}
 					}
 				}
 			}        
@@ -846,7 +825,7 @@
 					$entry['objectclass'][2] = 'phpgwAccount';
 					$entry['cn']             = utf8_encode($account_info['account_lid']);
 					$entry['gidnumber']      = $account_id;
-					$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
+					#$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['description']    = 'phpgw-created group';
 				}
 				else
@@ -886,6 +865,8 @@
 			// print ldap_error($this->ds);
 
 			// lets check group the user needs to be added
+			if($account_info['account_type'] == 'u')
+			{
 			foreach($account_info['account_groups'] as $key => $value)
 			{
 				// search for the group
@@ -921,7 +902,7 @@
 					}
 				}
 			}
-
+			}
 			if($account_id && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($account_id);

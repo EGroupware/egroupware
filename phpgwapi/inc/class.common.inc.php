@@ -1936,10 +1936,7 @@
 			{
 				return False;
 			}
-			else
-			{
-				return intval($id);
-			}
+			return intval($id);
 		}
 	}//end common class
 
