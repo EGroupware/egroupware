@@ -31,7 +31,7 @@ repetition	calendar	no	Gjenntakelse
 sat	calendar	no	Lør
 search results	calendar	no	Søk resultater
 sun	calendar	no	Søn
-the following conflicts with the suggested time:<ul>x</ul>	calendar	no	De følgende konflikter ved den foreslåtte tidene:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	no	De følgende konflikter ved den foreslåtte tidene:<ul>%1</ul>
 this month	calendar	no	Denne måneden
 this week	calendar	no	Denne uken
 thu	calendar	no	Tor
@@ -42,12 +42,12 @@ view this entry	calendar	no	Vis denne entry
 wed	calendar	no	Ons
 week	calendar	no	Uke
 weekly	calendar	no	Ukentlig
-x matches found	calendar	no	%1 match funnet
+%1 matches found	calendar	no	%1 match funnet
 year	calendar	no	År
 yearly	calendar	no	Årlig
 you have 1 high priority event on your calendar today.	common	no	Du har 1 høy prioritets event i din kalender i dag.
-you have x high priority events on your calendar today.	common	no	Du har %1 høy prioritets event i din kalender i dag.
+you have %1 high priority events on your calendar today.	common	no	Du har %1 høy prioritets event i din kalender i dag.
 you have not entered a\nbrief description	calendar	no	Du har ikke skrevet inn en\nkort beskrivelse
 you have not entered a\nvalid time of day.	calendar	no	Du har ikke skrevet inn en\ngyldig tid.
 you must enter one or more search keywords	calendar	no	Du må skrive inn ett eller flere søkeord
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	no	Din foreslåtte tid av <B> %1 - %2 </B> er i konflikt med de følgende kalender entries:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	no	Din foreslåtte tid av <B> %1 - %2 </B> er i konflikt med de følgende kalender entries:

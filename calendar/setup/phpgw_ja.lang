@@ -101,7 +101,7 @@ submit to repository	calendar	ja	転送
 sun	calendar	ja	日
 tentative	calendar	ja	仮承諾
 th	calendar	ja	木
-the following conflicts with the suggested time:<ul>x</ul>	calendar	ja	The following conflicts with the suggested time:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	ja	The following conflicts with the suggested time:<ul>%1</ul>
 this month	calendar	ja	今月
 this week	calendar	ja	今週
 this year	calendar	ja	今年
@@ -120,15 +120,15 @@ weekly	calendar	ja	週単位
 when creating new events default set to private	calendar	ja	プライベート用とする（新規作成時）
 work day ends on	calendar	ja	就業時間（終了）
 work day starts on	calendar	ja	就業時間（開始）
-x matches found	calendar	ja	%1 件見つかりました。
+%1 matches found	calendar	ja	%1 件見つかりました。
 year	calendar	ja	年
 yearly	calendar	ja	年単位
 you have 1 high priority event on your calendar today.	common	ja	優先度の高い予定が１つあります。
-you have x high priority events on your calendar today.	common	ja	優先度の高い予定が %1 つあります。
+you have %1 high priority events on your calendar today.	common	ja	優先度の高い予定が %1 つあります。
 you have not entered a\nbrief description	calendar	ja	概要を入力してください。
 you have not entered a brief description	calendar	ja	概要を入力してください。
 you have not entered a title	calendar	ja	タイトルを入力して下さい
 you have not entered a valid date	calendar	ja	日付が正しくありません
 you have not entered a\nvalid time of day.	calendar	ja	時刻が誤っています。
 you must enter one or more search keywords	calendar	ja	検索キーワードを入力して下さい。
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> には、別の予定があります。
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> には、別の予定があります。

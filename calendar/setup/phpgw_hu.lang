@@ -55,7 +55,7 @@ start date/time	calendar	hu	Kezdet dátuma/ideje
 su	calendar	hu	V
 sun	calendar	hu	V
 th	calendar	hu	Cs
-the following conflicts with the suggested time:<ul>x</ul>	calendar	hu	A következõ bejegyzés ütközik a javasolt idõponttal:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	hu	A következõ bejegyzés ütközik a javasolt idõponttal:<ul>%1</ul>
 this month	calendar	hu	Aktuális hónapban
 this week	calendar	hu	Aktuális héten
 thu	calendar	hu	Cs
@@ -71,12 +71,12 @@ weekday starts on	calendar	hu	Hétköznap kezdete
 weekly	calendar	hu	Hetente
 work day ends on	calendar	hu	Munkanapok vége
 work day starts on	calendar	hu	Munkanapok kezdete
-x matches found	calendar	hu	%1 találat
+%1 matches found	calendar	hu	%1 találat
 year	calendar	hu	Év
 yearly	calendar	hu	Évente
 you have 1 high priority event on your calendar today.	common	hu	1 fontos esemény szerepel a mai napra a naptárban.
-you have x high priority events on your calendar today.	common	hu	%1 fontos esemény szerepel a mai napra a naptárban.
+you have %1 high priority events on your calendar today.	common	hu	%1 fontos esemény szerepel a mai napra a naptárban.
 you have not entered a\nbrief description	calendar	hu	Nem írt be\nleírást
 you have not entered a\nvalid time of day.	calendar	hu	Nem írt be érvényes\nidõpontot.
 you must enter one or more search keywords	calendar	hu	Egy vagy több kulcsszót meg kell adni a kereséshez
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	hu	A megadott idõpont <B> %1 - %2 </B> összeütközik a következõ bejegyzésekkel:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	hu	A megadott idõpont <B> %1 - %2 </B> összeütközik a következõ bejegyzésekkel:

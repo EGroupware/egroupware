@@ -109,7 +109,7 @@ su	calendar	nl	Zo
 sun	calendar	nl	Zon
 tentative	calendar	nl	
 th	calendar	nl	Do
-the following conflicts with the suggested time:<ul>x</ul>	calendar	nl	Het volgende levert een confilct op met de voorgestelde tijd:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	nl	Het volgende levert een confilct op met de voorgestelde tijd:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	nl	Er was een probleem tijdens de verbinding met de news server.<br>Neem contact op met de beheerder om de servernaam, gebruikersnaam en wachtwoord te controleren.
 this month	calendar	nl	Deze maand
 this week	calendar	nl	Deze week
@@ -129,7 +129,7 @@ weekly	calendar	nl	wekelijks
 when creating new events default set to private	calendar	nl	Nieuwe afspraken standaard op prive zetten
 work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
-x matches found	calendar	nl	%1 resultaten gevonden
+%1 matches found	calendar	nl	%1 resultaten gevonden
 year	calendar	nl	Jaar
 yearly	calendar	nl	Jaarlijks
 you have 1 high priority event on your calendar today.	common	nl	U hebt vandaag 1 afspraak met hoge prioriteit op uw agenda staan.
@@ -140,8 +140,8 @@ you have not entered a valid time of day	calendar	nl	U heeft geen geldige tijd o
 you have not entered a\nbrief description	calendar	nl	U hebt geen korte\nomschrijving ingevoerd
 you have not entered a\nvalid time of day.	calendar	nl	U hebt geen geldige\n tijd ingevoerd
 you have not entered participants	calendar	nl	U heeft geen deelnemers opgegeven
-you have x high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
+you have %1 high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
 you must enter one or more search keywords	calendar	nl	U moet een of meer zoektermen invoeren
 your meeting scheduled for	calendar	nl	Uw afspraak op
 your meeting that had been scheduled for	calendar	nl	Uw afspraak die was op
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	nl	Uw opgegeven tijd (%1 - %2) levert een conflict op met de volgende afspraken:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	nl	Uw opgegeven tijd (%1 - %2) levert een conflict op met de volgende afspraken:

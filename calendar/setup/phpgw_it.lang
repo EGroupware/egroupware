@@ -98,7 +98,7 @@ su	calendar	it	Do
 sun	calendar	it	Dom
 tentative	calendar	it	Tentativo
 th	calendar	it	G
-the following conflicts with the suggested time:<ul>x</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
 this month	calendar	it	Questo mese
 this week	calendar	it	Questa settimana
 this year	calendar	it	Quest'anno
@@ -117,7 +117,7 @@ weekly	calendar	it	Settimanale
 when creating new events default set to private	calendar	it	Quando vengono creati nuovi eventi settali automaticamente privati
 work day ends on	calendar	it	La giornata lavorativa termina alle
 work day starts on	calendar	it	La giornata lavorativa inizia alle
-x matches found	calendar	it	Trovate %1 occorrenze
+%1 matches found	calendar	it	Trovate %1 occorrenze
 year	calendar	it	Anno
 yearly	calendar	it	Annuale
 you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nella tua agenda.
@@ -126,8 +126,8 @@ you have not entered a title	calendar	it	Non hai inserito alcun titolo
 you have not entered a valid date	calendar	it	Hai inserito una data non valida
 you have not entered a valid time of day	calendar	it	Hai inserito un orario non valido
 you have not entered participants	calendar	it	Non hai inserito i partecipanti
-you have x high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nella tua agenda.
+you have %1 high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nella tua agenda.
 you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca
 your meeting scheduled for	calendar	it	Il tuo meeting fissato per
 your meeting that was scheduled for	calendar	it	Il tuo meeting che era fissato per 
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in agenda:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in agenda:

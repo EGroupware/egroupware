@@ -32,7 +32,7 @@ repetition	calendar	ko	반복
 sat	calendar	ko	토요일
 search results	calendar	ko	검색결과
 sun	calendar	ko	일요일
-the following conflicts with the suggested time:<ul>x</ul>	calendar	ko	다음 항목이 제안된 시간과 충돌합니다. :<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	ko	다음 항목이 제안된 시간과 충돌합니다. :<ul>%1</ul>
 this month	calendar	ko	이번달
 this week	calendar	ko	이번주
 thu	calendar	ko	목요일
@@ -43,12 +43,12 @@ view this entry	calendar	ko	항목 보기
 wed	calendar	ko	수요일
 week	calendar	ko	주
 weekly	calendar	ko	매주
-x matches found	calendar	ko	%1개 항목 찾음
+%1 matches found	calendar	ko	%1개 항목 찾음
 year	calendar	ko	년
 yearly	calendar	ko	매년
 you have 1 high priority event on your calendar today.	common	ko	1건의 중요도가 높은 작업이 있습니다.
-you have x high priority events on your calendar today.	common	ko	%1건의 중요도가 높은 작업들이 있습니다.
+you have %1 high priority events on your calendar today.	common	ko	%1건의 중요도가 높은 작업들이 있습니다.
 you have not entered a\nbrief description	calendar	ko	간단한 설명을 입력하세요.
 you have not entered a\nvalid time of day.	calendar	ko	시간을 정확하게 입력하세요.
 you must enter one or more search keywords	calendar	ko	하나 이상의 검색키워드를 입력하셔야 합니다.
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ko	<B> %1 - %2 </B>이 항목이 달력에 있는 내용과 같습니다.
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	ko	<B> %1 - %2 </B>이 항목이 달력에 있는 내용과 같습니다.

@@ -2433,7 +2433,7 @@
 			}
 			elseif ($matches > 0)
 			{
-				$quantity = lang('x matches found',$matches).'.';
+				$quantity = lang('%1 matches found',$matches).'.';
 			}
 			else
 			{
@@ -2945,7 +2945,7 @@
 			$var = Array(
 				'color'		=> $this->theme['bg_text'],
 				'overlap_title' => lang('Scheduling Conflict'),
-				'overlap_text'	=> lang('Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:',$GLOBALS['phpgw']->common->show_date($start),$GLOBALS['phpgw']->common->show_date($end)),
+				'overlap_text'	=> lang('Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:',$GLOBALS['phpgw']->common->show_date($start),$GLOBALS['phpgw']->common->show_date($end)),
 				'overlap_list'	=> $overlap
 			);
 			$p->set_var($var);

@@ -97,7 +97,7 @@ su	calendar	fi	Su
 sun	calendar	fi	Sunnuntai
 tentative	calendar	fi	Alustava
 th	calendar	fi	To
-the following conflicts with the suggested time:<ul>x</ul>	calendar	fi	Ehdotetun ajan kanssa p‰‰llekk‰in:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	fi	Ehdotetun ajan kanssa p‰‰llekk‰in:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fi	Uutispalvelimeen ei saatu yhteytt‰.<br>Tarkista yll‰pidolta palvelin, tunnus ja salasana.
 this month	calendar	fi	T‰m‰ kuukausi
 this week	calendar	fi	T‰m‰ viikko
@@ -116,11 +116,11 @@ weekly	calendar	fi	Viikoittain
 when creating new events default set to private	calendar	fi	Luo uudet tapahtumat yksityisin‰
 work day ends on	calendar	fi	Tyˆp‰iv‰ p‰‰ttyy
 work day starts on	calendar	fi	Tyˆp‰iv‰ alkaa
-x matches found	calendar	fi	%1 lˆytyi
+%1 matches found	calendar	fi	%1 lˆytyi
 year	calendar	fi	Vuosi
 yearly	calendar	fi	Vuosittain
 you have 1 high priority event on your calendar today.	common	fi	Kalenterissasi on t‰lle p‰iv‰lle yksi t‰rke‰ tapahtuma.
-you have x high priority events on your calendar today.	common	fi	Kalenterissasi on t‰lle p‰iv‰lle %1 t‰rke‰‰ tapahtumaa.
+you have %1 high priority events on your calendar today.	common	fi	Kalenterissasi on t‰lle p‰iv‰lle %1 t‰rke‰‰ tapahtumaa.
 you have a meeting scheduled for	calendar	fi	Sinulla on kokous
 you have not entered a valid date	calendar	fi	Et ole antanut p‰iv‰m‰‰r‰‰
 you have not entered a title	calendar	fi	Et ole antanut otsikkoa
@@ -129,4 +129,4 @@ you have not entered participants	calendar	fi	Et ole antanut osallistujia
 you must enter one or more search keywords	calendar	fi	Anna ainakin yksi hakusana
 your meeting scheduled for	calendar	fi	Kokouksesi kello
 your meeting that was scheduled for	calendar	fi	Kokouksesi jonka piti olla
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fi	Ehdottamasi aika <B> %1 - %2 </B> on p‰‰llekk‰in n‰iden tapahtumien kanssa:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	fi	Ehdottamasi aika <B> %1 - %2 </B> on p‰‰llekk‰in n‰iden tapahtumien kanssa:

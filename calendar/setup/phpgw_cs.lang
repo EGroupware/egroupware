@@ -46,12 +46,12 @@ w	calendar	cs	S
 wed	calendar	cs	St
 week	calendar	cs	Týden
 weekly	calendar	cs	Týdnì
-x matches found	calendar	cs	 záznamù nalezeno
+%1 matches found	calendar	cs	%1 záznamù nalezeno
 year	calendar	cs	Rok
 yearly	calendar	cs	Roènì
 you have 1 high priority event on your calendar today.	common	cs	Máte dnes 1 událost s vysokou prioritou.
-you have x high priority events on your calendar today.	common	cs	Máte dnes  událostí s vysokou priritou.
+you have %1 high priority events on your calendar today.	common	cs	Máte dnes %1 událostí s vysokou priritou.
 you have not entered a\nbrief description	calendar	cs	Nebyl zadán \nkrátký popis
 you have not entered a\nvalid time of day.	calendar	cs	Nebyl zadán \nplatný èas.
 you must enter one or more search keywords	calendar	cs	Musíte zadat aspoò jedno klíèové slovo
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	cs	Vá¹ navrhovaný èas <B> %1 - %2 </B> se pøekrývá s následujícími záznamy v kalendáøi:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	cs	Vá¹ navrhovaný èas <B> %1 - %2 </B> se pøekrývá s následujícími záznamy v kalendáøi:

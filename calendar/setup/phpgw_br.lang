@@ -31,7 +31,7 @@ repetition	calendar	br	Repeticao
 sat	calendar	br	Sab
 search results	calendar	br	Resultados da pesquisa
 sun	calendar	br	Dom
-the following conflicts with the suggested time:<ul>x</ul>	calendar	br	os seguintes conflitos com o horario sugerido:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	br	os seguintes conflitos com o horario sugerido:<ul>%1</ul>
 this month	calendar	br	Este mes
 this week	calendar	br	Esta Semana
 thu	calendar	br	Qui
@@ -42,12 +42,12 @@ view this entry	calendar	br	Visualiza esta entrada
 wed	calendar	br	Qua
 week	calendar	br	Semana
 weekly	calendar	br	semanal
-x matches found	calendar	br	%1 ocorrencias encontradas
+%1 matches found	calendar	br	%1 ocorrencias encontradas
 year	calendar	br	Ano
 yearly	calendar	br	Anual
 you have 1 high priority event on your calendar today.	common	br	Voce tem 1 evento com alta prioridade no seu calendario hoje.
-you have x high priority events on your calendar today.	common	br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
+you have %1 high priority events on your calendar today.	common	br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
 you have not entered a\nbrief description	calendar	br	Voce nao digitou uma \nBreve Descricao
 you have not entered a\nvalid time of day.	calendar	br	Voce nao digitou \num horario valido.
 you must enter one or more search keywords	calendar	br	voce deve digitar uma ou mais palavras chave
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	br	Horiario Sugerido: <B> %1 - %2 </B> esta em conflito com as seguintes entradas no calendario:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	br	Horiario Sugerido: <B> %1 - %2 </B> esta em conflito com as seguintes entradas no calendario:

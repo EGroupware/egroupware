@@ -59,7 +59,7 @@ start date/time	calendar	sv	Start Datum/Tid
 su	calendar	sv	Sö
 sun	calendar	sv	Sön
 th	calendar	sv	To
-the following conflicts with the suggested time:<ul>x</ul>	calendar	sv	Följande kommer i konflikt med den föreslagna tiden:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	sv	Följande kommer i konflikt med den föreslagna tiden:<ul>%1</ul>
 this month	calendar	sv	Denna månaden
 this week	calendar	sv	Denna veckan
 thu	calendar	sv	Tor
@@ -75,11 +75,11 @@ weekday starts on	calendar	sv	Första veckodag är
 weekly	calendar	sv	Veckovis
 work day ends on	calendar	sv	Arbetsdagen slutar
 work day starts on	calendar	sv	Arbetsdagen börjar
-x matches found	calendar	sv	%1 träffar hittade
+%1 matches found	calendar	sv	%1 träffar hittade
 year	calendar	sv	År
 yearly	calendar	sv	Årligen
 you have 1 high priority event on your calendar today.	common	sv	Du har 1 högprioritets händelse i din kalender i dag.
-you have x high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
+you have %1 high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
 you have not entered a\\\\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
 you have not entered a\\\\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
 you have not entered a\\nbrief description	calendar	sv	Du har inte gett\\nnågon beskrivning
@@ -87,4 +87,4 @@ you have not entered a\\nvalid time of day.	calendar	sv	Du har inte angett\\nnåg
 you have not entered a\nbrief description	calendar	sv	Du har inte skrivit\\nen beskrivning.
 you have not entered a\nvalid time of day.	calendar	sv	Du har inte angivit\\nen giltig tid.
 you must enter one or more search keywords	calendar	sv	Du måste skriva in ett eller flera sökord
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	sv	Din föreslagna tid av <B> %1 - %2 </B> är i konflikt med de följande kalender entries:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	sv	Din föreslagna tid av <B> %1 - %2 </B> är i konflikt med de följande kalender entries:

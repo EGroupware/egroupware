@@ -126,7 +126,7 @@ weekly	calendar	pl	Tygodniowy
 when creating new events default set to private	calendar	pl	Ustawiæ nowe zdarzenia jako prywatne?
 work day ends on	calendar	pl	Koniec dnia o
 work day starts on	calendar	pl	Pocz±tek dnia o
-x matches found	calendar	pl	Znaleziono %1 zgodnych
+%1 matches found	calendar	pl	Znaleziono %1 zgodnych
 year	calendar	pl	Rok
 yearly	calendar	pl	Roczny
 you have 1 high priority event on your calendar today.	common	pl	
@@ -135,8 +135,8 @@ you have not entered a title	calendar	pl	Nie poda³e¶ tytu³u
 you have not entered a valid date	calendar	pl	Nie poda³e¶ poprawnej daty
 you have not entered a valid time of day	calendar	pl	
 you have not entered participants	calendar	pl	Nie poda³e¶ uczestników
-you have x high priority events on your calendar today.	common	pl	
+you have %1 high priority events on your calendar today.	common	pl	
 you must enter one or more search keywords	calendar	pl	Musisz podaæ jedno lub wiêcej s³ów kluczowych
 your meeting scheduled for	calendar	pl	
 your meeting that had been scheduled for	calendar	pl	
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	pl	Twój zaproponowany czas <B> %1 - %2 </B> jest w konflikcie z nastêpuj±cymi wpisami w kalendarzu:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pl	Twój zaproponowany czas <B> %1 - %2 </B> jest w konflikcie z nastêpuj±cymi wpisami w kalendarzu:

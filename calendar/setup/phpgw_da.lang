@@ -100,7 +100,7 @@ su	calendar	da	Sø
 sun	calendar	da	Søn
 tentative	calendar	da	Prøve
 th	calendar	da	To
-the following conflicts with the suggested time:<ul>x</ul>	calendar	da	Det følgende er i konflikt med den ønskede tid:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	da	Det følgende er i konflikt med den ønskede tid:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	da	Der skete en fejl ved forsøg på at skabe forbindelse til din nyhedsserver.<br>Kontakt venligst administratoren for at tjekke nyhedsservernavn, brugernavn og kodeord.
 this month	calendar	da	Denne måned
 this week	calendar	da	Denne uge
@@ -119,7 +119,7 @@ weekly	calendar	da	Ugentlig kalender
 when creating new events default set to private	calendar	da	Sæt som standard nye aftaler til private
 work day ends on	calendar	da	Arbejdsdage slutter om
 work day starts on	calendar	da	Arbejdsdage begynder om
-x matches found	calendar	da	%1 resultater fundet
+%1 matches found	calendar	da	%1 resultater fundet
 year	calendar	da	År
 yearly	calendar	da	Årlig
 you have 1 high priority event on your calendar today.	common	da	Du har 1 begivenhed af høj prioritet på Din kalender i dag.
@@ -130,8 +130,8 @@ you have not entered a valid time of day	calendar	da	Du har ikke indtastet et gy
 you have not entered a\nbrief description	calendar	da	Du har ikke skrevet\nen kort beskrivelse
 you have not entered a\nvalid time of day.	calendar	da	Du har ikke skrevet\n et gyldigt klokkeslæt
 you have not entered participants	calendar	da	Du har ikke valgt deltagere
-you have x high priority events on your calendar today.	common	da	Du har %1 begivenheder af høj prioritet på Din kalender i dag.
+you have %1 high priority events on your calendar today.	common	da	Du har %1 begivenheder af høj prioritet på Din kalender i dag.
 you must enter one or more search keywords	calendar	da	Du skal indtaste et eller flere søgeord
 your meeting scheduled for	calendar	da	Dit møde er sat til
 your meeting that had been scheduled for	calendar	da	Dit møde der skulle have været sat til 
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	da	Den foreslåede tid (<b>%1 - %2</b>) er i konflikt med følgende kalender punkter:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	da	Den foreslåede tid (<b>%1 - %2</b>) er i konflikt med følgende kalender punkter:

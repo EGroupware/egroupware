@@ -80,7 +80,7 @@
 			@reset($locales);
 			if (!$locales)
 			{
-				$p->set_var('message',lang('No matchs found'));
+				$p->set_var('message',lang('No matches found.'));
 				$p->parse('rows','row_empty',True);
 			}
 			else
@@ -164,7 +164,7 @@
 
 			if (!count($holidays))
 			{
-				$p->set_var('message',lang('No matchs found'));
+				$p->set_var('message',lang('No matches found.'));
 				$p->parse('rows','row_empty',True);
 			}
 			else

@@ -86,7 +86,7 @@ su	calendar	zt	日
 sun	calendar	zt	日
 tentative	calendar	zt	暫定
 th	calendar	zt	四
-the following conflicts with the suggested time:<ul>x</ul>	calendar	zt	下列的約會和您欲加入的約會重疊：<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	zt	下列的約會和您欲加入的約會重疊：<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zt	無法連結到您的新聞主機，<br>請和網路管理者聯絡，協助檢查新聞主機的名稱、使用者代號及密碼。
 this month	calendar	zt	本月
 this week	calendar	zt	本週
@@ -105,15 +105,15 @@ weekly	calendar	zt	每週
 when creating new events default set to private	calendar	zt	新增約會時預設為私人性約會
 work day ends on	calendar	zt	每日結束時間
 work day starts on	calendar	zt	每日開始時間
-x matches found	calendar	zt	共有 %1 筆資料符合
+%1 matches found	calendar	zt	共有 %1 筆資料符合
 year	calendar	zt	年
 yearly	calendar	zt	每年
 you have 1 high priority event on your calendar today.	common	zt	您今天有 1 個高重要性的約會。
-you have x high priority events on your calendar today.	common	zt	您今天有 %1 個高重要性的約會。
+you have %1 high priority events on your calendar today.	common	zt	您今天有 %1 個高重要性的約會。
 you have not entered a valid date	calendar	zt	您沒有輸入正確的日期
 you have not entered a title	calendar	zt	您沒有輸入約會主題
 you have not entered a valid time of day	calendar	zt	您沒有輸入正確的時間
 you have not entered participants	calendar	zt	您沒有選擇與會者
 you must enter one or more search keywords	calendar	zt	您必需輸入一個或一個以上的關鍵字
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	zt	您所使用的約會時間 <B> %1 - %2 </B> 和下列的約會重疊：
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zt	您所使用的約會時間 <B> %1 - %2 </B> 和下列的約會重疊：
 

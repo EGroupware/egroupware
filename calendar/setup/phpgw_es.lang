@@ -40,7 +40,7 @@ search results	calendar	es	Resultados de la busqueda
 su	calendar	es	Do
 sun	calendar	es	Dom
 th	calendar	es	J
-the following conflicts with the suggested time:<ul>x</ul>	calendar	es	Los siguientes conflictos con las horas sugeridas:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	es	Los siguientes conflictos con las horas sugeridas:<ul>%1</ul>
 this month	calendar	es	Este mes
 this week	calendar	es	Esta semana
 thu	calendar	es	Jue
@@ -53,12 +53,12 @@ we	calendar	es	Mi
 wed	calendar	es	Mie
 week	calendar	es	Semana
 weekly	calendar	es	Semanal
-x matches found	calendar	es	%1 coincidencias encontradas
+%1 matches found	calendar	es	%1 coincidencias encontradas
 year	calendar	es	Año
 yearly	calendar	es	Anual
 you have 1 high priority event on your calendar today.	common	es	Ud. tiene 1 evento de alta prioridad es su calendario para hoy.
-you have x high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
+you have %1 high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
 you have not entered a\nbrief description	calendar	es	Ud. no ha ingresado una\nBrief descripción
 you have not entered a\nvalid time of day.	calendar	es	Ud. no ha ingresado una\nvalid hora valida.
 you must enter one or more search keywords	calendar	es	Ud. debe entrar una o mas claves de busqueda
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	es	Sus horas sugeridas de <B> %1 - %2 </B> estan es conflicto con las siguientes entradas es el calendario:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es	Sus horas sugeridas de <B> %1 - %2 </B> estan es conflicto con las siguientes entradas es el calendario:

@@ -91,7 +91,6 @@ monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 new entry	calendar	de	Neuer Eintrag
-no matches found	calendar	de	Keine Treffer gefunden
 no matches found.	calendar	de	Keine Treffer gefunden.
 no response	calendar	de	Keine Antwort
 normal	calendar	de	normal
@@ -99,7 +98,7 @@ number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag
 number of months	calendar	de	Anzahl Monate
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
-on x x x your meeting request for x	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
+on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
 overlap holiday	calendar	de	überlappender Urlaub
 participant	calendar	de	Teilnehmer
 participants	calendar	de	Teilnehmer
@@ -154,7 +153,7 @@ sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 text	calendar	de	Text
 th	calendar	de	Do
-the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
 this month	calendar	de	Dieser Monat
 this week	calendar	de	Diese Woche
@@ -176,7 +175,7 @@ weekly	calendar	de	Wöchentlich
 when creating new events default set to private	calendar	de	neue Termine sind privat
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
-x matches found	calendar	de	%1 Treffer gefunden
+%1 matches found	calendar	de	%1 Treffer gefunden
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !!!
@@ -189,10 +188,10 @@ you have not entered a valid time of day	calendar	de	Sie haben keine gültige Uhr
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
 you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
 you have not entered participants	calendar	de	Sie haben keine Teilnehmer angegeben
-you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
+you have %1 high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you must enter one or more search keywords	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben
 you must select a [iv]cal. (*.[iv]cs)	calendar	de	Sie müssen einen [iv]Cal (*.[iv]cs) auswählen.
 you need to set either a day or a occurence !!!	calendar	de	Sie müssen entweder einen Tag oder eine Wiederholung angeben !!!
 your meeting scheduled for	calendar	de	Ihr Termin am
 your meeting that had been scheduled for	calendar	de	Ihr Termin am
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:

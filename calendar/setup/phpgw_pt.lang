@@ -99,7 +99,7 @@ su	calendar	pt	Do
 sun	calendar	pt	Dom
 tentative	calendar	pt	Tentativa
 th	calendar	pt	Qu
-the following conflicts with the suggested time:<ul>x</ul>	calendar	pt	os seguintes conflitos com o horário sugerido:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	pt	os seguintes conflitos com o horário sugerido:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	pt	Houve um erro tentanto conectar no servidor de notícias.<br>Por favor entre em contato com o administrador para verificar a configuração.
 this month	calendar	pt	Este mês
 this week	calendar	pt	Esta Semana
@@ -118,7 +118,7 @@ weekly	calendar	pt	semanal
 when creating new events default set to private	calendar	pt	Quando criar novos eventos definir por padrão como privados
 work day ends on	calendar	pt	Dias de trabalho terminam em
 work day starts on	calendar	pt	Dias de trabalho começam em 
-x matches found	calendar	pt	%1 ocorrências encontradas
+%1 matches found	calendar	pt	%1 ocorrências encontradas
 year	calendar	pt	Ano
 yearly	calendar	pt	Anual
 you have 1 high priority event on your calendar today.	common	pt	Você tem 1 evento com alta prioridade no seu calendário hoje.
@@ -127,8 +127,8 @@ you have not entered a title	calendar	pt	Você não colocou o título
 you have not entered a valid date	calendar	pt	Você informou  uma data inválida
 you have not entered a valid time of day	calendar	pt	você informou uma hora do dia inválida 
 you have not entered participants	calendar	pt	Você não informou os participantes
-you have x high priority events on your calendar today.	common	pt	Você tem %1 eventos com alta prioridade no seu calendário hoje.
+you have %1 high priority events on your calendar today.	common	pt	Você tem %1 eventos com alta prioridade no seu calendário hoje.
 you must enter one or more search keywords	calendar	pt	voce deve digitar uma ou mais palavras chave
 your meeting scheduled for	calendar	pt	Seu compromisso está marcado para
 your meeting that had been scheduled for	calendar	pt	Seu compromisso que foi agendado para
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	pt	Horiário sugerido: <B> %1 - %2 </B> está em conflito com as seguintes entradas no calendário:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pt	Horiário sugerido: <B> %1 - %2 </B> está em conflito com as seguintes entradas no calendário:
