@@ -969,7 +969,8 @@
 
 			/* First include the ordered apps hook file */
 			$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . 'hook_' . $location . '.inc.php';
-			if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+			if (file_exists($f) &&
+				( $phpgw_info['user']['apps'][$appname] || ( ($location == 'config') && $appname) ) )
 			{
 				include($f);
 				return True;
