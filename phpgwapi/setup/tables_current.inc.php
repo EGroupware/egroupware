@@ -258,14 +258,13 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-// Begin j3rry		
 		'phpgw_log' => array(
 			'fd' => array(
-				'log_id' 	=> array('type' => 'auto', 		'precision' => 4,	'nullable' => False),
-				'log_date' 	=> array('type' => 'timestamp',	'nullable' => False),
-				'log_user' 	=> array('type' => 'int',  		'precision' => 4,	'nullable' => False),
-				'log_app' 	=> array('type' => 'varchar', 	'precision' => 50,	'nullable' => False),
-				'log_severity' 	=> array('type' => 'char', 	'precision' => 1,	'nullable' => False)
+				'log_id'       => array('type' => 'auto', 'precision' => 4, 'nullable' => False),
+				'log_date'     => array('type' => 'timestamp', 'nullable' => False),
+				'log_user'     => array('type' => 'int', 'precision' => 4, 'nullable' => False),
+				'log_app'      => array('type' => 'varchar', 'precision' => 50, 'nullable' => False),
+				'log_severity' => array('type' => 'char', 'precision' => 1, 'nullable' => False)
 			    ),
 			'pk' => array('log_id'),
 			'fk' => array(),
@@ -274,21 +273,22 @@
 		),
 		'phpgw_log_msg' => array(
 			'fd' => array(
-				'log_msg_log_id' 	=> array('type' => 'int', 		'precision' => 4,	'nullable' => False),
-				'log_msg_seq_no'	=> array('type' => 'int',  		'precision' => 4,	'nullable' => False),
-				'log_msg_date'		=> array('type' => 'timestamp',	'nullable' => False),
-				'log_msg_tx_fid'	=> array('type' => 'varchar',	'precision' => 4,	'nullable' => True),
-				'log_msg_tx_id'		=> array('type' => 'varchar',	'precision' => 4,	'nullable' => True),
-				'log_msg_severity'	=> array('type' => 'char', 		'precision' => 1,	'nullable' => False),
-				'log_msg_code' 		=> array('type' => 'varchar', 	'precision' => 30,	'nullable' => False),
-				'log_msg_msg' 		=> array('type' => 'text', 							'nullable' => False),
-				'log_msg_parms'		=> array('type' => 'text', 							'nullable' => False)
+				'log_msg_log_id'   => array('type' => 'int', 'precision' => 4, 'nullable' => False),
+				'log_msg_seq_no'   => array('type' => 'int', 'precision' => 4, 'nullable' => False),
+				'log_msg_date'     => array('type' => 'timestamp', 'nullable' => False),
+				'log_msg_tx_fid'   => array('type' => 'varchar', 'precision' => 4, 'nullable' => True),
+				'log_msg_tx_id'    => array('type' => 'varchar', 'precision' => 4, 'nullable' => True),
+				'log_msg_severity' => array('type' => 'char', 'precision' => 1, 'nullable' => False),
+				'log_msg_code'     => array('type' => 'varchar', 'precision' => 30, 'nullable' => False),
+				'log_msg_msg'      => array('type' => 'text', 'nullable' => False),
+				'log_msg_parms'    => array('type' => 'text', 'nullable' => False),
+				'log_msg_file'     => array('type' => 'varchar', 'precision' => 255, 'nullable' => False),
+				'log_msg_line'     => array('type' => 'int', 'precision' => 4, 'nullable' => False)
 			    ),
 			'pk' => array('log_msg_log_id', 'log_msg_seq_no'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
 		)
-// End j3rry		
 	);
 ?>
