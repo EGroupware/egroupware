@@ -35,8 +35,8 @@
 
 		function setup($html=False, $translation=False)
 		{
-			$this->detection = CreateObject('setup.setup_detection');
-			$this->process   = CreateObject('setup.setup_process');
+			$this->detection =& CreateObject('setup.setup_detection');
+			$this->process   =& CreateObject('setup.setup_process');
 
 			/* The setup application needs these */
 			$this->html = $html ? CreateObject('setup.setup_html') : '';
@@ -47,10 +47,9 @@
 			$this->tbl_hooks   = $this->get_hooks_table_name();
 		}
 
-		/*!
-		@function loaddb
-		@abstract include api db class for the ConfigDomain and connect to the db
-		*/
+		/**
+		 * include api db class for the ConfigDomain and connect to the db
+		 */
 		function loaddb($connect_and_setcharset=true)
 		{
 			if(!isset($this->ConfigDomain) || empty($this->ConfigDomain))
@@ -64,7 +63,7 @@
 			{
 				$GLOBALS['egw_info']['server']['db_persistent'] = False;
 			}
-			$this->db           = CreateObject('phpgwapi.db');
+			$this->db           =& CreateObject('phpgwapi.db');
 			$this->db->Host     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_host'];
 			$this->db->Port     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_port'];
 			$this->db->Type     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
@@ -125,11 +124,11 @@
 			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 		}
 
-		/*!
-		@function auth
-		@abstract authenticate the setup user
-		@param	$auth_type	???
-		*/
+		/**
+		 * authenticate the setup user
+		 *
+		 * @param	$auth_type	???
+		 */
 		function auth($auth_type='Config')
 		{
 			#phpinfo();
@@ -335,11 +334,11 @@
 			return False;
 		}
 
-		/*!
-		@function get_major
-		@abstract Return X.X.X major version from X.X.X.X versionstring
-		@param	$
-		*/
+		/**
+		 * Return X.X.X major version from X.X.X.X versionstring
+		 *
+		 * @param	$
+		 */
 		function get_major($versionstring)
 		{
 			if(!$versionstring)
@@ -354,11 +353,9 @@
 			return $major;
 		}
 
-		/*!
-		@function clear_session_cache
-		@abstract Clear system/user level cache so as to have it rebuilt with the next access
-		@param	None
-		*/
+		/**
+		 * Clear system/user level cache so as to have it rebuilt with the next access
+		 */
 		function clear_session_cache()
 		{
 			$tables = Array();
@@ -376,12 +373,12 @@
 			}
 		}
 
-		/*!
-		@function register_app
-		@abstract Add an application to the phpgw_applications table
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		@param	$enable		optional, set to True/False to override setup.inc.php setting
-		*/
+		/**
+		 * Add an application to the phpgw_applications table
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 * @param	$enable		 * optional, set to True/False to override setup.inc.php setting
+		 */
 		function register_app($appname,$enable=99)
 		{
 			$setup_info = $GLOBALS['setup_info'];
@@ -442,12 +439,12 @@
 			}
 		}
 
-		/*!
-		@function app_registered
-		@abstract Check if an application has info in the db
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		@param	$enabled	optional, set to False to not enable this app
-		*/
+		/**
+		 * Check if an application has info in the db
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 * @param	$enabled	optional, set to False to not enable this app
+		 */
 		function app_registered($appname)
 		{
 			$setup_info = $GLOBALS['setup_info'];
@@ -485,12 +482,12 @@
 			return False;
 		}
 
-		/*!
-		@function update_app
-		@abstract Update application info in the db
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		@param	$enabled	optional, set to False to not enable this app
-		*/
+		/**
+		 * Update application info in the db
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 * @param	$enabled	optional, set to False to not enable this app
+		 */
 		function update_app($appname)
 		{
 			$setup_info = $GLOBALS['setup_info'];
@@ -532,13 +529,13 @@
 			}
 		}
 
-		/*!
-		@function update_app_version
-		@abstract Update application version in applications table, post upgrade
-		@param	$setup_info		Array of application information (multiple apps or single)
-		@param	$appname		Application 'name' with a matching $setup_info[$appname] array slice
-		@param	$tableschanged	???
-		*/
+		/**
+		 * Update application version in applications table, post upgrade
+		 *
+		 * @param	$setup_info		 * Array of application information (multiple apps or single)
+		 * @param	$appname		 * Application 'name' with a matching $setup_info[$appname] array slice
+		 * @param	$tableschanged	???
+		 */
 		function update_app_version($setup_info, $appname, $tableschanged = True)
 		{
 			if(!$appname)
@@ -564,11 +561,11 @@
 			return $setup_info;
 		}
 
-		/*!
-		@function deregister_app
-		@abstract de-Register an application
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		*/
+		/**
+		 * de-Register an application
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 */
 		function deregister_app($appname)
 		{
 			if(!$appname)
@@ -587,11 +584,11 @@
 			$this->clear_session_cache();
 		}
 
-		/*!
-		@function register_hooks
-		@abstract Register an application's hooks
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		*/
+		/**
+		 * Register an application's hooks
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 */
 		function register_hooks($appname)
 		{
 			$setup_info = $GLOBALS['setup_info'];
@@ -609,26 +606,26 @@
 
 			if (!is_object($this->hooks))
 			{
-				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
 			}
 			$this->hooks->register_hooks($appname,$setup_info[$appname]['hooks']);
 		}
 
-		/*!
-		@function update_hooks
-		@abstract Update an application's hooks
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		*/
+		/**
+		 * Update an application's hooks
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 */
 		function update_hooks($appname)
 		{
 			$this->register_hooks($appname);
 		}
 
-		/*!
-		@function deregister_hooks
-		@abstract de-Register an application's hooks
-		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-		*/
+		/**
+		 * de-Register an application's hooks
+		 *
+		 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+		 */
 		function deregister_hooks($appname)
 		{
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5'))
@@ -645,33 +642,32 @@
 			//echo "DELETING hooks for: " . $setup_info[$appname]['name'];
 			if (!is_object($this->hooks))
 			{
-				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
 			}
 			$this->hooks->register_hooks($appname);
 		}
 
-		/*!
-		 @function hook
-		 @abstract call the hooks for a single application
-		 @param $location hook location - required
-		 @param $appname application name - optional
-		*/
+		/**
+		  * call the hooks for a single application
+		  *
+		  * @param $location hook location - required
+		  * @param $appname application name - optional
+		 */
 		function hook($location, $appname='')
 		{
 			if (!is_object($this->hooks))
 			{
-				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
 			}
 			return $this->hooks->single($location,$appname,True,True);
 		}
 
-		/*
-		@function alessthanb
-		@abstract phpgw version checking, is param 1 < param 2 in phpgw versionspeak?
-		@param	$a	phpgw version number to check if less than $b
-		@param	$b	phpgw version number to check $a against
-		#return	True if $a < $b
-		*/
+		/**
+		 * egw version checking, is param 1 < param 2 in phpgw versionspeak?
+		 * @param	$a	phpgw version number to check if less than $b
+		 * @param	$b	phpgw version number to check $a against
+		 * @return	True if $a < $b
+		 */
 		function alessthanb($a,$b,$DEBUG=False)
 		{
 			$num = array('1st','2nd','3rd','4th');
@@ -752,13 +748,13 @@
 			}
 		}
 
-		/*!
-		@function amorethanb
-		@abstract phpgw version checking, is param 1 > param 2 in phpgw versionspeak?
-		@param	$a	phpgw version number to check if more than $b
-		@param	$b	phpgw version number to check $a against
-		#return	True if $a < $b
-		*/
+		/**
+		 * egw version checking, is param 1 > param 2 in phpgw versionspeak?
+		 *
+		 * @param	$a	phpgw version number to check if more than $b
+		 * @param	$b	phpgw version number to check $a against
+		 * @return	True if $a < $b
+		 */
 		function amorethanb($a,$b,$DEBUG=False)
 		{
 			$num = array('1st','2nd','3rd','4th');
@@ -861,11 +857,12 @@
 				}
 				if (!is_object($GLOBALS['egw']))
 				{
-					$GLOBALS['egw'] = CreateObject('phpgwapi.phpgw');
+					$GLOBALS['egw'] =& CreateObject('phpgwapi.egw');
+					$GLOBALS['phpgw'] =& $GLOBALS['egw'];
 				}
-				copyobj($this->db,$GLOBALS['egw']->db);
-				$GLOBALS['egw']->common      = CreateObject('phpgwapi.common');
-				$GLOBALS['egw']->accounts    = CreateObject('phpgwapi.accounts');
+				$GLOBALS['egw']->db          = clone($this->db);
+				$GLOBALS['egw']->common      =& CreateObject('phpgwapi.common');
+				$GLOBALS['egw']->accounts    =& CreateObject('phpgwapi.accounts');
 
 				if(($GLOBALS['egw_info']['server']['account_repository'] == 'ldap') &&
 					!$GLOBALS['egw']->accounts->ds)
@@ -876,17 +873,18 @@
 			}
 		}
 
-		/*!
-		@function add_account
-		@abstract add an user account or a user group
-		@param username string alphanumerical username or groupname (account_lid)
-		@param first, last string first / last name
-		@param $passwd string cleartext pw
-		@param $group string/boolean Groupname for users primary group or False for a group, default 'Default'
-		@param $changepw boolean user has right to change pw, default False
-		@returns the numerical user-id
-		@note if the $username already exists, only the id is returned, no new user / group gets created
-		*/
+		/**
+		 * add an user account or a user group
+		 *
+		 * if the $username already exists, only the id is returned, no new user / group gets created
+		 *
+		 * @param username string alphanumerical username or groupname (account_lid)
+		 * @param first, last string first / last name
+		 * @param $passwd string cleartext pw
+		 * @param $group string/boolean Groupname for users primary group or False for a group, default 'Default'
+		 * @param $changepw boolean user has right to change pw, default False
+		 * @return the numerical user-id
+		 */
 		function add_account($username,$first,$last,$passwd,$group='default',$changepw=False)
 		{
 			$this->setup_account_object();
@@ -916,14 +914,14 @@
 			return $accountid;
 		}
 
-		/*!
-		@function add_acl
-		@abstract Add ACL rights
-		@param $app string/array with app-names
-		@param $locations string eg. run
-		@param $account int/string accountid or account_lid
-		@param $rights int rights to set, default 1
-		*/
+		/**
+		 * Add ACL rights
+		 *
+		 * @param $app string/array with app-names
+		 * @param $locations string eg. run
+		 * @param $account int/string accountid or account_lid
+		 * @param $rights int rights to set, default 1
+		 */
 		function add_acl($apps,$location,$account,$rights=1)
 		{
 			if (!is_int($account))

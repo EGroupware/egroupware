@@ -32,11 +32,11 @@
 	{
 		var $langarray = array();
 
-		/*!
-		@function setup_lang
-		@abstract constructor for the class, loads all phrases into langarray
-		@param $lang	user lang variable (defaults to en)
-		*/
+		/**
+		 * constructor for the class, loads all phrases into langarray
+		 *
+		 * @param $lang	user lang variable (defaults to en)
+		 */
 		function setup_translation()
 		{
 			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
@@ -68,12 +68,12 @@
 			}
 		}
 
-		/*!
-		@function translate
-		@abstract Translate phrase to user selected lang
-		@param $key  phrase to translate
-		@param $vars vars sent to lang function, passed to us
-		*/
+		/**
+		 * Translate phrase to user selected lang
+		 *
+		 * @param $key  phrase to translate
+		 * @param $vars vars sent to lang function, passed to us
+		 */
 		function translate($key, $vars=False) 
 		{
 			$ret = $key.'*';
@@ -99,7 +99,7 @@
 			if (!is_object($this->sql))
 			{
 				include_once(EGW_API_INC.'/class.translation_sql.inc.php');
-				$this->sql = new translation;
+				$this->sql =& new translation;
 			}
 		}
 
@@ -173,7 +173,7 @@
 			{
 				return $charsets;
 			}
-			$html = CreateObject('phpgwapi.html');
+			$html =& CreateObject('phpgwapi.html');
 			
 			return $html->select($name,trim(strtolower($selected)),$charsets,true);
 		}								

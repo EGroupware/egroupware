@@ -35,27 +35,27 @@
 
 		function setup_process()
 		{
-			$this->translation = CreateObject('setup.setup_translation');
+			$this->translation =& CreateObject('setup.setup_translation');
 		}
 
-		/*!
-		@function init_process
-		@abstract create schema_proc object
-		@param none
-		*/
+		/**
+		 * create schema_proc object
+		 *
+		 * @param none
+		 */
 		function init_process()
 		{
-			$GLOBALS['egw_setup']->oProc = CreateObject('phpgwapi.schema_proc');
+			$GLOBALS['egw_setup']->oProc =& CreateObject('phpgwapi.schema_proc');
 		}
 
-		/*!
-		@function pass
-		@abstract the mother of all multipass upgrade parental loop functions
-		@param $setup_info	array of application info from setup.inc.php files
-		@param $type		optional, defaults to new(install), could also be 'upgrade'
-		@param $DEBUG		optional, print debugging info
-		@param $force_en	optional, install english language files
-		*/
+		/**
+		 * the mother of all multipass upgrade parental loop functions
+		 *
+		 * @param $setup_info	array of application info from setup.inc.php files
+		 * @param $type		optional, defaults to new(install), could also be 'upgrade'
+		 * @param $DEBUG		optional, print debugging info
+		 * @param $force_en	optional, install english language files
+		 */
 		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$system_charset=false)
 		{
 			if(!$method)
@@ -186,10 +186,10 @@
 			return $setup_info = array_merge($setup_info,$passed);
 		}
 
-		/*!
-		@function save_minimal_config
-		@abstract saves a minimal default config, so you get a running install without entering and saveing Step #2 config
-		*/
+		/**
+		 * saves a minimal default config, so you get a running install without entering and saveing Step #2 config
+		 *
+		 */
 		function save_minimal_config($system_charset)
 		{
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
@@ -215,7 +215,7 @@
 			array_pop($parts);	// remove setup
 			$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
 
-			$datetime = CreateObject('phpgwapi.datetime');
+			$datetime =& CreateObject('phpgwapi.datetime');
 			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
@@ -240,11 +240,11 @@
 			}
 		}
 
-		/*!
-		@function droptables
-		@abstract drop tables per application, check that they are in the db first
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
+		/**
+		 * drop tables per application, check that they are in the db first
+		 *
+		 * @param $setup_info	array of application info from setup.inc.php files, etc.
+		 */
 		function droptables($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -289,12 +289,12 @@
 			return $setup_info;
 		}
 
-		/*!
-		@function current
-		@abstract process current table setup in each application/setup dir
-		@param $appinfo	array of application info from setup.inc.php files, etc.
-		@discussion This duplicates the old newtables behavior, using schema_proc
-		*/
+		/**
+		 * process current table setup in each application/setup dir
+		 *
+		 * @param $appinfo	array of application info from setup.inc.php files, etc.
+		 * This duplicates the old newtables behavior, using schema_proc
+		 */
 		function current($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -310,7 +310,7 @@
 
 				if($DEBUG) { echo '<br>process->current(): Incoming status: ' . $appname . ',status: '. $setup_info[$key]['status']; }
 
-				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+				$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 				if($setup_info[$key]['tables'] && file_exists($appdir.'tables_current.inc.php'))
 				{
@@ -370,11 +370,11 @@
 			return ($setup_info);
 		}
 
-		/*!
-		@function default_records
-		@abstract process default_records.inc.php in each application/setup dir
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
+		/**
+		 * process default_records.inc.php in each application/setup dir
+		 *
+		 * @param $setup_info	array of application info from setup.inc.php files, etc.
+		 */
 		function default_records($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -385,7 +385,7 @@
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+				$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 				if($setup_info[$key]['tables'] && file_exists($appdir.'default_records.inc.php'))
 				{
@@ -405,12 +405,12 @@
 			return ($setup_info);
 		}
 
-		/*!
-		@function test_data
-		@abstract process test_data.inc.php in each application/setup dir for developer tests
-		This data should work with the baseline tables
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
+		/**
+		 * process test_data.inc.php in each application/setup dir for developer tests
+		 *
+		 * This data should work with the baseline tables
+		 * @param $setup_info	array of application info from setup.inc.php files, etc.
+		 */
 		function test_data($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -421,7 +421,7 @@
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+				$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 				if(file_exists($appdir.'test_data.inc.php'))
 				{
@@ -439,11 +439,11 @@
 			return ($setup_info);
 		}
 
-		/*!
-		@function baseline
-		@abstract process baseline table setup in each application/setup dir
-		@param $appinfo	array of application info from setup.inc.php files, etc.
-		*/
+		/**
+		 * process baseline table setup in each application/setup dir
+		 *
+		 * @param $appinfo	array of application info from setup.inc.php files, etc.
+		 */
 		function baseline($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -455,7 +455,7 @@
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+				$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 				if(file_exists($appdir.'tables_baseline.inc.php'))
 				{
@@ -484,11 +484,11 @@
 			return ($setup_info);
 		}
 
-		/*!
-		@function upgrade
-		@abstract process available upgrades in each application/setup dir
-		@param $appinfo	array of application info from setup.inc.php files, etc.
-		*/
+		/**
+		 * process available upgrades in each application/setup dir
+		 *
+		 * @param $appinfo	array of application info from setup.inc.php files, etc.
+		 */
 		function upgrade($setup_info,$DEBUG=False)
 		{
 			if(!@$GLOBALS['egw_setup']->oProc)
@@ -520,7 +520,7 @@
 				{
 					$currentver = $appdata['currentver'];
 					$targetver  = $appdata['version'];	// The version we need to match when done
-					$appdir     = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+					$appdir     = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 					if(file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
 					{
@@ -613,10 +613,10 @@
 			return ($setup_info);
 		}
 
-		/*!
-		@function post_process
-		@abstract commit above processing to the db
-		*/
+		/**
+		 * commit above processing to the db
+		 *
+		 */
 		function post_process($tables,$DEBUG=False)
 		{
 			if(!$tables)
@@ -643,11 +643,11 @@
 			}
 		}
 
-		/*!
-		@function sql_to_array
-		@abstract send this a table name, returns printable column spec and keys for the table from schema_proc
-		@param	$tablename	table whose array you want to see
-		*/
+		/**
+		 * send this a table name, returns printable column spec and keys for the table from schema_proc
+		 *
+		 * @param	$tablename	table whose array you want to see
+		 */
 		function sql_to_array($tablename='')
 		{
 			if(!$tablename)

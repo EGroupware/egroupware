@@ -16,10 +16,10 @@
 
 	class setup_html
 	{
-		/*!
-		@function generate_header
-		@abstract generate header.inc.php file output - NOT a generic html header function
-		*/
+		/**
+		 * generate header.inc.php file output - NOT a generic html header function
+		 *
+		 */
 		function generate_header()
 		{
 			// PHP will automatically replace any dots in incoming

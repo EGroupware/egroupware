@@ -19,7 +19,7 @@
 	error_reporting(error_reporting() & ~E_NOTICE);
 	
 	// for an old header, we need to setup the reference before including it
-	if (!is_array($GLOBALS['phpgw_info'])) $GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+	if (!is_array($GLOBALS['egw_info'])) $GLOBALS['egw_info'] =& $GLOBALS['egw_info'];
 	
 	if(file_exists('../header.inc.php'))
 	{
@@ -48,10 +48,10 @@
 
 	define('SEP',filesystem_separator());
 
-	/*!
-	 @function lang
-	 @abstract function to handle multilanguage support
-	*/
+	/**
+	  * function to handle multilanguage support
+	  *
+	 */
 	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
 	{
 		if(is_array($m1))
@@ -66,11 +66,9 @@
 		return $value;
 	}
 
-	/*!
-	@function get_langs
-	@abstract	returns array of languages we support, with enabled set
-				to True if the lang file exists
-	*/
+	/**
+	 * returns array of languages we support, with enabled set to True if the lang file exists
+	 */
 	function get_langs()
 	{
 		$f = fopen('./lang/languages','rb');
@@ -137,5 +135,5 @@
 
 	$GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
 
-	$GLOBALS['egw_setup'] = CreateObject('setup.setup',True,True);
+	$GLOBALS['egw_setup'] =& CreateObject('setup.setup',True,True);
 	$GLOBALS['phpgw_setup'] =& $GLOBALS['egw_setup'];

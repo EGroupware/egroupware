@@ -25,10 +25,11 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	/*!
-	 @class_start accounts
-	 @abstract Class for handling user and group accounts
-	*/
+	/**
+	 *  @class_start accounts
+	  * Class for handling user and group accounts
+	  *
+	 */
 	class accounts_
 	{
 		var $db;
@@ -38,9 +39,7 @@
 
 		function accounts_()
 		{
-			//copyobj($GLOBALS['phpgw']->db,$this->db);
-			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
-			
+			$this->db = clone($GLOBALS['egw']->db);
 			$this->table = 'phpgw_accounts';
 			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 		}
@@ -78,10 +77,10 @@
 			}
 		}
 
-		/*!
-		@function read_repository
-		@abstract grabs the records from the data store
-		*/
+		/**
+		 * grabs the records from the data store
+		 *
+		 */
 		function read_repository()
 		{
 			$this->db->select($this->table,'*',array('account_id'=>$this->account_id),__LINE__,__FILE__);
@@ -105,10 +104,10 @@
 			return $this->data;
 		}
 
-		/*!
-		@function save_repository
-		@abstract saves the records to the data store
-		*/
+		/**
+		 * saves the records to the data store
+		 *
+		 */
 		function save_repository()
 		{
 			$this->db->update($this->table,array(
@@ -304,7 +303,7 @@
 		{
 			$account_data = array(
 				'account_lid'			=> $account_info['account_lid'],
-				'account_pwd'			=> $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'],True),
+				'account_pwd'			=> $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd'],True),
 				'account_firstname'		=> $account_info['account_firstname'],
 				'account_lastname'		=> $account_info['account_lastname'],
 				'account_status'		=> $account_info['account_status'],
@@ -328,15 +327,15 @@
 		{
 			if ($expiredate == 0)
 			{
-				if(isset($GLOBALS['phpgw_info']['server']['auto_create_expire']) == True)
+				if(isset($GLOBALS['egw_info']['server']['auto_create_expire']) == True)
 				{
-					if($GLOBALS['phpgw_info']['server']['auto_create_expire'] == 'never')
+					if($GLOBALS['egw_info']['server']['auto_create_expire'] == 'never')
 					{
 						$expires = -1;
 					}
 					else
 					{
-						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
+						$expiredate = time() + $GLOBALS['egw_info']['server']['auto_create_expire'];
 					}
 				}
 			}
@@ -351,7 +350,7 @@
 				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 			}
 
-			$default_group_id  = $this->name2id($GLOBALS['phpgw_info']['server']['default_group_lid']);
+			$default_group_id  = $this->name2id($GLOBALS['egw_info']['server']['default_group_lid']);
 			if (!$default_group_id)
 			{
 				$default_group_id = (int) $this->name2id('Default');
@@ -377,9 +376,9 @@
 			{
 				$acct_info['account_email'] = $GLOBALS['auto_create_acct']['email'];
 			}
-			elseif(isset($GLOBALS['phpgw_info']['server']['mail_suffix']) == True && $GLOBALS['phpgw_info']['server']['mail_suffix'] != '')
+			elseif(isset($GLOBALS['egw_info']['server']['mail_suffix']) == True && $GLOBALS['egw_info']['server']['mail_suffix'] != '')
 			{
-				$acct_info['account_email'] = $accountname . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+				$acct_info['account_email'] = $accountname . '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
 			}
 
 			$this->db->transaction_begin();
@@ -400,20 +399,20 @@
 				/* if we have an mail address set it in the uesrs' email preference */
 				if (isset($GLOBALS['auto_create_acct']['email']) && $GLOBALS['auto_create_acct']['email'] != '')
 				{
-					$GLOBALS['phpgw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
-					$GLOBALS['phpgw']->preferences->preferences($accountid);
-					$GLOBALS['phpgw']->preferences->read_repository();
-					$GLOBALS['phpgw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
-					$GLOBALS['phpgw']->preferences->save_repository();
+					$GLOBALS['egw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
+					$GLOBALS['egw']->preferences->preferences($accountid);
+					$GLOBALS['egw']->preferences->read_repository();
+					$GLOBALS['egw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
+					$GLOBALS['egw']->preferences->save_repository();
 				}
 				/* use the default mail domain to set the uesrs' email preference  */
-				elseif(isset($GLOBALS['phpgw_info']['server']['mail_suffix']) && $GLOBALS['phpgw_info']['server']['mail_suffix'] != '') 
+				elseif(isset($GLOBALS['egw_info']['server']['mail_suffix']) && $GLOBALS['egw_info']['server']['mail_suffix'] != '') 
 				{
-					$GLOBALS['phpgw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
-					$GLOBALS['phpgw']->preferences->preferences($accountid);
-					$GLOBALS['phpgw']->preferences->read_repository();
-					$GLOBALS['phpgw']->preferences->add('email','address', $accountname . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix']);
-					$GLOBALS['phpgw']->preferences->save_repository();
+					$GLOBALS['egw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
+					$GLOBALS['egw']->preferences->preferences($accountid);
+					$GLOBALS['egw']->preferences->read_repository();
+					$GLOBALS['egw']->preferences->add('email','address', $accountname . '@' . $GLOBALS['egw_info']['server']['mail_suffix']);
+					$GLOBALS['egw']->preferences->save_repository();
 				}
 
 				/* commit the new account transaction */
@@ -426,7 +425,7 @@
 				$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
 				$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_firstname'];
 				$GLOBALS['hook_values']['account_lastname'] =  $acct_info['account_lastname'];
-				$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'addaccount'
 				),False,True);  /* called for every app now, not only enabled ones */
 
@@ -458,6 +457,6 @@
 			return True;
 		}
 	}
-	/*!
-	 @class_end accounts
-	*/
+	/**
+	 *  @class_end accounts
+	 */

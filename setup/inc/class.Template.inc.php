@@ -376,7 +376,7 @@
 				}
 				else
 				{
-					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
+					$new_root = str_replace($GLOBALS['egw_info']['server']['template_set'],'default',$root);
 					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 				}
 			}

@@ -16,11 +16,11 @@
 	  Set a global flag to indicate this file was found by setup/config.php.
 	  config.php will unset it after parsing the form values.
 	*/
-	$GLOBALS['phpgw_info']['server']['found_validation_hook'] = True;
+	$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
 
 	function in_docroot($path='')
 	{
-		$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+		$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
 
 		foreach($docroots as $docroot)
 		{
