@@ -1149,13 +1149,15 @@
       }
       $this->hour_arr[$ind] .= "] ";
       $this->hour_arr[$ind] .= "<img src=\"".$phpgw->common->get_image_path('calendar')."/circle.gif\" border=0 alt=\"" . $event->description . "\"></a>";
-      if ($event->priority == 3)
-	$this->hour_arr[$ind] .= "<font color=\"CC0000\">";
+      if ($event->priority == 3) {
+        $this->hour_arr[$ind] .= "<font color=\"CC0000\">";
+      }
       $this->hour_arr[$ind] .= $event->name;
 
-      if ($event->priority == 3)
-	$this->hour_arr[$ind] .= "</font>";
-      $this->hour_arr[$ind] .= "</A><BR>";
+      if ($event->priority == 3) {
+        $this->hour_arr[$ind] .= "</font>";
+      }
+      $this->hour_arr[$ind] .= "<BR>";
     }
 
     function print_day_at_a_glance($date,$owner=0) {
