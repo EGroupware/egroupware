@@ -21,7 +21,7 @@
 	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - BO layer
 	@discussion This class is the BO-layer of the links
-	@discussion Links have to ends each pointing to an entry, an entry is a double:
+	@discussion Links have two ends each pointing to an entry, each entry is a double:
 	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
 	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	*/
@@ -70,6 +70,7 @@
 		);
 		var $vfs;
 		var $vfs_basedir='/infolog';
+		var $vfs_appname='file';	// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
 		var $valid_pathes = array();
 		var $send_file_ips = array();
 
@@ -80,7 +81,7 @@
 				'query' => True,
 				'title' => True,
 				'view'  => True,
-				'vfs_view' => True
+				'get_file' => True
 			);
 			$this->vfs = CreateObject('infolog.vfs');
 
@@ -101,9 +102,9 @@
 		@abstract creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 		@param $app1 app of $id1
 		@param $id1 id of item to linkto or 0 if item not yet created or array with links 
-			of not created item or $file-array if $app1 == 'vfs' (see below)
+			of not created item or $file-array if $app1 == $this->vfs_appname (see below)
 		@param $app2 app of 2.linkend or array with links ($id2 not used)
-		@param $id2 id of 2. item of $file-array if $app2 == 'vfs' (see below)
+		@param $id2 id of 2. item of $file-array if $app2 == $this->vfs_appname (see below)
 		@param $file array with informations about the file in format of the etemplate file-type
 		@param $file['name'] name of the file (no directory)
 		@param $file['type'] mine-type of the file
@@ -123,7 +124,7 @@
 			{
 				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner,$lastmod)</p>\n";
 			}
-			if (!$app1 || !$app2 || !$id1 && is_array($id2) || $app1 == $app2 && $id1 == $id2)
+			if (!$app1 || !$app2 || $app1 == $app2 && $id1 == $id2)
 			{
 				return False;
 			}
@@ -133,7 +134,7 @@
 				{
 					$id1 = array( );
 				}
-				$link_id = "$app2:$id2";
+				$link_id = $app2 != $this->vfs_appname ? "$app2:$id2" : "$app2:$id2[name]";
 				$id1[$link_id] = array(
 					'app' => $app2,
 					'id'  => $id2,
@@ -142,6 +143,10 @@
 					'link_id' => $link_id,
 					'lastmod' => time()
 				);
+				if ($this->debug)
+				{
+					_debug_array($id1);
+				}
 				return $link_id;
 			}
 			if (is_array($app2) && !$id2)
@@ -150,7 +155,11 @@
 				$link_id = True;
 				while ($link_id && list(,$link) = each($app2))
 				{
-					if ($link['app'] == 'vfs')
+					if (!is_array($link))	// check for unlink-marker
+					{
+						continue;
+					}
+					if ($link['app'] == $this->vfs_appname)
 					{
 						$link_id = -intval($this->attach_file($app1,$id1,$link['id'],$link['remark']));
 					}
@@ -162,11 +171,11 @@
 				}
 				return $link_id;
 			}
-			if ($app1 == 'vfs')
+			if ($app1 == $this->vfs_appname)
 			{
 				return -intval($this->attach_file($app2,$id2,$id1,$remark));
 			}
-			elseif ($app2 == 'vfs')
+			elseif ($app2 == $this->vfs_appname)
 			{
 				return -intval($this->attach_file($app1,$id1,$id2,$remark));
 			}
@@ -197,7 +206,8 @@
 					end($id);
 					while ($link = current($id))
 					{
-						if ($only_app && $not_only == ($link['app'] == $only_app))
+						if (!is_array($link) ||		// check for unlink-marker
+						    $only_app && $not_only == ($link['app'] == $only_app))
 						{
 							continue;
 						}
@@ -209,8 +219,8 @@
 			}
 			$ids = solink::get_links($app,$id,$only_app,$order);
 
-			if (empty($only_apps) || $only_apps == 'vfs' ||
-			    ($only_app[0] == '!' && $only_app != '!vfs'))
+			if (empty($only_apps) || $only_apps == $this->vfs_appname ||
+			    ($only_app[0] == '!' && $only_app != '!'.$this->vfs_appname))
 			{
 				if ($vfs_ids = $this->list_attached($app,$id))
 				{
@@ -234,19 +244,19 @@
 		{
 			if (is_array($id))
 			{
-				if (isset($id[$app_link_id]))
+				if (isset($id[$app_link_id]) && is_array($id[$app_link_id]))	// check for unlinked-marker
 				{
 					return $id[$app_link_id];
 				}
 				return False;
 			}
-			if (intval($app_link_id) < 0 || $app_link_id == 'vfs' || $app2 == 'vfs')
+			if (intval($app_link_id) < 0 || $app_link_id == $this->vfs_appname || $app2 == $this->vfs_appname)
 			{
 				if (intval($app_link_id) < 0)	// vfs link_id ?
 				{
 					return $this->fileinfo2link(-$app_link_id);
 				}
-				if ($app_link_id == 'vfs')
+				if ($app_link_id == $this->vfs_appname)
 				{
 					return $this->info_attached($app2,$id2,$id);
 				}
@@ -272,11 +282,11 @@
 			{
 				return $this->delete_attached(-$link_id);
 			}
-			elseif ($app == 'vfs')
+			elseif ($app == $this->vfs_appname)
 			{
 				return $this->delete_attached($app2,$id2,$id);
 			}
-			elseif ($app2 == 'vfs')
+			elseif ($app2 == $this->vfs_appname)
 			{
 				return $this->delete_attached($app,$id,$id2);
 			}
@@ -284,18 +294,20 @@
 			{
 				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
 			}
-			$result = isset($id[$link_id]);
+			if (isset($id[$link_id]))
+			{
+				$id[$link_id] = False;	// set the unlink marker
 
-			unset($id[$link_id]);
-
-			return $result;
+				return True;
+			}
+			return False;
 		}
 
 		/*!
 		@function app_list
 		@syntax app_list(   )
 		@author ralfbecker
-		@abstrac get list/array of link-aware apps the user has rights to use 
+		@abstrac get list/array of link-aware apps the user has rights to use
 		@result array( $app => lang($app), ... )
 		*/
 		function app_list( )
@@ -347,8 +359,13 @@
 			{
 				echo "<p>bolink::title('$app','$id')</p>\n";
 			}
-			if ($app == 'vfs')
+			if ($app == $this->vfs_appname)
 			{
+				if (is_array($id) && $link)
+				{
+					$link = $id;
+					$id = $link['name'];
+				}
 				if (is_array($link))
 				{
 					$size = $link['size'];
@@ -363,9 +380,9 @@
 							$size = $size_k.'k';
 						}
 					}
-					$size = ' '.$size;
+					$extra = ': '.$link['type'] . ' '.$size;
 				}
-				return $id.$size;
+				return $id.$extra;
 			}
 			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['title']))
 			{
@@ -385,9 +402,9 @@
 		*/
 		function view($app,$id,$link='')
 		{
-			if ($app == 'vfs' && !empty($id) && is_array($link))
+			if ($app == $this->vfs_appname && !empty($id) && is_array($link))
 			{
-				return $this->vfs_view($link);
+				return $this->get_file($link);
 			}
 			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
 			{
@@ -411,12 +428,12 @@
 			return $view;
 		}
 		
-		function vfs_view($link='')
+		function get_file($link='')
 		{
 			if (is_array($link))
 			{
 				return array(
-					'menuaction' => 'infolog.bolink.vfs_view',
+					'menuaction' => 'infolog.bolink.get_file',
 					'app' => $link['app2'],
 					'id'  => $link['id2'],
 					'filename' => $link['id']
@@ -435,7 +452,7 @@
 
 			$local = $this->attached_local($app,$id,$filename,
 				get_var('REMOTE_ADDR',Array('SERVER')),$browser->is_windows());
-			
+
 			if ($local)
 			{
 				Header('Location: ' . $local);
@@ -624,7 +641,7 @@
 			if (!is_array($fileinfo))
 			{
 				$fileinfo = $this->vfs->fileinfo($fileinfo);
-				list(,$fileinfo) = each($fileinfo);
+				list(,$fileinfo) = each($fileinfo); 
 
 				if (!is_array($fileinfo))
 				{
@@ -634,11 +651,11 @@
 			$lastmod = $fileinfo[!empty($fileinfo['modified']) ? 'modified' : 'created'];
 			list($y,$m,$d) = explode('-',$lastmod);
 			$lastmod = mktime(0,0,0,$m,$d,$y);
-			
+
 			$dir_parts = array_reverse(explode('/',$fileinfo['directory']));
 
 			return array(
-				'app'       => 'vfs',
+				'app'       => $this->vfs_appname,
 				'id'        => $fileinfo['name'],
 				'app2'      => $dir_parts[1],
 				'id2'       => $dir_parts[0],
@@ -647,7 +664,7 @@
 				'link_id'   => -$fileinfo['file_id'],
 				'lastmod'   => $lastmod,
 				'size'      => $fileinfo['size'],
-				'mime_type' => $fileinfo['mime_type']
+				'type'      => $fileinfo['mime_type']
 			);
 		}
 
@@ -721,7 +738,7 @@
 			}
 			$link = $this->vfs->readlink ($this->vfs_path($app,$id,$filename), array (RELATIVE_ROOT));
 
-			if ($link)
+			if ($link && is_array($this->link_pathes))
 			{
 				reset($this->link_pathes); $fname = '';
 				while ((list($valid,$trans) = each($this->link_pathes)) && !$fname)
