@@ -79,7 +79,6 @@
 			}
 			else
 			{
-				$value += $GLOBALS['phpgw']->datetime->tz_offset;
 				$value = array(
 					'Y' => date('Y',$value),
 					'm' => date('m',$value),
@@ -288,8 +287,7 @@
 				}
 				if (empty($extension_data))
 				{
-					$value = mktime(intval($value['H']),intval($value['i']),0,$value['m'],$value['d'],$value['Y']) 
-						- $GLOBALS['phpgw']->datetime->tz_offset;
+					$value = mktime(intval($value['H']),intval($value['i']),0,$value['m'],$value['d'],$value['Y']);
 				}
 				else
 				{
