@@ -32,6 +32,7 @@
 
 		<FORM name="login" method="post" action="{login_url}" {autocomplete}>
 		<input type="hidden" name="passwd_type" value="text">
+		<input type="hidden" name="account type" value="u">
 			<TABLE border="0" align="CENTER" bgcolor="#486591" width="100%" cellpadding="0" cellspacing="0">
 				<TR bgcolor="#e6e6e6">
 					<TD colspan="3" align="CENTER">{cd}</TD>

@@ -37,6 +37,7 @@
   <td valign="baseline">
   <form name="login" method="post" action="{login_url}">
   <input type="hidden" name="passwd_type" value="text">
+  <input type="hidden" name="account_type" value="u">
    <table bgcolor="#adadad" border="0" align="center" width="100%" cellpadding="0" cellspacing="0">
     <tr>
      <td colspan="2" align="center">{cd}</td>

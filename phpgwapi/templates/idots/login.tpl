@@ -6,7 +6,7 @@
 <meta name="description" content="eGroupWare login screen">
 <meta name="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 <meta name="keywords" content="eGroupWare login screen">
-<link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">	
+<link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">
 <link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico">
 <link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
 <title>{website_title} - Login</title>
@@ -99,7 +99,7 @@ body { background: #ffffff; }
 </td>
 </tr>
 <tr bgcolor="#e6e6e6">
-<td colspan="3"> <input type="hidden" name="passwd_type" value="text"> </td>
+<td colspan="3"> <input type="hidden" name="passwd_type" value="text"> <input type="hidden" name="account_type" value="u"> </td>
 </tr>
 <tr bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_username}:&nbsp;</font></td>

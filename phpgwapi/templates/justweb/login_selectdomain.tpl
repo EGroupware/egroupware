@@ -23,6 +23,8 @@
      <td valign="baselines">
 
       <form method="post" action="{login_url}">
+       <input type="hidden" name="passwd_type" value="text">
+       <input type="hidden" name="account_type" value="u">
        <table border="0" align="center" bgcolor="#486591" width="100%" cellpadding="0" cellspacing="0">
         <tr bgcolor="#e6e6e6">
          <td colspan="3" align="center">

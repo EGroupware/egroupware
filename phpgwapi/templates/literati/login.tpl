@@ -15,6 +15,8 @@
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 <FORM name="login_form" method="post" action="{login_url}">
+	<input type="hidden" name="passwd_type" value="text">
+    <input type="hidden" name="account_type" value="u">
 <TABLE class=sidebox cellSpacing=1 cellPadding=0  border=0  align=center>
 <TR> 
 <TD class="sideboxtitle" align="center"  height=28>{website_title}</TD>

@@ -20,7 +20,8 @@
 <TR> 
 <TD class="sideboxcontent" bgColor="#efefef">
 <FORM method="post" action="{login_url}">
-
+	<input type="hidden" name="passwd_type" value="text">
+    <input type="hidden" name="account_type" value="u">
 <TABLE class="sideboxtext" cellSpacing=0 cellPadding=0 width="100%" border="0">
 <TR bgcolor="#e6e6e6">
 <TD colspan="3" align="center">
