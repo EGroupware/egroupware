@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare Email - POP3 Mail Wrapper for Imap Enabled PHP                                  *
-  * http://www.phpgroupware.org/                                          *                               *
+  * phpGroupWare Email - POP3 Mail Wrapper for Imap Enabled PHP              *
+  * http://www.phpgroupware.org/                                             *
   * -------------------------------------------------------------------------*
   * This library is part of phpGroupWare (http://www.phpgroupware.org)       *
   * This library is free software; you can redistribute it and/or modify it  *
@@ -161,7 +161,7 @@
 			{
 				echo 'CALL TO LOGIN IN CLASS MSG POP3'.'<br>'.'userid='.$GLOBALS['phpgw_info']['user']['preferences']['email']['userid'];
 			}
-	
+
 			error_reporting(error_reporting() - 2);
 			if($folder!='INBOX')
 			{
@@ -205,4 +205,3 @@
 			return $folder_str;
 		}
 	} // end of class msg
-

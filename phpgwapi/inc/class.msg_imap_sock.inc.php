@@ -21,8 +21,10 @@
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
 
+  /* $Id$ */
+
 	class msg extends msg_base
-	{		
+	{
 		/**************************************************************************\
 		*	data analysis specific to IMAP data communications
 		\**************************************************************************/
@@ -90,7 +92,7 @@
 				return False;
 			}
 		}
-		
+
 		/*!
 		@function imap_read_port
 		@abstract reads data from an IMAP server until the line that begins with the specified param "cmd_tag"
@@ -179,7 +181,7 @@
 					$this->server_last_error_str = $line;
 					// what should we return here IF there was a NO or BAD error ?
 					// how about an empty array, how about FALSE ??
-						
+
 					// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 					// empty the array
 					$return_me = Array();
@@ -197,7 +199,7 @@
 					$this->server_last_error_str = 'imap unknown error in imap_read_port: "'.$line.'"';
 					// what should we return here IF there was a NO or BAD error ?
 					// how about an empty array, how about FALSE ??
-						
+
 					// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 					// empty the array
 					$return_me = Array();
@@ -210,7 +212,7 @@
 			}
 			return $return_me;
 		}
-		
+
 		/*!
 		@function report_svr_data
 		@abstract reports server data array for debugging purposes
@@ -231,7 +233,7 @@
 				echo 'imap: '.$calling_func_name.': last server completion line: "'.htmlspecialchars($this->server_last_ok_response).'"<br>';
 			}
 		}
-		
+
 		/*!
 		@function server_last_error
 		@abstract implements IMAP_LAST_ERROR
@@ -246,8 +248,7 @@
 			if ($this->debug >= 1) { echo 'imap: call to server_last_error<br>'; }
 			return $this->server_last_error_str;
 		}
-		
-		
+
 		/**************************************************************************\
 		*	Functions NOT YET IMPLEMENTED
 		\**************************************************************************/
@@ -348,8 +349,7 @@
 			if ($this->debug >= 1) { echo 'imap: call to not-yet-implemented socket function: search<br>'; }
 			return $empty_return;
 		}
-	
-		
+
 		/**************************************************************************\
 		*	OPEN and CLOSE Server Connection
 		\**************************************************************************/
@@ -393,10 +393,10 @@
 			$cmd_tag = 'L001';
 			$full_command = $cmd_tag.' LOGIN "'.quotemeta($user).'" "'.quotemeta($pass).'"';
 			$expecting = $cmd_tag; // may be followed by OK, NO, or BAD
-			
+
 			if ($this->debug >= 2) { echo 'imap: open: write_port: '. htmlspecialchars($full_command) .'<br>'; }
 			if ($this->debug >= 2) { echo 'imap: open: expecting: "'. htmlspecialchars($expecting) .'" followed by OK, NO, or BAD<br>'; }
-			
+
 			if(!$this->write_port($full_command))
 			{
 				if ($this->debug >= 1) { echo 'imap: open: could not write_port<br>'; }
@@ -407,7 +407,7 @@
 			// server can spew some b.s. hello messages before the official response
 			// read the server data
 			$response_array = $this->imap_read_port($expecting);
-			
+
 			// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 			if (count($response_array) == 0)
 			{
@@ -425,7 +425,7 @@
 				if ($this->debug >= 2) { $this->report_svr_data($response_array, 'open', True); }
 				if ($this->debug >= 1) { echo 'imap: open: Successful IMAP Login<br>'; }
 			}
-			
+
 			// now that we have logged in, php's IMAP_OPEN would now select the desired folder
 			if ($this->debug >= 2) { echo 'imap: open: php IMAP_OPEN would now select desired folder: "'. htmlspecialchars($folder) .'"<br>'; }
 			// php's IMAP_OPEN also selects the desired folder (mailbox) after the connection is established
@@ -440,24 +440,24 @@
 		function close($flags="")
 		{
 			if ($this->debug >= 1) { echo 'imap: Entering Close<br>'; }
-			
+
 			$cmd_tag = 'c001';
 			$full_command = $cmd_tag.' LOGOUT';
 			$expecting = $cmd_tag; // may be followed by OK, NO, or BAD
-			
+
 			if ($this->debug >= 2) { echo 'imap: close: write_port: "'. htmlspecialchars($full_command) .'"<br>'; }
 			if ($this->debug >= 2) { echo 'imap: close: expecting: "'. htmlspecialchars($expecting) .'" followed by OK, NO, or BAD<br>'; }
-			
+
 			if(!$this->write_port($full_command))
 			{
 				if ($this->debug >= 1) { echo 'imap: close: could not write_port<br>'; }
 				$this->error();
 			}
-			
+
 			// server can spew some b.s. goodbye message before the official response
 			// read the server data
 			$response_array = $this->imap_read_port($expecting);
-			
+
 			// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 			if (count($response_array) == 0)
 			{
@@ -468,7 +468,7 @@
 					echo  $this->server_last_error().'<br>';
 				}
 				if ($this->debug >= 1) { echo 'imap: Leaving Close with error<br>'; }
-				return False;				
+				return False;
 			}
 			else
 			{
@@ -492,29 +492,29 @@
 		function reopen($stream_notused, $fq_folder, $flags='')
 		{
 			if ($this->debug >= 1) { echo 'imap: Entering reopen<br>'; }
-			
+
 			// fq_folder is a "fully qualified folder", seperate the parts:
 			$svr_data = array();
 			$svr_data = $this->distill_fq_folder($fq_folder);
 			$folder = $svr_data['folder'];
 			if ($this->debug >= 1) { echo 'imap: reopen: folder value is: ['.$folder.']<br>'; }
-			
+
 			$cmd_tag = 'r001';
 			$full_command = $cmd_tag.' SELECT "'.$folder.'"';
 			$expecting = $cmd_tag; // may be followed by OK, NO, or BAD
-			
+
 			if ($this->debug >= 2) { echo 'imap: reopen: write_port: "'. htmlspecialchars($full_command) .'"<br>'; }
 			if ($this->debug >= 2) { echo 'imap: reopen: expecting: "'. htmlspecialchars($expecting) .'" followed by OK, NO, or BAD<br>'; }
-			
+
 			if(!$this->write_port($full_command))
 			{
 				if ($this->debug >= 1) { echo 'imap: reopen: could not write_port<br>'; }
 				$this->error();
 			}
-			
+
 			// read the server data
 			$response_array = $this->imap_read_port($expecting);
-			
+
 			// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 			if (count($response_array) == 0)
 			{
@@ -525,7 +525,7 @@
 					echo  $this->server_last_error().'<br>';
 				}
 				if ($this->debug >= 1) { echo 'imap: Leaving reopen with error<br>'; }
-				return False;				
+				return False;
 			}
 			else
 			{
@@ -568,7 +568,7 @@
 		{
 			if ($this->debug >= 1) { echo 'imap: Entering listmailbox<br>'; }
 			$mailboxes_array = Array();
-			
+
 			// prepare params, seperate wildcards "*" or "%" from param $pattern
 			// LIST param 1 is empty or is a mailbox reference string withOUT any wildcard
 			// LIST param 2 is empty or is the wildcard either "%" or "*"
@@ -604,7 +604,7 @@
 			$cmd_tag = 'X001';
 			$full_command = $cmd_tag.' LIST '.$list_params;
 			$expecting = $cmd_tag; // may be followed by OK, NO, or BAD
-			
+
 			if ($this->debug >= 2) { echo 'imap: listmailbox: write_port: ['. htmlspecialchars($full_command) .']<br>'; }
 			if ($this->debug >= 2) { echo 'imap: listmailbox: expecting: "'. htmlspecialchars($expecting) .'" followed by OK, NO, or BAD<br>'; }
 			
@@ -613,10 +613,10 @@
 				if ($this->debug >= 1) { echo 'imap: listmailbox: could not write_port<br>'; }
 				$this->error();
 			}
-			
+
 			// read the server data
 			$response_array = $this->imap_read_port($expecting);
-			
+
 			// TEST THIS ERROR DETECTION - empty array = error (BAD or NO)
 			if (count($response_array) == 0)
 			{
@@ -627,13 +627,13 @@
 					echo  $this->server_last_error().'<br>';
 				}
 				if ($this->debug >= 1) { echo 'imap: Leaving listmailbox with error<br>'; }
-				return False;				
+				return False;
 			}
 			else
 			{
 				if ($this->debug >= 2) { $this->report_svr_data($response_array, 'reopen', True); }
 			}
-			
+
 			// delete all text except the folder name
 			for ($i=0; $i<count($response_array); $i++)
 			{
@@ -664,13 +664,13 @@
 					$mailboxes_array[$next_pos] = $folder_name;
 				}
 			}
-			
+
 			if ($this->debug >= 2) { $this->report_svr_data($mailboxes_array, 'listmailbox INTERNAL_mailboxes_array', False); }
 			if ($this->debug >= 1) { echo 'imap: Leaving listmailbox<br>'; }
 			//return '';
 			return $mailboxes_array;
 		}
-		
+
 		// OBSOLETED
 		function fix_folder($folder)
 		{
@@ -698,17 +698,17 @@
 			}
 			return $folder;
 		}
-		
+
 		/**************************************************************************\
 		*	Mailbox Status and Information
 		\**************************************************************************/
-		
+
 		function mailboxmsginfo($stream_notused='')
 		{
 			if ($this->debug >= 1) { echo 'imap: mailboxmsginfo<br>'; }
 			return False;
 		}
-		
+
 		/*
 		function mailboxmsginfo($folder='')
 		{
@@ -730,10 +730,10 @@
 			{
 				$mailbox = $folder;
 			}
-			
+
 			$info->messages = $this->num_msgs($mailbox);
 			$info->size  = $this->total($this->fetch_field(1,$info->messages,'RFC822.SIZE'));
-			
+
 			if ($info->messages)
 			{
 				return $info;
@@ -744,7 +744,7 @@
 			}
 		}
 		*/
-		
+
 		/*!
 		@function status
 		@abstract implements php function IMAP_STATUS
@@ -773,11 +773,11 @@
 			// build the query string
 			$query_str = '';
 			$available_options = Array(
-				SA_MESSAGES	=> 'MESSAGES',
-				SA_RECENT	=> 'RECENT',
-				SA_UNSEEN	=> 'UNSEEN',
-				SA_UIDNEXT	=> 'UIDNEXT',
-				SA_UIDVALIDITY	=> 'UIDVALIDITY'
+				SA_MESSAGES => 'MESSAGES',
+				SA_RECENT   => 'RECENT',
+				SA_UNSEEN   => 'UNSEEN',
+				SA_UIDNEXT  => 'UIDNEXT',
+				SA_UIDVALIDITY => 'UIDVALIDITY'
 			);
 			@reset($available_options);
 			while(list($key,$value) = each($available_options))
@@ -788,22 +788,22 @@
 				}
 			}
 			$query_str = trim($query_str);
-			
+
 			$cmd_tag = 's001';
 			//$full_command = $cmd_tag.' STATUS '.$svr_data['folder'].' (MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)';
 			$full_command = $cmd_tag.' STATUS "'.$svr_data['folder'].'" ('.$query_str.')';
 			$expecting = $cmd_tag; // may be followed by OK, NO, or BAD
-			
+
 			if ($this->debug >= 2) { echo 'imap: status: write_port: "'. htmlspecialchars($full_command) .'"<br>'; }
 			if ($this->debug >= 2) { echo 'imap: status: expecting: "'. htmlspecialchars($expecting) .'" followed by OK, NO, or BAD<br>'; }
-			
+
 			if(!$this->write_port($full_command))
 			{
 				if ($this->debug >= 1) { echo 'imap: status: could not write_port<br>'; }
 				$this->error();
-				return False;				
+				return False;
 			}
-			
+
 			// read the server data
 			$response_array = $this->imap_read_port($expecting);
 			
@@ -817,7 +817,7 @@
 					echo  $this->server_last_error().'<br>';
 				}
 				if ($this->debug >= 1) { echo 'imap: Leaving status with error<br>'; }
-				return False;				
+				return False;
 			}
 			// STATUS should only return 1 line of data
 			if (count($response_array) > 1)
@@ -829,12 +829,12 @@
 					echo  $this->server_last_error().'<br>';
 				}
 				if ($this->debug >= 1) { echo 'imap: Leaving status with error<br>'; }
-				return False;				
+				return False;
 			}
-			
+
 			// if we get here we have valid server data
 			if ($this->debug >= 2) { $this->report_svr_data($response_array, 'status', True); }
-			
+
 			// initialize structure
 			$info = new mailbox_status;
 			$info->messages = '';
@@ -842,20 +842,20 @@
 			$info->unseen = '';
 			$info->uidnext = '';
 			$info->uidvalidity = '';
-			
+
 			//typical server data:
 			// * STATUS INBOX (MESSAGES 15 RECENT 1 UNSEEN 2 UIDNEXT 17 UIDVALIDITY 1005967489)
 			// data starts after the mailbox name, which could actually have similar strings as the status querey
 			// get data the includes and follows the opening paren
 			$status_data_raw = strstr($response_array[0], '(');
-			
+
 			// snarf any of the 5 possible pieces of data if they are present
 			$status_data['messages'] = $this->snarf_status_data($status_data_raw, 'MESSAGES');
 			$status_data['recent'] = $this->snarf_status_data($status_data_raw, 'RECENT');
 			$status_data['unseen'] = $this->snarf_status_data($status_data_raw, 'UNSEEN');
 			$status_data['uidnext'] = $this->snarf_status_data($status_data_raw, 'UIDNEXT');
 			$status_data['uidvalidity'] = $this->snarf_status_data($status_data_raw, 'UIDVALIDITY');
-			
+
 			// fill structure and unset any unfilled data elements
 			if ($status_data['messages'] != '')
 			{
@@ -901,7 +901,7 @@
 			if ($this->debug >= 1) { echo 'imap: Leaving status<br>'; }
 			return $info;
 		}
-		
+
 		function snarf_status_data($status_raw_str='',$snarf_this='')
 		{
 			// bogus data detection
@@ -912,10 +912,10 @@
 			}
 			// fallback value
 			$return_data = '';
-			
+
 			//typical server data:
 			// * STATUS INBOX (MESSAGES 15 RECENT 1 UNSEEN 2 UIDNEXT 17 UIDVALIDITY 1005967489)
-			
+
 			// see if $snarf_this is in the raw data
 			$data_mini_str = stristr($status_raw_str, $snarf_this);
 			if ($data_mini_str != False)
@@ -947,7 +947,7 @@
 			}
 			return $return_data;
 		}
-		
+
 		// OBSOLETED
 		function num_msg($folder='')
 		{
@@ -957,7 +957,7 @@
 			}
 			return $this->status_query($folder,'MESSAGES');
 		}
-		
+
 		// OBSOLETED
 		function total($field)
 		{
@@ -969,19 +969,19 @@
 			}
 			return $total;
 		}
-					
+
 		/**************************************************************************\
 		*	Message Sorting
 		\**************************************************************************/
 		// options/flags are:
-			//SE_UID	Return UIDs instead of sequence numbers
-			//SE_NOPREFETCH	Don't prefetch searched messages.
+		//SE_UID	Return UIDs instead of sequence numbers
+		//SE_NOPREFETCH	Don't prefetch searched messages.
 		function sort($stream_notused='',$criteria=SORTARRIVAL,$reverse=False,$options='')
 		{
 			if ($this->debug >= 1) { echo 'imap: sort<br>'; }
 			return False;
 		}
-		
+
 		/*
 		function sort($folder='',$criteria=SORTDATE,$reverse=False,$options='')
 		{
@@ -1029,7 +1029,7 @@
 				else
 				{
 					uasort($field_list,array($this,"ssort_decending"));
-				}			
+				}
 			}
 			elseif(!$reverse)
 			{
@@ -1051,7 +1051,7 @@
 			return $return_array;
 		}
 		*/
-		
+
 		/**************************************************************************\
 		*
 		*	Message Structural Information
@@ -1063,7 +1063,7 @@
 			if ($this->debug >= 1) { echo 'imap: fetchstructure<br>'; }
 			return False;
 		}
-		
+
 		/*
 		function fetchstructure($msgnum)
 		{
@@ -1098,8 +1098,7 @@
 			return $this->header;
 		}
 		*/
-		
-		
+
 		/**************************************************************************\
 		*	Message Envelope (Header Info) Data
 		\**************************************************************************/
@@ -1108,12 +1107,11 @@
 			if ($this->debug >= 1) { echo 'imap: header<br>'; }
 			return False;
 		}
-		
-		
+
 		/**************************************************************************\
 		*	More Data Communications (dcom) With IMAP Server
 		\**************************************************************************/
-	
+
 		/**************************************************************************\
 		*	DELETE a Message From the Server
 		\**************************************************************************/
@@ -1122,8 +1120,7 @@
 			if ($this->debug >= 1) { echo 'imap: delete<br>'; }
 			return False;
 		}
-		
-		
+
 		/**************************************************************************\
 		*	Get Message Headers From Server
 		\**************************************************************************/
@@ -1133,7 +1130,7 @@
 			if ($this->debug >= 1) { echo 'imap: fetchheader<br>'; }
 			return False;
 		}
-		
+
 		function fetch_header($start,$stop,$element)
 		{
 			if(!$this->write_port('a001 FETCH '.$start.':'.$stop.' RFC822.HEADER'))
@@ -1169,8 +1166,7 @@
 			$response = $this->read_port();
 			return $field_element;
 		}
-		
-		
+
 		function fetch_field($start,$stop,$element)
 		{
 			if(!$this->write_port('a001 FETCH '.$start.':'.$stop.' '.$element))
@@ -1188,9 +1184,8 @@
 				$response = $this->read_port();
 			}
 			return $field_element;
-		}		
-		
-		
+		}
+
 		/**************************************************************************\
 		*	Get Message Body (Parts) From Server
 		\**************************************************************************/
@@ -1199,7 +1194,7 @@
 			if ($this->debug >= 1) { echo 'imap: fetchbody<br>'; }
 			return False;
 		}
-		
+
 		/*!
 		@function get_body
 		@abstract implements IMAP_BODY
@@ -1210,7 +1205,5 @@
 			if ($this->debug >= 1) { echo 'imap: get_body<br>'; }
 			return False;
 		}
-		
 	}
-
 ?>
