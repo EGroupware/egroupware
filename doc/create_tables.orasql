@@ -9,6 +9,22 @@
 -- APPLICATIONS --
 ------------------
 
+connect system/system;
+
+CREATE TABLESPACE phpgw
+	DATAFILE 'diskb:tablespace_phpgw.dat' SIZE 500K REUSE
+	AUTOEXTEND ON NEXT 500K MAXSIZE 10M;
+
+CREATE USER phpgw IDENTIFIED BY phpgw
+	DEFAULT TABLESPACE phpgw
+	QUOTA 10M ON phpgw;
+
+GRANT connect TO phpgw;
+
+GRANT dba TO phpgw;
+
+connect phpgw/phpgw;
+
 CREATE TABLE applications (
   app_name varchar2(25) NOT NULL,
   app_title varchar2(50),
@@ -32,12 +48,12 @@ insert into applications (app_name, app_title, app_enabled) values ('cron_apps',
 --------------
 
 CREATE TABLE accounts (
-  con		number(11) DEFAULT '0' NOT NULL , --auto-increment
+  con		number NOT NULL,
   loginid	varchar2(25) NOT NULL,
   passwd	varchar2(32) NOT NULL,
   firstname	varchar2(50),
   lastname	varchar2(50),
-  permissions	text,
+  permissions	varchar2(255),
   groups	varchar2(30),
   lastlogin	number(11),
   lastloginfrom	varchar2(255),
@@ -57,29 +73,24 @@ create sequence accounts_seq
   nocycle
   nocache;
 
--- this trigger unfortunately does not work, since "NEW or OLD references are
--- not allowed in table level triggers" (oracle error msg quoted here). But we
--- need to define some triggers like this for each table that needs the
--- auto-increment function:
---
--- create trigger accounts_trg
---   before insert into accounts
---   begin
---     :new.con := accounts_seq.nextid;
---   end;
--- /
+create trigger accounts_bri
+before insert on accounts
+for each row
+begin
+  select accounts_seq.nextval into :new.con from dual;
+end;
+/
 
 insert into accounts (loginid,passwd,firstname,lastname,permissions,groups,
   status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
   ':admin:email:todo:addressbook:calendar:hr:',',1,','A');
-
 
 ------------
 -- GROUPS --
 ------------
 
 create table groups (
-  group_id	int NOT NULL , --auto-increment
+  group_id	number NOT NULL,
   group_name	varchar2(255),
   group_apps    varchar2(255),
   primary key(group_id)
@@ -93,8 +104,15 @@ create sequence groups_seq
   nocycle
   nocache;
 
-insert into groups (group_name) values ('Default');
+create trigger groups_bri
+before insert on groups
+for each row
+begin
+  select groups_seq.nextval into :new.group_id from dual;
+end;
+/
 
+insert into groups (group_name) values ('Default');
 
 -----------------
 -- PREFERENCES --
@@ -114,7 +132,6 @@ insert into preferences values ('demo','dateformat','m/d/Y');
 insert into preferences values ('demo','theme','default');
 insert into preferences values ('demo','tz_offset','0');
 
-
 --------------
 -- SESSIONS --
 --------------
@@ -131,7 +148,6 @@ CREATE TABLE sessions (
 create unique index sessions_sessionid 
 on sessions (sessionid);
 
-
 ------------------
 -- APP_SESSIONS --
 ------------------
@@ -140,9 +156,8 @@ CREATE TABLE app_sessions (
   sessionid	varchar2(255) NOT NULL,
   loginid	varchar2(20),
   app	varchar2(20),
-  content	text
+  content	varchar2(2000)
 );
-
 
 ----------------
 -- ACCESS_LOG --
@@ -156,13 +171,12 @@ create table access_log (
   lo		int
 );
 
-
 --------------
 -- PROFILES --
 --------------
 
 CREATE TABLE profiles (
-  con number(11) DEFAULT '0' NOT NULL , --auto-increment
+  con number NOT NULL,
   owner varchar2(20),
   title varchar2(255),
   phone_number varchar2(255),
@@ -180,6 +194,13 @@ create sequence profiles_seq
   nocycle
   nocache;
 
+create trigger profiles_bri
+before insert on profiles
+for each row
+begin
+  select profiles_seq.nextval into :new.con from dual;
+end;
+/
 
 -----------------
 -- ADDRESSBOOK --
@@ -203,7 +224,7 @@ CREATE TABLE addressbook (
   state	varchar2(255),
   zip		varchar2(255),
   bday		varchar2(255),
-  notes	text,
+  notes	        varchar2(4000),
   company	varchar2(255),
   PRIMARY KEY (con)
 );
@@ -216,16 +237,23 @@ create sequence addressbook_seq
   nocycle
   nocache;
 
+create trigger addressbook_bri
+before insert on addressbook
+for each row
+begin
+  select addressbook_seq.nextval into :new.con from dual;
+end;
+/
 
 ----------
 -- TODO --
 ----------
 
 CREATE TABLE todo (
-  con		number(11) DEFAULT '0' NOT NULL , --auto-increment
+  con		number NOT NULL,
   owner	varchar2(25),
   todo_access	varchar2(10),
-  des		text,        
+  des		varchar2(4000),        
   pri		number(11),
   status	number(11),
   datecreated	number(11),
@@ -241,13 +269,20 @@ create sequence todo_seq
   nocycle
   nocache;
 
+create trigger todo_bri
+before insert on todo
+for each row
+begin
+  select todo_seq.nextval into :new.con from dual;
+end;
+/
 
 ------------------
 -- WEBCAL_ENTRY --
 ------------------
 
 CREATE TABLE webcal_entry (
-  cal_id	number(11) DEFAULT '0' NOT NULL , --auto-increment
+  cal_id	number NOT NULL,
   cal_group_id	number(11),
   cal_create_by varchar2(25) NOT NULL,
   cal_date	number(11) DEFAULT '0' NOT NULL,
@@ -271,48 +306,52 @@ create sequence webcal_entry_seq
   nocycle
   nocache;
 
+create trigger webcal_entry_bri
+before insert on webcal_entry
+for each row
+begin
+  select webcal_entry_seq.nextval into :new.cal_id from dual;
+end;
+/
 
 --------------------------
 -- WEBCAL_ENTRY_REPEATS --
 --------------------------
 
 CREATE TABLE webcal_entry_repeats (
-  cal_id	number(11) DEFAULT '0' NOT NULL,
+  cal_id	number NOT NULL,
   cal_type varchar2(40) DEFAULT 'daily' check (cal_type in ('daily','weekly','monthlyByDay','monthlyByDate','yearly')) NOT NULL,  
   cal_end	number(11),
   cal_frequency number(11) DEFAULT '1',
   cal_days	char(7)
 );
 
-
 ------------------------
 -- WEBCAL_ENTRY_USERS --
 ------------------------
 
 CREATE TABLE webcal_entry_user (
-  cal_id	number(11) DEFAULT '0' NOT NULL,
+  cal_id	number NOT NULL,
   cal_login	varchar2(25) NOT NULL,
   cal_status	char(1) DEFAULT 'A',
   PRIMARY KEY (cal_id, cal_login)
 );
-
 
 -------------------------
 -- WEBCAL_ENTRY_GROUPS --
 -------------------------
 
 create table webcal_entry_groups (
-  cal_id	int,
+  cal_id	number not null,
   groups	varchar2(255)
 );
-
 
 ----------------
 -- NEWSGROUPS --
 ----------------
 
 CREATE TABLE newsgroups (
-  con		number(11) NOT NULL , --auto-increment
+  con		number NOT NULL,
   name		varchar2(255) NOT NULL,
   messagecount	number(11) NOT NULL,
   lastmessage	number(11) NOT NULL,
@@ -332,16 +371,22 @@ create sequence newsgroups_seq
   nocycle
   nocache;
 
+create trigger newsgroups_bri
+before insert on newsgroups
+for each row
+begin
+  select newsgroups_seq.nextval into :new.con from dual;
+end;
+/
 
 ---------------------
 -- USERS_NEWSGOUPS --
 ---------------------
 
 CREATE TABLE users_newsgroups (
-  owner		number(11) NOT NULL,
-  newsgroup	number(11) NOT NULL
+  owner		number NOT NULL,
+  newsgroup	number NOT NULL
 );
-
 
 ----------
 -- LANG --
@@ -354,3 +399,9 @@ CREATE TABLE lang (
   content varchar2(4000) NOT NULL,
   PRIMARY KEY (message_id,app_name,lang)
 );
+
+connect system/system;
+
+REVOKE dba FROM phpgw;
+
+commit;
