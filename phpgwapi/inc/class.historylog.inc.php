@@ -33,6 +33,7 @@
 			'D' => 'Deleted',
 			'E' => 'Edited'
 		);
+		var $alternate_handlers = array();
 
 		function historylog($appname)
 		{
@@ -55,7 +56,7 @@
 		}
 
 		// array $filter_out
-		function return_array($filter_out,$only_show,$_orderby = '',$sort = '', $record_id = 0)
+		function return_array($filter_out,$only_show,$_orderby = '',$sort = '', $record_id)
 		{
 			
 			if (! $sort || ! $_orderby)
@@ -87,13 +88,9 @@
 				$only_show_filter = ' and ' . implode(' or ',$_only_show);
 			}
 
-			if ($record_id)
-			{
-				$record_filter = " and history_record_id='$record_id' ";
-			}
-
 			$this->db->query("select * from phpgw_history_log where history_appname='"
-				. $this->appname . "' $filter $record_filter $only_show_filter $orderby",__LINE__,__FILE__);
+				. $this->appname . "' and history_record_id='$record_id' $filter $only_show_filter "
+				. "$orderby",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				$return_values[] = array(
@@ -109,7 +106,7 @@
 			return $return_values;
 		}
 
-		function return_html($filter_out,$orderby = '',$sort = '', $record_id = 0)
+		function return_html($filter_out,$orderby = '',$sort = '', $record_id)
 		{
 			$this->template   = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
@@ -147,8 +144,18 @@
 
 				$this->template->set_var('row_date',$GLOBALS['phpgw']->common->show_date($value['datetime']));
 				$this->template->set_var('row_owner',$value['owner']);
+
+				if ($this->alternate_handlers[$value['status']])
+				{
+					eval('\$s = ' . $this->alternate_handlers[$value['status']] . '(' . $value['new_value'] . ');');
+					$this->template->set_var('row_new_value',$s);
+					unset($s);
+				}
+				else
+				{
+					$this->template->set_var('row_new_value',$value['new_value']);
+				}
 				$this->template->set_var('row_status',$this->types[$value['status']]);
-				$this->template->set_var('row_new_value',$value['new_value']);
 
 				$this->template->fp('rows','row',True);
 			}
