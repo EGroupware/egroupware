@@ -128,6 +128,17 @@
       $db->query("alter table sessions     change logintime         session_logintime      int(11)");
       $db->query("alter table sessions     change dla               session_dla            int(11)");
 
+      $db->query("alter table todo         change con               todo_id                int(11)");
+      $db->query("alter table todo         change owner             todo_owner             varchar(25)");
+      $db->query("alter table todo         change access            todo_access            varchar(255)");
+      $db->query("alter table todo         change des               todo_des               text");
+      $db->query("alter table todo         change pri               todo_pri               int(11)");
+      $db->query("alter table todo         change status            todo_status            int(11)");
+      $db->query("alter table todo         change datecreated       todo_datecreated       int(11)");
+      $db->query("alter table todo         change datedue           todo_datedue           int(11)");
+
+      // The addressbook section is missing.
+      
       $db->query("update applications set app_order=1,app_tables=NULL where app_name='admin'");
       $db->query("update applications set app_order=2,app_tables=NULL where app_name='tts'");
       $db->query("update applications set app_order=3,app_tables=NULL where app_name='inv'");
