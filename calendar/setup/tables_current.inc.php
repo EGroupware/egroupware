@@ -82,7 +82,8 @@
 				'cal_id' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
 				'cal_owner'	=> array('type' => 'int', 'precision' => 8, 'nullable' => False),
 				'cal_time' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
-				'cal_text' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False)
+				'cal_text' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False),
+				'alarm_enabled' => array('type' => 'int', 'precision' => 4, 'nullable' => False, 'default' => '1')
 			),
 			'pk' => array('alarm_id'),
 			'fk' => array(),

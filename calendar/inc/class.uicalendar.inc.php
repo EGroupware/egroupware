@@ -1657,7 +1657,18 @@
 						'height'	=> 13
 					);
 				}
-	
+				if(@isset($event['alarm']) && count($event['alarm']) >= 1)
+				{
+					if($this->bo->alarm_today($event,$rawdate_offset,$starttime))
+					{
+						$picture[] = Array(
+							'pict'	=> $GLOBALS['phpgw']->common->image('calendar','alarm.gif'),
+							'width'	=> 13,
+							'height'	=> 13
+						);
+					}
+				}
+
    			$description = $this->bo->get_short_field($event,$is_private,'description');
 				for($i=0;$i<count($picture);$i++)
 				{
@@ -2273,19 +2284,20 @@
 				$this->output_template_array($p,'row','list',$var[$i]);
 			}
 
-			if($alarms = $this->bo->get_alarms($event['id']))
+			if(@isset($event['alarm']))
 			{
 				$p->set_var('hr_text','<hr>');
 				$p->parse('row','hr',True);
 				$p->set_var('hr_text','<center><b>'.lang('Alarms').'</b></center><br>');
 				$p->parse('row','hr',True);
 
-				@reset($alarms);
-				while(list($time,$text) = each($alarms))
+				@reset($event['alarm']);
+				while(list($key,$alarm) = each($event['alarm']))
 				{
+					$icon = '<img src="'.$GLOBALS['phpgw']->common->image('calendar',($alarm['enabled']?'enabled.gif':'disabled.gif')).'" width="13" height="13">';
 					$var = Array(
-						'field'	=>	$GLOBALS['phpgw']->common->show_date($time),
-						'data'	=>	$text
+						'field'	=>	$icon.$GLOBALS['phpgw']->common->show_date($alarm['time']),
+						'data'	=>	$alarm['text']
 					);
 					$this->output_template_array($p,'row','list',$var);
 				}
@@ -2809,7 +2821,7 @@
          							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
          							. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
          							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
-         							  ($event['reference']?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
+         							  (@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
 				'errormsg'			=>	($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
 			);
 			$p->set_var($vars);

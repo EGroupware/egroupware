@@ -868,4 +868,13 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.004';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+	$test[] = '0.9.13.004';
+	function calendar_upgrade0_9_13_004()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal_alarm','alarm_enabled',array('type' => 'int', 'precision' => 4,'nullable' => False, 'default' => '1'));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.005';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>

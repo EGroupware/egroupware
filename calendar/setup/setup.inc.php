@@ -13,7 +13,7 @@
 
 	$setup_info['calendar']['name']    = 'calendar';
 	$setup_info['calendar']['title']   = 'Calendar';
-	$setup_info['calendar']['version'] = '0.9.13.004';
+	$setup_info['calendar']['version'] = '0.9.13.005';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 

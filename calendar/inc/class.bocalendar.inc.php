@@ -439,8 +439,8 @@
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
 				$this->so->set_end($l_end['year'],$l_end['month'],$l_end['mday'],$l_end['hour'],$l_end['min'],0);
 				$this->so->set_class($is_public);
-				$this->so->add_attribute('reference',($l_cal['reference']?$l_cal['reference']:0));
-				$this->so->add_attribute('location',($l_cal['location']?$l_cal['location']:''));
+				$this->so->add_attribute('reference',(@isset($l_cal['reference']) && $l_cal['reference']?$l_cal['reference']:0));
+				$this->so->add_attribute('location',(@isset($l_cal['location']) && $l_cal['location']?$l_cal['location']:''));
 				if($l_cal['id'])
 				{
 					$this->so->add_attribute('id',$l_cal['id']);
@@ -1826,6 +1826,41 @@
 			return $this->so->get_alarm($event_id);
 		}
 
+		function alarm_today($event,$today,$starttime)
+		{
+			$found = False;
+			@reset($event['alarm']);
+			$starttime_hi = $GLOBALS['phpgw']->common->show_date($starttime,'Hi');
+			$t_appt['month'] =$GLOBALS['phpgw']->common->show_date($today,'m');
+			$t_appt['mday'] = $GLOBALS['phpgw']->common->show_date($today,'d');
+			$t_appt['year'] = $GLOBALS['phpgw']->common->show_date($today,'Y');
+			$t_appt['hour'] = $GLOBALS['phpgw']->common->show_date($starttime,'H');
+			$t_appt['min']  = $GLOBALS['phpgw']->common->show_date($starttime,'i');
+			$t_appt['sec']  = 0;
+			$t_time = $this->maketime($t_appt) - $this->datetime->tz_offset;
+			$y_time = $t_time - 86400;
+			$tt_time = $t_time + 86399;
+//echo 'T_TIME : '.$t_time."<br>\n";
+//echo 'Y_TIME : '.$y_time."<br>\n";
+//echo 'TT_TIME : '.$tt_time."<br>\n";
+			while(list($key,$alarm) = each($event['alarm']))
+			{
+//echo 'TIME : '.$alarm['time']."<br>\n";
+				if($event['recur_type'] != MCAL_RECUR_NONE)   /* Recurring Event */
+				{
+					if($alarm['time'] > $y_time && $GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi && $alarm['time'] < $t_time)
+					{
+						$found = True;
+					}
+				}
+				elseif($GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi)
+				{
+					$found = True;
+				}
+			}
+			return $found;
+		}
+		
 		function prepare_recipients(&$new_event,$old_event)
 		{
 			// Find modified and deleted users.....

@@ -128,16 +128,13 @@ class socalendar_ extends socalendar__
 			//$this->event->alarm = intval($this->stream->f('alarm'));
 			// But until then, do it this way...
 		//Legacy Support (New)
-			$this->set_alarm(0);
 
-//			$this->add_attribute('datetime',intval($this->stream->f('datetime')));
 			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
 			$this->set_start($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
 			$datetime = $this->datetime->localdates($this->stream->f('mdatetime'));
 			$this->set_date('modtime',$datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-//			$this->add_attribute('edatetime',intval($this->stream->f('edatetime')));
 			$datetime = $this->datetime->localdates($this->stream->f('edatetime'));
 			$this->set_end($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
@@ -206,7 +203,11 @@ class socalendar_ extends socalendar__
 			{
 				while($this->stream->next_record())
 				{
-					$this->add_attribute('alarm',$this->stream->f('cal_text'),intval($this->stream->f('cal_time')));
+					$this->event['alarm'][] = Array(
+						'time'	=> intval($this->stream->f('cal_time')),
+						'text'	=> $this->stream->f('cal_text'),
+						'enabled'	=> intval($this->stream->f('alarm_enabled'))
+					);
 				}
 			}
 		}
