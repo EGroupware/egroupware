@@ -23,6 +23,10 @@
 		var $ids = array();
 				
 		var $export= array(
+			"id"                     => "id",
+			"lid"                    => "lid",
+			"tid"                    => "tid",
+			"owner"                  => "owner",
 			"fn"                     => "fn",
 			"n_given"                => "n_given",
 			"n_family"               => "n_family",
