@@ -1,0 +1,45 @@
+INSTALL
+-------
+Command examples are suggestions only.  Use your head.
+
+COMMAND SUMMARY
+---------------
+cp -a /some/path/to/phpgroupware/files /path/to/files
+cd /path/to/files
+chown -R nobody .
+-OR-
+chmod -R 777 .
+
+http://yourhost.com/setup/ > Setup/Config > Edit Current Configuration
+"Enter the full path for users and group files" => /path/to/files
+
+FULL EXPLANATION
+----------------
+[REQUIRED] Copy phpgroupware/files to where you want to store the files.
+	   THIS SHOULD BE SOMEWHERE NOT INSIDE THE WEBROOT AND NOT ACCESSIBLE TO THE WEB.
+	   Having the files within the webroot is a huge security risk as well as a privacy concern.
+	   The exception to this would be if you WANT the users' and groups' files to be accessible
+	   from the web, such as when setting up public or semi-public web page/document hosting.  In
+	   this case, the files directory can be left where it is.
+	   (Make sure you copy the directory, don't just make a new one.  The necessary directories
+		are files/ and files/home/)
+[REQUIRED] In http://yourhost.com/setup, login to Setup/Config, then Edit Current Configuration.  Enter the FULL path for the files directory you created earlier in the second box from the top.
+[REQUIRED] Change permissions for files directory and all it's subdirectories to be writable by Apache
+	   This is the files directory you created earlier and specified in setup (Edit Current Configuration).  Note that 'nobody' below could also be 'apache' on your system.  Check the 'User' setting in your httpd.conf.
+		cd /path/to/files
+		chown -R nobody .
+		-OR-
+		chmod -R 777 .
+
+SECURITY CONCERNS
+-----------------
+There are many security concerns related with allowing users to store files on the server.  The most common problem is that users can upload any type of file, including CGI and PHP scripts.  This in effect grants them local access to the machine, and can be used to read database passwords and other sensitive files.  The ability to upload files of any type is not forbidden by phpwebhosting because it is sometimes desired, and also the types of vulnerable files differ from server to server.  To combat this, you can add a simple entry to Apache's httpd.conf to prevent certain types of files from being executed.  Included below is an example that results in .cgi, .pl, .php, .php3, and .phps files being treated as normal text files.  It also explicitly turns all Options off, which includes turning Indexes (listing of files) off.
+
+<Directory /path/to/files>
+Options None
+AllowOverride None
+DirectoryIndex index.html
+RemoveHandler cgi-script .cgi .pl
+RemoveType application/x-httpd-php .php .php3
+RemoveType application/x-httpd-php-source .phps
+</Directory>
