@@ -95,7 +95,7 @@
     <td colspan="<?php echo ($newinstall?"1":"2"); ?>">&nbsp;<font color="fefefe">Multi-Language support setup</font></td>
    </tr>
    <tr bgcolor="e6e6e6">
-    <td colspan="<?php echo ($newinstall?"1":"2"); ?>">This program will help you upgrade or installing different languages for phpGroupWare</td>
+    <td colspan="<?php echo ($newinstall?"1":"2"); ?>">This program will help you upgrade or install different languages for phpGroupWare</td>
    </tr>
    <tr bgcolor="e6e6e6">
     <td<?php echo ($newinstall?' align="center"':""); ?>>Select which languages you would like to use.
@@ -113,8 +113,8 @@
     <?php
       if (! $newinstall) {
          echo '<td valign="top">Select which method of upgrade you would like to do'
-            . '<br><input type="radio" name="upgrademethod" value="dumpold">&nbsp;Delete all old langagues and install new ones'
-            . '<br><input type="radio" name="upgrademethod" value="addmissing">&nbsp;Only add new pharses'
+            . '<br><input type="radio" name="upgrademethod" value="dumpold">&nbsp;Delete all old languages and install new ones'
+            . '<br><input type="radio" name="upgrademethod" value="addmissing">&nbsp;Only add new phrases'
             . '<br><input type="radio" name="upgrademethod" value="addonlynew">&nbsp;only add languages that are not in the database already.'
             . '</td>';
       }
