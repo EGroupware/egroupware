@@ -11,7 +11,7 @@
 		}
 		else
 		{
-			$imgpath = $GLOBALS['phpgw']->common->get_image_dir($appname) . SEP . 'navbar.gif';
+			$imgpath = $GLOBALS['phpgw']->common->get_image_path($appname) . SEP . 'navbar.gif';
 		}
 
 		$browser = CreateObject('phpgwapi.browser');
