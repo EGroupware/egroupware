@@ -690,7 +690,7 @@
 			}
 
 			list($addnew) = $this->bo->read_entry(array(
-				'id' => $_GET['ab_id'],
+				'id' => (int) $_GET['ab_id'],
 				'fields' => $this->bo->stock_contact_fields + $this->extrafields + $customfields
 			));
 
@@ -786,7 +786,7 @@
 			}
 
 			/* First, make sure they have permission to this entry */
-			$check = $this->bo->read_entry(array('id' => $_GET['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
+			$check = $this->bo->read_entry(array('id' => (int) $_GET['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
 			if(!$this->bo->check_perms($check[0],PHPGW_ACL_EDIT))
 			{
@@ -809,14 +809,14 @@
 
 			/* merge in extra fields */
 			$qfields = $this->bo->stock_contact_fields + $this->extrafields + $customfields;
-			$fields = $this->bo->read_entry(array('id' => $_GET['ab_id'], 'fields' => $qfields));
+			$fields = $this->bo->read_entry(array('id' => (int) $_GET['ab_id'], 'fields' => $qfields));
 
 			$this->addressbook_form('edit','menuaction=addressbook.uiaddressbook.edit',lang('Edit'),$fields[0],$customfields);
 
 			$GLOBALS['phpgw']->template->set_file(array('edit' => 'edit.tpl'));
 
 			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
-			$GLOBALS['phpgw']->template->set_var('ab_id',$_GET['ab_id']);
+			$GLOBALS['phpgw']->template->set_var('ab_id',(int) $_GET['ab_id']);
 			$GLOBALS['phpgw']->template->set_var('tid',$check[0]['tid']);
 			$GLOBALS['phpgw']->template->set_var('referer',$referer);
 			$GLOBALS['phpgw']->template->set_var('lang_save',lang('Save'));
@@ -851,7 +851,7 @@
 
 			if(!$ab_id)
 			{
-				$ab_id = $_GET['ab_id'];		// else plain Link in delete does not work
+				$ab_id = (int) $_GET['ab_id'];		// else plain Link in delete does not work
 			}
 			if((!$ab_id && !$select) || $_POST['no'])
 			{
@@ -935,7 +935,7 @@
 
 		function view()
 		{
-			$ab_id   = $_GET['ab_id'];
+			$ab_id   = (int) $_GET['ab_id'];
 			$submit  = $_POST['submit'];
 			$referer = $this->rebuild_referer($_GET['referer']);
 
