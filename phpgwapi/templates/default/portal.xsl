@@ -18,8 +18,16 @@
    						<table cellpadding="0" cellspacing="0" width="{$inner_width}" class="portal">
 							<tr>
 								<td>
-									<xsl:apply-templates select="listbox"/>
-									<xsl:apply-templates select="extrabox"/>
+									<xsl:choose>
+										<xsl:when test="listbox">
+											<ul>
+												<xsl:apply-templates select="listbox"/>
+											</ul>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:apply-templates select="extrabox"/>
+										</xsl:otherwise>
+									</xsl:choose>
 								</td>
 							</tr>
    						</table>
@@ -38,23 +46,12 @@
 		</a>
 	</xsl:template>
 
-<!-- 	<xsl:template name="portal_row">
-		<tr>
-			<td>
-				<xsl:apply-templates select="listbox"/>
-				<xsl:apply-templates select="extrabox"/>
-			</td>
-		</tr>
-	</xsl:template> -->
-
 	<xsl:template match="listbox">
 		<xsl:variable name="link"><xsl:value-of select="link"/></xsl:variable>
 		<xsl:variable name="lang_link_statustext"><xsl:value-of select="lang_link_statustext"/></xsl:variable>
-			<ul>
-				<li>
-					<a href="{$link}" onMouseover="window.status='{$lang_link_statustext}';return true;" onMouseout="window.status='';return true;">
-						<xsl:value-of select="text"/>
-					</a>
-				</li>
-			</ul>
+			<li>
+				<a href="{$link}" onMouseover="window.status='{$lang_link_statustext}';return true;" onMouseout="window.status='';return true;">
+					<xsl:value-of select="text"/>
+				</a>
+			</li>
 	</xsl:template>
