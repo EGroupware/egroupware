@@ -258,7 +258,7 @@
 		 *
 		 * @param string $location app location to get rights from
 		 * @param string $appname optional defaults to $GLOBALS['egw_info']['flags']['currentapp'];
-		 * @return int al rights or'ed together
+		 * @return int all rights or'ed together
 		 */
 		function get_rights($location,$appname = '')
 		{
@@ -303,6 +303,7 @@
 		 * @param $location app location
 		 * @param $required required right to check against
 		 * @param $appname optional defaults to currentapp
+		 * @return boolean
 		 */
 		function check($location, $required, $appname = False)
 		{
@@ -526,6 +527,31 @@
 		}
 
 		/**
+		 * get the locations for an app (excluding the run location !!!)
+		 *
+		 * @param string $app app optional defaults to $GLOBALS['egw_info']['flags']['currentapp'];
+		 * @return boolean/array false if there are no matching location in the db or array of locations
+		 */
+		function get_locations_for_app($app='')
+		{
+			if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
+
+			$this->db->select($this->table_name,'DISTINCT '.'acl_location',array(
+				'acl_appname'  => $app,
+			),__LINE__,__FILE__);
+
+			$locations = false;
+			while ($this->db->next_record())
+			{
+				if (($location = $this->db->f(0)) != 'run')
+				{
+					$locations[] = $location;
+				}
+			}
+			return $locations;
+		}
+
+		/**
 		 * get a list of applications a user has rights to
 		 *
 		 * @param int $account_id optional defaults to $GLOBALS['egw_info']['user']['account_id'];
@@ -578,8 +604,8 @@
 		{
 			if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
 
-			$memberships = array($account_id);
-			foreach((array)$GLOBALS['egw']->accounts->membership($account_id) as $group)
+			$memberships = array($this->account_id);
+			foreach((array)$GLOBALS['egw']->accounts->membership($this->account_id) as $group)
 			{
 				$memberships[] = $group['account_id'];
 			}
