@@ -2700,8 +2700,8 @@
 				{
 					$picture[] = Array(
 						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','high'),
-						'width'	=> 8,
-						'height'=> 17,
+						'width'	=> 16,
+						'height'=> 16,
 						'title' => lang('high priority')
 					);
 				}
@@ -2709,8 +2709,8 @@
 				{
 					$picture[] = Array(
 						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','circle'),
-						'width'	=> 5,
-						'height'=> 7,
+						'width'	=> 9,
+						'height'=> 9,
 						'title' => lang('single event')
 					);
 				}
@@ -3022,7 +3022,7 @@
 					if ($day_params['new_event'])
 					{
 						$new_event_link = ' <a href="'.$this->page('add','&date='.$date).'">'
-							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new').'" width="10" height="10" title="'.lang('New Entry').'" border="0" align="center">'
+							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new3').'" width="10" height="10" title="'.lang('New Entry').'" border="0" align="center">'
 							. '</a>';
 						$day_number = '<a href="'.$this->page('day','&date='.$date).'">'.$day.'</a>';
 					}
