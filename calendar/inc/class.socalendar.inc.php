@@ -208,24 +208,6 @@
 			$this->cal->set_status($id,$this->owner,$status);
 		}
 
-		function get_lastid()
-		{
-			$this->makeobj();
-		 	$entry = $this->cal->read_last_entry();
-			$ab_id = $entry[0]['id'];
-			return $ab_id;
-		}
-
-		function update_entry($userid,$fields)
-		{
-			$this->makeobj();
-			if ($this->rights & PHPGW_ACL_EDIT)
-			{
-				$this->cal->update($fields['ab_id'],$userid,$fields,$fields['access'],$fields['cat_id']);
-			}
-			return;
-		}
-
 		/* Begin mcal equiv functions */
 		function get_cached_event()
 		{

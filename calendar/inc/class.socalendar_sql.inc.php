@@ -124,22 +124,16 @@ class socalendar_ extends socalendar__
 			//$this->event->alarm = intval($this->stream->f('alarm'));
 			// But until then, do it this way...
 		//Legacy Support (New)
-			$this->event->alarm = 0;
+			$this->set_alarm(0);
 
-			$this->add_attribute('datetime',intval($this->stream->f('datetime')));
+//			$this->add_attribute('datetime',intval($this->stream->f('datetime')));
 			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
 			$this->set_start($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
 			$datetime = $this->datetime->localdates($this->stream->f('mdatetime'));
-			$this->event->mod->year	= $datetime['year'];
-			$this->event->mod->month	= $datetime['month'];
-			$this->event->mod->mday	= $datetime['day'];
-			$this->event->mod->hour	= $datetime['hour'];
-			$this->event->mod->min	= $datetime['minute'];
-			$this->event->mod->sec	= $datetime['second'];
-			$this->event->mod->alarm	= 0;
+			$this->set_date('modtime',$datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-			$this->add_attribute('edatetime',intval($this->stream->f('edatetime')));
+//			$this->add_attribute('edatetime',intval($this->stream->f('edatetime')));
 			$datetime = $this->datetime->localdates($this->stream->f('edatetime'));
 			$this->set_end($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
@@ -150,7 +144,7 @@ class socalendar_ extends socalendar__
 				$groups = explode(',',$this->stream->f('groups'));
 				for($j=1;$j<count($groups) - 1;$j++)
 				{
-					$this->event->groups[] = $groups[$j];
+					$this->add_attribute('groups',$groups[$j],$j-1);
 				}
 			}
 			
@@ -159,32 +153,31 @@ class socalendar_ extends socalendar__
 			{
 				$this->stream->next_record();
 
-				$this->event->recur_type = intval($this->stream->f('recur_type'));
-				$this->event->recur_interval = intval($this->stream->f('recur_interval'));
+				$this->add_attribute('recur_type',intval($this->stream->f('recur_type')));
+				$this->add_attribute('recur_interval',intval($this->stream->f('recur_interval')));
 				$enddate = $this->stream->f('recur_enddate');
 				if($enddate != 0 && $enddate != Null)
 				{
 					$datetime = $this->datetime->localdates($enddate);
-					$this->event->recur_enddate->year	= $datetime['year'];
-					$this->event->recur_enddate->month	= $datetime['month'];
-					$this->event->recur_enddate->mday	= $datetime['day'];
-					$this->event->recur_enddate->hour	= $datetime['hour'];
-					$this->event->recur_enddate->min	= $datetime['minute'];
-					$this->event->recur_enddate->sec	= $datetime['second'];
-					$this->event->recur_enddate->alarm	= 0;
+					$this->add_attribute('recur_enddate',$datetime['year'],'year');
+					$this->add_attribute('recur_enddate',$datetime['month'],'month');
+					$this->add_attribute('recur_enddate',$datetime['day'],'mday');
+					$this->add_attribute('recur_enddate',$datetime['hour'],'hour');
+					$this->add_attribute('recur_enddate',$datetime['minute'],'min');
+					$this->add_attribute('recur_enddate',$datetime['second'],'sec');
 				}
 				else
 				{
-					$this->event->recur_enddate->year	= 0;
-					$this->event->recur_enddate->month	= 0;
-					$this->event->recur_enddate->mday	= 0;
-					$this->event->recur_enddate->hour	= 0;
-					$this->event->recur_enddate->min	= 0;
-					$this->event->recur_enddate->sec	= 0;
-					$this->event->recur_enddate->alarm	= 0;
+					$this->add_attribute('recur_enddate',0,'year');
+					$this->add_attribute('recur_enddate',0,'month');
+					$this->add_attribute('recur_enddate',0,'mday');
+					$this->add_attribute('recur_enddate',0,'hour');
+					$this->add_attribute('recur_enddate',0,'min');
+					$this->add_attribute('recur_enddate',0,'sec');
 				}
-//	echo 'Event ID#'.$this->event->id.' : Enddate = '.$enddate."<br>\n";
-				$this->event->recur_data = $this->stream->f('recur_data');
+				$this->add_attribute('recur_enddate',0,'alarm');
+//	echo 'Event ID#'.$this->event['id'].' : Enddate = '.$enddate."<br>\n";
+				$this->add_attribute('recur_data',$this->stream->f('recur_data'));
 			}
 			
 		//Legacy Support
@@ -195,11 +188,12 @@ class socalendar_ extends socalendar__
 				{
 					if(intval($this->stream->f('cal_login')) == intval($this->user))
 					{
-						$this->event->users_status = $this->stream->f('cal_status');
+						$this->add_attribute('users_status',$this->stream->f('cal_status'));
 					}
 //					$this->event->participants[$this->stream->f('cal_login')] = $this->stream->f('cal_status');
-//					$this->add_attribute('participants',$this->stream->f('cal_status'),intval($this->stream->f('cal_login')));
-					$this->add_attribute('participants['.intval($this->stream->f('cal_login')).']',$this->stream->f('cal_status'));
+					$this->add_attribute('participants',$this->stream->f('cal_status'),intval($this->stream->f('cal_login')));
+//					$this->add_attribute('participants',array(intval($this->stream->f('cal_login'))=>$this->stream->f('cal_status')));
+//					$this->add_attribute('participants['.intval($this->stream->f('cal_login')).']',$this->stream->f('cal_status'));
 				}
 			}
 		}
@@ -242,7 +236,7 @@ class socalendar_ extends socalendar__
 	{
 		$this->save_event($this->event);
 		$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
-		return $this->event->id;
+		return $this->event['id'];
 	}
 
 	function store_event()
@@ -346,22 +340,22 @@ class socalendar_ extends socalendar__
 			'phpgw_cal_repeats'
 		);
 		$this->stream->lock($locks);
-		if($event->id == 0)
+		if($event['id'] == 0)
 		{
 			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
 			$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public) '
-				. "values('".$temp_name."',".$event->owner.",".$event->priority.",".$event->public.")");
+				. "values('".$temp_name."',".$event['owner'].",".$event['priority'].",".$event['public'].")");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
-			$event->id = $this->stream->f('cal_id');
+			$event['id'] = $this->stream->f('cal_id');
 		}
 
-		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
-		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
+		$date = $this->maketime($event['start']) - $this->datetime->tz_offset;
+		$enddate = $this->maketime($event['end']) - $this->datetime->tz_offset;
 		$today = time() - $this->datetime->tz_offset;
 //		$today = time();
 
-		if($event->recur_type != MCAL_RECUR_NONE)
+		if($event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$type = 'M';
 		}
@@ -370,71 +364,65 @@ class socalendar_ extends socalendar__
 			$type = 'E';
 		}
 
-		$cat = '';
-		if($event->category != 0)
-		{
-			$cat = 'category='.$event->category.', ';
-		}
-
 		$sql = 'UPDATE phpgw_cal SET '
-				. 'owner='.$event->owner.', '
+				. 'owner='.$event['owner'].', '
 				. 'datetime='.$date.', '
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
-				. 'priority='.$event->priority.', '
-				. $cat
+				. 'priority='.$event['priority'].', '
+				. ($event['category'] != 0?'category='.$event['category'].', ':'')
 				. "cal_type='".$type."', "
-				. 'is_public='.$event->public.', '
-				. "title='".addslashes($event->title)."', "
-				. "description='".addslashes($event->description)."' "
-				. 'WHERE cal_id='.$event->id;
+				. 'is_public='.$event['public'].', '
+				. "title='".addslashes($event['title'])."', "
+				. "description='".addslashes($event['description'])."' "
+				. 'WHERE cal_id='.$event['id'];
 				
 		$this->stream->query($sql,__LINE__,__FILE__);
 		
-		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 
-		reset($event->participants);
-		while (list($key,$value) = each($event->participants))
+		reset($event['participants']);
+		while (list($key,$value) = each($event['participants']))
 		{
 			if(intval($key) == intval($this->user))
 			{
 				$value = 'A';
 			}
 			$this->stream->query('INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event->id.','.intval($key).",'".$value."')",__LINE__,__FILE__);
+				. 'VALUES('.$event['id'].','.intval($key).",'".$value."')",__LINE__,__FILE__);
 		}
 
-		if($event->recur_type != MCAL_RECUR_NONE)
+		if($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			if($event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0 && $event->recur_enddate->year != 0)
+			if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
 			{
-				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $this->datetime->tz_offset;
+				$end = $this->maketime($event['recur_enddate']) - $this->datetime->tz_offset;
 			}
 			else
 			{
 				$end = 0;
 			}
 
-			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 			$this->stream->next_record();
 			$num_rows = $this->stream->f(0);
 			if($num_rows == 0)
 			{
 				$this->stream->query('INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_enddate,recur_data,recur_interval) '
-					.'VALUES('.$event->id.','.$event->recur_type.','.$end.','.$event->recur_data.','.$event->recur_interval.')',__LINE__,__FILE__);
+					.'VALUES('.$event['id'].','.$event['recur_type'].','.$end.','.$event['recur_data'].','.$event['recur_interval'].')',__LINE__,__FILE__);
 			}
 			else
 			{
 				$this->stream->query('UPDATE phpgw_cal_repeats '
-					.'SET recur_type='.$event->recur_type.', '
+					.'SET recur_type='.$event['recur_type'].', '
 					.'recur_enddate='.$end.', '
-					.'recur_data='.$event->recur_data.', recur_interval='.$event->recur_interval.' '
-					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
+					.'recur_data='.$event['recur_data'].', recur_interval='.$event['recur_interval'].' '
+					.'WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 			}
 		}
 		else
 		{
-			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 		}
 		
 		$this->stream->unlock();
@@ -455,6 +443,11 @@ class socalendar_ extends socalendar__
 	}
 	
 // End of ICal style support.......
+
+	function maketime($time)
+	{
+		return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
+	}
 
 	function group_search($owner=0)
 	{

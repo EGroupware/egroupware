@@ -72,132 +72,134 @@ class socalendar__
 
 	function event_init()
 	{
-		CreateObject('calendar.calendar_item');
-		$this->event = new calendar_item;
-		$this->event->start = new calendar_time;
-		$this->event->end = new calendar_time;
-		$this->event->mod = new calendar_time;
-		$this->event->recur_enddate = new calendar_time;
+//		CreateObject('calendar.calendar_item');
+		$this->event = Array();
+//		$this->event['start'] = Array();
+//		$this->event['end'] = Array();
+//		$this->event['mod'] = Array();
+//		$this->event['recur_enddate'] = Array();
 		$this->add_attribute('owner',intval($this->user));
 	}
 
 	function set_category($category='')
 	{
-		$this->event->category = $category;
+		$this->add_attribute('category',$category);
 	}
 
 	function set_title($title='')
 	{
-		$this->event->title = $title;
+		$this->add_attribute('title',$title);
 	}
 
 	function set_description($description='')
 	{
-		$this->event->description = $description;
+		$this->add_attribute('description',$description);
+	}
+
+	function set_date($element,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->add_attribute($element,intval($year),'year');
+		$this->add_attribute($element,intval($month),'month');
+		$this->add_attribute($element,intval($day),'mday');
+		$this->add_attribute($element,intval($hour),'hour');
+		$this->add_attribute($element,intval($min),'min');
+		$this->add_attribute($element,intval($sec),'sec');
+		$this->add_attribute($element,0,'alarm');
 	}
 
 	function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		$this->event->start->year = intval($year);
-		$this->event->start->month = intval($month);
-		$this->event->start->mday = intval($day);
-		$this->event->start->hour = intval($hour);
-		$this->event->start->min = intval($min);
-		$this->event->start->sec = intval($sec);
-		$this->event->start->alarm = 0;
+		$this->set_date('start',$year,$month,$day,$hour,$min,$sec);
 	}
 
 	function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		$this->event->end->year = intval($year);
-		$this->event->end->month = intval($month);
-		$this->event->end->mday = intval($day);
-		$this->event->end->hour = intval($hour);
-		$this->event->end->min = intval($min);
-		$this->event->end->sec = intval($sec);
-		$this->event->end->alarm = 0;
+		$this->set_date('end',$year,$month,$day,$hour,$min,$sec);
 	}
 
 	function set_alarm($alarm)
 	{
-		$this->event->alarm = intval($alarm);
+		$this->add_attribute('alarm',intval($alarm));
 	}
 
 	function set_class($class)
 	{
-		$this->event->public = $class;
+		$this->add_attribute('public',$class);
 	}
 
-	function set_common_recur($year,$month,$day,$interval)
+	function set_common_recur($year=0,$month=0,$day=0,$interval)
 	{
-		$this->event->recur_interval = intval($interval);
-		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
-		{
-			$this->event->recur_enddate->year = 0;
-			$this->event->recur_enddate->month = 0;
-			$this->event->recur_enddate->mday = 0;
-		}
-		else
-		{
-			$this->event->recur_enddate->year = intval($year);
-			$this->event->recur_enddate->month = intval($month);
-			$this->event->recur_enddate->mday = intval($day);
-		}
-		$this->event->recur_enddate->hour = 0;
-		$this->event->recur_enddate->min = 0;
-		$this->event->recur_enddate->sec = 0;
-		$this->event->recur_enddate->alarm = 0;
-		$this->event->recur_data = 0;
+		$this->add_attribute('recur_interval',intval(interval));
+		$this->set_date('recur_enddate',$year,$month,$day,0,0,0);
+		$this->add_attribute('recur_data',0);
 	}
 
 	function set_recur_none()
 	{
 		$this->set_common_recur(0,0,0,0);
-		$this->event->recur_type = MCAL_RECUR_NONE;
+		$this->add_attribute('recur_type',MCAL_RECUR_NONE);
 	}
 
 	function set_recur_daily($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = MCAL_RECUR_DAILY;
+		$this->add_attribute('recur_type',MCAL_RECUR_DAILY);
 	}
 
 	function set_recur_weekly($year,$month,$day,$interval,$weekdays)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = MCAL_RECUR_WEEKLY;
-		$this->event->recur_data = intval($weekdays);
+		$this->add_attribute('recur_type',MCAL_RECUR_WEEKLY);
+		$this->add_attribute('recur_data',intval($weekdays));
 	}
 
 	function set_recur_monthly_mday($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = MCAL_RECUR_MONTHLY_MDAY;
+		$this->add_attribute('recur_type',MCAL_RECUR_MONTHLY_MDAY);
 	}
 	
 	function set_recur_monthly_wday($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = MCAL_RECUR_MONTHLY_WDAY;
+		$this->add_attribute('recur_type',MCAL_RECUR_MONTHLY_WDAY);
 	}
 	
 	function set_recur_yearly($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = MCAL_RECUR_YEARLY;
+		$this->add_attribute('recur_type',MCAL_RECUR_YEARLY);
 	}
 
 	function fetch_current_stream_event()
 	{
-		return $this->fetch_event($this->event->id);
+		return $this->fetch_event($this->event['id']);
 	}
 	
-	function add_attribute($attribute,$value,$element='')
+	function add_attribute($attribute,$value,$element='False')
 	{
 		if(is_array($value))
 		{
 			reset($value);
 		}
-		eval("\$this->event->".$attribute." = ".$value.";"); 
+		if($element!='False')
+		{
+			if(is_int($element))
+			{
+				eval("\$this->event['".$attribute."'][".$element."] = ".$value.";");
+			}
+			else
+			{
+				eval("\$this->event['".$attribute."']['".$element."'] = ".$value.";");
+			}
+		}
+		elseif(is_int($value))
+		{
+			eval("\$this->event['".$attribute."'] = ".$value.";");
+		}
+		elseif(is_string($value))
+		{
+			eval("\$this->event['".$attribute."'] = '".$value."';");
+		}
 	}
 }

@@ -17,11 +17,56 @@
 	class bocalendar
 	{
 		var $public_functions = Array(
-			'read_entries'	=> True,
 			'read_entry'	=> True,
 			'delete_entry' => True,
 			'update'       => True,
-			'preferences'  => True
+			'preferences'  => True,
+			'assoc_array'	=> True,
+			'store_to_cache'	=> True
+		);
+
+		var $soap_functions = Array(
+			'read_entry' => Array(
+				'in' => Array(
+					'int'
+				),
+				'out' => Array(
+					'SOAPStruct'
+				)
+			),
+			'delete_entry' => Array(
+				'in' => Array(
+					'int'
+				),
+				'out' => Array(
+					'int'
+				)
+			),
+			'update' => Array(
+				'in' => Array(
+					'array',
+					'array',
+					'array',
+					'array',
+					'array'
+				),
+				'out' => Array(
+					'array'
+				)
+			),
+			'store_to_cache'	=> Array(
+				'in' => Array(
+					'int',
+					'int',
+					'int',
+					'int',
+					'int',
+					'int'
+				),
+				'out' => Array(
+					'SOAPStruct'
+				)
+			)
 		);
 
 		var $debug = False;
@@ -48,6 +93,8 @@
 		var $modified;
 		var $deleted;
 		var $added;
+
+		var $soap = False;
 		
 		var $use_session = False;
 
@@ -180,7 +227,8 @@
 		{
 			if($this->check_perms(PHPGW_ACL_READ))
 			{
-				return $this->so->read_entry($id);
+				$event = $this->so->read_entry($id);
+				return $event;
 			}
 		}
 
@@ -210,7 +258,7 @@
 				{
 					$event_id = $this->so->cal->deleted_events[$i];
 					$event = $this->so->read_entry($event_id);
-					$this->send_update(MSG_DELETED,$event->participants,$event);
+					$this->send_update(MSG_DELETED,$event['participants'],$event);
 				}
 				$this->so->expunge();
 			}
@@ -219,35 +267,6 @@
 		function search_keywords($keywords)
 		{
 			return $this->so->list_events_keyword($keywords);
-/*
-			$event_ids = $this->so->list_events_keyword($keywords);
-			$event_ids_repeating = $this->so->list_repeated_events_keyword($keywords);
-
-			$c_event_ids = count($cached_event_ids);
-			$c_event_ids_repeating = count($cached_event_ids_repeating);
-
-			if($this->debug)
-			{
-				echo "events cached : $c_event_ids : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
-				echo "repeating events cached : $c_event_ids_repeating : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
-			}
-
-			if($c_cached_ids)
-			{
-				for($i=0;$i<$c_cached_ids;$i++)
-				{
-					$cached_events[] = $this->so->read_entry($event_ids[$i]);
-				}
-			}
-
-			if($c_event_ids_repeating)
-			{
-				for($i=0;$i<$c_event_ids_repeating;$i++)
-				{
-					$cached_events[] = $this->so->read_entry($event_ids_repeating[$i]);
-				}
-			}
-*/
 		}
 
 		function update($p_cal=0,$p_participants=0,$p_start=0,$p_end=0,$p_recur_enddata=0)
@@ -259,6 +278,12 @@
 			$start = ($p_start?$p_start:$start);
 			$end = ($p_end?$p_end:$end);
 			$recur_enddate = ($p_recur_enddate?$p_recur_enddate:$recur_enddate);
+
+			$send_to_ui = True;
+			if($p_cal && $p_participants && $p_start && $p_end && $p_recur_enddata)
+			{
+				$send_to_ui = False;
+			}
 
 			$overlapping_events = False;
 
@@ -312,7 +337,6 @@
 					$recur_enddate['month'] = 0;
 					$recur_enddate['mday'] = 0;
 				}
-				$cal['recur_data'] = $cal['rpt_sun'] + $cal['rpt_mon'] + $cal['rpt_tue'] + $cal['rpt_wed'] + $cal['rpt_thu'] + $cal['rpt_fri'] + $cal['rpt_sat'];
 		
 				switch($cal['recur_type'])
 				{
@@ -323,6 +347,7 @@
 						$this->so->set_recur_daily($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval']);
 						break;
 					case MCAL_RECUR_WEEKLY:
+						$cal['recur_data'] = $cal['rpt_sun'] + $cal['rpt_mon'] + $cal['rpt_tue'] + $cal['rpt_wed'] + $cal['rpt_thu'] + $cal['rpt_fri'] + $cal['rpt_sat'];
 						$this->so->set_recur_weekly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval'],$cal['recur_data']);
 						break;
 					case MCAL_RECUR_MONTHLY_MDAY:
@@ -367,12 +392,12 @@
 				@reset($part);
 				while(list($key,$value) = each($part))
 				{
-					$this->so->add_attribute('participants['.$key.']','U');
+					$this->so->add_attribute('participants','U',$key);
 				}
 
 				reset($participants);
 				$event = $this->get_cached_event();
-				if(!@$event->participants[$cal['owner']])
+				if(!@$event['participants'][$cal['owner']])
 				{
 					$this->so->add_attribute('owner',$minparts);
 				}
@@ -389,32 +414,42 @@
 
             settype($start,'integer');
             settype($end,'integer');
-				$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
-				$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
+				$start = $this->maketime($event['start']) - $this->datetime->tz_offset;
+				$end = $this->maketime($event['end']) - $this->datetime->tz_offset;
 
-				$overlapping_events = $this->overlap($start,$end,$event->participants,$event->owner,$event->id);
+				$overlapping_events = $this->overlap($start,$end,$event['participants'],$event->owner,$event->id);
 			}
 
 			if($overlapping_events)
 			{
-			   $ui->overlap($overlapping_events,$event);
+            if($send_to_ui)
+            {
+				   $ui->overlap($overlapping_events,$event);
+				}
+				else
+				{
+					return $overlapping_events;
+				}
 			}
 			else
 			{
-				if(!$event->id)
+				if(!$event['id'])
 				{
    				$this->so->add_entry($event);
-	   			$this->send_update(MSG_ADDED,$event->participants,'',$this->get_cached_event());
+	   			$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
 				}
 				else
 				{
 					$new_event = $event;
-					$old_event = $this->read_entry($new_event->id);
+					$old_event = $this->read_entry($new_event['id']);
 					$this->prepare_recipients($new_event,$old_event);
    				$this->so->add_entry($event);
 				}
-            $date = sprintf("%04d%02d%02d",$event->start->year,$event->start->month,$event->start->mday);
-			   $ui->index();
+            $date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
+            if($send_to_ui)
+            {
+				   $ui->index();
+				}
 			}
 		}
 
@@ -499,6 +534,11 @@
 			unset($holiday);
 		}
 
+		function maketime($time)
+		{
+			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
+		}
+
 		function can_user_edit($event)
 		{
 			$can_edit = False;
@@ -554,17 +594,17 @@
 			{
 				$error = 40;
 			}
-			elseif (($this->datetime->time_valid($event->start->hour,$event->start->min,0) == False) || ($this->datetime->time_valid($event->end->hour,$event->end->min,0) == False))
+			elseif (($this->datetime->time_valid($event['start']['hour'],$event['start']['min'],0) == False) || ($this->datetime->time_valid($event['end']['hour'],$event['end']['min'],0) == False))
 			{
 				$error = 41;
 			}
-			elseif (($this->datetime->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($this->datetime->date_valid($event->end->year,$event->end->month,$event->end->mday) == False) || ($this->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 1))
+			elseif (($this->datetime->date_valid($event['start']['year'],$event['start']['month'],$event['start']['mday']) == False) || ($this->datetime->date_valid($event['end']['year'],$event['end']['month'],$event['end']['mday']) == False) || ($this->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 1))
 			{
 				$error = 42;
 			}
-			elseif ($this->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 0)
+			elseif ($this->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 0)
 			{
-				if ($this->datetime->time_compare($event->start->hour,$event->start->min,0,$event->end->hour,$event->end->min,0) == 1)
+				if ($this->datetime->time_compare($event['start']['hour'],$event['start']['min'],0,$event['end']['hour'],$event['end']['min'],0) == 1)
 				{
 					$error = 42;
 				}
@@ -734,21 +774,21 @@
 			{
 				$owner = $this->owner;
 			}
-			if ($owner == $phpgw_info['user']['account_id'] || ($event->public==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event->public==0))
+			if ($owner == $phpgw_info['user']['account_id'] || ($event['public']==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event['public']==0))
 			{
 				return False;
 			}
-			elseif($event->public == 0)
+			elseif($event['public'] == 0)
 			{
 				return True;
 			}
-			elseif($event->public == 2)
+			elseif($event['public'] == 2)
 			{
 				$is_private = True;
 				$groups = $phpgw->accounts->memberships($owner);
 				while (list($key,$group) = each($groups))
 				{
-					if (strpos(' '.implode($event->groups,',').' ',$group['account_id']))
+					if (strpos(' '.implode($event['groups'],',').' ',$group['account_id']))
 					{
 						return False;
 					}
@@ -768,13 +808,13 @@
 			{
 				return 'private';
 			}
-			elseif (strlen($event->$field) > 19)
+			elseif (strlen($event[$field]) > 19)
 			{
-				return substr($event->$field, 0 , 19) . '...';
+				return substr($event[$field], 0 , 19) . '...';
 			}
 			else
 			{
-				return $event->$field;
+				return $event[$field];
 			}
 		}
 
@@ -872,9 +912,9 @@
 				for($i=0;$i<count($this->cached_events[$date]);$i++)
 				{
 					$events = $this->cached_events[$date][$i];
-					$events_id = $events->id;
-					$event_id = $event->id;
-					if($events->id == $event->id)
+					$events_id = $events['id'];
+					$event_id = $event['id'];
+					if($events['id'] == $event['id'])
 					{
 						$inserted = True;
 						break;
@@ -882,7 +922,7 @@
 					$year = substr($date,0,4);
 					$month = substr($date,4,2);
 					$day = substr($date,6,2);
-					if(date('Hi',mktime($event->start->hour,$event->start->min,$event->start->sec,$month,$day,$year)) < date('Hi',mktime($events->start->hour,$events->start->min,$events->start->sec,$month,$day,$year)))
+					if(date('Hi',mktime($event['start']['hour'],$event['start']['min'],$event['start']['sec'],$month,$day,$year)) < date('Hi',mktime($events['start']['hour'],$events['start']['min'],$events['start']['sec'],$month,$day,$year)))
 					{
 						for($j=count($this->cached_events[$date]);$j>=$i;$j--)
 						{
@@ -917,10 +957,10 @@
 			{
 				$rep_events = $this->repeating_events[$i];
 				$id = $rep_events->id;
-				$event_beg_day = mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year);
-				if($rep_events->recur_enddate->month != 0 && $rep_events->recur_enddate->mday != 0 && $rep_events->recur_enddate->year != 0)
+				$event_beg_day = mktime(0,0,0,$rep_events['start']['month'],$rep_events['start']['mday'],$rep_events['start']['year']);
+				if($rep_events['recur_enddate']['month'] != 0 && $rep_events['recur_enddate']['mday'] != 0 && $rep_events['recur_enddate']['year'] != 0)
 				{
-					$event_recur_time = mktime($rep_events->recur_enddate->hour,$rep_events->recur_enddate->min,$rep_events->recur_enddate->sec,$rep_events->recur_enddate->month,$rep_events->recur_enddate->mday,$rep_events->recur_enddate->year);
+					$event_recur_time = $this->maketime($rep_events['recur_enddate']);
 				}
 				else
 				{
@@ -942,8 +982,8 @@
 				}
 				else
 				{				
-					$freq = $rep_events->recur_interval;
-					$type = $rep_events->recur_type;
+					$freq = $rep_events['recur_interval'];
+					$type = $rep_events['recur_type'];
 					switch($type)
 					{
 						case MCAL_RECUR_DAILY:
@@ -986,35 +1026,35 @@
 									$check = MCAL_M_SATURDAY;
 									break;
 							}
-							if ($rep_events->recur_data & $check)
+							if ($rep_events['recur_data'] & $check)
 							{
 								$this->sort_event($rep_events,$search_date_full);
 							}
 							break;
 						case MCAL_RECUR_MONTHLY_WDAY:
-							if ((($search_date_year - $rep_events->start->year) * 12 + $search_date_month - $rep_events->start->month) % $freq)
+							if ((($search_date_year - $rep_events['start']['year']) * 12 + $search_date_month - $rep_events['start']['month']) % $freq)
 							{
 								continue;
 							}
 	  
-							if (($this->datetime->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $this->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
-								(ceil($rep_events->start->mday/7) == ceil($search_date_day/7)))
+							if (($this->datetime->day_of_week($rep_events['start']['year'],$rep_events['start']['month'],$rep_events['start']['mday']) == $this->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
+								(ceil($rep_events['start']['mday']/7) == ceil($search_date_day/7)))
 							{
 								$this->sort_event($rep_events,$search_date_full);
 							}
 							break;
 						case MCAL_RECUR_MONTHLY_MDAY:
-							if ((($search_date_year - $rep_events->start->year) * 12 + $search_date_month - $rep_events->start->month) % $freq)
+							if ((($search_date_year - $rep_events['start']['year']) * 12 + $search_date_month - $rep_events['start']['month']) % $freq)
 							{
 								continue;
 							}
-							if ($search_date_day == $rep_events->start->mday)
+							if ($search_date_day == $rep_events['start']['mday'])
 							{
 								$this->sort_event($rep_events,$search_date_full);
 							}
 							break;
 						case MCAL_RECUR_YEARLY:
-							if (($search_date_year - $rep_events->start->year) % $freq)
+							if (($search_date_year - $rep_events['start']['year']) % $freq)
 							{
 								continue;
 							}
@@ -1086,8 +1126,8 @@
 				for($i=0;$i<$c_cached_ids;$i++)
 				{
 					$event = $this->so->read_entry($cached_event_ids[$i]);
-					$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year);
-					$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year);
+					$starttime = $this->maketime($event['start']);
+					$endtime = $this->maketime($event['end']);
 					$this->cached_events[date('Ymd',$starttime)][] = $event;
 					if($this->cached_events[date('Ymd',$endtime)][count($this->cached_events[date('Ymd',$starttime)]) - 1] != $event)
 					{
@@ -1109,6 +1149,7 @@
 					$this->check_repeating_events($date);
 				}
 			}
+			return $this->cached_events;
 		}
 
 		/* Begin Appsession Data */
@@ -1359,7 +1400,7 @@
 						}
 						$private = $this->is_private($event,$part);
 						$time_display = $phpgw->common->show_date($eventstart['raw'],$this->users_timeformat).'-'.$phpgw->common->show_date($eventend['raw'],$this->users_timeformat);
-						$time_description = '('.$time_display.') '.$this->get_short_field($event,$private,'title').$this->display_status($event->participants[$part]);
+						$time_description = '('.$time_display.') '.$this->get_short_field($event,$private,'title').$this->display_status($event['participants'][$part]);
 						for($m=$startminute;$m<=$endminute;$m++)
 						{
 							$index = ($hour + (($m * $increment) * 100));
@@ -1378,15 +1419,15 @@
 			switch($status)
 			{
 				case REJECTED:
-					$this->send_update(MSG_REJECTED,$old_event->participants,$old_event);
+					$this->send_update(MSG_REJECTED,$old_event['participants'],$old_event);
 					$this->so->set_status($cal_id,$status);
 					break;
 				case TENTATIVE:
-					$this->send_update(MSG_TENTATIVE,$old_event->participants,$old_event);
+					$this->send_update(MSG_TENTATIVE,$old_event['participants'],$old_event);
 					$this->so->set_status($cal_id,$status);
 					break;
 				case ACCEPTED:
-					$this->send_update(MSG_ACCEPTED,$old_event->participants,$old_event);
+					$this->send_update(MSG_ACCEPTED,$old_event['participants'],$old_event);
 					$this->so->set_status($cal_id,$status);
 					break;
 			}
@@ -1415,7 +1456,7 @@
 
 			if($old_event != False)
 			{
-				$t_old_start_time = mktime($old_event->start->hour,$old_event->start->min,$old_event->start->sec,$old_event->start->month,$old_event->start->mday,$old_event->start->year);
+				$t_old_start_time = $this->maketime($old_event['start']);
 				if($t_old_start_time < (time() - 86400))
 				{
 					return False;
@@ -1447,32 +1488,32 @@
 			{
 				case MSG_DELETED:
 					$action = 'Deleted';
-					$event_id = $old_event->id;
+					$event_id = $old_event['id'];
 					$msgtype = '"calendar";';
 					break;
 				case MSG_MODIFIED:
 					$action = 'Modified';
-					$event_id = $old_event->id;
+					$event_id = $old_event['id'];
 					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
 					break;
 				case MSG_ADDED:
 					$action = 'Added';
-					$event_id = $new_event->id;
+					$event_id = $new_event['id'];
 					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
 					break;
 				case MSG_REJECTED:
 					$action = 'Rejected';
-					$event_id = $old_event->id;
+					$event_id = $old_event['id'];
 					$msgtype = '"calendar";';
 					break;
 				case MSG_TENTATIVE:
 					$action = 'Tentative';
-					$event_id = $old_event->id;
+					$event_id = $old_event['id'];
 					$msgtype = '"calendar";';
 					break;
 				case MSG_ACCEPTED:
 					$action = 'Tentative';
-					$event_id = $old_event->id;
+					$event_id = $old_event['id'];
 					$msgtype = '"calendar";';
 					break;
 			}
@@ -1484,7 +1525,7 @@
 		
 			if($new_event != False)
 			{
-				$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $this->datetime->tz_offset;
+				$new_event_datetime = $this->maketime($new_event['start']) - $this->datetime->tz_offset;
 			}
 
 			while(list($userid,$statusid) = each($participants))
@@ -1560,9 +1601,9 @@
 		function prepare_recipients(&$new_event,$old_event)
 		{
 			// Find modified and deleted users.....
-			while(list($old_userid,$old_status) = each($old_event->participants))
+			while(list($old_userid,$old_status) = each($old_event['participants']))
 			{
-				if(isset($new_event->participants[$old_userid]))
+				if(isset($new_event['participants'][$old_userid]))
 				{
 					if($this->debug)
 					{
@@ -1580,16 +1621,16 @@
 				}
 			}
 			// Find new users.....
-			while(list($new_userid,$new_status) = each($new_event->participants))
+			while(list($new_userid,$new_status) = each($new_event['participants']))
 			{
-				if(!isset($old_event->participants[$new_userid]))
+				if(!isset($old_event['participants'][$new_userid]))
 				{
 					if($this->debug)
 					{
 						echo "Adding event for user ".$new_userid."<br>\n";
 					}
 					$this->added[$new_userid] = 'U';
-					$new_event->participants[$new_userid] = 'U';
+					$new_event['participants'][$new_userid] = 'U';
 				}
 			}
 		
