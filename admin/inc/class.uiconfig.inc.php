@@ -18,6 +18,23 @@
 
 		function index()
 		{
+			$referer = urldecode($GLOBALS['HTTP_GET_VARS']['referer']);
+
+			if($referer)
+			{
+				$_redir = $referer;
+				$GLOBALS['phpgw']->session->appsession('session_data','admin_config',$referer);
+			}
+			else
+			{
+				$referer = $GLOBALS['phpgw']->session->appsession('session_data','admin_config');
+				if($referer == '-1')
+				{
+					$referer = '';
+				}
+				$_redir  = $referer ? $referer : $GLOBALS['phpgw']->link('/admin/index.php');
+			}
+
 			switch($GLOBALS['HTTP_GET_VARS']['appname'])
 			{
 				case 'admin':
@@ -39,7 +56,7 @@
 				case 'phpgwapi':
 				case '':
 					/* This keeps the admin from getting into what is a setup-only config */
-					Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+					Header('Location: ' . $_redir);
 					break;
 				default:
 					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
@@ -64,7 +81,7 @@
 
 			if ($GLOBALS['HTTP_POST_VARS']['cancel'])
 			{
-				Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+				Header('Location: ' . $_redir);
 			}
 
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
@@ -118,7 +135,8 @@
 
 				if(!$errors)
 				{
-					Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+					$GLOBALS['phpgw']->session->appsession('session_data','admin_config',-1);
+					Header('Location: ' . $_redir);
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 			}
