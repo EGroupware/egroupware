@@ -608,6 +608,10 @@
 
 			if ($login != '')
 			{
+				if (strlen($login) > 30)
+				{
+					$login = substr($login,0,30);
+				}
 				$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id)'
 					. " VALUES ('" . $sessionid . "','" . $this->db->db_addslashes($login). "','"
 					. $this->db->db_addslashes($user_ip) . "',$now,0," . (int)$account_id .')',__LINE__,__FILE__);
