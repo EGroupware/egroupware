@@ -207,12 +207,18 @@
      {
         global $phpgw;
   
-  	if(!$name) $name = "n_groups[]";
+        if(!$name) $name = "n_groups[]";
     	$out = '<select name="' . $name . '" multiple>';
         while (list($null,$group) = each($groups)) {
            $out .= '<option value="' . $group[0] . '"';
-           if (ereg("," . $group[0] . ",", $selected))
-   {
+           if (strtolower(gettype($selected)) == strtolower("array")) {
+              for($i=0;$i<count($selected);$i++) {
+                if ($group[0] == $selected[$i]) {
+                   $out .= " SELECTED";
+                   break;
+                }
+              }
+           } elseif (ereg("," . $group[0] . ",", $selected))  {
               $out .= " SELECTED";
            }
            $out .= ">" . $group[1] . "</option>\n";

@@ -174,7 +174,7 @@
     $db2->query("SELECT account_lid FROM accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
     $db2->next_record();
     $user_groups = $phpgw->accounts->read_group_names($db2->f("account_lid"));
-
+      
     display_item(lang("Groups"),$sb->getGroups($user_groups,$cal_info->groups,"cal[groups][]"));
 
 // Participants
