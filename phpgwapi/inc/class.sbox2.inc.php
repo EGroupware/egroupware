@@ -298,7 +298,7 @@
 				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames);
 				next($accs);
 			}
-			return $this->getArrayItem($name,$selected,$aarr,1);			
+			return $this->getArrayItem($name,$id,$aarr,1);			
 		}
 
 		function getDate($n_year,$n_month,$n_day,$date)
