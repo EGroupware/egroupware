@@ -63,7 +63,6 @@ check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
-click <a href="index.php"?sessionid=e8b5fbb098cb6b1e628cc61a5b848229>here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 completed	setup	es-es	Completado
 config password	setup	es-es	Contraseña de configuración
