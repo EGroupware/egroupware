@@ -138,5 +138,7 @@
 
   $t->set_var("lang_button",Lang("Add"));
   $t->pparse("out","form");
+  
+  account_close();
   $phpgw->common->phpgw_footer();
 ?>

@@ -14,6 +14,15 @@
   // Sections of code where taking from slapda http://www.jeremias.net/projects/sldapa  by
   // Jason Jeremias <jason@jeremias.net>
   
+  
+  $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
+
+  if (! ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
+     echo "<p><b>Error binding to LDAP server.  Check your config</b>";
+     exit;
+  }
+
+  
   function account_read($method,$start,$sort,$order)
   {
   
@@ -21,7 +30,7 @@
   
   function account_add($account_info)
   {
-     global $phpgw_info;
+     global $phpgw_info, $ldap;
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
         $salt = randomstring(2);
@@ -31,13 +40,6 @@
      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
         $salt = randomstring(9);
         $userpassword = md5cryptpass($account_info["passwd"], $salt);
-     }
-
-     $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
-
-     if (! ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
-        echo "<p><b>Error binding to LDAP server.  Check your config</b>";
-        exit;
      }
 
      // Create our entry
@@ -92,10 +94,22 @@
   
   function account_delete($account_id)
   {
+     global $ldap;
 
+     $searchline = getSearchLine($searchstring);
+     $result     = ldap_search($ldap, $BASEDN, $searchline);
+     $entry      = ldap_get_entries($ldap, $result);
+     $numentries = $entry["count"];
+ 
+    @ldap_delete($ldap, $button); 
   }
 
   function account_exsists($loginid)
   {
 
+  }
+  
+  function account_close()
+  {
+     @ldap_close($ldap);  
   }

@@ -62,4 +62,5 @@
 
      Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
   }
+  account_close();
 ?>

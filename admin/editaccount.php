@@ -226,6 +226,7 @@
          </table>
         </center>
        </form>
-<?php        
-    $phpgw->common->phpgw_footer();
+<?php
+  account_close();
+  $phpgw->common->phpgw_footer();
 ?>

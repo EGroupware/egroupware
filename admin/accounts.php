@@ -86,4 +86,6 @@
   $t->pparse("out","footer");
 
   $phpgw->common->phpgw_footer();
+  
+  account_close();
 ?>

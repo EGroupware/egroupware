@@ -243,3 +243,9 @@
 
      return $phpgw->db->f(0);
   }
+
+  // This is need for LDAP, so this is a dummy function.  
+  function account_close()
+  {
+     return True;
+  }
