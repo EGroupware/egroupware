@@ -34,9 +34,12 @@
 
 			foreach($holiday as $name => $val)
 			{
-				if (!substr($name,0,4) == 'hol_')
+				if (substr($name,0,4) != 'hol_')
 				{
-					$holiday['hol_'.$name] = $holiday[$name];
+					if (!is_numeric($name))
+					{
+						$holiday['hol_'.$name] = $holiday[$name];
+					}
 					unset($holiday[$name]);
 				}
 			}
@@ -127,7 +130,7 @@
 		}
 		
 		/* Private functions */
-		function _build_where($locales,$query='',$order='',$year=0)
+		function _build_where($locales,$query='',$order='',$year=0,$add_order_by=True)
 		{
 			$querymethod = 'hol_locale';
 			if (is_array($locales))
@@ -146,8 +149,10 @@
 			{
 				$querymethod .= " AND (hol_occurence < 1900 OR hol_occurence = ".(int)$year.")";
 			}
-			$querymethod .= ' ORDER BY '.(preg_match('/[a-zA-Z0-9_,]+/',$order) ? $order : 'hol_month_num,hol_mday');
-
+			if ($add_order_by)
+			{
+				$querymethod .= ' ORDER BY '.(preg_match('/[a-zA-Z0-9_,]+/',$order) ? $order : 'hol_month_num,hol_mday');
+			}
 			return $querymethod;
 		}
 
@@ -173,7 +178,7 @@
 		
 		function holiday_total($locale,$query='',$year=0)
 		{
-			$where = $this->_build_where($locale,$query,'',$year);
+			$where = $this->_build_where($locale,$query,'',$year,False);
 
 			if($this->debug)
 			{
