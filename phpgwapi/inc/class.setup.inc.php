@@ -72,6 +72,7 @@
 		*/
 		function auth($auth_type='Config')
 		{
+			#phpinfo();
 			$remoteip     = $_SERVER['REMOTE_ADDR'];
 
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
@@ -101,7 +102,7 @@
 				6. None of the above
 			*/
 
-			$expire = time() + 1200; /* Expire login if idle for 20 minutes. */
+			$expire = time() + (1200*9); /* Expire login if idle for 20 minutes. */
 
 			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
