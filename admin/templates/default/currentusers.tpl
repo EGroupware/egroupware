@@ -1,13 +1,15 @@
 <!-- BEGIN list -->
 <br>
 <table border="0" width="95%" align="center">
- <tr bgcolor="{bg_color}">
+ <tr>
    {left_next_matchs}
    <td>&nbsp;</td>
    <td>&nbsp;</td>
    {right_next_matchs}
  </tr> 
+</td>
 
+<table border="0" width="95%" align="center">
  <tr bgcolor="{th_bg}">
   <td>{sort_loginid}</td>
   <td>{sort_ip}</td>

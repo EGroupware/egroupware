@@ -2,7 +2,7 @@
 <br>
 <div align="center">
  <table border="0" width="45%">
-  <tr bgcolor="{bg_color}">
+  <tr>
 {left}
     <td align="center">{lang_showing}</td>
 {right}

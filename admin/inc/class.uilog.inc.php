@@ -210,10 +210,10 @@
 			$header['_cols']= $this->fields_inc;
 
 			// Set Table formating parameters
-			$header['#table_parms']=array('width'=>"98%", 'bgcolor'=>"000000", 'border'=>"0");
+			$header['#table_parms']=array('width'=>"98%", 'bgcolor'=>"#000000", 'border'=>"0");
 
 			// Set Header formating parameters
-			$header['#head_parms']=array('bgcolor'=>"D3DCFF");
+			$header['#head_parms']=array('bgcolor'=>"#D3DCFF");
 
 			// Column Log_ID
 			$header['log_id']['#parms_hdr'] = array('align'=>"center");
@@ -271,20 +271,20 @@
 		{
 			switch($row['log_severity']['value'])
 			{
-				case 'D': $row['log_severity']['bgcolor'] = 'D3DCFF'; break;
-				case 'I': $row['log_severity']['bgcolor'] = 'C0FFC0'; break;
-				case 'W': $row['log_severity']['bgcolor'] = 'FFFFC0'; break;
-				case 'E': $row['log_severity']['bgcolor'] = 'FFC0C0'; break;
-				case 'F': $row['log_severity']['bgcolor'] = 'FF0909'; break;
+				case 'D': $row['log_severity']['bgcolor'] = '#D3DCFF'; break;
+				case 'I': $row['log_severity']['bgcolor'] = '#C0FFC0'; break;
+				case 'W': $row['log_severity']['bgcolor'] = '#FFFFC0'; break;
+				case 'E': $row['log_severity']['bgcolor'] = '#FFC0C0'; break;
+				case 'F': $row['log_severity']['bgcolor'] = '#FF0909'; break;
 			}
 
 			switch($row['log_msg_severity']['value'])
 			{
-				case 'D': $color = 'D3DCFF'; break;
-				case 'I': $color = 'C0FFC0'; break;
-				case 'W': $color = 'FFFFC0'; break;
-				case 'E': $color = 'FFC0C0'; break;
-				case 'F': $color = 'FF0909'; break;
+				case 'D': $color = '#D3DCFF'; break;
+				case 'I': $color = '#C0FFC0'; break;
+				case 'W': $color = '#FFFFC0'; break;
+				case 'E': $color = '#FFC0C0'; break;
+				case 'F': $color = '#FF0909'; break;
 			}
 			reset($this->fields_inc);
 			while(list($cno,$fld) = each($this->fields_inc))

@@ -77,6 +77,7 @@
 
 		function get_error_e($parms)
 		{
+if ( false ) {
 			/* Fixed From */
 			if (!isset($parms['from']))
 			{
@@ -87,6 +88,7 @@
 				$parms['from'][] = 'phpgw_accounts';
 			} 
 
+}	
 			/* Fix Where */
 			if (!isset($parms['where']))
 			{
@@ -94,9 +96,8 @@
 			}
 			else
 			{
-				$parms['where'][] = 'phpgw_log.log_id = phpgw_accounts.account_id';
+				$parms['where'][] = 'phpgw_log.log_user = phpgw_accounts.account_id';
 			}
-			
 			/* Fix Default Fields */
 			if (!isset($parms['fields']))
 			{

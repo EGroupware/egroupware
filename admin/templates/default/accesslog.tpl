@@ -18,7 +18,9 @@
 							<td align="right">
 								<table border="0">
 									<tr>
-										{nextmatchs_left}&nbsp;{nextmatchs_right}
+										{nextmatchs_left}
+										<td>&nbsp;</td>
+										{nextmatchs_right}
 									</tr>
 								</table>
 							</td>

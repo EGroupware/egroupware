@@ -2,9 +2,9 @@
 <p>
  <table border="0" width="45%" align="center">
   <tr>
-   <td align="left">{left_next_matchs}</td>
+   {left_next_matchs}
    <td align="center">{lang_groups}</td>
-   <td align="right">{right_next_matchs}</td>
+   {right_next_matchs}
   </tr>
  </table>
 

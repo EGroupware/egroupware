@@ -29,9 +29,9 @@
 				}
 				else
 				{
-					$html .= '<form method="post" action="'
-						 . $GLOBALS['phpgw']->link('/index.php')
-						 . '">' . "\n";
+					#$html .= '<form method="post" action="'
+					#	 . $GLOBALS['phpgw']->link('/index.php')
+					#	 . '">' . "\n";
 					$bo = CreateObject('admin.bolog',True);
 					if (!isset($start))
 					{
@@ -50,10 +50,10 @@
 					$hits =	$nextmatchs->show_hits($total_records,$start);
 
 					$html .= '<table width="98%"><tr>';
-					$html .= '<td align="left">' . $left . '</td>';
+					$html .= $left;
 					$html .= '<td align="right"> ' . $hits . ' </td>';
 					$html .= '<td align="left"> <a href=' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log&editable=true') .'> ' . lang('Edit Table format') . '</a></td>';
-					$html .= '<td align="right">' . $right . '</td>';
+					$html .= $right;
 					$html .= '</tr></table>';
 				}
 			}
@@ -120,7 +120,7 @@
 				while(list($pc,$pcol)=each($printlist))
 				{
 					$cname = $pcol['#name'];
-					$cparms = $this->arr_merge($head[$cname],$pcol,array('bgcolor'=>'FFFFFF'),$rows[$rno][$cname]);
+					$cparms = $this->arr_merge($head[$cname],$pcol,array('bgcolor'=>'#FFFFFF'),$rows[$rno][$cname]);
 					$rows[$rno][$cname] = $cparms;
 				}
 			}
@@ -201,7 +201,7 @@
 				}
 			}
 			$html .= "</table>\n";
-			$html .= "</form>";
+			#$html .= "</form>";
 			return $html;
 		}
 
@@ -225,14 +225,16 @@
 						if ($pvalue != 1)
 						{
 							$html .= $comma . $pname . '="' . $pvalue . '"';
-							$comma = ', ';
+							#$comma = ', ';
+							$comma = ' ';
 						};
 						break;
 					default:
 						if (substr($pname,0,1) != '#')
 						{
 							$html .= $comma . $pname . '="' . $pvalue . '"';
-							$comma = ', ';
+							#$comma = ', ';
+							$comma = ' ';
 						}
 				}
 			}
@@ -310,28 +312,28 @@
 
 			// Column Defintions...
 			$html .= "<h2>Column Definition</h2>";
-			$html .= "<table width=\"98%\", bgcolor=\"000000\">\n";
+			$html .= "<table width=\"98%\" bgcolor=\"#000000\">\n";
 			$f	= array();
 			for ($fno=0;$fno<$noflds;$fno++)
 			{
 				$f[]=$fno;
 			}
 			// Column Headings
-			$html .= "\t<tr bgcolor=\"D3DCFF\">\n";
+			$html .= "\t<tr bgcolor=\"#D3DCFF\">\n";
 			for ($cno=0;$cno<$nocols;$cno++)
 			{
-				$html .= "\t\t<td align=center>$cno</td>\n";
+				$html .= "\t\t<td align=\"center\">$cno</td>\n";
 			}
 			$html .= "\t</tr >\n";
 			for ($rno=0;$rno<$norows;$rno++)
 			{
-				$html .= "\t<tr bgcolor=\"D3DCFF\">\n";
+				$html .= "\t<tr bgcolor=\"#D3DCFF\">\n";
 				for ($cno=0;$cno<$nocols;$cno++)
 				{
 					$c = $layout[$rno][$cno];
 					$tname = "layout[$rno][]";
 					$t = $this->DropDown($f,$tname,$c);
-					$html .= "\t\t<td align=center>$t</td>\n";
+					$html .= "\t\t<td align=\"center\">$t</td>\n";
 				}
 				$html .= "\t</tr >\n";
 			}
@@ -347,9 +349,9 @@
 			$html .= "<input type=\"submit\" name=\"submit\" value=\"Update\">";
 			//Field Definitions
 			$html .= "<h2>Field Definitions</h2>";
-			$html .= "<table width=\"98%\", bgcolor=\"D3DCFF\">\n";
-			$html .= "\t\t<td width=\"2%\", align=\"center\">No</td>\n";
-			$html .= "\t\t<td width=\"2%\", align=\"center\">Del</td>\n";
+			$html .= "<table width=\"98%\" bgcolor=\"#D3DCFF\">\n";
+			$html .= "\t\t<td width=\"2%\" align=\"center\">No</td>\n";
+			$html .= "\t\t<td width=\"2%\" align=\"center\">Del</td>\n";
 			$html .= "\t\t<td width=\"5%\">Field</td>\n";
 			$html .= "\t\t<td>Value</td>\n";
 			$html .= "\t</tr>\n";
@@ -367,11 +369,11 @@
 					$title = $name;
 				}
 				$html .= "\t</tr>\n";
-				$html .= "\t\t<td bgcolor=\"FFFFFF\">$fno</td>\n";
-				$html .= "\t\t<td bgcolor=\"FFFFFF\"><input type=\"checkbox\" name=\"_delcol[]\" value=\"$fno\"></td>\n";
-				$html .= "\t\t<td bgcolor=\"FFFFFF\">".$this->dropdown($cnam,'_cols[]',$name)."</td>\n";
+				$html .= "\t\t<td bgcolor=\"#FFFFFF\">$fno</td>\n";
+				$html .= "\t\t<td bgcolor=\"#FFFFFF\"><input type=\"checkbox\" name=\"_delcol[]\" value=\"$fno\"></td>\n";
+				$html .= "\t\t<td bgcolor=\"#FFFFFF\">".$this->dropdown($cnam,'_cols[]',$name)."</td>\n";
 				$value = $rows[0][$name]['value'];
-				$html .= "\t\t<td bgcolor=\"FFFFFF\">$value</td>\n";
+				$html .= "\t\t<td bgcolor=\"#FFFFFF\">$value</td>\n";
 				$html .= "\t</tr>\n";
 			}
 			$html .= "</table>\n";
