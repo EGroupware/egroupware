@@ -468,9 +468,30 @@
 			return False;
 		}
 
-		function get_list($start='',$sort='',$order='',$query='',$offset='')
+		function get_list($start='',$sort='',$order='',$query='',$offset='',&$total)
 		{
-			$sql = "SELECT * FROM $this->table";
+			if (!$sort)
+			{
+				$sort = 'DESC';
+			}
+			if ($query)
+			{
+				$whereclause = "WHERE server_name LIKE '%$query%'"
+					. "OR server_url  LIKE '%$query%'"
+					. "OR server_mode LIKE '%$query%'"
+					. "OR admin_name  LIKE '%$query%'"
+					. "OR admin_email LIKE '%$query%'";
+			}
+			if ($order)
+			{
+				$orderclause = 'ORDER BY ' . $order . ' ' . $sort;
+			}
+			else
+			{
+				$orderclause = 'ORDER BY server_name ASC';
+			}
+
+			$sql = "SELECT * FROM $this->table $whereclause $orderclause";
 			$this->db->query($sql,__LINE__,__FILE__);
 			
 			while ($this->db->next_record())
@@ -485,11 +506,12 @@
 				$this->servers[$this->db->f('server_name')]['admin_name']  = $this->db->f('admin_name');
 				$this->servers[$this->db->f('server_name')]['admin_email'] = $this->db->f('admin_email');
 			}
-			$this->total = $this->db->num_rows() + 1;
+			$this->total = $this->db->num_rows();
+			$total = $this->total;
 			return $this->servers;
 		}
 
-		function formatted_list($server_id=0,$java=False)
+		function formatted_list($server_id=0,$java=False,$local=False)
 		{
 			if ($java)
 			{
@@ -501,9 +523,11 @@
 			{
 				$select .= ' selected';
 			}
-			$select .= '>' . lang('Please Select') . '</option>'."\n";
+			$selectlang = $local ? lang('Local') : lang('Please Select');
+			$select .= '>' . $selectlang . '</option>'."\n";
 
-			$slist = $this->get_list();
+			$x = '';
+			$slist = $this->get_list('','','','','',$x);
 			while (list($key,$val) = each($slist))
 			{
 				$foundservers = True;
