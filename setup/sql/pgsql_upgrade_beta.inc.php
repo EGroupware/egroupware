@@ -669,7 +669,7 @@
 	    }
 	    $cal_frequency = $db->f("cal_frequency");
 	    $cal_days = $db->f("cal_days");
-	    $db2->f("INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_frequency,cal_days) VALUES(".$cal_id.",'".$cal_type."',".$useend.",".$enddate.",".$cal_frequency.",'".$cal_days."')",__LINE__,__FILE__);
+	    $db2->query("INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_frequency,cal_days) VALUES(".$cal_id.",'".$cal_type."',".$useend.",".$enddate.",".$cal_frequency.",'".$cal_days."')",__LINE__,__FILE__);
 	  }
 	}
 	$db->query("DROP TABLE webcal_entry_repeats",__LINE__,__FILE__);
