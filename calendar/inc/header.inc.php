@@ -16,7 +16,7 @@
 
   if (floor($PHP_VERSION ) == 4) {
     global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-    global $matrixtype, $participants, $owner, $phpgw, $grants, $rights;
+    global $matrixtype, $participants, $owner, $phpgw, $grants, $rights, $SCRIPT_FILENAME;
   }
 
 	$cols = 8;
