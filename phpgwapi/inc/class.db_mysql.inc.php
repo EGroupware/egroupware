@@ -126,8 +126,10 @@
 
 		function db_addslashes($str)
 		{
-			if (!IsSet($str) || $str == '')
+			if (!isset($str) || $str == '')
+			{
 				return '';
+			}
 
 			return addslashes($str);
 		}
