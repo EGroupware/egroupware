@@ -1,13 +1,15 @@
-address book	common	it	Rubrica
 addressbook	common	it	Rubrica
-addressbook preferences	common	it	Preferenze della rubrica
-addvcard	common	it	Aggiungi Vcard
+address book	common	it	Rubrica
+addressbook preferences	addressbook	it	Preferenze della Rubrica
 address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
 address line 3	addressbook	it	Indirizzo linea 3
 address type	addressbook	it	Tipo di indirizzo
+addvcard	common	it	Aggiungi Vcard
+alt. csv import	addressbook	it	Importazione CSV Alternativa
 bbs phone	addressbook	it	Telefono BBS
-birthday	addressbook	it	Compleanno
+birthday	addressbook	it	Data di nascita
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	it	<b>Nessun tipo di conversione &lt;nessuno&gt; è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
 business address type	addressbook	it	Tipo di indirizzo dell'ufficio
 business city	common	it	Città Ufficio
 business	common	it	Ufficio
@@ -18,56 +20,71 @@ business fax	common	it	Fax ufficio
 business phone	common	it	Telefono ufficio
 business state	common	it	Provincia ufficio
 business street	common	it	Via ufficio
-business zip codecommonitCAP ufficio
-car phone	addressbook	it	Telefono auto
-cell phone	addressbook	it	telefono cellulare
-city	addressbook	it	Città
+business zip code	common	it	CAP ufficio
+car phone	addressbook	it	Telefono veicolare
+cell phone	addressbook	it	Telefono cellulare
+city	common	it	Città
 company	common	it	Società
-company name	addressbook	it	Nome società
+company name	common	it	Nome società
+contact application	admin	it	Applicativo Contatti
 contact	common	it	Contatto
-country	addressbook	it	Stato
+contact settings	admin	it	Impostazioni Contatto
+country	common	it	Stato
 custom fields	addressbook	it	Campi Personalizzati
-department	addressbook	it	Dipartimento
+department	common	it	Divisione
 export contacts	addressbook	it	Esporta Contatti
+export file name	addressbook	it	Esporta file name
+extra	addressbook	it	Extra
 fax	addressbook	it	Fax
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista dell'indirizzo
 full name	addressbook	it	Nome completo
 geo	addressbook	it	GEO
-grant addressbook access        common  it      Permetti accesso alla Rubrica
-home city	addressbook	it	Città casa
-home address type	addressbook	it	Tipo indirizzo di Casa
-home country	addressbook	it	Paese Casa
-home email	addressbook	it	Email a Casa
+grant addressbook access        common  it	Permetti accesso alla Rubrica
+home address type	addressbook	it	Tipo indirizzo Abitazione
+home city	addressbook	it	Città Abitazione
+home country	addressbook	it	Stato Abitazione
+home email	addressbook	it	Email Abitazione
 home email type	addressbook	it	Tipo di email a Casa
-home phone	addressbook	it	Telefono Casa
-home state	addressbook	it	Stato Casa
-home street	addressbook	it	Via Casa
-home zip code	addressbook	it	CAP Casa
+home phone	addressbook	it	Telefono Abitazione
+home state	addressbook	it	Stato Abitazione
+home street	addressbook	it	Via Abitazione
+home zip code	addressbook	it	CAP Abitazione
 import contacts	addressbook	it	Importa Contatti
 import file	addressbook	it	Importa File
 import from outlook	addressbook	it	Importa da Outlook
 isdn phone	addressbook	it	Telefono ISDN
 label	addressbook	it	Etichetta
+ldap context for contacts	admin	it	Contesto LDAP per i contatti
+ldap host for contacts	admin	it	Server LDAP per i contatti
+ldap root dn for contacts	admin	it	root dn di LDAP per i contatti
+ldap root pw for contacts	admin	it	root password di LDAP per i contatti
 line 2	addressbook	it	Linea 2
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
 mobile	addressbook	it	Mobile
+mobile phone	addressbook	it	Telefono Mobile
+modem phone	addressbook	it	Telefono Modem
 other number	addressbook	it	Altro Numero
-pager	addressbook	it	TeleDrin
+other phone	addressbook	it	Altro Telefono
+pager	addressbook	it	Teledrin
 parcel	addressbook	it	Parcel
-phone numbers	addressbook	it	Numeri telefono
+phone number	common	it	Numero di Telefono
+phone numbers	addressbook	it	Numeri di telefono
 postal	addressbook	it	Postal
 prefix	addressbook	it	Prefisso
-record access	addressbook	it	Accesso alla registrazione
-record owner	addressbook	it	Proprietario della registrazione
+public key	addressbook	it	Chiave Pubblica
+record access	addressbook	it	Accesso alla scheda
+record owner	addressbook	it	Proprietario della scheda
+retrieve contacts	admin	it	recupera i contatti
+select where you want to store	admin	it	Seleziona dove vuoi memorizzare
 show birthday reminders on main screen	addressbook	it	Mostra annunci dei compleanni nella schermata principale
 state	addressbook	it	Provincia
 street	addressbook	it	Via
+successfully imported x records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
 suffix	addressbook	it	Suffisso
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
 today is x's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is x's birthday.	common	it	Domani è il compleanno di %1.
-url	addressbook	it	URL
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 video phone	addressbook	it	Videotelefono
