@@ -163,7 +163,7 @@
 
 	function sidebox_menu_item($item_link='',$item_text='')
 	{
-		if($item_text == '_NewLine_' || $item_link == '_NewLine_')
+		if($item_text === '_NewLine_' || $item_link === '_NewLine_')
 		{
 			$GLOBALS['idots_tpl']->pparse('out','extra_block_spacer');
 		}
@@ -175,7 +175,7 @@
 				if (isset($item_link['icon']))
 				{
 					$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
-					$var['icon_or_star'] = $GLOBALS['phpgw']->common->image($app,$item_link['icon']);
+					$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'">';
 				}
 				$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 				$var['item_link'] = $item_link['link'];
