@@ -299,8 +299,6 @@
 			$GLOBALS['phpgw']->template->set_var('lang_search',lang('search'));
 			$GLOBALS['phpgw']->template->set_var('lang_groups',lang('user groups'));
 			$GLOBALS['phpgw']->template->set_var('lang_accounts',lang('user accounts'));
-			$GLOBALS['phpgw']->template->set_var('lang_perm',lang('Groups with permission for %1',$app));
-			$GLOBALS['phpgw']->template->set_var('lang_nonperm',lang('Groups without permission for %1',$app));
 
 			$GLOBALS['phpgw']->template->set_var('img',$GLOBALS['phpgw']->common->image('phpgwapi','select'));
 			$GLOBALS['phpgw']->template->set_var('lang_select_user',lang('Select user'));
@@ -331,7 +329,18 @@
 					$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
 					$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
 					break;
+				case 'e_projects':
+					$action = 'projects.uiprojects.e_accounts_popup';
+					$app = 'projects';
+					$GLOBALS['phpgw']->template->set_var('select_name',"employees[]']");
+					$GLOBALS['phpgw']->template->set_var('js_function','ExchangeAccountSelect');
+					$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
+					$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
+					break;
 			}
+
+			$GLOBALS['phpgw']->template->set_var('lang_perm',lang('Groups with permission for %1',lang($app)));
+			$GLOBALS['phpgw']->template->set_var('lang_nonperm',lang('Groups without permission for %1',lang($app)));
 
 			$link_data = array
 			(
