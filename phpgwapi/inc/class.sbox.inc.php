@@ -526,7 +526,7 @@
 			while (list($null,$group) = each($groups))
 			{
 				$out .= '<option value="' . $group['account_id'] . '"';
-				if (strtolower(gettype($selected)) == strtolower("array"))
+				if(@is_array($selected))
 				{
 					for($i=0;$i<count($selected);$i++)
 					{
