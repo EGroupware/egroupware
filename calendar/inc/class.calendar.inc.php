@@ -179,7 +179,8 @@ class calendar extends calendar_
 		return $status;
 	}
 
-	function get_weekday_start($year,$month,$day) {
+	function get_weekday_start($year,$month,$day)
+	{
 		global $phpgw_info;
 
 		$weekday = date('w',mktime(0,0,0,$month,$day,$year));
@@ -187,32 +188,43 @@ class calendar extends calendar_
 		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 		{
 			$days = Array(
-				0	=>	'Mon',
-				1	=>	'Tue',
-				2	=>	'Wed',
-				3	=>	'Thu',
-				4	=>	'Fri',
-				5	=>	'Sat',
-				6	=>	'Sun'
+				0 => 'Mon',
+				1 => 'Tue',
+				2 => 'Wed',
+				3 => 'Thu',
+				4 => 'Fri',
+				5 => 'Sat',
+				6 => 'Sun'
 			);
-			$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
+			switch($weekday)
+			{
+				case 0:
+					$sday = mktime(0,0,0,$month,$day - 6,$year);
+					break;
+				case 1:
+					$sday = mktime(0,0,0,$month,$day,$year);
+					break;
+				default:
+					$sday = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
+					break;
+			}
 		}
 		else
 		{
 			$days = Array(
-				0	=>	'Sun',
-				1	=>	'Mon',
-				2	=>	'Tue',
-				3	=>	'Wed',
-				4	=>	'Thu',
-				5	=>	'Fri',
-				6	=>	'Sat'
+				0 => 'Sun',
+				1 => 'Mon',
+				2 => 'Tue',
+				3 => 'Wed',
+				4 => 'Thu',
+				5 => 'Fri',
+				6 => 'Sat'
 			);
-			$sday = mktime(2,0,0,$month,$day - $weekday,$year);
+			$sday = mktime(0,0,0,$month,$day - $weekday,$year);
 		}
 
 		$this->days = $days;
-      return $sday;
+		return $sday;
 	}
 
 	function link_to_entry($id, $pic, $description)
