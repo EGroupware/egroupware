@@ -358,7 +358,7 @@
 		*/
 		function delete($app_name, $var = False,$type = 'user')
 		{
-			//echo "<p>delete('$app_name','$var')</p>\n";
+			//echo "<p>delete('$app_name','$var','$type')</p>\n";
 			$set_via = array(
 				'forced'  => array('user','default'),
 				'default' => array('forced','user'),
@@ -368,14 +368,16 @@
 			{
 				$type = 'user';
 			}
+			$pref = &$this->$type;
+
 			if ($all = (is_string($var) && $var == ''))
 			{
-				unset($this->$type[$app_name]);
+				unset($pref[$app_name]);
 				unset($this->data[$app_name]);
 			}
 			else
 			{
-				unset($this->$type[$app_name][$var]);
+				unset($pref[$app_name][$var]);
 				unset($this->data[$app_name][$var]);
 			}
 			// set the effectiv pref again if needed
