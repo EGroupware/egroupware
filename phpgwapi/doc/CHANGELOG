@@ -17,12 +17,15 @@
 	- Classes are now loaded via createobject()
 	- The categories class has been updated and is working better
 	- The new contacts class, which will be a central point for all contact data is now in place
-		(under development)
 	- Cleaned up most of the user/group admin section (including templates, code re-write, and small bug fixes)
 	- Added partial API support for anonymous sessions
 	- Fix PostgreSQL error for explicit cast from int to varchar in todo/index.php
 	- Re-created a few icons for the verdilak layout. Apparently, they where bad .gif files
 	  which where casuing problems.
+	- Added new layout - Thanks to IDSociety
+	- Global and user level categories, some apps have started using it
+	- Fixed todo list dates, they where being created completly wrong
+	- Added better error checking for the todo list
 
 [0.9.9pl1]
 	- Added some error checking to see if there header and/or database table where created.
