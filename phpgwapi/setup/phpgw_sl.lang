@@ -1,9 +1,9 @@
 about %1	common	sl	Vizitka %1
 access	common	sl	Dostopnost
 access not permitted	common	sl	Dostop ni dovoljen.
-account has been created	common	sl	Uporabni≈°ki raƒçun je bil ustvarjen.
-account has been deleted	common	sl	Uporabni≈°ki raƒçun je bil izbrisan.
-account has been updated	common	sl	Uporabni≈°ki raƒçun je bil osve≈æen.
+account has been created	common	sl	Uporabniπki ra&#269;un je bil ustvarjen.
+account has been deleted	common	sl	Uporabniπki ra&#269;un je bil izbrisan.
+account has been updated	common	sl	Uporabniπki ra&#269;un je bil osveæen.
 acl	common	sl	ACL
 action	common	sl	Akcija
 active	common	sl	Aktiven
@@ -16,9 +16,9 @@ admin	common	sl	Admin
 administration	common	sl	Administracija
 afghanistan	common	sl	AFGANISTAN
 albania	common	sl	ALBANIJA
-algeria	common	sl	AL≈ΩIRIJA
+algeria	common	sl	ALÆIRIJA
 all	common	sl	Vse
-american samoa	common	sl	AMERI≈†KA SAMOA
+american samoa	common	sl	AMERI©KA SAMOA
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
 anguilla	common	sl	ANGVILA
@@ -26,7 +26,7 @@ antarctica	common	sl	ANTARKTIKA
 antigua and barbuda	common	sl	ANTIGVA IN BARBUDA
 apply	common	sl	Uporabi
 april	common	sl	April
-are you sure you want to delete this entry ?	common	sl	Ste prepriƒçani, da ≈æelite izbrisati ta vnos?
+are you sure you want to delete this entry ?	common	sl	Ste prepri&#269;ani, da æelite izbrisati ta vnos?
 argentina	common	sl	ARGENTINA
 armenia	common	sl	ARMENIJA
 aruba	common	sl	ARUBA
@@ -35,12 +35,12 @@ australia	common	sl	AVSTRALIJA
 austria	common	sl	AVSTRIJA
 author	common	sl	Avtor
 autosave default category	common	sl	Samodejno shrani privzeto kategorijo
-azerbaijan	common	sl	AZARBEJD≈ΩAN
+azerbaijan	common	sl	AZARBEJDÆAN
 back	common	sl	Nazaj
-bad login or password	common	sl	Napaƒçno uporabni≈°ko ime ali geslo
+bad login or password	common	sl	Napa&#269;no uporabniπko ime ali geslo
 bahamas	common	sl	BAHAMI
 bahrain	common	sl	BAHRAIN
-bangladesh	common	sl	BANGLADE≈†
+bangladesh	common	sl	BANGLADE©
 barbados	common	sl	BARBADOS
 belarus	common	sl	BELARUS
 belgium	common	sl	BELGIJA
@@ -48,37 +48,37 @@ belize	common	sl	BELIZE
 benin	common	sl	BENIN
 bermuda	common	sl	BERMUDA
 bhutan	common	sl	BUTAN
-blocked, too many attempts	common	sl	Zaklenjeno: preveƒç poskusov.
+blocked, too many attempts	common	sl	Zaklenjeno: preve&#269; poskusov.
 bolivia	common	sl	BOLIVIJA
 bosnia and herzegovina	common	sl	BOSNA IN HERCEGOVINA
 botswana	common	sl	BOCVANA
-bouvet island	common	sl	OTOƒåJE BOUVET
+bouvet island	common	sl	OTO&#268;JE BOUVET
 brazil	common	sl	BRAZILIJA
-british indian ocean territory	common	sl	BRITANSKO INDIJSKO OTOƒåJE
+british indian ocean territory	common	sl	BRITANSKO INDIJSKO OTO&#268;JE
 brunei darussalam	common	sl	BRUNEI DARUSSALAM
 bulgaria	common	sl	BOLGARIJA
 burkina faso	common	sl	BURKINA FASO
 burundi	common	sl	BURUNDI
-cambodia	common	sl	KAMBOD≈ΩA
+cambodia	common	sl	KAMBODÆA
 cameroon	common	sl	KAMERUN
 canada	common	sl	KANADA
-cancel	common	sl	Prekliƒçi
+cancel	common	sl	Prekli&#269;i
 cape verde	common	sl	CAPE VERDE
 categories	common	sl	Kategorije
 categories for	common	sl	kategorije za
 category	common	sl	Kategorija
 category %1 has been added !	common	sl	Dodana je bila kategorija %1!
-category %1 has been updated !	common	sl	Osve≈æena je bila kategorija %1!
+category %1 has been updated !	common	sl	Osveæena je bila kategorija %1!
 cayman islands	common	sl	KAJMANSKI OTOKI
-central african republic	common	sl	CENTRALNOAFRI≈†KA REPUBLIKA
-chad	common	sl	ƒåAD
+central african republic	common	sl	CENTRALNOAFRI©KA REPUBLIKA
+chad	common	sl	&#268;AD
 change	common	sl	Spremeni
-charset	common	sl	UTF-8
-chile	common	sl	ƒåILE
+charset	common	sl	ISO-8859-2
+chile	common	sl	&#268;ILE
 china	common	sl	KITAJSKA
 choose the category	common	sl	Izberi kategorijo
 choose the parent category	common	sl	Izberi nadrejeno kategorijo
-christmas island	common	sl	BO≈ΩIƒåNI OTOK
+christmas island	common	sl	BOÆI&#268;NI OTOK
 clear	common	sl	Izprazni
 clear form	common	sl	Izprazni formo
 close	common	sl	Zapri
@@ -86,42 +86,42 @@ cocos (keeling) islands	common	sl	KOKOSOVI (KEELINGOVI) OTOKI
 colombia	common	sl	KOLUMBIJA
 comoros	common	sl	KOMORI
 congo	common	sl	KONGO
-congo, the democratic republic of the	common	sl	KONGO, DEMOKRATIƒåNA REPUBLIKA
+congo, the democratic republic of the	common	sl	KONGO, DEMOKRATI&#268;NA REPUBLIKA
 cook islands	common	sl	COOKOVI OTOKI
 copy	common	sl	Kopiraj
 costa rica	common	sl	KOSTARIKA
 cote d ivoire	common	sl	COTE D IVOIRE
 create	common	sl	Ustvari
 created by	common	sl	Ustvaril
-croatia	common	sl	HRVA≈†KA
+croatia	common	sl	HRVA©KA
 cuba	common	sl	KUBA
 currency	common	sl	Valuta
 current	common	sl	Trenutno
 current users	common	sl	Trenutni uporabniki
 cyprus	common	sl	CIPER
-czech republic	common	sl	ƒåE≈†KA REPUBLIKA
+czech republic	common	sl	&#268;E©KA REPUBLIKA
 date	common	sl	Datum
 date due	common	sl	Rok
 december	common	sl	December
 default category	common	sl	Privzeta kategorija
-delete	common	sl	Bri≈°i
+delete	common	sl	Briπi
 denmark	common	sl	DANSKA
 description	common	sl	Opis
 detail	common	sl	Podrobnost
 details	common	sl	Pordrobnosti
-disabled	common	sl	Onemogoƒçeno
+disabled	common	sl	Onemogo&#269;eno
 display monday first	common	sl	Najprej ponedeljek
 display sunday first	common	sl	Najprej nedelja
-djibouti	common	sl	D≈ΩIBUTI
-do you also want to delete all subcategories ?	common	sl	Ali ≈æelite izbrisati tudi podkategorije?
+djibouti	common	sl	DÆIBUTI
+do you also want to delete all subcategories ?	common	sl	Ali æelite izbrisati tudi podkategorije?
 domain	common	sl	Domena
 domain name for mail-address, eg. "%1"	common	sl	ime domene za elektronski naslov, npr. "%1"
-domestic	common	sl	Domaƒç
+domestic	common	sl	Doma&#269;
 dominica	common	sl	DOMINIKA
 dominican republic	common	sl	DOMINIKANSKA REPUBLIKA
-done	common	sl	Konƒçano
-drag to move	jscalendar	sl	Povleci za premik
-e-mail	common	sl	Epo≈°ta
+done	common	sl	Kon&#269;ano
+drag to move	common	sl	Povleci za premik
+e-mail	common	sl	Epoπta
 east timor	common	sl	VZHODNI TIMOR
 ecuador	common	sl	EKVADOR
 edit	common	sl	Popravi
@@ -130,13 +130,13 @@ edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
 egypt	common	sl	EGIPT
 el salvador	common	sl	EL SALVADOR
-email	common	sl	Epo≈°ta
+email	common	sl	Epoπta
 email-address of the user, eg. "%1"	common	sl	enaslov uporabnika, npr. "%1"
-enabled	common	sl	Omogoƒçeno
-end date	common	sl	Konƒçni datum
-end time	common	sl	Konƒçni ƒças
-entry has been deleted sucessfully	common	sl	Vnos je bil uspe≈°no izbrisan.
-entry updated sucessfully	common	sl	Vnos je bil uspe≈°no osve≈æen.
+enabled	common	sl	Omogo&#269;eno
+end date	common	sl	Kon&#269;ni datum
+end time	common	sl	Kon&#269;ni &#269;as
+entry has been deleted sucessfully	common	sl	Vnos je bil uspeπno izbrisan.
+entry updated sucessfully	common	sl	Vnos je bil uspeπno osveæen.
 equatorial guinea	common	sl	EKVATORIALNA GVINEJA
 eritrea	common	sl	ERITREJA
 error	common	sl	Napaka
@@ -145,12 +145,12 @@ error deleting %1 %2 directory	common	sl	Napaka ob brisanju %1 %2 direktorija.
 error renaming %1 %2 directory	common	sl	Napaka ob preimoenovanju %1 %2 direktorija.
 estonia	common	sl	ESTONIJA
 ethiopia	common	sl	ETIOPIJA
-falkland islands (malvinas)	common	sl	FALKLANDSKO OTOƒåJE (MALVINI)
-faroe islands	common	sl	OTOƒåJE FAROE
-fax number	common	sl	≈°t. faksa
+falkland islands (malvinas)	common	sl	FALKLANDSKO OTO&#268;JE (MALVINI)
+faroe islands	common	sl	OTO&#268;JE FAROE
+fax number	common	sl	πt. faksa
 february	common	sl	Februar
 fields	common	sl	Polja
-fiji	common	sl	FID≈ΩI
+fiji	common	sl	FIDÆI
 files	common	sl	Datoteke
 filter	common	sl	Sito
 finland	common	sl	FINSKA
@@ -163,29 +163,29 @@ force selectbox	common	sl	Prisili izbiro
 france	common	sl	FRANCIJA
 french guiana	common	sl	FRANCOSKA GVAJANA
 french polynesia	common	sl	FRANCOSKA POLINEZIJA
-french southern territories	common	sl	FRANCOSKI JU≈ΩNI TERITORIJ
+french southern territories	common	sl	FRANCOSKI JUÆNI TERITORIJ
 friday	common	sl	Petek
 ftp	common	sl	FTP
 fullname	common	sl	Polno ime
 gabon	common	sl	GABON
 gambia	common	sl	GAMBIJA
-general menu	common	sl	Splo≈°ni meni
+general menu	common	sl	Sploπni meni
 georgia	common	sl	GRUZIJA
-germany	common	sl	NEMƒåIJA
+germany	common	sl	NEM&#268;IJA
 ghana	common	sl	GANA
 gibraltar	common	sl	GIBRALTAR
 global	common	sl	Globalno
-global public	common	sl	Splo≈°na javnost
-go today	jscalendar	sl	Danes
+global public	common	sl	Sploπna javnost
+go today	common	sl	Danes
 grant access	common	sl	Dovoli dostop
-greece	common	sl	GRƒåIJA
+greece	common	sl	GR&#268;IJA
 greenland	common	sl	GRENLANDIJA
 grenada	common	sl	GRENADA
 group	common	sl	Skupina
 group access	common	sl	Dostop skupine
 group has been added	common	sl	Skupina je bila dodana.
 group has been deleted	common	sl	Skupina je bila izbrisana.
-group has been updated	common	sl	Skupina je bila osve≈æena.
+group has been updated	common	sl	Skupina je bila osveæena.
 group name	common	sl	Ime skupine
 group public	common	sl	Javnost skupine
 groups	common	sl	Skupine
@@ -199,26 +199,26 @@ guinea-bissau	common	sl	GVINEJA-BISSAU
 guyana	common	sl	GVAJANA
 haiti	common	sl	HAITI
 heard island and mcdonald islands	common	sl	OTOK HERAD IN MCDONALDOVI OTOKI
-help	common	sl	Pomoƒç
+help	common	sl	Pomo&#269;
 high	common	sl	Visoko
-highest	common	sl	Najvi≈°je
-holy see (vatican city state)	common	sl	SVETI SEDE≈Ω (MESTNA DR≈ΩAVA VATIKAN)
+highest	common	sl	Najviπje
+holy see (vatican city state)	common	sl	SVETI SEDEÆ (MESTNA DRÆAVA VATIKAN)
 home	common	sl	Domov
 honduras	common	sl	HONDURAS
 hong kong	common	sl	HONG KONG
-hungary	common	sl	MAD≈ΩARSKA
+hungary	common	sl	MADÆARSKA
 iceland	common	sl	ISLANDIJA
 india	common	sl	INDIJA
 indonesia	common	sl	INDONEZIJA
 international	common	sl	Mednarodno
-invalid ip address	common	sl	Napaƒçna IP ≈°tevilka
-invalid password	common	sl	Napaƒçno geslo
+invalid ip address	common	sl	Napa&#269;na IP πtevilka
+invalid password	common	sl	Napa&#269;no geslo
 iran, islamic republic of	common	sl	IRAN, ISLAMSKA REPUBLIKA
 iraq	common	sl	IRAK
 ireland	common	sl	IRSKA
 israel	common	sl	IZRAEL
-it has been more then %1 days since you changed your password	common	sl	Od zadnje menjave gesla je preteklo ≈æe veƒç kot %1 dni.
-it is recommended that you run setup to upgrade your tables to the current version	common	sl	Priporoƒçamo, da po≈æenete namestitev (setup) za nadgradnjo tabel na trenutno razliƒçico.
+it has been more then %1 days since you changed your password	common	sl	Od zadnje menjave gesla je preteklo æe ve&#269; kot %1 dni.
+it is recommended that you run setup to upgrade your tables to the current version	common	sl	Priporo&#269;amo, da poæenete namestitev (setup) za nadgradnjo tabel na trenutno razli&#269;ico.
 italy	common	sl	ITALIJA
 jamaica	common	sl	JAMAJKA
 january	common	sl	Januar
@@ -228,14 +228,14 @@ july	common	sl	Julij
 june	common	sl	Junij
 kazakstan	common	sl	KAZAHSTAN
 kenya	common	sl	KENIJA
-keywords	common	sl	Kljuƒçne  besede
+keywords	common	sl	Klju&#269;ne  besede
 kiribati	common	sl	KIRIBATI
-korea, democratic peoples republic of	common	sl	KOREJA, DEMOKRATIƒåNA REPUBLIKA
+korea, democratic peoples republic of	common	sl	KOREJA, DEMOKRATI&#268;NA REPUBLIKA
 korea, republic of	common	sl	KOREJA, REPUBLIKA
 kuwait	common	sl	KUVAJT
 kyrgyzstan	common	sl	KIRGISTAN
 language	common	sl	Jezik
-lao peoples democratic republic	common	sl	LAO, LJUDSKA DEMOKRATIƒåNA REPUBLIKA
+lao peoples democratic republic	common	sl	LAO, LJUDSKA DEMOKRATI&#268;NA REPUBLIKA
 last name	common	sl	Priimek
 last name of the user, eg. "%1"	common	sl	priimek uporabnika, npr. "%1"
 last page	common	sl	Zadnja stran
@@ -245,7 +245,7 @@ lebanon	common	sl	LIBANON
 lesotho	common	sl	LESOTO
 liberia	common	sl	LIBERIJA
 libyan arab jamahiriya	common	sl	LIBIJSKA ARABSKA JAMAHIRIJA
-license	common	sl	Licenca
+license	about	sl	Licenca
 liechtenstein	common	sl	LICHTENSTEIN
 list	common	sl	Seznam
 lithuania	common	sl	LITVA
@@ -254,23 +254,22 @@ login	common	sl	Prijava
 loginid	common	sl	ID ob prijavi
 logout	common	sl	Odjava
 low	common	sl	Nizko
-lowest	common	sl	Najni≈æje
+lowest	common	sl	Najniæje
 luxembourg	common	sl	LUKSEMBURG
 macau	common	sl	MAKU
-macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA, BIV≈†A JUGOSLOVANSA REPUBLIKA
+macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA, BIV©A JUGOSLOVANSA REPUBLIKA
 madagascar	common	sl	MADAGASKAR
-mail domain, eg. "%1"	common	sl	po≈°tna domena, npr. "%1"
+mail domain, eg. "%1"	common	sl	poπtna domena, npr. "%1"
 main category	common	sl	Osnovna kategorija
 main screen	common	sl	Osnovni zaslon
-maintainer	common	sl	Vzdr≈æevalec
+maintainer	about	sl	Vzdræevalec
 malawi	common	sl	MALAWI
 malaysia	common	sl	MALEZIJA
 maldives	common	sl	MALDIVI
 mali	common	sl	MALI
 malta	common	sl	MALTA
-manual	common	sl	Priroƒçnik
 march	common	sl	Marec
-marshall islands	common	sl	MARSHALLOVO OTOƒåJE
+marshall islands	common	sl	MARSHALLOVO OTO&#268;JE
 martinique	common	sl	MARTINIQUE
 mauritania	common	sl	MAVRETANIJA
 mauritius	common	sl	MAVRITIUS
@@ -278,9 +277,9 @@ may	common	sl	Maj
 mayotte	common	sl	MAYOTTE
 medium	common	sl	Srednje
 menu	common	sl	Meni
-message	common	sl	Sporoƒçilo
+message	common	sl	Sporo&#269;ilo
 mexico	common	sl	MEHIKA
-micronesia, federated states of	common	sl	MIKRONEZIJA, ZDRU≈ΩENE DR≈ΩAVE
+micronesia, federated states of	common	sl	MIKRONEZIJA, ZDRUÆENE DRÆAVE
 moldova, republic of	common	sl	MOLDOVA, REPUBLIKA
 monaco	common	sl	MONAKO
 monday	common	sl	Ponedeljek
@@ -298,14 +297,14 @@ netherlands	common	sl	NIZOZEMSKA
 netherlands antilles	common	sl	NIZOZEMSKI ANTILI
 never	common	sl	Nikoli
 new caledonia	common	sl	NOVA KALEDONIJA
-new entry added sucessfully	common	sl	Nov vnos je uspe≈°no dodan.
+new entry added sucessfully	common	sl	Nov vnos je uspeπno dodan.
 new main category	common	sl	Nova osnovna kategorija
 new value	common	sl	Nova vrednost
 new zealand	common	sl	NOVA ZELANDIJA
 next	common	sl	Naslednji
-next month (hold for menu)	jscalendar	sl	Naslednji mesec (dr≈æi za meni)
+next month (hold for menu)	common	sl	Naslednji mesec (dræi za meni)
 next page	common	sl	Naslednja stran
-next year (hold for menu)	jscalendar	sl	Naslednje leto
+next year (hold for menu)	common	sl	Naslednje leto
 nicaragua	common	sl	NIKARAGVA
 niger	common	sl	NIGER
 nigeria	common	sl	NIGERIJA
@@ -318,7 +317,7 @@ none	common	sl	Noben
 norfolk island	common	sl	OTOK NORFOLK
 normal	common	sl	Normalno
 northern mariana islands	common	sl	SEVERNI MARIANSKI OTOKI
-norway	common	sl	NORVE≈†KA
+norway	common	sl	NORVE©KA
 not assigned	common	sl	ni dodeljeno
 note	common	sl	Opomba
 notes	common	sl	Opombe
@@ -330,7 +329,7 @@ old value	common	sl	Stara vrednost
 oman	common	sl	OMAN
 on *nix systems please type: %1	common	sl	Na UNIXu podobnih sistemih vnesite: %1
 only private	common	sl	samo zasebno
-only yours	common	sl	samo va≈°e
+only yours	common	sl	samo vaπe
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri popup okno
 original	common	sl	Original
@@ -346,32 +345,32 @@ paraguay	common	sl	PARAGVAJ
 parcel	common	sl	Paket
 parent category	common	sl	Nadrejena kategorija
 password	common	sl	Geslo
-password could not be changed	common	sl	Gesla ni mogoƒçe zamenjati.
+password could not be changed	common	sl	Gesla ni mogo&#269;e zamenjati.
 password has been updated	common	sl	Geslo je bilo zamenjano.
 pattern for search in addressbook	common	sl	Vzorec za iskanje v adresarju
 pattern for search in calendar	common	sl	Vzorec za iskanje v koledarju
 pattern for search in projects	common	sl	Vzorec za iskanje med projektih
-permissions to the files/users directory	common	sl	dovoljenja za datoteke/uporabni≈°ki direktorij
+permissions to the files/users directory	common	sl	dovoljenja za datoteke/uporabniπki direktorij
 personal	common	sl	Zasebno
 peru	common	sl	PERU
 philippines	common	sl	FILIPINI
-phone number	common	sl	telefonska ≈°tevilka
+phone number	common	sl	telefonska πtevilka
 pitcairn	common	sl	PITCARIN
-please %1 by hand	common	sl	Prosimo, roƒçno %1
+please %1 by hand	common	sl	Prosimo, ro&#269;no %1
 please enter a name	common	sl	Prosimo, vnesite ime!
-please run setup to become current	common	sl	Prosimo po≈æenite namestitve za osve≈æitev.
+please run setup to become current	common	sl	Prosimo poæenite namestitve za osveæitev.
 please select	common	sl	Prosimo izberite
-please set your global preferences	common	sl	Prosimo, vnesite splo≈°ne nastavitve.
+please set your global preferences	common	sl	Prosimo, vnesite sploπne nastavitve.
 please set your preferences for this application	common	sl	Prosimo, vnesite nastavitve za to aplikacijo!
-please wait...	common	sl	Prosimo, poƒçakajte...
+please wait...	common	sl	Prosimo, po&#269;akajte...
 poland	common	sl	POLJSKA
 portugal	common	sl	PORTUGALSKA
-postal	common	sl	Po≈°tno
-powered by phpgroupware version %1	common	sl	Teƒçe na <a href="http://www.egroupware.org">eGroupware</a> razliƒçica %1
+postal	common	sl	Poπtno
+powered by phpgroupware version %1	common	sl	Te&#269;e na <a href="http://www.egroupware.org">eGroupware</a> razli&#269;ica %1
 preferences	common	sl	Nastavitve
-prev. month (hold for menu)	jscalendar	sl	Prej≈°nji mesesc (dr≈æite za meni)
-prev. year (hold for menu)	jscalendar	sl	Prej≈°nje leto (dr≈æite za meni)
-previous page	common	sl	Prej≈°nja stran
+prev. month (hold for menu)	common	sl	Prejπnji mesesc (dræite za meni)
+prev. year (hold for menu)	common	sl	Prejπnje leto (dræite za meni)
+previous page	common	sl	Prejπnja stran
 print	common	sl	Natisni
 priority	common	sl	Prioriteta
 private	common	sl	Zasebno
@@ -401,88 +400,88 @@ sao tome and principe	common	sl	SAO TOME IN PRINCIPE
 saturday	common	sl	Sobota
 saudi arabia	common	sl	SAVDSKA ARABIJA
 save	common	sl	Shrani
-search	common	sl	I≈°ƒçi
+search	common	sl	Iπ&#269;i
 section	common	sl	Izbor
 select	common	sl	Izberi
 select category	common	sl	Izberi kategorijo
 select date	common	sl	Izberi datum
 select group	common	sl	Izberi skupino
-select one	common	sl	Izberi
+select one	common	sl	Izberi 
 select user	common	sl	Izberi uporabnika
-send	common	sl	Po≈°lji
+send	common	sl	Poπlji
 senegal	common	sl	SENEGAL
 september	common	sl	September
-server %1 has been added	common	sl	Dodan je bil stre≈ænik %1.
-server name	common	sl	Ime stre≈ænika
+server %1 has been added	common	sl	Dodan je bil streænik %1.
+server name	common	sl	Ime streænika
 session has been killed	common	sl	Seja je bila prisilno prekinjena.
 setup	common	sl	Namestitev
-seychelles	common	sl	SEJE≈†ELI
-show all	common	sl	prika≈æi vse
+seychelles	common	sl	SEJE©ELI
+show all	common	sl	prikaæi vse
 showing %1	common	sl	prikazanih %1
 showing %1 - %2 of %3	common	sl	prikazani %1 - %2 od %3
 sierra leone	common	sl	SIERRA LEONE
 singapore	common	sl	SINGAPUR
-slovakia	common	sl	SLOVA≈†KA
+slovakia	common	sl	SLOVA©KA
 slovenia	common	sl	SLOVENIJA
 solomon islands	common	sl	SOLOMONOVI OTOKI
 somalia	common	sl	SOMALIJA
-sorry, your login has expired	login	sl	Oprostite, va≈°a prijava je potekla.
-south africa	common	sl	JU≈ΩNA AFRIKA
-south georgia and the south sandwich islands	common	sl	JU≈ΩNA GEORGIJA IN JU≈ΩNO OTOƒåJE SANDWICH
-spain	common	sl	≈†PANIJA
-sri lanka	common	sl	≈†RI LANKA
-start date	common	sl	Zaƒçetni datum
-start time	common	sl	Zaƒçetni ƒças
+sorry, your login has expired	login	sl	Oprostite, vaπa prijava je potekla.
+south africa	common	sl	JUÆNA AFRIKA
+south georgia and the south sandwich islands	common	sl	JUÆNA GEORGIJA IN JUÆNO OTO&#268;JE SANDWICH
+spain	common	sl	©PANIJA
+sri lanka	common	sl	©RI LANKA
+start date	common	sl	Za&#269;etni datum
+start time	common	sl	Za&#269;etni &#269;as
 status	common	sl	Status
 subject	common	sl	Zadeva
-submit	common	sl	Po≈°lji
+submit	common	sl	Poπlji
 substitutions and their meanings:	common	sl	Nadomestila in njihov pomen
 sudan	common	sl	SUDAN
 sunday	common	sl	Nedelja
 suriname	common	sl	SURINAM
 svalbard and jan mayen	common	sl	SVALBARD IN JAN MAJEN
 swaziland	common	sl	SVAZILAND
-sweden	common	sl	≈†VEDSKA
-switzerland	common	sl	≈†VICA
+sweden	common	sl	©VEDSKA
+switzerland	common	sl	©VICA
 syrian arab republic	common	sl	SIRIJA, ARABSKA REPUBLIKA
 taiwan	common	sl	TAJVAN
-tajikistan	common	sl	TAD≈ΩIKISTAN
-tanzania, united republic of	common	sl	TANZANIJA, ZDRU≈ΩENA REPUBLIKA
+tajikistan	common	sl	TADÆIKISTAN
+tanzania, united republic of	common	sl	TANZANIJA, ZDRUÆENA REPUBLIKA
 thailand	common	sl	TAJSKA
 the api is current	common	sl	API je aktualen
 the api requires an upgrade	common	sl	API je potrebno obnoviti
 the following applications require upgrades	common	sl	Naslednje aplikacije je potrebno nadgraditi
-the mail server returned	common	sl	Po≈°tni stre≈ænik je vrnil
+the mail server returned	common	sl	Poπtni streænik je vrnil
 this application is current	common	sl	Aplikacija je aktualna
 this application requires an upgrade	common	sl	Aplikacijo je potrebno obnoviti
-this name has been used already	common	sl	To ime je ≈æe uporabljeno!
-thursday	common	sl	ƒåetrtek
-time	common	sl	ƒåas
-time zone	common	sl	ƒåasovna cona
-time zone offset	common	sl	Zamik ƒçasovne cone
+this name has been used already	common	sl	To ime je æe uporabljeno!
+thursday	common	sl	&#268;etrtek
+time	common	sl	&#268;as
+time zone	common	sl	&#268;asovna cona
+time zone offset	common	sl	Zamik &#269;asovne cone
 title	common	sl	Naslov
 to correct this error for the future you will need to properly set the	common	sl	Za odpravo ponavljanja te napake bo potrebno pravilno nastaviti
-to go back to the msg list, click <a href= %1 >here</a>	common	sl	Da pridete nazaj na seznam sporoƒçil, kliknite <a href="%1">tu</a>.
+to go back to the msg list, click <a href= %1 >here</a>	common	sl	Da pridete nazaj na seznam sporo&#269;il, kliknite <a href="%1">tu</a>.
 today	common	sl	Danes
-todays date, eg. "%1"	common	sl	dana≈°nji datum, npr. "%1"
-toggle first day of week	jscalendar	sl	Zamenjajte prvi dan v tednu
+todays date, eg. "%1"	common	sl	danaπnji datum, npr. "%1"
+toggle first day of week	common	sl	Zamenjajte prvi dan v tednu
 togo	common	sl	TOGO
 tokelau	common	sl	TOKELAU
 tonga	common	sl	TONGO
 total	common	sl	Skupaj
 trinidad and tobago	common	sl	TRINIDAD IN TOBAGO
-tuesday	common	sl	ƒåetrtek
+tuesday	common	sl	&#268;etrtek
 tunisia	common	sl	TUNIZIJA
-turkey	common	sl	TURƒåIJA
+turkey	common	sl	TUR&#268;IJA
 turkmenistan	common	sl	TURKMENISTAN
 turks and caicos islands	common	sl	TURKS IN CAICOS OTOKI
 tuvalu	common	sl	TUVALU
 uganda	common	sl	UGANDA
 ukraine	common	sl	UKRAJINA
-united arab emirates	common	sl	ZDRU≈ΩENI ARABSKI EMIRATI
-united kingdom	common	sl	ZDRU≈ΩENO KRALJESTVO
-united states	common	sl	ZDRU≈ΩENE DR≈ΩAVE
-united states minor outlying islands	common	sl	CELINSKE ZDRU≈ΩENE DR≈ΩAVE
+united arab emirates	common	sl	ZDRUÆENI ARABSKI EMIRATI
+united kingdom	common	sl	ZDRUÆENO KRALJESTVO
+united states	common	sl	ZDRUÆENE DRÆAVE 
+united states minor outlying islands	common	sl	CELINSKE ZDRUÆENE DRÆAVE
 unknown	common	sl	Neznano
 update	common	sl	Obnovi
 url	common	sl	URL
@@ -492,45 +491,45 @@ use button to search for address	common	sl	Uporabi gumb za iskanje naslova
 use button to search for calendarevent	common	sl	Uporabi gumb za iskanje dogodka v koledarju
 use button to search for project	common	sl	Uporabi gumb za iskanje projekta
 user	common	sl	Uporabnik
-user accounts	common	sl	uporabni≈°ko ime
-user groups	common	sl	uporabni≈°ka skupina
-username	common	sl	Uporabni≈°ko ime
+user accounts	common	sl	uporabniπko ime
+user groups	common	sl	uporabniπka skupina
+username	common	sl	Uporabniπko ime
 users	common	sl	uporabniki
-users choice	common	sl	Uporabni≈°ki izbor
+users choice	common	sl	Uporabniπki izbor
 uzbekistan	common	sl	UZBEKISATAN
 vanuatu	common	sl	VANUATU
 venezuela	common	sl	VENEZUELA
-version	common	sl	Razliƒçica
+version	common	sl	Razli&#269;ica
 viet nam	common	sl	VIETNAM
 view	common	sl	Pregled
-virgin islands, british	common	sl	DEVI≈†KI OTOKI (BRITANSKI)
-virgin islands, u.s.	common	sl	DEVI≈†KI OTOKI (ZDA)
+virgin islands, british	common	sl	DEVI©KI OTOKI (BRITANSKI)
+virgin islands, u.s.	common	sl	DEVI©KI OTOKI (ZDA)
 wallis and futuna	common	sl	WALLIS IN FUTUNA
 wednesday	common	sl	Sreda
-welcome	common	sl	Dobrodo≈°li!
+welcome	common	sl	Dobrodoπli!
 western sahara	common	sl	ZAHODNA SAHARA
 which groups	common	sl	Katere skupine
-wk	jscalendar	sl	wk
+wk	common	sl	wk
 written by:	common	sl	Napisal:
 year	common	sl	Leto
 yemen	common	sl	JEMEN
 yes	common	sl	Da
 you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo
-you are running a newer version of phpgroupware than your database is setup for	common	sl	Uporabljate novej≈°o razliƒçico egroupware, kot je name≈°ƒçena v bazi podatkov.
-you have been successfully logged out	login	sl	Bili ste uspe≈°no odjavljeni.
+you are running a newer version of phpgroupware than your database is setup for	common	sl	Uporabljate novejπo razli&#269;ico egroupware, kot je nameπ&#269;ena v bazi podatkov.
+you have been successfully logged out	login	sl	Bili ste uspeπno odjavljeni.
 you have not entered a title	common	sl	Niste vnesli naslova
 you have not entered a valid date	common	sl	Niste vnesli veljavnega datuma
-you have not entered a valid time of day	common	sl	Niste vnesli veljavnega ƒçasa v dnevu
-you have not entered participants	common	sl	Niste vnesli udele≈æencev
-you have selected an invalid date	common	sl	Izbrali ste napaƒçen datum
-you have selected an invalid main category	common	sl	Izbrali ste napaƒçno osnovno kategorijo
-you have successfully logged out	common	sl	Bili ste uspe≈°no odjavljeni
-your message could <b>not</b> be sent!<br>	common	sl	Va≈°e sporoƒçilo <b>ni<b> bilo poslano! <br>
-your message has been sent	common	sl	Va≈°e sporoƒçilo je bilo poslano.
+you have not entered a valid time of day	common	sl	Niste vnesli veljavnega &#269;asa v dnevu
+you have not entered participants	common	sl	Niste vnesli udeleæencev
+you have selected an invalid date	common	sl	Izbrali ste napa&#269;en datum
+you have selected an invalid main category	common	sl	Izbrali ste napa&#269;no osnovno kategorijo
+you have successfully logged out	common	sl	Bili ste uspeπno odjavljeni
+your message could <b>not</b> be sent!<br>	common	sl	Vaπe sporo&#269;ilo <b>ni<b> bilo poslano! <br>
+your message has been sent	common	sl	Vaπe sporo&#269;ilo je bilo poslano.
 your search returned %1 matchs	common	sl	najdenih %1 zadetkov
 your search returned 1 match	common	sl	najden 1 zadetek.
-your session could not be verified.	login	sl	Va≈°a seja ne more biti potrjena.
-your settings have been updated	common	sl	Va≈°e nastavitve so bile osve≈æene.
+your session could not be verified.	login	sl	Vaπa seja ne more biti potrjena.
+your settings have been updated	common	sl	Vaπe nastavitve so bile osveæene.
 yugoslavia	common	sl	JUGOSLAVIJA
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABWE
