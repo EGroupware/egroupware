@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.link_widget.search" template="" lang="" group="" version="0.9.15.002">
+	<grid id="etemplate.link_widget.search" template="" lang="" group="" version="0.9.15.003">
 		<columns>
 			<column/>
 			<column/>
@@ -11,7 +11,7 @@
 		<rows>
 			<row class="row_on">
 				<menulist>
-					<menupopup label="Search" id="app" statustext="Select an App to search in"/>
+					<menupopup label="Search" no_lang="1" id="app" statustext="Select an App to search in"/>
 				</menulist>
 				<textbox size="25" id="query" statustext="Enter a search pattern"/>
 				<button label="Search" id="search" statustext="Click here to start the search"/>

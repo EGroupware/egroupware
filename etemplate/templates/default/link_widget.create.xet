@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
 	<grid id="etemplate.link_widget.create" template="" lang="" group="" version="0.9.15.001">
@@ -9,7 +9,7 @@
 			<column/>
 		</columns>
 		<rows>
-			<row>
+			<row class="row_on">
 				<description id="app"/>
 				<menulist>
 					<menupopup no_lang="1" id="id" statustext="Select an entry to link with"/>

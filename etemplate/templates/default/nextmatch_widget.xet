@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="0.9.15.005" width="100%" spacing="0" padding="5">
+	<grid id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="0.9.15.006" width="100%" spacing="0" padding="5">
 		<columns>
 			<column width="1%"/>
 			<column width="1%"/>
@@ -17,31 +17,36 @@
 			<row class="nmh">
 				<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 				<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
-				<menulist label="Category" onchange="1" statustext="select a Category">
-					<menupopup id="cat_id" options="-1" type="select-cat"/>
+				<menulist>
+					<menupopup type="select-cat" options="-1" label="Category" id="cat_id" onchange="1" statustext="select a Category"/>
 				</menulist>
-				<menulist label="@filter_label" align="center" onchange="1" statustext="@filter_help">
-					<menupopup id="filter"/>
+				<menulist>
+					<menupopup label="@filter_label" align="center" id="filter" onchange="1" statustext="@filter_help"/>
 				</menulist>
-				<menulist label="@filter2_label" align="right" onchange="1" statustext="@filter2_help">
-					<menupopup id="filter2"/>
+				<menulist>
+					<menupopup label="@filter2_label" align="right" id="filter2" onchange="1" statustext="@filter2_help"/>
 				</menulist>
-				<textbox align="right" id="search" statustext="a pattern to be searched for"/>
+				<textbox align="right" id="search" onchange="1" statustext="a pattern to be searched for"/>
 				<button label="Search" id="start_search" statustext="to start the search"/>
 				<button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
 				<button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.006" width="100%" spacing="0" padding="5">
+	<grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.008" width="100%">
 		<columns>
-			<column width="55%"/>
-			<column width="45%"/>
+			<column width="40%"/>
+			<column/>
+			<column width="40%"/>
 		</columns>
 		<rows>
 			<row>
-				<description value="showing" no_lang="1" align="right" id="range"/>
-				<description span="all" value="of" no_lang="1" id="total"/>
+				<grid id="@header_left"/>
+				<hbox align="center">
+					<description value="showing" no_lang="1" id="range"/>
+					<description value="of" no_lang="1" id="total"/>
+				</hbox>
+				<grid align="right" id="@header_right"/>
 			</row>
 			<row>
 				<grid span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
@@ -49,6 +54,13 @@
 			<row>
 				<grid content="rows" span="all" align="center" id="@template"/>
 			</row>
+			<row disabled="!@bottom_too">
+				<grid content="bottom" span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
+			</row>
 		</rows>
+		<styles>
+			.activ_sortcolumn { color: red; font-weight: bold; }
+.inactiv_sortcolumn { color: green; font-weight: normal; }
+		</styles>
 	</grid>
 </overlay>

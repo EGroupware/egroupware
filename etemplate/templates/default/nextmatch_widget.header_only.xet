@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.nextmatch_widget.header_only" template="" lang="" group="" version="0.9.15.002" width="100%">
+		<columns>
+			<column width="50%"/>
+			<column width="50%"/>
+		</columns>
+		<rows>
+			<row>
+				<grid id="@header_left"/>
+				<grid align="right" id="@header_right"/>
+			</row>
+			<row>
+				<grid content="rows" span="all" align="center" id="@template"/>
+			</row>
+		</rows>
+		<styles>
+			.activ_sortcolumn { color: red; font-weight: bold; }
+.inactiv_sortcolumn { color: green; font-weight: normal; }
+		</styles>
+	</grid>
+</overlay>

@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.link_widget.list" template="" lang="" group="" version="0.9.15.002" class="whiteback">
+	<grid id="etemplate.link_widget.list" template="" lang="" group="" version="0.9.15.003" class="whiteback">
 		<columns>
-			<column/>
 			<column/>
 			<column/>
 			<column/>
@@ -12,14 +11,17 @@
 		<rows>
 			<row class="nmr">
 				<description id="${row}[app]"/>
-				<description options=",@${row}[view]" no_lang="1" id="${row}[title]" statustext="view this linked entry in its application"/>
-				<description no_lang="1" id="${row}[remark]"/>
-				<button image="delete.gif" label="Unlink" id="unlink[$row_cont[link_id]]" statustext="Remove this link (not the entry itself)"/>
+				<hbox options="0,0">
+					<description options=",@${row}[view]" no_lang="1" id="${row}[title]" statustext="view this linked entry in its application"/>
+					<description class="note_following" no_lang="1" id="${row}[remark]"/>
+				</hbox>
+				<button image="delete.png" label="Unlink" id="unlink[$row_cont[link_id]]" statustext="Remove this link (not the entry itself)"/>
 				<radio options="$row_cont[link_id]" id="primary" statustext="Select a primary contact, to show in the list"/>
 			</row>
 		</rows>
 		<styles>
 			.whiteback { background: white; }
+.note_following { font-style: italic; padding-left: 5px; }
 		</styles>
 	</grid>
 </overlay>

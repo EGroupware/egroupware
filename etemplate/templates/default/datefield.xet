@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.datefield" template="" lang="" group="" version="0.9.15.002" spacing="0">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<int options="1,,6" id="f1" statustext="@help"/>
+				<description options="b" id="sep"/>
+				<int options="1,,6" id="f2" statustext="@help"/>
+				<description options="b" id="sep"/>
+				<int options="1,,6" id="f3" statustext="@help"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>

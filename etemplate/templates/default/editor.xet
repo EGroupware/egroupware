@@ -88,7 +88,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.cell" template="" lang="" group="0" version="0.9.15.002" height="100%">
+	<grid id="etemplate.editor.cell" template="" lang="" group="0" version="0.9.15.003" height="100%">
 		<columns>
 			<column/>
 			<column/>
@@ -129,7 +129,9 @@
 			</row>
 			<row class="row">
 				<description value="Help"/>
-				<textbox size="50" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+				<textbox size="45" span="3" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+				<description value="blurText" align="center"/>
+				<textbox size="10" id="blur" statustext="this text gets displayed if the input-field is empty and has no focus (blur)"/>
 			</row>
 		</rows>
 	</grid>
@@ -171,7 +173,7 @@
 			<row>
 				<hbox span="all">
 					<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
-					<button label="Show (no save)" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
+					<button label="Show" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
 					<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
 					<button label="Delete" id="delete" statustext="deletes the eTemplate spez. above"/>
 					<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>

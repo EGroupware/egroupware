@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.tab_widget.tab" template="" lang="" group="" version="0.9.15.001" padding="0">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<button class="etemplate_tab row_on" label="@label" id="tab" onchange="1" statustext="@help"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>
