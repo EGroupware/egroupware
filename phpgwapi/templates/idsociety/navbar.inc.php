@@ -61,7 +61,7 @@
 			$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
 			if($img_src_over)
 			{
-				$pre_load[] = $img_src_over;
+				$pre_load[] = str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$img_src_over);
 			}
 		}
 
