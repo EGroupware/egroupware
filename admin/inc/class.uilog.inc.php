@@ -1,7 +1,7 @@
 <?php
 	/***************************************************************************\
-	* phpGroupWare - uilog                                                      *
-	* http://www.phpgroupware.org                                               *
+	* eGroupWare - uilog                                                        *
+	* http://www.egroupware.org                                                 *
 	* Written by : jerry westrick [jerry@westrick.com]                          *
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
