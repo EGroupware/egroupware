@@ -25,16 +25,12 @@
 			'preferences' => True
 		);
 		var $icons;
-		var $data;
-		var $enums;
 
 		function uiinfolog( )
 		{
 			global $phpgw;
 
 			$this->bo = CreateObject('infolog.boinfolog');
-			$this->data = &$this->bo->data;
-			$this->enums = &$this->bo->enums;
 
 			$this->icons = array(
 				'type' => array(
@@ -68,7 +64,7 @@
 				'own+upcoming'		=>	lang('own upcoming'),
 				'open+today'		=>	lang('open'),
 				'open+overdue'		=>	lang('overdue'),
-				'upcoming'			=>	lang('upcoming'),
+				'upcoming'			=>	lang('upcoming')
 			);
 
 			$this->html = CreateObject('infolog.html');
@@ -78,19 +74,17 @@
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 		}
 				
-		function menuaction($action = 'get_list')
+		function menuaction($action = 'get_list',$app='infolog')
 		{
-			return array( 'menuaction' => "infolog.uiinfolog.$action" );
+			return array( 'menuaction' => "$app.ui$app.$action" );
 		}
 
 		function icon($cat,$id,$status='')
 		{
 			global $phpgw,$DOCUMENT_ROOT;
 
-			$icons = &$this->icons[$cat];
-
-			if (!$status || !($icon = $icons[$id.'_'.$status])) {
-				$icon = $icons[$id];
+			if (!$status || !($icon = $this->icons[$cat][$id.'_'.$status])) {
+				$icon = $this->icons[$cat][$id];
 			}
 			if ($icon)
 			{
@@ -105,14 +99,14 @@
 					$icon = $phpgw->common->get_image_path() . '/' . $icon;
 				}            
 			}
-			if (!$status || !($alt = $icons[$id.'_'.$status.'_alt']))
+			if (!$status || !($alt = $this->icons[$cat][$id.'_'.$status.'_alt']))
 			{
-				if (!($alt = $icons[$id.'_alt']))
+				if (!($alt = $this->icons[$cat][$id.'_alt']))
 				{
 					$alt = $id;
 				}
 			}
-			return ($icon ? "<img src='$icon' alt='" : '') . lang($alt) .
+   		return ($icon ? "<img src='$icon' alt='" : '') . lang($alt) .
 					 ($icon ? '\' border=0>' : '');
 		}
 		
@@ -138,7 +132,7 @@
 			if (!is_array($info) && (!$info ||
 				 !is_array($info=$this->bo->read($info))))
 			{
-				$info = $this->data;
+				$info = $this->bo->so->data;
 			}
 			$done = $info['info_status'] == 'done' ||
 					  $info['info_status'] == 'billed';   
@@ -281,7 +275,7 @@
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 			}
-			$t = &$this->template; $html = &$this->html;
+			$t = $this->template; $html = $this->html;
 
 			$t->set_file(array( 'info_list_t' => 'list.tpl' ));
 			$t->set_block('info_list_t','info_list','list');
@@ -521,7 +515,7 @@
 			global $type,$from,$addr,$id_addr,$id_project,$subject,$des,$access;
 			global $pri,$status,$confirm,$info_cat,$id_parent,$responsible;
 
-			$t = &$this->template; $html = &$this->html;
+			$t = $this->template; $html = $this->html;
 
 			$hidden_vars = array('sort' => $sort,'order' => $order,
 										'query' => $query,'start' => $start,
@@ -644,19 +638,19 @@
 					Header('Location: ' .  $html->link($referer));
 					$phpgw->common->phpgw_exit();
 				}
-				$parent = $this->data;
-				$this->data['info_id'] = $info_id = 0;
-				$this->data['info_owner'] = $phpgw_info['user']['account_id'];
-				$this->data['info_id_parent'] = $parent['info_id'];
+				$parent = $this->bo->so->data;
+				$this->bo->so->data['info_id'] = $info_id = 0;
+				$this->bo->so->data['info_owner'] = $phpgw_info['user']['account_id'];
+				$this->bo->so->data['info_id_parent'] = $parent['info_id'];
 				if ($parent['info_type']=='task' && $parent['info_status']=='offer')
 				{
-					$this->data['info_type'] = 'confirm';   // confirmation to parent
-					$this->data['info_responsible'] = $parent['info_owner'];
+					$this->bo->so->data['info_type'] = 'confirm';   // confirmation to parent
+					$this->bo->so->data['info_responsible'] = $parent['info_owner'];
 				}
-				$this->data['info_status'] = 'ongoing';
-				$this->data['info_confirm'] = 'not';
-				$this->data['info_subject']=lang('Re:').' '.$parent['info_subject'];
-				$this->data['info_des'] = '';
+				$this->bo->so->data['info_status'] = 'ongoing';
+				$this->bo->so->data['info_confirm'] = 'not';
+				$this->bo->so->data['info_subject']=lang('Re:').' '.$parent['info_subject'];
+				$this->bo->so->data['info_des'] = '';
 			}
 			else
 			{
@@ -667,7 +661,7 @@
 				}
 			}      
 			if (!$id_parent)
-				$id_parent = $this->data['info_id_parent'];
+				$id_parent = $this->bo->so->data['info_id_parent'];
 
 			$common_hidden_vars =  $html->input_hidden( $hidden_vars + array(
 				'info_id' => $info_id,
@@ -701,8 +695,8 @@
 					break;
 				case 'new': case 'addr': case 'proj':
 					$info_action = 'InfoLog - New';
-					if ($info_type && isset($this->enums['type'][$info_type]))
-						$this->data['info_type'] = $info_type;
+					if ($info_type && isset($this->bo->enums['type'][$info_type]))
+						$this->bo->so->data['info_type'] = $info_type;
 					break;
 				default:
 					$info_action = 'InfoLog - Edit'; break;
@@ -712,7 +706,7 @@
 			$t->set_var($this->setStyleSheet( ));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_none',lang('None'));
-			if (!isset($info_cat)) $info_cat = $this->data['info_cat'];
+			if (!isset($info_cat)) $info_cat = $this->bo->so->data['info_cat'];
 			$t->set_var('cat_list',$this->categories->formated_list('select',
 																		'all',$info_cat,'True'));
 
@@ -724,45 +718,45 @@
 			$sb = CreateObject('phpgwapi.sbox2');
 
 			$t->set_var('lang_owner',lang('Owner'));
-			$t->set_var('owner_info',$sb->accountInfo($this->data['info_owner']));
+			$t->set_var('owner_info',$sb->accountInfo($this->bo->so->data['info_owner']));
 
 			$t->set_var('lang_type',lang('Type'));
-			if (!isset($type)) $type = $this->data['info_type'];
+			if (!isset($type)) $type = $this->bo->so->data['info_type'];
 			if (!$type) $type = 'note';
 			$t->set_var('type_list',$html->sbox_submit($sb->getArrayItem(
-												'type',$type,$this->enums['type']),True));
+												'type',$type,$this->bo->enums['type']),True));
 
 			$t->set_var('lang_prfrom', lang('From'));
-			if (!isset($from)) $from =$phpgw->strip_html($this->data['info_from']);
+			if (!isset($from)) $from =$phpgw->strip_html($this->bo->so->data['info_from']);
 			$t->set_var('fromval', $from);
 
 			$t->set_var('lang_praddr', lang('Phone/Email'));
-			if (!isset($addr)) $addr =$phpgw->strip_html($this->data['info_addr']);
+			if (!isset($addr)) $addr =$phpgw->strip_html($this->bo->so->data['info_addr']);
 			$t->set_var('addrval', $addr);
 
-			if (!isset($id_project)) $id_project = $this->data['info_proj_id'];
+			if (!isset($id_project)) $id_project = $this->bo->so->data['info_proj_id'];
 			$t->set_var($sb->getProject('project',$id_project,$query_project));
 
-			if (!isset($id_addr)) $id_addr = $this->data['info_addr_id'];
+			if (!isset($id_addr)) $id_addr = $this->bo->so->data['info_addr_id'];
 			$t->set_var($sb->getAddress('addr',$id_addr,$query_addr));
 					
 			$t->set_var('lang_prsubject', lang('Subject'));
 			if (!isset($subject)) {
-				$subject = $phpgw->strip_html($this->data['info_subject']);
+				$subject = $phpgw->strip_html($this->bo->so->data['info_subject']);
 			}
 			$t->set_var('subjectval', $subject);
 
 			$t->set_var('lang_prdesc', lang('Description'));
-			if (!isset($des)) $des = $phpgw->strip_html($this->data['info_des']);
+			if (!isset($des)) $des = $phpgw->strip_html($this->bo->so->data['info_des']);
 			$t->set_var('descval', $des);
 
 			$t->set_var('lang_start_date',lang('Startdate'));
-			if (!isset($startdate)) $startdate = $this->data['info_startdate'];
+			if (!isset($startdate)) $startdate = $this->bo->so->data['info_startdate'];
 			$t->set_var('start_select_date',
 							$sb->getDate('syear','smonth','sday',$startdate));
 
 			$t->set_var('lang_end_date',lang('Enddate'));
-			if (!isset($enddate)) $enddate = $this->data['info_enddate'];
+			if (!isset($enddate)) $enddate = $this->bo->so->data['info_enddate'];
 			$t->set_var('end_select_date',
 							$sb->getDate('eyear','emonth','eday',$enddate));
 
@@ -772,28 +766,28 @@
 			$t->set_var('days',lang('days'));
 
 			$t->set_var('lang_status',lang('Status'));
-			if (!isset($status)) $status = $this->data['info_status'];
+			if (!isset($status)) $status = $this->bo->so->data['info_status'];
 			if (!$status) $status = $this->bo->status['defaults'][$type];
 			$t->set_var('status_list',$sb->getArrayItem('status',$status,
 																	$this->bo->status[$type]));
 
 			$t->set_var('lang_priority',lang('Priority'));
-			if (!isset($pri)) $pri = $this->data['info_pri'];
+			if (!isset($pri)) $pri = $this->bo->so->data['info_pri'];
 			$t->set_var('priority_list',$sb->getArrayItem('pri',$pri,
-																	$this->enums['priority']));
+																	$this->bo->enums['priority']));
 
 			$t->set_var('lang_confirm',lang('Confirm'));
-			if (!isset($confirm)) $confirm = $this->data['info_confirm'];
+			if (!isset($confirm)) $confirm = $this->bo->so->data['info_confirm'];
 			$t->set_var('confirm_list',$sb->getArrayItem('confirm',$confirm,
-																	$this->enums['confirm']));
+																	$this->bo->enums['confirm']));
 
 			$t->set_var('lang_responsible',lang('Responsible'));
-			if (!isset($responsible)) $responsible=$this->data['info_responsible'];
+			if (!isset($responsible)) $responsible=$this->bo->so->data['info_responsible'];
 			$t->set_var('responsible_list',$sb->getAccount('responsible',
 																		  $responsible));
 
 			$t->set_var('lang_access_type',lang('Private'));
-			if (!isset($access)) $access = $this->data['info_access'] == 'private';
+			if (!isset($access)) $access = $this->bo->so->data['info_access'] == 'private';
 			$t->set_var('access_list',$html->checkbox('access',$access));
 			  
 			$t->set_var('edit_button',$html->submit_button('save','Save'));
@@ -817,7 +811,7 @@
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $info_id,$confirm;
 
-			$t = &$this->template; $html = &$this->html;
+			$t = $this->template; $html = $this->html;
 
 			$referer = $this->get_referer();
 
@@ -871,7 +865,7 @@
 				'longNames'			=> 'Show full usernames'
 			);
 			$allowed_values = array (
-				'defaultFilter' => $this->filters,
+				'defaultFilter' => $this->filters
 			);
 
 			$phpgw->preferences->read_repository();
@@ -890,7 +884,7 @@
 			$phpgw->common->phpgw_header();
 			echo parse_navbar();
 
-			$t = &$this->template; $html = &$this->html;
+			$t = $this->template; $html = $this->html;
 
 			$t->set_file(array('info_prefs' => 'preferences.tpl'));
 
@@ -900,7 +894,7 @@
 				'action_url' => $html->link('/index.php',
 													 $this->menuaction('preferences')),
 				'bg_h_color' => $phpgw_info['theme']['th_bg'],
-				'save_button' => $html->submit_button('save','Save'),
+				'save_button' => $html->submit_button('save','Save')
 			);
 			$t->set_var($vars);
 

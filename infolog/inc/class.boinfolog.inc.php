@@ -27,12 +27,10 @@
 			'anzSubs'	=>	True,
 			'readIdArray' => True,
 			'accountInfo'	=> True,	// in class boinfolog (this class)
-			'addr2name'	=>	True,
+			'addr2name'	=>	True
 		);
 		var $enums;
 		var $so;
-		var $data;
-		var $grants;
 
 		function boinfolog( $info_id = 0)
 		{
@@ -50,8 +48,8 @@
 					'not' => 'not','accept' => 'accept','finish' => 'finish',
 					'both' => 'both' ),
 				'type'      => array(
-					'task' => 'task','phone' => 'phone','note' => 'note',
-				/*	'confirm' => 'confirm','reject' => 'reject','email' => 'email',
+					'task' => 'task','phone' => 'phone','note' => 'note'
+				/*	,'confirm' => 'confirm','reject' => 'reject','email' => 'email',
 					'fax' => 'fax' no implemented so far */ )
 			);
 			$this->status = array(
@@ -68,8 +66,6 @@
 			));
 					
 			$this->so = CreateObject('infolog.soinfolog');
-			$this->data = &$this->so->data;
-			$this->grants = &$this->so->grants;
 
 			$this->read( $info_id);
 		}
@@ -166,17 +162,17 @@
 		{
 			$this->so->read($info_id);
 				
-			if ($this->data['info_subject'] ==
-				 (substr($this->data['info_des'],0,60).' ...'))
+			if ($this->so->data['info_subject'] ==
+				 (substr($this->so->data['info_des'],0,60).' ...'))
 			{
-				$this->data['info_subject'] = '';
+				$this->so->data['info_subject'] = '';
 			}
-			if ($this->data['info_addr_id'] && $this->data['info_from'] ==
-				 $this->addr2name( $this->readAddr( $this->data['info_addr_id'] )))
+			if ($this->so->data['info_addr_id'] && $this->so->data['info_from'] ==
+				 $this->addr2name( $this->readAddr( $this->so->data['info_addr_id'] )))
 			{
-				$this->data['info_from'] = '';
+				$this->so->data['info_from'] = '';
 			}            
-			return $this->data;
+			return $this->so->data;
 		}
 
 		function delete($info_id)
