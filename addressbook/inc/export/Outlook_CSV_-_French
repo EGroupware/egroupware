@@ -1,0 +1,148 @@
+<?php
+// This file defines a set of functions and an associative array.
+// The key of the array corresponds to a header in the source
+// export file and the value of the array item will be used in
+// the creation of the output file.
+//
+// An exported Outlook file looks like this:
+//
+// Title<tab>First Name<tab>Middle Name<tab>Last Name<tab>...
+// <tab>Patrick<tab><tab>Walsh<tab>...
+//
+// Where the first line explains each optional field.  This is what
+// will be looked up in the key.
+//
+// The array need not be in any order and any fields not defined will
+// not be transferred.  If the val='+', the value will be appended to
+// the previous field and any text after the '+' will be appended 
+// before the value.  For example, the following would add a comma and
+// a space between LastName and FirstName and store it in FullName:
+//
+//	array("LastName" => "FullName","FirstName" => "+, ");
+//
+// Also start with a '#' symbol and a comma separated list will be
+// turned into a number of the same entries.
+
+	class export_conv
+	{
+		var $currentrecord = array(); //used for buffering to allow uid lines to go first
+		var $id;
+		var $type = 'csv';
+
+		var $export = array(
+			'title'               => 'Fonction',
+			'n_given'             => 'Prénom',
+			'n_middle'            => 'Deuxième prénom',
+			'n_family'            => 'Nom',
+			'n_suffix'            => 'Suffixe',
+			'org_name'            => 'Société',
+			'org_unit'            => 'Service',
+			'adr_one_street'      => 'Rue (bureau)',
+			'address2'            => 'Rue (bureau) 2',
+			'address3'            => 'Rue (bureau) 3',
+			'adr_one_locality'    => 'Ville (bureau)',
+			'adr_one_region'      => 'État/Prov (bureau)',
+			'adr_one_postalcode'  => 'Code postal (bureau)',
+			'adr_one_countryname' => 'Pays (bureau)',
+			'adr_two_street'      => 'Rue (domicile)',
+			'adr_two_locality'    => 'Ville (domicile)',
+			'adr_two_region'      => 'État/Prov (domicile)',
+			'adr_two_postalcode'  => 'Code postal (domicile)',
+			'adr_two_countryname' => 'Pays (domicile)',
+			'tel_fax'             => 'Télécopie (bureau)',
+			'tel_work'            => 'Téléphone (bureau)',
+			'tel_msg'             => "Téléphone de l'assistant(e)",
+			'tel_car'             => 'Téléphone (voiture)',
+			'tel_isdn'            => 'RNIS',
+			'tel_home'            => 'Téléphone (domicile)',
+			'tel_cell'            => 'Tél. mobile',
+			'tel_pager'           => 'Récepteur de radiomessagerie',
+			'ophone'              => 'Téléphone 2 (bureau)',
+			'bday'                => 'Anniversaire',
+			'email'               => 'Adresse e-mail',
+			'email_home'          => 'Adresse e-mail 2',
+			'url'                 => 'Page Web',
+			'note'                => 'Notes'
+		);
+
+		// This will store the contacts object
+		var $contacts = '';
+
+		function export_start_file($buffer,$ncat_id='')
+		{
+			$this->id=-1;
+			if ($ncat_id)
+			{
+				$filter = 'tid=n,cat_id='.$ncat_id;
+			}
+			else
+			{
+				$filter = 'tid=n';
+			}
+			$this->contacts = CreateObject('phpgwapi.contacts');
+
+			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
+			for ($i=0;$i<count($tmp);$i++)
+			{
+				$this->ids[$i] = $tmp[$i]['id'];
+			}
+			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
+			// $buffer is still empty
+			return $buffer;
+		}
+
+		// Read each entry
+		function export_start_record($buffer)
+		{
+			$this->id++;
+			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
+			$this->currentrecord = $top[0];
+			return $buffer;
+		}
+
+		// Read each attribute, populate buffer
+		// name/value are the fields from the export array above
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name])
+			{
+				$buffer[$this->id][$this->export[$name]] = $value;
+				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
+			}
+			return $buffer;
+		}
+
+		// Tack on some extra values
+		function export_end_record($buffer)
+		{
+			return $buffer;
+		}
+
+		function export_end_file($buffer)
+		{
+			// Build the header for the file (field list)
+			reset($this->export);
+			while (list($name,$value)=each($this->export))
+			{
+				$entries .= $value . ',';
+			}
+			$entries = substr($entries,0,-1);
+			$entries .= "\r\n";
+
+			// Now add all the data
+			reset($this->ids);
+			for ($i=0;$i<count($this->ids);$i++)
+			{
+				reset($this->export);
+				while (list($name,$value)=each($this->export))
+				{
+					$entries .= $buffer[$i][$value] . ',';
+				}
+				$entries = substr($entries,0,-1);
+				$entries .= "\r\n";
+			}
+			$buffer = $entries;
+			return $buffer;
+		}
+	}
+?>
