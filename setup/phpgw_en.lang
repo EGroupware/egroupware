@@ -174,6 +174,7 @@ home phone	addressbook	en	Home Phone
 human resources	common	en	Human Resources
 idle	admin	en	idle
 if applicable	email	en	If Applicable
+ignore conflict	calendar	en	Ignore Conflict
 image	email	en	Image
 imap server type	email	en	IMAP Server Type
 import lang set	transy	en	Import lang set
@@ -286,6 +287,7 @@ priority	common	en	Priority
 private	common	en	Private
 private_files	filemanager	en	Private files
 project description	todo	en	Project Description
+re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
 record access	addressbook	en	Record Access
