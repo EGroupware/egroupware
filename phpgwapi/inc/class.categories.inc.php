@@ -676,7 +676,7 @@
 				if ($values['parent'] > 0)
 				{
 					$values['main']  = (int)$this->id2name($values['parent'],'main');
-					$values['level'] = (int)$this->id2name($values['parent'],'level' + 1);
+					$values['level'] = (int)$this->id2name($values['parent'],'level') + 1;
 				}
 				else
 				{
@@ -721,6 +721,7 @@
 			}
 			switch($item)
 			{
+				default:	//fall through
 				case 'name':	$value = 'cat_name'; break;
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
