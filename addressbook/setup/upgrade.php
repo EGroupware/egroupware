@@ -91,13 +91,15 @@
   
 		$phpgw_setup->db->query($sql);  
 
-		// create an extra db object for the two nested queries below
-		$db1 = $db2 = $db3 = $db4 = $phpgw_setup->db;
+		// create db objects for the main and two nested queries below
+		$db1 = $db2 = $phpgw_setup->db;
 		
 		// read in old addressbook
 		$db1->query("select * from addressbook");
 
 		while ( $db1->next_record() ) {
+			// clear the arrays for subsequent passes
+			$fields = $extra = array();
 			$fields["org_name"]			= $db1->f("ab_company");
 			$fields["n_given"]			= $db1->f("ab_firstname");
 			$fields["n_family"]			= $db1->f("ab_lastname");
@@ -115,6 +117,7 @@
 			$fields["adr_region"]		= $db1->f("ab_state");
 			$fields["adr_postalcode"]	= $db1->f("ab_zip");
 			$fields["owner"]			= $db1->f("ab_owner");
+			$fields["id"]				= $db1->f("ab_id");
 
 			$extra["pager"]				= $db1->f("ab_pager");
 			$extra["mphone"]			= $db1->f("ab_mphone");
@@ -126,9 +129,9 @@
 
 			// add this record's standard with current entry's owner as owner
 			$sql="INSERT INTO phpgw_addressbook ("
-				. "org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
+				. "id,org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
 				. "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner)"
-				. " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
+				. " VALUES ('".$fields["id"]."','".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
 				. $fields["fn"]."','".$fields["d_email"]."','".$fields["title"]."','".$fields["a_tel"]."','"
 				. $fields["a_tel_work"]."','".$fields["b_tel"]."','".$fields["b_tel_home"]."','"
 				. $fields["c_tel"]."','".$fields["c_tel_fax"]."','".$fields["adr_street"]."','"
@@ -137,14 +140,11 @@
 
 			$db2->query($sql);
 
-			// fetch the id just inserted
-			$db3->query("SELECT max(id) FROM phpgw_addressbook ",__LINE__,__FILE__);
-			$db3->next_record();
-			$id = $db3->f(0);
-
+			//echo "<br>Inserting id '".$fields["id"]."'";
 			// insert extra data for this record into extra fields table
 			while (list($name,$value) = each($extra)) {
-				$db4->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
+				//echo "<br>Inserting '".$name."' = '".$value."'";
+				$db2->query("INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 			}
 		}
