@@ -1,15 +1,14 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare                                                             *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare                                                             *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	/* $Id$ */
 
 	/*
 	 Idea:  This is so I don't forget.  When they are performing a new install, after config,
@@ -19,12 +18,13 @@
 	$GLOBALS['DEBUG'] = False;
 
 	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'currentapp' => 'home',
-		'noapi'      => True,
-		'nocachecontrol' => True
+	$GLOBALS['phpgw_info']['flags'] = array
+	(
+		'noheader' 			=> True,
+		'nonavbar'			=> True,
+		'currentapp'		=> 'home',
+		'noapi'				=> True,
+		'nocachecontrol'	=> True
 	);
 	include('./inc/functions.inc.php');
 
@@ -32,14 +32,15 @@
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
-	$setup_tpl->set_file(array(
-		'T_head' => 'head.tpl',
-		'T_footer' => 'footer.tpl',
-		'T_alert_msg' => 'msg_alert_msg.tpl',
-		'T_login_main' => 'login_main.tpl',
-		'T_login_stage_header' => 'login_stage_header.tpl',
-		'T_setup_main' => 'setup_main.tpl',
-		'T_setup_db_blocks' => 'setup_db_blocks.tpl'
+	$setup_tpl->set_file(array
+	(
+		'T_head'				=> 'head.tpl',
+		'T_footer'				=> 'footer.tpl',
+		'T_alert_msg'			=> 'msg_alert_msg.tpl',
+		'T_login_main'			=> 'login_main.tpl',
+		'T_login_stage_header'	=> 'login_stage_header.tpl',
+		'T_setup_main'			=> 'setup_main.tpl',
+		'T_setup_db_blocks'		=> 'setup_db_blocks.tpl'
 	));
 
 	$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
@@ -127,7 +128,7 @@
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
-			$submsg = lang('At your request, this script is going to attempt to install all the applications for you').'.';
+			$submsg = lang('At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you').'.';
 			$subaction = 'installed';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
@@ -191,7 +192,7 @@
 			$setup_tpl->set_var('dbexists',lang('Your database is working, but you dont have any applications installed'));
 			$setup_tpl->set_var('install',lang('Install'));
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
-			$setup_tpl->set_var('allapps',lang('all applications'));
+			$setup_tpl->set_var('coreapps',lang('all core tables and the admin and preferences applications'));
 			$setup_tpl->parse('V_db_stage_3','B_db_stage_3');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_3');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);

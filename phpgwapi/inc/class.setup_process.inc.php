@@ -1,17 +1,16 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  * This file written by Miles Lott<milosch@phpgroupware.org>                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare - Setup                                                     *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	* This file written by Miles Lott<milosch@phpgroupware.org>                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	/* $Id$ */
 
 	/* app status values:
 	U	Upgrade required/available
@@ -70,7 +69,9 @@
 				return False;
 			}
 			// Place api first
-			$pass['phpgwapi'] = $setup_info['phpgwapi'];
+			$pass['phpgwapi']		= $setup_info['phpgwapi'];
+			$pass['admin']			= $setup_info['admin'];
+			$pass['preferences']	= $setup_info['preferences'];
 			@reset($setup_info);
 			$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
 			@reset($setup_info);

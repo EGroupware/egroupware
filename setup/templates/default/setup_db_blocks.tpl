@@ -50,10 +50,10 @@
 	<td>
 		<form action="index.php" method="post">
 		<input type="hidden" name="oldversion" value="new">
-		
+
 		{dbexists}<br>
         <input type="hidden" name="action" value="Install">
-		<input type="submit" name="label" value="{install}"> {allapps}
+		<input type="submit" name="label" value="{install}"> {coreapps}
 		</form>
 	</td>
 </tr>

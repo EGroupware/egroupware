@@ -13,7 +13,7 @@ admin password to header manager	setup	en	Admin password to header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
-all applications	setup	en	all applications
+all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
 all users	setup	en	All Users
 analysis	setup	en	Analysis
 app details	setup	en	App details
@@ -25,7 +25,7 @@ application name and status information	setup	en	Application Name and Status Inf
 application title	setup	en	Application Title
 are you sure?	setup	en	ARE YOU SURE?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	en	At your request, this script is going to attempt to create the database and assign the db user rights to it
-at your request, this script is going to attempt to install all the applications for you	setup	en	At your request, this script is going to attempt to install all the applications for you
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	en	At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	en	At your request, this script is going to attempt to upgrade your old tables to the new format
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	en	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
