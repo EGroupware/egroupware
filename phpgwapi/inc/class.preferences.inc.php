@@ -727,6 +727,11 @@
 			return $prefs_email_address;
 		}
 
+		function sub_default_address($account_id='')
+		{
+			return $this->email_address($account_id);
+		}
+
 		/*!
 		@function create_email_preferences
 		@abstract create email preferences
