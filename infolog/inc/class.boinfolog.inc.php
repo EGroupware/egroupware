@@ -531,8 +531,8 @@
 						),
 						'categories' => array(
 							'function'  => 'categories',
-							'signature' => array(array(xmlrpcBool,xmlrpcStruct)),
-							'docstring' => lang('List all categories.')
+							'signature' => array(array(xmlrpcBoolean,xmlrpcBoolean)),
+							'docstring' => lang('List all categories')
 						),
 						'list_methods' => array(
 							'function'  => 'list_methods',
@@ -609,6 +609,6 @@
 		// return array with all infolog categories (for xmlrpc)
 		function categories($complete = False)
 		{
-			return $GLOBALS['server']->categories($complete);
+			return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
 		}
 	}
