@@ -74,12 +74,13 @@
   $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_app_sessions (
-   sessionid	varchar(255) NOT NULL,
-   loginid	varchar(20),
-   app	        varchar(20),
-   content	text
+    sessionid	   varchar(255) NOT NULL,
+    loginid	     varchar(20),
+    location      varchar(255),
+    app	         varchar(20),
+    content	     text
   )";
-  $phpgw_setup->db->query($sql);
+  $phpgw_setup->db->query($sql); 
 
   $sql = "create table phpgw_access_log (
    sessionid    varchar(255),

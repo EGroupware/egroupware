@@ -940,6 +940,26 @@
      $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
   }
 
+
+  $test[] = "0.9.10pre5";
+  function upgrade0_9_10pre5()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+		// This is only temp data, so we can kill it.
+		$phpgw_setup->db->query('drop table phpgw_app_sessions',__LINE__,__FILE__);
+    $sql = "CREATE TABLE phpgw_app_sessions (
+      sessionid	   varchar(255) NOT NULL,
+      loginid	     varchar(20),
+      location      varchar(255),
+      app	         varchar(20),
+      content	     text
+    )";
+    $phpgw_setup->db->query($sql);  
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre6";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

@@ -25,6 +25,7 @@
 
   class sessions
   {
+		var $use_cache = True;		// If you want to cache the phpgw_info array
     var $login;
     var $passwd;
     var $account_id;
@@ -100,11 +101,23 @@
 
        $phpgw_info["user"]["kp3"] = $this->kp3;
        $phpgw_info_flags    = $phpgw_info["flags"];
-       $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
-       $this->data          = $phpgw_info["user"];
+
        $phpgw_info["flags"] = $phpgw_info_flags;
        $userid_array = explode("@",$db->f("session_lid"));
        $this->account_lid = $userid_array[0];
+       $this->update_dla();
+       $this->account_id = $phpgw->accounts->name2id($this->account_lid);
+
+       if ($this->use_cache) {
+      		$t = $this->appsession('phpgw_info_cache','phpgwapi');
+       } else {
+      		$t = $this->read_repositories();
+       }
+
+       $phpgw_info["server"]					= $t["server"];
+       $phpgw_info["user"]						= $t["user"];
+       $phpgw_info["hooks"]					 = $t["hooks"];
+       $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
           return False;
@@ -114,8 +127,6 @@
           return False;
        }
 
-       $this->update_dla();
-       $this->account_id = $phpgw->accounts->name2id($this->account_lid);
        $phpgw->acl->acl($this->account_id);
        $phpgw->accounts->accounts($this->account_id);
        $phpgw->preferences->preferences($this->account_id);
@@ -137,23 +148,6 @@
           $phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
                           . "'",__LINE__,__FILE__);
        }
-    }
-    
-    function update_session_info()
-    {
-       global $phpgw, $phpgw_info;
-       $phpgw_info_temp = $phpgw_info;
-       $phpgw_info_temp["user"]["kp3"] = "";
-       $phpgw_info_temp["flags"] = array();
-
-       //$this->read_repositories();
-       if ($PHP_VERSION < "4.0.0") {
-          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
-       } else {
-          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);
-       }
-       $phpgw->db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
-                       . $this->sessionid . "'",__LINE__,__FILE__);
     }
 
     function create($login,$passwd)
@@ -186,8 +180,7 @@
       }
       $phpgw->accounts->account_id = $this->account_id;
 
-      $phpgw_info["user"] = $phpgw->accounts->read_repository();
-      $this->sessionid    = md5($phpgw->common->randomstring(10));
+      $this->sessionid		= md5($phpgw->common->randomstring(10));
       $this->kp3          = md5($phpgw->common->randomstring(15));
 
       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
@@ -212,16 +205,16 @@
          unset ($phpgw_info["server"]["default_domain"]);                   // we kill this for security reasons
       }
 
-      // Why are we double encrypting it ?
-      // If mcrypt is already installed, the entire session_info field is all ready encrypted. (jengo)
-      $this->passwd = $phpgw->common->encrypt($passwd);
       $this->read_repositories();
+      $phpgw_info["user"]  = $this->user;
+      $phpgw_info["hooks"] = $this->hooks;
+			if ($this->use_cache) {
+					$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info);
+			}
 
-      if ($PHP_VERSION < "4.0.0") {
-         $info_string = addslashes($phpgw->crypto->encrypt($this->data));
-      } else {
-         $info_string = $phpgw->crypto->encrypt($this->data);       
-      }
+			// This is going to be stored by appsessions in its own record
+//    $this->passwd = $phpgw->common->encrypt($passwd);
+
       $phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
                       . "','".$login."','" . $this->getuser_ip() . "','"
                       . time() . "','" . time() . "','".$info_string."')",__LINE__,__FILE__);
@@ -270,84 +263,78 @@
 		/*************************************************************************\
 		* Functions for appsession data and session cache                         *
 		\*************************************************************************/
-
     function read_repositories()
     {
-      global $phpgw_info, $phpgw;
+      global $phpgw;
       $phpgw->acl->acl($this->account_id);
       $phpgw->accounts->accounts($this->account_id);
       $phpgw->preferences->preferences($this->account_id);
       $phpgw->applications->applications($this->account_id);
-      $phpgw_info["user"]                = $phpgw->accounts->read_repository();
-      $phpgw_info["user"]["acl"]         = $phpgw->acl->read_repository();
-      $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
-      $phpgw_info["user"]["apps"]        = $phpgw->applications->read_repository();
-      @reset($phpgw_info["user"]["apps"]);
 
-      $phpgw_info["user"]["domain"]      = $this->account_domain;
-      $phpgw_info["user"]["sessionid"]   = $this->sessionid;
-      $phpgw_info["user"]["kp3"]         = $this->kp3;
-      $phpgw_info["user"]["session_ip"]  = $this->getuser_ip();
-      $phpgw_info["user"]["session_lid"] = $this->account_lid."@".$this->account_domain;
-      $phpgw_info["user"]["account_id"]  = $this->account_id;
-      $phpgw_info["user"]["account_lid"] = $this->account_lid;
-      $phpgw_info["user"]["userid"]      = $this->account_lid;
-      $phpgw_info["user"]["passwd"]      = $this->passwd;
-
-      $this->data["user"]        = $phpgw_info["user"];
-      $this->data["apps"]        = $phpgw_info["apps"];
-      $this->data["server"]      = $phpgw_info["server"];
-      $this->data["hooks"]       = $phpgw->hooks->read();
-      $this->data["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-      $this->data["user"]["kp3"] = "";
+			$this->user                = $phpgw->accounts->read_repository();
+      $this->user["acl"]         = $phpgw->acl->read_repository();
+      $this->user["preferences"] = $phpgw->preferences->read_repository();
+      $this->user["apps"]        = $phpgw->applications->read_repository();
+      //@reset($this->data["user"]["apps"]);
+    
+      $this->user["domain"]      = $this->account_domain;
+      $this->user["sessionid"]   = $this->sessionid;
+      $this->user["kp3"]         = $this->kp3;
+      $this->user["session_ip"]  = $this->getuser_ip();
+      $this->user["session_lid"] = $this->account_lid."@".$this->account_domain;
+      $this->user["account_id"]  = $this->account_id;
+      $this->user["account_lid"] = $this->account_lid;
+      $this->user["userid"]      = $this->account_lid;
+      $this->user["passwd"]      = $this->passwd;
+      $this->hooks       				= $phpgw->hooks->read();
     }
 
-    function appsession($data = "##NOTHING##", $location = "default") {
+    function save_repositories()
+    {
+       global $phpgw, $phpgw_info;
+       $phpgw_info_temp = $phpgw_info;
+       $phpgw_info_temp["user"]["kp3"] = "";
+       $phpgw_info_temp["flags"] = array();
+
+			if ($this->use_cache) {
+					$this->appsessions("phpgw_info_cache","phpgwapi",$phpgw_info_temp);
+			}
+    }
+
+    function appsession($location = "default", $appname = "", $data = "##NOTHING##")
+    {
       global $phpgw_info, $phpgw;
 
-      if ($data == "##NOTHING##") {  /* This allows the user to put "" as the value. */
-				$sql = 'select content from phpgw_app_sessions where'
-					.' sessionid = "'.$this->sessionid.'"'
-					.' and loginid = "'.$this->account_id.'"'
-					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-					.' and location = "'.$location.'"';
+			if (! $appname) {
+					$appname = $phpgw_info['flags']['currentapp'];
+			}
 
-	      $phpgw->db->query($sql,__LINE__,__FILE__);
+			/* This allows the user to put "" as the value. */
+      if ($data == "##NOTHING##") {
+      		$phpgw->db->query('select content from phpgw_app_sessions where'
+													 .' sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'"'
+								 					.' and app = "'.$appname.'" and location = "'.$location.'"',__LINE__,__FILE__);
 
-	      if($phpgw->db->num_rows()) {
 	        $phpgw->db->next_record();
 	        $data = $phpgw->db->f("content");
-//	        $data = $phpgw->common->decrypt($data);
+	        $data = $phpgw->common->decrypt($data);
 	        return $data;
-	      }
       } else {
-//	      $data = $phpgw->common->encrypt($data);
-				$sql = 'select content from phpgw_app_sessions where'
-					.' sessionid = "'.$this->sessionid.'"'
-					.' and loginid = "'.$this->account_id.'"'
-					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-					.' and location = "'.$location.'"';
-
-	      $phpgw->db->query($sql,__LINE__,__FILE__);
+	      $phpgw->db->query('select content from phpgw_app_sessions where '
+												. 'sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'" '
+												. 'and app = "'.$appname.'" and location = "'.$location.'"',__LINE__,__FILE__);
 
 	      if ($phpgw->db->num_rows()==0) {
-					$sql = 'INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content)'
-						.' VALUES ("'.$this->sessionid.'"'
-						.' ","'.$this->account_id.'"'
-						.' ","'.$phpgw_info["flags"]["currentapp"].'"'
-						.' ","'.$location.'"'
-						.' ","'.$data.'")'
-					;
-		      $phpgw->db->query($sql,__LINE__,__FILE__);
+      		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
+		      $phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
+													. 'VALUES ("'.$this->sessionid.'","'.$this->account_id.'","'.$appname
+													. '","'.$location.'","'.$data.'")',__LINE__,__FILE__);
 	      } else {
-					$sql = 'update phpgw_app_sessions set content = "'.$data.'"'
-						.' where sessionid = "'.$this->sessionid.'"'
-						.' and loginid = "'.$this->account_id.'"'
-						.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-						.' and location = "'.$location.'"';
-		      $phpgw->db->query($sql,__LINE__,__FILE__);
+		      $phpgw->db->query('update phpgw_app_sessions set content = "'.$data.'" '
+													. 'where sessionid = "'.$this->sessionid.'" '
+													. 'and loginid = "'.$this->account_id.'" and app = "'.$appname.'" '
+													. 'and location = "'.$location.'"',__LINE__,__FILE__);
 	      }
-	      //$data = $phpgw->common->decrypt($data);
         return $data;
       }
     }

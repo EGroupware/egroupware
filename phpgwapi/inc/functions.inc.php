@@ -78,7 +78,8 @@
 		global $debugme;
 		if ($debugme == "on") { echo 'debug: '.$text.'<br>'; }
 	}
-print_debug('core functions are done');
+
+	print_debug('core functions are done');
 	/****************************************************************************\
 	* Quick verification of sane environment                                     *
 	\****************************************************************************/
@@ -96,7 +97,7 @@ print_debug('core functions are done');
 	}
 
 	magic_quotes_runtime(false);
-print_debug('sane environment');
+	print_debug('sane environment');
 
 	/****************************************************************************\
 	* Multi-Domain support                                                       *
@@ -150,9 +151,10 @@ print_debug('sane environment');
 	}
 	unset ($domain); // we kill this to save memory
 
-print_debug('domain: '.$phpgw_info["user"]["domain"]);
+	print_debug('domain: '.$phpgw_info["user"]["domain"]);
 
-//dont know where to put this (seek3r)
+	// Dont know where to put this (seek3r)
+	// This is where it belongs (jengo)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array('root'     => True,
 																												'bin'      => True,
@@ -184,7 +186,7 @@ print_debug('domain: '.$phpgw_info["user"]["domain"]);
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
 	$phpgw->phpgw_();	
-print_debug('main class loaded');
+	print_debug('main class loaded');
 
 	/* Fill phpgw_info["server"] array */
 	$phpgw->db->query("select * from config",__LINE__,__FILE__);
@@ -194,34 +196,26 @@ print_debug('main class loaded');
 	// Handy little shortcut
 	$sep = $phpgw_info["server"]["dir_separator"];
 
-	if ($phpgw_info["flags"]["currentapp"] == "login" || $phpgw_info["flags"]["currentapp"] == "logout") {
-		/****************************************************************************\
-		* Stuff to use if logging in or logging out                                  *
-		\****************************************************************************/
-
-		/* incase we are dealing with a fresh login */
-// not sure these lines are needed anymore (seek3r)
-//		if (! isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
-//			$phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
-//		}
-
-		if ($phpgw_info["flags"]["currentapp"] == "login") {
-			if ($login != ""){
-				$login_array = explode("@",$login);
-				$login_id = $phpgw->accounts->name2id($login_array[0]);
-				$phpgw->accounts->accounts($login_id);
-				$phpgw->preferences->preferences($login_id);
-			}
-		}
-
 	/****************************************************************************\
-	* Everything from this point on will ONLY happen if                          *
-	* the currentapp is not login or logout                                      *
+	* Stuff to use if logging in or logging out                                  *
 	\****************************************************************************/
+	if ($phpgw_info["flags"]["currentapp"] == "login" || $phpgw_info["flags"]["currentapp"] == "logout") {
+			if ($phpgw_info["flags"]["currentapp"] == "login") {
+					if ($login != ""){
+							$login_array = explode("@",$login);
+							$login_id = $phpgw->accounts->name2id($login_array[0]);
+							$phpgw->accounts->accounts($login_id);
+							$phpgw->preferences->preferences($login_id);
+					}
+			}
+			/****************************************************************************\
+			* Everything from this point on will ONLY happen if                          *
+			* the currentapp is not login or logout                                      *
+			\****************************************************************************/
 	} else {
 		if (! $phpgw->session->verify()) {
-		 Header("Location: " . $phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]."/login.php","cd=10")));
-		 exit;
+				Header("Location: " . $phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]."/login.php","cd=10")));
+				exit;
 		}
 
 		/* A few hacker resistant constants that will be used throught the program */
@@ -240,20 +234,20 @@ print_debug('main class loaded');
 		define("PHPGW_ACL_DELETE",8);
 
 		/********* Load up additional phpgw_info["server"] values *********/
-			/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
-			$phpgw_info["server"]["template_dir"]     = PHPGW_TEMPLATE_DIR;
-			$phpgw_info["server"]["images_dir"]       = PHPGW_IMAGES_DIR;
-			$phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
-			$phpgw_info["server"]["app_root"]         = PHPGW_APP_ROOT;
-			$phpgw_info["server"]["app_inc"]          = PHPGW_APP_INC;
-			$phpgw_info["server"]["app_tpl"]          = PHPGW_APP_TPL;
-			$phpgw_info["server"]["app_images"]       = PHPGW_IMAGES;
-			$phpgw_info["server"]["app_images_dir"]   = PHPGW_IMAGES_DIR;
-			/* END LEGACY SUPPORT!!!*/
+		/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
+		$phpgw_info["server"]["template_dir"]     = PHPGW_TEMPLATE_DIR;
+		$phpgw_info["server"]["images_dir"]       = PHPGW_IMAGES_DIR;
+		$phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
+		$phpgw_info["server"]["app_root"]         = PHPGW_APP_ROOT;
+		$phpgw_info["server"]["app_inc"]          = PHPGW_APP_INC;
+		$phpgw_info["server"]["app_tpl"]          = PHPGW_APP_TPL;
+		$phpgw_info["server"]["app_images"]       = PHPGW_IMAGES;
+		$phpgw_info["server"]["app_images_dir"]   = PHPGW_IMAGES_DIR;
+		/* END LEGACY SUPPORT!!!*/
 
 		/********* This sets the user variables *********/
 		$phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"]
-				. "/users/".$phpgw_info["user"]["userid"];
+																			. "/users/".$phpgw_info["user"]["userid"];
 
 		/* This will make sure that a user has the basic default prefs. If not it will add them */
 		$phpgw->preferences->verify_basic_settings();

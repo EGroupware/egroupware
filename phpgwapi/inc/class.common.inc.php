@@ -884,29 +884,27 @@
 
 
     // This will return the full phpgw_info array, used for debugging    
-    function debug_phpgw_info()
+    function debug_list_array_contents($array)
     {
-       global $phpgw_info;
-
-       while (list($key, $val) = each($phpgw_info)) {
+       while (list($key, $val) = each($array)) {
           if (is_array($val)) {
              while (list($key2, $val2) = each($val)) {
                 if (is_array($val2)) {
                    while (list($key3, $val3) = each ($val2)) {
                       if (is_array($val3)) {
                          while (list($key4, $val4) = each ($val3)) {
-                            echo "phpgw_info[$key][$key2][$key3][$key4]=$val4<br>";
+                            echo $$array . "[$key][$key2][$key3][$key4]=$val4<br>";
                          }
                       } else {
-                         echo "phpgw_info[$key][$key2][$key3]=$val3<br>";
+                         echo $$array . "[$key][$key2][$key3]=$val3<br>";
                       }
                   }
                 } else {
-                  echo "phpgw_info[$key][$key2]=$val2<br>";
+                  echo $$array . "[$key][$key2]=$val2<br>";
                 }
              }
           } else {
-             echo "phpgw_info[$key]=$val<br>";
+             echo $$array . "[$key]=$val<br>";
           }
        }
     }
