@@ -25,12 +25,15 @@
 //		$GLOBALS['phpgw']->common->phpgw_exit();
 //	}
 
+	@reset($GLOBALS['phpgw_info']['user']['preferences']);
+	//_debug_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
 //	$GLOBALS['phpgw']->preferences->delete('portal_order');
 //	unset($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
 //	$GLOBALS['phpgw']->preferences->save_repository();
 
 	function move_boxes($curr_position,$new_order,$offset,$value_to_check,$max_num)
 	{
+		//echo "MOVE: $curr_position,$new_order,$offset,$value_to_check,$max_num<br>";
 		if(isset($GLOBALS['phpgw_info']['user']['preferences']['portal_order'][$new_order]))
 		{
 			if($new_order == $max_num)
@@ -62,7 +65,7 @@
 		$GLOBALS['phpgw']->preferences->delete('portal_order',$new_order);
 		$GLOBALS['phpgw']->preferences->add('portal_order',$new_order,intval($_GET['app']));
 			
-		$GLOBALS['phpgw']->preferences->save_repository();
+		$GLOBALS['phpgw_info']['user']['preferences']['portal_order'] = $GLOBALS['phpgw']->preferences->save_repository();
 	}
 
 	//error_reporting(E_ALL);
@@ -70,10 +73,10 @@
 	{
 		//print_debug('set_box', $GLOBALS['phpgw_info']['user']['preferences']['portal_order']),'app',5);
 		case 'up':
-			$curr_position = $GLOBALS['phpgw']->common->find_portal_order(intval($_GET['app']));
+			$curr_position = $GLOBALS['phpgw']->common->find_portal_order((int)($_GET['app']));
 			$max_count = count($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) - 1;
 			$offset = -1;
-			if($curr_position == 0)
+			if($curr_position <= 0)
 			{
 				$new_order = $max_count;
 			}
@@ -84,10 +87,10 @@
 			move_boxes($curr_position,$new_order,$offset,0,$max_count);
 			break;
 		case 'down':
-			$curr_position = $GLOBALS['phpgw']->common->find_portal_order(intval($_GET['app']));
+			$curr_position = $GLOBALS['phpgw']->common->find_portal_order((int)($_GET['app']));
 			$max_count = count($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) - 1;
 			$offset = 1;
-			if($curr_position == $max_count)
+			if($curr_position >= $max_count)
 			{
 				$new_order = 0;
 			}
@@ -103,7 +106,7 @@
 		default:
 	}
 
-	Header('Location: '.$GLOBALS['phpgw']->link('/home.php'));
+	header('Location: '.$GLOBALS['phpgw']->link('/home.php'));
 	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
 

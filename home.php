@@ -382,6 +382,7 @@
 		while(list($app_order,$app_name) = each($neworder))
 		{
 			$app_id = $GLOBALS['phpgw']->applications->name2id($app_name);
+			//echo "neworder: $app_order=$app_id:$app_name<br>";
 			$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
 		}
 		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
