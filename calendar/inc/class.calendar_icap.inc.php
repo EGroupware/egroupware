@@ -157,6 +157,68 @@ class calendar_
 		return mcal_append_event($mcal_stream);
 	}
 
+	function store_event($mcal_stream)
+	{
+		return mcal_store_event($mcal_stream);
+	}
+
+	function delete_event($mcal_stream,$event_id)
+	{
+		return mcal_delete_event($mcal_stream,$event_id);
+	}
+
+	function snooze($mcal_stream,$event_id)
+	{
+		return mcal_snooze($mcal_stream,$event_id);
+	}
+
+	function list_alarms($mcal_stream,$begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
+	{
+		if($end_day == '')
+		{
+			if($end_month == '')
+			{
+				if($end_year == '')
+				{
+					if($begin_day == '')
+					{
+						if($begin_month == '')
+						{
+							if($begin_year == '')
+							{
+								return mcal_list_alarms($mcal_stream);
+							}
+							else
+							{
+								return mcal_list_alarms($mcal_stream,$begin_year);
+							}
+						}
+						else
+						{
+							return mcal_list_alarms($mcal_stream,$begin_year,$begin_month);
+						}
+					}
+					else
+					{
+						return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day);
+					}
+				}
+				else
+				{
+					return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year);
+				}
+			}
+			else
+			{
+				return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month);
+			}
+		}
+		else
+		{
+			return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month,$end_day);
+		}
+	}
+	
 	function event_init($stream)
 	{
 		return mcal_event_init($stream);

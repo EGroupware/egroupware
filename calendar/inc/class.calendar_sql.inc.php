@@ -397,6 +397,27 @@ class calendar_
 		return $this->save_event($this->event);
 	}
 
+	function delete_event($mcal_stream,$event_id)
+	{
+		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id[$i],__LINE__,__FILE__);
+		$this->stream->unlock();
+	}
+
+	function snooze($mcal_stream,$event_id)
+	{
+	//Turn off an alarm for an event
+	//Returns true. 
+	}
+
+	function list_alarms($mcal_stream,$begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
+	{
+	//Return a list of events that has an alarm triggered at the given datetime
+	//Returns an array of event ID's
+	}
+
 	function event_init($stream)
 	{
 		$this->event = CreateObject('calendar.calendar_item');
