@@ -88,10 +88,12 @@
     global $phpgw, $phpgw_info, $cd, $colspan;
     $phpgw_info["server"]["template_dir"] = $phpgw->common->get_tpl_dir("phpgwapi");
     $phpgw_info["server"]["images_dir"]   = $phpgw->common->get_image_path("phpgwapi");
+    $phpgw_info["server"]["images_filedir"]   = $phpgw->common->get_image_dir("phpgwapi");
     $phpgw_info["server"]["app_root"]   = $phpgw->common->get_app_dir();
     $phpgw_info["server"]["app_inc"]    = $phpgw->common->get_inc_dir();
     $phpgw_info["server"]["app_tpl"]    = $phpgw->common->get_tpl_dir();
     $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
+    $phpgw_info["server"]["app_images_dir"] = $phpgw->common->get_image_dir();
   
     /* ********This sets the user variables******** */
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"
