@@ -128,7 +128,8 @@
 		'firstname' => lang('Firstname'). ' '.lang('Lastname'),
 		'lastname'  => lang('Lastname').', '.lang('Firstname'),
 		'username'  => lang('username'),
-		'all'       => '&lt;'.lang('username').'&gt; '.lang('Lastname').', '.lang('Firstname')
+		'firstall'  => lang('Firstname').' '.lang('Lastname').' ['.lang('username').']',
+		'all'       => '['.lang('username').'] '.lang('Lastname').', '.lang('Firstname')
 	);
 	create_select_box('How do you like to display accounts','account_display',$account_display,
 		'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.');

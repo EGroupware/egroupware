@@ -429,10 +429,13 @@
 			switch($display)
 			{
 				case 'all':
-					$name = "&lt;$lid&gt; ";
+					$name = '['.$lid.'] ';
 					// fall-through
 				case 'lastname':
 					$name .= implode(', ',$a);
+					break;
+				case 'firstall':
+					$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
 					break;
 				case 'firstname':
 				default:
