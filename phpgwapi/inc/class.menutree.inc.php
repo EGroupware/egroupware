@@ -362,7 +362,7 @@ var $last_column_size;
 				$src = $REQUEST_URI;
 				if(ereg('[\?\&]p=',$src) != 0)
 				{
-					$src = ereg_replace('[\?\&]p=([0-9\|])','',$REQUEST_URI);
+					$src = ereg_replace('[\?\&]p=([0-9\|])+','',$REQUEST_URI);
 				}
 //				echo 'Src = '.$src."<br>\n";
 				if(strpos(' '.$src,'?'))
