@@ -451,12 +451,19 @@ class socalendar_ extends socalendar__
 				}
 				$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			}
+/*	makes problems if tempnam is to long for title column, see bug #3162
 			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
 			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
 				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].','.$event['priority'].','.$event['public'].",'".$event['category']."')");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
 			$event['id'] = $this->stream->f('cal_id');
+*/
+			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
+				. "values('".$event['uid']."','".$this->stream->db_addslashes($event['title'])
+				. "',".$event['owner'].','.$event['priority'].','.$event['public'].",'"
+				. $event['category']."')",__LINE__,__FILE__);
+			$event['id'] = $this->stream->get_last_insert_id('phpgw_cal','cal_id');
 		}
 
 		$date = $this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
