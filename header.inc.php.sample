@@ -29,7 +29,7 @@
   $phpgw_info["server"]["db_name"] = "phpgroupware";
   $phpgw_info["server"]["db_user"] = "phpgroupware";
   $phpgw_info["server"]["db_pass"] = "your_password";
-  $phpgw_info["server"]["db_type"] = "mysql"; //mysql, postgresql, or oracle
+  $phpgw_info["server"]["db_type"] = "mysql"; //mysql, pgsql (for postgresql), or oracle
 
   /* This will limit who is allowed to make configuration modifcations */
   $phpgw_info["server"]["config_passwd"] = "changeme";    
@@ -38,7 +38,7 @@
   * Do not edit these lines                                                  *
   \**************************************************************************/
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
-  $phpgw_info["server"]["header_version"] = "1.1";
+  $phpgw_info["server"]["header_version"] = "1.2";
   if (!$phpgw_info["flags"]["noapi"] == True){
     include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
   }

@@ -25,16 +25,7 @@
   echo "<body bgcolor='#ffffff'>\n";
 
   /* Database setup */
-  switch($phpgw_info["server"]["db_type"]){
-    case "postgresql":
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_pgsql.inc.php");
-      break;
-    case "oracle":
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_oracle.inc.php");
-      break;      
-    default:
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_mysql.inc.php");
-  }
+  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
   $db	            = new db;
   $db->Host	    = $phpgw_info["server"]["db_host"];
