@@ -26,7 +26,7 @@ default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 deleted	calendar	en	Deleted
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
-Display interval in Day View	calendar	en	Display interval in Day View
+display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
 duration	calendar	en	Duration
@@ -67,6 +67,7 @@ monthly	calendar	en	Monthly
 new entry	calendar	en	New Entry
 no matches found.	calendar	en	No matches found.
 no response	calendar	en	No Response
+number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
