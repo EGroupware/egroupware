@@ -135,7 +135,7 @@
 								if($message_id && $content)
 								{
 									// echo "<br>adding - insert into $langtbl(message_id,app_name,lang,content) values ('$message_id','$app_name','" . $GLOBALS['phpgw_setup']->db_lang . "','$content')";
-									$GLOBALS['phpgw_setup']->db->query("INSERT into $langtbl(message_id,app_name,lang,content) VALUES ('$message_id','$app_name','"
+									$GLOBALS['phpgw_setup']->db->query("INSERT INTO $langtbl(message_id,app_name,lang,content) VALUES ('$message_id','$app_name','"
 										. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
 								}
 							}
@@ -180,15 +180,21 @@
 			$td_align    = $newinstall ? ' align="center"' : '';
 			$hidden_var1 = $newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
 
+			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
+			$installed_langs = array();
+			while(@$GLOBALS['phpgw_setup']->db->next_record())
+			{
+				$installed_langs[$GLOBALS['phpgw_setup']->db->f('lang')] = ' selected';
+			}
+
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box_langs = '';
-			$GLOBALS['phpgw_setup']->db->query("select lang_id,lang_name from $langstbl where available='Yes'");
+			$GLOBALS['phpgw_setup']->db->query("SELECT lang_id,lang_name from $langstbl WHERE available='Yes' ORDER BY(lang_name)");
 			while ($GLOBALS['phpgw_setup']->db->next_record())
 			{
-				$select_box_langs .= 
-					'<option value="' . $GLOBALS['phpgw_setup']->db->f('lang_id') . '">'
-					. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>'
-					."\n";
+				$select_box_langs .= '<option value="' . $GLOBALS['phpgw_setup']->db->f('lang_id')
+					. '"' . $installed_langs[$GLOBALS['phpgw_setup']->db->f('lang_id')] . '>'
+					. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>' . "\n";
 			}
 
 			if (! $newinstall)
