@@ -97,8 +97,8 @@
 			'lang_groups'		=> lang('Groups'),
 			'lang_expires'		=> lang('Expires'),
 			'lang_firstname'	=> lang('First Name'),
-			'lang_button'		=> lang('Save'),
-			'lang_file_space'	=> lang('File Space')
+			'lang_button'		=> lang('Save')
+			/* 'lang_file_space'	=> lang('File Space') */
 		);
 		$t->set_var($var);
 		$t->parse('form_buttons','form_buttons_',True);
@@ -120,7 +120,8 @@
 		$_y = $phpgw->sbox->getyears('account_expires_year',$userData['account_expires_year'],date('Y'),date('Y')+10);
 		$_m = $phpgw->sbox->getmonthtext('account_expires_month',$userData['account_expires_month']);
 		$_d = $phpgw->sbox->getdays('account_expires_day',$userData['account_expires_day']);
-		
+
+		/*
 		if (!$userData['file_space'])
 		{
 			$userData['file_space'] = $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'];
@@ -143,6 +144,7 @@
 		$t->set_var ('lang_file_space', "File space");
 		$t->set_var ('account_file_space', $account_file_space);
 		$t->set_var ('account_file_space_select', $account_file_space_select);
+		*/
 
 		$var = Array(
 			'input_expires'	=> $phpgw->common->dateformatorder($_y,$_m,$_d,True),
@@ -177,7 +179,7 @@
 			$groups_select .= '<option value="' . $value['account_id'] . '"';
 			for ($i=0; $i<count($userGroups); $i++) 
 			{
-				#print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>";
+				/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
 				if ($userGroups[$i]['account_id'] == $value['account_id']) 
 				{
 					$groups_select .= ' selected';
@@ -187,7 +189,7 @@
 		}
 		$groups_select .= '</select>';
 
-		// create list of available apps
+		/* create list of available apps */
 		$i = 0;
 
 		$apps = CreateObject('phpgwapi.applications',$_account_id);
@@ -207,7 +209,7 @@
 			}
 		}
 
-		// create apps output
+		/* create apps output */
 		@reset($db_perms);
 		for ($i=0;$i<count($perm_display);$i++) 
 		{
@@ -262,7 +264,7 @@
 		echo $t->fp('out','form');
 	}
 
-	// stores the userdata
+	/* stores the userdata */
 	function saveUserData($_userData)
 	{
 		global $phpgw;
@@ -312,9 +314,8 @@
 		reset($allGroups);
 		while (list($key,$groupData) = each($allGroups)) 
 		{
-			#print "$key,". $groupData['account_id'] ."<br>";
-
-			#print "$key,". $_userData['account_groups'][1] ."<br>";
+			/* print "$key,". $groupData['account_id'] ."<br>";*/
+			/* print "$key,". $_userData['account_groups'][1] ."<br>"; */
 
 			if ($newGroups[$groupData['account_id']]) 
 			{
@@ -328,9 +329,10 @@
 		$phpgw->session->delete_cache(intval($_userData['account_id']));
 	}
 
-	// checks if the userdata are valid
-	// returns FALSE if the data are correct
-	// otherwise the error array
+	/* checks if the userdata are valid
+	 returns FALSE if the data are correct
+	 otherwise the error array
+	*/
 	function userDataInvalid(&$_userData)
 	{
 		global $phpgw,$phpgw_info;
@@ -387,11 +389,13 @@
 			$_userData['expires'] = -1;
 		}
 
+		/*
 		$check_account_file_space = explode ("-", $_userData['file_space']);
 		if (preg_match ("/\D/", $check_account_file_space[0]))
 		{
 			$error[$totalerrors++] = lang ('File space must be an integer');
 		}
+		*/
 
 		if ($totalerrors == 0)
 		{
@@ -465,8 +469,8 @@
 			'loginshell'            => $loginshell,
 			'account_expires_month' => $account_expires_month,
 			'account_expires_day'   => $account_expires_day,
-			'account_expires_year'  => $account_expires_year,
-			'file_space'	=> $account_file_space_number . "-" . $account_file_space_type
+			'account_expires_year'  => $account_expires_year
+			/* 'file_space'	=> $account_file_space_number . "-" . $account_file_space_type */
 		);
 
 		if (!$errors = userDataInvalid($userData))
@@ -540,7 +544,7 @@
 	}
 
 	$includedSomething = False;
-	// start inlcuding other admin tools
+	// start including other admin tools
 	while($app = each($apps_after))
 	{
 		$phpgw->common->hook_single('show_user_data', $app[0]);

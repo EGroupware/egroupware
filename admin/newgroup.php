@@ -14,7 +14,10 @@
 	$phpgw_info = array();
 	if ($submit)
 	{
-		$phpgw_info['flags'] = array('noheader' => True, 'nonavbar' => True);
+		$phpgw_info['flags'] = array(
+			'noheader' => True,
+			'nonavbar' => True
+		);
 	}
 
 	$phpgw_info['flags']['currentapp'] = 'admin';
@@ -63,10 +66,12 @@
 			$account_expires = -1;
 		}
 
+		/*
 		if (preg_match ("/\D/", $account_file_space_number))
 		{
 			$error = lang ('File space must be an integer');
 		}
+		*/
 
 		if (!$error)
 		{
@@ -233,10 +238,11 @@
 	}
 	$account_file_space_select .= '</select>';
 
+	/*
 	$p->set_var ('lang_file_space', "File space");
 	$p->set_var ('account_file_space', $account_file_space);
 	$p->set_var ('account_file_space_select', $account_file_space_select);
-
+	*/
 	$p->set_var("lang_permissions",lang("Permissions this group has"));
 
 	$i = 0;
@@ -287,9 +293,9 @@
 		$i++;
 	}
 
-	$p->set_var("permissions_list",$perm_html);	
-	$p->set_var("lang_submit_button",lang("Create Group"));
-	$p->pparse("out","form");
+	$p->set_var('permissions_list',$perm_html);	
+	$p->set_var('lang_submit_button',lang('Create Group'));
+	$p->pfp('out','form');
 
 	$phpgw->common->phpgw_footer();
 ?>

@@ -74,10 +74,12 @@
 			}
 		}
 
+		/*
 		if (preg_match ("/\D/", $account_file_space_number))
 		{
 			$error = lang ('File space must be an integer');
 		}
+		*/
 
 		if (!$error)
 		{
@@ -269,6 +271,7 @@
 	{
 		$group_repository['file_space'] = $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'];
 	}
+	/*
 	$file_space_array = explode ("-", $group_repository['file_space']);
 	$account_file_space_number = $file_space_array[0];
 	$account_file_space_type = $file_space_array[1];
@@ -287,7 +290,7 @@
 	$p->set_var ('lang_file_space', "File space");
 	$p->set_var ('account_file_space', $account_file_space);
 	$p->set_var ('account_file_space_select', $account_file_space_select);
-
+	*/
 	$p->set_var('lang_permissions',lang('Permissions this group has'));
 
 	$i = 0;
@@ -342,9 +345,9 @@
 		$perm_html .= '<td colspan="4">&nbsp;</td></tr>';
 	}
 
-	$p->set_var("permissions_list",$perm_html);	
-	$p->set_var("lang_submit_button",lang("submit changes"));
-	$p->pparse("out","form");
+	$p->set_var('permissions_list',$perm_html);	
+	$p->set_var('lang_submit_button',lang('submit changes'));
+	$p->pfp('out','form');
 
 	$phpgw->common->phpgw_footer();
 ?>

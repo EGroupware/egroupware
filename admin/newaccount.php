@@ -92,10 +92,12 @@
 			$account_expires = -1;
 		}
 
+		/*
 		if (preg_match ("/\D/", $account_file_space_number))
 		{
 			$error[$totalerrors++] = lang ('File space must be an integer');
 		}
+		*/
 
 		if (! $error)
 		{
@@ -115,8 +117,8 @@
 				'account_firstname' => $account_firstname,
 				'account_lastname'  => $account_lastname,
 				'account_status'    => $account_status,
-				'account_expires'   => $account_expires,
-				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
+				'account_expires'   => $account_expires
+				/* 'account_file_space' => $account_file_space_number . "-" . $account_file_space_type */
 			);
 			$phpgw->accounts->create($account_info);
 
@@ -288,7 +290,7 @@
 
 	$p->parse('form_buttons','form_buttons_',True);
 
-	// groups list
+	/* groups list */
 	$groups_select = '<select name="account_groups[]" multiple>';
 
 	$groups = $phpgw->accounts->get_list('groups');
@@ -310,8 +312,9 @@
 	}
 	$groups_select .= '</select>';
 	$p->set_var('groups_select',$groups_select);
-	// end groups list
+	/* end groups list */
 
+	/*
 	if (!$account_file_space_number)
 	{
 		$account_file_space_number = $phpgw_info['server']['vfs_default_account_size_number'];
@@ -335,6 +338,7 @@
 	$p->set_var ('lang_file_space', "File space");
 	$p->set_var ('account_file_space', $account_file_space);
 	$p->set_var ('account_file_space_select', $account_file_space_select);
+	*/
 
 	$i = 0;
 	$phpgw->applications->read_installed_apps();
