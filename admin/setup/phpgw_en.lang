@@ -74,7 +74,7 @@ category list	admin	en	Category list
 change acl rights	admin	en	change ACL Rights
 change config settings	admin	en	Change config settings
 change main screen message	admin	en	Change main screen message
-check ip address of all sessions	admin	en	check ip address of all sessions
+check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 country selection	admin	en	Country Selection
 create group	admin	en	Create Group
@@ -343,9 +343,9 @@ view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
-would you like phpgroupware to check for new application versions when admins login ?	admin	en	Would you like phpGroupWare to check for new application versions when admins login ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automaticaly load new langfiles (at login-time) ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
+would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
