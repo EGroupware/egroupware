@@ -1573,18 +1573,22 @@ class calendar extends calendar_
 		);
 
 		reset($event->participants);
-		$participating = False;
-		$participate = False;
-		while(list($part,$status) = each($event->participants))
+		if($event->participants[$this->owner])
 		{
-			if($part == $this->owner)
-			{
-				$participating = True;
-			}
-			if($part == $phpgw_info['user']['account_id'])
-			{
-				$participate = True;
-			}
+			$participating = True;
+		}
+		else
+		{
+			$participating = False;
+		}
+		
+		if($event->participants[$phpgw_info['user']['account_id']])
+		{
+			$participate = True;
+		}
+		else
+		{
+			$participate = False;
 		}
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
