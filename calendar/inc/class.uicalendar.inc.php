@@ -2659,6 +2659,7 @@
 				)
 			);
 
+			$ev = $this->bo->get_cached_event();
 			$response_choices = Array(
 				ACCEPTED	=> lang('Accept'),
 				REJECTED	=> lang('Reject'),
@@ -2668,14 +2669,17 @@
 			$str = '';
 			while(list($param,$text) = each($response_choices))
 			{
-				$var = Array(	
-					'action_url_button'	=> $this->page('set_action','&cal_id='.$cal_id.'&action='.$param),
-					'action_text_button'	=> '  '.$text.'  ',
-					'action_confirm_button'	=> '',
-					'action_extra_field'	=> ''
-				);
-				$p->set_var($var);
-				$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
+				if(!($param == REJECTED && $ev['owner'] == $this->bo->owner))
+				{
+					$var = Array(	
+						'action_url_button'	=> $this->page('set_action','&cal_id='.$cal_id.'&action='.$param),
+						'action_text_button'	=> '  '.$text.'  ',
+						'action_confirm_button'	=> '',
+						'action_extra_field'	=> ''
+					);
+					$p->set_var($var);
+					$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
+				}
 			}
 			return '<table width="100%" cols="4"><tr align="center">'."\n".$str.'</tr></table>'."\n";
 		}
@@ -2720,7 +2724,8 @@
 				'action_url'		=>	$GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
 				'common_hidden'	=>	'<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
          							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
-         							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="reference" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":''),
+         							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
+         							  ($event['reference']?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
 				'errormsg'			=>	($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
 			);
 			$p->set_var($vars);

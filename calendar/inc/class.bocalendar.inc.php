@@ -347,7 +347,6 @@
 			$l_start = ($params['start']?$params['start']:$GLOBALS['HTTP_POST_VARS']['start']);
 			$l_end = ($params['end']?$params['end']:$GLOBALS['HTTP_POST_VARS']['end']);
 			$l_recur_enddate = ($params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
-			$l_reference = ($params['reference']?$params['reference']:$GLOBALS['HTTP_POST_VARS']['reference']);
 
 			$send_to_ui = True;
 			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
@@ -404,7 +403,7 @@
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
 				$this->so->set_end($l_end['year'],$l_end['month'],$l_end['mday'],$l_end['hour'],$l_end['min'],0);
 				$this->so->set_class($is_public);
-				$this->so->add_attribute('reference',($l_reference?$l_reference:0));
+				$this->so->add_attribute('reference',$l_cal['reference']);
 				if($l_cal['id'])
 				{
 					$this->so->add_attribute('id',$l_cal['id']);
