@@ -314,6 +314,7 @@ class ProcessManager extends BaseManager {
     $proc_info = $this->get_process($pId);
     $name = $proc_info['wf_name'];
     if(!$proc_info) return false;
+
     // Now update the version
     $version = $this->_new_version($proc_info['wf_version'],$minor);
     while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where wf_name='$name' and wf_version='$version'")) {
@@ -324,6 +325,13 @@ class ProcessManager extends BaseManager {
     $proc_info['wf_is_active'] = 'n';
     // create a new process, but don't create start/end activities
     $pid = $this->replace_process(0, $proc_info, false);
+
+    //Since we are copying a process we should copy
+    //the old directory structure to the new directory
+    $oldname = $proc_info['wf_normalized_name'];
+    $newname = $this->_get_normalized_name($pid);
+    $this->_rec_copy(GALAXIA_PROCESSES.SEP."$oldname".SEP.'code',GALAXIA_PROCESSES.SEP."$newname".SEP.'code');
+
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
     $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$oldpid";
@@ -331,7 +339,7 @@ class ProcessManager extends BaseManager {
     $newaid = array();
     while($res = $result->fetchRow()) {    
       $oldaid = $res['wf_activity_id'];
-      $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
+      $newaid[$oldaid] = $am->replace_activity($pid,0,$res, false);
     }
     // create transitions
     $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where wf_p_id=$oldpid";
@@ -378,12 +386,6 @@ class ProcessManager extends BaseManager {
         $am->add_activity_role($newaid[$res['wf_activity_id']],$newrid[$res['wf_role_id']]);
       }
     }
-
-    //Now since we are copying a process we should copy
-    //the old directory structure to the new directory
-    $oldname = $proc_info['wf_normalized_name'];
-    $newname = $this->_get_normalized_name($pid);
-    $this->_rec_copy(GALAXIA_PROCESSES.SEP."$oldname",GALAXIA_PROCESSES.SEP."$newname");
 
     // create a graph for the new process
     $am->build_process_graph($pid);
