@@ -18,7 +18,7 @@
   }
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
-                               "enable_message_class" => True, "enable_calendar_class" => True, 
+                               "enable_network_class" => True, "enable_calendar_class" => True, 
                                "enable_todo_class" => True, "enable_addressbook_class" => True
                                );
   include("header.inc.php");
@@ -64,7 +64,7 @@
      exit;
   }
 
-  $phpgw->hooks->proccess("location","mainscreen");
+  //$phpgw->hooks->proccess("location","mainscreen");
 
  // $phpgw->preferences->read_preferences("addressbook");
 //  $phpgw->preferences->read_preferences("email");
@@ -118,31 +118,7 @@
      include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
      echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
   }  
-
-  if ((isset($phpgw_info["user"]["apps"]["email"]) &&
-       $phpgw_info["user"]["apps"]["email"]) &&
-      (isset($phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"]) &&
-       $phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"])) {
-    echo "<!-- Mailox info -->\n";
-
-    $mbox = $phpgw->msg->login();
-    if (! $mbox) {
-      echo "Mail error: can not open connection to mail server";
-      exit;
-    }
-
-  	$mailbox_status = $phpgw->msg->status($mbox,"{" . $phpgw_info["server"]["mail_server"] . ":" . $phpgw_info["server"]["mail_port"] . "}INBOX",SA_UNSEEN);
-    if ($mailbox_status->unseen == 1) {
-      echo "<tr><td><A href=\"" . $phpgw->link("email/index.php") . "\"> "
-	 . lang("You have 1 new message!") . "</A></td></tr>\n";
-    }
-    if ($mailbox_status->unseen > 1) {
-      echo "<tr><td><A href=\"" . $phpgw->link("email/index.php") . "\"> "
-	 . lang("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
-    }
-    echo "<!-- Mailox info -->\n";
-  }
-
+  $phpgw->common->hook();
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
