@@ -23,7 +23,7 @@
 
 	/* $Id$ */
 
-	$path_to_phpgroupware = '../..';	// need to be adapted if this script is moved somewhere else
+	$path_to_phpgroupware = '../..';	//  need to be adapted if this script is moved somewhere else
 	$_GET['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'default';
 
 	$GLOBALS['phpgw_info']['flags'] = array(
