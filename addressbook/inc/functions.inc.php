@@ -128,7 +128,7 @@
 	function display_name($column) {
 		$abc = array(
 			"fn"                  => "full name",
-			"sound"               => "",
+			"sound"               => "Sound",
 			"org_name"            => "company name",
 			"org_unit"            => "department",
 			"title"               => "title",
