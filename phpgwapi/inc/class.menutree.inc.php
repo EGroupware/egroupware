@@ -53,13 +53,13 @@
 			$SCRIPT_FILENAME = $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_FILENAME'];
 			$REQUEST_URI     = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
     
-			$img_expand   = $GLOBALS['phpgw']->common->image('manual','tree_expand.gif');
-			$img_collapse = $GLOBALS['phpgw']->common->image('manual','tree_collapse.gif');
-			$img_line     = $GLOBALS['phpgw']->common->image('manual','tree_vertline.gif');
-			$img_split    = $GLOBALS['phpgw']->common->image('manual','tree_split.gif');
-			$img_end      = $GLOBALS['phpgw']->common->image('manual','tree_end.gif');
-			$img_leaf     = $GLOBALS['phpgw']->common->image('manual','tree_leaf.gif');
-			$img_spc      = $GLOBALS['phpgw']->common->image('manual','tree_space.gif');
+			$img_expand   = $GLOBALS['phpgw']->common->image('phpgwapi','tree_expand.gif');
+			$img_collapse = $GLOBALS['phpgw']->common->image('phpgwapi','tree_collapse.gif');
+			$img_line     = $GLOBALS['phpgw']->common->image('phpgwapi','tree_vertline.gif');
+			$img_split    = $GLOBALS['phpgw']->common->image('phpgwapi','tree_split.gif');
+			$img_end      = $GLOBALS['phpgw']->common->image('phpgwapi','tree_end.gif');
+			$img_leaf     = $GLOBALS['phpgw']->common->image('phpgwapi','tree_leaf.gif');
+			$img_spc      = $GLOBALS['phpgw']->common->image('phpgwapi','tree_space.gif');
 
 			/*********************************************/
 			/*  Read text file with tree structure       */
