@@ -185,6 +185,15 @@
 	\****************************************************************************/
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
+	$phpgw->db->Halt_On_Error = "no";
+	@$phpgw->db->query("select count(*) from phpgw_config");
+	if (! @$phpgw->db->next_record()) {
+			$setup_dir = ereg_replace($PHP_SELF,"index.php","setup/");
+			echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
+					.'phpGroupWare. Click <a href="' . $setup_dir . '">here</a> run for setup.</center>';
+			exit;
+	}
+	$phpgw->db->Halt_On_Error = "yes";
 
 	/* Fill phpgw_info["server"] array */
 	$phpgw->db->query("select * from phpgw_config",__LINE__,__FILE__);
