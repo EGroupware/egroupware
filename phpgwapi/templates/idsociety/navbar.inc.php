@@ -108,8 +108,8 @@
 			$db  = $phpgw->db;
 			$db->query('select count(session_id) from phpgw_sessions');
 			$db->next_record();
-			$tpl->set_var("current_users",'<a href="' . $phpgw->link('/admin/currentusers.php') . '">&nbsp;'
-				. lang('Current users') . ': ' . $db->f(0) . '</a>');
+			$tpl->set_var("current_users",'<a href="' . $phpgw->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
+			 	. '">&nbsp;' . lang('Current users') . ': ' . $db->f(0) . '</a>');
 		}
 		$tpl->set_var('user_info',$phpgw->common->display_fullname() . ' - '
 			. lang($phpgw->common->show_date(time(),'l')) . ' '
