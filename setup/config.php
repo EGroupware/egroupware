@@ -181,6 +181,7 @@
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
       <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
       <option value="mail"<?php echo $selected["mail"]; ?>>Mail</option>
+      <option value="http"<?php echo $selected["http"]; ?>>HTTP</option>
       <option value="pam"<?php echo $selected["pam"]; ?>>PAM (Not Ready)</option>
      </select>
     </td>
