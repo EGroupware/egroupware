@@ -10,7 +10,7 @@
 |--------------------------------------------------*/
 
 // modified for egw 29-12-03 ndee
-
+// 27-01-04 ndee: amended function dtree() with parameter for php based icondir
 
 // Node object
 function Node(id, pid, name, url, urlClick, urlOut, title, target, icon, iconOpen, open) {
@@ -34,23 +34,23 @@ function Node(id, pid, name, url, urlClick, urlOut, title, target, icon, iconOpe
 
 
 // Tree object
-function dTree(objName) {
-	
+function dTree(objName,icondir) {
+	iconPath = (icondir !='') ? icondir : '/egroupware/phpgwapi/js/foldertree_default_icons';
 	this.icon = {
-		root				: '/egroupware/phpgwapi/templates/idots/images/foldertree/base.gif',
-		folder				: '/egroupware/phpgwapi/templates/idots/images/foldertree/folder.gif',
-		folderOpen			: '/egroupware/phpgwapi/templates/idots/images/foldertree/folderopen.gif',
-		node				: '/egroupware/phpgwapi/templates/idots/images/foldertree/folder.gif',
-		empty				: '/egroupware/phpgwapi/templates/idots/images/foldertree/empty.gif',
-		line				: '/egroupware/phpgwapi/templates/idots/images/foldertree/line.gif',
-		join				: '/egroupware/phpgwapi/templates/idots/images/foldertree/join.gif',
-		joinBottom			: '/egroupware/phpgwapi/templates/idots/images/foldertree/joinbottom.gif',
-		plus				: '/egroupware/phpgwapi/templates/idots/images/foldertree/plus.gif',
-		plusBottom			: '/egroupware/phpgwapi/templates/idots/images/foldertree/plusbottom.gif',
-		minus				: '/egroupware/phpgwapi/templates/idots/images/foldertree/minus.gif',
-		minusBottom			: '/egroupware/phpgwapi/templates/idots/images/foldertree/minusbottom.gif',
-		nlPlus				: '/egroupware/phpgwapi/templates/idots/images/foldertree/nolines_plus.gif',
-		nlMinus				: '/egroupware/phpgwapi/templates/idots/images/foldertree/nolines_minus.gif'
+		root				: iconPath+'/foldertree/base.gif',
+		folder				: iconPath+'/foldertree/folder.gif',
+		folderOpen			: iconPath+'/foldertree/folderopen.gif',
+		node				: iconPath+'/foldertree/folder.gif',
+		empty				: iconPath+'/foldertree/empty.gif',
+		line				: iconPath+'/foldertree/line.gif',
+		join				: iconPath+'/foldertree/join.gif',
+		joinBottom			: iconPath+'/foldertree/joinbottom.gif',
+		plus				: iconPath+'/foldertree/plus.gif',
+		plusBottom			: iconPath+'/foldertree/plusbottom.gif',
+		minus				: iconPath+'/foldertree/minus.gif',
+		minusBottom			: iconPath+'/foldertree/minusbottom.gif',
+		nlPlus				: iconPath+'/foldertree/nolines_plus.gif',
+		nlMinus				: iconPath+'/foldertree/nolines_minus.gif'
 	};
 
 
