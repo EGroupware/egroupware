@@ -788,7 +788,7 @@
 			$this->parameter = Array(
 				'altrep' => Array(
 					'type'		=> 'uri',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> True,
 					'properties' => Array(
 						'comment'	=> True,
@@ -3249,18 +3249,19 @@
 						{
 							$interval = (int)$ical['event'][$i]['rrule']['interval'];
 						}
-// recur_type
+						/* recur_type */
 						switch($ical['event'][$i]['rrule']['freq'])
 						{
 							case DAILY:
-								$recur_type = MCAL_RECUR_DAILY;
+								$so_event->set_recur_daily($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
 							case WEEKLY:
 								$so_event->set_recur_weekly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval,$recur_data);
 								break;
 							case MONTHLY:
-// Still need to determine if this is by day or by week for the month..
-//								$recur_type = MCAL_RECUR_M??????;
+							/* FIXME: need to handle by month by day or by week.
+							 * AssUMe by month by day for now. */
+								$so_event->set_recur_monthly_mday($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
 							case YEARLY:
 								$so_event->set_recur_yearly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
@@ -3279,8 +3280,11 @@
 						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
 					}
 
-					/* if the original organizer is an egroupware user, add the original user as an event participant */
-					/* NB: ['mailto'] has two parts, ['user'], containing the username, and ['host'], containing the domain of the user's email address */
+					/* if the original organizer is an egroupware user, add the original 
+					 * user as an event participant.
+					 * NB: ['mailto'] has two parts, ['user'], containing the username, 
+					 * and ['host'], containing the domain of the user's email address.
+					 */
 					if (isset($ical['event'][$i]['organizer']['mailto']['user']) && $GLOBALS['phpgw']->accounts->exists($ical['event'][$i]['organizer']['mailto']['user']) == True)
 					{
 						$so_event->add_attribute('participants','A',(int)$GLOBALS['phpgw']->accounts->name2id($ical['event'][$i]['organizer']['mailto']['user']));
