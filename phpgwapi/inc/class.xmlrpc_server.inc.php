@@ -43,10 +43,10 @@
 
 		function serializeDebug()
 		{
-			global $_xmlrpc_debuginfo;
-			if ($_xmlrpc_debuginfo != '')
+//			global $_xmlrpc_debuginfo;
+			if ($GLOBALS['_xmlrpc_debuginfo'] != '')
 			{
-				return "<!-- DEBUG INFO:\n\n" . $_xmlrpc_debuginfo . "\n-->\n";
+				return "<!-- DEBUG INFO:\n\n" . $GLOBALS['_xmlrpc_debuginfo'] . "\n-->\n";
 			}
 			else
 			{
@@ -104,21 +104,21 @@
 
 		function parseRequest($data='')
 		{
-			global $_xh,$HTTP_RAW_POST_DATA;
-			global $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding, $_xmlrpcs_dmap;
+			global $HTTP_RAW_POST_DATA;
+//			global $_xh, $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding, $_xmlrpcs_dmap;
 	
 			if ($data == '')
 			{
 				$data = $HTTP_RAW_POST_DATA;
 			}
-			$parser = xml_parser_create($xmlrpc_defencoding);
+			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 	
-			$_xh[$parser] = array();
-			$_xh[$parser]['st']     = '';
-			$_xh[$parser]['cm']     = 0; 
-			$_xh[$parser]['isf']    = 0; 
-			$_xh[$parser]['params'] = array();
-			$_xh[$parser]['method'] = '';
+			$GLOBALS['_xh'][$parser] = array();
+			$GLOBALS['_xh'][$parser]['st']     = '';
+			$GLOBALS['_xh'][$parser]['cm']     = 0; 
+			$GLOBALS['_xh'][$parser]['isf']    = 0; 
+			$GLOBALS['_xh'][$parser]['params'] = array();
+			$GLOBALS['_xh'][$parser]['method'] = '';
 
 			// decompose incoming XML into request structure
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
@@ -129,7 +129,7 @@
 			{
 				// return XML error as a faultCode
 				$r = CreateObject('phpgwapi.xmlrpcresp',0,
-					$xmlrpcerrxml + xml_get_error_code($parser),
+					$GLOBALS['xmlrpcerrxml'] + xml_get_error_code($parser),
 					sprintf('XML error: %s at line %d',
 					xml_error_string(xml_get_error_code($parser)),
 					xml_get_current_line_number($parser))
@@ -139,32 +139,34 @@
 			else
 			{
 				xml_parser_free($parser);
-				$m = CreateObject('phpgwapi.xmlrpcmsg',$_xh[$parser]['method']);
+				$m = CreateObject('phpgwapi.xmlrpcmsg',$GLOBALS['_xh'][$parser]['method']);
 				// now add parameters in
-				for($i=0; $i<sizeof($_xh[$parser]['params']); $i++)
+				for($i=0; $i<sizeof($GLOBALS['_xh'][$parser]['params']); $i++)
 				{
-					//print "<!-- " . $_xh[$parser]['params'][$i]. "-->\n";
-					$plist .= "$i - " . $_xh[$parser]['params'][$i]. " \n";
-					$code = '$m->addParam(' . $_xh[$parser]['params'][$i] . ');';
+					//print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n";
+					$plist .= "$i - " . $GLOBALS['_xh'][$parser]['params'][$i]. " \n";
+					$code = '$m->addParam(' . $GLOBALS['_xh'][$parser]['params'][$i] . ');';
 					$code = ereg_replace(',,',",'',",$code);
 					eval($code);
 				}
 				// uncomment this to really see what the server's getting!
 				// xmlrpc_debugmsg($plist);
 				// now to deal with the method
-				$methName = $_xh[$parser]['method'];
+				$methName = $GLOBALS['_xh'][$parser]['method'];
 				if (ereg("^system\.", $methName))
 				{
-					$dmap = $_xmlrpcs_dmap; $sysCall=1;
+					$dmap = $GLOBALS['_xmlrpcs_dmap'];
+					$sysCall=1;
 				}
 				else
 				{
-					$dmap = $this->dmap; $sysCall=0;
+					$dmap = $this->dmap;
+					$sysCall=0;
 				}
 				if(!isset($dmap[$methName]['function']))
 				{
 					/* these params are xmlrcpvals, need extract */
-					$params = $_xh[$parser]['params'];
+					$params = $GLOBALS['_xh'][$parser]['params'];
 					$code = "\$obj = ExecMethod('" . $methName . "',\$params);";
 					/* echo $code; */
 					/* _debug_array($params); */
@@ -200,7 +202,7 @@
 							}
 							else
 							{
-								$params = $_xh[$parser]['params'];
+								$params = $GLOBALS['_xh'][$parser]['params'];
 								$code = '$r =' . "ExecMethod('" . $dmap[$methName]['function'] . "'" . ',$params);';
 							}
 							eval($code);
@@ -208,14 +210,14 @@
 					}
 					else
 					{
-						$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$xmlrpcerr['incorrect_params'],$xmlrpcstr['incorrect_params'].': ' . $sr[1]
+						$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$GLOBALS['xmlrpcerr']['incorrect_params'],$GLOBALS['xmlrpcstr']['incorrect_params'].': ' . $sr[1]
 						);
 					}
 				}
 				else
 				{
 					// else prepare error response
-					$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$xmlrpcerr['unknown_method'],$xmlrpcstr['unknown_method']);
+					$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$GLOBALS['xmlrpcerr']['unknown_method'],$GLOBALS['xmlrpcstr']['unknown_method']);
 				}
 			}
 			return $r;

@@ -66,29 +66,29 @@
 
 		function serialize()
 		{
-			$rs="<methodResponse>\n";
+			$rs='<methodResponse>'."\n";
 			if ($this->fn)
 			{
-				$rs .= "<fault>
+				$rs .= '<fault>
   <value>
     <struct>
       <member>
         <name>faultCode</name>
-        <value><int>" . $this->fn . "</int></value>
+        <value><int>' . $this->fn . '</int></value>
       </member>
       <member>
         <name>faultString</name>
-        <value><string>" . $this->fs . "</string></value>
+        <value><string>' . $this->fs . '</string></value>
       </member>
     </struct>
   </value>
-</fault>";
+</fault>';
 			}
 			else
 			{
-				$rs .= "<params>\n<param>\n" . @$this->xv->serialize() . "</param>\n</params>";
+				$rs .= '<params>'."\n".'<param>'."\n".@$this->xv->serialize().'</param>'."\n".'</params>';
 			}
-			$rs.="\n</methodResponse>";
+			$rs.="\n".'</methodResponse>';
 			return $rs;
 		}
 	}

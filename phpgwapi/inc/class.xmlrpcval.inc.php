@@ -25,7 +25,6 @@
 
 		function xmlrpcval($val=-1, $type='')
 		{
-			global $xmlrpcTypes;
 			$this->me = array();
 			$this->mytype = 0;
 			if ($val!=-1 || $type!='')
@@ -34,15 +33,15 @@
 				{
 					$type='string';
 				}
-				if ($xmlrpcTypes[$type]==1)
+				if ($GLOBALS['xmlrpcTypes'][$type]==1)
 				{
 					$this->addScalar($val,$type);
 				}
-				elseif ($xmlrpcTypes[$type]==2)
+				elseif ($GLOBALS['xmlrpcTypes'][$type]==2)
 				{
 					$this->addArray($val);
 				}
-				elseif ($xmlrpcTypes[$type]==3)
+				elseif ($GLOBALS['xmlrpcTypes'][$type]==3)
 				{
 					$this->addStruct($val);
 				}
@@ -51,25 +50,23 @@
 
 		function addScalar($val, $type='string')
 		{
-			global $xmlrpcTypes, $xmlrpcBoolean;
-
 			if ($this->mytype==1)
 			{
-				echo "<B>xmlrpcval</B>: scalar can have only one value<BR>";
+				echo '<B>xmlrpcval</B>: scalar can have only one value<BR>';
 				return 0;
 			}
-			$typeof=$xmlrpcTypes[$type];
+			$typeof=$GLOBALS['xmlrpcTypes'][$type];
 			if ($typeof!=1)
 			{
-				echo "<B>xmlrpcval</B>: not a scalar type (${typeof})<BR>";
+				echo '<B>xmlrpcval</B>: not a scalar type ('.$typeof.')<BR>';
 				return 0;
 			}
 		
-			if ($type==$xmlrpcBoolean)
+			if ($type==xmlrpcBoolean)
 			{
-				if (strcasecmp($val,"true")==0 || 
+				if (strcasecmp($val,'true')==0 || 
 					$val==1 || ($val==true && 
-					strcasecmp($val,"false")))
+					strcasecmp($val,'false')))
 				{
 					$val=1;
 				}
@@ -82,9 +79,9 @@
 			if ($this->mytype==2)
 			{
 				// we're adding to an array here
-				$ar=$this->me["array"];
+				$ar=$this->me['array'];
 				$ar[] = CreateObject('phpgwapi.xmlrpcval',$val, $type);
-				$this->me["array"]=$ar;
+				$this->me['array']=$ar;
 			}
 			else
 			{
@@ -97,28 +94,27 @@
 
 		function addArray($vals)
 		{
-			global $xmlrpcTypes;
 			if ($this->mytype!=0)
 			{
-				echo "<B>xmlrpcval</B>: already initialized as a [" . $this->kindOf() . "]<BR>";
+				echo '<B>xmlrpcval</B>: already initialized as a [' . $this->kindOf() . ']<BR>';
 				return 0;
 			}
 
-			$this->mytype=$xmlrpcTypes["array"];
-			$this->me["array"]=$vals;
+			$this->mytype=$GLOBALS['xmlrpcTypes']['array'];
+			$this->me['array']=$vals;
 			return 1;
 		}
 
 		function addStruct($vals)
 		{
-			global $xmlrpcTypes;
+//			global $xmlrpcTypes;
 			if ($this->mytype!=0)
 			{
-				echo "<B>xmlrpcval</B>: already initialized as a [" . $this->kindOf() . "]<BR>";
+				echo '<B>xmlrpcval</B>: already initialized as a [' . $this->kindOf() . ']<BR>';
 				return 0;
 			}
-			$this->mytype=$xmlrpcTypes["struct"];
-			$this->me["struct"]=$vals;
+			$this->mytype=$GLOBALS['xmlrpcTypes']['struct'];
+			$this->me['struct']=$vals;
 			return 1;
 		}
 
@@ -127,12 +123,12 @@
 			reset($ar);
 			while (list($key,$val) = each($ar))
 			{
-				echo "$key => $val<br>";
+				echo $key.' => '.$val.'<br>';
 				if ($key == 'array')
 				{
 					while (list($key2,$val2) = each($val))
 					{
-						echo "-- $key2 => $val2<br>";
+						echo '-- '.$key2.' => '.$val2.'<br>';
 					}
 				}
 			}
@@ -143,64 +139,62 @@
 			switch($this->mytype)
 			{
 				case 3:
-					return "struct";
+					return 'struct';
 					break;
 				case 2:
-					return "array";
+					return 'array';
 					break;
 				case 1:
-					return "scalar";
+					return 'scalar';
 					break;
 				default:
-					return "undef";
+					return 'undef';
 			}
 		}
 
 		function serializedata($typ, $val)
 		{
 			$rs='';
-			global $xmlrpcTypes, $xmlrpcBase64, $xmlrpcString,$xmlrpcBoolean;
-
 			if($typ)
 			{
-				switch($xmlrpcTypes[$typ])
+				switch($GLOBALS['xmlrpcTypes'][$typ])
 				{
 					case 3:
 						// struct
-						$rs.="<struct>\n";
+						$rs .= '<struct>'."\n";
 						reset($val);
 						while(list($key2, $val2)=each($val))
 						{
-							$rs .= "<member><name>${key2}</name>\n";
-							$rs .= $this->serializeval($val2);
-							$rs .= "</member>\n";
+							$rs .= '<member><name>'.$key2.'</name>'."\n".$this->serializeval($val2).'</member>'."\n";
 						}
-						$rs.="</struct>";
+						$rs .= '</struct>';
 						break;
 					case 2:
 						// array
-						$rs.="<array>\n<data>\n";
+						$rs .= '<array>'."\n".'<data>'."\n";
 						for($i=0; $i<sizeof($val); $i++)
 						{
 							$rs .= $this->serializeval($val[$i]);
 						}
-						$rs.="</data>\n</array>";
+						$rs .= '</data>'."\n".'</array>';
 						break;
 					case 1:
+						$rs .= '<'.$typ.'>';
 						switch ($typ)
 						{
-							case $xmlrpcBase64:
-								$rs.="<${typ}>" . base64_encode($val) . "</${typ}>";
+							case xmlrpcBase64:
+								$rs.= base64_encode($val);
 								break;
-							case $xmlrpcBoolean:
-								$rs.="<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
-							break;
-							case $xmlrpcString:
-								$rs.="<${typ}>" . htmlspecialchars($val). "</${typ}>";
+							case xmlrpcBoolean:
+								$rs.= ($val ? '1' : '0');
+								break;
+							case xmlrpcString:
+								$rs.= htmlspecialchars($val);
 								break;
 							default:
-								$rs.="<${typ}>${val}</${typ}>";
+								$rs.= $val;
 						}
+						$rs .= '</'.$typ.'>';
 						break;
 					default:
 						break;
@@ -216,37 +210,35 @@
 
 		function serializeval($o)
 		{
-			global $xmlrpcTypes;
-			$rs="";
+			$rs='';
 			$ar=$o->me;
 			reset($ar);
 			list($typ, $val) = each($ar);
-			$rs.="<value>";
+			$rs.='<value>';
 			$rs.=$this->serializedata($typ, $val);
-			$rs.="</value>\n";
+			$rs.='</value>'."\n";
 			return $rs;
 		}
 
 		function structmem($m)
 		{
-			$nv=$this->me["struct"][$m];
+			$nv=$this->me['struct'][$m];
 			return $nv;
 		}
 
 		function structreset()
 		{
-			reset($this->me["struct"]);
+			reset($this->me['struct']);
 		}
 
 		function structeach()
 		{
-			return each($this->me["struct"]);
+			return each($this->me['struct']);
 		}
 
 		function getval()
 		{
 			// UNSTABLE
-			global $xmlrpcBoolean, $xmlrpcBase64;
 			reset($this->me);
 			list($a,$b)=each($this->me);
 			// contributed by I Sofer, 2001-03-24
@@ -284,7 +276,6 @@
 
 		function scalarval()
 		{
-			global $xmlrpcBoolean, $xmlrpcBase64;
 			reset($this->me);
 			list($a,$b)=each($this->me);
 			return $b;
@@ -292,19 +283,18 @@
 
 		function scalartyp()
 		{
-			global $xmlrpcI4, $xmlrpcInt;
 			reset($this->me);
 			list($a,$b)=each($this->me);
-			if ($a==$xmlrpcI4) 
+			if ($a==xmlrpcI4) 
 			{
-				$a=$xmlrpcInt;
+				$a=xmlrpcInt;
 			}
 			return $a;
 		}
 
 		function arraymem($m)
 		{
-			$nv=$this->me["array"][$m];
+			$nv=$this->me['array'][$m];
 			return $nv;
 		}
 

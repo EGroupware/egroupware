@@ -31,29 +31,29 @@
 		}
 	}
 
-	$xmlrpcI4       = 'i4';
-	$xmlrpcInt      = 'int';
-	$xmlrpcBoolean  = 'boolean';
-	$xmlrpcDouble   = 'double';
-	$xmlrpcString   = 'string';
-	$xmlrpcDateTime = 'dateTime.iso8601';
-	$xmlrpcBase64   = 'base64';
-	$xmlrpcArray    = 'array';
-	$xmlrpcStruct   = 'struct';
+	define('xmlrpcI4','i4');
+	define('xmlrpcInt','int');
+	define('xmlrpcBoolean','boolean');
+	define('xmlrpcDouble','double');
+	define('xmlrpcString','string');
+	define('xmlrpcDateTime','dateTime.iso8601');
+	define('xmlrpcBase64','base64');
+	define('xmlrpcArray','array');
+	define('xmlrpcStruct','struct');
 
-	$xmlrpcTypes = array(
-		$xmlrpcI4       => 1,
-		$xmlrpcInt      => 1,
-		$xmlrpcBoolean  => 1,
-		$xmlrpcString   => 1,
-		$xmlrpcDouble   => 1,
-		$xmlrpcDateTime => 1,
-		$xmlrpcBase64   => 1,
-		$xmlrpcArray    => 2,
-		$xmlrpcStruct   => 3
+	$GLOBALS['xmlrpcTypes'] = array(
+		xmlrpcI4       => 1,
+		xmlrpcInt      => 1,
+		xmlrpcBoolean  => 1,
+		xmlrpcString   => 1,
+		xmlrpcDouble   => 1,
+		xmlrpcDateTime => 1,
+		xmlrpcBase64   => 1,
+		xmlrpcArray    => 2,
+		xmlrpcStruct   => 3
 	);
 
-	$xmlEntities=array(
+	$GLOBALS['xmlEntities']=array(
 		'amp'  => '&',
 		'quot' => '"',
 		'lt'   => '<',
@@ -61,29 +61,29 @@
 		'apos' => "'"
 	);
 
-	$xmlrpcerr['unknown_method']     = 1;
-	$xmlrpcstr['unknown_method']     = 'Unknown method';
-	$xmlrpcerr['invalid_return']     = 2;
-	$xmlrpcstr['invalid_return']     = 'Invalid return payload: enabling debugging to examine incoming payload';
-	$xmlrpcerr['incorrect_params']   = 3;
-	$xmlrpcstr['incorrect_params']   = 'Incorrect parameters passed to method';
-	$xmlrpcerr['introspect_unknown'] = 4;
-	$xmlrpcstr['introspect_unknown'] = "Can't introspect: method unknown";
-	$xmlrpcerr['http_error']         = 5;
-	$xmlrpcstr['http_error']         = "Didn't receive 200 OK from remote server.";
+	$GLOBALS['xmlrpcerr']['unknown_method']     = 1;
+	$GLOBALS['xmlrpcstr']['unknown_method']     = 'Unknown method';
+	$GLOBALS['xmlrpcerr']['invalid_return']     = 2;
+	$GLOBALS['xmlrpcstr']['invalid_return']     = 'Invalid return payload: enabling debugging to examine incoming payload';
+	$GLOBALS['xmlrpcerr']['incorrect_params']   = 3;
+	$GLOBALS['xmlrpcstr']['incorrect_params']   = 'Incorrect parameters passed to method';
+	$GLOBALS['xmlrpcerr']['introspect_unknown'] = 4;
+	$GLOBALS['xmlrpcstr']['introspect_unknown'] = "Can't introspect: method unknown";
+	$GLOBALS['xmlrpcerr']['http_error']         = 5;
+	$GLOBALS['xmlrpcstr']['http_error']         = "Didn't receive 200 OK from remote server.";
 
-	$xmlrpc_defencoding = 'UTF-8';
+	$GLOBALS['xmlrpc_defencoding'] = 'UTF-8';
 
-	$xmlrpcName    = 'XML-RPC for PHP';
-	$xmlrpcVersion = '1.0b9';
+	$GLOBALS['xmlrpcName']    = 'XML-RPC for PHP';
+	$GLOBALS['xmlrpcVersion'] = '1.0b9';
 
 	// let user errors start at 800
-	$xmlrpcerruser = 800; 
+	$GLOBALS['xmlrpcerruser'] = 800; 
 	// let XML parse errors start at 100
-	$xmlrpcerrxml = 100;
+	$GLOBALS['xmlrpcerrxml'] = 100;
 
 	// formulate backslashes for escaping regexp
-	$xmlrpc_backslash = chr(92) . chr(92);
+	$GLOBALS['xmlrpc_backslash'] = chr(92) . chr(92);
 
 	// used to store state during parsing
 	// quick explanation of components:
@@ -97,11 +97,11 @@
 	//   params - used to store parameters in method calls
 	//   method - used to store method name
 
-	$_xh=array();
+	$GLOBALS['_xh']=array();
 
 	function xmlrpc_entity_decode($string)
 	{
-		$top = split("&", $string);
+		$top = split('&', $string);
 		$op  = '';
 		$i   = 0;
 		while($i<sizeof($top))
@@ -129,11 +129,9 @@
 
 	function xmlrpc_lookup_entity($ent)
 	{
-		global $xmlEntities;
-
-		if (isset($xmlEntities[strtolower($ent)]))
+		if (isset($GLOBALS['xmlEntities'][strtolower($ent)]))
 		{
-			return $xmlEntities[strtolower($ent)];
+			return $GLOBALS['xmlEntities'][strtolower($ent)];
 		}
 		if (ereg("^#([0-9]+)$", $ent, $regs))
 		{
@@ -144,35 +142,33 @@
 
 	function xmlrpc_se($parser, $name, $attrs)
 	{
-		global $_xh, $xmlrpcDateTime, $xmlrpcString;
-
 		switch($name)
 		{
 			case 'STRUCT':
 			case 'ARRAY':
-				$_xh[$parser]['st'] .= 'array(';
-				$_xh[$parser]['cm']++;
+				$GLOBALS['_xh'][$parser]['st'] .= 'array(';
+				$GLOBALS['_xh'][$parser]['cm']++;
 				// this last line turns quoting off
 				// this means if we get an empty array we'll 
 				// simply get a bit of whitespace in the eval
-				$_xh[$parser]['qt']=0;
+				$GLOBALS['_xh'][$parser]['qt']=0;
 				break;
 			case 'NAME':
-				$_xh[$parser]['st'] .= "'";
-				$_xh[$parser]['ac'] = '';
+				$GLOBALS['_xh'][$parser]['st'] .= "'";
+				$GLOBALS['_xh'][$parser]['ac'] = '';
 				break;
 			case 'FAULT':
-				$_xh[$parser]['isf'] = 1;
+				$GLOBALS['_xh'][$parser]['isf'] = 1;
 				break;
 			case 'PARAM':
-				$_xh[$parser]['st'] = '';
+				$GLOBALS['_xh'][$parser]['st'] = '';
 				break;
 			case 'VALUE':
-				$_xh[$parser]['st'] .= " CreateObject('phpgwapi.xmlrpcval',"; 
-				$_xh[$parser]['vt']  = $xmlrpcString;
-				$_xh[$parser]['ac']  = '';
-				$_xh[$parser]['qt']  = 0;
-				$_xh[$parser]['lv']  = 1;
+				$GLOBALS['_xh'][$parser]['st'] .= " CreateObject('phpgwapi.xmlrpcval',"; 
+				$GLOBALS['_xh'][$parser]['vt']  = xmlrpcString;
+				$GLOBALS['_xh'][$parser]['ac']  = '';
+				$GLOBALS['_xh'][$parser]['qt']  = 0;
+				$GLOBALS['_xh'][$parser]['lv']  = 1;
 				// look for a value: if this is still 1 by the
 				// time we reach the first data segment then the type is string
 				// by implication and we need to add in a quote
@@ -184,30 +180,30 @@
 			case 'DOUBLE':
 			case 'DATETIME.ISO8601':
 			case 'BASE64':
-				$_xh[$parser]['ac']=''; // reset the accumulator
+				$GLOBALS['_xh'][$parser]['ac']=''; // reset the accumulator
 
 				if ($name=='DATETIME.ISO8601' || $name=='STRING')
 				{
-					$_xh[$parser]['qt']=1;
+					$GLOBALS['_xh'][$parser]['qt']=1;
 					if ($name=='DATETIME.ISO8601')
 					{
-						$_xh[$parser]['vt']=$xmlrpcDateTime;
+						$GLOBALS['_xh'][$parser]['vt']=xmlrpcDateTime;
 					}
 				}
 				elseif($name=='BASE64')
 				{
-					$_xh[$parser]['qt']=2;
+					$GLOBALS['_xh'][$parser]['qt']=2;
 				}
 				else
 				{
 					// No quoting is required here -- but
 					// at the end of the element we must check
 					// for data format errors.
-					$_xh[$parser]['qt']=0;
+					$GLOBALS['_xh'][$parser]['qt']=0;
 				}
 				break;
 			case 'MEMBER':
-				$_xh[$parser]['ac']='';
+				$GLOBALS['_xh'][$parser]['ac']='';
 				break;
 			default:
 				break;
@@ -215,41 +211,39 @@
 
 		if ($name!='VALUE')
 		{
-			$_xh[$parser]['lv']=0;
+			$GLOBALS['_xh'][$parser]['lv']=0;
 		}
 	}
 
 	function xmlrpc_ee($parser, $name)
 	{
-		global $_xh,$xmlrpcTypes,$xmlrpcString;
-
 		switch($name)
 		{
 			case 'STRUCT':
 			case 'ARRAY':
-				if ($_xh[$parser]['cm'] && substr($_xh[$parser]['st'], -1) ==',')
+				if ($GLOBALS['_xh'][$parser]['cm'] && substr($GLOBALS['_xh'][$parser]['st'], -1) ==',')
 				{
-					$_xh[$parser]['st']=substr($_xh[$parser]['st'],0,-1);
+					$GLOBALS['_xh'][$parser]['st']=substr($GLOBALS['_xh'][$parser]['st'],0,-1);
 				}
-				$_xh[$parser]['st'].=")";	
-				$_xh[$parser]['vt']=strtolower($name);
-				$_xh[$parser]['cm']--;
+				$GLOBALS['_xh'][$parser]['st'].=')';
+				$GLOBALS['_xh'][$parser]['vt']=strtolower($name);
+				$GLOBALS['_xh'][$parser]['cm']--;
 				break;
 			case 'NAME':
-				$_xh[$parser]['st'].= $_xh[$parser]['ac'] . "' => ";
+				$GLOBALS['_xh'][$parser]['st'].= $GLOBALS['_xh'][$parser]['ac'] . "' => ";
 				break;
 			case 'BOOLEAN':
 				// special case here: we translate boolean 1 or 0 into PHP
 				// constants true or false
-				if ($_xh[$parser]['ac']=='1') 
+				if ($GLOBALS['_xh'][$parser]['ac']=='1') 
 				{
-					$_xh[$parser]['ac']='True';
+					$GLOBALS['_xh'][$parser]['ac']='True';
 				}
 				else
 				{
-					$_xh[$parser]['ac']='false';
+					$GLOBALS['_xh'][$parser]['ac']='false';
 				}
-				$_xh[$parser]['vt']=strtolower($name);
+				$GLOBALS['_xh'][$parser]['vt']=strtolower($name);
 				// Drop through intentionally.
 			case 'I4':
 			case 'INT':
@@ -257,138 +251,137 @@
 			case 'DOUBLE':
 			case 'DATETIME.ISO8601':
 			case 'BASE64':
-				if ($_xh[$parser]['qt']==1)
+				if ($GLOBALS['_xh'][$parser]['qt']==1)
 				{
 					// we use double quotes rather than single so backslashification works OK
-					$_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
+					$GLOBALS['_xh'][$parser]['st'].='"'. $GLOBALS['_xh'][$parser]['ac'] . '"'; 
 				}
-				elseif ($_xh[$parser]['qt']==2)
+				elseif ($GLOBALS['_xh'][$parser]['qt']==2)
 				{
-					$_xh[$parser]['st'].="base64_decode('". $_xh[$parser]['ac'] . "')"; 
+					$GLOBALS['_xh'][$parser]['st'].="base64_decode('". $GLOBALS['_xh'][$parser]['ac'] . "')"; 
 				}
 				else if ($name=='BOOLEAN')
 				{
-					$_xh[$parser]['st'].=$_xh[$parser]['ac'];
+					$GLOBALS['_xh'][$parser]['st'].=$GLOBALS['_xh'][$parser]['ac'];
 				}
 				else
 				{
 					// we have an I4, INT or a DOUBLE
 					// we must check that only 0123456789-.<space> are characters here
-					if (!ereg("^\-?[0123456789 \t\.]+$", $_xh[$parser]['ac']))
+					if (!ereg("^\-?[0123456789 \t\.]+$", $GLOBALS['_xh'][$parser]['ac']))
 					{
 						// TODO: find a better way of throwing an error
 						// than this!
-						error_log("XML-RPC: non numeric value received in INT or DOUBLE");
-						$_xh[$parser]['st'].="ERROR_NON_NUMERIC_FOUND";
+						error_log('XML-RPC: non numeric value received in INT or DOUBLE');
+						$GLOBALS['_xh'][$parser]['st'].='ERROR_NON_NUMERIC_FOUND';
 					}
 					else
 					{
 						// it's ok, add it on
-						$_xh[$parser]['st'].=$_xh[$parser]['ac'];
+						$GLOBALS['_xh'][$parser]['st'].=$GLOBALS['_xh'][$parser]['ac'];
 					}
 				}
-				$_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
-				$_xh[$parser]['lv']=3; // indicate we've found a value
+				$GLOBALS['_xh'][$parser]['ac']=""; $GLOBALS['_xh'][$parser]['qt']=0;
+				$GLOBALS['_xh'][$parser]['lv']=3; // indicate we've found a value
 				break;
 			case 'VALUE':
 				// deal with a string value
-				if (strlen($_xh[$parser]['ac'])>0 &&
-					$_xh[$parser]['vt']==$xmlrpcString)
+				if (strlen($GLOBALS['_xh'][$parser]['ac'])>0 &&
+					$GLOBALS['_xh'][$parser]['vt']==xmlrpcString)
 				{
-					$_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
+					$GLOBALS['_xh'][$parser]['st'].='"'. $GLOBALS['_xh'][$parser]['ac'] . '"'; 
 				}
 				// This if() detects if no scalar was inside <VALUE></VALUE>
 				// and pads an empty "".
-				if($_xh[$parser]['st'][strlen($_xh[$parser]['st'])-1] == '(')
+				if($GLOBALS['_xh'][$parser]['st'][strlen($GLOBALS['_xh'][$parser]['st'])-1] == '(')
 				{
-					$_xh[$parser]['st'].= '""';
+					$GLOBALS['_xh'][$parser]['st'].= '""';
 				}
-				$_xh[$parser]['st'].=", '" . $_xh[$parser]['vt'] . "')";
-				if ($_xh[$parser]['cm'])
+				$GLOBALS['_xh'][$parser]['st'].=", '" . $GLOBALS['_xh'][$parser]['vt'] . "')";
+				if ($GLOBALS['_xh'][$parser]['cm'])
 				{
-					$_xh[$parser]['st'].=",";
+					$GLOBALS['_xh'][$parser]['st'].=",";
 				}
 				break;
 			case 'MEMBER':
-				$_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
-				 break;
+				$GLOBALS['_xh'][$parser]['ac']="";
+				$GLOBALS['_xh'][$parser]['qt']=0;
+				break;
 			case 'DATA':
-				$_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
+				$GLOBALS['_xh'][$parser]['ac']="";
+				$GLOBALS['_xh'][$parser]['qt']=0;
 				break;
 			case 'PARAM':
-				$_xh[$parser]['params'][]=$_xh[$parser]['st'];
+				$GLOBALS['_xh'][$parser]['params'][]=$GLOBALS['_xh'][$parser]['st'];
 				break;
 			case 'METHODNAME':
-				$_xh[$parser]['method']=ereg_replace("^[\n\r\t ]+", "", $_xh[$parser]['ac']);
+				$GLOBALS['_xh'][$parser]['method']=ereg_replace("^[\n\r\t ]+", "", $GLOBALS['_xh'][$parser]['ac']);
 				break;
 			case 'BOOLEAN':
 				// special case here: we translate boolean 1 or 0 into PHP
 				// constants true or false
-				if ($_xh[$parser]['ac']=='1') 
+				if ($GLOBALS['_xh'][$parser]['ac']=='1') 
 				{
-					$_xh[$parser]['ac']="True";
+					$GLOBALS['_xh'][$parser]['ac']='True';
 				}
 				else
 				{
-					$_xh[$parser]['ac']="false";
+					$GLOBALS['_xh'][$parser]['ac']='false';
 				}
-				$_xh[$parser]['vt']=strtolower($name);
+				$GLOBALS['_xh'][$parser]['vt']=strtolower($name);
 				break;
 			default:
 				break;
 		}
 		// if it's a valid type name, set the type
-		if (isset($xmlrpcTypes[strtolower($name)]))
+		if (isset($GLOBALS['xmlrpcTypes'][strtolower($name)]))
 		{
-			$_xh[$parser]['vt']=strtolower($name);
+			$GLOBALS['_xh'][$parser]['vt']=strtolower($name);
 		}
 	}
 
 	function xmlrpc_cd($parser, $data)
 	{
-		global $_xh, $xmlrpc_backslash;
-
 		//if (ereg("^[\n\r \t]+$", $data)) return;
 		// print "adding [${data}]\n";
 
-		if ($_xh[$parser]['lv']!=3)
+		if ($GLOBALS['_xh'][$parser]['lv']!=3)
 		{
 			// "lookforvalue==3" means that we've found an entire value
 			// and should discard any further character data
-			if ($_xh[$parser]['lv']==1)
+			if ($GLOBALS['_xh'][$parser]['lv']==1)
 			{
 				// if we've found text and we're just in a <value> then
 				// turn quoting on, as this will be a string
-				$_xh[$parser]['qt']=1; 
+				$GLOBALS['_xh'][$parser]['qt']=1; 
 				// and say we've found a value
-				$_xh[$parser]['lv']=2; 
+				$GLOBALS['_xh'][$parser]['lv']=2; 
 			}
-			if (isset($_xh[$parser]['qt']) && $_xh[$parser]['qt'])
+			if (isset($GLOBALS['_xh'][$parser]['qt']) && $GLOBALS['_xh'][$parser]['qt'])
 			{
 				// quoted string: replace characters that eval would
 				// do special things with
-				$_xh[$parser]['ac'].=str_replace('$', '\$',
+				$GLOBALS['_xh'][$parser]['ac'].=str_replace('$', '\$',
 					str_replace('"', '\"', 
-					str_replace(chr(92),$xmlrpc_backslash, $data)));
+					str_replace(chr(92),xmlrpc_backslash, $data)));
 			}
 			else 
 			{
-				$_xh[$parser]['ac'].=$data;
+				$GLOBALS['_xh'][$parser]['ac'].=$data;
 			}
 		}
 	}
 
 	function xmlrpc_dh($parser, $data)
 	{
-		global $_xh;
-		if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";")
+		if (substr($data, 0, 1) == '&' && substr($data, -1, 1) == ';')
 		{
-			if ($_xh[$parser]['lv']==1)
+			if ($GLOBALS['_xh'][$parser]['lv']==1)
 			{
-				$_xh[$parser]['qt']=1; 
-				$_xh[$parser]['lv']=2; 
+				$GLOBALS['_xh'][$parser]['qt']=1; 
+				$GLOBALS['_xh'][$parser]['lv']=2; 
 			}
-			$_xh[$parser]['ac'].=$data;
+			$GLOBALS['_xh'][$parser]['ac'].=$data;
 		}
 	}
 
@@ -495,12 +488,6 @@
 	****************************************************************/
 	function xmlrpc_encode($php_val)
 	{
-		global $xmlrpcInt;
-		global $xmlrpcDouble;
-		global $xmlrpcString;
-		global $xmlrpcArray;
-		global $xmlrpcStruct;
-
 		$type = gettype($php_val);
 		$xmlrpc_val = CreateObject('phpgwapi.xmlrpcval');
 
@@ -516,18 +503,18 @@
 				$xmlrpc_val->addStruct($arr);
 				break;
 			case "integer":
-				$xmlrpc_val->addScalar($php_val, $xmlrpcInt);
+				$xmlrpc_val->addScalar($php_val, xmlrpcInt);
 				break;
 			case "double":
-				$xmlrpc_val->addScalar($php_val, $xmlrpcDouble);
+				$xmlrpc_val->addScalar($php_val, xmlrpcDouble);
 				break;
 			case "string":
-				$xmlrpc_val->addScalar($php_val, $xmlrpcString);
+				$xmlrpc_val->addScalar($php_val, xmlrpcString);
 				break;
 			// <G_Giunta_2001-02-29>
 			// Add support for encoding/decoding of booleans, since they are supported in PHP
 			case "boolean":
-				$xmlrpc_val->addScalar($php_val, $xmlrpcBoolean);
+				$xmlrpc_val->addScalar($php_val, xmlrpcBoolean);
 				break;
 			// </G_Giunta_2001-02-29>
 			case "unknown type":
@@ -539,12 +526,10 @@
 	}
 
 	// listMethods: either a string, or nothing
-	$_xmlrpcs_listMethods_sig = array(array($xmlrpcArray, $xmlrpcString), array($xmlrpcArray));
-	$_xmlrpcs_listMethods_doc = 'This method lists all the methods that the XML-RPC server knows how to dispatch';
+	$GLOBALS['_xmlrpcs_listMethods_sig'] = array(array(xmlrpcArray, xmlrpcString), array(xmlrpcArray));
+	$GLOBALS['_xmlrpcs_listMethods_doc'] = 'This method lists all the methods that the XML-RPC server knows how to dispatch';
 	function _xmlrpcs_listMethods($server, $m)
 	{
-		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
-
 		$v     =  CreateObject('phpgwapi.xmlrpcval');
 		$dmap  = $server->dmap;
 		$outAr = array();
@@ -552,7 +537,7 @@
 		{
 			$outAr[] = CreateObject('phpgwapi.xmlrpcval',$key, 'string');
 		}
-		$dmap = $_xmlrpcs_dmap;
+		$dmap = $GLOBALS['_xmlrpcs_dmap'];
 		for(reset($dmap); list($key, $val) = each($dmap); )
 		{
 			$outAr[] = CreateObject('phpgwapi.xmlrpcval',$key, 'string');
@@ -561,17 +546,15 @@
 		return CreateObject('phpgwapi.xmlrpcresp',$v);
 	}
 
-	$_xmlrpcs_methodSignature_sig=array(array($xmlrpcArray, $xmlrpcString));
-	$_xmlrpcs_methodSignature_doc='Returns an array of known signatures (an array of arrays) for the method name passed. If no signatures are known, returns a none-array (test for type != array to detect missing signature)';
+	$GLOBALS['_xmlrpcs_methodSignature_sig']=array(array(xmlrpcArray, xmlrpcString));
+	$GLOBALS['_xmlrpcs_methodSignature_doc']='Returns an array of known signatures (an array of arrays) for the method name passed. If no signatures are known, returns a none-array (test for type != array to detect missing signature)';
 	function _xmlrpcs_methodSignature($server, $m)
 	{
-		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
-
 		$methName = $m->getParam(0);
 		$methName = $methName->scalarval();
 		if (ereg("^system\.", $methName))
 		{
-			$dmap = $_xmlrpcs_dmap;
+			$dmap = $GLOBALS['_xmlrpcs_dmap'];
 			$sysCall = 1;
 		}
 		else
@@ -605,26 +588,26 @@
 		}
 		else
 		{
-			$r = CreateObject('phpgwapi.xmlrpcresp',0,$xmlrpcerr['introspect_unknown'],$xmlrpcstr['introspect_unknown']);
+			$r = CreateObject('phpgwapi.xmlrpcresp',0,$GLOBALS['xmlrpcerr']['introspect_unknown'],$GLOBALS['xmlrpcstr']['introspect_unknown']);
 		}
 		return $r;
 	}
 
-	$_xmlrpcs_methodHelp_sig = array(array($xmlrpcString, $xmlrpcString));
-	$_xmlrpcs_methodHelp_doc = 'Returns help text if defined for the method passed, otherwise returns an empty string';
+	$GLOBALS['_xmlrpcs_methodHelp_sig'] = array(array(xmlrpcString, xmlrpcString));
+	$GLOBALS['_xmlrpcs_methodHelp_doc'] = 'Returns help text if defined for the method passed, otherwise returns an empty string';
 	function _xmlrpcs_methodHelp($server, $m)
 	{
-		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
-
 		$methName = $m->getParam(0);
 		$methName = $methName->scalarval();
 		if (ereg("^system\.", $methName))
 		{
-			$dmap = $_xmlrpcs_dmap; $sysCall=1;
+			$dmap = $GLOBALS['_xmlrpcs_dmap'];
+			$sysCall=1;
 		}
 		else
 		{
-			$dmap = $server->dmap; $sysCall=0;
+			$dmap = $server->dmap;
+			$sysCall=0;
 		}
 		//	print "<!-- ${methName} -->\n";
 		if (isset($dmap[$methName]))
@@ -640,34 +623,33 @@
 		}
 		else
 		{
-			$r = CreateObject('phpgwapi.xmlrpcresp',0,$xmlrpcerr['introspect_unknown'],$xmlrpcstr['introspect_unknown']);
+			$r = CreateObject('phpgwapi.xmlrpcresp',0,$GLOBALS['xmlrpcerr']['introspect_unknown'],$GLOBALS['xmlrpcstr']['introspect_unknown']);
 		}
 		return $r;
 	}
 
-	$_xmlrpcs_dmap=array(
+	$GLOBALS['_xmlrpcs_dmap']=array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
-			'signature' => $_xmlrpcs_listMethods_sig,
-			'docstring' => $_xmlrpcs_listMethods_doc
+			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_listMethods_doc']
 		),
 		'system.methodHelp' => array(
 			'function'  => '_xmlrpcs_methodHelp',
-			'signature' => $_xmlrpcs_methodHelp_sig,
-			'docstring' => $_xmlrpcs_methodHelp_doc
+			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
 		),
 		'system.methodSignature' => array(
 			'function'  => '_xmlrpcs_methodSignature',
-			'signature' => $_xmlrpcs_methodSignature_sig,
-			'docstring' => $_xmlrpcs_methodSignature_doc
+			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
 		)
 	);
 
-	$_xmlrpc_debuginfo = '';
+	$GLOBALS['_xmlrpc_debuginfo'] = '';
 	function xmlrpc_debugmsg($m)
 	{
-		global $_xmlrpc_debuginfo;
-		$_xmlrpc_debuginfo = $_xmlrpc_debuginfo . $m . "\n";
+		$GLOBALS['_xmlrpc_debuginfo'] .= $m . "\n";
 	}
 
 ?>

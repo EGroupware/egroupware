@@ -39,34 +39,34 @@
 
 		function xml_header()
 		{
-			return "<?xml version=\"1.0\"?>\n<methodCall>\n";
+			return '<?xml version="1.0"?>'."\n".'<methodCall>'."\n";
 		}
 
 		function xml_footer()
 		{
-			return "</methodCall>\n";
+			return '</methodCall>'."\n";
 		}
 
 		function createPayload()
 		{
 			$this->payload=$this->xml_header();
-			$this->payload.="<methodName>" . $this->methodname . "</methodName>\n";
+			$this->payload.='<methodName>' . $this->methodname . '</methodName>'."\n";
 			//	if (sizeof($this->params)) {
-			$this->payload.="<params>\n";
+			$this->payload.='<params>'."\n";
 			for($i=0; $i<sizeof($this->params); $i++)
 			{
 				$p=$this->params[$i];
-				$this->payload.="<param>\n" . $p->serialize() . "</param>\n";
+				$this->payload.='<param>'."\n" . $p->serialize() . '</param>'."\n";
 			}
-			$this->payload.="</params>\n";
+			$this->payload.='</params>'."\n";
 			// }
 			$this->payload.=$this->xml_footer();
 			$this->payload=str_replace("\n", "\r\n", $this->payload);
 		}
 
-		function method($meth="")
+		function method($meth='')
 		{
-			if ($meth!="")
+			if ($meth!='')
 			{
 				$this->methodname=$meth;
 			}
@@ -85,7 +85,7 @@
 
 		function parseResponseFile($fp)
 		{
-			$ipd="";
+			$ipd='';
 
 			while($data=fread($fp, 32768))
 			{
@@ -94,39 +94,36 @@
 			return $this->parseResponse($ipd);
 		}
 
-		function parseResponse($data="")
+		function parseResponse($data='')
 		{
-			global $_xh,$xmlrpcerr,$xmlrpcstr;
-			global $xmlrpc_defencoding;
+			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 
-			$parser = xml_parser_create($xmlrpc_defencoding);
-
-			$_xh[$parser]        = array();
-			$_xh[$parser]['st']  = ''; 
-			$_xh[$parser]['cm']  = 0; 
-			$_xh[$parser]['isf'] = 0; 
-			$_xh[$parser]['ac']  = '';
-			$_xh[$parser]['qt']  = '';
+			$GLOBALS['_xh'][$parser]        = array();
+			$GLOBALS['_xh'][$parser]['st']  = ''; 
+			$GLOBALS['_xh'][$parser]['cm']  = 0; 
+			$GLOBALS['_xh'][$parser]['isf'] = 0; 
+			$GLOBALS['_xh'][$parser]['ac']  = '';
+			$GLOBALS['_xh'][$parser]['qt']  = '';
 
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
 			xml_set_element_handler($parser, "xmlrpc_se", "xmlrpc_ee");
 			xml_set_character_data_handler($parser, "xmlrpc_cd");
 			xml_set_default_handler($parser, "xmlrpc_dh");
-			$xmlrpc_value = CreateObject('phpgwapi.xmlrpcval');
+//			$xmlrpc_value = CreateObject('phpgwapi.xmlrpcval');
 
 			$hdrfnd=0;
 			if ($this->debug)
 			{
-				print "<PRE>---GOT---\n" . htmlspecialchars($data) . "\n---END---\n</PRE>";
+				print '<PRE>---GOT---'."\n" . htmlspecialchars($data) . "\n".'---END---'."\n".'</PRE>';
 			}
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
 			if (ereg("^HTTP",$data) && !ereg("^HTTP/[0-9\.]+ 200 ", $data))
 			{
 				$errstr= substr($data, 0, strpos($data, "\n")-1);
-				error_log("HTTP error, got response: " .$errstr);
-				$r = CreateObject('phpgwapi.xmlrpcresp',0, $xmlrpcerr['http_error'],
-					$xmlrpcstr['http_error'] . " (" . $errstr . ")");
+				error_log('HTTP error, got response: ' .$errstr);
+				$r = CreateObject('phpgwapi.xmlrpcresp',0, $GLOBALS['xmlrpcerr']['http_error'],
+					$GLOBALS['xmlrpcstr']['http_error'] . ' (' . $errstr . ')');
 				xml_parser_free($parser);
 				return $r;
 			}
@@ -142,7 +139,7 @@
 				// thanks to Peter Kocks <peter.kocks@baygate.com>
 				if((xml_get_current_line_number($parser)) == 1) 
 				{
-					$errstr = "XML error at line 1, check URL";
+					$errstr = 'XML error at line 1, check URL';
 				}
 				else
 				{
@@ -151,33 +148,33 @@
 						xml_get_current_line_number($parser));
 				}
 				error_log($errstr);
-				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $xmlrpcerr['invalid_return'],$xmlrpcstr['invalid_return']);
+				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 				xml_parser_free($parser);
 				return $r;
 			}
 			xml_parser_free($parser);
 			if ($this->debug)
 			{
-				print "<PRE>---EVALING---[" . 
-					strlen($_xh[$parser]['st']) . " chars]---\n" . 
-					htmlspecialchars($_xh[$parser]['st']) . ";\n---END---</PRE>";
+				print '<PRE>---EVALING---[' . 
+					strlen($GLOBALS['_xh'][$parser]['st']) . ' chars]---'."\n" . 
+					htmlspecialchars($GLOBALS['_xh'][$parser]['st']) . ';'."\n".'---END---</PRE>';
 			}
-			if (strlen($_xh[$parser]['st']) == 0)
+			if (strlen($GLOBALS['_xh'][$parser]['st']) == 0)
 			{
 				// then something odd has happened
 				// and it's time to generate a client side error
 				// indicating something odd went on
-				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $xmlrpcerr['invalid_return'],$xmlrpcstr['invalid_return']);
+				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 			}
 			else
 			{
-				$code = '$v=' . $_xh[$parser]['st'] . '; $allOK=1;';
+				$code = '$v=' . $GLOBALS['_xh'][$parser]['st'] . '; $allOK=1;';
 				$code = ereg_replace(',,',",'',",$code);
 				eval($code);
-				if ($_xh[$parser]['isf'])
+				if ($GLOBALS['_xh'][$parser]['isf'])
 				{
-					$f  = $v->structmem("faultCode");
-					$fs = $v->structmem("faultString");
+					$f  = $v->structmem('faultCode');
+					$fs = $v->structmem('faultString');
 					$r  = CreateObject('phpgwapi.xmlrpcresp',$v, $f->scalarval(), $fs->scalarval());
 				}
 				else
@@ -185,7 +182,7 @@
 					$r = CreateObject('phpgwapi.xmlrpcresp',$v);
 				}
 			}
-			$r->hdrs=split("\r?\n", $_xh[$parser]['ha'][1]);
+			$r->hdrs=split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
 			return $r;
 		}
 	}
