@@ -45,11 +45,11 @@
   function show_cookie()
   {
     global $phpgw_info, $code, $lastloginid, $login;
-    if ($code != 5){    
-      if ($phpgw_info["server"]["usecookies"]) {
+    if ($code != 5 && $phpgw_info["server"]["usecookies"] == True){
+      if (!empty($login)) {
         SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
-        return $lastloginid;
       }
+      return $lastloginid;
     }
   }
 
