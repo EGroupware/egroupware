@@ -39,7 +39,7 @@
 			
 			    <tr bgcolor="{tr_color1}">
 			     <td>{lang_expires}</td>
-			     <td colspan="3">{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;<input type="checkbox" name="never_expires" value="True"{never_expires}></td>
+			     <td colspan="3">{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;{never_expires}</td>
 			    </tr>
 			
 			    {permissions_list}

@@ -852,9 +852,9 @@
 				{
 					/* Change this to be an admin/setup setting.  For now, default to expire one week from today. */
 					$time_var = time() + (60*60*24*7);
-					$userData['account_expires_month'] = date('m',$userData['expires'] ? $userData['expires'] : $time_var);
-					$userData['account_expires_day']   = date('d',$userData['expires'] ? $userData['expires'] : $time_var);
-					$userData['account_expires_year']  = date('Y',$userData['expires'] ? $userData['expires'] : $time_var);
+					$userData['account_expires_month'] = date('m',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
+					$userData['account_expires_day']   = date('d',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
+					$userData['account_expires_year']  = date('Y',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
 				}
 			}
 			$page_params['menuaction'] = 'admin.boaccounts.'.($_account_id?'edit':'add').'_user';
@@ -937,6 +937,7 @@
 
 			$var = Array(
 				'input_expires'	=> $GLOBALS['phpgw']->common->dateformatorder($_y,$_m,$_d,True),
+				'lang_never'	=> lang('Never'),
 				'account_lid'	=> '<input name="account_lid" value="' . $userData['account_lid'] . '">',
 				'lang_homedir'	=> $lang_homedir,
 				'lang_shell'	=> $lang_shell,
@@ -949,6 +950,16 @@
 				'account_passwd_2'	=> $account_passwd_2,
 				'account_file_space'	=> $account_file_space
 			);
+
+			if($userData['expires'] == -1)
+			{
+				$var['never_expires'] = '<input type="checkbox" name="never_expires" value="True" checked>';
+			}
+			else
+			{
+				$var['never_expires'] = '<input type="checkbox" name="never_expires" value="True">';
+			}
+
 			$t->set_var($var);
 			$t->parse('password_fields','form_passwordinfo',True);
 
