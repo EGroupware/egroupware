@@ -228,7 +228,7 @@
       $currentver = "0.9.2";
     }
   }
-  
+
   function update_owner($table,$field){
     global $db;
     $db->query("select distinct($field) from $table");
@@ -237,9 +237,9 @@
 	$owner[count($owner)] = $db->f($field);
       }
       for($i=0;$i<count($owner);$i++) {
-        $db->query("select account_id From accounts where account_lid='".$owner[$i]."'");
-	$account_id[$i] = $db->f("account_id");
-	$db->query("update $table set $field=".$account_id[$i]." where $field='".$owner[$i]."'");
+        $db->query("select account_id from accounts where account_lid='".$owner[$i]."'");
+	$db->next_record();
+	$db->query("update $table set $field=".$db->f("account_id")." where $field='".$owner[$i]."'");
       }
     }
     $db->query("alter table $table change $field $field int(11) NOT NULL");
@@ -256,7 +256,8 @@
 	update_owner("todo","todo_owner");
 	update_owner("webcal_entry","cal_create_by");
 	update_owner("webcal_entry_user","cal_login");
-      }
+	$currentver = "0.9.3pre2";
+       }
       if ($currentver == "0.9.3pre2") {
 	$db->query("select owner, newsgroup from users_newsgroups");
 	if($db->num_rows()) {
@@ -276,7 +277,7 @@
        echo "  <tr bgcolor=\"e6e6e6\">\n";
        echo "    <td>Upgrade from 0.9.2 to 0.9.3pre3 is completed.</td>\n";
        echo "  </tr>\n";
-       $currentver = "0.9.3pre2";
+       $currentver = "0.9.3pre3";
     }
   }
 
