@@ -1,7 +1,59 @@
-add to addressbook	common	fr	Ajouter au carnet d'adresses
-address book	common	fr	Carnet d'adresse
-address book - view	common	fr	Carnet d'adresses - voir
-addressbook	common	fr	Carnet d'adresses
-addressbook preferences	common	fr	Pr&eacute;f&eacute;rences du carnet d'adresses
-today is x's birthday!	common	fr	Aujourd'hui, c'est l'anniversaire de %1 !
-tomorrow is x's birthday.	common	fr	Demain, c'est l'anniversaire de %1.
+address book - view	addressbook	fr	Carnet d'adresses - Voir
+address line 2	addressbook	fr	Adresse ligne 2
+address line 3	addressbook	fr	Adresse ligne 3
+address type	addressbook	fr	Type d'adresse
+bbs phone	addressbook	fr	Téléphone BBS
+birthday	addressbook	fr	Anniversaire
+business address type	addressbook	fr	Type d'adresse travail
+car phone	addressbook	fr	Téléphone voiture
+cell phone	addressbook	fr	Téléphone portable
+city	addressbook	fr	Ville
+company name	addressbook	fr	Nom de la société
+country	addressbook	fr	Pays
+custom fields	addressbook	fr	Champs personnalisés
+department	addressbook	fr	Département
+export contacts	addressbook	fr	Exporter les contacts
+fax	addressbook	fr	Fax
+fields to show in address list	addressbook	fr	Champs à montrer dans la liste des adresses
+full name	addressbook	fr	Nom complet
+geo	addressbook	fr	GEO
+home city	addressbook	fr	Ville maison
+home address type	addressbook	fr	Type d'adresse maison
+home country	addressbook	fr	Pays maison
+home email	addressbook	fr	EMail maison
+home email type	addressbook	fr	Type d'EMail maison
+home phone	addressbook	fr	Téléphone maison
+home state	addressbook	fr	Région maison
+home street	addressbook	fr	Rue maison
+home zip code	addressbook	fr	Code postal maison
+import contacts	addressbook	fr	Importer les contacts
+import file	addressbook	fr	Importer le fichier
+import from outlook	addressbook	fr	Importer depuis Outlook
+isdn phone	addressbook	fr	Téléphone RNIS
+label	addressbook	fr	Label
+line 2	addressbook	fr	Ligne 2
+message phone	addressbook	fr	Téléphone de message
+middle name	addressbook	fr	Deuxième prénom
+mobile	addressbook	fr	Portable
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fr	<b>Aucun  type de conversion &lt;none&gt; n'a pu être trouvé.</b>  S'il vous plaît choisissez un type de conversion depuis la liste
+other number	addressbook	fr	Autre nombre
+pager	addressbook	fr	Pager
+parcel	addressbook	fr	Paquet
+phone numbers	addressbook	fr	Numéros de téléphone
+postal	addressbook	fr	Postal
+prefix	addressbook	fr	Préfixe
+public key	addressbook	fr	Clé publique
+record access	addressbook	fr	Enregistrer l'accès
+record owner	addressbook	fr	Enregistrer le propriétaire
+show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
+state	addressbook	fr	Région
+street	addressbook	fr	Rue
+successfully imported x records into your addressbook.	addressbook	fr	Importé avec succès %1 enregistrements dans votre carnet d'adresses.
+suffix	addressbook	fr	Suffixe
+this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses
+url	addressbook	fr	URL
+vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée Prénom.
+video phone	addressbook	fr	Téléphone Vidéo
+voice phone	addressbook	fr	Téléphone vocal
+work phone	addressbook	fr	Téléphone travail
+zip code	addressbook	fr	Code postal
