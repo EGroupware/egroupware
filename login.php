@@ -127,7 +127,7 @@
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER))
 		{
-			$phpgw->redirect($phpgw->link('','code=5'));
+			$phpgw->redirect($phpgw->link('/login.php','code=5'));
 		}
 		$sessionid = $phpgw->session->create($login,$passwd);
 		if (! isset($sessionid) || ! $sessionid)
