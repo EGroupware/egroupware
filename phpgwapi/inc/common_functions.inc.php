@@ -1193,7 +1193,7 @@
 		);
 		foreach(array('order','sort') as $name)
 		{
-			if (isset($GLOBALS[$where][$name]) && !preg_match($pregs[$name],$GLOBALS[$where][$name]))
+			if (isset($GLOBALS[$where][$name]) && !is_array($GLOBALS[$where][$name]) && !preg_match($pregs[$name],$GLOBALS[$where][$name]))
 			{
 				$GLOBALS[$where][$name] = '';
 			}
