@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare                                                               *
+	* http://www.egroupware.org                                                *
 	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -14,7 +14,7 @@
 	/**************************************************************************\
 	* !!!!!!! EDIT THESE LINES !!!!!!!!                                        *
 	* This setting allows you to easily move the include directory and the     *
-	* base of the phpGroupWare install. Simple edit the following 2 lines with * 
+	* base of the eGroupWare install. Simple edit the following 2 lines with   *
 	* the absolute path to fit your site, and you should be up and running.    *
 	\**************************************************************************/
 
@@ -22,7 +22,7 @@
 	define('PHPGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
 	$GLOBALS['phpgw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
 
-	/* phpGroupWare domain-specific db settings */{domains}
+	/* eGroupWare domain-specific db settings */{domains}
 	/*
 	** If you want to have your domains in a select box, change to True
 	** If not, users will have to login as user@domain
@@ -34,8 +34,8 @@
 	$GLOBALS['phpgw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
 	/*
-	** phpGroupWare can handle session management using the database, but if
-	** you are using PHP4 you can usually get better performance by having phpGroupWare
+	** eGroupWare can handle session management using the database, but if
+	** you are using PHP4 you can usually get better performance by having eGroupWare
 	** use the session support built into PHP4. PHP3 users will have to use the database.
 	** Your choices are 'db' or 'php4'
 	*/
@@ -57,8 +57,8 @@
 	*/
 	$GLOBALS['phpgw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 
-	/* If you want phpGroupWare to be cached by proxy servers, uncomment the following */
-	/* This is NOT recommended, but phpGroupWare should still work fine. */
+	/* If you want eGroupWare to be cached by proxy servers, uncomment the following */
+	/* This is NOT recommended, but eGroupWare should still work fine. */
 	if(!isset($GLOBALS['phpgw_info']['flags']['nocachecontrol']) || !$GLOBALS['phpgw_info']['flags']['nocachecontrol'] == True)
 	{
 		header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
@@ -101,16 +101,16 @@
 		include(PHPGW_API_INC . '/soap_functions.inc.php');
 	}
 
-	/* 
+	/*
 	  Leave off the final php closing tag, some editors will add
 	  a \n or space after which will mess up cookies later on
 	*/<!-- BEGIN domain -->
 	$GLOBALS['phpgw_domain']['{DB_DOMAIN}'] = array (
-		'db_host' => '{DB_HOST}', 
-		'db_port' => '{DB_PORT}', 
-		'db_name' => '{DB_NAME}', 
-		'db_user' => '{DB_USER}', 
-		'db_pass' => '{DB_PASS}', 
+		'db_host' => '{DB_HOST}',
+		'db_port' => '{DB_PORT}',
+		'db_name' => '{DB_NAME}',
+		'db_user' => '{DB_USER}',
+		'db_pass' => '{DB_PASS}',
 		// Look at the README file
 		'db_type' => '{DB_TYPE}',
 		// This will limit who is allowed to make configuration modifications
