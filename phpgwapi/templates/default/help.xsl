@@ -1,23 +1,29 @@
 <!-- $Id$ -->
 
 	<xsl:template name="help">
-		<xsl:apply-templates select="help_data"/>
+		<xsl:apply-templates select="help_values"/>
 	</xsl:template>
 
-	<xsl:template match="help_data">
+	<xsl:template match="help_values">
+		<xsl:variable name="img" select="img"/>
 		<table cellpadding="0" cellspacing="0" width="100%">
  			<tr class="th">
-  				<td class="th_text">
-					<xsl:value-of disable-output-escaping="yes" select="space"/>
-					<xsl:value-of select="title"/>
+  				<td class="th_text" valign="middle">
+					<img src="{$img}" border="0"/>&nbsp;
+					<xsl:value-of select="title"/>&nbsp;
+					<xsl:value-of select="lang_version"/>:&nbsp;<xsl:value-of select="version"/>
 				</td>
 				<td valign="middle" align="right">
-					<xsl:apply-templates select="control_link"/>
+					<xsl:choose>
+						<xsl:when test="control_link != ''">
+							<xsl:apply-templates select="control_link"/>
+						</xsl:when>
+					</xsl:choose>
 				</td>
 			</tr>
  			<tr>
   				<td colspan="2">
-					<table cellpadding="3" cellspacing="0" class="portal">
+					<table cellpadding="3" cellspacing="0" class="row_on" width="100%">
 						<xsl:choose>
 							<xsl:when test="listbox != ''">
 								<tr>
@@ -37,10 +43,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="xextrabox != ''">
+							<xsl:when test="xhelp != ''">
 								<tr>
 									<td>
-										<xsl:call-template name="extrabox"/>
+										<xsl:call-template name="help_data"/>
 									</td>
 								</tr>
 							</xsl:when>
