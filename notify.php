@@ -11,7 +11,8 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$phpgw_info = array();
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'disable_Template_class' => True,
@@ -28,16 +29,16 @@
 	<!-- Activate Cloaking Device
 	function CheckEmail()
 	{
-		window.opener.document.location.href="<?php echo $phpgw->link('/index.php','menuaction=email.uiindex.index'); ?>";
+		window.opener.document.location.href="<?php echo $GLOBALS['phpgw']->link('/index.php','menuaction=email.uiindex.index'); ?>";
 	}
 	//-->
 	</script>
 </head>
-<body bgcolor="<?php echo $phpgw_info['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
+<body bgcolor="<?php echo $GLOBALS['phpgw_info']['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
 <table>
-	<tr><td><a href="<?php echo $phpgw->link('/notify.php'); ?>">Check Now</a></td></tr>
+	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>">Check Now</a></td></tr>
 <?php
-	$phpgw->common->hook('notifywindow',array('email'));
+	$GLOBALS['phpgw']->common->hook('notifywindow',array('email'));
 ?>
 </table>
 </body>

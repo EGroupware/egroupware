@@ -13,22 +13,22 @@
 	/* $Id$ */
 
 	// TODO:
-	//	Limit which users can access this program (ACL check)
-	//	Global disabler
-	//	Detect bad logins and passwords, spit out generic message
+	// Limit which users can access this program (ACL check)
+	// Global disabler
+	// Detect bad logins and passwords, spit out generic message
 
 	// If your are going to use multiable accounts, remove the following lines
 	$login  = 'anonymous';
 	$passwd = 'anonymous';
 
-	$phpgw_info['flags'] = array(
-		'disable_template_class' => True,
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'disable_Template_class' => True,
 		'login' => True,
 		'currentapp' => 'login',
-		'noheader'  => True);
-
+		'noheader'  => True
+	);
 	include('./header.inc.php');
 
-	$sessionid = $phpgw->session->create($login,$passwd);
-	$phpgw->redirect($phpgw->link('/index.php'));
+	$sessionid = $GLOBALS['phpgw']->session->create($login,$passwd);
+	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php'));
 ?>

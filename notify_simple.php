@@ -11,9 +11,15 @@
 
   /* $Id$ */
 
-	$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "notifywindow");
-	include("header.inc.php");
+	$phpgw_info = array();
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'noheader' => True,
+		'nonavbar' => True,
+		'currentapp' => 'notifywindow'
+	);
+	include('./header.inc.php');
+
 	echo '<html><body>';
-	$phpgw->common->hook("simple",array("email"));
+	$GLOBALS['phpgw']->common->hook('simple',array('email'));
 	echo '</body></html>';
 ?>
