@@ -21,26 +21,34 @@
 			{
 				$config['mcrypt_algo'] = 'tripledes';  /* MCRYPT_TRIPLEDES */
 			}
-			$algos = mcrypt_list_algorithms();
+			$algos = @mcrypt_list_algorithms();
 
-			while (list ($key, $value) = each ($algos))
+			if(@is_array($algos))
 			{
-				/* Only show each once - seems this is a problem in some installs */
-				if(!in_array($value,$listed))
+				while (list ($key, $value) = each ($algos))
 				{
-					if ($config['mcrypt_algo'] == $value)
+					/* Only show each once - seems this is a problem in some installs */
+					if(!in_array($value,$listed))
 					{
-						$selected = ' selected';
+						if ($config['mcrypt_algo'] == $value)
+						{
+							$selected = ' selected';
+						}
+						else
+						{
+							$selected = '';
+						}
+						$descr = strtoupper($value);
+		
+						$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
+						$listed[] = $value;
 					}
-					else
-					{
-						$selected = '';
-					}
-					$descr = strtoupper($value);
-	
-					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-					$listed[] = $value;
 				}
+			}
+			else
+			{
+				/* Something is wrong with their mcrypt install or php.ini */
+				$out = '<option value="tripledes">' . lang('no algorithms available') . '</option>' . "\n";;
 			}
 		}
 		else
@@ -59,26 +67,34 @@
 			{
 				$config['mcrypt_mode'] = 'cbc'; /* MCRYPT_MODE_CBC */
 			}
-			$modes = mcrypt_list_modes();
+			$modes = @mcrypt_list_modes();
 
-			while (list ($key, $value) = each ($modes))
+			if(@is_array($modes))
 			{
-				/* Only show each once - seems this is a problem in some installs */
-				if(!in_array($value,$listed))
+				while (list ($key, $value) = each ($modes))
 				{
-					if ($config['mcrypt_mode'] == $value)
+					/* Only show each once - seems this is a problem in some installs */
+					if(!in_array($value,$listed))
 					{
-						$selected = ' selected';
+						if ($config['mcrypt_mode'] == $value)
+						{
+							$selected = ' selected';
+						}
+						else
+						{
+							$selected = '';
+						}
+						$descr = strtoupper($value);
+		
+						$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
+						$listed[] = $value;
 					}
-					else
-					{
-						$selected = '';
-					}
-					$descr = strtoupper($value);
-	
-					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
-					$listed[] = $value;
 				}
+			}
+			else
+			{
+				/* Something is wrong with their mcrypt install or php.ini */
+				$out = '<option value="cbc" selected>' . lang('no modes available') . '</option>' . "\n";
 			}
 		}
 		else
