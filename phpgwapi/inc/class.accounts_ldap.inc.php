@@ -325,7 +325,8 @@
 								// remove the uid from memberuid
 								$newData['memberuid'] = array_flip($newData['memberuid']);
 								unset($newData['memberuid'][$oldAccountID]);
-								$newData['memberuid'] = array_values(sort(array_flip($newData['memberuid'])));
+								# $newData['memberuid'] = array_values(sort(array_flip($newData['memberuid'])));
+								$newData['memberuid'] = array_values(array_flip($newData['memberuid']));
 								ldap_mod_replace($this->ds, $dn, $newData);
 								#print ldap_error($this->ds);
 							}
