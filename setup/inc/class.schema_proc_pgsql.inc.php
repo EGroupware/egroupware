@@ -508,7 +508,16 @@
 				if ($DEBUG) { echo '<br>RenameTable(): Altering column default for: ' . $sField; }
 				$oProc->m_odb->query("ALTER TABLE $sOldTableName ALTER $sField SET DEFAULT nextval('seq_" . $sNewTableName . "')",__LINE__,__FILE__);
 			}
-			$oProc->m_odb->query("DROP INDEX " . $sOldTableName . "_pkey",__LINE__,__FILE__);
+
+			$indexnames = $oProc->m_odb->index_names();
+			while(list($key,$val) = @each($indexnames))
+			{
+				$indexes[] = $val['index_name'];
+			}
+			if(isinarray($sOldTableName . '_pkey',$indexes)
+			{
+				$oProc->m_odb->query("DROP INDEX " . $sOldTableName . "_pkey",__LINE__,__FILE__);
+			}
 
 			return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
 		}

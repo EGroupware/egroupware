@@ -193,6 +193,23 @@
 		return $select;
 	}
 
+	/*!
+	@function isinarray
+	@abstract php3/4 compliant in_array()
+	@param	$needle		String to search for
+	@param	$haystack	Array to search
+	*/
+	function isinarray($needle,$haystack='') 
+	{
+		if($haystack == '')
+		{
+			settype($haystack,'array');
+			$haystack = Array();
+		}
+		for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++);
+		return ($i!=count($haystack));
+	}
+
 	/* Include to check user authorization against the 
 	   password in ../header.inc.php to protect all of the setup
 	   pages from unauthorized use.
