@@ -46,11 +46,11 @@
 		{
 			switch ($type)
 			{
-				case 'subs':		 $s = " AND cat_parent != '0'"; break;
-				case 'mains':		 $s = " AND cat_parent = '0'"; break;
-				case 'appandmains':	 $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
-				case 'appandsubs':	 $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
-				default: return False;
+				case 'subs':        $s = " AND cat_parent != '0'"; break;
+				case 'mains':       $s = " AND cat_parent = '0'"; break;
+				case 'appandmains': $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
+				case 'appandsubs':  $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
+				default:            return False;
 			}
 			return $s;
 		}
@@ -64,12 +64,12 @@
 		{
 			switch($for)
 			{
-				case 'app':			$w = " WHERE cat_appname='" . $this->app_name . "'"; break;
-				case 'appandmains':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'";
-				case 'appandsubs':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'";
-				case 'subs':		$w = " WHERE cat_parent != '0'"; break;
-				case 'mains':		$w = " WHERE cat_parent = '0'"; break;
-				default:			return False;
+				case 'app':         $w = " WHERE cat_appname='" . $this->app_name . "'"; break;
+				case 'appandmains': $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'";
+				case 'appandsubs':  $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'";
+				case 'subs':        $w = " WHERE cat_parent != '0'"; break;
+				case 'mains':       $w = " WHERE cat_parent = '0'"; break;
+				default:            return False;
 			
 			}
 			$this->db->query("SELECT COUNT(cat_id) FROM phpgw_categories $w",__LINE__,__FILE__);
@@ -159,16 +159,16 @@
 			$i = 0;
 			while ($this->db->next_record())
 			{
-				$cats[$i]['id']				= $this->db->f('cat_id');
-				$cats[$i]['owner']			= $this->db->f('cat_owner');
-				$cats[$i]['access']			= $this->db->f('cat_access');
-				$cats[$i]['app_name']		= $this->db->f('cat_appname');
-				$cats[$i]['main']			= $this->db->f('cat_main');
-				$cats[$i]['level']			= $this->db->f('cat_level');
-				$cats[$i]['parent']			= $this->db->f('cat_parent');
-				$cats[$i]['name']			= $this->db->f('cat_name');
-				$cats[$i]['description']	= $this->db->f('cat_description');
-				$cats[$i]['data']			= $this->db->f('cat_data');
+				$cats[$i]['id']       = $this->db->f('cat_id');
+				$cats[$i]['owner']    = $this->db->f('cat_owner');
+				$cats[$i]['access']   = $this->db->f('cat_access');
+				$cats[$i]['app_name'] = $this->db->f('cat_appname');
+				$cats[$i]['main']     = $this->db->f('cat_main');
+				$cats[$i]['level']    = $this->db->f('cat_level');
+				$cats[$i]['parent']   = $this->db->f('cat_parent');
+				$cats[$i]['name']     = $this->db->f('cat_name');
+				$cats[$i]['description'] = $this->db->f('cat_description');
+				$cats[$i]['data']     = $this->db->f('cat_data');
 				$i++;
 			}
 			return $cats;
@@ -186,16 +186,16 @@
 
 			if ($this->db->next_record())
 			{
-				$cats[0]['id']				= $this->db->f('cat_id');
-				$cats[0]['owner']			= $this->db->f('cat_owner');
-				$cats[0]['access']			= $this->db->f('cat_access');
-				$cats[0]['app_name']		= $this->db->f('cat_appname');
-				$cats[0]['main']			= $this->db->f('cat_main');
-				$cats[0]['level']			= $this->db->f('cat_level');
-				$cats[0]['parent']			= $this->db->f('cat_parent');
-				$cats[0]['name']			= $this->db->f('cat_name');
-				$cats[0]['description']		= $this->db->f('cat_description');
-				$cats[0]['data']			= $this->db->f('cat_data');
+				$cats[0]['id']       = $this->db->f('cat_id');
+				$cats[0]['owner']    = $this->db->f('cat_owner');
+				$cats[0]['access']   = $this->db->f('cat_access');
+				$cats[0]['app_name'] = $this->db->f('cat_appname');
+				$cats[0]['main']     = $this->db->f('cat_main');
+				$cats[0]['level']    = $this->db->f('cat_level');
+				$cats[0]['parent']   = $this->db->f('cat_parent');
+				$cats[0]['name']     = $this->db->f('cat_name');
+				$cats[0]['description'] = $this->db->f('cat_description');
+				$cats[0]['data']     = $this->db->f('cat_data');
 			}
 			return $cats;
 		}
@@ -211,16 +211,16 @@
 
 			if (! $app_name)
 			{
-				$app_name   = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$app_name = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			$this->account_id		= $account_id;
-			$this->app_name			= $app_name;
-			$this->db				= $GLOBALS['phpgw']->db;
-			$this->db2				= $this->db;
-			$this->total_records	= $this->db2->num_rows();
-			$this->grants			= $GLOBALS['phpgw']->acl->get_grants($app_name);
-			$this->cats				= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+			$this->account_id= $account_id;
+			$this->app_name = $app_name;
+			$this->db       = $GLOBALS['phpgw']->db;
+			$this->db2      = $this->db;
+			$this->total_records = $this->db2->num_rows();
+			$this->grants   = $GLOBALS['phpgw']->acl->get_grants($app_name);
+			$this->cats     = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
 
 		function in_array($needle,$haystack)
@@ -308,9 +308,10 @@
 
 						$s .= '<tr>' . "\n";
 						$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $GLOBALS['phpgw']->strip_html($cats[$i]['name'])
-									. '</a></td>' . "\n";
-						$s .= '</tr>' . "\n";
+						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['id']) . '">'
+							. $GLOBALS['phpgw']->strip_html($cats[$i]['name'])
+							. '</a></td>' . "\n"
+							. '</tr>' . "\n";
 					}
 				}
 				$s .= '</table>' . "\n";
@@ -338,16 +339,16 @@
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
 			$this->db->query("INSERT INTO phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
-							. "cat_description,cat_data,cat_main,cat_level) VALUES ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access'] . "','"
-							. $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr']
-							. "','" . $cat_values['data'] . "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
+				. "cat_description,cat_data,cat_main,cat_level) VALUES ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access'] . "','"
+				. $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr']
+				. "','" . $cat_values['data'] . "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
 
 			if (!$cat_values['parent'] || $cat_values['parent'] == 0)
 			{
 				$this->db2->query("SELECT MAX(cat_id) AS max FROM phpgw_categories",__LINE__,__FILE__);
 				$this->db2->next_record();
 				$this->db->query("UPDATE phpgw_categories SET cat_main='" . $this->db2->f('max') . "' WHERE cat_id='"
-								. $this->db2->f('max') . "'",__LINE__,__FILE__);
+					. $this->db2->f('max') . "'",__LINE__,__FILE__);
 			}
 		}
 
@@ -364,7 +365,7 @@
 			}
 
 			$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='$cat_id' $subdelete AND cat_appname='"
-							. $this->app_name . "'",__LINE__,__FILE__);
+				. $this->app_name . "'",__LINE__,__FILE__);
 		}
 		/*!
 		@function edit
@@ -403,7 +404,7 @@
 				. "WHERE cat_name='".$cat_name."' AND "
 				. "cat_appname='".$this->app_name."' AND "
 				. "cat_owner=".$this->account_id,__LINE__,__FILE__);
-				
+
 			if(!$this->db->num_rows())
 			{
 				return 0;
@@ -422,14 +423,14 @@
 			}
 			switch($item)
 			{
-				case 'name':	$value = 'cat_name'; break;
-				case 'owner':	$value = 'cat_owner'; break;
-				case 'main':	$value = 'cat_main'; break;
-				case 'level':	$value = 'cat_level'; break;
+				case 'name':  $value = 'cat_name'; break;
+				case 'owner': $value = 'cat_owner'; break;
+				case 'main':  $value = 'cat_main'; break;
+				case 'level': $value = 'cat_level'; break;
 			 }
 
 			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id='"
-							. "$cat_id'",__LINE__,__FILE__);
+				. "$cat_id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			if ($this->db->f($value))
