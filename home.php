@@ -15,8 +15,7 @@
 	$phpgw_info = array();
 	if (!is_file('header.inc.php'))
 	{
-		echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
-			. 'here</a>.</center>';
+		Header('Location: setup/index.php');
 		exit;
 	}
 
