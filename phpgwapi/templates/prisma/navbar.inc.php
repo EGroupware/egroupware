@@ -13,27 +13,27 @@
 
 	function parse_navbar($force = False)
 	{
-		$GLOBALS['idots_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+		$GLOBALS['prisma_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 
-		$GLOBALS['idots_tpl']->set_file(
+		$GLOBALS['prisma_tpl']->set_file(
 			array(
 				'navbar' => 'navbar.tpl'
 			)
 		);
 
-		$GLOBALS['idots_tpl']->set_block('navbar','navbar_header','navbar_header');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row','extra_block_row');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row_no_link','extra_block_row_no_link');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
-		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
-		$GLOBALS['idots_tpl']->set_block('navbar','sidebox_hide_header','sidebox_hide_header');
-		$GLOBALS['idots_tpl']->set_block('navbar','sidebox_hide_footer','sidebox_hide_footer');
-		$GLOBALS['idots_tpl']->set_block('navbar','appbox','appbox');
-		$GLOBALS['idots_tpl']->set_block('navbar','navbar_footer','navbar_footer');
+		$GLOBALS['prisma_tpl']->set_block('navbar','navbar_header','navbar_header');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_block_row','extra_block_row');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_block_row_no_link','extra_block_row_no_link');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
+		$GLOBALS['prisma_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
+		$GLOBALS['prisma_tpl']->set_block('navbar','sidebox_hide_header','sidebox_hide_header');
+		$GLOBALS['prisma_tpl']->set_block('navbar','sidebox_hide_footer','sidebox_hide_footer');
+		$GLOBALS['prisma_tpl']->set_block('navbar','appbox','appbox');
+		$GLOBALS['prisma_tpl']->set_block('navbar','navbar_footer','navbar_footer');
 
-		$var['img_root'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images';
+		$var['img_root'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/images';
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		if($GLOBALS['phpgw_info']['user']['preferences']['common']['click_or_onmouseover']=='onmouseover')
@@ -247,8 +247,8 @@
 			}
 			$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 
-			$GLOBALS['idots_tpl']->set_var($var);
-			$GLOBALS['idots_tpl']->pfp('out','navbar_header');
+			$GLOBALS['prisma_tpl']->set_var($var);
+			$GLOBALS['prisma_tpl']->pfp('out','navbar_header');
 
 			/******************************************************\
 			* The sidebox menu's                                   *
@@ -272,19 +272,19 @@
 
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
 			{
-				$GLOBALS['idots_tpl']->set_var('show_menu_event',$show_menu_event);
-				$GLOBALS['idots_tpl']->set_var('lang_show_menu',lang('show menu'));
-				$GLOBALS['idots_tpl']->pparse('out','sidebox_hide_header');
+				$GLOBALS['prisma_tpl']->set_var('show_menu_event',$show_menu_event);
+				$GLOBALS['prisma_tpl']->set_var('lang_show_menu',lang('show menu'));
+				$GLOBALS['prisma_tpl']->pparse('out','sidebox_hide_header');
 
 				display_sidebox('',$menu_title,$file);
 				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
 
-				$GLOBALS['idots_tpl']->pparse('out','sidebox_hide_footer');
+				$GLOBALS['prisma_tpl']->pparse('out','sidebox_hide_footer');
 
 				$var['sideboxcolstart']='';
 
-				$GLOBALS['idots_tpl']->set_var($var);
-				$GLOBALS['idots_tpl']->pparse('out','appbox');
+				$GLOBALS['prisma_tpl']->set_var($var);
+				$GLOBALS['prisma_tpl']->pparse('out','appbox');
 				$var['remove_padding'] = 'style="padding-left:0px;"';
 				$var['sideboxcolend'] = '';
 			}
@@ -293,8 +293,8 @@
 				$var['menu_link'] = '';
 				$var['sideboxcolstart'] = '<td id="tdSidebox" valign="top">';
 				$var['remove_padding'] = '';
-				$GLOBALS['idots_tpl']->set_var($var);
-				$GLOBALS['idots_tpl']->pparse('out','appbox');
+				$GLOBALS['prisma_tpl']->set_var($var);
+				$GLOBALS['prisma_tpl']->pparse('out','appbox');
 
 				display_sidebox('',$menu_title,$file);
 				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
@@ -302,8 +302,8 @@
 				$var['sideboxcolend'] = '</td>';
 			}
 
-			$GLOBALS['idots_tpl']->set_var($var);
-			$GLOBALS['idots_tpl']->pparse('out','navbar_footer');
+			$GLOBALS['prisma_tpl']->set_var($var);
+			$GLOBALS['prisma_tpl']->pparse('out','navbar_footer');
 
 			// If the application has a header include, we now include it
 			if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
@@ -323,15 +323,15 @@
 			if(!$appname || ($appname==$GLOBALS['phpgw_info']['flags']['currentapp'] && $file))
 			{
 				$var['lang_title']=$menu_title;//$appname.' '.lang('Menu');
-				$GLOBALS['idots_tpl']->set_var($var);
-				$GLOBALS['idots_tpl']->pfp('out','extra_blocks_header');
+				$GLOBALS['prisma_tpl']->set_var($var);
+				$GLOBALS['prisma_tpl']->pfp('out','extra_blocks_header');
 
 				foreach($file as $text => $url)
 				{
 					sidebox_menu_item($url,$text);
 				}
 
-				$GLOBALS['idots_tpl']->pparse('out','extra_blocks_footer');
+				$GLOBALS['prisma_tpl']->pparse('out','extra_blocks_footer');
 			}
 		}
 
@@ -339,11 +339,11 @@
 		{
 			if($item_text === '_NewLine_' || $item_link === '_NewLine_')
 			{
-				$GLOBALS['idots_tpl']->pparse('out','extra_block_spacer');
+				$GLOBALS['prisma_tpl']->pparse('out','extra_block_spacer');
 			}
 			else
 			{
-				$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+				$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
 				$var['target'] = '';
 				if(is_array($item_link))
 				{
@@ -370,28 +370,28 @@
 
 					$var['item_link'] = $item_link;
 				}
-				$GLOBALS['idots_tpl']->set_var($var);
+				$GLOBALS['prisma_tpl']->set_var($var);
 
 				$block = 'extra_block_row';
 				if ($var['item_link'] === False)
 				{
 					$block .= $var['icon_or_star'] === False ? '_raw' : '_no_link';
 				}
-				$GLOBALS['idots_tpl']->pparse('out',$block);
+				$GLOBALS['prisma_tpl']->pparse('out',$block);
 			}
 		}
 
 		function parse_navbar_end()
 		{
-			$GLOBALS['idots_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$GLOBALS['prisma_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 
-			$GLOBALS['idots_tpl']->set_file(
+			$GLOBALS['prisma_tpl']->set_file(
 				array(
 					'footer' => 'footer.tpl'
 				)
 			);
 			$var = Array(
-				'img_root'       => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images',
+				'img_root'       => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/images',
 				'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'version'        => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
@@ -410,6 +410,6 @@
 
 			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			$var['activate_tooltips'] = '<script src="'.$GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
-			$GLOBALS['idots_tpl']->set_var($var);
-			$GLOBALS['idots_tpl']->pfp('out','footer');
+			$GLOBALS['prisma_tpl']->set_var($var);
+			$GLOBALS['prisma_tpl']->pfp('out','footer');
 		}

@@ -32,17 +32,17 @@
 	}
 
 	#_debug_array($GLOBALS['phpgw_info']['user']['preferences']['common']);
-	$theme_css = '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
+	$theme_css = '/phpgwapi/templates/prisma/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	if(!file_exists(PHPGW_SERVER_ROOT.$theme_css))
 	{
-		$theme_css = '/phpgwapi/templates/idots/css/idots.css';
+		$theme_css = '/phpgwapi/templates/prisma/css/prisma.css';
 	}
 	$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . $theme_css;
 
 	//pngfix defaults to yes
 	if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_pngfix'])
 	{
-		$pngfix_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
+		$pngfix_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/js/pngfix.js';
 		$pngfix ='<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 and higher --> 
 		<!--[if gte IE 5.5000]>
 		<script src="'.$pngfix_src.'" type="text/javascript">
@@ -52,13 +52,13 @@
 
 	if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_slider_effects'])
 	{
-		$slider_effects_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
+		$slider_effects_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/js/slidereffects.js';
 		$slider_effects = '<script src="'.$slider_effects_src.'" type="text/javascript">
 		</script>';
 	}
 	else
 	{
-		$simple_show_hide_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
+		$simple_show_hide_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/prisma/js/simple_show_hide.js';
 		$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type="text/javascript">
 		</script>';
 	}
