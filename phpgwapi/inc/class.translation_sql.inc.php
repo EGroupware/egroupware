@@ -437,9 +437,8 @@
 
 			// update the ctimes of the installed langsfiles for the autoloading of the lang-files
 			//
-			$this->db->query("DELETE from phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
-			$this->db->query($query="INSERT INTO phpgw_config(config_app,config_name,config_value) VALUES ('phpgwapi','lang_ctimes','".
-				addslashes(serialize($GLOBALS['phpgw_info']['server']['lang_ctimes']))."')",__LINE__,__FILE__);
+			$config =  CreateObject('phpgwapi.config.save_value');
+			$config->save_value('lang_ctimes',$GLOBALS['phpgw_info']['server']['lang_ctimes'],'phpgwapi');
 		}
 
 		/*!
