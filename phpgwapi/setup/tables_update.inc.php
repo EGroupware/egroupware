@@ -469,7 +469,31 @@
 		
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.5pre2";
 	}
-	
+
+  $test[] = "0.9.5";
+  function upgrade0_9_5(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.6";
+  }
+
+  $test[] = "0.9.6";
+  function upgrade0_9_6(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7pre1";
+  }
+
+  $test[] = "0.9.7pre3";
+  function upgrade0_9_7pre3(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7";
+  }
+
+  $test[] = "0.9.7";
+  function upgrade0_9_7(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre1";
+  }
+
 	$test[] = "0.9.8pre1";
 	function phpgwapi_upgrade0_9_8pre1()
 	{
