@@ -8,8 +8,7 @@
   $db	         = new db;
   $db->Host	    = $phpgw_info["server"]["db_host"];
   $db->Type	    = $phpgw_info["server"]["db_type"];
-//  $db->Database    = $phpgw_info["server"]["db_name"];
-  $db->Database    = "phpgroupware";
+  $db->Database    = $phpgw_info["server"]["db_name"];
   $db->User	    = $phpgw_info["server"]["db_user"];
   $db->Password    = $phpgw_info["server"]["db_pass"];
   
