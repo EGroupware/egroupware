@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare                                                               *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -149,7 +149,7 @@
 		$var['powered_by_color'] = '#ffffff';
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
-			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 		}
 		else
 		{

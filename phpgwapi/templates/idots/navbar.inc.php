@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare                                                               *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -401,7 +401,7 @@
 				$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
 			}
 
-			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			$var['activate_tooltips'] = '<script src="'.$GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
 			$GLOBALS['idots_tpl']->set_var($var);
 			$GLOBALS['idots_tpl']->pfp('out','footer');

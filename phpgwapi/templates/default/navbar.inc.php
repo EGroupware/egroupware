@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare                                                               *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -82,7 +82,7 @@
 
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
-			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 		}
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{
@@ -156,7 +156,7 @@
 			$var = Array(
 				'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 			);
-			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 			{
 				$var['current_users'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
