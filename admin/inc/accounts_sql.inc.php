@@ -150,7 +150,7 @@
      $table_locks = array('preferences','todo','addressbook','accounts');
 
      $cal = CreateObject('calendar.calendar');
-     $cal->delete(string($lid));
+     $cal->delete((string)$lid);
 
      $phpgw->db->lock($table_locks);
 
