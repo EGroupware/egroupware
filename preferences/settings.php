@@ -142,27 +142,25 @@
         </td>
        </tr>
        <tr>
-         <td><?php echo lang("language"); ?></td>
-         <td>
-          <select name="settings[lang]">
-          <?php
-
-            $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
-            $phpgw->db->query("SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'",__LINE__,__FILE__);
-            while ($phpgw->db->next_record()) {
-                echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
-                if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
-                   if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
-                      echo " selected";
-                   }
-                } elseif ($phpgw->db->f("lang_id") == "en") {
-                   echo " selected";
-                }
-                echo ">" . $phpgw->db->f("lang_name") . "</option>";
-            }
-            ?>
-          </select>
-         </td>
+         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; ?>
+        <td><?php echo lang("language"); ?></td>
+        <td>
+         <select name="settings[lang]">
+        <?php
+          $phpgw->db->query("select distinct lang from lang;");
+          while ($phpgw->db->next_record()) {
+            $phpgw_info["installed_langs"][$phpgw->db->f("lang")] = $phpgw->db->f("lang");
+          }
+          reset ($phpgw_info["installed_langs"]);
+          while (list ($key, $value) = each ($phpgw_info["installed_langs"])) {
+            $sql = "select lang_name from languages where lang_id = '".$value."';";
+            $phpgw->db->query($sql);
+            $phpgw->db->next_record();
+            echo '<option value="'.$key.'" '.$selected[$key].'>'.$phpgw->db->f("lang_name").'</option>';
+          }
+        ?>
+         </select>
+        </td>
        </tr>
        <?php
          if ($phpgw_info["user"]["apps"]["admin"]) {
