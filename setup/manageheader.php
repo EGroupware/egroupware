@@ -72,7 +72,7 @@
         fclose($fsetup);
         $phpgw_setup->show_header("Generated header.inc.php", False, "header");
         echo "<form action=\"index.php\" method=post>";
-        echo "<br> Created header.inc.php!<br>";
+        echo "<br>Created header.inc.php! ";
         echo "<input type=hidden name=\"FormLogout\" value=\"header\">";
         echo "<input type=submit name=\"junk\" value=\"continue\">";
         echo "</form>";
