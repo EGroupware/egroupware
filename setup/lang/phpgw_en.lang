@@ -20,7 +20,6 @@ Enter the title for your site	setup	en	Enter the title for your site
 Enter your HTTP proxy server	setup	en	Enter your HTTP proxy server
 Enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
 Enter your default FTP server	setup	en	Enter your default FTP server
-go to	setup	en	Go to
 Host information	setup	en	Host information
 If no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
@@ -101,9 +100,11 @@ details for admin account	setup	en	Details for Admin account
 domain	setup	en	Domain
 dont touch my data	setup	en	Dont touch my data
 edit current configuration	setup	en	Edit Current Configuration
+export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 go back	setup	en	Go back
+go to	setup	en	Go to
 has a version mismatch	setup	en	has a version mismatch
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
@@ -111,6 +112,7 @@ however, the application is otherwise installed	setup	en	However, the applicatio
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the phpGroupWare accounts table (for a new install using SQL accounts)
 import ldap users/groups	setup	en	Import LDAP users/groups
 insanity	setup	en	Insanity
 install	setup	en	Install
@@ -126,6 +128,7 @@ logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
 manage languages	setup	en	Manage Languages
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 not complete	setup	en	not complete
@@ -165,6 +168,7 @@ select which user(s) will be imported	setup	en	Select which user(s) will be impo
 select which user(s) will have admin privileges	setup	en	Select which user(s) will have admin privileges
 select your old version	setup	en	Select your old version
 setup	setup	en	Setup
+setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 status	setup	en	Status
 step 1 - simple application management	setup	en	Step 1 - Simple Application Management
