@@ -53,13 +53,21 @@
 				$this->placeholders[] = '%'.$i;
 			}
 			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			$this->db->set_app('phpgwapi');
+			$this->lang_table = 'phpgw_lang';
+			$this->languages_table = 'phpgw_languages';
+			$this->config_table = 'phpgw_config';
+
 			if (!isset($GLOBALS['phpgw_setup']))
 			{
 				$this->system_charset = @$GLOBALS['phpgw_info']['server']['system_charset'];
 			}
 			else
 			{
-				$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+				$this->db->select($this->config_table,'config_value',array(
+					'config_app'=>'phpgwapi',
+					'config_name'=>'system_charset'
+				),__LINE__,__FILE__);
 				if ($this->db->next_record())
 				{
 					$this->system_charset = $this->db->f(0);
@@ -99,7 +107,11 @@
 			{
 				if (!isset($this->charsets[$lang]))
 				{
-					$this->db->query("SELECT content FROM phpgw_lang WHERE lang='$lang' AND message_id='charset' AND app_name='common'",__LINE__,__FILE__);
+					$this->db->select($this->lang_table,'content',array(
+						'lang'		=> $lang,
+						'message_id'=> 'charset',
+						'app_name'	=> 'common',
+					),__LINE__,__FILE__);
 					$this->charsets[$lang] = $this->db->next_record() ? strtolower($this->db->f(0)) : 'iso-8859-1';
 				}
 				return $this->charsets[$lang];
@@ -189,8 +201,10 @@
 
 			if (!isset($this->loaded_apps[$app]) || $this->loaded_apps[$app] != $lang)
 			{
-				$sql = "select message_id,content from phpgw_lang where lang='".$lang."' and app_name='".$app."'";
-				$this->db->query($sql,__LINE__,__FILE__);
+				$this->db->select($this->lang_table,'message_id,content',array(
+					'lang'		=> $lang,
+					'app_name'	=> $app,
+				),__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
 					$GLOBALS['lang'][strtolower ($this->db->f('message_id'))] = $this->db->f('content');
@@ -354,7 +368,10 @@
 			//echo "<p>translation_sql::install_langs(".print_r($langs,true).",'$upgrademthod','$only_app')</p>\n";
 			if (!isset($GLOBALS['phpgw_info']['server']) && $upgrademethod != 'dumpold')
 			{
-				$this->db->query("SELECT * FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
+				$this->db->select($this->config_table,'config_value',array(
+					'config_app'	=> 'phpgwapi',
+					'config_name'	=> 'lang_ctimes',
+				),__LINE__,__FILE__);
 				if ($this->db->next_record())
 				{
 					$GLOBALS['phpgw_info']['server']['lang_ctimes'] = unserialize(stripslashes($this->db->f('config_value')));
@@ -370,7 +387,7 @@
 			if ($upgrademethod == 'dumpold')
 			{
 				// dont delete the custom main- & loginscreen messages every time
-				$this->db->query("DELETE FROM phpgw_lang WHERE app_name != 'mainscreen' AND app_name != 'loginscreen'",__LINE__,__FILE__);
+				$this->db->delete($this->lang_table,array("app_name!='mainscreen'","app_name!='loginscreen'"),__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
 				$GLOBALS['phpgw_info']['server']['lang_ctimes'] = array();
 			}
@@ -381,7 +398,9 @@
 				if ($upgrademethod == 'addonlynew')
 				{
 					//echo "<br>Test: addonlynew - select count(*) from phpgw_lang where lang='".$lang."'";
-					$this->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE lang='".$lang."'",__LINE__,__FILE__);
+					$this->db->select($this->lang_table,'COUNT(*)',array(
+						'lang' => $lang,
+					),__LINE__,__FILE__);
 					$this->db->next_record();
 
 					if ($this->db->f(0) == 0)
@@ -416,7 +435,6 @@
 								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
 								list($message_id,$app_name,,$content) = $_f_buffer = explode("\t",$line);
 								$content=str_replace(array("\n","\r"),'',$content);
-
 								if( count($_f_buffer) != 4 )
 								{
 									$line_display = str_replace(array("\t","\n"),
@@ -438,23 +456,23 @@
 					//echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
 					foreach($raw as $app_name => $ids)
 					{
-						$app_name = $this->db->db_addslashes($app_name);
-
 						foreach($ids as $message_id => $content)
 						{
 							if ($this->system_charset)
 							{
 								$content = $this->convert($content,$charset,$this->system_charset);
 							}
-							$message_id = $this->db->db_addslashes($message_id);
-							$content = $this->db->db_addslashes($content);
-
 							$addit = False;
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$this->db->query("SELECT content,CASE WHEN app_name IN ('common') then 1 else 0 END AS in_api FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') ORDER BY in_api DESC",__LINE__,__FILE__);
+								$this->db->select($this->lang_table,"content,CASE WHEN app_name IN ('common') THEN 1 ELSE 0 END AS in_api",array(
+									'message_id' 	=> $message_id,
+									'lang'			=> $lang,
+									$this->db->expression($this->lang_table,'(',array(
+										'app_name' => $app_name
+									)," OR app_name='common') ORDER BY in_api DESC")),__LINE__,__FILE__);
 
 								if (!($row = $this->db->row(True)))
 								{
@@ -472,7 +490,11 @@
 										$addit = $content != ($row2 ? $row2['content'] : $row['content']);
 										if ($addit)	// if we want to add/update it ==> delete it
 										{
-											$this->db->query($q="DELETE FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND app_name='$app_name'",__LINE__,__FILE__);
+											$this->db->delete($this->lang_table,array(
+												'message_id'	=> $message_id,
+												'lang'			=> $lang,
+												'app_name'		=> $app_name,
+											),__LINE__,__FILE__);
 										}
 									}
 								}
@@ -482,8 +504,14 @@
 							{
 								if($message_id && $content)
 								{
-									//echo "<br>adding - insert into phpgw_lang values ('$message_id','$app_name','$lang','$content')";
-									$result = $this->db->query("INSERT INTO phpgw_lang (message_id,app_name,lang,content) VALUES('$message_id','$app_name','$lang','$content')",__LINE__,__FILE__);
+									// echo "<br>adding - insert into phpgw_lang values ('$message_id','$app_name','$lang','$content')";
+									$result = $this->db->insert($this->lang_table,array(
+										'message_id'	=> $message_id,
+										'app_name'		=> $app_name,
+										'lang'			=> $lang,
+										'content'		=> $content,
+									),False,__LINE__,__FILE__);
+
 									if ((int)$result <= 0)
 									{
 										echo "<br>Error inserting record: phpgw_lang values ('$message_id','$app_name','$lang','$content')";
@@ -573,11 +601,15 @@
 			{
 				echo '<br>drop_langs(): Working on: ' . $appname;
 			}
-			$this->db->query("SELECT COUNT(message_id) FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
+			$this->db->select($this->lang_table,'COUNT(message_id)',array(
+				'app_name' => $appname
+			),__LINE__,__FILE__);
 			$this->db->next_record();
 			if($this->db->f(0))
 			{
-				$this->db->query("DELETE FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
+				$this->db->delete($this->lang_table,array(
+					'app_name' => $appname
+				),__LINE__,__FILE__);
 				return True;
 			}
 			return False;
