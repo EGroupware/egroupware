@@ -259,7 +259,7 @@
     global $currentver, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6") {
       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	      v0_9_2to0_9_3update_owner("addressbook","ab_owner");
 	      v0_9_2to0_9_3update_owner("todo","todo_owner");
@@ -301,20 +301,28 @@
         $currentver = "0.9.3pre5";
         update_version_table();
       }
+
       if ($currentver == "0.9.3pre5") {
-        $db->query("CREATE TABLE categories (
-          cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
-          account_id      int(11) DEFAULT '0' NOT NULL,
-          app_name        varchar(25) NOT NULL,
-          cat_name        varchar(150) NOT NULL,
-          cat_description text NOT NULL,
-          PRIMARY KEY (cat_id))"
-        );
-        $currentver = "0.9.3pre6";
-        update_version_table();
+         $db->query("CREATE TABLE categories (
+                      cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+                      account_id      int(11) DEFAULT '0' NOT NULL,
+                      app_name        varchar(25) NOT NULL,
+                      cat_name        varchar(150) NOT NULL,
+                      cat_description text NOT NULL,
+                      PRIMARY KEY (cat_id))"
+                   );
+         $currentver = "0.9.3pre6";
+         update_version_table();
       }
+
+      if ($currentver == "0.9.3pre6") {
+         $db->query("alter table addressbook add ab_url varchar(255)");
+         $currentver = "0.9.3pre7";
+         update_version_table();
+      }
+
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.2 to 0.9.3pre6 is completed.</td>\n";
+      echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }

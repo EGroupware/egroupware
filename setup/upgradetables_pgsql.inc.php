@@ -245,54 +245,72 @@
     $db->query("alter table $table change $field $field int(11) NOT NULL");
   }
 
-  function v0_9_2to0_9_3pre5(){
+  function v0_9_2to0_9_3()
+  {
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4") {
-      if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
-	update_owner("addressbook","ab_owner");
-	update_owner("todo","todo_owner");
-	update_owner("webcal_entry","cal_create_by");
-	update_owner("webcal_entry_user","cal_login");
-	$currentver = "0.9.3pre2";
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6") {
+       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
+	      update_owner("addressbook","ab_owner");
+      	update_owner("todo","todo_owner");
+      	update_owner("webcal_entry","cal_create_by");
+      	update_owner("webcal_entry_user","cal_login");
+      	$currentver = "0.9.3pre2";
        }
-      if ($currentver == "0.9.3pre2") {
-	$db->query("select owner, newsgroup from users_newsgroups");
-	if($db->num_rows()) {
-	  while($db->next_record()) {
-	    $owner[count($owner)] = $db->f("owner");
-	    $newsgroup[count($newsgroup)] = $db->f("newsgroup");
-	  }
-	  for($i=0;$i<count($owner);$i++) {
-	    $db->query("insert into preferences (preference_owner,preference_name,"
-		       ."preference_value,preference_appname) values ('".$owner[$i]."','".$newsgroup[$i]."','True',"
-		       ."'nntp')");
- 	  }
-	  $db->query("drop table users_newsgroups");
-	  $db->query("update applications set app_tables='newsgroups' where app_name='nntp'");
-	}
+       if ($currentver == "0.9.3pre2") {
+      	$db->query("select owner, newsgroup from users_newsgroups");
+      	if ($db->num_rows()) {
+   	   while($db->next_record()) {
+	        $owner[count($owner)] = $db->f("owner");
+   	     $newsgroup[count($newsgroup)] = $db->f("newsgroup");
+ 	     }
+   	   for ($i=0;$i<count($owner);$i++) {
+	         $db->query("insert into preferences (preference_owner,preference_name,"
+		               ."preference_value,preference_appname) values ('".$owner[$i]."','".$newsgroup[$i]."','True',"
+		               ."'nntp')");
+    	  }
+ 	     $db->query("drop table users_newsgroups");
+   	   $db->query("update applications set app_tables='newsgroups' where app_name='nntp'");
+  	}
         $currentver = "0.9.3pre3";
-      }
-      if ($currentver == "0.9.3pre3") {
-     	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
-         $currentver = "0.9.3pre4";
-      }
+    }
 
-      if ($currentver == "0.9.3pre4") {
-     	$db->query("create table temp as select * from config");
-     	$db->query("drop table config");
-     	$db->query("create table config config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL");
-     	$db->query("insert into config select * from temp");
-     	$db->query("drop table config");
-        $currentver = "0.9.3pre5";
-      }
+    if ($currentver == "0.9.3pre3") {
+   	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
+       $currentver = "0.9.3pre4";
+    }
+
+    if ($currentver == "0.9.3pre4") {
+   	$db->query("create table temp as select * from config");
+   	$db->query("drop table config");
+   	$db->query("create table config config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL");
+   	$db->query("insert into config select * from temp");
+   	$db->query("drop table config");
+       $currentver = "0.9.3pre5";
+    }
+
+    if ($currentver == "0.9.3pre5") {
+       $db->query("CREATE TABLE categories (
+                    cat_id          serial,
+                    account_id      int DEFAULT '0' NOT NULL,
+                    app_name        varchar(25) NOT NULL,
+                    cat_name        varchar(150) NOT NULL,
+                    cat_description text NOT NULL)"
+                 );
+       $currentver = "0.9.3pre6";
+       update_version_table();
+    }
+
+    if ($currentver == "0.9.3pre6") {
+       $db->query("alter table addressbook add ab_url varchar(255)");
+       $currentver = "0.9.3pre7";
+    }
       
-
-       echo "  <tr bgcolor=\"e6e6e6\">\n";
-       echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
-       echo "  </tr>\n";
+    echo "  <tr bgcolor=\"e6e6e6\">\n";
+    echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
+    echo "  </tr>\n";
     }
   }
 
@@ -307,7 +325,7 @@
   v9052000to9072000();
   v9072000to0_9_1();
   v0_9_1to0_9_2();
-  v0_9_2to0_9_3pre5();
+  v0_9_2to0_9_3();
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   $db->query("update config set config_value='" . $phpgw_info["server"]["version"] . "' where "

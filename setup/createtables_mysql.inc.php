@@ -125,8 +125,9 @@
     ab_notes    text,
     ab_company  varchar(255),
     ab_company_id int(10) unsigned,
-    ab_title varchar(60),
+    ab_title    varchar(60),
     ab_address2 varchar(60),
+    ab_url      varchar(255),
     PRIMARY KEY (ab_id)
   )";
   $db->query($sql);  

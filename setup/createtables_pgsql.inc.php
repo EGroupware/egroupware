@@ -102,28 +102,29 @@
   $db->query($sql);
 
   $sql = "create table addressbook (
-    ab_id 		serial,
-    ab_owner	varchar(25),
-    ab_access	varchar(10),
-    ab_firstname	varchar(255),
-    ab_lastname	varchar(255),
-    ab_email	varchar(255),
-    ab_hphone	varchar(255),
-    ab_wphone	varchar(255),
-    ab_fax		varchar(255),
-    ab_pager	varchar(255),
-    ab_mphone	varchar(255),
-    ab_ophone	varchar(255),
-    ab_street	varchar(255),
-    ab_city		varchar(255),
-    ab_state	varchar(255),
-    ab_zip		varchar(255),
-    ab_bday		varchar(255),
-    ab_notes	varchar(255),
-    ab_company	varchar(255),
+    ab_id       serial,
+    ab_owner    varchar(25),
+    ab_access   varchar(10),
+    ab_firstname varchar(255),
+    ab_lastname varchar(255),
+    ab_email    varchar(255),
+    ab_hphone   varchar(255),
+    ab_wphone   varchar(255),
+    ab_fax      varchar(255),
+    ab_pager    varchar(255),
+    ab_mphone   varchar(255),
+    ab_ophone   varchar(255),
+    ab_street   varchar(255),
+    ab_city     varchar(255),
+    ab_state    varchar(255),
+    ab_zip      varchar(255),
+    ab_bday     varchar(255),
+    ab_notes    varchar(255),
+    ab_company  varchar(255),
     ab_company_id int,
-    ab_title varchar(60),   
+    ab_title    varchar(60),   
     ab_address2 varchar(60)
+    ab_url      varchar(255),
   )";
   $db->query($sql);
 
@@ -195,6 +196,15 @@
     lang           varchar(5) DEFAULT '' NOT NULL,
     content        text NOT NULL,
     unique(message_id,app_name,lang)
+  )";
+  $db->query($sql);
+
+  $sql = "CREATE TABLE categories (
+    cat_id          serial,
+    account_id      int DEFAULT '0' NOT NULL,
+    app_name        varchar(25) NOT NULL,
+    cat_name        varchar(150) NOT NULL,
+    cat_description text NOT NULL
   )";
   $db->query($sql);
 
