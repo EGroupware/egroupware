@@ -9,7 +9,6 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	$phpgw_info = array();
@@ -17,7 +16,8 @@
 	include('../header.inc.php');
 
 	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$templates = Array(
+	$templates = Array
+	(
 		'pref' => 'index.tpl'
 	);
 
@@ -52,15 +52,18 @@
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		$tabs[] = array(
+		$tabs[] = array
+		(
 			'label' => lang('Your preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=user')
 		);
-		$tabs[] = array(
+		$tabs[] = array
+		(
 			'label' => lang('Default preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=default')
 		);
-		$tabs[] = array(
+		$tabs[] = array
+		(
 			'label' => lang('Forced preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=forced')
 		);
@@ -121,7 +124,7 @@
 
 	function display_section($appname,$title,$file)
 	{
-		section_start($title,$GLOBALS['phpgw']->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
+		section_start($title,$GLOBALS['phpgw']->common->image($appname,'navbar'),$appname);
 
 		while(list($text,$url) = each($file))
 		{
