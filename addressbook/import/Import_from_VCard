@@ -18,7 +18,7 @@
 // before the value.  For example, the following would add a comma and
 // a space between LastName and FirstName and store it in FullName:
 //
-//	array("LastName" => "FullName","FirstName" => "+, ");
+//	array('LastName' => 'FullName','FirstName' => '+, ');
 //
 // Also start with a '#' symbol and a comma separated list will be
 // turned into a number of the same entries.
@@ -36,53 +36,60 @@
 		// This will be populated via the vcard->import var
 		var $import = array();
 
-		function import_start_file($buffer,$j="",$k="") {
+		function import_start_file($buffer)
+		{
 			$this->id = 0;
-			$this->contacts = CreateObject("phpgwapi.contacts");
-			$this->vcard = CreateObject("phpgwapi.vcard");
+			$this->contacts = CreateObject('phpgwapi.contacts');
+			$this->vcard = CreateObject('phpgwapi.vcard');
 			$this->import = $this->vcard->import;
 			return $buffer;
 		}
 
-		function import_start_record($buffer) {
+		function import_start_record($buffer)
+		{
 			++$this->id;
 			$this->currentrecord = array();
 			return $buffer;
 		}
 
-		function import_new_attrib($buffer,$name,$value) {
+		function import_new_attrib($buffer,$name,$value)
+		{
 			$value = trim($value);
-			$value = ereg_replace("=0D=0A","\n",$value);
-			//echo '<br>'.$this->id.": ".$name.' => '.$value;
+			$value = ereg_replace('=0D=0A','\n',$value);
+			//echo '<br>'.$this->id.': '.$name.' => '.$value;
 			$this->currentrecord += array($name => $value);
 
 			return $buffer;
 		}
 
-		function import_end_record($buffer) {
+		function import_end_record($buffer)
+		{
 			global $phpgw_info;
-			$buffer[$this->id]="";
-			while ( list($name, $value) = each($this->currentrecord)) {
+			$buffer[$this->id]='';
+			while ( list($name, $value) = each($this->currentrecord))
+			{
 				$buffer[$this->id][$name] = $value;
-				//$buffer[$this->id]["private"] = $private;
+				//$buffer[$this->id]['private'] = $private;
 				//echo '<br>'.$name.' => '.$value;
 			}
 			return $buffer;
 		}
 
-		function import_end_file($buffer,$access="private",$cat_id=0) {
+		function import_end_file($buffer,$access='private',$cat_id=0)
+		{
 			global $phpgw,$phpgw_info;
 
-			for ($i=1;$i<=count($buffer);$i++) {
+			for ($i=1;$i<=count($buffer);$i++)
+			{
 				// Send the entire array to the vcard class in function.
 				// It will parse the vcard fields and clean the array of extra
 				// bogus values that get stuffed in.
 				$entry = $this->vcard->in($buffer[$i]);
 				// Now actually add the new entry
-				$this->contacts->add($phpgw_info["user"]["account_id"],$entry,$access,$cat_id);
+				$this->contacts->add($phpgw_info['user']['account_id'],$entry,$access,$cat_id);
 			}
 			$num = $i - 1;
-			return "Successfully imported $num records into your addressbook.";
+			return lang('Successfully imported x records into your addressbook.',$num);
 		}
 	}
 ?>
