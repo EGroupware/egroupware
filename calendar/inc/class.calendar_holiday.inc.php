@@ -146,6 +146,7 @@ class calendar_holiday
 			{
 				$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],1);
 				$day = (7 * $holiday['occurence'] - 6 + ($holiday['dow'] - $dow) % 7);
+				$day += ($day < 1 ? 7 : 0);
 			}
 			else
 			{
