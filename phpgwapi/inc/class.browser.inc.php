@@ -287,7 +287,7 @@
 
 				if ($length)
 				{
-					header("Content-length: ".$length);
+					header('Content-length: '.$length);
 				}
 
 				if ($nocache)
