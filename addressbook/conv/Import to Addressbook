@@ -121,17 +121,19 @@
 
 		function import_end_file($buffer) {
 			global $phpgw,$phpgw_info;
-	
-			//$contacts = CreateObject("phpgwapi.contacts");
-			echo '<br>'; 
-			for ($i=0;$i<count($buffer);$i++) {
-				while ( list($name,$value) = each($buffer[$i]) ) {
-					echo '<br>'.$i.': '.$name.' => '.$value;
-					//$contacts->add($phpgw_info["user"]["account_id"],$entry);
-				}
-			}
 
-			return "Successfully imported $i records into your addressbook.";
+			$contacts = CreateObject("phpgwapi.contacts");
+			echo '<br>'; 
+			for ($i=1;$i<=count($buffer);$i++) {
+				while ( list($name,$value) = @each($buffer[$i]) ) {
+					//echo '<br>'.$i.': '.$name.' => '.$value;
+					$entry[$i][$name] = $value;
+				}
+				//echo '<br>';
+				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
+			}
+			$num = $i - 1;
+			return "Successfully imported $num records into your addressbook.";
 		}
 
 		function import_start_record($buffer) {
@@ -143,6 +145,7 @@
 
 		function import_end_record($buffer,$private="private") {
 			global $phpgw_info;
+			$buffer[$this->id]="";
 			while ( list($name, $value) = each($this->currentrecord)) {
 				$buffer[$this->id][$name] = $value;
 				//echo '<br>'.$name.' => '.$value;
