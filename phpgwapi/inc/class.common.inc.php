@@ -927,8 +927,10 @@
 			while (list(,$appname) = each($order))
 			{
 				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
-				if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+				if (file_exists($f) &&
+					($phpgw_info['user']['apps'][$appname]) || ($location == 'preferences'))
 				{
+					//echo '<br>including: ' . $f;
 					include($f);
 				}
 				$completed_hooks[$appname] = True;
