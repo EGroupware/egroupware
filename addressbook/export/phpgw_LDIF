@@ -106,7 +106,7 @@
 		// Read each attribute, populate buffer
 		// name/value are the fields from the export array above
 		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name]) {
+			if ($this->export[$name] && ($value != "") ) {
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
@@ -120,7 +120,13 @@
 				$context = $phpgw_info['server']['ldap_contact_context'];
 			}
 			$time = gettimeofday();
-			$buffer[$this->id]["dn"]  = 'uid='.time().$time["usec"].":".$buffer[$this->id]['cn'].','.$context;
+			$cn = ereg_replace(',','',$buffer[$this->id]["cn"]);
+			$buffer[$this->id]["dn"]  = 'uid='.time().$time["usec"].":".$cn.','.$context;
+			$buffer[$this->id]["uid"] = time().$time["usec"];
+			if ($buffer[$this->id]['cn']) {
+				$buffer[$this->id]["uid"] .= ":".$buffer[$this->id]['cn'];
+			}
+			$buffer[$this->id]["description"] = ereg_replace("\r\n",';',$buffer[$this->id]["description"]);
 			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
 			return $buffer;
 		}
@@ -131,19 +137,15 @@
 				$entries .= 'dn: '.$buffer[$i]['dn'] . "\n";
 				reset($this->export);
 				while (list($name,$value)=each($this->export)) {
-					if ($value != 'dn') {
-						$entries .= $value . ": " . $buffer[$i][$value] . "\n";
+					if (($value != 'dn') && !empty($buffer[$i][$value])) {
+						$tmp = ereg_replace(',','',$buffer[$i][$value]);
+						$entries .= $value . ": " . $tmp . "\n";
 					}
 				}
-				$entries .= "xmozillauseconferenceserver: " . $buffer[$i]["xmozillauseconferenceserver"] . "\n";
-				$entries .= "xmozillanickname: "            . $buffer[$i]["xmozillanickname"] . "\n";
-				$entries .= "xmozillausehtmlmail: "         . $buffer[$i]["xmozillausehtmlmail"] . "\n";
 				$entries .= "objectClass: person\n";
-				$entries .= "objectClass: account\n";
 				$entries .= "objectClass: organizationalPerson\n";
-				$entries .= "objectClass: posixAccount\n";
 				$entries .= "objectClass: inetOrgPerson\n";
-				$entries .= "objectClass: shadowAccount\n";
+				$entries .= "objectClass: phpgwContact\n";
 				$entries .= "\n";
 			}
 			$buffer = $entries;
