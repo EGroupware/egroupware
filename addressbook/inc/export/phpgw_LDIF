@@ -48,7 +48,7 @@
 			'title'               => 'title',
 
 			'adr_one_street'      => 'streetaddress',
-			'adr_one_locality'    => 'locality', 
+			'adr_one_locality'    => 'localityname', 
 			'adr_one_region'      => 'st', 
 			'adr_one_postalcode'  => 'postalcode',
 			'adr_one_countryname' => 'co',
@@ -166,7 +166,8 @@
 				}
 				$entries .= 'objectClass: person' . "\n";
 				$entries .= 'objectClass: organizationalPerson' . "\n";
-				$entries .= 'objectClass: inetOrgPerson' . "\n";
+				# not needed for openldap > 2.1 anymore
+				#$entries .= 'objectClass: inetOrgPerson' . "\n";
 				$entries .= 'objectClass: phpgwContact' . "\n";
 				$entries .= "\n";
 			}
