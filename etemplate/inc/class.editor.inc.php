@@ -96,6 +96,10 @@
 				}
 			}
 			list($app) = explode('.',$this->etemplate->name);
+			if ($app && $app != 'etemplate')
+			{
+				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
+			}
 			if ($app && $app != 'etemplate' && is_array($this->extensions) &&
 			    (!is_array($this->extensions['**loaded**']) || !$this->extensions['**loaded**'][$app]))
 			{
@@ -667,6 +671,11 @@
 			{
 				$this->edit();
 				return;
+			}
+			list($app) = explode('.',$this->etemplate->name);
+			if ($app && $app != 'etemplate')
+			{
+				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
 			}
 			$content = $this->etemplate->as_array() + array('msg' => $msg);
 
