@@ -91,8 +91,10 @@ select
 
 td
 {
+
+/* global tags should never be defined here [ndee]*/
 	font-size: 11px;
-	text-align:left;
+/* removed text-align:left; [ndee]*/
 	/*	padding-top:1px;
 	padding-bottom:1px;*/
 }
