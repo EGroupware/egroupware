@@ -434,7 +434,7 @@
 				$setup_tpl->set_var('lang_delete',lang('Delete'));
 				$setup_tpl->set_var('db_domain','default');
 				$setup_tpl->set_var('db_host','localhost');
-				$setup_tpl->set_var('db_port','3306');
+				$setup_tpl->set_var('db_port','');
 				$setup_tpl->set_var('db_name','egroupware');
 				$setup_tpl->set_var('db_user','egroupware');
 				$setup_tpl->set_var('db_pass','your_password');
