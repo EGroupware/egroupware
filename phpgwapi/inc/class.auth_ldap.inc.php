@@ -30,22 +30,21 @@
 
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info, $phpgw;
 			/*
 			error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
 			these are just "warnings" and can be ignored.....
 			*/
 			error_reporting(0); 
 
-			$ldap = ldap_connect($phpgw_info['server']['ldap_host']);
+			$ldap = ldap_connect($GLOBALS['phpgw_info']['server']['ldap_host']);
 			if (! $ldap)
 			{
-				$phpgw->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
+				$GLOBALS['phpgw']->log->commit();
 			}
 
 			/* find the dn for this uid, the uid is not always in the dn */
-			$sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
+			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uid='.$username);
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
 			{
@@ -76,26 +75,24 @@
 
 		function change_password($old_passwd, $new_passwd, $_account_id='') 
 		{
-			global $phpgw_info, $phpgw;
-
 			if ('' == $_account_id)
 			{
-				$_account_id = $phpgw_info['user']['account_id'];
+				$_account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 	
-			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "uidnumber=$_account_id");
+			$ds = $GLOBALS['phpgw']->common->ldapConnect();
+			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], "uidnumber=$_account_id");
 			$allValues = ldap_get_entries($ds, $sri);
 	
 	
-			$entry['userpassword'] = $phpgw->common->encrypt_password($new_passwd);
+			$entry['userpassword'] = $GLOBALS['phpgw']->common->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];
 	
 			if (!@ldap_modify($ds, $dn, $entry)) 
 			{
 				return false;
 			}
-			$phpgw->session->appsession('password','phpgwapi',$new_passwd);
+			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 	
 			return $encrypted_passwd;
 		}
@@ -103,28 +100,24 @@
 		/* This data needs to be updated in LDAP, not SQL (jengo) */
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
-
-			$phpgw->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
-			$phpgw->db->next_record();
-			$this->previous_login = $phpgw->db->f('account_lastlogin');
+			$GLOBALS['phpgw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->next_record();
+			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
 
 			$now = time();
 
-			$phpgw->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . $now
 				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}
 
 		function new_update_lastlogin($_account_id, $ip)
 		{
-			global $phpgw_info, $phpgw;
-
 			$entry['phpgwaccountlastlogin']     = time();
 			$entry['phpgwaccountlastloginfrom'] = $ip;
 
-			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber=' . $_account_id);
+			$ds = $GLOBALS['phpgw']->common->ldapConnect();
+			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . $_account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			$dn = $allValues[0]['dn'];
@@ -132,6 +125,5 @@
 
 			@ldap_modify($ds, $dn, $entry);
 		}
-
 	}
 ?>
