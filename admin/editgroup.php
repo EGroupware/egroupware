@@ -41,9 +41,10 @@
 //        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions"));
 
         $phpgw->accounts->add_app($n_group_permissions);
-	$apps_after = explode(":",$phpgw->accounts->add_app("",True));
+	$apps = $phpgw->accounts->add_app("",True)
+	$apps_after = explode(":",$apps);
 
-        $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps_after
+        $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps
 			 . "' where group_id=$group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
