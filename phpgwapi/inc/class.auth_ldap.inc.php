@@ -76,9 +76,10 @@
     {
        global $phpgw;
 
+       $now = time();
        $phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
-   	                . "$ip', account_lastlogin='" . time()
-                       . "' where account_lid='$login'",__LINE__,__FILE__);
+   	                . "$ip', account_lastlogin='" . $now
+                       . "' where account_lid='$account_lid'",__LINE__,__FILE__);
     }
   }
 ?>
