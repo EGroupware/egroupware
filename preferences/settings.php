@@ -309,11 +309,6 @@
         }
      }
 
-     if ($phpgw_info["user"]["apps"]["headlines"]) {
-        include($phpgw_info["server"]["server_root"] . "/headlines/inc/functions.inc.php");
-	   headlines_update($phpgw_info["user"]["userid"],$headlines);
-     }
-
      $phpgw->db->unlock();
 
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
