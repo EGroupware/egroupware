@@ -36,11 +36,11 @@
      if ($filter != "none") {
         $filtermethod = " access like '%,$filter,%' ";
      } else {
-        $filtermethod = " (owner='" . $phpgw->session->loginid ."' OR access='public' "
-		      . $phpgw->accounts->sql_search("access") . " ) ";
+        $filtermethod = " (owner='" . $phpgw_info["user"]["userid"] ."' OR access='public' "
+		            . $phpgw->accounts->sql_search("access") . " ) ";
      }
   } else {
-     $filtermethod = " owner='" . $phpgw->session->loginid . "' ";
+     $filtermethod = " owner='" . $phpgw_info["user"]["userid"] . "' ";
   }
 
   if ($query) {

@@ -35,7 +35,7 @@
 
      $sql = "insert into addressbook (owner,access,firstname,lastname,email,"
        	  . "hphone,wphone,fax,pager,mphone,ophone,street,city,state,zip,bday,"
-          . "notes,company) values ('" . $phpgw->session->loginid . "','$access','"
+          . "notes,company) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
           . addslashes($firstname). "','"
           . addslashes($lastname) . "','"
           . addslashes($email) 	. "','" 

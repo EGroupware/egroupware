@@ -20,13 +20,13 @@
   include("../header.inc.php");
   if (! $con)
     Header("Location: " . $phpgw_info["server"]["webserver_url"] . 
-	    "/addressbook/?sessionid=" . $phpgw->session->id);
+	      "/addressbook/?sessionid=" . $phpgw_info["user"]["sessionid"]);
 
   if ($filter != "private")
      $filtermethod = " or access='public' " . $phpgw->groups->sql_search();
 
   $phpgw->db->query("SELECT * FROM addressbook WHERE con='$con' AND (owner='"
-	      . $phpgw->session->loginid . "' $filtermethod)");
+	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
   $phpgw->db->next_record();
 
   $fields = array(

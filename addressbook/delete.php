@@ -27,7 +27,7 @@
      $phpgw->db->query("select owner from addressbook where con='$con'");
      $phpgw->db->next_record();
 
-     if ($phpgw->db->f("owner") != $phpgw->session->loginid)
+     if ($phpgw->db->f("owner") != $phpgw_info["user"]["userid"])
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
 
      ?>
@@ -45,10 +45,10 @@
      //exit;
   } else {
 
-     $phpgw->db->query("delete from addressbook where owner='" . $phpgw->session->loginid
-		    . "' and con='$con'");
+     $phpgw->db->query("delete from addressbook where owner='" . $phpgw_info["user"]["userid"]
+		           . "' and con='$con'");
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	    "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
   }
-
+?>
 

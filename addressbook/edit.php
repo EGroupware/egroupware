@@ -21,13 +21,13 @@
   
   if (! $con) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
-	    "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+	       "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
      exit;
   }
 
   if (! $submit) {
      $phpgw->db->query("SELECT * FROM addressbook WHERE owner='"
-		 . $phpgw->session->loginid . "' AND con='$con'");
+		           . $phpgw_info["user"]["userid"] . "' AND con='$con'");
      $phpgw->db->next_record();
 
      $fields = array(
@@ -75,7 +75,7 @@
 	 . "', notes='" 	. addslashes($notes)
 	 . "', company='" 	. addslashes($company)
 	 . "', access='" 	. addslashes($access)
-	 . "'  WHERE owner='" . $phpgw->session->loginid . "' AND con='$con'";
+	 . "'  WHERE owner='" . $phpgw_info["user"]["userid"] . "' AND con='$con'";
 
      $phpgw->db->query($sql);
 
