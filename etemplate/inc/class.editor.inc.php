@@ -22,7 +22,8 @@
 			'deleted'   => 'Template deleted',
 			'saved'     => 'Template saved',
 			'error_writing' => 'Error: while saveing !!!',
-			'other_version' => 'only an other Version found !!!'
+			'other_version' => 'only an other Version found !!!',
+			'ext_loaded' => 'Extensions loaded: '
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -66,12 +67,22 @@
 			if ($this->extensions == '')
 			{
 				$this->extensions = $this->scan_for_extensions();
+				if (count($this->extensions))
+				{
+					$msg .= $this->messages['ext_loaded'] . implode(', ',$this->extensions);
+					$msg_ext_loaded = True;
+				}
 			}
 			list($app) = explode('.',$this->etemplate->name);
 			if ($app && $app != 'etemplate' && is_array($this->extensions) &&
 			    (!is_array($this->extensions['**loaded**']) || !$this->extensions['**loaded**'][$app]))
 			{
-				$this->extensions += $this->scan_for_extensions($app);
+				$extensions = $this->scan_for_extensions($app);
+				if (count($extensions))
+				{
+					$msg .= (!$msg_ext_loaded?$this->messages['ext_loaded']:', ') . implode(', ',$extensions);
+					$this->extensions += $extensions;
+				}
 				$this->extensions['**loaded**'][$app] = True;
 			}
 			$content = $this->etemplate->as_array() + array(
@@ -451,17 +462,14 @@
 
 			$dir = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/inc');
 
-			echo "<p>loading extenstions for '$app': ";
 			while ($dir && ($file = readdir($dir)))
 			{
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
 					 ($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
 				{
-					echo "$regs[1], ";
 					$extensions[$regs[1]] = $ext->human_name;
 				}
 			}
-			echo "</p>\n";
 			return $extensions;
 		}
 	};
