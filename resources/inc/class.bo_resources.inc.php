@@ -75,6 +75,7 @@ class bo_resources
 				$readonlys["buyable[$resource[id]]"] = true;
 			}
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
+			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 		return $nr;
 	}
