@@ -88,8 +88,10 @@ import	addressbook	zt	匯入
 import contacts	addressbook	zt	匯入聯絡人
 import csv-file into addressbook	addressbook	zt	將CSV檔案匯入通訊錄
 import file	addressbook	zt	匯入檔案
+import from	addressbook	zt	匯入自
 import from ldif, csv, or vcard	addressbook	zt	從LDIF, CSV, 或 VCard匯入
 import from outlook	addressbook	zt	從Outlook匯入
+import multiple vcard	addressbook	zt	匯入多重名片檔
 import next set	addressbook	zt	匯入下一個
 import_instructions	addressbook	zt	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
 <p>Palm Desktop 4.0 或是更新的版本，在瀏覽通訊錄資料時在<b>檔案</b>功能選擇 <b>匯出</b>，匯出的資料是 VCard 格式。
@@ -102,12 +104,14 @@ ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
 ldap root pw for contacts	admin	zt	聯絡人之LDAP root 密碼
 ldif	addressbook	zt	LDIF
 line 2	addressbook	zt	第2行
+load vcard	addressbook	zt	讀取名片檔
 mark records as private	addressbook	zt	標示為私人記錄
 message phone	addressbook	zt	留言電話
 middle name	addressbook	zt	中間欄位
 mobile	addressbook	zt	行動電話
 mobile phone	addressbook	zt	行動電話
 modem phone	addressbook	zt	撥接電話
+multiple vcard	addressbook	zt	多重名片檔
 no vcard	addressbook	zt	沒有VCard
 number of records to read (%1)	addressbook	zt	讀取記錄號碼(%1)
 number of records to read (<=200)	addressbook	zt	讀取的資料筆數(<=200)
@@ -147,14 +151,14 @@ tomorrow is %1's birthday.	common	zt	明天是 %1 的生日。
 translation	addressbook	zt	轉換
 update a single entry by passing the fields.	addressbook	zt	從欄位更新一筆資料。
 use country list	addressbook	zt	使用國家清單
-vcard	common	zt	VCard
-vcards require a first name entry.	addressbook	zt	VCards需要名字資料。
-vcards require a last name entry.	addressbook	zt	Vcards需要姓氏資料。
+vcard	common	zt	名片檔
+vcards require a first name entry.	addressbook	zt	名片檔需要名字資料。
+vcards require a last name entry.	addressbook	zt	名片檔需要姓氏資料。
 video phone	addressbook	zt	影像電話
 voice phone	addressbook	zt	語音電話
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zt	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 work phone	addressbook	zt	工作電話
-you must select a vcard. (*.vcf)	addressbook	zt	您必須選取一個vcard (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	zt	您必須選取一個名片檔 (*.vcf)
 you must select at least 1 column to display	addressbook	zt	您必須至少選取一個欄位才能顯示
 zip code	common	zt	郵遞區號
 zip_note	addressbook	zt	<p><b>注意：</b> 壓縮檔案可能包含 .csv, .vcf, 或 .ldif 格式，請不要在同一次的匯入工作中混用不同的檔案格式！
