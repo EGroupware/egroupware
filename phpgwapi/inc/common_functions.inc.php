@@ -62,7 +62,8 @@
 	*/
 	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
 	{
-		if (($part == 'app' && EXP_DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
+//		if (($part == 'app' && EXP_DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
+		if (($part == 'app' && DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
 		{
 			if (!defined('DEBUG_OUTPUT'))
 			{
