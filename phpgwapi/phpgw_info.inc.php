@@ -27,12 +27,12 @@
 	  echo "!!! PLEASE CORRECT THIS SITUATION !!!";
   }
 
-  if (empty($phpgw_info["server"]["default_tplset"])){
-    $phpgw_info["server"]["default_tplset"] = "default";
+  if (empty($phpgw_info["server"]["template_set"])){
+    $phpgw_info["server"]["template_set"] = "default";
   }
 
   if (empty($phpgw_info["server"]["template_dir"])){
-    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"]."/templates/".$phpgw_info["server"]["default_tplset"];
+    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"]."/templates/".$phpgw_info["server"]["template_set"];
   }
 
   if (!isset($phpgw_domain)) { // make them fix their header
@@ -93,14 +93,16 @@
   function phpgw_fillarray()
   {
     global $phpgw, $phpgw_info, $cd, $colspan;
-    $phpgw_info["server"]["images_dir"]   = $phpgw_info["server"]["webserver_url"] . "/images";
+    if (!isset($phpgw_info["server"]["images_dir"])){
+      $phpgw_info["server"]["images_dir"]   = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/".$phpgw_info["server"]["template_set"]."/images";
+    }
     $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"] . "/templates/"
-                                          . $phpgw_info["server"]["default_tplset"];
+                                          . $phpgw_info["server"]["template_set"];
   
     $phpgw_info["server"]["app_root"]   = $phpgw_info["server"]["server_root"]."/".$phpgw_info["flags"]["currentapp"];
     $phpgw_info["server"]["app_inc"]    = $phpgw_info["server"]["app_root"]."/inc";
-    $phpgw_info["server"]["app_images"] = $phpgw_info["server"]["webserver_url"]."/".$phpgw_info["flags"]["currentapp"]."/images";
-    $phpgw_info["server"]["app_tpl"]    = $phpgw_info["server"]["app_root"]."/templates/".$phpgw_info["server"]["default_tplset"];
+    $phpgw_info["server"]["app_images"] = $phpgw_info["server"]["webserver_url"]."/".$phpgw_info["flags"]["currentapp"]."/templates/".$phpgw_info["server"]["template_set"]."/images";
+    $phpgw_info["server"]["app_tpl"]    = $phpgw_info["server"]["app_root"]."/templates/".$phpgw_info["server"]["template_set"];
   
     /* ********This sets the user variables******** */
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"

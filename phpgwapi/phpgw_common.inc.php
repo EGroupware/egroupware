@@ -172,7 +172,7 @@
     {
        global $phpgw_info;
        $output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-       $ir = $phpgw_info["server"]["webserver_url"] . "/images";
+       $ir = $phpgw_info["server"]["images_dir"];
 
        if ($fontsize) {
           $fs  = '<font size="' . $fontsize . '">';
@@ -275,10 +275,9 @@
           if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] != "text") {
              if ($appname != "home" && $appname != "logout" && $appname != "print") {
                 $output_text .= "<img src=\"" . $phpgw_info["server"]["webserver_url"] 
-                              . "/" . $appname . "/images" . "/navbar.gif\" border=0 alt=\"" . lang($description) . "\">";
+                              . "/" . $appname . "/templates/".$phpgw_info["server"]["template_set"]."/images" . "/navbar.gif\" border=0 alt=\"" . lang($description) . "\">";
           	} else {
-       	      $output_text .= "<img src=\"" . $phpgw_info["server"]["webserver_url"] 
-                    	       . "/images/$appname.gif\" border=0 alt=\"" . lang($description) . "\">";
+       	      $output_text .= "<img src=\"" . $phpgw_info["server"]["images_dir"]."/$appname.gif\" border=0 alt=\"" . lang($description) . "\">";
           	}
           }
 
@@ -444,7 +443,7 @@
        if ($phpgw_info["user"]["lastpasswd_change"] == 0) {
           echo "<br><center>" . lang("You are required to change your password "
  	       . "during your first login");
- 	       echo "<br> Click this image on the navbar: <img src=\"".$phpgw_info["server"]["webserver_url"]."/preferences/images/navbar.gif\">";
+ 	       echo "<br> Click this image on the navbar: <img src=\"".$phpgw_info["server"]["webserver_url"]."/preferences/templates/".$phpgw_info["server"]["template_set"]."/images/navbar.gif\">";
  	       echo "</center>";
        } else if ($phpgw_info["user"]["lastpasswd_change"] < time() - (86400*30)) {
    	    echo "<br><CENTER>" . lang("it has been more then x days since you "
@@ -986,6 +985,4 @@
            }
        }
     }
-
-
   }

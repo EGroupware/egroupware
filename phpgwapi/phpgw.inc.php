@@ -191,7 +191,7 @@
 
       $sep = filesystem_separator();
       $template_root = $phpgw_info["server"]["server_root"] . $sep . $phpgw_info["flags"]["currentapp"]
-   	               . $sep . "templates" . $sep . $phpgw_info["server"]["default_tplset"];
+   	               . $sep . "templates" . $sep . $phpgw_info["server"]["template_set"];
       if (is_dir($template_root)) {          
          $this->template = new Template($template_root);
       }

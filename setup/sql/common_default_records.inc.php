@@ -13,7 +13,7 @@
 
   function add_default_server_config(){
     global $db, $phpgw_info, $currentver;
-    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
+    $db->query("insert into config (config_name, config_value) values ('template_set', 'default')");
     $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
     $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
     $db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
@@ -54,7 +54,7 @@
   if ($useglobalconfigsettings == "on"){
     if (is_file($basedir)){
       include ($phpgw_info["server"]["include_root"]."/globalconfig.inc.php");
-      $db->query("insert into config (config_name, config_value) values ('default_tplset', '".$phpgw_info["server"]["default_tplset"]."')");
+      $db->query("insert into config (config_name, config_value) values ('template_set', '".$phpgw_info["server"]["template_set"]."')");
       $db->query("insert into config (config_name, config_value) values ('temp_dir', '".$phpgw_info["server"]["temp_dir"]."')");
       $db->query("insert into config (config_name, config_value) values ('files_dir', '".$phpgw_info["server"]["files_dir"]."')");
       $db->query("insert into config (config_name, config_value) values ('encryptkey', '".$phpgw_info["server"]["encryptkey"]."')");

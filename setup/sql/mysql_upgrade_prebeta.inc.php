@@ -137,7 +137,7 @@
     .")";
     $db->query($sql);  
 
-    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
+    $db->query("insert into config (config_name, config_value) values ('template_set', 'default')");
     $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
     $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
     $db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else'");
