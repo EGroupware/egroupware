@@ -324,7 +324,9 @@
 				}
 			}
 
-			if(count($aTableDef['ix']) > 0)
+			// fast hack to enable this only for MySQL, as I need to fix it for the other db's
+			// which dont like indices in contrain syntax
+			if(count($aTableDef['ix']) > 0 && $this->sType == 'mysql')
 			{
 				if(!$this->_GetIX($aTableDef['ix'], $sIXSQL))
 				{
