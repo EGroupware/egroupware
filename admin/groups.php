@@ -58,7 +58,7 @@
 	if (! count($account_info))
 	{
 		$p->set_var('message',lang('No matchs found'));
-		$p->parse('rows','empty_row',True);
+		$p->parse('rows','row_empty',True);
 	}
 	else
 	{
