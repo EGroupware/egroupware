@@ -40,25 +40,54 @@
         return $s;
      }
 
-     function return_array($type = 'all', $id = '')
-     {
-        $filter = $this->filter($type);
+    function return_array($type ='all',$start,$limit,$query = '',$sort = '',$order = '') {                                     
 
-        if ($type == 'single') {
-           $filter = " and cat_id='$id'";
-        }
+	global $phpgw, $phpgw_info;                                                                                 
+                                                                                                                   
+	$filter = $this->filter($type);
 
-        $this->db->query("select * from phpgw_categories where cat_appname='"
-                       . $this->app_name . "' $filter",__LINE__,__FILE__);
-        $i = 0;
-        while ($this->db->next_record()) {
-           $cats[$i]['id']          = $this->db->f('cat_id');
-           $cats[$i]['owner']       = $this->db->f('cat_owner');
-           $cats[$i]['parent']      = $this->db->f('cat_parent');
-           $cats[$i]['name']        = $this->db->f('cat_name');
-           $cats[$i]['description'] = $this->db->f('cat_description');
-           $cats[$i]['data']        = $this->db->f('cat_data');
-           $i++;
+	if (!$sort) { $sort = "ASC";  }                                                                                 
+                                                                                                                   
+	if ($order) { $ordermethod = " order by $order $sort"; }                                                        
+	else { $ordermethod = " order by cat_parent asc"; }                                                              
+                                                                                                                   
+	if ($query) {                                                                                                    
+	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
+		    . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod" . " "
+		    . $this->db->limit($start,$limit),__LINE__,__FILE__);                                
+	}                                                                                                    
+	else {                                                                                                          
+	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
+			. "$filter $ordermethod" . " "
+			. $this->db->limit($start,$limit),__LINE__,__FILE__);         
+	}                                                                                                             
+                                                                                                                   
+	    $i = 0;
+	    while ($phpgw->db->next_record()) {
+	    $cats[$i]['id']             = $phpgw->db->f('cat_id');
+	    $cats[$i]['owner']          = $phpgw->db->f('cat_owner');
+	    $cats[$i]['parent']         = $phpgw->db->f('cat_parent');
+	    $cats[$i]['name']           = $phpgw->db->f('cat_name');
+	    $cats[$i]['description']    = $phpgw->db->f('cat_description');
+	    $cats[$i]['data']           = $phpgw->db->f('cat_data');
+	    $i++;
+	    }
+	    return $cats;
+	}
+
+
+    function return_single($id = '')
+    {
+
+        $this->db->query("select * from phpgw_categories where cat_id='$id'",__LINE__,__FILE__);
+	    
+	    $this->db->next_record(); {
+            $cats[0]['id']          = $this->db->f('cat_id');
+            $cats[0]['owner']       = $this->db->f('cat_owner');
+            $cats[0]['parent']      = $this->db->f('cat_parent');
+            $cats[0]['name']        = $this->db->f('cat_name');
+            $cats[0]['description'] = $this->db->f('cat_description');
+            $cats[0]['data']        = $this->db->f('cat_data');
         }
         return $cats;
      }
@@ -77,7 +106,7 @@
         $this->account_id = $account_id;
         $this->app_name   = $app_name;
         $this->db         = $phpgw->db;
-        $this->cats       = $this->return_array();
+        $this->cats       = $this->return_array($type,$start,$limit,$query,$sort,$order);
      }
 
      // Return into a select box, list or other formats
