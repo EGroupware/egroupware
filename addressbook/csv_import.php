@@ -183,7 +183,7 @@
 				{
 					list( $addr,$trans ) = explode($PSep,$def,2);
 					$t->set_var('trans',$trans);
-					$t->set_var('addr_fields',str_replace($addr.'">',$addr.'" selected>',$addr_name_options));
+					$t->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
 				}
 				else
 				{
