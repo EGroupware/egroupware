@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-	if (!is_file("header.inc.php"))
+	if (!is_file('header.inc.php'))
 	{
 		echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
 			. 'here</a>.</center>';
@@ -21,7 +21,7 @@
 
 	if (!isset($sessionid) || !$sessionid)
 	{
-		Header("Location: login.php");
+		Header('Location: login.php');
 		exit;
 	}
 
@@ -33,7 +33,7 @@
 		'enable_contacts_class'   => True,
 		'enable_nextmatchs_class' => True
 	);
-	include("header.inc.php");
+	include('header.inc.php');
 	// Note: I need to add checks to make sure these apps are installed.
 
 	if ($phpgw_forward)
@@ -43,52 +43,52 @@
 		{
 			while (list($name,$value) = each($HTTP_GET_VARS))
 			{
-				if (ereg("phpgw_",$name))
+				if (ereg('phpgw_',$name))
 				{
-					$extra_vars .= "&" . $name . "=" . urlencode($value);
+					$extra_vars .= '&' . $name . '=' . urlencode($value);
 				}
 			}
 		}
 		$phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
 	}
 
-	if (($phpgw_info["user"]["preferences"]["common"]["useframes"] &&
-		$phpgw_info["server"]["useframes"] == "allowed") ||
-		($phpgw_info["server"]["useframes"] == "always"))
+	if (($phpgw_info['user']['preferences']['common']['useframes'] &&
+		$phpgw_info['server']['useframes'] == 'allowed') ||
+		($phpgw_info['server']['useframes'] == 'always'))
 		{
-			if ($cd == "yes")
+			if ($cd == 'yes')
 			{
 				if (! $navbarframe && ! $framebody)
 				{
-					$tpl = new Template($phpgw_info["server"]["template_dir"]);
+					$tpl = new Template($phpgw_info['server']['template_dir']);
 					$tpl->set_file(array(
-						"frames"       => "frames.tpl",
-						"frame_body"   => "frames_body.tpl",
-						"frame_navbar" => "frames_navbar.tpl"
+						'frames'       => 'frames.tpl',
+						'frame_body'   => 'frames_body.tpl',
+						'frame_navbar' => 'frames_navbar.tpl'
 					));
-					$tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
+					$tpl->set_var('navbar_link',$phpgw->link('index.php','navbarframe=True&cd=yes'));
 					if ($forward)
 					{
-						$tpl->set_var("body_link",$phpgw->link($forward));
+						$tpl->set_var('body_link',$phpgw->link($forward));
 					}
 					else
 					{
-						$tpl->set_var("body_link",$phpgw->link("index.php","framebody=True&cd=yes"));
+						$tpl->set_var('body_link',$phpgw->link('index.php','framebody=True&cd=yes'));
 					}
 
-					if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom")
+					if ($phpgw_info['user']['preferences']['common']['frame_navbar_location'] == 'bottom')
 					{
-						$tpl->set_var("frame_size","*,60");
-						$tpl->parse("frames_","frame_body",True);
-						$tpl->parse("frames_","frame_navbar",True);
+						$tpl->set_var('frame_size','*,60');
+						$tpl->parse('frames_','frame_body',True);
+						$tpl->parse('frames_','frame_navbar',True);
 					}
 					else
 					{
-						$tpl->set_var("frame_size","60,*");
-						$tpl->parse("frames_","frame_navbar",True);
-						$tpl->parse("frames_","frame_body",True);
+						$tpl->set_var('frame_size','60,*');
+						$tpl->parse('frames_','frame_navbar',True);
+						$tpl->parse('frames_','frame_body',True);
 					}
-					$tpl->pparse("out","frames");
+					$tpl->pparse('out','frames');
 				}
 				if ($navbarframe)
 				{
@@ -97,10 +97,10 @@
 				}
 			}
 		}
-		elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
-			&& $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]])
+		elseif ($cd=='yes' && $phpgw_info['user']['preferences']['common']['default_app']
+			&& $phpgw_info['user']['apps'][$phpgw_info['user']['preferences']['common']['default_app']])
 		{
-			$phpgw->redirect($phpgw->link('/' . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/" . "index.php"));
+			$phpgw->redirect($phpgw->link('/' . $phpgw_info['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
 			$phpgw->common->phpgw_exit();
 		}
 		else
@@ -115,29 +115,38 @@
 		// $phpgw->preferences->read_preferences("calendar");
 		// $phpgw->preferences->read_preferences("stocks");
 
-		$phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
-		$phpgw->db->next_record();
-
-		if ($phpgw_info["server"]["versions"]["phpgwapi"] > $phpgw->db->f("app_version"))
+		$phpgw->db->query("select app_version from phpgw_applications where app_name='phpgwapi'",__LINE__,__FILE__);
+		if($phpgw->db->next_record())
 		{
-			echo "<p><b>" . lang("Your are running a newer version of phpGroupWare then your database is setup for")
-				. "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
-				. "</b>";
+			$apiversion = $phpgw->db->f('app_version');
+		}
+		else
+		{
+			$phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
+			$phpgw->db->next_record();
+			$apiversion = $phpgw->db->f('app_version');
 		}
 
-		$phpgw->translation->add_app("mainscreen");
-		if (lang("mainscreen_message") != "mainscreen_message*")
+		if ($phpgw_info['server']['versions']['phpgwapi'] > $apiversion)
 		{
-			echo "<center>" . stripslashes(lang("mainscreen_message")) . "</center>";
+			echo '<p><b>' . lang('You are running a newer version of phpGroupWare then your database is setup for')
+				. '<br>' . lang('It is recommend that you run setup to upgrade your tables to the current version')
+				. '</b>';
 		}
 
-		if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
-			$phpgw_info["user"]["apps"]["admin"]) && 
-			(isset($phpgw_info["server"]["checkfornewversion"]) &&
-			$phpgw_info["server"]["checkfornewversion"]))
+		$phpgw->translation->add_app('mainscreen');
+		if (lang('mainscreen_message') != 'mainscreen_message*')
+		{
+			echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
+		}
+
+		if ((isset($phpgw_info['user']['apps']['admin']) &&
+			$phpgw_info['user']['apps']['admin']) && 
+			(isset($phpgw_info['server']['checkfornewversion']) &&
+			$phpgw_info['server']['checkfornewversion']))
 		{
 			$phpgw->network->set_addcrlf(False);
-			$lines = $phpgw->network->gethttpsocketfile("http://www.phpgroupware.org/currentversion");
+			$lines = $phpgw->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
 			for ($i=0; $i<count($lines); $i++)
 			{
 				if (ereg("currentversion",$lines[$i]))
@@ -145,10 +154,10 @@
 					$line_found = explode(":",chop($lines[$i]));
 				}
 			}
-			if($phpgw->common->cmp_version($phpgw_info["server"]["versions"]["phpgwapi"],$line_found[1]))
+			if($phpgw->common->cmp_version($phpgw_info['server']['versions']['phpgwapi'],$line_found[1]))
 			{
-				echo "<p>There is a new version of phpGroupWare available. <a href=\""
-					. "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
+				echo '<p>There is a new version of phpGroupWare available. <a href="'
+					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
 			}
 		}
 ?>
@@ -165,7 +174,7 @@
 				NotifyWindow.close();
 			}
 		}
-		NotifyWindow = window.open("<?php echo $phpgw->link("/notify.php")?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
+		NotifyWindow = window.open("<?php echo $phpgw->link('/notify.php')?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
 		if (NotifyWindow.opener == null)
 		{
 			NotifyWindow.opener = window;
