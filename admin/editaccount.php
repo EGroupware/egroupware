@@ -188,10 +188,10 @@
 		$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
 		$account->update_data($_userData);
 		$account->save_repository();
-		if ($_userData['passwd'])
+		if ($_userData['account_passwd'])
 		{
 			$auth = CreateObject('phpgwapi.auth');
-			$auth->change_password($old_passwd, $_userData['passwd'], $_userData['account_id']);
+			$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
 		}
 
 		$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
