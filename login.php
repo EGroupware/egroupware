@@ -25,8 +25,15 @@
 	
 	if(file_exists('./header.inc.php'))
 	{
-		include('./header.inc.php');
-		$GLOBALS['phpgw']->sessions = CreateObject('phpgwapi.sessions');
+		if(function_exists('CreateObject'))
+		{
+			$GLOBALS['phpgw']->sessions = CreateObject('phpgwapi.sessions');
+		}
+		else
+		{
+			Header('Location: setup/index.php');
+			exit;
+		}
 	}
 	else
 	{
