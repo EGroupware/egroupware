@@ -77,7 +77,7 @@
 			}
 			if(version_compare(phpversion(),'4.3.0') >= 0)
 			{
-				$this->socket = fsockopen($server,$port,$errcode,$errmsg,$timeout);
+				$this->socket = @fsockopen($server,$port,$errcode,$errmsg,$timeout);
 				if($this->socket)
 				{
 					stream_set_timeout($this->socket,$timeout,0);
@@ -85,7 +85,7 @@
 			}
 			else
 			{
-				$this->socket = fsockopen($server,$port,$errcode,$errmsg);
+				$this->socket = @fsockopen($server,$port,$errcode,$errmsg);
 			}
 			if(!$this->socket)
 			{

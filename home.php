@@ -124,7 +124,7 @@
 			$GLOBALS['phpgw_info']['server']['checkfornewversion']))
 		{
 			$GLOBALS['phpgw']->network->set_addcrlf(False);
-			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
+			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
 			for ($i=0; $i<count($lines); $i++)
 			{
 				if (ereg('currentversion',$lines[$i]))
@@ -135,7 +135,7 @@
 			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
 				echo '<p>There is a new version of eGroupWare available. <a href="'
-					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
+					. 'http://www.egroupware.org">http://www.egroupware.org</a>';
 			}
 
 			$_found = False;
