@@ -78,9 +78,9 @@
 
 		function save($data)
 		{
-			$sql = "UPDATE phpgw_applications SET app_name='" . addslashes($data['n_app_name']) . "',"
+			$sql = "UPDATE phpgw_applications SET "
 				. "app_enabled='" . $data['n_app_status'] . "',app_order='" . $data['app_order'] 
-				. "' WHERE app_name='" . $data['old_app_name'] . "'";
+				. "' WHERE app_name='" . $data['app_name'] . "'";
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			return True;

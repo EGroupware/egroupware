@@ -287,29 +287,14 @@
 				$totalerrors = 0;
 
 				$app_order    = $_POST['app_order'] ? $_POST['app_order'] : 0;
-				$n_app_name   = chop($_POST['n_app_name']);
 				$n_app_status = $_POST['n_app_status'];
 
-				if (! $n_app_name)
-				{
-					$error[$totalerrors++] = lang('You must enter an application name.');
-				}
-
-				if ($app_name != $n_app_name)
-				{
-					if ($this->bo->exists($n_app_name))
-					{
-						$error[$totalerrors++] = lang('That application name already exists.');
-					}
-				}
- 
 				if (! $totalerrors)
 				{
 					$this->bo->save(array(
-						'n_app_name'   => $n_app_name,
 						'n_app_status' => $n_app_status,
 						'app_order'    => $app_order,
-						'old_app_name' => urldecode($app_name)
+						'app_name' => urldecode($app_name)
 					));
 
 					$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiapplications.get_list&start='.$start);
@@ -339,7 +324,7 @@
 			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.edit'));
 
-			$this->display_row(lang('application name'),'<input name="n_app_name" value="' . $n_app_name . '">');
+			$this->display_row(lang('application name'), $n_app_name );
 
 			$GLOBALS['phpgw']->template->set_var('lang_status',lang('Status'));
 			$GLOBALS['phpgw']->template->set_var('lang_save_button',lang('Save'));
