@@ -47,11 +47,21 @@
 					$applications .= ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
 				}
 
-				$applications .= 'onMouseOver="' . $app[0] . '.src=\'' . $img_src_over . '\'" onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'">';
-				$applications .= $title . '</a></td></tr>';
-				$applications .= "\n";
+				if($img_src_over != '')
+				{
+					$applications .= ' onMouseOver="' . $app[0] . '.src=\'' . $img_src_over . '\'" ';
+				}
+				if($img_src_out != '')
+				{
+					$applications .= ' onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'"';
+				}
+				$applications .= '>'.$title.'</a></td></tr>'."\n";
 			}
-			$pre_load[] = $phpgw->common->image($app[0],'navbar-over.gif');
+			$img_src_over = $phpgw->common->image($app[0],'navbar-over.gif');
+			if($img_src_over)
+			{
+				$pre_load[] = $img_src_over;
+			}
 		}
 
 		$tpl->set_var('app_images',implode("','",$pre_load));
