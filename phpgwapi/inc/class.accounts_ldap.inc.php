@@ -118,21 +118,22 @@
 			$this->create($account_name, $account_type, $first_name, $last_name, $passwd);
 		}
 
-		function delete($account_id = '')
+		function delete($accountid = '')
 		{
 			global $phpgw, $phpgw_info;
 
-			$account_lid = $this->id2name(get_account_id($account_id));
+			$account_id = get_account_id($accountid);
+			$account_lid = $this->id2name($account_id);
 			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uid='.$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]["dn"]) {
-				$del = ldap_delete($ds, $allValues[0]["dn"]);
+			if ($allValues[0]['dn']) {
+				$del = ldap_delete($ds, $allValues[0]['dn']);
 			}
 
 			// Do this last since we are depending upon this record to get the account_lid above
-			$this->db->query("DELETE FROM phpgw_accounts WHERE account_id=$account_id");
+			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
 		}
 
 		function get_list($_type='both')
