@@ -268,5 +268,6 @@
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('xh','Xhosa','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('yo','Yoruba','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('zh','Chinese','No')");
+  @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('zt','Chinese(Taiwan)','Yes')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('zu','Zulu','No')"); 
 ?>
