@@ -90,8 +90,7 @@
         if ($lid <> $n_loginid) {
           $sep = $phpgw->common->filesystem_separator();
 	
-  	      $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-		        . "users" . $sep;
+          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
    	      if (! @rename($basedir . $lid, $basedir . $n_loginid)) {
 	          $cd = 35;
@@ -154,11 +153,11 @@
             while ($phpgw->db->next_record()) {
               echo "<option value=\"" . $phpgw->db->f("group_id") . "\"";
               for ($i=0; $i<count($user_groups); $i++) {
-		            if ($user_groups[$i][0] == $phpgw->db->f("group_id")){
+		if ($user_groups[$i][0] == $phpgw->db->f("group_id")) {
                   echo " selected";
                 }
-	            }
-	            echo ">" . $phpgw->db->f("group_name") . "</option>\n";
+	      }
+	      echo ">" . $phpgw->db->f("group_name") . "</option>\n";
             }
 ?>
             </select>
