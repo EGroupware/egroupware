@@ -687,7 +687,7 @@
   /* Wrapper to the session->appsession() */
   function appsession($data = '##NOTHING##') {
     global $phpgw_info, $phpgw;
-    return $phpgw->session->appsession($data);
+    return $phpgw->session->appsession('default','',$data);
   }
 
     function show_date($t = '', $format = '')

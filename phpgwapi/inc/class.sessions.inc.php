@@ -362,7 +362,7 @@
 
 				// I added these into seperate steps for easier debugging
 				$data = $phpgw->db->f('content');
-				$data = $phpgw->common->decrypt($data);
+				$data = $phpgw->crypto->decrypt($data);
 				$data = stripslashes($data);
 
 				return $data;
@@ -376,12 +376,14 @@
 					// I added these into seperate steps for easier debugging
 					$data = serialize($data);
 					$data = $phpgw->crypto->encrypt($data);
+					$data = addslashes($data);
 
 					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 					. "','".$location."','".$data."')",__LINE__,__FILE__);
 				} else {
 	 				$data = $phpgw->crypto->encrypt(serialize($data));
+					$data = addslashes($data);
 					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"
 					. "where sessionid = '".$this->sessionid."'"
 					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
