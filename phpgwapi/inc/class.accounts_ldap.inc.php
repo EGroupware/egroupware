@@ -158,15 +158,6 @@
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			if ($offset)
-			{
-				$limitclause = $GLOBALS['phpgw']->db->limit($start,$offset);
-			}
-			elseif ($start && !$offset)
-			{
-				$limitclause = $GLOBALS['phpgw']->db->limit($start);
-			}
-
 			if (! $sort)
 			{
 				$sort = 'desc';
@@ -195,8 +186,8 @@
 					$whereclause = '';
 			}
 
-			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause $limitclause";
-			$this->db->query($sql,__LINE__,__FILE__);
+			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
+			$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
 			while ($this->db->next_record())
 			{
 				// get user information from ldap only, if it's a user, not a group
