@@ -130,8 +130,8 @@
 //	}
 	unset($thisdate);
 	
-	$thisdate = $phpgw->calendar->makegmttime(0,0,0,$m,$d,$y);
-	$sun = $phpgw->calendar->get_weekday_start($y,$m,$d) - $phpgw->calendar->tz_offset - 7200;
+	$thisdate = $phpgw->calendar->datetime->makegmttime(0,0,0,$m,$d,$y);
+	$sun = $phpgw->calendar->datetime->get_weekday_start($y,$m,$d) - $phpgw->calendar->datetime->tz_offset - 7200;
 
 	$str = '';
 	

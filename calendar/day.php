@@ -70,8 +70,8 @@
 		}
 	}
 
-	$now	= $phpgw->calendar->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
-	$now['raw'] += $phpgw->calendar->tz_offset;
+	$now	= $phpgw->calendar->datetime->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
+	$now['raw'] += $phpgw->calendar->datetime->tz_offset;
 	$m = mktime(0,0,0,$thismonth,1,$thisyear);
 	
 	$var = Array(
@@ -87,7 +87,7 @@
 	$p->set_var($var);
 
 	$p->pparse('out','day_t');
-	if(!isset($friendly) || $friendly == False)
+	if(!isset($friendly) || !$friendly)
 	{
 		$phpgw->common->phpgw_footer();
 	}

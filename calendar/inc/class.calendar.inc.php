@@ -24,7 +24,7 @@ if(isset($phpgw_info['server']['calendar_type']) &&
 // The following line can be removed when vCalendar is implemented....
 $phpgw_info['server']['calendar_type'] = 'sql';
 //CreateObject('calendar.vCalendar');
-CreateObject('calendar.calendar__');
+$temp = CreateObject('calendar.calendar__');
 include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
 
 class calendar extends calendar_
@@ -44,7 +44,6 @@ class calendar extends calendar_
 	var $sorted_events_matching = 0;
 	var $end_repeat_day = 0;
 	var $weekstarttime;
-	var $days = Array();
 	
 	var $tz_offset;
 
@@ -89,11 +88,13 @@ class calendar extends calendar_
 		$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
 		$this->phpgwapi_template_dir = PHPGW_IMAGES_DIR;
 		$this->image_dir = $phpgw->common->get_image_path('calendar');
-		$this->today = $this->localdates(time());
 
-		$this->open('',intval($this->owner));
+		$this->calendar__();
+		
+		$this->today = $this->datetime->localdates(time());
+
+		$this->open('INBOX',intval($this->owner));
 		$this->set_filter();
-		$this->tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		
 		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 		{
@@ -110,23 +111,6 @@ class calendar extends calendar_
 
 // Generic functions that are derived from mcal functions.
 // NOT PART OF THE ORIGINAL MCAL SPECS.
-	function time_compare($a_hour,$a_minute,$a_second,$b_hour,$b_minute,$b_second)
-	{
-		$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),0,0,70);
-		$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),0,0,70);
-		if($a_time == $b_time)
-		{
-			return 0;
-		}
-		elseif($a_time > $b_time)
-		{
-			return 1;
-		}
-		elseif($a_time < $b_time)
-		{
-			return -1;
-		}
-	}
 
 	function set_filter()
 	{
@@ -171,7 +155,7 @@ class calendar extends calendar_
 			$fullname = $db->f('account_lid');
 			if($db->f('account_lastname') && $db->f('account_firstname'))
 			{
-+				$fullname = $db->f('account_lastname').', '.$db->f('account_firstname');
+				$fullname = $db->f('account_lastname').', '.$db->f('account_firstname');
 			}
 			return $fullname;
 		}
@@ -215,78 +199,6 @@ class calendar extends calendar_
 		}
 	}
 
-	function get_weekday_start($year,$month,$day)
-	{
-		global $phpgw_info;
-
-		$weekday = $this->day_of_week($year,$month,$day);
-		switch($phpgw_info['user']['preferences']['calendar']['weekdaystarts'])
-		{
-			case 'Monday':
-				$days = Array(
-					0 => 'Mon',
-					1 => 'Tue',
-					2 => 'Wed',
-					3 => 'Thu',
-					4 => 'Fri',
-					5 => 'Sat',
-					6 => 'Sun'
-				);
-				switch($weekday)
-				{
-					case 0:
-						$sday = mktime(2,0,0,$month,$day - 6,$year);
-						break;
-					case 1:
-						$sday = mktime(2,0,0,$month,$day,$year);
-						break;
-					default:
-						$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
-						break;
-				}
-				break;
-			case 'Sunday':
-				$days = Array(
-					0 => 'Sun',
-					1 => 'Mon',
-					2 => 'Tue',
-					3 => 'Wed',
-					4 => 'Thu',
-					5 => 'Fri',
-					6 => 'Sat'
-				);
-				$sday = mktime(2,0,0,$month,$day - $weekday,$year);
-				break;
-// The following is for Arabic support.....
-			case 'Saturday':
-				$days = Array(
-					0 => 'Sat',
-					1 => 'Sun',
-					2 => 'Mon',
-					3 => 'Tue',
-					4 => 'Wed',
-					5 => 'Thu',
-					6 => 'Fri'
-				);
-				switch($weekday)
-				{
-					case 0:
-						$sday = mktime(2,0,0,$month,$day - 1,$year);
-						break;
-					case 6:
-						$sday = mktime(2,0,0,$month,$day,$year);
-						break;
-					default:
-						$sday = mktime(2,0,0,$month,$day - ($weekday + 1),$year);
-						break;
-				}
-				break;				
-		}
-
-		$this->days = $days;
-		return $sday;
-	}
-
 	function link_to_entry($event,$month,$day,$year)
 	{
 		global $phpgw, $phpgw_info;
@@ -307,11 +219,11 @@ class calendar extends calendar_
 		$p->set_block('link_picture','link_text','link_text');
 		$description = $this->get_short_field($event,$is_private,'description');
 
-		$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->tz_offset;
-		$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->tz_offset;
+		$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
+		$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
 		$rawdate = mktime(0,0,0,$month,$day,$year);
-		$rawdate_offset = $rawdate - $this->tz_offset;
-		$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->tz_offset;
+		$rawdate_offset = $rawdate - $this->datetime->tz_offset;
+		$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->datetime->tz_offset;
 		if (intval($phpgw->common->show_date($starttime,'Hi')) && $starttime == $endtime)
 		{
 			$time = $phpgw->common->show_date($starttime,'Hi');
@@ -333,7 +245,7 @@ class calendar extends calendar_
 
 			if($endtime >= ($rawdate_offset + 86400))
 			{
-				$end_time = $phpgw->common->show_date(mktime(23,59,59,$month,$day,$year) - $this->tz_offset,$this->users_timeformat);
+				$end_time = $phpgw->common->show_date(mktime(23,59,59,$month,$day,$year) - $this->datetime->tz_offset,$this->users_timeformat);
 			}
 			else
 			{
@@ -518,7 +430,7 @@ class calendar extends calendar_
 			$c_events = count($events);
 			for($i=0;$i<$c_events;$i++)
 			{
-				$this->repeating_events[] = $this->fetch_event($this->stream,$events[$i]);
+				$this->repeating_events[] = $this->fetch_event($events[$i]);
 			}
 		}
 	}
@@ -716,7 +628,7 @@ class calendar extends calendar_
 		{
 			for($i=0;$i<$this->sorted_events_matching;$i++)
 			{
-				$events[] = $this->fetch_event($this->stream,$event[$i]);
+				$events[] = $this->fetch_event($event[$i]);
 			}
 
 			if($this->sorted_events_matching == 1)
@@ -781,13 +693,13 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info, $view;
 
-		$date = $this->makegmttime(0,0,0,$month,$day,$year);
+		$date = $this->datetime->makegmttime(0,0,0,$month,$day,$year);
 		$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
 		$month_ahead = intval(date('Ymd',mktime(0,0,0,$month + 1,$day,$year)));
 		$monthstart = intval(date('Ymd',mktime(0,0,0,$month,1,$year)));
 		$monthend = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
 
-		$weekstarttime = $this->get_weekday_start($year,$month,1);
+		$weekstarttime = $this->datetime->get_weekday_start($year,$month,1);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');
@@ -850,7 +762,7 @@ class calendar extends calendar_
 
 		for($i=0;$i<7;$i++)
 		{
-			$p->set_var('dayname','<b>' . substr(lang($this->days[$i]),0,2) . '</b>');
+			$p->set_var('dayname','<b>' . substr(lang($this->datetime->days[$i]),0,2) . '</b>');
 			$p->parse('daynames','mini_day',True);
 		}
 		for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
@@ -858,8 +770,8 @@ class calendar extends calendar_
 			for($j=0;$j<7;$j++)
 			{
 				$str = '';
-				$cal = $this->gmtdate($i + ($j * 24 * 3600));
-				$cal = $this->makegmttime(0,0,0,$cal['month'],$cal['day'],$cal['year']);
+				$cal = $this->datetime->gmtdate($i + ($j * 24 * 3600));
+				$cal = $this->datetime->makegmttime(0,0,0,$cal['month'],$cal['day'],$cal['year']);
 				if($cal['full'] >= $monthstart && $cal['full'] <= $monthend)
 				{
 					$day_image = '';
@@ -945,7 +857,7 @@ class calendar extends calendar_
 			$p->set_var('monthweek_day','');
 		}
 		
-		$return_value = $p->finish($p->parse('out','mini_cal'));
+		$return_value = $p->fp('out','mini_cal');
 		unset($p);
 		return $return_value;
 	}
@@ -957,8 +869,8 @@ class calendar extends calendar_
 		$retval = Array();
 		$ok = False;
 
-		$starttime -= $this->tz_offset;
-		$endtime -= $this->tz_offset;
+		$starttime -= $this->datetime->tz_offset;
+		$endtime -= $this->datetime->tz_offset;
 
 		if($starttime == $endtime)
 		{
@@ -1034,7 +946,7 @@ class calendar extends calendar_
 	{
 		global $phpgw_info;
 
-		$this->weekstarttime = $this->get_weekday_start($year,$month,1);
+		$this->weekstarttime = $this->datetime->get_weekday_start($year,$month,1);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');
@@ -1061,11 +973,11 @@ class calendar extends calendar_
 
 		for($i=0;$i<7;$i++)
 		{
-			$p->set_var('col_title',lang($this->days[$i]));
+			$p->set_var('col_title',lang($this->datetime->days[$i]));
 			$p->parse('column_header','column_title',True);
 		}
 		
-		return $p->finish($p->parse('out','monthly_header'));
+		return $p->fp('out','monthly_header');
 	}
 
 	function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0)
@@ -1106,7 +1018,7 @@ class calendar extends calendar_
 		}
 		for ($j=0;$j<7;$j++)
 		{
-			$date = $this->gmtdate($startdate + ($j * 86400));
+			$date = $this->datetime->gmtdate($startdate + ($j * 86400));
 			$var = Array(
 				'column_data'	=>	'',
 				'extra'		=>	''
@@ -1116,7 +1028,7 @@ class calendar extends calendar_
 			$day = $phpgw->common->show_date($date['raw'],'d');
 			$month = $phpgw->common->show_date($date['raw'],'m');
 			$year = $phpgw->common->show_date($date['raw'],'Y');
-			$date = $this->gmtdate(mktime(0,0,0,$date['month'],$date['day'],$date['year']));
+			$date = $this->datetime->gmtdate(mktime(0,0,0,$date['month'],$date['day'],$date['year']));
 
 			if ($weekly || ($date['full'] >= $monthstart && $date['full'] <= $monthend))
 			{
@@ -1246,7 +1158,7 @@ class calendar extends calendar_
 		$p->set_block('week','m_w_table','m_w_table');
 		$p->set_block('week','event','event');
 		
-		$start = $this->get_weekday_start($year, $month, $day);
+		$start = $this->datetime->get_weekday_start($year, $month, $day);
 
 		$this->end_repeat_day = $start + 604800;
 
@@ -1298,7 +1210,7 @@ class calendar extends calendar_
 
 		$this->end_repeat_day = $monthend;
 		
-		$start = $this->get_weekday_start($year, $month, 1);
+		$start = $this->datetime->get_weekday_start($year, $month, 1);
 
 		$this->repeated_events = Null;
 		$this->repeating_events = Null;
@@ -1443,7 +1355,7 @@ class calendar extends calendar_
 
 		$time = Array();
 
-		$date = $this->localdates($date['raw'] - $this->tz_offset);
+		$date = $this->datetime->localdates($date['raw'] - $this->datetime->tz_offset);
 
 //		echo 'Searching for events on : '.$phpgw->common->show_date($date['raw'])."<br>\n";
 
@@ -1664,18 +1576,16 @@ class calendar extends calendar_
 			$p->parse('row','list',True);
 		}
 
-		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->tz_offset;
 		$var = Array(
 			'field'	=>	lang('Start Date/Time'),
-			'data'	=>	$phpgw->common->show_date($start)
+			'data'	=>	$phpgw->common->show_date(mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset)
 		);
 		$p->set_var($var);
 		$p->parse('row','list',True);
 	
-		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->tz_offset;
 		$var = Array(
 			'field'	=>	lang('End Date/Time'),
-			'data'	=>	$phpgw->common->show_date($end)
+			'data'	=>	$phpgw->common->show_date(mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset)
 		);
 		$p->set_var($var);
 		$p->parse('row','list',True);
@@ -1784,7 +1694,7 @@ class calendar extends calendar_
 				$recur_end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
 				if($recur_end != 0)
 				{
-					$recur_end -= $this->tz_offset;
+					$recur_end -= $this->datetime->tz_offset;
 					$str .= lang('ends').': '.lang($phpgw->common->show_date($recur_end,'l'));
 					$str .= ', '.lang($phpgw->common->show_date($recur_end,'F'));
 					$str .= ' '.$phpgw->common->show_date($recur_end,'d, Y').' ';
@@ -1873,7 +1783,7 @@ class calendar extends calendar_
 			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
-		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
+		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
 
 		$var = Array(
 			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.REJECTED),
@@ -1882,7 +1792,7 @@ class calendar extends calendar_
 			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
-		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
+		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
 
 		$var = Array(
 			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.TENTATIVE),
@@ -1891,7 +1801,7 @@ class calendar extends calendar_
 			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
-		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
+		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
 
 		$var = Array(
 			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.NO_RESPONSE),
@@ -1900,7 +1810,7 @@ class calendar extends calendar_
 			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
-		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
+		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
 
 		$str .= '</tr></table>';
 
@@ -1995,8 +1905,8 @@ class calendar extends calendar_
 				for($k=0;$k<$this->sorted_events_matching;$k++)
 				{
 					$event = $events[$k];
-					$eventstart = $this->localdates($event->datetime);
-					$eventend = $this->localdates($event->edatetime);
+					$eventstart = $this->datetime->localdates($event->datetime);
+					$eventend = $this->datetime->localdates($event->edatetime);
 					$start = ($eventstart['hour'] * 10000) + ($eventstart['minute'] * 100);
 					$starttemp = $this->splittime("$start",False);
 					$subminute = 0;

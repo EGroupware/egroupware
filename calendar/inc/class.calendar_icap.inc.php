@@ -46,8 +46,6 @@ class calendar_ extends calendar__
 		{
 			$this->stream = mcal_open('{'.$phpgw_info['server']['icap_server'].'/'.$phpgw_info['server']['icap_type'].'}'.$calendar,$this->user,$passwd);
 		}
-		
-		return $this->stream;
 	}
 
 	function popen($calendar='',$user='',$passwd='',$options='')
@@ -74,8 +72,6 @@ class calendar_ extends calendar__
 		{
 			$this->stream = mcal_popen('{'.$phpgw_info['server']['icap_server'].'/'.$phpgw_info['server']['icap_type'].'}'.$calendar,$this->user,$passwd);
 		}
-		
-		return $this->stream;
 	}
 
 	function reopen($calendar,$options='')
@@ -88,38 +84,36 @@ class calendar_ extends calendar__
 		{
 			$this->stream = mcal_reopen($calendar);
 		}
-		
-		return $this->stream;
 	}
 
-	function close($mcal_stream,$options='')
+	function close($options='')
 	{
 		if($options != '')
 		{
-			return mcal_close($mcal_stream,$options);
+			return mcal_close($this->stream,$options);
 		}
 		else
 		{
-			return mcal_close($mcal_stream);
+			return mcal_close($this->stream);
 		}
 	}
 
-	function create_calendar($stream,$calendar)
+	function create_calendar($calendar)
 	{
-		return mcal_create_calendar($stream,$calendar);
+		return mcal_create_calendar($this->stream,$calendar);
 	}
 
-	function rename_calendar($stream,$old_name,$new_name)
+	function rename_calendar($old_name,$new_name)
 	{
-		return mcal_rename_calendar($stream,$old_name,$new_name);
+		return mcal_rename_calendar($this->stream,$old_name,$new_name);
 	}
 
-	function delete_calendar($stream,$calendar)
+	function delete_calendar($calendar)
 	{
-		return mcal_delete_calendar($stream,$calendar);
+		return mcal_delete_calendar($this->stream,$calendar);
 	}
 
-	function fetch_event($mcal_stream,$event_id,$options='')
+	function fetch_event($event_id,$options='')
 	{
 		if(!isset($this->stream))
 		{
@@ -130,11 +124,11 @@ class calendar_ extends calendar__
 	  
 		if($options != '')
 		{
-			$this->event = mcal_fetch_event($mcal_stream,$event_id,$options);
+			$this->event = mcal_fetch_event($this->stream,$event_id,$options);
 		}
 		else
 		{
-			$this->event = mcal_fetch_event($mcal_stream,$event_id);
+			$this->event = mcal_fetch_event($this->stream,$event_id);
 		}
 
 		// Need to load the $this->event variable with the $event structure from
@@ -145,41 +139,41 @@ class calendar_ extends calendar__
 		return $this->event;
 	}
 
-	function list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
+	function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
 	{
 		if($endYear != '' && $endMonth != '' && $endDay != '')
 		{
-			$events = mcal_list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear,$endMonth,$endYear);
+			$events = mcal_list_events($this->stream,$startYear,$startMonth,$startDay,$endYear,$endMonth,$endYear);
 		}
 		else
 		{
-			$events = mcal_list_events($mcal_stream,$startYear,$startMonth,$startDay);
+			$events = mcal_list_events($this->stream,$startYear,$startMonth,$startDay);
 		}
 
-		return $events;		
+		return $events;
 	}
 
-	function append_event($mcal_stream)
+	function append_event()
 	{
-		return mcal_append_event($mcal_stream);
+		return mcal_append_event($this->stream);
 	}
 
-	function store_event($mcal_stream)
+	function store_event()
 	{
-		return mcal_store_event($mcal_stream);
+		return mcal_store_event($this->stream);
 	}
 
-	function delete_event($mcal_stream,$event_id)
+	function delete_event($event_id)
 	{
-		return mcal_delete_event($mcal_stream,$event_id);
+		return mcal_delete_event($this->stream,$event_id);
 	}
 
-	function snooze($mcal_stream,$event_id)
+	function snooze($event_id)
 	{
-		return mcal_snooze($mcal_stream,$event_id);
+		return mcal_snooze($this->stream,$event_id);
 	}
 
-	function list_alarms($mcal_stream,$begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
+	function list_alarms($begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
 	{
 		if($end_day == '')
 		{
@@ -193,64 +187,64 @@ class calendar_ extends calendar__
 						{
 							if($begin_year == '')
 							{
-								return mcal_list_alarms($mcal_stream);
+								return mcal_list_alarms($this->stream);
 							}
 							else
 							{
-								return mcal_list_alarms($mcal_stream,$begin_year);
+								return mcal_list_alarms($this->stream,$begin_year);
 							}
 						}
 						else
 						{
-							return mcal_list_alarms($mcal_stream,$begin_year,$begin_month);
+							return mcal_list_alarms($this->stream,$begin_year,$begin_month);
 						}
 					}
 					else
 					{
-						return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day);
+						return mcal_list_alarms($this->stream,$begin_year,$begin_month,$begin_day);
 					}
 				}
 				else
 				{
-					return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year);
+					return mcal_list_alarms($this->stream,$begin_year,$begin_month,$begin_day,$end_year);
 				}
 			}
 			else
 			{
-				return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month);
+				return mcal_list_alarms($this->stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month);
 			}
 		}
 		else
 		{
-			return mcal_list_alarms($mcal_stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month,$end_day);
+			return mcal_list_alarms($this->stream,$begin_year,$begin_month,$begin_day,$end_year,$end_month,$end_day);
 		}
 	}
 	
-	function event_init($stream)
+	function event_init()
 	{
 		$this->event = CreateObject('calendar.calendar_item');
-		return mcal_event_init($stream);
+		return mcal_event_init($this->stream);
 	}
 
-	function event_set_category($stream,$category='')
+	function event_set_category($category='')
 	{
 		$this->event->category = $category;
-		return mcal_event_set_category($stream,$this->event->category);
+		return mcal_event_set_category($this->stream,$this->event->category);
 	}
 	
-	function event_set_title($stream,$title='')
+	function event_set_title($title='')
 	{
 		$this->event->title = $title;
-		return mcal_event_set_title($stream,$this->event->title);
+		return mcal_event_set_title($this->stream,$this->event->title);
 	}
 
-	function event_set_description($stream,$description='')
+	function event_set_description($description='')
 	{
 		$this->event->description = $description;
-		return mcal_event_set_description($stream,$this->event->description);
+		return mcal_event_set_description($this->stream,$this->event->description);
 	}
 
-	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function event_set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
 	// Legacy Support
 		$this->event->year = $year;
@@ -276,30 +270,30 @@ class calendar_ extends calendar__
 				{
 					if($day == 0)
 					{
-						return mcal_event_set_start($stream,$year,$month);
+						return mcal_event_set_start($this->stream,$year,$month);
 					}
 					else
 					{
-						return mcal_event_set_start($stream,$year,$month,$day);
+						return mcal_event_set_start($this->stream,$year,$month,$day);
 					}
 				}
 				else
 				{
-					return mcal_event_set_start($stream,$year,$month,$day,$hour);
+					return mcal_event_set_start($this->stream,$year,$month,$day,$hour);
 				}
 			}
 			else
 			{
-				return mcal_event_set_start($stream,$year,$month,$day,$hour,$min);
+				return mcal_event_set_start($this->stream,$year,$month,$day,$hour,$min);
 			}
 		}
 		else
 		{
-			return mcal_event_set_start($stream,$year,$month,$day,$hour,$min,$sec);
+			return mcal_event_set_start($this->stream,$year,$month,$day,$hour,$min,$sec);
 		}
 	}
 
-	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function event_set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
 	// Legacy Support
 		$this->event->end_year = $year;
@@ -327,38 +321,38 @@ class calendar_ extends calendar__
 				{
 					if($day == 0)
 					{
-						return mcal_event_set_end($stream,$year,$month);
+						return mcal_event_set_end($this->stream,$year,$month);
 					}
 					else
 					{
-						return mcal_event_set_end($stream,$year,$month,$day);
+						return mcal_event_set_end($this->stream,$year,$month,$day);
 					}
 				}
 				else
 				{
-					return mcal_event_set_end($stream,$year,$month,$day,$hour);
+					return mcal_event_set_end($this->stream,$year,$month,$day,$hour);
 				}
 			}
 			else
 			{
-				return mcal_event_set_end($stream,$year,$month,$day,$hour,$min);
+				return mcal_event_set_end($this->stream,$year,$month,$day,$hour,$min);
 			}
 		}
 		else
 		{
-			return mcal_event_set_end($stream,$year,$month,$day,$hour,$min,$sec);
+			return mcal_event_set_end($this->stream,$year,$month,$day,$hour,$min,$sec);
 		}
 	}
 
-	function event_set_alarm($stream,$alarm)
+	function event_set_alarm($alarm)
 	{
-		return mcal_event_set_alarm ($stream,$alarm);
+		return mcal_event_set_alarm ($this->stream,$alarm);
 	}
 
-	function event_set_class($stream,$class)
+	function event_set_class($class)
 	{
 		$this->event->public = $class;
-		return mcal_event_set_class($stream,$class);
+		return mcal_event_set_class($this->stream,$class);
 	}
 
 	function is_leap_year($year)
@@ -398,59 +392,59 @@ class calendar_ extends calendar__
 
 	// The function definition doesn't look correct...
 	// Need more information for this function
-	function next_recurrence($stream,$weekstart,$next)
+	function next_recurrence($weekstart,$next)
 	{
-		return mcal_next_recurrence($stream,$weekstart,$next);
+		return mcal_next_recurrence($this->stream,$weekstart,$next);
 	}
 
-	function event_set_recur_none($stream)
+	function event_set_recur_none()
 	{
-		return mcal_event_set_recur_none($stream);
+		return mcal_event_set_recur_none($this->stream);
 	}
 
-	function event_set_recur_daily($stream,$year,$month,$day,$interval)
+	function event_set_recur_daily($year,$month,$day,$interval)
 	{
-		return mcal_event_set_recur_daily($stream,$year,$month,$day,$interval);
+		return mcal_event_set_recur_daily($this->stream,$year,$month,$day,$interval);
 	}
 	
-	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
+	function event_set_recur_weekly($year,$month,$day,$interval,$weekdays)
 	{
-		return mcal_event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays);
+		return mcal_event_set_recur_weekly($this->stream,$year,$month,$day,$interval,$weekdays);
 	}
 
-	function event_set_recur_monthly_mday($stream,$year,$month,$day,$interval)
+	function event_set_recur_monthly_mday($year,$month,$day,$interval)
 	{
-		return mcal_event_set_recur_monthly_mday($stream,$year,$month,$day,$interval);
+		return mcal_event_set_recur_monthly_mday($this->stream,$year,$month,$day,$interval);
 	}
 	
-	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
+	function event_set_recur_monthly_wday($year,$month,$day,$interval)
 	{
-		return mcal_event_set_recur_monthly_wday($stream,$year,$month,$day,$interval);
+		return mcal_event_set_recur_monthly_wday($this->stream,$year,$month,$day,$interval);
 	}
 
-	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
+	function event_set_recur_yearly($year,$month,$day,$interval)
 	{
-		return mcal_event_set_recur_yearly($stream,$year,$month,$day,$interval);
+		return mcal_event_set_recur_yearly($this->stream,$year,$month,$day,$interval);
 	}
 
-	function fetch_current_stream_event($stream)
+	function fetch_current_stream_event()
 	{
-		return mcal_fetch_current_stream_event($stream);
+		return mcal_fetch_current_stream_event($this->stream);
 	}
 
-	function event_add_attribute($stream,$attribute,$value)
+	function event_add_attribute($attribute,$value)
 	{
-		mcal_event_add_attribute($stream,$attribute,$value);
+		mcal_event_add_attribute($this->stream,$attribute,$value);
 	}
 
-	function expunge($stream)
+	function expunge()
 	{
-		return mcal_expunge($stream);
+		return mcal_expunge($this->stream);
 	}
 
 	/**************** Local functions for ICAL based Calendar *****************/
 	
-	function event_set_participants($stream,$participants)
+	function event_set_participants($participants)
 	{
 		$this->event->participants = Array();
 		reset($participants);

@@ -14,8 +14,7 @@
 
   /* $Id$ */
 
-if (isset($phpgw_info['flags']['included_classes']['calendar_']) && 
-    $phpgw_info['flags']['included_classes']['calendar_'] == True)
+if (@$phpgw_info['flags']['included_classes']['calendar_'])
 {
 	return;
 }
@@ -61,31 +60,31 @@ class calendar_ extends calendar__
 		return $this->stream;
 	}
 
-	function close($mcal_stream,$options='')
+	function close($options='')
 	{
 		return True;
 	}
 
-	function create_calendar($stream='',$calendar='')
+	function create_calendar($calendar='')
 	{
 		return $calendar;
 	}
 
-	function rename_calendar($stream='',$old_name='',$new_name='')
+	function rename_calendar($old_name='',$new_name='')
 	{
 		return $new_name;
 	}
     
-	function delete_calendar($stream='',$calendar='')
+	function delete_calendar($calendar='')
 	{
 		$this->stream->query('SELECT cal_id FROM phpgw_cal WHERE owner='.intval($calendar),__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
 			while($this->stream->next_record())
 			{
-				$this->delete_event($stream,intval($this->stream->f('cal_id')));
+				$this->delete_event(intval($this->stream->f('cal_id')));
 			}
-			$this->expunge($stream);
+			$this->expunge();
 		}
 		$this->stream->lock(array('phpgw_cal_user'));
 		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_login='.intval($calendar),__LINE__,__FILE__);
@@ -94,7 +93,7 @@ class calendar_ extends calendar__
 		return $calendar;
 	}
 
-	function fetch_event($mcal_stream,$event_id,$options='')
+	function fetch_event($event_id,$options='')
 	{
 		global $phpgw;
 		
@@ -133,7 +132,7 @@ class calendar_ extends calendar__
 			$this->event->alarm = 0;
 			
 			$this->event->datetime = $this->stream->f('datetime');
-			$datetime = $this->localdates($this->stream->f('datetime'));
+			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
 			$this->event->start->year	= $datetime['year'];
 			$this->event->start->month	= $datetime['month'];
 			$this->event->start->mday	= $datetime['day'];
@@ -143,7 +142,7 @@ class calendar_ extends calendar__
 			$this->event->start->alarm	= 0;
 
 			$this->event->mdatetime = $this->stream->f('mdatetime');
-			$datetime = $this->localdates($this->stream->f('mdatetime'));
+			$datetime = $this->datetime->localdates($this->stream->f('mdatetime'));
 			$this->event->mod->year	= $datetime['year'];
 			$this->event->mod->month	= $datetime['month'];
 			$this->event->mod->mday	= $datetime['day'];
@@ -153,7 +152,7 @@ class calendar_ extends calendar__
 			$this->event->mod->alarm	= 0;
 
 			$this->event->edatetime = $this->stream->f('edatetime');
-			$datetime = $this->localdates($this->stream->f('edatetime'));
+			$datetime = $this->datetime->localdates($this->stream->f('edatetime'));
 			$this->event->end->year	= $datetime['year'];
 			$this->event->end->month	= $datetime['month'];
 			$this->event->end->mday	= $datetime['day'];
@@ -183,7 +182,7 @@ class calendar_ extends calendar__
 				$enddate = $this->stream->f('recur_enddate');
 				if($enddate != 0 && $enddate != Null)
 				{
-					$datetime = $this->localdates($enddate);
+					$datetime = $this->datetime->localdates($enddate);
 					$this->event->recur_enddate->year	= $datetime['year'];
 					$this->event->recur_enddate->month	= $datetime['month'];
 					$this->event->recur_enddate->mday	= $datetime['day'];
@@ -230,19 +229,19 @@ class calendar_ extends calendar__
 		return $this->event;
 	}
 
-	function list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
+	function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
 	{
 		if(!isset($this->stream))
 		{
 			return False;
 		}
 
-		$datetime = $this->makegmttime(0,0,0,$startMonth,$startDay,$startYear);
+		$datetime = $this->datetime->makegmttime(0,0,0,$startMonth,$startDay,$startYear);
 		$startDate = ' AND (phpgw_cal.datetime >= '.$datetime.') ';
 	  
 		if($endYear != '' && $endMonth != '' && $endDay != '')
 		{
-			$edatetime = $this->makegmttime(23,59,59,intval($endMonth),intval($endDay),intval($endYear));
+			$edatetime = $this->datetime->makegmttime(23,59,59,intval($endMonth),intval($endDay),intval($endYear));
 			$endDate = 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
 		}
 		else
@@ -253,19 +252,19 @@ class calendar_ extends calendar__
 		return $this->get_event_ids(False,$startDate.$endDate);
 	}
 
-	function append_event($mcal_stream)
+	function append_event()
 	{
 		$this->save_event($this->event);
 		$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
 		return $this->event->id;
 	}
 
-	function store_event($mcal_stream)
+	function store_event()
 	{
 		if($this->event->id != 0)
 		{
 			$new_event = $this->event;
-			$old_event = $this->fetch_event($this->stream,$new_event->id);
+			$old_event = $this->fetch_event($new_event->id);
 			$this->prepare_recipients($new_event,$old_event);
 			$this->event = $new_event;
 		}
@@ -281,57 +280,50 @@ class calendar_ extends calendar__
 		return $this->save_event($this->event);
 	}
 
-	function delete_event($mcal_stream,$event_id)
+	function delete_event($event_id)
 	{
 		$this->deleted_events[] = $event_id;
 	}
 
-	function snooze($mcal_stream,$event_id)
+	function snooze($event_id)
 	{
 	//Turn off an alarm for an event
 	//Returns true. 
 	}
 
-	function list_alarms($mcal_stream,$begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
+	function list_alarms($begin_year='',$begin_month='',$begin_day='',$end_year='',$end_month='',$end_day='')
 	{
 	//Return a list of events that has an alarm triggered at the given datetime
 	//Returns an array of event ID's
 	}
 
-	function event_init($stream)
+	function event_init()
 	{
 		$this->event = CreateObject('calendar.calendar_item');
 		$this->event->owner = $this->user;
-//		echo 'Initializing Calendar Event<br>'."\n";
-//		echo 'Setting Owner = '.$this->event->owner."<br>\n";
 		return True;
 	}
 
-	function event_set_category($stream,$category='')
+	function set_category($stream,$category='')
 	{
 		$this->event->category = $category;
-//		echo 'Setting Calendar Category = '.$this->event->category.'<br>'."\n";
 		return True;
 	}
 
-	function event_set_title($stream,$title='')
+	function set_title($title='')
 	{
 		$this->event->title = $title;
-//		echo 'Setting Calendar Title = '.$this->event->title.'<br>'."\n";
 		return True;
 	}
 
-	function event_set_description($stream,$description='')
+	function set_description($description='')
 	{
 		$this->event->description = $description;
-//		echo 'Setting Calendar Description = '.$this->event->description.'<br>'."\n";
 		return True;
 	}
 
-	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		global $phpgw_info;
-		
 		$this->event->start->year = intval($year);
 		$this->event->start->month = intval($month);
 		$this->event->start->mday = intval($day);
@@ -339,15 +331,11 @@ class calendar_ extends calendar__
 		$this->event->start->min = intval($min);
 		$this->event->start->sec = intval($sec);
 		$this->event->start->alarm = 0;
-
-//		echo 'Setting Calendar Start = '.$this->event->start->year.$this->event->start->month.$this->event->start->mday.':'.$this->event->start->hour.$this->event->start->min.$this->event->start->sec.'<br>'."\n";
 		return True;
 	}
 
-	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		global $phpgw_info;
-		
 		$this->event->end->year = intval($year);
 		$this->event->end->month = intval($month);
 		$this->event->end->mday = intval($day);
@@ -355,117 +343,19 @@ class calendar_ extends calendar__
 		$this->event->end->min = intval($min);
 		$this->event->end->sec = intval($sec);
 		$this->event->end->alarm = 0;
-		
-//		echo 'Setting Calendar End = '.$this->event->end->year.$this->event->end->month.$this->event->end->mday.':'.$this->event->end->hour.$this->event->end->min.$this->event->end->sec.'<br>'."\n";
 		return True;
 	}
 
-	function event_set_alarm($stream,$alarm)
+	function set_alarm($alarm)
 	{
 		$this->event->alarm = intval($alarm);
 		return True;
 	}
 
-	function event_set_class($stream,$class)
+	function set_class($class)
 	{
 		$this->event->public = $class;
 		return True;
-	}
-
-	function is_leap_year($year)
-	{
-		if ((intval($year) % 4 == 0) && (intval($year) % 100 != 0) || (intval($year) % 400 == 0))
-			return 1;
-		else
-			return 0;
-	}
-
-	function days_in_month($month,$year)
-	{
-		$days = Array(
-			1	=>	31,
-			2	=>	28 + $this->is_leap_year(intval($year)),
-			3	=>	31,
-			4	=>	30,
-			5	=>	31,
-			6	=>	30,
-			7	=>	31,
-			8	=>	31,
-			9	=>	30,
-			10	=>	31,
-			11	=>	30,
-			12	=>	31
-		);
-		return $days[intval($month)];
-	}
-
-	function date_valid($year,$month,$day)
-	{
-		return checkdate(intval($month),intval($day),intval($year));
-	}
-
-	function time_valid($hour,$minutes,$seconds)
-	{
-		if(intval($hour) < 0 || intval($hour) > 24)
-		{
-			return False;
-		}
-		if(intval($minutes) < 0 || intval($minutes) > 59)
-		{
-			return False;
-		}
-		if(intval($seconds) < 0 || intval($seconds) > 59)
-		{
-			return False;
-		}
-
-		return True;
-	}
-
-	function day_of_week($year,$month,$day)
-	{
-		if($month > 2)
-		{
-			$month -= 2;
-		}
-		else
-		{
-			$month += 10;
-			$year--;
-		}
-		$day = (floor((13 * $month - 1) / 5) + $day + ($year % 100) + floor(($year % 100) / 4) + floor(($year / 100) / 4) - 2 * floor($year / 100) + 77);
-		return (($day - 7 * floor($day / 7)));
-	}
-	
-	function day_of_year($year,$month,$day)
-	{
-		$days = array(0,31,59,90,120,151,181,212,243,273,304,334);
-        
-		$julian = ($days[$month - 1] + $day);
-
-		if($month > 2 && $this->is_leap_year($year))
-		{
-			$julian++;
-		}
-		return($julian);
-	}
-
-	function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
-	{
-		$a_date = mktime(0,0,0,intval($a_month),intval($a_day),intval($a_year));
-		$b_date = mktime(0,0,0,intval($b_month),intval($b_day),intval($b_year));
-		if($a_date == $b_date)
-		{
-			return 0;
-		}
-		elseif($a_date > $b_date)
-		{
-			return 1;
-		}
-		elseif($a_date < $b_date)
-		{
-			return -1;
-		}
 	}
 
 	// The function definition doesn't look correct...
@@ -623,10 +513,9 @@ class calendar_ extends calendar__
 			$event->id = $this->stream->f('cal_id');
 		}
 
-		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
-		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
-		$today = time() - $tz_offset;
+		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
+		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
+		$today = time() - $this->datetime->tz_offset;
 
 		if($event->recur_type != RECUR_NONE)
 		{
@@ -679,7 +568,7 @@ class calendar_ extends calendar__
 		{
 			if($event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0 && $event->recur_enddate->year != 0)
 			{
-				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $tz_offset;
+				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $this->datetime->tz_offset;
 			}
 			else
 			{
@@ -832,42 +721,6 @@ class calendar_ extends calendar__
 			}
 		}
 		return $temp;
-	}
-
-	function makegmttime($hour,$minute,$second,$month,$day,$year)
-	{
-		global $phpgw, $phpgw_info;
-
-		return $this->gmtdate(mktime($hour, $minute, $second, $month, $day, $year));
-	}
-
-	function localdates($localtime)
-	{
-		global $phpgw, $phpgw_info;
-
-		$date = Array('raw','day','month','year','full','dow','dm','bd');
-		$date['raw'] = $localtime;
-		$date['year'] = intval($phpgw->common->show_date($date['raw'],'Y'));
-		$date['month'] = intval($phpgw->common->show_date($date['raw'],'m'));
-		$date['day'] = intval($phpgw->common->show_date($date['raw'],'d'));
-		$date['full'] = intval($phpgw->common->show_date($date['raw'],'Ymd'));
-		$date['bd'] = mktime(0,0,0,$date['month'],$date['day'],$date['year']);
-		$date['dm'] = intval($phpgw->common->show_date($date['raw'],'dm'));
-		$date['dow'] = $this->day_of_week($date['year'],$date['month'],$date['day']);
-		$date['hour'] = intval($phpgw->common->show_date($date['raw'],'H'));
-		$date['minute'] = intval($phpgw->common->show_date($date['raw'],'i'));
-		$date['second'] = intval($phpgw->common->show_date($date['raw'],'s'));
-		
-		return $date;
-	}
-
-	function gmtdate($localtime)
-	{
-		global $phpgw_info;
-      
-		$localtime -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-		
-		return $this->localdates($localtime);
 	}
 
 	function date_to_epoch($d)

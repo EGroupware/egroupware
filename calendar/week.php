@@ -39,14 +39,14 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	$next = $phpgw->calendar->makegmttime(0,0,0,$thismonth,$thisday + 7,$thisyear);
-	$prev = $phpgw->calendar->makegmttime(0,0,0,$thismonth,$thisday - 7,$thisyear);
+	$next = $phpgw->calendar->datetime->makegmttime(0,0,0,$thismonth,$thisday + 7,$thisyear);
+	$prev = $phpgw->calendar->datetime->makegmttime(0,0,0,$thismonth,$thisday - 7,$thisyear);
 
-	$nextmonth = $phpgw->calendar->makegmttime(0,0,0,$thismonth + 1,1,$thisyear);
-	$prevmonth = $phpgw->calendar->makegmttime(0,0,0,$thismonth - 1,1,$thisyear);
+	$nextmonth = $phpgw->calendar->datetime->makegmttime(0,0,0,$thismonth + 1,1,$thisyear);
+	$prevmonth = $phpgw->calendar->datetime->makegmttime(0,0,0,$thismonth - 1,1,$thisyear);
 
-	$first = $phpgw->calendar->gmtdate($phpgw->calendar->get_weekday_start($thisyear, $thismonth, $thisday));
-	$last = $phpgw->calendar->gmtdate($first['raw'] + 518400);
+	$first = $phpgw->calendar->datetime->gmtdate($phpgw->calendar->datetime->get_weekday_start($thisyear, $thismonth, $thisday));
+	$last = $phpgw->calendar->datetime->gmtdate($first['raw'] + 518400);
 
 // Week Label
 	$week_id = lang(strftime("%B",$first['raw'])).' '.$first['day'];

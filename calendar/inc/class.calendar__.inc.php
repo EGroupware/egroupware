@@ -59,6 +59,12 @@ class calendar__
 	var $modified;
 	var $deleted;
 	var $added;
+	var $datetime;
+
+	function calendar__()
+	{
+		$this->datetime = CreateObject('phpgwapi.datetime');
+	}
 
 	function send_update($msg_type,$participants,$old_event=False,$new_event=False)
 	{
@@ -144,12 +150,12 @@ class calendar__
 
 		if($old_event != False)
 		{
-			$old_event_datetime = $t_old_start_time - $tz_offset;
+			$old_event_datetime = $t_old_start_time - $this->datetime->tz_offset;
 		}
 		
 		if($new_event != False)
 		{
-			$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $tz_offset;
+			$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $this->datetime->tz_offset;
 		}
 
 		for($i=0;$i<count($participants);$i++)
