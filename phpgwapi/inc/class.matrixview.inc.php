@@ -26,6 +26,7 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
+
 	/* $Id$ */
 
 	class matrixview
@@ -47,23 +48,20 @@
 
 		var $selection = 1;
 
-	/**
-	*
-	* construtor: graphview class
-	*
-	* constructor waits for the desired month in 
-	* integer presentation and the desired year also
-	* in integer presentation 4 digits (ex. 2001)
-	*
-	* @param 	int 	month (for example: 02)
-	* @param  int 	year (for example: 2001)
-	*
-	*/
-
+		/**
+		*
+		* construtor: graphview class
+		*
+		* constructor waits for the desired month in 
+		* integer presentation and the desired year also
+		* in integer presentation 4 digits (ex. 2001)
+		*
+		* @param 	int 	month (for example: 02)
+		* @param  int 	year (for example: 2001)
+		*
+		*/
 		function matrixview ($month_int = 0, $year_int = 0)
 		{
-			global $phpgw;
-
 			for($i;$i<32;$i++)
 			{
 				if(checkdate($month_int,$i,$year_int)) $days++;
@@ -71,26 +69,25 @@
 
 			$this->month = $month_int;
 			$this->year = $year_int;
-			$this->set1PixelGif($phpgw->common->get_image_path('todo').'/pix.gif');
+			$this->set1PixelGif($GLOBALS['phpgw']->common->get_image_path('todo').'/pix.gif');
 		}
 
-	/**
-	*
-	* set a Period for a specified item
-	*
-	* setting a period for an element means to define
-	* a fromDate and and a toDate together with the
-	* item itself. This will store a timeframe associated
-	* with an item for later usage
-	*
-	* @param 	string 	item for the timeframe
-	* @param  date 	fromdate in format yyyymmdd
-	* @param  date		todate in format yyyymmdd
-	*
-	* @return boolean	false if item cannot be saved
-	*				otherwise true
-	*/
-	
+		/**
+		*
+		* set a Period for a specified item
+		*
+		* setting a period for an element means to define
+		* a fromDate and and a toDate together with the
+		* item itself. This will store a timeframe associated
+		* with an item for later usage
+		*
+		* @param 	string 	item for the timeframe
+		* @param  date 	fromdate in format yyyymmdd
+		* @param  date		todate in format yyyymmdd
+		*
+		* @return boolean	false if item cannot be saved
+		*				otherwise true
+		*/
 		function setPeriod ($item, $fromdate, $todate, $color='#990033')
 		{
 			$fyear = substr($fromdate,0,4);
@@ -117,100 +114,91 @@
 
 			while($go == 1)
 			{
-
-			// calculates fromdate
-			// echo date("d/m/Y", mktime(0,0,0, $fmonth, $fday+$i, $fyear)); echo "<br>";
+				// calculates fromdate
+				// echo date("d/m/Y", mktime(0,0,0, $fmonth, $fday+$i, $fyear)); echo "<br>";
 
 				$datinfo = getdate(mktime(0,0,0, $fmonth, $fday+$i, $fyear));
 			
 				if($datinfo['mon'] == $this->month
 					&& $datinfo['year'] == $this->year
 					&& $datinfo['mday'] <= $this->day)
-					{
-						$t = $datinfo['mday'];
-						$this->items_content[$this->items_count][$t] = 'x';
-					}
+				{
+					$t = $datinfo['mday'];
+					$this->items_content[$this->items_count][$t] = 'x';
+				}
 				
-				if (mktime(0,0,0, $fmonth, $fday+$i, $fyear) >= 
-					mktime(0,0,0, $this->month+1, 0, $this->year)
-					||
-					mktime(0,0,0, $fmonth, $fday+$i, $fyear) >=
-					mktime(0,0,0, $tmonth, $tday, $tyear)) $go = 0
-					;
-					$i++;
+				if (mktime(0,0,0, $fmonth, $fday+$i, $fyear) >= mktime(0,0,0, $this->month+1, 0, $this->year) ||
+					mktime(0,0,0, $fmonth, $fday+$i, $fyear) >= mktime(0,0,0, $tmonth, $tday, $tyear))
+				{
+					$go = 0;
+				}
+				$i++;
 			}
 		
 			$this->items_content[$this->items_count][0] = $item;
 			$this->items_color[$this->items_count]      = $color;
 
-		// increase number of items in two-dimensional array
-
+			// increase number of items in two-dimensional array
 			$this->items_count++;
 		}
 
-	/**
-	*
-	* sets the color for empty dayfields
-	*
-	* @param	string 	color in hexadecimal (ex. "#336699")
-	*/
-
+		/**
+		*
+		* sets the color for empty dayfields
+		*
+		* @param	string 	color in hexadecimal (ex. "#336699")
+		*/
 		function setEmptyFieldColor ($color)
 		{
 			$this->color_emptyfield=$color;
 		}
 
-	/**
-	*
-	* sets the color for calendar day fields
-	*
-	* @param	string 	color in hexadecimal (ex. "#336699")
-	*/
-
+		/**
+		*
+		* sets the color for calendar day fields
+		*
+		* @param	string 	color in hexadecimal (ex. "#336699")
+		*/
 		function setHeaderFieldColor ($color)
 		{
 			$this->color_headerfield=$color;
 		}
 
-	/**
-	*
-	* sets a new path for 1pixel (pix.gif) gif needed for the table
-	* default is set actual script dir + /images
-	*
-	* @param	string 	path and name to 1pixel gif
-	*/
-
+		/**
+		*
+		* sets a new path for 1pixel (pix.gif) gif needed for the table
+		* default is set actual script dir + /images
+		*
+		* @param	string 	path and name to 1pixel gif
+		*/
 		function set1PixelGif ($filepath)
 		{
 			$this->image1pix=$filepath;
 		}
 
-	/**
-	*
-	* disable selection of new timeframe
-	*
-	*/
-
+		/**
+		*
+		* disable selection of new timeframe
+		*
+		*/
 		function diableSelection ()
 		{
 			$this->selection=0;
 		}
 
-	/**
-	*
-	* return the html code for the matrix
-	*
-	* will return the complete html code for the matrix.
-	* In the calling program you can do some other
-	* operations on it, because it wont be echoed directly
-	*
-	* @return string	html code for the matrix
-	*/
-
+		/**
+		*
+		* return the html code for the matrix
+		*
+		* will return the complete html code for the matrix.
+		* In the calling program you can do some other
+		* operations on it, because it wont be echoed directly
+		*
+		* @return string	html code for the matrix
+		*/
 		function out($form_link)
 		{
-
-	// get days of desired month (month submitted in constructor)
+			// get days of desired month (month submitted in constructor)
 
 			$in = getdate(mktime(0,0,0, $this->month+1,0,$this->year));
 			$this->sumdays = $in[mday];
@@ -223,12 +211,10 @@
 
 			$this->out_header();
 
-	// loop through number of items
-
+			// loop through number of items
 			for($z=0;$z<$this->items_count;$z++)
 			{
-
-	// seperate color and name from first array element
+				// seperate color and name from first array element
 
 				$itemname  = $this->items_content[$z][0];
 				$itemcolor = $this->items_color[$z];
@@ -236,11 +222,17 @@
 				echo '<tr>' . "\n";
 				echo '<td>' . $itemname . '</td>' . "\n";
 
-	// loop through days of desired month
-
+				// loop through days of desired month
 				for($r=1;$r<$this->sumdays+1;$r++)
 				{
-					if($this->items_content[$z][$r] == 'x') $color = $itemcolor; else $color = $this->color_emptyfield;
+					if($this->items_content[$z][$r] == 'x')
+					{
+						$color = $itemcolor;
+					}
+					else
+					{
+						$color = $this->color_emptyfield;
+					}
 					echo '<td bgcolor="' . $color . '">&nbsp;</td>' . "\n";
 				}
 
@@ -252,14 +244,13 @@
 			echo '</div>' . "\n";
 		}
 
-	/**
-	*
-	* private class for out method
-	*
-	* should not be used from external
-	*
-	*/
-
+		/**
+		*
+		* private class for out method
+		*
+		* should not be used from external
+		*
+		*/
 		function out_header ()
 		{
 			echo '<tr>' . "\n";
@@ -279,14 +270,13 @@
 			echo '</tr>' . "\n";
 		}
 
-	/**
-	*
-	* private class for out method
-	*
-	* should not be used from external
-	*
-	*/
-
+		/**
+		*
+		* private class for out method
+		*
+		* should not be used from external
+		*
+		*/
 		function out_ruler ()
 		{
 			echo '<tr>' . "\n";
@@ -294,18 +284,15 @@
 			echo '</tr>' . "\n";
 		}
 
-	/**
-	*
-	* private class for out method
-	*
-	* should not be used from external
-	*
-	*/
-
+		/**
+		*
+		* private class for out method
+		*
+		* should not be used from external
+		*
+		*/
 		function out_monthyear($form_link)
 		{
-			global $phpgw;
-
 			echo '<form action="' . $form_link . '" method="post">' . "\n";
 			echo '<table border="0" width="100%" cellpadding="0" cellspacing="0">' . "\n";
 			echo '<tr>' . "\n";
