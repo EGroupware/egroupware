@@ -794,24 +794,13 @@
 			{
 				return False;
 			}
-			$db = $GLOBALS['phpgw']->db;
-			$db->query('SELECT account_lid,account_lastname,account_firstname FROM phpgw_accounts WHERE account_id='.$account_id,__LINE__,__FILE__);
-			if($db->num_rows())
+			$GLOBALS['phpgw']->accounts->get_account_name($account_id,$lid,$fname,$lname);
+			$fullname = $lid;
+			if($lname && $fname)
 			{
-				$db->next_record();
-				$fullname = $db->f('account_lid');
-				$lname = $db->f('account_lastname');
-				$fname = $db->f('account_firstname');
-				if($lname && $fname)
-				{
-					$fullname = $lname.', '.$fname;
-				}
-				return $fullname;
+				$fullname = $lname.', '.$fname;
 			}
-			else
-			{
-				return False;
-			}
+			return $fullname;
 		}
 
 		function display_status($user_status)
@@ -1728,9 +1717,8 @@
 					@reset($event['participants']);
 					while(list($part,$status) = each($event['participants']))
 					{
-						$db->query('select account_firstname,account_lastname from phpgw_accounts where account_id='.$part,__LINE__,__FILE__);
-						$db->next_record();
-						$name = $db->f('account_firstname').' '.$db->f('account_lastname');
+						$GLOBALS['phpgw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
+						$name = $fname.' '.$lname;
 						$owner_status = $icalendar->switch_partstat(intval($this->switch_status($event['participants'][$part])));
 						$owner_mailto = 'mpeters@satx.rr.com';
 						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$owner_mailto;
