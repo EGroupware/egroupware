@@ -2955,7 +2955,7 @@ class boicalendar
 			// time limit should be controlled elsewhere
 			@set_time_limit(0);
 
-			$GLOBALS['phpgw']->common->create_emailpreferences();
+			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences();
 			$users_email = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
 			$cats = CreateObject('phpgwapi.categories');
 			$ical = $this->parse($mime_msg);
@@ -2975,6 +2975,10 @@ class boicalendar
 				if($ical['event'][$i]['uid']['value'])
 				{
 					$uid_exists = $so_event->find_uid($ical['event'][$i]['uid']['value']);
+				}
+				else
+				{
+					$uid_exists = False;
 				}
 				if($uid_exists)
 				{
@@ -3085,11 +3089,11 @@ class boicalendar
 					if(isset($ical['event'][$i]['rrule']))
 					{
 // recur_enddate
-						if($ical['event'][$i]['rrule']['until'])
+						if(isset($ical['event'][$i]['rrule']['until']))
 						{
-							$recur_enddate['year'] = $ical['event'][$i]['rrule']['until']['year'];
-							$recur_enddate['month'] = $ical['event'][$i]['rrule']['until']['month'];
-							$recur_enddate['mday'] = $ical['event'][$i]['rrule']['until']['mday'];
+							$recur_enddate['year'] = intval($ical['event'][$i]['rrule']['until']['year']);
+							$recur_enddate['month'] = intval($ical['event'][$i]['rrule']['until']['month']);
+							$recur_enddate['mday'] = intval($ical['event'][$i]['rrule']['until']['mday']);
 						}
 						else
 						{
@@ -3100,7 +3104,7 @@ class boicalendar
 
 // recur_data
 						$recur_data = 0;
-						if($ical['event'][$i]['rrule']['byday'])
+						if(isset($ical['event'][$i]['rrule']['byday']))
 						{
 							$week_days = Array(
 								MCAL_M_SUNDAY	=> 'SU',
@@ -3137,14 +3141,14 @@ class boicalendar
 								$recur_type = MCAL_RECUR_DAILY;
 								break;
 							case WEEKLY:
-								$so_event->set_recur_weekly(intval($recur_enddate['year']),intval($recur_enddate['month']),intval($recur_enddate['mday']),$interval,$recur_data);
+								$so_event->set_recur_weekly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval,$recur_data);
 								break;
 							case MONTHLY:
 // Still need to determine if this is by day or by week for the month..
 //								$recur_type = MCAL_RECUR_M??????;
 								break;
 							case YEARLY:
-								$so_event->set_recur_yearly(intval($recur_enddate['year']),intval($recur_enddate['month']),intval($recur_enddate['mday']),$interval);
+								$so_event->set_recur_yearly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
 						}
 					}
