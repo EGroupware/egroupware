@@ -132,6 +132,7 @@
           <select name="lang">
            <option value="en"<?php echo $lang_select["en"]; ?>>English</option>
            <option value="de"<?php echo $lang_select["de"]; ?>>Deutsch</option>
+           <option value="dk"<?php echo $lang_select["dk"]; ?>>Danish</option>
            <option value="sp"<?php echo $lang_select["sp"]; ?>>Spanish</option>
            <option value="br"<?php echo $lang_select["br"]; ?>>Brazilian Portuguese</option>
            <option value="no"<?php echo $lang_select["no"]; ?>>Norwegien</option>
