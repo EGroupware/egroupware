@@ -853,6 +853,7 @@
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
+			return $prefs;
 		}
 
 
