@@ -1,10 +1,12 @@
 <!-- BEGIN list -->
   <p>
-<table border="0" align="center" width="95%">
+<div align="center">
+<table border="0" width="95%">
 <tr>
   	{rows}
 	<td>
-		<table border="0" align="center" width="100%">
+		<div align="center">
+		<table border="0" width="100%">
 		<tr>
 			<td align="left">
 				{lang_last_x_logins}
@@ -38,9 +40,11 @@
 			<td colspan="5" align="left">{lang_percent}</td>
 		</tr>
 		</table>
+		</div>
 	</td>
 </tr>
 </table>
+</div>
 <!-- END list -->
 
 <!-- BEGIN row -->
