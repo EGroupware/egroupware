@@ -87,8 +87,9 @@
 
   } else {
     if (! $included) {
+       setup_header();
 ?>
-  <table border="0" align="center" width="<?php echo ($newinstall?"60%":"80%"); ?>">
+  <p><table border="0" align="center" width="<?php echo ($newinstall?"60%":"80%"); ?>">
    <tr bgcolor="486591">
     <td colspan="<?php echo ($newinstall?"1":"2"); ?>">&nbsp;<font color="fefefe">Multi-Language support setup</font></td>
    </tr>
