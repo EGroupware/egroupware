@@ -134,7 +134,7 @@
 			$phpgw_info['hooks'] = $this->hooks;
 
 			$phpgw_info['user']['session_ip']  = $db->f('session_ip');
-			$phpgw_info['user']['passwd']		  = $this->appsession('password','phpgwapi');
+			$phpgw_info['user']['passwd']		  = base64_decode($this->appsession('password','phpgwapi'));
 
 			if ($userid_array[1] != $phpgw_info['user']['domain'])
 			{
@@ -254,7 +254,7 @@
 			$phpgw_info['user']  = $this->user;
 			$phpgw_info['hooks'] = $this->hooks;
 
-			$this->appsession('password','phpgwapi',$this->passwd);
+			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 			if ($phpgw->acl->check('anonymous',1,'phpgwapi'))
 			{
 				$session_flags = 'A';
