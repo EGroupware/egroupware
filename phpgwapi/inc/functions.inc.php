@@ -391,7 +391,7 @@
 		}
 	}
 
-	error_reporting(7);
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 	/************************************************************************\
 	* This function will return a properly formatted account_id.             *
