@@ -75,6 +75,7 @@ full name	addressbook	zh	姓名
 geo	addressbook	zh	GEO
 global categories	addressbook	zh	全局类别
 grant addressbook access	common	zh	授权访问
+home	addressbook	zh	家庭
 home address type	addressbook	zh	地址类型
 home city	addressbook	zh	城市
 home country	addressbook	zh	国家/地区
@@ -88,41 +89,46 @@ import	addressbook	zh	导入
 import contacts	addressbook	zh	导入通讯录
 import csv-file into addressbook	addressbook	zh	从CSV文件导入
 import file	addressbook	zh	导入文件
+import from	addressbook	zh	导入从
 import from ldif, csv, or vcard	addressbook	zh	导入其他软件的通讯录
 import from outlook	addressbook	zh	从Outlook导入
+import multiple vcard	addressbook	zh	导入多重名片档
 import next set	addressbook	zh	导入下一个集合
-import_instructions	addressbook	zh	请按照下列方法导出其他软件的通讯录, 以便导入eGroupWare中:<p>在Netscape中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以LDIF格式存放.<p>在Outlook中, 选定将要导出的联系人文件夹, 选定<b>文件菜单</b>的<b>导入和导出</b>项, 导出的文件将以CSV格式存放.<p>在Palm Desktop 4.0或更高版本中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以VCard格式存放.<p>Palm Desktop 4.0 或是更新的版本，在瀏覽通訊錄資料時在<b>檔案</b>功能選擇 <b>匯出</b>，匯出的資料是 VCard 格式。
-international	addressbook	zt	國際
-isdn phone	addressbook	zt	ISDN電話
-label	addressbook	zt	概述
-ldap context for contacts	admin	zt	聯絡人之LDAP context
-ldap host for contacts	admin	zt	聯絡人之LDAP host
-ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
-ldap root pw for contacts	admin	zt	聯絡人之LDAP root 密碼
-ldif	addressbook	zt	LDIF
-line 2	addressbook	zt	第2行
-mark records as private	addressbook	zt	標示為私人記錄
-message phone	addressbook	zt	留言電話
-middle name	addressbook	zt	中間欄位
-mobile	addressbook	zt	行動電話
-mobile phone	addressbook	zt	行動電話
-modem phone	addressbook	zt	撥接電話
-no vcard	addressbook	zt	沒有VCard
-number of records to read (%1)	addressbook	zt	讀取記錄號碼(%1)
-number of records to read (<=200)	addressbook	zt	讀取的資料筆數(<=200)
-other number	addressbook	zt	其他號碼
-other phone	addressbook	zt	其他電話
-pager	common	zt	呼叫器
-parcel	addressbook	zt	兼職
-phone number	common	zt	電話號碼
-phone numbers	common	zt	電話號碼
-please enter a name for that field !	addressbook	zt	請輸入欄位名稱！
-postal	common	zt	郵政信箱
+import_instructions	addressbook	zh	请按照下列方法导出其他软件的通讯录, 以便导入eGroupWare中:<p>在Netscape中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以LDIF格式存放.<p>在Outlook中, 选定将要导出的联系人文件夹, 选定<b>文件菜单</b>的<b>导入和导出</b>项, 导出的文件将以CSV格式存放.<p>在Palm Desktop 4.0或更高版本中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以VCard格式存放.
+international	addressbook	zh	国际
+isdn phone	addressbook	zh	ISDN电话
+label	addressbook	zh	附注
+ldap context for contacts	admin	zh	LDAP服务器上下文
+ldap host for contacts	admin	zh	LDAP服务器主机名
+ldap root dn for contacts	admin	zh	LDAP服务器管理员dn
+ldap root pw for contacts	admin	zh	LDAP服务器管理员密码
+ldif	addressbook	zh	LDIF
+line 2	addressbook	zh	第2行
+load vcard	addressbook	zh	导入Vcard
+mark records as private	addressbook	zh	将导入的条目设为私有条目
+message phone	addressbook	zh	短信电话
+middle name	addressbook	zh	中间名
+mobile	addressbook	zh	移动的
+mobile phone	addressbook	zh	移动电话
+modem phone	addressbook	zh	Modem电话
+multiple vcard	addressbook	zh	多重名片档
+no vcard	addressbook	zh	无vCard
+number of records to read (<=200)	addressbook	zh	待读取记录数 (<=200)
+number of records to read (%1)	addressbook	zh	读取记录号码(%1)
+other number	addressbook	zh	其他电话
+other phone	addressbook	zh	其他电话
+pager	common	zh	寻呼
+parcel	addressbook	zh	包裹
+phone number	common	zh	电话号码
+phone numbers	common	zh	电话号码
+please enter a name for that field !	addressbook	zh	请输入该字段名!
+postal	common	zh	邮政
 pref	addressbook	zh	设为首选
+preference	addressbook	zh	通讯录个性化配置
 prefix	addressbook	zh	称谓
 public key	addressbook	zh	公钥
 read a list of entries.	addressbook	zh	读取条目列表.
-read a single entry by passing the id and fieldlist.	addressbook	zh	Read a single entry by passing the id and fieldlist.
+read a single entry by passing the id and fieldlist.	addressbook	zh	从ID及条目清单读取一个条目
 record access	addressbook	zh	谁可访问？
 record owner	addressbook	zh	所有者
 retrieve contacts	admin	zh	取位置:
@@ -140,7 +146,7 @@ test import (show importable records <u>only</u> in browser)	addressbook	zh	导�
 that field name has been used already !	addressbook	zh	该字段名已被占用!
 this person's first name was not in the address book.	addressbook	zh	通讯录中无此人名.
 this person's last name was not in the address book.	addressbook	zh	通讯录中无此姓氏.
-to many might exceed your execution-time-limit	addressbook	zh	to many might exceed your execution-time-limit
+to many might exceed your execution-time-limit	addressbook	zh	太多而超时
 today is %1's birthday!	common	zh	今天是%1的生日!
 tomorrow is %1's birthday.	common	zh	明天是%1的生日。
 translation	addressbook	zh	翻译

@@ -1,0 +1,71 @@
+?add profile	emailadmin	zh	添加帐户
+add profile	emailadmin	zh	添加帐户
+admin dn	emailadmin	zh	LDAP管理员账户 DN
+admin password	emailadmin	zh	管理员密码
+admin passwort	emailadmin	zh	管理员密码
+admin username	emailadmin	zh	管理员用户名
+advanced options	emailadmin	zh	高级选项
+alternate email address	emailadmin	zh	备选EMail地址
+cyrus imap server	emailadmin	zh	Cyrus IMAP服务器
+cyrus imap server administration	emailadmin	zh	Cyrus IMAP服务器管理
+default	emailadmin	zh	默认
+deliver extern	emailadmin	zh	deliver extern
+do you really want to delete this profile	emailadmin	zh	确定要删除该帐户吗？
+domainname	emailadmin	zh	域名
+edit email settings	emailadmin	zh	编辑EMail配置
+email account active	emailadmin	zh	启用EMail帐户
+email address	emailadmin	zh	EMail地址
+emailadmin	common	zh	邮件管理
+enable cyrus imap server administration	emailadmin	zh	启用Cyrus IMAP服务器管理
+enable sieve	emailadmin	zh	启用邮件过滤
+enter your default mail domain (from: user@domain)	emailadmin	zh	默认的邮件域名
+forward also to	emailadmin	zh	转发
+forward email's to	emailadmin	zh	转发给
+forward only	emailadmin	zh	仅转发
+imap admin password	admin	zh	IMAP管理员密码
+imap admin user	admin	zh	IMAP管理员用户名
+imap server hostname or ip address	emailadmin	zh	IMAP服务器主机名或IP地址
+imap server logintyp	emailadmin	zh	IMAP服务器登录类型
+imap server port	emailadmin	zh	IMAP服务器端口
+imap/pop3 server name	emailadmin	zh	IMAP/POP3服务器名称
+in mbyte	emailadmin	zh	单位:兆字节
+ldap basedn	emailadmin	zh	LDAP服务器帐户 DN
+ldap server	emailadmin	zh	LDAP服务器
+ldap server accounts dn	emailadmin	zh	LDAP服务器帐户 DN
+ldap server admin dn	emailadmin	zh	LDAP服务器管理员 DN
+ldap server admin password	emailadmin	zh	LDAP服务器管理员密码
+ldap server hostname or ip address	emailadmin	zh	LDAP服务器主机名或IP地址
+ldap settings	emailadmin	zh	LDAP配置
+leave empty for no quota	emailadmin	zh	留空则不使用配额
+mail settings	admin	zh	邮件配置
+name of organisation	emailadmin	zh	说明
+no alternate email address	emailadmin	zh	无备选EMail地址
+no forwarding email address	emailadmin	zh	无转发EMail地址
+pop3 server hostname or ip address	emailadmin	zh	POP3服务器主机名或IP地址
+pop3 server port	emailadmin	zh	POP3服务器端口
+postfix with ldap	emailadmin	zh	LDAP后缀
+profile list	emailadmin	zh	帐户列表
+profile name	emailadmin	zh	帐户名称
+qmaildotmode	emailadmin	zh	qmaildotmode
+qouta size in mbyte	emailadmin	zh	配额大小(兆字节)
+quota settings	emailadmin	zh	配额设置
+remove	emailadmin	zh	删除
+select type of imap/pop3 server	emailadmin	zh	选择IMAP/POP3服务器类型
+select type of smtp server	emailadmin	zh	选择SMTP服务器类型
+sieve server hostname or ip address	emailadmin	zh	过滤服务器主机名或IP地址
+sieve server port	emailadmin	zh	过滤服务器端口
+sieve settings	emailadmin	zh	过滤配置
+smtp server name	emailadmin	zh	SMTP服务器名称
+smtp-server hostname or ip address	emailadmin	zh	SMTP服务器主机名或IP地址
+smtp-server port	emailadmin	zh	SMTP服务器端口
+standard	emailadmin	zh	标准
+standard imap server	emailadmin	zh	标准IMAP服务器
+standard pop3 server	emailadmin	zh	标准POP3服务器
+standard smtp-server	emailadmin	zh	标准SMTP服务器
+use ldap defaults	emailadmin	zh	使用LDAP默认值
+use smtp auth	emailadmin	zh	启用SMTP身份验证
+use tls authentication	emailadmin	zh	启用TLS身份验证
+use tls encryption	emailadmin	zh	启用TLS加密
+users can define their own emailaccounts	emailadmin	zh	允许用户自定义邮件帐户
+virtual mail manager	emailadmin	zh	虚拟域
+IMAP C-Client Version < 2001	emailadmin	zh	IMAP C-Client 版本 < 2001
