@@ -25,10 +25,9 @@
   /* $Id$ */
 
   /* $Id$ */
-if (!$phpgw_info["flags"]["included_classes"]["portalbox"]){
-  $phpgw_info["flags"]["included_classes"]["portalbox"] = True;
-  include($phpgw_info["server"]["include_root"]."/".$appname."/inc/class.portalbox.inc.php");
-}
+
+CreateObject('phpgwapi.portalbox');
+
 class linkbox extends portalbox { 
     /* 
          Set up the Object. You will notice, we have not reserved  
