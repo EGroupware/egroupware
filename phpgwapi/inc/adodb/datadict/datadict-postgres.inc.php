@@ -236,10 +236,15 @@ class ADODB2_postgres extends ADODB_DataDict {
 	// this is still necessary if postgres < 7.3 or the SERIAL was created on an earlier version!!!
 	function _DropAutoIncrement($tabname)
 	{
-		return False;	// we should/can only drop a sequenz is NOT automaticaly droped !!!
 		$tabname = $this->connection->quote('%'.$tabname.'%');
-		$seq = $this->connection->GetOne("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relname LIKE $tabname AND relkind='S' ORDER BY relname");
-		return $seq ? "DROP SEQUENCE ".$seq : false;
+
+		$seq = $this->connection->GetOne("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relname LIKE $tabname AND relkind='S'");
+
+		// check if a tables depends on the sequenz and it therefor cant and dont need to be droped separatly
+		if (!$seq || $this->connection->GetOne("SELECT relname FROM pg_class JOIN pg_depend ON pg_class.relfilenode=pg_depend.objid WHERE relname='$seq' AND relkind='S' AND deptype='i'")) {
+			return False;
+		}
+		return "DROP SEQUENCE ".$seq;
 	}
 	
 	/*
