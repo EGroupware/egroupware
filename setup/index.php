@@ -235,7 +235,8 @@
   }
 
   // If the user wanted to upgrade/install/remove an app, now is the time
-  if ($submit == "Perform Actions" && is_array($appAction)) {
+  if ((isset($submit) && $submit == "Perform Actions") && 
+       is_array($appAction)) {
     echo "<p>\n";
     echo "<table border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='0'>\n";
     echo "<tr bgcolor='#486591'>";
