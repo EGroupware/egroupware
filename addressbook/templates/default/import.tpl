@@ -26,6 +26,7 @@
 	    {conv}
             </SELECT><P></LI>
             <LI><INPUT NAME="download" TYPE="checkbox" VALUE="{debug}" CHECKED>Debug output in browser (Uncheck to download output.)</LI>
+			<LI><INPUT NAME="private" TYPE="checkbox" VALUE="private" CHECKED>Mark records as private</LI>
             <LI><INPUT NAME="convert" TYPE="submit" VALUE="{download}"></LI>
             </OL>
             </FORM></TD>
