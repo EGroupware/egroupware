@@ -41,7 +41,7 @@
   {
     global $tmpl;
     $tmpl->set_var("updating","<center>Opps! You caught us in the middle of a system"
-      . " upgrade.<br>Please, check back with us shortly.</center>");
+                 . " upgrade.<br>Please, check back with us shortly.</center>");
     $tmpl->parse("loginout", "login");
     $tmpl->p("loginout");
     exit;
@@ -102,18 +102,17 @@
 
   } else {
     if ($last_loginid) {
-       $phpgw->db->query("select preference_value from preferences where preference_owner='$last_loginid' "
+       $phpgw->db->query("select account_id from accounts where account_lid='$last_loginid'");
+       $phpgw->db->next_record();
+    
+       $phpgw->db->query("select preference_value from preferences where preference_owner='" . $phpgw->db->f("account_id") . "' "
                        . "and preference_name='lang'");
        $phpgw->db->next_record();
-       if (! $phpgw->db->f("preference_value")) {
-          $users_lang = "en";
-//      } else {
-//           $users_lang = $phpgw->db->f("preference_value");
-//           include($phpgw_info["server"]["include_root"] . "/lang/$users_lang/" . $users_lang
-//	         . "_login.inc.php");
-      }
+       $phpgw_info["user"]["preferences"]["common"]["lang"] = $phpgw->db->f("preference_value");
+       $phpgw->translation->add_app("login");
     }
   }
+/*  This has been put on hold until 0.9.4pre1, we have a different method of doing it (jengo)
   if ($phpgw_info["server"]["multiable_domains"]) {
      $tmpl->set_var("lang_domain",lang("Domain"));
      if ($phpgw_info["server"]["multiable_domains_use_select_box"]) {
@@ -136,6 +135,7 @@
      $tmpl->set_var("domain_row","");
      $tmpl->parse("null","domain_row");
   }
+*/
   
   
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
@@ -143,7 +143,7 @@
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
   $tmpl->set_var("lang_username",lang("username"));
-  $tmpl->set_var("lang_phpgw_login","phpGroupWare login");
+  $tmpl->set_var("lang_phpgw_login",lang("phpGroupWare login"));
   $tmpl->set_var("version",$phpgw_info["server"]["version"]);
   $tmpl->set_var("lang_password",lang("password"));
   $tmpl->set_var("lang_login",lang("login"));

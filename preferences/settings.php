@@ -108,7 +108,7 @@
               } elseif ($phpgw->db->f("lang_id") == "EN") {
                  echo " selected";
               }
-              echo ">" . lang($phpgw->db->f("lang_name")) . "</option>";
+              echo ">" . $phpgw->db->f("lang_name") . "</option>";
           }
           ?>
           </select>
