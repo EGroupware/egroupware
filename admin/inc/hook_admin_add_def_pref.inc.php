@@ -1,8 +1,9 @@
 <?php
-//  $phpgw->preferences->add_newuser("common","maxmatchs","15");
-//  $phpgw->preferences->add_newuser("common","theme","default");
-//  $phpgw->preferences->add_newuser("common","tz_offset","0");
-//  $phpgw->preferences->add_newuser("common","dateformat","m/d/Y");
-//  $phpgw->preferences->add_newuser("common","timeformat","12");
-//  $phpgw->preferences->add_newuser("common","lang","en");
+  global $pref;
+  $pref->change("common","maxmatchs","15");
+  $pref->change("common","theme","default");
+  $pref->change("common","tz_offset","0");
+  $pref->change("common","dateformat","m/d/Y");
+  $pref->change("common","timeformat","12");
+  $pref->change("common","lang","en");
 ?>

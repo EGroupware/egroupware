@@ -66,11 +66,14 @@
         $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
         $phpgw->db->next_record();
         $apps = explode(":",$phpgw->db->f("account_permissions"));
+	$phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='".$n_loginid."'");
+	$phpgw->db->next_record();
+	$pref = new preferences($phpgw->db->f("account_id"));
         $phpgw->common->hook_single("add_def_pref", "admin");
         for ($i=1;$i<sizeof($apps) - 1;$i++) {
            $phpgw->common->hook_single("add_def_pref", $apps[$i]);
         }
-        $phpgw->preferences->commit_newuser($n_loginid);
+        $pref->commit();
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         $phpgw->common->phpgw_exit();
      }

@@ -1,8 +1,9 @@
 <?php
-  $phpgw->preferences->add_newuser("calendar","weekstarts","Monday");
-  $phpgw->preferences->add_newuser("calendar","workdaystarts","9");
-  $phpgw->preferences->add_newuser("calendar","workdayends","17");
-  $phpgw->preferences->add_newuser("calendar","defaultcalendar","index.php");
-  $phpgw->preferences->add_newuser("calendar","defaultfilter","all");
-  $phpgw->preferences->add_newuser("calendar","mainscreen_showevents","Y");
+  global $pref;
+  $pref->change("calendar","weekstarts","Monday");
+  $pref->change("calendar","workdaystarts","9");
+  $pref->change("calendar","workdayends","17");
+  $pref->change("calendar","defaultcalendar","index.php");
+  $pref->change("calendar","defaultfilter","all");
+  $pref->change("calendar","mainscreen_showevents","Y");
 ?>

@@ -1,5 +1,6 @@
 <?php
-  $phpgw->preferences->add_newuser("addressbook","company","addressbook_True");
-  $phpgw->preferences->add_newuser("addressbook","lastname","addressbook_True");
-  $phpgw->preferences->add_newuser("addressbook","firstname","addressbook_True");
+  global $pref;
+  $pref->change("addressbook","company","addressbook_True");
+  $pref->change("addressbook","lastname","addressbook_True");
+  $pref->change("addressbook","firstname","addressbook_True");
 ?>

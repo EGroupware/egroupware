@@ -60,23 +60,6 @@
                      . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
                      . "$n_app_status','$app_order')",__LINE__,__FILE__);
 
-        $phpgw->db->query("SELECT preference_owner, preference_value FROM preferences");
-        if ($phpgw->db->num_rows()) {
-           while ($phpgw->db->next_record()) {
-              if ($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"]) {
-                 $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
-                 if (!$phpgw_newuser["user"]["preferences"][$n_app_name]) {
-                    $phpgw->common->hook_single("add_def_pref", $n_app_name);
-                    $phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
-                 }
-              } elseif(!$phpgw_info["user"]["preferences"][$n_app_name]) {
-                 $phpgw->common->hook_single("add_def_pref", $n_app_name);
-                 $phpgw_info["user"]["preferences"][$n_app_name] = $phpgw_newuser["user"]["preferences"][$n_app_name];
-                 unset($phpgw_newuser);
-                 $phpgw->preferences->commit();
-              }
-          }
-        }
         Header("Location: " . $phpgw->link("applications.php"));
         $phpgw->common->phpgw_exit();
      } else {

@@ -97,30 +97,18 @@
    if (count($new_apps)) {
       $phpgw->db->query("select account_id from accounts where account_lid='$new_loginid'",__LINE__,__FILE__);
       $phpgw->db->next_record();
-      $users_account_id = $phpgw->db->f("account_id");
- 
-      if ($account_id <> $phpgw_info["user"]["account_id"]) {
-         $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner='$users_account_id'",__FILE__,__LINE__);
-         $phpgw->db->next_record();
-         $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
-      } else {
-         $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-      }
+
+      $pref = new preferences($phpgw->db->f("account_id"));
+
       $docommit = False;
       for ($j=0;$j<count($new_apps);$j++) {
-         if (! @$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
+         if (! @$pref->preferences[$new_apps[$j]]) {
             $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
             $docommit = True;
          }
       }
       if ($docommit) {
-         if ($account_id <> $phpgw_info["user"]["account_id"]) {
-//            $phpgw->preferences->commit_user($users_account_id);
-         } else {
-            $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
-            unset($phpgw_newuser);
-            $phpgw->preferences->commit();
-         }
+	 $pref->commit();
       }
    }
 

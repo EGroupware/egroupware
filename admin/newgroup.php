@@ -35,13 +35,18 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
-        $phpgw->accounts->add_app($n_group_permissions);        
+        $phpgw->accounts->add_app($n_group_permissions);
+	$apps = $phpgw->accounts->add_app("",True)
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
-				. $phpgw->accounts->add_app("",True) . "')");
+				. $apps . "')");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
         $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
+	$after_apps = explode(":",$apps);
+	for ($i=1;$i<=count($after_apps);$i++) {
+	  $new_apps[] = $after_apps[$i];
+	}
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
@@ -50,6 +55,18 @@
 
            $user_groups = ereg_replace(",,",",",$user_groups);
            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
+
+	   $pref = new preferences($n_users[$i]);
+	   $docommit = False;
+	   for ($j=0;$j<count($new_apps);$j++) {
+	     if (!$pref->preferences[$new_apps[$j]]) {
+	       $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+	       $docommit = True;
+	     }
+	   }
+	   if ($docommit) {
+	     $pref->commit();
+	   }
         }
 
         $sep = $phpgw->common->filesystem_separator();
