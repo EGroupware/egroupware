@@ -159,7 +159,10 @@
 						print "array: set *$k* to *$v*<br>\n";
 					}
 					$this->varkeys[$k] = $this->varname($k);
-					$this->varvals[$k] = $this->egroupware_hack ? str_replace('phpGroupWare','eGroupWare',$v) : $v;
+					$this->varvals[$k] = $this->egroupware_hack ? str_replace(
+						array('phpGroupWare','www.phpgroupware.org'),
+						array('eGroupWare','www.eGroupWare.org'),$v
+					) : $v;
 				}
 			}
 		}
