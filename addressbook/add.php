@@ -18,14 +18,14 @@
 			"nonavbar" => True
 		);
 	}
-	
+
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	$phpgw_info["flags"]["enable_addressbook_class"] = True;
 	include("../header.inc.php");
-	
+
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array("add" => "add.tpl"));
-	
+
 	$this = CreateObject("phpgwapi.contacts");
 
 	// Read in user custom fields, if any
@@ -60,7 +60,10 @@
 		$addnew['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew['owner']).", record #".$addnew['id'].".";
 		$addnew['owner'] = $phpgw_info["user"]["account_id"];
 		$addnew['id']    = '';
-		addressbook_add_entry($addnew['owner'],$addnew);
+
+		if ($account=True) { addressbook_add_entry($addnew['owner'],$addnew,'','',True); }
+		else { addressbook_add_entry($addnew['owner'],$addnew); }
+
 		$fields = addressbook_read_last_entry($qfields);
 		$newid = $fields[0]['id'];
 		Header("Location: "
