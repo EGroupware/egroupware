@@ -15,10 +15,10 @@
 {
 // Only Modify the $file and $title variables.....
 	$title = $appname;
-	$file = Array(
-		'Preferences'	=> $phpgw->link('/index.php','menuaction=infolog.uiinfolog.preferences'),
-		'Grant Access'	=> $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
-		'Edit Categories'	=> $phpgw->link('/preferences/categories.php','cats_app='.$appname)
+	$file = array(
+		'Preferences'     => $GLOBALS['phpgw']->link('/index.php','menuaction=infolog.uiinfolog.preferences'),
+		'Grant Access'    => $GLOBALS['phpgw']->link('/preferences/acl_preferences.php','acl_app='.$appname),
+		'Edit Categories' => $GLOBALS['phpgw']->link('/preferences/categories.php','cats_app='.$appname)
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
