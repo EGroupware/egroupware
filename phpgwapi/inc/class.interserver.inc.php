@@ -42,10 +42,10 @@
 		);
 
 		/*
-		  0/none == no access
-		  1/apps == read app data only
-		  99/all == read accounts and other api data
-		  Two servers must have each other setup as 'all' for full coop
+		0/none == no access
+		1/apps == read app data only
+		99/all == read accounts and other api data
+		Two servers must have each other setup as 'all' for full coop
 		*/
 		var $trust_levels = array(
 			'none' => 0,
@@ -53,12 +53,19 @@
 			'all'  => 99
 		);
 
+		/*
+		0 - No trust, but they may trust us
+		1 - Trust to make requests of us
+		2 - Trust remote server's trusts also
+		3 - We both trust each other
+		4 - We both trust each other, and we trust the remote server's trusts also
+		*/
 		var $trust_relationships = array(
-			'outbound'       => 0,	/* No trust, but they may trust us */
-			'inbound'        => 1,	/* Trust to make requests of us */
-			'passthrough'    => 2,	/* Trust remote server's trusts also */
-			'bi-directional' => 3,	/* We both trust each other */
-			'bi-dir passthrough' => 4	/* We both trust each other, and we trust the remote server's trusts also */
+			'outbound'       => 0,
+			'inbound'        => 1,
+			'passthrough'    => 2,
+			'bi-directional' => 3,
+			'bi-dir passthrough' => 4
 		);
 
 		var $security_types = array(
@@ -419,7 +426,8 @@
 			}
 			$select .= '>' . lang('Please Select') . '</option>'."\n";
 
-			while (list($key,$val) = each($this->get_list()))
+			$slist = $this->get_list();
+			while (list($key,$val) = each($slist))
 			{
 				$foundservers = True;
 				$select .= '<option value="' . $val['server_id'] . '"';
