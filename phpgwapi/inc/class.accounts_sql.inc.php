@@ -393,7 +393,7 @@
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
 			$db = $GLOBALS['phpgw']->db;
-			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
+			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . (int)$accountid,__LINE__,__FILE__);
 			if (!$db->next_record())
 			{
 				return False;
