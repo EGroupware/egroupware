@@ -203,7 +203,7 @@
 			{
 				if(!is_array($extradata))
 				{
-					parse_str($extradata,&$extradata);
+					parse_str($extradata,$extradata);
 				}
 				foreach($extradata as $var => $value)
 				{
