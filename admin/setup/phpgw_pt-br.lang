@@ -1,4 +1,5 @@
-%1 - %2 of %3 user accounts	admin	pt-br	%1 -2 de %3 contas de usuários
+%1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usuários
+%1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usuários
 %1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável !!!
 (stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
@@ -13,6 +14,7 @@ account preferences	admin	pt-br	Preferências da Conta
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
+activate wysiwyg-editor	admin	pt-br	ativar editor WYSIWYG
 add a category	admin	pt-br	adicionar uma categoria
 add a group	admin	pt-br	adicionar um grupo
 add a new account.	admin	pt-br	Adicionar uma conta. nova
@@ -79,6 +81,8 @@ change config settings	admin	pt-br	Mudar parâmetros de configuração
 change main screen message	admin	pt-br	Alterar mensagem da tela principal
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
+click to select a color	admin	pt-br	Clique para selecionar uma cor
+color	admin	pt-br	Cor
 configure access permissions	admin	pt-br	Configurar permissões de acesso
 configure rss exports	admin	pt-br	Configurar exportação RSS
 country selection	admin	pt-br	Seleção de País
@@ -119,6 +123,7 @@ deny all users access to grant other users access to their entries ?	admin	pt-br
 deny to site configuration	admin	pt-br	Negar acesso a configuração do servidor
 description can not exceed 255 characters in length !	admin	pt-br	A descrição não deverá exceder 255 caracteres!
 disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formulário de entrada
+disable wysiwyg-editor	admin	pt-br	desabilitar editor WYSIWYG
 disabled (not recomended)	admin	pt-br	desabilitar (não recomendado)
 display	admin	pt-br	Visualizar
 do not delete the category and return back to the list	admin	pt-br	NÃO apague essa categoria e retorne à lista
@@ -162,8 +167,11 @@ enter the title of your logo	admin	pt-br	Digite o título do seu logotipo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	pt-br	Digite a URL ou o nome do arquivo (em phpgwapi/templates/default/images) do seu logotipo.
 enter the url where your logo should link to	admin	pt-br	Digite a url para onde o seu logotipo deve apontar
 enter your default ftp server	admin	pt-br	Digite seu servidor FTP padrão
+enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu domínio padrão de correio eletrônico (usuario@dominio)
 enter your http proxy server	admin	pt-br	Digite o endereço do servidor proxy HTTP
 enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy HTTP
+enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
+enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum estconfigurado !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
@@ -189,6 +197,7 @@ host information	admin	pt-br	Informações do servidor
 hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem apagadas (padrão 90)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
+icon	admin	pt-br	Ícone
 idle	admin	pt-br	ocioso
 if no acl records for user or any group the user is a member of	admin	pt-br	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login?
@@ -227,6 +236,7 @@ login screen	admin	pt-br	Tela de Conexão
 login shell	admin	pt-br	Shell de Conexão
 login time	admin	pt-br	Hora da conexão
 loginid	admin	pt-br	Código do usuário
+mail settings	admin	pt-br	Configurações de Correio Eletronico
 main screen message	admin	pt-br	Mensagem da tela principal
 maintain answers	admin	pt-br	Manutenção de respostas
 maintain questions	admin	pt-br	Manutenção de perguntas
@@ -254,6 +264,7 @@ no permission to create groups	admin	pt-br	sem permissão para criar grupos
 note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estará disponível somente se o PHP houver sido compilado com suporte a curl
 outbound	admin	pt-br	Saída
 passthrough	admin	pt-br	Atravessar
+password for smtp-authentication	admin	pt-br	Senha para autenticação SMTP
 path information	admin	pt-br	Informação de Path
 peer server list	admin	pt-br	Lista de servidores parceiros
 peer servers	admin	pt-br	Servidores parceiros
@@ -337,6 +348,7 @@ the loginid can not be more then 8 characters	admin	pt-br	O código de usuário nã
 the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que é executado.
 the two passwords are not the same	admin	pt-br	As senhas não conferem
 the users bellow are still members of group %1	admin	pt-br	os usuários abaixo ainda são membros do grupo %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	pt-br	Já existe um grupo com este nome. O nome do usuário não pode ser o mesmo de um grupo.
 they must be removed before you can continue	admin	pt-br	Eles devem ser removidos antes de continuar
 this application is current	admin	pt-br	Este aplicativo está atualizado
 this application requires an upgrade	admin	pt-br	Esta aplicativo precisa ser atualizado
@@ -354,6 +366,7 @@ use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTM
 use theme	admin	pt-br	Usar tema
 user accounts	admin	pt-br	Contas de usuários
 user data	admin	pt-br	Dados de usuários
+user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
 userdata	admin	pt-br	Dados de usuário
 users choice	admin	pt-br	Escolha do usuário
@@ -384,7 +397,3 @@ you must enter an application name.	admin	pt-br	Você deve digitar um nome para a
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as sub-categorias antes de remover esta categoria !
-enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu domínio padrão de correio eletrônico (usuario@dominio)
-enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
-enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
-mail settings	admin	pt-br	Configurações de Correio Eletronico

@@ -12,6 +12,8 @@ automatically hide the sidebox menu's?	preferences	pt-br	O menú lateral deve ser
 change your password	preferences	pt-br	Altere sua senha
 change your profile	preferences	pt-br	Altere seu perfil
 change your settings	preferences	pt-br	Altere suas preferências
+click to select a color	preferences	pt-br	Clique para selecionar uma cor
+color	preferences	pt-br	Cor
 country	preferences	pt-br	País
 date format	preferences	pt-br	Formato de data
 default	preferences	pt-br	padrão
@@ -23,6 +25,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	pt-br	Editar campos personalizados
 enter your new password	preferences	pt-br	Digite sua nova senha
 error: there was a problem finding the preference file for %1 in %2	preferences	pt-br	Erro: Houve um problema ao tentar encontrar o arquivo de preferencias para %1 em %2
+failed to change password.  please contact your administrator.	preferences	pt-br	Erro ao moudar a senha. Por favor contate seu administrador.
 forced preferences	preferences	pt-br	Preferências obrigatórias
 help off	preferences	pt-br	Desligar ajuda
 hours	preferences	pt-br	horas
@@ -31,6 +34,7 @@ how do you like to select accounts	preferences	pt-br	Como você gostaria de selec
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pt-br	Quantas horas você está além ou aquém do fuso-horário do servidor.<br> Se você estiver no mesmo selecione 0, caso contrário, escolha o fuso-horário apropriado.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pt-br	Quantos ícones devem ser mostrados na barra de navegação no topo da página. Ícones adicionais serão colocados em um menu do tipo caixa suspensa, sendo acessado por um botão na extremidade direita da barra.
 how should phpgroupware display dates for you.	preferences	pt-br	Como o eGroupWare deve mostrar as datas para você
+icon	preferences	pt-br	Ícone
 icons and text	preferences	pt-br	Ícones e texto
 icons only	preferences	pt-br	Somente ícones
 in which country are you. this is used to set certain defaults for you.	preferences	pt-br	Em que País você está. Isto é usado para determinar alguns padrões.
@@ -47,7 +51,8 @@ select different theme	preferences	pt-br	Selecione um tema diferente
 select one	preferences	pt-br	Selecione um
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do eGroupWare.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
 selectbox	preferences	pt-br	Caixa de seleção
-set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt-br	Selecione isto caso deseje. Por razões de segurança, você pode não querer mostrar seu nome de usuário publicamente.
+selectbox with primary group and search	preferences	pt-br	Caixa de seleção com grupo principal e busca
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt-br	Selecione isto caso queira. Por razões de segurança, você pode não querer mostrar seu nome de usuário publicamente.
 should the number of active sessions be displayed for you all the time.	preferences	pt-br	O número de sessões ativas deve ser mostrado todo o tempo.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	pt-br	Essas mensagens de ajuda devem aparecer sempre ao modificar preferências, ou quando somente quando requisitadas.
 show current users on navigation bar	preferences	pt-br	Exibir usuários ativos na barra de navegação

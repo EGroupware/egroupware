@@ -78,6 +78,7 @@ default status for a new log entry	infolog	pt-br	status padrão para um novo regi
 delegation	infolog	pt-br	Atribuição
 delete	infolog	pt-br	Apagar
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	pt-br	Apagar todas sub-tarefas (que não sejam pais ou órfans)
+delete one record by passing its id.	infolog	pt-br	Apagar um registro contornando seu id.
 delete the entry	infolog	pt-br	Apagar o registro
 delete this entry	infolog	pt-br	Apagar este registro
 deletes the selected typ	infolog	pt-br	Apagar os tipos selecionados
@@ -138,6 +139,7 @@ length<br>rows	infolog	pt-br	Largura<br>Colunas
 link	infolog	pt-br	Link
 links	infolog	pt-br	Links
 links of this entry	infolog	pt-br	Links para este registro
+list all categories	infolog	pt-br	Listar todas as categorias
 list no subs/childs	infolog	pt-br	não listar subs/filhos
 longer textual description	infolog	pt-br	descrição detalhada
 low	infolog	pt-br	baixo
@@ -182,12 +184,14 @@ priority	infolog	pt-br	Prioridade
 private	infolog	pt-br	Particular
 project	infolog	pt-br	Projeto
 re:	infolog	pt-br	Re:
+read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	pt-br	Destaque
 remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o registro)
 responsible	infolog	pt-br	Responsável
 responsible user, priority, ...	infolog	pt-br	usuário responsável, prioridade, ...
+returns a list / search for records.	infolog	pt-br	Retornar uma lista / pesquisar por registros
 revisar	infolog	pt-br	Revisar
 save	infolog	pt-br	Salvar
 saves the changes made and leaves	infolog	pt-br	salvar as alterações realizadas e sair.
@@ -252,7 +256,8 @@ view subs	infolog	pt-br	ver inferiores
 view the parent of this entry and all his subs	infolog	pt-br	Ver o registro superior e todos os inferiores
 view this linked entry in its application	infolog	pt-br	Ver esse link no aplicativo correspondente
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt-br	Quando uma pendência ou chamada for iniciada ela deverá ser mostrada primeiro no filtro que esteja aberto ou na sua página inicial
-will-call	infolog	pt-br	à chamar
+will-call	infolog	pt-br	a chamar
+write (add or update) a record by passing its fields.	infolog	pt-br	Escrever (adicionar ou atualizar) um registro contornando seus campos.
 yes - delete	infolog	pt-br	Sim - Apagar
 you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!!!
 you have entered an invalid ending date	infolog	pt-br	Você informou uma data final inválida
