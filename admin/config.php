@@ -17,7 +17,8 @@
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'admin',
-		'enable_nextmatchs_class' => True
+		'enable_nextmatchs_class' => True,
+		'disable_Template_class' => True
 	);
 	include('../header.inc.php');
 
@@ -67,21 +68,67 @@
 
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
+		/* Load hook file with functions to validate each config (one/none/all) */
+		$GLOBALS['phpgw']->common->hook_single('config_validate',$appname);
+
 		while (list($key,$config) = each($GLOBALS['HTTP_POST_VARS']['newsettings']))
 		{
 			if ($config)
 			{
-				$c->config_data[$key] = $config;
+				if($GLOBALS['phpgw_info']['server']['found_validation_hook'] && function_exists($key))
+				{
+					call_user_func($key,$config);
+					if($GLOBALS['config_error'])
+					{
+						$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
+						$GLOBALS['config_error'] = False;
+					}
+				}
+				else
+				{
+					$c->config_data[$key] = $config;
+				}
 			}
 			else
 			{
-				unset($c->config_data[$key]);
+				/* don't erase passwords, since we also don't print them */
+				if(!ereg('passwd',$key) && !ereg('password',$key) && !ereg('root_pw',$key))
+				{
+					unset($c->config_data[$key]);
+				}
 			}
 		}
+		if($GLOBALS['phpgw_info']['server']['found_validation_hook'] && function_exists('final_validation'))
+		{
+			final_validation($newsettings);
+			if($GLOBALS['config_error'])
+			{
+				$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
+				$GLOBALS['config_error'] = False;
+			}
+			unset($GLOBALS['phpgw_info']['server']['found_validation_hook']);
+		}
+
 		$c->save_repository(True);
 
-		Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		if(!$errors)
+		{
+			Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+			$GLOBALS['phpgw']->common->phpgw_exit();
+		}
+	}
+
+	if($errors)
+	{
+		$t->set_var('error',lang('Error') . ': ' . $errors);
+		$t->set_var('th_err','#FF8888');
+		unset($errors);
+		unset($GLOBALS['config_error']);
+	}
+	else
+	{
+		$t->set_var('error','');
+		$t->set_var('th_err',$GLOBALS['phpgw_info']['theme']['th_bg']);
 	}
 
 	$GLOBALS['phpgw']->common->phpgw_header();
@@ -118,9 +165,18 @@
 				break;
 			case 'value':
 				$newval = ereg_replace(' ','_',$newval);
-				$t->set_var($value,$current_config[$newval]);
+				/* Don't show passwords in the form */
+				if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
+				{
+					$t->set_var($value,'');
+				}
+				else
+				{
+					$t->set_var($value,$current_config[$newval]);
+				}
 				break;
-/*			case 'checked':
+			/*
+			case 'checked':
 				$newval = ereg_replace(' ','_',$newval);
 				if ($current_config[$newval])
 				{
@@ -130,7 +186,8 @@
 				{
 					$t->set_var($value,'');
 				}
-				break;*/
+				break;
+			*/
 			case 'selected':
 				$configs = array();
 				$config  = '';
