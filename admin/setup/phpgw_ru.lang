@@ -23,8 +23,10 @@ all records and account information will be lost!	admin	ru	Все записи и учетные 
 all users	admin	ru	Все пользователи
 allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
 anonymous user	admin	ru	Анонимный пользователь
+anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сессий)
 application	admin	ru	Приложение
 applications	admin	ru	Приложения
+are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что желаете удалить приложение %1?
 are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить данную учетную запичь?
 are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить данное приложение?
 are you sure you want to delete this category ?	common	ru	Вы уверены, что хотите удалить данную категорию?
@@ -33,11 +35,13 @@ are you sure you want to delete this server?	admin	ru	Вы уверены, что хотите уда
 are you sure you want to kill this session ?	admin	ru	Вы уверены, что хотите прервать данную сессию?
 authentication / accounts	admin	ru	Авторизация / Учетные записи
 back to the list	admin	ru	назад к списку
+can change password	admin	ru	Возможно изменять пароль
 categories list	admin	ru	Список категорий
 check ip address of all sessions	admin	ru	Проверить IP-адреса всех сессий
 color	admin	ru	Цвет
 country selection	admin	ru	Выбор страны
 create group	admin	ru	Создать группу
+day of week<br>(0-6, 0=sun)	admin	ru	День недели<br> (0-6, 0=Вск)
 delete account	admin	ru	Удалить учетную запись
 delete application	admin	ru	Удалить приложение
 delete category	admin	ru	Удалить категорию
@@ -57,12 +61,24 @@ enter your http proxy server	admin	ru	Введитн адрес HTTP прокси сервера
 enter your http proxy server port	admin	ru	Введите порт HTTP прокси сервера
 enter your smtp server hostname or ip address	admin	ru	Введите IP-адрес или имя Вашего SMTP-сервера
 enter your smtp server port	admin	ru	Введите порт Вашего SMTP-сервера
+expires	admin	ru	Окончание действия
 group has been added	common	ru	Группа была добавлена
 group has been deleted	common	ru	Группа была удалена
 group has been updated	common	ru	Группа была обновлена
 group manager	admin	ru	Менеджер Групп
 home directory	admin	ru	Домашняя директория
+login history	common	ru	История Подключений
 mail settings	admin	ru	Установки почты
+new group name	admin	ru	Название новой группы
+new password [ leave blank for no change ]	admin	ru	Новый пародь [оставьте пустым, если без изменения]
+no permission to add users	admin	ru	нет прав для добавления пользователей
+no permission to create groups	admin	ru	нет прав для создания групп
+permissions this group has	admin	ru	Эта группа имеет доступ к
+primary group	admin	ru	основная Группа
+re-enter password	admin	ru	Введите пароль еще раз
+select users for inclusion	admin	ru	Выбирите пользователя для включения в Группу
 sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
+submit changes	admin	ru	Отправить изменения
 the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
+user data	admin	ru	Данные Пользователя
 you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
