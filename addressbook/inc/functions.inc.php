@@ -513,6 +513,9 @@
 					case "bday":
 						$bday = $v[0];
 						break;
+					case "url":
+						$url = $v[0];
+						break;
 					case "adr": // This one is real ugly. :(
 						$street   = $v[2];
 						$address2 = $v[1] . " " . $v[0];
@@ -647,7 +650,8 @@
 		$fields["adr_region"]     = addslashes($state);
 		$fields["adr_postalcode"] = addslashes($zip);
 		$fields["bday"]           = addslashes($bday);
-		$fields["notes"]          = addslashes($notes);
+		$fields["url"]            = addslashes($url);
+		$fields["note"]           = addslashes($notes);
 		$fields["org_name"]       = addslashes($company);
 		
 		$this = CreateObject("phpgwapi.contacts");
