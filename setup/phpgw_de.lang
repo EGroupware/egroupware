@@ -296,6 +296,7 @@ minutes between reloads	admin	de	Minuten zwischen Reloads
 mo	calendar	de	Mo
 mobile	addressbook	de	Mobil
 mobile phone	common	de	Tel Funk
+modem phone	addressbook	de	Modem
 mon	calendar	de	Mo
 monday	common	de	Montag
 monitor	nntp	de	Überwachen
@@ -539,6 +540,7 @@ view only open tickets	tts	de	Nur offene Tickets anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view this entry	calendar	de	Diesen Eintrag anzeigen
 view/edit/delete all phrases	transy	de	Alle Phrasen anzeigen/editieren/löschen
+voice phone	addressbook	de	Telefon
 we	calendar	de	Mi
 wed	calendar	de	Mi
 wednesday	common	de	Mittwoch
