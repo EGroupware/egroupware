@@ -22,7 +22,7 @@
 	{
 		var $xv = array();
 		var $fn;
-		var $fs;
+		var $fs = '';
 		var $hdrs;
 
 		function xmlrpcresp($val='', $fcode=0, $fstr='')
