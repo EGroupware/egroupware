@@ -43,6 +43,9 @@
      function return_array($type = "all")
      {
         $filter = $this->filter($type);
+        if (gettype($type) == "integer") {
+           $filter = " and cat_id='$type'";
+        }
 
         $this->db->query("select * from phpgw_categories where cat_owner='"
                        . $this->account_id . "' and cat_appname='"
