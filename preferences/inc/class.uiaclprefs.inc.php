@@ -71,7 +71,7 @@
 			}
 
 			$owner_name = $GLOBALS['phpgw']->accounts->id2name($owner);		// get owner name for title
-			if($no_privat_grant = $GLOBALS['phpgw']->accounts->get_type($owner) == 'g')
+			if($no_privat_grants = $GLOBALS['phpgw']->accounts->get_type($owner) == 'g')
 			{
 				$owner_name = lang('Group').' ('.$owner_name.')';
 			}
@@ -194,7 +194,7 @@
 			));
 			$totalentries = $GLOBALS['phpgw']->accounts->total;
 			
-			$memberships = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
+			$memberships = (array) $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
 
 			$header_type = '';
 			$processed = Array();
