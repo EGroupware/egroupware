@@ -275,9 +275,9 @@
 		}
 		return $result;
 	}
-	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest');
-	$check_oldvarnames = false;
-	if($check_oldvarnames)
+	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated');
+	$migrate_oldvarnames = false;
+	if($migrate_oldvarnames)
 	{
 		$_apps = $GLOBALS['phpgw_info']['user']['apps'];
 		foreach($_apps as $_appname)
