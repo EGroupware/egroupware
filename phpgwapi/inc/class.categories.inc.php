@@ -179,8 +179,7 @@
 		function return_single($id = '')
 		{
 
-			$this->db->query("select * from phpgw_categories where cat_id='$id' and "
-							. "cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+			$this->db->query("select * from phpgw_categories where cat_id='$id'",__LINE__,__FILE__);
 
 			if ($this->db->next_record())
 			{
