@@ -13,23 +13,22 @@
 	
 	$phpgw_flags = Array(
 		'currentapp'	=> 'manual',
+		'admin_header'	=> True,
 		'enable_utilities_class'	=> True
 	);
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../header.inc.php');
+	$appname = 'admin;
 ?>
-<img src="<?php echo $phpgw->common->image('admin','navbar.gif'); ?>" border=0> 
-<font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2">
-<p>
+<img src="<?php echo $phpgw->common->image($appname,'navbar.gif'); ?>" border=0> 
+<font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2"><p/>
 This function is usually only available to the systems administrator of the system.
 Administration of all applications, user and group accounts, session logging and control.
 <ul>
-<li><b>Account management:</b>
-<p><i>User accounts:</i>
-<br>Create, edit and delete users accounts. Set membership of groups, and access to applications.
-<p><i>User groups:</i>
-<br>Create, edit and delete groups.
-<p>
-</ul>
-</font>
+<li><b>Account management:</b><p/>
+<i>User accounts:</i><br/>
+Create, edit and delete users accounts. Set membership of groups, and access to applications.<p/>
+<i>User groups:</i><br/>
+Create, edit and delete groups.<p/>
+</ul></font>
 <?php $phpgw->common->phpgw_footer(); ?>

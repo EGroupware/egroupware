@@ -10,26 +10,18 @@
   \**************************************************************************/
 
 	/* $Id$ */
-	
+
 	$phpgw_flags = Array(
-		'currentapp'	=> 'manual',
+		'currentapp'	=> 'manual'
 		'admin_header'	=> True,
-		'enable_utilities_class'	=> True
 	);
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../header.inc.php');
 	$appname = 'admin';
+	include(PHPGW_SERVER_ROOT.'/'.$appname.'/version.inc.php');
 ?>
-<img src="<?php echo $phpgw->common->image($appname,'navbar.gif'); ?>" border=0> 
+<img src="<?php echo $phpgw->common->image($appname,'navbar.gif'); ?>" border="0"><p/>
 <font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2">
-<p>
-This function is usually only available to the systems administrator of the system.
-Administration of all applications, user and group accounts, session logging and control.
-<ul>
-<li><b>Session management:</b>
-<p><i>View sessions:</i>
-<br>Current sessions, IP, Login Time, Idle Time, and gives option to kill session.
-<p><i>View Access Log:</i>
-<br>LoginId, IP, Login Time, Logout Time, Total time spent.
-</ul>
+Version: <b><?php echo $phpgw_info['server']['versions'][$appname]; ?></b>
+</font>
 <?php $phpgw->common->phpgw_footer(); ?>
