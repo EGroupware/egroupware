@@ -531,7 +531,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='',$cat_id='')
+		function update($id,$owner,$fields,$access='',$cat_id='',$tid='')
 		{
 			// First make sure that id number exists
 			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
@@ -549,7 +549,7 @@
 				if ($field_s == ",") {
 					unset($field_s);
 				}
-				$this->db->query("update $this->std_table set access='$access',cat_id='$cat_id' $fields_s where "
+				$this->db->query("update $this->std_table set access='$access',cat_id='$cat_id', tid='$tid' $fields_s where "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
