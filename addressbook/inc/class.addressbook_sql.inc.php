@@ -293,10 +293,10 @@
       while ($column = each($abc)) {
         if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
           $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
-          $this->cols .= '<td height="21">';
-          $this->cols .= '<font size="-1" face="Arial, Helvetica, sans-serif">';
+          $this->cols .= "  <td height=\"21\">\n";
+          $this->cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
           $this->cols .= $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
-          $this->cols .= '</font></td>';
+          $this->cols .= "</font>\n  </td>";
           $this->cols .= "\n";
              
       // To be used when displaying the rows

@@ -25,8 +25,11 @@
   }
   section_start("Address Book",$imgpath);
 
-  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/preferences.php");
-  echo "<A href=".$pg.">" . lang("Addressbook preferences") . "</A>";
+  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
+  echo "<a href=".$pg.">" . lang("Addressbook preferences") . "</a><br>";
+
+  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
+  echo "<a href=".$pg.">" . lang("Grant Addressbook Access") . "</a>";
 
   section_end(); 
 }

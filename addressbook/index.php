@@ -23,7 +23,6 @@
 
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "addressbook_header"	=> "header.tpl",
-		      "searchfilter"		=> "searchfilter.tpl",
 		      "column"			=> "column.tpl",
 		      "row"			=> "row.tpl",
 		      "addressbook_footer"	=> "footer.tpl" ));
@@ -66,7 +65,6 @@
   $t->set_var("cols",$this->cols);
 
   $t->pparse("out","addressbook_header");
-  $t->pparse("out","searchfilter");
 
   for ($i=0;$i<$limit;$i++) { // each entry
     $t->set_var(columns,"");
@@ -90,7 +88,7 @@
         }
         $data=$coldata."</a>";
       } else { // But these do not
-        $ref=" "; $data=$coldata;
+        $ref=""; $data=$coldata;
       }
       $t->set_var(col_data,$ref.$data);
       $t->parse("columns","column",True);
