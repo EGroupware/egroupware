@@ -118,13 +118,13 @@ show birthday reminders on main screen	addressbook	es	Mostrar recordatorios de C
 startrecord	addressbook	es	Registro Inicial
 state	common	es	Provincia
 street	common	es	Calle
-successfully imported x records into your addressbook.	addressbook	es	Se han importado %1 registros.
+successfully imported %1 records into your addressbook.	addressbook	es	Se han importado %1 registros.
 suffix	addressbook	es	Sufijo
 test import (show importable records <u>only</u> in browser)	addressbook	es	Test - Solo mostrar registros en el navegador
 this person's first name was not in the address book.	addressbook	es	El primer nombre de esta persona no se encuentra almacenado.
 title	addressbook	es	Titulo
-today is x's birthday!	common	es	Hoy es el cumplea&ntilde;os de %1!
-tomorrow is x's birthday.	common	es	Ma&ntilde;ana es el cumplea&ntilde;os de %1!
+today is %1's birthday!	common	es	Hoy es el cumplea&ntilde;os de %1!
+tomorrow is %1's birthday.	common	es	Ma&ntilde;ana es el cumplea&ntilde;os de %1!
 translation	addressbook	es	Traduccion
 vcard	common	es	VCard
 vcards require a first name entry.	addressbook	es	Las VCards requieren el primer nombre.

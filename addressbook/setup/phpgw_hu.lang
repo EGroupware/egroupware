@@ -21,8 +21,8 @@ show birthday reminders on main screen	addressbook	hu	Születésnapi emlékeztetõk 
 state	addressbook	hu	Állam
 street	addressbook	hu	Utca
 title	addressbook	hu	Cím
-today is x's birthday!	common	hu	Ma van %1 születésnapja!
-tomorrow is x's birthday.	common	hu	Holnap van %1 születésnapja.
+today is %1's birthday!	common	hu	Ma van %1 születésnapja!
+tomorrow is %1's birthday.	common	hu	Holnap van %1 születésnapja.
 url	addressbook	hu	URL
 work phone	addressbook	hu	Munkahelyi telefon
 zip code	addressbook	hu	Irányítószám

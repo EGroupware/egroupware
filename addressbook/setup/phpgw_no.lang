@@ -13,7 +13,7 @@ other number	addressbook	no	Annet Nummer
 pager	addressbook	no	Personsøker
 state	addressbook	no	Stat
 street	addressbook	no	Gate
-today is x's birthday!	common	no	I dag har %1 fødselsdag!
-tomorrow is x's birthday.	common	no	I morgen er det %1's fødselsdag.
+today is %1's birthday!	common	no	I dag har %1 fødselsdag!
+tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
 work phone	addressbook	no	Arbeids telefon
 zip code	addressbook	no	Postnummer

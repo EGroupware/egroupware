@@ -53,7 +53,7 @@ extra	addressbook	de	Extra
 fax	addressbook	de	Telefax
 fax number	common	de	Telefaxnummer
 field name	addressbook	de	Feldname
-field x has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
+field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
 fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 full name	addressbook	de	vollständiger Name
@@ -108,12 +108,12 @@ select where you want to store	admin	de	Auswählen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
 state	common	de	Land
 street	common	de	Straße
-successfully imported x records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in ihr Adressbuch importiert
+successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
 the <b>file</b> menu and export your contacts into a comma separated text (csv) file. <p>or, in palm desktop 4.0 or greater, visit your addressbook and select <b>export</b> from the <b>file</b> menu. the file exported will be in vcard format.<p>	addressbook	de	
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
-today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
-tomorrow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
+today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
+tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 video phone	addressbook	de	Bildtelefon

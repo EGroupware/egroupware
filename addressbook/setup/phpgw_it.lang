@@ -91,11 +91,11 @@ select where you want to store	admin	it	Seleziona dove vuoi memorizzare
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
 state	addressbook	it	Provincia
 street	addressbook	it	Via
-successfully imported x records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
+successfully imported %1 records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
 suffix	addressbook	it	Suffisso
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
-today is x's birthday!	common	it	Oggi è il compleanno di %1!
-tomorrow is x's birthday.	common	it	Domani è il compleanno di %1.
+today is %1's birthday!	common	it	Oggi è il compleanno di %1!
+tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 video phone	addressbook	it	Videotelefono

@@ -12,7 +12,7 @@ other number	addressbook	ko	기타번호
 pager	addressbook	ko	삐삐
 state	addressbook	ko	지역
 street	addressbook	ko	주소
-today is x's birthday!	common	ko	오늘은 %1의 생일입니다!
-tomorrow is x's birthday.	common	ko	내일은 %1의 생일입니다.
+today is %1's birthday!	common	ko	오늘은 %1의 생일입니다!
+tomorrow is %1's birthday.	common	ko	내일은 %1의 생일입니다.
 tork phone	addressbook	ko	직장전화
 zip code	addressbook	ko	우편번호

@@ -49,7 +49,7 @@ extra	addressbook	pl	Dodatkowe
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
 field name	addressbook	pl	Nazwa pola
-field x has been added !	addressbook	pl	Pole %1 zosta³o dodane !
+field %1 has been added !	addressbook	pl	Pole %1 zosta³o dodane !
 fields to show in address list	addressbook	pl	Pola pokazywane na li¶cie adresów
 full name	addressbook	pl	Pe³na nazwa
 geo	addressbook	pl	GEO
@@ -98,12 +98,12 @@ select where you want to store	admin	pl	Wybierz gdzie zapamiêtaæ
 show birthday reminders on main screen	addressbook	pl	Pokazuj przypomnienia o urodzinach na g³ównym ekranie
 state	common	pl	Województwo
 street	common	pl	Ulica
-successfully imported x records into your addressbook.	addressbook	pl	Zaimportowano %1 rekordów do ksi±¿ki adresowej.
+successfully imported %1 records into your addressbook.	addressbook	pl	Zaimportowano %1 rekordów do ksi±¿ki adresowej.
 suffix	addressbook	pl	Sufiks
 this person's first name was not in the address book.	addressbook	pl	Ksi±¿ka adresowa nie zawiera imienia tej osoby
 this person\'s first name was not in the address book.	addressbook	pl	Ta osoba nie posiada imienia w ksi±¿ce adresowej
-today is x's birthday!	common	pl	Dzi¶ s± urodziny %1
-tomorrow is x's birthday.	common	pl	Jutro s± urodziny  %1
+today is %1's birthday!	common	pl	Dzi¶ s± urodziny %1
+tomorrow is %1's birthday.	common	pl	Jutro s± urodziny  %1
 url	addressbook	pl	URL
 use country list	addressbook	pl	We¼ listê krajów
 vcard	common	pl	Kartka elektroniczna

@@ -21,8 +21,8 @@ show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen w
 state	addressbook	nl	Provincie
 street	addressbook	nl	Straatnaam
 title	addressbook	nl	Titel
-today is x's birthday!	common	nl	Vandaag is %1's verjaardag!
-tomorrow is x's birthday.	common	nl	Morgen is %1's verjaardag.
+today is %1's birthday!	common	nl	Vandaag is %1's verjaardag!
+tomorrow is %1's birthday.	common	nl	Morgen is %1's verjaardag.
 rl	addressbook	nl	URL
 work phone	addressbook	nl	Telefoon werk
 zip code	addressbook	nl	Postcode

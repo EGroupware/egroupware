@@ -9,7 +9,7 @@ other number	addressbook	br	Outro Numero
 pager	common	br	Pager
 state	common	br	Estado
 street	common	br	Rua
-today is x's birthday!	common	br	Hoje e' aniversario de %1!
-tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
+today is %1's birthday!	common	br	Hoje e' aniversario de %1!
+tomorrow is %1's birthday.	common	br	Amanha e' aniversario de %1.
 work phone	common	br	Fone Comercial
 zip code	common	br	CEP

@@ -44,8 +44,8 @@ export from addressbook	addressbook	ja	エクスポート（アドレス帳）
 fax	common	ja	Fax
 field list	addressbook	ja	項目一覧
 field name	addressbook	ja	項目名
-field x has been added !	addressbook	ja	項目 %1 を追加しました。
-field x has been updated !	addressbook	ja	項目 %1 を訂正しました。
+field %1 has been added !	addressbook	ja	項目 %1 を追加しました。
+field %1 has been updated !	addressbook	ja	項目 %1 を訂正しました。
 fields to show in address list	addressbook	ja	アドレスリストに表示する項目
 fieldseparator	addressbook	ja	項目の区切り
 geo	addressbook	ja	Geo
@@ -87,8 +87,8 @@ street	common	ja	町域
 suffix	addressbook	ja	敬称
 that field name has been used already !	addressbook	ja	項目名は既に存在しています。
 this person's first name was not in the address book.	addressbook	ja	アドレス帳に名前がありません。
-today is x's birthday!	common	ja	今日は %1 さんの誕生日です。
-tommorow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
+today is %1's birthday!	common	ja	今日は %1 さんの誕生日です。
+tomorrow is %1's birthday.	common	ja	明日は %1 さんの誕生日です。
 url	addressbook	ja	URL
 vcard	common	ja	VCard
 vcards require a first name entry.	addressbook	ja	VCard には、名前が必要です。

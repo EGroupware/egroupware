@@ -27,8 +27,8 @@ show birthday reminders on main screen	addressbook	sv	Visa födelsedags notis på 
 state	addressbook	sv	Stat
 street	addressbook	sv	Gata
 title	addressbook	sv	Titel
-today is x's birthday!	common	sv	I dag har %1 födelsedag!
-tomorrow is x's birthday.	common	sv	I morgon är det %1's födelsedag.
+today is %1's birthday!	common	sv	I dag har %1 födelsedag!
+tomorrow is %1's birthday.	common	sv	I morgon är det %1's födelsedag.
 url	addressbook	sv	URL
 work phone	addressbook	sv	Arbetstelefon
 you must select at least 1 column to display	addressbook	sv	Du måste välja minst 1 kolumn att visa

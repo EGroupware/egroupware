@@ -105,13 +105,13 @@ select where you want to store	admin	da	Vælg hvor du vil gemme
 show birthday reminders on main screen	addressbook	da	Påmind om fødselsdage på forsiden
 state	common	da	Land
 street	common	da	Vejnavn
-successfully imported x records into your addressbook.	addressbook	da	Imported %1 posteringer til din adressebog.
+successfully imported %1 records into your addressbook.	addressbook	da	Imported %1 posteringer til din adressebog.
 suffix	addressbook	da	Suffix
 this person's first name was not in the address book.	addressbook	da	Denne persons fornavn var ikke i adressebogen.
 time zone offset	addressbook	da	tidszone forskel
 title	addressbook	da	Titel
-today is x's birthday!	common	da	I dag er det %1's fødselsdag!
-tomorrow is x's birthday.	common	da	I morgen er det %1's fødselsdag.
+today is %1's birthday!	common	da	I dag er det %1's fødselsdag!
+tomorrow is %1's birthday.	common	da	I morgen er det %1's fødselsdag.
 url	addressbook	da	URL
 vcard	common	da	VCard
 vcards require a first name entry.	addressbook	da	VCards kræver et fornavn indtastet.

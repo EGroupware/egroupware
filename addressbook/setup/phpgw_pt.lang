@@ -47,7 +47,7 @@ fax	addressbook	pt	Fax
 fax number	common	pt	Fax
 field name	addressbook	pt	Nome do campo
 fields to show in address list	addressbook	pt	Campos a serem exibidos na lista de endereços
-field x has been added !	addressbook	pt	Campo x foi adicionado !
+field %1 has been added !	addressbook	pt	Campo %1 foi adicionado !
 full name	addressbook	pt	Nome Completo
 geo	addressbook	pt	GEO
 grant addressbook access	common	pt	Permitir acesso aos Contatos
@@ -93,11 +93,11 @@ select where you want to store	admin	pt	Selecione onde você deseja guardar
 show birthday reminders on main screen	addressbook	pt	Exibir lembrete de aniversários na tela principal
 state	common	pt	Estado
 street	common	pt	Rua
-successfully imported x records into your addressbook.	addressbook	pt	%1 Registros importados para o seu catálogo de endereços.
+successfully imported %1 records into your addressbook.	addressbook	pt	%1 Registros importados para o seu catálogo de endereços.
 suffix	addressbook	pt	Sufixo
 this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Catálogo de Endereços
-today is x's birthday!	common	pt	Hoje é o aniversário de %1.
-tomorrow is x's birthday.	common	pt	Amanhã é o aniversário de %1.
+today is %1's birthday!	common	pt	Hoje é o aniversário de %1.
+tomorrow is %1's birthday.	common	pt	Amanhã é o aniversário de %1.
 vcard	common	pt	VCard
 vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome.
 video phone	addressbook	pt	Videofone

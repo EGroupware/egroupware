@@ -96,11 +96,11 @@ select where you want to store	admin	fi	Minne haluat tallentaa
 show birthday reminders on main screen	addressbook	fi	N‰yt‰ syntym‰p‰iv‰muistutukset p‰‰n‰ytˆll‰
 state	common	fi	Osavaltio
 street	common	fi	Katuosoite
-successfully imported x records into your addressbook.	addressbook	fi	Tuotiin %1 tietuetta osoitekirjaan.
+successfully imported %1 records into your addressbook.	addressbook	fi	Tuotiin %1 tietuetta osoitekirjaan.
 suffix	addressbook	fi	J‰lkiliite
 this person's first name was not in the address book.	addressbook	fi	Etunime‰ ei ole osoitekirjassa.
-today is x's birthday!	common	fi	T‰n‰‰n syntym‰p‰iv‰‰ns‰ viett‰‰ %1!
-tomorrow is x's birthday.	common	fi	Huomenna syntym‰p‰iv‰‰ns‰ viett‰‰ %1.
+today is %1's birthday!	common	fi	T‰n‰‰n syntym‰p‰iv‰‰ns‰ viett‰‰ %1!
+tomorrow is %1's birthday.	common	fi	Huomenna syntym‰p‰iv‰‰ns‰ viett‰‰ %1.
 vcard	common	fi	VCard
 vcards require a first name entry.	addressbook	fi	VCard vaatii etunimen.
 video phone	addressbook	fi	Videopuhelin
