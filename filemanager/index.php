@@ -410,7 +410,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				{
 					if ($files["mime_type"] == "Directory")
 						html_image ("images/folder.gif", "Folder");
-					html_form_input ("text", "renamefiles[" . string_encode ($files[name], 1) . "]", "$files[name]", 255);
+					html_form_input ("text", "renamefiles[" . string_encode ($files[name], 1) . "]", $files["name"], 255);
 				}
 				else
 				{
@@ -542,7 +542,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				html_table_col_begin ();
 				if ($edit_this_comment)
 				{
-					html_form_input ("text", "comment_files[" . string_encode ($files[name], 1) . "]", "$files[comment]", 255);
+					html_form_input ("text", "comment_files[" . string_encode ($files[name], 1) . "]", html_encode ($files["comment"], 1), 255);
 				}
 				else
 				{
@@ -691,8 +691,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		if ($path != "/" && $path != $fakebase)
 		{
 			html_break (1);
+
+/* WIP - make download work
 			html_form_input ("submit", "download", "Download");
 			html_nbsp (3);
+*/
 
 			html_form_input ("text", "createdir", NULL, 255, 15);
 			html_form_input ("submit", "newdir", "Create Folder");
@@ -910,6 +913,14 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 {
 	for ($i = 0; $i != 5; $i++)
 	{
+		if ($badchar = bad_chars ($file_name[$i], 1))
+		{
+			echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
+			html_break (2);
+			html_link_back ();
+			html_page_close ();
+		}
+
 		if ($file_size[$i] != 0)
 		{
 			###
@@ -922,7 +933,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 			{
 				if ($fileinfo["mime_type"] == "Directory")
 				{
-					html_text_summary_error ("Cannot replace $fileinfo[name] because it is a directory");
+					echo $phpgw->common->error_list (array ("Cannot replace $fileinfo[name] because it is a directory"));
 					continue;
 				}
 
@@ -932,7 +943,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 
 				if (($file_size[$i] + $usedspace) > $userinfo["hdspace"])
 				{
-					html_text_summary_error ("Sorry, you do not have enough space to upload those files");
+					echo $phpgw->common->error_list (array ("Sorry, you do not have enough space to upload those files"));
 					continue;
 				}
 
@@ -952,7 +963,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 
 				if (($file_size[$i] + $usedspace) > $userinfo["hdspace"])
 				{
-					html_text_summary_error ("Not enough space to upload $file_name[$i]", NULL, $file_size[$i]);
+					echo $phpgw->common->error_list (array ("Not enough space to upload $file_name[$i] - $file_size[$i]"));
 					continue;
                                 }
 
@@ -983,6 +994,12 @@ elseif ($comment_files)
 {
 	while (list ($file) = each ($comment_files))
 	{
+		if ($badchar = bad_chars ($comment_files[$file], 1))
+		{
+			echo $phpgw->common->error_list (array (html_encode ("Comments cannot contain \"$badchar\")", 1)));
+			continue;
+		}
+
 		$file_decoded = stripslashes (string_decode ($file, 1));
 		$phpgw->vfs->set_attributes ($file_decoded, array (RELATIVE_ALL), array ("comment" => stripslashes ($comment_files[$file])));
 
@@ -1004,15 +1021,21 @@ elseif ($renamefiles)
 		$from_file_decoded = stripslashes (string_decode ($file, 1));
 		$to_file_decoded = stripslashes (string_decode ($renamefiles[$file], 1));
 
-		if (ereg ("/", $to_file_decoded))
+		if ($badchar = bad_chars ($to_file_decoded, 1))
 		{
-			echo $phpgw->common->error_list (array ("File names cannot contain /"));
+			echo $phpgw->common->error_list (array (html_encode ("File names cannot contain \"$badchar\"", 1)));
+			continue;
+		}
+
+		if (ereg ("/", $to_file_decoded) || ereg ("\\\\", $to_file_decoded))
+		{
+			echo $phpgw->common->error_list (array ("File names cannot contain \\ or /"));
 		}
 		elseif (!$phpgw->vfs->mv ($from_file_decoded, $to_file_decoded))
 		{
 			echo $phpgw->common->error_list (array ("Could not rename $disppath/$from_file_decoded to $disppath/$to_file_decoded"));
 		}
-		else
+		else 
 		{
 			html_text_summary ("Renamed $disppath/$from_file_decoded to $disppath/$to_file_decoded");
 		}
@@ -1118,9 +1141,9 @@ elseif ($delete)
 
 elseif ($newdir && $createdir)
 {
-	if ($badchar = bad_chars_file ($createdir, 1))
+	if ($badchar = bad_chars ($createdir, 1))
 	{
-		html_text_summary_error ("Cannot create directory $createdir&nbsp;&nbsp;&nbsp;(name contains \"$badchar\")");
+		echo $phpgw->common->error_list (array (html_encode ("Directory names cannot contain \"$badchar\")", 1)));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
@@ -1128,7 +1151,7 @@ elseif ($newdir && $createdir)
 	
 	if ($createdir[strlen($createdir)-1] == " " || $createdir[0] == " ")
 	{
-		html_text_summary_error ("Cannot create directory $createdir because it begins or ends in a space", 1);
+		echo $phpgw->common->error_list (array ("Cannot create directory because it begins or ends in a space"));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
@@ -1139,14 +1162,14 @@ elseif ($newdir && $createdir)
 	{
 		if ($fileinfo[1] != "Directory")
 		{
-			html_text_summary_error ("$fileinfo[0] already exists as a file");
+			echo $phpgw->common->error_list (array ("$fileinfo[0] already exists as a file"));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
 		}
 		else
 		{
-			html_text_summary_error ("Directory $fileinfo[0] already exists");
+			echo $phpgw->common->error_list (array ("Directory $fileinfo[0] already exists"));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
@@ -1160,7 +1183,7 @@ elseif ($newdir && $createdir)
 
 		if (($usedspace + 1024) > $userinfo["hdspace"])
 		{
-			html_text_summary_error ("Sorry, you do not have enough space to create a new directory", 1);
+			echo $phpgw->common->error_list (array ("Sorry, you do not have enough space to create a new directory"));
 			html_page_close ();
 		}
 
