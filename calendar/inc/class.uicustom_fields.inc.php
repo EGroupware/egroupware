@@ -129,8 +129,8 @@
 				$ordered[$order] = array(
 					'field'     => $field,
 					'name'      => stripslashes($_POST['name'][$field]),
-					'length'    => intval($_POST['length'][$field]),
-					'shown'     => intval($_POST['shown'][$field]),
+					'length'    => (int)$_POST['length'][$field],
+					'shown'     => (int)$_POST['shown'][$field],
 					'title'     => !!$_POST['title'][$field],
 					'disabled'  => !!$_POST['disabled'][$field]
 				);
@@ -158,8 +158,8 @@
 					$ordered[$order] = array(
 						'field'     => '#'.$name,
 						'name'      => $name,
-						'length'    => intval($_POST['length']['***new***']),
-						'shown'     => intval($_POST['shown']['***new***']),
+						'length'    => (int)$_POST['length']['***new***'],
+						'shown'     => (int)$_POST['shown']['***new***'],
 						'title'     => !!$_POST['title']['***new***'],
 						'disabled'  => !!$_POST['disabled']['***new***']
 					);

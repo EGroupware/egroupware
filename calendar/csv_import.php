@@ -62,64 +62,70 @@
 	$CPre = '|['; $CPreReg = '\|\['; // |{csv-fieldname} is expanded to the value of the csv-field
 	$CPos = ']';  $CPosReg = '\]';	// if used together with @ (replacement is eval-ed) value gets autom. quoted
 
-function addr_id( $n_family,$n_given,$org_name )
-{		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
-	$contacts = createobject('phpgwapi.contacts');
+	function addr_id( $n_family,$n_given,$org_name )
+	{		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
+		$contacts = createobject('phpgwapi.contacts');
 
-	$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
-	if (!count($addrs))
-		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given" );
-	if (!count($addrs))
-		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name" );
+		$addrs = $contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name");
+		if(!count($addrs))
+		{
+			$addrs = $contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given");
+		}
+		if(!count($addrs))
+		{
+			$addrs = $contacts->read(0,0,array('id'),'',"n_family=$n_family,org_name=$org_name");
+		}
 
-	if (count($addrs))
-		return $addrs[0]['id'];
+		if (count($addrs))
+		{
+			return $addrs[0]['id'];
+		}
 
-	return False;
-}
-
-$cat2id = array( );
-
-function cat_id($cats)
-{
-	if (!$cats)
-	{
-		return '';
+		return False;
 	}
 
-	$cats = split('[,;]',$cats);
+	$cat2id = array( );
 
-	foreach($cats as $k => $cat)
+	function cat_id($cats)
 	{
-		if (isset($cat2id[$cat]))
+		if (!$cats)
 		{
-			$ids[$cat] = $cat2id[$cat];	// cat is in cache
+			return '';
 		}
-		else
+
+		$cats = split('[,;]',$cats);
+
+		foreach($cats as $k => $cat)
 		{
-			if (!is_object($GLOBALS['phpgw']->categories))
+			if (isset($cat2id[$cat]))
 			{
-				$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
-			}
-			if ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
-			{	// cat exists
-				$cat2id[$cat] = $ids[$cat] = $id;
+				$ids[$cat] = $cat2id[$cat];	// cat is in cache
 			}
 			else
-			{	// create new cat
-				$GLOBALS['phpgw']->categories->add( array('name' => $cat,'descr' => $cat ));
-				$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) );
+			{
+				if (!is_object($GLOBALS['phpgw']->categories))
+				{
+					$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
+				}
+				if ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
+				{	// cat exists
+					$cat2id[$cat] = $ids[$cat] = $id;
+				}
+				else
+				{	// create new cat
+					$GLOBALS['phpgw']->categories->add( array('name' => $cat,'descr' => $cat ));
+					$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) );
+				}
 			}
 		}
-	}
-	$id_str = implode( ',',$ids );
+		$id_str = implode( ',',$ids );
 
-	if (count($ids) > 1)		// multiple cats need to be in ','
-	{
-		$id_str = ",$id_str,";
+		if (count($ids) > 1)		// multiple cats need to be in ','
+		{
+			$id_str = ",$id_str,";
+		}
+		return  $id_str;
 	}
-	return  $id_str;
-}
 
 	if (!is_object($GLOBALS['phpgw']->html))
 	{
@@ -168,12 +174,12 @@ function cat_id($cats)
 			'start'	=> 'Start Date: start: Timestamp or eg. YYYY-MM-DD hh:mm',
 			'end'	=> 'End Date: start',
 			'participants' => 'Participants: comma separated user-id\'s or -names',
-			'category' 	=> 'Categories: id\'s or names, comma separated (new ones got created)',
+			'category'	=> 'Categories: id\'s or names, comma separated (new ones got created)',
 			'priority'  => 'Priority: 1=Low, 2=Normal, 3=High',
 			'public'	=> 'Access: 1=public, 0=private',
 			'owner'		=> 'Owner: int(11) user-id/-name',
-			'modtime' => 'Modification date',
-//			'groups' 	=> 'Groups (dont know what this field is for)',
+			'modtime'	=> 'Modification date',
+//			'groups'	=> 'Groups (dont know what this field is for)',
 //			'cal_type'	=> 'cal_type: single_event=E (default) else M',
 		);
 
@@ -181,26 +187,26 @@ function cat_id($cats)
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
 
 		$cal_name_options = "<option value=\"\">none\n";
-		foreach($cal_names as $field => $name) 
+		foreach($cal_names as $field => $name)
 		{
 			$cal_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
 		}
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 		$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
-		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
+		$csv_fields[] = 'no CSV 1';					// eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
-		foreach($csv_fields as $csv_idx => $csv_field) 
+		foreach($csv_fields as $csv_idx => $csv_field)
 		{
 			$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
 			$GLOBALS['phpgw']->template->set_var('csv_idx',$csv_idx);
-			if ($def = $defaults[$csv_field]) 
+			if ($def = $defaults[$csv_field])
 			{
 				list( $info,$trans ) = explode($PSep,$def,2);
 				$GLOBALS['phpgw']->template->set_var('trans',$trans);
 				$GLOBALS['phpgw']->template->set_var('cal_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$cal_name_options));
-			} 
-			else 
+			}
+			else
 			{
 				$GLOBALS['phpgw']->template->set_var('trans','');
 				$GLOBALS['phpgw']->template->set_var('cal_fields',$cal_name_options);
@@ -222,7 +228,7 @@ function cat_id($cats)
 			'fieldsep'=> $_POST['fieldsep'],
 			'charset' => $_POST['charset']
 		));
-		$help_on_trans = 	"<a name=\"help\"></a><b>How to use Translation's</b><p>".
+		$help_on_trans = "<a name=\"help\"></a><b>How to use Translation's</b><p>".
 			"Translations enable you to change / adapt the content of each CSV field for your needs. <br>".
 			"General syntax is: <b>pattern1 ${ASep} replacement1 ${PSep} ... ${PSep} patternN ${ASep} replacementN</b><br>".
 			"If the pattern-part of a pair is ommited it will match everything ('^.*$'), which is only ".
@@ -276,7 +282,7 @@ function cat_id($cats)
 		$fp=fopen($csvfile,'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 		$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
-		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
+		$csv_fields[] = 'no CSV 1';						// eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
 
@@ -303,14 +309,14 @@ function cat_id($cats)
 			// if (!$debug) echo "<p>$csv_idx: ".$csv_fields[$csv_idx].": $info".($trans[$csv_idx] ? ': '.$trans[$csv_idx] : '')."</p>";
 			$pat_reps = explode($PSep,stripslashes($_POST['trans'][$csv_idx]));
 			$replaces = ''; $values = '';
-			if ($pat_reps[0] != '') 
+			if ($pat_reps[0] != '')
 			{
-				foreach($pat_reps as $k => $pat_rep) 
+				foreach($pat_reps as $k => $pat_rep)
 				{
 					list($pattern,$replace) = explode($ASep,$pat_rep,2);
-					if ($replace == '') 
-					{ 
-						$replace = $pattern; $pattern = '^.*$'; 
+					if ($replace == '')
+					{
+						$replace = $pattern; $pattern = '^.*$';
 					}
 					$values[$pattern] = $replace;	// replace two with only one, added by the form
 					$replaces .= ($replaces != '' ? $PSep : '') . $pattern . $ASep . $replace;
@@ -334,7 +340,7 @@ function cat_id($cats)
 		$start = $_POST['start'] < 1 ? 1 : $_POST['start'];
 
 		// ignore empty lines, is_null($fields[0]) is returned on empty lines !!!
-		for($i = 1; $i < $start; ++$i) 	// overread lines before our start-record
+		for($i = 1; $i < $start; ++$i)	// overread lines before our start-record
 		{
 			while(($fields = fgetcsv($fp,8000,$_POST['fieldsep'])) && is_null($fields[0])) ;
 		}

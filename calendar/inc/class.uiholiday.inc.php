@@ -264,11 +264,11 @@
 			}
 	
 			$var = Array(
-				'title_holiday'=> ($this->bo->id ? lang('Edit') : lang('Add')).' '.lang('Holiday'),
-				'message'		=> $message,
-				'actionurl'	   => $GLOBALS['phpgw']->link($this->base_url,'menuaction=calendar.boholiday.add&year='.$this->bo->year),
-				'hidden_vars'	=> '<input type="hidden" name="holiday[hol_id]" value="'.$this->bo->id.'">'."\n"
-							 . '<input type="hidden" name="holiday[locales]" value="'.$this->bo->locales[0].'">'."\n"
+				'title_holiday' => ($this->bo->id ? lang('Edit') : lang('Add')).' '.lang('Holiday'),
+				'message'       => $message,
+				'actionurl'     => $GLOBALS['phpgw']->link($this->base_url,'menuaction=calendar.boholiday.add&year='.$this->bo->year),
+				'hidden_vars'   => '<input type="hidden" name="holiday[hol_id]" value="'.$this->bo->id.'">'."\n"
+					. '<input type="hidden" name="holiday[locales]" value="'.$this->bo->locales[0].'">'."\n"
 			);
 			$t->set_var($var);
 

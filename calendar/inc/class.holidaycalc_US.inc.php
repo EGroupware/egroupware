@@ -1,4 +1,4 @@
-<?php 
+<?php
   /**************************************************************************\
   * phpGroupWare - holidaycalc_US                                            *
   * http://www.phpgroupware.org                                              *
@@ -13,73 +13,73 @@
 
   /* $Id$ */
 
-class holidaycalc {
-
-	function calculate_date($holiday, &$holidays, $year, &$i)
+	class holidaycalc
 	{
-//		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
-		if($holiday['day'] == 0 && $holiday['occurence'] != 0)
+		function calculate_date($holiday, &$holidays, $year, &$i)
 		{
-			if($holiday['occurence'] != 99)
+	//		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+			if($holiday['day'] == 0 && $holiday['occurence'] != 0)
 			{
-				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],1);
-				$day = (((7 * $holiday['occurence']) - 6) + ((($holiday['dow'] + 7) - $dow) % 7));
-				$day += ($day < 1 ? 7 : 0);
-				// What is the point of this?  
-				// Add 7 when the holiday falls on a Monday???
-				//$day += ($holiday['dow']==1 ? 7 : 0);
-
-				// Sometimes the 5th occurance of a weekday (ie the 5th monday)
-				// can spill over to the next month.  This prevents that.  
-				$ld = $GLOBALS['phpgw']->datetime->days_in_month($holiday['month'],$year);
-				if ($day > $ld)
+				if($holiday['occurence'] != 99)
 				{
-					return;
+					$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],1);
+					$day = (((7 * $holiday['occurence']) - 6) + ((($holiday['dow'] + 7) - $dow) % 7));
+					$day += ($day < 1 ? 7 : 0);
+					// What is the point of this?
+					// Add 7 when the holiday falls on a Monday???
+					//$day += ($holiday['dow']==1 ? 7 : 0);
+
+					// Sometimes the 5th occurance of a weekday (ie the 5th monday)
+					// can spill over to the next month.  This prevents that.
+					$ld = $GLOBALS['phpgw']->datetime->days_in_month($holiday['month'],$year);
+					if ($day > $ld)
+					{
+						return;
+					}
+				}
+				else
+				{
+					$ld = $GLOBALS['phpgw']->datetime->days_in_month($holiday['month'],$year);
+					$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$ld);
+					$day = $ld - (($dow + 7) - $holiday['dow']) % 7 ;
 				}
 			}
 			else
 			{
-				$ld = $GLOBALS['phpgw']->datetime->days_in_month($holiday['month'],$year);
-				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$ld);
-				$day = $ld - (($dow + 7) - $holiday['dow']) % 7 ;
-			}
-		}
-		else
-		{
-			$day = $holiday['day'];
-			if($holiday['observance_rule'] == True)
-			{
-				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
-				// This now calulates Observed holidays and creates a new entry for them.
-				if($dow == 0)
+				$day = $holiday['day'];
+				if($holiday['observance_rule'] == True)
 				{
-					$i++;
-					$holidays[$i]['locale'] = $holiday['locale'];
-					$holidays[$i]['name'] = $holiday['name'].' (Observed)';
-					$holidays[$i]['day'] = $holiday['day'] + 1;
-					$holidays[$i]['month'] = $holiday['month'];
-					$holidays[$i]['occurence'] = $holiday['occurence'];
-					$holidays[$i]['dow'] = $holiday['dow'];
-					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
-					$holidays[$i]['obervance_rule'] = 0;
-				}
-				elseif($dow == 6)
-				{
-					$i++;
-					$holidays[$i]['locale'] = $holiday['locale'];
-					$holidays[$i]['name'] = $holiday['name'].' (Observed)';
-					$holidays[$i]['day'] = $holiday['day'] - 1;
-					$holidays[$i]['month'] = $holiday['month'];
-					$holidays[$i]['occurence'] = $holiday['occurence'];
-					$holidays[$i]['dow'] = $holiday['dow'];
-					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
-					$holidays[$i]['obervance_rule'] = 0;
+					$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
+					// This now calulates Observed holidays and creates a new entry for them.
+					if($dow == 0)
+					{
+						$i++;
+						$holidays[$i]['locale'] = $holiday['locale'];
+						$holidays[$i]['name'] = $holiday['name'].' (Observed)';
+						$holidays[$i]['day'] = $holiday['day'] + 1;
+						$holidays[$i]['month'] = $holiday['month'];
+						$holidays[$i]['occurence'] = $holiday['occurence'];
+						$holidays[$i]['dow'] = $holiday['dow'];
+						$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
+						$holidays[$i]['obervance_rule'] = 0;
+					}
+					elseif($dow == 6)
+					{
+						$i++;
+						$holidays[$i]['locale'] = $holiday['locale'];
+						$holidays[$i]['name'] = $holiday['name'].' (Observed)';
+						$holidays[$i]['day'] = $holiday['day'] - 1;
+						$holidays[$i]['month'] = $holiday['month'];
+						$holidays[$i]['occurence'] = $holiday['occurence'];
+						$holidays[$i]['dow'] = $holiday['dow'];
+						$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
+						$holidays[$i]['obervance_rule'] = 0;
+					}
 				}
 			}
-		}
-		$date = mktime(0,0,0,$holiday['month'],$day,$year);
+			$date = mktime(0,0,0,$holiday['month'],$day,$year);
 
-		return $date;
+			return $date;
+		}
 	}
-}
 ?>

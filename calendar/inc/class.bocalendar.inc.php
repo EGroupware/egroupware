@@ -111,11 +111,11 @@
 		var $cached_holidays;
 
 		var $g_owner = 0;
-		
+
 		var $filter;
 		var $cat_id;
 		var $users_timeformat;
-		
+
 		var $modified;
 		var $deleted;
 		var $added;
@@ -123,7 +123,7 @@
 		var $is_group = False;
 
 		var $soap = False;
-		
+
 		var $use_session = False;
 
 		var $today;
@@ -143,7 +143,7 @@
 				{
 					$this->debug_string = '';
 					ob_start();
-				}	
+				}
 
 				foreach($this->grants as $grantor => $rights)
 				{
@@ -166,13 +166,13 @@
 			$this->check_set_default_prefs();
 
 			$owner = get_var('owner',array('GET','POST'),$GLOBALS['owner']);
-			
+
 			ereg('menuaction=([a-zA-Z.]+)',$_SERVER['HTTP_REFERER'],$regs);
 			$from = $regs[1];
 			if ((substr($_SERVER['PHP_SELF'],-8) == 'home.php' && substr($this->prefs['calendar']['defaultcalendar'],0,7) == 'planner'
-				 || $_GET['menuaction'] == 'calendar.uicalendar.planner' &&
-				    $from  != 'calendar.uicalendar.planner' && !$this->save_owner)
-				 && intval($this->prefs['calendar']['planner_start_with_group']) > 0)
+				|| $_GET['menuaction'] == 'calendar.uicalendar.planner' &&
+				$from  != 'calendar.uicalendar.planner' && !$this->save_owner)
+				&& (int)$this->prefs['calendar']['planner_start_with_group'] > 0)
 			{
 				// entering planner for the first time ==> saving owner in save_owner, setting owner to default
 				//
@@ -180,11 +180,11 @@
 				$owner = 'g_'.$this->prefs['calendar']['planner_start_with_group'];
 			}
 			elseif ($_GET['menuaction'] != 'calendar.uicalendar.planner' &&
-			        $this->save_owner)
+				$this->save_owner)
 			{
 				// leaving planner with an unchanged user/owner ==> setting owner back to save_owner
 				//
-				$owner = intval(isset($_GET['owner']) ? $_GET['owner'] : $this->save_owner);
+				$owner = (int)(isset($_GET['owner']) ? $_GET['owner'] : $this->save_owner);
 				unset($this->save_owner);
 			}
 			elseif (!empty($owner) && $owner != $this->owner && $from == 'calendar.uicalendar.planner')
@@ -193,22 +193,22 @@
 				//
 				unset($this->save_owner);
 			}
-			
+
 			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
 			{
 				$this->set_owner_to_group(substr($owner,2));
 			}
 			elseif(isset($owner) && $owner!='')
 			{
-				$this->owner = intval($owner);
+				$this->owner = (int)$owner;
 			}
 			elseif(!@isset($this->owner) || !@$this->owner)
 			{
-				$this->owner = intval($GLOBALS['phpgw_info']['user']['account_id']);
+				$this->owner = (int)$GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			elseif(isset($this->owner) && $GLOBALS['phpgw']->accounts->get_type($this->owner) == 'g')
 			{
-				$this->set_owner_to_group(intval($this->owner));
+				$this->set_owner_to_group((int)$this->owner);
 			}
 
 			$this->prefs['common']    = $GLOBALS['phpgw_info']['user']['preferences']['common'];
@@ -226,7 +226,7 @@
 			$friendly = (isset($_GET['friendly'])?$_GET['friendly']:'');
 			$friendly = ($friendly=='' && isset($_POST['friendly'])?$_POST['friendly']:$friendly);
 
-			$this->printer_friendly = (intval($friendly) == 1?True:False);
+			$this->printer_friendly = ((int)$friendly == 1?True:False);
 
 			if(isset($_POST['filter'])) { $this->filter = $_POST['filter']; }
 			if(isset($_POST['sortby'])) { $this->sortby = $_POST['sortby']; }
@@ -239,7 +239,7 @@
 
 			if(!isset($this->sortby))
 			{
-			   $this->sortby = $this->prefs['calendar']['defaultcalendar'] == 'planner_user' ? 'user' : 'category';
+				$this->sortby = $this->prefs['calendar']['defaultcalendar'] == 'planner_user' ? 'user' : 'category';
 			}
 
 			if($GLOBALS['phpgw']->accounts->get_type($this->owner)=='g')
@@ -283,7 +283,7 @@
 				MCAL_RECUR_MONTHLY_MDAY	=> 'Monthly (by date)',
 				MCAL_RECUR_YEARLY	=> 'Yearly'
 			);
-			
+
 			$localtime = $GLOBALS['phpgw']->datetime->users_localtime;
 
 			$date = (isset($GLOBALS['date'])?$GLOBALS['date']:'');
@@ -304,9 +304,9 @@
 
 			if(isset($date) && $date!='')
 			{
-				$this->year = intval(substr($date,0,4));
-				$this->month = intval(substr($date,4,2));
-				$this->day = intval(substr($date,6,2));
+				$this->year  = (int)(substr($date,0,4));
+				$this->month = (int)(substr($date,4,2));
+				$this->day   = (int)(substr($date,6,2));
 			}
 			else
 			{
@@ -435,7 +435,7 @@
 		function set_owner_to_group($owner)
 		{
 			print_debug('calendar::bocalendar::set_owner_to_group:owner',$owner);
-			$this->owner = intval($owner);
+			$this->owner = (int)$owner;
 			$this->is_group = True;
 			$this->g_owner = Array();
 			$members = $GLOBALS['phpgw']->accounts->member($owner);
@@ -512,12 +512,12 @@
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
 			$this->sortby = $data['sortby'];
-			$this->owner  = intval($data['owner']);
-			$this->save_owner = intval($data['save_owner']);
-			$this->year   = intval($data['year']);
-			$this->month  = intval($data['month']);
-			$this->day    = intval($data['day']);
-			$this->num_months = intval($data['num_months']);
+			$this->owner  = (int)$data['owner'];
+			$this->save_owner = (int)$data['save_owner'];
+			$this->year   = (int)$data['year'];
+			$this->month  = (int)$data['month'];
+			$this->day    = (int)$data['day'];
+			$this->num_months = (int)$data['num_months'];
 			$this->return_to = $data['return_to'];
 		}
 
@@ -533,7 +533,7 @@
 				$event = $this->so->read_entry($id);
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
 				{
-					$this->so->add_attribute('participants','U',intval($this->owner));
+					$this->so->add_attribute('participants','U',(int)$this->owner);
 					$this->so->add_entry($event);
 					$event = $this->get_cached_event();
 				}
@@ -544,20 +544,20 @@
 
 		function delete_single($param)
 		{
-			if($this->check_perms(PHPGW_ACL_DELETE,intval($param['id'])))
+			if($this->check_perms(PHPGW_ACL_DELETE,(int)$param['id']))
 			{
 				$temp_event = $this->get_cached_event();
-				$event = $this->read_entry(intval($param['id']));
+				$event = $this->read_entry((int)$param['id']);
 //				if($this->owner == $event['owner'])
 //				{
 				$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $GLOBALS['phpgw']->datetime->tz_offset;
-				$event['recur_exception'][] = intval($exception_time);
+				$event['recur_exception'][] = (int)$exception_time;
 				$this->so->cal->event = $event;
 //				print_debug('exception time',$event['recur_exception'][count($event['recur_exception']) -1]);
 //				print_debug('count event exceptions',count($event['recur_exception']));
 				$this->so->add_entry($event);
 				$cd = 16;
-				
+
 				$this->so->cal->event = $temp_event;
 				unset($temp_event);
 			}
@@ -600,17 +600,17 @@
 				{
 					while(list($key,$value) = each($params['reinstate_index']))
 					{
-						print_debug('reinstate_index ['.$key.']',intval($value));
-						print_debug('exception time',$event['recur_exception'][intval($value)]);
-						unset($event['recur_exception'][intval($value)]);
+						print_debug('reinstate_index ['.$key.']',(int)$value);
+						print_debug('exception time',$event['recur_exception'][(int)$value]);
+						unset($event['recur_exception'][(int)$value]);
 						print_debug('count event exceptions',count($event['recur_exception']));
-				 	}
+					}
 				}
 				else
 				{
-					print_debug('reinstate_index[0]',intval($params['reinstate_index'][0]));
-					print_debug('exception time',$event['recur_exception'][intval($params['reinstate_index'][0])]);
-					unset($event['recur_exception'][intval($params['reinstate_index'][0])]);
+					print_debug('reinstate_index[0]',(int)$params['reinstate_index'][0]);
+					print_debug('exception time',$event['recur_exception'][(int)$params['reinstate_index'][0]]);
+					unset($event['recur_exception'][(int)$params['reinstate_index'][0]]);
 					print_debug('count event exceptions',count($event['recur_exception']));
 				}
 				$this->so->cal->event = $event;
@@ -664,7 +664,7 @@
 		{
 			$type = $GLOBALS['phpgw']->accounts->get_type($this->owner);
 
-			if($type == 'g') 
+			if($type == 'g')
 			{
 				$members = $GLOBALS['phpgw']->acl->get_ids_for_location($this->owner, 1, 'phpgw_group');
 			}
@@ -808,7 +808,7 @@
 					$l_categories = 0;
 				}
 
-				$is_public = intval(isset($l_cal['public']) ? $l_cal['public'] : $l_cal['private'] == 'public');
+				$is_public = (int)(isset($l_cal['public']) ? $l_cal['public'] : $l_cal['private'] == 'public');
 				$this->so->event_init();
 				$this->add_attribute('uid',$l_cal['uid']);
 				if(count($l_categories) >= 2)
@@ -842,36 +842,36 @@
 					$l_recur_enddate = $this->jscal->input2date($l_recur_enddate['str'],False,'mday');
 				}
 
-				switch(intval($l_cal['recur_type']))
+				switch((int)$l_cal['recur_type'])
 				{
 					case MCAL_RECUR_NONE:
 						$this->so->set_recur_none();
 						break;
 					case MCAL_RECUR_DAILY:
-						$this->so->set_recur_daily(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
+						$this->so->set_recur_daily((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 					case MCAL_RECUR_WEEKLY:
 						foreach(array('rpt_sun','rpt_mon','rpt_tue','rpt_wed','rpt_thu','rpt_fri','rpt_sat') as $rpt_day)
 						{
-							$l_cal['recur_data'] += intval($l_cal[$rpt_day]);
+							$l_cal['recur_data'] += (int)$l_cal[$rpt_day];
 						}
 						if (is_array($l_cal['rpt_day']))
 						{
 							foreach ($l_cal['rpt_day'] as $mask)
 							{
-								$l_cal['recur_data'] |= intval($mask);
+								$l_cal['recur_data'] |= (int)$mask;
 							}
 						}
-						$this->so->set_recur_weekly(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']),$l_cal['recur_data']);
+						$this->so->set_recur_weekly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval'],$l_cal['recur_data']);
 						break;
 					case MCAL_RECUR_MONTHLY_MDAY:
-						$this->so->set_recur_monthly_mday(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
+						$this->so->set_recur_monthly_mday((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 					case MCAL_RECUR_MONTHLY_WDAY:
-						$this->so->set_recur_monthly_wday(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
+						$this->so->set_recur_monthly_wday((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 					case MCAL_RECUR_YEARLY:
-						$this->so->set_recur_yearly(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
+						$this->so->set_recur_yearly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 				}
 
@@ -882,23 +882,23 @@
 					$part = Array();
 					for($i=0;$i<count($parts);$i++)
 					{
-						if (($accept_type = substr($parts[$i],-1,1)) == '0' || intval($accept_type) > 0)
+						if (($accept_type = substr($parts[$i],-1,1)) == '0' || (int)$accept_type > 0)
 						{
 							$accept_type = 'U';
 						}
-						$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
+						$acct_type = $GLOBALS['phpgw']->accounts->get_type((int)$parts[$i]);
 						if($acct_type == 'u')
 						{
-							$part[intval($parts[$i])] = $accept_type;
+							$part[(int)$parts[$i]] = $accept_type;
 						}
 						elseif($acct_type == 'g')
 						{
-							$part[intval($parts[$i])] = $accept_type;
+							$part[(int)$parts[$i]] = $accept_type;
 							$groups[] = $parts[$i];
 							/* This pulls ALL users of a group and makes them as participants to the event */
 							/* I would like to turn this back into a group thing. */
-							$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
-							$members = $acct->member(intval($parts[$i]));
+							$acct = CreateObject('phpgwapi.accounts',(int)$parts[$i]);
+							$members = $acct->member((int)$parts[$i]);
 							unset($acct);
 							if($members == False)
 							{
@@ -921,14 +921,14 @@
 					@reset($part);
 					while(list($key,$accept_type) = each($part))
 					{
-						$this->so->add_attribute('participants',$accept_type,intval($key));
+						$this->so->add_attribute('participants',$accept_type,(int)$key);
 					}
 				}
 
 				if($groups)
 				{
 					@reset($groups);
-					$this->so->add_attribute('groups',intval($group_id));
+					$this->so->add_attribute('groups',(int)$group_id);
 				}
 
 				$event = $this->get_cached_event();
@@ -1027,10 +1027,10 @@
 					unset($GLOBALS['phpgw_info']['flags']['noheader']);
 					unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 					ExecMethod('calendar.uicalendar.overlap',
-				   		Array(
-				   			'o_events'	=> $overlapping_events,
-				   			'this_event'	=> $event
-				   		)
+						Array(
+							'o_events'	=> $overlapping_events,
+							'this_event'	=> $event
+						)
 					);
 					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
@@ -1055,7 +1055,7 @@
 					// if old event has alarm and the start-time changed => update them
 					//echo "<p>checking ".count($old_event['alarm'])." alarms of event #$event[id] start moved from ".print_r($old_event['start'],True)." to ".print_r($event['start'],True)."</p>\n";
 					if ($old_event['alarm'] &&
-					    $this->maketime($old_event['start']) != $this->maketime($event['start']))
+						$this->maketime($old_event['start']) != $this->maketime($event['start']))
 					{
 						$this->so->delete_alarms($old_event['id']);
 						foreach($old_event['alarm'] as $id => $alarm)
@@ -1083,7 +1083,7 @@
 				}
 				else
 				{
-					return intval($event['id']);
+					return (int)$event['id'];
 				}
 			}
 			return True;
@@ -1141,13 +1141,13 @@
 		function time2array($time,$alarm = 0)
 		{
 			return array(
-				'year'  => intval(date('Y',$time)),
-				'month' => intval(date('m',$time)),
-				'mday'  => intval(date('d',$time)),
-				'hour'  => intval(date('H',$time)),
-				'min'   => intval(date('i',$time)),
-				'sec'   => intval(date('s',$time)),
-				'alarm' => intval($alarm)
+				'year'  => (int)(date('Y',$time)),
+				'month' => (int)(date('m',$time)),
+				'mday'  => (int)(date('d',$time)),
+				'hour'  => (int)(date('H',$time)),
+				'min'   => (int)(date('i',$time)),
+				'sec'   => (int)(date('s',$time)),
+				'alarm' => (int)($alarm)
 			);
 		}
 
@@ -1196,7 +1196,7 @@
 						$time_param['hour'] -= 12;
 					}
 				}
-		
+
 				if($time_param['hour'] > 24)
 				{
 					$time_param['hour'] -= 12;
@@ -1245,7 +1245,7 @@
 			{
 				//echo "testing event[participants][uid=$uid] = '".$event['participants'][$uid]."'<br>\n";
 				if (isset($event['participants'][$uid]) && $event['participants'][$uid] != 'R' &&
-				    $status != 'R')
+					$status != 'R')
 				{
 					return True;	// found not rejected participant in event
 				}
@@ -1265,14 +1265,14 @@
 				$temp_cache_events = $this->cached_events;
 			}
 
-//			$temp_start = intval($GLOBALS['phpgw']->common->show_date($starttime,'Ymd'));
-//			$temp_start_time = intval($GLOBALS['phpgw']->common->show_date($starttime,'Hi'));
-//			$temp_end = intval($GLOBALS['phpgw']->common->show_date($endtime,'Ymd'));
-//			$temp_end_time = intval($GLOBALS['phpgw']->common->show_date($endtime,'Hi'));
-			$temp_start = intval(date('Ymd',$starttime));
-			$temp_start_time = intval(date('Hi',$starttime));
-			$temp_end = intval(date('Ymd',$endtime));
-			$temp_end_time = intval(date('Hi',$endtime));
+//			$temp_start = (int)$GLOBALS['phpgw']->common->show_date($starttime,'Ymd');
+//			$temp_start_time = (int)($GLOBALS['phpgw']->common->show_date($starttime,'Hi');
+//			$temp_end = (int)$GLOBALS['phpgw']->common->show_date($endtime,'Ymd');
+//			$temp_end_time = (int)$GLOBALS['phpgw']->common->show_date($endtime,'Hi');
+			$temp_start = (int)(date('Ymd',$starttime));
+			$temp_start_time = (int)(date('Hi',$starttime));
+			$temp_end = (int)(date('Ymd',$endtime));
+			$temp_end_time = (int)(date('Hi',$endtime));
 			if($this->debug)
 			{
 				echo '<!-- Temp_Start: '.$temp_start.' -->'."\n";
@@ -1349,19 +1349,19 @@
 								echo '<!-- Checking event id #'.$event['id'];
 							}
 							$temp_event_start = sprintf("%d%02d",$event['start']['hour'],$event['start']['min']);
-							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);					
+							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);
 //							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
-							if(($temp_start_time <= $temp_event_start && 
-							    $temp_end_time > $temp_event_start && 
-							    $temp_end_time <= $temp_event_end ||
-							    $temp_start_time >= $temp_event_start && 
-							    $temp_start_time < $temp_event_end && 
-							    $temp_end_time >= $temp_event_end ||
-							    $temp_start_time <= $temp_event_start && 
-							    $temp_end_time >= $temp_event_end ||
-							    $temp_start_time >= $temp_event_start && 
-							    $temp_end_time <= $temp_event_end) && 
-							   $this->participants_not_rejected($participants,$event))
+							if(($temp_start_time <= $temp_event_start &&
+								$temp_end_time > $temp_event_start &&
+								$temp_end_time <= $temp_event_end ||
+								$temp_start_time >= $temp_event_start &&
+								$temp_start_time < $temp_event_end &&
+								$temp_end_time >= $temp_event_end ||
+								$temp_start_time <= $temp_event_start &&
+								$temp_end_time >= $temp_event_end ||
+								$temp_start_time >= $temp_event_start &&
+								$temp_end_time <= $temp_event_end) &&
+								$this->participants_not_rejected($participants,$event))
 							{
 								if($this->debug)
 								{
@@ -1393,7 +1393,7 @@
 		/*!
 		@function check_perms( )
 		@syntax check_perms($needed,$event=0,$other=0)
-		@abstract Checks if the current user has the necessary ACL rights 
+		@abstract Checks if the current user has the necessary ACL rights
 		@author ralfbecker
 		@discussion The check is performed on an event or general on the cal of an other user
 		@param $needed necessary ACL right: PHPGW_ACL_{READ|EDIT|DELETE}
@@ -1424,7 +1424,7 @@
 			}
 			$user = $GLOBALS['phpgw_info']['user']['account_id'];
 			$grants = $this->grants[$owner];
-			
+
 			if (is_array($event) && $needed == PHPGW_ACL_READ)
 			{
 				// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1447,7 +1447,7 @@
 			{
 				$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
 			}
-			//echo "<p>".function_backtrace()." check_perms($needed,$event_id,$other) for user $user and needed_acl $needed: event='$event[title]': owner=$owner, privat=$private, grants=$grants ==> access=$access</p>\n";
+			//echo "<p>".function_backtrace()." check_perms($needed,$event_id,$other) for user $user and needed_acl $needed: event='$event[title]': owner=$owner, private=$private, grants=$grants ==> access=$access</p>\n";
 
 			return $access;
 		}
@@ -1553,7 +1553,7 @@
 				$last['day'] = $last['mday'];
 			}
 			$datefmt = $this->prefs['common']['dateformat'];
-			
+
 			$month_before_day = strtolower($datefmt[0]) == 'm' ||
 				strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
 
@@ -1578,7 +1578,7 @@
 								return $range;
 							}
 							$range .= ' - ';
-							
+
 							if ($first['year'] != $last['year'] && $datefmt[0] == 'Y')
 							{
 								$range .= $last['year'] . ', ';
@@ -1611,14 +1611,14 @@
 		{
 			$first = $GLOBALS['phpgw']->datetime->gmtdate($GLOBALS['phpgw']->datetime->get_weekday_start($this->year, $this->month, $this->day));
 			$last = $GLOBALS['phpgw']->datetime->gmtdate($first['raw'] + 518400);
-         
+
 			return ($this->long_date($first,$last));
 		}
-		
+
 		function normalizeminutes(&$minutes)
 		{
 			$hour = 0;
-			$min = intval($minutes);
+			$min = (int)$minutes;
 			if($min >= 60)
 			{
 				$hour += $min / 60;
@@ -1633,9 +1633,9 @@
 		{
 			$temp = array('hour','minute','second','ampm');
 			$time = strrev($time);
-			$second = intval(strrev(substr($time,0,2)));
-			$minute = intval(strrev(substr($time,2,2)));
-			$hour   = intval(strrev(substr($time,4)));
+			$second = (int)(strrev(substr($time,0,2)));
+			$minute = (int)(strrev(substr($time,2,2)));
+			$hour   = (int)(strrev(substr($time,4)));
 			$hour += $this->normalizeminutes(&$minute);
 			$temp['second'] = $second;
 			$temp['minute'] = $minute;
@@ -1647,16 +1647,16 @@
 				{
 					return $temp;
 				}
-		
+
 				$temp['ampm'] = 'am';
-		
+
 				if ((int)$temp['hour'] > 12)
 				{
 					$temp['hour'] = (int)((int)$temp['hour'] - 12);
 					$temp['ampm'] = 'pm';
-   		   }
-      		elseif ((int)$temp['hour'] == 12)
-	      	{
+				}
+				elseif ((int)$temp['hour'] == 12)
+				{
 					$temp['ampm'] = 'pm';
 				}
 			}
@@ -1671,12 +1671,12 @@
 				$exceptions = explode(',',$exception_str);
 				for($exception_count=0;$exception_count<count($exceptions);$exception_count++)
 				{
-					$exception[] = intval($exceptions[$exception_count]);
+					$exception[] = (int)$exceptions[$exception_count];
 				}
 			}
 			elseif($exception_str != '')
 			{
-				$exception[] = intval($exception_str);
+				$exception[] = (int)$exception_str;
 			}
 			return $exception;
 		}
@@ -1685,12 +1685,12 @@
 		{
 			$time = $this->splittime($fixed_time);
 			$str = $time['hour'].':'.((int)$time['minute']<=9?'0':'').$time['minute'];
-		
+
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
 				$str .= ' ' . $time['ampm'];
 			}
-		
+
 			return $str;
 		}
 
@@ -1699,7 +1699,7 @@
 			$inserted = False;
 			if(isset($event['recur_exception']))
 			{
-				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,(int)(substr($date,4,2)),(int)(substr($date,6,2)),(int)(substr($date,0,4))) - $GLOBALS['phpgw']->datetime->tz_offset;
 				while($inserted == False && list($key,$exception_time) = each($event['recur_exception']))
 				{
 					if($this->debug)
@@ -2028,7 +2028,7 @@
 				return;
 			}
 
-			$cache_start = intval(sprintf("%04d%02d%02d",$syear,$smonth,$sday));
+			$cache_start = (int)(sprintf("%04d%02d%02d",$syear,$smonth,$sday));
 			if($c_cached_ids)
 			{
 				for($i=0;$i<$c_cached_ids;$i++)
@@ -2038,15 +2038,15 @@
 					{
 						continue;	// fetch recuring events only in 2. loop
 					}
-					$startdate = intval(date('Ymd',$this->maketime($event['start'])));
-					$enddate = intval(date('Ymd',$this->maketime($event['end'])));
+					$startdate = (int)(date('Ymd',$this->maketime($event['start'])));
+					$enddate = (int)(date('Ymd',$this->maketime($event['end'])));
 					$this->cached_events[$startdate][] = $event;
 					if($startdate != $enddate)
 					{
-						$start['year'] = intval(substr($startdate,0,4));
-						$start['month'] = intval(substr($startdate,4,2));
-						$start['mday'] = intval(substr($startdate,6,2));
-						for($j=$startdate,$k=0;$j<=$enddate;$k++,$j=intval(date('Ymd',mktime(0,0,0,$start['month'],$start['mday'] + $k,$start['year']))))
+						$start['year'] = (int)(substr($startdate,0,4));
+						$start['month'] = (int)(substr($startdate,4,2));
+						$start['mday'] = (int)(substr($startdate,6,2));
+						for($j=$startdate,$k=0;$j<=$enddate;$k++,$j=(int)(date('Ymd',mktime(0,0,0,$start['month'],$start['mday'] + $k,$start['year']))))
 						{
 							$c_evt_day = count($this->cached_events[$j]) - 1;
 							if($c_evt_day < 0)
@@ -2206,7 +2206,7 @@
 			{
 				foreach(array('year','month','mday','hour','min','sec') as $n => $name)
 				{
-					$date[$name] = intval($arr[$n]);
+					$date[$name] = (int)$arr[$n];
 				}
 				return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
 					$date['month'],$date['mday'],$date['year']) : $date;
@@ -2234,7 +2234,7 @@
 		{
 			return $this->so->get_cached_event();
 		}
-		
+
 		function add_attribute($var,$value,$index='**(**')
 		{
 			$this->so->add_attribute($var,$value,$index);
@@ -2336,7 +2336,7 @@
 				for($m=0;$m<$interval;$m++)
 				{
 					$minutes = $increment * $m;
-					if(intval($starttemp['minute']) > $minutes && intval($starttemp['minute']) < ($minutes + $increment))
+					if((int)$starttemp['minute'] > $minutes && (int)$starttemp['minute'] < ($minutes + $increment))
 					{
 						$subminute = ($starttemp['minute'] - $minutes) * 100;
 					}
@@ -2356,17 +2356,17 @@
 				$end += $addminute;
 				$starttemp = $this->splittime("$start",False);
 				$endtemp = $this->splittime("$end",False);
-					
+
 				for($h=$starttemp['hour'];$h<=$endtemp['hour'];$h++)
 				{
 					$startminute = 0;
 					$endminute = $interval;
 					$hour = $h * 10000;
-					if($h == intval($starttemp['hour']))
+					if($h == (int)$starttemp['hour'])
 					{
 						$startminute = ($starttemp['minute'] / $increment);
 					}
-					if($h == intval($endtemp['hour']))
+					if($h == (int)$endtemp['hour'])
 					{
 						$endminute = ($endtemp['minute'] / $increment);
 					}
@@ -2425,7 +2425,7 @@
 				return True;	// always True for now
 			}
 			$want_update = 0;
-			
+
 			// the following switch fall-through all cases, as each included the following too
 			//
 			$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE;
@@ -2453,7 +2453,7 @@
 					}
 				case 'add_cancel':
 					if ($old_event['owner'] == $userid && $msg_is_response ||
-					    $msg_type == MSG_DELETED || $msg_type == MSG_ADDED)
+						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED)
 					{
 						++$want_update;
 					}
@@ -2495,7 +2495,7 @@
 			$temp_timeformat = $this->prefs['common']['timeformat'];
 			$temp_dateformat = $this->prefs['common']['dateformat'];
 
-			$tz_offset = ((60 * 60) * intval($temp_tz_offset));
+			$tz_offset = ((60 * 60) * (int)$temp_tz_offset);
 
 			if($old_event != False)
 			{
@@ -2593,7 +2593,7 @@
 
 			foreach($to_notify as $userid => $statusid)
 			{
-				$userid = intval($userid);
+				$userid = (int)$userid;
 
 				if ($statusid == 'R')
 				{
@@ -2626,7 +2626,7 @@
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
 
-					$GLOBALS['phpgw']->datetime->tz_offset = ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+					$GLOBALS['phpgw']->datetime->tz_offset = ((60 * 60) * (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
 
 					if($old_starttime)
 					{
@@ -2634,7 +2634,7 @@
 					}
 					$details['startdate'] = $GLOBALS['phpgw']->common->show_date($starttime);
 					$details['enddate']   = $GLOBALS['phpgw']->common->show_date($endtime);
-				
+
 					list($subject,$body) = split("\n",$GLOBALS['phpgw']->preferences->parse_notify($notify_msg,$details),2);
 					$subject = $send->encode_subject($subject);
 					switch($part_prefs['calendar']['update_format'])
@@ -2670,7 +2670,7 @@
 					}
 					$returncode = $send->msg('email',$to,$subject,$body,''/*$msgtype*/,'','','',$sender, $content_type/*,$boundary*/);
 					//echo "<p>send(to='$to', sender='$sender'<br>subject='$subject') returncode=$returncode<br>".nl2br($body)."</p>\n";
-					
+
 					if (!$returncode)	// not nice, but better than failing silently
 					{
 						echo '<p><b>bocalendar::send_update</b>: '.lang("Failed sending message to '%1' #%2 subject='%3', sender='%4' !!!",$to,$userid,htmlspecialchars($subject), $sender)."<br>\n";
@@ -2681,7 +2681,7 @@
 				}
 			}
 			unset($send);
-		
+
 			if((is_int($this->user) && $this->user != $temp_user['account_id']) ||
 				(is_string($this->user) && $this->user != $temp_user['account_lid']))
 			{
@@ -2692,7 +2692,7 @@
 			$GLBOALS['phpgw']->datetime->tz_offset = ((60 * 60) * $temp_tz_offset);
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $temp_dateformat;
-			
+
 			return $returncode;
 		}
 
@@ -2764,7 +2764,7 @@
 			print_debug('Found',$found);
 			return $found;
 		}
-		
+
 		function prepare_recipients(&$new_event,$old_event)
 		{
 			// Find modified and deleted users.....
@@ -2773,12 +2773,12 @@
 				if(isset($new_event['participants'][$old_userid]))
 				{
 					print_debug('Modifying event for user',$old_userid);
-					$this->modified[intval($old_userid)] = $new_status;
+					$this->modified[(int)$old_userid] = $new_status;
 				}
 				else
 				{
 					print_debug('Deleting user from the event',$old_userid);
-					$this->deleted[intval($old_userid)] = $old_status;
+					$this->deleted[(int)$old_userid] = $old_status;
 				}
 			}
 			// Find new users.....
@@ -2791,7 +2791,7 @@
 					$new_event['participants'][$new_userid] = 'U';
 				}
 			}
-		
+
 			if(count($this->added) > 0 || count($this->modified) > 0 || count($this->deleted) > 0)
 			{
 				if(count($this->added) > 0)
@@ -2836,7 +2836,7 @@
 				}
 			}
 		}
-		
+
 		function get_dirty_entries($lastmod=-1)
 		{
 			$events = false;
@@ -2859,7 +2859,7 @@
 				}
 			}
 			unset($rep_event_ids);
-			
+
 			return $events;
 		}
 
@@ -2868,7 +2868,7 @@
 			echo '<br>UI:';
 			_debug_array($data);
 		}
-		
+
 		/*!
 		@function rejected_no_show
 		@abstract checks if event is rejected from user and he's not the owner and dont want rejected
@@ -2877,13 +2877,13 @@
 		*/
 		function rejected_no_show($event)
 		{
-			$ret = !$this->prefs['calendar']['show_rejected'] && 
-			       $event['owner'] != $this->owner && 
-			       $event['participants'][$this->owner] == 'R';
+			$ret = !$this->prefs['calendar']['show_rejected'] &&
+				$event['owner'] != $this->owner &&
+				$event['participants'][$this->owner] == 'R';
 			//echo "<p>rejected_no_show($event[title])='$ret': user=$this->owner, event-owner=$event[owner], status='".$event['participants'][$this->owner]."', show_rejected='".$this->prefs['calendar']['show_rejected']."'</p>\n";
 			return $ret;
 		}
-		
+
 		/*!
 		@function list_cals
 		@abstract generate list of user- / group-calendars for the selectbox in the header
@@ -2933,7 +2933,7 @@
 
 			return $users + $groups;	// users first and then groups, both alphabeticaly
 		}
-		
+
 		/*!
 		@function event2array
 		@abstract create array with name, translated name and readable content of each attributes of an event
@@ -2994,7 +2994,7 @@
 			$pri = Array(
 				1	=> lang('Low'),
 				2	=> lang('Normal'),
-		  		3	=> lang('High')
+				3	=> lang('High')
 			);
 			$var['priority'] = Array(
 				'field'	=> lang('Priority'),
@@ -3013,7 +3013,7 @@
 
 			$var['access'] = Array(
 				'field'	=> lang('Access'),
-				'data'	=> $event['public'] ? lang('Public') : lang('Privat')
+				'data'	=> $event['public'] ? lang('Public') : lang('Private')
 			);
 
 			if(@isset($event['groups'][0]))

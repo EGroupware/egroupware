@@ -39,16 +39,16 @@
 		var $start;
 		var $query;
 		var $sort;
-		
+
 		var $locales = Array();
 		var $holidays;
 		var $cached_holidays;
-		
+
 		function boholiday()
 		{
 			$this->so = CreateObject('calendar.soholiday');
 
-			$this->start  = intval(get_var('start',array('POST','GET')));
+			$this->start  = (int)get_var('start',array('POST','GET'));
 			$this->query  = get_var('query',array('POST','GET'));
 			$this->sort   = get_var('sort',array('POST','GET'));
 			$this->order  = get_var('order',array('POST','GET'));
@@ -59,7 +59,7 @@
 			{
 				$this->locales[] = $this->locale;
 			}
-			
+
 			if($this->debug)
 			{
 				echo '<-- Locale = '.$this->locales[0].' -->'."\n";
@@ -75,7 +75,7 @@
 			{
 				echo "BO : Reading Holiday ID : ".$id."<br>\n";
 			}
-			
+
 			if(!$id)
 			{
 				if(!$this->id)
@@ -112,7 +112,7 @@
 				$this->ui->admin();
 			}
 		}
-		
+
 		function delete_locale($locale='')
 		{
 			if(!$locale)
@@ -153,7 +153,7 @@
 			}
 			Header('Location: '.$send_back_to);
 		}
-		
+
 		function get_holiday_list($locale='', $sort='', $order='', $query='', $total='', $year=0)
 		{
 			$locale = ($locale?$locale:$this->locales[0]);
@@ -194,7 +194,7 @@
 			{
 				$this->locales[] = 'US';
 			}
-			
+
 			if($this->owner != $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				$owner_pref = CreateObject('phpgwapi.preferences',$owner);
@@ -219,7 +219,7 @@
 				}
 			}
 		}
-		
+
 		function auto_load_holidays($locale)
 		{
 			if($this->so->holiday_total($locale) == 0)
@@ -270,11 +270,11 @@
 					{
 						$holiday['locale'] = $holiday[0];
 						$holiday['name'] = $GLOBALS['phpgw']->db->db_addslashes($holiday[1]);
-						$holiday['mday'] = intval($holiday[2]);
-						$holiday['month_num'] = intval($holiday[3]);
-						$holiday['occurence'] = intval($holiday[4]);
-						$holiday['dow'] = intval($holiday[5]);
-						$holiday['observance_rule'] = intval($holiday[6]);
+						$holiday['mday'] = (int)$holiday[2];
+						$holiday['month_num'] = (int)$holiday[3];
+						$holiday['occurence'] = (int)$holiday[4];
+						$holiday['dow'] = (int)$holiday[5];
+						$holiday['observance_rule'] = (int)$holiday[6];
 						$holiday['hol_id'] = 0;
 						$this->so->save_holiday($holiday);
 					}
@@ -309,7 +309,7 @@
 				{
 					$holiday['hol_id'] = $this->bo->id;
 				}
-				
+
 				// some input validation
 
 				if (!$holiday['mday'] == !$holiday['occurence'])
@@ -322,11 +322,10 @@
 				}
 				else
 				{
-					$holiday['occurence'] = intval($holiday['occurence'] ? $holiday['occurence'] : $holiday['year']);
+					$holiday['occurence'] = (int)($holiday['occurence'] ? $holiday['occurence'] : $holiday['year']);
 					unset($holiday['year']);
 				}
 
-		
 	// Still need to put some validation in here.....
 
 				$this->ui = CreateObject('calendar.uiholiday');
@@ -385,7 +384,7 @@
 			if(count($holidays) == 0)
 			{
 				return $holidays;
-			}			
+			}
 
 			$temp_locale = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			for($i=0;$i<count($holidays);$i++)
@@ -421,7 +420,7 @@
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php'));
 			}
 		}
-		
+
 		function rule_string($holiday)
 		{
 			if (!is_array($holiday))

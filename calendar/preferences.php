@@ -11,7 +11,7 @@
 
 	/* $Id$ */
 
-	$phpgw_flags = Array(
+	$GLOBALS['phpgw']_flags = Array(
 		'currentapp'			=>	'calendar',
 		'enable_nextmatchs_class'	=>	True,
 		'noheader'			=>	True,
@@ -20,82 +20,82 @@
 		'noappfooter'			=>	True
 	);
 
-	$phpgw_info['flags'] = $phpgw_flags;
+	$GLOBALS['phpgw_info']['flags'] = $GLOBALS['phpgw']_flags;
 	include('../header.inc.php');
 
 	if ($submit)
 	{
-		$phpgw->preferences->read_repository();
-		$phpgw->preferences->add('calendar','weekdaystarts');
-		$phpgw->preferences->add('calendar','workdaystarts');
-		$phpgw->preferences->add('calendar','workdayends');
-		$phpgw->preferences->add('calendar','defaultcalendar');
-		$phpgw->preferences->add('calendar','defaultfilter');
-		$phpgw->preferences->add('calendar','interval');
+		$GLOBALS['phpgw']->preferences->read_repository();
+		$GLOBALS['phpgw']->preferences->add('calendar','weekdaystarts');
+		$GLOBALS['phpgw']->preferences->add('calendar','workdaystarts');
+		$GLOBALS['phpgw']->preferences->add('calendar','workdayends');
+		$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar');
+		$GLOBALS['phpgw']->preferences->add('calendar','defaultfilter');
+		$GLOBALS['phpgw']->preferences->add('calendar','interval');
 		if ($mainscreen_showevents == True)
 		{
-			$phpgw->preferences->add('calendar','mainscreen_showevents');
+			$GLOBALS['phpgw']->preferences->add('calendar','mainscreen_showevents');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','mainscreen_showevents');
+			$GLOBALS['phpgw']->preferences->delete('calendar','mainscreen_showevents');
 		}
 		if ($send_updates == True)
 		{
-			$phpgw->preferences->add('calendar','send_updates');
+			$GLOBALS['phpgw']->preferences->add('calendar','send_updates');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','send_updates');
+			$GLOBALS['phpgw']->preferences->delete('calendar','send_updates');
 		}
-		
+
 		if ($display_status == True)
 		{
-			$phpgw->preferences->add('calendar','display_status');
+			$GLOBALS['phpgw']->preferences->add('calendar','display_status');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','display_status');
+			$GLOBALS['phpgw']->preferences->delete('calendar','display_status');
 		}
 
 		if ($default_private == True)
 		{
-			$phpgw->preferences->add('calendar','default_private');
+			$GLOBALS['phpgw']->preferences->add('calendar','default_private');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','default_private');
+			$GLOBALS['phpgw']->preferences->delete('calendar','default_private');
 		}
 
 		if ($display_minicals == True)
 		{
-			$phpgw->preferences->add('calendar','display_minicals');
+			$GLOBALS['phpgw']->preferences->add('calendar','display_minicals');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','display_minicals');
+			$GLOBALS['phpgw']->preferences->delete('calendar','display_minicals');
 		}
 
 		if ($print_black_white == True)
 		{
-			$phpgw->preferences->add('calendar','print_black_white');
+			$GLOBALS['phpgw']->preferences->add('calendar','print_black_white');
 		}
 		else
 		{
-			$phpgw->preferences->delete('calendar','print_black_white');
+			$GLOBALS['phpgw']->preferences->delete('calendar','print_black_white');
 		}
 
-		$phpgw->preferences->save_repository(True);
-     
-		Header('Location: '.$phpgw->link('/preferences/index.php'));
-		$phpgw->common->phpgw_exit();
+		$GLOBALS['phpgw']->preferences->save_repository(True);
+
+		Header('Location: '.$GLOBALS['phpgw']->link('/preferences/index.php'));
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
 	function display_item($field,$data)
 	{
-		global $phpgw, $p, $tr_color;
+		global $GLOBALS['phpgw'], $p, $tr_color;
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 		$var = Array(
 			'bg_color'	=>	$tr_color,
 			'field'		=>	$field,
@@ -105,10 +105,10 @@
 		$p->parse('row','pref_list',True);
 	}
 
-	$phpgw->common->phpgw_header();
+	$GLOBALS['phpgw']->common->phpgw_header();
 	echo parse_navbar();
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$p = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('calendar'));
 	$templates = Array(
 		'pref'		=>	'pref.tpl',
 		'pref_colspan'	=>	'pref_colspan.tpl',
@@ -118,24 +118,24 @@
 
 	$var = Array(
 		'title'		=>	lang('Calendar preferences'),
-		'action_url'	=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/preferences.php'),
-		'bg_color'	=>	$phpgw_info['theme']['th_bg'],
+		'action_url'	=>	$GLOBALS['phpgw']->link('/'.$GLOBALS['phpgw_info']['flags']['currentapp'].'/preferences.php'),
+		'bg_color'	=>	$GLOBALS['phpgw_info']['theme']['th_bg'],
 		'submit_lang'	=>	lang('submit')
 	);
-	
+
 	$p->set_var($var);
 	$p->set_var('text','&nbsp;');
 	$p->parse('row','pref_colspan',True);
 
 //	if ($totalerrors)
 //	{
-//		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
+//		echo '<p><center>' . $GLOBALS['phpgw']->common->error_list($errors) . '</center>';
 //	}
 
-	$str = '<input type="checkbox" name="mainscreen_showevents" value="True"'.($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="mainscreen_showevents" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'] == True?' checked':'').'>';
 	display_item(lang('show day view on main screen'),$str);
 
-	$t_weekday[$phpgw_info['user']['preferences']['calendar']['weekdaystarts']] = ' selected';
+	$t_weekday[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts']] = ' selected';
 	$str = '<select name="weekdaystarts">'
 		. '<option value="Monday"'.$t_weekday['Monday'].'>'.lang('Monday').'</option>'
 		. '<option value="Sunday"'.$t_weekday['Sunday'].'>'.lang('Sunday').'</option>'
@@ -144,28 +144,28 @@
 		. '</select>';
 	display_item(lang('weekday starts on'),$str);
 
-	$t_workdaystarts[$phpgw_info['user']['preferences']['calendar']['workdaystarts']] = ' selected';
+	$t_workdaystarts[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['workdaystarts']] = ' selected';
 	$str = '<select name="workdaystarts">';
 	for ($i=0; $i<24; $i++)
 	{
 		$str .= '<option value="'.$i.'"'.$t_workdaystarts[$i].'>'
-			. $phpgw->common->formattime($i,'00') . '</option>';
+			. $GLOBALS['phpgw']->common->formattime($i,'00') . '</option>';
 	}
 	$str .= '</select>';
 	display_item(lang('work day starts on'),$str);
-  
-	$t_workdayends[$phpgw_info['user']['preferences']['calendar']['workdayends']] = ' selected';
+
+	$t_workdayends[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['workdayends']] = ' selected';
 	$str = '<select name="workdayends">';
 	for ($i=0; $i<24; $i++)
 	{
 		$str .= '<option value="'.$i.'"'.$t_workdayends[$i].'>'
-			. $phpgw->common->formattime($i,'00') . '</option>';
+			. $GLOBALS['phpgw']->common->formattime($i,'00') . '</option>';
 	}
 	$str .= '</select>';
 	display_item(lang('work day ends on'),$str);
 
-	$selected[$phpgw_info['user']['preferences']['calendar']['defaultcalendar']] = ' selected';
-	if (!isset($phpgw_info['user']['preferences']['calendar']['defaultcalendar']))
+	$selected[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']] = ' selected';
+	if (!isset($GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']))
 	{
 		$selected['month.php'] = ' selected';
 	}
@@ -179,8 +179,8 @@
 
 
 	$selected = array();
-	$selected[$phpgw_info['user']['preferences']['calendar']['defaultfilter']] = ' selected';
-	if (! isset($phpgw_info['user']['preferences']['calendar']['defaultfilter']) || $phpgw_info['user']['preferences']['calendar']['defaultfilter'] == 'private')
+	$selected[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultfilter']] = ' selected';
+	if (! isset($GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultfilter']) || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultfilter'] == 'private')
 	{
 		$selected['private'] = ' selected';
 	}
@@ -196,8 +196,8 @@
 	display_item(lang('Default calendar filter'),$str);
 
 	$selected = array();
-	$selected[intval($phpgw_info['user']['preferences']['calendar']['interval'])] = ' selected';
-	if (! isset($phpgw_info['user']['preferences']['calendar']['interval']))
+	$selected[intval($GLOBALS['phpgw_info']['user']['preferences']['calendar']['interval'])] = ' selected';
+	if (! isset($GLOBALS['phpgw_info']['user']['preferences']['calendar']['interval']))
 	{
 		$selected[60] = ' selected';
 	}
@@ -210,7 +210,7 @@
 		45	=> '45',
 		60	=> '60'
 	);
-	
+
 	$str = '<select name="interval">';
 	while(list($key,$value) = each($var))
 	{
@@ -219,21 +219,21 @@
 	$str .= '</select>';
 	display_item(lang('Display interval in Day View'),$str);
 
-	$str = '<input type="checkbox" name="send_updates" value="True"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="send_updates" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['send_updates'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
 	display_item(lang('Send/receive updates via email'),$str);
 
-	$str = '<input type="checkbox" name="display_status" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_status'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="display_status" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['display_status'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
 	display_item(lang('Display status of events'),$str);
 
-	$str = '<input type="checkbox" name="default_private" value="True"'.($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="default_private" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['default_private'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['default_private'] == True?' checked':'').'>';
 	display_item(lang('When creating new events default set to private'),$str);
 
-	$str = '<input type="checkbox" name="display_minicals" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="display_minicals" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['display_minicals'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['display_minicals'] == True?' checked':'').'>';
 	display_item(lang('Display mini calendars when printing'),$str);
 
-	$str = '<input type="checkbox" name="print_black_white" value="True"'.($phpgw_info['user']['preferences']['calendar']['print_black_white'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['print_black_white'] == True?' checked':'').'>';
+	$str = '<input type="checkbox" name="print_black_white" value="True"'.($GLOBALS['phpgw_info']['user']['preferences']['calendar']['print_black_white'] == 'Y' || $GLOBALS['phpgw_info']['user']['preferences']['calendar']['print_black_white'] == True?' checked':'').'>';
 	display_item(lang('Print calendars in black & white'),$str);
 
 	$p->pparse('out','pref');
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

@@ -14,7 +14,7 @@
 {
 
  /*
-	This hookfile is for generating an app-specific side menu used in the idots 
+	This hookfile is for generating an app-specific side menu used in the idots
 	template set.
 
 	$menu_title speaks for itself

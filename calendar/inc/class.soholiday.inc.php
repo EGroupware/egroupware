@@ -31,7 +31,7 @@
 				{
 					echo "Updating LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 				}
-				$sql = "UPDATE phpgw_cal_holidays SET name='".$holiday['name']."', mday=".$holiday['mday'].', month_num='.$holiday['month_num'].', occurence='.$holiday['occurence'].', dow='.$holiday['dow'].', observance_rule='.intval($holiday['observance_rule']).' WHERE hol_id='.$holiday['hol_id'];
+				$sql = "UPDATE phpgw_cal_holidays SET name='".$holiday['name']."', mday=".$holiday['mday'].', month_num='.$holiday['month_num'].', occurence='.$holiday['occurence'].', dow='.$holiday['dow'].', observance_rule='.(int)$holiday['observance_rule'].' WHERE hol_id='.$holiday['hol_id'];
 			}
 			else
 			{
@@ -40,7 +40,7 @@
 					echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 				}
 				$sql = 'INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) '
-					. "VALUES('".strtoupper($holiday['locale'])."','".$holiday['name']."',".$holiday['mday'].','.$holiday['month_num'].','.$holiday['occurence'].','.$holiday['dow'].','.intval($holiday['observance_rule']).")";
+					. "VALUES('".strtoupper($holiday['locale'])."','".$holiday['name']."',".$holiday['mday'].','.$holiday['month_num'].','.$holiday['occurence'].','.$holiday['dow'].','.(int)$holiday['observance_rule'].")";
 			}
 			$this->db->query($sql,__LINE__,__FILE__);
 		}
@@ -53,10 +53,10 @@
 					'index'			=> $this->db->f('hol_id'),
 					'locale'		=> $this->db->f('locale'),
 					'name'			=> $GLOBALS['phpgw']->strip_html($this->db->f('name')),
-					'day'			=> intval($this->db->f('mday')),
-					'month'			=> intval($this->db->f('month_num')),
-					'occurence'		=> intval($this->db->f('occurence')),
-					'dow'			=> intval($this->db->f('dow')),
+					'day'			=> (int)$this->db->f('mday'),
+					'month'			=> (int)$this->db->f('month_num'),
+					'occurence'		=> (int)$this->db->f('occurence'),
+					'dow'			=> (int)$this->db->f('dow'),
 					'observance_rule'	=> $this->db->f('observance_rule')
 				);
 				if($this->debug)
@@ -136,7 +136,7 @@
 			{
 				$querymethod = " AND name like '%".$query."%'";
 			}
-			if (intval($year) > 1900)
+			if ((int)$year > 1900)
 			{
 				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
 			}
@@ -172,7 +172,7 @@
 			{
 				$querymethod = " AND name like '%".$query."%'";
 			}
-			if (intval($year) >= 1900)
+			if ((int)$year >= 1900)
 			{
 				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
 			}
@@ -185,7 +185,7 @@
 			
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
-			$retval = intval($this->db->f(0));
+			$retval = (int)$this->db->f(0);
 			if($this->debug)
 			{
 				echo 'Total Holidays for : '.$locale.' : '.$retval."<br>\n";

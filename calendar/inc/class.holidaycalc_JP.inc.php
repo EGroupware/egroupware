@@ -1,4 +1,4 @@
-<?php 
+<?php
   /**************************************************************************\
   * phpGroupWare - holidaycalc_JP                                            *
   * http://www.phpgroupware.org                                              *
@@ -13,141 +13,141 @@
 
   /* $Id$ */
 
-class holidaycalc {
-
-	function calculate_date($holiday, &$holidays, $year, &$i)
+	class holidaycalc
 	{
-		static	$cached_month;
-		static	$cached_day;
-		static	$cached_observance_rule;
-
-		if ($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+		function calculate_date($holiday, &$holidays, $year, &$i)
 		{
-			$dow = $GLOBALS['phpgw']->datetime->day_of_week($year, $holiday['month'], 1);
-			$dayshift = (($holiday['dow'] + 7) - $dow) % 7;
-			$day = ($holiday['occurence'] - 1) * 7 + $dayshift + 1;
+			static	$cached_month;
+			static	$cached_day;
+			static	$cached_observance_rule;
 
-			// Happy monday law.
-			if ($holiday['month'] == 1)
+			if ($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
 			{
-				if ($year < 2000) 
+				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year, $holiday['month'], 1);
+				$dayshift = (($holiday['dow'] + 7) - $dow) % 7;
+				$day = ($holiday['occurence'] - 1) * 7 + $dayshift + 1;
+
+				// Happy monday law.
+				if ($holiday['month'] == 1)
 				{
-					$day = 15;
+					if ($year < 2000)
+					{
+						$day = 15;
+					}
+				}
+				elseif ($holiday['month'] == 7)
+				{
+					if ($year < 2003)
+					{
+						$day = 20;
+					}
+				}
+				elseif ($holiday['month'] == 9)
+				{
+					if ($year < 2003)
+					{
+						$day = 15;
+					}
+				}
+				elseif ($holiday['month'] == 10)
+				{
+					if ($year < 2000)
+					{
+						$day = 10;
+					}
 				}
 			}
-			elseif ($holiday['month'] == 7)
+			elseif ($holiday['day'] == 0 && $holiday['dow'] == 0 && $holiday['occurence'] == 0)
 			{
-				if ($year < 2003)
+				// For the next generation.
+				// over 2151, please set $factor...
+				if ($holiday['month'] == 3)
 				{
-					$day = 20;
+					// for Vernal Equinox
+					if ($year >= 1980 && $year <= 2099)
+					{
+						$factor = 20.8431;
+					}
+					elseif ($year >= 2100 && $year <= 2150)
+					{
+						$factor = 21.851;
+					}
 				}
+				elseif ($holiday['month'] == 9)
+				{
+					// for Autumnal Equinox
+					if ($year >= 1980 && $year <= 2099)
+					{
+						$factor = 23.2488;
+					}
+					elseif ($year >= 2100 && $year <= 2150)
+					{
+						$factor = 24.2488;
+					}
+				}
+
+				$day = (int)($factor + 0.242194 * ($year - 1980)
+					- (int)(($year - 1980) / 4));
 			}
-			elseif ($holiday['month'] == 9)
+			else
 			{
-				if ($year < 2003)
-				{
-					$day = 15;
-				}
+				// normal holiday
+				$day = $holiday['day'];
 			}
-			elseif ($holiday['month'] == 10)
+
+			if ($year >= 1985 && $holiday['month'] == $cached_month && $day == $cached_day + 2 && $cached_observance_rule == True && $holiday['observance_rule'] == True)
 			{
-				if ($year < 2000)
+				$pdow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day-1);
+				if ($pdow != 0)
 				{
-					$day = 10;
-				}
-			}
-		}
-		elseif ($holiday['day'] == 0 && $holiday['dow'] == 0 && $holiday['occurence'] == 0)
-		{
-			// For the next generation.
-			// over 2151, please set $factor...
-			if ($holiday['month'] == 3)
-			{
-				// for Vernal Equinox
-				if ($year >= 1980 && $year <= 2099)
-				{
-					$factor = 20.8431;
-				}
-				elseif ($year >= 2100 && $year <= 2150)
-				{
-					$factor = 21.851;
-				}
-			}
-			elseif ($holiday['month'] == 9)
-			{
-				// for Autumnal Equinox
-				if ($year >= 1980 && $year <= 2099)
-				{
-					$factor = 23.2488;
-				}
-				elseif ($year >= 2100 && $year <= 2150)
-				{
-					$factor = 24.2488;
+					$addcnt = count($holidays) + 1;
+					$holidays[$addcnt]['locale'] = $holiday['locale'];
+					if ($pdow == 1)
+					{
+						$holidays[$addcnt]['name'] = lang('overlap holiday');
+					}
+					else
+					{
+						$holidays[$addcnt]['name'] = lang('people holiday');
+					}
+					$holidays[$addcnt]['day'] = $day - 1;
+					$holidays[$addcnt]['month'] = $holiday['month'];
+					$holidays[$addcnt]['occurence'] = 0;
+					$holidays[$addcnt]['dow'] = 0;
+					$holidays[$addcnt]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
+					$holidays[$addcnt]['observance_rule'] = 0;
 				}
 			}
 
-			$day = (int)($factor + 0.242194 * ($year - 1980)
-			     - (int)(($year - 1980) / 4));
-		}
-		else
-		{
-			// normal holiday
-			$day = $holiday['day'];
-		}
+			$cached_month = $holiday['month'];
+			$cached_day = $day;
+			$cached_observance_rule = $holiday['observance_rule'];
 
-		if ($year >= 1985 && $holiday['month'] == $cached_month && $day == $cached_day + 2 && $cached_observance_rule == True && $holiday['observance_rule'] == True)
-		{
-			$pdow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day-1);
-			if ($pdow != 0)
+			if ($year >= 1985 && $holiday['month'] == 5 && $day == 3)
 			{
-				$addcnt = count($holidays) + 1;
-				$holidays[$addcnt]['locale'] = $holiday['locale'];
-				if ($pdow == 1)
+				;
+			}
+			elseif ($holiday['observance_rule'] == True)
+			{
+				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
+				// This now calulates Observed holidays and creates a new entry for them.
+				if($dow == 0)
 				{
+					$addcnt = count($holidays) + 1;
+					$holidays[$addcnt]['locale'] = $holiday['locale'];
 					$holidays[$addcnt]['name'] = lang('overlap holiday');
+					$holidays[$addcnt]['day'] = $day + 1;
+					$holidays[$addcnt]['month'] = $holiday['month'];
+					$holidays[$addcnt]['occurence'] = $holiday['occurence'];
+					$holidays[$addcnt]['dow'] = $holiday['dow'];
+					$holidays[$addcnt]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
+					$holidays[$addcnt]['observance_rule'] = 0;
 				}
-				else
-				{
-					$holidays[$addcnt]['name'] = lang('people holiday');
-				}
-				$holidays[$addcnt]['day'] = $day - 1;
-				$holidays[$addcnt]['month'] = $holiday['month'];
-				$holidays[$addcnt]['occurence'] = 0;
-				$holidays[$addcnt]['dow'] = 0;
-				$holidays[$addcnt]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
-				$holidays[$addcnt]['observance_rule'] = 0;
 			}
+
+			$date = mktime(0,0,0,$holiday['month'],$day,$year);
+
+			return $date;
 		}
-
-		$cached_month = $holiday['month'];
-		$cached_day = $day;
-		$cached_observance_rule = $holiday['observance_rule'];
-
-		if ($year >= 1985 && $holiday['month'] == 5 && $day == 3)
-		{
-			;
-		}
-		elseif ($holiday['observance_rule'] == True)
-		{
-			$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
-			// This now calulates Observed holidays and creates a new entry for them.
-			if($dow == 0)
-			{
-				$addcnt = count($holidays) + 1;
-				$holidays[$addcnt]['locale'] = $holiday['locale'];
-				$holidays[$addcnt]['name'] = lang('overlap holiday');
-				$holidays[$addcnt]['day'] = $day + 1;
-				$holidays[$addcnt]['month'] = $holiday['month'];
-				$holidays[$addcnt]['occurence'] = $holiday['occurence'];
-				$holidays[$addcnt]['dow'] = $holiday['dow'];
-				$holidays[$addcnt]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
-				$holidays[$addcnt]['observance_rule'] = 0;
-			}
-		}
-
-		$date = mktime(0,0,0,$holiday['month'],$day,$year);
-
-		return $date;
 	}
-}
 ?>

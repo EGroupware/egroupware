@@ -22,7 +22,7 @@
 	}
 	unset($d1);
 
-	$showevents = intval($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents']);
+	$showevents = (int)$GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'];
 	if($showevents>0)
 	{
 		$GLOBALS['phpgw']->translation->add_app('calendar');
@@ -60,9 +60,9 @@
 			$_page = 'day';
 		}
 		include(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php');
-		
+
 		$title = lang('Calendar');
-		
+
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
 				'title'	=> $title,
@@ -94,7 +94,7 @@
 
 		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($GLOBALS['extra_data'])."\n".'<!-- END Calendar info -->'."\n";
 		unset($cal);
-	} 
+	}
 	flush();
 	unset($showevents);
 ?>

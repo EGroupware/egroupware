@@ -57,7 +57,7 @@
 		function prep_page()
 		{
 			if ($this->bo->cal_id <= 0 ||
-			    !$this->event = $this->bo->read_entry($this->bo->cal_id))
+				!$this->event = $this->bo->read_entry($this->bo->cal_id))
 			{
 				$GLOBALS['phpgw']->redirect_link('/index.php',Array(
 					'menuaction'	=> 'calendar.uicalendar.index'
@@ -122,9 +122,9 @@
 
 			if ($_POST['add'])
 			{
-				$time = intval($_POST['time']['days'])*24*3600 +
-					intval($_POST['time']['hours'])*3600 +
-					intval($_POST['time']['mins'])*60;
+				$time = (int)($_POST['time']['days'])*24*3600 +
+					(int)($_POST['time']['hours'])*3600 +
+					(int)($_POST['time']['mins'])*60;
 
 				if ($time > 0 && !$this->bo->add($this->event,$time,$_POST['owner']))
 				{
@@ -184,7 +184,7 @@
 				}
 				$this->template->parse('rows','buttons',True);
 			}
-			if (isset($this->event['participants'][intval($GLOBALS['phpgw_info']['user']['account_id'])]))
+			if (isset($this->event['participants'][(int)$GLOBALS['phpgw_info']['user']['account_id']]))
 			{
 				$this->template->set_var(Array(
 					'input_days'    => $this->html->select('time[days]',$_POST['time']['days'],range(0,31),True).' '.lang('days'),

@@ -12,16 +12,16 @@
 	/* $Id$ */
 
 	// Delete all records for a user
-	if(intval($GLOBALS['HTTP_POST_VARS']['new_owner'])==0)
+	if((int)$_POST['new_owner'] == 0)
 	{
-		ExecMethod('calendar.bocalendar.delete_calendar',intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+		ExecMethod('calendar.bocalendar.delete_calendar',(int)$_POST['account_id']);
 	}
 	else
 	{
 		ExecMethod('calendar.bocalendar.change_owner',
 			Array(
-				'old_owner'	=> intval($GLOBALS['HTTP_POST_VARS']['account_id']),
-				'new_owner'	=> intval($GLOBALS['HTTP_POST_VARS']['new_owner'])
+				'old_owner'	=> (int)$_POST['account_id'],
+				'new_owner'	=> (int)$_POST['new_owner']
 			)
 		);
 	}

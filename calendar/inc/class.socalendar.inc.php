@@ -55,7 +55,7 @@
 
 		function open_box($owner)
 		{
-			$this->cal->open('INBOX',intval($owner));
+			$this->cal->open('INBOX',(int)$owner);
 		}
 
 		function maketime($time)
@@ -90,7 +90,7 @@
 				$owner_id = $this->is_group ? $this->g_owner : $this->owner;
 			}
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] != 'sql' ||
-			   !count($owner_id))	// happens with empty groups
+				!count($owner_id))	// happens with empty groups
 			{
 				return Array();
 			}
@@ -130,7 +130,7 @@
 				$members[] = $this->owner;
 			}
 			$sql = 'AND (phpgw_cal_user.cal_login IN ('.implode(',',$members).')) AND '.
-				'(phpgw_cal_user.cal_login='.intval($this->owner).' OR phpgw_cal.is_public=1) AND (';
+				'(phpgw_cal_user.cal_login=' . (int)$this->owner . ' OR phpgw_cal.is_public=1) AND (';
 
 			$words = split(' ',$keywords);
 			foreach($words as $i => $word)
@@ -286,7 +286,7 @@
 				{
 					while($this->cal->next_record())
 					{
-						$arr[] = intval($this->cal->f('datetime'));
+						$arr[] = (int)$this->cal->f('datetime');
 					}
 				}
 				if(count($arr) == 0)

@@ -36,7 +36,7 @@
 
 		function boalarm()
 		{
-			$cal_id = (isset($_POST['cal_id'])?intval($_POST['cal_id']):'');
+			$cal_id = (isset($_POST['cal_id'])?(int)$_POST['cal_id']:'');
 			if($cal_id)
 			{
 				$this->cal_id = $cal_id;
@@ -71,7 +71,7 @@
 
 		function read_entry($cal_id)
 		{
-			return $this->bo->read_entry(intval($cal_id));
+			return $this->bo->read_entry((int)$cal_id);
 		}
 
 		/*!
@@ -168,7 +168,7 @@
 				{
 					return -1;
 				}
-				$alarm['enabled'] = intval(!$alarm['enabled']);
+				$alarm['enabled'] = (int)(!$alarm['enabled']);
 				if ($this->so->save_alarm($alarm['cal_id'],$alarm))
 				{
 					++$enabled;

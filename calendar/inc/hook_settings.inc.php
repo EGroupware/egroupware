@@ -33,7 +33,7 @@
 	   for the main calendar page.  But the list could be added to the
 	   default list above, if requested.  - shrykedude. */
 	$mainpage = array(
-		'1' => lang('Yes'),	
+		'1' => lang('Yes'),
 		'0' => lang('No'),
 		'2' => lang('No').' - '.lang('show list of upcoming events'),
 	);
@@ -112,7 +112,7 @@
 	);
 	create_select_box('weekday starts on','weekdaystarts',$weekdaystarts,
 		'This day is shown as first day in the week or month view.');
-	
+
 	for ($i=0; $i < 24; ++$i)
 	{
 		$options[$i] = $GLOBALS['phpgw']->common->formattime($i,'00');
@@ -146,7 +146,7 @@
 	}
 	create_select_box('Preselected group for entering the planner','planner_start_with_group',$options,
 		'This group that is preselected when you enter the planner. You can change it in the planner anytime you want.');
-	
+
 	$planner_intervals = array(
 		1	=> '1',
 		2	=> '2',
@@ -154,7 +154,7 @@
 		4	=> '4',
 	);
 	create_select_box('Intervals per day in planner view','planner_intervals_per_day',
-		$planner_intervals,'Specifies the the number of intervals shown in the planner view.'); 
+		$planner_intervals,'Specifies the the number of intervals shown in the planner view.');
 
 	$defaultfilter = array(
 		'all'     => lang('all'),
