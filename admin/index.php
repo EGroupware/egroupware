@@ -63,7 +63,10 @@
 
 	function display_section($appname,$title,$file)
 	{
-		section_start($title,$GLOBALS['phpgw']->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
+		section_start($title,$GLOBALS['phpgw']->common->image($appname,
+				Array('navbar',$appname,'nonav')
+			),$appname
+		);
 
 		while(list($text,$url) = each($file))
 		{
