@@ -7,6 +7,7 @@ address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
 addvcard	addressbook	en	Add VCard
+alphabet	addressbook	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt. csv import	addressbook	en	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
