@@ -269,7 +269,10 @@
 					$x2 = $largest * $linespace + $this->margin_left;
 				}
 
-				$this->img->Line($x1,$y1,$x2,$y2);
+				for ($w = 0; $w < 7; $w++)
+				{
+					$this->img->Line(1+$x1,$y1+$w,$x2,$y2+$w);
+				}
 				$color_index++;
 				$i++;
 			}
