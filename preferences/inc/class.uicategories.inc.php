@@ -174,7 +174,7 @@
 
 			for ($i=0;$i<count($cats);$i++)
 			{
-				$this->nextmatchs->template_alternate_row_color(&$GLOBALS['phpgw']->template);
+				$this->nextmatchs->template_alternate_row_color($GLOBALS['phpgw']->template);
 
 				if ($cats[$i]['app_name'] == 'phpgw')
 				{
