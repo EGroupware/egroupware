@@ -71,10 +71,11 @@ class ui_resources
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= 'Category';
-		$content['nm']['filter_help']	= 'Select a category'; // is this used???
-		$content['nm']['options-filter']= array('0'=>'all categories')+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
-		$content['nm']['no_filter2']	= True;
-		$content['nm']['no_cat']	= True;
+		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
+		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
+		$content['nm']['no_filter2']	= true;
+		$content['nm']['filter_no_lang'] = true;
+		$content['nm']['no_cat']	= true;
 		
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(PHPGW_ACL_ADD))
@@ -111,7 +112,7 @@ class ui_resources
 			{
 				if(!$content['cat_id'] || !$content['name'])
 				{
-					$content['msg'] = 'You need to choose at least a name and a category!';
+					$content['msg'] = lang('You need to choose at least a name and a category!');
 					$this->tmpl->read('resources.edit');
 					$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button);
 					return;

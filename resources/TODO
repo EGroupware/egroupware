@@ -13,7 +13,6 @@ TODO:
 - sitemgr module
 
 - list 
-	don't translate cats in header (eTemplate bug --> Ralf)
 	handle select all button --> add actions for selected
 	
 -edit / add
