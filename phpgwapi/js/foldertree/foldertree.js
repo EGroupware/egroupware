@@ -35,22 +35,22 @@ function Node(id, pid, name, url, urlClick, urlOut, title, target, icon, iconOpe
 
 // Tree object
 function dTree(objName,icondir) {
-	iconPath = (icondir !='') ? icondir : '/egroupware/phpgwapi/js/foldertree_default_icons';
+	iconPath = (icondir !='') ? icondir : '/egroupware/phpgwapi/templates/default/images';
 	this.icon = {
-		root				: iconPath+'/foldertree/base.gif',
-		folder				: iconPath+'/foldertree/folder.gif',
-		folderOpen			: iconPath+'/foldertree/folderopen.gif',
-		node				: iconPath+'/foldertree/folder.gif',
-		empty				: iconPath+'/foldertree/empty.gif',
-		line				: iconPath+'/foldertree/line.gif',
-		join				: iconPath+'/foldertree/join.gif',
-		joinBottom			: iconPath+'/foldertree/joinbottom.gif',
-		plus				: iconPath+'/foldertree/plus.gif',
-		plusBottom			: iconPath+'/foldertree/plusbottom.gif',
-		minus				: iconPath+'/foldertree/minus.gif',
-		minusBottom			: iconPath+'/foldertree/minusbottom.gif',
-		nlPlus				: iconPath+'/foldertree/nolines_plus.gif',
-		nlMinus				: iconPath+'/foldertree/nolines_minus.gif'
+		root				: iconPath+'/foldertree_base.gif',
+		folder				: iconPath+'/foldertree_folder.gif',
+		folderOpen			: iconPath+'/foldertree_folderopen.gif',
+		node				: iconPath+'/foldertree_folder.gif',
+		empty				: iconPath+'/foldertree_empty.gif',
+		line				: iconPath+'/foldertree_line.gif',
+		join				: iconPath+'/foldertree_join.gif',
+		joinBottom			: iconPath+'/foldertree_joinbottom.gif',
+		plus				: iconPath+'/foldertree_plus.gif',
+		plusBottom			: iconPath+'/foldertree_plusbottom.gif',
+		minus				: iconPath+'/foldertree_minus.gif',
+		minusBottom			: iconPath+'/foldertree_minusbottom.gif',
+		nlPlus				: iconPath+'/foldertree_nolines_plus.gif',
+		nlMinus				: iconPath+'/foldertree_nolines_minus.gif'
 	};
 
 
