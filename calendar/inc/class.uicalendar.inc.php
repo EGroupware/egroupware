@@ -2704,15 +2704,31 @@
 			{
 				$time = '';
 			}
-			$text = '';
+			
+			$texttitle = $texttime = $textdesc = $textlocation = $textstatus = '';
 
+			
+			
 			if(!$is_private)
 			{
-				$text .= $this->bo->display_status($event['users_status']);
+				//$text .= $this->bo->display_status($event['users_status']);
+				
+				// split text for better display by templates, also see $texttime $texttitle $textdesc $textlocation	
+				$textstatus=$this->bo->display_status($event['users_status']); 
+				
 			}
+
+			/*
 			$text = '<nobr>&nbsp;'.$time.'&nbsp;</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.
-				(!$is_private && $event['description'] ? ': <I>'.$this->bo->get_short_field($event,$is_private,'description').'</I>':'').
+				(!$is_private && $event['description'] ? ': <i>'.$this->bo->get_short_field($event,$is_private,'description').'</i>':'').
 				$GLOBALS['phpgw']->browser->br;
+			*/
+			
+			$texttime=$time;
+			$texttitle=$this->bo->get_short_field($event,$is_private,'title');
+			$textdesc=(!$is_private && $event['description'] ? $this->bo->get_short_field($event,$is_private,'description'):'');
+			// added $textlocation but this must be activated in the actual pict_link.tpl file of the used template set
+			$textlocation=$this->bo->get_short_field($event,$is_private,'location');
 
 			if ($viewable)
 			{
@@ -2806,10 +2822,15 @@
 				);
 				$this->output_template_array($this->link_tpl,'picture','pict',$var);
 			}
-			if ($text)
+			if ($texttitle)
 			{
 				$var = Array(
-					'text' => $text
+			//		'text' => $text,
+					'time'=> $texttime,
+					'title'=> $texttitle,
+					'users_status'=>$textstatus,
+					'desc'=> $textdesc,
+					'location'=> $textlocation
 				);
 				$this->output_template_array($this->link_tpl,'picture','link_text',$var);
 			}
