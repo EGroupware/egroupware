@@ -1915,20 +1915,12 @@
 			if (!$is_private)
 			{
 				$opt .= $this->event_tooltip($event,True);
-			}
-			else
-			{
-				$opt .= ' title="'.lang('You do not have permission to read this record!').'"';
-			}
-
-			if (!$is_private)
-			{
 				$opt .= ' onClick="location=\''.$view.'\'"';
 				$cel = '<a href="'.$view.'">';
 			}
 			else
 			{
-				$opt .= '';
+				$opt .= ' title="'.lang('You do not have permission to read this record!').'"';
 				$cel = '';
 			}
 			$opt .= ' class="planner-cell"';
@@ -1941,7 +1933,8 @@
 			{
 				$cel .= $this->html->image('calendar','recur.gif','','border="0"');
 			}
-			$cel .= $this->html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif','','border="0"');
+			$cel .= $this->html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',
+				$is_private?$this->planner_participants($event['participants']):'','border="0"');
 			$cel .= '</a>';
 
 			if (isset($event['print_title']) && $event['print_title'] == 'yes')
