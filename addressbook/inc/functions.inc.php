@@ -40,7 +40,7 @@
 			"title"				=> "title",
 			"n_given"			=> "first name",   //firstname
 			"n_family"			=> "last name",  //lastname
-			"n_middle"			=> "middle",
+			"n_middle"			=> "middle name",
 			"n_prefix"			=> "prefix",
 			"n_suffix"			=> "suffix",
 			"label"				=> "label",
