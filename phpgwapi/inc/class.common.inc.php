@@ -975,7 +975,7 @@
 				}
 				$image = $lang_images;
 			}
-			while (!$image_found && list(,$img) = each($image))
+			while (empty($image_found) && list(,$img) = each($image))
 			{
 				if(isset($this->found_files[$appname][$img.$ext]))
 				{
