@@ -1,1342 +1,1675 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-           "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
-<meta name="GENERATOR" content="TtH 2.86">
- 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
-                       
-   
-   
-<title>  phpGroupWare Application Development</title>
- 
-<h1 align="center"> phpGroupWare Application Development </h1>
+<!--Converted with jLaTeX2HTML 2002 (1.62) JA patch-1.4
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 2002 (1.62),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>phpGroupWare Application Development</TITLE>
+<META NAME="description" CONTENT="phpGroupWare Application Development">
+<META NAME="keywords" CONTENT="index">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
 
-<p>
- 
-<title> phpGroupWare Application Development</title>
-    
-<h1 align="center">phpGroupWare Application Development </h1>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002 JA patch-1.4">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
 
-<p>
+<LINK REL="STYLESHEET" HREF="index.css">
 
-<h3 align="center">Dan Kuykendall &lt;dan@kuykendall.org&#62; </h3>
+</HEAD>
 
-<p>
+<BODY >
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="file:/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
 
-<h3 align="center">v0.9 29 September 2000 </h3>
+<P>
 
-<p>
+<P>
 
-<blockquote><em>This document explains phpGroupWare's infrastructure and API,
-along with what is required to integrate applications into it.</em>
-</blockquote>
+<P>
 
-<h1>Contents </h1>
-<a href="#tth_sEc1"
->1&nbsp; Introduction</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc1.1"
->1.1&nbsp; Overview of application writing</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc1.2"
->1.2&nbsp; What does the phpGroupWare API provide?</a><br />
-<a href="#tth_sEc2"
->2&nbsp; Guidelines</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc2.1"
->2.1&nbsp; Requirements</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc2.2"
->2.2&nbsp; Writing/porting your application</a><br />
-<a href="#tth_sEc3"
->3&nbsp; Installing your application</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.1"
->3.1&nbsp; Overview</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.2"
->3.2&nbsp; Automatic features</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.3"
->3.3&nbsp; Adding files, directories and icons.</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.4"
->3.4&nbsp; Making phpGroupWare aware of your application</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.5"
->3.5&nbsp; Hooking into Administration page</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.6"
->3.6&nbsp; Hooking into Preferences page</a><br />
-<a href="#tth_sEc4"
->4&nbsp; Infrastructure</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.1"
->4.1&nbsp; Overview</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.2"
->4.2&nbsp; Directory tree</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.3"
->4.3&nbsp; Translations</a><br />
-<a href="#tth_sEc5"
->5&nbsp; The API</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.1"
->5.1&nbsp; Introduction</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.2"
->5.2&nbsp; Basic functions</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.3"
->5.3&nbsp; Application Functions</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.4"
->5.4&nbsp; File functions</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.5"
->5.5&nbsp; Email/NNTP Functions</a><br />
-<a href="#tth_sEc6"
->6&nbsp; Configuration Variables</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.1"
->6.1&nbsp; Introduction</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.2"
->6.2&nbsp; User information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.3"
->6.3&nbsp; Group information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.4"
->6.4&nbsp; Server information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.5"
->6.5&nbsp; Database information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.6"
->6.6&nbsp; Mail information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.7"
->6.7&nbsp; NNTP information</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.8"
->6.8&nbsp; Application information</a><br />
-<a href="#tth_sEc7"
->7&nbsp; Using Language Support</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc7.1"
->7.1&nbsp; Overview</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc7.2"
->7.2&nbsp; How to use lang support</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc7.3"
->7.3&nbsp; Common return codes</a><br />
-<a href="#tth_sEc8"
->8&nbsp; Using Templates</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc8.1"
->8.1&nbsp; Overview</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc8.2"
->8.2&nbsp; How to use templates</a><br />
-<a href="#tth_sEc9"
->9&nbsp; About this document</a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc9.1"
->9.1&nbsp; New versions </a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc9.2"
->9.2&nbsp; Comments </a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc9.3"
->9.3&nbsp; History </a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc9.4"
->9.4&nbsp; Copyrights and Trademarks </a><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc9.5"
->9.5&nbsp; Acknowledgments and Thanks </a><br />
- 
+<P>
+<H1 ALIGN="CENTER">eGroupWare Application Development</H1>
+<P ALIGN="CENTER"><STRONG>Dan Kuykendall &lt;dan@kuykendall.org&gt;</STRONG></P>
+<P ALIGN="CENTER"><STRONG>v0.9 29 September 2000</STRONG></P>
+<BLOCKQUOTE>
+<I>This document explains eGroupWare's infrastructure and API,
+along with what is required to integrate applications into it.</I>
 
-<p>
- <h2><a name="tth_sEc1">
-1</a>&nbsp;&nbsp;Introduction</h2>
+</BLOCKQUOTE>
+<BR>
 
-<p>
-phpGroupWare is a web based groupware application framework (API),
-for writing applications. Integrated applications such as email, calendar,
-todo list, address book, and file manager are included. 
+<H2><A NAME="SECTION00010000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
 
-<p>
-     <h3><a name="tth_sEc1.1">
-1.1</a>&nbsp;&nbsp;Overview of application writing</h3>
+<UL>
+<LI><A NAME="tex2html65"
+  HREF="index.html">1 Introduction</A>
+<UL>
+<LI><A NAME="tex2html66"
+  HREF="index.html#SECTION00021000000000000000">1.1 Overview of application writing</A>
+<LI><A NAME="tex2html67"
+  HREF="index.html#SECTION00022000000000000000">1.2 What does the eGroupWare API provide?</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html68"
+  HREF="index.html#SECTION00030000000000000000">2 Guidelines</A>
+<UL>
+<LI><A NAME="tex2html69"
+  HREF="index.html#SECTION00031000000000000000">2.1 Requirements</A>
+<LI><A NAME="tex2html70"
+  HREF="index.html#SECTION00032000000000000000">2.2 Writing/porting your application</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html71"
+  HREF="index.html#SECTION00040000000000000000">3 Installing your application</A>
+<UL>
+<LI><A NAME="tex2html72"
+  HREF="index.html#SECTION00041000000000000000">3.1 Overview</A>
+<LI><A NAME="tex2html73"
+  HREF="index.html#SECTION00042000000000000000">3.2 Automatic features</A>
+<LI><A NAME="tex2html74"
+  HREF="index.html#SECTION00043000000000000000">3.3 Adding files, directories and icons.</A>
+<LI><A NAME="tex2html75"
+  HREF="index.html#SECTION00044000000000000000">3.4 Making eGroupWare aware of your application</A>
+<LI><A NAME="tex2html76"
+  HREF="index.html#SECTION00045000000000000000">3.5 Hooking into Administration page</A>
+<LI><A NAME="tex2html77"
+  HREF="index.html#SECTION00046000000000000000">3.6 Hooking into Preferences page</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html78"
+  HREF="index.html#SECTION00050000000000000000">4 Infrastructure</A>
+<UL>
+<LI><A NAME="tex2html79"
+  HREF="index.html#SECTION00051000000000000000">4.1 Overview</A>
+<LI><A NAME="tex2html80"
+  HREF="index.html#SECTION00052000000000000000">4.2 Directory tree</A>
+<LI><A NAME="tex2html81"
+  HREF="index.html#SECTION00053000000000000000">4.3 Translations</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html82"
+  HREF="index.html#SECTION00060000000000000000">5 The API</A>
+<UL>
+<LI><A NAME="tex2html83"
+  HREF="index.html#SECTION00061000000000000000">5.1 Introduction</A>
+<LI><A NAME="tex2html84"
+  HREF="index.html#SECTION00062000000000000000">5.2 Basic functions</A>
+<LI><A NAME="tex2html85"
+  HREF="index.html#SECTION00063000000000000000">5.3 Application Functions</A>
+<LI><A NAME="tex2html86"
+  HREF="index.html#SECTION00064000000000000000">5.4 File functions</A>
+<LI><A NAME="tex2html87"
+  HREF="index.html#SECTION00065000000000000000">5.5 Email/NNTP Functions</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html88"
+  HREF="index.html#SECTION00070000000000000000">6 Configuration Variables</A>
+<UL>
+<LI><A NAME="tex2html89"
+  HREF="index.html#SECTION00071000000000000000">6.1 Introduction</A>
+<LI><A NAME="tex2html90"
+  HREF="index.html#SECTION00072000000000000000">6.2 User information</A>
+<LI><A NAME="tex2html91"
+  HREF="index.html#SECTION00073000000000000000">6.3 Group information</A>
+<LI><A NAME="tex2html92"
+  HREF="index.html#SECTION00074000000000000000">6.4 Server information</A>
+<LI><A NAME="tex2html93"
+  HREF="index.html#SECTION00075000000000000000">6.5 Database information</A>
+<LI><A NAME="tex2html94"
+  HREF="index.html#SECTION00076000000000000000">6.6 Mail information</A>
+<LI><A NAME="tex2html95"
+  HREF="index.html#SECTION00077000000000000000">6.7 NNTP information</A>
+<LI><A NAME="tex2html96"
+  HREF="index.html#SECTION00078000000000000000">6.8 Application information</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html97"
+  HREF="index.html#SECTION00080000000000000000">7 Using Language Support</A>
+<UL>
+<LI><A NAME="tex2html98"
+  HREF="index.html#SECTION00081000000000000000">7.1 Overview</A>
+<LI><A NAME="tex2html99"
+  HREF="index.html#SECTION00082000000000000000">7.2 How to use lang support</A>
+<LI><A NAME="tex2html100"
+  HREF="index.html#SECTION00083000000000000000">7.3 Common return codes</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html101"
+  HREF="index.html#SECTION00090000000000000000">8 Using Templates</A>
+<UL>
+<LI><A NAME="tex2html102"
+  HREF="index.html#SECTION00091000000000000000">8.1 Overview</A>
+<LI><A NAME="tex2html103"
+  HREF="index.html#SECTION00092000000000000000">8.2 How to use templates</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html104"
+  HREF="index.html#SECTION000100000000000000000">9 About this document</A>
+<UL>
+<LI><A NAME="tex2html105"
+  HREF="index.html#SECTION000101000000000000000">9.1 New versions </A>
+<LI><A NAME="tex2html106"
+  HREF="index.html#SECTION000102000000000000000">9.2 Comments </A>
+<LI><A NAME="tex2html107"
+  HREF="index.html#SECTION000103000000000000000">9.3 History </A>
+<LI><A NAME="tex2html108"
+  HREF="index.html#SECTION000104000000000000000">9.4 Copyrights and Trademarks </A>
+<LI><A NAME="tex2html109"
+  HREF="index.html#SECTION000105000000000000000">9.5 Acknowledgments and Thanks </A>
+</UL>
+<BR>
+<LI><A NAME="tex2html110"
+  HREF="index.html#SECTION000110000000000000000">About this document ...</A>
+</UL>
+<!--End of Table of Contents-->
 
-<p>
-We have attempted to make writing application for phpGroupWare as
-painless as possible. We hope any pain and suffering is cause by making
-your application work, but not dealing with phpGroupWare itself. 
+<P>
 
-<p>
-     <h3><a name="tth_sEc1.2">
-1.2</a>&nbsp;&nbsp;What does the phpGroupWare API provide?</h3>
+<H1><A NAME="SECTION00020000000000000000">
+1 Introduction</A>
+</H1>
 
-<p>
-The phpGroupWare API handles session management, user/group management,
-has support for multiple databases, using the PHPLIB database abstraction
-method, we support templates using the PHPLIB Templates class, a file
-system interface, and even a network i/o interface. 
+<P>
+eGroupWare is a web based groupware application framework (API), for
+writing applications. Integrated applications such as email, calendar,
+todo list, address book, and file manager are included. eGroupWare
+is a fork of phpGroupWare, for which the original version of this
+document was written.
 
-<p>
-On top of these standard functions, phpGroupWare provides several
-functions to give you the information you need about the users environment,
-and to properly plug into phpGroupWare. 
+<P>
 
-<p>
- <h2><a name="tth_sEc2">
-2</a>&nbsp;&nbsp;Guidelines</h2>
+<H2><A NAME="SECTION00021000000000000000">
+1.1 Overview of application writing</A>
+</H2>
 
-<p>
-     <h3><a name="tth_sEc2.1">
-2.1</a>&nbsp;&nbsp;Requirements</h3>
+<P>
+We have attempted to make writing applications for eGroupWare as painless
+as possible. We hope any pain and suffering is caused by making your
+application work, but not dealing with eGroupWare itself. 
 
-<p>
+<P>
+
+<H2><A NAME="SECTION00022000000000000000">
+1.2 What does the eGroupWare API provide?</A>
+</H2>
+
+<P>
+The eGroupWare API handles session management, user/group management,
+has support for multiple databases, using either PHPLIB or ADODB database
+abstraction methods, we support templates using the PHPLIB Templates
+class, a file system interface, and even a network i/o interface. 
+
+<P>
+On top of these standard functions, eGroupWare provides several functions
+to give you the information you need about the users environment,
+and to properly plug into eGroupWare. 
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+2 Guidelines</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00031000000000000000">
+2.1 Requirements</A>
+</H2>
+
+<P>
 These guidelines must be followed for any application that wants considered
-for inclusion into phpGroupWare deluxe:
+for inclusion into eGroupWare:
 
-<p>
+<P>
 
-<ul><p>
-<li> It must run on PHP3 and PHP4.</li>
-<p>
-<li> SQL statements must be compatible with both MySQL and PostgreSQL.</li>
-<p>
-<li> It must use our default header.inc.php include.</li>
-<p>
-<li> It must use our $phpgw_link($url) for all links (this is for session
-support).</li>
-<p>
-<li> It must use ``post'' for forms.</li>
-<p>
-<li> It must respect phpGW group rights and phpGW user permissions.</li>
-<p>
-<li> It must use our directory structure, template support and lang (multi-language)
-support.</li>
-<p>
-<li> Where possible it should run on both Unix and NT platforms.</li>
-<p>
-<li> For applications that do not meet these requirements, they can be
-available to users via the phpGroupWare Apps project, or whatever
-means the developers decide. If you need help converting your application
-to templates and our lang support, we will try to connect you with
-someone to help.</li>
-</ul>
+<UL>
+<LI>It must run on PHP4 and PHP5. 
+</LI>
+<LI>SQL statements must be compatible with both MySQL and PostgreSQL.
+When in doubt it is best to stick with SQL92.
+</LI>
+<LI>It must use our default header.inc.php include. 
+</LI>
+<LI>It must use our $GLOBALS['phpgw']-&gt;link($url) for all links
+(this is for session support). 
+</LI>
+<LI>It must use ``post'' for forms. 
+</LI>
+<LI>It must respect phpGW group rights and phpGW user permissions. 
+</LI>
+<LI>It must use our directory structure, template support and lang (multi-language)
+support. 
+</LI>
+<LI>Where possible it should run on both Unix and NT platforms.
+</LI>
+<LI>For applications that do not meet these requirements, they can be
+made available to users however you decide. If you need help converting
+your application to templates and our lang support, we will try to
+connect you with someone to help. 
+</LI>
+</UL>
 
-<p>
-     <h3><a name="tth_sEc2.2">
-2.2</a>&nbsp;&nbsp;Writing/porting your application</h3>
+<P>
 
-<p>
+<H2><A NAME="SECTION00032000000000000000">
+2.2 Writing/porting your application</A>
+</H2>
 
-<h4>Include files</h4>
+<P>
 
-<p>
+<H3><A NAME="SECTION00032100000000000000">
+Include files</A>
+</H3>
+
+<P>
 Each PHP page you write will need to include the header.inc.php along
-with a few variables.<br />
- This is done by putting this at the top of each PHP page. 
-<pre>
-
+with a few variables.
+<BR>
+This is done by putting this at the top of each PHP page. <PRE>
   &lt;?php
-  $phpgw_info["flags"]["currentapp"] = "appname";
-  include("../header.inc.php");
-  ?&#62;
 
+$GLOBALS['phpgw_info']['flags']['currentapp'] = 'appname';
 
-</pre>Of course change application name to fit.<br />
- This include will provide the following things: 
+include('../header.inc.php');
+  ?&gt;
+</PRE>Of course change application name to fit.
+<BR>
+This include will provide the following things: 
 
-<p>
+<P>
 
-<ul><p>
-<li> The phpgwAPI - The phpGroupWare API will be loaded.</li>
-<p>
-<li> The phpGW navbar will be loaded (by default, but can be disabled until
-a later point.</li>
-<p>
-<li> appname/inc/functions.inc.php - This file is loaded just after the
+<UL>
+<LI>The phpgwAPI - The eGroupWare API will be loaded. 
+</LI>
+<LI>The phpGW navbar will be loaded (by default, but can be disabled until
+a later point. 
+</LI>
+<LI>appname/inc/functions.inc.php - This file is loaded just after the
 phpgwAPI and before any HTML code is generated. This file should include
 all your application specific functions.. You are welcome to include
-any additional files you need from within this file.</li>
-<p>
-<li> appname/inc/header.inc.php - This file is loaded just after the system
+any additional files you need from within this file. 
+</LI>
+<LI>appname/inc/header.inc.php - This file is loaded just after the system
 header/navbar, and allows developers to use it for whatever they need
-to load.</li>
-<p>
-<li> appname/inc/footer.inc.php - This file is loaded just before the system
+to load. 
+</LI>
+<LI>appname/inc/footer.inc.php - This file is loaded just before the system
 footer, allowing developers to close connections and whatever else
-they need.</li>
-<p>
-<li> The phpGW footer will be loaded, which closes several connections.</li>
-</ul>
+they need. 
+</LI>
+<LI>The phpGW footer will be loaded, which closes several connections.
+</LI>
+</UL>
 
-<p>
- <h2><a name="tth_sEc3">
-3</a>&nbsp;&nbsp;Installing your application</h2>
+<P>
 
-<p>
-     <h3><a name="tth_sEc3.1">
-3.1</a>&nbsp;&nbsp;Overview</h3>
+<H1><A NAME="SECTION00040000000000000000">
+3 Installing your application</A>
+</H1>
 
-<p>
-It is fairly simple to add and delete applications to/from phpGroupWare. 
+<P>
 
-<p>
-     <h3><a name="tth_sEc3.2">
-3.2</a>&nbsp;&nbsp;Automatic features</h3>
+<H2><A NAME="SECTION00041000000000000000">
+3.1 Overview</A>
+</H2>
 
-<p>
+<P>
+It is fairly simple to add and delete applications to/from eGroupWare. 
+
+<P>
+
+<H2><A NAME="SECTION00042000000000000000">
+3.2 Automatic features</A>
+</H2>
+
+<P>
 To make things easy for developers we go ahead and load the following
 files. 
 
-<p>
+<P>
 
-<ul><p>
-<li> appname/inc/functions.inc.php - This file should include all your
-application specific functions.</li>
-<p>
-<li> appname/inc/header.inc.php - This file is loaded by $phpgw-&#62;common-&#62;header
+<UL>
+<LI>appname/inc/functions.inc.php - This file should include all your
+application specific functions. 
+</LI>
+<LI>appname/inc/header.inc.php - This file is loaded by $GLOBALS['phpgw']-&gt;common-&gt;header
 just after the system header/navbar, and allows developers to use
-it for whatever they need to load.</li>
-<p>
-<li> appname/inc/footer.inc.php - This file is loaded by $phpgw-&#62;common-&#62;footer
+it for whatever they need to load. 
+</LI>
+<LI>appname/inc/footer.inc.php - This file is loaded by $GLOBALS['phpgw']-&gt;common-&gt;footer
 just before the system footer, allowing developers to close connections
-and whatever else they need.</li>
-</ul>
+and whatever else they need.
+</LI>
+</UL>
 
-<p>
-     <h3><a name="tth_sEc3.3">
-3.3</a>&nbsp;&nbsp;Adding files, directories and icons.</h3>
+<P>
 
-<p>
-You will need to create the following directories for your code <br />
- (replace 'appname' with your application name)<br />
+<H2><A NAME="SECTION00043000000000000000">
+3.3 Adding files, directories and icons.</A>
+</H2>
 
-<p>
- <tt>`--appname</tt>
+<P>
+You will need to create the following directories for your code 
+<BR> (replace 'appname' with your application name)
+<BR>
+<P>
+<TT>`-appname</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|--inc</tt>
+<P>
+<TT>&nbsp;&nbsp;|-inc</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp;&nbsp; |--functions.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp; |-functions.inc.php</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp; &nbsp;|--header.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp;|-header.inc.php</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp; &nbsp;|--hook_preferences.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp;|-hook_preferences.inc.php</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp; &nbsp;|--hook_admin.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp;|-hook_admin.inc.php</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp; &nbsp;`--footer.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp;`-footer.inc.php</TT>
 
-<p>
- <tt>&nbsp;&nbsp;`--templates</tt>
+<P>
+<TT>&nbsp;&nbsp;`-templates</TT>
 
-<p>
- <tt>&nbsp;&nbsp;|&nbsp;&nbsp; `--default</tt>
+<P>
+<TT>&nbsp;&nbsp;|&nbsp;&nbsp; `-default</TT>
 
-<p>
+<P>
 
-<dl compact="compact"><dt><b></b></dt>
-	<dd>
+<DL COMPACT>
+<DT>
+<DD><P>
+</DD>
+</DL>
+<P>
 
-<p>
-</dl>     <h3><a name="tth_sEc3.4">
-3.4</a>&nbsp;&nbsp;Making phpGroupWare aware of your application</h3>
+<H2><A NAME="SECTION00044000000000000000">
+3.4 Making eGroupWare aware of your application</A>
+</H2>
 
-<p>
-To make the application aware of your application, add your application
-details to the applications table. This can be done via the GUI administration
-screen, or via a SQL script. 
-<pre>
+<P>
+Please see the documentation in the setup/doc directory for information
+on integrating into eGroupWare. This is very important since the steps
+for database table setup and modification discussed there must be
+followed.
 
-  insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
+<P>
 
+<H2><A NAME="SECTION00045000000000000000">
+3.5 Hooking into Administration page</A>
+</H2>
 
-</pre>
-
-<p>
-     <h3><a name="tth_sEc3.5">
-3.5</a>&nbsp;&nbsp;Hooking into Administration page</h3>
-
-<p>
+<P>
 When a user goes to the Administration page, it starts appname/inc/hook_admin.inc.php
 for each application that is enabled, in alphabetical order of application
 title. If the file exists, it is include()d in the hopes it will display
 a selection of links to configure that application.
 
-<p>
-Simple Example: 
-<pre>
-
+<P>
+Simple Example: <PRE>
 &lt;?php
-  $img = "/" . $appname . "/images/navbar.gif";
-  section_start("My Application",$img);
-  echo "&lt;a HREF=\"" . $phpgw-&#62;link("myAdminPage.php") . "\"&#62;";
-  echo lang("Change myApp settings") . "&lt;/a&#62;";
+
+$img = '/' . $appname . '/images/navbar.gif';
+  section_start('My Application',$img);
+  echo '&lt;a HREF="' . $GLOBALS['phpgw']-&gt;link('myAdminPage.php') . '"&gt;';
+  echo lang('Change myApp settings') . '&lt;/a&gt;';
   section_end();
-?&#62;
-
-
-</pre>Look at headlines/inc/hook_admin.inc.php and admin/inc/hook_admin.inc.php
+?&gt;
+</PRE>Look at headlines/inc/hook_admin.inc.php and admin/inc/hook_admin.inc.php
 for more examples.
 
-<p>
+<P>
 Things to note: 
 
-<p>
+<P>
 
-<ul><p>
-<li> Links are relative to the admin/index.php file, not your application's
-base directory. (so use $appname in your link() calls)</li>
-<p>
-<li> The file is brought in with include() so be careful to not pollute
-the name-space too much</li>
-</ul>
-The standard $phpgw and $phpgw_info variables are in-scope, as
-is $appname which corresponds to the application name in the path.
+<UL>
+<LI>Links are relative to the admin/index.php file, not your application's
+base directory. (so use $appname in your link() calls) 
+</LI>
+<LI>The file is brought in with include() so be careful to not pollute
+the name-space too much
+</LI>
+</UL>
+The standard $GLOBALS['phpgw'] and $GLOBALS['phpgw_info']
+variables are in-scope, as is $appname which corresponds to the application
+name in the path.
 
-<p>
+<P>
 There are 2 functions to coordinate the display of each application's
 links, section_start() and section_end() 
 
-<p>
+<P>
 
-<h4>section_start</h4>
+<H3><A NAME="SECTION00045100000000000000">
+section_start</A>
+</H3>
 
-<p>
+<P>
 section_start($title,$icon_url) starts the section for your application.
 $title is passed through lang() for you. $icon_url should be page-relative
 to admin/index.php or an absolute URL. 
 
-<p>
+<P>
 
-<h4>section_end</h4>
+<H3><A NAME="SECTION00045200000000000000">
+section_end</A>
+</H3>
 
-<p>
+<P>
 section_end() closes the section that was started with section_start(). 
 
-<p>
-     <h3><a name="tth_sEc3.6">
-3.6</a>&nbsp;&nbsp;Hooking into Preferences page</h3>
+<P>
 
-<p>
+<H2><A NAME="SECTION00046000000000000000">
+3.6 Hooking into Preferences page</A>
+</H2>
+
+<P>
 The mechanism to hook into the preferences page is identical to the
 one used to hook into the administration page, however it looks for
 appname/inc/hook_preferences.inc.php instead of appname/inc/hook_admin.inc.php.
 The same functions and variables are defined. 
 
-<p>
- <h2><a name="tth_sEc4">
-4</a>&nbsp;&nbsp;Infrastructure</h2>
+<P>
 
-<p>
-     <h3><a name="tth_sEc4.1">
-4.1</a>&nbsp;&nbsp;Overview</h3>
+<H1><A NAME="SECTION00050000000000000000">
+4 Infrastructure</A>
+</H1>
 
-<p>
-phpGroupWare attempts to provide developers with a sound directory
-structure to work from.<br />
- The directory layout may seem complex at first, but after some use,
+<P>
+
+<H2><A NAME="SECTION00051000000000000000">
+4.1 Overview</A>
+</H2>
+
+<P>
+eGroupWare attempts to provide developers with a sound directory structure
+to work from.
+<BR>
+The directory layout may seem complex at first, but after some use,
 you will see that it is designed to accommodate a large number of
 applications and functions. 
 
-<p>
-     <h3><a name="tth_sEc4.2">
-4.2</a>&nbsp;&nbsp;Directory tree</h3>
+<P>
 
-<p>
-<tt>.--appname</tt>
+<H2><A NAME="SECTION00052000000000000000">
+4.2 Directory tree</A>
+</H2>
 
-<p>
-<tt>|&nbsp;&nbsp; |--inc</tt>
+<P>
+<TT>.-appname</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--functions.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |-inc</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--header.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-functions.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--hook_preferences.ini.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-header.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--hook_home.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-hook_preferences.ini.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; `--footer.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-hook_home.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |--manual</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; `-footer.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |--setup</tt>
+<P>
+<TT>|&nbsp;&nbsp; |-manual</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--baseline.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |-setup</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--droptables.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-tables_baseline.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--newtables.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-tables_current.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--upgradetables.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-tables_update.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; |--config.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; |-setup.inc.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; `--register.inc.php</tt>
+<P>
+<TT>|&nbsp;&nbsp; `-templates</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; `--templates</tt>
+<P>
+<TT>|&nbsp;&nbsp; |&nbsp;&nbsp; `-default</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |&nbsp;&nbsp; `--default</tt>
+<P>
+<TT>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `-images</TT>
 
-<p>
-<tt>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `--images</tt>
+<P>
+<TT>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `-navbar.png</TT>
 
-<p>
-<tt>|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `--navbar.gif</tt>
+<P>
+<TT>|&nbsp;&nbsp; |-preferences.php</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |--preferences.php</tt>
+<P>
+<TT>|-docs (installation docs)</TT>
 
-<p>
-<tt>|--docs (installation docs)</tt>
+<P>
+<TT>|-files</TT>
 
-<p>
-<tt>|--files</tt>
+<P>
+<TT>|&nbsp;&nbsp; |-groups</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; |--groups</tt>
+<P>
+<TT>|&nbsp;&nbsp; `-users</TT>
 
-<p>
-<tt>|&nbsp;&nbsp; `--users</tt>
+<P>
+<TT>`-phpgwapi</TT>
 
-<p>
-<tt>`--phpgwapi</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-cron (egroupware's optional daemons)</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--cron (phpgroupware's optional daemons)</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-doc (developer docs)</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--doc (developers docs)</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-inc</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--inc</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-class.phpgw.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--phpgw.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-class.common.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--phpgw_info.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; `-etc..</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--phpgw_common.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-manual</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; `--etc..</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-setup</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--manual </tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-tables_baseline.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--setup</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-tables_current.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--baseline.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-tables_update.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--droptables.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-setup.inc.php</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--newtables.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|-templates</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--upgradetables.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |-default</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--config.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; `-images</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; `--register.inc.php</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; |-home.gif</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|--templates</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; `-preferences.gif</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |--default</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; `-verilak</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; `--images</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `-images</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; |--home.gif</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |-home.gif</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; |&nbsp;&nbsp; `--preferences.gif</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `-preferences.gif</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; `--verilak</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;`-themes</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `--images</tt>
+<P>
+<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`-default.theme</TT>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |--home.gif</tt>
+<P>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `--preferences.gif</tt>
+<DL COMPACT>
+<DT>
+<DD><P>
+</DD>
+</DL>
+<P>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;`--themes</tt>
+<H2><A NAME="SECTION00053000000000000000">
+4.3 Translations</A>
+</H2>
 
-<p>
-<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`--default.theme</tt>
-
-<p>
-
-<dl compact="compact"><dt><b></b></dt>
-	<dd>
-
-<p>
-</dl>     <h3><a name="tth_sEc4.3">
-4.3</a>&nbsp;&nbsp;Translations</h3>
-
-<p>
+<P>
 The translations are now being done thru the database, and will be
 configurable to use other mechanisms. 
 
-<p>
-We are completing a program called Transy, which will provide developers/translators
+<P>
+The application, developer_tools, provides developers/translators
 a nice GUI for building and updating translations. 
 
-<p>
-In the mean time you will need to create a SQL script yourself and
-name it lang.sql. You can copy the one in doc/lang.sql and use it
-as a template. 
+<P>
 
-<p>
- <h2><a name="tth_sEc5">
-5</a>&nbsp;&nbsp;The API</h2>
+<H1><A NAME="SECTION00060000000000000000">
+5 The API</A>
+</H1>
 
-<p>
-     <h3><a name="tth_sEc5.1">
-5.1</a>&nbsp;&nbsp;Introduction</h3>
+<P>
 
-<p>
-phpGroupWare attempts to provide developers with a useful API to handle
+<H2><A NAME="SECTION00061000000000000000">
+5.1 Introduction</A>
+</H2>
+
+<P>
+eGroupWare attempts to provide developers with a useful API to handle
 common tasks. 
 
-<p>
-To do this we have created a multi-dimensional class $phpgw-&#62;. 
+<P>
+To do this we have created a multi-dimensional class $GLOBALS['phpgw']. 
 
-<p>
+<P>
 This allows for terrific code organization, and help developers easily
 identify the file that the function is in. All the files that are
 part of this class are in the inc/core directory and are named to
 match the sub-class. 
 
-<p>
-Example: $phpgw-&#62;send-&#62;msg() is in the inc/phpgwapi/phpgw_send.inc.php
+<P>
+Example: $GLOBALS['phpgw']-&gt;send-&gt;msg() is in the inc/phpgwapi/phpgw_send.inc.php
 file. 
 
-<p>
-     <h3><a name="tth_sEc5.2">
-5.2</a>&nbsp;&nbsp;Basic functions</h3>
+<P>
 
-<p>
+<H2><A NAME="SECTION00062000000000000000">
+5.2 Basic functions</A>
+</H2>
 
-<h4>$phpgw-&#62;link</h4>
+<P>
 
-<p>
-$phpgw-&#62;link($url)<br />
- Add support for session management. ALL links must use this, that
+<H3><A NAME="SECTION00062100000000000000">
+$GLOBALS['phpgw']-&gt;link</A>
+</H3>
+
+<P>
+$GLOBALS['phpgw']-&gt;link($url)
+<BR>
+Add support for session management. ALL links must use this, that
 includes href's form actions and header location's. 
 
-<p>
+<P>
 If you are just doing a form action back to the same page, you can
 use it without any parameters. 
 
-<p>
+<P>
 This function is right at the core of the class because it is used
 so often, we wanted to save developers a few keystrokes. Example:
-
-<pre>
-
-&lt;form name=copy method=post action="&lt;?php echo $phpgw-&#62;link();?&#62;"&#62;
+<PRE>
+&lt;form name="copy" method="post" action="&lt;?php echo $GLOBALS['phpgw']-&gt;link();?&gt;"&gt;
 /* If session management is done via passing url parameters */
 /* The the result would be */
-/* &lt;form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"&#62; */
+/* &lt;form name="copy" method="post" action="somepage.php?sessionid=87687693276?kp3=kjh98u80"&gt; */
+</PRE>
 
+<P>
 
-</pre>
+<H2><A NAME="SECTION00063000000000000000">
+5.3 Application Functions</A>
+</H2>
 
-<p>
-     <h3><a name="tth_sEc5.3">
-5.3</a>&nbsp;&nbsp;Application Functions</h3>
+<P>
 
-<p>
+<H3><A NAME="SECTION00063100000000000000">
+$GLOBALS['phpgw']-&gt;common-&gt;phpgw_header();</A>
+</H3>
 
-<h4>$phpgw-&#62;common-&#62;phpgw_header</h4>
-
-<p>
-$phpgw-&#62;phpgw_header()<br />
- Print out the start of the HTML page, including the navigation bar
+<P>
+$GLOBALS['phpgw']-&gt;phpgw_header()
+<BR>
+Print out the start of the HTML page, including the navigation bar
 and includes appname/inc/header.php 
 
-<p>
+<P>
 
-<h4>$phpgw-&#62;common-&#62;phpgw_footer</h4>
+<H3><A NAME="SECTION00063200000000000000">
+$GLOBALS['phpgw']-&gt;common-&gt;phpgw_footer();</A>
+</H3>
 
-<p>
-$phpgw-&#62;phpgw_footer()<br />
- Prints the system footer, and includes appname/inc/footer.php 
+<P>
+$GLOBALS['phpgw']-&gt;phpgw_footer()
+<BR>
+Prints the system footer, and includes appname/inc/footer.php 
 
-<p>
+<P>
 
-<h4>$phpgw-&#62;common-&#62;appsession</h4>
+<H3><A NAME="SECTION00063300000000000000">
+$GLOBALS['phpgw']-&gt;common-&gt;appsession();</A>
+</H3>
 
-<p>
-$phpgw-&#62;common-&#62;appsession($data)<br />
- Store important information session information that your application
-needs.<br />
- $phpgw-&#62;appsession will return the value of your session data is
-you leave the parameter empty [i.e. $phpgw-&#62;appsession(``'')],
-otherwise it will store whatever data you send to it.<br />
- You can also store a comma delimited string and use explode() to
+<P>
+$GLOBALS['phpgw']-&gt;common-&gt;appsession($data)
+<BR>
+Store important information session information that your application
+needs.
+<BR> $GLOBALS['phpgw']-&gt;appsession will return the value of your
+session data is you leave the parameter empty [i.e. $GLOBALS['phpgw']-&gt;appsession(``'')],
+otherwise it will store whatever data you send to it.
+<BR>
+You can also store a comma delimited string and use explode() to
 turn it back into an array when you receive the value back. 
 
-<p>
-Example: 
-<pre>
+<P>
+Example: <PRE>
+  $GLOBALS['phpgw']-&gt;common-&gt;appsession('/path/to/something');
+  echo "Dir: " . $GLOBALS['phpgw']-&gt;common-&gt;appsession();
+</PRE>
 
-  $phpgw-&#62;common-&#62;appsession("/path/to/something");
-  echo "Dir: " . $phpgw-&#62;common-&#62;appsession();
+<P>
 
+<H2><A NAME="SECTION00064000000000000000">
+5.4 File functions</A>
+</H2>
 
-</pre>
+<P>
 
-<p>
-     <h3><a name="tth_sEc5.4">
-5.4</a>&nbsp;&nbsp;File functions</h3>
+<H3><A NAME="SECTION00064100000000000000">
+Please also see the phpgwapi/doc/vfs directory for additional VFS
+class documentation</A>
+</H3>
 
-<p>
+<P>
 
-<h4>$phpgw-&#62;vfs-&#62;read_file</h4>
+<H3><A NAME="SECTION00064200000000000000">
+$GLOBALS['phpgw']-&gt;vfs-&gt;read_file</A>
+</H3>
 
-<p>
-$phpgw-&#62;vfs-&#62;read_file($file)<br />
- Returns the data from $file.<br />
- You must send the complete path to the file.<br />
- Example: 
-<pre>
+<P>
+$GLOBALS['phpgw']-&gt;vfs-&gt;read_file($file)
+<BR>
+Returns the data from $file.
+<BR>
+You must send the complete path to the file.
+<BR>
+Example: <PRE>
+$data = $GLOBALS['phpgw']-&gt;vfs-&gt;read_file('/some/dir/to/file.txt');
+</PRE>
 
-$data = $phpgw-&#62;vfs-&#62;read_file("/some/dir/to/file.txt");
+<P>
 
+<H3><A NAME="SECTION00064300000000000000">
+$GLOBALS['phpgw']-&gt;vfs-&gt;write_file</A>
+</H3>
 
-</pre>
+<P>
+$GLOBALS['phpgw']-&gt;vfs-&gt;write_file($file, $contents)
+<BR>
+Write data to $file.
+<BR>
+You must send the complete path to the file.
+<BR>
+Example: <PRE>
+$data = $GLOBALS['phpgw']-&gt;vfs-&gt;write_file("/some/dir/to/file.txt");
+</PRE>
 
-<p>
+<P>
 
-<h4>$phpgw-&#62;vfs-&#62;write_file</h4>
+<H3><A NAME="SECTION00064400000000000000">
+$GLOBALS['phpgw']-&gt;vfs-&gt;read_userfile</A>
+</H3>
 
-<p>
-$phpgw-&#62;vfs-&#62;write_file($file, $contents)<br />
- Write data to $file.<br />
- You must send the complete path to the file.<br />
- Example: 
-<pre>
+<P>
+$GLOBALS['phpgw']-&gt;vfs-&gt;read_userfile($file)
+<BR>
+Returns the data from $file, which resides in the users private
+dir.
+<BR>
+Example: <PRE>
+$data = $GLOBALS['phpgw']-&gt;vfs-&gt;read_userfile("file.txt");
+</PRE>
 
-$data = $phpgw-&#62;vfs-&#62;write_file("/some/dir/to/file.txt");
+<P>
 
+<H3><A NAME="SECTION00064500000000000000">
+$GLOBALS['phpgw']-&gt;vfs-&gt;write_userfile</A>
+</H3>
 
-</pre>
+<P>
+$GLOBALS['phpgw']-&gt;write_userfile($file, $contents)
+<BR>
+Writes data to $file, which resides in the users private dir.
+<BR>
+Example: <PRE>
+$data = $GLOBALS['phpgw']-&gt;vfs-&gt;write_userfile("file.txt");
+</PRE>
 
-<p>
+<P>
 
-<h4>$phpgw-&#62;vfs-&#62;read_userfile</h4>
+<H3><A NAME="SECTION00064600000000000000">
+$GLOBALS['phpgw']-&gt;vfs-&gt;list_userfiles</A>
+</H3>
 
-<p>
-$phpgw-&#62;vfs-&#62;read_userfile($file)<br />
- Returns the data from $file, which resides in the users private
-dir.<br />
- Example: 
-<pre>
-
-$data = $phpgw-&#62;vfs-&#62;read_userfile("file.txt");
-
-
-</pre>
-
-<p>
-
-<h4>$phpgw-&#62;vfs-&#62;write_userfile</h4>
-
-<p>
-$phpgw-&#62;write_userfile($file, $contents)<br />
- Writes data to $file, which resides in the users private dir.<br />
- Example: 
-<pre>
-
-$data = $phpgw-&#62;vfs-&#62;write_userfile("file.txt");
-
-
-</pre>
-
-<p>
-
-<h4>$phpgw-&#62;vfs-&#62;list_userfiles</h4>
-
-<p>
-$phpgw-&#62;vfs-&#62;list_userfiles()<br />
- Returns an array which has the list of files in the users private
-dir.<br />
- Example: 
-<pre>
-
+<P>
+$GLOBALS['phpgw']-&gt;vfs-&gt;list_userfiles()
+<BR>
+Returns an array which has the list of files in the users private
+dir.
+<BR>
+Example: <PRE>
 $filelist = array();
-$filelist = $phpgw-&#62;vfs-&#62;list_userfiles();
+$filelist = $GLOBALS['phpgw']-&gt;vfs-&gt;list_userfiles();
+</PRE>
 
+<P>
 
-</pre>
+<H2><A NAME="SECTION00065000000000000000">
+5.5 Email/NNTP Functions</A>
+</H2>
 
-<p>
-     <h3><a name="tth_sEc5.5">
-5.5</a>&nbsp;&nbsp;Email/NNTP Functions</h3>
+<P>
 
-<p>
+<H3><A NAME="SECTION00065100000000000000">
+$GLOBALS['phpgw']-&gt;send-&gt;msg</A>
+</H3>
 
-<h4>$phpgw-&#62;send-&#62;msg</h4>
-
-<p>
-$phpgw-&#62;msg-&#62;send($service, $to, $subject, $body, $msgtype,
-$cc, $bcc)<br />
- Send a message via email or NNTP and returns any error codes.<br />
- Example: 
-<pre>
-
+<P>
+$GLOBALS['phpgw']-&gt;send-&gt;msg($service, $to, $subject, $body,
+$msgtype, $cc, $bcc)
+<BR>
+Send a message via email or NNTP and returns any error codes.
+<BR>
+Example: <PRE>
 $to = "someuser@domain.com";
 $subject = "Hello buddy";
 $body = "Give me a call\n Been wondering what your up to.";
-$errors = $phpgw-&#62;msg-&#62;send("email", $to, $subject, $body);
+$errors = $GLOBALS['phpgw']-&gt;send-&gt;msg("email", $to, $subject, $body);
+</PRE>
 
+<P>
 
-</pre>
+<H1><A NAME="SECTION00070000000000000000">
+6 Configuration Variables</A>
+</H1>
 
-<p>
- <h2><a name="tth_sEc6">
-6</a>&nbsp;&nbsp;Configuration Variables</h2>
+<P>
 
-<p>
-     <h3><a name="tth_sEc6.1">
-6.1</a>&nbsp;&nbsp;Introduction</h3>
+<H2><A NAME="SECTION00071000000000000000">
+6.1 Introduction</A>
+</H2>
 
-<p>
-phpGroupWare attempt to provide developers with as much information
+<P>
+eGroupWare attempts to provide developers with as much information
 about the user, group, server, and application configuration as possible. 
 
-<p>
-To do this we provide a multi-dimensional array called '$phpgw_info[]',
+<P>
+To do this we provide a multi-dimensional array called '$GLOBALS['phpgw_info'][]',
 which includes all the information about your environment. 
 
-<p>
+<P>
 Due to the multi-dimensional array approach. getting these values
 is easy. 
 
-<p>
-Here are some examples: 
-<pre>
-
+<P>
+Here are some examples: <PRE>
   &lt;?php
   // To do a hello username
-  echo "Hello " . $phpgw_info["user"]["fullname"];
+  echo "Hello " . $GLOBALS['phpgw_info']['user']['fullname'];
   //If username first name is John and last name is Doe, prints: 'Hello John Doe'
-  ?&#62;
+  ?&gt;
   &lt;?php
   // To find out the location of the imap server
-  echo "IMAP Server is named: " . $phpgw_info["server"]["imap_server"]; 
+  echo "IMAP Server is named: " . $GLOBALS['phpgw_info']['server']['imap_server']; 
   //If imap is running on localhost, prints: 'IMAP Server is named: localhost'
-  ?&#62;
-  
+  ?&gt;
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00072000000000000000">
+6.2 User information</A>
+</H2>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``userid'']
+= The user ID. </FONT></TT>
+<P>
 
 
-</pre>
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``sessionid'']
+= The session ID </FONT></TT>
+<P>
 
-<p>
-     <h3><a name="tth_sEc6.2">
-6.2</a>&nbsp;&nbsp;User information</h3>
 
-<p>
-<tt><font size="-1">$phpgw_info[``user''][``userid'']
-= The user ID. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``sessionid'']
-= The session ID </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``theme'']
-= Selected theme </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``private_dir'']
-= Users private dir. Use phpGroupWare core functions for access to
-the files. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``firstname'']
-= Users first name </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``lastname'']
-= Users last name </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``fullname'']
-= Users Full Name </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``groups'']
-= Groups the user is a member of </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``app_perms'']
-= If the user has access to the current application </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``lastlogin'']
-= Last time the user logged in. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``lastloginfrom'']
-= Where they logged in from the last time. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``lastpasswd_change'']
-= Last time they changed their password. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``passwd'']
-= Hashed password. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``status'']
-= If the user is enabled. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``logintime'']
-= Time they logged into their current session. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``session_dla'']
-= Last time they did anything in their current session </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``user''][``session_ip'']
-= Current IP address</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.3">
-6.3</a>&nbsp;&nbsp;Group information</h3>
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``theme'']
+= Selected theme </FONT></TT>
+<P>
 
-<p>
-<tt><font size="-1">$phpgw_info[``group''][``group_names'']
-= List of groups.</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.4">
-6.4</a>&nbsp;&nbsp;Server information</h3>
 
-<p>
-<tt><font size="-1">$phpgw_info[``server''][``server_root'']
-= Main installation directory </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``include_root'']
-= Location of the 'inc' directory. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``temp_dir'']
-= Directory that can be used for temporarily storing files </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``files_dir'']
-= Directory er and group files are stored </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``common_include_dir'']
-= Location of the core/shared include files. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``template_dir'']
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``private_dir'']
+= Users private dir. Use eGroupWare core functions for access to the
+files. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``firstname'']
+= Users first name </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``lastname'']
+= Users last name </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``fullname'']
+= Users Full Name </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``groups'']
+= Groups the user is a member of </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``app_perms'']
+= If the user has access to the current application </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``lastlogin'']
+= Last time the user logged in. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``lastloginfrom'']
+= Where they logged in from the last time. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``lastpasswd_change'']
+= Last time they changed their password. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``passwd'']
+= Hashed password. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``status'']
+= If the user is enabled. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``logintime'']
+= Time they logged into their current session. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``session_dla'']
+= Last time they did anything in their current session </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``user''][``session_ip'']
+= Current IP address</FONT></TT>
+<P>
+
+
+<P>
+
+<H2><A NAME="SECTION00073000000000000000">
+6.3 Group information</A>
+</H2>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``group''][``group_names'']
+= List of groups.</FONT></TT>
+<P>
+
+
+<P>
+
+<H2><A NAME="SECTION00074000000000000000">
+6.4 Server information</A>
+</H2>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``server_root'']
+= Main installation directory </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``include_root'']
+= Location of the 'inc' directory. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``temp_dir'']
+= Directory that can be used for temporarily storing files </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``files_dir'']
+= Directory er and group files are stored </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``common_include_dir'']
+= Location of the core/shared include files. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``template_dir'']
 = Active template files directory. This is defaulted by the server,
-and changeable by the user. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``dir_separator'']
-= Allows compatibility with WindowsNT directory format, </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``encrpytkey'']
-= Key used for encryption functions </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``site_title'']
-= Site Title will show in the title bar of each webpage. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``webserver_url'']
-= URL to phpGroupWare installation. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``hostname'']
-= Name of the server phpGroupWare is installed upon. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``charset'']
-= default charset, default:iso-8859-1 </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``version'']
-= phpGroupWare version.</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.5">
-6.5</a>&nbsp;&nbsp;Database information</h3>
+and changeable by the user. </FONT></TT>
+<P>
 
-<p>
-It is unlikely you will need these, because $phpgw_info_db will
-already be loaded as a database for you to use. 
 
-<p>
-<tt><font size="-1">$phpgw_info[``server''][``db_host'']
-= Address of the database server. Usually this is set to localhost. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``db_name'']
-= Database name. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``db_user'']
-= User name. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``db_pass'']
-= Password </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``db_type'']
-= Type of database. Currently MySQL and PostgreSQL are supported.</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.6">
-6.6</a>&nbsp;&nbsp;Mail information</h3>
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``dir_separator'']
+= Allows compatibility with WindowsNT directory format, </FONT></TT>
+<P>
 
-<p>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``encrpytkey'']
+= Key used for encryption functions </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``site_title'']
+= Site Title will show in the title bar of each webpage. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``webserver_url'']
+= URL to eGroupWare installation. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``hostname'']
+= Name of the server eGroupWare is installed upon. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``charset'']
+= default charset, default:iso-8859-1 </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``version'']
+= eGroupWare version.</FONT></TT>
+<P>
+
+
+<P>
+
+<H2><A NAME="SECTION00075000000000000000">
+6.5 Database information</A>
+</H2>
+
+<P>
+It is unlikely you will need these, because $GLOBALS['phpgw_info']_db
+will already be loaded as a database for you to use. 
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``db_host'']
+= Address of the database server. Usually this is set to localhost. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``db_name'']
+= Database name. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``db_user'']
+= User name. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``db_pass'']
+= Password </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``db_type'']
+= Type of database. Currently MySQL and PostgreSQL are supported.</FONT></TT>
+<P>
+
+
+<P>
+
+<H2><A NAME="SECTION00076000000000000000">
+6.6 Mail information</A>
+</H2>
+
+<P>
 It is unlikely you will need these, because most email needs are services
-thru core phpGroupWare functions. 
+thru core eGroupWare functions. 
 
-<p>
-<tt><font size="-1">$phpgw_info[``server''][``mail_server'']
-= Address of the IMAP server. Usually this is set to localhost. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``mail_server_type'']
-= IMAP or POP3 </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``imap_server_type'']
-= Cyrus or Uwash </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``imap_port'']
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``mail_server'']
+= Address of the IMAP server. Usually this is set to localhost. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``mail_server_type'']
+= IMAP or POP3 </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``imap_server_type'']
+= Cyrus or Uwash </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``imap_port'']
 = This is usually 143, and should only be changed if there is a good
-reason. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``mail_suffix]
-= This is the domain name, used to add to email address </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``mail_login_type'']
+reason. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``mail_suffix]
+= This is the domain name, used to add to email address </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``mail_login_type'']
 = This adds support for VMailMgr. Generally this should be set to
-'standard'. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``smtp_server'']
-= Address of the SMTP server. Usually this is set to localhost. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``smtp_port'']
+'standard'. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``smtp_server'']
+= Address of the SMTP server. Usually this is set to localhost. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``smtp_port'']
 = This is usually 25, and should only be changed if there is a good
-reason</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.7">
-6.7</a>&nbsp;&nbsp;NNTP information</h3>
+reason</FONT></TT>
+<P>
 
-<p>
-<tt><font size="-1">$phpgw_info[``server''][``nntp_server'']
-= Address of the NNTP server. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``nntp_port'']
+
+<P>
+
+<H2><A NAME="SECTION00077000000000000000">
+6.7 NNTP information</A>
+</H2>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``nntp_server'']
+= Address of the NNTP server. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``nntp_port'']
 = This is usually XX, and should only be changed if there is a good
-reason. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``nntp_sender'']
-= Unknown </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``nntp_organization'']
-= Unknown </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``nntp_admin'']
-= Unknown</font></tt><font size="-1">
-<p>
-</font>     <h3><a name="tth_sEc6.8">
-6.8</a>&nbsp;&nbsp;Application information</h3>
+reason. </FONT></TT>
+<P>
 
-<p>
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``nntp_sender'']
+= Unknown </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``nntp_organization'']
+= Unknown </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``nntp_admin'']
+= Unknown</FONT></TT>
+<P>
+
+
+<P>
+
+<H2><A NAME="SECTION00078000000000000000">
+6.8 Application information</A>
+</H2>
+
+<P>
 Each application has the following information available. 
 
-<p>
-<tt><font size="-1">$phpgw_info[``apps''][``appname''][``title'']
-= The title of the application. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``apps''][``appname''][``enabled'']
-= If the application is enabled. True or False. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``app_include_dir'']
-= Location of the current application include files. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``app_template_dir'']
-= Location of the current application tpl files. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``app_lang_dir'']
-= Location of the current lang directory. </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``app_auth'']
-= If the server and current user have access to current application </font></tt><font size="-1">
-<p>
-</font><tt><font size="-1">$phpgw_info[``server''][``app_current'']
-= name of the current application.</font></tt><font size="-1">
-<p>
-</font> <h2><a name="tth_sEc7">
-7</a>&nbsp;&nbsp;Using Language Support</h2>
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``apps''][``appname''][``title'']
+= The title of the application. </FONT></TT>
+<P>
 
-<p>
-     <h3><a name="tth_sEc7.1">
-7.1</a>&nbsp;&nbsp;Overview</h3>
 
-<p>
-phpGroupWare is built using a multi-language support scheme. This
-means the pages can be translated to other languages very easily.
-Translations of text strings are stored in the phpGroupWare database,
-and can be modified by the phpGroupWare administrator. 
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``apps''][``appname''][``enabled'']
+= If the application is enabled. True or False. </FONT></TT>
+<P>
 
-<p>
-     <h3><a name="tth_sEc7.2">
-7.2</a>&nbsp;&nbsp;How to use lang support</h3>
 
-<p>
-The lang() function is your application's interface to phpGroupWare's
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``app_include_dir'']
+= Location of the current application include files. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``app_template_dir'']
+= Location of the current application tpl files. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``app_lang_dir'']
+= Location of the current lang directory. </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``app_auth'']
+= If the server and current user have access to current application </FONT></TT>
+<P>
+
+
+<P>
+<TT><FONT SIZE="-1">$GLOBALS['phpgw_info'][``server''][``app_current'']
+= name of the current application.</FONT></TT>
+<P>
+
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000">
+7 Using Language Support</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00081000000000000000">
+7.1 Overview</A>
+</H2>
+
+<P>
+eGroupWare is built using a multi-language support scheme. This means
+the pages can be translated to other languages very easily. Translations
+of text strings are stored in the phpGroupWare database, and can be
+modified by the eGroupWare administrator.
+
+<P>
+Please see the setup/doc directory for a document which contains more
+complete documentation of the language system.
+
+<P>
+
+<H2><A NAME="SECTION00082000000000000000">
+7.2 How to use lang support</A>
+</H2>
+
+<P>
+The lang() function is your application's interface to eGroupWare's
 internationalization support.
 
-<p>
+<P>
 While developing your application, just wrap all your text output
-with calls to lang(), as in the following code: 
-<pre>
-
+with calls to lang(), as in the following code: <PRE>
   $x = 42;
-  echo lang("The counter is %1",$x)."&lt;br&#62;";
-
-
-</pre>This will attempt to translate ``The counter is %1'',
+  echo lang("The counter is %1",$x)."&lt;br&gt;";
+</PRE>This will attempt to translate ``The counter is %1'',
 and return a translated version based on the current application and
 language in use. Note how the position that $x will end up is controlled
-by the format string, <b>not</b> by building up the string in your
+by the format string, <B>not</B> by building up the string in your
 code. This allows your application to be translated to languages where
 the actual number is not placed at the end of the string.
 
-<p>
+<P>
 When a translation is not found, the original text will be returned
 with a * after the string. This makes it easy to develop your application,
 then go back and add missing translations (identified by the *)
 later.
 
-<p>
+<P>
 Without a specific translation in the lang table, the above code will
-print: 
-<pre>
+print: <PRE>
+The counter is 42*&lt;br&gt;
+</PRE> If the current user speaks Italian, they string returned
+may instead be: <PRE>
+il contatore è 42&lt;br&gt;
+</PRE>
 
-The counter is 42*&lt;br&#62; 
+<P>
 
+<H3><A NAME="SECTION00082100000000000000">
+The lang function</A>
+</H3>
 
-</pre> If the current user speaks Italian, they string returned
-may instead be: 
-<pre>
-
-il contatore è 42&lt;br&#62;
-
-
-</pre>
-
-<p>
-
-<h4>The lang function</h4>
-
-<p>
-
-<pre>
-
+<P>
+<PRE>
 lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", 
           $m6="", $m7="", $m8="", $m9="", $m10="")
+</PRE>
 
+<P>
+<DL>
+<DT><STRONG>$key&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-</pre>
-
-<p>
-
-<dl compact="compact">
-	<dd> [$key&nbsp;]&nbsp;
-
-<p>
+<P>
 is the string to translate and may contain replacement directives
-of the form %n.<br /></dd>
+of the form %n.
+<BR>
+<P>
+</DD>
+<DT><STRONG>$m1&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-	<dd> [$m1&nbsp;]&nbsp;
-
-<p>
+<P>
 is the first replacement value or may be an array of replacement values
-(in which case $m2 and above are ignored).</dd>
+(in which case $m2 and above are ignored).
 
-	<dd> [$m2&nbsp;-&nbsp;$m10&nbsp;]&nbsp;
+<P>
+</DD>
+<DT><STRONG>$m2&nbsp;-&nbsp;$m10&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-<p>
-the 2nd through 10th replacement values if $m1 is not an array.</dd>
-</dl>
+<P>
+the 2nd through 10th replacement values if $m1 is not an array.
+
+<P>
+</DD>
+</DL>
 The database is searched for rows with a lang.message_id that matches
 $key. If a translation is not found, the original $key is used.
 The translation engine then replaces all tokens of the form %N with
 the Nth parameter (either $m1[N] or $mN). 
 
-<p>
+<P>
 
-<h4>Adding translation data</h4>
+<H3><A NAME="SECTION00082200000000000000">
+Adding translation data</A>
+</H3>
 
-<p>
-An application called <b>Transy</b> is being developed to make this
+<P>
+An application called <B>Transy</B> is being developed to make this
 easier, until then you can create the translation data manually. 
 
-<p>
+<P>
 
-<h4>The lang table</h4>
+<H3><A NAME="SECTION00082300000000000000">
+The lang table</A>
+</H3>
 
-<p>
+<P>
 The translation class uses the lang table for all translations. We
 are concerned with 4 of the columns to create a translation: 
 
-<p>
+<P>
+<DL>
+<DT><STRONG>message_id&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-<dl compact="compact">
-	<dd> [message_id&nbsp;]&nbsp;
-
-<p>
+<P>
 The key to identify the message (the $key passed to the lang() function).
-This is written in English.</dd>
+This is written in English.
 
-	<dd> [app_name&nbsp;]&nbsp;
+<P>
+</DD>
+<DT><STRONG>app_name&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-<p>
+<P>
 The application the translation applies to, or common if it is common
-across multiple applications.</dd>
+across multiple applications.
 
-	<dd> [lang&nbsp;]&nbsp;
+<P>
+</DD>
+<DT><STRONG>lang&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-<p>
-The code for the language the translation is in.</dd>
+<P>
+The code for the language the translation is in.
 
-	<dd> [content&nbsp;]&nbsp;
+<P>
+</DD>
+<DT><STRONG>content&nbsp;</STRONG></DT>
+<DD>&nbsp;
 
-<p>
-The translated string.</dd>
-</dl>
+<P>
+The translated string.
 
-<p>
+<P>
+</DD>
+</DL>
 
-<h4>lang.sql</h4>
+<P>
 
-<p>
-Currently all applications, and the core phpGroupWare source tree
-have a lang.sql file. This is the place to add translation data. Just
-add lines of the form: 
-<pre>
+<H2><A NAME="SECTION00083000000000000000">
+7.3 Common return codes</A>
+</H2>
 
-REPLACE INTO lang (message_id, app_name, lang, content) 
-VALUES( 'account has been deleted','common','en','Account has been deleted');
-
-
-</pre>translating the content to reflect the message_id string
-in the lang language. If the string is specific to your application,
-put your application name in for app_name otherwise use the name
-common. The message_id should be in lower case for a small increase
-in speed. 
-
-<p>
-     <h3><a name="tth_sEc7.3">
-7.3</a>&nbsp;&nbsp;Common return codes</h3>
-
-<p>
-If you browse through the phpGroupWare sources, you may notice a pattern
+<P>
+If you browse through the eGroupWare sources, you may notice a pattern
 to the return codes used in the higher-level functions. The codes
 used are partially documented in the doc/developers/CODES file.
 
-<p>
+<P>
 Codes are used as a simple way to communicate common error and progress
 conditions back to the user. They are mapped to a text string through
 the check_code() function, which passes the strings through lang()
 before returning.
 
-<p>
-For example, calling 
-<pre>
-
+<P>
+For example, calling <PRE>
 echo check_code(13);
-
-
-</pre>Would print 
-<pre>
-
+</PRE>Would print <PRE>
 Your message has been sent
+</PRE> translated into the current language.
 
+<P>
 
-</pre> translated into the current language.
+<H1><A NAME="SECTION00090000000000000000">
+8 Using Templates</A>
+</H1>
 
-<p>
- <h2><a name="tth_sEc8">
-8</a>&nbsp;&nbsp;Using Templates</h2>
+<P>
 
-<p>
-     <h3><a name="tth_sEc8.1">
-8.1</a>&nbsp;&nbsp;Overview</h3>
+<H2><A NAME="SECTION00091000000000000000">
+8.1 Overview</A>
+</H2>
 
-<p>
-phpGroupWare is built using a templates based design. This means the
+<P>
+eGroupWare is built using a templates-based design. This means the
 display pages, stored in tpl files, can be translated to other languages,
 made to look completely different. 
 
-<p>
-     <h3><a name="tth_sEc8.2">
-8.2</a>&nbsp;&nbsp;How to use templates</h3>
+<P>
 
-<p>
+<H2><A NAME="SECTION00092000000000000000">
+8.2 How to use templates</A>
+</H2>
+
+<P>
 Some instructions on using templates: 
 
-<p>
+<P>
 For Further info read the PHPLIBs documentation for their template
-class. <a href="http://phplib.netuse.de"><tt>http://phplib.netuse.de</tt></a>
+class. http://phplib.netuse.de
 
-<p>
- <h2><a name="tth_sEc9">
-9</a>&nbsp;&nbsp;About this document</h2>
+<P>
 
-<p>
-     <h3><a name="tth_sEc9.1">
-9.1</a>&nbsp;&nbsp;New versions </h3>
+<H1><A NAME="SECTION000100000000000000000">
+9 About this document</A>
+</H1>
 
-<p>
-The newest version of this document can be found on our website <a href="http://www.phpgroupware.org"><tt>http://www.phpgroupware.org</tt></a>
+<P>
+
+<H2><A NAME="SECTION000101000000000000000">
+9.1 New versions </A>
+</H2>
+
+<P>
+The newest version of this document can be found on our website http://www.egroupware.org
 as lyx source, HTML, and text.
 
-<p>
-     <h3><a name="tth_sEc9.2">
-9.2</a>&nbsp;&nbsp;Comments </h3>
+<P>
 
-<p>
-Comments on this HOWTO should be directed to the phpGroupWare developers
-mailing list phpgroupware-developers@lists.sourceforge.net 
+<H2><A NAME="SECTION000102000000000000000">
+9.2 Comments </A>
+</H2>
 
-<p>
-To subscribe, go to <a href="http://sourceforge.net/mail/?group"><tt>http://sourceforge.net/mail/?group</tt></a>_id=7305 
+<P>
+Comments on this HOWTO should be directed to the eGroupWare developers
+mailing list egroupware-developers@lists.sourceforge.net 
 
-<p>
-     <h3><a name="tth_sEc9.3">
-9.3</a>&nbsp;&nbsp;History </h3>
+<P>
+To subscribe, go to http://lists.sourceforge.net/lists/egroupware-developers
 
-<p>
+<P>
+
+<H2><A NAME="SECTION000103000000000000000">
+9.3 History </A>
+</H2>
+
+<P>
 This document was written by Dan Kuykendall.
 
-<p>
+<P>
 2000-09-25 documentation on lang(), codes, administration and preferences
 extension added by Steve Brown. 
 
-<p>
+<P>
 2001-01-08 fixed directory structure, minor layout changes, imported
 to lyx source - Darryl VanDorp
 
-<p>
-     <h3><a name="tth_sEc9.4">
-9.4</a>&nbsp;&nbsp;Copyrights and Trademarks </h3>
+<P>
+2003-12-29 adapted for eGroupWare and updated for setup and use of
+GLOBALS - Miles Lott
 
-<p>
+<P>
+
+<H2><A NAME="SECTION000104000000000000000">
+9.4 Copyrights and Trademarks </A>
+</H2>
+
+<P>
 Copyright (c) Dan Kuykendall. Permission is granted to copy, distribute
 and/or modify this document under the terms of the GNU Free Documentation
 License, Version 1.1 or any later version published by the Free Software
 Foundation. 
 
-<p>
-A copy of the license is available at <a href="http://www.gnu.org/copyleft/gpl.html"><tt>http://www.gnu.org/copyleft/gpl.html</tt></a>
+<P>
+A copy of the license is available at http://www.gnu.org/copyleft/gpl.html
 
-<p>
-     <h3><a name="tth_sEc9.5">
-9.5</a>&nbsp;&nbsp;Acknowledgments and Thanks </h3>
+<P>
 
-<p>
+<H2><A NAME="SECTION000105000000000000000">
+9.5 Acknowledgments and Thanks </A>
+</H2>
+
+<P>
 Thanks to Joesph Engo for starting phpGroupWare (at the time called
 webdistro). Thanks to all the developers and users who contribute
-to making phpGroupWare such a success. 
+to making eGroupWare and phpGroupWare such a success. 
 
-<br /><br /><hr /><small>File translated from
-T<sub><font size="-1">E</font></sub>X
-by <a href="http://hutchinson.belmont.ma.us/tth/">
-T<sub><font size="-1">T</font></sub>H</a>,
-version 2.86.<br />On  9 Jan 2001, 21:41.</small>
-</html>
+<H1><A NAME="SECTION000110000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>eGroupWare Application Development</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002 (1.62)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+<A HREF="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</A>, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-no_subdir -split 0 -show_section_numbers /tmp/lyx_tmpdir16754AF2VdD/lyx_tmpbuf16754yRvNsc/index.tex</TT>
+<P>
+The translation was initiated by Miles Lott on 2003-12-28<HR>
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="file:/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Miles Lott
+2003-12-28
+</ADDRESS>
+</BODY>
+</HTML>

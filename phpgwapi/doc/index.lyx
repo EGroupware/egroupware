@@ -31,7 +31,7 @@
 
 \layout Title
 
-phpGroupWare Application Development
+eGroupWare Application Development
 \layout Author
 
 Dan Kuykendall <dan@kuykendall.org>
@@ -42,8 +42,8 @@ v0.9 29 September 2000
 
 
 \emph on 
-This document explains phpGroupWare's infrastructure and API, along with
- what is required to integrate applications into it.
+This document explains eGroupWare's infrastructure and API, along with what
+ is required to integrate applications into it.
 \layout Standard
 
 
@@ -57,36 +57,37 @@ This document explains phpGroupWare's infrastructure and API, along with
 Introduction
 \layout Standard
 
-phpGroupWare is a web based groupware application framework (API), for writing
+eGroupWare is a web based groupware application framework (API), for writing
  applications.
  Integrated applications such as email, calendar, todo list, address book,
  and file manager are included.
- 
+ eGroupWare is a fork of phpGroupWare, for which the original version of
+ this document was written.
 \layout Subsection
 
 Overview of application writing
 \layout Standard
 
-We have attempted to make writing application for phpGroupWare as painless
+We have attempted to make writing applications for eGroupWare as painless
  as possible.
- We hope any pain and suffering is cause by making your application work,
- but not dealing with phpGroupWare itself.
+ We hope any pain and suffering is caused by making your application work,
+ but not dealing with eGroupWare itself.
  
 \layout Subsection
 
-What does the phpGroupWare API provide?
+What does the eGroupWare API provide?
 \layout Standard
 
-The phpGroupWare API handles session management, user/group management,
- has support for multiple databases, using the PHPLIB database abstraction
- method, we support templates using the PHPLIB Templates class, a file system
- interface, and even a network i/o interface.
+The eGroupWare API handles session management, user/group management, has
+ support for multiple databases, using either PHPLIB or ADODB database abstracti
+on methods, we support templates using the PHPLIB Templates class, a file
+ system interface, and even a network i/o interface.
  
 \layout Standard
 
-On top of these standard functions, phpGroupWare provides several functions
+On top of these standard functions, eGroupWare provides several functions
  to give you the information you need about the users environment, and to
- properly plug into phpGroupWare.
+ properly plug into eGroupWare.
  
 \layout Section
 
@@ -97,22 +98,23 @@ Requirements
 \layout Standard
 
 These guidelines must be followed for any application that wants considered
- for inclusion into phpGroupWare deluxe:
+ for inclusion into eGroupWare:
 \layout Itemize
 
-It must run on PHP3 and PHP4.
+It must run on PHP4 and PHP5.
  
 \layout Itemize
 
 SQL statements must be compatible with both MySQL and PostgreSQL.
- 
+ When in doubt it is best to stick with SQL92.
 \layout Itemize
 
 It must use our default header.inc.php include.
  
 \layout Itemize
 
-It must use our $phpgw_link($url) for all links (this is for session support).
+It must use our $GLOBALS['phpgw']->link($url) for all links (this is for
+ session support).
  
 \layout Itemize
 
@@ -140,9 +142,8 @@ It must use our directory structure, template support and lang (multi-language)
 Where possible it should run on both Unix and NT platforms.
 \layout Itemize
 
-For applications that do not meet these requirements, they can be available
- to users via the phpGroupWare Apps project, or whatever means the developers
- decide.
+For applications that do not meet these requirements, they can be made available
+ to users however you decide.
  If you need help converting your application to templates and our lang
  support, we will try to connect you with someone to help.
  
@@ -167,10 +168,16 @@ begin{verbatim}
 
 \newline 
   <?php
-\newline 
-  $phpgw_info["flags"]["currentapp"] = "appname";
-\newline 
-  include("../header.inc.php");
+\layout Standard
+
+
+\latex latex 
+$GLOBALS['phpgw_info']['flags']['currentapp'] = 'appname';
+\layout Standard
+
+
+\latex latex 
+include('../header.inc.php');
 \newline 
   ?>
 \newline 
@@ -185,7 +192,7 @@ Of course change application name to fit.
  This include will provide the following things: 
 \layout Itemize
 
-The phpgwAPI - The phpGroupWare API will be loaded.
+The phpgwAPI - The eGroupWare API will be loaded.
  
 \layout Itemize
 
@@ -221,7 +228,7 @@ Installing your application
 Overview
 \layout Standard
 
-It is fairly simple to add and delete applications to/from phpGroupWare.
+It is fairly simple to add and delete applications to/from eGroupWare.
  
 \layout Subsection
 
@@ -237,14 +244,14 @@ appname/inc/functions.inc.php - This file should include all your application
  
 \layout Itemize
 
-appname/inc/header.inc.php - This file is loaded by $phpgw->common->header
- just after the system header/navbar, and allows developers to use it for
- whatever they need to load.
+appname/inc/header.inc.php - This file is loaded by $GLOBALS['phpgw']->common->hea
+der just after the system header/navbar, and allows developers to use it
+ for whatever they need to load.
  
 \layout Itemize
 
-appname/inc/footer.inc.php - This file is loaded by $phpgw->common->footer
- just before the system footer, allowing developers to close connections
+appname/inc/footer.inc.php - This file is loaded by $GLOBALS['phpgw']->common->foo
+ter just before the system footer, allowing developers to close connections
  and whatever else they need.
 \layout Subsection
 
@@ -346,28 +353,13 @@ You will need to create the following directories for your code
 
 \layout Subsection
 
-Making phpGroupWare aware of your application
+Making eGroupWare aware of your application
 \layout Standard
 
-To make the application aware of your application, add your application
- details to the applications table.
- This can be done via the GUI administration screen, or via a SQL script.
- 
-\latex latex 
-
-\backslash 
-begin{verbatim}
-\newline 
-
-\newline 
-  insert into applications (app_name, app_title, app_enabled) values ('appname',
- 'The App name', 1);
-\newline 
-
-\newline 
-
-\backslash 
-end{verbatim}
+Please see the documentation in the setup/doc directory for information
+ on integrating into eGroupWare.
+ This is very important since the steps for database table setup and modificatio
+n discussed there must be followed.
 \layout Subsection
 
 Hooking into Administration page
@@ -389,23 +381,22 @@ begin{verbatim}
 
 \newline 
 <?php
-\newline 
-  $img = "/" .
+\layout Standard
+
+
+\latex latex 
+$img = '/' .
  $appname .
- "/images/navbar.gif";
+ '/images/navbar.gif';
 \newline 
-  section_start("My Application",$img);
+  section_start('My Application',$img);
 \newline 
-  echo "<a HREF=
-\backslash 
-"" .
- $phpgw->link("myAdminPage.php") .
- "
-\backslash 
-">";
+  echo '<a HREF="' .
+ $GLOBALS['phpgw']->link('myAdminPage.php') .
+ '">';
 \newline 
-  echo lang("Change myApp settings") .
- "</a>";
+  echo lang('Change myApp settings') .
+ '</a>';
 \newline 
   section_end();
 \newline 
@@ -433,8 +424,9 @@ The file is brought in with include() so be careful to not pollute the name-spac
 e too much
 \layout Standard
 
-The standard $phpgw and $phpgw_info variables are in-scope, as is $appname
- which corresponds to the application name in the path.
+The standard $GLOBALS['phpgw'] and $GLOBALS['phpgw_info'] variables are
+ in-scope, as is $appname which corresponds to the application name in the
+ path.
 \layout Standard
 
 There are 2 functions to coordinate the display of each application's links,
@@ -473,7 +465,7 @@ Infrastructure
 Overview
 \layout Standard
 
-phpGroupWare attempts to provide developers with a sound directory structure
+eGroupWare attempts to provide developers with a sound directory structure
  to work from.
 \newline 
  The directory layout may seem complex at first, but after some use, you
@@ -562,7 +554,7 @@ Directory tree
 \SpecialChar ~
  |\SpecialChar ~
 \SpecialChar ~
- |--baseline.inc.php
+ |--tables_baseline.inc.php
 \layout Standard
 
 
@@ -571,7 +563,7 @@ Directory tree
 \SpecialChar ~
  |\SpecialChar ~
 \SpecialChar ~
- |--droptables.inc.php
+ |--tables_current.inc.php
 \layout Standard
 
 
@@ -580,7 +572,7 @@ Directory tree
 \SpecialChar ~
  |\SpecialChar ~
 \SpecialChar ~
- |--newtables.inc.php
+ |--tables_update.inc.php
 \layout Standard
 
 
@@ -589,25 +581,7 @@ Directory tree
 \SpecialChar ~
  |\SpecialChar ~
 \SpecialChar ~
- |--upgradetables.inc.php
-\layout Standard
-
-
-\family typewriter 
-|\SpecialChar ~
-\SpecialChar ~
- |\SpecialChar ~
-\SpecialChar ~
- |--config.inc.php
-\layout Standard
-
-
-\family typewriter 
-|\SpecialChar ~
-\SpecialChar ~
- |\SpecialChar ~
-\SpecialChar ~
- `--register.inc.php
+ |--setup.inc.php
 \layout Standard
 
 
@@ -651,7 +625,7 @@ Directory tree
 \SpecialChar ~
 \SpecialChar ~
 \SpecialChar ~
- `--navbar.gif
+ `--navbar.png
 \layout Standard
 
 
@@ -695,7 +669,7 @@ Directory tree
 \SpecialChar ~
 \SpecialChar ~
 \SpecialChar ~
-|--cron (phpgroupware's optional daemons)
+|--cron (egroupware's optional daemons)
 \layout Standard
 
 
@@ -703,7 +677,7 @@ Directory tree
 \SpecialChar ~
 \SpecialChar ~
 \SpecialChar ~
-|--doc (developers docs)
+|--doc (developer docs)
 \layout Standard
 
 
@@ -721,7 +695,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--phpgw.inc.php
+ |--class.phpgw.inc.php
 \layout Standard
 
 
@@ -731,17 +705,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--phpgw_info.inc.php
-\layout Standard
-
-
-\family typewriter 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-|\SpecialChar ~
-\SpecialChar ~
- |--phpgw_common.inc.php
+ |--class.common.inc.php
 \layout Standard
 
 
@@ -759,7 +723,7 @@ Directory tree
 \SpecialChar ~
 \SpecialChar ~
 \SpecialChar ~
-|--manual 
+|--manual
 \layout Standard
 
 
@@ -777,7 +741,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--baseline.inc.php
+ |--tables_baseline.inc.php
 \layout Standard
 
 
@@ -787,7 +751,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--droptables.inc.php
+ |--tables_current.inc.php
 \layout Standard
 
 
@@ -797,7 +761,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--newtables.inc.php
+ |--tables_update.inc.php
 \layout Standard
 
 
@@ -807,27 +771,7 @@ Directory tree
 \SpecialChar ~
 |\SpecialChar ~
 \SpecialChar ~
- |--upgradetables.inc.php
-\layout Standard
-
-
-\family typewriter 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-|\SpecialChar ~
-\SpecialChar ~
- |--config.inc.php
-\layout Standard
-
-
-\family typewriter 
-\SpecialChar ~
-\SpecialChar ~
-\SpecialChar ~
-|\SpecialChar ~
-\SpecialChar ~
- `--register.inc.php
+ |--setup.inc.php
 \layout Standard
 
 
@@ -967,14 +911,8 @@ The translations are now being done thru the database, and will be configurable
  
 \layout Standard
 
-We are completing a program called Transy, which will provide developers/transla
-tors a nice GUI for building and updating translations.
- 
-\layout Standard
-
-In the mean time you will need to create a SQL script yourself and name
- it lang.sql.
- You can copy the one in doc/lang.sql and use it as a template.
+The application, developer_tools, provides developers/translators a nice
+ GUI for building and updating translations.
  
 \layout Section
 
@@ -984,12 +922,12 @@ The API
 Introduction
 \layout Standard
 
-phpGroupWare attempts to provide developers with a useful API to handle
- common tasks.
+eGroupWare attempts to provide developers with a useful API to handle common
+ tasks.
  
 \layout Standard
 
-To do this we have created a multi-dimensional class $phpgw->.
+To do this we have created a multi-dimensional class $GLOBALS['phpgw'].
  
 \layout Standard
 
@@ -1000,17 +938,18 @@ This allows for terrific code organization, and help developers easily identify
  
 \layout Standard
 
-Example: $phpgw->send->msg() is in the inc/phpgwapi/phpgw_send.inc.php file.
+Example: $GLOBALS['phpgw']->send->msg() is in the inc/phpgwapi/phpgw_send.inc.php
+ file.
  
 \layout Subsection
 
 Basic functions
 \layout Subsubsection*
 
-$phpgw->link
+$GLOBALS['phpgw']->link
 \layout Standard
 
-$phpgw->link($url)
+$GLOBALS['phpgw']->link($url)
 \newline 
  Add support for session management.
  ALL links must use this, that includes href's form actions and header location'
@@ -1033,14 +972,15 @@ begin{verbatim}
 \newline 
 
 \newline 
-<form name=copy method=post action="<?php echo $phpgw->link();?>">
+<form name="copy" method="post" action="<?php echo $GLOBALS['phpgw']->link();?>"
+>
 \newline 
 /* If session management is done via passing url parameters */
 \newline 
 /* The the result would be */
 \newline 
-/* <form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh
-98u80"> */
+/* <form name="copy" method="post" action="somepage.php?sessionid=87687693276?kp3
+=kjh98u80"> */
 \newline 
 
 \newline 
@@ -1052,33 +992,33 @@ end{verbatim}
 Application Functions
 \layout Subsubsection*
 
-$phpgw->common->phpgw_header
+$GLOBALS['phpgw']->common->phpgw_header();
 \layout Standard
 
-$phpgw->phpgw_header()
+$GLOBALS['phpgw']->phpgw_header()
 \newline 
  Print out the start of the HTML page, including the navigation bar and
  includes appname/inc/header.php 
 \layout Subsubsection*
 
-$phpgw->common->phpgw_footer
+$GLOBALS['phpgw']->common->phpgw_footer();
 \layout Standard
 
-$phpgw->phpgw_footer()
+$GLOBALS['phpgw']->phpgw_footer()
 \newline 
  Prints the system footer, and includes appname/inc/footer.php 
 \layout Subsubsection*
 
-$phpgw->common->appsession
+$GLOBALS['phpgw']->common->appsession();
 \layout Standard
 
-$phpgw->common->appsession($data)
+$GLOBALS['phpgw']->common->appsession($data)
 \newline 
  Store important information session information that your application needs.
 \newline 
- $phpgw->appsession will return the value of your session data is you leave
- the parameter empty [i.e.
- $phpgw->appsession(
+ $GLOBALS['phpgw']->appsession will return the value of your session data
+ is you leave the parameter empty [i.e.
+ $GLOBALS['phpgw']->appsession(
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1101,10 +1041,10 @@ begin{verbatim}
 \newline 
 
 \newline 
-  $phpgw->common->appsession("/path/to/something");
+  $GLOBALS['phpgw']->common->appsession('/path/to/something');
 \newline 
   echo "Dir: " .
- $phpgw->common->appsession();
+ $GLOBALS['phpgw']->common->appsession();
 \newline 
 
 \newline 
@@ -1116,10 +1056,14 @@ end{verbatim}
 File functions
 \layout Subsubsection*
 
-$phpgw->vfs->read_file
+Please also see the phpgwapi/doc/vfs directory for additional VFS class
+ documentation
+\layout Subsubsection*
+
+$GLOBALS['phpgw']->vfs->read_file
 \layout Standard
 
-$phpgw->vfs->read_file($file)
+$GLOBALS['phpgw']->vfs->read_file($file)
 \newline 
  Returns the data from $file.
 \newline 
@@ -1133,7 +1077,7 @@ begin{verbatim}
 \newline 
 
 \newline 
-$data = $phpgw->vfs->read_file("/some/dir/to/file.txt");
+$data = $GLOBALS['phpgw']->vfs->read_file('/some/dir/to/file.txt');
 \newline 
 
 \newline 
@@ -1142,10 +1086,10 @@ $data = $phpgw->vfs->read_file("/some/dir/to/file.txt");
 end{verbatim}
 \layout Subsubsection*
 
-$phpgw->vfs->write_file
+$GLOBALS['phpgw']->vfs->write_file
 \layout Standard
 
-$phpgw->vfs->write_file($file, $contents)
+$GLOBALS['phpgw']->vfs->write_file($file, $contents)
 \newline 
  Write data to $file.
 \newline 
@@ -1159,7 +1103,7 @@ begin{verbatim}
 \newline 
 
 \newline 
-$data = $phpgw->vfs->write_file("/some/dir/to/file.txt");
+$data = $GLOBALS['phpgw']->vfs->write_file("/some/dir/to/file.txt");
 \newline 
 
 \newline 
@@ -1168,10 +1112,10 @@ $data = $phpgw->vfs->write_file("/some/dir/to/file.txt");
 end{verbatim}
 \layout Subsubsection*
 
-$phpgw->vfs->read_userfile
+$GLOBALS['phpgw']->vfs->read_userfile
 \layout Standard
 
-$phpgw->vfs->read_userfile($file)
+$GLOBALS['phpgw']->vfs->read_userfile($file)
 \newline 
  Returns the data from $file, which resides in the users private dir.
 \newline 
@@ -1183,7 +1127,7 @@ begin{verbatim}
 \newline 
 
 \newline 
-$data = $phpgw->vfs->read_userfile("file.txt");
+$data = $GLOBALS['phpgw']->vfs->read_userfile("file.txt");
 \newline 
 
 \newline 
@@ -1192,10 +1136,10 @@ $data = $phpgw->vfs->read_userfile("file.txt");
 end{verbatim}
 \layout Subsubsection*
 
-$phpgw->vfs->write_userfile
+$GLOBALS['phpgw']->vfs->write_userfile
 \layout Standard
 
-$phpgw->write_userfile($file, $contents)
+$GLOBALS['phpgw']->write_userfile($file, $contents)
 \newline 
  Writes data to $file, which resides in the users private dir.
 \newline 
@@ -1207,7 +1151,7 @@ begin{verbatim}
 \newline 
 
 \newline 
-$data = $phpgw->vfs->write_userfile("file.txt");
+$data = $GLOBALS['phpgw']->vfs->write_userfile("file.txt");
 \newline 
 
 \newline 
@@ -1216,10 +1160,10 @@ $data = $phpgw->vfs->write_userfile("file.txt");
 end{verbatim}
 \layout Subsubsection*
 
-$phpgw->vfs->list_userfiles
+$GLOBALS['phpgw']->vfs->list_userfiles
 \layout Standard
 
-$phpgw->vfs->list_userfiles()
+$GLOBALS['phpgw']->vfs->list_userfiles()
 \newline 
  Returns an array which has the list of files in the users private dir.
 \newline 
@@ -1233,7 +1177,7 @@ begin{verbatim}
 \newline 
 $filelist = array();
 \newline 
-$filelist = $phpgw->vfs->list_userfiles();
+$filelist = $GLOBALS['phpgw']->vfs->list_userfiles();
 \newline 
 
 \newline 
@@ -1245,10 +1189,11 @@ end{verbatim}
 Email/NNTP Functions
 \layout Subsubsection*
 
-$phpgw->send->msg
+$GLOBALS['phpgw']->send->msg
 \layout Standard
 
-$phpgw->send->msg($service, $to, $subject, $body, $msgtype, $cc, $bcc)
+$GLOBALS['phpgw']->send->msg($service, $to, $subject, $body, $msgtype, $cc,
+ $bcc)
 \newline 
  Send a message via email or NNTP and returns any error codes.
 \newline 
@@ -1268,7 +1213,7 @@ $body = "Give me a call
 \backslash 
 n Been wondering what your up to.";
 \newline 
-$errors = $phpgw->send->msg("email", $to, $subject, $body);
+$errors = $GLOBALS['phpgw']->send->msg("email", $to, $subject, $body);
 \newline 
 
 \newline 
@@ -1283,13 +1228,13 @@ Configuration Variables
 Introduction
 \layout Standard
 
-phpGroupWare attempt to provide developers with as much information about
+eGroupWare attempts to provide developers with as much information about
  the user, group, server, and application configuration as possible.
  
 \layout Standard
 
-To do this we provide a multi-dimensional array called '$phpgw_info[]',
- which includes all the information about your environment.
+To do this we provide a multi-dimensional array called '$GLOBALS['phpgw_info'][]
+', which includes all the information about your environment.
  
 \layout Standard
 
@@ -1311,7 +1256,7 @@ begin{verbatim}
   // To do a hello username
 \newline 
   echo "Hello " .
- $phpgw_info["user"]["fullname"];
+ $GLOBALS['phpgw_info']['user']['fullname'];
 \newline 
   //If username first name is John and last name is Doe, prints: 'Hello
  John Doe'
@@ -1323,7 +1268,7 @@ begin{verbatim}
   // To find out the location of the imap server
 \newline 
   echo "IMAP Server is named: " .
- $phpgw_info["server"]["imap_server"]; 
+ $GLOBALS['phpgw_info']['server']['imap_server']; 
 \newline 
   //If imap is running on localhost, prints: 'IMAP Server is named: localhost'
 \newline 
@@ -1344,7 +1289,7 @@ User information
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1367,7 +1312,7 @@ userid
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1389,7 +1334,7 @@ sessionid
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1411,7 +1356,7 @@ theme
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1428,14 +1373,14 @@ private_dir
 \end_inset 
 
 ] = Users private dir.
- Use phpGroupWare core functions for access to the files.
+ Use eGroupWare core functions for access to the files.
  
 \layout Standard
 
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1457,7 +1402,7 @@ firstname
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1479,7 +1424,7 @@ lastname
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1501,7 +1446,7 @@ fullname
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1523,7 +1468,7 @@ groups
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1545,7 +1490,7 @@ app_perms
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1568,7 +1513,7 @@ lastlogin
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1591,7 +1536,7 @@ lastloginfrom
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1614,7 +1559,7 @@ lastpasswd_change
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1637,7 +1582,7 @@ passwd
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1660,7 +1605,7 @@ status
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1683,7 +1628,7 @@ logintime
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1705,7 +1650,7 @@ session_dla
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1730,7 +1675,7 @@ Group information
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1755,7 +1700,7 @@ Server information
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1777,7 +1722,7 @@ server_root
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1800,7 +1745,7 @@ include_root
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1822,7 +1767,7 @@ temp_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1844,7 +1789,7 @@ files_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1867,7 +1812,7 @@ common_include_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1891,7 +1836,7 @@ template_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1913,7 +1858,7 @@ dir_separator
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1935,7 +1880,7 @@ encrpytkey
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1958,7 +1903,7 @@ site_title
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1974,14 +1919,14 @@ webserver_url
 \begin_inset Quotes erd
 \end_inset 
 
-] = URL to phpGroupWare installation.
+] = URL to eGroupWare installation.
  
 \layout Standard
 
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -1997,14 +1942,14 @@ hostname
 \begin_inset Quotes erd
 \end_inset 
 
-] = Name of the server phpGroupWare is installed upon.
+] = Name of the server eGroupWare is installed upon.
  
 \layout Standard
 
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2026,7 +1971,7 @@ charset
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2042,21 +1987,21 @@ version
 \begin_inset Quotes erd
 \end_inset 
 
-] = phpGroupWare version.
+] = eGroupWare version.
 \layout Subsection
 
 Database information
 \layout Standard
 
-It is unlikely you will need these, because $phpgw_info_db will already
- be loaded as a database for you to use.
+It is unlikely you will need these, because $GLOBALS['phpgw_info']_db will
+ already be loaded as a database for you to use.
  
 \layout Standard
 
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2080,7 +2025,7 @@ db_host
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2103,7 +2048,7 @@ db_name
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2126,7 +2071,7 @@ db_user
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2148,7 +2093,7 @@ db_pass
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2172,14 +2117,14 @@ Mail information
 \layout Standard
 
 It is unlikely you will need these, because most email needs are services
- thru core phpGroupWare functions.
+ thru core eGroupWare functions.
  
 \layout Standard
 
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2203,7 +2148,7 @@ mail_server
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2225,7 +2170,7 @@ mail_server_type
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2247,7 +2192,7 @@ imap_server_type
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2270,7 +2215,7 @@ imap_port
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2288,7 +2233,7 @@ mail_suffix] = This is the domain name, used to add to email address
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2312,7 +2257,7 @@ mail_login_type
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2336,7 +2281,7 @@ smtp_server
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2361,7 +2306,7 @@ NNTP information
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2384,7 +2329,7 @@ nntp_server
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2407,7 +2352,7 @@ nntp_port
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2429,7 +2374,7 @@ nntp_sender
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2451,7 +2396,7 @@ nntp_organization
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2480,7 +2425,7 @@ Each application has the following information available.
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2511,7 +2456,7 @@ title
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2543,7 +2488,7 @@ enabled
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2566,7 +2511,7 @@ app_include_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2589,7 +2534,7 @@ app_template_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2612,7 +2557,7 @@ app_lang_dir
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2634,7 +2579,7 @@ app_auth
 
 \family typewriter 
 \size small 
-$phpgw_info[
+$GLOBALS['phpgw_info'][
 \begin_inset Quotes eld
 \end_inset 
 
@@ -2659,18 +2604,21 @@ Using Language Support
 Overview
 \layout Standard
 
-phpGroupWare is built using a multi-language support scheme.
+eGroupWare is built using a multi-language support scheme.
  This means the pages can be translated to other languages very easily.
  Translations of text strings are stored in the phpGroupWare database, and
- can be modified by the phpGroupWare administrator.
- 
+ can be modified by the eGroupWare administrator.
+\layout Standard
+
+Please see the setup/doc directory for a document which contains more complete
+ documentation of the language system.
 \layout Subsection
 
 How to use lang support
 \layout Standard
 
-The lang() function is your application's interface to phpGroupWare's internatio
-nalization support.
+The lang() function is your application's interface to eGroupWare's internationa
+lization support.
 \layout Standard
 
 While developing your application, just wrap all your text output with calls
@@ -2898,44 +2846,13 @@ content
 
 The translated string.
 \end_deeper 
-\layout Subsubsection*
-
-lang.sql
-\layout Standard
-
-Currently all applications, and the core phpGroupWare source tree have a
- lang.sql file.
- This is the place to add translation data.
- Just add lines of the form: 
-\latex latex 
-
-\backslash 
-begin{verbatim}
-\newline 
-
-\newline 
-REPLACE INTO lang (message_id, app_name, lang, content) 
-\newline 
-VALUES( 'account has been deleted','common','en','Account has been deleted');
-\newline 
-
-\newline 
-
-\backslash 
-end{verbatim}
-\latex default 
-translating the content to reflect the message_id string in the lang language.
- If the string is specific to your application, put your application name
- in for app_name otherwise use the name common.
- The message_id should be in lower case for a small increase in speed.
- 
 \layout Subsection
 
 Common return codes
 \layout Standard
 
-If you browse through the phpGroupWare sources, you may notice a pattern
- to the return codes used in the higher-level functions.
+If you browse through the eGroupWare sources, you may notice a pattern to
+ the return codes used in the higher-level functions.
  The codes used are partially documented in the doc/developers/CODES file.
 \layout Standard
 
@@ -2986,7 +2903,7 @@ Using Templates
 Overview
 \layout Standard
 
-phpGroupWare is built using a templates based design.
+eGroupWare is built using a templates-based design.
  This means the display pages, stored in tpl files, can be translated to
  other languages, made to look completely different.
  
@@ -3017,7 +2934,7 @@ The newest version of this document can be found on our website
 \latex latex 
 
 \backslash 
-url{http://www.phpgroupware.org}
+url{http://www.egroupware.org}
 \latex default 
  as lyx source, HTML, and text.
 \layout Subsection
@@ -3025,17 +2942,15 @@ url{http://www.phpgroupware.org}
 Comments 
 \layout Standard
 
-Comments on this HOWTO should be directed to the phpGroupWare developers
- mailing list phpgroupware-developers@lists.sourceforge.net 
+Comments on this HOWTO should be directed to the eGroupWare developers mailing
+ list egroupware-developers@lists.sourceforge.net 
 \layout Standard
 
 To subscribe, go to 
 \latex latex 
 
 \backslash 
-url{http://sourceforge.net/mail/?group}
-\latex default 
-_id=7305 
+url{http://lists.sourceforge.net/lists/egroupware-developers}
 \layout Subsection
 
 History 
@@ -3051,6 +2966,10 @@ This document was written by Dan Kuykendall.
 
 2001-01-08 fixed directory structure, minor layout changes, imported to
  lyx source - Darryl VanDorp
+\layout Standard
+
+2003-12-29 adapted for eGroupWare and updated for setup and use of GLOBALS
+ - Miles Lott
 \layout Subsection
 
 Copyrights and Trademarks 
@@ -3075,7 +2994,7 @@ Acknowledgments and Thanks
 \layout Standard
 
 Thanks to Joesph Engo for starting phpGroupWare (at the time called webdistro).
- Thanks to all the developers and users who contribute to making phpGroupWare
- such a success.
+ Thanks to all the developers and users who contribute to making eGroupWare
+ and phpGroupWare such a success.
  
 \the_end
