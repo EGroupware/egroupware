@@ -29,7 +29,6 @@
 
 
 	// Modules you want to checkout, do NOT add the phpgroupware module
-	$co_modules[] = 'ab';
 	$co_modules[] = 'addressbook';
 	$co_modules[] = 'admin';
 	$co_modules[] = 'bookkeeping';
@@ -44,7 +43,6 @@
 	$co_modules[] = 'eldaptir';
 	$co_modules[] = 'email';
 	$co_modules[] = 'filemanager';
-	$co_modules[] = 'files';
 	$co_modules[] = 'forum';
 	$co_modules[] = 'ftp';
 	$co_modules[] = 'headlines';
@@ -60,6 +58,7 @@
 	$co_modules[] = 'phpGWShell_Win32_VB';
 	$co_modules[] = 'phpgwapi';
 	$co_modules[] = 'phpgwnetsaint';
+	$co_modules[] = 'phpwebhosting';
 	$co_modules[] = 'polls';
 	$co_modules[] = 'preferences';
 	$co_modules[] = 'projects';
