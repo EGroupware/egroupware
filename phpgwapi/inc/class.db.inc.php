@@ -1106,19 +1106,18 @@
 		*/
 		function insert($table,$data,$where,$line,$file,$app=False)
 		{
+			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app')</p>\n";
+
 			$table_def = $this->get_table_definitions($app,$table);
 
 			if (is_array($where) && count($where))
 			{
-				$sql = "SELECT count(*) FROM $table WHERE ".
-					$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
-
-				$this->query($sql,$line,$file);
+				$this->select($table,'count(*)',$where,$line,$file);
 				if ($this->next_record() && $this->f(0))
 				{
 					return $this->update($table,$data,$where,$line,$file,$app);
 				}
-				$data = array_merge($check,$data);	// the checked values need to be inserted too, value in data has precedence
+				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
 			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']);
 
@@ -1212,7 +1211,7 @@
 						break;
 				}
 			}
-			//echo "<p>db::expression($table,<pre>".print_r(func_get_args(),True)."</pre>) ='$sql'</p>\n";
+			if ($this->Debug) echo "<p>db::expression($table,<pre>".print_r(func_get_args(),True)."</pre>) ='$sql'</p>\n";
 			return $sql;
 		}
 
@@ -1232,6 +1231,8 @@
 		*/
 		function select($table,$cols,$where,$line,$file,$offset=False,$app=False)
 		{
+			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
+
 			$table_def = $this->get_table_definitions($app,$table);
 			if (is_array($cols))
 			{
@@ -1242,6 +1243,8 @@
 				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 			}
 			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1');
+
+			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
 			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : 0);
 		}
