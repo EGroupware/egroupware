@@ -72,21 +72,23 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 		'func' => 'php_ini_check',
 		'value' => 0,
 		'verbose_value' => 'Off',
-		'warning' => "register_globals is turned on, eGroupWare does NOT require it and it's generaly more secure to have it turned Off"
+		'warning' => "register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off"
 	),
 	'memory_limit' => array(
 		'func' => 'php_ini_check',
 		'value' => '16M',
 		'check' => '>=',
-		'error' => 'memory_limit is set to less then 16M: some applications of eGroupWare need more then the recommend 8M, expect ocasional failures',
-		'safe_mode' => 'memory_limit = 16M'
+		'error' => 'memory_limit is set to less then 16M: some applications of eGroupWare need more then the recommend 8M,
+expect ocasional failures',
+		'change' => 'memory_limit = 16M'
 	),
 	'max_execution_time' => array(
 		'func' => 'php_ini_check',
 		'value' => 30,
 		'check' => '>=',
-		'error' => 'max_execution_time is set to less then 30 (seconds): eGroupWare sometimes need a higher execution_time, expect ocasional failures',
-		'safe_mode' => 'max_execution_time = 30'
+		'error' => 'max_execution_time is set to less then 30 (seconds): eGroupWare sometimes need a higher execution_time,
+expect ocasional failures',
+		'save_mode' => 'max_execution_time = 30'
 	),
 	'mysql' => array(
 		'func' => 'extension_check',
@@ -150,17 +152,17 @@ function extension_check($name,$args)
 	{
 		return True;	// check only under windows
 	}
-	$availible = extension_loaded($name) || function_exists('dl') && dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
+	$availible = extension_loaded($name) || @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
 
 	echo "Checking extension $name is loaded or loadable: ".($availible ? 'True' : 'False')."\n";
 
 	if (!$availible)
 	{
-		echo $warning_icon.$args['warning']."\n";
+		echo $warning_icon.$args['warning']."\n\n";
 	}
 	else
 	{
-		echo $passed_icon."\n";
+		echo $passed_icon."\n\n";
 	}
 	return $availible;
 }
@@ -279,6 +281,8 @@ function permission_check($name,$args,$verbose=True)
 	{
 		echo "$passed_icon\n";
 	}
+	if ($verbose) echo "\n";
+
 	if ($Ok && $args['recursiv'] && is_dir($name))
 	{
 		$handle = @opendir($name);
@@ -336,13 +340,14 @@ function php_ini_check($name,$args)
 		{
 			echo $error_icon.$args['error']."\n";
 		}
-		if (isset($args['safe_mode']) && $safe_mode)
+		if (isset($args['safe_mode']) && $safe_mode || $args['change'])
 		{
-			echo $warning_icon."Please make the following change in your php.ini:\n$args[safe_mode]\n";
+			echo "Please make the following change in your php.ini: ".($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
 		}
+		echo "\n";
 		return False;
 	}
-	echo "$passed_icon\n";
+	echo "$passed_icon\n\n";
 
 	return True;
 }
@@ -371,7 +376,6 @@ $Ok = True;
 foreach ($checks as $name => $args)
 {
 	$check_ok = $args['func']($name,$args);
-	echo "\n";
 	$Ok = $Ok && $check_ok;
 }
 
