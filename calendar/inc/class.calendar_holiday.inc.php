@@ -32,6 +32,10 @@ class calendar_holiday
 		{
 			$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
 		}
+		else
+		{
+			$this->users['user'] = 'US';
+		}		
 		$owner_id = get_account_id($owner);
 		if($owner_id != $phpgw_info['user']['account_id'])
 		{
@@ -41,6 +45,11 @@ class calendar_holiday
 			{
 				$this->users['owner'] = $owner_prefs['calendar']['locale'];
 			}
+			else
+			{
+				$this->users['owner'] = 'US';
+			}
+				
 		}
 		if($phpgw_info['server']['auto_load_holidays'] == True)
 		{

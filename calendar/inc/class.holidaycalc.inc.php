@@ -15,7 +15,7 @@
 
 	if (empty($phpgw_info['user']['preferences']['calendar']['locale']))
 	{
-		$rule = 'EN';
+		$rule = 'US';
 	}
 	else
 	{
