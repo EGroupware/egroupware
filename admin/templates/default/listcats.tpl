@@ -35,7 +35,7 @@
 				<td>{name}</td>
 				<td>{descr}</td>
 				<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
-				<td align="center"><a href="{delete}">{lang_delete_entry}</td>  
+				<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>  
 			</tr>
 
 <!-- END cat_list -->  
