@@ -395,11 +395,13 @@
 				}
 				else
 				{
-					if ($var && @isset($this->$set_from[$app_name][$var]) && $this->$set_from[$app_name][$var] !== '')
+					$arr = $this->$set_from;
+					if($var && @isset($arr[$app_name][$var]) && $arr[$app_name][$var] !== '')
 					{
 						$this->data[$app_name][$var] = $this->$set_from[$app_name][$var];
 						break;
 					}
+					unset($arr);
 				}
 			}
 			reset ($this->data);
