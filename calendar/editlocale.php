@@ -41,12 +41,6 @@
 		$phpgw->db->query("SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod,__LINE__,__FILE__);
 		$phpgw->db->next_record();
 		return intval($phpgw->db->f(0));
-//		$count = 0;
-//		while($phpgw->db->next_record())
-//		{
-//			$count++;
-//		}
-//		return $count;
 	}
 
 	function get_holiday_list($locale, $sort, $order, $query, $total)
@@ -72,10 +66,6 @@
 		return $holiday;
 	}
 
-//	if($query)
-//	{
-//		$query = str_replace('=',"='",$query)."'";
-//	}
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array(
 		'locale'	=> 'locales.tpl'
