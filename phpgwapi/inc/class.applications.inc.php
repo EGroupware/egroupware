@@ -141,7 +141,7 @@
           $name = $this->db->f("app_name");
           $title  = $this->db->f("app_title");
           $status = $this->db->f("app_enabled");
-          $phpgw_info["apps"]["$name"] = array("title" => $title, "name" => $name, "enabled" => True, "status" => $status);
+          $phpgw_info["apps"][$name] = array("title" => $title, "name" => $name, "enabled" => True, "status" => $status);
         }
       }
     }

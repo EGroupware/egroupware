@@ -105,6 +105,7 @@
          }
        }
        $apps->save_apps();
+       @reset($new_permissions);
 
        $cd = account_edit(array('loginid'        => $n_loginid,        'firstname'   => $n_firstname,
                                 'lastname'       => $n_lastname,       'passwd'      => $n_passwd,
