@@ -289,6 +289,15 @@ class calendar extends calendar_
 		return $str;
 	}
 
+	function change_owner($account_id,$new_owner)
+	{
+		if($phpgw_info['server']['calendar_type'] == 'sql')
+		{
+			$this->stream->query('UPDATE calendar_entry SET cal_owner='.$new_owner.' WHERE cal_owner='.$account_id,__LINE__,__FILE__);
+			$this->stream->query('UPDATE calendar_entry_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
+		}
+	}
+
 	function read_repeated_events($owner=0)
 	{
 		global $phpgw, $phpgw_info;
@@ -1381,7 +1390,7 @@ class calendar extends calendar_
 		return $p->finish($p->parse('out','day_cal'));
 	}	// end function
 
-	function view_add_day(&$repeat_days,$day)
+	function view_add_day($day,&$repeat_days)
 	{
 		if($repeat_days)
 		{
@@ -1544,50 +1553,56 @@ class calendar extends calendar_
 
 // Repeated Events
 		$str = $event->rpt_type;
-		if($event->recur_type <> RECUR_NONE || ($event->recur_enddate->mday != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->year != 0))
+		if($event->recur_type <> RECUR_NONE)
 		{
 			$str .= ' (';
-			$recur_end = mktime(0,0,0,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
-			if($recur_end != 0)
+			if ($event->recur_enddate->mday != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->year != 0)
 			{
-				$str .= lang('ends').': '.$phpgw->common->show_date($recur_end,'l, F d, Y').' ';
+				$recur_end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
+				if($recur_end != 0)
+				{
+					$str .= lang('ends').': '.$phpgw->common->show_date($recur_end,'l, F d, Y').' ';
+				}
 			}
 			if($event->recur_type == RECUR_WEEKLY || $event->recur_type == RECUR_DAILY)
 			{
 				$repeat_days = '';
 				if ($event->recur_data & M_SUNDAY)
 				{
-					add_day($repeat_days,lang('Sunday '));
+					$this->view_add_day(lang('Sunday '),$repeat_days);
 				}
 				if ($event->recur_data & M_MONDAY)
 				{
-					add_day($repeat_days,lang('Monday '));
+					$this->view_add_day(lang('Monday '),$repeat_days);
 				}
 				if ($event->recur_data & M_TUESDAY)
 				{
-					add_day($repeat_days,lang('Tuesay '));
+					$this->view_add_day(lang('Tuesay '),$repeat_days);
 				}
 				if ($event->recur_data & M_WEDNESDAY)
 				{
-					add_day($repeat_days,lang('Wednesday '));
+					$this->view_add_day(lang('Wednesday '),$repeat_days);
 				}
 				if ($event->recur_data & M_THURSDAY)
 				{
-					add_day($repeat_days,lang('Thursday '));
+					$this->view_add_day(lang('Thursday '),$repeat_days);
 				}
 				if ($event->recur_data & M_FRIDAY)
 				{
-					add_day($repeat_days,lang('Friday '));
+					$this->view_add_day(lang('Friday '),$repeat_days);
 				}
 				if ($event->recur_data & M_SATURDAY)
 				{
-					add_day($repeat_days,lang('Saturday '));
+					$this->view_add_day(lang('Saturday '),$repeat_days);
 				}
-				$str .= lang('days repeated').': '.$repeat_days;
+				if($repeat_days <> '')
+				{
+					$str .= lang('days repeated').': '.$repeat_days;
+				}
 			}
 			if($event->recur_interval)
 			{
-				$str .= lang('frequency').' '.$event->recur_interval;
+				$str .= lang('frequency').': '.$event->recur_interval;
 			}
 			$str .= ')';
 
