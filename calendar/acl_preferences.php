@@ -13,10 +13,10 @@
 
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
 
-  if(isset($submit) && $submit) {
-    $phpgw_info["flags"]["noheader"] = True;
-    $phpgw_info["flags"]["nonavbar"] = True;
-  }
+//  if(isset($submit) && $submit) {
+//    $phpgw_info["flags"]["noheader"] = True;
+//    $phpgw_info["flags"]["nonavbar"] = True;
+//  }
   
   include("../header.inc.php");
 
@@ -57,9 +57,10 @@
 
   if ($submit) {
 
-    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"u");
-    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"g");
-  
+    $to_remove = unserialize(urldecode($processed));
+    for($i=0;$i<count($to_remove);$i++) {
+      $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],$to_remove[$i]);
+    }
 // Group records
     $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
     
@@ -82,11 +83,12 @@
       $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
     }
      
-     header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"]."/preferences/index.php"));
-     $phpgw->common->phpgw_exit();
+//     header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"]."/preferences/index.php"));
+//     $phpgw->common->phpgw_exit();
   }
 
   $groups = $phpgw->accounts->read_group_names($phpgw->info["user"]["account_id"]);
+  $processed = Array();
 
   $total = 0;
   
@@ -145,7 +147,7 @@
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
       display_row($tr_color,'g_',$group[0],$group[1]);
       $s_groups++;
-      $processed[] = ',g_'.$group[0];
+      $processed[] = 'g_'.$group[0];
       $total++;
       if($total == $maxm) break;
     }
@@ -168,7 +170,7 @@
           $id = $db->f("account_id");
           display_row($tr_color,'u_',$id,$phpgw->common->grab_owner_name($id));
           $s_users++;
-          $processed[] = ',u_'.$id;
+          $processed[] = 'u_'.$id;
           $total++;
           if($total == $maxm) break;
         }
