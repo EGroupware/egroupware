@@ -39,7 +39,7 @@
 
 	if ($GLOBALS['phpgw_forward'])
 	{
-		while (list($name,$value) = each($HTTP_GET_VARS))
+		while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
 		{
 			if (ereg('phpgw_',$name))
 			{
