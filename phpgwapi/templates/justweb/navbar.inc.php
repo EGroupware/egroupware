@@ -79,7 +79,7 @@
 		if (isset($phpgw_info['navbar']['admin']) && isset($phpgw_info['user']['preferences']['common']['show_currentusers']))
 		{
 			$db  = $phpgw->db;
-			$db->query("select count(*) from phpgw_sessions");
+			$db->query("select count(session_id) from phpgw_sessions");
 			$db->next_record();
 			$tpl->set_var('current_users','<a href="' . $phpgw->link('/admin/currentusers.php') . '">&nbsp;'
 				. lang('Current users') . ': ' . $db->f(0) . '</a>');

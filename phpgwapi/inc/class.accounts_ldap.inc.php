@@ -243,7 +243,7 @@
 			global $phpgw, $phpgw_info;
 			static $name_list;
 
-			if($name_list[$account_lid])
+			if(@isset($name_list[$account_lid]))
 			{
 				return $name_list[$account_lid];
 			}
@@ -252,13 +252,13 @@
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$name_list[$account_lid] = $this->db->f('account_id');
-				return intval($this->db->f('account_id'));
+				$name_list[$account_lid] = intval($this->db->f('account_id'));
 			}
 			else
 			{
-				return False;
+				$name_list[$account_lid] = False;
 			}
+			return $name_list[$account_lid];
 		}
 
 		function id2name($account_id)
@@ -266,7 +266,7 @@
 			global $phpgw, $phpgw_info;
 			static $id_list;
 
-			if($id_list[$account_id])
+			if(isset($id_list[$account_id]))
 			{
 				return $id_list[$account_id];
 			}				
@@ -276,29 +276,35 @@
 			{
 				$this->db->next_record();
 				$id_list[$account_id] = $this->db->f('account_lid');
-				return $this->db->f('account_lid');
 			}
 			else
 			{
-				return False;
+				$id_list[$account_id] = False;
 			}
+			return $id_list[$account_id];
 		}
 
 		function get_type($accountid = '')
 		{
 			global $phpgw, $phpgw_info;
+			static $account_type;
 
 			$account_id = get_account_id($accountid);
+			if(@isset($account_type[$account_id]))
+			{
+				return $account_type[$account_id];
+			}
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if ($this->db->num_rows())
 			{
 				$this->db->next_record();
-				return $this->db->f('account_type');
+				$account_type[$account_id] = $this->db->f('account_type');
 			}
 			else
 			{
-				return False;
+				$account_type[$account_id] = False;
 			}
+			return $account_type[$account_id];
 		}
 
 		/*
@@ -308,16 +314,28 @@
 		function exists($account)
 		{
 			global $phpgw, $phpgw_info;
+			/* This sets up internal caching variables for this functon */
+			static $by_id, $by_lid;
 
 			if(gettype($account) == 'integer')
 			{
 				$sql_name  = 'account_id';
 				$ldap_name = 'uidnumber';
+				/* If data is cached, use it. */
+				if(@isset($by_id[$account]))
+				{
+					return $by_id[$account];
+				}
 			}
 			else
 			{
 				$sql_name  = 'account_lid';
 				$ldap_name = 'uid';
+				/* If data is cached, use it. */
+				if(@isset($by_lid[$account]))
+				{
+					return $by_lid[$account];
+				}
 			}
 			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE $sql_name='$account'",__LINE__,__FILE__);
 			$this->db->next_record();
@@ -335,6 +353,18 @@
 				$in += 2;
 			}
 			/* echo "<p>class_accounts_ldap->exists('$account') == $in</p>"; */
+
+			/* This sets up internal caching for this functon */
+			if($sql_name == 'account_id')
+			{
+				$by_id[$account] = $in;
+				$by_lid[$this->id2name($account)] = $in;
+			}
+			else
+			{
+				$by_lid[$account] = $in;
+				$by_id[$this->name2id($account)] = $in;
+			}
 			
 			return $in;
 		}

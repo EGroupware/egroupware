@@ -72,7 +72,7 @@
 				default:			return False;
 			
 			}
-			$this->db->query("select count(*) from phpgw_categories $w",__LINE__,__FILE__);
+			$this->db->query("select count(cat_id) from phpgw_categories $w",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			return $this->db->f(0);
@@ -475,7 +475,7 @@
 				$cat_exists = " cat_name='" . addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
 			}
 
-			$this->db->query("select count(*) from phpgw_categories where $cat_exists $filter",__LINE__,__FILE__);
+			$this->db->query("select count(cat_id) from phpgw_categories where $cat_exists $filter",__LINE__,__FILE__);
 
 			$this->db->next_record();
 

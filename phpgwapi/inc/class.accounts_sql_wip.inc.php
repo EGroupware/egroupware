@@ -254,14 +254,17 @@
 
 		function exists($account_lid)
 		{
+			$sql = "SELECT count(account_id) FROM phpgw_accounts WHERE ";
 			if(gettype($account_lid) == 'integer')
 			{
-				$account_id = $account_lid;
-				settype($account_lid,'string');
-				$account_lid = $this->id2name($account_id);
+				$sql .= "account_id = ".$account_lid;
+			}
+			else
+			{
+				$sql .= "account_lid = '".$account_lid."'";
 			}
 
-			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0) > 0;
 		}

@@ -89,7 +89,7 @@
 		if (isset($phpgw_info['navbar']['admin']) && isset($phpgw_info['user']['preferences']['common']['show_currentusers']))
 		{
 			$db  = $phpgw->db;
-			$db->query("select count(*) from phpgw_sessions where session_flags != 'A'");
+			$db->query("select count(session_id) from phpgw_sessions where session_flags != 'A'");
 			$db->next_record();
 			$tpl->set_var('current_users','<a style="font-family: Geneva,Arial,Helvetica,sans-serif; font-size: 12pt;" href="' . $phpgw->link('/admin/currentusers.php') . '">&nbsp;'
 				. lang('Current users') . ': ' . $db->f(0) . '</a>');

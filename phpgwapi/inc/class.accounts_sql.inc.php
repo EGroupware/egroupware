@@ -172,13 +172,13 @@
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$name_list[$account_lid] = $this->db->f('account_id');
-				return $this->db->f('account_id');
+				$name_list[$account_lid] = intval($this->db->f('account_id'));
 			}
 			else
 			{
-				return False;
+				$name_list[$account_lid] = False;
 			}
+			return $name_list[$account_lid];
 		}
 
 		function id2name($account_id)
@@ -196,43 +196,73 @@
 			{
 				$this->db->next_record();
 				$id_list[$account_id] = $this->db->f('account_lid');
-				return $this->db->f('account_lid');
 			}
 			else
 			{
-				return False;
+				$id_list[$account_id] = False;
 			}
+			return $id_list[$account_id];
 		}
 
 		function get_type($accountid)
 		{
 			global $phpgw, $phpgw_info;
+			static $account_type;
 
 			$account_id = get_account_id($accountid);
+			if(@isset($account_type[$account_id]))
+			{
+				return $account_type[$account_id];
+			}
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if ($this->db->num_rows())
 			{
 				$this->db->next_record();
-				return $this->db->f('account_type');
+				$account_type[$account_id] = $this->db->f('account_type');
 			}
 			else
 			{
-				return False;
+				$account_type[$account_id] = False;
 			}
+			return $account_type[$account_id];
 		}
 
 		function exists($account_lid)
 		{
+			static $by_id, $by_lid;
+
+			$sql = "SELECT count(account_id) FROM phpgw_accounts WHERE ";
 			if(gettype($account_lid) == 'integer')
 			{
-				$account_id = $account_lid;
-				settype($account_lid,'string');
-				$account_lid = $this->id2name($account_id);
+				if(@isset($by_id[$account_lid]))
+				{
+					return $by_id[$account_lid];
+				}
+				$sql .= "account_id = ".$account_lid;
+			}
+			else
+			{
+				if(@isset($by_lid[$account_lid]))
+				{
+					return $by_lid[$account_lid];
+				}
+				$sql .= "account_lid = '".$account_lid."'";
 			}
 
-			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
-			return $this->db->f(0) > 0;
+			$ret_val = $this->db->f(0) > 0;
+			if(gettype($account_lid) == 'integer')
+			{
+				$by_id[$account_lid] = $ret_val;
+				$by_lid[$this->id2name($account_lid)] = $ret_val;
+			}
+			else
+			{
+				$by_lid[$account_lid] = $ret_val;
+				$by_id[$this->name2id($account_lid)] = $ret_val;
+			}
+			return $ret_val;
 		}
 
 		function create($account_info)

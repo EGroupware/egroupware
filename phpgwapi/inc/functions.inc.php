@@ -243,13 +243,13 @@
 			{
 				return (isset($GLOBALS['phpgw_info']['user']['account_id'])?$GLOBALS['phpgw_info']['user']['account_id']:0);
 			}
-			elseif (gettype($default_id) == 'string')
+			elseif (is_string($default_id))
 			{
 				return $GLOBALS['phpgw']->accounts->name2id($default_id);
 			}
 			return intval($default_id);
 		}
-		elseif (gettype($account_id) == 'string')
+		elseif (is_string($account_id))
 		{
 			if($GLOBALS['phpgw']->accounts->exists(intval($account_id)) == True)
 			{
@@ -412,7 +412,7 @@
 	}
 
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'no';
-	@$GLOBALS['phpgw']->db->query("select count(*) from phpgw_config");
+	@$GLOBALS['phpgw']->db->query("select count(config_name) from phpgw_config");
 	if (! @$GLOBALS['phpgw']->db->next_record())
 	{
 		$setup_dir = ereg_replace($PHP_SELF,'index.php','setup/');
