@@ -1,5 +1,16 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
+(shift-)click or drag to change value	common	en	(Shift-)Click or drag to change value
+- click on any of the time parts to increase it	common	en	- Click on any of the time parts to increase it
+- hold mouse button on any of the above buttons for faster selection.	common	en	- Hold mouse button on any of the above buttons for faster selection.
+- or click and drag for faster selection.	common	en	- or click and drag for faster selection.
+- or shift-click to decrease it	common	en	- or Shift-click to decrease it
+- use the %1, %2 buttons to select month	common	en	- Use the %1, %2 buttons to select month
+- use the %1, %2 buttons to select year	common	en	- Use the %1, %2 buttons to select year
+00 (disable)	admin	en	00 (disable)
+13 (ntp)	admin	en	13 (ntp)
+80 (http)	admin	en	80 (http)
 about %1	common	en	About %1
+about the calendar	common	en	About the calendar
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 account has been created	common	en	Account has been created
@@ -28,8 +39,8 @@ antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
 apply	common	en	Apply
 april	common	en	April
-are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries ?
+are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 argentina	common	en	ARGENTINA
 armenia	common	en	ARMENIA
 aruba	common	en	ARUBA
@@ -37,9 +48,12 @@ august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
 author	common	en	Author
+autohide sidebox menu's	common	en	Autohide Sidebox menu's
+automacally hide the sidebox menu's?	common	en	Automacally hide the Sidebox menu's?
 autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
+back to user login	common	en	Back to user login
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
@@ -63,6 +77,7 @@ brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
+calendar	common	en	Calendar
 cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
 canada	common	en	CANADA
@@ -79,6 +94,7 @@ central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
 charset	common	en	iso-8859-1
+check installation	common	en	Check installation
 chile	common	en	CHILE
 china	common	en	CHINA
 choose the category	common	en	Choose the category
@@ -86,6 +102,9 @@ choose the parent category	common	en	Choose the parent category
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear Form
+click	common	en	Click
+click or mouse over to show menu's	common	en	Click or Mouse Over to show menu's
+click or mouse over to show menu's?	common	en	Click or Mouse Over to show menu's?
 close	common	en	Close
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 colombia	common	en	COLOMBIA
@@ -108,6 +127,8 @@ cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
 date	common	en	Date
 date due	common	en	Date Due
+date selection:	common	en	Date selection:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	en	December
 default category	common	en	Default Category
 delete	common	en	Delete
@@ -115,6 +136,10 @@ denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
+disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
+disable slider effects	common	en	Disable slider effects
+disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menu's in the page? Opera and Konqueror users will probably must want this.
 disabled	common	en	Disabled
 display monday first	common	en	Display Monday first
 display sunday first	common	en	Display Sunday first
@@ -214,6 +239,7 @@ home	common	en	Home
 home email	common	en	home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 india	common	en	INDIA
@@ -283,6 +309,7 @@ marshall islands	common	en	MARSHALL ISLANDS
 martinique	common	en	MARTINIQUE
 mauritania	common	en	MAURITANIA
 mauritius	common	en	MAURITIUS
+max number of icons in navbar	common	en	Max number of icons in navbar
 may	common	en	May
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
@@ -338,6 +365,7 @@ ok	common	en	OK
 old value	common	en	Old Value
 oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
+on mouse over	common	en	On Mouse Over
 only private	common	en	only private
 only yours	common	en	only yours
 open notify window	common	en	Open notify window
@@ -346,6 +374,7 @@ original	common	en	Original
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
+page was generated in %1 seconds	common	en	Page was generated in %1 seconds
 pakistan	common	en	PAKISTAN
 palau	common	en	PALAU
 palestinian territory, occupied	common	en	PALESTINIAN TERRITORY, OCCUPIED
@@ -357,6 +386,7 @@ parent category	common	en	Parent Category
 password	common	en	Password
 password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
+path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	common	en	Pattern for Search in Addressbook
 pattern for search in calendar	common	en	Pattern for Search in Calendar
 pattern for search in projects	common	en	Pattern for Search in Projects
@@ -413,6 +443,7 @@ save	common	en	Save
 search	common	en	Search
 section	common	en	Section
 select	common	en	Select
+select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select Category
 select date	common	en	Select date
 select group	common	en	Select group
@@ -427,9 +458,13 @@ server %1 has been added	common	en	Server %1 has been added
 server name	common	en	Server Name
 session has been killed	common	en	Session has been killed
 setup	common	en	Setup
+setup main menu	common	en	Setup Main Menu
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
 show all categorys	common	en	Show all categorys
+show page generation time	common	en	Show page generation time
+show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
+show_more_apps	common	en	show_more_apps
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
@@ -470,6 +505,7 @@ this application requires an upgrade	common	en	This application requires an upgr
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 time	common	en	Time
+time selection:	common	en	Time selection:
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
