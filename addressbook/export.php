@@ -84,54 +84,62 @@
 	}
 	else
 	{
-		include ($phpgw_info['server']['app_root'].$sep.'export'.$sep.$conv_type);
-		$buffer=array();
-		$this = new export_conv;
-
-		// Read in user custom fields, if any
-		$customfields = array();
-		while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
+		if ($conv_type == 'none')
 		{
-			if ( substr($col,0,6) == 'extra_' )
-			{
-				$field = ereg_replace('extra_','',$col);
-				$field = ereg_replace(' ','_',$field);
-				$customfields[$field] = ucfirst($field);
-			}
-		}
- 		$extrafields = array(
-			'ophone'   => 'ophone',
-			'address2' => 'address2',
-			'address3' => 'address3'
-		);
-		if ($this->type != 'vcard')
-		{
-			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
-		}
-
-		if (!empty($cat_id))
-		{
-			$buffer = $this->export_start_file($buffer,$cat_id);
+			echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
+			$download = 'off';
 		}
 		else
 		{
-			$buffer = $this->export_start_file($buffer);
-		}
-		
-		for ($i=0;$i<count($this->ids);$i++)
-		{
-			$buffer = $this->export_start_record($buffer);
-			while( list($name,$value) = each($this->currentrecord) )
+			include ($phpgw_info['server']['app_root'].$sep.'export'.$sep.$conv_type);
+			$buffer=array();
+			$this = new export_conv;
+
+			// Read in user custom fields, if any
+			$customfields = array();
+			while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
 			{
-				$buffer = $this->export_new_attrib($buffer,$name,$value);
+			if ( substr($col,0,6) == 'extra_' )
+				{
+					$field = ereg_replace('extra_','',$col);
+						$field = ereg_replace(' ','_',$field);
+					$customfields[$field] = ucfirst($field);
+				}
 			}
-			$buffer = $this->export_end_record($buffer);
+ 			$extrafields = array(
+				'ophone'   => 'ophone',
+				'address2' => 'address2',
+				'address3' => 'address3'
+			);
+			if ($this->type != 'vcard')
+			{
+				$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
+			}
+
+			if (!empty($cat_id))
+			{
+				$buffer = $this->export_start_file($buffer,$cat_id);
+			}
+			else
+			{
+			$buffer = $this->export_start_file($buffer);
+			}
+
+			for ($i=0;$i<count($this->ids);$i++)
+			{
+				$buffer = $this->export_start_record($buffer);
+				while( list($name,$value) = each($this->currentrecord) )
+				{
+					$buffer = $this->export_new_attrib($buffer,$name,$value);
+				}
+				$buffer = $this->export_end_record($buffer);
+			}
+
+			// Here, buffer becomes a string suitable for printing
+			$buffer = $this->export_end_file($buffer);
+
+			$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 		}
-
-		// Here, buffer becomes a string suitable for printing
-		$buffer = $this->export_end_file($buffer);
-
-		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
 		if ( ($download == 'on') || ($o->type == 'pdb') )
 		{
