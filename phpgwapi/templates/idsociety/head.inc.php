@@ -23,7 +23,7 @@
 	}
 
 	$app_css = '';
-	if($GLOBALS['HTTP_GET_VARS']['menuaction'])
+	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 	{
 		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
 		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
