@@ -22,7 +22,8 @@
 	if(!$GLOBALS['sessionid'])
 	{
 		Header('Location: login.php'.
-			(isset($_SERVER['QUERY_STRING']) ? '?phpgw_forward='.urlencode('/index.php?'.$_SERVER['QUERY_STRING']):''));
+			(isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ?
+			'?phpgw_forward='.urlencode('/index.php?'.$_SERVER['QUERY_STRING']):''));
 		exit;
 	}
 
