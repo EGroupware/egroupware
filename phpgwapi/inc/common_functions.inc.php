@@ -287,7 +287,7 @@
 	*/
 
 	/*
-	$GLOBALS['phpgw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
+	$GLOBALS['egw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
 	*/
 
 	function sanitize($string,$type)
@@ -370,16 +370,16 @@
 				$password_numbers = Array('0','1','2','3','4','5','6','7','8','9');
 				$password_special_chars = Array(' ','~','`','!','@','#','$','%','^','&','*','(',')','_','+','-','=','{','}','|','[',']',"\\",':','"',';',"'",'<','>','?',',','.','/');
 
-				if(@isset($GLOBALS['phpgw_info']['server']['pass_min_length']) && is_int($GLOBALS['phpgw_info']['server']['pass_min_length']) && $GLOBALS['phpgw_info']['server']['pass_min_length'] > 1)
+				if(@isset($GLOBALS['egw_info']['server']['pass_min_length']) && is_int($GLOBALS['egw_info']['server']['pass_min_length']) && $GLOBALS['egw_info']['server']['pass_min_length'] > 1)
 				{
-					$min_length = $GLOBALS['phpgw_info']['server']['pass_min_length'];
+					$min_length = $GLOBALS['egw_info']['server']['pass_min_length'];
 				}
 				else
 				{
 					$min_length = 1;
 				}
 
-				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_non_alpha']) && $GLOBALS['phpgw_info']['server']['pass_require_non_alpha'] == True)
+				if(@isset($GLOBALS['egw_info']['server']['pass_require_non_alpha']) && $GLOBALS['egw_info']['server']['pass_require_non_alpha'] == True)
 				{
 					$pass_verify_non_alpha = False;
 				}
@@ -388,7 +388,7 @@
 					$pass_verify_non_alpha = True;
 				}
 				
-				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_numbers']) && $GLOBALS['phpgw_info']['server']['pass_require_numbers'] == True)
+				if(@isset($GLOBALS['egw_info']['server']['pass_require_numbers']) && $GLOBALS['egw_info']['server']['pass_require_numbers'] == True)
 				{
 					$pass_verify_num = False;
 				}
@@ -397,7 +397,7 @@
 					$pass_verify_num = True;
 				}
 
-				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_special_char']) && $GLOBALS['phpgw_info']['server']['pass_require_special_char'] == True)
+				if(@isset($GLOBALS['egw_info']['server']['pass_require_special_char']) && $GLOBALS['egw_info']['server']['pass_require_special_char'] == True)
 				{
 					$pass_verify_special_char = False;
 				}
@@ -427,17 +427,17 @@
 
 					if ($pass_verify_num == False)
 					{
-						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one non-alpha character']=False;
+						$GLOBALS['egw_info']['flags']['msgbox_data']['Password requires at least one non-alpha character']=False;
 					}
 
 					if ($pass_verify_num == False)
 					{
-						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one numeric character']=False;
+						$GLOBALS['egw_info']['flags']['msgbox_data']['Password requires at least one numeric character']=False;
 					}
 
 					if ($pass_verify_special_char == False)
 					{
-						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one special character (non-letter and non-number)']=False;
+						$GLOBALS['egw_info']['flags']['msgbox_data']['Password requires at least one special character (non-letter and non-number)']=False;
 					}
 					
 					if ($pass_verify_num == True && $pass_verify_special_char == True)
@@ -446,16 +446,16 @@
 					}
 					return False;
 				}
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password must be at least '.$min_length.' characters']=False;
+				$GLOBALS['egw_info']['flags']['msgbox_data']['Password must be at least '.$min_length.' characters']=False;
 				return False;
 				break;
 			case 'any':
 				return True;
 				break;
 			default :
-				if (isset($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']))
+				if (isset($GLOBALS['egw_info']['server']['sanitize_types'][$type]['type']))
 				{
-					if ($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['string'], $string))
+					if ($GLOBALS['egw_info']['server']['sanitize_types'][$type]['type']($GLOBALS['egw_info']['server']['sanitize_types'][$type]['string'], $string))
 					{
 						return True;
 					}
@@ -640,7 +640,7 @@
 		}
 		if($register)
 		{
-			$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $result;
+			$GLOBALS['egw_info'][$GLOBALS['egw_info']['flags']['currentapp']][$varname] = $result;
 		}
 		return $result;
 	}
@@ -666,25 +666,6 @@
 	}
 
 	/*!
-	 @function include_class
-	 @abstract This will include the class once and guarantee that it is loaded only once.  Similar to CreateObject, but does not instantiate the class.
-	 @author skeeter
-	 @discussion This will include the API class once and guarantee that it is loaded only once.  Similar to CreateObject, but does not instantiate the class.
-	 @syntax include_class('setup');
-	 @example include_class('setup');
-	 @param $included_class API class to load
-	*/
-	function include_class($included_class)
-	{
-		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$included_class]) ||
-			!$GLOBALS['phpgw_info']['flags']['included_classes'][$included_class])
-		{
-			$GLOBALS['phpgw_info']['flags']['included_classes'][$included_class] = True;   
-			include(PHPGW_SERVER_ROOT.'/phpgwapi/inc/class.'.$included_class.'.inc.php');
-		}
-	}
-
-	/*!
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
 	 @author mdean
@@ -694,78 +675,37 @@
 	 @syntax CreateObject('app.class', 'constructor_params');
 	 @example $phpgw->acl = CreateObject('phpgwapi.acl');
 	 @param $classname name of class
-	 @param $p1-$p16 class parameters (all optional)
+	 @param $p1,$p2,... class parameters (all optional)
 	*/
-	function &CreateObject($class,
-		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
-		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
-		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
-		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
+	function &CreateObject($class)
 	{
-		global $phpgw_info, $phpgw;
+		list($appname,$classname) = explode('.',$class);
 
-		/*
-		if(is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+		include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+
+		$args = func_get_args();
+		if(count($args) == 1)
 		{
-			$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
-		}
-		*/
-
-		/* error_reporting(0); */
-		list($appname,$classname) = explode('.', $class);
-		$filename = PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php';
-		$included_files = get_included_files();
-
-		if(!isset($included_files[$filename]))
-		{
-			if(@file_exists($filename))
-			{
-				include_once($filename);
-				$is_included = True;
-			}
-			else
-			{
-				$is_included = False;
-			}
+			$obj =& new $classname;
 		}
 		else
 		{
-			$is_included = True;
-		}
-
-		if($is_included)
-		{
-			if($p1 == '_UNDEF_' && $p1 != 1)
+			$code = '$obj =& new ' . $classname . '(';
+			foreach($args as $n => $arg)
 			{
-				$obj = new $classname;
-			}
-			else
-			{
-				$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
-				$i = 1;
-				$code = '$obj = new ' . $classname . '(';
-				foreach($input as $test)
+				if ($n)
 				{
-					if(($test == '_UNDEF_' && $test != 1 ) || $i == 17)
-					{
-						break;
-					}
-					else
-					{
-						$code .= '$p' . $i . ',';
-					}
-					$i++;
+					$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
 				}
-				$code = substr($code,0,-1) . ');';
-				eval($code);
 			}
-			if (!is_object($obj))
-			{
-				function_backtrace(1);
-			}
-			/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
-			return $obj;
+			$code .= ');';
+			eval($code);
 		}
+		if (!is_object($obj))
+		{
+			echo function_backtrace(1);
+		}
+		return $obj;
 	}
 
 	/*!
@@ -886,7 +826,7 @@
 	 @author milosch
 	 @discussion This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
 	 @syntax copyobj($source_object,$target_object);
-	 @example copyobj($GLOBALS['phpgw']->db,$mydb);
+	 @example copyobj($GLOBALS['egw']->db,$mydb);
 	 @param $a   - Source Object
 	 @param $b   - Target Object (copy)
 	*/
@@ -923,23 +863,23 @@
 		{
 			if ($default_id == '')
 			{
-				return (isset($GLOBALS['phpgw_info']['user']['account_id'])?$GLOBALS['phpgw_info']['user']['account_id']:0);
+				return (isset($GLOBALS['egw_info']['user']['account_id'])?$GLOBALS['egw_info']['user']['account_id']:0);
 			}
 			elseif (is_string($default_id))
 			{
-				return $GLOBALS['phpgw']->accounts->name2id($default_id);
+				return $GLOBALS['egw']->accounts->name2id($default_id);
 			}
 			return (int)$default_id;
 		}
 		elseif (is_string($account_id))
 		{
-			if($GLOBALS['phpgw']->accounts->exists((int)$account_id) == True)
+			if($GLOBALS['egw']->accounts->exists((int)$account_id) == True)
 			{
 				return (int)$account_id;
 			}
 			else
 			{
-				return $GLOBALS['phpgw']->accounts->name2id($account_id);
+				return $GLOBALS['egw']->accounts->name2id($account_id);
 			}
 		}
 	}
@@ -1196,7 +1136,7 @@
 			}
 			return implode(' / ',$ret);
 		}
-		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
+		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(EGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
 
 	function _check_script_tag(&$var,$name='')
