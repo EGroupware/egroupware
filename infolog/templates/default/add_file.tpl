@@ -40,10 +40,9 @@
 		  <p>
         <table width="75%" border="0" cellspacing="0" cellpadding="0">
          <tr valign="bottom">
-          <td>{submit_button}</td>
+          <td>{submit_button}</form></td>
           <td>{cancel_button}</td>
          </tr>
         </table>
-    </form>
   </center>
 </html>

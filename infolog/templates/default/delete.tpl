@@ -31,9 +31,8 @@
         </td>
        </tr>
        <tr>
-         <td height=50 valign=bottom align=center>{yes_button}</td>
+         <td height=50 valign=bottom align=center>{yes_button}</form></td>
          <td valign=bottom align=center>{no_button}</td>
        </tr>
       </table>
-</form>
      </center>
