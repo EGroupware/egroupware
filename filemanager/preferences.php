@@ -24,7 +24,7 @@
 	/*
 	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
 	*/
-	$other_checkboxes = array ("viewinnewwin" => "View documents in new window", "viewonserver" => "View documents on server (if available)", "viewtextplain" => "Unknown MIME-type defaults to text/plain when viewing", "dotdot" => "Show ..", "dotfiles" => "Show .files", "show_help" => "Show help");
+	$other_checkboxes = array ("viewinnewwin" => "View documents in new window", "viewonserver" => "View documents on server (if available)", "viewtextplain" => "Unknown MIME-type defaults to text/plain when viewing", "dotdot" => "Show ..", "dotfiles" => "Show .files", "show_help" => "Show help", "show_command_line" => "Show command line (EXPERIMENTAL. DANGEROUS.)");
 
 	/*
 	   To add a dropdown preferences, add it here.  Key is internal name, value key is
