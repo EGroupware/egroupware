@@ -34,21 +34,9 @@
   $tpl->set_file(array("footer" => "footer.tpl"));
   $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images");
   $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
+  $tpl->set_var("showpoweredbyon",$phpgw_info["server"]["showpoweredbyon"]);
+  $tpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
   echo $tpl->finish($tpl->parse("out","footer"));
-
-  // This will need to be converted into the classic template
-
-/*  if ($phpgw_info["server"]["showpoweredbyon"] == "bottom" && $phpgw_info["server"]["showpoweredbyon"] != "top") {
-     echo "<P>\n";
-     echo "<Table Width=100% Border=0 CellPadding=0 CellSpacing=0 BGColor=".$phpgw_info["theme"]["navbar_bg"].">\n";
-     echo " <TR><TD>";
-     echo "<P><P>\n" . lang("Powered by phpGroupWare version x",
-							$phpgw_info["server"]["versions"]["phpgwapi"]) . "<br>\n";
-     echo "</TD>";
-     if ($phpgw_info["flags"]["parent_page"])
-       echo "<td align=\"right\"><a href=\"".$phpgw->link($phpgw_info["flags"]["parent_page"])."\">".lang("up")."</a></td>";
-     echo "</TR>\n</Table>\n";
-  } */
   $phpgw->db->disconnect();
   
 ?>

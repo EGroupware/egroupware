@@ -28,10 +28,6 @@
 	  echo "!!! PLEASE CORRECT THIS SITUATION !!!";
   }
 
-  if (empty($phpgw_info["server"]["template_set"])){
-    $phpgw_info["server"]["template_set"] = "default";
-  }
-
   if (!isset($phpgw_domain)) { // make them fix their header
     echo "The administration is required to upgrade the header.inc.php file before you can continue.";
     exit;
