@@ -148,6 +148,9 @@
 		$accountid = $GLOBALS['phpgw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True);
 		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
 
+		/* Clear the access log, since these are all new users anyway */
+		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_access_log');
+
 		$GLOBALS['phpgw_setup']->db->transaction_commit();
 
 		Header('Location: index.php');
