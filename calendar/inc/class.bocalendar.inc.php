@@ -922,6 +922,11 @@
 						$this->so->set_recur_yearly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 				}
+				// restoring the recur-exceptions from the old event
+				if ($l_cal['recur_type'] != MCAL_RECUR_NONE && $old_event && count($old_event['recur_exception']))
+				{
+					$this->so->add_attribute('recur_exception',$old_event['recur_exception']);
+				}
 
 				if($l_participants)
 				{
