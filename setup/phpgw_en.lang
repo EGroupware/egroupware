@@ -197,7 +197,7 @@ enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled	weather	en	Enabled
 end date/time	calendar	en	End Date/Time
-end date	todo	en	End Date
+end date	common	en	End Date
 end time	common	en	end time
 ends	calendar	en	ends
 enter your new password	preferences	en	Enter your new password
@@ -427,6 +427,7 @@ parent category	common	en	Parent Category
 parent project	todo	en	parent project
 participant	calendar	en	Participant
 participants	calendar	en	Participants
+participates	calendar	en	Participates
 password	common	en	Password
 password has been updated	common	en	Password has been updated
 percent of users that logged out	admin	en	Percent of users that logged out
@@ -538,7 +539,7 @@ sorry, your login has expired	login	en	Sorry, your login has expired
 source language	transy	en	Source Language
 specify_file_name	filemanager	en	You must specify a name for the file you wish to create
 start date/time	calendar	en	Start Date/Time
-start date	todo	en	Start Date
+start date	common	en	Start Date
 start time	common	en	Start Time
 state	addressbook	en	State
 state	weather	en	State
@@ -582,6 +583,7 @@ this month	calendar	en	This month
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
 this week	calendar	en	This week
+this year	calendar	en	This year
 threads	nntp	en	Threads
 thu	calendar	en	Thu
 thursday	common	en	Thursday
