@@ -391,32 +391,7 @@
 				$GLOBALS['phpgw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
 				$GLOBALS['phpgw']->preferences->save_repository();
 			}
-			if ($default_acls == False)
-			{
-				if ($default_group_id)
-				{
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
-						. $default_group_id . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
-				}
-				else
-				{
-					// If they don't have a default group, they need some sort of permissions.
-					// This generally doesn't / shouldn't happen, but will (jengo)
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
-
-					foreach(Array(
-						'addressbook',
-						'calendar',
-						'email',
-						'infolog',
-						'manual'
-					) as $app)
-					{
-						$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('" . $app . "', 'run', " . $accountid . ', 1)',__LINE__,__FILE__);
-					}
-				}
-			}
+			// commit the new account transaction
 			$this->db->transaction_commit();
 			
 			$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
