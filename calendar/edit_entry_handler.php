@@ -72,10 +72,10 @@
     $datetime_check = validate($cal_info);
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       if ($cal_info->hour >= 12) {
-	$cal_info->ampm = "";
+        $cal_info->ampm = "";
       }
       if ($cal_info->end_hour >= 12) {
-	$cal_info->end_ampm = "";
+        $cal_info->end_ampm = "";
       }
     }
     $cal_info->datetime += ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
@@ -110,12 +110,13 @@
     for($i=0;$i<count($calendar_overlaps);$i++) {
       $cal_over = $calendar_overlaps[$i];
       if($cal_over) {
-	$overlap .= "<li>";
-	if(strtoupper($cal_over->access) == "PRIVATE")
-	  $overlap .= "(PRIVATE)";
-	else
-	  $overlap .= $phpgw->calendar->link_to_entry($cal_over->id,"circle.gif",$cal_over->name);
-	$overlap .= " (".$phpgw->common->show_date($cal_over->datetime)." - ".$phpgw->common->show_date($cal_over->edatetime).")<br>";
+        $overlap .= "<li>";
+        $private = $phpgw->calendar->is_private($cal_over,$cal_over->owner);
+        if(strtoupper($private) == "PRIVATE")
+          $overlap .= "(PRIVATE)";
+        else
+          $overlap .= $phpgw->calendar->link_to_entry($cal_over->id,"circle.gif",$cal_over->description).$cal_over->name;
+        $overlap .= " (".$phpgw->common->show_date($cal_over->datetime)." - ".$phpgw->common->show_date($cal_over->edatetime).")<br>";
       }
     }
     if(strlen($overlap)) {
