@@ -28,12 +28,12 @@
 		$GLOBALS['phpgw']->template->set_block('parts','top_part');
 		$GLOBALS['phpgw']->template->set_block('parts','top_part_app');
 
-		$var['navbar_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
+	/*	$var['navbar_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		if ($GLOBALS['phpgw_info']['flags']['navbar_target'])
 		{
 			$target = ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
-		}
+		} */
 
 		$i = 1;
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))

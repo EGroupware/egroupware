@@ -76,11 +76,9 @@ a:hover
 	word-spacing: 0em;
 }
 
-.navbar
+.portal
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 10pt;
-    color: #000000;
+	background-color: #80BBFF;
 }
 
 .bodytext
@@ -142,6 +140,11 @@ a:hover
 .th
 {
 	background-color: #80BBFF;
+}
+
+.th_bright
+{
+	background-color: #CCEEFF;
 }
 
 .th_text

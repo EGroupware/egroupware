@@ -4,6 +4,7 @@ body
 	margin-left: 0em;
 	margin-top: 0em;
 	margin-bottom: 0em;
+	background-color: #FFFFFF;
 }
 
 table
@@ -78,10 +79,14 @@ a:hover
 
 .navbar
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 10pt;
-    color: #000000;
+	background-color: #80BBFF;
 }
+
+.portal
+{
+	background-color: #80BBFF;
+}
+
 
 .bodytext
 {
@@ -140,6 +145,11 @@ a:hover
 }
 
 .th
+{
+	background-color: #80BBFF;
+}
+
+.th_bright
 {
 	background-color: #80BBFF;
 }
