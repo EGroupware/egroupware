@@ -31,6 +31,7 @@
 
 
   if ($phpgw_info["user"]["permissions"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
+     $phpgw->network = new network;
      $phpgw->network->set_addcrlf(False);
      if ($phpgw->network->open_port("phpgroupware.org",80,30)) {
 	 $phpgw->network->write_port("GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");
