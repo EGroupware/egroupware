@@ -177,7 +177,7 @@
 	$vars = Array(
 						'bg_color'			=>	$phpgw_info['theme']['bg_text'],
 						'calendar_action'	=>	$action,
-						'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry_handler.php'),
+						'action_url'		=>	$phpgw->link('/calendar/edit_entry_handler.php'),
 						'common_hidden'	=>	$common_hidden,
 						'errormsg'			=>	$errormsg
 	);
@@ -186,10 +186,10 @@
 	$p->parse('out','edit_entry_begin');
 
 // Brief Description
-	display_item(lang('Title'),'<input name="title" size="25" value="'.$event->title.'">');
+	display_item(lang('Title'),'<input name="title" size="25" maxlength="80" value="'.$event->title.'">');
 
 // Full Description
-	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual">'.$event->description.'</textarea>');
+	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>');
 
 // Date
 	$day_html = $sb->getDays('start[mday]',intval($phpgw->common->show_date($start,'d')));
