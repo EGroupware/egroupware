@@ -111,7 +111,11 @@
 		),
 		'odbc' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB') . '</div>',
+			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB, MsSQL or Oracle') . '</div>',
+		),
+		'oci8' => array(
+			'func' => 'extension_check',
+			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','oci','Oracle') . '</div>',
 		),
 		'mbstring' => array(
 			'func' => 'extension_check',

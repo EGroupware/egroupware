@@ -1324,8 +1324,21 @@
 	{
 		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'php4';	// the more performant default
 	}
-	if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4' && !extension_loaded('session') && !@dl('session'))
+	// for php4 sessions, check if the extension is loaded, try loading it and fallback to db sessions if not
+	if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4' && !extension_loaded('session'))
 	{
-		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';	// fallback if we have no php4 sessions support
+		// some constanst for pre php4.3
+		if (!defined('PHP_SHLIB_SUFFIX'))
+		{
+			define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+		}
+		if (!defined('PHP_SHLIB_PREFIX'))
+		{
+			define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+		}
+		if (!function_exists('dl') || !@dl(PHP_SHLIB_PREFIX.'session'.'.'.PHP_SHLIB_SUFFIX))
+		{
+			$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';	// fallback if we have no php4 sessions support
+		}
 	}
 	include_once(PHPGW_API_INC.'/class.sessions_'.$GLOBALS['phpgw_info']['server']['sessions_type'].'.inc.php');

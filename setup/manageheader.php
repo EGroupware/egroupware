@@ -21,6 +21,24 @@
 	);
 	include('./inc/functions.inc.php');
 
+	// some constanst for pre php4.3
+	if (!defined('PHP_SHLIB_SUFFIX'))
+	{
+		define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+	}
+	if (!defined('PHP_SHLIB_PREFIX'))
+	{
+		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
+	/**
+	 * checks if a named extension is loaded or loadable
+	 */
+	function check_load_extension($extension)
+	{
+		return extension_loaded($extension) ||
+			function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
+	}
+
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 	unset($setup_info);
@@ -48,15 +66,19 @@
 		'pgsql'  => 'PostgreSQL',
 		'mysql'  => 'MySQL',
 		'mssql'  => 'MS SQL Server',
+		'odbc_mssql'  => 'MS SQL Server via ODBC',
 		'oracle' => 'Oracle',
-		'sapdb'  => 'SAP/Max DB',
+		'odbc_oracle' => 'Oracle via ODBC',
+		'sapdb'  => 'SAP/Max DB via ODBC',
 	);
 
 	$default_db_ports = array(
 		'pgsql'  => 5432,
 		'mysql'  => 3306,
 		'mssql'  => 1433,
+		'odbc_mssql'  => '',
 		'oracle' => 1521,
+		'odbc_oracle' => '',
 		'sapdb'  => '',
 	);
 
@@ -252,7 +274,7 @@
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
-			if(extension_loaded('mysql') || function_exists('mysql_connect'))
+			if(check_load_extension('mysql') || function_exists('mysql_connect'))
 			{
 				$detected .= lang('You appear to have MySQL support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mysql';
@@ -261,7 +283,7 @@
 			{
 				$detected .= lang('No MySQL support found. Disabling') . '<br>' . "\n";
 			}
-			if(extension_loaded('pgsql') || function_exists('pg_connect'))
+			if(check_load_extension('pgsql') || function_exists('pg_connect'))
 			{
 				$detected .= lang('You appear to have PostgreSQL support enabled') . '<br>' . "\n";
 				$supported_db[]  = 'pgsql';
@@ -270,7 +292,7 @@
 			{
 				$detected .= lang('No PostgreSQL support found. Disabling') . '<br>' . "\n";
 			}
-			if(extension_loaded('mssql') || function_exists('mssql_connect'))
+			if(check_load_extension('mssql') || function_exists('mssql_connect'))
 			{
 				$detected .= lang('You appear to have Microsoft SQL Server support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mssql';
@@ -279,35 +301,29 @@
 			{
 				$detected .= lang('No Microsoft SQL Server support found. Disabling') . '<br>' . "\n";
 			}
-			if(extension_loaded('odbc'))
+			if(check_load_extension('odbc'))
 			{
 				$detected .= lang('You appear to have ODBC support enabled') . '<br>' . "\n";
 				// databases supported by the ODBC driver
 				$supported_db[] = 'sapdb';
+				$supported_db[] = 'odbc_mssql';
+				$supported_db[] = 'odbc_oracle';
 			}
 			else
 			{
 				$detected .= lang('No ODBC support found. Disabling') . '<br>' . "\n";
 			}
-/*
-			if(extension_loaded('oci8'))
+
+			if(check_load_extension('oci8'))
 			{
 				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br>' . "\n";
 				$supported_db[] = 'oracle';
 			}
 			else
 			{
-				if(extension_loaded('oracle'))
-				{
-					$detected .= lang('You appear to have Oracle support enabled') . '<br>' . "\n";
-					$supported_db[] = 'oracle';
-				}
-				else
-				{
-					$detected .= lang('No Oracle-DB support found. Disabling') . '<br>' . "\n";
-				}
+				$detected .= lang('No Oracle-DB support found. Disabling') . '<br>' . "\n";
 			}
-*/
+
 			if(!count($supported_db))
 			{
 				$detected .= '<b><p align="center" class="msg">'
@@ -327,12 +343,12 @@
 				echo $detected;
 				exit;
 			}
-			else
+			if (check_load_extension('session'))
 			{
-				$detected .= lang('You appear to be using PHP4. Enabling PHP4 sessions support') . '<br>' . "\n";
+				$detected .= lang('You appear to have PHP4 session support. Enabling PHP4 sessions.') . '<br>' . "\n";
 				$supported_sessions_type[] = 'php4';	// makeing php4 sessions the default
-				$supported_sessions_type[] = 'db';
 			}
+			$supported_sessions_type[] = 'db';
 
 			@reset($default_db_ports);
 			$js_default_db_ports = 'var default_db_ports = new Array();'."\n";
@@ -343,7 +359,7 @@
 			$setup_tpl->set_var('js_default_db_ports',$js_default_db_ports);
 
 			/*
-			if(extension_loaded('xml') || function_exists('xml_parser_create'))
+			if(check_load_extension('xml') || function_exists('xml_parser_create'))
 			{
 				$detected .= lang('You appear to have XML support enabled') . '<br>' . "\n";
 				$xml_enabled = 'True';
@@ -503,7 +519,7 @@
 
 				/* These are a few of the advanced settings */
 				$GLOBALS['phpgw_info']['server']['db_persistent'] = True;
-				$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = extension_loaded('mcrypt');
+				$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = check_load_extension('mcrypt');
 				$GLOBALS['phpgw_info']['server']['versions']['mcrypt'] = '';
 
 				srand((double)microtime()*1000000);

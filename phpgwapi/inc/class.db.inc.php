@@ -21,6 +21,15 @@
 	 * @license LGPL
 	 */
 
+	// some constanst for pre php4.3
+	if (!defined('PHP_SHLIB_SUFFIX'))
+	{
+		define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+	}
+	if (!defined('PHP_SHLIB_PREFIX'))
+	{
+		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
 	if(empty($GLOBALS['phpgw_info']['server']['db_type']))
 	{
 		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
@@ -185,25 +194,46 @@
 				{
 					$$name = $this->$name;
 				}
-				$type = $this->Type;
+				$php_extension = $type = $this->Type;
 
 				switch($this->Type)	// convert to ADO db-type-names
 				{
 					case 'pgsql':
-						$type = 'postgres';
+						$type = 'postgres'; // name in ADOdb
 						// create our own pgsql connection-string, to allow unix domain soccets if !$Host
 						$Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
 							" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
 						$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 						break;
+
+					case 'odbc_mssql':
+						$php_extension = 'odbc';
+						$this->Type = 'mssql';
+						// fall through
 					case 'mssql':
 						if ($this->Port) $Host .= ','.$this->Port;
 						break;
+
+					case 'odbc_oracle':
+						$php_extension = 'odbc';
+						$this->Type = 'oracle';
+						break;
+					case 'oracle':
+						$php_extension = $type = 'oci8';
+						break;
+
+					case 'sapdb':
+						$this->Type = 'maxdb';
+						// fall through
+					case 'maxdb': 
+						$type ='sapdb';	// name in ADOdb
+						$php_extension = 'odbc';
+						break;
+
 					default:
 						if ($this->Port) $Host .= ':'.$this->Port;
 						break;
 				}
-
 				if (!is_object($GLOBALS['phpgw']->ADOdb) ||	// we have no connection so far
 					(is_object($GLOBALS['phpgw']->db) &&	// we connect to a different db, then the global one
 						($this->Type != $GLOBALS['phpgw']->db->Type ||
@@ -212,6 +242,12 @@
 						$this->Host != $GLOBALS['phpgw']->db->Host ||
 						$this->Port != $GLOBALS['phpgw']->db->Port)))
 				{
+					if (!extension_loaded($php_extension) && (!function_exists('dl') || 
+						!dl(PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX)))
+					{
+						$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
+						return 0;	// in case error-reporting = 'no'
+					}
 					if (!is_object($GLOBALS['phpgw']->ADOdb))	// use the global object to store the connection
 					{
 						$this->Link_ID = &$GLOBALS['phpgw']->ADOdb;
@@ -223,7 +259,7 @@
 					$this->Link_ID = ADONewConnection($type);
 					if (!$this->Link_ID)
 					{
-						$this->halt("No ADOdb support for '$type' !!!");
+						$this->halt("No ADOdb support for '$type' ($this->Type) !!!");
 						return 0;	// in case error-reporting = 'no'
 					}
 					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
