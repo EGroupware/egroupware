@@ -11,10 +11,10 @@
 	/* $Id$ */
 	
 	/* Include older phpGroupWare update support */
-	include($appdir . 'tables_update_0_9_9.inc.php');
-	include($appdir . 'tables_update_0_9_10.inc.php');
-	include($appdir . 'tables_update_0_9_12.inc.php');
-	include($appdir . 'tables_update_0_9_14.inc.php');
+	include('tables_update_0_9_9.inc.php');
+	include('tables_update_0_9_10.inc.php');
+	include('tables_update_0_9_12.inc.php');
+	include('tables_update_0_9_14.inc.php');
 
 	/* This is since the last release */
 	$test[] = '0.9.13.018';
