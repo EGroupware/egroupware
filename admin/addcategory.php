@@ -42,15 +42,13 @@
     if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category $cat_name has been added !")); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
-    $t->set_var('font',$font);
     $t->set_var('title_categories',lang('Add global category'));
     $t->set_var('actionurl',$phpgw->link('/admin/addcategory.php'));
     $t->set_var('doneurl',$phpgw->link('/admin/categories.php'));
     $t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
-    $t->set_var('lang_choose',lang('Choose the category'));
-    $t->set_var('lang_main_cat',lang('Category'));
+    $t->set_var('lang_select_parent',lang('Select parent category'));
 
-    $t->set_var('main_cat_list',$c->formated_list('select','mains'));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('cat_name',$cat_name);

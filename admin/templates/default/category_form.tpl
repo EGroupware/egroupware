@@ -10,6 +10,10 @@
 <table border="0" width="80%" cellspacing="2" cellpadding="2"> 
   <form name="form" action="{actionurl}" method="POST">
     <tr>
+     <td>&nbsp;</td>
+     <td><select name="cat_parent"><option value="">{lang_select_parent}</option>{category_list}</select></td>
+    </tr>
+    <tr>
      <td>{lang_name}:</td>
      <td><input name="cat_name" size="50" value="{cat_name}"></td>
     </tr>
@@ -24,7 +28,7 @@
          <tr valign="bottom">
           <td height="50" align="center">
            {hidden_vars}
-           <input type="submit" name="submit" value="{lang_add}"></td> 
+           <input type="submit" name="submit" value="{lang_add}"></td>
           <td height="50" align="center">
            <input type="reset" name="reset" value="{lang_reset}"></form></td>
           <td height="50" align="center">

@@ -53,9 +53,8 @@
 
     $cats = $c->return_single($cat_id);
 
-    $t->set_var('font',$font);
     $t->set_var('title_categories',lang('Edit global category'));
-    $t->set_var('lang_action',lang('Edit category'));
+    $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
     $t->set_var('doneurl',$phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
@@ -68,9 +67,11 @@
     $t->set_var('lang_delete',lang('Delete'));
 
     $cat_id = $cats[0]['id'];
+    $cat_parent = $cats[0]['parent'];
 
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');

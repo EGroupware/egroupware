@@ -82,9 +82,16 @@
 
     $cat_id = $categories[$i]['id'];
     $owner = $categories[$i]['owner'];
-    $name = $phpgw->strip_html($categories[$i]['name']);
+    $space = "&nbsp;&nbsp;";
+    if ($categories[$i]['parent'] > 0) { $name = $space . $phpgw->strip_html($categories[$i]['name']); }
+
     $descr = $phpgw->strip_html($categories[$i]['description']);
-    if (! $descr) { $descr  = '&nbsp;'; }
+    if (! $descr) { $descr  = "&nbsp;"; }
+
+    if ($categories[$i]['parent'] == 0) {
+    $name = "<font color=FF0000><b>" . $phpgw->strip_html($categories[$i]['name']) . "</b></font>";
+    $descr = "<font color=FF0000><b>" . $descr . "</b></font>";
+    }
 
 //-------------------------- template declaration for list records ---------------------------
 
