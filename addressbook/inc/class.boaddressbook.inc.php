@@ -389,9 +389,13 @@
 				{
 					// $account is a group
 					unset($accounts[$key]);
-					foreach($GLOBALS['phpgw']->accounts->member($account) as $member)
+					$members = $GLOBALS['phpgw']->accounts->member($account);
+					if (is_array($members))
 					{
-						$accounts[] = $member['account_id'];
+						foreach($members as $member)
+						{
+							$accounts[] = $member['account_id'];
+						}
 					}
 				}
 			}
