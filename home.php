@@ -276,7 +276,7 @@
 		return $result;
 	}
 	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest');
-	$check_oldvarnames = true;
+	$check_oldvarnames = false;
 	if($check_oldvarnames)
 	{
 		$_apps = $GLOBALS['phpgw_info']['user']['apps'];
