@@ -793,6 +793,7 @@
 			/* merge in extra fields */
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
 			$fields = $this->bo->read_entry(array('id' => $GLOBALS['HTTP_GET_VARS']['ab_id'], 'fields' => $qfields));
+
 			$this->addressbook_form('edit','menuaction=addressbook.uiaddressbook.edit',lang('Edit'),$fields[0],$customfields);
 
 			$GLOBALS['phpgw']->template->set_file(array('edit' => 'edit.tpl'));
@@ -948,6 +949,9 @@
 			}
 
 			$GLOBALS['phpgw']->template->set_var('lang_viewpref',lang('Address book - view') . $noprefs);
+
+			unset($qfields['email_type']);		// noone is useing that any more
+			unset($qfields['privat_email_type']);
 
 			@reset($qfields);
 			while(list($column,$null) = @each($qfields))
@@ -1508,7 +1512,7 @@
   <tr bgcolor="' . $GLOBALS['phpgw_info']['theme']['row_off'] . '">
     <td>&nbsp;</td>
     <td><font color="' . $GLOBALS['phpgw_info']['theme']['th_text'] . '" face="" size="-1">'.$value.':</font></td>
-    <td colspan="3"><INPUT size="30" name="entry[' . $name . ']" value="' . $fields[$value] . '"></td>
+    <td colspan="3"><INPUT size="30" name="entry[' . $name . ']" value="' . $fields[$name] . '"></td>
   </tr>
 ';
 				}
