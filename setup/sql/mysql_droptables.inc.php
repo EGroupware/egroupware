@@ -16,9 +16,10 @@
   $db->query("DROP TABLE accounts");
   $db->query("DROP TABLE groups");
   $db->query("DROP TABLE preferences");
-  $db->query("DROP TABLE sessions");
-  $db->query("DROP TABLE app_sessions");
-  $db->query("DROP TABLE access_log");
+  $db->query("DROP TABLE phpgw_sessions");
+  $db->query("DROP TABLE phpgw_app_sessions");
+  $db->query("DROP TABLE phpgw_acl");
+  $db->query("DROP TABLE phpgw_access_log");
   $db->query("DROP TABLE profiles");
   $db->query("DROP TABLE addressbook");
   $db->query("DROP TABLE todo");

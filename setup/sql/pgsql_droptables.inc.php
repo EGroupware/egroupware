@@ -18,9 +18,10 @@
   $db->query("drop sequence groups_group_id_seq");
   $db->query("DROP TABLE groups");
   $db->query("DROP TABLE preferences");
-  $db->query("DROP TABLE sessions");
-  $db->query("DROP TABLE app_sessions");
-  $db->query("DROP TABLE access_log");
+  $db->query("DROP TABLE phpgw_sessions");
+  $db->query("DROP TABLE phpgw_app_sessions");
+  $db->query("DROP TABLE phpgw_acl");
+  $db->query("DROP TABLE phpgw_access_log");
   $db->query("drop sequence profiles_con_seq");
   $db->query("DROP TABLE profiles");
   $db->query("drop sequence addressbook_ab_id_seq");

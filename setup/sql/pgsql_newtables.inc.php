@@ -54,7 +54,7 @@
   )";
   $db->query($sql);
   
-  $sql = "create table sessions (
+  $sql = "create table phpgw_sessions (
     session_id         varchar(255),
     session_lid        varchar(255),
     session_pwd        varchar(255),
@@ -65,11 +65,29 @@
   )";
   $db->query($sql);
 
-  $sql = "CREATE TABLE app_sessions (
+  $sql = "CREATE TABLE phpgw_acl (
+    acl_appname       varchar(50),
+    acl_location      varchar(255),
+    acl_account       int,
+    acl_account_type  char(1),
+    acl_rights        int
+  )";
+  $db->query($sql);  
+
+  $sql = "CREATE TABLE phpgw_app_sessions (
    sessionid	varchar(255) NOT NULL,
    loginid	varchar(20),
    app	        varchar(20),
    content	text
+  )";
+  $db->query($sql);
+
+  $sql = "create table phpgw_access_log (
+   sessionid    varchar(255),
+   loginid      varchar(30),
+   ip           varchar(30),
+   li           int,
+   lo           varchar(255)
   )";
   $db->query($sql);
 
@@ -78,15 +96,6 @@
     preference_name        varchar(50),
     preference_value       varchar(50),
     preference_appname     varchar(50)
-  )";
-  $db->query($sql);
-
-  $sql = "create table access_log (
-   sessionid    varchar(255),
-   loginid      varchar(30),
-   ip           varchar(30),
-   li           int,
-   lo           varchar(255)
   )";
   $db->query($sql);
 
