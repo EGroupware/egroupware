@@ -1413,11 +1413,19 @@ class calendar extends calendar_
 			
 			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
+				$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
+				if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+				{
+					$new_hour += 12;
+				}
+				
+				$new_minute = substr($dtime,strpos($dtime,':')+1,2);
+				
 				$open_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php',
 								  'year='.$date['year'].'&month='.$date['month']
 								. '&day='.$date['day']
-								. '&hour='.substr($dtime,0,strpos($dtime,':'))
-								. '&minute='.substr($dtime,strpos($dtime,':')+1,2).'&owner='.$this->owner).'">';
+								. '&hour='.$new_hour
+								. '&minute='.$new_minute.'&owner='.$this->owner).'">';
 								
 				$close_link = '</a>';
 			}
