@@ -299,6 +299,7 @@ import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
 income	bookkeeping	en	Income
 installed applications	admin	en	Installed applications
+interface/template selection	preferences	en	Interface/Template Selection
 international	common	en	International
 inventory	common	en	Inventory
 ip	admin	en	IP
@@ -556,6 +557,7 @@ the login and password can not be the same	admin	en	The login and password can n
 there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	en	There was an error trying to connect to your mail server.<br>Please, check your username and password, or contact your admin.
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
 the two passwords are not the same	common	en	The two passwords are not the same
+theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
 they must be removed before you can continue	admin	en	They must be removed before you can continue
 this folder is empty	email	en	This folder is empty
 this month	calendar	en	This month
