@@ -29,10 +29,10 @@
 
   // Actual content
   if ($phpgw->acl->check('changepassword',1)) {
-			echo "<a href=\"" . $phpgw->link("changepassword.php") . "\">"
+			echo "<a href=\"" . $phpgw->link('/preferences/changepassword.php') . "\">"
      . lang("change your password") . "</a>";
 	}
-  echo "<br><a href=\"" . $phpgw->link("settings.php") . "\">"
+  echo "<br><a href=\"" . $phpgw->link('/preferences/settings.php') . "\">"
      . lang("change your settings") . "</a>";
 //  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
 //     . lang("change your profile") . "</a>";

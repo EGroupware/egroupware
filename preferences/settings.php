@@ -42,7 +42,7 @@
         $target = ' target="_top"';
      }
      ?>
-      <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>"<?php echo $target; ?>>
+      <form method="POST" action="<?php echo $phpgw->link('/preferences/settings.php'); ?>"<?php echo $target; ?>>
        <table border=0>
        <tr>
         <td><?php echo lang("max matchs per page"); ?>: </td>
@@ -271,10 +271,10 @@
      $pref->save_repository();
 
      if ($phpgw_info['server']['useframes'] != 'never') {
-        Header('Location: ' . $phpgw->link($phpgw_info['server']['webserver_url'] . '/preferences/index.php'));
+        Header('Location: ' . $phpgw->link('/preferences/index.php'));
         $phpgw->common->phpgw_exit();
      }
 
-     Header('Location: ' . $phpgw->link('index.php'));
+     Header('Location: ' . $phpgw->link('/preferences/index.php'));
   }
 ?>
