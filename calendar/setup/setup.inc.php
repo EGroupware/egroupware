@@ -23,7 +23,14 @@
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_user';
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['calendar']['hooks'] = array('preferences','admin');
+	$setup_info['calendar']['hooks'] = array(
+		'preferences',
+		'admin',
+		'manual',
+		'deleteaccount',
+		'add_def_prefs',
+		'email'
+	);
 
 	/* Dependencies for this app to work */
 	$setup_info['calendar']['depends'][] = array(
