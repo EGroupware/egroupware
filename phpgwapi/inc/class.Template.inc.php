@@ -18,8 +18,12 @@
 	{
 		var $classname = 'Template';
 
-		/* if set, echo assignments */
-		var $debug = False;
+		/**
+		 * @var $rb_debug mixed False for no debug, string or array of strings with:
+		 *	- function-name like set_var to get eg. all assignments or
+		 *	- handle- / variable-names - if you are only interested in some variables ;-)
+		 */
+		var $debug = False;	// array('cat_list','cat_list_t');
 
 		/* $file[handle] = 'filename'; */
 		var $file = array();
@@ -62,6 +66,10 @@
 		 */
 		function set_root($root)
 		{
+			if ($this->debug && $this->check_debug('set_root'))
+			{
+				echo "<p>Template::set_root('$root')</p>\n";
+			}
 			if (!is_dir($root))
 			{
 				$this->halt("set_root: $root is not a directory.");
@@ -77,6 +85,10 @@
 		 */
 		function set_unknowns($unknowns = 'keep')
 		{
+			if ($this->debug && $this->check_debug('set_unknows'))
+			{
+				echo "<p>Template::set_unknows('$unknowns')</p>\n";
+			}
 			$this->unknowns = $unknowns;
 		}
 
@@ -89,6 +101,10 @@
 		 */
 		function set_file($handle, $filename = '')
 		{
+			if ($this->debug && $this->check_debug('set_file',$handle,$filename))
+			{
+				echo "<p>Template::set_file('".print_r($handle,true)."','$filename')</p>\n";
+			}
 			if (!is_array($handle))
 			{
 				if ($filename == '')
@@ -100,8 +116,6 @@
 			}
 			else
 			{
-//				reset($handle);
-//				while(list($h, $f) = each($handle))
 				foreach($handle as $h => $f)
 				{
 					$this->file[$h] = $this->filename($f);
@@ -115,9 +129,13 @@
 		 */
 		function set_block($parent, $handle, $name = '')
 		{
+			if ($this->debug && $this->check_debug('set_block',$parent,$handle,$name))
+			{
+				echo "<p>Template::set_block('$parent','$handle','$name')</p>\n";
+			}
 			if (!$this->loadfile($parent))
 			{
-				$this->halt("subst: unable to load $parent.");
+				$this->halt("set_block: unable to load '$parent'.");
 				return false;
 			}
 			if ($name == '')
@@ -125,11 +143,15 @@
 				$name = $handle;
 			}
 			$str = $this->get_var($parent);
-			$reg = "/<!--\s+BEGIN $handle\s+-->(.*)\n\s*<!--\s+END $handle\s+-->/sm";
-			preg_match_all($reg, $str, $m);
-			$str = preg_replace($reg, '{' . "$name}", $str);
-			$this->set_var($handle, $m[1][0]);
-			$this->set_var($parent, $str);
+			$qhandle = preg_quote($handle);
+			$reg = "/<!--\\s+BEGIN $qhandle\\s+-->(.*)\n\\s*<!--\\s+END $qhandle\\s+-->/s";
+			if (!preg_match($reg,$str,$match))
+			{
+				$this->halt("set_block: unable to find block '$handle' in '$parent'.");
+				return False;
+			}
+			$this->set_var($handle,$match[1]);
+			$this->set_var($parent,preg_replace($reg, '{' . "$name}",$str));
 		}
 
 		/* public: set_var(array $values)
@@ -155,9 +177,9 @@
 			{
 				if (!empty($k))
 				{
-					if ($this->debug)
+					if ($this->debug && $this->check_debug('set_var',$k))
 					{
-						print "array: set *$k* to *$v*<br>\n";
+						echo "<p>Template::set_var('$k','$v')</p>\n";
 					}
 					$this->varkeys[$k] = $this->varname($k);
 					$this->varvals[$k] = $this->egroupware_hack ? str_replace(
@@ -173,6 +195,10 @@
 		 */
 		function subst($handle)
 		{
+			if ($this->debug && $this->check_debug('subst',$handle))
+			{
+				echo "<p>Template::subst('$handle')</p>\n";
+			}
 			if (!$this->loadfile($handle))
 			{
 				$this->halt("subst: unable to load $handle.");
@@ -180,8 +206,6 @@
 			}
 
 			$str = $this->get_var($handle);
-//			reset($this->varkeys);
-//			while (list($k, $v) = each($this->varkeys))
 			foreach($this->varkeys as $k => $v)
 			{
 				$str = str_replace($v, $this->varvals[$k], $str);
@@ -199,7 +223,6 @@
 		}
 
 		/* public: parse(string $target, string $handle, boolean append)
-		 * public: parse(string $target, array  $handle, boolean append)
 		 * target: handle of variable to generate
 		 * handle: handle of template to substitute
 		 * append: append to target handle
@@ -220,8 +243,6 @@
 			}
 			else
 			{
-//				reset($handle);
-//				while(list($i, $h) = each($handle))
 				foreach($handle as $i => $h)
 				{
 					$str = $this->subst($h);
@@ -253,8 +274,6 @@
 		 */
 		function get_vars()
 		{
-//			reset($this->varkeys);
-//			while(list($k, $v) = each($this->varkeys))
 			foreach($this->varkeys as $k => $v)
 			{
 				$result[$k] = $this->varvals[$k];
@@ -276,8 +295,6 @@
 			}
 			else
 			{
-//				reset($varname);
-//				while(list($k, $v) = each($varname))
 				foreach($varname as $k => $v)
 				{
 					$result[$k] = $this->varvals[$k];
@@ -303,8 +320,6 @@
 			{
 				return false;
 			}
-//			reset($m);
-//			while(list($k, $v) = each($m))
 			foreach($m as $k => $v)
 			{
 				if (!isset($this->varkeys[$v]))
@@ -405,12 +420,21 @@
 		 */
 		function loadfile($handle)
 		{
-			if (isset($this->varkeys[$handle]) and !empty($this->varvals[$handle]))
+			if ($this->debug && $this->check_debug('loadfile',$handle))
+			{
+				echo "<p>Template::loadfile('$handle') file=<pre>\n".print_r($this->file,True)."</pre>\n";
+				echo "<p>backtrace: ".function_backtrace()."</p>\n";
+			}
+			if (isset($this->varkeys[$handle]) && !empty($this->varvals[$handle]))
 			{
 				return true;
 			}
 			if (!isset($this->file[$handle]))
 			{
+				if ($this->debug && $this->check_debug('loadfile',$handle))
+				{
+					echo "varkeys =<pre>".print_r($this->varkeys,True)."</pre>varvals =<pre>".print_r($this->varvals,True)."</pre>\n";
+				}
 				$this->halt("loadfile: $handle is not a valid handle.");
 				return false;
 			}
@@ -454,5 +478,21 @@
 		function haltmsg($msg)
 		{
 			printf("<b>Template Error:</b> %s<br>\n", $msg);
+			echo "<b>Backtrace</b>: ".function_backtrace(2)."<br>\n";
+		}
+
+		function check_debug($str)
+		{
+			if (!$this->debug) return False;
+
+			foreach(func_get_args() as $arg)
+			{
+				if (!is_array($this->debug) && $this->debug === $arg ||
+					(is_array($this->debug) && (@$this->debug[$arg] || in_array($arg,$this->debug,True))))
+				{
+					return True;
+				}
+			}
+			return False;
 		}
 	}
