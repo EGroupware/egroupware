@@ -18,7 +18,7 @@
 		global $phpgw;
 
 		$country  = array(
-			'user_choice'  => 'User Choice',
+			'user_choice'  => 'Users Choice',
 			'force_select' => 'Force Selectbox'
 		);
 
