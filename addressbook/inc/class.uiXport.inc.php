@@ -164,7 +164,7 @@
 
 			if ($convert)
 			{
-				$buffer = $this->bo->export($cat_id);
+				$buffer = $this->bo->export($conv_type,$cat_id);
 
 				if ($conv_type == 'none')
 				{

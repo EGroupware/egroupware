@@ -225,9 +225,9 @@
 			return $buffer;
 		}
 
-		function export($cat_id='')
+		function export($conv_type,$cat_id='')
 		{
-			global $phpgw_info,$conv_type;
+			global $phpgw_info;
 
 			include (PHPGW_APP_INC . '/export/' . $conv_type);
 			$buffer=array();
