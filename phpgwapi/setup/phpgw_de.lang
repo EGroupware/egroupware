@@ -52,10 +52,8 @@ august	common	de	August
 australia	common	de	AUSTRALIEN
 austria	common	de	ÖSTERREICH
 author	common	de	Autor
-autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
-autohide sidebox menus	common	de	
-automacally hide the sidebox menu's?	common	de	Automatisch das linke Navigationsmenü ausblenden
-automatically hide the sidebox menus?	common	de	
+autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
+automatically hide the sidebox menus?	common	de	Automatisch das linkes Navigationsmenü ausblenden
 autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
@@ -84,7 +82,7 @@ brazil	common	de	BRASILIEN
 british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
-bulleted list	htmlarea	de	
+bulleted list	htmlarea	de	Geordnete Liste
 burkina faso	common	de	BURKINA FASO
 burundi	common	de	BURUNDI
 calendar	common	de	Kalender
@@ -116,8 +114,8 @@ clear form	common	de	Eingaben löschen
 click	common	de	Klicken
 click or mouse over to show menu's	common	de	Klicken oder "on mouse over" um das Menü anzuzeigen.
 click or mouse over to show menu's?	common	de	Klicken oder "on maus over" um das Menü anzuzeigen?
-click or mouse over to show menus	common	de	
-click or mouse over to show menus?	common	de	
+click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
+click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 close	common	de	Schließen
 cocos (keeling) islands	common	de	COCOS INSELN
 colombia	common	de	KOLUMBIEN
@@ -127,7 +125,7 @@ congo	common	de	KONGO
 congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
 cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
-copy selection	htmlarea	de	
+copy selection	htmlarea	de	Den markierten Text kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 create	common	de	Erstellen
@@ -139,7 +137,7 @@ currency	common	de	Währung
 current	common	de	derzeit
 current style	htmlarea	de	
 current users	common	de	Derzeit angemeldete Benutzer
-cut selection	htmlarea	de	
+cut selection	htmlarea	de	Den markierten Text einfügen
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 date	common	de	Datum
@@ -147,7 +145,7 @@ date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	de	Dezember
-decrease indent	htmlarea	de	
+decrease indent	htmlarea	de	Einzug verkleinern
 default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
 denmark	common	de	DÄNEMARK
@@ -157,8 +155,7 @@ details	common	de	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfixe Scripts für Internet Explorer 5.5 und höher, zum darstellen von transparenten PNG Bildern abschalten.?
 disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG Bilder Bugfix abschalten
 disable slider effects	common	de	Schwebeeffekte des Navigations Menüs abschalten
-disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim anzeigen oder verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim anzeigen oder verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
 disabled	common	de	Deaktiviert
 display monday first	jscalendar	de	Montag zuerst anzeigen
 display sunday first	jscalendar	de	Sonntag zuerst anzeigen
@@ -187,7 +184,8 @@ email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. 
 enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
-enlarge editor	htmlarea	de	
+enlarge editor	htmlarea	de	Editor vergrößern
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre eGroupWare erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware &nbsp; or &nbsp; /egroupware<br><b> KEINEN Slash "/" am ende</b>
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 equatorial guinea	common	de	EQUATORIAL GUINEA
@@ -255,7 +253,7 @@ guyana	common	de	GUYANA
 haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 help	common	de	Hilfe
-help using editor	htmlarea	de	
+help using editor	htmlarea	de	Hilfe zum benutzen des Editors
 high	common	de	Hoch
 highest	common	de	Höchste
 holy see (vatican city state)	common	de	VATICAN
@@ -267,13 +265,13 @@ horizontal rule	htmlarea	de	Horizantale Linie
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
-increase indent	htmlarea	de	
+increase indent	htmlarea	de	Einzug erhöhen
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
 insert image	htmlarea	de	Bild einfügen
 insert table	htmlarea	de	Tabelle einfügen
-insert web link	htmlarea	de	
+insert web link	htmlarea	de	Web Kink hinzufügen
 international	common	de	International
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -291,10 +289,10 @@ japan	common	de	JAPAN
 jordan	common	de	JORDANIEN
 july	common	de	Juli
 june	common	de	Juni
-justify center	htmlarea	de	
-justify full	htmlarea	de	
-justify left	htmlarea	de	
-justify right	htmlarea	de	
+justify center	htmlarea	de	Ausrichtung mittig
+justify full	htmlarea	de	Ausrichtung im block
+justify left	htmlarea	de	Ausrichtung links
+justify right	htmlarea	de	Ausrichtung rechts
 kazakstan	common	de	KAZAKSTAN
 kenya	common	de	KENIA
 keywords	common	de	Schlüsselwort
@@ -525,11 +523,11 @@ status	common	de	Status
 strikethrough	htmlarea	de	Durchstreichen
 subject	common	de	Betreff
 submit	common	de	Absenden
-subscript	htmlarea	de	
+subscript	htmlarea	de	Tiefer gestellt Zeichen
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
 sudan	common	de	SUDAN
 sunday	common	de	Sonntag
-superscript	htmlarea	de	
+superscript	htmlarea	de	Hochgestellt Zeichen
 suriname	common	de	SURINAME
 svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
 swaziland	common	de	SWAZILAND
@@ -559,7 +557,7 @@ to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste d
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
 toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
-toggle html source	htmlarea	de	
+toggle html source	htmlarea	de	Wechseln zur HTML source Ansicht
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
@@ -615,7 +613,7 @@ written by:	common	de	Geschrieben von:
 year	common	de	Jahr
 yemen	common	de	YEMEN
 yes	common	de	Ja
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	de	Sie befinden sich im Text Modus. Benutzen Sie den [<>] Button um zum WYSIWYG Modus zu wechsweln. 
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	de	Sie befinden sich im Text Modus. Benutzen Sie den [<>] Button um zum WYSIWYG Modus zu wechsweln.
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you are running a newer version of phpgroupware than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.
 you have been successfully logged out	login	de	Abmelden erfolgreich
