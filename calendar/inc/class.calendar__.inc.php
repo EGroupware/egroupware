@@ -14,6 +14,8 @@
 
 	/* $Id$ */
 
+include(PHPGW_SERVER_ROOT.'/'.$phpgw_info['flags']['currentapp'].'/version.inc.php');
+
 if(extension_loaded('mcal') == False)
 {
 	define(RECUR_NONE,0);
@@ -66,17 +68,17 @@ class calendar__
 			case MSG_DELETED:
 				$action = 'Deleted ';
 				$event_id = $old_event->id;
-				$msgtype = '';
+				$msgtype = '"calendar";';
 				break;
 			case MSG_MODIFIED:
 				$action = 'Modified ';
 				$event_id = $old_event->id;
-				$msgtype = 'Calendar-Version: '.$phpgw_info['server']['versions']['calendar'].'; Calendar-Id: '.$new_event->id;
+				$msgtype = '"calendar"; Version="'.$phpgw_info['server']['versions']['calendar'].'"; Id="'.$new_event->id.'"';
 				break;
 			case MSG_ADDED:
 				$action = 'Added ';
 				$event_id = $old_event->id;
-				$msgtype = 'Calendar-Version: '.$phpgw_info['server']['versions']['calendar'].'; Calendar-Id: '.$new_event->id;
+				$msgtype = '"calendar"; Version="'.$phpgw_info['server']['versions']['calendar'].'"; Id="'.$new_event->id.'"';
 				break;
 		}
 
@@ -132,7 +134,7 @@ class calendar__
 						$body = 'You have a meeting scheduled for '.$new_event_date;
 						break;
 				}
-				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' L';
+				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
 				$send->msg('email',$to,$subject,$body,$msgtype);
 			}
 		}
