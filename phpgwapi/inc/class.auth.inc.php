@@ -3,8 +3,9 @@
   * eGroupWare API - Password auth and crypt functions                       *
   * This file written by Miles Lott <milos@groupwhere.org>                   *
   * Copyright (C) 2004 Miles Lott                                            *
-  *  Most functions based on code from http://www.thomas-alfeld.de/frank/    *
-  *  Other code taken from class.common.inc.php originally from phpGroupWare *
+  *  Many functions based on code from Frank Thomas <frank@thomas-alfeld.de> *
+  *    which can be seen at http://www.thomas-alfeld.de/frank/               *
+  *  Other functions from class.common.inc.php originally from phpGroupWare  *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -124,6 +125,7 @@
 		/* Create a password for storage in the phpgw_accounts table */
 		function encrypt_sql($password)
 		{
+			/* Grab configured type, or default to md5() (old method) */
 			$type = @$GLOBALS['phpgw_info']['server']['sql_encryption_type']
 				? strtolower($GLOBALS['phpgw_info']['server']['sql_encryption_type'])
 				: 'md5';
@@ -167,7 +169,7 @@
 						$this->error = 'no sha';
 						return False;
 					}
-					return '{SHA}' . base64_encode(mhash(MHASH_SHA1,$passwd));
+					return '{SHA}' . base64_encode(mhash(MHASH_SHA1,$password));
 				case 'ssha':
 					if(!function_exists('mhash'))
 					{
@@ -183,6 +185,80 @@
 					return md5($password);
 			}
 			$this->error = $this->error ? $this->error : 'no valid encryption available';
+			return False;
+		}
+
+		/**
+		@function sha_compare
+		@abstract compare SHA-encrypted passwords for authentication
+		@param $form_val user input value for comparison
+		@param $db_val   stored value (from database)
+		@return boolean	 True on successful comparison
+		*/
+		function sha_compare($form_val,$db_val)
+		{
+			/* Start with the first char after {SHA} */
+			$hash = base64_decode(substr($db_val,5));
+			$new_hash = mhash(MHASH_SHA1,$form_val);
+			//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
+
+			if(strcmp($hash,$new_hash) == 0)
+			{
+				return True;
+			}
+			return False;
+		}
+
+		/**
+		@function ssha_compare
+		@abstract compare SSHA-encrypted passwords for authentication
+		@param $form_val user input value for comparison
+		@param $db_val   stored value (from database)
+		@return boolean	 True on successful comparison
+		*/
+		function ssha_compare($form_val,$db_val)
+		{
+			/* Start with the first char after {SSHA} */
+			$hash = base64_decode(substr($db_val, 6));
+
+			// SHA-1 hashes are 160 bits long
+			$orig_hash = substr($hash, 0, 20);
+			$salt = substr($hash, 20);
+			$new_hash = mhash(MHASH_SHA1, $form_val . $salt);
+
+			if(strcmp($orig_hash,$new_hash) == 0)
+			{
+				return True;
+			}
+			return False;
+		}
+
+		/**
+		@function crypt_compare
+		@abstract compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
+		@param $form_val user input value for comparison
+		@param $db_val   stored value (from database)
+		@param $type     crypt() type
+		@return boolean	 True on successful comparison
+		*/
+		function crypt_compare($form_val,$db_val,$type)
+		{
+			$saltlen = array(
+				'blowfish_crypt' => 16,
+				'md5_crypt' => 12,
+				'ext_crypt' => 9,
+				'crypt' => 2
+			);
+
+			// PHP's crypt(): salt + hash
+			// notice: "The encryption type is triggered by the salt argument."
+			$salt = substr($db_val, 0, (int)$saltlen[$type]);
+			$new_hash = crypt($form_val, $salt);
+
+			if(strcmp($db_val,$new_hash) == 0)
+			{
+				return True;
+			}
 			return False;
 		}
 	}
