@@ -221,12 +221,13 @@
       } else {
         $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
         $url .= "&kp3=" . $kp3;
-        if ($extravars) {
-          $url .= "&$extravars";
-        }
         $url .= "&domain=" . $phpgw_info["user"]["domain"];
         if ($phpgw_info["flags"]["newsmode"]) {
           $url .= "&newsmode=on";
+        }
+
+        if ($extravars) {
+          $url .= "&$extravars";
         }
       }
 
