@@ -45,7 +45,7 @@
 				'tertiary'  => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'width'     => '100%',
 				'outerborderwidth' => '0',
-				'header_background_image' => $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
+				'header_background_image' => $GLOBALS['phpgw']->common->image($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'),'bg_filler')
 			)
 		);
 		$app_id = $GLOBALS['phpgw']->applications->name2id('addressbook');
