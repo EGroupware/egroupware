@@ -132,7 +132,7 @@
 
     function phpgw_()
     {
-      global $phpgw_info, $sessionid;
+      global $phpgw_info, $sessionid, $login;
       /**************************************************************************\
       * Required classes                                                         *
       \**************************************************************************/
@@ -167,6 +167,9 @@
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
         $this->session       = new sessions;
+	$log = explode("@",$login);
+	$this->preferences   = new preferences($log[0]);
+//	$this->preferences->preferences_($log[0]);
       }else{
         /* Load selected authentication class */
         if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
@@ -182,11 +185,11 @@
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
+	$this->preferences   = new preferences;
      }
       $this->accounts      = new accounts;
       $this->translation   = new translation;
       $this->common        = new common;
-      $this->preferences   = new preferences($phpgw_info["user"]["account_id"]);
       $this->acl           = new acl;
       $this->hooks         = new hooks;
 

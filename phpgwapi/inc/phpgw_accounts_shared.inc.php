@@ -21,7 +21,10 @@
        //echo "accounts_const called<br>line: $line<br>$file";
 
        $phpgw->accounts->phpgw_fillarray();
-       $preferences  = new preferences($phpgw_info["user"]["account_id"]);
+       if(! $phpgw->preferences->account_id) {
+	 $phpgw->preferences->preferences($phpgw_info["user"]["account_id"]);
+       }
+       $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
        $this->apps   = $this->read_apps($phpgw_info["user"]["userid"]);
        
@@ -47,8 +50,7 @@
        $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
        $phpgw_info_temp["server"]      = $phpgw_info["server"];
        $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
-       $p = new preferences($phpgw_info["user"]["account_id"]);
-       $phpgw_info_temp["user"]["preferences"] = $p->preferences;
+       $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
        $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
                                                                  // database for security.
 
@@ -197,13 +199,26 @@
     function preferences($account_id)
     {
       global $phpgw;
-      $db2 = $phpgw->db;      
-      $this->account_id = $account_id;
+      $db2 = $phpgw->db;
+      $load_pref = True;
+      if (is_long($account_id)) {
+	$this->account_id = $account_id;
+      } elseif(is_string($account_id)) {
+	$db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'");
+	if($db2->num_rows()) {
+	  $db2->next_record();
+	  $this->account_id = $db2->f("account_id");
+	}
+      } else {
+	$load_pref = False;
+      }
 
-      $db2->query("select preference_value from preferences where preference_owner='"
-                . $this->account_id . "'",__LINE__,__FILE__);
-      $db2->next_record();
-      $this->preferences = unserialize($db2->f("preference_value"));
+      if ($load_pref) {
+	$db2->query("select preference_value from preferences where preference_owner='"
+                  . $this->account_id . "'",__LINE__,__FILE__);
+	$db2->next_record();
+	$this->preferences = unserialize($db2->f("preference_value"));
+      }
     }
 
     // This should be called when you are done makeing changes to the preferences
@@ -212,16 +227,19 @@
        //echo "<br>commit called<br>Line: $line<br>File: $file";
     
        global $phpgw, $phpgw_info;
-       $db = $phpgw->db;
+       if ($this->account_id) {
+         $db = $phpgw->db;
 
-       $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
+         $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
-       $db->query("insert into preferences (preference_owner,preference_value) values ('"
-                . $this->account_id . "','" . serialize($this->preferences) . "')",__LINE__,__FILE__);
+         $db->query("insert into preferences (preference_owner,preference_value) values ('"
+                  . $this->account_id . "','" . serialize($this->preferences) . "')",__LINE__,__FILE__);
 
-       if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-          $phpgw->accounts->sync(__LINE__,__FILE__);
-       }
+         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
+	    $phpgw_info["user"]["preferences"] = $this->preferences;
+            $phpgw->accounts->sync(__LINE__,__FILE__);
+         }
+      }
     }
 
     // Add a new preference.
@@ -239,7 +257,11 @@
     
     function delete($app_name,$var)
     {
-       $this->change($app_name,$var,"");
+       if (! $var) {
+	  $this->reset($app_name);
+       } else {
+	  unset($this->preferences[$app_name][$var]);
+       }
     }
 
     // This will kill all preferences within a certain app
@@ -248,6 +270,10 @@
        $this->preferences[$app_name] = array();
     }
 
+    function get_preferences()
+    {
+       return $this->preferences;
+    }
   } //end of preferences class
 
 
