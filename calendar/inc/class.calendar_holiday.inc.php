@@ -160,7 +160,7 @@ class calendar_holiday
 
 	function read_holiday()
 	{
-		global $phpgw;
+		global $phpgw, $phpgw_info;
 
 		$this->year = intval($phpgw->calendar->tempyear);
 		
