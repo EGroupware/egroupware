@@ -52,8 +52,6 @@ august	common	fr	Août
 australia	common	fr	AUSTRALIE
 austria	common	fr	AUTRICHE
 author	common	fr	Auteur
-autohide sidebox menus	common	fr	
-automatically hide the sidebox menus?	common	fr	
 autosave default category	common	fr	Sauvegarde automatique dans catégorie par défaut
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
@@ -71,7 +69,6 @@ belize	common	fr	BELIZE
 benin	common	fr	BENIN
 bermuda	common	fr	BERMUDES
 bhutan	common	fr	BOUTAN
-blocked, too many attempts	common	fr	
 bold	htmlarea	fr	Gras
 bolivia	common	fr	BOLIVIE
 bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
@@ -138,7 +135,6 @@ czech republic	common	fr	REPUBLIQUE TCHEQUE
 date	common	fr	Date
 date due	common	fr	Date butoir
 date selection:	jscalendar	fr	Sélection de la date :
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	
 december	common	fr	Décembre
 decrease indent	htmlarea	fr	Décrémenter l'indentation
 default category	common	fr	Catégorie par défaut
@@ -147,10 +143,6 @@ denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	
-disable internet explorer png-image-bugfix	common	fr	
-disable slider effects	common	fr	
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	
 disabled	common	fr	Désactivé
 display monday first	jscalendar	fr	Affiche Lundi en premier
 display sunday first	jscalendar	fr	Affiche Dimanche en premier
@@ -171,7 +163,6 @@ edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 egroupware api version %1	common	fr	eGroupWare version API %1
-egroupware: login blocked for user '%1', ip %2	common	fr	
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	EMail
@@ -180,7 +171,6 @@ enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
 enlarge editor	htmlarea	fr	2largir l'éditeur
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
@@ -283,6 +273,7 @@ january	common	fr	Janvier
 japan	common	fr	JAPON
 jordan	common	fr	JORDANIE
 july	common	fr	Juillet
+jun	common	fr	Jun
 june	common	fr	Juin
 justify center	htmlarea	fr	Centrer
 justify full	htmlarea	fr	Justifier
@@ -392,12 +383,9 @@ ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
-on mouse over	common	fr	
 only private	common	fr	Seulement privés
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
-open popup window	common	fr	
-ordered list	htmlarea	fr	
 original	common	fr	Original
 other	common	fr	Autre
 overview	common	fr	Vue d'ensemble
@@ -416,7 +404,6 @@ password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 paste from clipboard	htmlarea	fr	Coller depuis la presse-papiers
 path	htmlarea	fr	Chemin
-path to user and group files has to be outside of the webservers document-root!!!	common	fr	
 pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
 pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
 pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
@@ -438,7 +425,6 @@ portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
 powered by phpgroupware version %1	common	fr	Motorisé par <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	fr	Préférences
-preferences for the idots template set	common	fr	
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
@@ -496,7 +482,6 @@ show all	common	fr	Tous les éléments
 show all categorys	common	fr	Voir toutes les catégories
 show menu	common	fr	Voir menu
 show page generation time	common	fr	Voir le temps de génération de page
-show page generation time on the bottom of the page?	common	fr	
 show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
