@@ -409,13 +409,13 @@
 		{
 			if (!$startYear)
 			{
-				$startYear = date('Y') - 2;
+				$startYear = date('Y') - 5;
 			}
 			if ($selected && $startYear > $selected) $startYear = $selected;
 
 			if (!$endyear)
 			{
-				$endyear = date('Y') + 5;
+				$endyear = date('Y') + 6;
 			}
 			if ($selected && $endYear < $selected) $endYear = $selected;
 

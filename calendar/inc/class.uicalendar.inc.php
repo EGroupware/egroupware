@@ -2628,7 +2628,7 @@
 			$var[] = Array(
 				'field'	=> lang('Start Date'),
 				'data'	=> $phpgw->common->dateformatorder(
-				   $sb->getYears('start[year]',intval($phpgw->common->show_date($start,'Y')),intval($phpgw->common->show_date($start,'Y'))),
+				   $sb->getYears('start[year]',intval($phpgw->common->show_date($start,'Y'))),
 				   $sb->getMonthText('start[month]',intval($phpgw->common->show_date($start,'n'))),
 				   $sb->getDays('start[mday]',intval($phpgw->common->show_date($start,'d')))
 			   )
@@ -2649,7 +2649,7 @@
 			$var[] = Array(
 				'field'	=> lang('End Date'),
 				'data'	=> $phpgw->common->dateformatorder(
-				   $sb->getYears('end[year]',intval($phpgw->common->show_date($end,'Y')),intval($phpgw->common->show_date($end,'Y'))),
+				   $sb->getYears('end[year]',intval($phpgw->common->show_date($end,'Y'))),
 				   $sb->getMonthText('end[month]',intval($phpgw->common->show_date($end,'n'))),
 				   $sb->getDays('end[mday]',intval($phpgw->common->show_date($end,'d')))
 				)
@@ -2765,7 +2765,7 @@
 				'field'	=> lang('Repeat End Date'),
 				'data'	=> '<input type="checkbox" name="cal[rpt_use_end]" value="y"'.$checked.'>'.lang('Use End Date').'  '
 				   .$phpgw->common->dateformatorder(
-			         $sb->getYears('recur_enddate[year]',intval($phpgw->common->show_date($recur_end,'Y')),intval($phpgw->common->show_date($recur_end,'Y'))),
+			         $sb->getYears('recur_enddate[year]',intval($phpgw->common->show_date($recur_end,'Y'))),
          		   $sb->getMonthText('recur_enddate[month]',intval($phpgw->common->show_date($recur_end,'n'))),
                   $sb->getDays('recur_enddate[mday]',intval($phpgw->common->show_date($recur_end,'d')))
                )
