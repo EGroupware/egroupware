@@ -94,11 +94,11 @@
 						{
 							$addit = False;
 							list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
-							$message_id = addslashes(chop($message_id));
+							$message_id = $phpgw_setup->db->db_addslashes(chop($message_id));
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
-							$app_name   = addslashes(chop($app_name));
-							$phpgw_setup->db_lang    = addslashes(chop($phpgw_setup->db_lang));
-							$content    = addslashes(chop($content));
+							$app_name   = $phpgw_setup->db->db_addslashes(chop($app_name));
+							$phpgw_setup->db_lang    = $phpgw_setup->db->db_addslashes(chop($phpgw_setup->db_lang));
+							$content    = $phpgw_setup->db->db_addslashes(chop($content));
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
