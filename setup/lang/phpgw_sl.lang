@@ -13,7 +13,7 @@ admin password to header manager	setup	sl	Geslo za upravljanje konfiguracijske d
 admin username	setup	sl	Uporabniško ime upravljalca
 admins	setup	sl	Uporabniki
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sl	Po prenosu datoteke jo shranite v isti direktorij, kjer je header.inc.php. Potem kliknite "Nadaljevanje".
-all core tables and the admin and preferences applications	setup	sl	vse osnovne aplikacije in aplikaciji admin in nastavitve.
+all core tables and the admin and preferences applications	setup	sl	vse osnovne tabele in aplikaciji admin in nastavitve.
 all users	setup	sl	Vsi uporabniki
 analysis	setup	sl	Analiza
 app details	setup	sl	Podrobnosti aplikacije
@@ -56,7 +56,7 @@ charset	setup	sl	nabor znakov
 charset to convert to	setup	sl	Nabor za pretvorbo
 check ip address of all sessions	setup	sl	Preverite IP naslov vseh sej
 click <a href="index.php">here</a> to return to setup.	setup	sl	Klikni <a href="index.php">tukaj</a> za vrnitev v namestitev.
-click here	setup	sl	Kliknite tukaj.
+click here	setup	sl	Kliknite tukaj
 completed	setup	sl	Dokon&#269;ano
 configuration	setup	sl	Konfiguriranje
 configuration completed	setup	sl	Konfiguriranje dokon&#269;ano
@@ -68,7 +68,7 @@ could not open header.inc.php for writing!	setup	sl	Ali lahko odpreš header.inc.
 country selection	setup	sl	Izbor države
 create	setup	sl	Ustvari
 create database	setup	sl	Ustvari podatkovno bazo
-create demo accounts	setup	sl	Ustvari demo uporabniški ra&#269;un
+create demo accounts	setup	sl	Ustvari demo uporabniške ra&#269;une.
 create one now	setup	sl	Ustvari enega sedaj
 create the empty database -	setup	sl	Ustvari prazno podatkovno bazo -
 create the empty database and grant user permissions -	setup	sl	Ustvari prazno podatkovno bazo in dodeli pravice dostopa
@@ -217,7 +217,7 @@ no xml support found. disabling	setup	sl	Ni podpore za XML. Onemogo&#269;am.
 not complete	setup	sl	ni dokon&#269;ano
 not completed	setup	sl	Ni dokon&#269;ano
 not ready for this stage yet	setup	sl	Sistem še ni pripravljen za ta korak.
-not set	setup	sl	ni uporabljeno
+not set	setup	sl	ni nameš&#269;en
 note: you will be able to customize this later	setup	sl	Obvestilo: to boste lahko prilagajali tudi kasneje.
 now guessing better values for defaults...	setup	sl	Ugibam boljše vrednosti za privzete nastavitve.
 ok	setup	sl	V redu
@@ -277,8 +277,8 @@ select where you want to store/retrieve user accounts	setup	sl	Izberite, kam žel
 select which group(s) will be exported (group membership will be maintained)	setup	sl	Izberite, katere skupine želite izvoziti (&#269;lanstvo v skupinah bo ohranjeno)
 select which group(s) will be imported (group membership will be maintained)	setup	sl	Izberite, katere skupine želite uvoziti (&#269;lanstvo v skupinah bo ohranjeno)
 select which group(s) will be modified (group membership will be maintained)	setup	sl	Izberite, katere skupine boste spremenili (&#269;lanstvo v skupinah bo ohranjeno)
-select which languages you would like to use	setup	sl	Izberite jezike, ki jih želite uporabljati
-select which method of upgrade you would like to do	setup	sl	Izberite, katero metodo nadgrajevanja želite uporabiti
+select which languages you would like to use	setup	sl	Izberite jezike, ki jih želite uporabljati:
+select which method of upgrade you would like to do	setup	sl	Izberite, katero metodo nadgrajevanja želite uporabiti:
 select which type of authentication you are using	setup	sl	Izberite, katero metodo avtentikacije boste uporabljali
 select which user(s) will also have admin privileges	setup	sl	Izberite, kateri uporabniki bodo še imeli upravljalske pravice
 select which user(s) will be exported	setup	sl	Izberite, kateri uporabniški ra&#269;uni bodo izvoženi

@@ -213,7 +213,7 @@ login message	admin	sl	Prijavno sporo&#269;ilo
 login screen	admin	sl	Prijavni zaslon
 login shell	admin	sl	Prijavna lupina
 login time	admin	sl	Prijavni &#269;as
-loginid	admin	sl	Prijavni ID
+loginid	admin	sl	Uporabniško ime
 main screen message	admin	sl	Sporo&#269;ilo osnovnega zaslona
 manager	admin	sl	Upravljalec
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najve&#269;ji ID ra&#269;una (npr. 65535 ali 1000000)
@@ -250,7 +250,7 @@ please enter a name	admin	sl	Prosimo, vnesite ime
 please enter a name for that server !	admin	sl	Prosimo, vnesite ime tistega stre¾nika!
 please run setup to become current	admin	sl	Prosimo, po¾enite namestitev (setup) za posodobitev!
 please select	admin	sl	Prosimo izberite
-preferences	admin	sl	Namestitve
+preferences	admin	sl	Nastavitve
 primary group	admin	sl	Osnovna skupina
 re-enter password	admin	sl	Ponovite geslo
 read this list of methods.	admin	sl	Preberite ta seznam metod

@@ -6,7 +6,7 @@
 (i/v)cal	calendar	sl	(i/v)Cal
 1 match found	calendar	sl	1 zadetek najden
 a	calendar	sl	a
-accept	calendar	sl	Sprejeti
+accept	calendar	sl	Sprejmi
 accepted	calendar	sl	Sprejeto
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sl	Dejanje, ki je povzro&#269;ilo obvestilo: Dodano, Prekinjeno, Sprejeto, Zavrneno,...
 add a single entry by passing the fields.	calendar	sl	Dodaj en zapis z vnosom polj.
@@ -247,7 +247,7 @@ startrecord	calendar	sl	Zaèetni zapis
 su	calendar	sl	Ne
 submit to repository	calendar	sl	Objavi v skladi¹&#269;e
 sun	calendar	sl	Nedelja
-tentative	calendar	sl	Tentative
+tentative	calendar	sl	Morda
 test import (show importable records <u>only</u> in browser)	calendar	sl	Tesi uvoza (poka¾i uvozljive zapise<u>samo</u> v brskalniku)
 text	calendar	sl	Tekst
 th	calendar	sl	T
