@@ -61,7 +61,7 @@
 				$this->data['account_id']   = $allValues[0]['gidnumber'][0];
 				$this->data['account_lid']  = $allValues[0]['cn'][0];
 				$this->data['firstname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
-				$this->data['lastname']     = 'Group';
+				$this->data['lastname']     = lang('Group');
 			}
 			else
 			{
@@ -1029,15 +1029,15 @@
 
 			if($acct_type =='g')
 			{
-				$account_name[$account_id]['lid']   = $allValues[0]['cn'][0];
-				$account_name[$account_id]['fname'] = $allValues[0]['cn'][0];
-				$account_name[$account_id]['lname'] = 'Group';
+				$account_name[$account_id]['lid']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
+				$account_name[$account_id]['fname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
+				$account_name[$account_id]['lname'] = lang('Group');
 			}
 			else
 			{
-				$account_name[$account_id]['lid']   = $allValues[0]['uid'][0];
-				$account_name[$account_id]['fname'] = $allValues[0]['givenname'][0];
-				$account_name[$account_id]['lname'] = $allValues[0]['sn'][0];
+				$account_name[$account_id]['lid']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['uid'][0],'utf-8');
+				$account_name[$account_id]['fname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'utf-8');
+				$account_name[$account_id]['lname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
 			}
 			$lid = $account_name[$account_id]['lid'];
 			$fname = $account_name[$account_id]['fname'];
