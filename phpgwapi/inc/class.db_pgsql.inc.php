@@ -132,7 +132,7 @@ class db {
 
 	function transaction_begin()
 	{
-		return pg_Exec($this->Link_ID,'begin');
+		return $this->query('begin');
 	}
 
 	function transaction_commit()
