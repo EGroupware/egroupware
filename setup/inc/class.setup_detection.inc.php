@@ -27,7 +27,7 @@
 					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 					if (@file_exists ($f))
 					{
-						@include($f);
+						include($f);
 						$setup_info[$entry]['filename'] = $f;
 					}
 				}
