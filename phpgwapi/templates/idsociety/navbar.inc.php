@@ -54,7 +54,7 @@
 //			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && $app[1]['title'] != 'About' && $app[1]['title'] != 'Logout')
 			{
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
-					. lang($app[1]['title']) . '" border="0" name="' . $app[0] . '">';
+					. lang($app[1]['title']) . '" border="0" name="' . str_replace('-','_',$app[0]) . '">';
 				$img_src_over = $app[1]['icon_hover'];
 				$img_src_out = $app[1]['icon'];
 
@@ -67,19 +67,19 @@
 
 				if($img_src_over != '')
 				{
-					$applications .= ' onMouseOver="' . $app[0] . ".src='" . $img_src_over . '\'" ';
+					$applications .= ' onMouseOver="' . str_replace('-','_',$app[0]) . ".src='" . $img_src_over . '\'"';
 				}
 				if($img_src_out != '')
 				{
-					$applications .= ' onMouseOut="' . $app[0] . ".src='" . $img_src_out . '\'" ';
+					$applications .= ' onMouseOut="' . str_replace('-','_',$app[0]) . ".src='" . $img_src_out . '\'"';
 				}
 				$applications .= '>'.$title.'</a></td></tr>'."\r\n";
 			}
 			else
 			{
-				$img_src_over = $GLOBALS['phpgw']->common->image_on($app[0],'navbar','-over');
+				$img_src_over = $GLOBALS['phpgw']->common->image_on($app[0],Array('navbar','nonav'),'-over');
 			}
-			if($img_src_over)
+			if($img_src_over != '')
 			{
 				if($strip_portion)
 				{
@@ -90,7 +90,7 @@
 			}
 		}
 
-		$var['app_images'] = implode("','",$pre_load);
+		$var['app_images'] = implode("',\r\n'",$pre_load);
 
 		$var['applications'] = $applications;
      
@@ -112,13 +112,13 @@
 
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
 		{
-			$var['preferences_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences');
-			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences','_over');
+			$var['preferences_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences2');
+			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
 		}
 		else
 		{
-			$var['preferences_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences','_over');
-			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences');
+			$var['preferences_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
+			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences2');
 		}
 
 		$var['logout_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','log_out2');
