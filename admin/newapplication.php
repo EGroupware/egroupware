@@ -61,9 +61,11 @@
 	  while($phpgw->db->next_record()) {
 	    if($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"]) {
 	      $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
-	      $phpgw->common->hook_single("add_def_pref", $n_app_name);
-	      $phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
-	    } else {
+	      if(!$phpgw_newuser["user"]["preferences"][$n_app_name]) {
+		$phpgw->common->hook_single("add_def_pref", $n_app_name);
+		$phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
+	      }
+	    } elseif(!$phpgw_info["user"]["preferences"][$n_app_name]) {
 	      $phpgw->common->hook_single("add_def_pref", $n_app_name);
 	      $phpgw_info["user"]["preferences"]["$n_app_name"] = $phpgw_newuser["user"]["preferences"]["$n_app_name"];
 	      unset($phpgw_newuser);
@@ -91,6 +93,7 @@
   display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
   display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');
 
+  if(!isset($n_app_status)) $n_app_status = 1;
   $selected[$n_app_status] = " selected";
   $status_html = '<option value="0"' . $selected[0] . '>' . lang("Disabled") . '</option>'
                . '<option value="1"' . $selected[1] . '>' . lang("Enabled")  . '</option>'
