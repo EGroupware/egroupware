@@ -103,46 +103,31 @@
     
     function get_list()
     {
-    	global $phpgw, $phpgw_info;
+    	global $phpgw;
       
-      	$sql = "select * from phpgw_accounts";
-      	$this->db->query($sql,__LINE__,__FILE__);
-      	while ($this->db->next_record()) 
-      	{
-      		$accounts[] = Array("account_id" => $this->db->f("account_id"),
-      				"account_lid" => $this->db->f("account_lid"),
+       	// get a ldap connection handle
+       	$ds = $phpgw->common->ldapConnect();
+
+       	// search the dn for the given uid
+       	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=*kd");
+       	$allValues = ldap_get_entries($ds, $sri);
+       
+       	for ($i=0, $j=0; $i<$info["count"]; $i++,$j++) 
+       	{
+
+       		$this->db->query("select * from phpgw_accounts where account_id='" . $allValues[$i]["uidnumber"][0] . "'",__LINE__,__FILE__);
+       		$this->db->next_record();
+      
+      		$accounts[] = Array("account_id" => $allValues[$i]["uidnumber"][0],
+      				"account_lid" => $allValues[$i]["uid"][0],
       				"account_type" => $this->db->f("account_type"),
-      				"account_firstname" => $this->db->f("account_firstname"),
-      				"account_lastname" => $this->db->f("account_lastname"),
+      				"account_firstname" => $allValues[$i]["givenname"][0],
+      				"account_lastname" => $allValues[$i]["sn"][0],
       				"account_status" => $this->db->f("account_status")
       				);
-      }
-
-       // get a ldap connection handle
-       $ds = $phpgw->common->ldapConnect();
-
-       // search the dn for the given uid
-       $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$this->account_id);
-       $allValues = ldap_get_entries($ds, $sri);
-
-       /* Now dump it into the array; take first entry found */
-       $this->data["account_id"]	= $allValues[0]["uidnumber"][0];
-       $this->data["account_lid"] 	= $allValues[0]["uid"][0];
-       $this->data["account_dn"]  	= $allValues[0]["dn"];
-       $this->data["firstname"]   	= $allValues[0]["givenname"][0];
-       $this->data["lastname"]    	= $allValues[0]["sn"][0];
-       $this->data["fullname"]    	= $allValues[0]["cn"][0];
-      
-       $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
-       $this->db->next_record();
-      
-       $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-       $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-       $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-       $this->data["status"]            = $this->db->f("account_status");
-
-       return $this->data;
-      return $accounts;
+	}
+	
+	return $accounts;
     }
     
     function name2id($account_name)
@@ -174,14 +159,42 @@
 
     function get_type($account_id)
     {
-      global $phpgw, $phpgw_info;
-      
-      return "u";
+    	global $phpgw, $phpgw_info;
+    	
+    	$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+    	if ($this->db->num_rows()) 
+    	{
+    		$this->db->next_record();
+    		return $this->db->f("account_type");
+    	} 
+    	else 
+    	{
+    		return False;
+    	}
     }
 
     function exists($accountname)
     {
-    	return True;
+    	global $phpgw, $phpgw_info;
+    	
+    	if (gettype($account_id) == "string") 
+    	{
+    		$account_id = $this->name2id($account_id);
+    		$sql = "SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_id."'";
+    	}
+    	else
+    	{
+    		$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
+    	}
+    	$this->db->query($sql,__LINE__,__FILE__);
+    	if ($this->db->num_rows()) 
+    	{
+    		return True;
+    	} 
+    	else 
+    	{
+    		return False;
+    	}    	
     }
 
     function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
