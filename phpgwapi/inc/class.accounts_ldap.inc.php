@@ -1016,15 +1016,29 @@
 				}
 			}
 
+			$default_group_id  = $this->name2id($GLOBALS['phpgw_info']['server']['default_group_lid']);
+			if (!$default_group_id)
+			{
+				$default_group_id = (int) $this->name2id('Default');
+			}
+			$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
+				$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) == 'g' ?
+				(int) $GLOBALS['auto_create_acct']['primary_group'] : $default_group_id;
+
 			$acct_info = array(
 				'account_lid'       => $accountname,
 				'account_type'      => 'u',
 				'account_passwd'    => $passwd,
-				'account_firstname' => 'New',
-				'account_lastname'  => 'User',
+				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'] ? $GLOBALS['auto_create_acct']['firstname'] : 'New',
+				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'] ? $GLOBALS['auto_create_acct']['lastname'] : 'User',
 				'account_status'    => $account_status,
-				'account_expires'   => $expires
+				'account_expires'   => $expires,
+				'account_primary_group' => $primary_group,
 			);
+			if ($GLOBALS['auto_create_acct']['email'])
+			{
+				$acct_info['account_email'] = $GLOBALS['auto_create_acct']['email'];
+			}
 			$this->create($acct_info,$default_prefs);
 			$accountid = $this->name2id($accountname);
 
