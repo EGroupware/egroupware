@@ -30,6 +30,9 @@
 	}
 	else
 	{
+		$phpgw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
+		$phpgw->log->commit();
+
 		$app = 'home';
 		$invalid_data = True;
 	}
@@ -54,6 +57,13 @@
 	else
 	{
 		Header('Location: ' . $phpgw->link('/home.php'));
+		$phpgw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
+		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method])
+		{
+			$phpgw->log->message('W-BadmenuactionVariable, attempted to access private method: %1',$method);
+		}
+		$phpgw->log->commit();
+
 		/*
 		$_obj = CreateObject('home.home');
 		$_obj->get_list();
