@@ -117,8 +117,7 @@
 						/* Create tables and insert new records for each app in this list */
 						$passing = $this->current($pass,$DEBUG);
 						$passing = $this->default_records($passing,$DEBUG);
-						$my_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
-						$passing = $this->add_langs($passing,$DEBUG,array($my_lang,'en'));
+						$passing = $this->add_langs($passing,$DEBUG,array(get_var('ConfigLang',Array('POST','COOKIE')),'en'));
 						$this->save_minimal_config();
 						break;
 					case 'upgrade':
