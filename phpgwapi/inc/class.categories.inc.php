@@ -52,24 +52,26 @@
 	else { $ordermethod = " order by cat_parent asc"; }
 
 	if ($query) {
-	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
+	$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
 		    . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod" . " "
 		    . $this->db->limit($start,$limit),__LINE__,__FILE__);
+	$this->total_records = $this->db->num_rows();
 	}
 	else {
-	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
+	$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
 			. "$filter $ordermethod" . " "
 			. $this->db->limit($start,$limit),__LINE__,__FILE__);
+        $this->total_records = $this->db->num_rows();
 	}
 
 	    $i = 0;
-	    while ($phpgw->db->next_record()) {
-	    $cats[$i]['id']             = $phpgw->db->f('cat_id');
-	    $cats[$i]['owner']          = $phpgw->db->f('cat_owner');
-	    $cats[$i]['parent']         = $phpgw->db->f('cat_parent');
-	    $cats[$i]['name']           = $phpgw->db->f('cat_name');
-	    $cats[$i]['description']    = $phpgw->db->f('cat_description');
-	    $cats[$i]['data']           = $phpgw->db->f('cat_data');
+	    while ($this->db->next_record()) {
+	    $cats[$i]['id']             = $this->db->f('cat_id');
+	    $cats[$i]['owner']          = $this->db->f('cat_owner');
+	    $cats[$i]['parent']         = $this->db->f('cat_parent');
+	    $cats[$i]['name']           = $this->db->f('cat_name');
+	    $cats[$i]['description']    = $this->db->f('cat_description');
+	    $cats[$i]['data']           = $this->db->f('cat_data');
 	    $i++;
 	    }
 	    return $cats;
