@@ -508,7 +508,8 @@
 
 			if ($id === False)	// function not supported
 			{
-				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type'</p>\n";
+				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type' OR no insert operation before</p>\n";
+				function_backtrace();
 				return -1;
 			}
 			return $id;
@@ -947,7 +948,7 @@
 		{
 			if ($this->Debug) echo "<p>db::quote('$value','$type')</p>\n";
 			
-			if (!$not_null && is_null($value))	// writing unset php-variables and thouse set to NULL now as SQL NULL
+			if (!$not_null && is_null($value))	// writing unset php-variables and those set to NULL now as SQL NULL
 			{
 				return 'NULL';
 			}
@@ -1210,6 +1211,7 @@
 					$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.$where;
 
 				$ret = $this->query($sql,$line,$file);
+				if ($this->Debug) echo "<p>db::query('$sql',$line,$file) = '$ret'</p>\n";
 			}
 			// if we have any blobs to update, we do so now
 			if (($ret || !count($data)) && count($blobs2update))
@@ -1217,6 +1219,8 @@
 				foreach($blobs2update as $col => $val)
 				{
 					$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
+					if ($this->Debug) echo "<p>adodb::UpdateBlob('$table','$col','$val','$where') = '$ret'</p>\n";
+					if (!$ret) $this->halt("Error in UpdateBlob($table,$col,\$val,$where)",$line,$file);
 				}
 			}
 			return $ret;
