@@ -23,7 +23,7 @@
   include("../header.inc.php");
 
   $newpage = $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"];
-  if ($newpage=="index.php") {
+  if ($newpage=="index.php" || ($newpage!="day.php" && $newpage!="week.php" && $newpage!="month.php" && $newpage!="year.php")) {
     $newpage = "month.php";
     $phpgw->preferences->change("calendar","defaultcalendar","month.php");
     $phpgw->preferences->commit();
