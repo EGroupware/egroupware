@@ -320,20 +320,21 @@ First we need to create an other eTemplate to show the list: <b>'et_media.show'<
 					$this->delete();
 					$this->init();
 				}
-<pre>
+</pre>
 
 <p>Of course we have to add this buttons to the template 'et_media.edit'</p>
 
 <h2>9. creating the english lang-file</h2>
 <p>To get rid of the stars '*' behind each Label and to be able to translate the app in other languages we need to create a lang-file<br>
 There are 2 possibilties to create it automaticaly:</p>
+<ol>
 <li>Use the [Write Langfile] button in the eTemplate editor (put the app-name 'et_media' in the name-field first)<br>
 	That will omitt our own messages in the class!!!
 <li>We use a function in our class to call etemplate::writeLangFile('et_media','en',$extra) and can so supply some extra strings.<br>
 	If we add this function to the public_functions-array in our class, we can just call this function via the browser:<br>
 	http://ourDomain/phpgroupware/index.php?menuaction=et_media.et_media.writeLangFile (the errormsg can be savely ignored)<br>
 	This is the function (don't forget to add it like the edit-function to public_functions):
-</p>
+</ol>
 <pre>
 	function writeLangFile()
 	{
