@@ -31,50 +31,60 @@
 		function authenticate($username, $passwd)
 		{
 			global $phpgw_info, $phpgw;
-			//  error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
-			//  these are just "warnings" and can be ignored.....
+			/*
+			error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
+			these are just "warnings" and can be ignored.....
+			*/
 			error_reporting(0); 
 
 			$ldap = ldap_connect($phpgw_info['server']['ldap_host']);
 
-			// find the dn for this uid, the uid is not always in the dn
+			/* find the dn for this uid, the uid is not always in the dn */
 			$sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
 			{
-				// we only care about the first dn
+				/* we only care about the first dn */
 				$userDN = $allValues[0]['dn'];
 
-				// generate a bogus password to pass if the user doesn't give us one 
-				// this gets around systems that are anonymous search enabled 
-				if (empty($passwd)) $passwd = crypt(microtime()); 
-					// try to bind as the user with user suplied password
-					if (ldap_bind($ldap,$userDN, $passwd)) return True;
+				/*
+				generate a bogus password to pass if the user doesn't give us one 
+				this gets around systems that are anonymous search enabled
+				*/
+				if (empty($passwd))
+				{
+					$passwd = crypt(microtime());
 				}
+				/* try to bind as the user with user suplied password */
+				if (ldap_bind($ldap,$userDN, $passwd))
+				{
+					return True;
+				}
+			}
 
-				// Turn error reporting back to normal
-				error_reporting(7);
+			/* Turn error reporting back to normal */
+			error_reporting(7);
 
-				// dn not found or password wrong
-				return False;
+			/* dn not found or password wrong */
+			return False;
 		}
 
-		function change_password($old_passwd, $new_passwd, $_account_id="") 
+		function change_password($old_passwd, $new_passwd, $_account_id='') 
 		{
 			global $phpgw_info, $phpgw;
 
-			if ("" == $_account_id)
+			if ('' == $_account_id)
 			{
 				$_account_id = $phpgw_info['user']['account_id'];
 			}
 	
 			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "uidnumber=$_account_id");
 			$allValues = ldap_get_entries($ds, $sri);
 	
 	
 			$entry['userpassword'] = $phpgw->common->encrypt_password($new_passwd);
-			$dn = $allValues[0]["dn"];
+			$dn = $allValues[0]['dn'];
 	
 			if (!@ldap_modify($ds, $dn, $entry)) 
 			{
@@ -85,20 +95,38 @@
 			return $encrypted_passwd;
 		}
 
-		// This data needs to be updated in LDAP, not SQL (jengo)
+		/* This data needs to be updated in LDAP, not SQL (jengo) */
 		function update_lastlogin($account_id, $ip)
 		{
 			global $phpgw;
 
-			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$phpgw->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
 			$phpgw->db->next_record();
 			$this->previous_login = $phpgw->db->f('account_lastlogin');
 
 			$now = time();
 
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$phpgw->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . $now
-				. "' where account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}
+
+		function new_update_lastlogin($_account_id, $ip)
+		{
+			global $phpgw_info, $phpgw;
+
+			$entry['phpgwaccountlastlogin']     = time();
+			$entry['phpgwaccountlastloginfrom'] = $ip;
+
+			$ds = $phpgw->common->ldapConnect();
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber=' . $_account_id);
+			$allValues = ldap_get_entries($ds, $sri);
+
+			$dn = $allValues[0]['dn'];
+			$this->previous_login = $allValues[0]['phpgwaccountlastlogin'][0];
+
+			@ldap_modify($ds, $dn, $entry);
+		}
+
 	}
 ?>
