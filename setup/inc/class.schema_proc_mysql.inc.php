@@ -23,79 +23,79 @@
 
 		function schema_proc_mysql()
 		{
-			$this->m_sStatementTerminator = ";";
+			$this->m_sStatementTerminator = ';';
 		}
 
 		// Return a type suitable for DDL
 		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
-			$sTranslated = "";
+			$sTranslated = '';
 			switch($sType)
 			{
-				case "auto":
-					$sTranslated = "int(11) auto_increment";
+				case 'auto':
+					$sTranslated = 'int(11) auto_increment';
 					break;
-				case "blob":
-					$sTranslated = "blob";
+				case 'blob':
+					$sTranslated = 'blob';
 					break;
-				case "char":
+				case 'char':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("char(%d)", $iPrecision);
 					}
 					if ($iPrecision > 255)
 					{
-						$sTranslated =  "text";
+						$sTranslated =  'text';
 					}
 					break;
-				case "date":
-					$sTranslated =  "date";
+				case 'date':
+					$sTranslated =  'date';
 					break;
-				case "decimal":
+				case 'decimal':
 					$sTranslated =  sprintf("decimal(%d,%d)", $iPrecision, $iScale);
 					break;
-				case "float":
+				case 'float':
 					switch ($iPrecision)
 					{
 						case 4:
-							$sTranslated = "float";
+							$sTranslated = 'float';
 							break;
 						case 8:
-							$sTranslated = "double";
+							$sTranslated = 'double';
 							break;
 					}
 					break;
-				case "int":
+				case 'int':
 					switch ($iPrecision)
 					{
 						case 2:
-							$sTranslated = "smallint";
+							$sTranslated = 'smallint';
 							break;
 						case 4:
-							$sTranslated = "int";
+							$sTranslated = 'int';
 							break;
 						case 8:
-							$sTranslated = "bigint";
+							$sTranslated = 'bigint';
 							break;
 					}
 					break;
-				case "longtext":
-					$sTranslated = "longtext";
+				case 'longtext':
+					$sTranslated = 'longtext';
 					break;
-				case "text":
-					$sTranslated = "text";
+				case 'text':
+					$sTranslated = 'text';
 					break;
-				case "timestamp":
-					$sTranslated = "datetime";
+				case 'timestamp':
+					$sTranslated = 'datetime';
 					break;
-				case "varchar":
+				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 					}
 					if ($iPrecision > 255)
 					{
-						$sTranslated =  "text";
+						$sTranslated =  'text';
 					}
 					break;
 			}
@@ -107,9 +107,9 @@
 		{
 			switch ($sDefault)
 			{
-				case "current_date":
-				case "current_timestamp":
-					return "now";
+				case 'current_date':
+				case 'current_timestamp':
+					return 'now';
 			}
 
 			return $sDefault;
@@ -136,16 +136,16 @@
 			}
 			switch($sType)
 			{
-				case "tinyint":
-				case "smallint":
+				case 'tinyint':
+				case 'smallint':
 					$sTranslated = "'type' => 'int', 'precision' => 2";
 					break;
-				case "int":
+				case 'int':
 					$sTranslated = "'type' => 'int', 'precision' => 4";
 					break;
-				case "bigint":
+				case 'bigint':
 					$sTranslated = "'type' => 'int', 'precision' => 8";
-				case "char":
+				case 'char':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated = "'type' => 'char', 'precision' => $iPrecision";
@@ -155,21 +155,21 @@
 						$sTranslated =  "'type' => 'text'";
 					}
 					break;
-				case "decimal":
+				case 'decimal':
 					$sTranslated = "'type' => 'decimal', 'precision' => $iPrecision, 'scale' => $iScale";
 					break;
-				case "float":
-				case "double":
+				case 'float':
+				case 'double':
 					$sTranslated = "'type' => 'float', 'precision' => $iPrecision";
 					break;
-				case "datetime":
+				case 'datetime':
 					$sTranslated = "'type' => 'timestamp'";
 					break;
-				case "enum":
+				case 'enum':
 					// Here comes a nasty assumption
 					$sTranslated =  "'type' => 'varchar', 'precision' => 255";
 					break;
-				case "varchar":
+				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
@@ -179,10 +179,10 @@
 						$sTranslated =  "'type' => 'text'";
 					}
 					break;
-				case "longtext":
-				case "text":
-				case "blob":
-				case "date":
+				case 'longtext':
+				case 'text':
+				case 'blob':
+				case 'date':
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}
@@ -200,9 +200,9 @@
 			return "UNIQUE($sFields)";
 		}
 
-		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = "")
+		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '')
 		{
-			$sColumns = "";
+			$sColumns = '';
 			$this->pk = array();
 			$this->fk = array();
 			$this->ix = array();
@@ -213,9 +213,9 @@
 			while ($oProc->m_odb->next_record())
 			{
 				$type = $default = $null = $nullcomma = $prec = $scale = $ret = $colinfo = $scales = '';
-				if ($sColumns != "")
+				if ($sColumns != '')
 				{
-					$sColumns .= ",";
+					$sColumns .= ',';
 				}
 				$sColumns .= $oProc->m_odb->f(0);
 
@@ -324,7 +324,7 @@
 
 		function GetSequenceSQL($sTableName, &$sSequenceSQL)
 		{
-			$sSequenceSQL = "";
+			$sSequenceSQL = '';
 			return true;
 		}
 
@@ -333,7 +333,7 @@
 			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
 				// create sequence first since it will be needed for default
-				if ($sSequenceSQL != "")
+				if ($sSequenceSQL != '')
 				{
 					$oProc->m_odb->query($sSequenceSQL);
 				}

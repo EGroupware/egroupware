@@ -27,7 +27,7 @@
 
 		function schema_proc_pgsql()
 		{
-			$this->m_sStatementTerminator = ";";
+			$this->m_sStatementTerminator = ';';
 		}
 
 		// Return a type suitable for DDL
@@ -35,57 +35,57 @@
 		{
 			switch($sType)
 			{
-				case "auto":
-					$sTranslated = "int4";
+				case 'auto':
+					$sTranslated = 'int4';
 					break;
-				case "blob":
-					$sTranslated = "text";
+				case 'blob':
+					$sTranslated = 'text';
 					break;
-				case "char":
+				case 'char':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("char(%d)", $iPrecision);
 					}
 					if ($iPrecision > 255)
 					{
-						$sTranslated =  "text";
+						$sTranslated =  'text';
 					}
 					break;
-				case "date":
-					$sTranslated =  "date";
+				case 'date':
+					$sTranslated =  'date';
 					break;
-				case "decimal":
+				case 'decimal':
 					$sTranslated =  sprintf("decimal(%d,%d)", $iPrecision, $iScale);
 					break;
-				case "float":
+				case 'float':
 					if ($iPrecision == 4 || $iPrecision == 8)
 					{
 						$sTranslated =  sprintf("float%d", $iPrecision);
 					}
 					break;
-				case "int":
+				case 'int':
 					if ($iPrecision == 2 || $iPrecision == 4 || $iPrecision == 8)
 					{
 						$sTranslated =  sprintf("int%d", $iPrecision);
 					}
 					break;
-				case "longtext":
-					$sTranslated = "text";
+				case 'longtext':
+					$sTranslated = 'text';
 					break;
-				case "text":
-					$sTranslated = "text";
+				case 'text':
+					$sTranslated = 'text';
 					break;
-				case "timestamp":
-					$sTranslated = "timestamp";
+				case 'timestamp':
+					$sTranslated = 'timestamp';
 					break;
-				case "varchar":
+				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 					}
 					if ($iPrecision > 255)
 					{
-						$sTranslated =  "text";
+						$sTranslated =  'text';
 					}
 					break;
 			}
@@ -97,9 +97,9 @@
 		{
 			switch ($sDefault)
 			{
-				case "current_date":
-				case "current_timestamp":
-					return "now";
+				case 'current_date':
+				case 'current_timestamp':
+					return 'now';
 			}
 
 			return $sDefault;
@@ -108,23 +108,23 @@
 		// Inverse of above, convert sql column types to array info
 		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
-			$sTranslated = "";
+			$sTranslated = '';
 			switch($sType)
 			{
-				case "serial":
+				case 'serial':
 					$sTranslated = "'type' => 'auto'";
 					break;
-				case "int2":
+				case 'int2':
 					$sTranslated = "'type' => 'int', 'precision' => 2";
 					break;
-				case "int4":
+				case 'int4':
 					$sTranslated = "'type' => 'int', 'precision' => 4";
 					break;
-				case "int8":
+				case 'int8':
 					$sTranslated = "'type' => 'int', 'precision' => 8";
 					break;
-				case "bpchar":
-				case "char":
+				case 'bpchar':
+				case 'char':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated = "'type' => 'char', 'precision' => $iPrecision";
@@ -134,22 +134,22 @@
 						$sTranslated =  "'type' => 'text'";
 					}
 					break;
-				case "numeric":
+				case 'numeric':
 					/* Borrowed from phpPgAdmin */
 					$iPrecision = ($iScale >> 16) & 0xffff;
 					$iScale     = ($iScale - 4) & 0xffff;
 					$sTranslated = "'type' => 'decimal', 'precision' => $iPrecision, 'scale' => $iScale";
 					break;
-				case "float":
-				case "float4":
-				case "float8":
-				case "double":
+				case 'float':
+				case 'float4':
+				case 'float8':
+				case 'double':
 					$sTranslated = "'type' => 'float', 'precision' => $iPrecision";
 					break;
-				case "datetime":
+				case 'datetime':
 					$sTranslated = "'type' => 'timestamp'";
 					break;
-				case "varchar":
+				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
@@ -159,9 +159,9 @@
 						$sTranslated =  "'type' => 'text'";
 					}
 					break;
-				case "text":
-				case "blob":
-				case "date":
+				case 'text':
+				case 'blob':
+				case 'date':
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}
@@ -184,7 +184,7 @@
 			$sdb = $oProc->m_odb;
 			$sdc = $oProc->m_odb;
 
-			$sColumns = "";
+			$sColumns = '';
 			$this->pk = array();
 			$this->fk = array();
 			$this->ix = array();
@@ -192,18 +192,18 @@
 
 			$query = "SELECT a.attname,a.attnum FROM pg_attribute a,pg_class b WHERE ";
 			$query .= "b.oid=a.attrelid AND a.attnum>0 and b.relname='$sTableName'";
-			if ($sDropColumn != "")
+			if ($sDropColumn != '')
 			{
 				$query .= " AND a.attname != '$sDropColumn'";
 			}
-			$query .= " ORDER BY a.attnum";
+			$query .= ' ORDER BY a.attnum';
 
 			$oProc->m_odb->query($query);
 			while ($oProc->m_odb->next_record())
 			{
-				if ($sColumns != "")
+				if ($sColumns != '')
 				{
-					$sColumns .= ",";
+					$sColumns .= ',';
 				}
 
 				$sFieldName = $oProc->m_odb->f(0);
@@ -379,12 +379,12 @@
 					{
 						switch ($arraydef['type'])
 						{
-							case "blob":
-							case "char":
-							case "date":
-							case "text":
-							case "timestamp":
-							case "varchar":
+							case 'blob':
+							case 'char':
+							case 'date':
+							case 'text':
+							case 'timestamp':
+							case 'varchar':
 								$sSQL .= "'" . $oProc->m_odb->f($i) . "'";
 								break;
 							default:
@@ -473,10 +473,10 @@
 			}
 
 			$oProc->m_odb->query($query);
-			$this->_GetColumns($oProc, $sTableName . "_tmp", $sColumns, $sColumnName);
-			$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
+			$this->_GetColumns($oProc, $sTableName . '_tmp', $sColumns, $sColumnName);
+			$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . '_tmp';
 			$bRet = !!($oProc->m_odb->query($query));
-			return ($bRet && $this->DropTable($oProc, $aTables, $sTableName . "_tmp"));
+			return ($bRet && $this->DropTable($oProc, $aTables, $sTableName . '_tmp'));
 		}
 
 		function RenameTable($oProc, &$aTables, $sOldTableName, $sNewTableName)
@@ -584,7 +584,7 @@
 			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
 				// create sequence first since it will be needed for default
-				if ($bCreateSequence && $sSequenceSQL != "")
+				if ($bCreateSequence && $sSequenceSQL != '')
 				{
 					if ($DEBUG) { echo '<br>Making sequence using: ' . $sSequenceSQL; }
 					$oProc->m_odb->query($sSequenceSQL);
@@ -596,6 +596,6 @@
 			}
 
 			return false;
-		}	
+		}
 	}
 ?>

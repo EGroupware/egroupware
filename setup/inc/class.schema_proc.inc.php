@@ -40,10 +40,10 @@
 			$this->m_aTables = $aTables;
 
 			reset($this->m_aTables);
-			$sAllTableSQL = "";
+			$sAllTableSQL = '';
 			while (list($sTableName, $aTableDef) = each($this->m_aTables))
 			{
-				$sSequenceSQL = "";
+				$sSequenceSQL = '';
 				if ($this->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 				{
 					$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n)"
@@ -268,7 +268,7 @@
 			reset($aTableDef['fd']);
 			while (list($sFieldName, $aFieldAttr) = each($aTableDef['fd']))
 			{
-				$sFieldSQL = "";
+				$sFieldSQL = '';
 				if ($this->_GetFieldSQL($aFieldAttr, $sFieldSQL))
 				{
 					if ($sTableSQL != '')
@@ -281,7 +281,7 @@
 					if ($aFieldAttr['type'] == 'auto')
 					{
 						$this->m_oTranslator->GetSequenceSQL($sTableName, $sSequenceSQL);
-						if ($sSequenceSQL != "")
+						if ($sSequenceSQL != '')
 						{
 							$sTableSQL .= sprintf(" DEFAULT nextval('seq_%s')", $sTableName);
 						}
@@ -294,8 +294,8 @@
 				}
 			}
 
-			$sUCSQL = "";
-			$sPKSQL = "";
+			$sUCSQL = '';
+			$sPKSQL = '';
 
 			if (count($aTableDef['pk']) > 0)
 			{
