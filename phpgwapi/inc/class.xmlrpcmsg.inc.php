@@ -3,7 +3,7 @@
 	// <edd@usefulinc.com>
 	// xmlrpc.inc,v 1.18 2001/07/06 18:23:57 edmundd
 
-	// License is granted to use or modify this software ("XML-RPC for PHP")
+	// License is granted to use or modify this software ('XML-RPC for PHP')
 	// for commercial or non-commercial use provided the copyright of the author
 	// is preserved in any distributed or derivative work.
 
@@ -18,16 +18,18 @@
 	// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 	// THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+	/* $Id$ */
+
 	class xmlrpcmsg
 	{
 		var $payload;
 		var $methodname;
-		var $params=array();
-		var $debug=0;
+		var $params = array();
+		var $debug  = 1;
 
 		function xmlrpcmsg($meth, $pars=0)
 		{
-			$this->methodname=$meth;
+			$this->methodname = $meth;
 			if (is_array($pars) && sizeof($pars)>0)
 			{
 				for($i=0; $i<sizeof($pars); $i++) 
@@ -39,36 +41,37 @@
 
 		function xml_header()
 		{
-			return '<?xml version="1.0"?>'."\n".'<methodCall>'."\n";
+			return '<?xml version="1.0"?>' . "\n" . '<methodCall>' . "\n";
 		}
 
 		function xml_footer()
 		{
-			return '</methodCall>'."\n";
+			return '</methodCall>' . "\n";
 		}
 
 		function createPayload()
 		{
-			$this->payload=$this->xml_header();
-			$this->payload.='<methodName>' . $this->methodname . '</methodName>'."\n";
-			//	if (sizeof($this->params)) {
-			$this->payload.='<params>'."\n";
-			for($i=0; $i<sizeof($this->params); $i++)
+			$this->payload  = $this->xml_header();
+			$this->payload .= '<methodName>' . $this->methodname . '</methodName>' . "\n";
+			if (sizeof($this->params))
 			{
-				$p=$this->params[$i];
-				$this->payload.='<param>'."\n" . $p->serialize() . '</param>'."\n";
+				$this->payload .= '<params>' . "\n";
+				for($i=0; $i<sizeof($this->params); $i++)
+				{
+					$p = $this->params[$i];
+					$this->payload .= '<param>' . "\n" . $p->serialize() . '</param>' . "\n";
+				}
+				$this->payload .= '</params>' . "\n";
 			}
-			$this->payload.='</params>'."\n";
-			// }
-			$this->payload.=$this->xml_footer();
-			$this->payload=str_replace("\n", "\r\n", $this->payload);
+			$this->payload .= $this->xml_footer();
+			$this->payload  = str_replace("\n", "\r\n", $this->payload);
 		}
 
 		function method($meth='')
 		{
-			if ($meth!='')
+			if ($meth != '')
 			{
-				$this->methodname=$meth;
+				$this->methodname = $meth;
 			}
 			return $this->methodname;
 		}
@@ -79,17 +82,28 @@
 			return $this->payload;
 		}
 
-		function addParam($par) { $this->params[]=$par; }
-		function getParam($i) { return $this->params[$i]; }
-		function getNumParams() { return sizeof($this->params); }
+		function addParam($par)
+		{
+			$this->params[] = $par;
+		}
+
+		function getParam($i)
+		{
+			return $this->params[$i];
+		}
+
+		function getNumParams()
+		{
+			return sizeof($this->params);
+		}
 
 		function parseResponseFile($fp)
 		{
-			$ipd='';
+			$ipd = '';
 
-			while($data=fread($fp, 32768))
+			while($data = fread($fp, 32768))
 			{
-				$ipd.=$data;
+				$ipd .= $data;
 			}
 			return $this->parseResponse($ipd);
 		}
@@ -106,21 +120,21 @@
 			$GLOBALS['_xh'][$parser]['qt']  = '';
 
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
-			xml_set_element_handler($parser, "xmlrpc_se", "xmlrpc_ee");
-			xml_set_character_data_handler($parser, "xmlrpc_cd");
-			xml_set_default_handler($parser, "xmlrpc_dh");
+			xml_set_element_handler($parser, 'xmlrpc_se', 'xmlrpc_ee');
+			xml_set_character_data_handler($parser, 'xmlrpc_cd');
+			xml_set_default_handler($parser, 'xmlrpc_dh');
 //			$xmlrpc_value = CreateObject('phpgwapi.xmlrpcval');
 
 			$hdrfnd=0;
 			if ($this->debug)
 			{
-				print '<PRE>---GOT---'."\n" . htmlspecialchars($data) . "\n".'---END---'."\n".'</PRE>';
+				print '<PRE>---GOT---' . "\n" . htmlspecialchars($data) . "\n" . '---END---' . "\n" . '</PRE>';
 			}
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
 			if (ereg("^HTTP",$data) && !ereg("^HTTP/[0-9\.]+ 200 ", $data))
 			{
-				$errstr= substr($data, 0, strpos($data, "\n")-1);
+				$errstr = substr($data, 0, strpos($data, "\n")-1);
 				error_log('HTTP error, got response: ' .$errstr);
 				$r = CreateObject('phpgwapi.xmlrpcresp',0, $GLOBALS['xmlrpcerr']['http_error'],
 					$GLOBALS['xmlrpcstr']['http_error'] . ' (' . $errstr . ')');
@@ -130,8 +144,8 @@
 			// gotta get rid of headers here
 			if ((!$hdrfnd) && ereg("^(.*)\r\n\r\n",$data,$GLOBALS['_xh'][$parser]['ha']))
 			{
-				$data=ereg_replace("^.*\r\n\r\n", "", $data);
-				$hdrfnd=1;
+				$data = ereg_replace("^.*\r\n\r\n", "", $data);
+				$hdrfnd = 1;
 			}
 	
 			if (!xml_parse($parser, $data, sizeof($data)))
@@ -143,7 +157,7 @@
 				}
 				else
 				{
-					$errstr = sprintf("XML error: %s at line %d",
+					$errstr = sprintf('XML error: %s at line %d',
 						xml_error_string(xml_get_error_code($parser)),
 						xml_get_current_line_number($parser));
 				}
@@ -155,9 +169,9 @@
 			xml_parser_free($parser);
 			if ($this->debug)
 			{
-				print '<PRE>---EVALING---[' . 
-					strlen($GLOBALS['_xh'][$parser]['st']) . ' chars]---'."\n" . 
-					htmlspecialchars($GLOBALS['_xh'][$parser]['st']) . ';'."\n".'---END---</PRE>';
+				echo '<PRE>---EVALING---['
+					. strlen($GLOBALS['_xh'][$parser]['st']) . ' chars]---' . "\n"
+					. htmlspecialchars($GLOBALS['_xh'][$parser]['st']) . ';' . "\n" . '---END---</PRE>';
 			}
 			if (strlen($GLOBALS['_xh'][$parser]['st']) == 0)
 			{
@@ -182,7 +196,7 @@
 					$r = CreateObject('phpgwapi.xmlrpcresp',$v);
 				}
 			}
-			$r->hdrs=split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
+			$r->hdrs = split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
 			return $r;
 		}
 	}
