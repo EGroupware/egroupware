@@ -82,8 +82,9 @@
       }
 
       $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
+      $entry["phpgw_lastpasswd_change"] = time();
 
-      $dn = $phpgw_info["user"]["account_id"];;
+      $dn = $phpgw_info["user"]["account_dn"];
       @ldap_modify($ldap, $dn, $entry);
    }
 
