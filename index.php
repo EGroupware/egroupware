@@ -29,11 +29,23 @@
 
      if (! $navbarframe && ! $framebody) {
         $tpl = new Template($phpgw_info["server"]["template_dir"]);
-        $tpl->set_file(array("frames" => "frames.tpl"));
+        $tpl->set_file(array("frames"       => "frames.tpl",
+                             "frame_body"   => "frames_body.tpl",
+                             "frame_navbar" => "frames_navbar.tpl"
+                            ));
 
         $tpl->set_var("navbar_link",$phpgw->link("index.php?navbarframe=True"));
         $tpl->set_var("body_link",$phpgw->link("index.php?framebody=True"));
 
+        if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom") {
+           $tpl->set_var("frame_size","*,60");
+           $tpl->parse("frames_","frame_body",True);
+           $tpl->parse("frames_","frame_navbar",True);
+        } else {
+           $tpl->set_var("frame_size","60,*");        
+           $tpl->parse("frames_","frame_navbar",True);
+           $tpl->parse("frames_","frame_body",True);
+        }
         $tpl->pparse("out","frames");
      }
      if ($navbarframe) {

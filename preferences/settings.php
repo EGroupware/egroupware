@@ -56,6 +56,20 @@
        </tr>
        <?php
          }
+         if ($phpgw_info["server"]["useframes"] == "always") {
+       ?>
+       <tr>
+        <td><?php echo lang("Navigation bar frame location"); ?>: </td>
+        <td>
+         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"]] = " selected"; ?>
+         <select name="settings[frame_navbar_location]">
+          <option value="top"<?php echo $selected["top"] . ">" . lang("Top"); ?></option>
+          <option value="bottom"<?php echo $selected["bottom"] . ">" . lang("bottom"); ?></option>
+         </select>
+        </td>
+       </tr>
+       <?php        
+         }
        ?>
 
        <tr>
@@ -213,7 +227,7 @@
 
      $phpgw->db->unlock();
 
-     if ($settings["useframes"]) {
+     if ($phpgw_info["server"]["useframes"] != "never") {
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));
         exit;
      }
