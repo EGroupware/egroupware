@@ -120,21 +120,78 @@
 			return array(0, "Wanted $wanted, got $got at param $pno)");
 		}
 
-		function build_array($res)
+		function reqtoarray($_req,$recursed=False)
 		{
-			@reset($res);
-			while(list($key,$val) = @each($res))
+			switch(gettype($_req))
 			{
-				if(is_array($val))
-				{
-					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$this->build_array($val),'struct');
-				}
-				else
-				{
-					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
-				}
+				case 'object':
+					if($recursed)
+					{
+						return $_req->getval();
+					}
+					else
+					{
+						$this->req_array[] = $_req;
+					}
+					break;
+				case 'array':
+					@reset($_req);
+					while(list($key,$val) = @each($_req))
+					{
+						$this->req_array[$key] = $this->reqtoarray($val,True);
+					}
+					break;
+				case 'string':
+				case 'int':
+					if($recursed)
+					{
+						return $_req;
+					}
+					else
+					{
+						$this->req_array[] = $_req;
+					}
+					break;
+				default:
+					break;
 			}
-			return $ele;
+		}
+
+		function build_resp($_res,$recursed=False)
+		{
+			switch(gettype($_res))
+			{
+				case 'array':
+					@reset($_res);
+					while(list($key,$val) = @each($_res))
+					{
+						$ele[$key] = $this->build_resp($val,True);
+					}
+					$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+					break;
+				case 'string':
+					if($recursed)
+					{
+						return CreateObject('phpgwapi.xmlrpcval',$_res,'string');
+					}
+					else
+					{
+						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,'string');
+					}
+					break;
+				case 'integer':
+					if($recursed)
+					{
+						return CreateObject('phpgwapi.xmlrpcval',$_res,'int');
+					}
+					else
+					{
+						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,'int');
+					}
+					break;
+				default:
+					break;
+			}
 		}
 
 		function parseRequest($data='')
@@ -241,7 +298,8 @@
 								$code = '$p = '  . $params . ';';
 								eval($code);
 								$params = $p->getval();
-								/* _debug_array($params); */
+
+								// _debug_array($params);
 								if(gettype($params) == 'array')
 								{
 									@reset($params);
@@ -256,11 +314,11 @@
 												if(get_class($val1) == 'xmlrpcval')
 												{
 													$tmp[$key1] = $val1->getval();
-													/* echo '<br>Adding xmlrpc val1: ' . $tmp[$key1] . "\n"; */
+													// echo '<br>Adding xmlrpc val1: ' . $tmp[$key1] . "\n";
 												}
 												else
 												{
-													/* echo '<br>Adding val1: ' . $val1 . "\n"; */
+													// echo '<br>Adding val1: ' . $val1 . "\n";
 													$tmp[$key1] = $val1;
 												}
 											}
@@ -268,18 +326,24 @@
 										}
 										else
 										{
-											/* echo '<br>Adding val: ' . $val . "\n"; */
+											// echo '<br>Adding val: ' . $val . "\n";
 											$_params[$key] = $val;
 										}
 									}
 									$params = $_params;
 								}
-								/* _debug_array($params); */
+								//$this->reqtoarray($params);
+								//_debug_array($this->req_array);
+
+								/* $res = ExecMethod($method,$this->req_array); */
 								$res = ExecMethod($method,$params);
 								/* _debug_array($res);exit; */
-								
-								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->build_array($res),'struct'));
-								/* _debug_array($r);exit; */
+								$this->resp_struct = '';
+								$this->build_resp($res);
+								/*_debug_array($this->resp_struct); */
+
+								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
+								/* _debug_array($r); */
 							}
 						}
 					}
