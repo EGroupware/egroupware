@@ -18,11 +18,11 @@
 	}
 
 	$calendar = CreateObject('calendar.calendar');
-	$cal_stream = $calendar->open('INBOX',$account_id,'');
+	$calendar->open('INBOX',$account_id,'');
 
 	if(intval($new_owner)==0)
 	{
-		$calendar->delete_calendar($cal_stream,intval($account_id));
+		$calendar->delete_calendar(intval($account_id));
 	}
 	else
 	{
