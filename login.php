@@ -277,7 +277,7 @@
 	{
 		reset($GLOBALS['phpgw_domain']);
 		list($default_domain) = each($GLOBALS['phpgw_domain']);
-		if ($_COOKIE['last_domain'] != $default_domain)
+		if ($_COOKIE['last_domain'] != $default_domain && !empty($_COOKIE['last_domain']))
 		{
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
