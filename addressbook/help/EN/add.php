@@ -24,7 +24,9 @@
 
 	$values['add'] = array
 	(
-		'intro'	=> 'Click on the add button, a form page will be presented with the following fields:',
+		'add_img'				=> $GLOBALS['phpgw']->common->image('addressbook','help_add'),
+		'item_1'				=> 'Add any and all information that you see fit. You can use the tab key to tab from one field to the next.',
+		'item_2'				=> 'Once you have entered all the information, press OK to accept, Clear to erase all information in all the fields or Cancel to exit this screen.',
 		'lang_lastname'			=> 'Last name',
 		'lang_firstname'		=> 'First name',
 		'lang_email'			=> 'E-mail',

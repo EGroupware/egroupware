@@ -121,9 +121,23 @@
 	</xsl:template>
 
 	<xsl:template match="add">
+	<xsl:variable name="add_img" select="add_img"/>
 		<table>
 			<tr>
-				<td><xsl:value-of disable-output-escaping="yes" select="intro"/><br/>
+				<td colspan="2">
+					<img src="{$add_img}"/>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right">1</td>
+				<td><xsl:value-of disable-output-escaping="yes" select="item_1"/></td>
+			</tr>
+			<tr>
+				<td valign="top" align="right">2</td>
+				<td><xsl:value-of disable-output-escaping="yes" select="item_2"/></td>
+			</tr>
+			<tr>
+				<td colspan="2">
 					<table width="80%" bgcolor="#ccddeb">
 						<tr>
 							<td><xsl:value-of select="lang_lastname"/>:</td>
