@@ -170,6 +170,7 @@ description	common	en	Description
 detail	tts	en	Detail
 disabled	admin	en	Disabled
 display	admin	en	Display
+display mini calendars when printing	calendar	en	Display mini calendars when printing
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
 display note for	notes	en	Display note for
 display status of events	calendar	en	Display Status of Events
