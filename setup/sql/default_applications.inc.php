@@ -18,6 +18,7 @@
 		'.'        => True,
 		'..'       => True,
 		'CVS'      => True,
+		'CVSROOT'  => True,
 		'files'    => True
 	);
 
