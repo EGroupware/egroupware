@@ -76,6 +76,7 @@
 		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_file(array("edit" => "edit.tpl"));
 
+		$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 		$t->set_var('ab_id',$ab_id);
 		$t->set_var('sort',$sort);
 		$t->set_var('order',$order);

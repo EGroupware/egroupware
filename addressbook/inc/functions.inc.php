@@ -390,9 +390,13 @@
 		if(!$cat_id) {
 			$cat_id   = $fields['cat_id'];
 		}
-																		// allow multiple categories on 'sql'
-		$cats_link    = cat_option($cat_id,True,False,!$phpgw_info["server"]["contact_repository"] || 
-																	  $phpgw_info["server"]["contact_repository"] == 'sql');
+		/* allow multiple categories on sql */
+		$cats_link = cat_option(
+			$cat_id,
+			True,
+			False,
+			!$phpgw_info['server']['contact_repository'] || $phpgw_info['server']['contact_repository'] == 'sql'
+		);
 
 		if ($access == 'private')
 		{
@@ -407,15 +411,12 @@
 		{
 			while(list($name,$value) = each($customfields))
 			{
+				$value = ereg_replace('_',' ',$value);
 				$custom .= '
-  <tr>
-    <td></td>
-	<td><font color="#000000" face="" size="-1">'.$value.':</font></td>
-    <td>
-	  <font size="-1">
-	  <INPUT size="30" name="' . $name . '" value="' . $fields[$name] . '">
-      </font></td>
-	</td>
+  <tr bgcolor="' . $phpgw_info['theme']['row_off'] . '">
+    <td>&nbsp;</td>
+    <td><font color="' . $phpgw_info['theme']['th_text'] . '" face="" size="-1">'.$value.':</font></td>
+    <td colspan="3"><INPUT size="30" name="' . $name . '" value="' . $fields[$name] . '"></td>
   </tr>
 ';
 			}
@@ -575,7 +576,7 @@
 			. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
 		if ($format == 'edit')
 		{
-			$create .= '<tr><td><font size="-1">' . lang("Created by") . ':</font></td>'
+			$create .= '<tr bgcolor="' . $phpgw_info['theme']['th_bg'] . '"><td colspan="2"><font size="-1">' . lang("Created by") . ':</font></td>'
 				. '<td colspan="3"><font size="-1">'
 				. $phpgw->common->grab_owner_name($fields["owner"]);
 		}
@@ -708,6 +709,11 @@
 			$t->set_var('lang_custom','');
 			$t->set_var('custom','');
 		}
+		$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+		$t->set_var('th_text',$phpgw_info['theme']['th_text']);
+		$t->set_var('row_on',$phpgw_info['theme']['row_on']);
+		$t->set_var('row_off',$phpgw_info['theme']['row_off']);
+		$t->set_var('row_text',$phpgw_info['theme']['row_text']);
 
 		$t->pfp('out','form');
 	} //end form function
