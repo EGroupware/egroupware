@@ -275,6 +275,7 @@
 	$phpgw->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
 	if ($phpgw->db->num_rows())
 	{
+		$phpgw->db->next_record();
 		$phpgw_info['server']['cache_phpgw_info'] = stripslashes($phpgw->db->f('config_value'));
 	}
 
@@ -286,12 +287,7 @@
 	
 	if(@$phpgw_info['server']['cache_phpgw_info'] && $server_info_cache)
 	{
-		$cache_query = "select content from phpgw_app_sessions where"
-			." sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
-
-		$phpgw->db->query($cache_query,__LINE__,__FILE__);
 		$phpgw->db->next_record();
-
 		$phpgw_info['server'] = unserialize(stripslashes($phpgw->db->f('content')));
 	}
 	else
