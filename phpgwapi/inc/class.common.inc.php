@@ -417,7 +417,9 @@
        $phpgw_info["navbar"]["home"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
                                               . $phpgw_info["server"]["template_set"] . "/images/home.gif";
 
+       reset($phpgw_info["user"]["apps"]);
        while ($permission = each($phpgw_info["user"]["apps"])) {
+          if (is_long($permission[0])) { continue; }
           if ($phpgw_info["apps"][$permission[0]]["status"] != 2) {
              $phpgw_info["navbar"][$permission[0]]["title"] = $phpgw_info["apps"][$permission[0]]["title"];
              $phpgw_info["navbar"][$permission[0]]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
@@ -598,6 +600,7 @@
   function hook_count($location = ""){
     global $phpgw, $phpgw_info;
     $count = 0;
+    reset($phpgw_info["user"]["apps"]);
     while ($permission = each($phpgw_info["user"]["apps"])) {
       $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
     	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
