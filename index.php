@@ -57,10 +57,10 @@
 	else
 	{
 		Header('Location: ' . $phpgw->link('/home.php'));
-		$phpgw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
+		$phpgw->log->message(array('text'=>'W-BadmenuactionVariable, menuaction missing or corrupt: %1','p1'=>$menuaction));
 		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method])
 		{
-			$phpgw->log->message('W-BadmenuactionVariable, attempted to access private method: %1',$method);
+			$phpgw->log->message(array('text'=>'W-BadmenuactionVariable, attempted to access private method: %1','p1'=>$method));
 		}
 		$phpgw->log->commit();
 
