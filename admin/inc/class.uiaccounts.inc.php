@@ -188,7 +188,7 @@
 			
 			if(isset($_POST['start']))
 			{
-				$start = intval($_POST['start']);
+				$start = (int)$_POST['start'];
 			}
 			else
 			{
@@ -391,7 +391,7 @@
 			$p->set_var('message_display',lang('Are you sure you want to delete this group ?'));
 			$p->parse('messages','message_row');
 
-			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location(intval($_GET['account_id']),1,'phpgw_group');
+			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location((int)$_GET['account_id'],1,'phpgw_group');
 
 			if($old_group_list)
 			{
@@ -427,7 +427,6 @@
 			$p->set_var($var);
 /*
 			$p->parse('yes','form_button');
-
 
 			$var = Array(
 				'submit_button' => lang('Submit'),
@@ -494,11 +493,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = ($_GET['account_id']?$_GET['account_id']:intval($accountid));
+			$account_id = ($_GET['account_id'] ? $_GET['account_id'] : (int)$accountid);
 			
 			// todo
 			// not needed if i use the same file for new groups too
@@ -509,7 +508,7 @@
 			else
 			{
 				$group_info = Array(
-					'account_id'   => intval($_GET['account_id']),
+					'account_id'   => (int)$_GET['account_id'],
 					'account_name' => $GLOBALS['phpgw']->accounts->id2name($_GET['account_id']),
 					'account_user' => $this->bo->load_group_users($_GET['account_id']),
 					'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
@@ -551,11 +550,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = intval($_GET['account_id'] ? $_GET['account_id'] : $accountid);
+			$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
 			
 			// todo
 			// not needed if i use the same file for new users too
@@ -611,14 +610,14 @@
 
 			$t->parse('password_fields','form_logininfo',True);
 
-			$account = CreateObject('phpgwapi.accounts',intval($_GET['account_id']),'u');
+			$account = CreateObject('phpgwapi.accounts',(int)$_GET['account_id'],'u');
 			$userData = $account->read_repository();
 
 			$var['account_lid']       = $userData['account_lid'];
 			$var['account_firstname'] = $userData['firstname'];
 			$var['account_lastname']  = $userData['lastname'];
 
-			$acl = CreateObject('phpgwapi.acl',intval($_GET['account_id']));
+			$acl = CreateObject('phpgwapi.acl',(int)$_GET['account_id']);
 			$var['anonymous']         = $acl->check('anonymous',1,'phpgwapi') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			$var['changepassword']    = $acl->check('changepassword',0xFFFF,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			unset($acl);
@@ -663,8 +662,8 @@
 			}
 
 			// Find out which groups they are members of
-			$usergroups = $account->membership(intval($_GET['account_id']));
-			if (gettype($usergroups) != 'array')
+			$usergroups = $account->membership((int)$_GET['account_id']);
+			if(!@is_array($usergroups))
 			{
 				$var['groups_select'] = lang('None');
 			}
@@ -683,7 +682,7 @@
 
 			// create list of available app
 			$i = 0;
-		
+
 			$availableApps = $GLOBALS['phpgw_info']['apps'];
 			@asort($availableApps);
 			@reset($availableApps);
@@ -698,7 +697,7 @@
 			}
 
 			// create apps output
-			$apps = CreateObject('phpgwapi.applications',intval($_GET['account_id']));
+			$apps = CreateObject('phpgwapi.applications',(int)$_GET['account_id']);
 			$db_perms = $apps->read_account_specific();
 
 			@reset($db_perms);
@@ -744,11 +743,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = ($_GET['account_id']?$_GET['account_id']:intval($accountid));
+			$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
 			
 			// todo
 			// not needed if i use the same file for new groups too
@@ -759,7 +758,7 @@
 			else
 			{
 				$group_info = Array(
-					'account_id'   => intval($_GET['account_id']),
+					'account_id'   => (int)$_GET['account_id'],
 					'account_name' => $GLOBALS['phpgw']->accounts->id2name($_GET['account_id']),
 					'account_user' => $GLOBALS['phpgw']->accounts->member($_GET['account_id']),
 					'account_managers' => $this->bo->load_group_managers($_GET['account_id'])
@@ -817,8 +816,8 @@
 					$ac_name = $GLOBALS['phpgw']->accounts->get_account_data($ac_id);
 
 					$user_list .= '<option value="' . $ac_id . '" selected>'
-								. $GLOBALS['phpgw']->common->display_fullname($ac_name[$ac_id]['lid'],$ac_name[$ac_id]['firstname'],$ac_name[$ac_id]['lastname'])
-								. '</option>'."\n";
+						. $GLOBALS['phpgw']->common->display_fullname($ac_name[$ac_id]['lid'],$ac_name[$ac_id]['firstname'],$ac_name[$ac_id]['lastname'])
+						. '</option>'."\n";
 				}
 				$account_num = count($group_info['account_user']);
 				$p->set_var('select_size',($account_num < 25?$account_num:25));
@@ -834,7 +833,7 @@
 				while (list($key,$entry) = each($account_list))
 				{
 					$user_list .= '<option value="' . $entry['account_id'] . '"'
-					. $group_info['account_user'][intval($entry['account_id'])] . '>'
+					. $group_info['account_user'][(int)$entry['account_id']] . '>'
 					. $GLOBALS['phpgw']->common->display_fullname(
 						$entry['account_lid'],
 						$entry['account_firstname'],
@@ -959,8 +958,8 @@
 			{
 				$userData = Array();
 				$userData=$_userData;
-				$userData['account_firstname']	= $userData['firstname'];
-				$userData['account_lastname']	= $userData['lastname'];
+				$userData['account_firstname'] = $userData['firstname'];
+				$userData['account_lastname']  = $userData['lastname'];
 				@reset($userData['account_groups']);
 				while (list($key, $value) = @each($userData['account_groups']))
 				{
@@ -974,7 +973,7 @@
 			{
 				if($_account_id)
 				{
-					$account = CreateObject('phpgwapi.accounts',intval($_account_id),'u');
+					$account = CreateObject('phpgwapi.accounts',(int)$_account_id,'u');
 					$userData = $account->read_repository();
 					$userGroups = $account->membership($_account_id);
 					$acl = CreateObject('phpgwapi.acl',$_account_id);
@@ -1165,7 +1164,7 @@
 			}
 
 			$var = Array(
-				'groups_select'	
+				'groups_select'
 					=> '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
 				'primary_group_select'    
 					=> '<select name="account_primary_group">'."\n".$primary_group_select.'</select>'."\n",
@@ -1197,7 +1196,7 @@
 			while (list($key,$entry) = each($account_list))
 			{
 				$user_list .= '<option value="' . $entry['account_id'] . '"'
-					. $group_info['account_managers'][intval($entry['account_id'])] . '>'
+					. $group_info['account_managers'][(int)$entry['account_id']] . '>'
 					. $GLOBALS['phpgw']->common->grab_owner_name($entry['account_id'])
 					. '</option>'."\n";
 			}
@@ -1211,7 +1210,7 @@
 
 			$t->set_file(
 				Array(
-					'manager'	=>'group_manager.tpl'
+					'manager' =>'group_manager.tpl'
 				)
 			);
 
@@ -1235,6 +1234,5 @@
 
 			$t->pfp('out','form');
 		}
-
 	}
 ?>

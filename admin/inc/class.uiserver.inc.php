@@ -247,8 +247,8 @@
 					$server_info = array(
 						'server_name' => addslashes($_POST['server_name']),
 						'server_url'  => addslashes($_POST['server_url']),
-						'trust_level' => intval($_POST['trust_level']),
-						'trust_rel'   => intval($_POST['trust_rel']),
+						'trust_level' => (int)$_POST['trust_level'],
+						'trust_rel'   => (int)$_POST['trust_rel'],
 						'username'    => addslashes($_POST['server_username']),
 						'password'    => $_POST['server_password'] ? $_POST['server_password'] : $server['password'],
 						'server_mode' => addslashes($_POST['server_mode']),

@@ -23,7 +23,7 @@
 
 		function uiaclmanager()
 		{
-			$this->account_id = intval($_GET['account_id']);
+			$this->account_id = (int)$_GET['account_id'];
 			if (!$this->account_id || $GLOBALS['phpgw']->acl->check('account_access',64,'admin'))
 			{
 				$GLOBALS['phpgw']->redirect_link('/index.php');

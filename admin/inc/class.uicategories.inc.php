@@ -262,12 +262,12 @@
 		function add()
 		{
 			$new_parent			= $_POST['new_parent'];
-			$cat_parent			= intval(get_var('cat_parent',array('POST','GET')));
+			$cat_parent			= (int)(get_var('cat_parent',array('POST','GET')));
 			$cat_name			= $_POST['cat_name'];
 			$cat_description	= $_POST['cat_description'];
 			if ($new_parent)
 			{
-				$cat_parent = intval($new_parent);
+				$cat_parent = (int)$new_parent;
 			}
 
 			if (!$this->acl_add && $cat_parent == 0 || !$this->acl_add_sub && $cat_parent != 0)
@@ -328,11 +328,11 @@
 
 		function edit()
 		{
-			$new_parent			= intval($_POST['new_parent']);
-			$cat_parent			= intval($_POST['cat_parent']);
+			$new_parent			= (int)$_POST['new_parent'];
+			$cat_parent			= (int)$_POST['cat_parent'];
 			$cat_name			= $_POST['cat_name'];
 			$cat_description	= $_POST['cat_description'];
-			$old_parent			= intval($_POST['old_parent']);
+			$old_parent			= (int)$_POST['old_parent'];
 			
 			if ($new_parent)
 			{

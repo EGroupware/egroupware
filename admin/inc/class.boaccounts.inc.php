@@ -83,7 +83,7 @@
 				return False;
 			}
 			
-			$account_id = intval($_POST['account_id']);
+			$account_id = (int)$_POST['account_id'];
 
 			$GLOBALS['phpgw']->db->lock(
 				Array(
@@ -98,8 +98,8 @@
 			@reset($old_group_list);
 			while($old_group_list && $id = each($old_group_list))
 			{
-				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
-				$GLOBALS['phpgw']->session->delete_cache(intval($id[1]));
+				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,(int)$id[1]);
+				$GLOBALS['phpgw']->session->delete_cache((int)$id[1]);
 			}
 
 			$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
@@ -205,7 +205,7 @@
 			@reset($account_apps);
 
 			$group_info = Array(
-				'account_id'   => ($_POST['account_id']?intval($_POST['account_id']):0),
+				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
 				'account_user' => $account_user,
 				'account_apps' => $account_apps
@@ -334,12 +334,12 @@
 				{
 					if(!in_array($userData['account_primary_group'],$userData['account_groups']))
 					{
-						$userData['account_groups'][] = intval($userData['account_primary_group']);
+						$userData['account_groups'][] = (int)$userData['account_primary_group'];
 					}
 				}
 				else
 				{
-					$userData['account_groups'] = array(intval($userData['account_primary_group']));
+					$userData['account_groups'] = array((int)$userData['account_primary_group']);
 				}
 				
 				// when does the account expire
@@ -420,7 +420,7 @@
 			@reset($account_apps);
 
 			$group_info = Array(
-				'account_id'   => ($_POST['account_id']?intval($_POST['account_id']):0),
+				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
 				'account_user' => $account_user,
 				'account_apps' => $account_apps
@@ -593,7 +593,7 @@
 				);
 				if ($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
 				{
-					$userData['account_groups'][] = intval($userData['account_primary_group']);
+					$userData['account_groups'][] = (int)$userData['account_primary_group'];
 				}
 				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
@@ -644,19 +644,19 @@
 			}
 			elseif($_POST['submit'])
 			{
-				$acl = CreateObject('phpgwapi.acl',intval($_POST['account_id']));
+				$acl = CreateObject('phpgwapi.acl',(int)$_POST['account_id']);
 				
 				$users = $GLOBALS['phpgw']->accounts->member($_POST['account_id']);
 				@reset($users);
 				while($managers && list($key,$user) = each($users))
 				{
-					$acl->add_repository('phpgw_group',intval($_POST['account_id']),$user['account_id'],1);
+					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$user['account_id'],1);
 				}
 				$managers = $_POST['managers'];
 				@reset($managers);
 				while($managers && list($key,$manager) = each($managers))
 				{
-					$acl->add_repository('phpgw_group',intval($_POST['account_id']),$manager,(1 + PHPGW_ACL_GROUP_MANAGERS));
+					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$manager,(1 + PHPGW_ACL_GROUP_MANAGERS));
 				}
 			}
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
@@ -813,7 +813,7 @@
 				),False,True);	// called for every app now, not only enabled ones)
 			}
 
-			$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
+			$apps = CreateObject('phpgwapi.applications',array((int)$_userData['account_id'],'u'));
 
 			$apps->account_id = $_userData['account_id'];
 			if ($_userData['account_permissions'])
@@ -873,7 +873,7 @@
 			{
 				$GLOBALS['phpgw']->acl->delete_repository('preferences','changepassword',$_userData['account_id']);
 			}
-			$GLOBALS['phpgw']->session->delete_cache(intval($_userData['account_id']));
+			$GLOBALS['phpgw']->session->delete_cache((int)$_userData['account_id']);
 		}
 
 		function load_group_users($account_id)
@@ -918,7 +918,7 @@
 
 		function load_group_apps($account_id)
 		{
-			$apps = CreateObject('phpgwapi.applications',intval($account_id));
+			$apps = CreateObject('phpgwapi.applications',(int)$account_id;
 			$app_list = $apps->read_account_specific();
 			$account_apps = Array();
 			while(list($key,$app) = each($app_list))

@@ -68,7 +68,8 @@
 				}
 			}
 
-			if ( gettype($head['_cols'])=="NULL")
+//			if(gettype($head['_cols'])=="NULL")
+			if(@is_null($head['_cols']))
 			{
 				$cols = $this->arr_keys($rows[0]);
 			}
@@ -271,7 +272,8 @@
 			}
 			else
 			{
-				if ( gettype($head['_cols'])=="NULL")
+//				if(gettype($head['_cols'])=="NULL")
+				if(@is_null($head['_cols']))
 				{
 					$cols = $this->arr_keys($rows[0]);
 				}

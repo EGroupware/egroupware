@@ -174,7 +174,7 @@
 						$t->set_var($value,lang($newval));
 						break;
 					case 'value':
-						$newval = ereg_replace(' ','_',$newval);
+						$newval = str_replace(' ','_',$newval);
 						/* Don't show passwords in the form */
 						if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
 						{
@@ -187,7 +187,7 @@
 						break;
 					/*
 					case 'checked':
-						$newval = ereg_replace(' ','_',$newval);
+						$newval = str_replace(' ','_',$newval);
 						if ($current_config[$newval])
 						{
 							$t->set_var($value,' checked');
@@ -219,7 +219,7 @@
 						}
 						break;
 					case 'hook':
-						$newval = ereg_replace(' ','_',$newval);
+						$newval = str_replace(' ','_',$newval);
 						if(function_exists($newval))
 						{
 							$t->set_var($value,$newval($current_config));

@@ -24,7 +24,7 @@
 
 		function list_servers($data='',&$total)
 		{
-			if(gettype($data) == 'array')
+			if(@is_array($data))
 			{
 				if($this->debug) { _debug_array($data); }
 				list($start,$sort,$order,$query,$limit) = $data;
