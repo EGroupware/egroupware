@@ -26,10 +26,24 @@
 	unset($setup_info);
 	#include('../version.inc.php');
 
-	$adddomain = get_var('adddomain',Array('POST'));
-	if(@$adddomain)
+	/* Fetch the current real path.
+	 * If this is in the server document root, then it is probably ok.
+	 * Otherwise, don't guess, just show the usual instructive default.
+	 */
+	$realpath = realpath('..');
+	if(!ereg('^' . $_SERVER['DOCUMENT_ROOT'],$realpath))
 	{
+		if(PHP_OS == 'Windows')
+		{
+			$realpath = 'Drive:\\\\Path';
+		}
+		else
+		{
+			$realpath = '/path/to/egroupware';
+		}
 	}
+
+	$adddomain = get_var('adddomain',Array('POST'));
 
 	$default_db_ports = array(
 		'pgsql'  => 5432,
@@ -47,7 +61,7 @@
 		$domains = get_var('domains',Array('POST'));
 		@reset($domains);
 		while(list($k,$v) = @each($domains))
-		{	
+		{
 			$variableName = str_replace('.','_',$k);
 			$deletedomain = get_var('deletedomain',Array('POST'));
 			if(isset($deletedomain[$variableName]))
@@ -413,10 +427,8 @@
 				}
 				if(defined('PHPGW_SERVER_ROOT'))
 				{
-					$GLOBALS['phpgw_info']['server']['server_root'] = PHPGW_SERVER_ROOT == '..'
-						? '/path/to/egroupware'	: PHPGW_SERVER_ROOT;
-					$GLOBALS['phpgw_info']['server']['include_root'] = PHPGW_INCLUDE_ROOT == '..'
-						? '/path/to/egroupware' : PHPGW_INCLUDE_ROOT;
+					$GLOBALS['phpgw_info']['server']['server_root']  = (PHPGW_SERVER_ROOT  == '..') ? $realpath : PHPGW_SERVER_ROOT;
+					$GLOBALS['phpgw_info']['server']['include_root'] = (PHPGW_INCLUDE_ROOT == '..') ? $realpath : PHPGW_SERVER_ROOT;
 				}
 				elseif(!@isset($GLOBALS['phpgw_info']['server']['include_root']) && @$GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
 				{
@@ -430,8 +442,8 @@
 			else
 			{
 				$detected .= lang('Sample configuration not found. using built in defaults') . '<br>' . "\n";
-				$GLOBALS['phpgw_info']['server']['server_root'] = '/path/to/egroupware';
-				$GLOBALS['phpgw_info']['server']['include_root'] = '/path/to/egroupware';
+				$GLOBALS['phpgw_info']['server']['server_root']  = $realpath;
+				$GLOBALS['phpgw_info']['server']['include_root'] = $realpath;
 				/* This is the basic include needed on each page for eGroupWare application compliance */
 				$GLOBALS['phpgw_info']['flags']['htmlcompliant'] = True;
 
