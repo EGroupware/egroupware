@@ -18,6 +18,7 @@
 	{
 		var $so;
 		var $cal;
+		var $cal_id;
 
 		var $tz_offset;
 
@@ -29,6 +30,11 @@
 
 		function boalarm()
 		{
+			$cal_id = (isset($GLOBALS['HTTP_POST_VARS']['cal_id'])?intval($GLOBALS['HTTP_POST_VARS']['cal_id']):'');
+			if($cal_id)
+			{
+				$this->cal_id = $cal_id;
+			}
 			$this->cal = CreateObject('calendar.bocalendar',1);
 			$this->tz_offset = $this->cal->datetime->tz_offset;
 
