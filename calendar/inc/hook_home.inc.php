@@ -28,7 +28,7 @@
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$date = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
-		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
+		$extra_data = "\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
 			. $cal->mini_calendar(
 				Array(
 					'day'		=> $cal->bo->day,
@@ -45,7 +45,36 @@
 					'month'	=> $cal->bo->month,
 					'day'		=> $cal->bo->day
 				)
-			).'</td></tr></table>'."\n\n".'<!-- END Calendar info --></table></td></tr>'."\n";
+			).'</td></tr></table>'."\n".'</table>'."\n";
+			
+		$title = '<font color="#FFFFFF">'.lang('Calendar').'</font>';
+		
+		$portalbox = CreateObject('phpgwapi.listbox',
+			Array(
+				'title'	=> $title,
+				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'width'	=> '90%',
+				'outerborderwidth'	=> '0',
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
+			)
+		);
+
+		$var = Array(
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar')
+		);
+
+		while(list($key,$value) = each($var))
+		{
+			$portalbox->set_controls($key,$value);
+		}
+
+		echo '<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($extra_data)."\n".'<!-- END Calendar info -->'."\n";
 		unset($cal);
 	} 
 	flush();
