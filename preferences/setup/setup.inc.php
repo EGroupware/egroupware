@@ -18,7 +18,7 @@
 	$setup_info['preferences']['enable']    = 2;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['preferences']['hooks'][] = 'admin_deleteaccount';
+	$setup_info['preferences']['hooks'][] = 'deleteaccount';
 	$setup_info['preferences']['hooks'][] = 'config';
 	$setup_info['preferences']['hooks'][] = 'manual';
 	$setup_info['preferences']['hooks'][] = 'preferences';
