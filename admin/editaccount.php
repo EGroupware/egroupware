@@ -131,7 +131,7 @@
 		$account_file_space_type_selected[$account_file_space_type] = "selected";
 
 		$account_file_space = '
-			<input type=text name="account_file_space_number" value="' . $account_file_space_number . '" size="7">';
+			<input type=text name="account_file_space_number" value="' . trim($account_file_space_number) . '" size="7">';
 		$account_file_space_select ='<select name="account_file_space_type">';
 		$account_file_space_types = array ("gb", "mb", "kb", "b");
 		while (list ($num, $type) = each ($account_file_space_types))
