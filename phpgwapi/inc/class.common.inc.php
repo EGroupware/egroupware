@@ -1644,17 +1644,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 		}
 
-		/**************************************************************************\
-		* function to display the applications preferences and admin links         *
-		\**************************************************************************/
-
-		function display_mainscreen($appname,$file,$file2=False)
+		/*!
+		@function display_mainscreen
+		@abstract shows the applications preferences and admin links
+		*/
+		function display_mainscreen($appname,$file)
 		{
-			if ($file2)
-			{
-				$file = $file2;
-			}
-
 			if(is_array($file))
 			{
 				$icon = $GLOBALS['phpgw']->common->image($appname,'navbar','',True);
