@@ -123,7 +123,7 @@
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\"value=\"".
-			htmlentities($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
+			@htmlentities($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
