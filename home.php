@@ -54,62 +54,14 @@
 		$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] = $GLOBALS['phpgw_info']['server']['force_default_app'];
 	}
 
-	if (($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] &&
-		$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
-		($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
-		{
-			if ($GLOBALS['HTTP_GET_VARS']['cd'] == 'yes')
-			{
-				if (! $navbarframe && ! $framebody)
-				{
-					$tpl = new Template(PHPGW_TEMPLATE_DIR);
-					$tpl->set_file(array(
-						'frames'       => 'frames.tpl',
-						'frame_body'   => 'frames_body.tpl',
-						'frame_navbar' => 'frames_navbar.tpl'
-					));
-					$tpl->set_var('navbar_link',$GLOBALS['phpgw']->link('index.php','navbarframe=True&cd=yes'));
-					if ($GLOBALS['forward'])
-					{
-						$tpl->set_var('body_link',$GLOBALS['phpgw']->link($GLOBALS['forward']));
-					}
-					else
-					{
-						$tpl->set_var('body_link',$GLOBALS['phpgw']->link('index.php','framebody=True&cd=yes'));
-					}
-
-					if ($GLOBALS['phpgw_info']['user']['preferences']['common']['frame_navbar_location'] == 'bottom')
-					{
-						$tpl->set_var('frame_size','*,60');
-						$tpl->parse('frames_','frame_body',True);
-						$tpl->parse('frames_','frame_navbar',True);
-					}
-					else
-					{
-						$tpl->set_var('frame_size','60,*');
-						$tpl->parse('frames_','frame_navbar',True);
-						$tpl->parse('frames_','frame_body',True);
-					}
-					$tpl->pparse('out','frames');
-				}
-				if ($navbarframe)
-				{
-					$GLOBALS['phpgw']->common->phpgw_header();
-				}
-			}
-		}
-		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
+		if ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
 			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
 		}
-		else
-		{
-			$GLOBALS['phpgw']->common->phpgw_header();
-		}
 
 		$GLOBALS['phpgw']->translation->add_app('mainscreen');
-		if (lang('mainscreen_message') != 'mainscreen_message*')
+		if (lang('mainscreen_message') != 'mainscreen_message'.lang_char())
 		{
 			echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
 		}
@@ -130,8 +82,9 @@
 			}
 			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
-				echo '<p>There is a new version of phpGroupWare available. <a href="'
+				$message = '<p>There is a new version of phpGroupWare available. <a href="'
 					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
+				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=True;
 			}
 
 			$_found = False;
@@ -161,9 +114,12 @@
 			}
 			if($_found)
 			{
-				echo '<br>' . lang('The following applications require upgrades') . ':' . "\n";
-				echo $_app_string . "\n";
-				echo '<br>' . lang('Please run setup to become current') . '.' . "\n";
+				$message = '<br>' . lang('The following applications require upgrades') . ':' . "\n";
+				$message .= $_app_string . "\n";
+				$message .= '<br>' . lang('Please run setup to become current') . '.' . "\n";
+
+				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
+				unset($message);
 				unset($_app_string);
 			}
 		}
@@ -171,7 +127,7 @@
 	if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) &&
 		$GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
 	{
-?>
+/* need to figure out how to implement this properly
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 	var NotifyWindow;
 
@@ -193,8 +149,8 @@
 	}
 </SCRIPT>
 
-<?php
 		echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
+*/
 	}
 
 	/* This initializes the users portal_order preference if it does not exist. */
@@ -249,8 +205,5 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
-
-	//$phpgw->common->debug_phpgw_info();
-	//$phpgw->common->debug_list_core_functions();
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

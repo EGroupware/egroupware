@@ -1233,28 +1233,28 @@
 		{
 
 			/* Make sure some of the defaults are set */
-			if (!isset($phpgw_info['theme']['css']['A']))
+			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A']))
 			{
-				$phpgw_info['theme']['css']['A'] = 'text-decoration:none;';
+				$GLOBALS['phpgw_info']['theme']['css']['A'] = 'text-decoration:none;';
 			}
-			if (!isset($phpgw_info['theme']['css']['A:link']) && !empty($GLOBALS['phpgw_info']['theme']['link']))
+			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:link']) && !empty($GLOBALS['phpgw_info']['theme']['link']))
 			{
-				$phpgw_info['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
-			}
-
-			if (!isset($phpgw_info['theme']['css']['A:visited']) && !empty($GLOBALS['phpgw_info']['theme']['vlink']))
-			{
-				$phpgw_info['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
+				$GLOBALS['phpgw_info']['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
 			}
 
-			if (!isset($phpgw_info['theme']['css']['A:active']) && !empty($GLOBALS['phpgw_info']['theme']['alink']))
+			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:visited']) && !empty($GLOBALS['phpgw_info']['theme']['vlink']))
 			{
-				$phpgw_info['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
+				$GLOBALS['phpgw_info']['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
 			}
 
-			if (!isset($phpgw_info['theme']['css']['A:hover']) && !empty($GLOBALS['phpgw_info']['theme']['hovlink']))
+			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:active']) && !empty($GLOBALS['phpgw_info']['theme']['alink']))
 			{
-				$phpgw_info['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
+				$GLOBALS['phpgw_info']['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
+			}
+
+			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:hover']) && !empty($GLOBALS['phpgw_info']['theme']['hovlink']))
+			{
+				$GLOBALS['phpgw_info']['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
 			}
 
 			/* now put the css data into the template class */
@@ -1832,7 +1832,7 @@
 				$prefs['email']['mail_port'] = '110';
 			}
 			// This is going to be used to switch to the nntp class
-			if (isset($phpgw_info['flags']['newsmode']) &&
+			if (isset($GLOBALS['phpgw_info']['flags']['newsmode']) &&
 				$GLOBALS['phpgw_info']['flags']['newsmode'])
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';

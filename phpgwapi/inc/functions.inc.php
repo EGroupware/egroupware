@@ -53,6 +53,10 @@
 		$value = $GLOBALS['phpgw']->translation->translate("$key",$vars);
 		return $value;
 	}
+	function lang_char()
+	{
+		return $GLOBALS['phpgw']->translation->translator_helper;
+	}
 
 	/* Just a temp wrapper. ###DELETE_ME#### (Seek3r) */
 	function check_code($code)
@@ -273,8 +277,7 @@
 		{
 			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']));
-				exit;
+				$GLOBALS['phpgw']->redirect($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
 			}
 			if (@$login != '')
 			{
@@ -298,8 +301,7 @@
 		\**************************************************************************/
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
-			Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','code=10')));
-			exit;
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','code=10'));
 		}
 
 		/***************************************************************************\
