@@ -357,7 +357,7 @@
 
 				if ($filterlist) {
 					$filtermethod = '('.$filterlist.') ';
-					$fwhere = ' WHERE '; $fand = ' AND ';
+					$fwhere = ' WHERE '; $fand = '';
 				}
 			}
 
