@@ -276,8 +276,6 @@
 				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
 				. "','" . $account_info['account_expires'] . "')",__LINE__,__FILE__);
-
-			$GLOBALS['phpgw']->preferences->create_defaults($this->name2id($account_info['account_lid']));
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -302,7 +300,7 @@
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
 
-			if ($default_prefs == False)
+			if($default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
 			}
@@ -321,7 +319,7 @@
 				{
 					// If they don't have a default group, they need some sort of permissions.
 					// This generally doesn't / shouldn't happen, but will (jengo)
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
