@@ -2043,7 +2043,7 @@
 		$phpgw_setup->oProc->AddColumn('phpgw_log_msg','log_msg_file',array('type' => 'varchar', 'precision' => 255, 'nullable'=> False));
 		$phpgw_setup->oProc->AddColumn('phpgw_log_msg','log_msg_line',array('type' => 'int', 'precision' => 4, 'nullable'=> False));
 
-		$setup_info['phpgwapi']['currentver'] = '0.9.13.008';
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.009';
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
