@@ -87,6 +87,12 @@ class so_resources
 		}
 		return false;
 	}
+
+	function delete($id)
+        {
+                $this->db->delete($this->rs_table,$id,__LINE__,__FILE__);
+                return true;
+        }
 	
 	/*!
 		@function read
@@ -95,13 +101,6 @@ class so_resources
 		@param int $id resource id
 		@return array with key => value or false if not found
 	*/
-
-	function delete($id)
-        {
-                $this->db->delete($this->rs_table,$id,__LINE__,__FILE__);
-                return true;
-        }
-
 	function read($id)
 	{
 		$tabledef = $this->db->metadata($table=$this->rs_table,$full=false);
