@@ -651,6 +651,7 @@
 				return False;
 			}
 
+			// access, cat_id and tid can be in $fields now or as extra params
 			foreach(array('access','cat_id','tid') as $extra)
 			{
 				if (!is_null($$extra))
@@ -659,6 +660,16 @@
 				}
 			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+
+			// we need to add the non-stockfields too
+			foreach(array('access','cat_id','tid') as $extra)
+			{
+				if (isset($fields[$extra]))
+				{
+					$stock_fields[$extra] = $fields[$extra];
+					$stock_fieldnames[$extra] = $extra;
+				}
+			}
 			if (count($stock_fields))
 			{
 				while (list($stock_fieldname) = each($stock_fieldnames))
@@ -671,7 +682,7 @@
 				{
 					unset($field_s);
 				}
-				$this->db->query("UPDATE $this->std_table SET $fields_s WHERE "
+				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
