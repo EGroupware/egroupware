@@ -186,10 +186,15 @@
     }
 
     // This is a php3/4 compliant in_array(), used only below in check_db() so far
-    function isinarray($needle,$haystack=array()) 
+    function isinarray($needle,$haystack='') 
     {
-      for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++);
-        return ($i!=count($haystack));
+		if($haystack == '')
+		{
+			settype($haystack,'array');
+			$haystack = Array();
+		}
+		for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++);
+		return ($i!=count($haystack));
     }
 
     function check_db()
