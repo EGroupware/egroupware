@@ -218,7 +218,7 @@
          $kp3 = $phpgw_info["user"]["kp3"];
 
       if (! $url) {                         // PHP won't allow you to set a var to a var
-         $url = $PHP_SELF;                 // or function for default values
+         $url = $PHP_SELF;                  // or function for default values
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) && $phpgw_info["server"]["usecookies"]) {
@@ -229,6 +229,7 @@
         $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
         $url .= "&kp3=" . $kp3;
         $url .= "&domain=" . $phpgw_info["user"]["domain"];
+        // This doesn't belong in the API.  Its up to the app to pass this value. (jengo)
         if ($phpgw_info["flags"]["newsmode"]) {
           $url .= "&newsmode=on";
         }
@@ -238,9 +239,11 @@
         }
       }
 
+      // Note: The following code is slighty redundant, you should ALWAYS pass the full path (jengo)
+
       // next line adds index.php when one is assumed since
       // iis will not interpret urls like http://.../addressbook/?xyz=5
-      $url = str_replace("/?", "/index.php?", $url);
+/*      $url = str_replace("/?", "/index.php?", $url);
       $html_check = strtolower(substr($url ,0,4));
       $slash_check = strtolower(substr($url ,0,1));
       if($url_check != "http") {
@@ -249,15 +252,12 @@
         } else{
           $url = $phpgw_info["server"]["hostname"].$url; 
         } 
-      }
+      } */
       return $url;
     }  
 
     function strip_html($s)
     {
-       global $phpgw_info;
-       $working_langs = array("en" => True);
-
        return htmlspecialchars(stripslashes($s));
     }
 
@@ -335,10 +335,10 @@
   $phpgw = new phpgw;
   $phpgw->phpgw_();
   if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
-//     if (! $phpgw->session->verify()) {
-//        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
-//        exit;
-//     }
+     if (! $phpgw->session->verify()) {
+        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
+        exit;
+     }
      load_optional();
 
      phpgw_fillarray();

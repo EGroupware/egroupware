@@ -19,7 +19,7 @@
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
                                "enable_network_class" => True, "enable_todo_class" => True,
-			       "enable_addressbook_class" => True
+                               "enable_addressbook_class" => True
                               );
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
@@ -56,7 +56,7 @@
         }
         if ($navbarframe) {
            $phpgw->common->phpgw_header();
-           $phpgw->common->navbar(True);
+           echo parse_navbar();
         }
     }
   } elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
@@ -67,7 +67,7 @@
      $phpgw->common->phpgw_exit();
   } else {
      $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();  
+     echo parse_navbar();  
   }
 
   
