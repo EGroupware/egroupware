@@ -83,7 +83,6 @@
 			{
 				$group->data['account_lid'] = $n_group;
 			}
-			$group->save_repository();
 
 			// Set group acl
 			$acl = CreateObject('phpgwapi.acl',$group_id);
@@ -132,6 +131,9 @@
 				{
 					$pref->save_repository();
 				}
+				// This is down here so we are sure to catch the acl changes
+				// for LDAP to update the memberuid attribute
+				$group->save_repository();
 			}
 
 			if ($old_group_name <> $n_group)
