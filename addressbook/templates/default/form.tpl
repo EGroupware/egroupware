@@ -8,32 +8,32 @@
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_prefix}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="10" name="prefix" value="{prefix}"></font>
+      <font size="-1"><input size="10" name="entry[prefix]" value="{prefix}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_firstname}:</font></td>
     <td>
-      <font size="-1"><input name="firstname" value="{firstname}"></font>
+      <font size="-1"><input name="entry[firstname]" value="{firstname}"></font>
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_middle}:</font></td>
     <td>
-      <font size="-1"><input name="middle" value="{middle}"></font>
+      <font size="-1"><input name="entry[middle]" value="{middle}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_lastname}:</font></td>
     <td colspan="3">
-      <font size="-1"><input name="lastname" value="{lastname}"></font>
+      <font size="-1"><input name="entry[lastname]" value="{lastname}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_suffix}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="10" name="suffix" value="{suffix}"></font>
+      <font size="-1"><input size="10" name="entry[suffix]" value="{suffix}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_on}">
@@ -50,7 +50,7 @@
      <font color="{row_text}" face="" size="-1">{lang_title}:</font>
     </td>
     <td colspan="3">
-      <font size="-1"><input name="title" value="{title}"></font>
+      <font size="-1"><input name="entry[title]" value="{title}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
@@ -59,11 +59,11 @@
      <font color="{row_text}" face="" size="-1">{lang_company}:</font>
     </td>
     <td>
-     <font size="-1"><input size="30" name="company" value="{company}"></font>
+     <font size="-1"><input size="30" name="entry[company]" value="{company}"></font>
     </td>
     <td colspan="2">
      <font color="{row_text}" face="" size="-1">{lang_url}:</font>
-     <input size="30" name="url" value="{url}">
+     <input size="30" name="entry[url]" value="{url}">
     </td>
   </tr>
   <tr bgcolor="{row_on}">
@@ -72,7 +72,7 @@
      <font color="{row_text}" face="" size="-1">{lang_email}:
     </td>
     <td>
-      <font size="-1"><input size="30" name="email" value="{email}"></font>
+      <font size="-1"><input size="30" name="entry[email]" value="{email}"></font>
     </td>
     <td colspan="2">
      <font color="{row_text}" face="" size="-1">{lang_email_type}:</font>
@@ -85,45 +85,45 @@
      <font color="{row_text}" face="" size="-1">{lang_department}:</font>
     </td>
     <td colspan="3">
-     <font size="-1"><input name="department" value="{department}"></font>
+     <font size="-1"><input name="entry[department]" value="{department}"></font>
     </td>
   </tr> 
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_bstreet}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="30" name="bstreet" value="{bstreet}"></font>
+      <font size="-1"><input size="30" name="entry[bstreet]" value="{bstreet}"></font>
      </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_address2}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="30" name="address2" value="{address2}"></font>
+      <font size="-1"><input size="30" name="entry[address2]" value="{address2}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_address3}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="30" name="address3" value="{address3}"></font>
+      <font size="-1"><input size="30" name="entry[address3]" value="{address3}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_bcity}:</font></td>
     <td>
-      <font size="-1"><input size="30" name="bcity" value="{bcity}"></font>
+      <font size="-1"><input size="30" name="entry[bcity]" value="{bcity}"></font>
     </td>
     <td colspan="2"><font color="{row_text}" face="" size="-1">{lang_bstate}:</font>
-      <font size="-1"><input name="bstate" value="{bstate}"></font>
+      <font size="-1"><input name="entry[bstate]" value="{bstate}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_bzip}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="10" name="bzip" value="{bzip}"></font>
+      <font size="-1"><input size="10" name="entry[bzip]" value="{bzip}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
@@ -147,44 +147,44 @@
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_wphone}:</font></td>
      <td>
-      <font size="-1"><input name="wphone" value="{wphone}"></font>{pref_work}
+      <font size="-1"><input name="entry[wphone]" value="{wphone}"></font>{pref_work}
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_fax}:</font></td>
     <td>
-      <font size="-1"><input name="fax" value="{fax}"></font>{pref_fax}
+      <font size="-1"><input name="entry[fax]" value="{fax}"></font>{pref_fax}
     </td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_pager}:</font></td>
     <td>
-      <font size="-1"><input name="pager" value="{pager}"></font>{pref_pager}
+      <font size="-1"><input name="entry[pager]" value="{pager}"></font>{pref_pager}
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_mphone}:</font></td>
     <td>
-      <font size="-1"><input name="mphone" value="{mphone}"></font>{pref_cell}
+      <font size="-1"><input name="entry[mphone]" value="{mphone}"></font>{pref_cell}
     </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_msgphone}:</font></td>
     <td>
-      <font size="-1"><input name="msgphone" value="{msgphone}"></font>{pref_msg}
+      <font size="-1"><input name="entry[msgphone]" value="{msgphone}"></font>{pref_msg}
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_isdnphone}:</font></td>
     <td>
-      <font size="-1"><input name="isdnphone" value="{isdnphone}"></font>{pref_isdn}
+      <font size="-1"><input name="entry[isdnphone]" value="{isdnphone}"></font>{pref_isdn}
     </td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_carphone}:</font></td>
     <td>
-      <font size="-1"><input name="carphone" value="{carphone}"></font>{pref_car}
+      <font size="-1"><input name="entry[carphone]" value="{carphone}"></font>{pref_car}
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_vidphone}:</font></td>
     <td>
-      <font size="-1"><input name="vidphone" value="{vidphone}"></font>{pref_video}
+      <font size="-1"><input name="entry[vidphone]" value="{vidphone}"></font>{pref_video}
     </td>
   </tr>
   <tr bgcolor="{row_off}">
@@ -205,7 +205,7 @@
     <td>
       <font color="{row_text}" face="" size="-1">{lang_hemail}:</font>
     </td>
-    <td><font size="-1"><input size="30" name="hemail" value="{hemail}"></font></td>
+    <td><font size="-1"><input size="30" name="entry[hemail]" value="{hemail}"></font></td>
     <td colspan="2"><font color="{row_text}" face="" size="-1">{lang_hemail_type}:</font>
         <font size="-1">{hemail_type}</font>
     </td>
@@ -213,24 +213,24 @@
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_hstreet}:</font></td>
-    <td colspan="3"><font size="-1"><input size="30" name="hstreet" value="{hstreet}"></font></td>
+    <td colspan="3"><font size="-1"><input size="30" name="entry[hstreet]" value="{hstreet}"></font></td>
   </tr>
   <tr bgcolor="{row_on}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_hcity}:</font></td>
     <td>
-      <font size="-1"><input size="30" name="hcity" value="{hcity}"></font>
+      <font size="-1"><input size="30" name="entry[hcity]" value="{hcity}"></font>
     </td>
     <td><font color="{row_text}" face="" size="-1">{lang_hstate}:</font></td>
     <td>
-      <font size="-1"><input name="hstate" value="{hstate}"></font>
+      <font size="-1"><input name="entry[hstate]" value="{hstate}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
     <td>&nbsp;</td>
     <td><font face="" size="-1">{lang_hzip}:</font></td>
     <td colspan="3">
-      <font size="-1"><input size="10" name="hzip" value="{hzip}"></font>
+      <font size="-1"><input size="10" name="entry[hzip]" value="{hzip}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_on}">
@@ -251,10 +251,10 @@
     <td>&nbsp;</td>
     <td><font color="{row_text}" face="" size="-1">{lang_hphone}:</font></td>
     <td>
-      <font size="-1"><input name="hphone" value="{hphone}"></font>{pref_home}
+      <font size="-1"><input name="entry[hphone]" value="{hphone}"></font>{pref_home}
     </td>
     <td colspan="2"><font color="{row_text}" face="" size="-1">{lang_ophone}:</font>
-      <font size="-1"><input name="ophone" value="{ophone}"></font>
+      <font size="-1"><input name="entry[ophone]" value="{ophone}"></font>
     </td>
   </tr>
   <tr bgcolor="{row_off}">
@@ -264,7 +264,7 @@
   <tr bgcolor="{row_on}">
     <td><font size="-1">{lang_private}:</font></td>
     <td colspan="4">
-     <input type="checkbox" name="access" value="True"{access_check}>
+     <input type="checkbox" name="entry[access]" value="True"{access_check}>
     </td>
   </tr>
   <tr bgcolor="{row_off}">

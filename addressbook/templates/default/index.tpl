@@ -5,11 +5,6 @@
 <br>{searchreturn}
   <form action="{cats_url}" method="POST">
 {cats}{cats_link}
-    <input type="hidden" name="sort" value="{sort}">
-    <input type="hidden" name="order" value="{order}">
-    <input type="hidden" name="filter" value="{filter}">
-    <input type="hidden" name="query" value="{query}">
-    <input type="hidden" name="start" value="{start}">
     <noscript><input type="submit" name="cats" value="{lang_cats}"></noscript>
   </form>
 {search_filter}
@@ -67,46 +62,26 @@
    <tr bgcolor="{th_bg}"> 
      <form action="{add_url}" method="post">
      <td width="16%"> 
-         <input type="hidden" name="sort" value="{sort}">
-         <input type="hidden" name="order" value="{order}">
-         <input type="hidden" name="filter" value="{filter}">
-         <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Add" value="{lang_add}">
      </td>
      </form>
      <form action="{vcard_url}" method="post">
      <td width="16%">
-         <input type="hidden" name="sort" value="{sort}">
-         <input type="hidden" name="order" value="{order}">
-         <input type="hidden" name="filter" value="{filter}">
-         <input type="hidden" name="start" value="{start}">
         <input type="submit" name="AddVcard" value="{lang_addvcard}">
      </td>
      </form>
      <form action="{import_url}" method="post">
      <td width="16%">
-         <input type="hidden" name="sort" value="{sort}">
-         <input type="hidden" name="order" value="{order}">
-         <input type="hidden" name="filter" value="{filter}">
-         <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Import" value="{lang_import}">
      </td>
      </form>
      <form action="{import_alt_url}" method="post">
      <td width="16%">
-         <input type="hidden" name="sort" value="{sort}">
-         <input type="hidden" name="order" value="{order}">
-         <input type="hidden" name="filter" value="{filter}">
-         <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Import" value="{lang_import_alt}">
      </td>
      </form>
      <form action="{export_url}" method="post">
      <td width="16%">
-         <input type="hidden" name="sort" value="{sort}">
-         <input type="hidden" name="order" value="{order}">
-         <input type="hidden" name="filter" value="{filter}">
-         <input type="hidden" name="start" value="{start}">
          <input type="submit" name="Export" value="{lang_export}">
      </td>
      </form>

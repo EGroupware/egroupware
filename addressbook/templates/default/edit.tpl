@@ -1,11 +1,8 @@
 
 <!-- BEGIN edit -->
-   <input type="hidden" name="ab_id" value="{ab_id}">
-   <input type="hidden" name="sort" value="{sort}">
-   <input type="hidden" name="order" value="{order}">
-   <input type="hidden" name="filter" value="{filter}">
-   <input type="hidden" name="query" value="{query}">
-   <input type="hidden" name="start" value="{start}">
+   <input type="hidden" name="entry[ab_id]" value="{ab_id}">
+   <input type="hidden" name="entry[tid]" value="{tid}">
+   <input type="hidden" name="entry[referer]" value="{referer}">
    <table border="0" cellPadding="1" cellSpacing="1" width="95%">
      <tr>
       <td>&nbsp;</td>
@@ -15,21 +12,11 @@
       </TD>
       <td align="left" width="7%">
        {cancel_link}
-       <input type="hidden" name="sort" value="{sort}">
-       <input type="hidden" name="order" value="{order}">
-       <input type="hidden" name="filter" value="{filter}">
-       <input type="hidden" name="query" value="{query}">
-       <input type="hidden" name="start" value="{start}">
        <input type="submit" name="cancel" value="{lang_cancel}"></form>
       </td>
       <td align="right">
        {delete_link}
-       <input type="hidden" name="ab_id" value="{ab_id}">
-       <input type="hidden" name="sort" value="{sort}">
-       <input type="hidden" name="order" value="{order}">
-       <input type="hidden" name="filter" value="{filter}">
-       <input type="hidden" name="query" value="{query}">
-       <input type="hidden" name="start" value="{start}">
+       <input type="hidden" name="entry[ab_id]" value="{ab_id}">
        {delete_button}
        </form>
       </td>
