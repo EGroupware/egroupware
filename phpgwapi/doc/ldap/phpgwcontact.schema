@@ -75,8 +75,9 @@ attributetype ( 2.3.6.1.1.1.1.113
 
 attributetype ( 2.3.6.1.1.1.1.114
 	NAME 'phpgwAdrOneType'
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.14
-	SINGLE-VALUE )
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
 attributetype ( 2.3.6.1.1.1.1.115
 	NAME 'phpgwAddressLabel'
@@ -102,7 +103,7 @@ attributetype ( 2.3.6.1.1.1.1.119
 
 attributetype ( 2.3.6.1.1.1.1.120
 	NAME 'phpgwAdrTwoCountryName'
-	SUP countryname )
+	SUP friendlyCountryName )
 
 attributetype ( 2.3.6.1.1.1.1.121
 	NAME 'phpgwAdrTwoType'
@@ -175,7 +176,7 @@ objectclass	( 2.3.6.1.1.1.1.200
 	MAY ( cn $ givenname $ sn $ phpgwMiddlename $ phpgwPrefix $
 		phpgwSuffix $ phpgwAudio $ phpgwBirthday $ phpgwTz $ phpgwGeo $
 		phpgwUrl $ phpgwPublicKey $ o $ ou $ title $ streetaddress $
-		l $ st $ postalcode $ countryname $
+		l $ st $ postalcode $ friendlyCountryName $ c $ co $ countryname $
 		phpgwAdrOneType $ phpgwAddressLabel $
 		phpgwAdrTwoStreet $ phpgwAdrTwoLocality $ phpgwAdrTwoRegion $
 		phpgwAdrTwoPostalCode $ phpgwAdrTwoCountryName $ phpgwAdrTwoType $
