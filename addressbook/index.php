@@ -185,16 +185,19 @@
 
        // Some fields require special formating.       
        if ($column[0] == "url") {
+          if (! ereg("^http://",$field)) {
+             $data = "http://" . $field;
+          }
           echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
              . '<a href="' . $field . '" target="_new">' . $field. '</a>&nbsp;</font></td>';
        } else if ($column[0] == "email") {
           if ($phpgw_info["user"]["apps"]["email"]) {
              echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
                 . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
-                                            "to=" . urlencode($field)) . '" target="_top">' . $field . '</a>&nbsp;</font></td>';
+                                            "to=" . urlencode($field)) . '" target="_new">' . $field . '</a>&nbsp;</font></td>';
           } else {
              echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-                . '<a href="mailto:' . $field . '" target="_top">' . $field. '</a>&nbsp;</font></td>';
+                . '<a href="mailto:' . $field . '">' . $field. '</a>&nbsp;</font></td>';
           }
        } else {
           echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'

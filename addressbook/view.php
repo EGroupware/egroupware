@@ -19,6 +19,31 @@
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
 
+  function checkfor_specialformat($field,$data)
+  {
+     global $phpgw_info, $phpgw;
+
+     if ($field == "email") {
+        if ($phpgw_info["user"]["apps"]["email"]) {
+           $s = '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
+                                           "to=" . urlencode($data)) . '" target="_new">' . $data . '</a>';
+        } else {
+           $s = '<a href="mailto:' . $data . '">' . $data . '</a>';
+        }
+     } else if ($field == "URL") {
+        if (! ereg("^http://",$data)) {
+           $data = "http://" . $data;
+        }
+        $s = '<a href="' . $data . '" target="_new">' . $data . '</a>';
+     } else if ($field == "birthday") {
+        $date = explode("/",$data);
+        $s = $phpgw->common->dateformatorder($date[2],$date[1],$date[0],True);
+     } else {
+        $s = $data . "&nbsp;";
+     }     
+     return $s;  
+  }
+
   if (! $ab_id) {
     Header("Location: " . $phpgw->link("index.php"));
   }
@@ -58,14 +83,16 @@
       if (! $columns_to_display[$i]["field_name"]) break;
 
       $columns_html .= "<tr><td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
-                     . "<td>" . $columns_to_display[$i]["field_value"] . "</td>";
+                     . "<td>" . checkfor_specialformat($columns_to_display[$i]["field_name"],$columns_to_display[$i]["field_value"])
+                     . "</td>";
 
       $i++;
 
       if (! $columns_to_display[$i]["field_name"]) break;
 
-      $columns_html .= "<td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
-                     . "<td>" . $columns_to_display[$i]["field_value"];
+      $columns_html .= "<tr><td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
+                     . "<td>" . checkfor_specialformat($columns_to_display[$i]["field_name"],$columns_to_display[$i]["field_value"])
+                     . "</td>";
 
       $i++;
 	  $columns_html .= "</td></tr>";

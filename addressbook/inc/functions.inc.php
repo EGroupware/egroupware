@@ -13,14 +13,14 @@
   /* $Id$ */
   
   // NOTE: This entire file needs to be rewritten.  There is a great deal of code not being used
-  //       anymore. (jengo)
+  //       anymore. This should also be converted to templates while where at it (jengo)
 
   $abc = array('company'   => 'company',		  // AddressBook Columns and their descriptions
                'firstname' => 'first name',
                'lastname'  => 'last name',
                'email'     => 'email',
                'wphone'    => 'work phone',
-               'hphone'      => 'home phone',
+               'hphone'    => 'home phone',
                'fax'       => 'fax',
                'pager'     => 'pager',
                'mphone'    => 'mobile phone',
@@ -76,7 +76,7 @@
        $city	= "<input name=\"city\" value=\"$city\">";
        $state	= "<input name=\"state\" value=\"$state\">";
        $zip	= "<input name=\"zip\" value=\"$zip\">";
-       $url	= "<input name=\"url\" value=\"$url\">";
+       //$url	= "<input name=\"url\" value=\"$url\">";
               
        if($phpgw_info["apps"]["timetrack"]["enabled"]) {
          $company = '<select name="company">';
@@ -98,47 +98,50 @@
           list( $month, $day, $year ) = split( '/', $bday );
           $temp_month[$month] = "SELECTED";
 
-          $bday ="<select name=bday_month>"
-               . "<option value=\"\" $temp_month[0]> </option>"
-               . "<option value=1 $temp_month[1]>January</option>" 
-               . "<option value=2 $temp_month[2]>February</option>"
-               . "<option value=3 $temp_month[3]>March</option>"
-               . "<option value=4 $temp_month[4]>April</option>"
-               . "<option value=5 $temp_month[5]>May</option>"
-               . "<option value=6 $temp_month[6]>June</option>" 
-               . "<option value=7 $temp_month[7]>July</option>"
-               . "<option value=8 $temp_month[8]>August</option>"
-               . "<option value=9 $temp_month[9]>September</option>"
-               . "<option value=10 $temp_month[10]>October</option>"
-               . "<option value=11 $temp_month[11]>November</option>"
-               . "<option value=12 $temp_month[12]>December</option>"
-               . "</select>"
-               . "<input maxlength=2 name=bday_day value=\"$day\" size=2>"
-               . "<input maxlength=4 name=bday_year value=\"$year\" size=4>"
-               . "<font face=\"$theme[font]\" size=\"-2\">(e.g. 1969)</font>";
+          $bday_month = "<select name=bday_month>"
+                      . "<option value=\"\" $temp_month[0]> </option>"
+                      . "<option value=1 $temp_month[1]>January</option>" 
+                      . "<option value=2 $temp_month[2]>February</option>"
+                      . "<option value=3 $temp_month[3]>March</option>"
+                      . "<option value=4 $temp_month[4]>April</option>"
+                      . "<option value=5 $temp_month[5]>May</option>"
+                      . "<option value=6 $temp_month[6]>June</option>" 
+                      . "<option value=7 $temp_month[7]>July</option>"
+                      . "<option value=8 $temp_month[8]>August</option>"
+                      . "<option value=9 $temp_month[9]>September</option>"
+                      . "<option value=10 $temp_month[10]>October</option>"
+                      . "<option value=11 $temp_month[11]>November</option>"
+                      . "<option value=12 $temp_month[12]>December</option>"
+                      . "</select>"
+;
+          $bday_day   = '<input maxlength="2" name="bday_day" value="' . $day . '" size="2">'
+;
+          $bday_year  = '<input maxlength="4" name="bday_year" value="' . $year . '" size="4">';
     } else {
-       $bday ="<select name=bday_month>"
-            . "<option value=\"\" SELECTED> </option>"
-            . "<option value=1>January</option>" 
-            . "<option value=2>February</option>"
-            . "<option value=3>March</option>"
-            . "<option value=4>April</option>"
-            . "<option value=5>May</option>"
-            . "<option value=6>June</option>" 
-            . "<option value=7>July</option>"
-            . "<option value=8>August</option>"
-            . "<option value=9>September</option>"
-            . "<option value=10>October</option>"
-            . "<option value=11>November</option>"
-            . "<option value=12>December</option>"
-            . "</select>"
-            . "<input maxlength=2 name=bday_day size=2>"
-            . "<input maxlength=4 name=bday_year size=4>"
-            . "<font face=\"$theme[font]\" size=\"-2\">(e.g. 1969)</font>";
+       $bday_month = "<select name=bday_month>"
+                   . "<option value=\"\" SELECTED> </option>"
+                   . "<option value=1>January</option>" 
+                   . "<option value=2>February</option>"
+                   . "<option value=3>March</option>"
+                   . "<option value=4>April</option>"
+                   . "<option value=5>May</option>"
+                   . "<option value=6>June</option>" 
+                   . "<option value=7>July</option>"
+                   . "<option value=8>August</option>"
+                   . "<option value=9>September</option>"
+                   . "<option value=10>October</option>"
+                   . "<option value=11>November</option>"
+                   . "<option value=12>December</option>"
+                   . "</select>"
+;
+       $bday_day  = '<input name="bday_day" size="2" maxlength="2">'
+;
+       $bday_year = '<input name="bday_year" size="4" maxlength="4">'
+;
     }
 
-    $notes	= "<TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
-		. $notes . "</TEXTAREA>";
+    $notes	 = '<TEXTAREA cols="60" name="notes" rows="4">'
+ . $notes . '</TEXTAREA>';
   } else {
      $notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
 		. $notes . "</TEXTAREA></form>";
@@ -203,9 +206,12 @@
      <font color="#000000" face="" size="-1"><?php echo lang("URL"); ?>:</font>
     </td>
     <td>
-     <font size="-1">
-<?php echo $url; ?>
-</font>
+     <input name="url" value="<?php
+                                if (! ereg("^http://",$url)) {
+                                   echo "http://";
+                                }
+                                echo $url;
+                              ?>">
     </td>
     <td><font size="-1"></font></td>
   </tr>
@@ -254,9 +260,11 @@
     </font></td>
     <td><font face="" size="-1"><?php echo lang("Birthday"); ?>:</font></td>
     <td>
-      <font size="-1">
-        <?php echo $bday; ?>
-      </font> </td>
+     <?php 
+       echo $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
+          . '<font face="' . $theme["font"] . '" size="-2">(e.g. 1969)</font>';
+     ?>
+   </td>
   </tr>
   <tr>
     <td><font face="" size="-1"><?php echo lang("Line 2"); ?>:</font></td>

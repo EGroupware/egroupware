@@ -40,6 +40,10 @@
      if ($access != "private" && $access != "public") {
         $access = $phpgw->accounts->array_to_string($access,$n_groups);
      }
+     
+     if ($url == "http://") {
+        $url = "";
+     }
 
      if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
        $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"

@@ -59,6 +59,10 @@
      form("","edit.php","Edit",$fields);
 
   } else {
+     if ($url == "http://") {
+        $url = "";
+     }
+  
      if (! $bday_month && ! $bday_day && ! $bday_year) {
         $bday = "";
      } else {
