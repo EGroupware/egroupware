@@ -965,7 +965,7 @@
 			{
 				$this->add_acl('phpgw_group',(int)$groupid,(int)$accountid);
 			}
-			$this->add_acl('preferences','changepassword',(int)$accountid, (boolean)$changepw);
+			$this->add_acl('preferences','changepassword',(int)$accountid, (int)$changepw);
 
 			return $accountid;
 		}
@@ -985,6 +985,7 @@
 				$this->setup_account_object();
 				$account = $GLOBALS['phpgw']->accounts->name2id($account);
 			}
+			$rights = (int)$rights;
 			if (!is_object($this->db)) $this->loaddb();
 
 			if (!is_array($apps)) $apps = array($apps);
