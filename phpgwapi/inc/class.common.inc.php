@@ -5,7 +5,7 @@
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Mark Peters <skeeter@phpgroupware.org>                               *
   * and Lars Kneschke <lkneschke@linux-at-work.de>                           *
-  * Commononly used functions by phpGroupWare developers                     *
+  * Functions commonly used by phpGroupWare developers                       *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * Copyright (C) 2003 Lars Kneschke                                         *
   * -------------------------------------------------------------------------*
@@ -157,11 +157,11 @@
 				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			$groups = $GLOBALS['phpgw']->accounts->membership((int)$owner);
-			if (gettype($groups) == 'array')
+			if(@is_array($groups))
 			{
 				while ($group = each($groups))
 				{
-					$s .= " or $table like '%," . $group[2] . ",%'";
+					$s .= " OR $table LIKE '%," . $group[2] . ",%'";
 				}
 			}
 			return $s;
@@ -175,7 +175,7 @@
 		*/
 		function getInstalledLanguages()
 		{
-			$GLOBALS['phpgw']->db->query('select distinct lang from phpgw_lang');
+			$GLOBALS['phpgw']->db->query('SELECT DISTINCT lang FROM phpgw_lang');
 			while (@$GLOBALS['phpgw']->db->next_record()) 
 			{
 				$installedLanguages[$GLOBALS['phpgw']->db->f('lang')] = $GLOBALS['phpgw']->db->f('lang');
@@ -263,13 +263,13 @@
 			}
 			
 			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
-			{	
+			{
 				if(!ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3))
 				{
 					$GLOBALS['phpgw_info']['server']['ldap_version3'] = False;
 				}
 			}
-			
+
 			// bind as admin, we not to able to do everything
 			if (! ldap_bind($ds,$dn,$passwd))
 			{
@@ -1163,45 +1163,48 @@
 			$tpl->set_file('css', 'css.tpl');
 			$tpl->set_var($GLOBALS['phpgw_info']['theme']);
 			$app_css = '';
-		    	if(@isset($_GET['menuaction']))
-		    	{
-	    			list($app,$class,$method) = explode('.',$_GET['menuaction']);
-    				if(is_array($GLOBALS[$class]->public_functions) 
-					&& $GLOBALS[$class]->public_functions['css'])
-    				{
-    					$app_css .= $GLOBALS[$class]->css();
-    				}
-    			}
-    			if (isset($GLOBALS['phpgw_info']['flags']['css']))
-    			{
-    				$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
-    			}
+			if(@isset($_GET['menuaction']))
+			{
+				list($app,$class,$method) = explode('.',$_GET['menuaction']);
+				if(is_array($GLOBALS[$class]->public_functions) &&
+					$GLOBALS[$class]->public_functions['css'])
+				{
+					$app_css .= $GLOBALS[$class]->css();
+				}
+			}
+			if (isset($GLOBALS['phpgw_info']['flags']['css']))
+			{
+				$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
+			}
 			$tpl->set_var('app_css', $app_css);
-			
+
 			// search for app specific css file
 			if(@isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-				
-				if(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP .
-					       'templates' . SEP . $GLOBALS['phpgw_info']['server']['template_set'] . 
-					       SEP . 'app.css'))
+
+				if(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP
+					. 'templates' . SEP . $GLOBALS['phpgw_info']['server']['template_set']
+					. SEP . 'app.css')
+				)
 				{
 					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['phpgw_info']['server']['webserver_url']
-					."/$appname/templates/".$GLOBALS['phpgw_info']['server']['template_set']
-					."/app.css".'" type=text/css rel=StyleSheet>');
+						. "/$appname/templates/".$GLOBALS['phpgw_info']['server']['template_set']
+						. "/app.css".'" type=text/css rel=StyleSheet>');
 				}
-				elseif(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP .
-					       'templates' . SEP . 'default' . 
-					       SEP . 'app.css'))
+				elseif(file_exists(PHPGW_SERVER_ROOT . SEP . $appname . SEP
+					. 'templates' . SEP . 'default'
+					. SEP . 'app.css')
+				)
 				{
 					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['phpgw_info']['server']['webserver_url']
 					."/$appname/templates/default/app.css".'" type=text/css rel=StyleSheet>');
 				}
 			}
-			
-			return $tpl->subst('css');			
+
+			return $tpl->subst('css');
 		}
+
 		/**
 		* Used by the template headers for including javascript in the header
 		*
@@ -1219,21 +1222,20 @@
 			{
 				$java_script .= $GLOBALS['phpgw']->js->get_script_links();
 			}
-			
-		    	if(@isset($_GET['menuaction']))
-		    	{
-	    			list($app,$class,$method) = explode('.',$_GET['menuaction']);
-    				if(is_array($GLOBALS[$class]->public_functions) 
-					&& $GLOBALS[$class]->public_functions['java_script'])
-    				{
-    					$java_script .= $GLOBALS[$class]->java_script();
-    				}
-    			}
-			//you never know - best to protect the stupid ;)
-    			if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
-    			{
-    				$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'] . "\n";
-    			}
+
+			if(@isset($_GET['menuaction']))
+			{
+				list($app,$class,$method) = explode('.',$_GET['menuaction']);
+				if(is_array($GLOBALS[$class]->public_functions) &&
+					$GLOBALS[$class]->public_functions['java_script'])
+				{
+					$java_script .= $GLOBALS[$class]->java_script();
+				}
+			}
+			if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
+			{
+				$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'] . "\n";
+			}
 			return $java_script;
 		}
 
@@ -1255,7 +1257,6 @@
 			}
 		}
 
-		
 		function hex2bin($data)
 		{
 			$len = strlen($data);
@@ -1326,17 +1327,17 @@
 			{
 				$salt       = $this->randomstring(2);
 				$e_password = $this->des_cryptpasswd($password, $salt);
-				
+
 				return $e_password;
 			}
 			elseif (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'md5')
 			{
 				$salt       = $this->randomstring(8);
 				$e_password = $this->md5_cryptpasswd($password, $salt);
-				
+
 				return $e_password;
 			}
-			
+
 			return false;
 		}
 
@@ -1972,4 +1973,3 @@
 			return (int)$id;
 		}
 	}//end common class
-
