@@ -18,17 +18,19 @@
 -->
 </STYLE>
 <script language="javascript">
-<!-- // hide
+<!--
 function MM_preloadImages() {
     if (document.images) {
-    var imgFiles = MM_preloadImages.arguments;
-    if (document.preloadArray==null) document.preloadArray = new Array();
-    var i = document.preloadArray.length;
-    with (document) for (var j=0; j<imgFiles.length; j++) if (imgFiles[j].charAt(0)!="#"){
-    preloadArray[i] = new Image;
-    preloadArray[i++].src = imgFiles[j];
-  } }}
-// end hide -->
+      var imgFiles = MM_preloadImages.arguments;
+      if (document.preloadArray==null) document.preloadArray = new Array();
+      var i = document.preloadArray.length;
+      with (document) for (var j=0; j<imgFiles.length; j++) if (imgFiles[j].charAt(0)!="#"){
+        preloadArray[i] = new Image;
+        preloadArray[i++].src = imgFiles[j];
+      }
+    }
+}
+-->
 </script>
 
 <TITLE>{website_title}</TITLE>
