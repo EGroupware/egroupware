@@ -142,7 +142,8 @@
 			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
-				$ele[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
 			}
 			else
 			{
@@ -160,11 +161,11 @@
 					{
 						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 					}
+					$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+					$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 				}
 			}
-			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
 
-			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
 			$c->username = $this->sessionid;
@@ -196,7 +197,8 @@
 			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
-				$ele[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
 			}
 			else
 			{
@@ -215,15 +217,15 @@
 						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 					}
 				}
+				$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			}
-			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
 
-			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
 			$c->username = $this->sessionid;
 			$c->password = $this->kp3;
-			$c->setDebug(0);
+			$c->setDebug(1);
 			$r = $c->send($f);
 			if (!$r)
 			{
@@ -249,10 +251,29 @@
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
 			$hostpart = ereg_replace('https://','',$hostpart);
 			$hostpart = ereg_replace('http://','',$hostpart);
-			while(list($key,$val) = @each($args))
+			if(gettype($args) != 'array')
 			{
-				$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
+				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
 			}
+			else
+			{
+				while(list($key,$val) = @each($args))
+				{
+					if(gettype($val) == 'array')
+					{
+						while(list($x,$y) = each($val))
+						{
+							$tmp[] = CreateObject('phpgwapi.soapval',$x,'string',$y);
+						}
+						$arr[] = CreateObject('phpgwapi.soapval',$key, 'array',$tmp);
+					}
+					else
+					{
+						$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
+					}
+				}
+			}
+
 			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
 			/* print_r($soap_message);exit; */
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
@@ -278,18 +299,36 @@
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
 			$hostpart = ereg_replace('https://','',$hostpart);
 			$hostpart = ereg_replace('http://','',$hostpart);
-			while(list($key,$val) = @each($args))
+			if(gettype($args) != 'array')
 			{
-				$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
+				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
+			}
+			else
+			{
+				while(list($key,$val) = @each($args))
+				{
+					if(gettype($val) == 'array')
+					{
+						while(list($x,$y) = each($val))
+						{
+							$tmp[] = CreateObject('phpgwapi.soapval',$x,'string',$y);
+						}
+						$arr[] = CreateObject('phpgwapi.soapval',$key, 'array',$tmp);
+					}
+					else
+					{
+						$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
+					}
+				}
 			}
 			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
-			/* print_r($soap_message);exit; */
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
 			$soap->username = $this->sessionid;
 			$soap->password = $this->kp3;
-			/* _debug_array($soap);exit; */
+			/* _debug_array($soap_message); */
 			if($r = $soap->send($soap_message,$method_name))
 			{
+				_debug_array($soap->outgoing_payload);
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
 				$v = $r->decode();
 				$this->result = $v['return'];
@@ -297,6 +336,7 @@
 			}
 			else
 			{
+				_debug_array($soap->outgoing_payload);
 				$this->debug('Fault Code: ' . $r->ernno . ' Reason "' . $r->errstring . '"<br>',$debug);
 			}
 		}
