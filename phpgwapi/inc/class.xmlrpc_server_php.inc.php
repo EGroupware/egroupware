@@ -462,6 +462,7 @@
 					}
 				}
 			}
+			unset($GLOBALS['_xh'][$parser]);
 			return $r;
 		}
 
