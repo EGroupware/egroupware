@@ -15,6 +15,7 @@
 	$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 
 	$app = $GLOBALS['HTTP_GET_VARS']['app'];
+	$fn  = $GLOBALS['HTTP_GET_VARS']['fn'];
 
 	if($app)
 	{
