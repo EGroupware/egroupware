@@ -141,7 +141,6 @@
 		function contacts_($useacl=True)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
-			$this->db2 = $GLOBALS['phpgw']->db;
 			if($useacl)
 			{
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
@@ -488,6 +487,8 @@
 			}
 			if ($DEBUG) { echo "<br>$sql"; }
 
+			$db2 = $this->db;
+
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db->num_rows();
 
@@ -522,13 +523,13 @@
 					}
 					reset($stock_fieldnames);
 				}
-				$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
+				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 					. $this->db->f('id') . "'" .$filterextra,__LINE__,__FILE__);
-				while ($this->db2->next_record())
+				while ($db2->next_record())
 				{
-					if ($extra_fields[$this->db2->f('contact_name')])
+					if ($extra_fields[$db2->f('contact_name')])
 					{
-						$return_fields[$i][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
+						$return_fields[$i][$db2->f('contact_name')] = $db2->f('contact_value');
 					}
 				}
 				$i++;
