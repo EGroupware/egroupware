@@ -573,18 +573,12 @@
 
 		function _fixbytea()
 		{
-			foreach($this->_byteaArray as $k => $v)
+			foreach($this->_byteaArray as $v)
 			{
-				$this->Record[$k] = $this->_bytea_decode($this->Record[$k]);
-			}
-			foreach($this->_byteaArray as $k => $v)
-			{
-				if (!isset($this->Record[$v]))
+				if ($v)
 				{
-					$this->Record = false;
-					return;
+					$this->Record[$v] = $this->_bytea_decode($this->Record[$v]);
 				}
-				$this->Record[$v] = $this->_bytea_decode($this->fields[$v]);
 			}
 		}
 
