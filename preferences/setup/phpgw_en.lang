@@ -2,10 +2,10 @@
 %1 hours	preferences	en	%1 hours
 12 hour	preferences	en	12 hour
 24 hour	preferences	en	24 hour
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	en	A template defines the layout of phpGroupWare and it contains icons for each application.
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	en	A template defines the layout of eGroupWare and it contains icons for each application.
 a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
 acl grants have been updated	preferences	en	ACL grants have been updated
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in phpGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in phpGW will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
@@ -24,10 +24,10 @@ error: there was a problem finding the preference file for %1 in %2	preferences	
 forced preferences	preferences	en	Forced Preferences
 help off	preferences	en	Help off
 hours	preferences	en	hours
-how do you like to display accounts	preferences	en	How do you like to display accounts
-how do you like to select accounts	preferences	en	How do you like to select accounts
+how do you like to display accounts	preferences	en	How would you like to display accounts
+how do you like to select accounts	preferences	en	How would you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
-how should phpgroupware display dates for you.	preferences	en	How should phpGroupWare display dates for you.
+how should phpgroupware display dates for you.	preferences	en	How should eGroupWare display dates for you.
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
 in which country are you. this is used to set certain defaults for you.	preferences	en	In which country are you. This is used to set certain defaults for you.
@@ -41,17 +41,18 @@ popup with search	preferences	en	Popup with search
 re-enter your password	preferences	en	Re-Enter your password
 select different theme	preferences	en	Select different Theme
 select one	preferences	en	Select one
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
 selectbox	preferences	en	Selectbox
-set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	en	Set this to your convenience. For security reasons, you might not want to show your Loginname in public.
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	en	Set this to your liking.  For security reasons, you might not want to show your Username in public.
 should the number of active sessions be displayed for you all the time.	preferences	en	Should the number of active sessions be displayed for you all the time.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should this help messages shown up always, when you enter the preferences or only on request.
-show helpmessages by default	preferences	en	Show helpmessages by default
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should these help messages always display when modifying preferences, or only on request.
+show helpmessages by default	preferences	en	Show help messages by default
 show navigation bar as	preferences	en	Show navigation bar as
 show number of current users	preferences	en	Show number of current users
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
+The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
+The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
@@ -59,7 +60,7 @@ this server is located in the %1 timezone	preferences	en	This server is located 
 time format	preferences	en	Time format
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
-which currency symbol or name should be used in phpgroupware.	preferences	en	Which currency symbol or name should be used in phpGroupWare.
+which currency symbol or name should be used in phpgroupware.	preferences	en	Which currency symbol or name should be used in eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	en	You must enter a password
