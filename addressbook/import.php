@@ -50,11 +50,11 @@
     }
     
     $t->set_var("lang_cancel",lang("Cancel"));
-    $t->set_var("cancel_url",$phpgw->link("index.php"));
+    $t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
     $t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
     $t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
     $t->set_var("import_text",lang("Import from Outlook or LDIF - not working"));
-    $t->set_var("action_url",$phpgw->link("import.php"));
+    $t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
     $t->set_var("tsvfilename","");
     $t->set_var("conv",$conv);
     $t->set_var("debug",lang("Debug output in browser"));
@@ -104,12 +104,12 @@
         echo $buffer;
       } else {
         echo "<pre>$buffer</pre>";
-	echo '<a href="'.$phpgw->link("index.php").'">'.lang("OK").'</a>';
+	echo '<a href="'.$phpgw->link("/addressbook/index.php").'">'.lang("OK").'</a>';
         $phpgw->common->phpgw_footer();
       }
     } else {
       echo "<pre>$buffer</pre>";
-      echo '<a href="'.$phpgw->link("index.php").'">'.lang("OK").'</a>';
+      echo '<a href="'.$phpgw->link("/addressbook/index.php").'">'.lang("OK").'</a>';
       $phpgw->common->phpgw_footer();
     }
   }
