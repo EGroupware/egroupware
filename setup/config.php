@@ -53,7 +53,12 @@
        $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
     	  	  . "','" . addslashes($newsetting[1]) . "')");
      }
-     echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
+     if ($newsettings["authtype"] == "ldap") {
+        Header("Location: ldap.php");
+        exit;
+     } else {
+        echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
+     }
   }
 
   @$db->query("select * from config");
