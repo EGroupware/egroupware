@@ -30,25 +30,24 @@
 
 	$infolog = createobject('infolog.uiinfolog');
 
-	$t = $GLOBALS['phpgw']->template; //CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
-	$t->set_file(array('import_t' => 'csv_import.tpl'));
-	$t->set_block('import_t','filename');
-	$t->set_block('import_t','fheader');
-	$t->set_block('import_t','fields');
-	$t->set_block('import_t','ffooter');
-	$t->set_block('import_t','imported');
-	$t->set_block('import_t','import');
+	$GLOBALS['phpgw']->template->set_file(array('import_t' => 'csv_import.tpl'));
+	$GLOBALS['phpgw']->template->set_block('import_t','filename');
+	$GLOBALS['phpgw']->template->set_block('import_t','fheader');
+	$GLOBALS['phpgw']->template->set_block('import_t','fields');
+	$GLOBALS['phpgw']->template->set_block('import_t','ffooter');
+	$GLOBALS['phpgw']->template->set_block('import_t','imported');
+	$GLOBALS['phpgw']->template->set_block('import_t','import');
 
-	
-	// $t->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
-	// $t->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
-	
+
+	// $GLOBALS['phpgw']->template->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
+	// $GLOBALS['phpgw']->template->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
+
 	if ($action == 'download' && (!$fieldsep || !$csvfile || !($fp=fopen($csvfile,"r")))) {
 		$action = '';
-	}		
-	$t->set_var("action_url",$GLOBALS['phpgw']->link("/infolog/csv_import.php"));
-	$t->set_var( $infolog->setStyleSheet( ));
-	$t->set_var("lang_info_action",lang("InfoLog - Import CSV-File"));
+	}
+	$GLOBALS['phpgw']->template->set_var("action_url",$GLOBALS['phpgw']->link("/infolog/csv_import.php"));
+	$GLOBALS['phpgw']->template->set_var( $infolog->setStyleSheet( ));
+	$GLOBALS['phpgw']->template->set_var("lang_info_action",lang("InfoLog - Import CSV-File"));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 	$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -77,13 +76,13 @@ function addr_id( $n_family,$n_given,$org_name ) {		// find in Addressbook, at l
 		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given" );
 	if (!count($addrs))
 		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name" );
-	
+
 	if (count($addrs))
 		return $addrs[0]['id'];
-		
-	return False;	
+
+	return False;
 }
-	
+
 $cat2id = array( );
 
 function cat_id($cats)
@@ -129,15 +128,15 @@ function cat_id($cats)
 
 	switch ($action) {
 	case '':	// Start, ask Filename
-		$t->set_var('lang_csvfile',lang('CSV-Filename'));
-		$t->set_var('lang_fieldsep',lang('Fieldseparator'));
-		$t->set_var('fieldsep',$fieldsep ? $fieldsep : ',');
-		$t->set_var('submit',lang('Download'));
-		$t->set_var('csvfile',$csvfile);
-		$t->set_var('enctype','ENCTYPE="multipart/form-data"');
+		$GLOBALS['phpgw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
+		$GLOBALS['phpgw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
+		$GLOBALS['phpgw']->template->set_var('fieldsep',$fieldsep ? $fieldsep : ',');
+		$GLOBALS['phpgw']->template->set_var('submit',lang('Download'));
+		$GLOBALS['phpgw']->template->set_var('csvfile',$csvfile);
+		$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 		$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
-		$t->parse('rows','filename');
+		$GLOBALS['phpgw']->template->parse('rows','filename');
 		break;
 
 	case 'download':
@@ -147,12 +146,12 @@ function cat_id($cats)
 		{
 			$defaults = array();
 		}
-		$t->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-		$t->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
-		$t->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
-		$t->set_var('submit',lang('Import'));
-		$t->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-		$t->parse('rows','fheader');
+		$GLOBALS['phpgw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
+		$GLOBALS['phpgw']->template->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
+		$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
+		$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
+		$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
+		$GLOBALS['phpgw']->template->parse('rows','fheader');
 		$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n".
 							'<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
 
@@ -201,23 +200,23 @@ function cat_id($cats)
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
 		while (list($csv_idx,$csv_field) = each($csv_fields)) {
-			$t->set_var('csv_field',$csv_field);
-			$t->set_var('csv_idx',$csv_idx);
+			$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
+			$GLOBALS['phpgw']->template->set_var('csv_idx',$csv_idx);
 			if ($def = $defaults[$csv_field]) {
 				list( $info,$trans ) = explode($PSep,$def,2);
-				$t->set_var('trans',$trans);
-				$t->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
+				$GLOBALS['phpgw']->template->set_var('trans',$trans);
+				$GLOBALS['phpgw']->template->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
 			} else {
-				$t->set_var('trans','');
-				$t->set_var('info_fields',$info_name_options);
+				$GLOBALS['phpgw']->template->set_var('trans','');
+				$GLOBALS['phpgw']->template->set_var('info_fields',$info_name_options);
 			}
-			$t->parse('rows','fields',True);
+			$GLOBALS['phpgw']->template->parse('rows','fields',True);
 		}
-		$t->set_var('lang_start',lang('Startrecord'));
-		$t->set_var('start',$start);
-		$t->set_var('lang_max',lang('Number of records to read (<=200)'));
-		$t->set_var('max',200);
-		$t->parse('rows','ffooter',True);
+		$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
+		$GLOBALS['phpgw']->template->set_var('start',$start);
+		$GLOBALS['phpgw']->template->set_var('lang_max',lang('Number of records to read (<=200)'));
+		$GLOBALS['phpgw']->template->set_var('max',200);
+		$GLOBALS['phpgw']->template->parse('rows','ffooter',True);
 		fclose($fp);
 		$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/info_log_import_'.basename($csvfile);
 		rename($old,$csvfile);
@@ -254,7 +253,7 @@ function cat_id($cats)
 								"will be automaticaly added.<p>".
 								"I hope that helped to understand the features, if not <a href='mailto:RalfBecker@outdoor-training.de'>ask</a>.";
 
-		$t->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
+		$GLOBALS['phpgw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 		break;
 
 	case 'import':
@@ -346,15 +345,15 @@ function cat_id($cats)
 		}
 		$log .= "\t</tr>\n</table>\n";
 
-		$t->set_var('anz_imported',$debug ? lang( '%1 records read (not yet imported, you may go back and uncheck Test Import)',
+		$GLOBALS['phpgw']->template->set_var('anz_imported',$debug ? lang( '%1 records read (not yet imported, you may go back and uncheck Test Import)',
 																$anz,'<a href="javascript:history.back()">','</a>' ) :
 														lang( '%1 records imported',$anz ));
-		$t->set_var('log',$log);
-		$t->parse('rows','imported');
+		$GLOBALS['phpgw']->template->set_var('log',$log);
+		$GLOBALS['phpgw']->template->parse('rows','imported');
 		break;
 	}
-	$t->set_var('hiddenvars',$hiddenvars);
-	$t->pfp('out','import');
+	$GLOBALS['phpgw']->template->set_var('hiddenvars',$hiddenvars);
+	$GLOBALS['phpgw']->template->fp('phpgw_body','import');
 	$GLOBALS['phpgw']->common->phpgw_footer();
 
 ?>
