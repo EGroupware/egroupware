@@ -344,15 +344,15 @@ class calendar extends calendar_
 		global $phpgw, $phpgw_info, $grants;
 
 		if($owner == 0) { $owner = $phpgw_info['user']['account_id']; }
-		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True) || ($event->is_public == 1))
+		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True) || ($event->public == 1))
 		{
 			$is_private  = False;
 		}
-		elseif($event->is_public == 0)
+		elseif($event->public == 0)
 		{
 			$is_private = True;
 		}
-		elseif($event->is_public == 2)
+		elseif($event->public == 2)
 		{
 			$is_private = True;
 			$groups = $phpgw->accounts->memberships($owner);
