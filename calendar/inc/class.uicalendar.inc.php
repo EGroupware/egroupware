@@ -56,7 +56,9 @@
 
 		function uicalendar()
 		{
+			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$GLOBALS['phpgw']->browser    = CreateObject('phpgwapi.browser');
+			
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
 
 			$this->bo = CreateObject('calendar.bocalendar',1);
@@ -182,7 +184,7 @@
 			for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
 			{
 				unset($var);
-				$daily = $this->bo->set_week_array($i,$cellcolor,$weekly);
+				$daily = $this->set_week_array($i,$cellcolor,$weekly);
 				@reset($daily);
 				while(list($date,$day_params) = each($daily))
 				{
@@ -1760,7 +1762,7 @@
 				$p->set_var('col_width','12');
 			}
 			$today = date('Ymd',time());
-			$daily = $this->bo->set_week_array($startdate,$cellcolor,$weekly);
+			$daily = $this->set_week_array($startdate,$cellcolor,$weekly);
 			@reset($daily);
 			while(list($date,$day_params) = each($daily))
 			{
@@ -2150,7 +2152,7 @@
 						$str_extra .= lang('days repeated').': '.$repeat_days;
 					}
 				}
-				if($event['recur_interval'])
+				if($event['recur_interval'] != 0)
 				{
 					$str_extra .= lang('Interval').': '.$event['recur_interval'];
 				}
@@ -2259,7 +2261,7 @@
 	
 			$time = Array();
 
-			$daily = $this->bo->set_week_array($this->bo->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
+			$daily = $this->set_week_array($this->bo->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
 			if($this->debug)
 			{
 				echo "Date to Eval : ".$date_to_eval."<br>\n";
@@ -2916,6 +2918,102 @@
 					}
 				}
 			}
+		}
+
+		function set_week_array($startdate,$cellcolor,$weekly)
+		{
+			for ($j=0,$datetime=$startdate - $this->tz_offset;$j<7;$j++,$datetime += 86400)
+			{
+				$date = date('Ymd',$datetime);
+
+				if($this->debug)
+				{
+					echo "set_week_array : Date : ".$date."<br>\n";
+				}
+
+				$holidays = $this->bo->cached_holidays[$date];
+				if($weekly)
+				{
+					$cellcolor = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($cellcolor);
+				}
+				
+				$day_image = '';
+				if($holidays)
+				{
+					$extra = ' bgcolor="'.$this->bo->holiday_color.'"';
+					$class = 'minicalhol';
+					if ($date == $this->bo->today)
+					{
+						$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
+					}
+				}
+				elseif ($date != $this->bo->today)
+				{
+					$extra = ' bgcolor="'.$cellcolor.'"';
+					$class = 'minicalendar';
+				}
+				else
+				{
+					$extra = ' bgcolor="'.$GLOBALS['phpgw_info']['theme']['cal_today'].'"';
+					$class = 'minicalendar';
+					$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
+				}
+
+				if($this->bo->printer_friendly && @$this->bo->prefs['calendar']['print_black_white'])
+				{
+					$extra = '';
+				}
+
+				if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
+				{
+					$new_event = True;
+				}
+				else
+				{
+					$new_event = False;
+				}
+				$holiday_name = Array();
+				if($holidays)
+				{
+					for($k=0;$k<count($holidays);$k++)
+					{
+						$holiday_name[] = $holidays[$k]['name'];
+					}
+				}
+				if($this->bo->cached_events[$date])
+				{
+					if($this->debug)
+					{
+						echo "Date : ".$date." Appointments found : ".count($this->bo->cached_events[$date])."<br>\n";
+					}
+					$appts = True;
+				}
+				else
+				{
+					$appts = False;
+				}
+				$week = '';
+				if (!$j || ($j && substr($date,6,2) == '01'))
+				{
+					$week = 'week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7);
+				}
+				$daily[$date] = Array(
+					'extra'		=> $extra,
+					'new_event'	=> $new_event,
+					'holidays'	=> $holiday_name,
+					'appts'		=> $appts,
+					'week'		=> $week,
+					'day_image'	=> $day_image,
+					'class'		=> $class
+				);
+			}
+
+			if($this->debug)
+			{
+				$this->_debug_array($daily);
+			}
+			
+			return $daily;
 		}
 	}
 ?>
