@@ -2221,7 +2221,9 @@
 			}
 
 			$db2 = $GLOBALS['phpgw']->db;
-			$db2->query ("SELECT name FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+			$db2->query ("SELECT name FROM phpgw_vfs WHERE directory='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 
 			if ($db2->next_record ())
 			{
@@ -2438,7 +2440,9 @@
 
 						if($record[$attribute])
 						{
-							$db2->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+							$db2->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".
+								$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+								$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 						}
 					}
 
@@ -2546,7 +2550,9 @@
 
 						if($record[$attribute])
 						{
-							$db2->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+							$db2->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".
+								$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+								$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 						}
 					}
 
