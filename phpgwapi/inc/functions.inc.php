@@ -48,9 +48,9 @@
 	{
 		global $phpgw_info, $phpgw;
 
-		if (is_object($phpgw->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+		if (is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
 		{
-			//$phpgw->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
+			//$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
 		}
 
 		/* error_reporting(0); */
@@ -470,6 +470,7 @@
 	 /************************************************************************\
 	 * Required classes                                                       *
 	 \************************************************************************/
+	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
 	$GLOBALS['phpgw']->common       = CreateObject('phpgwapi.common');
 	$GLOBALS['phpgw']->hooks        = CreateObject('phpgwapi.hooks');
 	$GLOBALS['phpgw']->auth         = CreateObject('phpgwapi.auth');
@@ -479,7 +480,6 @@
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
 	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
-	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
 	//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
 	if (! isset($phpgw_info['flags']['included_classes']['error']) ||
