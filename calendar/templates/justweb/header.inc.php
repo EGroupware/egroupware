@@ -58,14 +58,18 @@
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'year.gif',lang('This Year')).'</td>';
 	add_col($tpl,$str);
 
+	$link = $this->page('planner','&date='.$today);
+	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'planner.gif',lang('Planner')).'</td>';
+	add_col($tpl,$str);
+
 	$link = $this->page('matrixselect');
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'view.gif',lang('Daily Matrix View')).'</td>';
 	add_col($tpl,$str);
 
-	$remainder = 65;
+	$remainder = 63;
 	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 	{
-		$remainder -= 30;
+		$remainder -= 28;
 		$hidden_vars = '<input type="hidden" name="from" value="'.$menuaction.'">'."\n";
 		if(isset($date) && $date)
 		{
@@ -94,7 +98,7 @@
 		$form_options .= '     <option value=" private "'.((!isset($this->bo->filter) || !$this->bo->filter) || $this->bo->filter==' private '?' selected':'').'>'.lang('Private Only').'</option>'."\n";
 		
 		$var = Array(
-			'form_width' => '30',
+			'form_width' => '28',
 			'form_link'	=> $this->page($referrer),
 			'form_name'	=> 'filter',
 			'title'	=> lang('Filter'),

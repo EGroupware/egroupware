@@ -15,6 +15,11 @@
 	class boholiday
 	{
 		var $public_functions = Array(
+			'add'		=> True,
+			'delete_holiday'	=> True,
+			'delete_locale'	=> True,
+			'accept_holiday'	=> True,
+			
 			'read_entries'	=> True,
 			'read_entry'	=> True,
 			'add_entry'	=> True,
@@ -22,24 +27,196 @@
 		);
 
 		var $debug = False;
+		var $base_url = '/index.php';
 
+		var $ui;
 		var $so;
-
 		var $owner;
-
 		var $year;
+
+		var $id;
+		var $total;
+		var $start;
+		var $query;
+		var $sort;
 		
 		var $locales = Array();
 		var $holidays;
 		var $cached_holidays;
 		
-		function boholiday($year,$owner=0)
+		function boholiday()
 		{
-			global $phpgw_info;
+			global $phpgw_info, $locale, $start, $query, $sort, $order, $id;
 
 			$this->so = CreateObject('calendar.soholiday');
 
-			$this->year = $year;
+			if(isset($locale)) { $this->locales[] = $locale; }
+
+			if(isset($start))  { $this->start = $start;      } else { $this->start = 0; }
+
+			if(isset($query))  { $this->query = $query;      }
+
+			if(isset($sort))   { $this->sort = $sort;        }
+
+			if(isset($order))  { $this->order = $order;      }
+
+			if(isset($id))     { $this->id = $id;            }
+			
+			if($this->debug)
+			{
+				echo "Locale = ".$this->locales[0]."<br>\n";
+			}
+
+			$this->total = $this->so->holiday_total($this->locales[0],$this->query);
+		}
+
+		/* Begin Calendar functions */
+		function read_entry($id=0)
+		{
+
+			if($this->debug)
+			{
+				echo "BO : Reading Holiday ID : ".$id."<br>\n";
+			}
+			
+			if(!$id)
+			{
+				if(!$this->id)
+				{
+					return Array();
+				}
+				else
+				{
+					$id = $this->id;
+				}
+			}
+
+			return $this->so->read_holiday($id);
+		}
+
+		function delete_holiday($id=0)
+		{
+			if(!$id)
+			{
+				if($this->id)
+				{
+					$id = $this->id;
+				}
+			}
+
+			$this->ui = CreateObject('calendar.uiholiday');
+			if($id)
+			{
+				$this->so->delete_holiday($id);
+				$this->ui->edit_locale();
+			}
+			else
+			{
+				$this->ui->admin();
+			}
+		}
+		
+		function delete_locale($locale='')
+		{
+			if(!$locale)
+			{
+				if($this->locales[0])
+				{
+					$locale = $this->locales[0];
+				}
+			}
+
+			if($locale)
+			{
+				$this->so->delete_locale($locale);
+			}
+			$this->ui = CreateObject('calendar.uiholiday');
+			$this->ui->admin();
+		}
+
+		function accept_holiday()
+		{
+			global $HTTP_REFERER;
+			global $name, $day, $month, $occurence, $dow, $observance;
+			
+			$send_back_to = str_replace('submitlocale','holiday_admin',$HTTP_REFERER);
+			if(!@$this->locales[0])
+			{
+				Header('Location: '.$send_back_to);
+			}
+
+			$send_back_to = str_replace('&locale='.$this->locales[0],'',$send_back_to);
+			$file = './holidays.'.$this->locales[0];
+			if(!file_exists($file) && count($name))
+			{
+				$c_holidays = count($name);
+				$fp = fopen($file,'w');
+				for($i=0;$i<$c_holidays;$i++)
+				{
+					fwrite($fp,$this->locales[0]."\t".$name[$i]."\t".$day[$i]."\t".$month[$i]."\t".$occurence[$i]."\t".$dow[$i]."\t".$observance[$i]."\n");
+				}
+				fclose($fp);
+			}
+			Header('Location: '.$send_back_to);
+		}
+		
+		function get_holiday_list($locale='', $sort='', $order='', $query='', $total='')
+		{
+			if(!$locale)
+			{
+				$locale = $this->locales[0];
+			}
+
+			if(!$sort)
+			{
+				$sort = $this->sort;
+			}
+
+			if(!$order)
+			{
+				$order = $this->order;
+			}
+
+			if(!$query)
+			{
+				$query = $this->query;
+			}
+
+			return $this->so->read_holidays($locale,$query,$order);
+		}
+
+		function get_locale_list($sort='', $order='', $query='')
+		{
+			if(!$sort)
+			{
+				$sort = $this->sort;
+			}
+
+			if(!$order)
+			{
+				$order = $this->order;
+			}
+
+			if(!$query)
+			{
+				$query = $this->query;
+			}
+
+			return $this->so->get_locale_list($sort,$order,$query);
+		}
+
+		function prepare_read_holidays($year=0,$owner=0)
+		{
+			global $phpgw_info;
+			
+			if($year==0)
+			{
+				$this->year = date('Y');
+			}
+			else
+			{
+				$this->year = $year;
+			}
 
 			if($owner == 0)
 			{
@@ -48,8 +225,8 @@
 			else
 			{
 				$this->owner = $owner;
-			}			
-		
+			}
+
 			if(@$phpgw_info['user']['preferences']['common']['country'])
 			{
 				$this->locales[] = $phpgw_info['user']['preferences']['common']['country'];
@@ -83,11 +260,10 @@
 				}
 			}
 		}
-
-		/* Begin Calendar functions */
+		
 		function auto_load_holidays($locale)
 		{
-			if($this->so->count_of_holidays($locale) == 0)
+			if($this->so->holiday_total($locale) == 0)
 			{
 				global $phpgw_info, $HTTP_HOST, $SERVER_PORT;
 		
@@ -145,6 +321,49 @@
 						$holiday['hol_id'] = 0;
 						$this->so->save_holiday($holiday);
 					}
+				}
+			}
+		}
+
+		function save_holiday($holiday)
+		{
+			$this->so->save_holiday($holiday);
+		}
+
+		function add()
+		{
+			global $phpgw, $submit, $holiday, $locale;
+			
+			if(@$submit)
+			{
+				if(empty($holiday['mday']))
+				{
+					$holiday['mday'] = 0;
+				}
+				if(!isset($this->bo->locales[0]) || $this->bo->locales[0]=='')
+				{
+					$this->bo->locales[0] = $holiday['locale'];
+				}
+				elseif(!isset($holiday['locale']) || $holiday['locale']=='')
+				{
+					$holiday['locale'] = $this->bo->locales[0];
+				}
+				if(!isset($holiday['hol_id']))
+				{
+					$holiday['hol_id'] = $this->bo->id;
+				}
+		
+	// Still need to put some validation in here.....
+
+				$this->ui = CreateObject('calendar.uiholiday');
+				if (is_array($errors))
+				{
+					$this->ui->add($errors,$holiday);
+				}
+				else
+				{
+					$this->so->save_holiday($holiday);
+					$this->ui->edit_locale();
 				}
 			}
 		}

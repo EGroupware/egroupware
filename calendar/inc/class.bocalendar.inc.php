@@ -19,9 +19,9 @@
 		var $public_functions = Array(
 			'read_entries'	=> True,
 			'read_entry'	=> True,
-			'add_entry'	=> True,
 			'delete_entry' => True,
-			'update_entry'	=> True
+			'update'       => True,
+			'preferences'  => True
 		);
 
 		var $debug = False;
@@ -53,7 +53,7 @@
 
 		function bocalendar($session=0)
 		{
-			global $phpgw, $phpgw_info, $date, $year, $month, $day, $owner, $filter, $fcat_id, $friendly;
+			global $phpgw, $phpgw_info, $date, $year, $month, $day, $owner, $filter, $cat_id, $friendly;
 
 			$phpgw->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
@@ -96,10 +96,7 @@
 
 			$this->holiday_color = (substr($phpgw_info['theme']['bg07'],0,1)=='#'?'':'#').$phpgw_info['theme']['bg07'];
 
-			if($friendly == 1)
-			{
-				$this->printer_friendly = True;
-			}
+			$this->printer_friendly = ($friendly == 1?True:False);
 
 			if(isset($filter))   { $this->filter = $filter; }
 			if(isset($cat_id))  { $this->cat_id = $cat_id; }
@@ -158,6 +155,7 @@
 			if ($this->use_session)
 			{
 				global $phpgw;
+				
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
 				$phpgw->session->appsession('session_data','calendar',$data);
 			}
@@ -186,35 +184,22 @@
 			}
 		}
 
-		function add_entry($event)
-		{
-			if($this->check_perms(PHPGW_ACL_ADD))
-			{
-				$this->so->add_entry($event);
-				$this->send_update(MSG_ADDED,$event->participants,'',$this->get_cached_event());
-			}
-		}
-
-		function update_entry($event)
-		{
-			if($this->check_perms(PHPGW_ACL_EDIT))
-			{
-				if($event->id != 0)
-				{
-					$new_event = $event;
-					$old_event = $this->read_entry($new_event->id);
-					$this->prepare_recipients($new_event,$old_event);
-				}
-				$this->so->add_entry($event);
-			}
-		}
-
 		function delete_entry($id)
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
-				$this->so->delete_entry($id);
+			   $temp_event = $this->read_entry($id);
+			   if($this->owner == $temp_event->owner)
+			   {
+   				$this->so->delete_entry($id);
+   				$cd = 16;
+   			}
+   			else
+   			{
+   			   $cd = 60;
+   			}
 			}
+			return $cd;
 		}
 
 		function expunge()
@@ -230,11 +215,285 @@
 				$this->so->expunge();
 			}
 		}
-		/* Private functions */
 
+		function search_keywords($keywords)
+		{
+			return $this->so->list_events_keyword($keywords);
+/*
+			$event_ids = $this->so->list_events_keyword($keywords);
+			$event_ids_repeating = $this->so->list_repeated_events_keyword($keywords);
+
+			$c_event_ids = count($cached_event_ids);
+			$c_event_ids_repeating = count($cached_event_ids_repeating);
+
+			if($this->debug)
+			{
+				echo "events cached : $c_event_ids : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+				echo "repeating events cached : $c_event_ids_repeating : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+			}
+
+			if($c_cached_ids)
+			{
+				for($i=0;$i<$c_cached_ids;$i++)
+				{
+					$cached_events[] = $this->so->read_entry($event_ids[$i]);
+				}
+			}
+
+			if($c_event_ids_repeating)
+			{
+				for($i=0;$i<$c_event_ids_repeating;$i++)
+				{
+					$cached_events[] = $this->so->read_entry($event_ids_repeating[$i]);
+				}
+			}
+*/
+		}
+
+		function update($p_cal=Array(),$p_start=Array(),$p_end=Array(),$p_recur_enddata=Array())
+		{
+			global $phpgw, $phpgw_info, $readsess, $cal, $participants, $start, $end, $recur_enddate;
+
+			$cal = ($p_cal?$p_cal:$cal);
+			$start = ($p_start?$p_start:$start);
+			$end = ($p_end?$p_end:$end);
+			$recur_enddate = ($p_recur_enddate?$p_recur_enddate:$recur_enddate);
+
+			$overlapping_events = False;
+
+  			$ui = CreateObject('calendar.uicalendar');
+  			
+         if(isset($readsess))
+         {
+				$event = $this->restore_from_appsession();
+				$datetime_check = $this->validate_update($event);
+				if($datetime_check)
+				{
+					$ui->edit($datetime_check,True);
+				}
+         }
+         else
+			{
+
+   			if(!$cal['id'] && !$this->check_perms(PHPGW_ACL_ADD))
+	   		{
+	   		   $ui->index();
+	   		}
+	   		elseif($cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT))
+	   		{
+	   		   $ui->index();
+	   		}
+
+				$this->fix_update_time($start);
+				$this->fix_update_time($end);
+
+				if(!isset($cal['private']))
+				{
+					$cal['private'] = 'public';
+				}
+
+				$is_public = ($cal['private'] == 'public'?1:0);
+				$this->so->event_init();
+				$this->so->set_category($cal['category']);
+				$this->so->set_title($cal['title']);
+				$this->so->set_description($cal['description']);
+				$this->so->set_start($start['year'],$start['month'],$start['mday'],$start['hour'],$start['min'],0);
+				$this->so->set_end($end['year'],$end['month'],$end['mday'],$end['hour'],$end['min'],0);
+				$this->so->set_class($is_public);
+				if($cal['id'])
+				{
+					$this->so->add_attribute('id',$cal['id']);
+				}
+
+				if($cal['rpt_use_end'] != 'y')
+				{
+					$recur_enddate['year'] = 0;
+					$recur_enddate['month'] = 0;
+					$recur_enddate['mday'] = 0;
+				}
+				$cal['recur_data'] = $cal['rpt_sun'] + $cal['rpt_mon'] + $cal['rpt_tue'] + $cal['rpt_wed'] + $cal['rpt_thu'] + $cal['rpt_fri'] + $cal['rpt_sat'];
+		
+				switch($cal['recur_type'])
+				{
+					case MCAL_RECUR_NONE:
+						$this->so->set_recur_none();
+						break;
+					case MCAL_RECUR_DAILY:
+						$this->so->set_recur_daily($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval']);
+						break;
+					case MCAL_RECUR_WEEKLY:
+						$this->so->set_recur_weekly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval'],$cal['recur_data']);
+						break;
+					case MCAL_RECUR_MONTHLY_MDAY:
+						$this->so->set_recur_monthly_mday($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval']);
+						break;
+					case MCAL_RECUR_MONTHLY_WDAY:
+						$this->so->set_recur_monthly_wday($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval']);
+						break;
+					case MCAL_RECUR_YEARLY:
+						$this->so->set_recur_yearly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$cal['recur_interval']);
+						break;
+				}
+
+				$parts = $participants;
+				$minparts = min($participants);
+				$part = Array();
+				for($i=0;$i<count($parts);$i++)
+				{
+					$acct_type = $phpgw->accounts->get_type(intval($parts[$i]));
+					if($acct_type == 'u')
+					{
+						$part[$parts[$i]] = 1;
+					}
+					elseif($acct_type == 'g')
+					{
+						/* This pulls ALL users of a group and makes them as participants to the event */
+						/* I would like to turn this back into a group thing. */
+						$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
+						$members = $acct->members(intval($parts[$i]));
+						unset($acct);
+						if($members == False)
+						{
+							continue;
+						}
+						while($member = each($members))
+						{
+							$part[$member[1]['account_id']] = 1;
+						}
+					}
+				}
+
+				@reset($part);
+				while(list($key,$value) = each($part))
+				{
+					$this->so->add_attribute('participants['.$key.']','U');
+				}
+
+				reset($participants);
+				$event = $this->get_cached_event();
+				if(!@$event->participants[$cal['owner']])
+				{
+					$this->so->add_attribute('owner',$minparts);
+				}
+				$this->so->add_attribute('priority',$cal['priority']);
+				$event = $this->get_cached_event();
+
+				$this->store_to_appsession($event);
+				$datetime_check = $this->validate_update($event);
+				if($datetime_check)
+				{
+				   $ui = CreateObject('calendar.uicalendar');
+				   $ui->edit($datetime_check,True);
+				}
+
+            settype($start,'integer');
+            settype($end,'integer');
+				$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
+				$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
+
+				$overlapping_events = $this->overlap($start,$end,$event->participants,$event->owner,$event->id);
+			}
+
+			if($overlapping_events)
+			{
+			   $ui->overlap($overlapping_events,$event);
+			}
+			else
+			{
+				if(!$event->id)
+				{
+   				$this->so->add_entry($event);
+	   			$this->send_update(MSG_ADDED,$event->participants,'',$this->get_cached_event());
+				}
+				else
+				{
+					$new_event = $event;
+					$old_event = $this->read_entry($new_event->id);
+					$this->prepare_recipients($new_event,$old_event);
+   				$this->so->add_entry($event);
+				}
+            $date = sprintf("%04d%02d%02d",$event->start->year,$event->start->month,$event->start->mday);
+			   $ui->index();
+			}
+		}
+
+      function preferences()
+      {
+			global $phpgw, $phpgw_info, $submit, $prefs;
+			if ($submit)
+			{
+				$phpgw->preferences->read_repository();
+				$phpgw->preferences->add('calendar','weekdaystarts',$prefs['weekdaystarts']);
+				$phpgw->preferences->add('calendar','workdaystarts',$prefs['workdaystarts']);
+				$phpgw->preferences->add('calendar','workdayends',$prefs['workdayends']);
+				$phpgw->preferences->add('calendar','defaultcalendar',$prefs['defaultcalendar']);
+				$phpgw->preferences->add('calendar','defaultfilter',$prefs['defaultfilter']);
+				$phpgw->preferences->add('calendar','interval',$prefs['interval']);
+				if ($prefs['mainscreen_showevents'] == True)
+				{
+					$phpgw->preferences->add('calendar','mainscreen_showevents',$prefs['mainscreen_showevents']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','mainscreen_showevents');
+				}
+				if ($prefs['send_updates'] == True)
+				{
+					$phpgw->preferences->add('calendar','send_updates',$prefs['send_updates']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','send_updates');
+				}
+		
+				if ($prefs['display_status'] == True)
+				{
+					$phpgw->preferences->add('calendar','display_status',$prefs['display_status']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','display_status');
+				}
+
+				if ($prefs['default_private'] == True)
+				{
+					$phpgw->preferences->add('calendar','default_private',$prefs['default_private']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','default_private');
+				}
+
+				if ($prefs['display_minicals'] == True)
+				{
+					$phpgw->preferences->add('calendar','display_minicals',$prefs['display_minicals']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','display_minicals');
+				}
+
+				if ($prefs['print_black_white'] == True)
+				{
+					$phpgw->preferences->add('calendar','print_black_white',$prefs['print_black_white']);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','print_black_white');
+				}
+
+				$phpgw->preferences->save_repository(True);
+     
+				Header('Location: '.$phpgw->link('/preferences/index.php'));
+				$phpgw->common->phpgw_exit();
+			}
+      }
+
+		/* Private functions */
 		function read_holidays()
 		{
-			$holiday = CreateObject('calendar.boholiday',$this->year,$this->owner);
+			$holiday = CreateObject('calendar.boholiday');
+			$holiday->prepare_read_holidays($this->year,$this->owner);
 			$this->cached_holidays = $holiday->read_holiday();
 			unset($holiday);
 		}
@@ -262,28 +521,26 @@
 
 		function fix_update_time(&$time_param)
 		{
-			global $phpgw_info;
-			
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
-				if ($time_param[ampm] == 'pm')
+				if ($time_param['ampm'] == 'pm')
 				{
-					if ($time_param[hour] <> 12)
+					if ($time_param['hour'] <> 12)
 					{
-						$time_param[hour] += 12;
+						$time_param['hour'] += 12;
 					}
 				}
-				elseif ($time_param[ampm] == 'am')
+				elseif ($time_param['ampm'] == 'am')
 				{
-					if ($time_param[hour] == 12)
+					if ($time_param['hour'] == 12)
 					{
-						$time_param[hour] -= 12;
+						$time_param['hour'] -= 12;
 					}
 				}
 		
-				if($time_param[hour] > 24)
+				if($time_param['hour'] > 24)
 				{
-					$time_param[hour] -= 12;
+					$time_param['hour'] -= 12;
 				}
 			}
 		}
@@ -472,30 +729,33 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			if($owner == 0) { $owner = $this->owner; }
-			if ($owner == $phpgw_info['user']['account_id'] || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event->public==0) || ($event->public == 1))
+			if($owner == 0)
 			{
-				$is_private  = False;
+				$owner = $this->owner;
+			}
+			if ($owner == $phpgw_info['user']['account_id'] || ($event->public==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event->public==0))
+			{
+				return False;
 			}
 			elseif($event->public == 0)
 			{
-				$is_private = True;
+				return True;
 			}
 			elseif($event->public == 2)
 			{
 				$is_private = True;
 				$groups = $phpgw->accounts->memberships($owner);
-				while ($group = each($groups))
+				while (list($key,$group) = each($groups))
 				{
-					if (strpos(' '.implode($event->groups,',').' ',$group[1]['account_id']))
+					if (strpos(' '.implode($event->groups,',').' ',$group['account_id']))
 					{
-						$is_private = False;
+						return False;
 					}
 				}
 			}
 			else
 			{
-				$is_private = False;
+				return False;
 			}
 
 			return $is_private;
@@ -505,18 +765,37 @@
 		{
 			if ($is_private)
 			{
-				$str = 'private';
+				return 'private';
 			}
 			elseif (strlen($event->$field) > 19)
 			{
-				$str = substr($event->$field, 0 , 19) . '...';
+				return substr($event->$field, 0 , 19) . '...';
 			}
 			else
 			{
-				$str = $event->$field;
+				return $event->$field;
 			}
+		}
 
-			return $str;
+		function get_week_label()
+		{
+			$first = $this->datetime->gmtdate($this->datetime->get_weekday_start($this->year, $this->month, $this->day));
+			$last = $this->datetime->gmtdate($first['raw'] + 518400);
+
+// Week Label
+			$week_id = lang(strftime("%B",$first['raw'])).' '.$first['day'];
+			if($first['month'] <> $last['month'] && $first['year'] <> $last['year'])
+			{
+				$week_id .= ', '.$first['year'];
+			}
+			$week_id .= ' - ';
+			if($first['month'] <> $last['month'])
+			{
+				$week_id .= lang(strftime("%B",$last['raw'])).' ';
+			}
+			$week_id .= $last['day'].', '.$last['year'];
+
+			return $week_id;
 		}
 
 		function normalizeminutes(&$minutes)
@@ -574,8 +853,7 @@
 			global $phpgw_info;
 		
 			$time = $this->splittime($fixed_time);
-			$str = '';
-			$str .= $time['hour'].':'.((int)$time['minute']<=9?'0':'').$time['minute'];
+			$str = $time['hour'].':'.((int)$time['minute']<=9?'0':'').$time['minute'];
 		
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
@@ -1285,12 +1563,18 @@
 			{
 				if(isset($new_event->participants[$old_userid]))
 				{
-//					echo "Modifying event for user ".$old_userid."<br>\n";
+					if($this->debug)
+					{
+						echo "Modifying event for user ".$old_userid."<br>\n";
+					}
 					$this->modified[intval($old_userid)] = $new_status;
 				}
 				else
 				{
-//					echo "Deleting user ".$old_userid." from the event<br>\n";
+					if($this->debug)
+					{
+						echo "Deleting user ".$old_userid." from the event<br>\n";
+					}
 					$this->deleted[intval($old_userid)] = $old_status;
 				}
 			}
@@ -1299,7 +1583,10 @@
 			{
 				if(!isset($old_event->participants[$new_userid]))
 				{
-//					echo "Adding event for user ".$new_userid."<br>\n";
+					if($this->debug)
+					{
+						echo "Adding event for user ".$new_userid."<br>\n";
+					}
 					$this->added[$new_userid] = 'U';
 					$new_event->participants[$new_userid] = 'U';
 				}
@@ -1321,8 +1608,6 @@
 				}
 			}
 		}
-
-
 
 		function _debug_array($data)
 		{

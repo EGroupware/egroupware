@@ -124,9 +124,47 @@
 				echo "SO list_repeated_events : SQL : ".$sql."<br>\n";
 			}
 
-			$events = $this->get_event_ids(True,$sql);
+			return $this->get_event_ids(True,$sql);
+		}
 
-			return $events;
+		function list_events_keyword($keywords)
+		{
+			$this->makeobj();
+			
+			$sql = 'AND (phpgw_cal_user.cal_login='.$this->owner.') ';
+
+			$words = split(' ',$keywords);
+			for ($i=0;$i<count($words);$i++)
+			{
+				if($i==0)
+				{
+					$sql .= ' AND (';
+				}
+				if($i>0)
+				{
+					$sql .= ' OR ';
+				}
+				$sql .= "(UPPER(phpgw_cal.title) LIKE UPPER('%".$words[$i]."%') OR "
+						. "UPPER(phpgw_cal.description) LIKE UPPER('%".$words[$i]."%'))";
+						
+				if($i==count($words) - 1)
+				{
+					$sql .= ') ';
+				}
+			}
+
+			if(strpos($this->filter,'private'))
+			{
+				$sql .= 'AND phpgw_cal.is_public=0 ';
+			}
+
+			if($this->cat_id)
+			{
+				$sql .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
+			}
+
+			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+			return $this->get_event_ids(False,$sql);
 		}
 
 		function read_from_store($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='')
