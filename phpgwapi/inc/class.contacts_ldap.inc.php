@@ -35,18 +35,112 @@
 	*/
 	class contacts_
 	{
-		var $db;
-		var $ldap;
-		var $nextid;
-		var $std_table='';
-		var $ext_table='phpgw_addressbook_extra';
+		var $db = '';
+		var $ldap = '';
+		var $nextid = '';
+		var $std_table = '';
+		var $ext_table = 'phpgw_addressbook_extra';
 
 		var $account_id;
-		var $stock_contact_fields;
-		var $non_contact_fields;
-		var $email_types;
+		var $adr_types;
 		var $total_records;
 		var $grants;
+
+		/* The left side are the array elements used throughout phpgw, right side are the ldap attributes */
+		var $stock_contact_fields = array(
+			'fn'                  => 'cn',
+			'n_given'             => 'givenname',
+			'n_family'            => 'sn',
+			'n_middle'            => 'phpgwmiddlename',
+			'n_prefix'            => 'phpgwprefix',
+			'n_suffix'            => 'phpgwsuffix',
+			'sound'               => 'phpgwaudio',
+			'bday'                => 'phpgwbirthday',
+			'note'                => 'description',
+			'tz'                  => 'phpgwtz',
+			'geo'                 => 'phpgwgeo',
+			'url'                 => 'phpgwurl',
+			'pubkey'              => 'phpgwpublickey',
+
+			'org_name'            => 'o',
+			'org_unit'            => 'ou',
+			'title'               => 'title',
+
+			'adr_one_street'      => 'street',
+			'adr_one_locality'    => 'l', 
+			'adr_one_region'      => 'st', 
+			'adr_one_postalcode'  => 'postalcode',
+			'adr_one_countryname' => 'co',
+			'adr_one_type'        => 'phpgwadronetype',
+			'label'               => 'phpgwaddresslabel',
+
+			'adr_two_street'      => 'phpgwadrtwostreet',
+			'adr_two_locality'    => 'phpgwadrtwolocality', 
+			'adr_two_region'      => 'phpgwadrtworegion', 
+			'adr_two_postalcode'  => 'phpgwadrtwopostalcode',
+			'adr_two_countryname' => 'phpgwadrtwocountryname',
+			'adr_two_type'        => 'phpgwadrtwotype',
+
+			'tel_work'            => 'telephonenumber',
+			'tel_home'            => 'homephone',
+			'tel_voice'           => 'phpgwvoicetelephonenumber',
+			'tel_fax'             => 'facsimiletelephonenumber', 
+			'tel_msg'             => 'phpgwmsgtelephonenumber',
+			'tel_cell'            => 'phpgwcelltelephonenumber',
+			'tel_pager'           => 'phpgwpagertelephonenumber',
+			'tel_bbs'             => 'phpgwbbstelephonenumber',
+			'tel_modem'           => 'phpgwmodemtelephonenumber',
+			'tel_car'             => 'phpgwmobiletelephonenumber',
+			'tel_isdn'            => 'phpgwisdnphonenumber',
+			'tel_video'           => 'phpgwvideophonenumber',
+			'tel_prefer'          => 'phpgwpreferphone',
+			'email'               => 'mail',
+			'email_type'          => 'phpgwmailtype',
+			'email_home'          => 'phpgwmailhome',
+			'email_home_type'     => 'phpgwmailhometype'
+		);
+
+		var $non_contact_fields = array(
+			'id'     => 'uidnumber',
+			'lid'    => 'uid',
+			'tid'    => 'phpgwcontacttypeid',
+			'cat_id' => 'phpgwcontactcatid',
+			'access' => 'phpgwcontactaccess',
+			'owner'  => 'phpgwcontactowner'
+		);
+
+		/* Used to set preferphone field */
+		var $tel_types = array(
+			'work'  => 'work',
+			'home'  => 'home',
+			'voice' => 'voice',
+			'fax'   => 'fax',
+			'msg'   => 'msg',
+			'cell'  => 'cell',
+			'pager' => 'pager',
+			'bbs'   => 'bbs',
+			'modem' => 'modem',
+			'car'   => 'car',
+			'isdn'  => 'isdn',
+			'video' => 'video'
+		);
+
+		/* Used to set mail_type fields */
+		var $email_types = array(
+			'INTERNET'   => 'INTERNET',
+			'CompuServe' => 'CompuServe',
+			'AOL'        => 'AOL',
+			'Prodigy'    => 'Prodigy',
+			'eWorld'     => 'eWorld',
+			'AppleLink'  => 'AppleLink',
+			'AppleTalk'  => 'AppleTalk',
+			'PowerShare' => 'PowerShare',
+			'IBMMail'    => 'IBMMail',
+			'ATTMail'    => 'ATTMail',
+			'MCIMail'    => 'MCIMail',
+			'X.400'      => 'X.400',
+			'TLX'        => 'TLX'
+		);
 
 		function contacts_()
 		{
@@ -59,69 +153,6 @@
 			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->grants     = $GLOBALS['phpgw']->acl->get_grants('addressbook');
 
-			/* The left side are the array elements used throughout phpgw, right side are the ldap attributes */
-			$this->stock_contact_fields = array(
-				'fn'                  => 'cn',
-				'n_given'             => 'givenname',
-				'n_family'            => 'sn',
-				'n_middle'            => 'phpgwmiddlename',
-				'n_prefix'            => 'phpgwprefix',
-				'n_suffix'            => 'phpgwsuffix',
-				'sound'               => 'phpgwaudio',
-				'bday'                => 'phpgwbirthday',
-				'note'                => 'description',
-				'tz'                  => 'phpgwtz',
-				'geo'                 => 'phpgwgeo',
-				'url'                 => 'phpgwurl',
-				'pubkey'              => 'phpgwpublickey',
-
-				'org_name'            => 'o',
-				'org_unit'            => 'ou',
-				'title'               => 'title',
-
-				'adr_one_street'      => 'street',
-				'adr_one_locality'    => 'l', 
-				'adr_one_region'      => 'st', 
-				'adr_one_postalcode'  => 'postalcode',
-				'adr_one_countryname' => 'co',
-				'adr_one_type'        => 'phpgwadronetype',
-				'label'               => 'phpgwaddresslabel',
-
-				'adr_two_street'      => 'phpgwadrtwostreet',
-				'adr_two_locality'    => 'phpgwadrtwolocality', 
-				'adr_two_region'      => 'phpgwadrtworegion', 
-				'adr_two_postalcode'  => 'phpgwadrtwopostalcode',
-				'adr_two_countryname' => 'phpgwadrtwocountryname',
-				'adr_two_type'        => 'phpgwadrtwotype',
-
-				'tel_work'            => 'telephonenumber',
-				'tel_home'            => 'homephone',
-				'tel_voice'           => 'phpgwvoicetelephonenumber',
-				'tel_fax'             => 'facsimiletelephonenumber', 
-				'tel_msg'             => 'phpgwmsgtelephonenumber',
-				'tel_cell'            => 'phpgwcelltelephonenumber',
-				'tel_pager'           => 'phpgwpagertelephonenumber',
-				'tel_bbs'             => 'phpgwbbstelephonenumber',
-				'tel_modem'           => 'phpgwmodemtelephonenumber',
-				'tel_car'             => 'phpgwmobiletelephonenumber',
-				'tel_isdn'            => 'phpgwisdnphonenumber',
-				'tel_video'           => 'phpgwvideophonenumber',
-				'tel_prefer'          => 'phpgwpreferphone',
-				'email'               => 'mail',
-				'email_type'          => 'phpgwmailtype',
-				'email_home'          => 'phpgwmailhome',
-				'email_home_type'     => 'phpgwmailhometype'
-			);
-
-			$this->non_contact_fields = array(
-				'id'     => 'uidnumber',
-				'lid'    => 'uid',
-				'tid'    => 'phpgwcontacttypeid',
-				'cat_id' => 'phpgwcontactcatid',
-				'access' => 'phpgwcontactaccess',
-				'owner'  => 'phpgwcontactowner'
-			);
-
 			/* Used to flag an address as being:
 			   domestic OR  international(default)
 			   parcel(default)
@@ -133,39 +164,6 @@
 				'intl'   => lang('International'),
 				'parcel' => lang('Parcel'),
 				'postal' => lang('Postal')
-			);
-
-			/* Used to set preferphone field */
-			$this->tel_types = array(
-				'work'  => 'work',
-				'home'  => 'home',
-				'voice' => 'voice',
-				'fax'   => 'fax',
-				'msg'   => 'msg',
-				'cell'  => 'cell',
-				'pager' => 'pager',
-				'bbs'   => 'bbs',
-				'modem' => 'modem',
-				'car'   => 'car',
-				'isdn'  => 'isdn',
-				'video' => 'video'
-			);
-
-			/* Used to set mail_type fields */
-			$this->email_types = array(
-				'INTERNET'   => 'INTERNET',
-				'CompuServe' => 'CompuServe',
-				'AOL'        => 'AOL',
-				'Prodigy'    => 'Prodigy',
-				'eWorld'     => 'eWorld',
-				'AppleLink'  => 'AppleLink',
-				'AppleTalk'  => 'AppleTalk',
-				'PowerShare' => 'PowerShare',
-				'IBMMail'    => 'IBMMail',
-				'ATTMail'    => 'ATTMail',
-				'MCIMail'    => 'MCIMail',
-				'X.400'      => 'X.400',
-				'TLX'        => 'TLX'
 			);
 		}
 
@@ -381,51 +379,28 @@
 			{
 				$ldap_fields = array();
 				$total = 0;
-				/*
-				Query each field seperately instead of using ldap OR search.
-				This should be changed to use ldap and/or syntax
-				*/
-				reset($stock_fieldnames);
-				while (list($name,$value) = each($stock_fieldnames) )
+
+				reset($this->stock_contact_fields);
+				$lquery = '(&(|'; /* $lquery = '(|'; */
+				while (list($name,$value) = each($this->stock_contact_fields) )
 				{
-					$lquery = $value.'=*'.$query.'*';
-					/* echo $lquery; exit; */
-					$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], $lquery);
-					/* append the results */
-					$ldap_fields += ldap_get_entries($this->ldap, $sri);
-					/* add the # rows to our total */
-					$total = $total + ldap_count_entries($this->ldap, $sri);
+					$lquery .= '(' . $value . '=*' . $query . '*)';
 				}
+				$lquery .= ')(phpgwcontactowner=*))'; /* $lquery .= ')'; */
+				/* echo $lquery; exit; */
+
+				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], "$lquery");
+
+				/* append the results */
+				$ldap_fields += ldap_get_entries($this->ldap, $sri);
+
+				/* add the # rows to our total */
+				$total = $total + ldap_count_entries($this->ldap, $sri);
+				/* _debug_array($ldap_fields);exit; */
 
 				if ($filterfields)
 				{
 					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
-				}
-
-				/* Now, remove duplicate rows */
-				$ldap_fields = $this->asortbyindex($ldap_fields,'uidnumber');
-				@reset($ldap_fields);
-				if (count($ldap_fields) > 0)
-				{
-					for ($a = 0; $a < count($ldap_fields); $a++)
-					{
-						if ($ldap_fields[$a])
-						{
-							/*
-							echo '<br>comparing "'.$ldap_fields[$a]['uidnumber'][0]
-							.'" to "'.$ldap_fields[$a - 1]['uidnumber'][0].'"';
-							*/
-							if (($ldap_fields[$a]['uidnumber'][0] <> $ldap_fields[$a - 1]['uidnumber'][0]))
-							{
-								$uniquearray[$a] = $ldap_fields[$a];
-							}
-							else
-							{
-								/* echo '<br>deleting "'.$ldap_fields[$a -1 ]['uidnumber'][0]; */
-							}
-						}
-					}
-					$ldap_fields = $uniquearray;
 				}
 
 				$this->total_records = count($ldap_fields);
@@ -516,6 +491,13 @@
 
 		function add($owner,$fields,$access='private',$cat_id='0',$tid='n')
 		{
+			$tid = $fields['tid'] ? trim($fields['tid']) : $tid;
+			unset($fields['tid']);
+			if(empty($tid))
+			{
+				$tid = 'n';
+			}
+
 			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
 			{
 				return False;
@@ -567,6 +549,7 @@
 			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
 
+			_debug_array($ldap_fields);
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
 			if (count($extra_fields))
