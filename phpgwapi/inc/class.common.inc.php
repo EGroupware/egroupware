@@ -25,9 +25,9 @@
 
   /* $Id$ */
 
-	$d1 = strtolower(substr($phpgw_info['server']['api_inc'],0,3));
-	$d2 = strtolower(substr($phpgw_info['server']['server_root'],0,3));
-	$d3 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+	$d1 = strtolower(@substr(PHPGW_API_INC,0,3));
+	$d2 = strtolower(@substr(PHPGW_SERVER_ROOT,0,3));
+	$d3 = strtolower(@substr(PHPGW_APP_INC,0,3));
 	if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp')
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
@@ -673,15 +673,15 @@
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
-			if (is_dir ($imagedir))
+			if (@is_dir ($imagedir))
 			{
 				return $imagedir;
 			}
-			elseif (is_dir ($imagedir_default))
+			elseif (@is_dir ($imagedir_default))
 			{
 				return $imagedir_default;
 			}
-			elseif (is_dir ($imagedir_olddefault))
+			elseif (@is_dir ($imagedir_olddefault))
 			{
 				return $imagedir_olddefault;
 			}
@@ -714,15 +714,15 @@
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/'.$appname.'/images';
 
-			if (is_dir ($imagedir))
+			if (@is_dir ($imagedir))
 			{
 				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
 			}
-			elseif (is_dir ($imagedir_default))
+			elseif (@is_dir ($imagedir_default))
 			{
 				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/default/images';
 			}
-			elseif (is_dir ($imagedir_olddefault))
+			elseif (@is_dir ($imagedir_olddefault))
 			{
 				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/images';
 			}
@@ -793,8 +793,7 @@
 
 			$phpgw_info['navbar']['home']['title'] = 'Home';
 			$phpgw_info['navbar']['home']['url']   = $phpgw->link('/index.php');
-			$phpgw_info['navbar']['home']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-				. $phpgw_info['server']['template_set'] . '/images/home.gif';
+			$phpgw_info['navbar']['home']['icon']  = $this->image('phpgwapi','home.gif');
 
 			reset($phpgw_info['user']['apps']);
 			while ($permission = each($phpgw_info['user']['apps']))
@@ -810,30 +809,16 @@
 					$phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link('/' . $permission[0] . '/index.php');
 					$phpgw_info['navbar'][$permission[0]]['name']  = $permission[0];
 
-					$icon_file    = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
-					$icon_default = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/default/images/navbar.gif';
-
-					if (file_exists($icon_file))
+					$phpgw_info['navbar'][$permission[0]]['icon']  = $this->image($permission[0],'navbar.gif');
+					if($phpgw_info['navbar'][$permission[0]]['icon'] == '')
 					{
-						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
-							. $permission[0] . '/templates/' . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
-					}
-					elseif (file_exists($icon_default))
-					{
-						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
-							. $permission[0] . '/templates/default/images/navbar.gif';
-					}
-					else
-					{
-						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
-							. 'phpgwapi/templates/' . $phpgw_info['server']['template_set'] . '/images/nonav.gif';
+						$phpgw_info['navbar'][$permission[0]]['icon']  = $this->image('phpgwapi','nonav.gif');
 					}
 				}
 			}
 			$phpgw_info['navbar']['preferences']['title'] = 'preferences';
 			$phpgw_info['navbar']['preferences']['url']   = $phpgw->link('/preferences/index.php');
-			$phpgw_info['navbar']['preferences']['icon']  = $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
-				. $phpgw_info['server']['template_set'] . '/images/navbar.gif';
+			$phpgw_info['navbar']['preferences']['icon']  = $this->image('preferences','navbar.gif');
 
 			if ($phpgw_info['flags']['currentapp'] == 'home' || $phpgw_info['flags']['currentapp'] == 'preferences' || $phpgw_info['flags']['currentapp'] == 'about')
 			{
@@ -848,13 +833,11 @@
 			$phpgw_info['navbar']['about']['title'] = lang('About x',$app);
 
 			$phpgw_info['navbar']['about']['url']   = $phpgw->link('/about.php','app='.$app);
-			$phpgw_info['navbar']['about']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-				. $phpgw_info['server']['template_set'] . '/images/about.gif';
+			$phpgw_info['navbar']['about']['icon']  = $this->image('phpgwapi','about.gif');
 
 			$phpgw_info['navbar']['logout']['title'] = 'Logout';
 			$phpgw_info['navbar']['logout']['url']   = $phpgw->link('/logout.php');
-			$phpgw_info['navbar']['logout']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-				. $phpgw_info['server']['template_set'] . '/images/logout.gif';
+			$phpgw_info['navbar']['logout']['icon']  = $this->image('phpgwapi','logout.gif');
 		}
 
 		/*!
