@@ -156,7 +156,8 @@
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));
 	$setup_tpl->set_var('lang_current',lang('Current system-charset'));
 	$setup_tpl->set_var('lang_convert_to',lang('Charset to convert to'));
-	$setup_tpl->set_var('lang_warning','<b>Warning</b>: <font color="red">This feature is still experimental. <b>DO NOT USE IT ON A PRODUCTION SYSTEM.</b></font><br>Hopefully you know what you do ;-)');
+	$setup_tpl->set_var('lang_warning','<b>'.lang('Setting the system-charset to UTF-8 (unicode) allows the coexistens of data from languages of different charsets.').'</b><br>'.
+		lang('If you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!'));
 
 	$installed_charsets = $translation->get_installed_charsets();
 	if ($translation->system_charset || count($installed_charsets) == 1)

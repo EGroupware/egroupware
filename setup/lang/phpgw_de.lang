@@ -183,6 +183,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	de	Wenn Sie nur Sprachen des gleichen Zeichensatzes (zB. westeuropäische) benützen, brauchen Sie keinen Systemzeichensatz zu setzten!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die eGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
 import has been completed!	setup	de	Import ist beendet!
@@ -334,6 +335,7 @@ server root	setup	de	Server-Root
 sessions type	setup	de	Session-Typ
 set	setup	de	gesetzt
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
 setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten

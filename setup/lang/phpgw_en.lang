@@ -179,6 +179,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manualy %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	en	If you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!
 image type selection order	setup	en	Image type selection order
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the eGroupWare accounts table (for a new install using SQL accounts)
 import has been completed!	setup	en	Import has been completed!
@@ -330,6 +331,7 @@ server root	setup	en	Server Root
 sessions type	setup	en	Sessions Type
 set	setup	en	set
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	en	Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	en	Setting the system-charset to UTF-8 (unicode) allows the coexistens of data from languages of different charsets.
 settings	setup	en	Settings
 setup	setup	en	Setup
 setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
