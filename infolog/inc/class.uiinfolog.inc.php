@@ -70,8 +70,8 @@
 			);
 
 			$this->html = CreateObject('infolog.html');
-			$this->template = CreateObject('phpgwapi.Template',
-													 $GLOBALS['phpgw']->common->get_tpl_dir('infolog'));
+			$this->template = $GLOBALS['phpgw']->template;
+			$this->template->set_root($GLOBALS['phpgw']->common->get_tpl_dir('infolog'));	// for the hooks to work
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 		}
@@ -252,6 +252,8 @@
 		function infoHeaders( $do_sort_header=0,$sort=0,$order=0,$cat_id=0)
 		{
 			$headers['th_bg'] = $GLOBALS['phpgw_info']['theme']['th_bg'];
+			$headers['row_off'] = $GLOBALS['phpgw_info']['theme']['row_off'];
+			$headers['row_on'] = $GLOBALS['phpgw_info']['theme']['row_on'];
 
 			$fields = array(
 				'type'		=> 'Type',
@@ -335,7 +337,6 @@
 			if (!$for_include)
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 			}
 			if ($action == '')
 			{
@@ -345,7 +346,10 @@
 			$t = $this->template; $html = $this->html;
 
 			$t->set_file(array( 'info_list_t' => 'list.tpl' ));
+			$t->set_block('info_list_t','projdetails','projdetailshandle');
+			$t->set_block('info_list_t','info_headers');
 			$t->set_block('info_list_t','info_list','list');
+			$t->set_block('info_list_t','get_list');
 
 			if ($cat_filter) $cat_id = $cat_filter;
 
@@ -422,6 +426,7 @@
 			$t->set_var( $this->infoHeaders( !$for_include,$sort,$order,$cat_id ));
 			$t->set_var(h_lang_sub,lang('Sub'));
 			$t->set_var(h_lang_action,lang('Action'));
+			$t->parse('info_headers','info_headers');
 			// -------------- end header declaration -----------------
 
 			$ids = $this->bo->readIdArray($order,$sort,$filter,$cat_id,$query,
@@ -444,14 +449,12 @@
 			// project description if subprojectlist
 			// ==========================================
 
-			$t->set_block('info_list_t','projdetails','projdetailshandle');
-
 			switch ($action)
 			{
 			  case 'sp':        // details of parent
 					$t->set_var( $this->infoHeaders(  ));
 					$t->set_var( $this->formatInfo( $action_id ));
-					$t->parse('projdetailshandle','projdetails',True);
+					$t->parse('projdetails','projdetailshandle');
 					break;
 			  case 'addr':
 			  case 'proj':
@@ -494,7 +497,7 @@
 
 			if (intval($for_include) == 2)
 			{
-				$t->set_block('info_list_t','info_headers','headershandle');
+				$t->set_var('info_headers','');
 			}
 			while (list($id,$parent) = each($ids))
 			{
@@ -559,7 +562,7 @@
 								'filter' => $filter,'action' => 'sp')));
 			  }
 
-			  $t->parse('list','info_list',True);
+			  $t->parse('info_list','list',True);
 			  // -------------- end record declaration ------------------------
 			}
 
@@ -576,11 +579,11 @@
 
 			if (intval($for_include) == 2)
 			{
-				return $t->fp('out','info_list_t',true);
+				return $t->fp('out','get_list',true);
 			}
 			else
 			{
-				$t->pfp('out','info_list_t',true);
+				$t->pfp('out','get_list',true);
 			}
 		}
 
@@ -648,7 +651,6 @@
 				if ($fileerror) $error[]=$fileerror;
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$t->set_file(array('info_add_file' => 'add_file.tpl'));
 			$t->set_var( $this->setStyleSheet( ));
@@ -869,17 +871,11 @@
 			));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
-			$t->set_file(array('info_edit' => 'form.tpl'));
-
-			// ====================================================================
-			// create two seperate blocks, addblock will be cut off from template
-			// editblock contains the buttons and forms for edit
-			// ====================================================================
-			$t->set_block('info_edit', 'add', 'addhandle');
-			$t->set_block('info_edit', 'edit', 'edithandle');
-			$t->set_block('info_edit', 'subpro', 'subprohandle');
+			$t->set_file(array('info_edit_t' => 'form.tpl'));
+			$t->set_block('info_edit_t','info_edit');
+			$t->set_block('info_edit_t','add');
+			$t->set_block('info_edit_t','edit');
 
 			if (is_array($error))
 			{
@@ -890,6 +886,7 @@
 			{
 				case 'sp':
 					$info_action = 'InfoLog - New Subproject';
+					$t->set_block('info_edit_t', 'subpro');
 					break;
 				case 'new': case 'addr': case 'proj': case 'event':
 					$info_action = 'InfoLog - New';
@@ -897,7 +894,9 @@
 						$this->bo->so->data['info_type'] = $info_type;
 					break;
 				default:
-					$info_action = 'InfoLog - Edit'; break;
+					$info_action = 'InfoLog - Edit';
+					$is_edit = True;
+					break;
 			}
 			$t->set_var('lang_info_action',lang($info_action) .
 					($query_addr ? ' - '.lang('Search for:')." '$query_addr'" : ''));
@@ -1002,11 +1001,8 @@
 			{
 				$t->set_var('delete_button',$html->submit_button('delete','Delete'));
 			}
-			$t->set_var('edithandle','');
-			$t->set_var('addhandle','');
-			$t->set_var('subprohandle','');
+			$t->parse('buttons',$is_edit ? 'edit' : 'add');
 			$t->pfp('out','info_edit');
-			$t->pfp('edithandle','edit');
 		}
 
 		function delete( )
@@ -1038,7 +1034,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$t->set_file(array( 'info_delete' => 'delete.tpl' ));
 
@@ -1107,9 +1102,10 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
-			$this->template->set_file(array('info_admin' => 'admin.tpl'));
+			$this->template->set_file(array('info_admin_t' => 'admin.tpl'));
+			$this->template->set_block('info_admin_t', 'admin_line');
+			$this->template->set_block('info_admin_t', 'info_admin');
 
 			$this->template->set_var(Array(
 				'title' => lang('InfoLog').' - '.lang('configuration'),
@@ -1122,7 +1118,6 @@
 				'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
 				'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.')
 			));
-			$this->template->set_block('info_admin', 'admin_line', 'admin_linehandle');
 
 			$i = 0; @reset($this->bo->link_pathes);
 			do {
@@ -1134,7 +1129,7 @@
 					'val_trans' => $this->html->input("trans[$i]",$trans),
 					'val_ip'    => $this->html->input("ip[$i]",$this->bo->send_file_ips[$valid])
 				));
-				$this->template->parse('admin_linehandle','admin_line',True);
+				$this->template->parse('admin_lines','admin_line',True);
 				++$i;
 			} while ($valid);
 
@@ -1169,11 +1164,12 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$t = $this->template; $html = $this->html;
 
-			$t->set_file(array('info_prefs' => 'preferences.tpl'));
+			$t->set_file(array('info_prefs_t' => 'preferences.tpl'));
+			$t->set_block('info_prefs_t','pref_line');
+			$t->set_block('info_prefs_t','info_prefs');
 
 			$vars = Array(
 				'title' => lang('InfoLog preferences'),
@@ -1183,8 +1179,6 @@
 				'save_button' => $html->submit_button('save','Save')
 			);
 			$t->set_var($vars);
-
-			$t->set_block('info_prefs', 'pref_line', 'pref_linehandle');
 
 			while (list($pref,$lang) = each($prefs))
 			{
@@ -1204,7 +1198,7 @@
 					$t->set_var('data',$html->checkbox($pref,
 								$GLOBALS['phpgw_info']['user']['preferences']['infolog'][$pref]));
 				}
-				$t->parse('pref_linehandle','pref_line',True);
+				$t->parse('pref_lines','pref_line',True);
 			}
 			$t->pfp('out','info_prefs');
 		}

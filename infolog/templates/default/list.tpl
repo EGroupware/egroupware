@@ -1,22 +1,3 @@
-
-<!-- InfoLog Start -->
-
-{info_css}
-<table width=98%>
- <tr>
-  <td>
-   <span class=action>{lang_info_action}</span>
-  </td><td align=center>
-   {total_matchs}
-  </td><td align=right>
-   <span class=action>{add_icons}</span>
-  </td>
- </tr>
-</table>
-
-<hr noshade width="98%" align="center" size="1">
-
-<center>
 <!-- BEGIN projdetails -->
  <table width=95% border=0 cellspacing=1 cellpadding=3>
   <tr bgcolor="{th_bg}">
@@ -28,7 +9,7 @@
    <td width="10%" class=list>{lang_owner}<br>{lang_datemodified}</td>
    <td width="10%" class=list>{lang_responsible}</td>
   </tr>
-  <tr bgcolor="{th_bg}" valign="top">
+  <tr bgcolor="{row_on}" valign="top">
    <td class=list>{type}</td>
    <td class=list>{status}</td>
    <td class=list>{subject}<br>{des}{filelinks}</td>
@@ -39,11 +20,6 @@
  </table><p>
 <!-- END projdetails -->
 
- <!-- next_matchs Start -->
- {next_matchs}
- <!-- next_matchs Ende -->
-
- <table width=95% border=0 cellspacing=1 cellpadding=3>
 <!-- BEGIN info_headers -->
   <tr bgcolor="{th_bg}">
    <td width="2%" class=list>{lang_type}</td>
@@ -74,6 +50,33 @@
   </tr>
 <!-- END info_list -->
 
+<!-- BEGIN get_list -->
+{info_css}
+<table width=98%>
+ <tr>
+  <td>
+   <span class=action>{lang_info_action}</span>
+  </td><td align=center>
+   {total_matchs}
+  </td><td align=right>
+   <span class=action>{add_icons}</span>
+  </td>
+ </tr>
+</table>
+
+<hr noshade width="98%" align="center" size="1">
+
+<center>
+ {projdetails}
+
+ <!-- next_matchs Start -->
+ {next_matchs}
+ <!-- next_matchs Ende -->
+
+ <table width=95% border=0 cellspacing=1 cellpadding=3>
+  {info_headers}
+  {info_list}
+
  </table>
 
  <!-- next_matchs_end Start -->
@@ -88,5 +91,4 @@
    <td>{back2projects}</td>
   </tr>
  </table>
-
-<!- InfoLog Ende -->
+<!-- END get_list -->
