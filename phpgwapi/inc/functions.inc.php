@@ -91,11 +91,12 @@
 	if (isset($_POST['login']))	// on login
 	{
 		$GLOBALS['login'] = $_POST['login'];
-		if (strstr($GLOBALS['login'],'@') === False)
+		if (strstr($GLOBALS['login'],'@') === False || count($GLOBALS['phpgw_domain']) == 1)
 		{
 			$GLOBALS['login'] .= '@' . get_var('logindomain',array('POST'),$GLOBALS['phpgw_info']['server']['default_domain']);
 		}
-		list(,$GLOBALS['phpgw_info']['user']['domain']) = explode('@',$GLOBALS['login']);
+		$parts = explode('@',$GLOBALS['login']);
+		$GLOBALS['phpgw_info']['user']['domain'] = array_pop($parts);
 	}
 	else	// on "normal" pageview
 	{
@@ -258,7 +259,14 @@
 		{
 			if (@$_POST['login'] != '')
 			{
-				list($login) = explode("@",$_POST['login']);
+				if (count($GLOBALS['phpgw_domain']) > 1)
+				{
+					list($login) = explode('@',$_POST['login']);
+				}
+				else
+				{
+					$login = $_POST['login'];
+				}
 				print_debug('LID',$login,'app');
 				$login_id = $GLOBALS['phpgw']->accounts->name2id($login);
 				print_debug('User ID',$login_id,'app');

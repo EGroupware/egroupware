@@ -244,6 +244,13 @@
 			}
 		}
 
+		function split_login_domain($both,&$login,&$domain)
+		{
+			$parts = explode('@',$both);
+			$domain = array_pop($parts);
+			$login = implode('@',$parts);
+		}
+
 		/**
 		* Check to see if a session is still current and valid
 		*
@@ -277,7 +284,7 @@
 
 			$this->session_flags = $session['session_flags'];
 
-			list($this->account_lid,$this->account_domain) = explode('@', $session['session_lid']);
+			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
 			if ($this->account_domain == '')
 			{
@@ -496,7 +503,8 @@
 			}
 
 			$this->clean_sessions();
-			list($this->account_lid,$this->account_domain) = explode('@', $login);
+			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
+
 			$now = time();
 
 			if (strstr($login,'@') === False)

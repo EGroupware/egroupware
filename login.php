@@ -160,6 +160,10 @@
 		{
 			$login .= '@' . $_POST['logindomain'];
 		}
+		elseif(count($GLOBALS['phpgw_domain']) == 1)
+		{
+			$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
+		}
 		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$_POST['passwd'],$_POST['passwd_type']);
 
 		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
