@@ -95,6 +95,15 @@
      </select>
     </td>
    </tr>
+   <tr bgcolor="{row_off}">
+     <td>{lang_Default_file_system_space_per_user}/{lang_group_?}:</td>
+     <td>
+      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
+      <select name="newsettings[vfs_default_account_size_type]">
+{hook_size_type}
+      </select>
+     </td>
+    </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->
