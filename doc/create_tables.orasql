@@ -216,7 +216,7 @@ end;
 -----------------
 
 CREATE TABLE addressbook (
-  ab_id		number(11) DEFAULT '0' NOT NULL , --auto-increment
+  ab_id		number NOT NULL,
   ab_owner	varchar2(25),
   ab_addr_access varchar2(10),
   ab_firstname	varchar2(255),
@@ -224,15 +224,15 @@ CREATE TABLE addressbook (
   ab_email	varchar2(255),
   ab_hphone	varchar2(255),
   ab_wphone	varchar2(255),
-  ab_fax		varchar2(255),
+  ab_fax	varchar2(255),
   ab_pager	varchar2(255),
   ab_mphone	varchar2(255),
   ab_ophone	varchar2(255),
   ab_street	varchar2(255),
-  ab_city		varchar2(255),
+  ab_city	varchar2(255),
   ab_state	varchar2(255),
-  ab_zip		varchar2(255),
-  ab_bday		varchar2(255),
+  ab_zip	varchar2(255),
+  ab_bday	varchar2(255),
   ab_notes	varchar2(4000),
   ab_company	varchar2(255),
   PRIMARY KEY (ab_id)
@@ -250,7 +250,7 @@ create trigger addressbook_bri
 before insert on addressbook
 for each row
 begin
-  select addressbook_seq.nextval into :new.con from dual;
+  select addressbook_seq.nextval into :new.ab_id from dual;
 end;
 /
 
@@ -282,7 +282,7 @@ create trigger todo_bri
 before insert on todo
 for each row
 begin
-  select todo_seq.nextval into :new.con from dual;
+  select todo_seq.nextval into :new.todo_id from dual;
 end;
 /
 
