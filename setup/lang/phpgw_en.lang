@@ -68,6 +68,7 @@ db root username	setup	en	DB root username
 db type	setup	en	DB Type
 db user	setup	en	DB User
 default file system space per user/group ?	setup	en	Default file system space per user/group ?
+delete	setup	en	Delete
 delete all my tables and data	setup	en	Delete all my tables and data
 delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
 deleting tables	setup	en	Deleting Tables
