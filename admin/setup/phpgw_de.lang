@@ -30,6 +30,7 @@ edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+global categories	admin	de	Globale Kategorien
 group name	admin	de	Gruppenname
 group has been added	common	de	Gruppe wurde hinzugef&uuml;gt
 group has been deleted	common	de	Gruppe wurde gel&ouml;scht
