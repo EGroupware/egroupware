@@ -21,7 +21,8 @@
 		'Global Categories'		=> $phpgw->link('/admin/categories.php'),
 		'Change Main Screen Message'		=> $phpgw->link('/admin/mainscreen_message.php'),
 		'View Sessions'		=> $phpgw->link('/admin/currentusers.php'),
-		'View Access Log'		=> $phpgw->link('/admin/accesslog.php')
+		'View Access Log'		=> $phpgw->link('/admin/accesslog.php'),
+		'phpInfo'	=> $phpgw->link('/admin/phpinfo.php')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
