@@ -183,7 +183,8 @@
 			{
 				echo "<p>soetemplate::read('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 			}
-			if ($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' && $this->readfile())
+			if (($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' ||
+			     $GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'xslt') && $this->readfile())
 			{
 				return True;
 			}
@@ -250,38 +251,69 @@
 		{
 			list($app,$name) = split("\.",$this->name,2);
 			$template = $this->template == '' ? 'default' : $this->template;
-			$file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name";
+
 			if ($this->lang)
 			{
-				$file .= '.' . $this->lang;
+				$lang = '.' . $this->lang;
 			}
-			$file .= '.xul';
+			$first_try = $ext = $GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'xslt' ? '.xsl' : '.xet';
 
+			while ((!$lang || !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name$lang$ext") &&
+			                  !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/default/$name$lang$ext")) &&
+			       !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name$ext") &&
+			       !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/default/$name$ext"))
+			{
+				if ($ext == $first_try)
+				{
+					$ext = $ext == '.xet' ? '.xsl' : '.xet';
+
+					if ($this->debug == 1 || $this->name != '' && $this->debug == $this->name)
+					{
+						echo "<p>tried '$file' now trying it with extension '$ext' !!!</p>\n";
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
 			if ($this->name == '' || $app == '' || $name == '' || !@file_exists($file) || !($f = @fopen($file,'r')))
 			{
 				if ($this->debug == 1 || $this->name != '' && $this->debug == $this->name)
 				{
-					echo "<p>Can't open '$file' !!!</p>\n";
+					echo "<p>Can't open template '$this->name' / '$file' !!!</p>\n";
 				}
 				return False;
 			}
-			$xul = fread ($f, filesize ($file));
+			$xml = fread ($f, filesize ($file));
 			fclose($f);
 
-			if (!is_object($this->xul_io))
+			if ($ext == '.xsl')
 			{
-				$this->xul_io = CreateObject('etemplate.xul_io');
+				$cell = $this->empty_cell();
+				$cell['type'] = 'xslt';
+				$cell['size'] = $this->name;
+				//$cell['xslt'] = &$xml;	xslttemplate class cant use it direct at the moment
+				$cell['name'] = '';
+				$this->data = array(0 => array(),1 => array('A' => &$cell));
+				$this->rows = $this->cols = 1;
 			}
-			$loaded = $this->xul_io->import(&$this,$xul);
-
-			if (!is_array($loaded))
+			else
 			{
-				return False;
+				if (!is_object($this->xul_io))
+				{
+					$this->xul_io = CreateObject('etemplate.xul_io');
+				}
+				$loaded = $this->xul_io->import(&$this,$xml);
+
+				if (!is_array($loaded))
+				{
+					return False;
+				}
+				$this->name = $app . '.' . $name;	// if template was copied or app was renamed
+
+				$this->tpls_in_file = count($loaded);
 			}
-			$this->name = $app . '.' . $name;	// if template was copied or app was renamed
-
-			$this->tpls_in_file = count($loaded);
-
 			return True;
 		}
 
