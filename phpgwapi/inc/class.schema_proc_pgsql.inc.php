@@ -54,9 +54,6 @@
 						$sTranslated =  'text';
 					}
 					break;
-				case 'date':
-					$sTranslated =  'date';
-					break;
 				case 'decimal':
 					$sTranslated =  sprintf("decimal(%d,%d)", $iPrecision, $iScale);
 					break;
@@ -75,12 +72,6 @@
 				case 'longtext':
 					$sTranslated = 'text';
 					break;
-				case 'text':
-					$sTranslated = 'text';
-					break;
-				case 'timestamp':
-					$sTranslated = 'timestamp';
-					break;
 				case 'varchar':
 					if($iPrecision > 0 && $iPrecision < 256)
 					{
@@ -90,6 +81,12 @@
 					{
 						$sTranslated =  'text';
 					}
+					break;
+				case 'date':
+				case 'text':
+				case 'timestamp':
+				case 'bool':
+					$sTranslated = $sType;
 					break;
 			}
 			return $sTranslated;
@@ -164,6 +161,7 @@
 				case 'text':
 				case 'blob':
 				case 'date':
+				case 'bool';
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}

@@ -41,6 +41,9 @@
 				case 'blob':
 					$sTranslated = 'blob';
 					break;
+				case 'bool':
+					$sTranslated = 'tinyint(1)';
+					break;
 				case 'char':
 					if($iPrecision > 0 && $iPrecision < 256)
 					{

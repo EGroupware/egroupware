@@ -87,6 +87,9 @@
 				case 'timestamp':
 					$sTranslated = 'datetime';
 					break;
+				case 'bool':
+					$sTranslated = 'bit';
+					break;
 				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
@@ -180,13 +183,16 @@
 				case 'text':
 					$sTranslated = "'type' => '$sType'";
 					break;
+				case 'bit':
+					$sTranslated = "'type' => 'bool'";
+					break;
 			}
 			return $sTranslated;
 		}
 
 		function GetPKSQL($sFields)
 		{
-			return "PRIMARY KEY($sFields)";
+			return "PRIMARY KEY NONCLUSTERED ($sFields)";
 		}
 
 		function GetUCSQL($sFields)
