@@ -19,7 +19,7 @@ class soapclient
 {
 	function soapclient($endpoint,$wsdl=False,$portName=False)
 	{
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->endpoint = $endpoint;
 		$this->portName = False;
 		
@@ -106,8 +106,7 @@ class soapclient
 					{
 						$this->debug("got fault");
 						$faultArray = $return->decode();
-						while(list($k,$v) = each($faultArray))
-						/* foreach($faultArray as $k => $v) */
+						foreach($faultArray as $k => $v)
 						{
 							print "$k = $v<br>";
 						}

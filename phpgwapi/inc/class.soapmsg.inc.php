@@ -14,23 +14,21 @@ class soapmsg
 		{
 			global $namespaces;
 			$i = count($namespaces);
-			while(list($v) = each($new_namespaces))
-			/* foreach($new_namespaces as $v) */
+			foreach($new_namespaces as $v)
 			{
 				$namespaces[$v] = "ns".$i++;
 			}
 			$this->namespaces = $namespaces;
 		}
 		$this->payload = '';
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->debug_str = "entering soapmsg() with soapval ".$this->value->name."\n";
   	}
 
 	function make_envelope($payload)
 	{
 		global $namespaces;
-		while(list($k,$v) = each($namespaces))
-		/* foreach($namespaces as $k => $v) */
+		foreach($namespaces as $k => $v)
 		{
 			$ns_string .= " xmlns:$v=\"$k\"";
 		}

@@ -26,7 +26,7 @@ class soap_client
 		$this->server = $server;
 		$this->errno;
 		$this->errstring;
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->debug_str = "";
 		$this->username = "";
 		$this->password = "";

@@ -46,7 +46,7 @@ class soapval
 		$this->type_code = 0;
 		$this->type_prefix = false;
 		$this->array_type = "";
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->debug_str = "";
 		$this->debug("Entering soapval - name: '$name' type: '$type'");
 
@@ -139,8 +139,7 @@ class soapval
 		$this->value = array();
 		if(is_array($vals) && count($vals) >= 1)
 		{
-			while(list($k,$v) = each($vals))
-			/* foreach($vals as $k => $v) */
+			foreach($vals as $k => $v)
 			{
 				$this->debug("checking value $k : $v");
 				// if soapval, add..
@@ -193,8 +192,7 @@ class soapval
 		$this->debug("adding struct '$this->name' with ".count($vals)." vals");
 		if(is_array($vals) && count($vals) >= 1)
 		{
-			while(list($k,$v) = each($vals))
-			/* foreach($vals as $k => $v) */
+			foreach($vals as $k => $v)
 			{
 				// if serialize, if soapval
 				if(get_class($v) == "soapval")
@@ -207,8 +205,7 @@ class soapval
 				{
 					if(is_array($v))
 					{
-						while(list($a,$b) = each($v))
-						/* foreach($v as $a => $b) */
+						foreach($v as $a => $b)
 						{
 							if($a == "0")
 							{
@@ -288,8 +285,7 @@ class soapval
 				}
 				if(is_array($soapval->value))
 				{
-					while(list($k,$v) = each($soapval->value))
-					/* foreach($soapval->value as $k => $v) */
+					foreach($soapval->value as $k => $v)
 					{
 						$xml .= $this->serializeval($v);
 					}
@@ -305,9 +301,7 @@ class soapval
 				break;
 			case 2:
 				// array
-				reset($soapval->value);
-				while($array_val = each($soapval->value))
-				/* foreach($soapval->value as $array_val) */
+				foreach($soapval->value as $array_val)
 				{
 					$array_types[$array_val->type] = 1;
 					$xml .= $this->serializeval($array_val);
@@ -354,9 +348,7 @@ class soapval
 		{
 			if(is_array($soapval->value))
 			{
-				reset($soapval->value);
-				while($item = each($soapval->value))
-				/* foreach($soapval->value as $item) */
+				foreach($soapval->value as $item)
 				{
 					$return[] = $this->decode($item);
 				}
@@ -372,9 +364,7 @@ class soapval
 		{
 			if(is_array($soapval->value))
 			{
-				reset($soapval->value);
-				while($item = each($soapval->value))			
-				/* foreach($soapval->value as $item) */
+				foreach($soapval->value as $item)
 				{
 					$return[$item->name] = $this->decode($item);
 				}
@@ -394,9 +384,7 @@ class soapval
 		{
 			global $namespaces,$soapTypes,$typemap;
 
-			reset($typemap);
-			while(list($namespace,$types) = each($typemap))
-			/* foreach($typemap as $namespace => $types) */
+			foreach($typemap as $namespace => $types)
 			{
 				if(in_array($type,$types))
 				{

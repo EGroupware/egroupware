@@ -23,7 +23,7 @@ class soap_parser
 		$this->fault_detail = "";
 		$this->eval_str = "";
 		$this->depth_array = array();
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->debug_str = "";
 		$this->previous_element = "";
 

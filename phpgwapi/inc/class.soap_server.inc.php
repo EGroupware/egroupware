@@ -52,7 +52,6 @@ class soap_server
 		$header[] = "Connection: Close\r\n";
 		$header[] = "Content-Type: text/xml; charset=UTF-8\r\n";
 		$header[] = "Content-Length: ".strlen($payload)."\r\n\r\n";
-		reset($header);
 		foreach($header as $hdr)
 		{
 			header($hdr);
