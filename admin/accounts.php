@@ -18,7 +18,7 @@
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["auth_type"] . ".inc.php");
 
-  $t = new Template($phpgw_info["server"]["template_dir"]);
+  $t = $phpgw->template;		// Just temp (jengo)
   $t->set_file(array("header" => "accounts.tpl",
 			         "row"	=> "accounts.tpl",
 			         "footer" => "accounts.tpl"));
