@@ -1,5 +1,6 @@
 <!-- $Id$ -->
 
+<!-- BEGIN cat_list -->
 <center>
 <table border="0" cellspacing="2" cellpadding="2" width="87%">
 	<tr>
@@ -29,11 +30,7 @@
 		<td bgcolor="{th_bg}">{sort_name}</td>
 		<td bgcolor="{th_bg}">{sort_description}</td>
 
-<!-- BEGIN data_column -->
-
 		{th_data}
-
-<!-- END data_column -->
 
 		<td bgcolor="{th_bg}" align="center">{lang_app}</td>
 		<td bgcolor="{th_bg}" align=center>{lang_sub}</td>
@@ -41,23 +38,9 @@
 		<td bgcolor="{th_bg}" align=center>{lang_delete}</td>
 	</tr>
 
-<!-- BEGIN cat_list -->
-
-	<tr bgcolor="{tr_color}">
-		<td>{name}</td>
-		<td>{descr}</td>
-		{td_data}
-		<td align="center"><a href="{app_url}">{lang_app}</a></td>
-		<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>
-		<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
-		<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>
-	</tr>
-
-<!-- END cat_list -->  
-
-<!-- BEGINN add   -->
-
+	{rows}
 </table>
+
 <table border="0" cellspacing="2" cellpadding="2" width="87%">
 	<tr valign="bottom">
 		<td width="50%">
@@ -70,8 +53,21 @@
 			</form>
 		</td>
 	</tr>
-
-<!-- END add -->
-
 </table>
+
 </center>
+<!-- END cat_list -->
+
+<!-- BEGIN cat_row -->
+
+	<tr bgcolor="{tr_color}">
+		<td>{name}</td>
+		<td>{descr}</td>
+		{td_data}
+		<td align="center"><a href="{app_url}">{lang_app}</a></td>
+		<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>
+		<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
+		<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>
+	</tr>
+
+<!-- END cat_row -->

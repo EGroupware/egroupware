@@ -24,20 +24,19 @@
 		<td colspan="2"><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></td>
 	</tr>
 
-<!-- BEGIN data_row -->
-
-	<tr>
-		<td>{lang_data}</td>
-		<td>{td_data}</td>
-	</tr>
-
-<!-- END data_row -->
+	{rows}
 
 	<tr>
 		<td>{lang_access}</td>
 		<td colspan="2">{access}</td>
 	</tr>
 </table>
+
+{buttons}
+
+</center>
+
+<!-- END form -->
 
 <!-- BEGIN add -->
 
@@ -52,7 +51,6 @@
 			<input type="submit" name="done" value="{lang_done}"></form></td>
 	</tr>
 </table>
-</center>
 
 <!-- END add -->
 
@@ -69,8 +67,14 @@
 			<input type="submit" name="done" value="{lang_done}"></form></td>
 	</tr>
 </table>
-</center>
 
 <!-- END edit -->
 
-<!-- END form -->
+<!-- BEGIN data_row -->
+
+	<tr>
+		<td>{lang_data}</td>
+		<td>{td_data}</td>
+	</tr>
+
+<!-- END data_row -->
