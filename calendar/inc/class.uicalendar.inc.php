@@ -1359,17 +1359,38 @@
 				'owner'     => $this->bo->owner	// num. id of the user, not necessary current user
 			));
 
+			if(is_array($todo_label))
+			{
+				list($label,$showall)=$todo_label;
+			} 
+			else
+			{
+				$label=$todo_label;
+				$showall=true;
+			}
+			$maxshow = intval($GLOBALS['phpgw_info']['user']['preferences']['infolog']['mainscreen_maxshow']);
+			if($maxshow<=0)
+			{
+				$maxshow=10;
+			}	
+			//print_debug("get_todos(): label=$label; showall=$showall; max=$maxshow");
+
 			$content = $todo_label = '';
 			if (is_array($todos_from_hook) && count($todos_from_hook))
 			{
-				$todo_label = lang("open ToDo's:");
-
+				$todo_label = !empty($label)?$label:lang("open ToDo's:");
+				
 				foreach($todos_from_hook as $todos)
 				{
+					$i = 0;
 					if (is_array($todos) && count($todos))
 					{
 						foreach($todos as $todo)
 						{
+							if(!$showall && ($i++>$maxshow))
+							{	
+								break;
+							}
 							$icons = '';
 							foreach($todo['icons'] as $name => $app)
 							{
