@@ -14,32 +14,31 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-  $t = new Template($phpgw_info["server"]["template_dir"]);
-  $t->set_file(array( "header"	=> "accesslog.tpl",
+  $phpgw->template->set_file(array( "header"	=> "accesslog.tpl",
 			  "row"		=> "accesslog.tpl",
 			  "footer"	=> "accesslog.tpl" ));
 
-  $t->set_block("header","row","footer");
+  $phpgw->template->set_block("header","row","footer");
 
   $show_maxlog = 30;
 
-  $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $t->set_var("lang_last_x_logins",lang("Last x logins",$show_maxlog));
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $phpgw->template->set_var("lang_last_x_logins",lang("Last x logins",$show_maxlog));
 
-  $t->set_var("lang_loginid",lang("LoginID"));
-  $t->set_var("lang_ip",lang("IP"));
-  $t->set_var("lang_login",lang("Login"));
-  $t->set_var("lang_logout",lang("Logout"));
-  $t->set_var("lang_total",lang("Total"));
+  $phpgw->template->set_var("lang_loginid",lang("LoginID"));
+  $phpgw->template->set_var("lang_ip",lang("IP"));
+  $phpgw->template->set_var("lang_login",lang("Login"));
+  $phpgw->template->set_var("lang_logout",lang("Logout"));
+  $phpgw->template->set_var("lang_total",lang("Total"));
 
-  $t->parse("out","header");
+  $phpgw->template->parse("out","header");
 
   $phpgw->db->query("select loginid,ip,li,lo from access_log order by li desc "
 	         . "limit $show_maxlog");
   while ($phpgw->db->next_record()) {
 
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $t->set_var("tr_color",$tr_color);
+    $phpgw->template->set_var("tr_color",$tr_color);
 
     // In case there was a problem creating there session. eg, bad login time
     // I still want it to be printed here.  This will alert the admin there
@@ -69,17 +68,17 @@
        $lo = "&nbsp;";
     }
 
-    $t->set_var("row_loginid",$phpgw->db->f("loginid"));
-    $t->set_var("row_ip",$phpgw->db->f("ip"));
-    $t->set_var("row_li",$li);
-    $t->set_var("row_lo",$lo);
-    $t->set_var("row_total",$total);
+    $phpgw->template->set_var("row_loginid",$phpgw->db->f("loginid"));
+    $phpgw->template->set_var("row_ip",$phpgw->db->f("ip"));
+    $phpgw->template->set_var("row_li",$li);
+    $phpgw->template->set_var("row_lo",$lo);
+    $phpgw->template->set_var("row_total",$total);
 
     if ($phpgw->db->num_rows() == 1) {
-       $t->set_var("output","");
+       $phpgw->template->set_var("output","");
     }
     if ($phpgw->db->num_rows() != ++$i) {
-       $t->parse("output","row",True);
+       $phpgw->template->parse("output","row",True);
     }
   }
 
@@ -93,10 +92,10 @@
 
   $percent = round((10000 * ($loggedout / $total)) / 100);
 
-  $t->set_var("bg_color",$phpgw_info["themes"]["bg_color"]);
-  $t->set_var("footer_total",lang("Total records") . ": $total");
-  $t->set_var("lang_percent",lang("Percent of users that logged out") . ": $percent%");
+  $phpgw->template->set_var("bg_color",$phpgw_info["themes"]["bg_color"]);
+  $phpgw->template->set_var("footer_total",lang("Total records") . ": $total");
+  $phpgw->template->set_var("lang_percent",lang("Percent of users that logged out") . ": $percent%");
 
-  $t->pparse("out","footer");
+  $phpgw->template->pparse("out","footer");
 
   $phpgw->common->phpgw_footer();
