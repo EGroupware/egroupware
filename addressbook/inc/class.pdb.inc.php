@@ -157,7 +157,7 @@
 			fwrite($fd, $content);
 
 			// And flushes all
-			flush($fd);
+			fflush($fd);
 		}
 
 		/**
