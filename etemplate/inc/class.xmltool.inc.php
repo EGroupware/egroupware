@@ -501,12 +501,12 @@
 								break;
 							}
 							
-							if(preg_match("(&|<)", $this->data))	// this is unnecessary with htmlspecialchars($this->data)
+							/*if(preg_match("(&|<)", $this->data))	// this is unnecessary with htmlspecialchars($this->data)
 							{
 								$result .= '<![CDATA['.$this->data.']]>';
 								$endtag_indent = '';		
 							}
-							elseif(strlen($this->data) > 30)
+							else*/if(strlen($this->data) > 30 && !empty($this->indentstring))
 							{
 								$result .= "\n".$indentstring.$this->indentstring.htmlspecialchars($this->data)."\n";
 								$endtag_indent = $indentstring;
