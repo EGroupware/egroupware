@@ -1,16 +1,23 @@
 %1 records imported	infolog	fr	%1 enregistrements importés
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous devriez %2revenir%3 et décocher Tester l'import)
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachements de fichiers via des liens symboliques</b> à la place des uploads et récupération via fichier:/chemin pour les clients avec accès réseau direct
+Add a file	infolog	fr	Ajouter un fichier
+Invalid filename	infolog	fr	Nom de fichier invalide
 accept	infolog	fr	Accepte
 action	infolog	fr	Action
 add	infolog	fr	Ajouter
 add sub	infolog	fr	Ajouter sous
 all	infolog	fr	Tous
 are you sure you want to delete this entry	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
+attach file	infolog	fr	Attacher un fichier
 back to Projectlist	infolog	fr	Revenir vers la liste des projets
 billed	infolog	fr	Facturé
 both	infolog	fr	Les deux
 call	infolog	fr	Appel
 category	infolog	fr	Catégorie
+close	infolog	fr	Fermer
+comment	infolog	fr	Commentaire
+configuration	infolog	fr	Konfiguration
 confirm	infolog	fr	Confirmer
 csv-fieldname	infolog	fr	CSV-Nomdechamp
 csv-filename	infolog	fr	CSV-Nomdefichier
@@ -25,25 +32,27 @@ download	infolog	fr	Télécharger
 duration	infolog	fr	Durée
 enddate	infolog	fr	Date de fin
 enddate can not be before startdate	infolog	fr	La date de fin ne peut pas être avant la date de début
+entry and all files	infolog	fr	Entrée et tous les fichiers
 fax	infolog	fr	Fax
 fieldseparator	infolog	fr	Séparateur de champ
 finish	infolog	fr	Terminer
 from	infolog	fr	De
 import	infolog	fr	Importer
-infolog - import CSV-File	infolog	fr	InfoLog - Importer CSV-Fichier
+infolog	common	fr	InfoLog
+info log	common	fr	InfoLog
 infolog - delete	infolog	fr	Info Log - Effacer
-infolog - edit	infolog	fr	InfoLog - Editer
+infolog - edit	infolog	fr	InfoLog - Modifier
+infolog - import CSV-File	infolog	fr	InfoLog - Importer CSV-Fichier
 infolog - new	infolog	fr	InfoLog - Nouveau
 infolog - new subproject	infolog	fr	InfoLog - Nouveau sous-projet
 infolog - subprojects from	infolog	fr	InfoLog - Sous-projets de
-infolog-fieldname	infolog	fr	Info Log-Nomdechamp
-infolog	common	fr	InfoLog
 infolog preferences	common	fr	Préférences InfoLog
+infolog-fieldname	infolog	fr	Info Log-Nomdechamp
 last changed	infolog	fr	Dernier modifié
 list no Subs/Childs	infolog	fr	Lister aucun sous/enfants
 no - cancel	infolog	fr	Non - Abandonner
+no entries found, try again ...	infolog	fr	Aucune occurrence trouvée, essayez à nouveau ...
 no filter	infolog	fr	Aucun filtre
-no entries found, try again ...	infolog	fr	AUcune occurence trouvée, essayez à nouveau ...
 none	infolog	fr	Aucun
 not	infolog	fr	pas
 not assigned	infolog	fr	Pas attribué
@@ -58,15 +67,17 @@ own open	infolog	fr	Propre ouvert
 own overdue	infolog	fr	Propre tardif
 own upcoming	infolog	fr	Propre arrivant
 owner	infolog	fr	Propriétaire
+path on (web-)serverside<br>eg. /var/samba/Share	infolog	fr	chemin sur côté serveur (web)<br>pe. /var/samba/Share
 pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
-pattern for search in projects	infolog	fr	Chaîne de aaractères à rechercher dans les projets
+pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
 phone	infolog	fr	Appel téléphonique
 phone/email	infolog	fr	Téléphone/EMail
 phonecall	infolog	fr	Appel téléphonique
-project	infolog	fr	Projet
 priority	infolog	fr	Priorité
 private	infolog	fr	Privé
+project	infolog	fr	Projet
 re:	infolog	fr	Re:
+reg. expr. for local IP's<br>eg. ^192.168.1.	infolog	fr	expr. rég. pour les IPs locales <br>pe. ^192.168.1.
 reject	infolog	fr	Rejette
 responsible	infolog	fr	Responsable
 search for:	infolog	fr	Rechercher:
@@ -77,7 +88,7 @@ showing x	infolog	fr	Montre %1
 showing x - x of x	infolog	fr	éléments %1 - %2 de %3
 startdate	infolog	fr	Date de départ
 startrecord	infolog	fr	Enregistrement de départ
-status	infolog	fr	Statur
+status	infolog	fr	Statut
 sub	infolog	fr	Sous
 subject	infolog	fr	Sujet
 task	infolog	fr	Tâche
@@ -90,6 +101,7 @@ urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
 use Button to search for Address	infolog	fr	Utiliser le bouton pour rechercher une adresse
 use Button to search for Project	infolog	fr	Utiliser le bouton pour rechercher un projet
+valid path on clientside<br>eg. \ServerShare or e:	infolog	fr	chemin valide côté client<br>pe. \ServerShare ou e:
 view other subs	infolog	fr	Voir les autres sous
 view subs	infolog	fr	Voir les sous
 will-call	infolog	fr	Va appeler

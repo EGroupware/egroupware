@@ -1,3 +1,4 @@
+add custom field	addressbook	fr	Ajouter champ personnalisé
 addressbook	common	fr	Carnet d'adresses
 address book	common	fr	Carnet d'adresses
 addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
@@ -7,8 +8,10 @@ address line 3	addressbook	fr	Adresse ligne 3
 address type	addressbook	fr	Type d'adresse
 addvcard	addressbook	fr	Ajouter VCard
 alt. csv import	addressbook	fr	Import Alt. CSV
+are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ?
 bbs phone	addressbook	fr	Téléphone BBS
-birthday	addressbook	fr	Anniversaire
+birthday	common	fr	Anniversaire
+blank	addressbook	fr	Blanc
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fr	<b>Aucun  type de conversion &lt;none&gt; n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
 business address type	addressbook	fr	Type d'adresse travail
 business city	addressbook	fr	Ville travail
@@ -23,19 +26,23 @@ business street	addressbook	fr	Rue travail
 business zip code	addressbook	fr	Code postal travail
 car phone	addressbook	fr	Téléphone voiture
 cell phone	addressbook	fr	Téléphone portable
-city	addressbook	fr	Ville
+city	common	fr	Ville
 company	common	fr	Société
-company name	addressbook	fr	Nom de la société
+company name	common	fr	Nom de la société
 contact application	admin	fr	Application contact
 contact	common	fr	Contact
 contact settings	admin	fr	Paramètres du contact
-country	addressbook	fr	Pays
+country	common	fr	Pays
 custom fields	addressbook	fr	Champs personnalisés
-department	addressbook	fr	Département
+default filter	addressbook	fr	Filtre par défaut
+department	common	fr	Département
+edit custom field	addressbook	fr	Editer le champ personnalisé
+edit custom fields	admin	fr	Editer les champs personnalisés
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
 extra	addressbook	fr	Extra
-fax	addressbook	fr	Fax
+fax number	common	fr	Numéro de Fax
+field name	addressbook	fr	Nom du champ
 fields to show in address list	addressbook	fr	Champs à montrer dans la liste des adresses
 full name	addressbook	fr	Nom complet
 geo	addressbook	fr	GEO
@@ -55,7 +62,7 @@ import from outlook	addressbook	fr	Importer depuis Outlook
 isdn phone	addressbook	fr	Téléphone RNIS
 label	addressbook	fr	Label
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
-ldap host for contacts	admin	fr	Hote LDAP pour les contacts
+ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
 ldap root dn for contacts	admin	fr	Racine LDAP dn pour les contacts
 ldap root pw for contacts	admin	fr	Racine LDAP pw pour les contacts
 line 2	addressbook	fr	Ligne 2
@@ -64,13 +71,14 @@ middle name	addressbook	fr	Deuxième prénom
 mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
+no vcard	addressbook	fr	Pas de VCard
 other number	addressbook	fr	Autre numéro
 other phone	addressbook	fr	Autre téléphone
-pager	addressbook	fr	Pager
+pager	common	fr	Pager
 parcel	addressbook	fr	Paquet
 phone number	common	fr	Numéro de téléphone
-phone numbers	addressbook	fr	Numéros de téléphone
-postal	addressbook	fr	Postal
+phone numbers	common	fr	Numéros de téléphone
+postal	common	fr	Postal
 prefix	addressbook	fr	Préfixe
 public key	addressbook	fr	Clé publique
 record access	addressbook	fr	Enregistrer l'accès
@@ -78,8 +86,8 @@ record owner	addressbook	fr	Enregistrer le propriétaire
 retrieve contacts	admin	fr	Récupérer les contacts
 select where you want to store	admin	fr	Choisissez où vous voulez stocker
 show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
-state	addressbook	fr	Région
-street	addressbook	fr	Rue
+state	common	fr	Région
+street	common	fr	Rue
 successfully imported x records into your addressbook.	addressbook	fr	Importé avec succès %1 enregistrements dans votre carnet d'adresses.
 suffix	addressbook	fr	Suffixe
 this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses
@@ -89,5 +97,6 @@ vcard	common	fr	VCard
 vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée Prénom.
 video phone	addressbook	fr	Téléphone vidéo
 voice phone	addressbook	fr	Téléphone vocal
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	Attention!! LDAP est valide seulement si vous n'utilisez pas les contacts pour le stockage des comptes!
 work phone	addressbook	fr	Téléphone travail
-zip code	addressbook	fr	Code postal
+zip code	common	fr	Code postal

@@ -1,33 +1,36 @@
-access	common	fr	Acc&egrave;s
-access not permitted	common	fr	Acc&egrave;s non permis
-acl	common	fr	Liste de Contrôle d'Accès
+access	common	fr	Accès
+access not permitted	common	fr	Accès non permis
+acl	common	fr	Liste de Contrôle d'accès
 active	common	fr	Actif
 add	common	fr	Ajouter
 add category	common	fr	Ajouter catégorie
 add x category for	common	fr	Ajouter %1 catégorie pour
+add sub	common	fr	Ajouter sous
 admin	common	fr	Admin
 administration	common	fr	Administration
 afghanistan	common	fr	AFGHANISTAN
-albania	common	fr	ALBANIA
-algeria	common	fr	ALGERIA
+albania	common	fr	ALBANIE
+algeria	common	fr	ALGERIE
 all	common	fr	Tous
-american samoa	common	fr	AMERICAN SAMOA
-andorra	common	fr	ANDORRA
+american samoa	common	fr	SAMOA AMERICAINES
+andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
 antarctica	common	fr	ANTARCTICA
 antigua and barbuda	common	fr	ANTIGUA AND BARBUDA
 april	common	fr	Avril
+are you sure you want to delete this entry ?	common	fr	Etes vous certain de vouloir supprimer cette entrée ?
 argentina	common	fr	ARGENTINA
 armenia	common	fr	ARMENIA
 aruba	common	fr	ARUBA
-are you sure you want to delete this entry ?	common	fr	Etes vous certain de vouloir supprimer cette entr&eacute;e ?
-august	common	fr	Au&ucirc;t
+august	common	fr	Août
 australia	common	fr	AUSTRALIA
 austria	common	fr	AUSTRIA
+author	common	fr	Auteur
 autosave default category	common	fr	Sauvegarde automatique dans catégorie par défaut
 azerbaijan	common	fr	AZERBAIJAN
-bad login or password	common	fr	Mauvais login ou mot de passe
+back	common	fr	Retour
+bad login or password	login	fr	Mauvais login ou mot de passe
 bahamas	common	fr	BAHAMAS
 bahrain	common	fr	BAHRAIN
 bangladesh	common	fr	BANGLADESH
@@ -65,6 +68,7 @@ change	common	fr	Changer
 charset	common	fr	iso-8859-1
 chile	common	fr	CHILE
 china	common	fr	CHINA
+choose the category	common	fr	Choisir la catégorie
 choose the parent category	common	fr	Choisir la catégorie parente
 christmas island	common	fr	CHRISTMAS ISLAND
 clear	common	fr	Effacer
@@ -78,64 +82,68 @@ cook islands	common	fr	COOK ISLANDS
 copy	common	fr	Copier
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
-create	common	fr	Cr&eacute;er
-created by	common	fr	Cr&eacute;&eacute; Par
+create	common	fr	Créer
+created by	common	fr	Crée Par
 croatia	common	fr	CROATIA
 cuba	common	fr	CUBA
 currency	common	fr	Devise
+current	common	fr	Courant
 current users	common	fr	Utilisateurs courants
 cyprus	common	fr	CYPRUS
 czech republic	common	fr	CZECH REPUBLIC
 date	common	fr	Date
 date due	common	fr	Date butoir
-december	common	fr	D&eacute;cembre
+december	common	fr	Décembre
 default category	common	fr	Catégorie par défaut
 delete	common	fr	Supprimer
 denmark	common	fr	DENMARK
 description	common	fr	Description
-disabled	common	fr	D&eacute;sactiv&eacute;
+detail	common	fr	Détail
+details	common	fr	Détails
+disabled	common	fr	Désactivé
 djibouti	common	fr	DJIBOUTI
+do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
 dominica	common	fr	DOMINICA
 dominican republic	common	fr	DOMINICAN REPUBLIC
 done	common	fr	Fait
-do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
+e-mail	common	fr	EMail
 east timor	common	fr	EAST TIMOR
 ecuador	common	fr	ECUADOR
-edit	common	fr	Editer
-edit category	common	fr	Editer Catégorie
-edit categories	common	fr	Editer Catégories
-edit x category for	common	fr	Editer %1 categorie pour
+edit	common	fr	Modifier
+edit categories	common	fr	Modifier les catégories
+edit category	common	fr	Modifier la catégorie
+edit x category for	common	fr	Modifier %1 catégorie pour
 egypt	common	fr	EGYPT
 el salvador	common	fr	EL SALVADOR
-e-mail	common	fr	E-Mail
-email	common	fr	E-Mail
-enabled	common	fr	Activ&eacute;
+email	common	fr	EMail
+enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
-entry has been deleted sucessfully	common	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
-entry updated sucessfully	common	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
+entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
+entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	EQUATORIAL GUINEA
 eritrea	common	fr	ERITREA
 error	common	fr	Erreur
-error creating x x directory	common	fr	Erreur pendant la creation du répertoire %1%2
+error creating x x directory	common	fr	Erreur pendant la création du répertoire %1%2
 error deleting x x directory	common	fr	Erreur pendant la suppression du répertoire %1%2
-error renaming x x directory	common	fr	Erreur pendant le renomage du répertoire %1%2
+error renaming x x directory	common	fr	Erreur pendant le renommage du répertoire %1%2
 estonia	common	fr	ESTONIA
 ethiopia	common	fr	ETHIOPIA
 falkland islands (malvinas)	common	fr	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	fr	FAROE ISLANDS
-february	common	fr	F&eacute;vrier
+february	common	fr	Février
 fields	common	fr	Champs
 fiji	common	fr	FIJI
 files	common	fr	Fichiers
 filter	common	fr	Filtrer
 finland	common	fr	FINLAND
 first name	common	fr	Premier nom
-firstname	common	fr	Pr&eacute;nom
+firstname	common	fr	Prénom
+force selectbox	common	fr	Forcer la boîte de sélection
 france	common	fr	FRANCE
-french guiana	common	fr	FRENCH GUIANA
-french polynesia	common	fr	FRENCH POLYNESIA
-french southern territories	common	fr	FRENCH SOUTHERN TERRITORIES
+french guiana	common	fr	GUINEE FRANCAISE
+french polynesia	common	fr	POLYNESIE FRANCAISE
+french southern territories	common	fr	TERRITOIRES FRANCAIS DU SUD
 friday	common	fr	Vendredi
 ftp	common	fr	FTP
 gabon	common	fr	GABON
@@ -145,14 +153,14 @@ germany	common	fr	GERMANY
 ghana	common	fr	GHANA
 gibraltar	common	fr	GIBRALTAR
 global	common	fr	Global
-global public	common	fr	Publique global
-grant access	common	fr	Autoriser accés
+global public	common	fr	Public global
+grant access	common	fr	Autoriser l'accés
 greece	common	fr	GREECE
 greenland	common	fr	GREENLAND
 grenada	common	fr	GRENADA
-group access	common	fr	Acc&egrave;s par groupe
 group	common	fr	Groupe
-group public	common	fr	Publique par groupe
+group access	common	fr	Accès par groupe
+group public	common	fr	Public par groupe
 groups	common	fr	Groupes
 guadeloupe	common	fr	GUADELOUPE
 guam	common	fr	GUAM
@@ -162,11 +170,13 @@ guinea-bissau	common	fr	GUINEA-BISSAU
 guyana	common	fr	GUYANA
 haiti	common	fr	HAITI
 heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	fr	Aide
+high	common	fr	Haut
+highest	common	fr	Plus haut
 holy see (vatican city state)	common	fr	HOLY SEE (VATICAN CITY STATE)
+home	common	fr	Maison
 honduras	common	fr	HONDURAS
 hong kong	common	fr	HONG KONG
-help	common	fr	Aide
-home	common	fr	Home
 hungary	common	fr	HUNGARY
 iceland	common	fr	ICELAND
 india	common	fr	INDIA
@@ -175,9 +185,9 @@ iran, islamic republic of	common	fr	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	fr	IRAQ
 ireland	common	fr	IRELAND
 israel	common	fr	ISRAEL
+it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifié votre mot de passe
+it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recommandé d'exécuter "setup" pour mettre à jour vos tables vers la version courante.
 italy	common	fr	ITALY
-it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recomendé d'executer \"setup\" pour mettre à jour vos tables vers la version courante.
-it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
 jamaica	common	fr	JAMAICA
 january	common	fr	Janvier
 japan	common	fr	JAPAN
@@ -191,18 +201,22 @@ korea, democratic peoples republic of	common	fr	KOREA, DEMOCRATIC PEOPLES REPUBL
 korea, republic of	common	fr	KOREA, REPUBLIC OF
 kuwait	common	fr	KUWAIT
 kyrgyzstan	common	fr	KYRGYZSTAN
+language	common	fr	Langue
 lao peoples democratic republic	common	fr	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	fr	Nom
 lastname	common	fr	Nom
-login	common	fr	Login
-logout	common	fr	Logout
 latvia	common	fr	LATVIA
 lebanon	common	fr	LEBANON
 lesotho	common	fr	LESOTHO
 liberia	common	fr	LIBERIA
 libyan arab jamahiriya	common	fr	LIBYAN ARAB JAMAHIRIYA
 liechtenstein	common	fr	LIECHTENSTEIN
+list	common	fr	Liste
 lithuania	common	fr	LITHUANIA
+login	common	fr	Login
+logout	common	fr	Déconnexion
+low	common	fr	Bas
+lowest	common	fr	Plus bas
 luxembourg	common	fr	LUXEMBOURG
 macau	common	fr	MACAU
 macedonia, the former yugoslav republic of	common	fr	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
@@ -241,7 +255,7 @@ nepal	common	fr	NEPAL
 netherlands	common	fr	NETHERLANDS
 netherlands antilles	common	fr	NETHERLANDS ANTILLES
 new caledonia	common	fr	NEW CALEDONIA
-new entry added sucessfully	common	fr	Nouvelle entr&eacute;e ajout&eacute;e avec succ&egrave;s
+new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
 new main category	common	fr	Nouvelle catégorie principale
 new zealand	common	fr	NEW ZEALAND
 next	common	fr	Suivant
@@ -250,18 +264,20 @@ niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
+no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
 norfolk island	common	fr	NORFOLK ISLAND
+normal	common	fr	Normal
 northern mariana islands	common	fr	NORTHERN MARIANA ISLANDS
 norway	common	fr	NORWAY
-no subject	common	fr	Sans Sujet
 note	common	fr	Note
 notes	common	fr	Notes
+notify window	common	fr	Fenêtre de notification
 november	common	fr	Novembre
 october	common	fr	Octobre
 ok	common	fr	OK
 oman	common	fr	OMAN
-only yours	common	fr	seulement les votres
+only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
 original	common	fr	Original
 other	common	fr	Autre
@@ -275,20 +291,21 @@ papua new guinea	common	fr	PAPUA NEW GUINEA
 paraguay	common	fr	PARAGUAY
 parent category	common	fr	Catégorie Parente
 password	common	fr	Mot de passe
-password has been updated	common	fr	Le mot de passe a &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s
-personal	common	fr	Personel
+password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
+personal	common	fr	Personnel
 peru	common	fr	PERU
 philippines	common	fr	PHILIPPINES
 pitcairn	common	fr	PITCAIRN
 please enter a name	common	fr	Veuillez saisir un nom !
-please set your preferences for this application	common	fr	Veuillez définir vos préferences pour cette application
+please run setup to become current	common	fr	SVP exécutez setup pour vous mettre à jour
+please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
 poland	common	fr	POLAND
 portugal	common	fr	PORTUGAL
 powered by phpgroupware version x	common	fr	Utilise <a href="http://www.phpgroupware.org:>phpGroupWare</a> version %1
-preferences	common	fr	Pr&eacute;f&eacute;rences
+preferences	common	fr	Préférences
 print	common	fr	Imprimer
-priority	common	fr	Priorit&eacute;
-private	common	fr	Priv&eacute;
+priority	common	fr	Priorité
+private	common	fr	privé
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
@@ -310,28 +327,29 @@ saturday	common	fr	Samedi
 saudi arabia	common	fr	SAUDI ARABIA
 save	common	fr	Sauver
 search	common	fr	Chercher
-select category	common	fr	selectionner la catégorie
+section	common	fr	Section
+select category	common	fr	sélectionner la catégorie
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
-session has been killed	common	fr	La session a &eacute;t&eacute; tu&eacute;e
+session has been killed	common	fr	La session a été tuée
 seychelles	common	fr	SEYCHELLES
-show all	common	fr	Tout les éléments
-showing x	common	fr	%1 &eacute;l&eacute;ments
-showing x - x of x	common	fr	&eacute;l&eacute;ments %1 - %2 de %3
+show all	common	fr	Tous les éléments
+showing x	common	fr	%1 éléments
+showing x - x of x	common	fr	éléments %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
 singapore	common	fr	SINGAPORE
 slovakia	common	fr	SLOVAKIA
 slovenia	common	fr	SLOVENIA
 solomon islands	common	fr	SOLOMON ISLANDS
 somalia	common	fr	SOMALIA
-sorry, your login has expired	common	fr	D&eacute;sol&eacute;, votre login a expir&eacute;
+sorry, your login has expired	login	fr	Désolé, votre login a expiré
 south africa	common	fr	SOUTH AFRICA
 south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	fr	SPAIN
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date début
 start time	common	fr	Heure début
-status	common	fr	&Eacute;tat
+status	common	fr	Etat
 subject	common	fr	Sujet
 submit	common	fr	Envoyer
 sudan	common	fr	SUDAN
@@ -346,11 +364,16 @@ taiwan, province of china	common	fr	TAIWAN, PROVINCE OF CHINA
 tajikistan	common	fr	TAJIKISTAN
 tanzania, united republic of	common	fr	TANZANIA, UNITED REPUBLIC OF
 thailand	common	fr	THAILAND
+the api is current	common	fr	L'API est à jour
+the api requires an upgrade	common	fr	L'API nécessite une mise à jour
+the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
+this application is current	common	fr	Cette application est à jour
+this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 thursday	common	fr	Jeudi
 time	common	fr	Heure
 time zone	common	fr	Fuseau horaire
-time zone offset	common	fr	D&eacute;calage du fuseau horaire
+time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
@@ -369,34 +392,36 @@ united arab emirates	common	fr	UNITED ARAB EMIRATES
 united kingdom	common	fr	UNITED KINGDOM
 united states	common	fr	UNITED STATES
 united states minor outlying islands	common	fr	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	fr	Inconnu
+update	common	fr	Mettre à jour
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
-updated	common	fr	Mis à jour
 user	common	fr	Utilisateur
 username	common	fr	Nom d'utilisateur
 users	common	fr	Utilisateurs
+users choice	common	fr	Choix d'utilisateurs
 uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
 viet nam	common	fr	VIET NAM
-view	common	fr	View
+view	common	fr	Voir
 virgin islands, british	common	fr	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	fr	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	fr	WALLIS AND FUTUNA
 wednesday	common	fr	Mercredi
 western sahara	common	fr	WESTERN SAHARA
 which groups	common	fr	Quels groupes
-written by	common	fr	Ecrit par
+written by:	common	fr	Ecrit par:
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupeWare plus récente que celle définie pour la base de données.
-you have selected an invalid date	common	fr	Vous avez selectionné une date invalide !
-you have selected an invalid main category	common	fr	Vous avez selectionné une catégorie principale invalide !
-your search returned 1 match	common	fr	Votre recherche a retourn&eacute;e un r&eacute;sultat
-your search returned x matchs	common	fr	Votre recherche a retourn&eacute;e %1 r&eacutes;sultats
-your settings have been updated	common	fr	Vos pr&eacute;f&eacute;rences ont &eacute;t&eacute; mises &agrave; jour
-yugoslavia	common	fr	YUGOSLAVIA
-you have been successfully logged out	login	fr	Déconnexion réussie 
+you have been successfully logged out	login	fr	Déconnexion réussie
+you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
+you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
+your search returned 1 match	common	fr	Votre recherche a retourné un résultat
+your search returned x matchs	common	fr	Votre recherche a retourné %1 résultats
 your session could not be verified.	login	fr	Votre session n'est pas valide.
+your settings have been updated	common	fr	Vos préférences ont été mises à jour
+yugoslavia	common	fr	YUGOSLAVIA
 zambia	common	fr	ZAMBIA
 zimbabwe	common	fr	ZIMBABWE
