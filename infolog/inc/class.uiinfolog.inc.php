@@ -92,7 +92,6 @@
 			{
 				$info['end_class'] = 'overdue';
 			}
-			$info['info_des'] = nl2br($info['info_des']);
 			$info['info_anz_subs'] = $this->bo->anzSubs($id);
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
