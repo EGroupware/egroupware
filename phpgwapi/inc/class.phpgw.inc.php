@@ -119,7 +119,7 @@
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
         $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
-        $this->applications = CreateObject("phpgwapi.applications", $log[0]);
+        $this->applications = CreateObject("phpgwapi.applications");
       }else{
         if (! $this->session->verify()) {
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
@@ -128,7 +128,8 @@
           exit;
         }
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
-        $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
+        $this->applications = CreateObject("phpgwapi.applications");
+        $this->applications->users_enabled_apps();
      }
 
       $this->translation = CreateObject("phpgwapi.translation");

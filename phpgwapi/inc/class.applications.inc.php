@@ -28,13 +28,6 @@
     var $user_apps = Array();
     var $group_apps = Array();
 
-    function applications($var = ""){
-      global $phpgw, $phpgw_info;
-      if ($var != ""){
-        $this->users_enabled_apps();
-      }
-    }
-
     function users_enabled_apps()
     {
        global $phpgw, $phpgw_info;

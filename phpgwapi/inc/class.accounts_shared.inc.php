@@ -38,8 +38,8 @@
        }
        $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
-       $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-       //$phpgw_info["user"]["apps"] = $apps->apps_enabled();
+       $apps = CreateObject('phpgwapi.applications');
+       $phpgw_info["user"]["apps"] = $apps->users_enabled_apps();
     }
   
     // use this if you make any changes to phpgw_info, including preferences, config table changes, etc
