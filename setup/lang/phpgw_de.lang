@@ -1,7 +1,7 @@
-(account deletion in sql only)	setup	de	(Benutzerkontenlöschung NUR in SQL)
 00 (disable)	setup	de	00 (abgeschaltet / empfohlen)
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.
 actions	setup	de	Aktionen
 add a domain	setup	de	Eine Domain zufügen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper zufügen ('Default' wird versucht wenn nichts angegeben.)
@@ -90,12 +90,14 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 db host	setup	de	Datenbank Host
 db name	setup	de	Datenbank Name
 db password	setup	de	Datenbank Passwort
+db port	setup	de	Datenbank Port
 db root password	setup	de	Datenbank Root Passwort
 db root username	setup	de	Datenbank Root Benutzername
 db type	setup	de	Datenbank Type
 db user	setup	de	Datenbank Benutzer
 default file system space per user/group ?	setup	de	Vorgabewert Festplatenplatz pro Benutzer / Gruppe ?
 delete	setup	de	Löschen
+delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	de	Alle existierende SQL Benutzer, Gruppen, ACLs und Einstellungen löschen (normal nicht nötig)?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
 deleting tables	setup	de	Lösche Tabellen
@@ -116,6 +118,7 @@ download	setup	de	Herunterladen
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
 edit your existing header.inc.php	setup	de	Bearbeiten ihrer existierenden header.inc.php
 edit your header.inc.php	setup	de	Bearbeiten ihrer header.inc.php
+egroupware administration manual	setup	de	eGroupWare Adminsitrationsmanual (nur in englisch)
 enable for extra debug-messages	setup	de	ankreutzen für zusätzliche Diagnosemeldungen
 enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
@@ -133,8 +136,8 @@ enter your http proxy server	setup	de	HTTP Proxy Server
 enter your http proxy server password	setup	de	Passwort des HTTP Proxy Server
 enter your http proxy server port	setup	de	Port des HTTP Proxy Server
 enter your http proxy server username	setup	de	Benutzername des HTTP Proxy Server
-export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
 export egroupware accounts from sql to ldap	setup	de	eGroupWare Benutzerkonten von SQL nach LDAP exportieren
+export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
 export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
 file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Datei Typ, Größe, Version, usw.
@@ -218,7 +221,7 @@ no microsoft sql server support found. disabling	setup	de	Keine Unterstützung fü
 no modes available	setup	de	kein Modus verfügbar
 no mysql support found. disabling	setup	de	Keine Unterstützung für MySQL gefunden. Abgeschaltet
 no oracle-db support found. disabling	setup	de	Keine Unterstützung für Oracle gefunden. Abgeschaltet
-no postgres-db support found. disabling	setup	de	Keine Unterstützung für Postgres gefunden. Abgeschaltet
+no postgresql support found. disabling	setup	de	Keine Unterstützung für PostgreSQL gefunden. Abgeschaltet
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle mcrypt Algorithmen und Modi funktionieren mit eGroupWare. Wenn sie Probleme feststellen, versuchen sie es abzuschalten.
 not complete	setup	de	nicht komplett
@@ -242,7 +245,6 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (Document-root) des Webservers sein!!!
 persistent connections	setup	de	Permanennte Verbindungen
-egroupware administration manual	setup	de	eGroupWare Adminsitrationsmanual (nur in englisch)
 please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
@@ -317,6 +319,7 @@ tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
+tcp port number of database server	setup	de	TCP Port des Datenbank Servers
 text entry	setup	de	Texteingabe
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
@@ -333,9 +336,8 @@ this section will help you import users and groups from your ldap tree into egro
 this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird ihnen helfen ihrer LDAP Benutzer für eGroupWare vorzubereiten.
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br>Hinweis: Die Vorgabe wurde zufällig erzeugt.
 this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN LÖSCHEN!!!</b><br>
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	de	zum Einrichten von eines Adminkontos und ggf. 3 Demo-Benutzerkonten.<br><b>Dies wird alle existierenden Benutzerkonten löschen!</b>
+to setup 1 admin account and 3 demo accounts.	setup	de	zum Anlegen von eines Administratorkontos und ggf. 3 Demo-Benutzerkonten.
 top	setup	de	oben
 translations added	setup	de	Übersetzungen hinzugefügt
 translations removed	setup	de	Übersetzungen entfernt
@@ -375,7 +377,7 @@ you appear to have microsoft sql server support enabled	setup	de	Sie scheinen Mi
 you appear to have mysql support enabled	setup	de	Sie scheinen MySQL Unterstützung zu haben.
 you appear to have oracle support enabled	setup	de	Sie scheinen Oracle Unterstützung zu haben.
 you appear to have oracle v8 (oci) support enabled	setup	de	Sie scheinen Oracle V8 (OCI) Unterstützung zu haben.
-You appear to have PostgreSQL support enabled	setup	de	Sie scheinen Postgres Unterstützung zu haben.
+you appear to have postgresql support enabled	setup	de	Sie scheinen PostgreSQL Unterstützung zu haben.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben

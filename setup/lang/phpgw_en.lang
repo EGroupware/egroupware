@@ -1,7 +1,7 @@
-(account deletion in sql only)	setup	en	(account deletion in SQL Only)
 00 (disable)	setup	en	00 (disable / recomended)
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 actions	setup	en	Actions
 add a domain	setup	en	Add a domain
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
@@ -95,6 +95,7 @@ db type	setup	en	DB Type
 db user	setup	en	DB User
 default file system space per user/group ?	setup	en	Default file system space per user/group ?
 delete	setup	en	Delete
+delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	en	Delete all existing SQL accounts, groups, ACLs and preferences (normaly not necessary)?
 delete all my tables and data	setup	en	Delete all my tables and data
 delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
 deleting tables	setup	en	Deleting Tables
@@ -115,6 +116,7 @@ download	setup	en	Download
 edit current configuration	setup	en	Edit Current Configuration
 edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
 edit your header.inc.php	setup	en	Edit your header.inc.php
+egroupware administration manual	setup	en	eGroupWare Administration Manual
 enable for extra debug-messages	setup	en	enable for extra debug-messages
 enable ldap version 3	setup	en	Enable LDAP Version 3
 enable mcrypt	setup	en	Enable MCrypt
@@ -132,8 +134,8 @@ enter your http proxy server	setup	en	Enter your HTTP proxy server
 enter your http proxy server password	setup	en	Enter your HTTP proxy server password
 enter your http proxy server port	setup	en	Enter your HTTP proxy server port
 enter your http proxy server username	setup	en	Enter your HTTP proxy server username
-export has been completed!  you will need to set the user passwords manually.	setup	en	Export has been completed!  You will need to set the user passwords manually.
 export egroupware accounts from sql to ldap	setup	en	Export eGroupWare accounts from SQL to LDAP
+export has been completed!  you will need to set the user passwords manually.	setup	en	Export has been completed!  You will need to set the user passwords manually.
 export sql users to ldap	setup	en	Export SQL users to LDAP
 file	setup	en	FILE
 file type, size, version, etc.	setup	en	file type, size, version, etc.
@@ -217,7 +219,7 @@ no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Serve
 no modes available	setup	en	no modes available
 no mysql support found. disabling	setup	en	No MySQL support found. Disabling
 no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
-no postgres-db support found. disabling	setup	en	No Postgres-DB support found. Disabling
+no postgresql support found. disabling	setup	en	No PostgreSQL support found. Disabling
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
 not complete	setup	en	not complete
@@ -241,7 +243,6 @@ passwords did not match, please re-enter	setup	en	Passwords did not match, pleas
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 persistent connections	setup	en	Persistent connections
-egroupware administration manual	setup	en	eGroupWare Administration Manual
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure egroupware for your environment	setup	en	Please configure eGroupWare for your environment
@@ -316,7 +317,7 @@ tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
 tables upgraded	setup	en	tables upgraded
 target version	setup	en	Target Version
-TCP port number of database server	setup	en	TCP port number of database server
+tcp port number of database server	setup	en	TCP port number of database server
 text entry	setup	en	Text Entry
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file
@@ -332,9 +333,8 @@ this section will help you import users and groups from your ldap tree into egro
 this section will help you setup your ldap accounts for use with egroupware	setup	en	This section will help you setup your LDAP accounts for use with eGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
 this stage is completed<br>	setup	en	This stage is completed<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
 to a version it does not know about	setup	en	to a version it does not know about
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+to setup 1 admin account and 3 demo accounts.	setup	en	to setup 1 admin account and 3 demo accounts.
 top	setup	en	top
 translations added	setup	en	Translations Added
 translations removed	setup	en	Translations Removed
@@ -374,7 +374,7 @@ you appear to have microsoft sql server support enabled	setup	en	You appear to h
 you appear to have mysql support enabled	setup	en	You appear to have MySQL support enabled
 you appear to have oracle support enabled	setup	en	You appear to have Oracle support enabled
 you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have Oracle V8 (OCI) support enabled
-you appear to have postgres-db support enabled	setup	en	You appear to have Postgres-DB support enabled
+you appear to have postgresql support enabled	setup	en	You appear to have PostgreSQL support enabled
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1

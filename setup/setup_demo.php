@@ -29,40 +29,6 @@
 		exit;
 	}
 
-	function add_account($username,$first,$last,$passwd,$type='u')
-	{
-		if($type == 'u')
-		{
-			$account_info = array(
-				'account_type'      => $type,
-				'account_lid'       => $username,
-				'account_passwd'    => $passwd,
-				'account_firstname' => $first,
-				'account_lastname'  => $last,
-				'account_status'    => 'A',
-				'account_primary_group' => $GLOBALS['phpgw']->accounts->name2id('default'),
-				'account_groups'    => array($GLOBALS['phpgw']->accounts->name2id('default')),
-				'account_expires'   => -1
-			);
-		}
-		else
-		{
-			$account_info = array(
-				'account_type'      => $type,
-				'account_lid'       => $username,
-				'account_passwd'    => $passwd,
-				'account_firstname' => $first,
-				'account_lastname'  => $last,
-				'account_status'    => 'A',
-				'account_expires'   => -1
-			);
-		}
-		
-		$GLOBALS['phpgw']->accounts->create($account_info);
-
-		return (int)$GLOBALS['phpgw']->accounts->name2id($username);
-	}
-
 	if(!get_var('submit',Array('POST')))
 	{
 		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
@@ -81,9 +47,9 @@
 		$GLOBALS['phpgw_setup']->html->show_header(lang('Demo Server Setup'));
 
 		$setup_tpl->set_var('action_url','setup_demo.php');
-		$setup_tpl->set_var('description',lang('This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>')
-			. ' '. lang('(account deletion in SQL only)'
-		));
+		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
+		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normaly not necessary)?'));
+
 		$setup_tpl->set_var('detailadmin',lang('Details for Admin account'));
 		$setup_tpl->set_var('adminusername',lang('Admin username'));
 		$setup_tpl->set_var('adminfirstname',lang('Admin first name'));
@@ -118,68 +84,23 @@
 		}
 
 		$GLOBALS['phpgw_setup']->loaddb();
-		/* Load up some configured values */
-		$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config ".
-		"WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%'",__LINE__,__FILE__);
-		while ($GLOBALS['phpgw_setup']->db->next_record())
-		{
-			$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
-		}
-		$GLOBALS['phpgw_info']['server']['ldap_host']		= $config['ldap_host'];
-		$GLOBALS['phpgw_info']['server']['ldap_context']	= $config['ldap_context'];
-		$GLOBALS['phpgw_info']['server']['ldap_group_context']	= $config['ldap_group_context'];
-		$GLOBALS['phpgw_info']['server']['ldap_root_dn']	= $config['ldap_root_dn'];
-		$GLOBALS['phpgw_info']['server']['ldap_root_pw']	= $config['ldap_root_pw'];
-		$GLOBALS['phpgw_info']['server']['ldap_extra_attributes'] = $config['ldap_extra_attributes'];
-		$GLOBALS['phpgw_info']['server']['ldap_account_home']	= $config['ldap_account_home'];
-		$GLOBALS['phpgw_info']['server']['ldap_account_shell']	= $config['ldap_account_shell'];
-		$GLOBALS['phpgw_info']['server']['ldap_encryption_type'] = $config['ldap_encryption_type'];
-		$GLOBALS['phpgw_info']['server']['account_repository']	= $config['account_repository'];
-		$GLOBALS['phpgw_info']['server']['ldap_version3'] 	= $config['ldap_version3'];
-		$GLOBALS['phpgw_info']['server']['account_min_id']	= $config['account_min_id'];
-		$GLOBALS['phpgw_info']['server']['account_max_id']	= $config['account_max_id'];
-
-		unset($config);
-
-		/* Create dummy class, then accounts object */
-		class phpgw
-		{
-			var $db;
-			var $common;
-			var $accounts;
-		}
-		$GLOBALS['phpgw'] = new phpgw;
-		copyobj($GLOBALS['phpgw_setup']->db,$GLOBALS['phpgw']->db);
-		$GLOBALS['phpgw']->common      = CreateObject('phpgwapi.common');
-		$GLOBALS['phpgw']->accounts    = CreateObject('phpgwapi.accounts');
-		$GLOBALS['phpgw']->translation = CreateObject('phpgwapi.translation');
-		if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
-			!$GLOBALS['phpgw']->accounts->ds)
-		{
-			printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['phpgw_info']['server']['ldap_host']);
-			exit;
-		}
-
 		/* Begin transaction for acl, etc */
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 
-		/* Now, clear out existing tables */
-		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_accounts');
-		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_preferences');
-		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_acl');
-
+		if ($_POST['delete_all'])
+		{
+			/* Now, clear out existing tables */
+			$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_accounts');
+			$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_preferences');
+			$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_acl');
+		}
 		/* Create the demo groups */
-		$defaultgroupid = (int)add_account('Default','Default','Group',$passwd,'g');
-		$admingroupid   = (int)add_account('Admins','Admin', 'Group',$passwd,'g');
+		$defaultgroupid = (int)$GLOBALS['phpgw_setup']->add_account('Default','Default','Group',False,False);
+		$admingroupid   = (int)$GLOBALS['phpgw_setup']->add_account('Admins','Admin','Group',False,False);
 
 		/* Group perms for the default group */
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('filemanager','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('manual','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences'),'run',$defaultgroupid);
+		$GLOBALS['phpgw_setup']->add_acl('admin','run',$admingroupid);
 
 		function insert_default_prefs($accountid)
 		{
@@ -217,39 +138,15 @@
 		/* Creation of the demo accounts is optional - the checkbox is on by default. */
 		if(get_var('create_demo',Array('POST')))
 		{
-			/* Create records for demo accounts */
-			$accountid = add_account('demo','Demo','Account','guest');
-
-			/* User permissions based on group membership with additional user perms for the messenger and infolog apps */
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group', '" . $defaultgroupid."'," . $accountid . ",1)");
-
-			$accountid = add_account('demo2','Demo2','Account','guest');
-
-			/* User permissions based solely on group membership */
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', ".$accountid.", 0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $defaultgroupid . "'," . $accountid . ",1)");
-
-			$accountid = add_account('demo3','Demo3','Account','guest');
-
-			/* User-specific perms, no group membership */
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run', " . $accountid . ", 1)");
+			// Create 3 demo accounts
+			$accountid = $GLOBALS['phpgw_setup']->add_account('demo','Demo','Account','guest');
+			$accountid = $GLOBALS['phpgw_setup']->add_account('demo2','Demo2','Account','guest');
+			$accountid = $GLOBALS['phpgw_setup']->add_account('demo3','Demo3','Account','guest');
 		}
 
-		/* Create records for administrator account */
-		$accountid = add_account($username,$fname,$lname,$passwd);
-
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $defaultgroupid."'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $admingroupid."'," . $accountid . ",1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('admin','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('infolog','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('headlines','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('bookmarks','run'," . $accountid . ", 1)");
+		/* Create records for administrator account, with Admins as primary and Default as additional group */
+		$accountid = $GLOBALS['phpgw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True);
+		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
 
 		$GLOBALS['phpgw_setup']->db->transaction_commit();
 

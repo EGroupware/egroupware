@@ -158,6 +158,10 @@
 				{
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Historylog removed') . '.';
 				}
+
+				// delete all application categories and ACL
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_categories WHERE cat_appname='$appname'",__LINE__,__FILE__);
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_acl WHERE acl_appname='$appname'",__LINE__,__FILE__);
 			}
 		}
 
@@ -237,8 +241,8 @@
 		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	}
 
-	$detail = get_var('detail',Array('GET')); 
-	$resolve = get_var('resolve',Array('GET')); 
+	$detail = get_var('detail',Array('GET'));
+	$resolve = get_var('resolve',Array('GET'));
 	if(@$detail)
 	{
 		@ksort($setup_info[$detail]);
@@ -248,13 +252,13 @@
 		$setup_tpl->set_var('name','application');
 		$setup_tpl->set_var('details', lang($setup_info[$detail]['title']));
 		$setup_tpl->pparse('out','detail');
-	
+
 		foreach($setup_info[$detail] as $key => $val)
 		{
 			if($key != 'title')
 			{
 				$i = ($i ? 0 : 1);
-			
+
 
 				if ($key == 'tables')
 				{
@@ -400,7 +404,7 @@
 		{
 			if(@$value['name'])
 			{
-				$i = ($i ? 0 : 1); 
+				$i = ($i ? 0 : 1);
 				$setup_tpl->set_var('apptitle',$value['title']?$value['title']:lang($value['name']));
 				$setup_tpl->set_var('currentver',@$value['currentver']);
 				$setup_tpl->set_var('version',$value['version']);

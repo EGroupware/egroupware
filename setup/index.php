@@ -351,8 +351,7 @@
 						'<br>',
 						'setup_demo.php',
 						lang('Click Here'),
-						lang('to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>')
-						. ' ' . lang('(account deletion in SQL Only)')
+						'<b>'.lang('to setup 1 admin account and 3 demo accounts.').'</b>'
 					);
 				}
 				else
@@ -367,7 +366,7 @@
 					'<br>',
 					'setup_demo.php',
 					lang('Click Here'),
-					lang('to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>')
+					'<b>'.lang('to setup 1 admin account and 3 demo accounts.').'</b>'
 				);
 			}
 			$config_td = "$btn_edit_config" ."$link_make_accts";
@@ -420,7 +419,7 @@
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
-			include(PHPGW_API_INC.'/class.translation_sql.inc.php');
+			include_once(PHPGW_API_INC.'/class.translation_sql.inc.php');
 			$translation = new translation;
 			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
 				$translation->system_charset ? "'$translation->system_charset'" : lang('not set'),

@@ -1,7 +1,11 @@
 <!-- BEGIN setup_demo -->
 <table border="0" width="90%" cellspacing="0" cellpadding="2">
   <tr>
-    <td>{description}	<br/><br/>	</td>
+    <td>
+	{description}
+	<p>
+	<input type="checkbox" name="delete_all">{lang_deleteall}
+    </td>
   </tr>
   <tr>
     <td align="left" bgcolor="#cccccc">{detailadmin}</td>
