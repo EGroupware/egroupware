@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * eGroupWare - Calendar Holidays                                           *
-  * http://www.egroupware.org                                              *
+  * eGroupWare - Country Codes                                               *
+  * http://www.egroupware.org                                                *
   * Written by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -12,6 +12,11 @@
 
   /* $Id$ */
 
+	/**
+	 * 2-digit ISO 3166 Country codes
+	 *
+	 * http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html
+	 */
 	class country
 	{
 		var $country_array;
