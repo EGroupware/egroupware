@@ -134,13 +134,12 @@
     for ($j = 0; $j < 7; $j++) {
       $date = $i + ($j * 24 * 3600);
       if (date("Ymd",$date) >= date("Ymd",$monthstart) &&
-         date("Ymd",$date) <= date("Ymd",$monthend) ) {
-         echo "<td valign=\"top\" width=\"75\" height=\"75\" id=\"tablecell\"";
+         date("Ymd",$date) <= date("Ymd",$monthend)) {
+         echo "<td valign=\"top\" width=\"75\" height=\"75\"";
          if (date("Ymd",$date) == date("Ymd",$today)) {
             echo " bgcolor=\"".$phpgw_info["theme"]["cal_today"]."\">";
          } else {
             echo " bgcolor=\"$cellcolor\">";
-         //   echo " bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">";
          }
 
          print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
