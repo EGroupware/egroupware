@@ -138,6 +138,10 @@
 		{
 			$var['app_titles'] = $app_titles;
 		}
+		else
+		{
+			$var['app_titles'] = '<td colspan="'.$max_icons.'">&nbsp;</td>'; 
+		}
 		if(isset($GLOBALS['phpgw_info']['flags']['app_header']))
 		{
 			$var['current_app_title'] = $GLOBALS['phpgw_info']['flags']['app_header'];
