@@ -29,15 +29,15 @@
 
 		$c = CreateObject('phpgwapi.contacts');
 		$qfields = array(
-			"n_given"  => 'n_given',
-			"n_family" => 'n_family',
-			"bday"     => 'bday'
+			'n_given'  => 'n_given',
+			'n_family' => 'n_family',
+			'bday'     => 'bday'
 		);
 		$now = time() - ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$today = $GLOBALS['phpgw']->common->show_date($now,'n/d/');
 //		echo $today."\n";
 
-		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']["user"]["account_id"]);
+		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{

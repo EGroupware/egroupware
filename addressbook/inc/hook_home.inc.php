@@ -39,25 +39,24 @@
 
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
-				'title'	=> $title,
-				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'width'	=> '100%',
-				'outerborderwidth'	=> '0',
-				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
+				'title'     => $title,
+				'primary'   => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'secondary' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'tertiary'  => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'width'     => '100%',
+				'outerborderwidth' => '0',
+				'header_background_image' => $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
 			)
 		);
 		$app_id = $GLOBALS['phpgw']->applications->name2id('addressbook');
 		$GLOBALS['portal_order'][] = $app_id;
 		$var = Array(
-			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
-			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
-			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
-			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
-			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id)
+			'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
+			'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
+			'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
+			'question' => Array('url' => '/set_box.php', 'app' => $app_id),
+			'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
 		);
-
 
 		while(list($key,$value) = each($var))
 		{
