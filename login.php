@@ -216,6 +216,11 @@
 		}
 		else
 		{
+			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
+			    $_POST['lang'] != $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			{
+				$GLOBALS['phpgw']->preferences->add('common','lang',$_POST['lang'],'session');
+			}
 			$forward = get_var('phpgw_forward', array('GET', 'POST'), 0);
 			if($forward)
 			{
@@ -368,6 +373,26 @@
 	}
 	$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 	$tmpl->set_var($var);
+
+	if (@$GLOBALS['phpgw_info']['server']['login_show_language_selection'])
+	{
+		$select_lang = '<select name="lang">';
+		$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
+		foreach ($langs as $key => $name)	// if we have a translation use it
+		{
+			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] ? ' selected="1"' : '').'>'.$name.'</option>';
+		}
+		$select_lang .= "\n</select>\n";
+		$tmpl->set_var(array(
+			'lang_language' => lang('Language'),
+			'select_language' => $select_lang,
+		));
+	}
+	else
+	{
+		$tmpl->set_block('login_form','language_select');
+		$tmpl->set_var('language_select','');
+	}
 
 	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 

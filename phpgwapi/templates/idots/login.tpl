@@ -97,10 +97,14 @@
 			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
 			<td>&nbsp;</td>
 		</tr>
+<!-- BEGIN language_select -->
 		<tr>
-			<td colspan="3" align="center">
-			&nbsp;
-			</td>
+			<td align="right">{lang_language}:&nbsp;</td>
+			<td align="left" colspan="2">{select_language}</td>
+		</tr>
+<!-- END language_select -->
+		<tr>
+			<td colspan="3">&nbsp;</td>
 		</tr>
 		<tr>
 			<td colspan="3" align="center">
