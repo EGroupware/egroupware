@@ -45,7 +45,7 @@ an eTemplate from the example app in the <a href="etemplate.html">Tutorial</a>
     &lt;/columns>
     &lt;rows>
       &lt;row>
-        &lt;description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+        &lt;description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
       &lt;/row>
       &lt;row>
         &lt;hrule span="all"/>
@@ -197,7 +197,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
-	<td><b>Size</b></td>
+	<td><b>Options</b></td>
 	<td>?</td>
 	<td>?</td>
 	<td>size</td>
@@ -340,7 +340,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a textual label</b><br>
 		The content is taken from the content-array but it can have an own label from
 		the label attribute too.<p>
-		<b>Size</b>: if it contains a 'i' and/or a 'b' the content (not the label) is rendered
+		<b>Options</b>: if it contains a 'i' and/or a 'b' the content (not the label) is rendered
 		in italic and/or bold.
 	</td>
 </tr>
@@ -352,7 +352,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a single-line input field for text</b><br>
 		In the html-UI this is rendered as &lt;input ...><p>
-		<b>Size</b> has 2 comma-separated fields:<br>
+		<b>Options</b> has 2 comma-separated fields:<br>
 		xml: <b>size</b>: the length in chars of the input-field<br>
 		xml: <b>maxlength</b>: the maximum length of the input
 	</td>
@@ -366,7 +366,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a input-field to enter an integer</b><br>
 		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
 		but the will come in the near future.</i><p>
-		<b>Size</b> has 3 comma-separated fields:<br>
+		<b>Options</b> has 3 comma-separated fields:<br>
 		xml: <b>min</b>: minimum value, default none<br>
 		xml: <b>max</b>: maximum value, default none<br>
 		xml: <b>size</b>: the length in chars of the input-field, default 5
@@ -381,7 +381,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a input-field to enter a float</b><br>
 		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
 		but the will come in the near future.</i><p>
-		<b>Size</b> has 3 comma-separated fields:<br>
+		<b>Options</b> has 3 comma-separated fields:<br>
 		xml: <b>min</b>: minimum value, default none<br>
 		xml: <b>max</b>: maximum value, default none<br>
 		xml: <b>size</b>: the length in chars of the input-field, default 5
@@ -395,7 +395,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a multiline input-field for text</b><br>
 		In the html-UI this is rendered as &lt;textarea ...>.<p>
-		<b>Size</b> has 2 comma-separated fields:<br>
+		<b>Options</b> has 2 comma-separated fields:<br>
 		xml: <b>cols</b>: the width of the field in chars<br>
 		xml: <b>rows</b>: the number of rows
 	</td>
@@ -419,8 +419,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a widget in a group of which only one can be checked</b><br>
 		In the html-UI this is rendered as &lt;input type="radio" ...><br>
 		Unlike XUL (and like html) the radio-buttons are grouped by giving them the same name / id.
-		If it is checked, the value is set to what is entered in <b>Size</b>. If the value of the
-		content array at index name/id matches size the radiobutton is marked 'checked'.
+		If it is checked, the value is set to what is entered in <b>Options</b>. If the value of the
+		content array at index name/id matches the options-field the radiobutton is marked 'checked'.
 	</td>
 </tr>
 <tr>
@@ -444,7 +444,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a horizontal rule / line</b><br>
 		In the html-UI this is rendered as &lt;hr ...><br>
-		<b>Size</b> can contain a width of the rule, default is 100%
+		<b>Options</b> can contain a width of the rule, default is 100%
 	</td>
 </tr>
 <tr>
@@ -455,8 +455,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a separate eTemplate to be loaded into this cell</b><br>
 		<b>Name</b> xml: <b>id</b>: the name of the etemplate to load<br>
-		<b>Size</b> xml: <b>content</b>: if set, the template uses an own sub-array
-		of the content array indexed by the value of size (if not the full
+		<b>Options</b> xml: <b>content</b>: if set, the template uses an own sub-array
+		of the content array indexed by the value of this field (if not the full
 		content-array is used). Variables like $row can be used as descript
 		for the general attribute Name.
 	</td>
@@ -477,7 +477,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		&lt;menulist><br>
 		&nbsp; &lt;menupopup/><br>
-		&lt;/menulist><br>
+		&lt;/menulist><p>
+		<i>multiselect: <b>options</b> > 1</i><br>
+		&lt;listbox rows="#"/>
 	</td>
 	<td>yes</td>
 	<td>select</td>
@@ -489,8 +491,15 @@ implement only a subset of XUL. Here are the main differences:</p>
 			<li>or in an separate array only for select-box-options under the index name, this array is passed
 				to the exec or show function of the etemplate-class
 		</ol>
-		<b>Size</b> xml: <b>size</b>: if set and > 1 the selectbox is a multiselection with size lines<br>
-	</td>
+		<b>Options</b> <i>in the editor</i>: if set and > 1 the selectbox is a multiselection with options number of lines<p>
+		xml: <b>rows</b>: <i>only for &lt;listbox></i>: number of rows to show<p>
+		xml: <b>type</b>: can be set to get several predefined select-contents, in that case you dont need to set
+			the content as descripted above: <br>
+			<b>select-cat</b>: Select a phpgw category, options can be set to -1 to get an additional 'All'<br>
+			<b>select-account</b>: Select a user and/or group, determined by the options-field:
+				'accounts' (default), 'groups', 'both'<br>
+			<b>select-percent, select-priority, select-access, select-country, select-state</b>: as you expect
+				by the name
 </tr>
 <tr>
 	<td><b>Tabs</b></td>

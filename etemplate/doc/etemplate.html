@@ -348,7 +348,7 @@ We are only lacking some way to show if we get more than one match on a search, 
 		}
 		$content = array(
 			'msg' => sprintf($this->messages['anz_found'],count($found)),
-			'entry' => $entry		<span>// et_media.show.rows uses this, as we put 'entry' in the size-field</span>
+			'entry' => $entry		<span>// et_media.show.rows uses this, as we put 'entry' in the Options-field</span>
 		);
 		$this->tmpl->read('et_media.show'); 	<span>// read the show-template</span>
 
@@ -363,13 +363,13 @@ We are only lacking some way to show if we get more than one match on a search, 
 		The names in the data-row (last row) of 'et_media.show.rows' are like '${row}[name]'. Variable expansion is performed on each
 		name and expands that for the first row to '1[name]' which addresses the name in the first match.
 	<li>$content contains again 'msg' which we set to the number of entris found and the above array with the data of all rows under
-		the key 'entry', as we put that in Size for the field loading the sub-template 'et_media.show.rows'. It not necessary to
-		put something in Size-field / use a sub-array for a sub-template, but it can be very helpful to organize a complex content-array.
-		(As an exercice you can remove 'entry' from the Size-field and change the function arrcordingly).
+		the key 'entry', as we put that in Options for the field loading the sub-template 'et_media.show.rows'. It not necessary to
+		put something in Options-field / use a sub-array for a sub-template, but it can be very helpful to organize a complex content-array.
+		(As an exercice you can remove 'entry' from the Options-field and change the function arrcordingly).
 	<li>we now explizitly read the template 'et_media.show' (the constructor reed 'et_media.edit') and execute it again with
 		the edit function as callback (because of that, show does NOT need to be listed in public_functions)
 	<li>as 'et_media.show.rows' contains only one data-row, but fieldnames with variables to expand, that row is autorepeated
-		for as many data we put into the content array (or the sub-array if we used the Size-field).
+		for as many data we put into the content array (or the sub-array if we used the Options-field).
 </ol>
 
 <p>To call the show function, we need to make some changes to the edit-function too:</p>

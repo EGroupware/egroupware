@@ -29,7 +29,8 @@
 				'span' => 'span,class',
 				'type' => '',	// this is the widget-name => dont write as attr
 				'disabled' => 'disabled=true',
-				'readonly' => 'readonly=true'
+				'readonly' => 'readonly=true',
+				'size' => 'options'
 			);
 			$this->widget2xul = array(	// how to translate widget-names and widget-spec. attr.
 				'label' => array(
@@ -56,7 +57,11 @@
 					'size' => 'min,max,size'
 				),
 				'select' => array(
-					'.name' => 'menulist,menupopup'
+					'.name' => 'menulist,menupopup',
+				),
+				'select-multi' => array(	// multiselection, if size > 0
+					'.name' => 'listbox',
+					'size'  => 'rows'
 				),
 				'template' => array(
 					'.name' => 'grid',
@@ -72,6 +77,7 @@
 			);
 			$this->xul2widget = array(
 				'menupopup' => 'select',
+				'listbox' => 'select',
 				'description' => 'label'
 			);
 		}
@@ -149,15 +155,21 @@
 					{
 						list(,$type) = each($type);
 					}
+					if (substr($type,0,6) == 'select')
+					{
+						$type = $cell['size'] > 1 ? 'select-multi' : 'select';
+					}
 					$widgetattr2xul = isset($this->widget2xul[$type]) ? $this->widget2xul[$type] : array();
 					$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
 					list($parent,$child,$child2) = explode(',',$type);
-					$widget = new xmlnode($child ? $child : $parent);
+					$widget = new xmlnode($parent);
+					if ($child)
+					{
+						$child = new xmlnode($child);
+					}
 					if ($child2)
 					{
 						$child2 = new xmlnode($child2);
-						$child  = $widget;
-						$widget = new xmlnode($parent);
 					}
 					if (isset($widgetattr2xul['.set']))	// set default-attr for type
 					{
@@ -168,8 +180,9 @@
 							$widget->set_attribute($attr,$val);
 						}
 					}
-					if ($parent == 'tabbox')
+					switch ($parent)
 					{
+					case 'tabbox':
 						$labels = explode('|',$cell['label']);  unset($cell['label']);
 						$helps  = explode('|',$cell['help']);   unset($cell['help']);
 						$names  = explode('|',$cell['name']);   unset($cell['name']);
@@ -184,6 +197,24 @@
 							$grid->set_attribute('id',$names[$n]);
 							$child2->add_node($grid);
 						}
+						break;
+					case 'menulist':	// id,options belongs to the 'menupopup' child
+						$child->set_attribute('id',$cell['name']); unset($cell['name']);
+						if (isset($cell['size']) && $cell['size'] != '')
+						{
+							$child->set_attribute('options',$cell['size']); unset($cell['size']);
+						}
+						if ($cell['type'] != 'select')	// one of the sub-types
+						{
+							$child->set_attribute('type',$cell['type']);
+						}
+						break;
+					case 'menulist':
+						if ($cell['type'] != 'select')	// one of the sub-types
+						{
+							$widget->set_attribute('type',$cell['type']);
+						}
+						break;
 					}
 					while (list($attr,$val) = each($cell))
 					{
@@ -201,21 +232,15 @@
 						}
 						$this->set_attributes($widget,$attr,$val,&$spanned);
 					}
-					if ($child && !$child2)
+					if ($child)
 					{
-						$parent = new xmlnode($parent);
-						$parent->add_node($widget);
-						$xul_row->add_node($parent);
+						$widget->add_node($child);
 					}
-					else
+					if ($child2)
 					{
-						if ($child2)
-						{
-							$widget->add_node($child);
-							$widget->add_node($child2);
-						}
-						$xul_row->add_node($widget);
+						$widget->add_node($child2);
 					}
+					$xul_row->add_node($widget);
 				}
 				$xul_rows->add_node($xul_row);
 			}
@@ -233,7 +258,7 @@
 			$doc->add_root($xul_overlay);
 			$xml = $doc->dump_mem();
 
-			if ($this->debug)
+			//if ($this->debug)
 			{
 				echo "<pre>\n" . htmlentities($xml) . "\n</pre>\n";
 			}
@@ -271,11 +296,15 @@
 				{
 					$attr['name'] = $attr['id']; unset($attr['id']);
 				}
+				if (isset($attr['options']) && $attr['options'] != '')
+				{
+					$attr['size'] = $attr['options']; unset($attr['options']);
+				}
 				if ($tag == 'grid' && $type == 'complete' && !is_array($tab_attr))
 				{
 					$tag = 'template';
 				}
-				if ($tag != 'textbox')
+				if ($tag != 'textbox' && !isset($attr['type']))
 				{
 					$attr['type'] = $this->xul2widget[$tag] ? $this->xul2widget[$tag] : $tag;
 				}
@@ -311,7 +340,6 @@
 						break;
 					case 'columns':
 					case 'rows':
-					case 'menulist':
 						break;
 					case 'column':
 						if ($type != 'complete')
@@ -367,6 +395,9 @@
 							$tab_helps[]  = $attr['statustext'];
 						}
 						break;
+					case 'menulist':
+						$menulist_attr = $attr;	// save for following menupopup
+						break;
 					case 'textbox':
 						if ($attr['multiline'])
 						{
@@ -403,6 +434,16 @@
 							case 'image':
 								$attr['label'] = $attr['src'];
 								unset($attr['src']);
+								break;
+							case 'listbox':
+								$attr['size'] = $attr['rows'];
+								unset($attr['rows']);
+								break;
+							case 'menupopup':
+								if (is_array($menulist_attr))
+								{
+									$attr += $menulist_attr;
+								}
 								break;
 						}
 						$attr['help'] = $attr['statustext']; unset($attr['statustext']);
