@@ -161,6 +161,8 @@
       <input type=hidden name="setting[write_config]" value=true>
         <tr><td colspan=2><b>Server Root</b><br><input type=text name="setting[server_root]" size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
         <tr><td colspan=2><b>Include Root (this should be the same as Server Root unless you know what you are doing)</b><br><input type=text name="setting[include_root]" size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
+        <tr><td colspan=2><b>Admin password to header manager </b><br><input type=text name="setting[HEADER_ADMIN_PASSWORD]" size=80 value="<? echo $phpgw_info["server"]["header_admin_password"] ?>"></td></tr>
+        <br><br>
         <tr><td><b>DB Host</b><br><input type=text name="setting[db_host]" value="<? echo $phpgw_info["server"]["db_host"] ?>"></td><td>Hostname/IP of Databaseserver</td></tr>
         <tr><td><b>DB Name</b><br><input type=text name="setting[db_name]" value="<? echo $phpgw_info["server"]["db_name"] ?>"></td><td>Name of Database</td></tr>
         <tr><td><b>DB User</b><br><input type=text name="setting[db_user]" value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>
