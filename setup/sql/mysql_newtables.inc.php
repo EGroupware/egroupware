@@ -291,7 +291,7 @@
           )";
   $db->query($sql);
 
-  $currentver = "0.9.7pre2";
+  $currentver = "0.9.7";
   $oldversion = $currentver;
   update_version_table();
 ?>

@@ -689,22 +689,27 @@
       if ($currentver == "0.9.7pre2") {
       	$db2 = $db;
       	$sql = "ALTER TABLE calendar_entry CHANGE cal_duration cal_edatetime int(11)";
-	$db->query($sql,__LINE__,__FILE__);
-
-	$db->query("SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
-	if($db->num_rows()) {
-	  while($db->next_record()) {
-	    $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->f("cal_owner"),__LINE__,__FILE__);
-	    $db2->next_record();
-	    $tz = $db2->f("preference_value");
-	    $cal_id = $db->f("cal_id");
-	    $datetime = $db->f("cal_datetime") - ((60 * 60) * $tz);
-	    $mdatetime = $db->f("cal_mdatetime") - ((60 * 60) * $tz);
-	    $edatetime = $datetime + (60 * $db->f("cal_edatetime"));
-	    $db2->query("UPDATE calendar_entry SET cal_datetime=".$datetime.", cal_edatetime=".$edatetime.", cal_mdatetime=".$mdatetime." WHERE cal_id=".$cal_id,__LINE__,__FILE__);
-	  }
-	}
+      	$db->query($sql,__LINE__,__FILE__);
+      
+      	$db->query("SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
+      	if($db->num_rows()) {
+      	  while($db->next_record()) {
+      	    $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->f("cal_owner"),__LINE__,__FILE__);
+      	    $db2->next_record();
+      	    $tz = $db2->f("preference_value");
+      	    $cal_id = $db->f("cal_id");
+      	    $datetime = $db->f("cal_datetime") - ((60 * 60) * $tz);
+      	    $mdatetime = $db->f("cal_mdatetime") - ((60 * 60) * $tz);
+      	    $edatetime = $datetime + (60 * $db->f("cal_edatetime"));
+      	    $db2->query("UPDATE calendar_entry SET cal_datetime=".$datetime.", cal_edatetime=".$edatetime.", cal_mdatetime=".$mdatetime." WHERE cal_id=".$cal_id,__LINE__,__FILE__);
+      	  }
+	      }
         $currentver = "0.9.7pre3";
+        update_version_table();	
+      }
+
+      if ($currentver == "0.9.7pre3") {
+        $currentver = "0.9.7";
         update_version_table();	
       }
 

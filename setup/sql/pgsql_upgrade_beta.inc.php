@@ -726,6 +726,10 @@
         $currentver = "0.9.7pre3";
         update_version_table();	
       }
+      if ($currentver == "0.9.7pre3") {
+        $currentver = "0.9.7";
+        update_version_table();	
+      }
 
       if ($oldversion != $currentver){
         echo "  </tr><td>\n";
