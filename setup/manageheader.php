@@ -37,7 +37,7 @@
       break;
     case "3":
       $phpgw_info["setup"]["HeaderFormMSG"] = "Your header.inc.php needs upgrading.";
-      $phpgw_info["setup"]["PageMSG"] = "Your header.inc.php needs upgrading.";
+      $phpgw_info["setup"]["PageMSG"] = "Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br>If you are using virtual domain support, this will <b>NOT</b> copy those domains over.  You will need to do this manually, <b>MAKE BACKUPS!</b>";
       $phpgw_info["setup"]["HeaderLoginMSG"] = "Your header.inc.php needs upgrading.";
       if (!$phpgw_setup->auth("Header")){
         $phpgw_setup->show_header("Please login",True);
