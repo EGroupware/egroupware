@@ -169,7 +169,7 @@ class boicalendar
 			'class'			=> Array(
 				'type'		=> 'text',
 				'to_text'	=> True,
-				'vevent'	=> Array(
+				'vevent'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
@@ -1020,6 +1020,15 @@ class boicalendar
 					'x-type'			=> True
 				)
 			),
+			'last_modified'		=> Array(
+				'type'		=> 'function',
+				'function'	=> 'switch_date',
+				'quoted'		=> False,
+				'to_text'	=> False,
+				'properties'	=> Array(
+					'last_modified'	=> True
+				)
+			),
 			'mailto'		=> Array(
 				'type'		=> 'function',
 				'function'	=> 'switch_mailto',
@@ -1045,7 +1054,8 @@ class boicalendar
 				'quoted'		=> False,
 				'to_text'	=> False,
 				'properties'	=> Array(
-					'attendee'		=> True
+					'attendee'		=> True,
+					'organizer'		=> True
 				)
 			),
 			'range'		=> Array(
@@ -1072,7 +1082,8 @@ class boicalendar
 				'quoted'		=> False,
 				'to_text'	=> False,
 				'properties'	=> Array(
-					'attendee'		=> True
+					'attendee'		=> True,
+					'organizer'		=> True
 				)
 			),
 			'rsvp'		=> Array(
@@ -1286,7 +1297,7 @@ class boicalendar
 		$str = str_replace("\\N","\n",$str);
 		$str = str_replace("\\n","\n",$str);
 		$str = str_replace("\\\\","\\",$str);
-		return $str;
+		return "$str";
 	}
 
 	function to_text($str)
@@ -1295,7 +1306,7 @@ class boicalendar
 		$str = str_replace(",","\\,",$str);
 		$str = str_replace(";","\\;",$str);
 		$str = str_replace("\n","\\n",$str);
-		return $str;
+		return "$str";
 	}
 
 	function from_dir($str)
@@ -1401,9 +1412,9 @@ class boicalendar
 					'param'	=> $majortype,
 					'value'	=> $temp[3]
 				);
-				$value = $temp[1];
+				$value = str_replace(':MAILTO','',$temp[1]);
 			}
-			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\-]*))([\;]?)(.*)',$value,$temp))
+			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\<\>\-]*))([\;]?)(.*)',$value,$temp))
 			{
 				$this->debug('Value : '._debug_array($temp));
 				$this->debug('Param '.$temp[2].' Value : '.$temp[3]);
@@ -1418,7 +1429,7 @@ class boicalendar
 		}
 		else
 		{
-			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\-]*))([\;]?)(.*)',$value,$temp))
+			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\<\>\-]*))([\;]?)(.*)',$value,$temp))
 			{
 				$this->debug('Value : '._debug_array($temp));
 				$this->debug('Param '.$temp[2].' Value : '.$temp[3]);
@@ -1513,11 +1524,11 @@ class boicalendar
 		}
 		else
 		{
-	$this->debug('Majortype : '.$majortype);
-	$this->debug('Property : '.$this->property[$majortype]['type']);
+			$this->debug('Majortype : '.$majortype);
+			$this->debug('Property : '.$this->property[$majortype]['type']);
 			if($this->property[$majortype]['type'] == 'date-time')
 			{
-	$this->debug('Got a DATE-TIME type!');
+				$this->debug('Got a DATE-TIME type!');
 				$t_var = $var[$majortype];
 				unset($var[$majortype]);
 				reset($t_var);
@@ -1574,16 +1585,16 @@ class boicalendar
 				continue;
 			}
 			$param_array = @$this->parameter[$key];
-			$type = @$param_array['type'];
+			$type = @$this->parameter[$key]['type'];
 			if($type == 'date-time')
 			{
 				$include_datetime = True;
 				continue;
 			}
-			$quote = (@$param_array['quoted']?'"':'');
-			if(!empty($event[$key]) && @$param_array['properties'][$property])
+			$quote = (@$this->parameter[$key]['quoted']?'"':'');
+			if(isset($event[$key]) && @$this->parameter[$key]['properties'][$property])
 			{
-				$change_text = @$param_array['to_text'];
+				$change_text = @$this->parameter[$key]['to_text'];
 				$value = $event[$key];
 				if($change_text && $type == 'text')
 				{
@@ -1595,9 +1606,12 @@ class boicalendar
 						$str .= ';'.str_replace('_','-',strtoupper($key)).'='.$quote.$this->to_dir($value).$quote;
 						break;
 					case 'function':
+//		$this->debug_str = True;
 						$str .= ';'.str_replace('_','-',strtoupper($key)).'=';
-						$function = @$param_array['function'];
+						$function = $this->parameter[$key]['function'];
+						$this->debug($key.' Function Param : '.$value);
 						$str .= $quote.$this->$function($value).$quote;
+//		$this->debug_str = False;
 						break;
 					case 'text':
 					case 'string':
@@ -1759,7 +1773,7 @@ class boicalendar
 					}
 					break;
 				case 'text':
-					if(!empty($event[$value]))
+					if(isset($event[$value]))
 					{
 						if(@$this->parameter[$key]['type'] != 'function')
 						{
@@ -1870,7 +1884,7 @@ class boicalendar
 		}
 		elseif(is_int($var))
 		{
-			switch($var)
+			switch(intval($var))
 			{
 				case PRIVATE:
 					return 'PRIVATE';
@@ -2207,12 +2221,16 @@ class boicalendar
 		}
 		elseif(is_array($var))
 		{
-			return 'MAILTO:'.$var['user'].'@'.$var['host'];
+//			return 'MAILTO:'.$var['user'].'@'.$var['host'];
+			return $var['user'].'@'.$var['host'];
 		}
 	}
 
 	function switch_partstat($var)
 	{
+//		$this->debug_str = True;
+		$this->debug('PARTSTAT = '.$var);
+//		$this->debug_str = False;
 		if(is_string($var))
 		{
 			switch($var)
@@ -2245,7 +2263,7 @@ class boicalendar
 		}
 		elseif(is_int($var))
 		{
-			switch($var)
+			switch(intval($var))
 			{
 				case NEEDS_ACTION:
 					return 'NEEDS-ACTION';

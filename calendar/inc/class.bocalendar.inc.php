@@ -1629,7 +1629,7 @@
 						case MSG_TENTATIVE:
 						case MSG_ACCEPTED:
 							$action_date = $old_event_date;
-							$body = 'On '.$phpgw->common->show_date(time() - $new_tz_offset).' '.$phpgw->common->grab_owner_name($phpgw_info['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
+							$body = 'On '.$GLOBALS['phpgw']->common->show_date(time() - $new_tz_offset).' '.$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
 							break;
 					}
 					$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
@@ -1647,6 +1647,25 @@
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $temp_dateformat;
+		}
+
+		function switch_status($status)
+		{
+			switch($status)
+			{
+				case 'U':
+					return 0;
+					break;
+				case 'A':
+					return 1;
+					break;
+				case 'R':
+					return 2;
+					break;
+				case 'T':
+					return 3;
+					break;
+			}
 		}
 
 		function export_event($l_event_id=0)
@@ -1676,13 +1695,48 @@
 				$event = $this->so->read_entry($event_id);
 
 				$icalendar->set_var($ical_event['uid'],'value','phpGW/'.$event['id']);
+				$ical_event['priority'] = $event['priority'];
+				$ical_event['class'] = intval($event['public']);
+//				$ical_event['class']['value'] = 1;
 				$icalendar->set_var($ical_event['description'],'value',$event['title']);
 				$icalendar->set_var($ical_event['summary'],'value',$event['description']);
 				$dtstart_mktime = $this->maketime($event['start']) - $this->datetime->tz_offset;
-				$icalendar->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'event');
+				$icalendar->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
 				$dtend_mktime = $this->maketime($event['end']) - $this->datetime->tz_offset;
-				$icalendar->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'event');
-
+				$icalendar->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
+				$mod_mktime = $this->maketime($event['modtime']) - $this->datetime->tz_offset;
+				$icalendar->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
+				if(count($event['participants']) > 1)
+				{
+					$db = $GLOBALS['phpgw']->db;
+					@reset($event['participants']);
+					while(list($part,$status) = each($event['participants']))
+					{
+						$db->query('select account_firstname,account_lastname from phpgw_accounts where account_id='.$part,__LINE__,__FILE__);
+						$db->next_record();
+						$name = $db->f('account_firstname').' '.$db->f('account_lastname');
+						$owner_status = $icalendar->switch_partstat(intval($this->switch_status($event['participants'][$part])));
+						$owner_mailto = 'mpeters@satx.rr.com';
+						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$owner_mailto;
+						if($part == $event['owner'])
+						{
+							$str = 'ROLE=CHAIR;'.$str;
+						}
+						else
+						{
+							$str = 'ROLE=REQ-PARTICIPANT;'.$str;
+						}
+						$icalendar->parse_value($ical_event,'attendee',$str,'vevent');
+						if($part == $event['owner'])
+						{
+							$icalendar->parse_value($ical_event,'organizer',$str,'vevent');
+						}
+					}
+				}
+				if(!$event['recur_type'])
+				{
+					
+				}
 				$ical_events[] = $ical_event;
 			}
 
