@@ -236,14 +236,18 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE categories (
-    cat_id          serial,
-    account_id      int DEFAULT '0' NOT NULL,
-    app_name        varchar(25) NOT NULL,
-    cat_name        varchar(150) NOT NULL,
-    cat_description text NOT NULL
-  )";
+
+  $sql = "CREATE TABLE phpgw_categories (
+            cat_id          serial,
+            cat_parent      int,
+            cat_owner       int,
+            cat_appname     varchar(50) NOT NULL,
+            cat_name        varchar(150) NOT NULL,
+            cat_description varchar(255) NOT NULL,
+            cat_data        text
+         )";
   $phpgw_setup->db->query($sql);
+
   
   $sql = "CREATE TABLE languages (
      lang_id         varchar(2) NOT NULL,

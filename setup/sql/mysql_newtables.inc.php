@@ -262,14 +262,16 @@
   )";
   $phpgw_setup->db->query($sql);
   
-  $sql = "CREATE TABLE categories (
-     cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
-     account_id      int(11) DEFAULT '0' NOT NULL,
-     app_name        varchar(25) NOT NULL,
-     cat_name        varchar(150) NOT NULL,
-     cat_description text NOT NULL,
-     PRIMARY KEY (cat_id)
-  )";
+  $sql = "CREATE TABLE phpgw_categories (
+            cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+            cat_parent      int(9) DEFAULT '0' NOT NULL,
+            cat_owner       int(11) DEFAULT '0' NOT NULL,
+            cat_appname     varchar(50) NOT NULL,
+            cat_name        varchar(150) NOT NULL,
+            cat_description varchar(255) NOT NULL,
+            cat_data        text,
+            PRIMARY KEY (cat_id)
+         )";
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE languages (

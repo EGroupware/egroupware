@@ -6,11 +6,11 @@
  <tr background="{img_root}/bg_filler.gif">
   <td align="left" valign="bottom"><img src="{img_root}/logo.gif" height="32" width="123"></td>
   <td align="center" valign="bottom" width="100%"><font color="FFFFFF" size="-1">{user_info}</font></td>
-  <td align="right" valign="bottom" rowspan="2"><a href="{home_link}"><img src="{img_root}/home.gif" border="0"></a><a href="{preferences_link}"><img src="{img_root}/preferences.gif" border="0"></a><a href="{logout_link}"><img src="{img_root}/logout.gif" border="0"></a><a href="{help_link}"><img src="{img_root}/about.gif" border="0"></a></td>
+  <td align="right" valign="bottom" rowspan="2"><a href="{home_link}"><img src="{welcome_img}" border="0"></a><a href="{preferences_link}"><img src="{preferences_img}" border="0"></a><a href="{logout_link}"><img src="{logout_img}" border="0"></a><a href="{help_link}"><img src="{img_root}/help.gif" border="0"></a></td>
  </tr>
 
  <tr background="{img_root}/bg_filler.gif">
-  <td align="center" width="100%" valign="bottom" colspan="2"><img src="{img_root}/greybar.jpg" height="4"  width="100%"></td>
+  <td align="center" width="100%" valign="bottom" colspan="2"><img src="{img_root}/greybar.gif" height="6"  width="100%"></td>
  </tr>
 
 </table>

@@ -13,78 +13,51 @@
 
   class categories
   {
-     function read($format = "", $app_name = "", $owner = "", $cat_id = "")
-     {
-        global $phpgw_info, $phpgw;
-        $db2 = $phpgw->db;
-
-        if (! isset($owner)) {
-           $owner = $phpgw_info["user"]["account_id"];
-        }
-        
-        if (! isset($format)) {
-           $format   = "array";
-        }
-        
-        if ($format == "single") {
-           $db2->query("select * from categories where cat_id='$cat_id' and account_id='$owner' "
-                     . "and app_name='" . addslashes($app_name) . "'");
-           $db2->next_record();
-
-           $cat_info[]["id"]         = $db2->f("cat_id");           
-           $cat_info[]["name"]       = $db2->f("cat_name");
-           $cat_info[]["descrption"] = $db2->f("cat_descrption");
-           return $cat_info;
-        }
-
-        if (! $app_name) {
-           $app_name = $phpgw_info["flags"]["currentapp"];
-        }
-        if (! $account_id) {
-           $owner    = $phpgw_info["user"]["account_id"];
-        }
-
-        $db2->query("select cat_id,cat_name,cat_description from categories where app_name='$app_name' "
-                  . "and account_id='$owner'");
-        $i = 0;
-        while ($db2->next_record()) {
-           if ($format == "array") {
-              $cat_list[$i]["cat_id"]          = $db2->f("cat_id");
-              $cat_list[$i]["cat_name"]        = $db2->f("cat_name");
-              $cat_list[$i]["cat_description"] = $db2->f("cat_description");
-              $i++;
-           }
-           if ($format == "select") {
-              $cat_list .= '<option value="' . $db2->f("cat_id") . '">' . $db2->f("cat_name")
-                         . '</option>';
-           }
-        }
-        return $cat_list;   
-     }
-
-     function add($owner,$app_name,$cat_name,$cat_description = "")
+     var $account_id;
+     var $app_name;
+     var $cats;
+     var $db;
+     
+     function categories($account_id,$app_name)
      {
         global $phpgw;
-        $db2 = $phpgw->db;
+        $this->account_id = $account_id;
+        $this->app_name   = $app_name;
+        $this->db         = $phpgw->db;
 
-        $db2->query("insert into categories (account_id,app_name,cat_name,cat_description) values ('"
-                  . "$owner','" . addslashes($app_name) . "','" . addslashes($cat_name) . "','"
-                  . addslashes($cat_description) . "')");
+        $this->db->query("select * from phpgw_categories where cat_owner='$account_id' and app_name='"
+                       . "$app_name'",__LINE__,__FILE__);
+        while ($this->db->next_record()) {
+           $this->cats[]["id"]          = $this->db->f("cat_id");
+           $this->cats[]["parent"]      = $this->db->f("cat_parent");
+           $this->cats[]["name"]        = $this->db->f("cat_name");
+           $this->cats[]["description"] = $this->db->f("cat_description");
+           $this->cats[]["data"]        = $this->db->f("cat_data");
+        }
      }
 
-     function delete($owner,$app_name,$cat_name)
+     // Return into a select box, list or other formats
+     function list()
      {
-        global $phpgw;
-        $db2 = $phpgw->db;
+     
+     }
+  
+     function add($app_name,$cat_name,$cat_parent,$cat_description = "", $cat_data = "")
+     {
+        $this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,"
+                       . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','"
+                       . "$app_name','" . addslashes($cat_name) . "','" . addslashes($cat_description)
+                       . "','$cat_data'",__LINE__,__FILE__);
+     }
 
-        $db2->query("delete from categories where account_id='$account_id' and app_name='"
-                  . addslashes($app_name) . "' and cat_name='" . addslashes($cat_name) . "'");
+     function delete($cat_id)
+     {
+        $this->db->query("delete from phpgw_categories where cat_id='$cat_id' and cat_owner='"
+                  . $this->account_id . "'",__LINE__,__FILE__);
      }
 
      function edit($owner,$app_name,$cat_name,$cat_description)
      {
-        global $phpgw;
-        $db2 = $phpgw->db;
 
         $db2->query("update categories set cat_name='" . addslashes($cat_name) . "', cat_description='"
                   . addslashes($cat_description) . "' where account_id='$owner' and app_name='"

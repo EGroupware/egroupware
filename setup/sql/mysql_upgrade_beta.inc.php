@@ -766,6 +766,29 @@
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre5";
   }
 
+  $test[] = "0.9.8pre5";
+  function upgrade0_9_8pre5(){
+    global $phpgw_info, $phpgw_setup;
+
+    // Since no applications are using it yet.  I am gonna drop it and create a new one.
+    // This is becuase I never finished the classes
+    $phpgw_setup->db->query("drop table categories");
+    $sql = "CREATE TABLE phpgw_categories (
+              cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+              cat_parent      int(9) DEFAULT '0' NOT NULL,
+              cat_owner       int(11) DEFAULT '0' NOT NULL,
+              cat_appname     varchar(50) NOT NULL,
+              cat_name        varchar(150) NOT NULL,
+              cat_description varchar(255) NOT NULL,
+              cat_data        text,
+              PRIMARY KEY (cat_id)
+           )";
+    $phpgw_setup->db->query($sql);
+
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9pre1";
+  }
+
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

@@ -13,7 +13,7 @@
 
   function parse_navbar($force = False)
   {
-     global $phpgw_info, $phpgw;
+     global $phpgw_info, $phpgw, $PHP_SELF;
 
      $tpl = new Template($phpgw_info["server"]["template_dir"]);
      $tpl->set_unknowns("remove");
@@ -43,6 +43,20 @@
      $tpl->set_var("preferences_link",$phpgw_info["navbar"]["preferences"]["url"]);
      $tpl->set_var("logout_link",$phpgw_info["navbar"]["logout"]["url"]);
      $tpl->set_var("help_link",$phpgw_info["navbar"]["about"]["url"]);
+
+     $ir = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images";
+     if (ereg($phpgw_info["server"]["webserver_url"] . "/index.php",$PHP_SELF)) {
+        $tpl->set_var("welcome_img",$ir . "/welcome-red.gif");
+     } else {
+        $tpl->set_var("welcome_img",$ir . "/welcome-grey.gif");
+     }
+
+     if (ereg("preferences",$PHP_SELF)) {
+        $tpl->set_var("preferences_img",$ir . "/preferences-red.gif");
+     } else {
+        $tpl->set_var("preferences_img",$ir . "/preferences-grey.gif");
+     }
+     $tpl->set_var("logout_img",$ir . "/logout-grey.gif");
 
 /*     if ($phpgw_info["server"]["showpoweredbyon"] == "top") {
         $tpl->set_var("powered_by",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
