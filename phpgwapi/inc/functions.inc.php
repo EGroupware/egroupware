@@ -319,7 +319,7 @@
 			if (! $phpgw_info["user"]["apps"][$phpgw_info["flags"]["currentapp"]]) {
 				$phpgw->common->phpgw_header();
 				echo "<p><center><b>".lang("Access not permitted")."</b></center>";
-				exit;
+				$phpgw->common->phpgw_exit(True);
 			}
 		}
 
