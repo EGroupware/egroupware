@@ -22,6 +22,10 @@ function check_all(which)
 {lang_showing}
 <br>{searchreturn}
 {search_filter}
+<table width="95%" border="1" cellspacing="1" cellpadding="3">
+<tr>{alphalinks}
+</tr>
+</table>
 <table width="95%" border="0" cellspacing="1" cellpadding="3">
 <form name="addr_index" action="{action_url}" method="POST">
 <tr bgcolor="{th_bg}">{cols}
@@ -65,3 +69,6 @@ function check_all(which)
  </table>
  </div>
 <!-- END addressbook_footer -->
+
+<!-- BEGIN addressbook_alpha --><td bgcolor="{charbgcolor}" align="center"><a href="{charlink}"><font color="{charcolor}">{char}</a></font></td>
+<!-- END addressbook_alpha -->

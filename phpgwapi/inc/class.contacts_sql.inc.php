@@ -189,7 +189,8 @@
 
 			if(@is_array($stock_fieldnames))
 			{
-				while (list($f_name) = each($stock_fieldnames))
+//				while (list($f_name) = each($stock_fieldnames))
+				foreach($stock_fieldnames as $f_name)
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
@@ -199,8 +200,9 @@
 			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+//				reset($this->adr_types);
+//				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
@@ -208,8 +210,9 @@
 			if ($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+//				reset($this->adr_types);
+//				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
@@ -258,7 +261,8 @@
 
 			if (@is_array($stock_fieldnames))
 			{
-				while (list($f_name) = each($stock_fieldnames))
+//				while (list($f_name) = each($stock_fieldnames))
+				foreach($stock_fieldnames as $f_name)
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
@@ -268,8 +272,9 @@
 			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+//				reset($this->adr_types);
+//				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
@@ -277,8 +282,9 @@
 			if ($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+//				reset($this->adr_types);
+//				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
@@ -296,7 +302,7 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
@@ -346,18 +352,20 @@
 				}
 
 				/* now check each element of the array and convert into SQL for queries below */
-				$i=0;
-				reset($filterfields);
-				while (list($name,$value) = each($filterfields))
+				$i = 0;
+//				reset($filterfields);
+//				while (list($name,$value) = each($filterfields))
+				foreach($filterfields as $name => $value)
 				{
 					if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
 					$isstd=0;
 					if ($name && empty($value))
 					{
 						if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
-						while (list($fname,$fvalue)=each($check_stock))
+//						while (list($fname,$fvalue)=each($check_stock))
+						foreach($check_stock as $fname => $fvalue)
 						{
-							if ($fvalue==$name)
+							if($fvalue == $name)
 							{
 								$filterlist .= $name.' is NULL,';
 								if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is a stock field'; }
@@ -367,26 +375,27 @@
 					}
 					elseif($name && $value)
 					{
-						reset($check_stock);
-						while (list($fname,$fvalue)=each($check_stock))
+//						reset($check_stock);
+//						while (list($fname,$fvalue)=each($check_stock))
+						foreach($check_stock as $fname => $fvalue)
 						{
-							if ($fvalue==$name)
+							if($fvalue == $name)
 							{
-								if ($name == 'cat_id')
+								if($name == 'cat_id')
 								{
 									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
 								}
 								elseif(@is_int($value))
 								{
-									$filterlist .= $name."=".$value.";";
+									$filterlist .= $name . '=' . $value . ';';
 								}
 								elseif ($value == "!''")	// check for not empty
 								{
-									$filterlist .= $name."!='';";
+									$filterlist .= $name . "!='';";
 								}
 								else
 								{
-									$filterlist .= $name."='".$value."';";
+									$filterlist .= $name . "='" . $value . "';";
 								}
 								break;
 							}
@@ -439,7 +448,8 @@
 			if(@is_array($this->grants))
 			{
 				$grants = $this->grants;
-				while (list($user) = each($grants))
+//				while (list($user) = each($grants))
+				foreach($grants as $user)
 				{
 					$public_user_list[] = $user;
 				}
@@ -477,7 +487,7 @@
 			{
 				$fwhere .= " AND last_mod > $lastmod ";
 			}
-			else if($lastmod >= 0)
+			elseif($lastmod >= 0)
 			{
 				$fwhere = " WHERE last_mod > $lastmod ";
 			}
@@ -489,15 +499,32 @@
 
 			$filtermethod = '';
 
-			if($query)
+			if($cquery)
+			{
+				$cfields = array(
+					'fn'       => 'cn',
+					'n_family' => 'sn',
+					'org_name' => 'o'
+				);
+				$sql = 'SELECT * FROM ' . $this->std_table . ' WHERE (';
+				$sqlcount = 'SELECT COUNT(id) FROM ' . $this->std_table  . ' WHERE (';
+				while(list($f,$x) = each($cfields))
+				{
+					$sql .= " UPPER($f) LIKE UPPER('$cquery%') OR ";
+					$sqlcount .= " UPPER($f) LIKE UPPER('$cquery%') OR ";
+				}
+				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod;
+				unset($f); unset($x);
+			}
+			elseif($query)
 			{
 				$query  = str_replace("'",'',$query);
 				$query  = str_replace('"','',$query);
 
 				$sql = "SELECT * FROM $this->std_table WHERE (";
 				$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
-				reset($this->stock_contact_fields);
-				while(list($f,$x) = each($this->stock_contact_fields))
+				foreach($this->stock_contact_fields as $f => $x)
 				{
 					$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
 					$sqlcount .= " UPPER($f) LIKE UPPER('%$query%') OR ";
@@ -561,7 +588,8 @@
 
 				if(@is_array($stock_fieldnames))
 				{
-					while(list($f_name) = each($stock_fieldnames))
+//					while(list($f_name) = each($stock_fieldnames))
+					foreach($stock_fieldnames as $f_name)
 					{
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
@@ -618,15 +646,16 @@
 
 			$id = $this->db->get_last_insert_id($this->std_table, 'id');
 
-			if (count($extra_fields))
+			if(count($extra_fields))
 			{
-				while (list($name,$value) = each($extra_fields))
+//				while (list($name,$value) = each($extra_fields))
+				foreach($extra_fields as $name => $value)
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $owner . "','"
 						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
-			return $id;
+			return ($id ? $id : False);
 		}
 
 		function field_exists($id,$field_name)
@@ -690,7 +719,8 @@
 				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
 					. "id=$id",__LINE__,__FILE__);
 			}
-			while (list($x_name,$x_value) = @each($extra_fields))
+//			while (list($x_name,$x_value) = @each($extra_fields))
+			foreach($extra_fields as $x_name => $x_value)
 			{
 				if ($this->field_exists($id,$x_name))
 				{

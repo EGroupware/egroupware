@@ -116,25 +116,26 @@
 		@param $order string sort-order DESC=descending, ASC=ascending
 		@param $lastmod integer get only fields modified since, -1=for all
 		*/
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 		{
 			if(@is_array($fields))
 			{
 				$fields['owner'] = 'owner';	// we need the owner to set the rights
 			}
-			if ($entrys = contacts_::read($start,$limit,$fields,$query,$filter,$sort,$order, $lastmod))
+			if($entries = contacts_::read($start,$limit,$fields,$query,$filter,$sort,$order,$lastmod,$cquery))
 			{
-				foreach($entrys as $nr => $entry)
+				foreach($entries as $nr => $entry)
 				{
-					$entrys[$nr]['rights'] = (int)$this->grants[$entry['owner']];
+					$entries[$nr]['rights'] = (int)$this->grants[$entry['owner']];
 				}
 			}
-			return $entrys;
+			return $entries;
 		}
 
 		function split_stock_and_extras($fields)
 		{
-			while (list($field,$value) = @each($fields))
+			settype($fields, 'array');
+			foreach($fields as $field => $value)
 			{
 				/* Depending on how the array was built, this is needed. */
 				if(@is_int($value))
@@ -157,11 +158,10 @@
 		function loop_addslashes($fields)
 		{
 			$absf = $this->stock_contact_fields;
-			while ($t = each($absf))
+			foreach($absf as $t => $nul)
 			{
-				$ta[] = $this->db->db_addslashes($fields[$t[0]]);
+				$ta[] = $this->db->db_addslashes($fields[$t]);
 			}
-			reset($absf);
 			return $ta;
 		}
 
@@ -170,7 +170,7 @@
 		{
 			if(@is_array($id))
 			{
-				while (list($null,$t_id) = each($id))
+				foreach($id as $nul => $t_id)
 				{
 					$this->delete_($t_id);
 				}
@@ -184,14 +184,20 @@
 		function asc_sort($a,$b)
 		{
 			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0;
+			if($a[1] == $b[1])
+			{
+				return 0;
+			}
 			return ($a[1]>$b[1])?1:-1;
 		}
 
 		function desc_sort($a,$b)
 		{
 			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0;
+			if($a[1]==$b[1])
+			{
+				return 0;
+			}
 			return ($a[1]<$b[1])?1:-1;
 		}
 

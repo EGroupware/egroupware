@@ -84,6 +84,7 @@
 			/* Might change this to '' at the end---> */
 			$_start   = get_var('start',array('POST','GET'));
 			$_query   = get_var('query',array('POST','GET'));
+			$_cquery  = get_var('cquery',  array('GET'));
 			$_sort    = get_var('sort',array('POST','GET'));
 			$_order   = get_var('order',array('POST','GET'));
 			$_filter  = get_var('filter',array('POST','GET'));
@@ -103,6 +104,13 @@
 			{
 				$this->query  = $_query;
 			}
+
+			if((empty($_cquery) && !empty($this->cquery)) || !empty($_cquery))
+			{
+				$this->cquery = $_cquery;
+			}
+
+//			$this->cquery = ((empty($_cquery) && !empty($this->cquery)) || !empty($_cquery)) ? $_cquery : $this->cquery;
 
 			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
@@ -145,6 +153,7 @@
 				'start'  => $this->start,
 				'limit'  => $this->limit,
 				'query'  => $this->query,
+				'cquery' => $this->cquery,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
@@ -228,6 +237,7 @@
 			$this->start  = $data['start'];
 			$this->limit  = $data['limit'];
 			$this->query  = $data['query'];
+			$this->cquery = $data['cquery'];
 			$this->sort   = $data['sort'];
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];
@@ -245,7 +255,7 @@
 			{
 				if(@is_array($dirty[$i]))
 				{
-					while(list($name,$value) = @each($dirty[$i]))
+					foreach($dirty[$i] as $name => $value)
 					{
 						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
 					}
@@ -348,7 +358,7 @@
 			}
 			if(!@$fields['owner'])
 			{
-				$fields['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+				$fields['owner'] = (int)$GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			if(empty($fields['access']))
 			{

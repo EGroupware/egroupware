@@ -299,7 +299,7 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
@@ -394,7 +394,16 @@
 			$ldap_fields = array();
 			$myfilter = '';
 
-			if($query)
+			if($cquery)
+			{
+				$search_filter = array(
+					'fn'       => 'cn',
+					'n_family' => 'sn',
+					'org_name' => 'o'
+				);
+				$myfilter = $this->makefilter($filterfields,$search_filter,"$cquery*",$DEBUG);
+			}
+			elseif($query)
 			{	
 				// the old code was searching about all fields
 				// this was very slow
@@ -669,23 +678,21 @@
 			$ldap_fields['objectclass'][0] = 'organizationalPerson';
 			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
-			//$ldap_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;		
+			//$ldap_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
 
-			// a hack!!
-			// there should be some validate function in this class
-			if(empty($ldap_fields['sn']))
+			$err = $this->validate($ldap_fields);
+			if(@is_array($err) && @isset($err[0]))
 			{
-				$ldap_fields['sn'] = $ldap_fields['cn'];
+				return $err;
 			}
-			if(empty($ldap_fields['cn']))
-			{
-				$ldap_fields['cn'] = $ldap_fields['sn'];
-			}
-			
 			// _debug_array($ldap_fields); exit;
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
+			if(!$err)
+			{
+				return False;
+			}
 
-			if (count($extra_fields))
+			if(count($extra_fields))
 			{
 				while (list($name,$value) = each($extra_fields))
 				{
@@ -694,6 +701,58 @@
 				}
 			}
 			return $this->nextid;
+		}
+
+		/* LDAP syntaxes require some testing prior to add */
+		function validate(&$entry)
+		{
+			$errors = array();
+			foreach($entry as $field => $value)
+			{
+				if(strstr($field,'phone'))
+				{
+					/* Regex for testing valid international phone number entries.
+					 * LDAP may reject bad values here, such as an email address in a phone number.
+					 * This format is somewhat loose, allowing for optional parenthesis, + sign,
+					 * and 0-7 numbers between separators.
+					 */
+					$regex = "/^[\s]*[\(]?[\+]?\d{0,7}[\s]?[\(]?[0-9]{0,7}[ ]?[\)]?[-]{0,7}[ ]?[0-9]{0,7}[ ]*[-]{0,7}[ ]*[0-9]{0,7}[ ]*$/x";
+					if(!preg_match($regex,$value))
+					{
+						$errors[] = array($field => $value);
+					}
+				}
+				elseif(strstr($field,'mailtype') || strstr($field,'mailhometype'))
+				{
+					/* Check for valid mail type */
+					if(!@isset($this->email_types[$value]))
+					{
+						$errors[] = array($field => $value);
+					}
+				}
+				elseif(strstr($field,'mail'))
+				{
+					/* Check for valid email address - TODO - should depend on mail type */
+					$regex = "/[ |\t|\r|\n]*\"?([^\"]+\"?@[^ <>\t]+\.[^ <>\t][^ <>\t]+)[ |\t|\r|\n]*/x";
+					if(!preg_match($regex,$value))
+					{
+						$errors[] = array($field => $value);
+					}
+				}
+			}
+			/* Verify sn/cn attrs set */
+			if(empty($entry['sn']) && !empty($entry['cn']))
+			{
+				$entry['sn'] = $entry['cn'];
+			}
+			if(empty($entry['cn']) && !empty($entry['sn']))
+			{
+				$entry['cn'] = $entry['sn'];
+			}
+			$entry['cn'] = $entry['cn'] ? $entry['cn'] : '-';
+			$entry['sn'] = $entry['sn'] ? $entry['sn'] : '-';
+
+			return $errors;
 		}
 
 		function field_exists($id,$field_name)

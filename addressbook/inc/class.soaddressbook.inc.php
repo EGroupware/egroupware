@@ -34,6 +34,8 @@
 
 		function read_entries($data)
 		{
+//			echo 'OK!';
+//			_debug_array($data);exit;
 			return $this->contacts->read(
 				$data['start'],
 				$data['limit'],
@@ -41,7 +43,9 @@
 				$data['query'],
 				$data['filter'],
 				$data['sort'],
-				$data['order']
+				$data['order'],
+				-1,
+				$data['cquery']
 			);
 		}
 

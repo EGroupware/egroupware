@@ -68,6 +68,7 @@
 			$this->start    = $this->bo->start;
 			$this->limit    = $this->bo->limit;
 			$this->query    = $this->bo->query;
+			$this->cquery   = $this->bo->cquery;
 			$this->sort     = $this->bo->sort;
 			$this->order    = $this->bo->order;
 			$this->filter   = $this->bo->filter;
@@ -81,6 +82,7 @@
 				'start'  => $this->start,
 				'limit'  => $this->limit,
 				'query'  => $this->query,
+				'cquery' => $this->cquery,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
@@ -97,6 +99,7 @@
 				'start'  => $this->start,
 				'limit'  => $this->limit,
 				'query'  => $this->query,
+				'cquery' => $this->cquery,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
@@ -232,6 +235,46 @@
 			$GLOBALS['phpgw']->template->set_block('addressbook_list_t','row','row');
 			$GLOBALS['phpgw']->template->set_block('addressbook_list_t','delete_block','delete_block');
 			$GLOBALS['phpgw']->template->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
+			$GLOBALS['phpgw']->template->set_block('addressbook_list_t','addressbook_alpha','addressbook_alpha');
+
+			/* Setup query for 1st char of fullname, company, lastname using user lang */
+			if(lang('alphabet') == 'alphabet*')
+			{
+				$aar = array('a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+			}
+			else
+			{
+				$aar = explode(',',lang('alphabet'));
+			}
+			$aar[] = 'all';
+			foreach($aar as $char)
+			{
+				if($this->cquery == $char ||
+					($char == 'all' && !$this->cquery))
+				{
+					$GLOBALS['phpgw']->template->set_var('charbgcolor','#000000');
+					$GLOBALS['phpgw']->template->set_var('charcolor','#FFFFFF');
+				}
+				else
+				{
+					$GLOBALS['phpgw']->template->set_var('charbgcolor',$GLOBALS['phpgw_info']['theme']['th_bg']);
+					$GLOBALS['phpgw']->template->set_var('charcolor',$GLOBALS['phpgw_info']['theme']['th_text']);
+				}
+				if($char == 'all')
+				{
+					$GLOBALS['phpgw']->template->set_var('charlink',
+						$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index&cquery=')
+					);
+				}
+				else
+				{
+					$GLOBALS['phpgw']->template->set_var('charlink',
+						$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index&cquery=' . $char)
+					);
+				}
+				$GLOBALS['phpgw']->template->set_var('char',$char != 'all' ? strtoupper($char) : lang('all'));
+				$GLOBALS['phpgw']->template->fp('alphalinks','addressbook_alpha',True);
+			}
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -402,6 +445,7 @@
 					'fields' => $columns_to_display,
 					'filter' => $qfilter,
 					'query'  => $this->query,
+					'cquery' => $this->cquery,
 					'sort'   => $this->sort,
 					'order'  => $this->order
 				));
@@ -641,9 +685,14 @@
 				unset($fields['referer']);
 				$fields['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
 
-				$this->bo->add_entry($fields);
-
-				$ab_id = $this->bo->get_lastid();
+				$ab_id = $this->bo->add_entry($fields);
+				if(@is_array($ab_id) || !$ab_id)
+				{
+					/* Errors encountered during validation */
+					$errors = $ab_id;
+					break;
+				}
+//				$ab_id = $this->bo->get_lastid();
 
 				Header('Location: '
 					. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
@@ -665,6 +714,11 @@
 
 			$this->addressbook_form('','menuaction=addressbook.uiaddressbook.add','Add','',$customfields,$this->cat_id);
 
+			$GLOBALS['phpgw']->template->set_var('errors','');
+			if(@is_array($errors))
+			{
+				$GLOBALS['phpgw']->template->set_var('errors',implode(',',$errors));
+			}
 			$GLOBALS['phpgw']->template->set_var('lang_save',lang('Save'));
 			$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
@@ -1199,7 +1253,7 @@
 						. strtolower($cf) . ']"'
 						. ($this->prefs[$cf] ? ' checked' : '')
 						. '>' . str_replace('_',' ',$cf) . '</option></td>' . "\n";
-					
+
 					if(!(++$i % 6))
 					{
 						echo "</tr>\n";
@@ -1540,12 +1594,12 @@
 					$temp_month[$month] = ' selected';
 					$bday_month = '<select name="entry[bday_month]">'
 						. '<option value=""'   . $temp_month[0]  . '>' . '</option>'
-						. '<option value="1"'  . $temp_month[1]  . '>' . lang('january')   . '</option>' 
+						. '<option value="1"'  . $temp_month[1]  . '>' . lang('january')   . '</option>'
 						. '<option value="2"'  . $temp_month[2]  . '>' . lang('february')  . '</option>'
 						. '<option value="3"'  . $temp_month[3]  . '>' . lang('march')     . '</option>'
 						. '<option value="4"'  . $temp_month[4]  . '>' . lang('april')     . '</option>'
 						. '<option value="5"'  . $temp_month[5]  . '>' . lang('may')       . '</option>'
-						. '<option value="6"'  . $temp_month[6]  . '>' . lang('june')      . '</option>' 
+						. '<option value="6"'  . $temp_month[6]  . '>' . lang('june')      . '</option>'
 						. '<option value="7"'  . $temp_month[7]  . '>' . lang('july')      . '</option>'
 						. '<option value="8"'  . $temp_month[8]  . '>' . lang('august')    . '</option>'
 						. '<option value="9"'  . $temp_month[9]  . '>' . lang('september') . '</option>'
@@ -1673,7 +1727,7 @@
 			if(!ereg('^http://',$url))
 			{
 				$url = 'http://' . $url;
-			} 
+			}
 
 			$birthday = $GLOBALS['phpgw']->common->dateformatorder($bday_year,$bday_month,$bday_day)
 				. '<font face="'.$theme["font"].'" size="-2">'.lang('(e.g. 1969)').'</font>';
@@ -1687,7 +1741,7 @@
 			{
 				$create .= '';
 			}
- 
+
 			$GLOBALS['phpgw']->template->set_var('lang_home',lang('Home'));
 			$GLOBALS['phpgw']->template->set_var('lang_business',lang('Business'));
 			$GLOBALS['phpgw']->template->set_var('lang_personal',lang('Personal'));
