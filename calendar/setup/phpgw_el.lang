@@ -22,7 +22,7 @@ alarms	calendar	el	Ειδοποιήσεις
 all day	calendar	el	Ολη Ημέρα
 are you sure you want to delete this country ?	calendar	el	Εισαι σίγουρος πως θέλεις να διαγράψεις αυτή τη χώρα;
 are you sure you want to delete this holiday ?	calendar	el	Εισαι σίγουρος πως θέλεις να διαγράψεις αυτή την αργία;
-are you sure\nyou want to\ndelete these alarms?   calendar        el      Εισαι σίγουρος\nπως θέλειςn\να διαγράψεις αυτές τις προιδοποιήσεις;
+are you sure\nyou want to\ndelete these alarms?	calendar	el	Εισαι σίγουρος\nπως θέλειςn\να διαγράψεις αυτές τις προιδοποιήσεις;
 are you sure\nyou want to\ndelete this entry ?	calendar	el	Εισαι σίγουρος\nπως θέλεις\nνα δαγράψεις αυτή την εισαγωγή;
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	el	Εισαι σίγουρος\nπως θέλεις να\nδιαγράψεις αυτή την εισαγωγή;\n\nΑυτό θα διαγράψει\nαυτή τη καταχώρηση για όλους τους χρήστες.
 are you sure\nyou want to\ndelete this single occurence ?n\n\this will delete\nthis entry for all users.	calendar	el	Εισαι σίγουρος\nπως θέλεις να\nδιαγράψεις αυτό το συμβάν;\n\nΑυτό θα διαγράψει\nαυτή τη καταχώρηση για όλους τους χρήστες.
