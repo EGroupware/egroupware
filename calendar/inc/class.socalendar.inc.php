@@ -37,6 +37,8 @@
 				echo 'SO Filter : '.$this->filter."<br>\n";
 				echo 'SO cat_id : '.$this->cat_id."<br>\n";
 			}
+			$this->cal = CreateObject('calendar.socalendar_');
+			$this->cal->open('INBOX',intval($this->owner));
 		}
 
 		function makeobj()

@@ -389,9 +389,11 @@
 
   			$ui = CreateObject('calendar.uicalendar');
 
-         if(isset($HTTP_GET_VARS['readsess']))
+         if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
          {
 				$event = $this->restore_from_appsession();
+				$event['title'] = stripslashes($event['title']);
+				$event['description'] = stripslashes($event['description']);
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
@@ -523,6 +525,8 @@
 				$this->so->add_attribute('priority',$l_cal['priority']);
 				$event = $this->get_cached_event();
 
+				$event['title'] = addslashes($event['title']);
+				$event['description'] = addslashes($event['description']);
 				$this->store_to_appsession($event);
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
@@ -657,7 +661,7 @@
 		{
 			$error = 0;
 			// do a little form verifying
-			if (!$event['participants'])
+			if (!count($event['participants']))
 			{
 				$error = 43;
 			}
