@@ -290,7 +290,7 @@ non-standard	email	en	Non-Standard
 none	calendar	en	None
 normal	common	en	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
-notes   common          en      Notes
+notes	common          en      Notes
 notes list     notes    en      Notes list
 notes preferences      common     en       Notes preferences
 november	common	en	November
