@@ -236,16 +236,18 @@
 
 // Participants
 	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
+	echo '<!-- count($accounts) = '.count($accounts).' -->'."\n";
 	$users = Array();
 	for($i=0;$i<count($accounts);$i++)
 	{
 		echo '<!-- account_id '.$accounts[$i].' should be valid -->'."\n";
-		if($accounts[$i] != $owner && !isset($users[$accounts[$i]]))
+		if(intval($accounts[$i]) != $owner && !isset($users[$accounts[$i]]))
 		{
-			$users[$accounts[$i]] = $phpgw->common->grab_owner_name($accounts[$i]);
-			if($phpgw->accounts->get_type($accounts[$i]) == 'g')
+			$users[intval($accounts[$i])] = $phpgw->common->grab_owner_name(intval($accounts[$i]));
+			echo '<!-- Setting account_id '.intval($accounts[$i]).' to '.$users[intval($accounts[$i])].' -->'."\n";
+			if($phpgw->accounts->get_type(intval($accounts[$i])) == 'g')
 			{
-				$group_members = $phpgw->acl->get_ids_for_location($accounts[$i],1,'phpgw_group');
+				$group_members = $phpgw->acl->get_ids_for_location(intval($accounts[$i]),1,'phpgw_group');
 				if($group_members != False)
 				{
 					for($j=0;$j<count($group_members);$j++)
@@ -260,6 +262,7 @@
 		}
 	}
 
+	echo '<!-- count($users) = '.count($users).' -->'."\n";
 	$str = "\n".'   <select name="participants[]" multiple size="5">'."\n";
 	for ($l=0;$l<count($event->participants);$l++)
 	{
