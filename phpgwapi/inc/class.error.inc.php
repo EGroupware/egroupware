@@ -41,8 +41,16 @@
 			{
 				return;
 			}
-			$etext =$parms['text'];
-			$parray = array($parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9'],$parms['p10']);
+			$etext = $parms['text'];
+			$parray = Array();
+			for($counter=1;$counter<=10;$counter++)
+			{
+				$str = 'p_'.$counter;
+				if(isset($parms[$str]) && !empty($parms[$str]))
+				{
+					$parray[] = $parms[$str];
+				}
+			}
 			$fname = $parms['file'];
 			$line  = $parms['line'];
 			if (eregi('([DIWEF])-([[:alnum:]]*)\, (.*)',$etext,$match))
