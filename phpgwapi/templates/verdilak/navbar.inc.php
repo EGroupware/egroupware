@@ -95,10 +95,12 @@
 				. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">&nbsp;'
 				. lang('Current users') . ': ' . $db->f(0) . '</a>';
 		}
+		$now = time();
 		$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . ' - '
-                             . lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-                             . lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-                             . $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
+			. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+//			. lang($GLOBALS['phpgw']->common->show_date($now,'F')) . ' '
+//			. $GLOBALS['phpgw']->common->show_date($now,'d, Y');
 
 		// Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
 		// to get rid of duplicate code.

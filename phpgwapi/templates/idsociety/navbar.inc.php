@@ -123,10 +123,12 @@
 		}
 
 		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
+		$now = time();
 		$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
+				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+//				. lang($GLOBALS['phpgw']->common->show_date($now,'F')) . ' '
+//				. $GLOBALS['phpgw']->common->show_date($now,'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';
