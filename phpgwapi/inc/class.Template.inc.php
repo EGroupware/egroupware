@@ -42,14 +42,25 @@
 
 		/* last error message is retained here */
 		var $last_error = '';
-
+		var $print = False;
+		
 		/***************************************************************************/
 		/* public: Constructor.
 		 * root:     template directory.
 		 * unknowns: how to handle unknown variables.
 		 */
-		function Template($root = '.', $unknowns = 'remove')
+		function Template($root = '.', $unknowns = 'remove', $print = False)
 		{
+			if ($print)
+			{
+				$this->print = True;
+			}
+			/* This covers loading up the common tpl file and CSS data */
+			$this->set_root(PHPGW_TEMPLATE_DIR);
+			$this->set_file('common', 'common.tpl');
+			$this->set_var('phpgw_css',$GLOBALS['phpgw_info']['theme']['css']);
+
+			/* Now move on to loading up the requested template set */
 			$this->set_root($root);
 			$this->set_unknowns($unknowns);
 		}
@@ -373,16 +384,35 @@
 				$new_filename = $filename;
 			}
 
+			if ($this->print && $time!=2 && $time!=4)
+			{
+				$new_filename = $new_filename.'_print';
+			}
+			
 			if (!file_exists($new_filename))
 			{
-				if($time==2)
+				switch($time)
 				{
-					$this->halt("filename: file $new_filename does not exist.");
-				}
-				else
-				{
-					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
-					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
+					case 2:
+						$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
+						$new_filename = $this->filename($filename,$new_root,3);
+						break;
+					case 3:
+						$new_filename = $this->filename($filename,$root,4);
+						break;
+					case 4:
+						$this->halt("filename: file $new_filename does not exist.");
+						break;
+					default:
+						if (!$this->print)
+						{
+							$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
+							$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,4);
+						}
+						else
+						{
+							$new_filename = $this->filename($filename,$root,2);
+						}
 				}
 			}
 			return $new_filename;

@@ -350,16 +350,9 @@
 		unset($enable_class);
 		reset($GLOBALS['phpgw_info']['flags']);
 
-		/*************************************************************************\
-		* These lines load up the templates class                                 *
-		\*************************************************************************/
-		if(!@$GLOBALS['phpgw_info']['flags']['disable_Template_class'])
-		{
-			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-		}
 
 		/*************************************************************************\
-		* These lines load up the themes                                          *
+		* These lines load up the themes and CSS data                             *
 		\*************************************************************************/
 		if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
 		{
@@ -404,7 +397,56 @@
 
 			exit;
 		}
+
+		if (!isset($GLOBALS['phpgw_info']['theme']['css']))
+		{
+			$GLOBALS['phpgw_info']['theme']['css'] = '';
+		}
+
+		if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
+			 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
+		{
+			$csshover = "\t".'A:hover{ text-decoration:none; color: ' .$GLOBALS['phpgw_info']['theme']['hovlink'] .'; }'."\n";
+		}
+		else
+		{
+			$csshover = '';
+		}
+		$GLOBALS['phpgw_info']['theme']['css'] = "\t".'a { text-decoration:none; }'."\n"
+		  ."\t".'A:link{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].'; }'."\n"
+		  ."\t".'A:visted{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].'; }'."\n"
+		  ."\t".'A:active{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].'; }'."\n"
+			.$csshover
+			.$GLOBALS['phpgw_info']['theme']['css'];
+
+		unset($csshover);
+
+		if(@file_exists(PHPGW_APP_TPL . '/app.css'))
+		{
+			$app_css_file = fopen (PHPGW_APP_TPL . '/app.css', "r");
+			$contents = fread ($app_css_file, filesize ($app_css_file));
+			fclose ($app_css_file);
+			$GLOBALS['phpgw_info']['theme']['css'] .= "\n".$contents;
+		}
+		
 		unset($theme_to_load);
+
+		/*************************************************************************\
+		* These lines load up the templates class                                 *
+		\*************************************************************************/
+		if(!@$GLOBALS['phpgw_info']['flags']['disable_Template_class'])
+		{
+			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+		}
+
+		/*************************************************************************\
+		* These lines remove the css data from memory since the template set will *
+		* already have loaded it into its own memory space                        *
+		\*************************************************************************/
+		if(!@$GLOBALS['phpgw_info']['flags']['keep_phpgw_css'])
+		{
+//			unset($GLOBALS['phpgw_info']['theme']['css']);
+		}
 
 		/*************************************************************************\
 		* If they are using frames, we need to set some variables                 *
