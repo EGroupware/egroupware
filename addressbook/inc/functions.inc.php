@@ -429,7 +429,7 @@
 		}
 
 		if ($action) {
-			echo "<FORM action=\"".$phpgw->link('/addressbook/' . $action.'?referer='.urlencode($referer))."\" method=\"post\">\n";
+			echo '<FORM action="' . $phpgw->link('/addressbook/' . $action, 'referer='.urlencode($referer)).'" method="post">';
 		}
 
 		if (! ereg("^http://",$url)) {
