@@ -423,10 +423,10 @@
 							}
 						}
 					}
-					else
-					{
-						$part = False;
-					}
+				}
+				else
+				{
+					$part = False;
 				}
 
 				if($part)
