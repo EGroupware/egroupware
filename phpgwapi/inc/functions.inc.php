@@ -470,7 +470,7 @@
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
 	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
-	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
+	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.log');
 //	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	@print_debug('main class loaded');
 	if (! isset($phpgw_info['flags']['included_classes']['error']) ||
