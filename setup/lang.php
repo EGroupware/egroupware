@@ -100,7 +100,7 @@
 	foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
 	{
 		$_f_buffer = split("/", $badline["appfile"]);
-		$langfile  = $_f_buffer[count($_f_buffer)-1] . " " . lang("in") . " " . $_f_buffer[count($_f_buffer)-2] . " " . lang("module");
+		$langfile  = $_f_buffer[count($_f_buffer)-1] . " " . lang("in") . " " . $_f_buffer[count($_f_buffer)-3] . " " . lang("module");
 		
 		$str .= lang("File") . " : " . $langfile . "<br>";
 		$str .= lang("Line") . " : " . $badline["line"] . "<br>";
