@@ -41,10 +41,28 @@
    </tr>
 
    <tr bgcolor="{row_off}">
-    <td>{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:</td>
+    <td>
+	{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:
+	<br>
+	({lang_file_type,_size,_version,_etc.})
+    </td>
     <td>
      <select name="newsettings[file_repository]">
       <option value="sql"{selected_file_repository_sql}>SQL</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr bgcolor="{row_off}">
+    <td>
+	{lang_Select_where_you_want_to_store/retrieve_file_contents}:
+	<br>
+	({lang_Recommended:_Filesystem})
+    </td>
+    <td>
+     <select name="newsettings[file_store_contents]">
+      <option value="filesystem"{selected_file_store_contents_filesystem}>Filesystem</option>
+      <option value="sql"{selected_file_store_contents_sql}>SQL</option>
      </select>
     </td>
    </tr>
