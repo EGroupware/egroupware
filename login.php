@@ -145,7 +145,8 @@
 		unset($sslattributes);
 	}
 
-	if (isset($HTTP_POST_VARS['submit']) && $HTTP_POST_VARS['submit'] || $submit_x || $submit_y)
+	if (isset($HTTP_POST_VARS['submitit']) && $HTTP_POST_VARS['submitit'] || $submit_x || $submit_y ||
+		 isset($HTTP_POST_VARS['passwd']) && $HTTP_POST_VARS['passwd']) // enable konqueror to login via Return
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
 		{

@@ -43,12 +43,12 @@
         </TR>
         <TR bgcolor="#e6e6e6">
          <TD align="RIGHT"><font color="#000000">{lang_password}:</font></TD>
-         <TD align="RIGHT"><input name="passwd" type="password"></TD>
+         <TD align="RIGHT"><input name="passwd" type="password" onChange="this.form.submit()"></TD>
          <TD>&nbsp;</TD>
         </TR>
         <TR bgcolor="#e6e6e6">
          <TD colspan="3" align="CENTER">
-          <input type="submit" value="{lang_login}" name="submit">
+          <input type="submit" value="{lang_login}" name="submitit">
          </TD>
         </TR>
         <TR bgcolor="#e6e6e6">

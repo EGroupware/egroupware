@@ -35,11 +35,11 @@
         </tr>
         <tr bgcolor="#e6e6e6">
          <td align="right"><font color="#000000">{lang_password}:&nbsp;</font></td>
-         <td><input name="passwd" type="password"></td>
+         <td><input name="passwd" type="password" onChange="this.form.submit()"></td>
         </tr>
         <tr bgcolor="#e6e6e6">
          <td colspan="2" align="center">
-          <input type="submit" value="{lang_login}" name="submit">
+          <input type="submit" value="{lang_login}" name="submitit">
          </td>
         </tr>
         <tr bgcolor="#e6e6e6">
