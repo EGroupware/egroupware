@@ -177,7 +177,6 @@ priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 re:	infolog	de	Re:
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
@@ -236,8 +235,6 @@ urgent	infolog	de	Dringend
 use button to search for address	infolog	de	Button zum Suchen der Adresse verwenden
 use button to search for project	infolog	de	Button zum Suchen des Projekts verwenden
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
