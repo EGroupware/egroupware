@@ -280,7 +280,7 @@
 	/****************************************************************************\
 	* Forcing the footer to run when the rest of the script is done.             *
 	\****************************************************************************/
-	register_shutdown_function(array($GLOBALS['phpgw']->common, 'phpgw_footer'));
+	register_shutdown_function(array($GLOBALS['phpgw']->common, 'phpgw_final'));
 
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
@@ -403,8 +403,6 @@
 				$message = lang('it has been more then x days since you changed your password',30);
 				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 			}
-
-			$GLOBALS['phpgw']->common->framework();
 
 			$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
 
