@@ -43,7 +43,6 @@
 		//var $debug_init_prefs = 1;
 		//var $debug_init_prefs = 2;
 		//var $debug_init_prefs = 3;
-		
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -177,7 +176,7 @@
 			{
 				$this->db->transaction_begin();
 				$this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id
-						. "'",__LINE__,__FILE__);
+					. "'",__LINE__,__FILE__);
 
 				if (floor(phpversion()) < 4)
 				{
@@ -188,7 +187,7 @@
 					$pref_info = serialize($this->data);
 				}
 				$this->db->query("insert into phpgw_preferences (preference_owner,preference_value) values ('"
-						. $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
+					. $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
 
 				$this->db->transaction_commit();
 			}
@@ -303,11 +302,11 @@
 				unset($preferences_update);
 			}
 		}
-		
-		/**************************************************************************\
-		* Email Preferences and Private Support Functions			*
-		\**************************************************************************/
-		
+
+		/****************************************************\
+		* Email Preferences and Private Support Functions   *
+		\****************************************************/
+
 		/*!
 		@function sub_get_mailsvr_port
 		@abstract Helper function for create_email_preferences, gets mail server port number.
@@ -323,7 +322,7 @@
 		@param $prefs - user preferences array based on element ['email'][]
 		@author  Angles
 		@access Private
-		*/	
+		*/
 		function sub_get_mailsvr_port($prefs)
 		{
 			/*// UNCOMMENT WHEN mail_port IS A REAL, USER SET OPTION
@@ -339,23 +338,29 @@
 			*/
 				switch($prefs['email']['mail_server_type'])
 				{
-					case 'imaps':		// IMAP over SSL
+					case 'imaps':
+						// IMAP over SSL
 						$port_number = 993;
 						break;
-					case 'pop3s':		// POP3 over SSL
+					case 'pop3s':
+						// POP3 over SSL
 						$port_number = 995;
 						break;
-					case 'pop3':		// POP3 normal connection, No SSL
-								// ( same string as normal imap above)
+					case 'pop3':
+						// POP3 normal connection, No SSL
+						// ( same string as normal imap above)
 						$port_number = 110;
 						break;
-					case 'nntp':		// NNTP news server port
+					case 'nntp':
+						// NNTP news server port
 						$port_number = 119;
 						break;
-					case 'imap':		// IMAP normal connection, No SSL 
-					default:		// UNKNOWN SERVER in Preferences, return a
-								// default value that is likely to work
-								// probably should raise some kind of error here
+					case 'imap':
+						// IMAP normal connection, No SSL 
+					default:
+						// UNKNOWN SERVER in Preferences, return a
+						// default value that is likely to work
+						// probably should raise some kind of error here
 						$port_number = 143;
 						break;
 				}
@@ -365,7 +370,7 @@
 			//}
 			return $port_number;
 		}
-		
+
 		/*!
 		@function sub_default_userid
 		@abstract Helper function for create_email_preferences, gets default userid for email
@@ -387,7 +392,7 @@
 			}
 			return $prefs_email_userid;
 		}
-		
+
 		/*!
 		@function sub_default_address
 		@abstract Helper function for create_email_preferences, gets default "From:" email address
@@ -404,7 +409,7 @@
 				. '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
 			return $prefs_email_address;
 		}
-		
+
 		/*!
 		@function create_email_preferences
 		@abstract create email preferences
@@ -419,13 +424,13 @@
 		for the  in the ['email'][] pref data array in cases where the user has not supplied 
 		a preference value for any particular preference item available to the user.
 		@access Public
-		*/	
+		*/
 		function create_email_preferences($accountid='')
 		{
 			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: ENTERING<br>'; }
 			// we may need function "html_quotes_decode" from the mail_msg class
 			$email_base = CreateObject("email.mail_msg");
-			
+
 			$account_id = get_account_id($accountid);
 			// If the current user is not the request user, grab the preferences
 			// and reset back to current user.
@@ -436,12 +441,12 @@
 				// current users settings.
 				$temp_account_id = $this->account_id;
 				$temp_data = $this->data;
-				
+
 				// Grab the new users settings, only if they are not the
 				// current users settings.
 				$this->account_id = $account_id;
 				$prefs = $this->read_repository();
-				
+
 				// Reset the data to what it was prior to this call
 				$this->account_id = $temp_account_id;
 				$this->data = $temp_data;
@@ -450,13 +455,17 @@
 			{
 				$prefs = $this->data;
 			}
-			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: raw $this->data dump<pre>';  print_r($this->data); echo '</pre>'; }
+			if ($this->debug_init_prefs > 0)
+			{
+				echo 'class.preferences: create_email_preferences: raw $this->data dump';
+				_debug_array($this->data);
+			}
 
 			// = = = =  NOT-SIMPLE  PREFS  = = = =
 			// Default Preferences info that is:
 			// (a) not controlled by email prefs itself (mostly api and/or server level stuff)
 			// (b) too complicated to be described in the email prefs data array instructions
-			
+
 			// ---  [server][mail_server_type]  ---
 			// Set API Level Server Mail Type if not defined
 			// if for some reason the API didnot have a mail server type set during initialization
@@ -464,7 +473,7 @@
 			{
 				$GLOBALS['phpgw_info']['server']['mail_server_type'] = 'imap';
 			}
-			
+
 			// ---  [server][mail_folder]  ---
 			// ====  UWash Mail Folder Location used to be "mail", now it's changeable, but keep the
 			// ====  default to "mail" so upgrades happen transparently
@@ -473,16 +482,16 @@
 			// ---  DELETE THE ABOVE WHEN THIS OPTION GETS INTO THE SYSTEM SETUP
 			// pick up custom "mail_folder" if it exists (used for UWash and UWash Maildir servers)
 			// else use the system default (which we temporarily hard coded to "mail" just above here)
-			
+
 			//---  [email][newsmode]  ---
 			// == Orphan == currently NOT USED
 			// This is going to be used to switch to the nntp class
-			if ((isset($GLOBALS['phpgw_info']['flags']['newsmode'])
-			&& $GLOBALS['phpgw_info']['flags']['newsmode']))
+			if ((isset($GLOBALS['phpgw_info']['flags']['newsmode']) &&
+				$GLOBALS['phpgw_info']['flags']['newsmode']))
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
-			
+
 			//---  [email][mail_port]  ---
 			// These sets the mail_port server variable
 			// someday (not currently) this may be a site-wide property set during site setup
@@ -490,17 +499,16 @@
 			// a custom email preference. Currently, we simply use standard port numbers
 			// for the service in question.
 			$prefs['email']['mail_port'] = $this->sub_get_mailsvr_port($prefs);
-			
+
 			// = = = =  SIMPLER PREFS  = = = =
-			
+
 			// Default Preferences info that is articulated in the email prefs schema array itself
 			// such email prefs schema array is described and established in /email/class.bopreferences
 			// by function "init_available_prefs", see the discussion there.
-			
+
 			// --- create the objectified /email/class.bopreferences.inc.php ---
 			$bo_mail_prefs = CreateObject('email.bopreferences');
-			
-			
+
 			// --- bo_mail_prefs->init_available_prefs() ---
 			// this fills object_email_bopreferences->std_prefs and ->cust_prefs
 			// we will initialize the users preferences according to the rules and instructions
@@ -508,7 +516,7 @@
 			// data read from the preferences DB. By taking the raw data and applying those rules,
 			// we will construct valid and known email preference data for this user.
 			$bo_mail_prefs->init_available_prefs();
-			
+
 			// --- combine the two array (std and cust) for 1 pass handling ---
 			// when this preference DB was submitted and saved, it was hopefully so well structured
 			// that we can simply combine the two arrays, std_prefs and cust_prefs, and do a one
@@ -521,8 +529,12 @@
 				$next_idx = count($avail_pref_array);
 				$avail_pref_array[$next_idx] = $bo_mail_prefs->cust_prefs[$i];
 			}
-			if ($this->debug_init_prefs > 1) { echo 'class.preferences: create_email_preferences: std AND cust arrays combined:<pre>';  print_r($avail_pref_array); echo '</pre>'; }
-			
+			if ($this->debug_init_prefs > 1)
+			{
+				echo 'class.preferences: create_email_preferences: std AND cust arrays combined:';
+				_debug_array($avail_pref_array);
+			}
+
 			// --- make the schema-based pref data for this user ---
 			// user defined values and/or user specified custom email prefs are read from the
 			// prefs DB with mininal manipulation of the data. Currently the only change to 
@@ -531,7 +543,7 @@
 			// take care of this for us. Of course, password data requires special decoding,
 			// but the password in the array [email][paswd] should be left in encrypted form 
 			// and only decrypted seperately when used to login in to an email server.
-			
+
 			// --- generating a default value if necessary ---
 			// in the absence of a user defined custom email preference for a particular item, we can
 			// determine the desired default value for that pref as such:
@@ -548,15 +560,19 @@
 			// default value for a particular preference if one is needed (i.e. if no user custom
 			// email preference exists that should override that default value, in which case we
 			// do not even need to obtain such a default value as described in ['init_default'] anyway).
-			
+
 			// --- loop thru $avail_pref_array and process each pref item ---
 			$c_prefs = count($avail_pref_array);
 			for($i=0;$i<$c_prefs;$i++)
 			{
 				$this_avail_pref = $avail_pref_array[$i];
 				if ($this->debug_init_prefs > 1) { echo 'class.preferences: create_email_preferences: value from DB for $prefs[email]['.$this_avail_pref['id'].'] = ['.$prefs['email'][$this_avail_pref['id']].']<br>'; }
-				if ($this->debug_init_prefs > 2) { echo 'class.preferences: create_email_preferences: std/cust_prefs $this_avail_pref['.$i.'] dump:<pre>'; print_r($this_avail_pref); echo "</pre>\r\n"; }
-				
+				if ($this->debug_init_prefs > 2)
+				{
+					echo 'class.preferences: create_email_preferences: std/cust_prefs $this_avail_pref['.$i.'] dump:';
+					_debug_array($this_avail_pref);
+				}
+
 				// --- is there a value in the DB for this preference item ---
 				// if the prefs DB has no value for this defined available preference, we must make one.
 				// This occurs if (a) this is user's first login, or (b) this is a custom pref which the user 
@@ -565,11 +581,11 @@
 				{
 					// now we are analizing an individual pref that is available to the user
 					// AND the user had no existing value in the prefs DB for this.
-					
+
 					// --- get instructions on how to generate a default value ---
 					$set_proc = explode(',', $this_avail_pref['init_default']);
 					if ($this->debug_init_prefs > 1) { echo ' * set_proc=['.serialize($set_proc).']<br>'; }
-					
+
 					// --- use "instructional token" in $set_proc[0] to take appropriate action ---
 					// STRING
 					if ($set_proc[0] == 'string')
@@ -612,15 +628,15 @@
 						if ($this->debug_init_prefs > 2) { echo ' * handle "function" set_proc: '.serialize($set_proc).'<br>'; }
 						$evaled = '';
 						//eval('$evaled = $this->'.$set_proc[1].'('.$account_id.');');
-						
+
 						$code = '$evaled = $this->'.$set_proc[1].'('.$account_id.');';
 						if ($this->debug_init_prefs > 2) { echo ' * $code: '.$code.'<br>'; }
 						eval($code);
-						
+
 						//$code = '$evaled = '.$set_proc[1];
 						//if ($this->debug_init_prefs > 1) { echo ' * $code: '.$code.'<br>'; }
 						//eval($code);
-						
+
 						if ($this->debug_init_prefs > 2) { echo ' * $evaled: '.$evaled.'<br>'; }
 						$prefs['email'][$this_avail_pref['id']] = $evaled;
 					}
@@ -660,12 +676,12 @@
 					// prefs will permenantly LOOSE the very thing(s) we are un-doing
 					/// here until the next OFFICIAL submit email prefs function, where it
 					// will again get this preparation before being written to the database.
-					
+
 					// NOTE: if database de-fanging is eventually handled deeper in the 
 					// preferences class, then the following code would become depreciated 
 					// and should be removed in that case.
-					if (($this_avail_pref['type'] == 'user_string')
-					&& (stristr($this_avail_pref['write_props'], 'no_db_defang') == False))
+					if (($this_avail_pref['type'] == 'user_string') &&
+						(stristr($this_avail_pref['write_props'], 'no_db_defang') == False))
 					{
 						// this value was "de-fanged" before putting it in the database
 						// undo that defanging now
@@ -675,7 +691,7 @@
 				}
 			}
 			// users preferences are now established to known structured values...
-			
+
 			// SANITY CHECK 
 			// ---  [email][use_trash_folder]  ---
 			// ---  [email][use_sent_folder]  ---
@@ -687,21 +703,24 @@
 				{
 					unset($prefs['email']['use_trash_folder']);
 				}
-				
+
 				if (isset($prefs['email']['use_sent_folder']))
 				{
 					unset($prefs['email']['use_sent_folder']);
 				}
 			}
-						
+
 			// DEBUG : force some settings to test stuff
 			//$prefs['email']['p_persistent'] = 'True';
 			
-			if ($this->debug_init_prefs > 1) { echo 'class.preferences: create_email_preferences: $prefs[email]<pre>'; print_r($prefs['email']) ; echo '</pre>'; }
+			if ($this->debug_init_prefs > 1)
+			{
+				echo 'class.preferences: create_email_preferences: $prefs[email]';
+				_debug_array($prefs['email']);
+			}
 			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: LEAVING<br>'; }
 			return $prefs;
 		}
-
 
 			/*
 			// ==== DEPRECIATED - ARCHIVAL CODE ====
@@ -709,10 +728,10 @@
 			// = = = =  SIMPLER PREFS  = = = =
 			// Default Preferences info that is:
 			// described in the email prefs array itself
-			
+
 			$default_trash_folder = 'Trash';
 			$default_sent_folder = 'Sent';
-			
+
 			// ---  userid  ---
 			if (!isset($prefs['email']['userid']))
 			{
@@ -767,7 +786,7 @@
 					$prefs['email']['mail_folder'] = '';
 				}
 			}
-			
+
 			// ---  use_trash_folder  ---
 			// ---  trash_folder_name  ---
 			// if the option to use the Trash folder is ON, make sure a proper name is specified
@@ -779,7 +798,7 @@
 					$prefs['email']['trash_folder_name'] = $default_trash_folder;
 				}
 			}
-			
+
 			// ---  use_sent_folder  ---
 			// ---  sent_folder_name  ---
 			// if the option to use the sent folder is ON, make sure a proper name is specified
@@ -790,7 +809,7 @@
 				{
 					$prefs['email']['sent_folder_name'] = $default_sent_folder;
 				}
-			}	
+			}
 
 			// ---  layout  ---
 			// Layout Template Preference
@@ -799,7 +818,7 @@
 			{
 				$prefs['email']['layout'] = 1;
 			}
-			
+
 			//// ---  font_size_offset  ---
 			//// Email Index Page Font Size Preference
 			//// layout 1 = default ; others are prefs
@@ -807,7 +826,7 @@
 			//{
 			//	$prefs['email']['font_size_offset'] = 'normal';
 			//}
-			
+
 			// SANITY CHECK 
 			// ---  use_trash_folder  ---
 			// ---  use_sent_folder  ---
@@ -825,18 +844,16 @@
 					unset($prefs['email']['use_sent_folder']);
 				}
 			}
-						
+
 			// DEBUG : force some settings to test stuff
 			//$prefs['email']['layout'] = 1;
 			//$prefs['email']['layout'] = 2;
 			//$prefs['email']['font_size_offset'] = (-1);
-			
+
 			// DEBUG
 			//echo "<br>prefs['email']: <br>"
 			//	.'<pre>'.serialize($prefs['email']) .'</pre><br>';
 			return $prefs;
 			*/
-	
-	
 	} /* end of preferences class */
 ?>
