@@ -156,7 +156,7 @@
 						}
 
 						// Now make them a member of this group in phpgw.
-						while (list($members = each($thismembers))
+						while (list($members) = each($thismembers))
 						{
 							// Insert acls for this group based on memberuid field.
 							// Since the group has app rights, we don't need to give users
