@@ -1728,7 +1728,7 @@ class calendar extends calendar_
 			$str .= ')';
 
 			$var = Array(
-				'field'	=>	lang('Repitition'),
+				'field'	=>	lang('Repetition'),
 				'data'	=>	$str
 			);
 			$p->set_var($var);
