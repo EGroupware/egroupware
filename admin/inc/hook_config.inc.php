@@ -16,6 +16,7 @@
 	{
 		if(@function_exists('mcrypt_list_algorithms'))
 		{
+			$listed = array();
 			if(!isset($config['mcrypt_algo']))
 			{
 				$config['mcrypt_algo'] = 'tripledes';  /* MCRYPT_TRIPLEDES */
@@ -53,6 +54,7 @@
 	{
 		if(@function_exists('mcrypt_list_modes'))
 		{
+			$listed = array();
 			if(!isset($config['mcrypt_mode']))
 			{
 				$config['mcrypt_mode'] = 'cbc'; /* MCRYPT_MODE_CBC */
