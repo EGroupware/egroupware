@@ -2970,6 +2970,9 @@
 			{
 				$this->link_tpl->parse('picture','link_close',True);
 			}
+
+			//NDEE(160704) for event tooltips
+			$this->link_tpl->set_var('loctitle',lang('location'));
 			$str = $this->link_tpl->fp('out','link_pict');
 			$this->link_tpl->set_var('picture','');
 			$this->link_tpl->set_var('out','');
