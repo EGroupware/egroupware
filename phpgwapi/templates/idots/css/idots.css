@@ -192,13 +192,20 @@ a.textSidebox
 	right:10px;
 	top:113px;
 	visibility:hidden;*/
-	background-image:url(../images/alpha-white.png);
+/*	background-image:url(../images/alpha-white.png);*/
+	background-color:#eeeeee;
 	border-width:1px;
 	border-color:#7e7e7e;
 	border-style:solid;
 }
 
-
+.extraIconsRow
+{
+	border-top-color:#dddddd;
+	border-top-width:1px;
+	border-top-style:solid;
+	padding:2px;
+}
 
 #divMain
 {
