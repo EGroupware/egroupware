@@ -9,16 +9,17 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-
   /* $Id$ */
-{
+
+	{
 // Only Modify the $file and $title variables.....
-	$title = $appname;
-	$file = Array(
-		'Site Configuration' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-		'Edit custom fields' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index')
-	);
+		$file = Array
+		(
+			'Site Configuration'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+			'Edit custom fields'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'),
+			'Global Categories'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname)
+		);
 //Do not modify below this line
-	display_section($appname,$title,$file);
-}
+		display_section($appname,$appname,$file);
+	}
 ?>
