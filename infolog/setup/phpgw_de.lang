@@ -81,3 +81,12 @@ no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versu
 Show open Events: Tasks/Calls/Notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
 List no Subs/Childs	infolog	de	Teilprojekte/Antwortdokumente nicht anzeigen
 Show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
+no Filter	infolog	de	kein Filter
+own	infolog	de	eigene
+own open	infolog	de	eigene offen
+own overdue	infolog	de	eigene überfällig
+own upcoming	infolog	de	eigene zukünftig
+open	infolog	de	offen
+overdue	infolog	de	überfällig
+upcoming	infolog	de	zukünftig
+Default Filter for InfoLog	infolog	de	Standard-Filter für InfoLog

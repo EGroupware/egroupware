@@ -51,8 +51,8 @@
 					'both' => 'both' ),
 				'type'      => array(
 					'task' => 'task','phone' => 'phone','note' => 'note',
-					'confirm' => 'confirm','reject' => 'reject','email' => 'email',
-					'fax' => 'fax' )
+				/*	'confirm' => 'confirm','reject' => 'reject','email' => 'email',
+					'fax' => 'fax' no implemented so far */ )
 			);
 			$this->so = CreateObject('infolog.soinfolog');
 			$this->data = &$this->so->data;

@@ -18,6 +18,7 @@
 		var $db,$db2;
 		var $grants;
 		var $data = array( );
+		var $filters = array( );
 
 		function soinfolog( $info_id = 0)
 		{
@@ -87,12 +88,16 @@
 		}
 
 		// sql to be AND into a query to ensure ACL is respected (incl. _PRIVATE)
-		// filter: none    - list all entrys user have rights to see
-		//         private - list only his personal entrys
+		// filter: none|all    - list all entrys user have rights to see
+		//         private|own - list only his personal entrys
 		//							(incl. those he is responsible for !!!)            
 		function aclFilter($filter = 'none')
 		{
 			global $phpgw_info;
+
+			ereg('.*(own|privat|all|none).*',$filter,$vars);
+			$filter = $vars[1];
+
 			if (isset($this->acl_filter[$filter]))
 			{
 				return $this->acl_filter[$filter];  // used cached filter if found
@@ -122,7 +127,7 @@
 			$filtermethod = " (info_owner=$user"; // user has all rights
 
 			// private: own entries plus the one user is responsible for 
-			if ($filter == 'private')
+			if ($filter == 'private' || $filter == 'own')
 			{
 				$filtermethod .= " OR info_responsible=$user AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
@@ -139,11 +144,40 @@
 			}
 			$filtermethod .= ') ';
 			
-			// echo "<p>aclFilter('$filter')(user='$user') = '$filtermethod'</p>";
-			
 			return $this->acl_filter[$filter] = $filtermethod;  // cache the filter
 		}      
 	
+		function statusFilter($filter = '')
+		{
+			ereg('.*(done|open|offer).*',$filter,$vars);
+			$filter = $vars[1];
+
+			switch ($filter)
+			{
+				case 'done':	return " AND info_status IN ('done','billed')";
+				case 'open':	return " AND NOT (info_status IN ('done','billed'))";
+				case 'offer':	return " AND info_status = 'offer'";
+			}
+			return '';
+		}
+
+		function dateFilter($filter = '')
+		{
+			ereg('.*(upcoming|today|overdue).*',$filter,$vars);
+			$filter = $vars[1];
+
+			$now = getdate(time());
+			$tomorrow = mktime(0,0,0,$now['mon'],$now['mday']+1,$now['year']);
+
+			switch ($filter)
+			{
+				case 'upcoming':	return " AND info_startdate >= '$tomorrow'";
+				case 'today':		return " AND info_startdate < '$tomorrow'";
+				case 'overdue':	return " AND (info_enddate != 0 AND info_enddate < '$tomorrow')";
+			}
+			return '';
+		}
+
 		function init()
 		{
 			global $phpgw_info;
@@ -236,11 +270,10 @@
 			{
 			  $ordermethod = 'order by info_datecreated desc';   // newest first
 			}
-			if (!$filter)
-			{
-			  $filter = 'none';
-			}
 			$filtermethod = $this->aclFilter($filter);
+			$filtermethod .= $this->statusFilter($filter);
+			$filtermethod .= $this->dateFilter($filter);
+			// echo "<p>filtermethod='$filtermethod'</p>";
 
 			if ($cat_id)
 			{

@@ -59,6 +59,18 @@
 					'offer' => 'offer.gif',      'offer_alt' => 'offer' )
 			);
 
+			$this->filters = array(
+				'none'				=>	lang('no Filter'),
+				'done'				=>	lang('done'),
+				'own'					=>	lang('own'),
+				'own+open+today'	=>	lang('own open'),
+				'own+open+overdue'=>	lang('own overdue'),
+				'own+upcoming'		=>	lang('own upcoming'),
+				'open+today'		=>	lang('open'),
+				'open+overdue'		=>	lang('overdue'),
+				'upcoming'			=>	lang('upcoming'),
+			);
+
 			$this->html = CreateObject('infolog.html');
 			$this->template = CreateObject('phpgwapi.Template',
 													 $phpgw->common->get_tpl_dir('infolog'));
@@ -274,6 +286,11 @@
 
 			if ($cat_filter) $cat_id = $cat_filter;
 
+			if (!$filter)
+			{
+				$filter = $phpgw_info['user']['preferences']['infolog']['defaultFilter'];
+			}
+
 			$hidden_vars = array(
 				'sort' => $sort,'order' => $order,'query' => $query,
 				'start' => $start,'filter' => $filter,'cat_id' => $cat_id
@@ -304,9 +321,13 @@
 									$this->bo->addr2name($addr));
 					break;
 			  default:
-					$t->set_var(lang_info_action,lang('Info Log'));
+					if ($filter && $filter != 'none')
+					{
+						$filter_name = ': '.$this->filters[ $filter ];
+					}
+					$t->set_var(lang_info_action,lang('Info Log').$filter_name);
 					break;
-			}    
+			}
 			$t->set_var($this->setStyleSheet( ));
 
 			if (!$for_include)
@@ -343,8 +364,6 @@
 			$t->set_var(h_lang_sub,lang('Sub'));
 			$t->set_var(h_lang_action,lang('Action'));
 			// -------------- end header declaration -----------------
-
-			if (!$filter) $filter = 'none';
 
 			$ids = $this->bo->readIdArray($order,$sort,$filter,$cat_id,$query,
 								  					$action,$addr_id,$proj_id,$info_id,
@@ -388,7 +407,7 @@
 			$t->set_block('info_list_t','cat_selection','cat_selectionhandle');
 
 			if (!$for_include || $total > $maxmatchs ||
-				 $query || $filter != 'none' || $cat_id)
+				 $query || $cat_id)
 			{
 				$t->parse('cat_selectionhandle','cat_selection',True);
 
@@ -403,8 +422,13 @@
 				{
 					$q_string .= "&cat_id=$cat_id";
 				}
+				while (list($f,$lang) = each ($this->filters))
+				{
+					$filters[] = array( $f,$lang );
+				}
 				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
-							$total,'&'.$q_string,'95%',$phpgw_info['theme']['th_bg']);
+							$total,'&'.$q_string,'95%',$phpgw_info['theme']['th_bg'],
+							0,$filters);
 
 				$t->set_var('next_matchs',$next_matchs);
 
@@ -849,9 +873,14 @@
 
 			$prefs = array(
 				'homeShowEvents'	=> 'Show open Events: Tasks/Calls/Notes on main screen',
+				'defaultFilter'	=>	'Default Filter for InfoLog',
 				'listNoSubs'		=> 'List no Subs/Childs',
 				'longNames'			=> 'Show full usernames'
 			);
+			$allowed_values = array (
+				'defaultFilter' => $this->filters,
+			);
+
 			$phpgw->preferences->read_repository();
 
 			if ($save)
@@ -888,8 +917,20 @@
 			{
 				$t->set_var('bg_nm_color',$this->nextmatchs->alternate_row_color());
 				$t->set_var('field',lang($lang));
-				$t->set_var('data',$html->checkbox($pref,
+
+				if (is_array($allowed_values[$pref]))
+				{
+					if (!is_object($sbox)) $sbox = CreateObject('phpgwapi.sbox2');
+
+					$t->set_var('data',$sbox->getArrayItem($pref,
+									$phpgw_info['user']['preferences']['infolog'][$pref],
+									$allowed_values[$pref],1));
+				}
+				else
+				{
+					$t->set_var('data',$html->checkbox($pref,
 								$phpgw_info['user']['preferences']['infolog'][$pref]));
+				}
 				$t->parse('pref_linehandle','pref_line',True);
 			}
 			$t->pfp('out','info_prefs');
