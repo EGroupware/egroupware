@@ -20,6 +20,7 @@
 
 // XML RPC Server class
 // requires: xmlrpc.inc
+class xmlrpcs { }
 
 // listMethods: either a string, or nothing
 $_xmlrpcs_listMethods_sig=array(array($xmlrpcArray, $xmlrpcString), 
