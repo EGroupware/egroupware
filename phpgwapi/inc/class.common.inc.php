@@ -1204,7 +1204,46 @@
 		@param $min minutes
 		@param $sec defaults to ''
 		*/
-    function formattime($hour,$min,$sec='')
+		function formattime($hour,$min,$sec='')
+		{
+			$h12 = $hour;
+			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12')
+			{
+				if ($hour >= 12) 
+				{
+					$ampm = ' pm';
+				}
+				else
+				{
+					$ampm = ' am';
+				}
+
+				$h12 %= 12;
+
+				if ($h12 == 0 && $hour)
+				{
+					$h12 = 12;
+				}
+				if ($h12 == 0 && !$hour)
+				{
+					$h12 = 0;
+				}
+			}
+			else 
+			{
+				$h12 = $hour;
+			}
+
+			if ($sec)
+			{
+				$sec = ":$sec";
+			}
+
+			return "$h12:$min$sec$ampm";
+		}
+
+	/* If the above still works, please remove this */
+    function old_formattime($hour,$min,$sec='')
     {
       $h12 = $hour;
       if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12') {
@@ -1225,7 +1264,6 @@
 
        return "$h12:$min$sec$ampm";
     }
-
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/*!
