@@ -16,13 +16,13 @@
   include("../header.inc.php");
 
   if ($submit) {
-     $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"calendar");
+     $phpgw->preferences->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"calendar");
 
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"workdayends","calendar");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdayends","calendar");
      if ($mainscreen_showevents) {
-        $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
+        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
      }
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      exit;
@@ -36,6 +36,7 @@
   }
 
   echo "<p><b>" . lang("Calendar preferences") . ":" . "</b><hr><p>";
+
 ?>
  <form action="<?php echo $phpgw->link(); ?>" method="POST">
   <table border="0" align="center" width="50%">
@@ -45,7 +46,10 @@
   <?php $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color); ?>
   <tr bgcolor="<?php echo $tr_color; ?>">
    <td><?php echo lang("show high priority events on main screen"); ?> ?</td>
-   <td align="center"><input type="checkbox" name="mainscreen_showevents" value="Y" <?php if ($phpgw_info["user"]["preferences"]["mainscreen_showevents"] == "Y") echo " checked"; ?>></td>
+   <td align="center"><input type="checkbox" name="mainscreen_showevents" value="Y" <?php
+	 if ($phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"] == "Y") echo " checked"; 
+   ?>>
+   </td>
   </tr>
 
   <?php
