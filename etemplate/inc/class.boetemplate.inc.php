@@ -385,7 +385,7 @@
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$name]->render($cell,$form_name,$value,$readonly,
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->render($cell,$form_name,$value,$readonly,
 				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],$this);
 		}
 
