@@ -79,12 +79,12 @@
 			{			
 				$this->nextmatchs->template_alternate_row_color($this->template);
 
-				$var = Array(
-					'row_loginid'	=> $record['loginid'],
-					'row_ip'		=> $record['ip'],
-					'row_li'		=> $record['li'],
-					'row_lo'		=> $record['lo'],
-					'row_total'	=> $record['total']
+				$var = array(
+					'row_loginid' => $record['loginid'],
+					'row_ip'      => $record['ip'],
+					'row_li'      => $record['li'],
+					'row_lo'      => $record['lo'],
+					'row_total'   => ($record['lo']?$record['total']:'&nbsp;')
 				);
 				$this->template->set_var($var);
 				$this->template->fp('rows_access','row',True);
