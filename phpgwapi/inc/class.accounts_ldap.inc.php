@@ -122,6 +122,19 @@
 
 		function delete($account_id)
 		{
+			global $phpgw, $phpgw_info;
+
+			$account_lid = $this->id2name($account_id);
+
+			$ds = $phpgw->common->ldapConnect();
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]["dn"]) {
+				$del = ldap_delete($ds, $allValues[0]["dn"]);
+			}
+
+			// Do this last since we are depending upon this record to get the account_lid above
 			$this->db->query("DELETE FROM phpgw_accounts WHERE account_id=$account_id");
 		}
 
@@ -285,7 +298,7 @@
 			$sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u')";
 			$this->db->query($sql);
 			$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)",__LINE__,__FILE__);
+			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
 			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
 			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
 			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
