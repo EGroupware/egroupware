@@ -154,9 +154,9 @@ class ProcessMonitor extends Base {
               group by wf_p_id";
     $result = $this->query($query);
     while($res = $result->fetchRow()) {
-      $pId = $res['pId'];
+      $pId = $res['wf_p_id'];
       if (!isset($ret[$pId])) continue;
-      $ret[$pId]['activities'] = $res['num_activities'];
+      $ret[$pId]['wf_activities'] = $res['num_activities'];
     }
     $retval = Array();
     $retval["data"] = $ret;
@@ -175,7 +175,7 @@ class ProcessMonitor extends Base {
       $bindvars = array();
     }
     if($where) {
-      $where = preg_replace('/pId/', 'ga.pId', $where);
+      $where = preg_replace('/pId/', 'ga.wf_p_id', $where);
       if($mid) {
         $mid.= " and ($where) ";
       } else {
