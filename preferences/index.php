@@ -101,7 +101,16 @@
 		global $pref_tpl;
 
 		$pref_tpl->set_var('pref_link',$pref_link);
-		$pref_tpl->set_var('pref_text',$pref_text);		
+
+		if (strtolower($pref_text) == 'grant access' && $GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
+		{
+			return False;
+		}
+		else
+		{
+			$pref_tpl->set_var('pref_text',$pref_text);
+		}
+
 		$pref_tpl->parse('rows','link_row',True);
 	} 
 

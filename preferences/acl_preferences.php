@@ -11,7 +11,13 @@
 
 	/* $Id$ */
 
-	$phpgw_flags = Array(
+	if (! $acl_app)
+	{
+		$acl_app            = 'preferences';
+		$acl_app_not_passed = True;
+	}
+
+	$phpgw_flags = array(
 		'currentapp'               => $acl_app,
 		'enable_nextmatchs_class'  => True,
 		'noappheader'              => True,
@@ -28,6 +34,23 @@
 
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
+
+	if ($acl_app_not_passed)
+	{
+		$GLOBALS['phpgw']->log->message(array(
+			'text' => 'F-BadmenuactionVariable, failed to pass acl_app.',
+			'line' => __LINE__,
+			'file' => __FILE__
+		));
+		$GLOBALS['phpgw']->log->commit();
+	}
+
+	if ($GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
+	{
+		echo '<center><b>' . lang('Access not permitted') . '</b></center>';
+		$phpgw->common->phpgw_exit(True);
+	}
+
 	/*
 	if(isset($save_my_owner) && $phpgw_info['user']['apps']['admin'])
 	{

@@ -1,6 +1,6 @@
 <!-- BEGIN header -->
 <form method="POST" action="{action_url}">
-<table border="0" align="center">
+<table border="0" align="center" width="85%">
    <tr bgcolor="{th_bg}">
     <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
@@ -97,6 +97,17 @@
      </select>
     </td>
    </tr>
+
+   <tr bgcolor="{row_off}">
+    <td>{lang_Deny_all_users_access_to_grant_other_users_access_to_there_entrys ?}:</td>
+    <td>
+     <select name="newsettings[deny_user_grants_access]">
+      <option value="">No</option>
+      <option value="True"{selected_deny_user_grants_access_True}>Yes</option>
+     </select>
+    </td>
+   </tr>
+
 <!--
    <tr bgcolor="{row_off}">
      <td>{lang_Default_file_system_space_per_user}/{lang_group_?}:</td>
