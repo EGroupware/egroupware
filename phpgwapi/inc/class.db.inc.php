@@ -27,7 +27,7 @@
 	}
 	if (!isset($GLOBALS['phpgw_info']['server']['use_adodb']) || $GLOBALS['phpgw_info']['server']['use_adodb'])
 	{
-		include_once('adodb/adodb.inc.php');
+		include_once(PHPGW_API_INC.'/adodb/adodb.inc.php');
 	}
 
 	class db_
@@ -145,65 +145,84 @@
 		*
 		* @param string $Database name of database to use (optional)
 		* @param string $Host database host to connect to (optional)
+		* @param string $Port database port to connect to (optional)
 		* @param string $User name of database user (optional)
-		* @var string $Password password for database user (optional)
+		* @param string $Password password for database user (optional)
 		*/
-		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
+		function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL,$Type = NULL)
 		{
 			/* Handle defaults */
-			if ($Database == '')
+			if (!is_null($Database) && $Database)
 			{
-				$Database = $this->Database;
+				$this->Database = $Database;
 			}
-			if ($Host == '')
+			if (!is_null($Host) && $Host)
 			{
-				$Host     = $this->Host;
+				$this->Host     = $Host;
 			}
-			if ($Port == '')
+			if (!is_null($Port) && $Port)
 			{
-				$Port     = $this->Port;
+				$this->Port     = $Port;
 			}
-			if ($User == '')
+			if (!is_null($User) && $User)
 			{
-				$User     = $this->User;
+				$this->User     = $User;
 			}
-			if ($Password == '')
+			if (!is_null($Password) && $Password)
 			{
-				$Password = $this->Password;
+				$this->Password = $Password;
+			}
+			if (!is_null($Type) && $Type)
+			{
+				$this->Type = $Type;
 			}
 
 			if (!$this->Link_ID)
 			{
-				$this->type = $GLOBALS['phpgw_info']['server']['db_type'];
-				if (!is_object($GLOBALS['phpgw']->ADOdb))
+				switch($this->Type)	// convert to ADO db-type-names
 				{
-					$error_str = "$Host, $User, \$Password, $Database";
-					switch($this->type)	// convert to ADO db-type-names
+					case 'pgsql':
+						$type = 'postgres';
+						// create our own pgsql connection-string, to allow unix domain soccets if !$Host
+						$this->Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
+							" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
+						$this->User = $this->Password = $this->Database = '';	// to indicate $Host is a connection-string
+						break;
+					default:
+						$this->Host .= ($this->Port ? ':'.$this->Port : '');
+						$type = $this->Type;
+				}
+
+				if (!is_object($GLOBALS['phpgw']->ADOdb) ||	// we have no connection so far
+					(is_object($GLOBALS['phpgw']->db) &&	// we connect to a different db, then the global one
+						($this->Type != $GLOBALS['phpgw']->db->Type ||
+						$this->Database != $GLOBALS['phpgw']->db->Database ||
+						$this->User != $GLOBALS['phpgw']->db->User ||
+						$this->Host != $GLOBALS['phpgw']->db->Host ||
+						$this->Port != $GLOBALS['phpgw']->db->Port)))
+				{
+					if (!is_object($GLOBALS['phpgw']->ADOdb))	// use the global object to store the connection
 					{
-						case 'pgsql':
-							$type = 'postgres';
-							// create our own pgsql connection-string, to allow unix domain soccets if !$Host
-							$Host = "dbname=$Database".($Host ? " host=$Host".($Port ? " port=$Port" : '') : '').
-								" user=$User".($Password ? " password='".addslashes($Password)."'" : '');
-							$User = $Password = $Database = '';	// to indicate $Host is a connection-string
-							break;
-						default:
-							$Host .= ($Port ? ':'.$Port : '');
-							$type = $this->type;
+						$this->Link_ID = &$GLOBALS['phpgw']->ADOdb;
 					}
-					$GLOBALS['phpgw']->adodb = ADONewConnection($type);
-					if (!$GLOBALS['phpgw']->adodb)
+					$this->Link_ID = ADONewConnection($type);
+					if (!$this->Link_ID)
 					{
 						$this->halt("No ADOdb support for '$type' !!!");
-					}
-					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
-					if (!$connect = $GLOBALS['phpgw']->adodb->$connect($Host, $User, $Password, $Database))
-					{
-						$this->halt("ADOdb::$connect($error_str) failed.");
 						return 0;	// in case error-reporting = 'no'
 					}
+					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
+					if (!$this->Link_ID->$connect($this->Host, $this->User, $this->Password, $this->Database))
+					{
+						$this->halt("ADOdb::$connect($this->Host, $this->User, \$Password, $this->Database) failed.");
+						return 0;	// in case error-reporting = 'no'
+					}
+					//echo "new ADOdb connection<pre>".print_r($GLOBALS['phpgw']->ADOdb,True)."</pre>\n";
 				}
-				$this->Link_ID = &$GLOBALS['phpgw']->adodb;
+				else
+				{
+					$this->Link_ID = &$GLOBALS['phpgw']->ADOdb;
+				}
 			}
 			return $this->Link_ID;
 		}
@@ -235,9 +254,9 @@
 			{
 				return addslashes($str);
 			}
-			if (!$this->Link_ID)
+			if (!$this->Link_ID && !$this->connect())
 			{
-				$this->connect();
+				return False;
 			}
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->quote($str),1,-1);
@@ -251,6 +270,10 @@
 		*/
 		function to_timestamp($epoch)
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->DBTimeStamp($epoch),1,-1);
 		}
@@ -263,6 +286,10 @@
 		*/
 		function from_timestamp($timestamp)
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			return $this->Link_ID->UnixTimeStamp($timestamp);
 		}
 
@@ -298,9 +325,9 @@
 			{
 				return 0;
 			}
-			if (!$this->connect())
+			if (!$this->Link_ID && !$this->connect())
 			{
-				return 0; /* we already complained in connect() about that. */
+				return False;
 			}
 
 			# New query, discard previous result.
@@ -386,7 +413,7 @@
 		*/
 		function seek($pos = 0)
 		{
-			if (!$this->Query_ID->Move($this->Row = $pos))
+			if (!$this->Query_ID  || !$this->Query_ID->Move($this->Row = $pos))
 			{
 				$this->halt("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
 				$this->Query_ID->Move( $this->num_rows() );
@@ -403,7 +430,10 @@
 		*/
 		function transaction_begin()
 		{
-			$this->connect();
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			//return $this->Link_ID->BeginTrans();
 			return $this->Link_ID->StartTrans();
 		}
@@ -415,6 +445,10 @@
 		*/
 		function transaction_commit()
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			//return $this->Link_ID->CommitTrans();
 			return $this->Link_ID->CompleteTrans();
 		}
@@ -426,6 +460,10 @@
 		*/
 		function transaction_abort()
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			//return $this->Link_ID->RollbackTrans();
 			return $this->Link_ID->FailTrans();
 		}
@@ -439,6 +477,10 @@
 		*/
 		function get_last_insert_id($table, $field)
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			$id = $this->Link_ID->Insert_ID();
 
 			if ($id === False)	// function not supported
@@ -481,6 +523,10 @@
 		*/
 		function affected_rows()
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			return $this->Link_ID->Affected_Rows();
 		}
 
@@ -501,7 +547,7 @@
 		*/
 		function num_fields()
 		{
-			return $this->Query_ID->FieldCount();
+			return $this->Query_ID ? $this->Query_ID->FieldCount() : False;
 		}
 
 		/**
@@ -645,20 +691,35 @@
 		*/
 		function metadata($table='',$full=false)
 		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			$columns = $this->Link_ID->MetaColumns($table);
+			//$columns = $this->Link_ID->MetaColumnsSQL($table);
 			//echo "<b>metadata</b>('$table')=<pre>\n".print_r($columns,True)."</pre>\n";
 
 			$metadata = array();
 			$i = 0;
 			foreach($columns as $column)
 			{
+				// for backwards compatibilty (depreciated)
+				unset($flags);
+				if($column->auto_increment) $flags .= "auto_increment ";
+				if($column->primary_key) $flags .= "primary_key ";
+				if($column->binary) $flags .= "binary ";
+
+//				_debug_array($column);
 				$metadata[$i] = array(
 					'table' => $table,
 					'name'  => $column->name,
 					'type'  => $column->type,
-					'len'   => $column->max_len,
-					'flags' => False,			// the following values are not used in eGW atm
+					'len'   => $column->max_length,
+					'flags' => $flags, // for backwards compatibilty (depreciated) used by JiNN atm
 					'not_null' => $column->not_null,
+					'auto_increment' => $column->auto_increment,
+					'primary_key' => $column->primary_key,
+					'binary' => $column->binary,
 					'has_default' => $column->has_default,
 					'default'  => $column->default_value,
 				);
@@ -683,7 +744,10 @@
 		*/
 		function table_names()
 		{
-			$this->connect();
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
 			$result = array();
 			$tables = $this->Link_ID->MetaTables('TABLES');
 			if (is_array($tables))
@@ -779,9 +843,9 @@
 			{
 				return "'" . (!isset($value) || $value == '' ? '' : addslashes($value)) . "'";
 			}
-			if (!$this->Link_ID)
+			if (!$this->Link_ID && !$this->connect())
 			{
-				$this->connect();
+				return False;
 			}
 			switch($type)
 			{
