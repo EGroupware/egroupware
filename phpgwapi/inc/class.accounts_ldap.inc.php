@@ -73,7 +73,7 @@
       $db->next_record();
       
       $phpgw_info["user"]["groups"]            = explode (",",$db->f("account_groups"));
-      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
+      $apps = CreateObject('phpgwapi.applications',array(intval($phpgw_info["user"]["account_id"]),'u'));
       $phpgw_info["user"]["app_perms"]         = $apps->app_perms;
       $phpgw_info["user"]["lastlogin"]         = $db->f("account_lastlogin");
       $phpgw_info["user"]["lastloginfrom"]     = $db->f("account_lastloginfrom");
@@ -124,7 +124,7 @@
       $db->next_record();
       
       $userData["groups"]            = explode (",",$db->f("account_groups"));
-      $apps = CreateObject('phpgwapi.applications',intval($userData["account_lid"]));
+      $apps = CreateObject('phpgwapi.applications',array(intval($userData["account_id"]),'u'));
       $userData["app_perms"]         = $apps->app_perms;
       $userData["lastlogin"]         = $db->f("account_lastlogin");
       $userData["lastloginfrom"]     = $db->f("account_lastloginfrom");
