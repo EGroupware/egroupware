@@ -279,15 +279,16 @@
 				$session_flags = 'N';
 			}
 
+			$user_ip  = $this->getuser_ip();
 			$phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
-								. "','".$login."','" . $this->getuser_ip() . "','"
+								. "','".$login."','" . $user_ip . "','"
 								. $now . "','" . $now . "','".$info_string."','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
 			$phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
-								. "$login','" . $this->getuser_ip() . "','$now','') ",__LINE__,__FILE__);
+								. "$login','" . $user_ip . "','$now','') ",__LINE__,__FILE__);
 
-			$phpgw->auth->update_lastlogin($this->account_id,$this->getuser_ip());
+			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);
 
 			return $this->sessionid;
 		}
