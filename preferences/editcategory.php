@@ -11,6 +11,12 @@
   \**************************************************************************/
   /* $Id$ */
 
+    if (! $cat_id)
+    {
+        Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"
+                                        . "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+    }
+
     $phpgw_info['flags']['currentapp'] = $cats_app;
     $phpgw_info['flags']['noappheader'] = True;
     $phpgw_info['flags']['noappfooter'] = True;
@@ -28,12 +34,6 @@
                 . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-    if (! $cat_id)
-    {
-	Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"                                                                                                             
-					. "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
-    }
-
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
     $t->set_file(array('form' => 'category_form.tpl'));
     $t->set_block('form','add','addhandle');
@@ -50,8 +50,8 @@
 
 	if (!$error)
 	{
-    	    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id); }
-    	    else { $exists = $c->exists('subs',$cat_name,$cat_id); }
+    	    if (!$cat_parent) { $exists = $c->exists('appandmains',$cat_name,$cat_id); }
+    	    else { $exists = $c->exists('appandsubs',$cat_name,$cat_id); }
     	    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 	}
 

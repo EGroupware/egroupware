@@ -37,39 +37,72 @@
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
 
-	if ($submit)
+    if ($submit)
+    {
+	$errorcount = 0;
+
+	if (!$cat_name)
 	{
-		$errorcount = 0;
-
-		if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-
-		if (!$error)
-		{
-			if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
-			else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
-			if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
-		}
-
-		if ($cat_main && $cat_parent) 
-		{
-		    $main = $c->return_main($cat_parent);
-		    if ($main != $cat_main) { $error[$errorcount++] = lang('You selected an invalid main category !'); }		    
-		}
-
-		if (!$error)
-		{
-			$cat_name = addslashes($cat_name);
-			$cat_description = addslashes($cat_description);
-			if ($access) { $cat_access = 'private'; }
-			else { $cat_access = 'public'; }
-
-			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
-		}
+	    $error[$errorcount++] = lang('Please enter a name for that category !');
 	}
 
-    if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been added !',$cat_name)); }
-    if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
+	if (!$error)
+	{
+	    if (!$cat_parent)
+	    {
+		$exists = $c->exists('appandmains',$cat_name,$cat_id='');
+	    }
+	    else
+	    {
+		$exists = $c->exists('appandsubs',$cat_name,$cat_id='');
+	    }
+
+	    if ($exists == True)
+	    {
+		$error[$errorcount++] = lang('That category name has been used already !');
+	    }
+	}
+
+	if ($cat_main && $cat_parent) 
+	{
+	    $main = $c->return_main($cat_parent);
+	    if ($main != $cat_main)
+	    {
+		$error[$errorcount++] = lang('You selected an invalid main category !');
+	    }		    
+	}
+
+	if (!$error)
+	{
+	    $cat_name = addslashes($cat_name);
+	    $cat_description = addslashes($cat_description);
+	    if ($access)
+	    {
+		$cat_access = 'private';
+	    }
+	    else
+	    {
+		$cat_access = 'public';
+	    }
+
+	    $c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
+	}
+    }
+
+    if ($errorcount)
+    {
+	$t->set_var('message',$phpgw->common->error_list($error));
+    }
+
+    if (($submit) && (! $error) && (! $errorcount))
+    {
+	$t->set_var('message',lang('Category x has been added !',$cat_name));
+    }
+
+    if ((! $submit) && (! $error) && (! $errorcount))
+    {
+	$t->set_var('message','');
+    }
 
     $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
     $t->set_var('title_categories',lang('Add x category for',$cats_app));

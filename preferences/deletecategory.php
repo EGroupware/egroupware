@@ -11,9 +11,15 @@
   \**************************************************************************/
   /* $Id$ */
 
-    if ($confirm) {
-    $phpgw_info["flags"] = array('noheader' => True, 
-                                  'nonavbar' => True);
+    if (! $cat_id)
+    {
+	Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+    }
+
+    if ($confirm)
+    {
+	$phpgw_info['flags'] = array('noheader' => True, 
+				    'nonavbar' => True);
     }
 
     $phpgw_info['flags']['currentapp'] = $cats_app;
@@ -25,44 +31,51 @@
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
 
-    if (! $cat_id) {
-    Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
+    if ($confirm)
+    {
+        if ($subs)
+	{
+	    $c->delete($cat_id,'True');
+	}
+        else
+	{
+	    $c->delete($cat_id);
+	}
+	Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
     }
-
-    if ($confirm) {
-        if ($subs) { $c->delete($cat_id,'True'); }
-        else { $c->delete($cat_id); }
-	Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
-    }
-    else {
+    else
+    {
 	$hidden_vars = "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n"
     		     . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
     		     . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
+    		     . "<input type=\"hidden\" name=\"global_cats\" value=\"$global_cats\">\n"
     		     . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n";
 
-    $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
-    $t->set_file(array('category_delete' => 'delete.tpl'));
-    $t->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
-    $t->set_var('font',$phpgw_info['theme']['font']);
-    $t->set_var('hidden_vars',$hidden_vars);
+	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
+	$t->set_file(array('category_delete' => 'delete.tpl'));
+	$t->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
+	$t->set_var('font',$phpgw_info['theme']['font']);
+	$t->set_var('hidden_vars',$hidden_vars);
 
-    $exists = $c->exists('subs',$cat_name='',$cat_id);
-    if ($exists==True) {
-        $t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
-        $t->set_var('subs','<input type="checkbox" name="subs" value="True">');
-    }
-    else {
-        $t->set_var('lang_subs','');
-        $t->set_var('subs', '');
-    }
+	$exists = $c->exists('subs',$cat_name='',$cat_id);
+	if ($exists==True)
+	{
+    	    $t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
+    	    $t->set_var('subs','<input type="checkbox" name="subs" value="True">');
+	}
+	else
+	{
+    	    $t->set_var('lang_subs','');
+    	    $t->set_var('subs', '');
+	}
 
-    $t->set_var('nolink',$phpgw->link('/preferences/categories.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
-    $t->set_var('lang_no',lang('No'));
+	$t->set_var('nolink',$phpgw->link('/preferences/categories.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+	$t->set_var('lang_no',lang('No'));
 
-    $t->set_var('action_url',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id$cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
-    $t->set_var('lang_yes',lang('Yes'));
+	$t->set_var('action_url',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id$cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+	$t->set_var('lang_yes',lang('Yes'));
 
-    $t->pparse('out','category_delete');
+	$t->pparse('out','category_delete');
     }
     
     $phpgw->common->phpgw_footer();
