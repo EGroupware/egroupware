@@ -148,7 +148,18 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					if(gettype($val) == 'array')
+					{
+						while(list($x,$y) = each($val))
+						{
+							$tmp[$x] = CreateObject('phpgwapi.xmlrpcval',$y, 'string');
+						}
+						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$tmp,'struct');
+					}
+					else
+					{
+						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					}
 				}
 			}
 			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
@@ -191,7 +202,18 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					if(gettype($val) == 'array')
+					{
+						while(list($x,$y) = each($val))
+						{
+							$tmp[$x] = CreateObject('phpgwapi.xmlrpcval',$y, 'string');
+						}
+						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$tmp,'struct');
+					}
+					else
+					{
+						$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					}
 				}
 			}
 			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
