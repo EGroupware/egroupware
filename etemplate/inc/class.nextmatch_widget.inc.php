@@ -45,7 +45,7 @@
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
 			//echo "<p>nextmatch_widget.pre_process(name='$name'): value = "; _debug_array($value);
-			echo "<p>nextmatch_widget.pre_process(name='$name'): nm_global = "; _debug_array($nm_global);
+			//echo "<p>nextmatch_widget.pre_process(name='$name'): nm_global = "; _debug_array($nm_global);
 
 			$extension_data = array(
 				'type' => $cell['type']
