@@ -206,7 +206,7 @@
 		/* start by looping thru the expected list and set params with */
 		/* the default values                                          */
 		$num = count($expected);
-    for ($i = 0; $i < $num; $i++)
+		for ($i = 0; $i < $num; $i++)
 		{
 			$args[$expected[$i]['name']] = $expected[$i]['default'];
 			if ($expected[$i]['default'] === '##REQUIRED##')
@@ -214,7 +214,7 @@
 				$required[$expected[$i]['name']] = True;
 			}
 			$types[$expected[$i]['name']] = $expected[$i]['type']; 
- 		}
+		}
 		
 		/* Make sure they passed at least one param */
 		if(count($recieved) != 0)
@@ -222,7 +222,7 @@
 			/* if used as standard function we loop thru and set by position */
 			if(!is_array($recieved[0]))
 			{
-		    for ($i = 0; $i < $num; $i++)
+			for ($i = 0; $i < $num; $i++)
 				{
 					if(isset($recieved[$i]) && $recieved[$i] !== '##DEFAULT##')
 					{
@@ -237,15 +237,15 @@
 							exit;
 						}
 					}
-   			}
+				}
 			}
 			/* if used as standard function we loop thru and set by position */
 			else
 			{
-		    for ($i = 0; $i < $num; $i++)
+				for ($i = 0; $i < $num; $i++)
 				{
 					$types[$expected[$i]['name']] = $expected[$i]['type']; 
- 				}
+				}
 				while(list($key,$val) = each($recieved[0]))
 				{
 					if($val !== '##DEFAULT##')
@@ -879,13 +879,13 @@
 			{
 				return $GLOBALS['phpgw']->accounts->name2id($default_id);
 			}
-			return intval($default_id);
+			return (int)$default_id;
 		}
 		elseif (is_string($account_id))
 		{
-			if($GLOBALS['phpgw']->accounts->exists(intval($account_id)) == True)
+			if($GLOBALS['phpgw']->accounts->exists((int)$account_id) == True)
 			{
-				return intval($account_id);
+				return (int)$account_id;
 			}
 			else
 			{
@@ -957,8 +957,8 @@
 			echo'<br>Input values: '
 				. 'A="'.$a.'", B="'.$b.'"';
 		}
-		$newa = ereg_replace('pre','.',$a);
-		$newb = ereg_replace('pre','.',$b);
+		$newa = str_replace('pre','.',$a);
+		$newb = str_replace('pre','.',$b);
 		$testa = explode('.',$newa);
 		if(@$testa[1] == '')
 		{
@@ -981,8 +981,8 @@
 
 		for ($i=0;$i<count($testa);$i++)
 		{
-			if ($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is less than ' . intval($testb[$i]) . ' ...'; }
-			if (intval($testa[$i]) < intval($testb[$i]))
+			if ($DEBUG) { echo'<br>Checking if '. (int)$testa[$i] . ' is less than ' . (int)$testb[$i] . ' ...'; }
+			if ((int)$testa[$i] < (int)$testb[$i])
 			{
 				if ($DEBUG) { echo ' yes.'; }
 				$less++;
@@ -994,7 +994,7 @@
 					break;
 				}
 			}
-			elseif(intval($testa[$i]) > intval($testb[$i]))
+			elseif((int)$testa[$i] > (int)$testb[$i])
 			{
 				if ($DEBUG) { echo ' no.'; }
 				$less--;
@@ -1046,8 +1046,8 @@
 			echo'<br>Input values: '
 				. 'A="'.$a.'", B="'.$b.'"';
 		}
-		$newa = ereg_replace('pre','.',$a);
-		$newb = ereg_replace('pre','.',$b);
+		$newa = str_replace('pre','.',$a);
+		$newb = str_replace('pre','.',$b);
 		$testa = explode('.',$newa);
 		if($testa[3] == '')
 		{
@@ -1062,8 +1062,8 @@
 
 		for ($i=0;$i<count($testa);$i++)
 		{
-			if ($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is more than ' . intval($testb[$i]) . ' ...'; }
-			if (intval($testa[$i]) > intval($testb[$i]))
+			if ($DEBUG) { echo'<br>Checking if '. (int)$testa[$i] . ' is more than ' . (int)$testb[$i] . ' ...'; }
+			if ((int)$testa[$i] > (int)$testb[$i])
 			{
 				if ($DEBUG) { echo ' yes.'; }
 				$less++;
@@ -1075,7 +1075,7 @@
 					break;
 				}
 			}
-			elseif(intval($testa[$i]) < intval($testb[$i]))
+			elseif((int)$testa[$i] < (int)$testb[$i])
 			{
 				if ($DEBUG) { echo ' no.'; }
 				$less--;
@@ -1153,5 +1153,4 @@
 		}
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
-
 ?>

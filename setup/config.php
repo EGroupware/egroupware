@@ -87,7 +87,7 @@
 	if(@get_var('submit',Array('POST')) && @$newsettings && !$files_in_docroot)
 	{
 		$datetime = CreateObject('phpgwapi.datetime');
-		switch (intval($newsettings['daytime_port']))
+		switch((int)$newsettings['daytime_port'])
 		{
 			case 13:
 				$newsettings['tz_offset'] = $datetime->getntpoffset();
@@ -224,7 +224,7 @@
 					$t->set_var($value,lang($newval));
 					break;
 				case 'value':
-					$newval = ereg_replace(' ','_',$newval);
+					$newval = str_replace(' ','_',$newval);
 					/* Don't show passwords in the form */
 					if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
 					{
@@ -256,7 +256,7 @@
 					}
 					break;
 				case 'hook':
-					$newval = ereg_replace(' ','_',$newval);
+					$newval = str_replace(' ','_',$newval);
 					$t->set_var($value,$newval($current_config));
 					break;
 				default:
