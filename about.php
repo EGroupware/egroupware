@@ -17,7 +17,7 @@
 	$GLOBALS['phpgw_info']['flags']['noheader'] = True;
 	include('header.inc.php');
 
-	$app = $HTTP_GET_VARS['app'];
+	$app = $_GET['app'];
 	if ($app)
 	{
 		if (!($included = $GLOBALS['phpgw']->hooks->single('about',$app)))
