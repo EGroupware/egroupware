@@ -8,10 +8,9 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
-	$phpgw_info = array();
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? @$GLOBALS['HTTP_GET_VARS']['sessionid'] : @$GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
 	if (! $GLOBALS['sessionid'])
 	{
@@ -47,11 +46,23 @@
 		$api_requested = True;
 	}
 
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader'   => True,
-		'nonavbar'   => True,
+	$GLOBALS['phpgw_info']['flags'] = array
+	(
+		//'noheader'   => True,
 		'currentapp' => $app
 	);
+
+	/* dont call the xslt_app_tpl if app isnt ported to xslt yet.
+	this is only temporarily. when more apps use xslt we should change it to ask for non xslt apps*/
+
+	switch($app)
+	{
+		case 'notes':
+		case 'property':
+			$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
+			break;
+	}
+
 	include('./header.inc.php');
 
 	if ($app == 'home' && ! $api_requested)

@@ -386,14 +386,6 @@
 			}
 		}
 
-		/* dont call the xslt_app_tpl if app isnt ported to xslt */
-		switch($GLOBALS['phpgw_info']['flags']['currentapp'])
-		{
-			case 'notes':
-				$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
-				break;
-		}
-
 		if($continue_app_data)
 		{
 			/* Make sure user is keeping his password in order */
