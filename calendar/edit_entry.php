@@ -193,7 +193,7 @@
 	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>');
 
 // Display Categories
-	display_item(lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','appandmains',$event->category,True).'</select>');
+	display_item(lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','all',$event->category,True).'</select>');
 
 // Date
 	$day_html = $sb->getDays('start[mday]',intval($phpgw->common->show_date($start,'d')));
