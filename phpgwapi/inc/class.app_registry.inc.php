@@ -396,7 +396,7 @@
 			}
 			else
 			{
-				$where_clause = "WHERE app_name='".$appid."'"
+				$where_clause = "WHERE app_name='".$appid."'";
 			}
 			$this->db->query('SELECT * FROM phpgw_applications '.$where_clause,__LINE__,__FILE__);
 			if(!$this->db->num_rows())
