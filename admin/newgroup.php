@@ -33,7 +33,7 @@
      }
 
      if (! $error) {
-        $phpgw->db->lock(array("accounts","groups","preferences"));
+        $phpgw->db->lock(array("accounts","groups"));
 
         $phpgw->accounts->add_app($n_group_permissions);
         $apps = $phpgw->accounts->add_app("",True);

@@ -244,7 +244,6 @@
         $preferences_update = True;
       }
       if ($preferences_update) {
-        echo "Committing new preferences<br>\n";
         $phpgw->preferences->commit(__LINE__,__FILE__);
       }
       unset($preferences_update);

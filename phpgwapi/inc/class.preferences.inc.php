@@ -55,12 +55,13 @@
 //echo "Account ID (After Initializing) = ".$this->account_id."<br>\n";
 
       if ($load_pref) {
-        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner='"
-                  . $this->account_id . "'",__LINE__,__FILE__);
+        $db2->lock("preferences");
+        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
         $db2->next_record();
         $pref_info = $db2->f("preference_value");
         $this->preference = unserialize($pref_info);
 //	echo "Preferences = ".$this->get_preferences()."<br>\n";
+        $db2->unlock();
       }
     }
 
@@ -73,6 +74,8 @@
       if ($this->account_id) {
         $db = $phpgw->db;
 
+        $db->lock("preferences");
+
         $db->query("delete from preferences where preference_owner=" . $this->account_id,__LINE__,__FILE__);
 
         if ($PHP_VERSION < "4.0.0") {
@@ -83,6 +86,9 @@
 
         $db->query("insert into preferences (preference_owner,preference_value) values ("
                   . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
+
+        $db->unlock();
+
 
         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
           $phpgw->preferences->preference = $this->get_preferences();

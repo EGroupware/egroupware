@@ -34,7 +34,7 @@
 
        $phpgw->accounts->phpgw_fillarray();
        if(!$phpgw->preferences->account_id) {
-         $phpgw->preferences = new preferences($phpgw_info["user"]["account_id"]);
+         $phpgw->preferences = CreateObject('phpgwapi.preferences',$phpgw_info["user"]["account_id"]);
        }
        $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
