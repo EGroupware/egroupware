@@ -78,6 +78,7 @@
 			if(floor(phpversion()) == 4)
 			{
 				$this->socket = fsockopen($server,$port,$errcode,$errmsg,$timeout);
+				socket_set_timeout($this->socket,$timeout,0);
 			}
 			else
 			{
@@ -192,7 +193,7 @@
 			{
 				if ($this->open_port($server,80, 15))
 				{
-					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n\n"))
+					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\r\n\r\n"))
 					{
 						return False;
 					}
@@ -227,7 +228,7 @@
 			{
 				if($this->open_port($server, 80, 15))
 				{
-					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n\n"))
+					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\r\n\r\n"))
 					{
 						return 0;
 					}
