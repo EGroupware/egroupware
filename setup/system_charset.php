@@ -65,8 +65,8 @@
 			{
 				Header('Location: index.php');
 			}
-			echo "<h3>Database successfully converted from '$_POST[current_charset]' to '$_POST[new_charset]'</h3>\n";
-			echo "<p>Click <b><a href=\"index.php\">here</a></b> to return to setup</p>\n";
+			echo '<h3>'.lang("Database successfully converted from '%1' to '%2'",$_POST[current_charset],$_POST[new_charset])."</h3>\n";
+			echo '<p>'.lang('Click <a href="index.php">here</a> to return to setup.')."</p>\n";
 			exit;
 		}
 	}
@@ -101,15 +101,9 @@
 				$GLOBALS['phpgw_setup']->db->query("SELECT * FROM $table",__LINE__,__FILE__);
 				while($columns = $GLOBALS['phpgw_setup']->db->row(True))
 				{
-					//$columns = $GLOBALS['phpgw_setup']->db->Record;
 					$update = array();
 					foreach($columns as $name => $data)
 					{
-						if (is_numeric($name))
-						{
-							unset($columns[$name]);
-							continue;
-						}
 						switch($definition['fd'][$name]['type'])
 						{
 							case 'char':
@@ -162,7 +156,7 @@
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));
 	$setup_tpl->set_var('lang_current',lang('Current system-charset'));
 	$setup_tpl->set_var('lang_convert_to',lang('Charset to convert to'));
-	$setup_tpl->set_var('lang_warning',lang('<b>Warning</b>: This feature is still experimental. <b>DO NOT USE IT ON A PRODUCTION SYSTEM.</b> Hopefully you know what you do ;-)'));
+	$setup_tpl->set_var('lang_warning','<b>Warning</b>: <font color="red">This feature is still experimental. <b>DO NOT USE IT ON A PRODUCTION SYSTEM.</b></font><br>Hopefully you know what you do ;-)');
 
 	$installed_charsets = $translation->get_installed_charsets();
 	if ($translation->system_charset || count($installed_charsets) == 1)
