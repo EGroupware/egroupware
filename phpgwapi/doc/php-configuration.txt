@@ -56,5 +56,5 @@ second so set it to 3660 if you want it to one hour ... the default is
 
 REGISTER GLOBALS
 register_globals = On
-Until release 0.9.14 phpGroupWare will not work, if the value is set to Off.
+Upto and including the 0.9.14 releases phpGroupWare will not work, if the value is set to Off.
 All further releases will support the Off setting.
