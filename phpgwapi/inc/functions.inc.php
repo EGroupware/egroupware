@@ -410,8 +410,8 @@
 		{
 			if (ereg('enable_',$phpgw_class_name[0]))
 			{
-				$enable_class = ereg_replace('enable_','',$phpgw_class_name[0]);
-				$enable_class = ereg_replace('_class','',$enable_class);
+				$enable_class = str_replace('enable_','',$phpgw_class_name[0]);
+				$enable_class = str_replace('_class','',$enable_class);
 				eval('$phpgw->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
 			}
 		}

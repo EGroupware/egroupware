@@ -569,6 +569,7 @@
 			$security = "('". $this->account_id ."'";
 			$myaccounts = CreateObject('phpgwapi.accounts');
 			$my_memberships = $myaccounts->memberships($this->account_id);
+			unset($myaccounts);
 			@reset($my_memberships);
 			while($my_memberships && list($key,$group) = each($my_memberships))
 			{
