@@ -24,9 +24,9 @@
 	
 	/* $Id$ */
 	
-	/****************************************************************************\
-	* If running in PHP3, then force admin to upgrade			     *
-	\****************************************************************************/
+	/***************************************************************************\
+	* If running in PHP3, then force admin to upgrade                           *
+	\***************************************************************************/
 
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
@@ -150,18 +150,18 @@
 	}
 
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'no';
-	@$GLOBALS['phpgw']->db->query("select count(config_name) from phpgw_config");
-	if (! @$GLOBALS['phpgw']->db->next_record())
+	@$GLOBALS['phpgw']->db->query("SELECT COUNT(config_name) FROM phpgw_config");
+	if(!@$GLOBALS['phpgw']->db->next_record())
 	{
 		$setup_dir = str_replace($_SERVER['PHP_SELF'],'index.php','setup/');
 		echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-		.'phpGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
+			.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
 		exit;
 	}
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'yes';
 
-	 /* Fill phpgw_info["server"] array */
-	 // An Attempt to speed things up using cache premise
+	/* Fill phpgw_info["server"] array */
+	// An Attempt to speed things up using cache premise
 	$GLOBALS['phpgw']->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
 	if ($GLOBALS['phpgw']->db->num_rows())
 	{
@@ -193,7 +193,7 @@
 			if($server_info_cache)
 			{
 				$cache_query = "DELETE FROM phpgw_app_sessions WHERE sessionid='0' and loginid='0' and app='phpgwapi' and location='config'";
-				$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);				
+				$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
 			}
 			$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
 				. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
