@@ -137,7 +137,8 @@ class matrixview {
 			$i++;
 		}
 		
-		$this->items_content[$this->items_count][0] = "$item;$color";
+		$this->items_content[$this->items_count][0] = $item;
+		$this->items_color[$this->items_count]      = $color;
 		// increase number of items in two-dimensional array
 		$this->items_count++;
 }
@@ -218,8 +219,8 @@ function out ()
 	for($z=0;$z<$this->items_count;$z++)
 	{
 		// seperate color and name from first array element
-		$itemname = strtok($this->items_content[$z][0],";");
-		$itemcolor = strtok(";");
+		$itemname  = $this->items_content[$z][0];
+		$itemcolor = $this->items_color[$z];
 		
 		echo "<tr>\n";
 		echo "<td>" . $itemname . "</td>\n";
