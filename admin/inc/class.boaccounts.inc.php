@@ -88,6 +88,7 @@
 			$GLOBALS['phpgw']->db->lock(
 				Array(
 					'phpgw_accounts',
+					'phpgw_app_sessions',
 					'phpgw_acl'
 				)
 			);
