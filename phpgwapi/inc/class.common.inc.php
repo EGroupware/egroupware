@@ -661,7 +661,7 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about')
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about' || $appname == 'help')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -1069,7 +1069,14 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				'app_tpl'			=> $app_tpl
 			);
 
-			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
+			if ($GLOBALS['phpgw_info']['flags']['headonly'] == True)
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi','default') . SEP . 'phpgw_header');
+			}
+			else
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
+			}
 
 			$cur_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
@@ -1137,15 +1144,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						$var['about_img_hover'] = $this->image('phpgwapi','question_mark2');
 					}
 
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'manual')
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'help')
 					{
-						$var['manual_img']			= $this->image('manual','manual');
-						$var['manual_img_hover']	= $this->image_on('manual','manual','_over');
+						$var['help_img']			= $this->image('phpgwapi','help');
+						$var['help_img_hover']		= $this->image_on('phpgwapi','help','_over');
 					}
 					else
 					{
-						$var['manual_img']			= $this->image_on('manual','manual','_over');
-						$var['manual_img_hover']	= $this->image('manual','manual');
+						$var['help_img']			= $this->image_on('phpgwapi','help','_over');
+						$var['help_img_hover']		= $this->image('phpgwapi','help');
 					}
 
 					$var['logo_img'] = $this->image('phpgwapi','logo2');
@@ -1159,7 +1166,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['prefs_img']	= $this->image('preferences','preferences-'.($app=='preferences' ? 'red' : 'grey'));
 					$var['logout_img']	= $this->image('phpgwapi','logout');
 					$var['about_img']	= $this->image('phpgwapi','about-'.($app=='about' ? 'red' : 'grey'));
-					$var['manual_img']	= $this->image('manual','help');
+					$var['help_img']	= $this->image('phpgwapi','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar');
 					break;
 				case 'justweb':
@@ -1168,32 +1175,32 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['prefs_img']	= $this->image('preferences','tab_prefs');
 					$var['logout_img']	= $this->image('phpgwapi','tab_logout');
 					$var['about_img']	= $this->image('phpgwapi','tab_help');
-					$var['manual_img']	= $this->image('manual','tab_manual');
+					$var['help_img']	= $this->image('phpgwapi','tab_help');
 					break;
 				case 'funkwerk':
 					$var['about_img']	= '!';
-					$var['manual_img']	= '?';
+					$var['help_img']	= '?';
 
 					switch ($cur_app)
 					{
 						case 'home':
 							$var['top_css_home'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							$var['top_css'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
 							break;
 						case 'preferences':
 							$var['top_css_prefs'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
 							break;
 						case 'about':
 							$var['top_css_about'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_manual'] = 'top_menu';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_help'] = 'top_menu';
 							break;
-						case 'manual':
-							$var['top_css_manual'] = 'top_menu_selected';
+						case 'help':
+							$var['top_css_help'] = 'top_menu_selected';
 							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = 'top_menu';
 							break;
 						default:
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_manual'] = 'top_menu';
+							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
 							break;
 					}
 					break;
@@ -1202,7 +1209,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['prefs_img']	= $GLOBALS['phpgw_info']['navbar']['preferences']['icon'];
 					$var['logout_img']	= $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
 					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon'];
-					$var['manual_img']	= $GLOBALS['phpgw_info']['navbar']['manual']['icon'];
+					$var['help_img']	= $GLOBALS['phpgw_info']['navbar']['help']['icon'];
 					break;
 			}
 
@@ -1210,19 +1217,19 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['prefs_link']			= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 			$var['logout_link']			= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
 			$var['about_link']			= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-			$var['manual_link']			= $GLOBALS['phpgw_info']['navbar']['manual']['url'];
+			$var['help_link']			= $GLOBALS['phpgw_info']['navbar']['help']['url'];
 
 			$var['home_title']			= $GLOBALS['phpgw_info']['navbar']['home']['title'];
 			$var['prefs_title']			= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
 			$var['logout_title']		= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
 			$var['about_title']			= $GLOBALS['phpgw_info']['navbar']['about']['title'];
-			$var['manual_title']		= $GLOBALS['phpgw_info']['navbar']['manual']['title'];
+			$var['help_title']			= $GLOBALS['phpgw_info']['navbar']['help']['title'];
 
 			$var['home_statustext']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
 			$var['prefs_statustext']	= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
 			$var['logout_statustext']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
 			$var['about_statustext']	= $GLOBALS['phpgw_info']['navbar']['about']['title'];
-			$var['manual_statustext']	= $GLOBALS['phpgw_info']['navbar']['manual']['title'];
+			$var['help_statustext']		= $GLOBALS['phpgw_info']['navbar']['help']['title'];
 
 			if (isset($GLOBALS['phpgw_ifo']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
@@ -1249,7 +1256,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$app_css = 'left';
 				}
 
-				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual')
+				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'help')
 				{
 					$var['applications'][] = array
 					(
@@ -1306,26 +1313,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$this->msgbox('',False,'phpgw');
 			}
 
-			$var['app_tpl'] = ''; 
+			$var['app_tpl'] = '';
+			$var['current_app'] = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
-			switch($GLOBALS['phpgw_info']['flags']['currentapp'])
+			$menuaction	= get_var('menuaction',Array('GET'));
+			$xslt_app	= get_var('xslt_app',Array('GET'));
+
+			if ($menuaction && $GLOBALS['phpgw_info']['flags']['xslt_app'])
 			{
-				case 'home':
-					$var['home'] = True;
-					break;
-				case 'about':
-					$var['about'] = True;
-					break;
-				default:
-					$menuaction	= get_var('menuaction',Array('GET'));
-					$xslt_app	= get_var('xslt_app',Array('GET'));
-
-					if ($menuaction && $GLOBALS['phpgw_info']['flags']['xslt_app'])
-					{
-						$app_function	= strrchr($menuaction,'.');
-						$var['app_tpl']	= substr($app_function,1,strlen($app_function));
-					}
-					break;
+				$app_function	= strrchr($menuaction,'.');
+				$var['app_tpl']	= substr($app_function,1,strlen($app_function));
 			}
 
 			$var['lang_powered_by']			= lang('powered by');
@@ -1411,10 +1408,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']			= $this->image('preferences',Array('navbar','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']	= $this->image_on('preferences',Array('navbar','nonav'),'-over');
 
-			$GLOBALS['phpgw_info']['navbar']['manual']['title']				= lang('manual');
-			$GLOBALS['phpgw_info']['navbar']['manual']['url']				= $GLOBALS['phpgw']->link('/manual/index.php');
-			$GLOBALS['phpgw_info']['navbar']['manual']['icon']				= $this->image('manual',Array('navbar','nonav'));
-			$GLOBALS['phpgw_info']['navbar']['manual']['icon_hover']		= $this->image_on('manual',Array('navbar','nonav'),'-over');
+			$GLOBALS['phpgw_info']['navbar']['help']['title']				= lang('manual');
+			$GLOBALS['phpgw_info']['navbar']['help']['url']					= $GLOBALS['phpgw']->link('/help.php');
+			$GLOBALS['phpgw_info']['navbar']['help']['icon']				= $this->image('phpgwapi',Array('help','nonav'));
+			$GLOBALS['phpgw_info']['navbar']['help']['icon_hover']			= $this->image_on('phpgwapi',Array('help','nonav'),'-over');
 
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home') //|| $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
 			{

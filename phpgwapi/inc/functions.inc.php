@@ -370,7 +370,8 @@
 		$continue_app_data = True;
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences' &&
-			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
+			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'about' &&
+			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'help')
 		{
 			// This will need to use ACL in the future
 			if (! $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']] ||

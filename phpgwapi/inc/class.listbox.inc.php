@@ -86,7 +86,6 @@
 		*/
 		function draw($extra_data='')
 		{
-			$this->start_template();
 			if(is_array($this->data) && !empty($this->data))
 			{
 				for ($x = 0; $x < count($this->data); $x++)
@@ -110,10 +109,7 @@
 			{
 				$this->start_template(True);
 			}
-			else
-			{
-				$this->start_template();
-			}
+
 			if(is_array($this->data) && !empty($this->data))
 			{
 				for ($x = 0; $x < count($this->data); $x++)
