@@ -22,7 +22,7 @@
 			<body onLoad="{$phpgw_onload}">
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 					<tr>
-						<td colspan="3">
+						<td colspan="2">
 						<!-- BEGIN top_part -->
 							<table width="100%" height="73" cellspacing="0" cellpadding="0">
 								<tr class="top_top">
@@ -59,31 +59,39 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="10%" height="85%" valign="top">
-							<xsl:call-template name="phpgw_left"/>
+						<td>
+						<!-- BEGIN left_part -->
+							<table cellspacing="0" cellpadding="0" valign="top" class="left">
+								<xsl:apply-templates select="applications"/>
+								<tr>
+									<td><img src="{nav_bar_left_top_bg_img}"></td>
+								</tr>
+							</table>
+						<!-- END left_part -->
 						</td>
-						<td width="80%" height="85%" valign="top">
+						<td width="85%" height="85%" valign="top">
 							<xsl:call-template name="msgbox"/>
 							<xsl:call-template name="phpgw_body"/>
 						</td>
-						<td width="10%" height="85%" align="right" valign="top">
-							<xsl:apply-templates select="phpgw_right"/>
-						</td>
 					</tr>
 					<tr>
-						<td width="100%" height="5%" colspan="3">
+						<td colspan="2" align="center" valign="middle" class="info">
 						<!-- BEGIN bottom_part -->
-							<table cellspacing="0" cellpadding="0" class="bottom">
-								<tr>
-									<td align="center" valign="middle" class="info">{powered}</td>
-								</tr>
-							</table>
+									{powered}
 						<!-- END bottom_part -->
 						</td>
 					</tr>
 				</table>
 			</body>
 		</html>
+	</xsl:template>
+
+	<xsl:template match="applications">
+		<tr>
+			<td class="info">
+
+			</td>
+		</tr>
 	</xsl:template>
 
 	<xsl:template match="head_js">
