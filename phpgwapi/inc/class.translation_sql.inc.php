@@ -93,7 +93,12 @@
 				}
 				return $this->charsets[$lang];
 			}
-			return $this->system_charset || !is_array($GLOBALS['lang']) ? $this->system_charset : strtolower($this->translate('charset'));
+			if ($this->system_charset)	// do we have a system-charset ==> return it
+			{
+				return $this->system_charset;
+			}
+			// if no translations are loaded (system-startup) use a default, else lang('charset')
+			return !is_array($GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
 		}
 
 		function init()
@@ -324,7 +329,7 @@
 			}
 			foreach($langs as $lang)
 			{
-				//echo '<br>Working on: ' . $lang;
+				echo '<br>Working on: ' . $lang;
 				$addlang = False;
 				if ($upgrademethod == 'addonlynew')
 				{
@@ -357,7 +362,7 @@
 						//echo '<br>Checking in: ' . $app['name'];
 						if($GLOBALS['phpgw_setup']->app_registered($app) && file_exists($appfile))
 						{
-							//echo '<br>Including: ' . $appfile;
+							echo '<br>Including: ' . $appfile;
 							$lines = file($appfile);
 							foreach($lines as $line)
 							{
@@ -373,7 +378,7 @@
 					}
 					$charset = @$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang);
 					//echo "<p>lang='$lang', charset='$charset', system_charset='$this->system_charset')</p>\n";
-
+echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
 					foreach($raw as $app_name => $ids)
 					{
 						foreach($ids as $message_id => $content)
@@ -463,6 +468,7 @@
 					{
 						// update all langs
 						$installed = $this->get_installed_langs();
+						echo "<p>install_langs(".print_r($installed,True).")</p>\n";
 						$this->install_langs($installed ? array_keys($installed) : array());
 						break;
 					}

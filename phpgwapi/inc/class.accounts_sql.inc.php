@@ -38,7 +38,6 @@
 
 		function accounts_()
 		{
-			/* Don't think this ever gets called */
 			$this->db = $GLOBALS['phpgw']->db;
 		}
 

@@ -37,7 +37,9 @@
 
 		function accounts_()
 		{
-			/* This does not get called */
+			$this->ds = $GLOBALS['phpgw']->common->ldapConnect();
+			$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
+			$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
 		}
 
 		function read_repository()

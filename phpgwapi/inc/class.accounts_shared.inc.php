@@ -96,12 +96,7 @@
 				$this->account_type = $account_type;
 			}
 
-			if($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
-			{
-				$this->ds = $GLOBALS['phpgw']->common->ldapConnect();
-				$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
-				$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
-			}
+			$this->accounts_();			// call constructor of extended class
 
 			$this->xmlrpc_methods[] = array(
 				'name'        => 'get_list',
