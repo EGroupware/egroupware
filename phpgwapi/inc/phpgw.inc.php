@@ -361,7 +361,6 @@
       }
       if ($preferences_update) {
          $phpgw->preferences->commit(__LINE__,__FILE__);
-	 $phpgw_info["user"]["preferences"]["common"] = $phpgw->preferences->preferences["common"];
       }
       unset($preferences_update);
     }
