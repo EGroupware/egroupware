@@ -15,9 +15,13 @@
 		$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
 		$s = $t->set_file(array('about' => 'about_app.tpl'));
 		$s .= $t->set_var('app_title',lang('calendar'));
+		$s .= $t->set_var('lang_version',lang('Version'));
+		$s .= $t->set_var('app_version',$GLOBALS['phpgw_info']['apps']['calendar']['version']);
 		$s .= $t->set_var('based_on',lang('based on'));
 		$s .= $t->set_var('written_by',lang('written by'));
-		$s .= $t->set_var('source','Webcalendar by Craig Knudsen &lt;cknudsen@radix.net&gt;<br>http://www.radix.net/~cknudsen');
+		$s .= $t->set_var('source','Webcalendar by Craig Knudsen &lt;cknudsen@radix.net&gt;');
+		$s .= $t->set_var('source_url','http://www.radix.net/~cknudsen');
+		$s .= $t->set_var('source_url_name','www.radix.net/~cknudsen');
 		$s .= $t->set_var('developers','Mark Peters &lt;skeeter@phpgroupware.org&gt;');
 		$s .= $t->fp('out','about');
 		return $s;
