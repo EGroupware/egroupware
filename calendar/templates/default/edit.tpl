@@ -1,36 +1,38 @@
 <!-- $Id$ -->
 <!-- BEGIN edit_entry -->
-<body bgcolor="#C0C0C0">
 <center>
 <font color="#000000" face="{font}">
-<h2>{calendar_action}</h2>
 
 <form action="{action_url}" method="post" name="addform">
 {common_hidden}
-<table border="0" width="75%">
+<table border="0" width="90%">
  <tr>
   <td colspan="2">
    <center><font size="+1"><b>{errormsg}</b></font></center>
-   <hr>
   </td>
  </tr>
 {row}
+ <tr>
+  <td>
+   <table><tr valign="top">
+    <td><input type="submit" value="{submit_button}">&nbsp;</form></td>
+    <td>{cancel_button}</td>
+   </tr></table>
+  </td>
+  <td align="right">{delete_button}</td>
+ </tr>
 </table>
-<input type="submit" value="{submit_button}">
-</form>
-<br/>
-{extra_buttons}
 </font>
 </center>
 <!-- END edit_entry -->
 <!-- BEGIN list -->
- <tr>
-  <td valign="top" width="35%"><b>{field}:</b></td>
+ <tr class="{tr_color}">
+  <td valign="top" width="35%">&nbsp;<b>{field}:</b></td>
   <td valign="top" width="65%">{data}</td>
  </tr>
 <!-- END list -->
 <!-- BEGIN hr -->
- <tr>
+ <tr class="{tr_color}">
   <td colspan="2">
    {hr_text}
   </td>

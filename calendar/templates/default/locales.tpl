@@ -21,7 +21,7 @@
 
  </table>
 
- <table border="0" width="60%" align="center">
+ <table border="0" width="70%" cellspacing="5" align="center">
   <tr>
    <td align="left">
     <form method="POST" action="{new_action}">
@@ -29,9 +29,9 @@
     </form>
    </td>
    {back_button}
-   <td align="right">{lang_search}&nbsp;
+   <td width="80%" align="right">
     <form method="POST" action="{search_action}">
-     <input name="query">
+     {lang_search}&nbsp;<input name="query">
     </form>
    </td>
   </tr>
@@ -39,7 +39,7 @@
 <!-- END list -->
 <!-- BEGIN row -->
  <tr class="{tr_color}">
-  <td>{group_name}</td>
+  <td>&nbsp;{group_name}</td>
   {rule}
   <td width="5%">{edit_link}</td>
   <td width="5%">{delete_link}</td>

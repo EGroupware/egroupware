@@ -1,26 +1,26 @@
 <!-- $Id$ -->
 <!-- BEGIN view_event -->
 <center>
- <h2>
-  <font color="{bg_text}">
-   {name}
-  </font>
- </h2>
- <table border="0" width="75%">
+ <table border="0" width="90%">
   {row}
+  <tr>
+   <td><table cellspacing="5"><tr>{button_left}</tr></table></td>
+   <td align="center"><table cellspacing="5"><tr>{button_center}</tr></table></td>
+   <td align="right"><table cellspacing="5"><tr>{button_right}</tr></table></td>
+  </tr>
  </table>
 </center>
 <!-- END view_event -->
 <!-- BEGIN list -->
-  <tr>
-   <td valign="top" width="30%"><b>{field}:</b></td>
-   <td valign="top" width="70%">{data}</td>
+  <tr class="{tr_color}">
+   <td valign="top" width="30%">&nbsp;<b>{field}:</b></td>
+   <td colspan="2" valign="top" width="70%">{data}</td>
   </tr>
 <!-- END list -->
 <!-- BEGIN hr -->
  <tr>
-  <td colspan="2">
-   {hr_text}
+  <td colspan="3" class="th" align="center">
+   <b>{hr_text}</b>
   </td>
  </tr>
 <!-- END hr -->

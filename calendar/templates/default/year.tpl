@@ -3,25 +3,21 @@
 <center>
 <table border="0" cellspacing="3" cellpadding="4" cols=4>
  <tr>
-  <td align="left">
+  <td align="center">
    {left_link}
   </td>
   <td align="center">
    <font face="{font}" size="+1">{year_text}</font>
   </td>
-  <td align="right">
+  <td align="center">
    {right_link}
   </td>
- </tr>
- <tr valign="top">
    {row}
  </tr>
 </table>
 </center>
 <p>
-<p>
 {printer_friendly}
-<hr>
 <!-- END year -->
 <!-- BEGIN month -->
 <td valign="top">

@@ -41,8 +41,9 @@
 			$this->bo->check_admin();
 			$this->base_url = $this->bo->base_url;
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir('calendar');
-			
 			$this->sb = CreateObject('phpgwapi.sbox');
+
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Holiday Management');
 		}
 
 		function admin()
@@ -52,7 +53,7 @@
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(Array('locales'=>'locales.tpl'));
 			$p->set_block('locales','list','list');
 			$p->set_block('locales','row','row');
@@ -148,7 +149,7 @@
 			$holidays = $this->bo->get_holiday_list();
 
 			$var = Array(
-				'th_bg'			=> $phpgw_info['theme']['th_bg'],
+				'th_bg'			=> $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'left_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->left('/index.php',$this->bo->start,$this->bo->total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
 				'right_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->right('/index.php',$this->bo->start,$this->bo->total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
 				'center'					=> '<td align="right">'.lang('Holidays').' ('.$this->bo->locales[0].')</td><td align="left">'.$year_form.'</td>',
@@ -234,9 +235,10 @@
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.($this->bo->id ? lang('Edit') : lang('Add')).' '.lang('Holiday');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$t = CreateObject('phpgwapi.Template',$this->template_dir);
+			$t = &$GLOBALS['phpgw']->template;
 			$t->set_file(Array('holiday'=>'holiday.tpl','form_button'=>'form_button_script.tpl'));
 			$t->set_block('holiday','form','form');
 			$t->set_block('holiday','list','list');
@@ -266,7 +268,8 @@
 			$this->display_item($t,lang('title'),'<input name="holiday[name]" size="60" maxlength="50" value="'.$holiday['name'].'">');
 
 // Date
-			$this->display_item($t,lang('Date'),$GLOBALS['phpgw']->common->dateformatorder($this->sb->getYears('holiday[year]',$holiday['occurence']>1900?$holiday['occurence']:0),$this->sb->getMonthText('holiday[month_num]',$holiday['month']),$this->sb->getDays('holiday[mday]',$holiday['day'])));
+			$this->display_item($t,lang('Date'),$GLOBALS['phpgw']->common->dateformatorder($this->sb->getYears('holiday[year]',$holiday['occurence']>1900?$holiday['occurence']:0),$this->sb->getMonthText('holiday[month_num]',$holiday['month']),$this->sb->getDays('holiday[mday]',$holiday['day'])).
+				'&nbsp;'.lang('Set a Year only for one-time / non-regular holidays.'));
 
 // Occurence
 			$occur = Array(
@@ -300,8 +303,10 @@
 				$out .= '<option value="'.$i.'"'.($holiday['dow']==$i?' selected':'').'>'.$dow[$i].'</option>'."\n";
 			}
 			$dow_html = '<select name="holiday[dow]">'."\n".$out.'</select>'."\n";
-			$this->display_item($t,lang('Occurence'),$occurence_html.'&nbsp;'.$dow_html);
-			$this->display_item($t,lang('Observance Rule'),'<input type="checkbox" name="holiday[observance_rule]" value="True"'.($holiday['observance_rule']?' checked':'').'>');
+			$this->display_item($t,lang('Occurence'),$occurence_html.'&nbsp;'.$dow_html.
+				'&nbsp;'.lang('You can either set a Year or a Occurence, not both !!!'));
+			$this->display_item($t,lang('Observance Rule'),'<input type="checkbox" name="holiday[observance_rule]" value="True"'.($holiday['observance_rule']?' checked':'').'>'.
+				'&nbsp;'.lang('If checked holidays falling on a weekend, are taken on the monday after.'));
 
 			$t->set_var('lang_add',lang('Save'));
 			$t->set_var('lang_reset',lang('Reset'));
@@ -310,7 +315,7 @@
 			{
 				$link_params = Array(
 					'menuaction'	=> 'calendar.uiholiday.edit_locale',
-					'year'	=> $this->bo->year,
+					'year'			=> $this->bo->year,
 					'locale'		=> $this->bo->locales[0]
 				);
 			}
@@ -321,14 +326,34 @@
 				);
 			}
 			
-			$var = Array(
+			$t->set_var(Array(
 				'action_url_button'	=> $GLOBALS['phpgw']->link($this->base_url,$link_params),
 				'action_text_button'	=> lang('Cancel'),
 				'action_confirm_button'	=> '',
 				'action_extra_field'	=> ''
-			);
-			$t->set_var($var);
+			));
 			$t->parse('cancel_button','form_button');
+			
+			if ($this->bo->id)
+			{
+				$link_params = Array(
+					'menuaction'	=> 'calendar.uiholiday.delete_holiday',
+					'year'			=> $this->bo->year,
+					'locale'		=> $this->bo->locales[0],
+					'id'			=> $this->bo->id
+				);
+				$t->set_var(Array(
+					'action_url_button'	=> $GLOBALS['phpgw']->link($this->base_url,$link_params),
+					'action_text_button'	=> lang('Delete'),
+					'action_confirm_button'	=> '',
+					'action_extra_field'	=> ''
+				));
+				$t->parse('delete_button','form_button');
+			}
+			else
+			{
+				$t->set_var('delete_button','&nbsp;');
+			}
 			$t->pparse('out','form');
 		}
 
@@ -471,6 +496,7 @@
 		function display_item(&$p,$field,$data)
 		{
 			$var = Array(
+				'tr_color' => $GLOBALS['phpgw']->nextmatchs->alternate_row_color(),
 				'field'	=> $field,
 				'data'	=> $data
 			);

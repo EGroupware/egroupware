@@ -30,8 +30,8 @@
 		{
 			$this->bo = CreateObject('calendar.boicalendar');
 			$this->template = $GLOBALS['phpgw']->template;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Calendar - [iv]Cal Importer');
 		}
-
 
 		function print_test($val,$title,$x_pre='')
 		{
@@ -191,7 +191,7 @@
  			);
 
 			$var = Array(
-				'vcal_header'	=> '<p>&nbsp;<b>' . lang('Calendar - [iv]Cal Importer') . '</b><hr><p>',
+				'vcal_header'	=> '<p>',
 				'ical_lang'		=> lang('(i/v)Cal'),
 				'action_url'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.boicalendar.import'),
 				'lang_access'	=> lang('Access'),

@@ -67,17 +67,18 @@
 				);
 			}
 
-  			unset($GLOBALS['phpgw_info']['flags']['noheader']);
-   		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-	   	$GLOBALS['phpgw']->common->phpgw_header();
+			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Alarm Management');
+			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$this->template = CreateObject('phpgwapi.Template',$this->template_dir);
 
 			$this->template->set_unknowns('keep');
 			$this->template->set_file(
 				Array(
-  					'alarm'	=> 'alarm.tpl'
-   				)
+					'alarm'	=> 'alarm.tpl'
+				)
 			);
 			$this->template->set_block('alarm','alarm_management','alarm_management');
 			$this->template->set_block('alarm','alarm_headers','alarm_headers');
@@ -96,21 +97,26 @@
 		function manager()
 		{
 			$this->prep_page();
-			echo ExecMethod('calendar.uicalendar.view_event',$this->event);
+			ExecMethod('calendar.uicalendar.view_event',$this->event);
+			echo "<br>\n";
+			$GLOBALS['phpgw']->template->set_var(array(
+				'hr_text'	=> lang('Alarms').':',
+				'button_left'	=> '',
+				'button_center'	=> '',
+				'button_right'	=> ''
+			));
+			$GLOBALS['phpgw']->template->fp('row','hr',True);
+			$GLOBALS['phpgw']->template->fp('phpgw_body','view_event');
 
-			$this->template->set_var('hr_text','<center><b>'.lang('Alarms').'</b></center></br><hr>');
-			$this->template->parse('row','hr',True);
+			
 			$var = Array(
 				'action_url'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uialarm.form_handler')),
 				'time_lang'		=> lang('Time'),
 				'text_lang'		=> lang('Text'),
-				'enabled_pict'		=> $GLOBALS['phpgw']->common->image('calendar','enabled.gif'),
+				'enabled_pict'	=> $GLOBALS['phpgw']->common->image('calendar','enabled.gif'),
 				'disabled_pict'	=> $GLOBALS['phpgw']->common->image('calendar','disabled.gif')
 			);
-			
 			$this->output_template_array('row','alarm_headers',$var);
-			$this->template->set_var('hr_text','<hr>');
-			$this->template->parse('row','hr',True);
 
 			if($this->event['alarm'])
 			{
@@ -127,10 +133,7 @@
 					$this->output_template_array('row','list',$var);
 				}
 			}
-			$this->template->set_var('hr_text','<hr>');
-			$this->template->parse('row','hr',True);
-
-			echo $this->template->fp('out','alarm_management');
+			$this->template->fp('phpgw_body','alarm_management');
 		}
 
 		function add_alarm()

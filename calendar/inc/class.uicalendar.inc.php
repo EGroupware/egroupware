@@ -131,6 +131,30 @@
 			print_debug('UI',$this->_debug_sqsof());
 		}
 
+		/*!
+		@function error_exit
+		@abstract shows $msg centered on the screen and exit
+		@syntax error_exit($msg)
+		@param $msg lang()'ed msg-text or one of the predefined messages (see below)
+		*/
+		function error_exit($msg)
+		{
+			switch($msg)
+			{
+				case 'invalid_id':
+					$msg = lang('Invalid entry id.');
+					break;
+				case 'no_read_perm':
+					$msg = lang('You do not have permission to read this record!');
+					break;
+				case 'not_exist':
+					$msg = lang('Sorry, this event does not exist');
+					break;
+			}
+			$GLOBALS['phpgw']->template->set_var('phpgw_body','<div style="text-align: center">'.$msg."</div>\n");
+			exit;
+		}
+
 		/* Public functions */
 
 		function mini_calendar($params)
@@ -310,14 +334,21 @@
 		/*!
 		@function cal_header
 		@abstract call common::phpgw_header and shows the application-header
+		@syntax cal_header($func_header,$big_header)
+		@param $func_header function name to display beside calendar-title
+		@param $always_show_header or only for selected templates
 		*/
-		function cal_header()
+		function cal_header($func_header = '',$always_show_header = False)
 		{
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			unset($GLOBALS['phpgw_info']['flags']['noappheader']);
 			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
-			$GLOBALS['phpgw']->common->phpgw_header();
+			if (!empty($func_header) && ($always_show_header || $GLOBALS['phpgw_info']['user']['preferences']['common']['template'] == 'idots'))
+			{
+				$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'] .
+					' - ' . $func_header;
+			}
 
 			function add_col(&$tpl,$str)
 			{
@@ -577,7 +608,7 @@
 			$tpl->parse('phpgw_body','head_table',True);
 		}
 
-		function printer_friendly($body)
+		function printer_friendly($body,$func_header='')
 		{
 			if($this->bo->printer_friendly)
 			{
@@ -597,7 +628,7 @@
 			}
 			else
 			{
-				$this->cal_header();
+				$this->cal_header($func_header && $GLOBALS['phpgw_info']['user']['template'] == 'idots' ? $func_header : '');
 
 				$new_body = $this->bo->debug_string.$body;
 			}
@@ -606,7 +637,7 @@
 
 		function month()
 		{
-			echo $this->printer_friendly($this->get_month());
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->printer_friendly($this->get_month(),lang('Monthview')));
 		}
 
 		function get_month()
@@ -665,7 +696,7 @@
 				'print'						=>	$print
 			);
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_unknowns('remove');
 			$p->set_file(
 				Array(
@@ -678,7 +709,7 @@
 
 		function week()
 		{
-			echo $this->printer_friendly($this->get_week());
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->printer_friendly($this->get_week(),lang('Weekview')));
 		}
 
 		function get_week()
@@ -812,7 +843,7 @@
 			$now['raw'] += $GLOBALS['phpgw']->datetime->tz_offset;
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'day_t' => 'day.tpl'
@@ -845,7 +876,11 @@
 
 		function year()
 		{
-			echo $this->printer_friendly($this->get_year());
+			if($this->bo->printer_friendly)
+			{
+				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
+			}
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->printer_friendly($this->get_year(),lang('Yearview')));
 		}
 
 		function get_year()
@@ -876,19 +911,27 @@
 				'printer_friendly'=> $printer
 			);
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'year_t' => 'year.tpl'
 				)
 			);
 			$p->set_block('year_t','year','year');
-			$p->set_block('year_t','month','month');
-			$p->set_block('year_t','month_sep','month_sep');
+			$p->set_block('year_t','month','month_handle');
+			$p->set_block('year_t','month_sep','month_sep_handle');
+			$p->set_var(array(
+				'month_handle' => '',
+				'month_sep_handle' => ''
+			));
 			$p->set_var($var);
 
 			for($i=1;$i<=12;$i++)
 			{
+				if(($i % 3) == 1)
+				{
+					$p->parse('row','month_sep',True);
+				}
 				$p->set_var('mini_month',$this->mini_calendar(
 						Array(
 							'day'	=> 1,
@@ -902,17 +945,13 @@
 				);
 				$p->parse('row','month',True);
 				$p->set_var('mini_month','');
-				if(($i % 3) == 0)
-				{
-					$p->parse('row','month_sep',True);
-				}
 			}
 			return $p->fp('out','year_t');
 		}
 		
 		function view($vcal_id=0,$cal_date=0)
 		{
-			$this->cal_header();
+			$this->cal_header(lang('View'),True);
 
 			$cal_id = get_var('cal_id',Array('GET','POST','DEFAULT'),$vcal_id);
 			$date = get_var('date',Array('GET','DEFAULT'),$cal_date);
@@ -920,22 +959,19 @@
 			// First, make sure they have permission to this entry
 			if ($cal_id < 1)
 			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_body','<center>'.lang('Invalid entry id.').'</center>'."\n");
-				exit;
-			}
-
-			if(!$this->bo->check_perms(PHPGW_ACL_READ,$cal_id))
-			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_body','<center>'.lang('You do not have permission to read this record!').'</center>'."\n");
-				exit;
+				$this->error_exit('invalid_id');
 			}
 
 			$event = $this->bo->read_entry($cal_id);
 
 			if(!isset($event['id']))
 			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_body','<center>'.lang("Sorry, this event does not exist").'.'.'</center>'."\n");
-				exit;
+				$this->error_exit('not_exist');
+			}
+
+			if(!$this->bo->check_perms(PHPGW_ACL_READ,$event))
+			{
+				$this->error_exit('no_read_perm');
 			}
 
 			$this->bo->repeating_events = Array();
@@ -958,15 +994,11 @@
 				$event['end']['year'] = date('Y',$temp_end);
 			}
 
-			$ret_value = $this->view_event($event,True);
-			$GLOBALS['phpgw']->template->set_var('phpgw_body',$ret_value);
-
-			if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
+			if(!$this->view_event($event,True))
 			{
-				exit;
+				$this->error_exit('no_read_perm');
 			}
 
-			//$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
@@ -974,6 +1006,7 @@
 				)
 			);
 
+			$button_left = $button_center = $button_right = '';
 			if($this->bo->check_perms(PHPGW_ACL_EDIT,$event))
 			{
 				if($event['recur_type'] != MCAL_RECUR_NONE)
@@ -986,7 +1019,7 @@
 							. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 
 					$var = Array(
 						'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
@@ -995,7 +1028,7 @@
 						'action_extra_field'	=> '<input type="hidden" name="edit_type" value="series">'
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 				}
 				else
 				{
@@ -1006,7 +1039,7 @@
 						'action_extra_field'	=> ''
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 				}
 
 				$var = Array(
@@ -1016,7 +1049,7 @@
 					'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
 				);
 				$p->set_var($var);
-				$p->parse('phpgw_body','form_button',True);
+				$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
 			}
 
 			if ($this->bo->check_perms(PHPGW_ACL_DELETE,$event))
@@ -1031,7 +1064,7 @@
 							. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_right .= '<td>'.$p->fp('button','form_button').'</td>';
 
 					$var = Array(
 						'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
@@ -1040,7 +1073,7 @@
 						'action_extra_field'	=> '<input type="hidden" name="delete_type" value="series">'
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_right .= '<td>'.$p->fp('button','form_button').'</td>';
 
 					if($event['recur_exception'])
 					{
@@ -1051,7 +1084,7 @@
 							'action_extra_field'	=> ''
 						);
 						$p->set_var($var);
-						$p->parse('phpgw_body','form_button',True);
+						$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
 					}
 				}
 				else
@@ -1063,9 +1096,8 @@
 						'action_extra_field'	=> ''
 					);
 					$p->set_var($var);
-					$p->parse('phpgw_body','form_button',True);
+					$button_right .= '<td>'.$p->fp('button','form_button').'</td>';
 				}
-//				}
 			}
 
 			$var = Array(
@@ -1075,7 +1107,7 @@
 				'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
 			);
 			$p->set_var($var);
-			$p->parse('phpgw_body','form_button',True);
+			$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
 
 			if ($this->bo->return_to)
 			{
@@ -1086,20 +1118,20 @@
 					'action_extra_field'	=> ''
 				);
 				$p->set_var($var);
-				$p->parse('phpgw_body','form_button',True);
+				$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 			}
-
+			$p->set_var(array(
+				'button_left'	=> $button_left,
+				'button_center'	=> $button_center,
+				'button_right'	=> $button_right
+			));
+			$p->fp('phpgw_body','view_event',True);
+			
 			$GLOBALS['phpgw']->hooks->process('calendar_view');
 		}
 
 		function edit($params='')
 		{
-// 		No event loaded, so what to check?
-//			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
-//			{
-//			   $this->no_edit();
-//			}
-
 			if($this->debug)
 			{
 				echo '<!-- params[readsess] = '.$params['readsess'].' -->'."\n";
@@ -1135,9 +1167,7 @@
 
 				if(!$this->bo->check_perms(PHPGW_ACL_EDIT,$event))
 				{
-					Header('Location: '.$this->page('view','&cal_id='.$cal_id));
-					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-					exit;
+					$GLOBALS['phpgw']->redirect($this->page('view','&cal_id='.$cal_id));
 				}
 				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
 				{
@@ -1174,9 +1204,10 @@
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Export');
 				$GLOBALS['phpgw']->common->phpgw_header();
 				
-				$p = CreateObject('phpgwapi.Template',$this->template_dir);
+				$p = $GLOBALS['phpgw']->template;
 				$p->set_file(
 					Array(
 						'form_button'	=> 'form_button_script.tpl'
@@ -1240,50 +1271,40 @@
 				$this->index();
 			}
 
-  			unset($GLOBALS['phpgw_info']['flags']['noheader']);
- 	 		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Reinstate');
 			$GLOBALS['phpgw']->common->phpgw_header();
-	   	
-			echo '<center>';
 
-			$cal_id = (isset($params['cal_id'])?intval($params['cal_id']):'');
-			$cal_id = ($cal_id==''?intval($GLOBALS['HTTP_GET_VARS']['cal_id']):$cal_id);
+			$cal_id = get_var('cal_id',array('GET'),$params['cal_id']);
 
 			if ($cal_id < 1)
 			{
-				echo lang('Invalid entry id.').'</center>'."\n";
-				exit;
+				$this->error_exit('invalid_id');
 			}
 
-			if(!$this->bo->check_perms(PHPGW_ACL_READ))
+			if(!$this->bo->check_perms(PHPGW_ACL_READ,$cal_id))
 			{
-				echo lang('You do not have permission to read this record!').'</center>'."\n";
-				exit;
+				$this->error_exit('no_read_perm');
 			}
 
 			$event = $this->bo->read_entry($cal_id);
 
 			if(!isset($event['id']))
 			{
-				echo lang('Sorry, this event does not exist').'.'.'</center>'."\n";
-				exit;
+				$this->error_exit('not_exist');
 			}
 			elseif(!isset($event['recur_exception']))
 			{
-				echo lang('Sorry, this event does not have exceptions defined').'.'.'</center>'."\n";
-				exit;
+				$this->error_exit(lang('Sorry, this event does not have exceptions defined'));
 			}
 
-			$ret_value = $this->view_event($event,True);
-			echo $ret_value;
-
-			if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
+			if(!$this->view_event($event,True))
 			{
-				echo '</center>'."\n";
-				exit;
+				$this->error_exit('no_read_perm');
 			}
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'form_button'	=> 'form_button_script.tpl'
@@ -1296,15 +1317,19 @@
 			{
 				$str .= '    <option value="'.$i.'">'.$GLOBALS['phpgw']->common->show_date($event['recur_exception'][$i]).'</option>'."\n";
 			}
+			$this->output_template_array($p,'row','list',array(
+				'field'	=> lang('Execptions'),
+				'data'	=> '<select name="reinstate_index[]" multiple size="5">'."\n".$str.'</select>'
+			));
 
 			$var = Array(
 				'action_url_button'	=> $this->page('reinstate','&cal_id='.$cal_id),
 				'action_text_button'	=> lang('Reinstate'),
 				'action_confirm_button'	=> '',
-				'action_extra_field'	=> "\n".'   <select name="reinstate_index[]" multiple size="5">'."\n".$str.'   </select>'
+				'action_extra_field'	=> ''
 			);
 			$p->set_var($var);
-			echo $p->fp('out','form_button');
+			$button_left = '<td>'.$p->fp('out','form_button').'</td>';
 
 			$var = Array(
 				'action_url_button'	=> $this->bo->return_to ? $GLOBALS['phpgw']->link('/index.php','menuaction='.$this->bo->return_to) : $this->page(''),
@@ -1313,7 +1338,10 @@
 				'action_extra_field'	=> ''
 			);
 			$p->set_var($var);
-			echo $p->fp('out','form_button').'</center>';
+			$button_left .= '<td>'.$p->fp('out','form_button').'</td>';
+			
+			$p->set_var('button_left',$button_left);
+			$p->pfp('phpgw_body','view_event');
 		}
 
 		function reinstate($params='')
@@ -1493,7 +1521,7 @@
 			$now	= $GLOBALS['phpgw']->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
 			$now['raw'] += $GLOBALS['phpgw']->datetime->tz_offset;
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'day_t' => 'day.tpl'
@@ -1520,7 +1548,7 @@
 
 			$p->set_var($var);
 			$p->parse('day_events','day_event');
-			echo $this->printer_friendly($p->fp('out','day'));
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->printer_friendly($p->fp('out','day'),lang('Dayview')));
 		}
 
 		function edit_status()
@@ -1529,6 +1557,7 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Change Status');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			
 			$event = $this->bo->read_entry($GLOBALS['HTTP_GET_VARS']['cal_id']);
@@ -1537,8 +1566,7 @@
 
 			if(!$event['participants'][$this->bo->owner])
 			{
-				echo '<center>The user '.$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner).' is not participating in this event!</center>';
-				return;
+				$this->error_exit(lang('The user %1 is not participating in this event!',$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner)));
 			}
 
 			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
@@ -1555,10 +1583,11 @@
 					'endtime'	=> 0,
 					'participants'	=> $event['participants']
 				)
-			);
+			).'<br>';
 
 			$event = $this->bo->read_entry($GLOBALS['HTTP_GET_VARS']['cal_id']);
-			echo $this->view_event($event);
+			$this->view_event($event);
+			$GLOBALS['phpgw']->template->fp('phpgw_body','view_event',True);
 
 			echo $this->get_response($event['id']);
 		}
@@ -1651,10 +1680,7 @@
 			//
 			if (!$no_header)
 			{
-				//unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				//unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				//$GLOBALS['phpgw']->common->phpgw_header();
-				$this->cal_header();
+				$this->cal_header(lang('Group Planner'));
 			}
 
 			// intervals_per_day can be configured in preferences now :-)
@@ -2177,12 +2203,9 @@
 
 			$sb = CreateObject('phpgwapi.sbox');
 
-			//unset($GLOBALS['phpgw_info']['flags']['noheader']);
-			//unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			//$GLOBALS['phpgw']->common->phpgw_header();
-			$this->cal_header();
+			$this->cal_header(lang('Matrixview'));
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'mq'		=> 'matrix_query.tpl',
@@ -2192,12 +2215,10 @@
 			$p->set_block('mq','matrix_query','matrix_query');
 			$p->set_block('mq','list','list');
 
-			$vars = Array(
-				'matrix_action'	=> lang('Daily Matrix View'),
+			$p->set_var(array(
+				'title'			=> lang('Daily Matrix View'),
 				'action_url'	=> $this->page('viewmatrix')
-			);
-
-			$p->set_var($vars);
+			));
 
 // Date
 			$var[] = Array(
@@ -2279,10 +2300,10 @@
 			}
 
 			$vars = Array(
-				'submit_button'		=> lang('Submit'),
-				'action_url_button'	=> '',
+				'submit_button'		=> lang('View'),
+				'action_url_button'	=> $this->bo->return_to ? $GLOBALS['phpgw']->link('/index.php','menuaction='.$this->bo->return_to) : $this->page(''),
 				'action_text_button'	=> lang('Cancel'),
-				'action_confirm_button'	=> 'onClick="history.back(-1)"',
+				'action_confirm_button'	=> '',
 				'action_extra_field'	=> ''
 			);
 
@@ -2330,16 +2351,14 @@
 
 			reset($participants);
 
-			unset($GLOBALS['phpgw_info']['flags']['noheader']);
-			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$this->cal_header(lang('Matrixview'));
 
 			$matrixtype = get_var('matrixtype',Array('POST'));
 			switch($matrixtype)
 			{
 				case 'free/busy':
 					$freetime = $GLOBALS['phpgw']->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
-					echo $this->timematrix(
+					$html = '<br>'.$this->timematrix(
 						Array(
 							'date'		=> $freetime,
 							'starttime'	=> $this->bo->splittime('000000',False),
@@ -2349,7 +2368,7 @@
 					);
 					break;
 				case 'weekly':
-					echo $this->display_weekly(
+					$html = '<br>'.$this->display_weekly(
 						Array(
 							'date'		=> sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day),
 							'showyear'	=> true,
@@ -2358,20 +2377,21 @@
 					);
 					break;
 			}
-			echo "\n".'<center>'."\n";
-			echo ' <form action="'.$this->page('viewmatrix').'" method="post" name="matrixform" target="viewmatrix">'."\n";
-			echo '  <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
-			echo '  <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-			echo '  <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-			echo '  <input type="hidden" name="matrixtype" value="'.$matrixtype.'">'."\n";
-			reset($parts);
-			while(list($key,$value) = each($parts))
+			$html .= "\n".'<br><center>'."\n";
+			$html .= ' <form action="'.$this->page('viewmatrix').'" method="post" name="matrixform" target="viewmatrix">'."\n";
+			$html .= '  <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
+			$html .= '  <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
+			$html .= '  <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
+
+			foreach($parts as $key => $value)
 			{
-				echo '  <input type="hidden" name="participants[]" value="'.$key.'">'."\n";
+				$html .= '  <input type="hidden" name="participants[]" value="'.$key.'">'."\n";
 			}
-			echo '  <input type="submit" value="'.lang('refresh').'">'."\n";
-			echo ' </form>'."\n";
-			echo '</center>'."\n";
+			$html .= '  <input type="submit" value="'.lang('refresh').'">'."\n";
+			$html .= ' </form>'."\n";
+			$html .= '</center>'."\n";
+
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$html);
 		}
 
 		function search()
@@ -2391,6 +2411,7 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Search Results');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$error = '';
@@ -2405,11 +2426,11 @@
 
 			$event_ids = $this->bo->search_keywords($keywords);
 			$ids = Array();
-			while(list($key,$id) = each($event_ids))
+			foreach($event_ids as $key => $id)
 			{
 				$event = $this->bo->read_entry($id);
 
-				if(!$event['public'] && !$this->bo->check_perms(PHPGW_ACL_READ,$event))
+				if(!$this->bo->check_perms(PHPGW_ACL_READ,$event))
 				{
 					continue;
 				}
@@ -2417,7 +2438,11 @@
 				$datetime = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 
 				$ids[strval($event['id'])]++;
-				$info[strval($event['id'])] = $GLOBALS['phpgw']->common->show_date($datetime).$this->link_to_entry($event,$event['start']['month'],$event['start']['mday'],$event['start']['year']);
+				$info[strval($event['id'])] = array(
+					'tr_color'	=> $GLOBALS['phpgw']->nextmatchs->alternate_row_color(),
+					'date'		=> $GLOBALS['phpgw']->common->show_date($datetime),
+					'link'		=> $this->link_to_entry($event,$event['start']['month'],$event['start']['mday'],$event['start']['year'])
+				);
 
 			}
 			$matches = count($event_ids);
@@ -2437,11 +2462,10 @@
 			}
 			else
 			{
-				echo '<b>'.lang('Error').':</b>'.lang('no matches found.');
-				return;
+				$this->error_exit(lang('no matches found.'));
 			}
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'search_form'	=> 'search.tpl'
@@ -2453,7 +2477,6 @@
 			$p->set_block('search_form','search_list_footer','search_list_footer');
 
 			$var = Array(
-				'color'		=> $this->theme['bg_text'],
 				'search_text'	=> lang('Search Results'),
 				'quantity'	=> $quantity
 			);
@@ -2465,9 +2488,9 @@
 			}
 			// now sort by number of hits
 			arsort($ids);
-			for(reset($ids);$key=key($ids);next($ids))
+			foreach($ids as $key => $nul)
 			{
-				$p->set_var('result_desc',$info[$key]);
+				$p->set_var($info[$key]);
 				$p->parse('rows','search_list',True);
 			}
 	
@@ -2500,6 +2523,10 @@
 			if (!isset($var['hidden_vars']))
 			{
 				$var['hidden_vars'] = '';
+			}
+			if (!isset($var['tr_color']))
+			{
+				$var['tr_color'] = $GLOBALS['phpgw']->nextmatchs->alternate_row_color();
 			}
 			$p->set_var($var);
 			$p->parse($row,$list,True);
@@ -2542,7 +2569,7 @@
 				$cols++;
 			}
 
-			$tpl = CreateObject('phpgwapi.Template',$this->template_dir);
+			$tpl = $GLOBALS['phpgw']->template;
 			$tpl->set_unknowns('remove');
 
 			include($this->template_dir.'/header.inc.php');
@@ -2731,6 +2758,7 @@
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 				$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 				$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+				$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Permission denied');
 				$GLOBALS['phpgw']->common->phpgw_header();
 			}
 			echo '<center>You do not have permission to edit this appointment!</center>';
@@ -2933,9 +2961,10 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Scheduling Conflict');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'overlap'	=> 'overlap.tpl',
@@ -3359,7 +3388,7 @@
 		{
 			if((!$event['participants'][$this->bo->owner] && !$this->bo->check_perms(PHPGW_ACL_READ,$event)))
 			{
-				return '<center>'.lang('You do not have permission to read this record!').'</center>';
+				return False;
 			}
 
 			$pri = Array(
@@ -3368,9 +3397,8 @@
 		  		3	=> lang('High')
 			);
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 
-			$p->set_unknowns('keep');
 			$p->set_file(
 				Array(
   					'view'	=> 'view.tpl'
@@ -3380,12 +3408,11 @@
 			$p->set_block('view','list','list');
 			$p->set_block('view','hr','hr');
 
-			$var = Array(
-				'bg_text'	=> $this->theme['bg_text'],
-				'name'		=> $event['title']
+			$var[] = Array(
+				'tr_color'	=> 'th',
+				'field'		=> lang('Title'),
+				'data'		=> $event['title']
 			);
-			$p->set_var($var);
-			unset($var);
 
 			// Some browser add a \n when its entered in the database. Not a big deal
 			// this will be printed even though its not needed.
@@ -3455,8 +3482,8 @@
 			);
 
 			$var[] = Array(
-				'field'	=> lang('Private'),
-				'data'	=> $event['public']==True?'False':'True'
+				'field'	=> lang('Access'),
+				'data'	=> $event['public']==True?lang('Public'):lang('Privat')
 			);
 
 			if(@isset($event['groups'][0]))
@@ -3581,13 +3608,10 @@
 
 			if($alarms && @isset($event['alarm']))
 			{
-				$p->set_var('hr_text','<hr>');
-				$p->parse('row','hr',True);
-				$p->set_var('hr_text','<center><b>'.lang('Alarms').'</b></center><br>');
+				$p->set_var('hr_text',lang('Alarms'));
 				$p->parse('row','hr',True);
 
-				@reset($event['alarm']);
-				while(list($key,$alarm) = each($event['alarm']))
+				foreach($event['alarm'] as $key => $alarm)
 				{
 					$icon = '<img src="'.$GLOBALS['phpgw']->common->image('calendar',($alarm['enabled']?'enabled':'disabled')).'" width="13" height="13">';
 					$var = Array(
@@ -3597,11 +3621,7 @@
 					$this->output_template_array($p,'row','list',$var);
 				}
 			}
-
-			$p->set_var('hr_text','<hr>');
-			$p->parse('row','hr',True);
-
-			return $p->fp('out','view_event');
+			return True;
 		}
 
 		function nm_on_off()
@@ -3633,7 +3653,7 @@
 				)
 			);
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = $GLOBALS['phpgw']->template;
 			$p->set_unknowns('keep');
 
 			$templates = Array(
@@ -3648,7 +3668,7 @@
 			$p->set_block('day_cal','day_time','day_time');
 
 			if (! $this->bo->prefs['calendar']['workdaystarts'] &&
-				 ! $this->bo->prefs['calendar']['workdayends'])
+				! $this->bo->prefs['calendar']['workdayends'])
 			{
 				
 				$GLOBALS['phpgw']->preferences->add('calendar','workdaystarts',8);
@@ -3869,6 +3889,7 @@
 							'close_link'	=> ''
 						);
 					}
+					$var['tr_color'] = '';	// dummy to stop output_template_array to set it
 					$this->output_template_array($p,'item','day_time',$var);
 					$p->parse('row','day_row',True);
 					$p->set_var('event','');
@@ -4024,7 +4045,7 @@
 
 		function get_response($cal_id)
 		{
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
   					'form_button'	=> 'form_button_script.tpl'
@@ -4086,9 +4107,10 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $event['id'] ? lang('Calendar - Edit') : lang('Calendar - Add');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
 					'edit'		=> 'edit.tpl',
@@ -4098,11 +4120,10 @@
 			$p->set_block('edit','edit_entry','edit_entry');
 			$p->set_block('edit','list','list');
 			$p->set_block('edit','hr','hr');
-
+	
 			$vars = Array(
 				'font'			=> $this->theme['font'],
 				'bg_color'		=> $this->theme['bg_text'],
-				'calendar_action'	=> ($event['id']?lang('Calendar - Edit'):lang('Calendar - Add')),
 				'action_url'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
 				'common_hidden'	=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
 										. '<input type="hidden" name="cal[owner]" value="'.$event['owner'].'">'."\n"
@@ -4117,8 +4138,9 @@
 
 // Brief Description
 			$var[] = Array(
+				'tr_color' => 'th',
 				'field'	=> lang('Title'),
-				'data'	=> '<input name="cal[title]" size="25" maxlength="80" value="'.$event['title'].'">'
+				'data'	=> '<input name="cal[title]" size="45" maxlength="80" value="'.$event['title'].'">'
 			);
 
 // Full Description
@@ -4153,7 +4175,7 @@
 // Location
 			$var[] = Array(
 				'field'	=> lang('Location'),
-				'data'	=> '<input name="cal[location]" size="25" maxlength="80" value="'.$event['location'].'">'
+				'data'	=> '<input name="cal[location]" size="45" maxlength="255" value="'.$event['location'].'">'
 			);
 
 // Date
@@ -4257,9 +4279,8 @@
 			unset($var);
 
 // Repeat Type
-			$p->set_var('hr_text','<hr>');
-			$p->parse('row','hr',True);
-			$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center><br>');
+			$p->set_var('tr_color','th');
+			$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center>');
 			$p->parse('row','hr',True);
 			$rpt_type = Array(
 				MCAL_RECUR_NONE,
@@ -4329,8 +4350,9 @@
 				$this->output_template_array($p,'row','list',$var[$i]);
 			}
 
-			$p->set_var('submit_button',lang('Submit'));
+			$p->set_var('submit_button',lang('Save'));
 
+			$delete_button = $cancel_button = '';
 			if ($event['id'] > 0)
 			{
 				$var = Array(
@@ -4340,8 +4362,10 @@
 					'action_extra_field'	=> ''
 				);
 				$p->set_var($var);
-				$extra_buttons = $p->fp('out','form_button');
+				$delete_button = $p->fp('out','form_button');
 			}
+			$p->set_var('delete_button',$delete_button);
+
 			if ($this->bo->return_to)
 			{
 				$var = Array(
@@ -4351,10 +4375,9 @@
 					'action_extra_field'	=> ''
 				);
 				$p->set_var($var);
-				$extra_buttons .= ($event['id']>0?'<br>':'') . $p->fp('out','form_button');
+				$cancel_button = $p->fp('out','form_button');
 			}
-			$p->set_var('extra_buttons',$extra_buttons);
-			
+			$p->set_var('cancel_button',$cancel_button);
 			$p->pparse('out','edit_entry');
 		}
 

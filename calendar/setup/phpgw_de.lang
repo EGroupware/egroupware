@@ -1,4 +1,7 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
+%1 matches found	calendar	de	%1 Treffer gefunden
+%1 records imported	calendar	de	%1 Datensätze importiert
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, sie können zurück gehen und Test Import ausschalten)
 (for weekly)	calendar	de	(für wöchentlich)
 (i/v)cal	calendar	de	[iv]Cal
 1 match found	calendar	de	1 Treffer gefunden
@@ -27,12 +30,18 @@ calendar event	calendar	de	Kalender Aktualisierung
 calendar holiday management	admin	de	Feiertage verwalten
 calendar preferences	calendar	de	Kalender Einstellungen
 calendar settings	admin	de	Kalender Einstellungen
+calendar-fieldname	calendar	de	Kalender Feldname
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	de	Ändere alle Termine für $params['old_owner'] auf $params['new_owner'].
+change status	calendar	de	Zusage ändern
 choose the category	calendar	de	Kategorie auswählen
 countries	calendar	de	Länder
+country	calendar	de	Land
+csv-fieldname	calendar	de	CSV-Feldname
+csv-filename	calendar	de	CSV-Dateiname
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
 days repeated	calendar	de	wiederholte Tage
+dayview	calendar	de	Tagesansicht
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 delete a single entry by passing the id.	calendar	de	Lösche einen einzelnen Eintrag über seine Id.
@@ -53,8 +62,10 @@ end date/time	calendar	de	Enddatum/-zeit
 ends	calendar	de	endet
 enter output filename: ( .vcs appended )	calendar	de	Namen der Ausgabedatei (.vcs angehangen)
 event details follow	calendar	de	Details zum Termin folgen
+execptions	calendar	de	Ausnahmen
 export	calendar	de	Exportieren
 export a list of entries in ical format.	calendar	de	Eine Liste von Einträgen im iCal Format exportieren.
+fieldseparator	calendar	de	Feldtrenner
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
 frequency	calendar	de	Häufigkeit
@@ -73,8 +84,10 @@ high priority	calendar	de	Hohe Priorität
 holiday	calendar	de	Feiertag
 holidays	calendar	de	Feiertage
 i participate	calendar	de	Ich nehme teil
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
+import csv-file into calendar	calendar	de	CSV-Datei in den Kalender importieren
 interval	calendar	de	Interval
 invalid entry id.	calendar	de	ungültige Id des Eintrags.
 last	calendar	de	letzte
@@ -82,6 +95,7 @@ load [iv]cal	calendar	de	[iv]Cal Laden
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
 low	calendar	de	niedrig
+matrixview	calendar	de	Matrixansicht
 minutes	calendar	de	Minuten
 mo	calendar	de	Mo
 modified	calendar	de	Geändert
@@ -90,12 +104,14 @@ month	calendar	de	Monat
 monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
+monthview	calendar	de	Monatsansicht
 new entry	calendar	de	Neuer Eintrag
 no matches found.	calendar	de	Keine Treffer gefunden.
 no response	calendar	de	Keine Antwort
 normal	calendar	de	normal
 number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag im Planer
 number of months	calendar	de	Anzahl Monate
+number of records to read (<=200)	calendar	de	Anzeil Datensätze zu lesen (<= 200)
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
@@ -103,7 +119,8 @@ overlap holiday	calendar	de	überlappender Urlaub
 participant	calendar	de	Teilnehmer
 participants	calendar	de	Teilnehmer
 participates	calendar	de	nimmt teil
-people holiday	calendar	de	
+people holiday	calendar	de	Feiertag
+permission denied	calendar	de	Zugriff verweigert
 planner	calendar	de	Planer
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
@@ -111,6 +128,7 @@ please confirm,accept,reject or examine changes in the corresponding entry in yo
 preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
 print calendars in black & white	calendar	de	Kalender in Schwarz und Weiß drucken
 printer friendly	calendar	de	Drucker-freundlich
+privat	calendar	de	Privat
 private and global public	calendar	de	Privat und Global Öffentlich
 private and group public	calendar	de	Privat und Gruppen Öffentlich
 private only	calendar	de	nur private
@@ -137,6 +155,8 @@ scheduling conflict	calendar	de	Terminüberschneidung
 search results	calendar	de	Suchergebnisse
 send updates via email	common	de	Updates via EMail senden
 send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
+send_extra	calendar	de	
+set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige / unregelmäßige Feiertage das Jahr angeben.
 show day view on main screen	calendar	de	Tagesansicht auf Startseite anzeigen
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
 show high priority events on main screen	calendar	de	Termine mit hoher Priorität auf der Startseite anzeigen
@@ -147,13 +167,16 @@ sorry, this event does not have exceptions defined	calendar	de	Dieser Termin hat
 sort by	calendar	de	Sortieren nach
 start date/time	calendar	de	Startdatum/-zeit
 start- and enddates	calendar	de	Start- und Enddatum/-zeit
+startrecord	calendar	de	Startdatensatz
 su	calendar	de	So
 submit to repository	calendar	de	Übertragen zu phpGroupWare.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
+test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
 text	calendar	de	Text
 th	calendar	de	Do
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	de	Der Benutzer %1 nimmt nicht an diesem Event teil!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
 this month	calendar	de	Dieser Monat
 this week	calendar	de	Diese Woche
@@ -161,6 +184,7 @@ this year	calendar	de	Dieses Jahr
 thu	calendar	de	Do
 title	calendar	de	TITEL
 today	calendar	de	Heute
+translation	calendar	de	Übersetzung
 tu	calendar	de	Di
 tue	calendar	de	Di
 update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin über seine Felder updaten.
@@ -172,12 +196,15 @@ wed	calendar	de	Mi
 week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
+weekview	calendar	de	Wochenansicht
 when creating new events default set to private	calendar	de	neue Termine sind privat
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
-%1 matches found	calendar	de	%1 Treffer gefunden
+workdayends	calendar	de	Arbeitstag endet um
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
+yearview	calendar	de	
+you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides !!!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !!!
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
 you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher Priorität auf Ihrer Liste!

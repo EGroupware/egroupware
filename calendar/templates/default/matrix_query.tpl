@@ -1,20 +1,26 @@
 <!-- $Id$ -->
 <!-- BEGIN matrix_query -->
 <center>
-<h2><font color="#000000">{matrix_action}</font></h2>
-
 <form target="viewmatrix" action="{action_url}" method="post" name="matrixform">
-<table border="0" width="75%">
-{rows}
+<table border="0" width="90%">
+ <tr class="th">
+  <td colspan="2" align="center"><b>{title}</b></td>
+ </tr>
+ {rows}
+ <tr>
+  <td>
+   <table cellspacing="5"><tr valign="top">
+    <td><input type="submit" value="{submit_button}"></form></td>
+    <td>{cancel_button}</td>
+   </tr></table>
+  </td>
+ </tr>
 </table>
-<input type="submit" value="{submit_button}">
-</form>
-{cancel_button}
 </center>
 <!-- END matrix_query -->
 <!-- BEGIN list -->
- <tr>
-  <td valign="top" width="35%"><b>{field}:</b></td>
+ <tr class="{tr_color}">
+  <td valign="top" width="35%"><b>&nbsp;{field}:</b></td>
   <td valign="top" width="65%">{data}</td>
  </tr>
 <!-- END list -->

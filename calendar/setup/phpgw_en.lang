@@ -1,5 +1,7 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
 %1 matches found	calendar	en	%1 matches found
+%1 records imported	calendar	en	%1 records imported
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
 (for weekly)	calendar	en	(for Weekly)
 (i/v)cal	calendar	en	(i/v)Cal
 1 match found	calendar	en	1 match found
@@ -11,6 +13,7 @@ add alarm	calendar	en	Add Alarm
 added	calendar	en	Added
 alarm	calendar	en	alarm
 alarm management	calendar	en	Alarm Management
+alarm-management	calendar	en	Alarm-Management
 alarms	calendar	en	Alarms
 all day	calendar	en	All Day
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
@@ -27,11 +30,18 @@ calendar event	calendar	en	Calendar Event
 calendar holiday management	admin	en	Calendar Holiday Management
 calendar preferences	calendar	en	Calendar Preferences
 calendar settings	admin	en	Calendar Settings
+calendar-fieldname	calendar	en	Calendar-Fieldname
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	en	Change all events for $params['old_owner'] to $params['new_owner'].
+change status	calendar	en	Change Status
+configuration	calendar	en	Configuration
 countries	calendar	en	Countries
+country	calendar	en	Country
+csv-fieldname	calendar	en	CSV-Fieldname
+csv-filename	calendar	en	CSV-Filename
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 days repeated	calendar	en	days repeated
+dayview	calendar	en	Dayview
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 delete a single entry by passing the id.	calendar	en	Delete a single entry by passing the id.
@@ -53,8 +63,10 @@ end date/time	calendar	en	End Date/Time
 ends	calendar	en	ends
 enter output filename: ( .vcs appended )	calendar	en	Enter Output Filename: ( .vcs appended )
 event details follow	calendar	en	Event Details Follow
+execptions	calendar	en	Execptions
 export	calendar	en	Export
 export a list of entries in ical format.	calendar	en	Export a list of entries in iCal format.
+fieldseparator	calendar	en	Fieldseparator
 fr	calendar	en	F
 free/busy	calendar	en	Free/Busy
 frequency	calendar	en	Frequency
@@ -70,16 +82,21 @@ has been canceled	calendar	en	has been canceled
 has been rescheduled to	calendar	en	has been rescheduled to
 high priority	calendar	en	high priority
 holiday	calendar	en	Holiday
+holiday management	calendar	en	Holiday Management
+holiday-management	calendar	en	Holiday-Management
 holidays	calendar	en	Holidays
 i participate	calendar	en	I Participate
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays falling on a weekend, are taken on the monday after.
 ignore conflict	calendar	en	Ignore Conflict
 import	calendar	en	Import
+import csv-file into calendar	calendar	en	Import CSV-File into Calendar
 interval	calendar	en	Interval
 invalid entry id.	calendar	en	Invalid entry id.
 last	calendar	en	last
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
+matrixview	calendar	en	Matrixview
 minutes	calendar	en	minutes
 mo	calendar	en	M
 modified	calendar	en	Modified
@@ -88,11 +105,13 @@ month	calendar	en	Month
 monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
+monthview	calendar	en	Monthview
 new entry	calendar	en	New Entry
 no matches found.	calendar	en	No matches found.
 no response	calendar	en	No Response
 number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
 number of months	calendar	en	Number of months
+number of records to read (<=200)	calendar	en	Number of records to read (<=200)
 observance rule	calendar	en	Observance Rule
 occurence	calendar	en	Occurence
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
@@ -100,13 +119,17 @@ overlap holiday	calendar	en	overlap holiday
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
+people holiday	calendar	en	people holiday
+permission denied	calendar	en	Permission denied
 planner	calendar	en	Planner
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
+planner_user	calendar	en	planner_user
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	en	Please confirm, accept, reject or examine changes in the corresponding entry in your calendar
 preselected group for entering the planner	calendar	en	Preselected group for entering the planner
 print calendars in black & white	calendar	en	Print calendars in black & white
 printer friendly	calendar	en	Printer Friendly
+privat	calendar	en	Privat
 private and global public	calendar	en	Private and Global Public
 private and group public	calendar	en	Private and Group Public
 private only	calendar	en	Private Only
@@ -132,6 +155,8 @@ scheduling conflict	calendar	en	Scheduling Conflict
 search results	calendar	en	Search Results
 send updates via email	common	en	Send updates via EMail
 send/receive updates via email	calendar	en	Send/Receive updates via EMail
+send_extra	calendar	en	send_extra
+set a year only for one-time / non-regular holidays.	calendar	en	Set a Year only for one-time / non-regular holidays.
 show day view on main screen	calendar	en	show day view on main screen
 show default view on main screen	calendar	en	Show default view on main screen
 show high priority events on main screen	calendar	en	Show high priority events on main screen
@@ -142,13 +167,16 @@ sorry, this event does not have exceptions defined	calendar	en	Sorry, this event
 sort by	calendar	en	Sort by
 start date/time	calendar	en	Start Date/Time
 start- and enddates	calendar	en	Start- and Enddates
+startrecord	calendar	en	Startrecord
 su	calendar	en	Su
 submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
+test import (show importable records <u>only</u> in browser)	calendar	en	Test Import (show importable records <u>only</u> in browser)
 text	calendar	en	Text
 th	calendar	en	T
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	en	The following conflicts with the suggested time:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	en	The user %1 is not participating in this event!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
 this month	calendar	en	This month
 this week	calendar	en	This week
@@ -156,6 +184,7 @@ this year	calendar	en	This year
 thu	calendar	en	Thu
 title	calendar	en	TITLE
 today	calendar	en	Today
+translation	calendar	en	Translation
 tu	calendar	en	T
 tue	calendar	en	Tue
 update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
@@ -167,10 +196,14 @@ wed	calendar	en	Wed
 week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
 weekly	calendar	en	Weekly
+weekview	calendar	en	Weekview
 when creating new events default set to private	calendar	en	When creating new events default set to private
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
+workdayends	calendar	en	workdayends
 yearly	calendar	en	Yearly
+yearview	calendar	en	Yearview
+you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurence, not both !!!
 you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurence !!!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have %1 high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.

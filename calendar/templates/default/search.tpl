@@ -1,16 +1,19 @@
 <!-- $Id$ -->
 <!-- BEGIN search -->
-<h2><font color="{color}">{search_text}</font></h2>
-<b>{quantity}</b><p>
+<table width="90%">
+ <tr><td colspan="2" align="center" class="th"><b>{quantity}</b></td></tr>
 {rows}
-<p>
+</table>
 <!-- END search -->
 <!-- BEGIN search_list_header -->
-<ul>
+
 <!-- END search_list_header -->
 <!-- BEGIN search_list -->
-<li>{result_desc}</li>
+ <tr class="{tr_color}">
+  <td width="20%">&nbsp;{date}</td>
+  <td>{link}</td>
+ </tr>
 <!-- END search_list -->
 <!-- BEGIN search_list_footer -->
-</ul>
+
 <!-- END search_list_footer -->
