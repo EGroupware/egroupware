@@ -76,6 +76,9 @@ class uiforms extends uical
 			{
 				if ((int) $uid) $content['participants'][] = (int) $uid;
 			}
+			$content['cal_id'] = $_GET['cal']['id'];
+			$content['recur_type'] = $_GET['cal']['recur_type'];
+			
 			// default search parameters
 			$content['start_time'] = $this->cal_prefs['workdaystarts'];
 			$content['end_time'] = $this->cal_prefs['workdayends'];
@@ -138,8 +141,12 @@ class uiforms extends uical
 </html>\n";
 				exit;
 			}
-		}		
-		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$duration);
+		}
+		if ($content['recur_type'])
+		{
+			$content['msg'] .= lang('Only the initial date of that recuring event is checked!');
+		}
+		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$duration,$content['cal_id']);
 		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$duration,$content['weekdays'],$content['start_time'],$content['end_time'],$sel_options);
 		$sel_options['search_window'] = array(
 			7*DAY_s		=> lang('one week'),
@@ -153,9 +160,13 @@ class uiforms extends uical
 
 		//echo "<pre>".print_r($content,true)."</pre>\n";
 		$GLOBALS['phpgw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('freetime search');
+		// let the window popup, if its already there
+		$GLOBALS['phpgw_info']['flags']['java_script'] .= "<script>\nwindow.focus();\n</script>\n";
 
 		$etpl->exec('calendar.uiforms.freetimesearch',$content,$sel_options,'',array(
 				'participants'	=> $content['participants'],
+				'cal_id'		=> $content['cal_id'],
+				'recur_type'	=> $content['recur_type'],
 			),2);		
 	}
 	
@@ -166,9 +177,10 @@ class uiforms extends uical
 	 * @param $end int end-time timestamp in user-time
 	 * @param $participants array of user-id's
 	 * @param $duration int min. duration in sec, default 1
+	 * @param $cal_id int own id for existing events, to exclude them from being busy-time, default 0
 	 * @return array of free time-slots: array with start and end values
 	 */
-	function freetime($participants,$start,$end,$duration=1)
+	function freetime($participants,$start,$end,$duration=1,$cal_id=0)
 	{
 		$busy = $this->bo->search(array(
 			'start' => $start,
@@ -184,6 +196,8 @@ class uiforms extends uical
 		$n = 0;
 		foreach($busy as $event)
 		{
+			if ((int)$cal_id && $event['id'] == (int)$cal_id) continue;	// ignore our own event
+
 			if ($this->debug)
 			{
 				echo "<p>ft_start=".date('D d.m.Y H:i',$ft_start)."<br>\n";

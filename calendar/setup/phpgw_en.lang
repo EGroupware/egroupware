@@ -154,7 +154,7 @@ list all categories.	calendar	en	List all categories.
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
-make freebusy information availible to not loged in persons?	calendar	en	Make freebusy information availible to not loged in persons?
+make freebusy information available to not loged in persons?	calendar	en	Make freebusy information available to not loged in persons?
 matrixview	calendar	en	Matrix View
 minutes	calendar	en	minutes
 mo	calendar	en	M
@@ -196,6 +196,7 @@ on time change of more than 4 hours too	calendar	en	on time change of more than 
 one month	calendar	en	one month
 one week	calendar	en	one week
 one year	calendar	en	one year
+only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recuring event is checked!
 open todo's:	calendar	en	Open To Do Items:
 or enddate / -time	calendar	en	or Enddate / -time
 order	calendar	en	Order

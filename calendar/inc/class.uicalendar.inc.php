@@ -4211,7 +4211,7 @@ return;
 				}
 				$fts_link = $GLOBALS['phpgw']->link('/index.php',array('menuaction'=>'calendar.uiforms.freetimesearch'));
 
-				$fields = array('start[str]','start[hour]','start[min]','end[str]','end[hour]','end[min]');
+				$fields = array('start[str]','start[hour]','start[min]','end[str]','end[hour]','end[min]','cal[id]','cal[recur_type]');
 				if ($this->bo->prefs['common']['timeformat'] == '12')
 				{
 					$fields[] = 'start[ampm]';

@@ -164,7 +164,7 @@ load [iv]cal	calendar	de	[iv]Cal Laden
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
 low	calendar	de	niedrig
-make freebusy information availible to not loged in persons?	calendar	de	Die Belegtzeiten für nicht angemeldete Personen verfügbar machen?
+make freebusy information available to not loged in persons?	calendar	de	Die Belegtzeiten für nicht angemeldete Personen verfügbar machen?
 matrixview	calendar	de	Matrixansicht
 minutes	calendar	de	Minuten
 mo	calendar	de	Mo
@@ -211,6 +211,7 @@ on time change of time of more than 4 hours (and above options)	calendar	de	wenn
 one month	calendar	de	ein Monat
 one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
+only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 open todo's:	calendar	de	unerledigte Aufgaben:
 or enddate / -time	calendar	de	oder Enddatum / -zeit
 order	calendar	de	Reihenfolge
