@@ -671,7 +671,7 @@
 					}
 
 					/* Verify cat_id */
-					$stock_fields['cat_id']  = $cat_id;
+					$stock_fields['cat_id']  = $cat_id ? $cat_id : ' ';
 					if (empty($ldap_fields[0]['phpgwcontactcatid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactcatid'  => $stock_fields['cat_id']));
