@@ -50,7 +50,7 @@
       }
       if($apps_enabled && $lid) {
         $owner_found = False;
-        if($this->is_type($lid,"integer") {
+        if($this->is_type($lid,"integer")) {
           $owner_id = $lid;
           $owner_found = True;
         } else {
@@ -92,6 +92,16 @@
       return False;
     }
 
+    function apps_enabled()
+    {
+       while ($sa = each($this->enabled)) {
+          if ($sa[1] == 2) {
+             $return_apps[$sa[0]] = True;
+          }
+       }
+       return $return_apps;  
+    }
+
     function is_type($lid,$type)
     {
       return (strtoupper(gettype($lid)) == strtoupper($type));
@@ -123,16 +133,7 @@
     {
       global $phpgw;
 
-      $db2 = $phpgw->db;
-     
-      if ($this->is_type($lid,"integer")) {
-        $db2->query("select account_groups from accounts where account_id=$lid",__LINE__,__FILE__);
-      } else {
-        $db2->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
-      }
-
-      $db2->next_record();
-      $groups = explode(",",$db2->f("account_groups"));
+      $groups = $phpgw->accounts->read_groups($lid);
 
       for ($i=1; $i<(count($groups)-1); $i++) {
         $ga = explode(":",$groups[$i]);
@@ -222,6 +223,7 @@
       if($group_id) {
         $db2 = $phpgw->db;
         $db2->query("UPDATE groups SET group_apps='".$this->group_app_string($group_id)."' WHERE group_id=".$group_id,__LINE__,__FILE__);
+      }
     }
 
     function save_user()
