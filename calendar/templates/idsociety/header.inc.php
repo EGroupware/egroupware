@@ -163,6 +163,7 @@
 		{
 			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
 		}
+		$hidden_vars .= '    <!-- BO Owner = '.$this->bo->owner.' -->'."\n";
 		$form_options = '';
 		reset($this->bo->grants);
 		while(list($grantor,$temp_rights) = each($this->bo->grants))
@@ -170,14 +171,30 @@
 			$GLOBALS['phpgw']->accounts->get_account_name($grantor,$lid,$fname,$lname);
 			$drop_down[$lname.' '.$fname] = Array(
 				'grantor'	=> $grantor,
+				'value'		=> $grantor,
 				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
 			);
 		}
+		$memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+		while(list($key,$group_info) = each($memberships))
+		{
+			$account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar');
+			while($account_perms && list($key,$group_id) = each($account_perms))
+			{
+				$GLOBALS['phpgw']->accounts->get_account_name($group_id,$lid,$fname,$lname);
+				$drop_down[$lname.' '.$fname] = Array(
+					'grantor'	=> $group_id,
+					'value'		=> 'g_'.$group_id,
+					'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
+				);
+			}
+		}
+		
 		@reset($drop_down);
 		@ksort($drop_down);
 		while(list($key,$grant) = each($drop_down))
 		{
-			$form_options .= '    <option value="'.$grant['grantor'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
+			$form_options .= '    <option value="'.$grant['value'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
       }
 		reset($this->bo->grants);
 		

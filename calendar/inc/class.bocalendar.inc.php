@@ -98,6 +98,8 @@
 		var $printer_friendly = False;
 
 		var $cached_holidays;
+
+		var $g_owner = 0;
 		
 		var $filter;
 		var $cat_id;
@@ -106,6 +108,8 @@
 		var $modified;
 		var $deleted;
 		var $added;
+
+		var $is_group = False;
 
 		var $soap = False;
 		
@@ -131,16 +135,25 @@
 				echo "Owner : ".$this->owner."<br>\n";
 			}
 			
-			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:'');
+			$owner = (isset($GLOBALS['owner'])?$GLOBALS['owner']:'');
+			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:$owner);
 			$owner = ($owner=='' && isset($GLOBALS['HTTP_POST_VARS']['owner'])?$GLOBALS['HTTP_POST_VARS']['owner']:$owner);
 
-			if(isset($owner) && $owner!='')
+			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
+			{
+				$this->set_owner_to_group(substr($owner,2));
+			}
+			elseif(isset($owner) && $owner!='')
 			{
 				$this->owner = intval($owner);
 			}
 			elseif(!@isset($this->owner) || !@$this->owner)
 			{
 				$this->owner = intval($GLOBALS['phpgw_info']['user']['account_id']);
+			}
+			elseif(isset($this->owner) && $GLOBALS['phpgw']->accounts->get_type($this->owner) == 'g')
+			{
+				$this->set_owner_to_group($this->owner);
 			}
 
 			$this->prefs['common']    = $GLOBALS['phpgw_info']['user']['preferences']['common'];
@@ -170,7 +183,8 @@
 				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
 			}
 
-			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:'');
+			$date = (isset($GLOBALS['date'])?$GLOBALS['date']:'');
+			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:$date);
 			$date = ($date=='' && isset($GLOBALS['HTTP_POST_VARS']['date'])?$GLOBALS['HTTP_POST_VARS']['date']:$date);
 
 			$year = (isset($GLOBALS['HTTP_GET_VARS']['year'])?$GLOBALS['HTTP_GET_VARS']['year']:'');
@@ -220,7 +234,8 @@
 				Array(
 					'owner'		=> $this->owner,
 					'filter'		=> $this->filter,
-					'category'	=> $this->cat_id
+					'category'	=> $this->cat_id,
+					'g_owner'	=> $this->g_owner
 				)
 			);
 			$this->datetime = $this->so->datetime;
@@ -298,6 +313,19 @@
 				default:
 					return array();
 					break;
+			}
+		}
+
+		function set_owner_to_group($owner)
+		{
+			$this->owner = intval($owner);
+			$this->is_group = True;
+			settype($this->g_owner,'array');
+			$this->g_owner = Array();
+			$group_owners = $GLOBALS['phpgw']->accounts->member($owner);
+			while($group_owners && list($index,$group_info) = each($group_owners))
+			{
+				$this->g_owner[] = $group_info['account_id'];
 			}
 		}
 
@@ -520,7 +548,7 @@
 							/* This pulls ALL users of a group and makes them as participants to the event */
 							/* I would like to turn this back into a group thing. */
 							$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
-							$members = $acct->members(intval($parts[$i]));
+							$members = $acct->member(intval($parts[$i]));
 							unset($acct);
 							if($members == False)
 							{
@@ -873,7 +901,7 @@
 			{
 				$owner = $this->owner;
 			}
-			if ($owner == $GLOBALS['phpgw_info']['user']['account_id'] || ($event['public']==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event['public']==0))
+			if ($owner == $GLOBALS['phpgw_info']['user']['account_id'] || ($event['public']==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event['public']==0) || $event['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				return False;
 			}
@@ -1190,6 +1218,13 @@
 			$eyear = (isset($params['eyear'])?$params['eyear']:0);
 			$emonth = (isset($params['emonth'])?$params['emonth']:0);
 			$eday = (isset($params['eday'])?$params['eday']:0);
+			$owner_id = (isset($params['owner'])?$params['owner']:0);
+			if($owner_id==0 && $this->is_group)
+			{
+				unset($owner_id);
+				$owner_id = $this->g_owner;
+				echo '<!-- owner_id in ('.implode($owner_id,',').') -->'."\n";
+			}
 			
 			if(!$eyear && !$emonth && !$eday)
 			{
@@ -1226,8 +1261,16 @@
 				echo "End   Date : ".sprintf("%04d%02d%02d",$eyear,$emonth,$eday)."<br>\n";
 			}
 
-			$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
-			$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
+			if($owner_id)
+			{
+				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
+				$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
+			}
+			else
+			{
+				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
+				$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
+			}
 
 			$c_cached_ids = count($cached_event_ids);
 			$c_cached_ids_repeating = count($cached_event_ids_repeating);

@@ -640,6 +640,11 @@
 				{
 					// Don't allow to override private!
 					$rights &= (~ PHPGW_ACL_PRIVATE);
+					if(!isset($grants[$grantor]))
+					{
+						$grants[$grantor] = 0;
+					}
+					$grants[$grantor] |= $rights;
 				}
 				while(list($nul,$grantors) = each($accounts[$grantor]))
 				{

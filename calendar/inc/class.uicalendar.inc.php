@@ -822,7 +822,7 @@
 				),
 				'small_calendar'		=> $minical,
 				'date'				=> lang(date('F',$m)).' '.sprintf("%02d",$this->bo->day).', '.$this->bo->year,
-				'username'			=> $GLOBALS['phpgw']->common->grab_owner_name($owner),
+				'username'			=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
 				'print'				=> $print
 			);
 
@@ -1208,7 +1208,7 @@
 				switch ($GLOBALS['phpgw']->accounts->get_type($participants[$i]))
 				{
 					case 'g':
-						$members = $acct->members(intval($participants[$i]));
+						$members = $acct->member(intval($participants[$i]));
 						while($members != False && list($index,$member) = each($members))
 						{
 							if($this->bo->check_perms(PHPGW_ACL_READ,$member['account_id']) && !isset($parts[$member['account_id']]))

@@ -221,7 +221,7 @@ class socalendar_ extends socalendar__
 		return $this->event;
 	}
 
-	function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$extra='',$tz_offset=0)
+	function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$extra='',$tz_offset=0,$owner_id=0)
 	{
 		if(!isset($this->stream))
 		{
@@ -229,7 +229,16 @@ class socalendar_ extends socalendar__
 		}
 
 		$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
-		$user_where = ' AND (phpgw_cal_user.cal_login = '.$this->user.') ';
+		if($owner_id)
+		{
+			$user_where = ' AND (phpgw_cal_user.cal_login in ('.implode(',',$owner_id).')) ';
+
+			echo '<!-- owner_id in ('.implode(',',$owner_id).') -->'."\n";
+		}
+		else
+		{
+			$user_where = ' AND (phpgw_cal_user.cal_login = '.$this->user.') ';
+		}
 		$startDate = 'AND ( ( (phpgw_cal.datetime >= '.$datetime.') ';
 
 		$enddate = '';

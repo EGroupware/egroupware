@@ -20,6 +20,8 @@
 		var $cal;
 		var $db;
 		var $owner;
+		var $g_owner;
+		var $is_group = False;
 		var $datetime;
 		var $filter;
 		var $cat_id;
@@ -32,6 +34,11 @@
 			$this->owner = (!isset($param['owner']) || $param['owner'] == 0?$GLOBALS['phpgw_info']['user']['account_id']:$param['owner']);
 			$this->filter = (isset($param['filter']) && $param['filter'] != ''?$param['filter']:$this->filter);
 			$this->cat_id = (isset($param['category']) && $param['category'] != ''?$param['category']:$this->cat_id);
+			if(isset($param['g_owner']) && is_array($param['g_owner']))
+			{
+				$this->is_group = True;
+				$this->g_owner = $param['g_owner'];
+			}
 			if($this->debug)
 			{
 				echo 'SO Filter : '.$this->filter."<br>\n";
@@ -51,15 +58,22 @@
 			return $this->cal->fetch_event($id);
 		}
 
-		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0)
+		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$owner_id=0)
 		{
 			$extra = '';
 			$extra .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
 			$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
-			return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
+			if($owner_id)
+			{
+				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset,$owner_id);
+			}
+			else
+			{
+				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
+			}
 		}
 
-		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday)
+		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id=0)
 		{
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] != 'sql')
 			{
@@ -70,16 +84,21 @@
 			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $this->datetime->tz_offset;
 //			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
 //			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
-			$sql = "AND (phpgw_cal.cal_type='M') "
-				. 'AND (phpgw_cal_user.cal_login='.$this->owner.' '
-//				. 'AND (phpgw_cal.datetime <= '.$starttime.') '
-				. 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) ';
-
-			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
-
-			$sql .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
-
-			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+			$sql = "AND (phpgw_cal.cal_type='M') ";
+			if($owner_id)
+			{
+				$sql .= 'AND (phpgw_cal_user.cal_login in ('.implode(',',$owner_id).') ';
+			}
+			else
+			{
+				$sql .= 'AND (phpgw_cal_user.cal_login'.(!$this->is_group?' = '.$this->owner:' in ('.implode(',',$this->g_owner).')').' ';
+			}
+			
+//			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') '
+			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
+				. (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'')
+				. ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'')
+				. 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 			if($this->debug)
 			{
