@@ -26,4 +26,7 @@
      </td>
     </tr>
    </table>
+   <table border="0" cellpadding="5" width="100%">
+    <tr>
+     <td>
 <!-- END navbar -->
