@@ -184,14 +184,14 @@
         $this->auth          = new auth;
         $this->session       = new sessions;
       }else{
+        /* Load selected authentication class */
+        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
         $this->session       = new sessions;
         if (! $this->session->verify()) {
           Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
           exit;
         }
-        /* Load selected authentication class */
-        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
      
         /* Load selected accounts class */
         if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
