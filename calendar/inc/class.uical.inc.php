@@ -339,7 +339,7 @@ class uical
 
 		// Search
 		$blur = addslashes($this->html->htmlspecialchars(lang('Search').'...'));
-		$value = @$_POST['keywords'] ? $_POST['keywords'] : $blur;
+		$value = @$_POST['keywords'] ? $this->html->htmlspecialchars($_POST['keywords']) : $blur;
 		$file[++$n] = array(
 			'text' => $this->html->form('<input name="keywords" value="'.$value.'" style="width: 100%;"'.
 				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.

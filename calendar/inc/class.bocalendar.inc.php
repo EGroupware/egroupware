@@ -207,17 +207,17 @@
 				unset($this->save_owner);
 			}
 
-			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
+			if(isset($owner) && substr($owner,0,2) == 'g_')
 			{
-				$this->set_owner_to_group(substr($owner,2));
+				$this->set_owner_to_group((int) substr($owner,2));
 			}
-			elseif(isset($owner) && $owner!='')
+			elseif(isset($owner) && $owner)
 			{
-				$this->owner = (int)$owner;
+				$this->owner = (int) $owner;
 			}
-			elseif(!@isset($this->owner) || !@$this->owner)
+			if(!@isset($this->owner) || !@$this->owner)
 			{
-				$this->owner = (int)$GLOBALS['phpgw_info']['user']['account_id'];
+				$this->owner = (int) $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			elseif(isset($this->owner) && $GLOBALS['phpgw']->accounts->get_type($this->owner) == 'g')
 			{
@@ -236,24 +236,27 @@
 			}
 			$this->holiday_color = (substr($GLOBALS['phpgw_info']['theme']['bg07'],0,1)=='#'?'':'#').$GLOBALS['phpgw_info']['theme']['bg07'];
 
-			$friendly = (isset($_GET['friendly'])?$_GET['friendly']:'');
-			$friendly = ($friendly=='' && isset($_POST['friendly'])?$_POST['friendly']:$friendly);
+			$friendly = (int) get_var('friendly',array('GET','POST'),0);
 
 			$this->printer_friendly = ((int)$friendly == 1?True:False);
 
-			if(isset($_POST['filter'])) { $this->filter = $_POST['filter']; }
-			if(isset($_REQUEST['sortby'])) { $this->sortby = $_REQUEST['sortby']; }
-			if(isset($_POST['cat_id'])) { $this->cat_id = $_POST['cat_id']; }
-
-			if(!isset($this->filter))
+			if(isset($_POST['filter']) && ($_POST['filter'] == ' all ' || $_POST['filter'] == ' privat '))
+			{ 
+				$this->filter = $_POST['filter']; 
+			}
+			else
 			{
 				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
 			}
-
-			if(!isset($this->sortby))
+			if(isset($_REQUEST['sortby']) && ($_REQUEST['sortby'] == 'user' || $_REQUEST['sortby'] == 'category')) 
+			{ 
+				$this->sortby = $_REQUEST['sortby']; 
+			}
+			else
 			{
 				$this->sortby = $this->prefs['calendar']['defaultcalendar'] == 'planner_user' ? 'user' : 'category';
 			}
+			if(isset($_POST['cat_id'])) { $this->cat_id = (int) $_POST['cat_id']; }
 
 			if($GLOBALS['phpgw']->accounts->get_type($this->owner)=='g')
 			{
@@ -299,65 +302,23 @@
 
 			$localtime = $GLOBALS['phpgw']->datetime->users_localtime;
 
-			$date = (isset($GLOBALS['date'])?$GLOBALS['date']:'');
-			$date = (isset($_GET['date'])?$_GET['date']:$date);
-			$date = ($date=='' && isset($_POST['date'])?$_POST['date']:$date);
+			$num_months = (int) get_var('num_month',array('GET','POST'),1);
 
-			$year = (isset($_GET['year'])?$_GET['year']:'');
-			$year = ($year=='' && isset($_POST['year'])?$_POST['year']:$year);
-
-			$month = (isset($_GET['month'])?$_GET['month']:'');
-			$month = ($month=='' && isset($_POST['month'])?$_POST['month']:$month);
-
-			$day = (isset($_GET['day'])?$_GET['day']:'');
-			$day = ($day=='' && isset($_POST['day'])?$_POST['day']:'');
-
-			$num_months = (isset($_GET['num_months'])?$_GET['num_months']:'');
-			$num_months = ($num_months=='' && isset($_POST['num_months'])?$_POST['num_months']:$num_months);
-
-			if(isset($date) && $date!='')
+			$this->date = (int) get_var('date',array('GET','POST'));
+			if($this->date)
 			{
-				$this->year  = (int)(substr($date,0,4));
-				$this->month = (int)(substr($date,4,2));
-				$this->day   = (int)(substr($date,6,2));
+				$this->year  = (int) substr($this->date,0,4);
+				$this->month = (int) substr($this->date,4,2);
+				$this->day   = (int) substr($this->date,6,2);
 			}
 			else
 			{
-				if(isset($year) && $year!='')
+				foreach(array('year' => 'Y','month' => 'm','day' => 'd') as $var => $pat)
 				{
-					$this->year = $year;
+					$this->$var = (int) get_var($var,array('POST','GET'),date($pat,$localtime));
 				}
-				else
-				{
-					$this->year = date('Y',$localtime);
-				}
-				if(isset($month) && $month!='')
-				{
-					$this->month = $month;
-				}
-				else
-				{
-					$this->month = date('m',$localtime);
-				}
-				if(isset($day) && $day!='')
-				{
-					$this->day = $day;
-				}
-				else
-				{
-					$this->day = date('d',$localtime);
-				}
+				$this->date = sprintf('%04d%02d%02d',$this->year,$this->month,$this->day);
 			}
-
-			if(isset($num_months) && $num_months!='')
-			{
-				$this->num_months = $num_months;
-			}
-			elseif($this->num_months == 0)
-			{
-				$this->num_months = 1;
-			}
-
 			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
 
 			if(DEBUG_APP)
@@ -879,6 +840,10 @@
 				{
 					$this->so->set_category(strval($l_categories[0]));
 				}
+				foreach(array('title','description','location') as $name)
+				{
+					$l_cal[$name] = strip_tags($l_cal[$name]);
+				}
 				$this->so->set_title($l_cal['title']);
 				$this->so->set_description($l_cal['description']);
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
@@ -921,6 +886,10 @@
 							{
 								$l_cal['recur_data'] |= (int)$mask;
 							}
+						}
+						if (!$l_cal['recur_data'])	// no day set ==> use the day of the startdate
+						{
+							$l_cal['recur_data'] = array_search(date('l',$this->maketime($l_start)-$GLOBALS['phpgw']->datetime->tz_offset),$this->rpt_day);
 						}
 						$this->so->set_recur_weekly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval'],$l_cal['recur_data']);
 						break;
