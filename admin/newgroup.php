@@ -45,7 +45,7 @@
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
 	      $phpgw->db->next_record();
-           $user_groups = $phpgw->db->f("account_groups") . ",$group_con,";
+           $user_groups = $phpgw->db->f("account_groups") . ",$group_con:0,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);

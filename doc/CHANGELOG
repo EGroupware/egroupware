@@ -11,6 +11,7 @@
 		- Applied Patch #101321 - CZECH lang translation. Thanks Petr Moses <pmoses@users.sourceforge.net>
 		- Now ISO 639 compliant with language translation id.
 		- Applied Patch #101828 - Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
+		- Fixed group management with new groups and navbar problems.
 
 [0.9.1] - Fixed a few missing variables with templates.
 	    - editing a product in the inventory program now forwards you back to the category
