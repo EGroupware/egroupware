@@ -127,12 +127,12 @@
 
 		function to_timestamp($epoch)
 		{
-			return date('YmdHis',$epoch);
+			return date('Y-m-d H:i:s',$epoch);
 		}
 
 		function from_timestamp($timestamp)
 		{
-			ereg('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})',$timestamp,$parts);
+			ereg('([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})',$timestamp,$parts);
 
 			return mktime($parts[4],$parts[5],$parts[6],$parts[2],$parts[3],$parts[1]);
 		}

@@ -106,11 +106,11 @@
 		{
 			if (floor($this->db_version) == 6)
 			{
-				return $this->from_timestamp_6($epoch);
+				return $this->from_timestamp_6($timestamp);
 			}
 			else
 			{
-				return $this->from_timestamp_7($epoch);
+				return $this->from_timestamp_7($timestamp);
 			}
 		}
 
