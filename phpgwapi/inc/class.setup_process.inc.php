@@ -25,6 +25,7 @@
 
 	class setup_process
 	{
+		var $oProc;
 		var $tables;
 		var $updateincluded = array();
 
@@ -47,6 +48,8 @@
 			$GLOBALS['phpgw_setup']->oProc->m_odb->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
 			$GLOBALS['phpgw_setup']->oProc->m_odb->Halt_On_Error = 'report';
 			$GLOBALS['phpgw_setup']->oProc->m_odb->connect();
+			/* Legacy - update table scripts */
+			$this->oProc = $GLOBALS['phpgw_setup']->oProc;
 		}
 
 		/*!
