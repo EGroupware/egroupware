@@ -90,7 +90,7 @@
 
 		if ($phpgw_info["server"]["ldap_extra_attributes"]) {
 			$t->set_var("lang_homedir",lang("home directory"));
-			$t->set_var("lang_shell",lang("shell"));
+			$t->set_var("lang_shell",lang("login shell"));
 			$t->set_var("homedirectory",'<input name="homedirectory" value="' . $userData['homedirectory']. '">');
 			$t->set_var("loginshell",'<input name="loginshell" value="' . $userData['loginshell']. '">');
 		}

@@ -78,6 +78,7 @@
 		{
 			$phpgw->db->lock(array(
 				'phpgw_accounts',
+				'phpgw_nextid',
 				'phpgw_preferences',
 				'phpgw_sessions',
 				'phpgw_acl',
@@ -225,7 +226,7 @@
 
 	if ($phpgw_info["server"]["ldap_extra_attributes"]) {
 		$phpgw->template->set_var("lang_homedir",lang("home directory"));
-		$phpgw->template->set_var("lang_shell",lang("shell"));
+		$phpgw->template->set_var("lang_shell",lang(" login shell"));
 		$phpgw->template->set_var("homedirectory",'<input name="homedirectory" value="' . $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid . '">');
 		$phpgw->template->set_var("loginshell",'<input name="loginshell" value="' . $phpgw_info["server"]["ldap_account_shell"] . '">');
 	}
