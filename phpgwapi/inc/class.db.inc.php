@@ -575,11 +575,11 @@
 		*/
 		function halt($msg, $line = '', $file = '')
 		{
-			$this->Error = $this->Link_ID->ErrorMsg();	// need to be BEFORE unlock,
-			$this->Errno = $this->Link_ID->ErrorNo();	// else we get its error or none
-
 			if ($this->Link_ID)		// only if we have a link, else infinite loop
 			{
+				$this->Error = $this->Link_ID->ErrorMsg();	// need to be BEFORE unlock,
+				$this->Errno = $this->Link_ID->ErrorNo();	// else we get its error or none
+
 				$this->unlock();	/* Just in case there is a table currently locked */
 			}
 			if ($this->Halt_On_Error == "no")
