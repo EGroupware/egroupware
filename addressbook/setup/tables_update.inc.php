@@ -86,6 +86,30 @@
 	{
 		global $setup_info;
 
+		$setup_info['addressbook']['currentver'] = '0.9.3pre3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre3";
+	function addressbook_upgrade0_9_3pre3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3pre4';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre4";
+	function addressbook_upgrade0_9_3pre4()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3pre5';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre5";
+	function addressbook_upgrade0_9_3pre5()
+	{
+		global $setup_info;
+
 		$setup_info['addressbook']['currentver'] = '0.9.3pre6';
 		return $setup_info['addressbook']['currentver'];
 	}
@@ -107,6 +131,182 @@
 	{
 		global $setup_info;
 
+		$setup_info['addressbook']['currentver'] = '0.9.3pre8';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre8";
+	function addressbook_upgrade0_9_3pre8()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3pre9';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre9";
+	function addressbook_upgrade0_9_3pre9()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3pre10';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3pre10";
+	function addressbook_upgrade0_9_3pre10()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.3";
+	function addressbook_upgrade0_9_3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4pre1";
+	function addressbook_upgrade0_9_4pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4pre2";
+	function addressbook_upgrade0_9_4pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4pre3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4pre3";
+	function addressbook_upgrade0_9_4pre3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4pre4';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4pre4";
+	function addressbook_upgrade0_9_4pre4()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4pre5';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4pre5";
+	function addressbook_upgrade0_9_4pre5()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.4';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.4";
+	function addressbook_upgrade0_9_4()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.5pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.5pre1";
+	function addressbook_upgrade0_9_5pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.5pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.5pre2";
+	function addressbook_upgrade0_9_5pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.5';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.5";
+	function addressbook_upgrade0_9_5()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.6';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.6";
+	function addressbook_upgrade0_9_6()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.7pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.7pre1";
+	function addressbook_upgrade0_9_7pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.7pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.7pre2";
+	function addressbook_upgrade0_9_7pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.7pre3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.7pre3";
+	function addressbook_upgrade0_9_7pre3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.7';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.7";
+	function addressbook_upgrade0_9_7()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.8pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.8pre1";
+	function addressbook_upgrade0_9_8pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.8pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.8pre2";
+	function addressbook_upgrade0_9_8pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.8pre3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.8pre3";
+	function addressbook_upgrade0_9_8pre3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.8pre4';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.8pre4";
+	function addressbook_upgrade0_9_8pre4()
+	{
+		global $setup_info;
+
 		$setup_info['addressbook']['currentver'] = '0.9.8pre5';
 		return $setup_info['addressbook']['currentver'];
 	}
@@ -115,9 +315,49 @@
 	function addressbook_upgrade0_9_8pre5()
 	{
 		global $setup_info;
-		$setup_info['addressbook']['currentver'] = '0.9.10pre4';
+		$setup_info['addressbook']['currentver'] = '0.9.9pre1';
 		return $setup_info['addressbook']['currentver'];
 		//return True;
+	}
+	$test[] = "0.9.9pre1";
+	function addressbook_upgrade0_9_9pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.9';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.9";
+	function addressbook_upgrade0_9_9()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.10pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.10pre1";
+	function addressbook_upgrade0_9_10pre1()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.10pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.10pre2";
+	function addressbook_upgrade0_9_10pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.10pre3';
+		return $setup_info['addressbook']['currentver'];
+	}
+	$test[] = "0.9.10pre3";
+	function addressbook_upgrade0_9_10pre3()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.10pre4';
+		return $setup_info['addressbook']['currentver'];
 	}
 
 	$test[] = "0.9.10pre4";
@@ -162,7 +402,7 @@
 		return $setup_info['addressbook']['currentver'];
 		//return True;
 	}
-       
+
 	$test[] = "0.9.10pre6";
 	function addressbook_upgrade0_9_10pre6()
 	{
@@ -540,8 +780,8 @@
 			)
 		);
 
-        $phpgw_setup->oProc->query("SELECT * FROM phpgw_addressbook_old");
-        while ($phpgw_setup->oProc->next_record())
+		$phpgw_setup->oProc->query("SELECT * FROM phpgw_addressbook_old");
+		while ($phpgw_setup->oProc->next_record())
 		{
 			$fields['id']                  = $phpgw_setup->oProc->f("id");
 			$fields['owner']               = $phpgw_setup->oProc->f("owner");
@@ -684,6 +924,150 @@
 		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null");
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre24';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10pre24';
+	function addressbook_upgrade0_9_10pre24()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre25';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10pre25';
+	function addressbook_upgrade0_9_10pre25()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre26';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10pre26';
+	function addressbook_upgrade0_9_10pre26()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre27';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10pre27';
+	function addressbook_upgrade0_9_10pre27()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre28';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10pre28';
+	function addressbook_upgrade0_9_10pre28()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.10';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.10';
+	function addressbook_upgrade0_9_10()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.001';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.001';
+	function addressbook_upgrade0_9_11_001()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.002';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.002';
+	function addressbook_upgrade0_9_11_002()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.003';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.003';
+	function addressbook_upgrade0_9_11_003()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.004';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.004';
+	function addressbook_upgrade0_9_11_004()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.005';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.005';
+	function addressbook_upgrade0_9_11_005()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.006';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.006';
+	function addressbook_upgrade0_9_11_006()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.007';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.007';
+	function addressbook_upgrade0_9_11_007()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.008';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.008';
+	function addressbook_upgrade0_9_11_008()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.009';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.009';
+	function addressbook_upgrade0_9_11_009()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.010';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.010';
+	function addressbook_upgrade0_9_11_010()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.11.011';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.11.011';
+	function addressbook_upgrade0_9_11_011()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.13.001';
+		return $setup_info['addressbook']['currentver'];
+		//return True;
+	}
+	$test[] = '0.9.13.001';
+	function addressbook_upgrade0_9_13_001()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.13.002';
 		return $setup_info['addressbook']['currentver'];
 		//return True;
 	}
