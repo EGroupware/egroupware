@@ -44,8 +44,8 @@
 			'select-priority' => 'Select Priority',
 			'select-access' => 'Select Access',
 			'select-country' => 'Select Country',
-			'select-state' => 'Select State',	// US-states
-			'select-cat' => 'Select Cathegory', // Cathegory-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
+			'select-state' => 'Select State',		// US-states
+			'select-cat' => 'Select Category',		// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
 			'select-account' => 'Select Account',	// label=accounts(default),groups,both
 																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
