@@ -18,7 +18,8 @@
 	      - Changed the format for the accounts, sessions, and preferences tables.
 	      - Started adding support for Oracle databases (Not working yet)
 	      - Added new layout for admin and preferences sections.
-	      - Fixed acounts not using link() properly and kicking admin out of searchs.
+	      - Fixed addressbook entries assigned to groups.
+	      - Fixed accounts not using link() properly and kicking admin out of searchs.
 	      - Removed globalconfig.inc.php and moved it into the database.  Theres now a nice new
 	        setup program.
 	      - Updated docs a great deal.
