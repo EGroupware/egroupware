@@ -968,10 +968,11 @@
 				<script language="javascript">
 					function edit_widget(path)
 					{
-						window.open("'.$GLOBALS['phpgw']->link('/index.php',$this->etemplate->as_array(-1)+array(
+						var url = "'.$GLOBALS['phpgw']->link('/index.php',$this->etemplate->as_array(-1)+array(
 							'menuaction' => 'etemplate.editor.widget',
-							'path'       => ''	// has to be last !
-						)).'"+path,"etemplate_editor_widget","dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
+						)).'";
+						url = url.replace(/index.php\\?/,"index.php?path="+path+"&");
+						window.open(url,"etemplate_editor_widget","dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
 					}
 				</script>';
 				$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
