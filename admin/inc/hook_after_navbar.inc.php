@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - Admin                                                       *
 	* http://www.egroupware.org                                                *
-	* This application written by Miles Lott <milosch@phpwhere.org>            *
+	* This application written by Miles Lott <milos@groupwhere.org>            *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -14,12 +14,12 @@
 
 	/* Check currentapp and API upgrade status */
 
-	if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+	if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'welcome' &&
 		(isset($GLOBALS['phpgw_info']['server']['checkappversions']) &&
 		$GLOBALS['phpgw_info']['server']['checkappversions']))
 	{
-		if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
+		if((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
 			$GLOBALS['phpgw_info']['user']['apps']['admin']) ||
 			$GLOBALS['phpgw_info']['server']['checkappversions'] == 'All')
 		{
