@@ -23,6 +23,14 @@
   }
   loaddb();
 
+  /* Guessing default paths. */
+  $current_config["files_dir"] = ereg_replace("/setup","/files",dirname($SCRIPT_FILENAME));
+  if (is_dir("/tmp")){
+    $current_config["temp_dir"] = "/tmp";
+  }else{
+    $current_config["temp_dir"] = "/path/to/temp/dir";
+  }
+
   if ($submit) {
     @$db->query("delete from config");
     while ($newsetting = each($newsettings)) {
