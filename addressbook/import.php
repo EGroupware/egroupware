@@ -58,7 +58,7 @@
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
 		$t->set_var("import_text",lang("Import from LDIF, CSV, or VCard"));
 		$t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
-		$t->set_var("cat_link",cat_option($cat_id));
+		$t->set_var("cat_link",cat_option($cat_id,True,False));
 		$t->set_var("tsvfilename","");
 		$t->set_var("conv",$conv);
 		$t->set_var("debug",lang("Debug output in browser"));
@@ -117,7 +117,7 @@
 					// Probable multiline encoding
 					$newval = base64_decode(trim($extra));
 					$value = $newval;
-					echo $name.':'.$value;
+					//echo $name.':'.$value;
 				}
 				
 				if ($name && $value) {
