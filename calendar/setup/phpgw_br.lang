@@ -3,6 +3,7 @@
 are you sure\nyou want to\ndelete this entry ?	calendar	br	Tem certeza\nque quer apagar\nesta entrada ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	br	Tem certeza\nvoce quer\napagar esta entrada ?\n\nIsto apagara a entrada\npara todos usuarios.
 brief description	calendar	br	Curta Descricao
+calendar	common	br	Calendario
 calendar - add	calendar	br	Calendario - Adicionar
 calendar - edit	calendar	br	Calendario - Editar
 daily	calendar	br	Diaria
@@ -44,6 +45,8 @@ weekly	calendar	br	semanal
 x matches found	calendar	br	%1 ocorrencias encontradas
 year	calendar	br	Ano
 yearly	calendar	br	Anual
+you have 1 high priority event on your calendar today.	common	br	Voce tem 1 evento com alta prioridade no seu calendario hoje.
+you have x high priority events on your calendar today.	common	br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
 you have not entered a\nbrief description	calendar	br	Voce nao digitou uma \nBreve Descricao
 you have not entered a\nvalid time of day.	calendar	br	Voce nao digitou \num horario valido.
 you must enter one or more search keywords	calendar	br	voce deve digitar uma ou mais palavras chave

@@ -9,6 +9,8 @@ are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis en
 are you sure\nyou want to\ndelete this entry ?	calendar	sv	Är du säker\natt du vill\\nradera denna post?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker\\natt du vill\\nradera denna post?\\n\\nDetta tar bort\\ndenna post för alla\\nanvändare.
 brief description	calendar	sv	Kort beskrivning
+calendar	common	sv	kalender
+calendar preferences	common	sv	Kalender inställningar
 calendar - add	calendar	sv	Kalender - Lägg till
 calendar - edit	calendar	sv	Kalender - Edit
 daily	calendar	sv	Daglig
@@ -76,6 +78,8 @@ work day starts on	calendar	sv	Arbetsdagen börjar
 x matches found	calendar	sv	%1 träffar hittade
 year	calendar	sv	År
 yearly	calendar	sv	Årligen
+you have 1 high priority event on your calendar today.	common	sv	Du har 1 högprioritets händelse i din kalender i dag.
+you have x high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
 you have not entered a\\\\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
 you have not entered a\\\\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
 you have not entered a\\nbrief description	calendar	sv	Du har inte gett\\nnågon beskrivning

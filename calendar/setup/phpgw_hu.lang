@@ -5,6 +5,8 @@ all	calendar	hu	Összes
 are you sure\nyou want to\ndelete this entry ?	calendar	hu	Biztosan törölni\nakarja ezt\na bejegyzést?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	hu	Biztosan törölni\nakarja ezt\na bejegyzést?\n\nMinden felhasználó számára\ntörölni fogja a bejegyzés.
 brief description	calendar	hu	Rövid leírás
+calendar	common	hu	Naptár
+calendar preferences	common	hu	Kalendárium tulajdonságok
 calendar - add	calendar	hu	Naptár - Hozzáadás
 calendar - edit	calendar	hu	Naptár - Módosítás
 daily	calendar	hu	Naponta
@@ -72,6 +74,8 @@ work day starts on	calendar	hu	Munkanapok kezdete
 x matches found	calendar	hu	%1 találat
 year	calendar	hu	Év
 yearly	calendar	hu	Évente
+you have 1 high priority event on your calendar today.	common	hu	1 fontos esemény szerepel a mai napra a naptárban.
+you have x high priority events on your calendar today.	common	hu	%1 fontos esemény szerepel a mai napra a naptárban.
 you have not entered a\nbrief description	calendar	hu	Nem írt be\nleírást
 you have not entered a\nvalid time of day.	calendar	hu	Nem írt be érvényes\nidõpontot.
 you must enter one or more search keywords	calendar	hu	Egy vagy több kulcsszót meg kell adni a kereséshez

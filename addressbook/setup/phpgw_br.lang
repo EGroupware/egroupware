@@ -1,4 +1,5 @@
-address book	addressbook	br	Contatos
+addressbook     common  br      Rubrica
+address book	common	br	Contatos
 birthday	addressbook	br	Aniversario
 city	addressbook	br	Cidade
 e-mail	addressbook	br	E-Mail
@@ -12,5 +13,7 @@ other number	addressbook	br	Outro Numero
 pager	addressbook	br	Pager
 state	addressbook	br	Estado
 street	addressbook	br	Rua
+today is x's birthday!	common	br	Hoje e' aniversario de %1!
+tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
 work phone	addressbook	br	Fone Comercial
 zip code	addressbook	br	CEP

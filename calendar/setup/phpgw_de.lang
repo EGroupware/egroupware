@@ -3,6 +3,8 @@
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 brief description	calendar	de	Kurzbeschreibung
+calendar	common	de	Kalender
+calendar preferences	common	de	Kalender Einstellungen
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
 daily	calendar	de	Täglich
@@ -19,6 +21,7 @@ fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
 go!	calendar	de	Go!
+grant calendar access	common	de	Berechtigungen f&uuml;r Kalenderzugriffe
 i participate	calendar	de	Ich nehme teil
 ignore conflict	calendar	de	Konflikt ignorieren
 minutes	calendar	de	Minuten
@@ -62,6 +65,8 @@ weekly	calendar	de	Wöchentlich
 x matches found	calendar	de	%1 Treffer gefunden
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
+you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher Priorität auf Ihrer Liste!
+you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
 you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
 you must enter one or more search keywords	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben

@@ -1,4 +1,5 @@
-address book	addressbook	ko	주소록
+address book	common	ko	주소록
+addressbook	common	ko	주소록
 birthday	addressbook	ko	생일
 city	addressbook	ko	도시
 e-mail	addressbook	ko	E-Mail
@@ -12,5 +13,7 @@ other number	addressbook	ko	기타번호
 pager	addressbook	ko	삐삐
 state	addressbook	ko	지역
 street	addressbook	ko	주소
-work phone	addressbook	ko	직장전화
+today is x's birthday!	common	ko	오늘은 %1의 생일입니다!
+tomorrow is x's birthday.	common	ko	내일은 %1의 생일입니다.
+tork phone	addressbook	ko	직장전화
 zip code	addressbook	ko	우편번호

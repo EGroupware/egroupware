@@ -4,6 +4,8 @@ a	calendar	nl	a
 are you sure\nyou want to\ndelete this entry ?	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen\nDit zal de afspraak bij\nalle gebruikers verwijderen.
 brief description	calendar	nl	Korte omschrijving
+calendar	common	nl	kalendar
+calendar preferences	common	nl	Kalender voorkeuren
 calendar - add	calendar	nl	Kalender - toevoegen
 calendar - edit	calendar	nl	Kalender - Bewerken
 daily	calendar	nl	Dagelijks
@@ -61,6 +63,8 @@ work day starts on	calendar	nl	Werkdag begint om
 x matches found	calendar	nl	%1 resultaten gevonden
 year	calendar	nl	Jaar
 yearly	calendar	nl	Jaarlijks
+you have 1 high priority event on your calendar today.	common	nl	U hebt vandaag 1 afspraak met hoge prioriteit op uw agenda staan.
+you have x high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
 you have not entered a\nbrief description	calendar	nl	U hebt geen korte\nomschrijving ingevoerd
 you have not entered a\nvalid time of day.	calendar	nl	U hebt geen geldige\n tijd ingevoerd
 you must enter one or more search keywords	calendar	nl	U moet een of meer zoektermen invoeren

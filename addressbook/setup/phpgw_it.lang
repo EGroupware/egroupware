@@ -1,3 +1,7 @@
+address book	common	it	Rubrica
+addressbook	common	it	Rubrica
+addressbook preferences	common	it	Preferenze della rubrica
+addvcard	common	it	Aggiungi Vcard
 address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
 address line 3	addressbook	it	Indirizzo linea 3
@@ -5,6 +9,16 @@ address type	addressbook	it	Tipo di indirizzo
 bbs phone	addressbook	it	Telefono BBS
 birthday	addressbook	it	Compleanno
 business address type	addressbook	it	Tipo di indirizzo dell'ufficio
+business city	common	it	Città Ufficio
+business	common	it	Ufficio
+business country	common	it	Città Ufficio
+business email	common	it	Email Ufficio
+business email type	common	it	Tipo email ufficio
+business fax	common	it	Fax ufficio
+business phone	common	it	Telefono ufficio
+business state	common	it	Provincia ufficio
+business street	common	it	Via ufficio
+business zip codecommonitCAP ufficio
 car phone	addressbook	it	Telefono auto
 cell phone	addressbook	it	telefono cellulare
 city	addressbook	it	Città
@@ -17,6 +31,7 @@ fax	addressbook	it	Fax
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista dell'indirizzo
 full name	addressbook	it	Nome completo
 geo	addressbook	it	GEO
+grant addressbook access        common  it      Permetti accesso alla Rubrica
 home city	addressbook	it	Città casa
 home address type	addressbook	it	Tipo indirizzo di Casa
 home country	addressbook	it	Paese Casa
@@ -48,7 +63,10 @@ state	addressbook	it	Provincia
 street	addressbook	it	Via
 suffix	addressbook	it	Suffisso
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
+today is x's birthday!	common	it	Oggi è il compleanno di %1!
+tomorrow is x's birthday.	common	it	Domani è il compleanno di %1.
 url	addressbook	it	URL
+vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 video phone	addressbook	it	Videotelefono
 voice phone	addressbook	it	Telefono Vocale

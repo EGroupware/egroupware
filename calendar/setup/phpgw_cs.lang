@@ -3,6 +3,7 @@
 are you sure\nyou want to\ndelete this entry ?	calendar	cs	Jste si jist,\n¾e chcete\nvymazat tento záznam ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì\nchcete\ndsmazat tento záznam ?\n\nBude vymazán\npro v¹echny u¾ivatele.
 brief description	calendar	cs	Krátký popis
+calendar	common	cs	Kalendáø
 calendar - add	calendar	cs	Kalendáø - Pøidej
 calendar - edit	calendar	cs	Kalendáø - Uprav
 daily	calendar	cs	Dennì
@@ -48,6 +49,8 @@ weekly	calendar	cs	Týdnì
 x matches found	calendar	cs	 záznamù nalezeno
 year	calendar	cs	Rok
 yearly	calendar	cs	Roènì
+you have 1 high priority event on your calendar today.	common	cs	Máte dnes 1 událost s vysokou prioritou.
+you have x high priority events on your calendar today.	common	cs	Máte dnes  událostí s vysokou priritou.
 you have not entered a\nbrief description	calendar	cs	Nebyl zadán \nkrátký popis
 you have not entered a\nvalid time of day.	calendar	cs	Nebyl zadán \nplatný èas.
 you must enter one or more search keywords	calendar	cs	Musíte zadat aspoò jedno klíèové slovo

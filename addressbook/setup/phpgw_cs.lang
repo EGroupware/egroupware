@@ -1,4 +1,5 @@
-address book	addressbook	cs	Adresáø
+addressbook	common	cs	Telefonní seznam
+address book	common	cs	Adresáø
 birthday	addressbook	cs	Narozeniny
 city	addressbook	cs	Mìsto
 company name	addressbook	cs	Firma
@@ -13,5 +14,7 @@ other number	addressbook	cs	Telefon - ostatní
 pager	addressbook	cs	Pager
 state	addressbook	cs	Stát
 street	addressbook	cs	Ulice
+today is x's birthday!	common	cs	Dnes má narozeniny %1!
+tomorrow is x's birthday.	common	cs	Zítra má narozeniny %1.
 work phone	addressbook	cs	Telefon - práce
 zip code	addressbook	cs	PSÈ

@@ -1,5 +1,9 @@
+address book	common	ja	¥¢¥É¥ì¥¹Ä¢
+addressbook	common	ja	¥¢¥É¥ì¥¹Ä¢
+addressbook preferences	common	ja	¥¢¥É¥ì¥¹Ä¢¥æ¡¼¥¶ÀßÄê
+addresses	common	ja	¥¢¥É¥ì¥¹Ä¢
+addvcard	common	ja	VCardÄÉ²Ã
 add a field	addressbook	ja	¹àÌÜÄÉ²Ã
-address book	addressbook	ja	¥¢¥É¥ì¥¹Ä¢
 address book - view	addressbook	ja	¥¢¥É¥ì¥¹Ä¢ - É½¼¨
 address line 2	addressbook	ja	Ä®°è£²
 address line 3	addressbook	ja	Ä®°è£³
@@ -8,6 +12,16 @@ are you sure you want to delete this field?	addressbook	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤
 bbs phone	addressbook	ja	BBSÅÅÏÃ
 birthday	addressbook	ja	ÃÂÀ¸Æü
 business address type	addressbook	ja	¥¢¥É¥ì¥¹¥¿¥¤¥×
+business	common	ja	¥Ó¥¸¥Í¥¹
+business city	common	ja	»Ô¶èÄ®Â¼
+business country	common	ja	¹ñ
+business email	common	ja	ÅÅ»Ò¥á¡¼¥ë
+business email type	common	ja	ÅÅ»Ò¥á¡¼¥ë¥¿¥¤¥×
+business fax	common	ja	FAX
+business phone	common	jaÅÅÏÃ
+business state	common	ja	ÅÔÆ»ÉÜ¸©
+business street	common	ja	Ä®°è
+business zip code	common	ja	Í¹ÊØÈÖ¹æ
 car phone	addressbook	ja	¼«Æ°¼ÖÅÅÏÃ
 cell phone	addressbook	ja	cell ÅÅÏÃ
 city	addressbook	ja	»Ô¶èÄ®Â¼
@@ -28,6 +42,7 @@ field x has been added !	addressbook	ja	¹àÌÜ %1 ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
 field x has been updated !	addressbook	ja	¹àÌÜ %1 ¤òÄûÀµ¤·¤Ş¤·¤¿¡£
 fields to show in address list	addressbook	ja	¥¢¥É¥ì¥¹¥ê¥¹¥È¤ËÉ½¼¨¤¹¤ë¹àÌÜ
 geo	addressbook	ja	Geo
+grant addressbook access	common	ja	ÍøÍÑµö²ÄÀßÄê
 home address type	addressbook	ja	½»½ê
 home city	addressbook	ja	»Ô¶èÄ®Â¼
 home country	addressbook	ja	¹ñ
@@ -63,7 +78,10 @@ street	addressbook	ja	Ä®°è
 suffix	addressbook	ja	·É¾Î
 that field name has been used already !	addressbook	ja	¹àÌÜÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
 this person's first name was not in the address book.	addressbook	ja	¥¢¥É¥ì¥¹Ä¢¤ËÌ¾Á°¤¬¤¢¤ê¤Ş¤»¤ó¡£
+today is x's birthday!	common	ja	º£Æü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
+tommorow is x's birthday.	common	ja	ÌÀÆü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
 url	addressbook	ja	URL
+vcard	common	ja	VCard
 vcards require a first name entry.	addressbook	ja	VCard ¤Ë¤Ï¡¢Ì¾Á°¤¬É¬Í×¤Ç¤¹¡£
 video phone	addressbook	ja	¥Ó¥Ç¥ªÅÅÏÃ
 voice phone	addressbook	ja	ÅÅÏÃ

@@ -1,3 +1,6 @@
+address book	common	es	Libreta de Direcciones
+addressbook	common	es	Libreta de direcciones
+addressbook preferences common  es      Preferencias - Libreta de direcciones
 address book	addressbook	es	Libreta de direcciones
 address book - view	addressbook	es	Libreta de direcciones - ver
 birthday	addressbook	es	Cumpleaños
@@ -10,7 +13,6 @@ home phone	addressbook	es	Tel.Particular
 last name	addressbook	es	Apellido
 line 2	addressbook	es	Linea 2
 mobile	addressbook	es	Tel.Celular
-notes	addressbook	es	Notas
 other number	addressbook	es	Otro Numero
 pager	addressbook	es	Pager
 record access	addressbook	es	Acceso al registro
@@ -18,7 +20,8 @@ record owner	addressbook	es	Dueño del registro
 state	addressbook	es	Estado
 street	addressbook	es	Calle
 title	addressbook	es	Titulo
-url	addressbook	es	URL
+today is x's birthday!	common	es	Hoy es el cumpleaños de %1!
+tomorrow is x's birthday.	common	es	Mañana es el cumpleaños de %1.
 work phone	addressbook	es	Tel.Trabajo
 zip code	addressbook	es	Codigo Postal
 company	addressbook	es	Compañia

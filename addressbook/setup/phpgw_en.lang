@@ -1,23 +1,39 @@
+address book	common	en	Address Book
+addressbook	common	en	Addressbook
+addressbook preferences	common	en	Addressbook preferences
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
+addvcard        common  en      Add VCard
 bbs phone	addressbook	en	BBS Phone
 birthday	addressbook	en	Birthday
 business address type	addressbook	en	Business Address Type
-car phone	addressbook	en	Car Phone
-cell phone	addressbook	en	cell phone
-city	addressbook	en	City
-company name	addressbook	en	Company Name
-country	addressbook	en	Country
+business city	common	en	Business City
+business	common	en	Business
+business country	common	en	Business Country
+business email	common	en	Business EMail
+business email type	common	en	Business EMail Type
+business fax	common	en	Business Fax
+business phone	common	en	Business Phone
+business state	common	en	Business State
+business street	common	en	Business Street
+business zip code	common	en	Business Postal Code
+car phone	common	en	Car Phone
+cell phone	common	en	cell phone
+city	common	en	City
+company	common	en	Company
+company name	common	en	Company Name
+country	common	en	Country
 custom fields	addressbook	en	Custom Fields
-department	addressbook	en	Department
+department	common	en	Department
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
-fax	addressbook	en	Fax
+fax	common	en	Fax
 fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
+grant addressbook access	common	en	Grant Addressbook Access
 home city	addressbook	en	Home City
 home address type	addressbook	en	Home Address Type
 home country	addressbook	en	Home Country
@@ -38,23 +54,26 @@ middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 other number	addressbook	en	Other Number
-pager	addressbook	en	Pager
+pager	common	en	Pager
 parcel	addressbook	en	Parcel
-phone numbers	addressbook	en	Phone Numbers
-postal	addressbook	en	Postal
+phone number	common	en	Phone Number
+phone numbers	common	en	Phone Numbers
+postal	common	en	Postal
 prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
-state	addressbook	en	State
-street	addressbook	en	Street
+state	common	en	State
+street	common	en	Street
 successfully imported x records into your addressbook.	addressbook	en	Successfully imported %1 records into your addressbook.
 suffix	addressbook	en	Suffix
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
-url	addressbook	en	URL
+today is x's birthday!	common	en	Today is %1's birthday!
+tomorrow is x's birthday.	common	en	Tomorrow is %1's birthday.
+vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
-work phone	addressbook	en	Work Phone
-zip code	addressbook	en	ZIP Code
+work phone	common	en	Work Phone
+zip code	common	en	ZIP Code

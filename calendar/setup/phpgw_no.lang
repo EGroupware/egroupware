@@ -3,6 +3,7 @@
 are you sure\nyou want to\ndelete this entry ?	calendar	no	Er du sikker på at\ndu vil\nslette denne?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	no	Er du sikker på at\ndu vil\nslette denne entry ?\n\nDette vil slette\ndenne entry for alle brukere.
 brief description	calendar	no	Kort beskrivelse
+calendar	common	no	kalender
 calendar - add	calendar	no	Kalender - Tilføy
 calendar - edit	calendar	no	Kalender - Edit
 daily	calendar	no	Daglig
@@ -44,6 +45,8 @@ weekly	calendar	no	Ukentlig
 x matches found	calendar	no	%1 match funnet
 year	calendar	no	År
 yearly	calendar	no	Årlig
+you have 1 high priority event on your calendar today.	common	no	Du har 1 høy prioritets event i din kalender i dag.
+you have x high priority events on your calendar today.	common	no	Du har %1 høy prioritets event i din kalender i dag.
 you have not entered a\nbrief description	calendar	no	Du har ikke skrevet inn en\nkort beskrivelse
 you have not entered a\nvalid time of day.	calendar	no	Du har ikke skrevet inn en\ngyldig tid.
 you must enter one or more search keywords	calendar	no	Du må skrive inn ett eller flere søkeord

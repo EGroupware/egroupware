@@ -4,6 +4,8 @@ all day	calendar	it	Tutto il giorno
 are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota ?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
 brief description	calendar	it	Descrizione breve
+calendar	common	it	calendario
+calendar preferences	common	it	Preferenze calendario
 calendar - add	calendar	it	Calendario - Aggiungi
 calendar - edit	calendar	it	Calendario - Modifica
 daily	calendar	it	Giornaliero
@@ -25,6 +27,7 @@ generate printer-friendly version	calendar	it	Genera versione stampabile
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public only	calendar	it	Solo Pubblico Globale
 go!	calendar	it	Vai!
+grant calendar access	common	it	Permetti accesso al Calendario
 group public only	calendar	it	Solo Pubblico per il Gruppo
 ignore conflict	calendar	it	Ignora Conflitto
 i participate	calendar	it	Io Partecipo
@@ -78,6 +81,8 @@ work day starts on	calendar	it	La giornata lavorativa inizia alle
 x matches found	calendar	it	Trovate %1 occorrenze
 year	calendar	it	Anno
 yearly	calendar	it	Annuale
+you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nel tuo calendario.
+you have x high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nel tuo calendario.
 you have not entered a\nbrief description	calendar	it	Non hai inserito una\nBreve Descrizione
 you have not entered a\nvalid time of day.	calendar	it	Non hai inserito un\norario valido.
 you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca

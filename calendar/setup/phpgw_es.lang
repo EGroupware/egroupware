@@ -4,6 +4,8 @@ a	calendar	es	a
 are you sure\nyou want to\ndelete this entry ?	calendar	es	Esta seguro\nde querer\nborrar esta entrada ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	es	Esta seguro\nde querer\nborrar esta entrarda ?\n\nEsto borrara\nla entrada para todos los usuarios.
 brief description	calendar	es	Descripción breve
+calendar	common	es	Calendario
+calendar preferences	common	es	Preferencias - Calendario
 calendar - add	calendar	es	Calendario - Agregar
 calendar - edit	calendar	es	Calendario - Editar
 daily	calendar	es	Diario
@@ -54,6 +56,8 @@ weekly	calendar	es	Semanal
 x matches found	calendar	es	%1 coincidencias encontradas
 year	calendar	es	Año
 yearly	calendar	es	Anual
+you have 1 high priority event on your calendar today.	common	es	Ud. tiene 1 evento de alta prioridad es su calendario para hoy.
+you have x high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
 you have not entered a\nbrief description	calendar	es	Ud. no ha ingresado una\nBrief descripción
 you have not entered a\nvalid time of day.	calendar	es	Ud. no ha ingresado una\nvalid hora valida.
 you must enter one or more search keywords	calendar	es	Ud. debe entrar una o mas claves de busqueda

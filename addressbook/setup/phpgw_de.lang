@@ -1,12 +1,14 @@
+address book	common	de	Adressbuch
+addressbook	common	de	Adressbuch
+addressbook preferences common  de      Adressbuch Einstellungen
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adreßzeile 2
 address line 3	addressbook	de	Adreßzeile 3
 address type	addressbook	de	Adreßtyp
 addvcard	addressbook	de	VCard hinzufügen
-autosave default category	addressbook	de	Standard-Kategorie automatisch speichern
 bbs phone	addressbook	de	BBS
-birthday	addressbook	de	Geburtstag
-business	addressbook	de	Geschäftlich
+birthday	common	de	Geburtstag
+business	common	de	Geschäftlich
 business city	addressbook	de	geschäftl. Stadt
 business country	addressbook	de	geschäftl. Staat
 business email	addressbook	de	geschäftl. EMail
@@ -18,19 +20,20 @@ business street	addressbook	de	geschäftl. Straße
 business zip code	addressbook	de	geschäftl. PLZ
 car phone	addressbook	de	Autotelefon
 cell phone	addressbook	de	Mobilfunk
-city	addressbook	de	Stadt
-company name	addressbook	de	Firma
-country	addressbook	de	Land
+city	common	de	Stadt
+company	common	de	Firma
+company name	common	de	Firmenname
+country	common	de	Land
 custom fields	addressbook	de	Benutzerdefinierte Felder
-default category	addressbook	de	Standard-Kategorie
-department	addressbook	de	Abteilung
+department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
 export contacts	addressbook	de	Kontakte exportieren
 extra	addressbook	de	Extra
-fax	addressbook	de	Fax
+fax	common	de	Fax
 fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 full name	addressbook	de	vollständiger Name
+grant addressbook access	common	de	Berechtigungen	f&uuml;r Adressbuchzugriffe
 home city	addressbook	de	Stadt (priv)
 home country	addressbook	de	Staat (priv)
 home email	addressbook	de	private EMail
@@ -42,7 +45,6 @@ home zip code	addressbook	de	PLZ (priv)
 import contacts	addressbook	de	Kontakte importieren
 import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
-international	addressbook	de	international
 isdn phone	addressbook	de	ISDN Tel.
 label	addressbook	de	Adreßetikett
 line 2	addressbook	de	Zeile 2
@@ -50,27 +52,29 @@ message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
 modem phone	addressbook	de	Modem
-notes	addressbook	de	Notizen
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
-pager 	addressbook	de	Pager
+pager 	common	de	Pager
 parcel	addressbook	de	Lieferadresse
 personal	addressbook	de	Persönlich
-phone numbers	addressbook	de	Telefonnummern
-postal	addressbook	de	Postanschrift
+phone number	common	de	Telefonnummer
+phone numbers	common	de	Telefonnummern
+postal	common	de	Postanschrift
 pref	addressbook	de	pref
 prefix	addressbook	de	Prefix
 public key	addressbook	de	öffentlicher Schlüssel
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
-state	addressbook	de	Land
-street	addressbook	de	Straße
+state	common	de	Land
+street	common	de	Straße
 suffix	addressbook	de	Zusatz
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
+today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
+tomorrow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
 vcard	addressbook	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 work phone	addressbook	de	Tel dienstl.
-zip code	addressbook	de	PLZ
+zip code	common	de	PLZ

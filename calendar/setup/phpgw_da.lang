@@ -4,6 +4,8 @@ a	calendar	da	a
 are you sure\nyou want to\ndelete this entry ?	calendar	da	Vil Du virkelig\n slette dette\nfelt
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	da	Vil Du virkelig\n slette dette\nfelt ?\n\nDette vil slette\nfeltet for alle brugere.
 brief description	calendar	da	Kort beskrivelse
+calendar	common	da	Kalender
+calendar preferences	common	da	Kalender preferencer
 calendar - add	calendar	da	Kalender - tilføj
 calendar - edit	calendar	da	Kalender - redigér
 daily	calendar	da	Daglig
@@ -60,6 +62,8 @@ work day starts on	calendar	da	Arbejdsdage begynder om
 x matches found	calendar	da	%1 resultater fundet
 year	calendar	da	År
 yearly	calendar	da	Årlig
+you have 1 high priority event on your calendar today.	common	da	Du har 1 begivenhed af høj prioritet på Din kalender i dag.
+you have x high priority events on your calendar today.	common	da	Du har %1 begivenheder af høj prioritet på Din kalender i dag.
 you have not entered a\nbrief description	calendar	da	Du har ikke skrevet\nen kort beskrivelse
 you have not entered a\nvalid time of day.	calendar	da	Du har ikke skrevet\n et gyldigt klokkeslæt
 you must enter one or more search keywords	calendar	da	Du skal indtaste et eller flere søgeord

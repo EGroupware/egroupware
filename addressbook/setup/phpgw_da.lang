@@ -1,4 +1,6 @@
-address book	addressbook	da	Adressebog
+address book	common	da	Adressebog
+addressbook	common	da	Adressebog
+addressbook preferences	common	da	Adressebog preferencer
 address book - view	addressbook	da	Adressebog - kig
 birthday	addressbook	da	Fødselsdag
 city	addressbook	da	By
@@ -10,7 +12,6 @@ home phone	addressbook	da	Hjemme telefon
 last name	addressbook	da	Efternavn
 line 2	addressbook	da	Linie 2
 mobile	addressbook	da	Mobil
-notes	addressbook	da	Noter
 other number	addressbook	da	Andet nummer
 pager	addressbook	da	Pager
 record access	addressbook	da	Posterings adgang
@@ -19,6 +20,8 @@ show birthday reminders on main screen	addressbook	da	Påmind om fødselsdage på f
 state	addressbook	da	Land
 street	addressbook	da	Vejnavn
 title	addressbook	da	Titel
+today is x's birthday!	common	da	I dag er det %1's fødselsdag!
+tomorrow is x's birthday.	common	da	I morgen er det %1's fødselsdag.
 url	addressbook	da	URL
 work phone	addressbook	da	Arbejds telefon
 zip code	addressbook	da	Postnummer

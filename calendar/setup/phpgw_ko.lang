@@ -3,6 +3,7 @@ a	calendar	ko
 are you sure\nyou want to\ndelete this entry ?	calendar	ko	이 항목을 정말로 삭제 하시겠습니까 ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ko	이 항목을 정말로 삭제하시겠습니까?
 brief description	calendar	ko	간단한 설명
+calendar	common	ko	일정
 calendar - add	calendar	ko	달력 - 추가
 calendar - edit	calendar	ko	달력 - 편집
 daily	calendar	ko	매일
@@ -45,6 +46,8 @@ weekly	calendar	ko	매주
 x matches found	calendar	ko	%1개 항목 찾음
 year	calendar	ko	년
 yearly	calendar	ko	매년
+you have 1 high priority event on your calendar today.	common	ko	1건의 중요도가 높은 작업이 있습니다.
+you have x high priority events on your calendar today.	common	ko	%1건의 중요도가 높은 작업들이 있습니다.
 you have not entered a\nbrief description	calendar	ko	간단한 설명을 입력하세요.
 you have not entered a\nvalid time of day.	calendar	ko	시간을 정확하게 입력하세요.
 you must enter one or more search keywords	calendar	ko	하나 이상의 검색키워드를 입력하셔야 합니다.

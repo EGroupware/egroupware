@@ -1,4 +1,6 @@
-address book	addressbook	nl	Adresboek
+address book	common	nl	Adresboek
+addressbook	common	nl	Adresboek
+addressbook preferences	common	nl	Adresboek voorkeuren
 address book - view	addressbook	nl	Adresboek - weergave
 birthday	addressbook	nl	Verjaardag
 city	addressbook	nl	Stad
@@ -19,6 +21,8 @@ show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen w
 state	addressbook	nl	Provincie
 street	addressbook	nl	Straatnaam
 title	addressbook	nl	Titel
-url	addressbook	nl	URL
+today is x's birthday!	common	nl	Vandaag is %1's verjaardag!
+tomorrow is x's birthday.	common	nl	Morgen is %1's verjaardag.
+rl	addressbook	nl	URL
 work phone	addressbook	nl	Telefoon werk
 zip code	addressbook	nl	Postcode
