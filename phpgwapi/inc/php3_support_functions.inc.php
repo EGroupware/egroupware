@@ -98,6 +98,25 @@
 		}
 	}
 
+	function array_unique ($array)
+	{
+		reset($array);
+		$reversed_array = Array();
+		while(list($key,$value) = each($array))
+		{
+			if (!isset($reversed_array[$value]))
+			{
+				$reversed_array[$value] = $key;
+			}
+		}
+		unset($key, $value);
+		while(list($key,$value) = each($reversed_array))
+		{
+				$new_array[$key] = $value;
+		}
+		return $new_array;		
+	}
+
 	function str_repeat($input,$multiplier)
 	{
 		for($i=0,$output='';$i<$multiplier;$i++)
