@@ -1,7 +1,7 @@
 (for weekly)	calendar	en	(for Weekly)
 1 match found	calendar	en	1 match found
 1 message has been deleted	email	en	1 message has been deleted
-a	calendar	en	a
+a	calendar	en	
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 access type	common	en	Access type
@@ -15,30 +15,30 @@ acl	common	en	ACL
 action	admin	en	Action
 active	admin	en	Active
 add	common	en	Add
-add a note for	notes	en	Add a note for
+add	bookkeeping	en	Add
 add a single phrase	transy	en	Add a single phrase
+add global category	admin	en	Add global category
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add new phrase	transy	en	Add new phrase
 add new ticket	tts	en	Add new ticket
-add note	notes	en	Add note 
-add sub	todo	en	Add sub
-add ticket 	tts	en	Add ticket
+add ticket	tts	en	Add ticket
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
 address book - view	addressbook	en	Address book - view
-address line 2	addressbook	en	Address Line 2
-address line 3	addressbook	en	Address Line 3
-address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
 addsub	todo	en	AddSub
 addvcard	common	en	Add VCard
+add_expense	bookkeeping	en	Add expense
+add_income	bookkeeping	en	Add income
 admin	common	en	Admin
+admin	bookkeeping	en	Admin
 administration	common	en	Administration
 all	common	en	All
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
+amount	bookkeeping	en	Amount
 anonymous user	admin	en	Anonymous user
 any	transy	en	Any
 application	transy	en	Application
@@ -52,43 +52,33 @@ are you sure you want to delete this entry	todo	en	Are you sure you want to dele
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
 are you sure you want to delete this news site ?	admin	en	Are you sure you want to delete this news site ?
-are you sure you want to delete this note ?	notes	en	Are you sure you want to delete this note ?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
-arial	notes	en	Arial
 august	common	en	August
 author	nntp	en	Author
 available groups	nntp	en	Available Groups
 bad login or password	login	en	Bad login or password
 base url	admin	en	Base URL
-bbs phone	addressbook	en	BBS Phone
 birthday	addressbook	en	Birthday
 book marks	common	en	Book marks
+bookkeeping	common	en	Bookkeeping
+bookkeeping admins	common	en	Bookkeeping admins
 bookmarks	common	en	Bookmarks
 brief description	calendar	en	Brief Description
-business	common	en	Business
-business city	common	en	Business City
-business country	common	en	Business Country
-business email	common	en	Business EMail
-business email type	common	en	Business EMail Type
-business fax	common	en	Business Fax
-business phone	common	en	Business Phone
-business state	common	en	Business State
-business street	common	en	Business Street
-business zip code	common	en	Business Postal Code
 calendar	common	en	calendar
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
 calendar preferences	common	en	Calendar preferences
 cancel	common	en	Cancel
 cannot display the requested article from the requested newsgroup	nntp	en	Cannot display the requested article from the requested newsgroup
-car phone	addressbook	en	Car Phone
-category	common	en	Category
-categories	common	en	Categories
-categories for	common	en	Categories for
+categories	bookkeeping	en	Categories
+category	bookkeeping	en	Category
+category description	admin	en	Category description
+category name	admin	en	Category name
+category x has been added !	admin	en	Category %1 has been added !
 cc	email	en	CC
-cell phone	addressbook	en	cell phone
+center	weather	en	Center
 change	common	en	Change
 change main screen message	admin	en	Change main screen message
 change your password	preferences	en	Change your Password
@@ -96,22 +86,20 @@ change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
 charset	common	en	iso-8859-1
 chat	common	en	Chat
-choose a font	notes	en	Choose a font
-choose the font size	notes	en	Choose the font size
 city	addressbook	en	City
+city	weather	en	City
+city	admin	en	City
 clear	common	en	Clear
 clear form	common	en	Clear Form
 clipboard_contents	filemanager	en	Clipboard Contents
-common	transy	en	Common
 company	common	en	Company
 company name	addressbook	en	Company Name
 completed	todo	en	completed
 compose	email	en	Compose
-contact	common	en	Contact
 copy	common	en	Copy
 copy_as	filemanager	en	Copy as
 country	addressbook	en	Country
-courier new	notes	en	Courier New
+country	weather	en	Country
 create	common	en	Create
 create group	admin	en	Create Group
 create lang.sql file	transy	en	Create lang.sql file
@@ -120,10 +108,10 @@ created by	common	en	Created By
 currency	common	en	Currency
 current users	common	en	Current users
 current_file	filemanager	en	Current File
-custom fields	addressbook	en	Custom Fields
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 date	common	en	Date
+date	bookkeeping	en	Date
 date due	todo	en	Date Due
 date format	preferences	en	Date format
 days datedue	todo	en	days datedue
@@ -134,26 +122,28 @@ default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 default sorting order	email	en	Default sorting order
 delete	common	en	Delete
+delete	bookkeeping	en	Delete
 department	addressbook	en	Department
 description	calendar	en	Description
+description	bookkeeping	en	Description
+description	admin	en	Description
 detail	tts	en	Detail
 disabled	admin	en	Disabled
 display	admin	en	Display
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
-display note for	notes	en	Display note for
-do_delete	filemanager	en	Delete
-domestic	common	en	Domestic
 done	common	en	Done
 download	filemanager	en	Download
+do_delete	filemanager	en	Delete
 duration	calendar	en	Duration
 e-mail	common	en	E-Mail
 e-mail preferences	common	en	E-Mail preferences
 edit	common	en	Edit
+edit	bookkeeping	en	Edit
 edit application	admin	en	Edit application
-edit custom fields	preferences	en	edit custom fields
 edit group	admin	en	Edit Group
-edit note for	notes	en	Edit note for
 edit user account	admin	en	Edit user account
+edit_expense	bookkeeping	en	Edit expense
+edit_income	bookkeeping	en	Edit income
 email	common	en	E-Mail
 email account name	email	en	Email Account Name
 email address	email	en	E-Mail address
@@ -161,29 +151,38 @@ email password	email	en	E-Mail password
 email signature	email	en	E-Mail signature
 email type	common	en	E-Mail Type
 enabled	admin	en	Enabled
+enabled	weather	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 end date	todo	en	End Date
 end date/time	calendar	en	End Date/Time
 end time	common	en	end time
 enter your new password	preferences	en	Enter your new password
+entries	bookkeeping	en	Entries
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
-err_saving_file	filemanager	en	Error saving file to disk
 error	common	en	Error
 error creating x x directory	common	en	Error creating %1%2 directory
 error deleting x x directory	common	en	Error deleting %1%2 directory
 error renaming x x directory	common	en	Error renaming %1%2 directory
+err_saving_file	filemanager	en	Error saving file to disk
 exit	common	en	Exit
-export contacts	addressbook	en	Export Contacts
+expense	bookkeeping	en	Expense
+expenses	bookkeeping	en	Expenses
+failed to find your station	weather	en	Failed to find your station
 fax	addressbook	en	Fax
 february	common	en	February
 file manager	common	en	File manager
-file_upload	filemanager	en	File Upload
 files	common	en	Files
+file_upload	filemanager	en	File Upload
 filter	common	en	Filter
 first name	common	en	First name
 first page	common	en	first page
+firstname	bookkeeping	en	Firstname
 folder	email	en	Folder
+forecast	weather	en	Forecast
+forecast	admin	en	Forecast
+forecast zone	admin	en	Forecast Zone
+forecasts	weather	en	Forecasts
 forum	common	en	Forum
 forward	email	en	Forward
 fr	calendar	en	F
@@ -195,19 +194,18 @@ from	email	en	From
 ftp	common	en	FTP
 full description	calendar	en	Full Description
 full name	addressbook	en	Full Name
+fzone	weather	en	FZone
+fzone	admin	en	FZone
 generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 geo	addressbook	en	GEO
-georgia	notes	en	Georgia
-global	common	en	Global
-global categories	common	en	Global Categories
+global	weather	en	Global
+global categories	admin	en	Global Categories
 global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
-grant addressbook access	common	en	Grant Addressbook Access
 grant calendar access	calendar	en	Grant Calendar Access
-grant todo access	common	en	Grant Todo Access
 group	common	en	Group
 group access	common	en	Group Access
 group has been added	common	en	Group has been added
@@ -216,45 +214,34 @@ group has been updated	common	en	Group has been updated
 group name	admin	en	Group Name
 group public	common	en	Group Public
 group public only	calendar	en	Group Public Only
-group_files	filemanager	en	group files
 groups	common	en	Groups
-groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 770
+groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
+group_files	filemanager	en	group files
 headline preferences	common	en	Headline preferences
 headline sites	admin	en	Headline Sites
 headlines	common	en	Headlines
 help	common	en	Help
-helvetica	notes	en	Helvetica
-hide php information	admin	en	hide php information
 high	common	en	High
 home	common	en	Home
-home city	addressbook	en	Home City
-home country	addressbook	en	Home Country
-home directory	admin	en	Home directory
-home email	addressbook	en	Home EMail
-home email type	addressbook	en	Home EMail Type
 home phone	addressbook	en	Home Phone
-home state	addressbook	en	Home State
-home street	addressbook	en	Home Street
-home zip code	addressbook	en	Home ZIP Code
 human resources	common	en	Human Resources
 i participate	calendar	en	I Participate
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
+id	weather	en	ID
+id	admin	en	ID
 idle	admin	en	idle
 if applicable	email	en	If Applicable
 ignore conflict	calendar	en	Ignore Conflict
 image	email	en	Image
 imap server type	email	en	IMAP Server Type
-import contacts	addressbook	en	Import Contacts
 import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
-installed applications	admin	en	Installed Applications
-intl	common	en	International
-international	common	en	International
+income	bookkeeping	en	Income
+installed applications	admin	en	Installed applications
 inventory	common	en	Inventory
 ip	admin	en	IP
-isdn phone	addressbook	en	ISDN Phone
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
 january	common	en	January
 july	common	en	July
@@ -262,22 +249,22 @@ june	common	en	June
 kill	admin	en	Kill
 label	addressbook	en	Label
 language	preferences	en	Language
-large	notes	en	Large
-last login	admin	en	last login
-last login from	admin	en	last login from
 last name	common	en	Last name
 last page	common	en	last page
 last time read	admin	en	Last Time Read
 last updated	todo	en	Last Updated
 last x logins	admin	en	Last %1 logins
+lastname	bookkeeping	en	Lastname
 line 2	addressbook	en	Line 2
+links	weather	en	Links
 list of current users	admin	en	list of current users
 listings displayed	admin	en	Listings Displayed
+logging	bookkeeping	en	Logging
 login	common	en	Login
 login screen	admin	en	Login screen
-login shell	admin	en	Login shell
 login time	admin	en	Login Time
 loginid	admin	en	LoginID
+loginid	bookkeeping	en	LoginID
 logout	common	en	Logout
 low	common	en	Low
 mail folder(uw-maildir)	email	en	Mail Folder(uw-maildir)
@@ -293,15 +280,15 @@ may	common	en	May
 medium	common	en	Medium
 message	common	en	Message
 message x	nntp	en	Message %1
-message phone	addressbook	en	Message Phone
 messages	email	en	Messages
+metar	weather	en	Metar
+metar	admin	en	Metar
 middle name	addressbook	en	Middle Name
 minutes	calendar	en	minutes
 minutes between reloads	admin	en	Minutes between Reloads
 mo	calendar	en	M
 mobile	addressbook	en	Mobile
 mobile phone	common	en	Mobile phone
-modem phone	common	en	Modem Phone
 mon	calendar	en	Mon
 monday	common	en	Monday
 monitor	common	en	Monitor
@@ -320,29 +307,28 @@ new message	email	en	New message
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 new phrase has been added	transy	en	New phrase has been added
 new ticket	tts	en	New Ticket
-new_file	filemanager	en	New File
 news file	admin	en	News File
 news headlines	common	en	News headlines
 news reader	common	en	News Reader
 news type	admin	en	News Type
 newsgroups	nntp	en	Newsgroups
+new_file	filemanager	en	New File
 next	common	en	Next
 next page	common	en	next page
 nntp	common	en	NNTP
 no	common	en	No
 no matches found.	calendar	en	No matches found.
-no matchs found	common	en	No matches found
+no matchs found	admin	en	No matchs found
 no subject	email	en	No Subject
 no tickets found	tts	en	No tickets found.
-no_file_name	filemanager	en	No filename was specified
 non-standard	email	en	Non-Standard
-none	common	en	None
+none	calendar	en	None
 normal	common	en	Normal
+not applicable	weather	en	Not Applicable
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
-notes	common	en	Notes
-notes list	notes	en	Notes list
-notes preferences	common	en	Notes preferences
 november	common	en	November
+no_file_name	filemanager	en	No filename was specified
+observations	weather	en	Observations
 october	common	en	October
 ok	common	en	OK
 on *nix systems please type: x	common	en	On *nix systems please type: %1
@@ -353,9 +339,7 @@ original	transy	en	Original
 other number	addressbook	en	Other Number
 other phone	common	en	Other phone
 owner	addressbook	en	Owner
-pager	common	en	Pager
-parcel	addressbook	en	Parcel
-parent projekt:	todo	en	parent project:
+pager	addressbook	en	Pager
 participants	calendar	en	Participants
 password	common	en	Password
 password has been updated	common	en	Password has been updated
@@ -363,19 +347,15 @@ percent of users that logged out	admin	en	Percent of users that logged out
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
-personal	common	en	Personal
-personalized notes for	notes	en	Personalized notes for
+php information	admin	en	PHP Information
 phpgroupware login	login	en	phpGroupWare login
 phrase in english	transy	en	Phrase in English
 phrase in new language	transy	en	Phrase in new language
+please enter a name for that category !	admin	en	Please enter a name for that category !
 please select a message first	email	en	Please select a message first
-please set your preferences for this app	common	en	Please set your preferences for this application
 please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
-postal	addressbook	en	Postal
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-pref	common	en	pref
-prefer	common	en	Prefer
 preferences	common	en	Preferences
 prefix	addressbook	en	Prefix
 previous	email	en	Previous
@@ -388,15 +368,19 @@ private and global public	calendar	en	Private and Global Public
 private and group public	calendar	en	Private and Group Public
 private only	calendar	en	Private Only
 private_files	filemanager	en	Private files
+proceed	bookkeeping	en	Proceed.
 project description	todo	en	Project Description
-public	common	en	Public
-public key	common	en	Public Key
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
 read	common	en	Read
+recent	weather	en	Recent
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
+region	weather	en	Region
+region	admin	en	Region
+regions	weather	en	Regions
+regions	admin	en	Regions
 remove all users from this group	admin	en	Remove all users from this group
 rename	common	en	Rename
 rename_to	filemanager	en	Rename to
@@ -407,6 +391,7 @@ repeating event information	calendar	en	Repeating Event Information
 repetition	calendar	en	Repetition
 reply	email	en	Reply
 reply all	email	en	Reply All
+reports	bookkeeping	en	Reports
 sa	calendar	en	Sa
 sat	calendar	en	Sat
 saturday	common	en	Saturday
@@ -415,10 +400,10 @@ search	common	en	Search
 search results	calendar	en	Search Results
 section	email	en	Section
 select application	transy	en	Select application
-select category	common	en	Select Category
 select different theme	preferences	en	Select different Theme
 select headline news sites	common	en	Select Headline News sites
 select language to generate for	transy	en	Select language to generate for
+select parent category	admin	en	Select parent category
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
 select which application for this phrase	transy	en	select which application for this phrase
@@ -426,7 +411,6 @@ select which language for this phrase	transy	en	select which language for this p
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
 send	email	en	Send
 send deleted messages to the trash	email	en	Send deleted messages to the trash
-send updates via email	common	en	Send updates via EMail
 september	common	en	September
 session has been killed	common	en	Session has been killed
 show all	common	en	show all
@@ -439,11 +423,11 @@ show high priority events on main screen	calendar	en	Show high priority events o
 show navigation bar as	preferences	en	Show navigation bar as
 show new messages on main screen	email	en	Show new messages on main screen
 show text on navigation icons	preferences	en	Show text on navigation icons
+showing # x of x	weather	en	showing # %1 of %2
 showing x	common	en	showing %1
 showing x - x of x	common	en	showing %1 - %2 of %3
 site	admin	en	Site
 size	email	en	Size
-small	notes	en	Small
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
 sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
@@ -454,22 +438,29 @@ start date	todo	en	Start Date
 start date/time	calendar	en	Start Date/Time
 start time	common	en	Start Time
 state	addressbook	en	State
+state	weather	en	State
+station	weather	en	Station
+station	admin	en	Station
+stations	weather	en	Stations
+stations	admin	en	Stations
+statistics	bookkeeping	en	Statistics
 status	common	en	Status
 street	addressbook	en	Street
 su	calendar	en	Su
-sub	todo	en	sub
 subject	common	en	Subject
 submit	common	en	Submit
 submit changes	admin	en	Submit Changes
-subproject description	todo	en	Sub-project description
 suffix	addressbook	en	Suffix
 sun	calendar	en	Sun
 sunday	common	en	Sunday
 switch current folder to	email	en	Switch Current Folder To
-tahoma	notes	en	Tahoma
+switch to	bookkeeping	en	Switch to
+table	admin	en	Table
+tables	weather	en	Tables
 target language	transy	en	Target Language
 text only	preferences	en	Text only
 th	calendar	en	T
+that category name has been used already !	admin	en	That category name has been used already !
 that loginid has already been taken	admin	en	That loginid has already been taken
 that phrase already exists	common	en	That phrase already exists
 that site has already been entered	admin	en	That site has already been entered
@@ -480,27 +471,23 @@ there was an error trying to connect to your mail server.<br>please, check your 
 they must be removed before you can continue	admin	en	They must be removed before you can continue
 this folder is empty	email	en	This folder is empty
 this month	calendar	en	This month
-this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
 this week	calendar	en	This week
 threads	nntp	en	Threads
 thu	calendar	en	Thu
 thursday	common	en	Thursday
 time	common	en	Time
-time created	notes	en	Time created
 time format	preferences	en	Time format
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
-times new roman	notes	en	Times New Roman
 title	common	en	Title
 to	email	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 today	calendar	en	Today
 today is x's birthday!	common	en	Today is %1's birthday!
-todo	common	en	todo
+todo	todo	en	todo
 todo list	common	en	Todo List
 todo list - add	todo	en	todo list - add
-todo list - add sub-project	todo	en	todo list - add sub-project
 todo list - edit	todo	en	Todo list - edit
 tommorow is x's birthday.	common	en	Tommorow is %1's birthday.
 total	common	en	Total
@@ -525,14 +512,11 @@ user accounts	admin	en	User accounts
 user groups	admin	en	User groups
 username	login	en	Username
 users	common	en	users
-usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 770
+usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
-verdana	notes	en	Verdana
-very large	notes	en	Very Large
-very small	notes	en	Very Small
-video phone	addressbook	en	Video Phone
 view	common	en	View
+view	bookkeeping	en	View
 view access log	admin	en	View Access Log
 view all tickets	tts	en	View all tickets
 view matrix of actual month	todo	en	View Matrix of actual Month
@@ -540,8 +524,13 @@ view only open tickets	tts	en	View only open tickets
 view sessions	admin	en	View sessions
 view this entry	calendar	en	View this entry
 view/edit/delete all phrases	transy	en	View/edit/delete all phrases
-voice phone	addressbook	en	Voice Phone
+view_expense	bookkeeping	en	View expense
+view_income	bookkeeping	en	View income
 we	calendar	en	W
+weather	weather	en	Weather
+weather	preferences	en	Weather
+weather center	preferences	en	Weather Center
+weather center	admin	en	Weather Center
 wed	calendar	en	Wed
 wednesday	common	en	Wednesday
 week	calendar	en	Week
@@ -550,7 +539,7 @@ weekly	calendar	en	Weekly
 which groups	common	en	Which groups
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
-work phone	addressbook	en	work phone
+work phone	addressbook	en	Work Phone
 x matches found	calendar	en	%1 matches found
 x messages have been deleted	email	en	%1 messages have been deleted
 year	calendar	en	Year
@@ -585,3 +574,5 @@ your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
 zip code	addressbook	en	ZIP Code
+zone	weather	en	Zone
+zone	admin	en	Zone
