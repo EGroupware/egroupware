@@ -78,6 +78,19 @@
     </td>
    </tr>
 
+   <tr bgcolor="{row_on}">
+    <td>
+      {lang_Timeout_for_sessions_(in_seconds)}.
+      <br>{lang_(not_for_php4_sessions)}
+    </td>
+    <td><input size="8" name="newsettings[sessions_timeout]" value="{value_sessions_timeout}"></td>
+   </tr>
+
+   <tr bgcolor="{row_on}">
+    <td>{lang_Timeout_for_application_session_data_(in_seconds)}.</td>
+    <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
+   </tr>
+
 <!--
    <tr bgcolor="{row_off}">
     <td>{lang_How_would_you_like_to_sort_applications_in_the_navbar?}:</td>

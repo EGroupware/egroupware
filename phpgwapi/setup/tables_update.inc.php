@@ -104,4 +104,14 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.15.005';
+	function phpgwapi_upgrade0_9_15_005()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_timeout',7200)");
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_app_timeout',86400)");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.006';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>

@@ -150,6 +150,8 @@
 	$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('zu','Zulu','No')");
 
 	$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_checkip','True')");
+	$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_timeout',7200)");
+	$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_app_timeout',86400)");
 
 	$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_interserv(server_name,server_host,server_url,trust_level,trust_rel,server_mode) VALUES ('phpGW cvsdemo',NULL,'http://www.phpgroupware.org/cvsdemo/xmlrpc.php',99,0,'xmlrpc')");
 
