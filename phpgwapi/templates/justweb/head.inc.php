@@ -31,15 +31,16 @@
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
 
-	$var = Array (
-		'img_icon'      => PHPGW_IMAGES . '/favicon.ico',
-		'img_shortcut'  => PHPGW_IMAGES . '/favicon.ico',
+	$var = Array
+	(
+		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'webserver_url'	=> $GLOBALS['phpgw_info']['server']['webserver_url'],
-		'home'		=> $GLOBALS['phpgw']->link('/index.php'),
-		'appt'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uicalendar.day')),
-		'todo'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'todo.uitodo.add')),
-		'prefs'		=> $GLOBALS['phpgw']->link('/preferences/index.php'),
-		'email'		=> $GLOBALS['phpgw']->link('/email/preferences.php'),
+		'home'			=> $GLOBALS['phpgw']->link('/index.php'),
+		'appt'			=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uicalendar.day')),
+		'todo'			=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'todo.uitodo.add')),
+		'prefs'			=> $GLOBALS['phpgw']->link('/preferences/index.php'),
+		'email'			=> $GLOBALS['phpgw']->link('/email/preferences.php'),
 		'calendar'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calender.uicalendar.preferences')),
 		'addressbook'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'addressbook.uiaddressbook.preferences')),
 		'charset'		=> lang('charset'),
