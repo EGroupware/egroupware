@@ -151,7 +151,7 @@
 			}
 			if ($add_order_by)
 			{
-				$querymethod .= ' ORDER BY '.(preg_match('/[a-zA-Z0-9_,]+/',$order) ? $order : 'hol_month_num,hol_mday');
+				$querymethod .= ' ORDER BY '.(preg_match('/^[a-zA-Z0-9_,]+$/',$order) ? $order : 'hol_month_num,hol_mday');
 			}
 			return $querymethod;
 		}
