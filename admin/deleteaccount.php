@@ -22,6 +22,8 @@
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
+  $phpgw->template->set_file(array("body" => "delete_common.tpl"));
+
   // I didn't active this code until all tables are up to date using the owner field
   // The calendar isn't update to date.  (jengo)
   // NOTE: This is so I don't forget, add a double explode() to the app_tables field
@@ -57,30 +59,14 @@
   if (($account_id) && (! $confirm)) {
      // the account can have special chars/white spaces, if it is a ldap dn
      $account_id = rawurlencode($account_id);
-     ?>
-     <center>
-      <table border=0 with=65%>
-       <tr colspan=2>
-        <td align=center>
-         <?php echo lang("Are you sure you want to delete this account ?"); ?>
-        <td>
-       </tr>
-       <tr colspan=2>
-        <td align=center>
-         <?php echo "<font color=\"red\"><blink>".lang("All records and account information will be lost!")."</blink></font>"; ?>
-        </td>
-       </tr>
-       <tr>
-         <td>
-           <a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang("No"); ?></a>
-         </td>
-         <td>
-           <a href="<?php echo $phpgw->link("deleteaccount.php","account_id=$account_id&confirm=true") . "\">" . lang("Yes"); ?></a>
-         </td>
-       </tr>
-      </table>
-     </center>
-<?php
+     $phpgw->template->set_var("message",lang("Are you sure you want to delete this account ?") . "<br>"
+                             . "<font color=\"red\"><blink>" . lang("All records and account information will be lost!") . "</blink></font>");
+     $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("deleteaccount.php","account_id=$account_id&confirm=true")
+                                   . '">' . lang("Yes") . '</a>');
+     $phpgw->template->set_var("no",'<a href="' . $phpgw->link("accounts.php")
+                                  . '">' . lang("No") . '</a>');
+     $phpgw->template->pparse("out","body");
+
      $phpgw->common->phpgw_footer();
   }
 

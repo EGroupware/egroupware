@@ -14,14 +14,15 @@
   $phpgw_info = array();
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
 
-  if (! $group_id)
+  if (! $group_id) {
      Header("Location: " . $phpgw->link("groups.php"));
-
+  }
   include("../header.inc.php");
+  $phpgw->template->set_file(array("body" => "delete_common.tpl"));
 
   if ((($group_id) && ($confirm)) || $removeusers) {
      if ($removeusers) {
-        $phpgw->db->query("select account_id,account_groups from accounts where account_groups like '%$group_id%'");
+        $phpgw->db->query("select account_id,account_groups from accounts where account_groups like '%$group_id%'",__LINE__,__FILE__);
         while ($phpgw->db->next_record()) {
           $groups[$phpgw->db->f("account_id")] = $phpgw->db->f("account_groups");
         }
@@ -31,17 +32,17 @@
           if ($user_[1] == ",") {
              $user_[1] = "";
           }
-          $phpgw->db->query("update accounts set account_groups='$user_[1]' where account_id=$user[0]");
+          $phpgw->db->query("update accounts set account_groups='$user_[1]' where account_id=$user[0]",__LINE__,__FILE__);
         }
         $confirm = True;
      }
 
-     $phpgw->db->query("select group_name from groups where group_id=$group_id");
+     $phpgw->db->query("select group_name from groups where group_id=$group_id",__LINE__,__FILE__);
      $phpgw->db->next_record();
 
      $group_name = $phpgw->db->f("group_name");
 
-     $phpgw->db->query("select count(*) from accounts where account_groups like '%$group_id%'");
+     $phpgw->db->query("select count(*) from accounts where account_groups like '%$group_id%'",__LINE__,__FILE__);
      $phpgw->db->next_record();
      if ($phpgw->db->f(0) != 0) {
         $phpgw->common->phpgw_header();
@@ -54,7 +55,7 @@
 
         echo '<table border="0"><tr><td>';
 
-        $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'");
+        $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'",__LINE__,__FILE__);
         while ($phpgw->db->next_record()) {
           echo '<tr><td><a href="' . $phpgw->link("editaccount.php","account_=" . $phpgw->db->f("account_id")) . '">' . $phpgw->db->f("loginid") . '</a></tr></td>';
         }
@@ -65,11 +66,11 @@
      }
 
      if ($confirm) {
-        $phpgw->db->query("select group_name from groups where group_id=$group_id");
+        $phpgw->db->query("select group_name from groups where group_id=$group_id",__LINE__,__FILE__);
         $phpgw->db->next_record();
         $group_name = $phpgw->db->f("group_name");
 
-        $phpgw->db->query("delete from groups where group_id=$group_id");
+        $phpgw->db->query("delete from groups where group_id=$group_id",__LINE__,__FILE__);
 
         $sep = $phpgw->common->filesystem_separator();
 
@@ -87,24 +88,12 @@
 
   $phpgw->common->phpgw_header();
   echo parse_navbar();
-  ?>
-     <center>
-      <table border=0 with=65%>
-       <tr colspan=2>
-        <td align=center>
-         <?php echo lang("Are you sure you want to delete this group ?"); ?>
-        <td>
-       </tr>
-       <tr>
-         <td>
-           <a href="<?php echo $phpgw->link("groups.php") . "\">" . lang("No") . "</a>"; ?>
-         </td>
-         <td>
-           <a href="<?php echo $phpgw->link("deletegroup.php","group_id=$group_id&confirm=true") . "\">" . lang("Yes") . "</a>"; ?>
-         </td>
-       </tr>
-      </table>
-     </center>
-<?php
-	$phpgw->common->phpgw_footer();
+
+  $phpgw->template->set_var("message",lang("Are you sure you want to delete this group ?"));
+  $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("deletegroup.php","group_id=$group_id&confirm=true") . '">' . lang("Yes") . '</a>');
+  $phpgw->template->set_var("no",'<a href="' . $phpgw->link("groups.php") . '">' . lang("No") . '</a>');
+
+  $phpgw->template->pparse("out","body");
+
+  $phpgw->common->phpgw_footer();
 ?>
