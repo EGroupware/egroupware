@@ -51,11 +51,13 @@
 				{
 					// save selected tab in persistent extension_data to use it in post_process
 					$extension_data = $selected_tab = $name;
-					$tcell['name'] = $tab_active;
+					$tcell['obj'] = &$tab_active;
+					$tcell['name'] = $tab_active->name;
 				}
 				else
 				{
-					$tcell['name'] = $tab;
+					$tcell['obj'] = &$tab;
+					$tcell['name'] = $tab->name;
 				}
 				$tcell['type'] = 'template';
 				$tcell['size'] = "_tab_widget[$name]";
@@ -73,7 +75,8 @@
 
 			if (!isset($selected_tab))
 			{
-				$tab_row['A']['name'] = $tab_active;
+				$tab_row['A']['obj'] = &$tab_active;
+				$tcell['name'] = $tab_active->name;
 				$extension_data = $selected_tab = $names[0];
 			}
 			$tabs->data[1] = $tab_row;
@@ -82,12 +85,14 @@
 			$tabs->size = ',,,,0';
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
-			$tab_widget->set_cell_attribute('@tabs','name',$tabs);
-			$tab_widget->set_cell_attribute('@body','name',
-				$tmpl->tpls_in_file > 1 ? new etemplate($selected_tab,$tmpl->as_array()) : $selected_tab);
+			$tab_widget->set_cell_attribute('@tabs','obj',$tabs);
+			if ($tmpl->tpls_in_file > 1)
+				$tab_widget->set_cell_attribute('@body','obj',new etemplate($selected_tab,$tmpl->as_array()));
+			else
+				$tab_widget->set_cell_attribute('@body','name',$selected_tab);
 
 			$cell['type'] = 'template';
-			$cell['name'] = $tab_widget;
+			$cell['obj'] = &$tab_widget;
 			$cell['label'] = $cell['help'] = '';
 
 			return False;	// NO extra Label

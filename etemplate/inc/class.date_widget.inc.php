@@ -27,7 +27,7 @@
 		);
 		var $human_name = 'Date';	// this is the name for the editor
 
-		function date_widget($ui)
+		function date_widget($ui='')
 		{
 			switch($ui)
 			{
@@ -44,7 +44,7 @@
 			return 0;
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
 		{
 			if ($cell['size'] != '')
 			{
@@ -67,14 +67,17 @@
 			return True;	// extra Label is ok
 		}
 
-		function render($cell,$form_name,$value,$readonly)
+		function render(&$cell,$form_name,&$value,$readonly,&$extension_data,&$tmpl)
 		{
 			$func = 'render_'.$this->ui;
 
-			return $this->$func($cell,$form_name,$value,$readonly);
+			if (!method_exists($this,$func))
+				return False;
+
+			return $this->$func($cell,$form_name,$value,$readonly,$tmpl);
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop)
+		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			if (!isset($value))
 			{
@@ -117,12 +120,12 @@
 			return True;
 		}
 
-		function render_html($cell,$form_name,$value,$readonly)
+		function render_html($cell,$form_name,$value,$readonly,&$tmpl)
 		{
 			if ($readonly)
 			{
 				return $GLOBALS['phpgw']->common->dateformatorder($value[0],$value[1],$value[2],True);
 			}
-			return $this->et->sbox->getDate($form_name.'[Y]',$form_name.'[m]',$form_name.'[d]',$value,$options);
+			return $tmpl->sbox->getDate($form_name.'[Y]',$form_name.'[m]',$form_name.'[d]',$value,$options);
 		}
 	}

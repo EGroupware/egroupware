@@ -25,7 +25,7 @@
 			'pre_process' => True,
 			'post_process' => True
 		);
-		var $human_name = 'Nextmatch Widget';	// this is the name for the editor
+		var $human_name = 'Nextmatch';	// this is the name for the editor
 
 		function nextmatch_widget($ui)
 		{
@@ -42,7 +42,7 @@
 			$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			if ($value['start'] > $total)
 			{
-				$value['start'] = 0;
+				$extension_data['start'] = $value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
 			$extension_data['total'] = $total;
@@ -54,6 +54,7 @@
 			$value['template'] = new etemplate($value['template'],$tmpl->as_array());
 
 			$nextmatch = new etemplate('etemplate.nextmatch_widget');
+
 			if ($value['no_cat'])
 			{
 				$nextmatch->disable_cells('cat_id');
@@ -77,7 +78,8 @@
 
 			$cell['type'] = 'template';
 			$cell['size'] = $cell['name'];
-			$cell['name'] = $nextmatch;
+			$cell['obj'] = &$nextmatch;
+			$cell['name'] = $nextmatch->name;
 			$cell['label'] = $cell['help'] = '';
 
 			return False;	// NO extra Label

@@ -592,6 +592,7 @@
 
 		function show($post_vars='')
 		{
+			echo "this->etemplate->data = "; _debug_array($this->etemplate->data);
 			if ($this->debug)
 			{
 				echo "<p>etemplate.editor.show: content="; _debug_array($post_vars);
@@ -641,7 +642,7 @@
 			}
 			else
 			{
-				$show->data[$show->rows]['A']['name'] = $this->etemplate;
+				$show->data[$show->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $post_vars['vals'];
 				$olds = $post_vars['olds'];
 
@@ -673,7 +674,7 @@
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
 					 ($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
 				{
-					$extensions[$regs[1]] = $ext->human_name;
+					$extensions[$regs[1]] = $ext;
 				}
 			}
 			return $extensions;

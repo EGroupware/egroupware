@@ -180,7 +180,7 @@
 			$this->init($name,$template,$lang,$group,$version);
 			if ($this->debug == 1 || $this->debug == $this->name)
 			{
-				echo "<p>soetemplate::read('$this->name','$this->template','$this->lang','$this->version')</p>\n";
+				echo "<p>soetemplate::read('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 			}
 			if ($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' && $this->readfile())
 			{
@@ -438,6 +438,14 @@
 		*/
 		function save($name='',$template='.',$lang='.',$group='',$version='.')
 		{
+			if (is_array($name))
+			{
+				$template = $name['template'];
+				$lang     = $name['lang'];
+				$group    = $name['group'];
+				$version  = $name['version'];
+				$name     = $name['name'];
+			}
 			if ($name != '')
 			{
 				$this->name = $name;
@@ -461,6 +469,10 @@
 			if ($this->name == '')	// name need to be set !!!
 			{
 				return False;
+			}
+			if ($this->debug > 0 || $this->debug == $this->name)
+			{
+				echo "<p>soetemplate::save('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 			}
 			$this->delete();	// so we have always a new insert
 
@@ -717,7 +729,7 @@
 
 			if ($time = @filemtime($path))
 			{
-				$templ = new etemplate(".$app",'','##');
+				$templ = new soetemplate(".$app",'','##');
 				if ($templ->lang != '##' || $templ->data[0] < $time) // need to import
 				{
 					$ret = $this->import_dump($app);

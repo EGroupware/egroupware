@@ -33,7 +33,6 @@
 		var $debug; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
-		var $loop = 0;	// set by process_show if an other Exec-ProcessExec loop is needed
 
 		/*!
 		@function etemplate
@@ -215,7 +214,7 @@
 			reset($this->data);
 			if (isset($this->data[0]))
 			{
-				list($nul,$width) = each($this->data);
+				list(,$width) = each($this->data);
 			}
 			else
 			{
@@ -223,11 +222,8 @@
 			}
 			for ($r = 0; $row = 1+$r /*list($row,$cols) = each($this->data)*/; ++$r)
 			{
-				$old_cols = $cols; $old_class = $class; $old_height = $height;
-				if (!(list($nul,$cols) = each($this->data)))	// no further row
+				if (!(list($r_key) = each($this->data)))	// no further row
 				{
-					$cols = $old_cols; $class = $old_class; $height = $old_height;
-					list($nul,$cell) = each($cols); reset($cols);
 					if (!($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) &&
 						!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
 						!$this->isset_array($content,$idx))
@@ -237,21 +233,25 @@
 				}
 				else
 				{
-					$height = $this->data[0]["h$row"];
-					$class = $this->data[0]["c$row"];
+					$cols = &$this->data[$r_key];
+					$height = &$this->data[0]["h$row"];
+					$class = &$this->data[0]["c$row"];
 				}
+				reset ($cols);
 				$row_data = array();
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
 				{
-					$old_cell = $cell;
-					if (!(list($nul,$cell) = each($cols)))		// no further cols
+					if (!(list($c_key) = each($cols)))		// no further cols
 					{
-						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
 							!$this->isset_array($content,$idx))
 						{
 							break;	// no auto-col-repeat
 						}
+					}
+					else
+					{
+						$cell = &$cols[$c_key];
 					}
 					$col = $this->num2chrs($c);
 					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,
@@ -317,7 +317,7 @@
 			}
 			list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
-			if ($cell['name'][0] == '@')
+			if ($cell['name'][0] == '@' && $cell['type'] != 'template')
 			{
 				$cell['name'] = $this->get_array($content,substr($cell['name'],1));
 			}
@@ -353,12 +353,11 @@
 			}
 			$extra_label = True;
 
-			if (!$this->types[$cell['type']] &&
-			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
+			if (!$this->types[$cell['type']] && $this->haveExtension($cell['type']))
 			{
-				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,
-					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],
-					$readonlys[$name],$this);
+				$type = $cell['type'];
+				$extra_label = $this->extensionPreProcess($cell,$value,$readonlys[$name]);
+				//echo "<p>$type::pre_process"; _debug_array($cell);
 				if (strstr($name,'|'))
 				{
 					$content = $this->complete_array_merge($content,$value);
@@ -468,6 +467,34 @@
 					$html .= $this->html->hr($cell['size']);
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
+					if (is_object($cell['name']))
+					{
+						$cell['obj'] = &$cell['name'];
+						unset($cell['name']);
+						$cell['name'] = 'was Object';
+						echo "<p>Object in Name in tpl '$this->name': "; _debug_array($this->data);
+					}
+					$obj_read = 'already loaded';
+					if (!is_object($cell['obj']))
+					{
+						if ($cell['name'][0] == '@')
+						{
+							$cell['obj'] = $this->get_array($content,substr($cell['name'],1));
+							$obj_read = is_object($cell['obj']) ? 'obj from content' : 'obj read, obj-name from content';
+							if (!is_object($cell['obj']))
+							{
+								$cell['obj'] = new etemplate($cell['obj'],$this->as_array());
+							}
+						}
+						else
+						{  $obj_read = 'obj read';
+							$cell['obj'] = new etemplate($cell['name'],$this->as_array());
+						}
+					}
+					if ($this->debug >= 3 || $this->debug == $cell['type'])
+					{
+						echo "<p>show_cell::template(tpl=$this->name,name=$cell[name]): $obj_read</p>\n";
+					}
 					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell['size'] != '')
 					{
 						if ($span == '' && isset($content[$idx]['span']))
@@ -490,8 +517,7 @@
 					{
 						$readonlys['__ALL__'] = True;
 					}
-					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
-					$html .= $templ->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+					$html .= $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
 					if (isset($sel_options[$name]))
@@ -548,13 +574,13 @@
 						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
 					break;
 				default:
-					if (!isset($this->extension[$cell['type']]))
+					if ($this->haveExtension($cell['type']))
 					{
-						$html .= "<i>unknown type '$cell[type]'</i>";
+						$html .= $this->extensionRender($cell,$form_name,$value,$readonly);
 					}
 					else
 					{
-						$html .= $this->extension[$cell['type']]->render($cell,$form_name,$value,$readonly);
+						$html .= "<i>unknown type '$cell[type]'</i>";
 					}
 					break;
 			}
@@ -613,11 +639,9 @@
 			}
 			for ($r = 0; True /*list($row,$cols) = each($this->data)*/; ++$r)
 			{
-				$old_cols = $cols;
-				if (!(list($nul,$cols) = each($this->data)))	// no further row
+				if (!(list($r_key) = each($this->data)))	// no further row
 				{
-					$cols = $old_cols;
-					list($nul,$cell) = each($cols); reset($cols);
+					//list($nul,$cell) = each($cols); reset($cols);
 					if ((!$this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) ||
 						$idx_cname == '' || !$this->isset_array($content,$idx)) &&
 						(!$this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) ||
@@ -626,13 +650,18 @@
 						break;	// no auto-row-repeat
 					}
 				}
+				else
+				{
+					$cols = &$this->data[$r_key];
+				}
 				$row = 1+$r;
+				reset($cols);
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
 				{
-					$old_cell = $cell;
-					if (!(list($nul,$cell) = each($cols)))	// no further cols
+					//$old_cell = $cell;
+					if (!(list($c_key/*,$cell*/) = each($cols)))	// no further cols
 					{
-						$cell = $old_cell;
+						//$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
 							$idx_cname == '' || !$this->isset_array($content,$idx))
 						{
@@ -641,6 +670,7 @@
 					}
 					else
 					{
+						$cell = &$cols[$c_key];
 						$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True); // get idx_cname
 					}
 					$col = $this->num2chrs($c);
@@ -741,16 +771,13 @@
 					echo "'$value'</p>\n";
 				}
 			}
-			if ((isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)) &&
-				isset($this->extension[$cell['type']]->public_functions['post_process']))
+			if ($this->haveExtension($cell['type'],'post_process'))
 			{
 				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
 				{
 					echo "<p>value for $cell[type]::post_process: "; _debug_array($value);
 				}
-				$this->extension[$cell['type']]->post_process($cell,$value,
-					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],
-					$GLOBALS['phpgw_info']['etemplate']['loop'],$this);
+				$this->extensionPostProcess($cell,$value);
 
 				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
 				{
@@ -788,13 +815,12 @@
 					}
 					break;
 				case 'template':
-					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
-					$templ->process_show($value,$readonlys);
-					if ($templ->loop)
+					if (!is_object($cell['obj']))
 					{
-						$this->loop = True;
-						//echo "<p>".$this->name.": loop set in process_show(".$templ->name.")</p>\n";
+						$cell['obj'] = new etemplate($cell['name'],$this->as_array());
 					}
+					//$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
+					$cell['obj']->process_show($value,$readonlys);
 					break;
 				case 'select':
 				case 'select-cat':

@@ -269,13 +269,13 @@
 						$this->data[$row][$col][$attr] = $val;
 						++$n;
 					}
-					if ($cell['type'] == 'template' && (is_object($cell['name']) || $cell['name'][0] != '@'))
+					if ($cell['type'] == 'template' && (is_object($cell['obj']) || $cell['name'][0] != '@'))
 					{
-						if (!is_object($cell['name']))
+						if (!is_object($cell['obj']))
 						{
-							$this->data[$row][$col]['name'] = CreateObject('etemplate.etemplate',$cell['name']);
+							$this->data[$row][$col]['obj'] = CreateObject('etemplate.etemplate',$cell['name']);
 						}
-						$n += $this->data[$row][$col]['name']->set_cell_attribute($name,$attr,$val);
+						$n += $this->data[$row][$col]['obj']->set_cell_attribute($name,$attr,$val);
 					}
 				}
 			}
@@ -297,15 +297,15 @@
 
 		/*!
 		@function loadExtension
-		@syntax loadExtension( $name,$ui='' )
+		@syntax loadExtension( $type )
 		@author ralfbecker
 		@abstact trys to load the Extension / Widget-class from the app or etemplate
 		@param $name name of the extension, the classname should be class.${name}_widget.inc.php
 		@discussion the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
 		*/
-		function loadExtension($name,&$parent,$ui='html')
+		function loadExtension($type)
 		{
-			list($class,$app) = explode('.',$name);
+			list($class,$app) = explode('.',$type);
 			$class .= '_widget';
 
 			if ($app == '')
@@ -322,19 +322,71 @@
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
-				return $this->extension[$name] = False;
+				return $GLOBALS['phpgw_info']['etemplate']['extension'][$type] = False;
 			}
-			$this->extension[$name] = CreateObject($app.'.'.$class,$ui);
+			$GLOBALS['phpgw_info']['etemplate']['extension'][$type] = CreateObject($app.'.'.$class,$ui='html');
 
-			if(floor(phpversion()) >= 4)
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->human_name;
+		}
+
+		function haveExtension($type,$function='')
+		/*
+		@function haveExtension
+		@syntax haveExtension($type)
+		@abstract checks if extension is loaded and load it if it isnt
+		*/
+		{
+			return ($GLOBALS['phpgw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
+			        ($function == '' || $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->public_functions[$function]);
+		}
+
+		function extensionPreProcess(&$cell,&$value,&$readonlys)
+		/*
+		@function extensionPreProcess
+		@syntax extensionPreProcess(&$cell,&$value,&$readonlys)
+		@param &$cell table-cell on which the extension operates
+		@param &$value value of the extensions content(-array)
+		@param &$readonlys value of the extensions readonly-setting(-array)
+		@abstract executes the pre_process-function of the extension $cell[]type]
+		*/
+		{
+			if (!$this->haveExtension($type = $cell['type']))
 			{
-				$this->extension[$name]->et = &$parent;
+				return False;
 			}
-			else
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->pre_process($cell,$value,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],$readonlys,$this);
+		}
+
+		function extensionPostProcess(&$cell,&$value)
+		/*
+		@function extensionPostProcess
+		@syntax extensionPostProcess(&$cell,&$value)
+		@abstract executes the post_process-function of the extension $cell[type]
+		*/
+		{
+			if (!$this->haveExtension($type = $cell['type'],'post_process'))
 			{
-				$this->extension[$name]->et = $parent;
+				return False;
 			}
-			return $this->extension[$name];
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($cell,$value,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],
+				$GLOBALS['phpgw_info']['etemplate']['loop'],$this);
+		}
+
+		function extensionRender(&$cell,$form_name,&$value,$readonly)
+		/*
+		@function extensionRender
+		@syntax extensionRender(&$cell,$form_name,&$value,$readonly)
+		@abstract executes the render-function of the extension $cell[type]
+		*/
+		{
+			if (!$this->haveExtension($type = $cell['type'],'render'))
+			{
+				return False;
+			}
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$name]->render($cell,$form_name,$value,$readonly,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],$this);
 		}
 
 		/*!
@@ -375,16 +427,16 @@
 			//echo "set_array: $code = '$val'\n";
 		}
 
-		function get_array(&$arr,$idx)
+		function &get_array(&$arr,$idx)
 		{
 			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
 			{
-				eval($code = str_replace(']',"']",str_replace('[',"['",'$val = $arr['.$regs[1].']'.$regs[2].';')));
+				eval($code = str_replace(']',"']",str_replace('[',"['",'$val = &$arr['.$regs[1].']'.$regs[2].';')));
 				//echo "get_array: $code = '$val'\n";
 			}
 			else
 			{
-				$val = $arr[$idx];
+				$val = &$arr[$idx];
 			}
 			return $val;
 		}
