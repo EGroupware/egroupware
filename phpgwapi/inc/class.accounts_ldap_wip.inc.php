@@ -243,13 +243,13 @@
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
 					$members = $this->members($this->data["account_id"]);
-					$entry["memberuid"] = "";
+					$entry["memberuid"] = array();
 					for ($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
 						if (!$this->isin_array($currname,$entry["memberuid"]))
 						{
-							$entry["memberuid"][$i] = $currname;
+							$entry["memberuid"][] = $currname;
 						}
 					}
 				}
@@ -723,6 +723,17 @@
 					$entry["cn"] = $account_lid;
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
+
+					$members = $this->members($account_id);
+					$entry["memberuid"] = array();
+					for ($i=0;$i<count($members);$i++)
+					{
+						$currname = $this->id2name($members[$i]['account_id']);
+						if (!$this->isin_array($currname,$entry["memberuid"]))
+						{
+							$entry["memberuid"][] = $currname;
+						}
+					}
 				}
 				else
 				{
