@@ -24,7 +24,7 @@
       echo "</head>\n";
       echo "<BODY BGCOLOR=\"FFFFFF\" margintop=\"0\" marginleft=\"0\" marginright=\"0\" marginbottom=\"0\">";
       echo "<table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"2\"><tr>";
-      echo "  <td align=\"left\" bgcolor=\"486591\">&nbsp;<font color=\"fefefe\">phpGroupWare version ".$phpgw_info["server"]["versions"]["phpgwapi"]." setup</font></td>";
+      echo "  <td align=\"left\" bgcolor=\"486591\">&nbsp;<font color=\"fefefe\">phpGroupWare version ".$phpgw_info["server"]["versions"]["phpgwapi"]." - 'All your base are belong to us' setup</font></td>";
       echo "  <td align=\"right\" bgcolor=\"486591\">";
         if ($nologoutbutton) {
           echo "&nbsp;</td>";
