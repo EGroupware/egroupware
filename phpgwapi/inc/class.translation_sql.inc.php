@@ -272,11 +272,17 @@
 			{
 				return mb_convert_encoding($data,$to,$from);
 			}
-			if (($data = iconv($from,$to,$date)))
+			if(function_exists('iconv'))
 			{
-				return $data;
+				if (($data = iconv($from,$to,$date)))
+				{
+					return $data;
+				}
 			}
-			die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
+			#die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
+			
+			// this is not good, not convert did succed
+			return $data;
 		}
 
 		/*!
