@@ -23,6 +23,8 @@
         - Merged in patch to fix the addressbook not displaying all of the fields.
           Thanks ydario
 	- New Calendar table structures and code.
+	- Applied patch to fix set_time_limit() warnings in safe_mode
+	  Thanks count
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
