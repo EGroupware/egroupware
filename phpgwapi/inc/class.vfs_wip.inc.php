@@ -39,6 +39,9 @@
 	define (VFS_REAL, 1024);
 	define (RELATIVE_ALL, RELATIVE_PATH);
 
+	/* These are used in calls to extra_sql () */
+	define (VFS_SQL_SELECT, 1);
+
 	/*!
 	@class path_class
 	@abstract helper class for path_parts
@@ -77,6 +80,7 @@ class vfs
 	var $attributes;
 	var $override_acl;
 	var $linked_dirs;
+	var $meta_types;
 
 	/*!
 	@function vfs
@@ -97,8 +101,17 @@ class vfs
 		/* File/dir attributes, each corresponding to a database field.  Useful for use in loops */
 		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name", "link_directory", "link_name");
 
+		/*
+		   These are stored in the MIME-type field and should normally be ignored.
+		   Adding a type here will ensure it is normally ignored, but you will have to
+		   explicitly add it to acl_check (), and to any other SELECT's in this file
+		*/
+		$this->meta_types = array ("journal");
+
 		/* We store the linked directories in an array now, so we don't have to make the SQL call again */
-		$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''");
+		$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''" . $this->extra_sql (VFS_SQL_SELECT));
+
+		$this->linked_dirs = array ();
 		while ($phpgw->db->next_record ())
 		{
 			$this->linked_dirs[] = $phpgw->db->Record;
@@ -186,6 +199,33 @@ class vfs
 		$string = ereg_replace ("'", "\'", $string);
 
 		return $string;
+	}
+
+	/*!
+	@function extra_sql
+	@abstract Return extra SQL code that should be appended to certain queries
+	@param $query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
+	@result Extra SQL code
+	*/
+
+	function extra_sql ($query_type = VFS_SQL_SELECT)
+	{
+		global $phpgw, $phpgw_info;
+
+		$sql = " AND (mime_type != ";
+
+		reset ($this->meta_types);
+		while (list ($num, $type) = each ($this->meta_types))
+		{
+			if ($num)
+				$sql .= ", ";
+
+			$sql .= "'$type'";
+		}
+
+		$sql .= "OR mime_type IS NULL)";
+
+		return ($sql);
 	}
 
 	/*!
@@ -551,7 +591,7 @@ class vfs
 		   We don't use ls () to get owner_id as we normally would,
 		   because ls () calls acl_check (), which would create an infinite loop
 		*/
-		$query = $phpgw->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='$p2->fake_leading_dirs_clean' AND name='$p2->fake_name_clean'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='$p2->fake_leading_dirs_clean' AND name='$p2->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 		$phpgw->db->next_record ();
 		$group_id = $phpgw->db->Record["owner_id"];
 
@@ -876,9 +916,8 @@ class vfs
 
 			$size = filesize ($t->real_full_path);
 
-			$query = $phpgw->db->query ("SELECT size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
-			$phpgw->db->next_record ();
-			$record = $phpgw->db->Record;
+			$ls_array = $this->ls ($f->fake_full_path, array ($f->mask), False, False, True);
+			$record = $ls_array[0];
 
 			if ($this->file_exists ($to, array ($relatives[1])))
 			{
@@ -1129,9 +1168,8 @@ class vfs
 			}
 
 			/* If the directory is linked, we delete the placeholder directory */
-			$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name'");
-			$phpgw->db->next_record ();
-			$link_info = $phpgw->db->Record;
+			$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), False, False, True);
+			$link_info = $ls_array[0];
 
 			if ($link_info["link_directory"] && $link_info["link_name"])
 			{
@@ -1190,25 +1228,24 @@ class vfs
 
 		if (!mkdir ($p->real_full_path, 0770))
 		{
+			echo "$p->real_full_path<br>";
 			return False;
+		}
+
+		if (!$this->file_exists ($p->fake_full_path, array ($p->mask)))
+		{
+			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
+
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
+
+			$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 		}
 		else
 		{
-			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array ($p->mask)))
-			{
-				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
-
-				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
-
-				$this->correct_attributes ($p->fake_full_path, array ($p->mask));
-			}
-			else
-			{
-				return False;
-			}
-
-			return True;
+			return False;
 		}
+
+		return True;
 	}
 
 	/*!
@@ -1304,10 +1341,9 @@ class vfs
 		   All this voodoo just decides which attributes to keep, and which to update
 		   depending on if the attribute was supplied in the $attributes array
 		*/
-		
-		$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, link_directory, link_name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
-		$phpgw->db->next_record ();
-		$record = $phpgw->db->Record;
+
+		$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), False, False, True);
+		$record = $ls_array[0];
 
 		$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "link_directory", "link_name");
 
@@ -1325,7 +1361,20 @@ class vfs
 			$$attribute = $this->db_clean ($$attribute);
 		}
 
-		$query = $phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$owner_id', createdby_id='$createdby_id', modifiedby_id='$modifiedby_id', created='$created', modified='$modified', size='$size', mime_type='$mime_type', deleteable='$deleteable', comment='$comment', app='$app', link_directory='$link_directory', link_name='$link_name' WHERE file_id='$record[file_id]'", __LINE__, __FILE__);
+		$sql = "UPDATE phpgw_vfs SET ";
+
+		reset ($attribute_names);
+		while (list ($num, $attribute) = each ($attribute_names))
+		{
+			if ($num)
+				$sql .= ", ";
+
+			$sql .= "$attribute='" . $$attribute . "'";
+		}
+
+		$sql .= " WHERE file_id='$record[file_id]'";
+
+		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
 		if ($query) 
 		{
@@ -1391,7 +1440,11 @@ class vfs
 			return False;
 		}
 
-		$query = $phpgw->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+		/*
+		   We don't use ls () because it calls file_type () to determine if it has been
+		   passed a directory
+		*/
+		$query = $phpgw->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 		$phpgw->db->next_record ();
 		$mime_type = $phpgw->db->Record["mime_type"];
 
@@ -1419,7 +1472,7 @@ class vfs
 			return $rr;
 		}
 
-		$query = $phpgw->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 
 		if ($phpgw->db->next_record ())
 		{
@@ -1480,7 +1533,7 @@ class vfs
 
 		if ($checksubdirs)
 		{
-			$query = $phpgw->db->query ("SELECT size FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'");
+			$query = $phpgw->db->query ("SELECT size FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT));
 			$phpgw->db->next_record ();
 			$size += $phpgw->db->Record[0];
 		}
@@ -1516,16 +1569,19 @@ class vfs
 	/*!
 	@function ls
 	@abstract get directory listing or info about a single file
-	@discussion Note: the entries are not guaranteed to be returned in any logical order
+	@discussion Note: The entries are not guaranteed to be returned in any logical order
+		    Note: The size for directories does not include subfiles/subdirectories.
+			  If you need that, use $this->get_size ()
 	@param $dir File or Directory
 	@param $relatives Relativity array
 	@param $checksubdirs Boolean, recursively list all sub directories as well?
 	@param $mime_type Only return entries matching MIME-type $mime_type.  Can be any MIME-type, "Directory" or "\ " for those without MIME types
 	@param $nofiles Boolean.  True means you want to return just the information about the directory $dir.  If $dir is a file, $nofiles is implied.  This is the equivalent of 'ls -ld $dir'
+	@param $orderby How to order results
 	@result array of arrays.  Subarrays contain full info for each file/dir.
 	*/
 
-	function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False)
+	function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "Directory")
 	{
 		global $phpgw, $phpgw_info;
 
@@ -1537,30 +1593,62 @@ class vfs
 		{
 			$p = $this->path_parts ($dir, array ($p->mask));
 
-			$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+			$sql = "SELECT ";
+
+			reset ($this->attributes);
+			while (list ($num, $attribute) = each ($this->attributes))
+			{
+				if ($num)
+					$sql .= ", ";
+
+				$sql .= "$attribute";
+			}
+
+			$sql .= " FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+			$sql .= $this->extra_sql (VFS_SQL_SELECT);
+
+			$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
 			$phpgw->db->next_record ();
 			$record = $phpgw->db->Record;
 
 			/* We return an array of one array to maintain the standard */
-			$rarray = array (array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]));
+			$rarray = array ();
+			reset ($this->attributes);
+			while (list ($num, $attribute) = each ($this->attributes))
+			{
+				$rarray[0][$attribute] = $record[$attribute];
+			}
 
 			return $rarray;
 		}
 
+		$sql = "SELECT ";
+
+		reset ($this->attributes);
+		while (list ($num, $attribute) = each ($this->attributes))
+		{
+			if ($num)
+				$sql .= ", ";
+
+			$sql .= "$attribute";
+		}
+
 		$dir_clean = $this->db_clean ($dir);
-		$sql = "SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory LIKE '$dir_clean%'";
+		$sql .= " FROM phpgw_vfs WHERE directory LIKE '$dir_clean%'";
+		$sql .= $this->extra_sql (VFS_SQL_SELECT);
+
 		if ($mime_type)
 		{
 			$sql .= " AND mime_type='$mime_type'";
 		}
 
-		$sql .= " ORDER BY directory";
+		$sql .= " ORDER BY $orderby";
 
 		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
 		$rarray = array ();
-		while ($phpgw->db->next_record ())
+		for ($i = 0; $phpgw->db->next_record (); $i++)
 		{
 			$record = $phpgw->db->Record;
 
@@ -1576,7 +1664,11 @@ class vfs
 				continue;
 			}
 
-			$rarray[] = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
+			reset ($this->attributes);
+			while (list ($num, $attribute) = each ($this->attributes))
+			{
+				$rarray[$i][$attribute] = $record[$attribute];
+			}
 		}
 
 		return $rarray;
