@@ -1327,9 +1327,9 @@
         global $phpgw_info, $phpgw_setup;
 
         $sql = "create table phpgw_nextid (
-           appname varchar(25),
+           appname varchar(25) NOT NULL,
            id      int(8),
-		   UNIQUE (appname)
+	   UNIQUE (appname)
           )";
 
         $phpgw_setup->db->query($sql);
