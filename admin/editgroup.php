@@ -145,7 +145,8 @@
   } else {
      $group_user = $phpgw->acl->get_ids_for_location($group_id,1,'phpgw_group');
 
-     while ($user = each($group_user)) {
+     if (!$group_user) { $group_user = array(); }
+	 while ($user = each($group_user)) {
         $selected_users[intval($user[1])] = ' selected';
      }
 
