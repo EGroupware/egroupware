@@ -18,7 +18,9 @@
   if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
      $phpgw_info["flags"]["nonavbar"] = True;
-//     $phpgw_info["flags"]["nocalendarheader"] = True;
+     $phpgw_info["flags"]["noappheader"] = True;
+     $phpgw_info["flags"]["noappfooter"] = True;
+     $phpgw_info["flags"]["nofooter"] = True;
   } else {
      $friendly = 0;
   }

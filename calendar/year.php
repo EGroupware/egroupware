@@ -12,13 +12,17 @@
 
   /* $Id$ */
 
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
+  
   if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
+     $phpgw_info["flags"]["nonavbar"] = True;
+     $phpgw_info["flags"]["noappheader"] = True;
+     $phpgw_info["flags"]["noappfooter"] = True;
+     $phpgw_info["flags"]["nofooter"] = True;
   } else {
      $friendly = 0;
   }
-
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   $view = "year";

@@ -1099,10 +1099,16 @@
                $p->set_var('dayname',$str);
             }
 	  	  } else {
-               $p->set_var('bgcolor2','#FEFEFE');
-               $p->set_var('dayname','<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
-	    	          . '/calendar/'.$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='
-	    	          . $cal["day"]).'" class="minicalendargrey">' . $cal["day"] . "</a>");
+            $p->set_var('bgcolor2','#FEFEFE');
+            $str = "";
+            if(!$this->printer_friendly) {
+              $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+                    . '/calendar/'.$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='
+                    . $cal["day"]).'" class="minicalendargrey">';
+            }
+            $str .= $cal["day"];
+	    	if (!$this->printer_friendly) $str .= '</a>';
+            $p->set_var('dayname',$str);
 	  	  }
 	  	  $p->parse('monthweek_day','mini_day',True);
 		}

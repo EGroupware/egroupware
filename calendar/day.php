@@ -18,7 +18,9 @@
   if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
      $phpgw_info["flags"]["nonavbar"] = True;
-     $phpgw_info["flags"]["nocalendarheader"] = True;
+     $phpgw_info["flags"]["noappheader"] = True;
+     $phpgw_info["flags"]["noappfooter"] = True;
+     $phpgw_info["flags"]["nofooter"] = True;
   } else {
      $friendly = 0;
   }
@@ -88,7 +90,7 @@
   $phpgw->template->set_var("small_calendar",$phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"));
 
   if (!$friendly) {
-    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
+    $param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter;
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
     $phpgw->template->parse("out","day_t");
     $phpgw->template->pparse("out","day_t");

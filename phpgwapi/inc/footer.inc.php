@@ -24,7 +24,8 @@
   if (file_exists ($phpgw_info["server"]["app_inc"]."/footer.inc.php") 
    && $phpgw_info["flags"]["currentapp"] != "home"
    && $phpgw_info["flags"]["currentapp"] != "login"
-   && $phpgw_info["flags"]["currentapp"] != "logout"){
+   && $phpgw_info["flags"]["currentapp"] != "logout"
+   && (!isset($phpgw_info["flags"]["noappfooter"]) || !$phpgw_info["flags"]["noappfooter"])) {
     include($phpgw_info["server"]["app_inc"]."/footer.inc.php");
   }
 

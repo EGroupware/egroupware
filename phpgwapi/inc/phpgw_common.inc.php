@@ -509,7 +509,10 @@
     function phpgw_footer()
     {
        global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
-       include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
+
+       if (!isset($phpgw_info["flags"]["nofooter"]) || !$phpgw_info["flags"]["nofooter"]) {
+         include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
+       }
  
        // Clean up mcrypt
        if (is_object($this->crypto)) {
