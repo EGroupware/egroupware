@@ -1332,7 +1332,7 @@
 		}
 
 		if (empty($id) || !$id) {
-			return -1;
+			return 1;
 		} else {
 			return intval($id);
 		}
