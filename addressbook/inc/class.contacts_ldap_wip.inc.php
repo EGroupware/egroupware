@@ -315,7 +315,7 @@
 			global $phpgw,$phpgw_info;
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			$DEBUG = 1;
+			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
@@ -492,11 +492,11 @@
 					$return_fields[$j]['owner']  = $ldap_fields[$i]['phpgwcontactowner'][0];
 					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
 					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatId'][0];
-					echo '<br>uidnumber: "'.$ldap_fields[$i]['uidnumber'][0].'"';
-					echo '<br>tid: "'.$ldap_fields[$i]['phpgwcontacttypeid'][0].'"';
-					echo '<br>owner: "'.$ldap_fields[$i]['phpgwcontactowner'][0].'"';
-					echo '<br>access: "'.$ldap_fields[$i]['phpgwcontactaccess'][0].'"';
-					echo '<br>catid: "'.$ldap_fields[$i]['phpgwcontactcatid'][0].'"';
+					//echo '<br>uidnumber: "'.$ldap_fields[$i]['uidnumber'][0].'"';
+					//echo '<br>tid: "'.$ldap_fields[$i]['phpgwcontacttypeid'][0].'"';
+					//echo '<br>owner: "'.$ldap_fields[$i]['phpgwcontactowner'][0].'"';
+					//echo '<br>access: "'.$ldap_fields[$i]['phpgwcontactaccess'][0].'"';
+					//echo '<br>catid: "'.$ldap_fields[$i]['phpgwcontactcatid'][0].'"';
 
 					if (gettype($stock_fieldnames) == 'array')
 					{
