@@ -15,6 +15,7 @@
 		- Changed around the way the preferences work.  The $phpgw_info array is also handled a little
 		  differently for preferences.  It now looks like:
 		  $phpgw_info["user"]["preferences"][appname][preference name]
+		- Fixed NNTP call to preferences.php if user does not have any groups selected.
 
 [0.9.1] - Fixed a few missing variables with templates.
 	    - editing a product in the inventory program now forwards you back to the category
