@@ -22,5 +22,10 @@
 	  </font>
 	 </td>
 <!-- END footer_row -->
+<!-- BEGIN blank_row -->
+         <td>
+          {b_row}
+         </td>
+<!-- END blank_row -->
 
 

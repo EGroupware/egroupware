@@ -146,9 +146,9 @@
 	{
 		$hidden_vars .= '    <input type="hidden" name="date" value="'.$HTTP_GET_VARS['date'].'">'."\n";
 	}
-	$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->so->month.'">'."\n";
-	$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->so->day.'">'."\n";
-	$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->so->year.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 	if(isset($this->bo->filter) && $this->bo->filter)
 	{
 		$hidden_vars .= '    <input type="hidden" name="filter" value="'.$this->bo->filter.'">'."\n";
