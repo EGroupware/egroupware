@@ -243,23 +243,30 @@
 			{
 				if ($aDefaults && isset($aDefaults[$name]))	// use given default
 				{
-					$select[] = $aDefaults[$name];
+					$value = $aDefaults[$name];
 				}
 				elseif (isset($old_fd[$name]))	// existing column, use its value => column-name in query
 				{
-					$select[] = $name;
+					$value = $name;
 				}
 				else	// new column => use default value or NULL
 				{
 					if (!isset($data['default']) && (!isset($data['nullable']) || $data['nullable']))
 					{
-						$select[] = 'NULL';
+						$value = 'NULL';
 					}
 					else
 					{
-						$select[] = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
+						$value = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
+						// fix for postgres error "no '<' operator for type 'unknown'"
+						if ($this->sType == 'pgsql')
+						{
+							$type_translated = $this->m_oTranslator->TranslateType($data['type']);
+							$value = "CAST($value AS $type_translated)";
+						}
 					}
 				}
+				$select[] = $value;
 			}
 			$select = implode(',',$select);
 
