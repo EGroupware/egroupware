@@ -627,7 +627,8 @@
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
-			if(!$this->bo->check_perms(PHPGW_ACL_READ))
+			//RB if(!$this->bo->check_perms(PHPGW_ACL_READ))
+			if(!$this->bo->rb_check_perms(PHPGW_ACL_READ,$cal_id))
 			{
 				echo lang('You do not have permission to read this record!').'</center>'."\n";
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
@@ -677,9 +678,11 @@
 				)
 			);
 
-			if($this->bo->owner == $event['owner'] || $this->bo->member_of_group($this->bo->owner))
-			{
-				if ($this->bo->check_perms(PHPGW_ACL_EDIT,$event['owner']))
+			//RB: this is handled by the acl
+			//RB if($this->bo->owner == $event['owner'] || $this->bo->member_of_group($this->bo->owner))
+			//RB {
+				//RB if ($this->bo->rb_check_perms(PHPGW_ACL_EDIT,$event['owner']))
+				if ($this->bo->rb_check_perms(PHPGW_ACL_EDIT,$event))
 				{
 					if($event['recur_type'] != MCAL_RECUR_NONE)
 					{
@@ -724,7 +727,8 @@
 					echo $p->fp('out','form_button');
 				}
 
-				if ($this->bo->check_perms(PHPGW_ACL_DELETE,$event['owner']))
+				//RB if ($this->bo->check_perms(PHPGW_ACL_DELETE,$event['owner']))
+				if ($this->bo->rb_check_perms(PHPGW_ACL_DELETE,$event))
 				{
 					if($event['recur_type'] != MCAL_RECUR_NONE)
 					{
@@ -770,7 +774,7 @@
 						echo $p->fp('out','form_button');
 					}
 				}
-			}
+			//RB}
 
 			$var = Array(
 				'action_url_button'	=> $this->page('export'),
@@ -786,7 +790,7 @@
 
 		function edit($params='')
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))//RB_NEED_WORK
 			{
 			   $this->no_edit();
 			}
@@ -912,11 +916,11 @@
 
 		function reinstate_list($params='')
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))//RB_NEED_WORK
 			{
 			   $this->no_edit();
 			}
-			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))
+			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))//RB_NEED_WORK
 			{
 				$this->index();
 			}
@@ -936,7 +940,7 @@
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
-			if(!$this->bo->check_perms(PHPGW_ACL_READ))
+			if(!$this->bo->check_perms(PHPGW_ACL_READ))//RB_NEED_WORK
 			{
 				echo lang('You do not have permission to read this record!').'</center>'."\n";
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
@@ -999,11 +1003,11 @@
 
 		function reinstate($params='')
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))//RB_NEED_WORK
 			{
 			   $this->no_edit();
 			}
-			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))
+			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))//RB_NEED_WORK
 			{
 				$this->index();
 			}
@@ -1032,7 +1036,7 @@
 
 		function add($cd=0,$readsess=0)
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_ADD))
+			if(!$this->bo->rb_check_perms(PHPGW_ACL_ADD))
 			{
 				$this->index();
 			}
@@ -1092,7 +1096,8 @@
 
 			$date = sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day);
 			$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
-			if(($GLOBALS['HTTP_GET_VARS']['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
+			//if(($GLOBALS['HTTP_GET_VARS']['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
+			if ($this->bo->rb_check_perms(PHPGW_ACL_DELETE,$event))
 			{
 
 				if(isset($GLOBALS['HTTP_POST_VARS']['delete_type']) && $GLOBALS['HTTP_POST_VARS']['delete_type'] == 'single')
@@ -1205,7 +1210,7 @@
 				return;
 			}
 
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			if(!$this->bo->rb_check_perms(PHPGW_ACL_EDIT))
 			{
 			   $this->no_edit();
 			   return;
@@ -1229,7 +1234,7 @@
 
 		function set_action()
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			if(!$this->bo->rb_check_perms(PHPGW_ACL_EDIT))
 			{
 				$this->no_edit();
 				return;
@@ -1539,7 +1544,7 @@
 			@reset($users);
 			while ($user = each($users))
 			{
-				if(($GLOBALS['phpgw']->accounts->exists($user[0]) && $this->bo->check_perms(PHPGW_ACL_READ,$user[0])) || $GLOBALS['phpgw']->accounts->get_type($user[0]) == 'g')
+				if(($GLOBALS['phpgw']->accounts->exists($user[0]) && $this->bo->check_perms(PHPGW_ACL_READ,$user[0])) || $GLOBALS['phpgw']->accounts->get_type($user[0]) == 'g')//RB_NEED_WORK
 				{
 					$str .= '    <option value="'.$user[0].'">('.$GLOBALS['phpgw']->accounts->get_type($user[0]).') '.$user[1].'</option>'."\n";
 				}
@@ -1581,14 +1586,14 @@
 						$members = $acct->member(intval($participants[$i]));
 						while($members != False && list($index,$member) = each($members))
 						{
-							if($this->bo->check_perms(PHPGW_ACL_READ,$member['account_id']) && !isset($parts[$member['account_id']]))
+							if($this->bo->check_perms(PHPGW_ACL_READ,$member['account_id']) && !isset($parts[$member['account_id']]))//RB_NEED_WORK
 							{
 								$parts[$member['account_id']] = 1;
 							}
 						}
 						break;
 					case 'u':
-						if($this->bo->check_perms(PHPGW_ACL_READ,$participants[$i]) && !isset($parts[$participants[$i]]))
+						if($this->bo->check_perms(PHPGW_ACL_READ,$participants[$i]) && !isset($parts[$participants[$i]]))//RB_NEED_WORK
 						{
 							$parts[$participants[$i]] = 1;
 						}
@@ -1723,7 +1728,7 @@
 			$p->set_block('search_form','search_list_header','search_list_header');
 			$p->set_block('search_form','search_list','search_list');
 			$p->set_block('search_form','search_list_footer','search_list_footer');
-	
+
 			$var = Array(
 				'color'		=> $this->theme['bg_text'],
 				'search_text'	=> lang('Search Results'),
@@ -1813,7 +1818,7 @@
 		function header()
 		{
 			$cols = 8;
-			if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)
+			if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)//RB_NEED_WORK
 			{
 				$cols++;
 			}
@@ -1967,7 +1972,7 @@
 
 		function no_edit()
 		{
-			if(!$isset($GLOBALS['phpgw_info']['flags']['noheader']))
+			if(isset($GLOBALS['phpgw_info']['flags']['noheader']))
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -1982,8 +1987,11 @@
 		function link_to_entry($event,$month,$day,$year)
 		{
 			$str = '';
-			$is_private = $this->bo->is_private($event,$event['owner']);
-			$editable = ((!$this->bo->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
+			//RB $is_private = $this->bo->is_private($event,$event['owner']);
+			//RB $editable = ((!$this->bo->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
+			//RB editable means here, ok to set a link to view
+			$editable = !$this->bo->printer_friendly && $this->bo->rb_check_perms(PHPGW_ACL_READ,$event);
+			$is_private = !$event['public'] && !$this->bo->rb_check_perms(PHPGW_ACL_READ,$event);
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$p->set_file(
@@ -2581,7 +2589,8 @@
 
 		function view_event($event,$alarms=False)
 		{
-			if((!$event['participants'][$this->bo->owner] && !$this->bo->member_of_group()) || (!$event['public'] && !$this->bo->check_perms(PHPGW_ACL_PRIVATE)))
+			//RB if((!$event['participants'][$this->bo->owner] && !$this->bo->member_of_group()) || (!$event['public'] && !$this->bo->check_perms(PHPGW_ACL_PRIVATE)))
+			if((!$event['participants'][$this->bo->owner] && !$this->bo->rb_check_perms(PHPGW_ACL_READ,$event)))
 			{
 				return '<center>'.lang('You do not have permission to read this record!').'</center>';
 			}
@@ -2706,7 +2715,7 @@
 			{
 				if($GLOBALS['phpgw']->accounts->exists($user))
 				{
-					$str .= ($str?'<br>':'').$GLOBALS['phpgw']->common->grab_owner_name($user).' ('.($this->bo->check_perms(PHPGW_ACL_EDIT,$user)?'<a href="'.$this->page('edit_status','&cal_id='.$event['id'].'&owner='.$user).'">'.$this->bo->get_long_status($short_status).'</a>':$this->bo->get_long_status($short_status)).')'."\n";
+					$str .= ($str?'<br>':'').$GLOBALS['phpgw']->common->grab_owner_name($user).' ('.($this->bo->check_perms(PHPGW_ACL_EDIT,$user)?'<a href="'.$this->page('edit_status','&cal_id='.$event['id'].'&owner='.$user).'">'.$this->bo->get_long_status($short_status).'</a>':$this->bo->get_long_status($short_status)).')'."\n";//RB_NEED_WORK
 				}
 			}
 			$var[] = Array(
@@ -3125,7 +3134,7 @@
 					$open_link = ' - ';
 					$close_link = '';
 			
-					if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
+					if(!$this->bo->printer_friendly && $this->bo->rb_check_perms(PHPGW_ACL_ADD))
 					{
 						$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
 						if ($this->bo->prefs['common']['timeformat'] == '12' && $i > 12)
@@ -3357,7 +3366,7 @@
 				'calendar_action'	=> ($event['id']?lang('Calendar - Edit'):lang('Calendar - Add')),
 				'action_url'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
 				'common_hidden'	=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
-										. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
+										. '<input type="hidden" name="cal[owner]" value="'.$event['owner']/*RB else owner changes if someone with edit-acl edits entry $this->bo->owner*/.'">'."\n"
 										. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
 										. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
 										  (@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":''))
@@ -3468,17 +3477,18 @@
 			if(!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
 			{
 				$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
+
 				$users = Array();
-				$this->build_part_list($users,$accounts,$this->bo->owner);
-    
+				$this->build_part_list($users,$accounts,$event['owner']); //RB was $this->bo->owner);
+																							 // if the calendar of a group was selected all participants of this group got removed from the participants list
 				$str = '';
 				@asort($users);
 				@reset($users);
 				while (list($id,$user_array) = each($users))
 				{
-					if($id != intval($this->bo->owner))
+					if($id != intval($event['owner']/*RB$this->bo->owner*/))
 					{
-						$str .= '    <option value="' . $id . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
+						$str .= '    <option value="' . $id . $event['participants'][$id] . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
 					}
 				}
 				$var[] = Array(
@@ -3487,7 +3497,7 @@
 				);
 
 // I Participate
-				if((($event['id'] > 0) && isset($event['participants'][$this->bo->owner])) || !$event['id'])
+				if((($event['id'] > 0) && isset($event['participants'][$event['owner']/*RB$this->bo->owner*/])) || !$event['id'])
 				{
 					$checked = ' checked';
 				}
@@ -3496,8 +3506,8 @@
 					$checked = '';
 				}
 				$var[] = Array(
-					'field'	=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner).' '.lang('Participates'),
-					'data'	=> '<input type="checkbox" name="participants[]" value="'.$this->bo->owner.'"'.$checked.'>'
+					'field'	=> $GLOBALS['phpgw']->common->grab_owner_name($event['owner']/*RB$this->bo->owner*/).' '.lang('Participates'),
+					'data'	=> '<input type="checkbox" name="participants[]" value="'.$event['owner'].$event['participants'][$event['owner']]/*RB$this->bo->owner*/.'"'.$checked.'>'
 				);
 			}
 			
@@ -3689,7 +3699,7 @@
 					$extra = '';
 				}
 
-				if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
+				if(!$this->bo->printer_friendly && $this->bo->rb_check_perms(PHPGW_ACL_ADD))
 				{
 					$new_event = True;
 				}

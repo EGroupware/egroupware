@@ -495,7 +495,7 @@ class socalendar_ extends socalendar__
 		@reset($event['participants']);
 		while (list($key,$value) = @each($event['participants']))
 		{
-			if(intval($key) == intval($this->user))
+			if(intval($key) == $event['owner']/*RB intval($this->user)*/)
 			{
 				$value = 'A';
 			}

@@ -383,9 +383,10 @@
 
 		function read_entry($id)
 		{
-			if($this->check_perms(PHPGW_ACL_READ))
+			if($this->rb_check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
+
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
 				{
 					$this->so->add_attribute('participants','U',intval($this->owner));
@@ -399,12 +400,12 @@
 		function delete_single($param)
 		{
 			
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			if($this->rb_check_perms(PHPGW_ACL_DELETE,intval($param['id'])))
 			{
 				$temp_event = $this->get_cached_event();
 			   $event = $this->read_entry(intval($param['id']));
-			   if($this->owner == $event['owner'])
-			   {
+			   //RB if($this->owner == $event['owner'])
+			   //RB {
 			   	$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $this->datetime->tz_offset;
 			   	$event['recur_exception'][] = intval($exception_time);
 			   	$this->so->cal->event = $event;
@@ -419,7 +420,7 @@
    			else
    			{
    			   $cd = 60;
-   			}
+   			//RB }
 			}
 			$this->so->cal->event = $temp_event;
 			unset($temp_event);
@@ -428,25 +429,26 @@
 
 		function delete_entry($id)
 		{
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			if($this->rb_check_perms(PHPGW_ACL_DELETE,$id))
 			{
 			   $temp_event = $this->read_entry($id);
-			   if($this->owner == $temp_event['owner'])
-			   {
+			   //RB if($this->owner == $temp_event['owner'])
+			   //RB {
    				$this->so->delete_entry($id);
    				$cd = 16;
    			}
    			else
    			{
    			   $cd = 60;
-   			}
+   			//RB }
 			}
 			return $cd;
 		}
 
 		function reinstate($params='')
 		{
-			if($this->check_perms(PHPGW_ACL_EDIT) && isset($params['cal_id']) && isset($params['reinstate_index']))
+			//RB if($this->check_perms(PHPGW_ACL_EDIT) && isset($params['cal_id']) && isset($params['reinstate_index']))
+			if($this->rb_check_perms(PHPGW_ACL_EDIT,$params['cal_id']) && isset($params['reinstate_index']))
 			{
 				$event = $this->so->read_entry($params['cal_id']);
 				@reset($params['reinstate_index']);
@@ -511,7 +513,7 @@
 
 		function expunge()
 		{
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			if($this->rb_check_perms(PHPGW_ACL_DELETE))
 			{
 				reset($this->so->cal->deleted_events);
 				for($i=0;$i<count($this->so->cal->deleted_events);$i++)
@@ -573,7 +575,7 @@
          }
          else
 			{
-   			if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT)))
+   			if((!$l_cal['id'] && !$this->rb_check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->rb_check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
 	   		{
 	   		   ExecMethod('calendar.uicalendar.index');
 					$GLOBALS['phpgw']->common->phpgw_exit();
@@ -656,14 +658,18 @@
 					$part = Array();
 					for($i=0;$i<count($parts);$i++)
 					{
+						if (($accept_type = substr($parts[$i],-1,1)) == '0' || intval($accept_type) > 0)
+						{
+							$accept_type = 'U';
+						}
 						$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
 						if($acct_type == 'u')
 						{
-							$part[$parts[$i]] = 1;
+							$part[intval($parts[$i])] = $accept_type;
 						}
 						elseif($acct_type == 'g')
 						{
-							$part[$parts[$i]] = 1;
+							$part[intval($parts[$i])] = $accept_type;
 							$groups[] = $parts[$i];
 							/* This pulls ALL users of a group and makes them as participants to the event */
 							/* I would like to turn this back into a group thing. */
@@ -676,7 +682,7 @@
 							}
 							while($member = each($members))
 							{
-								$part[$member[1]['account_id']] = 1;
+								$part[$member[1]['account_id']] = $accept_type;
 							}
 						}
 					}
@@ -689,9 +695,9 @@
 				if($part)
 				{
 					@reset($part);
-					while(list($key,$value) = each($part))
+					while(list($key,$accept_type) = each($part))
 					{
-						$this->so->add_attribute('participants','U',intval($key));
+						$this->so->add_attribute('participants',$accept_type,intval($key));
 					}
 				}
 
@@ -851,10 +857,40 @@
 			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
 		}
 
+		function rb_check_perms($needed,$event=0)
+		{
+			if (is_int($event) && $event == 0)
+			{
+				$owner = $this->owner;
+			}
+			else
+			{
+				if (!is_array($event))
+				{
+					$event = $this->so->read_entry((int) $event);
+				}
+				if (!is_array($event))
+				{
+					return False;
+				}
+				$owner = $event['owner'];
+				$privat = $event['public'] == False || $event['public'] == 0;
+			}
+			$user = $GLOBALS['phpgw_info']['user']['account_id'];
+			$grants = $this->grants[$owner];
+
+			$access = $user == $owner || $grants & $needed && (!$privat || $grants & PHPGW_ACL_PRIVAT);
+			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$privat, grants=$grants ==> access=$access</p>\n";
+
+			return $access;
+		}
+
 		function can_user_edit($event)
 		{
+			return $this->rb_check_perms(PHPGW_ACL_EDIT,$event);
+
 			$can_edit = False;
-		
+
 			if(($event['owner'] == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
 				if($event['public'] == False || $event['public'] == 0)
@@ -1197,7 +1233,7 @@
 			return $status;
 		}
 
-		function is_private($event,$owner)
+		function is_private($event,$owner)	//RB_NEED_WORK
 		{
 			if($owner == 0)
 			{
