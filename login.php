@@ -33,9 +33,9 @@
 		
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
 	$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+	$GLOBALS['phpgw']->xslttpl = CreateObject('phpgwapi.xslttemplates',$GLOBALS['phpgw_info']['server']['template_dir']);
 	$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
 	$GLOBALS['phpgw']->template->set_file('login','login.tpl');
-	$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
 
 	// This is used for system downtime, to prevent new logins.
 	if ($GLOBALS['phpgw_info']['server']['deny_all_logins'])
@@ -237,10 +237,12 @@
 		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
 	}
 	check_logoutcode();
-	$GLOBALS['phpgw']->common->msgbox('', False,'phpgw_login_msgbox');
-	
+
 	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
 	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
+
+	$GLOBALS['phpgw']->template->set_var('phpgw_login_msgbox',$GLOBALS['phpgw']->common->msgbox('',False));
+
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare - Login Page');
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
