@@ -317,25 +317,25 @@
 		@param $cat_name category name
 		@result boolean true or false
 		*/
-		function exists($type,$cat_name,$cat_id)
+		function exists($type,$cat_name = '',$cat_id = '')
 		{
 		    $filter = $this->filter($type);
 
-		    if ($cat_name) 
+		    if ($cat_name)
 		    {
-			$cat_exists = " cat_name='" . addslashes($cat_name) . "' "; 
+			$cat_exists = " AND cat_name='" . addslashes($cat_name) . "' "; 
 		    }
 		    if ($cat_id)
 		    {
-                        $cat_exists = " cat_parent='$cat_id' ";
+                        $cat_exists = " AND cat_parent='$cat_id' ";
 		    }
 		    if ($cat_name && $cat_id)
 		    {
-			$cat_exists = " cat_name='" . addslashes($cat_name) . "' and cat_id != '$cat_id' ";
+			$cat_exists = " AND cat_name='" . addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
 		    }
 
-                    $this->db->query("select count(*) from phpgw_categories where $cat_exists and cat_appname='"
-                       . $this->app_name . "' $filter",__LINE__,__FILE__);
+                    $this->db->query("select count(*) from phpgw_categories where cat_appname='"
+                       . $this->app_name . "' $cat_exists $filter",__LINE__,__FILE__);
 
 		    $this->db->next_record();
 
