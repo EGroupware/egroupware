@@ -219,7 +219,65 @@
   
   function account_edit($account_info)
   {
-  
+     global $phpgw, $phpgw_info, $ldap;
+     
+     // This is just until the API fully handles reading the LDAP account info.
+     $lid = $account_info["loginid"];
+     if ($account_info["c_loginid"]) {
+        $phpgw->db->query("update accounts set account_lid='" . $account_info["c_loginid"]
+                        . "' where account_lid='" . $account_info["loginid"] . "'");
+
+        $account_info["loginid"] = $account_info["c_loginid"];
+
+        $entry["uid"]            = $account_info["loginid"];
+        $entry["homeDirectory"]  = "/home/" . $account_info["loginid"];
+        $entry["mail"]		   = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+     }
+     
+     if ($account_info["passwd"]) {
+        $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
+
+        // Update the sessions table. (The user might be logged in)
+        $phpgw->db->query("update sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd) . "' "
+        		        . "where session_lid='$lid'");
+     }
+     
+     while ($permission = each($account_info["permissions"])) {
+        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+           $phpgw->accounts->add_app($permission[0]);
+        }
+     }
+
+     if (! $account_info["account_status"]) {
+        $account_info["account_status"] = "L";
+     }
+
+     $phpgw->db->query("update accounts set account_firstname='"
+        			 . addslashes($account_info["firstname"]) . "', account_lastname='"
+        			 . addslashes($account_info["lastname"]) . "', account_permissions='"
+	    	         . $phpgw->accounts->add_app("",True) . "', account_status='"
+			         . $account_info["account_status"] . "', account_groups='"
+    		         . $account_info["groups"] . "' where account_lid='" . $account_info["loginid"]
+    		         . "'");
+
+     $entry["cn"]			   = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
+     $entry["sn"]			   = $account_info["lastname"];
+     $entry["givenname"]		= $account_info["firstname"];
+
+     $dn = sprintf("uid=%s, %s", $phpgw_info["user"]["userid"],$phpgw_info["server"]["ldap_context"]);
+     @ldap_modify($ldap, $dn, $entry);
+
+     $cd = 27;
+     if ($account_info["c_loginid"] != $account_info["loginid"]) {
+        $sep = $phpgw->common->filesystem_separator();
+	
+        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+
+        if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
+           $cd = 35;
+        }
+     }     
+     return $cd;     
   }
   
   function account_delete($account_id)

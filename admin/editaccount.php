@@ -54,7 +54,7 @@
      if (! $totalerrors) {
         $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
         				         "firstname" => $n_firstname, "lastname"       => $n_lastname,
-        				         "passwd"    => $n_passwd,    "account_status" => $account_status,
+        				         "passwd"    => $n_passwd,    "account_status" => $n_account_status,
         				         "c_loginid" => $c_loginid,
         				         "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
      }

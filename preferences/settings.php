@@ -155,13 +155,7 @@
   } else {
      $phpgw->common->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
 
-     // If they don't have permissions to the headlines,
-     // we don't need to lock the table.
-     if ($phpgw_info["user"]["apps"]["headlines"]) {
-        $phpgw->db->lock(array("preferences","users_headlines"));
-     } else {
-        $phpgw->db->lock("preferences");
-     }
+     $phpgw->db->lock("preferences");
 
      $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"maxmatchs","common");
      $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"tz_offset","common");

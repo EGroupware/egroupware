@@ -16,14 +16,10 @@
 
   $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
-  if ($phpgw_info["user"]["permissions"]["anonymous"]) {
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
-     exit;
-  }
 
-if (! $submit) {
-   $phpgw->common->phpgw_header();
-   $phpgw->common->navbar();
+  if (! $submit) {
+     $phpgw->common->phpgw_header();
+     $phpgw->common->navbar();
 
     ?>
    <form method="POST" acion="<?php echo $phpgw->link("changepassword.php"); ?>">
@@ -85,15 +81,7 @@ if (! $submit) {
          exit;
       }
 
-      if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
-         $salt = $phpgw->common->randomstring(2);
-         $n_passwd = $phpgw->common->des_cryptpasswd($n_passwd, $salt);
-      }
-      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
-         $salt = $phpgw->common->randomstring(9);
-         $n_passwd = $phpgw->common->md5_cryptpasswd($n_passwd, $salt);
-      }
-      $entry["userpassword"] = $n_passwd;
+      $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
 
       $dn = sprintf("uid=%s, %s", $phpgw_info["user"]["userid"],$phpgw_info["server"]["ldap_context"]);
       @ldap_modify($ldap, $dn, $entry);
