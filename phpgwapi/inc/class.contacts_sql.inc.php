@@ -300,7 +300,7 @@
 								$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
 							}
 							$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$value);
-							$cat_filter = '(cat_id IN ('.implode(',',$cats).')';
+							$cat_filter = "(cat_id IN ('".implode("','",$cats)."')";
 							foreach($cats as $cat)
 							{
 								$cat_filter .= " OR cat_id LIKE '%,$cat,%'";
@@ -445,6 +445,20 @@
 						{
 							continue;	// this can be something nasty
 						}
+						// special handling of text columns for certain db's;
+						if (in_array($f,array('note','pubkey','label')))
+						{
+							switch($this->db->Type)
+							{
+								case 'sapdb': case 'maxdb':
+									$queryKey = false;	// sapdb cant use LIKE on text/LONG columns
+									break;
+								case 'mssql':
+									$queryKey = "CAST($queryKey AS varchar)";	// mssql cant use UPPER on text columns
+									break;
+							}
+							if (!$queryKey) continue;
+						}
 						$queryValue  = strtoupper($this->db->db_addslashes($queryValue));
 						$sql .= " UPPER($queryKey) LIKE '$queryValue' AND ";
 						$sqlcount .= " UPPER($queryKey) LIKE '$queryValue' AND ";
@@ -461,6 +475,20 @@
 					$sqlcount = "SELECT COUNT(*) FROM $this->std_table WHERE (";
 					foreach($this->stock_contact_fields as $f => $x)
 					{
+						// special handling of text columns for certain db's;
+						if (in_array($f,array('note','pubkey','label')))
+						{
+							switch($this->db->Type)
+							{
+								case 'sapdb': case 'maxdb':
+									$f = false;	// sapdb cant use LIKE on text/LONG columns
+									break;
+								case 'mssql':
+									$f = "CAST($f AS varchar)";	// mssql cant use UPPER on text columns
+									break;
+							}
+							if (!$f) continue;
+						}
 						$sql .= " UPPER($f) LIKE '%$query%' OR ";
 						$sqlcount .= " UPPER($f) LIKE '%$query%' OR ";
 					}
