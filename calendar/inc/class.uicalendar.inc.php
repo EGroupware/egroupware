@@ -3976,7 +3976,9 @@
 				'common_hidden'	=> $this->html->input_hidden('cal[id]',$event['id'])
 					. $this->html->input_hidden('cal[owner]',$event['owner'])
 					. $this->html->input_hidden('cal[uid]',$event['uid'])
-					. ($_GET['cal_id'] && $event['id'] == 0?$this->html->input_hidden('cal[reference]',$_GET['cal_id']) : 
+					. ($_GET['cal_id'] && $event['id'] == 0?$this->html->input_hidden(array(
+						'cal[reference]' => $_GET['cal_id'],
+						'cal[new_exception]' => $event['start']['raw'])) : 
 					(@isset($event['reference'])?$this->html->input_hidden('cal[reference]',$event['reference']):''))
 					. (@isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && $GLOBALS['phpgw_info']['server']['deny_user_grants_access']?
 					$this->html->input_hidden('participants[]',$this->bo->owner):''),
