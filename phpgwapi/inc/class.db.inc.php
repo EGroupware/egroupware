@@ -110,6 +110,8 @@
 		var $Link_ID = 0;
 		var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
 		var $Query_ID = 0;
+		
+		var $prepared_sql = array();	// sql is the index
 
 		/**
 		* @param string $query query to be executed (optional)
@@ -326,13 +328,14 @@
 		* Execute a query
 		*
 		* @param string $Query_String the query to be executed
-		* @param mixed $line the line method was called from - use __LINE__
+		* @param int $line the line method was called from - use __LINE__
 		* @param string $file the file method was called from - use __FILE__
-		* @param int $offset row to start from
-		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
+		* @param int $offset row to start from, default 0
+		* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
+		* @param array/boolean $inputarr array for binding variables to parameters or false (default)
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1)
+		function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false)
 		{
 			if ($Query_String == '')
 			{
@@ -352,17 +355,17 @@
 			{
 				$this->Link_ID->SetFetchMode(ADODB_FETCH_BOTH);
 			}
-			if (! $num_rows)
+			if (!$num_rows)
 			{
 				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			if ($num_rows > 0)
 			{
-				$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,(int)$offset);
+				$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,(int)$offset,$inputarr);
 			}
 			else
 			{
-				$this->Query_ID = $this->Link_ID->Execute($Query_String);
+				$this->Query_ID = $this->Link_ID->Execute($Query_String,$inputarr);
 			}
 			$this->Row = 0;
 			$this->Errno  = $this->Link_ID->ErrorNo();
@@ -370,7 +373,9 @@
 
 			if (! $this->Query_ID)
 			{
-				$this->halt("Invalid SQL: ".$Query_String, $line, $file);
+				$this->halt("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
+					($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''), 
+					$line, $file);
 			}
 			return $this->Query_ID;
 		}
@@ -379,15 +384,16 @@
 		* Execute a query with limited result set
 		*
 		* @param string $Query_String the query to be executed
-		* @param int $offset row to start from
-		* @param mixed $line the line method was called from - use __LINE__
+		* @param int $offset row to start from, default 0
+		* @param int $line the line method was called from - use __LINE__
 		* @param string $file the file method was called from - use __FILE__
-		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
+		* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
+		* @param array/boolean $inputarr array for binding variables to parameters or false (default)
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
+		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '',$inputarr=false)
 		{
-			return $this->query($Query_String,$line,$file,$offset,$num_rows);
+			return $this->query($Query_String,$line,$file,$offset,$num_rows,$inputarr);
 		}
 
 		/**
@@ -946,7 +952,7 @@
 		*/
 		function quote($value,$type=False,$not_null=true)
 		{
-			if ($this->Debug) echo "<p>db::quote('$value','$type')</p>\n";
+			if ($this->Debug) echo "<p>db::quote(".(is_null($value)?'NULL':"'$value'").",'$type','$not_null')</p>\n";
 			
 			if (!$not_null && is_null($value))	// writing unset php-variables and those set to NULL now as SQL NULL
 			{
@@ -1028,7 +1034,7 @@
 						$this->halt("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 					}
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
-					$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : True;
+					$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : false;
 
 					if (is_array($data))
 					{
@@ -1132,7 +1138,7 @@
 		* @param string/boolean $app string with name of app or False to use the current-app
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function insert($table,$data,$where,$line,$file,$app=False)
+		function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
 		{
 			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app')</p>\n";
 
@@ -1165,10 +1171,30 @@
 				}
 				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
-			$sql = "$cmd INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
-
+			$inputarr = false;
+			if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
+			{
+				$this->Link_ID->Param(false);	// reset param-counter 
+				$cols = array_keys($data);
+				foreach($cols as $col)
+				{
+					$params[] = $this->Link_ID->Param($col);
+				}
+				$sql = "$cmd INTO $table (".implode(',',$cols).') VALUES ('.implode(',',$params).')'.$sql_append;
+				// check if we already prepared that statement
+				if (!isset($this->prepared_sql[$sql]))
+				{
+					$this->prepared_sql[$sql] = $this->Link_ID->Prepare($sql);
+				}
+				$sql = $this->prepared_sql[$sql];
+				$inputarr = &$data;
+			}
+			else
+			{
+				$sql = "$cmd INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
+			}
 			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app') sql='$sql'</p>\n";
-			return $this->query($sql,$line,$file);
+			return $this->query($sql,$line,$file,0,-1,$inputarr);
 		}
 
 		/**
@@ -1184,7 +1210,7 @@
 		* @param string/boolean $app string with name of app or False to use the current-app
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function update($table,$data,$where,$line,$file,$app=False)
+		function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
 		{
 			if ($this->Debug) echo "<p>db::update('$table',".print_r($data,true).','.print_r($where,true).",$line,$file,'$app')</p>\n";
 			$table_def = $this->get_table_definitions($app,$table);
@@ -1192,30 +1218,53 @@
 			$blobs2update = array();
 			// SapDB/MaxDB cant update LONG columns / blob's: if a blob-column is included in the update we remember it in $blobs2update 
 			// and remove it from $data
-			if ($this->Type == 'sapdb')
+			switch ($this->Type)
 			{
-				// check if data contains any LONG columns
-				foreach($data as $col => $val)
-				{
-					switch ($table_def['fd'][$col]['type'])
+				case 'sapdb':
+				case 'maxdb':
+					if ($use_prepared_statement) break;
+					// check if data contains any LONG columns
+					foreach($data as $col => $val)
 					{
-						case 'text':
-						case 'longtext':
-						case 'blob':
-							$blobs2update[$col] = $data[$col];
-							unset($data[$col]);
-							break;
+						switch ($table_def['fd'][$col]['type'])
+						{
+							case 'text':
+							case 'longtext':
+							case 'blob':
+								$blobs2update[$col] = &$data[$col];
+								unset($data[$col]);
+								break;
+						}
 					}
-				}
+					break;
 			}
 			$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 
 			if (count($data))
 			{
-				$sql = "UPDATE $table SET ".
-					$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.$where;
-
-				$ret = $this->query($sql,$line,$file);
+				$inputarr = false;
+				if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
+				{
+					$this->Link_ID->Param(false);	// reset param-counter
+					foreach($data as $col => $val)
+					{
+						$params[] = $this->name_quote($col).'='.$this->Link_ID->Param($col);
+					}
+					$sql = "UPDATE $table SET ".implode(',',$params).' WHERE '.$where;
+					// check if we already prepared that statement
+					if (!isset($this->prepared_sql[$sql]))
+					{
+						$this->prepared_sql[$sql] = $this->Link_ID->Prepare($sql);
+					}
+					$sql = $this->prepared_sql[$sql];
+					$inputarr = &$data;
+				}
+				else
+				{
+					$sql = "UPDATE $table SET ".
+						$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.$where;
+				}
+				$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
 				if ($this->Debug) echo "<p>db::query('$sql',$line,$file) = '$ret'</p>\n";
 			}
 			// if we have any blobs to update, we do so now
