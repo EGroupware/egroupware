@@ -33,7 +33,7 @@
 		var $type = 'csv';
 
 		var $import = array(
-			'Tratamiento' => 'title', 
+			'Tratamiento' => 'n_prefix', 
 			'Nombre' => 'n_given',
 			'Segundo Nombre' => 'n_middle',
 			'Apellidos' => 'n_family',

@@ -14,7 +14,7 @@
 //
 // The array need not be in any order and any fields not defined will
 // not be transferred.  If the val='+', the value will be appended to
-// the previous field and any text after the '+' will be appended 
+// the previous field and any text after the '+' will be appended
 // before the value.  For example, the following would add a comma and
 // a space between LastName and FirstName and store it in FullName:
 //
@@ -32,7 +32,7 @@
 		var $type = 'csv';
 
 		var $import = array(
-			'Titolo' => 'title', 
+			'Titolo' => 'n_prefix',
 			'Nome' => 'n_given',
 			'Secondo nome' => 'n_middle',
 			'Cognome' => 'n_family',
@@ -85,7 +85,7 @@
 			'Nome assistente' => '', //newPilotPerson
 			'Dati fatturazione' => '',
 			'Compleanno' => 'bday',
-			'Categorie' => '', 
+			'Categorie' => '',
 			'Figli' => '',
 			'Server di elenchi in linea' => '',
 			'Indirizzo posta elettronica' => 'email',
@@ -134,7 +134,7 @@
 
 		function import_start_record($buffer)
 		{
-			$top=array();
+			$top = array();
 			++$this->id;
 			$this->currentrecord = $top;
 			return $buffer;
@@ -152,8 +152,8 @@
 
 		function import_end_record($buffer)
 		{
-			$buffer[$this->id]='';
-			while ( list($name, $value) = each($this->currentrecord))
+			$buffer[$this->id] = '';
+			while(list($name, $value) = each($this->currentrecord))
 			{
 				$buffer[$this->id][$name] = $value;
 				//echo '<br>'.$name.' => '.$value;
@@ -164,10 +164,10 @@
 		function import_end_file($buffer,$access='private',$cat_id=0)
 		{
 			$contacts = CreateObject('phpgwapi.contacts');
-			//echo '<br>'; 
-			for ($i=1;$i<=count($buffer);$i++)
+			//echo '<br>';
+			for($i=1;$i<=count($buffer);$i++)
 			{
-				while ( list($name,$value) = @each($buffer[$i]) )
+				while(list($name,$value) = @each($buffer[$i]))
 				{
 					//echo '<br>'.$i.': '.$name.' => '.$value;
 					$entry[$i][$name] = $value;
