@@ -16,7 +16,7 @@
 	$phpgw_info['flags']['currentapp'] = 'calendar';
 	include('../header.inc.php');
 
-	$icsfile='/home/httpd/html/phpgroupware/calendar/inc/vcal1.ics';
+	$icsfile=PHPGW_APP_INC.'/vcal1.ics';
 	$fp=fopen($icsfile,'r');
 	$contents = explode("\n",fread ($fp, filesize($icsfile)));
 	fclose($fp);
