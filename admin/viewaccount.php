@@ -31,12 +31,11 @@
 		Header('Location: ' . $phpgw->link('/admin/accounts.php'));
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir('admin'));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_unknowns('remove');
-	$t->set_file(array(
-		'form'           => 'account_form.tpl',
-		'form_logininfo' => 'account_form_logininfo.tpl'
-	));
+	$t->set_file(array('account' => 'account_form.tpl'));
+	$t->set_block('account','form','form');
+	$t->set_block('account','form_logininfo','form_logininfo');
 
 	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 	$t->set_var('tr_color1',$phpgw_info['theme']['row_on']);
