@@ -579,6 +579,18 @@
 			}
 */
 
+			// build the extravars string from a array
+			
+			if (is_array($extravars))
+			{
+				while(list($key,$value) = each($extravars))
+				{
+					if (!empty($new_extravars)) $new_extravars .= '&';
+					$new_extravars .= "$key=$value";
+				}
+				$extravars = $new_extravars;
+			}
+
 			if (isset($phpgw_info['server']['usecookies']) && $phpgw_info['server']['usecookies'])
 			{
 				if ($extravars)
