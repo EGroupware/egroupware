@@ -33,16 +33,20 @@ contact application	admin	fr	Application contact
 contact	common	fr	Contact
 contact settings	admin	fr	Paramètres du contact
 country	common	fr	Pays
+custom	addressbook	fr	Personnalisé
 custom fields	addressbook	fr	Champs personnalisés
 default filter	addressbook	fr	Filtre par défaut
 department	common	fr	Département
+domestic	addressbook	fr	Domestique
 edit custom field	addressbook	fr	Editer le champ personnalisé
 edit custom fields	admin	fr	Editer les champs personnalisés
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
 extra	addressbook	fr	Extra
+fax	addressbook	fr	Fax
 fax number	common	fr	Numéro de Fax
 field name	addressbook	fr	Nom du champ
+field x has been added !	addressbook	fr	Le champ x a été ajouté !
 fields to show in address list	addressbook	fr	Champs à montrer dans la liste des adresses
 full name	addressbook	fr	Nom complet
 geo	addressbook	fr	GEO
@@ -59,6 +63,7 @@ home zip code	addressbook	fr	Code postal maison
 import contacts	addressbook	fr	Importer les contacts
 import file	addressbook	fr	Importer le fichier
 import from outlook	addressbook	fr	Importer depuis Outlook
+international	addressbook	fr	International
 isdn phone	addressbook	fr	Téléphone RNIS
 label	addressbook	fr	Label
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts

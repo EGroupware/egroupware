@@ -50,7 +50,7 @@ deny access to groups	admin	fr	Refuser l'accès aux groupes
 deny access to mainscreen message	admin	fr	Refuser l'accès au message de la page principale
 deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
 deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
-deny all users access to grant other users access to their entries ?	admin	fr	Refuser à tous les utilisateurs le droit d'autoriser les autres utilisateurs à accéder à leurs données ?
+deny all users access to grant other users access to their entries ?	admin	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
 deny to site configuration	admin	fr	Refuser  l'accès à la configuration du site
 display	admin	fr	Afficher
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
@@ -82,6 +82,7 @@ group ?	admin	fr	Groupe ?
 group has been added	common	fr	Le groupe a été ajouté
 group has been deleted	common	fr	Le groupe a été effacé
 group has been updated	common	fr	Le groupe a été mis à jour
+group manager	admin	fr	Gestionnaire de groupe
 group name	admin	fr	Nom du groupe
 hide php information	admin	fr	Cacher les informations sur php
 home directory	admin	fr	Répertoire maison
@@ -141,6 +142,7 @@ re-enter password	admin	fr	Ré-entrez le mot de passe
 remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
 security	admin	fr	Sécurité
 selectbox	admin	fr	Boite de sélection
+select group managers	admin	fr	Sélectionner les gestionnaires de groupe
 select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
 select users for inclusion	admin	fr	Choisissez les utilisateurs à inclure
 select where you want to store/retrieve filesystem information	admin	fr	Choisissez où vous voulez stocker/récupérer les informations sur les systèmes de fichiers
@@ -162,7 +164,7 @@ sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de groupe
 sorry, that group name has already been taking.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
 sorry, the follow users are still a member of the group x	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
 status	admin	fr	Etat
-(stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sra pas montré ici)
+(stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 submit changes	admin	fr	Soumettre les changements
 template selection	admin	fr	Sélection du style
 text entry	admin	fr	Entrée de texte

@@ -17,6 +17,7 @@ calendar - add	calendar	fr	Calendrier - Ajouter
 calendar - edit	calendar	fr	Calendrier - Modifier
 calendar event	calendar	fr	Evénement de calendrier
 calendar holiday management	admin	fr	Gestion du calendrier des vacances
+calendar preferences	calendar	fr	Préférences du calendrier
 calendar settings	admin	fr	Réglages calendrier
 daily	calendar	fr	Journalier
 daily matrix view	calendar	fr	Vue journalière de la matrice
@@ -69,6 +70,7 @@ no response	calendar	fr	Pas de réponse
 participant	calendar	fr	Participant
 participants	calendar	fr	Participants
 participates	calendar	fr	Participe
+planner	calendar	fr	Planificateur
 print calendars in black & white	calendar	fr	Imprimer les calendriers en noir & blanc
 printer friendly	calendar	fr	Imprimable
 private and global public	calendar	fr	Public privé et global
@@ -89,7 +91,7 @@ scheduling conflict	calendar	fr	Conflit de planification
 search results	calendar	fr	Résultats de recherche
 send/Receive updates via email	calendar	fr	Envoyer/recevoir les mises à jour par EMail
 send updates via email	common	fr	Envoyer les mises à jour par EMail
-show day view on main screen	calendar	fr	Montrer la vue du jour sur la page principale
+show default view on main screen	calendar	fr	Montrer la vue par défaut sur l'écran principal
 show high priority events on main screen	calendar	fr	Montrer les événements prioritaires sur la page principale
 sorry, the owner has just deleted this event	calendar	fr	Désolé, le propriétaire vient juste d'effacer cet événement
 start date/time	calendar	fr	Date/heure de début
@@ -128,5 +130,5 @@ you have not entered a valid time of day	calendar	fr	Vous n'avez pas entré une h
 you have not entered participants	calendar	fr	Vous n'avez pas sélectionné de participants
 you must enter one or more search keywords	calendar	fr	Vous devez entrer un ou plusieurs mots clés de recherche
 your meeting scheduled for	calendar	fr	Votre réunion planifiée pour
-your meeting that was scheduled for	calendar	fr	Votre réunion qui était planifiée pour
+your meeting that had been scheduled for	calendar	fr	Votre réunion qui a été planifiée pour
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:

@@ -137,7 +137,7 @@ fiji	common	fr	FIDJI
 files	common	fr	Fichiers
 filter	common	fr	Filtrer
 finland	common	fr	FINLANDE
-first name	common	fr	Premier nom
+first name	common	fr	Prénom
 firstname	common	fr	Prénom
 force selectbox	common	fr	Forcer la boîte de sélection
 france	common	fr	FRANCE
@@ -257,6 +257,7 @@ netherlands antilles	common	fr	ANTILLES HOLLANDAISES
 new caledonia	common	fr	NOUVELLE CALEDONIE
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
 new main category	common	fr	Nouvelle catégorie principale
+new value	common	fr	Nouvelle valeur
 new zealand	common	fr	NOUVELLE ZELANDE
 next	common	fr	Suivant
 nicaragua	common	fr	NICARAGUA
@@ -264,6 +265,7 @@ niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
+no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
 norfolk island	common	fr	NORFOLK ISLAND
@@ -276,6 +278,7 @@ notify window	common	fr	Fenêtre de notification
 november	common	fr	Novembre
 october	common	fr	Octobre
 ok	common	fr	OK
+old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
@@ -366,6 +369,7 @@ tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE OF
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
+the mail server returned	common	fr	Le serveur de mail a renvoyé
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
@@ -375,6 +379,7 @@ time	common	fr	Heure
 time zone	common	fr	Fuseau horaire
 time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
+to go back to the msg list, click <a href= x >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
@@ -415,10 +420,11 @@ which groups	common	fr	Quels groupes
 written by:	common	fr	Ecrit par:
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
-you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupeWare plus récente que celle définie pour la base de données.
+you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
+your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
 your search returned 1 match	common	fr	Votre recherche a retourné un résultat
 your search returned x matchs	common	fr	Votre recherche a retourné %1 résultats
 your session could not be verified.	login	fr	Votre session n'est pas valide.
