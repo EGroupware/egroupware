@@ -16,7 +16,7 @@
 			'fd' => array(
 				'config_app' => array('type' => 'varchar', 'precision' => 50),
 				'config_name' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
-				'config_value' => array('type' => 'varchar', 'precision' => 100)
+				'config_value' => array('type' => 'text', 'nullable' => false)
 			),
 			'pk' => array(),
 			'fk' => array(),
@@ -27,7 +27,6 @@
 			'fd' => array(
 				'app_id' => array('type' => 'auto', 'precision' => 4, 'nullable' => false),
 				'app_name' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
-				'app_title' => array('type' => 'varchar', 'precision' => 50),
 				'app_enabled' => array('type' => 'int', 'precision' => 4),
 				'app_order' => array('type' => 'int', 'precision' => 4),
 				'app_tables' => array('type' => 'text'),

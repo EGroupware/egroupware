@@ -1162,6 +1162,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['about_img']	= $this->image('phpgwapi','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar.jpg');
 					break;
+				default:
+					$var['home_img']	= $GLOBALS['phpgw_info']['navbar']['home']['icon'];
+					$var['prefs_img']	= $GLOBALS['phpgw_info']['navbar']['preferences']['icon'];
+					$var['logout_img']	= $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
+					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon'];
+					break;
 			}
 			$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
 			$var['prefs_link']		= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
@@ -1230,7 +1236,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['lang_phpgw_statustext']	= lang('phpGroupWare --> homepage');
 			$var['top_spacer_middle_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
 
-			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var,True);
+			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
 		}
 
 		/*!

@@ -18,7 +18,7 @@ a:hover
 	color: #EE0000;
 }
 
-.navbar
+.navbar,.bottom
 {
 	background-color: #AABBCC;
 }

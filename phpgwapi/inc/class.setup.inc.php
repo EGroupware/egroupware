@@ -360,11 +360,10 @@
 					}
 				}
 				$this->db->query("INSERT INTO $appstbl "
-					. "($app_idstr app_name,app_title,app_enabled,app_order,app_tables,app_version) "
+					. "($app_idstr app_name,app_enabled,app_order,app_tables,app_version) "
 					. "VALUES ("
 					. $app_id
 					. "'" . $setup_info[$appname]['name'] . "',"
-					. "'" . $setup_info[$appname]['title'] . "',"
 					. $enable . ","
 					. intval($setup_info[$appname]['app_order']) . ","
 					. "'" . $tables . "',"
@@ -468,7 +467,6 @@
 
 				$sql = "UPDATE $appstbl "
 					. "SET app_name='" . $setup_info[$appname]['name'] . "',"
-					. " app_title='" . $setup_info[$appname]['title'] . "',"
 					. " app_enabled=" . intval($setup_info[$appname]['enable']) . ","
 					. " app_order=" . intval($setup_info[$appname]['app_order']) . ","
 					. " app_tables='" . $tables . "',"

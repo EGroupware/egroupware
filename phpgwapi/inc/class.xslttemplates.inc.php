@@ -3,7 +3,7 @@
 	* phpGroupWare API - XSLT Template class                            *
 	* Written by Dan Kuykendall <seek3r@phpgroupware.org>               *
 	* and Bettina Gille [ceb@phpgroupware.org]                          *
-	* and Ralf Becker <ralfbecker@outdoortraining.de>                   *
+	* and Ralf Becker <ralfbecker@outdoor-training.de>                  *
 	* Copyright (C) 2002 Dan Kuykendall, Bettina Gille, Ralf Becker     *
 	* ----------------------------------------------------------------- *
 	* This library is part of the phpGroupWare API                      *

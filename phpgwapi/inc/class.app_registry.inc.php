@@ -353,7 +353,7 @@
 						$app[$this->db->f('app_id')] = Array(
 							'id'      => $this->db->f('app_id'),
 							'name'    => $this->db->f('app_name'),
-							'title'   => $this->db->f('app_title'),
+							'title'   => lang($this->db->f('app_name')),
 							'version' => $this->db->f('app_version'),
 							'tables'  => $this->db->f('app_tables')
 						);
@@ -490,7 +490,7 @@
 				Array(
 					'id'      => CreateObject('phpgwapi.xmlrpcval',$app_id,'int'),
 					'name'    => CreateObject('phpgwapi.xmlrpcval',$app_name,'string'),
-					'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
+					'title'   => CreateObject('phpgwapi.xmlrpcval',lang($this->db->f('app_name')),'string'),
 					'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
 					'tables'  => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_tables'),'string')
 				),
@@ -509,7 +509,7 @@
 				while ($this->db->next_record())
 				{
 					$name   = $this->db->f('app_name');
-					$title  = $this->db->f('app_title');
+					$title  = lang($this->db->f('app_name'));
 					$status = $this->db->f('app_enabled');
 					$version= $this->db->f('app_version');
 					$apps[$name] = CreateObject('phpgwapi.xmlrpcval',

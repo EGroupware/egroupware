@@ -114,4 +114,42 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+
+
+	$test[] = '0.9.15.006';
+	function phpgwapi_upgrade0_9_15_006()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_config','config_value',array(
+			'type' => 'text',
+			'nullable' => False
+		));
+
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.007';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.15.007';
+	function phpgwapi_upgrade0_9_15_007()
+	{
+		$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_applications',array(
+			'fd' => array(
+				'app_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'app_name' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'app_enabled' => array('type' => 'int','precision' => '4'),
+				'app_order' => array('type' => 'int','precision' => '4'),
+				'app_tables' => array('type' => 'text'),
+				'app_version' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => '0.0')
+			),
+			'pk' => array('app_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('app_name')
+		),'app_title');
+
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.008';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
