@@ -58,6 +58,7 @@ download	addressbook	de	Herunterladen
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 empty for all	addressbook	de	leer für alle
+enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Addressbuch
@@ -89,6 +90,7 @@ import file	addressbook	de	Datei importieren
 import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder VCard
 import from outlook	addressbook	de	Aus Outlook importieren
 import next set	addressbook	de	Nächsten Satz importieren
+import_instructions	addressbook	de	In Netscape, öffnen sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Formaz exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei Menü aus. Die Datei wird im VCard Format Exportiert.
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN Tel.
 label	addressbook	de	Adreßetikett
@@ -98,6 +100,7 @@ ldap root dn for contacts	admin	de	LDAP rootdn für Kontakte
 ldap root pw for contacts	admin	de	LDAP Paswort für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
+mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
@@ -127,6 +130,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
 retrieve contacts	admin	de	Kontakte laden
 select	addressbook	de	Auswählen
+select the type of conversion	addressbook	de	
 select where you want to store	admin	de	Auswählen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
 startrecord	addressbook	de	Startdatensatz
@@ -155,3 +159,4 @@ you appear to be running	addressbook	de	Sie benutzen gerade einen
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 zip code	common	de	PLZ
+zip_note	addressbook	de	
