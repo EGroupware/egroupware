@@ -2,8 +2,10 @@
 	/**************************************************************************\
 	* phpGroupWare API - Portal Box manager                                    *
 	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	*        and Bettina Gille [ceb@phpgroupware.org]                          *
 	* Helps manage the portal boxes for phpGroupWares main page                *
-	* Copyright (C) 2000 - 2003  Joseph Engo                                   *
+	* Copyright (C) 2000, 2001  Joseph Engo                                    *
+	* Copyright (C) 2002, 2003 Bettina Gille                                   *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org                                              * 

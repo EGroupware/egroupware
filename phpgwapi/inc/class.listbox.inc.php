@@ -3,11 +3,13 @@
 	* phpGroupWare API - Link box generator                                    *
 	* http://www.phpgroupware.org/api                                          *
 	* Written by Mark Peters <skeeter@phpgroupware.org>                        *
+	*        and Bettina Gille [ceb@phpgroupware.org]                          *
 	* Creates listboxes using templates                                        *
-	* Copyright (C) 2000 - 2002 Mark Peters                                    *
+	* Copyright (C) 2000, 2001 Mark Peters                                     *
+	* Copyright (C) 2002, 2003 Bettina Gille                                   *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org                                              * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

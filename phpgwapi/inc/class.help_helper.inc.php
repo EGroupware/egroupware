@@ -3,10 +3,10 @@
 	* phpGroupWare API - help system manager                            *
 	* Written by Bettina Gille [ceb@phpgroupware.org]                   *
 	* Manager for the phpGroupWare help system                          *
-	* Copyright (C) 2002  Bettina Gille                                 *
+	* Copyright (C) 2002, 2003 Bettina Gille                            *
 	* ----------------------------------------------------------------- *
 	* This library is part of the phpGroupWare API                      *
-	* http://www.phpgroupware.org/theapi                                * 
+	* http://www.phpgroupware.org                                       * 
 	* ----------------------------------------------------------------- *
 	* This library is free software; you can redistribute it and/or     *
 	* modify it under the terms of the GNU General Public License as    *
