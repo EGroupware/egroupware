@@ -54,6 +54,16 @@
 			return $apps;
 		}
 
+		function add($data)
+		{
+			$sql = "INSERT INTO phpgw_applications (app_name,app_title,app_enabled,app_order) VALUES('"
+				. addslashes($data['n_app_name']) . "','" . addslashes($data['n_app_title']) . "','"
+				. $data['n_app_status'] . "','" . $data['app_order'] . "')";
+
+			$this->db->query($sql,__LINE__,__FILE__);
+			return True;
+		}
+
 		function save($data)
 		{
 			$sql = "UPDATE phpgw_applications SET app_name='" . addslashes($data['n_app_name']) . "',"

@@ -30,6 +30,11 @@
 			return $this->so->read($app_name);
 		}
 
+		function add($data)
+		{
+			return $this->so->add($data);
+		}
+
 		function save($data)
 		{
 			return $this->so->save($data);

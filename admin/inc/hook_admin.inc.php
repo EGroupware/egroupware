@@ -33,7 +33,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('applications_access',1,'admin'))
 	{
-		$file['Applications']               = $GLOBALS['phpgw']->link('/admin/applications.php');
+		$file['Applications']               = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('global_categories_access',1,'admin'))

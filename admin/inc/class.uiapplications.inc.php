@@ -161,14 +161,14 @@
 			$GLOBALS['phpgw']->template->set_block('application','form','form');
 			$GLOBALS['phpgw']->template->set_block('application','row','row');
 
-			if ($HTTP_POST_VARS['submit'])
+			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$totalerrors = 0;
 
-				$apporder     = $HTTP_POST_VARS['app_order'] ? $HTTP_POST_VARS['app_order'] : 0;
-				$n_app_name   = chop($HTTP_POST_VARS['n_app_name']);
-				$n_app_title  = chop($HTTP_POST_VARS['n_app_title']);
-				$n_app_status = $HTTP_POST_VARS['n_app_status'];
+				$app_order    = $GLOBALS['HTTP_POST_VARS']['app_order'] ? $GLOBALS['HTTP_POST_VARS']['app_order'] : 0;
+				$n_app_name   = chop($GLOBALS['HTTP_POST_VARS']['n_app_name']);
+				$n_app_title  = chop($GLOBALS['HTTP_POST_VARS']['n_app_title']);
+				$n_app_status = $GLOBALS['HTTP_POST_VARS']['n_app_status'];
 
 				if ($this->bo->exists($n_app_name))
 				{
@@ -189,9 +189,12 @@
 
 				if (!$totalerrors)
 				{
-					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_applications (app_name,app_title,app_enabled,app_order) VALUES('"
-						. addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
-						. "$n_app_status','$app_order')",__LINE__,__FILE__);
+					$this->bo->add(array(
+						'n_app_name'   => $n_app_name,
+						'n_app_title'  => $n_app_title,
+						'n_app_status' => $n_app_status,
+						'app_order'    => $app_order
+					));
 
 					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list'));
 					$GLOBALS['phpgw']->common->phpgw_exit();
