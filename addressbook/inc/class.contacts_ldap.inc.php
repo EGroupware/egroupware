@@ -1,27 +1,26 @@
 <?php
-/**************************************************************************\
-* phpGroupWare API - Accounts manager for SQL                              *
-* This file written by Joseph Engo <jengo@phpgroupware.org>                *
-* View and manipulate contact records using SQL                            *
-* Copyright (C) 2001 Joseph Engo                                           *
-* -------------------------------------------------------------------------*
-* This library is part of the phpGroupWare API                             *
-* http://www.phpgroupware.org/api                                          * 
-* ------------------------------------------------------------------------ *
-* This library is free software; you can redistribute it and/or modify it  *
-* under the terms of the GNU Lesser General Public License as published by *
-* the Free Software Foundation; either version 2.1 of the License,         *
-* or any later version.                                                    *
-* This library is distributed in the hope that it will be useful, but      *
-* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-* See the GNU Lesser General Public License for more details.              *
-* You should have received a copy of the GNU Lesser General Public License *
-* along with this library; if not, write to the Free Software Foundation,  *
-* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-\**************************************************************************/
+  /**************************************************************************\
+  * phpGroupWare API - Accounts manager for LDAP                             *
+  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * View and manipulate contact records using LDAP                           *
+  * -------------------------------------------------------------------------*
+  * This library is part of the phpGroupWare API                             *
+  * http://www.phpgroupware.org/api                                          * 
+  * ------------------------------------------------------------------------ *
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
 
-/* $Id$ */
+  /* $Id$ */
 
 	/*!
 	 @class contacts
@@ -29,6 +28,8 @@
 	 @discussion Author: jengo/Milosch <br>
 	 This class provides a contact database scheme. <br>
 	 It attempts to be based on the vcard 2.1 standard, with mods as needed to make for more reasonable sql storage. <br>
+	 The LDAP schema used here may require installation of schema files available in the phpgwapi/doc/ldap dir.
+	 Please see the README file there.
 	 Syntax: CreateObject('phpgwapi.contacts'); <br>
 	 Example1: $contacts = CreateObject('phpgwapi.contacts');
 	*/
