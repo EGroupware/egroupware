@@ -505,7 +505,7 @@ class ActivityManager extends BaseManager {
     $pId is the processId
     $activityId is the activityId  
   */
-  function replace_activity($pId, $activityId, $vars)
+  function replace_activity($pId, $activityId, $vars, $create_files=true)
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."activities";
     $now = date("U");
@@ -590,20 +590,22 @@ class ActivityManager extends BaseManager {
          die;      
       }
       // Should create the code file
-      $wf_procname = $proc_info["wf_normalized_name"];
-        $fw = fopen(GALAXIA_PROCESSES."/$wf_procname/code/activities/".$vars['wf_normalized_name'].'.php','w');
-        fwrite($fw,'<'.'?'.'php'."\n".'?'.'>');
-        fclose($fw);
-        
-         if($vars['wf_is_interactive']=='y') {
-            $fw = fopen(GALAXIA_PROCESSES."/$wf_procname/code/templates/".$vars['wf_normalized_name'].'.tpl','w');
-            if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
-              fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
-            }
-            fclose($fw);
-        }
+	  if ($create_files) {
+		  $wf_procname = $proc_info["wf_normalized_name"];
+		  $fw = fopen(GALAXIA_PROCESSES."/$wf_procname/code/activities/".$vars['wf_normalized_name'].'.php','w');
+			fwrite($fw,'<'.'?'.'php'."\n".'?'.'>');
+			fclose($fw);
+			
+			 if($vars['wf_is_interactive']=='y') {
+				$fw = fopen(GALAXIA_PROCESSES."/$wf_procname/code/templates/".$vars['wf_normalized_name'].'.tpl','w');
+				if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
+				  fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
+				}
+				fclose($fw);
+			}
+	  }
 
-         $this->compile_activity($pId,$activityId);
+      $this->compile_activity($pId,$activityId);
       
     }
     // Get the id
