@@ -1,5 +1,4 @@
 <!-- $Id$ -->
-<!-- BEGIN index -->
 {printer_friendly}
 <head>
 <style type="text/css">
@@ -27,4 +26,4 @@
 <p>
 <p>
 {print}
-<!-- END index -->
+

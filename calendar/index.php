@@ -59,9 +59,9 @@
 
   $view = "month";
 
-  $phpgw->template->set_file(array("index" => "index.tpl"));
+  $phpgw->template->set_file(array("index_t" => "index.tpl"));
 
-  $phpgw->template->set_block("index");
+  $phpgw->template->set_block("index_t","index");
 
   if ($friendly) {
     $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
@@ -82,12 +82,12 @@
     $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1";
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</a>");
-    $phpgw->template->parse("out","index");
-    $phpgw->template->pparse("out","index");
+    $phpgw->template->parse("out","index_t");
+    $phpgw->template->pparse("out","index_t");
     $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
-    $phpgw->template->parse("out","index");
-    $phpgw->template->pparse("out","index");
+    $phpgw->template->parse("out","index_t");
+    $phpgw->template->pparse("out","index_t");
   }
 ?>
