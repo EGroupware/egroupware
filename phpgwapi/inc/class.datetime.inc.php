@@ -397,7 +397,7 @@
 		*/
 		function days_between($m1,$d1,$y1,$m2,$d2,$y2)
 		{
-			return (int)(mktime(0,0,0,$m2,$d2,$y2,0) - mktime(0,0,0,$m1,$d1,$y1,0) / 86400);
+			return (int)((mktime(0,0,0,$m2,$d2,$y2,0) - mktime(0,0,0,$m1,$d1,$y1,0)) / 86400);
 		}
 
 		function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
