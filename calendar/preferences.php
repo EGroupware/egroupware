@@ -75,6 +75,16 @@
 		{
 			$phpgw->preferences->delete('calendar','display_minicals');
 		}
+
+		if ($print_black_white == True)
+		{
+			$phpgw->preferences->add('calendar','print_black_white');
+		}
+		else
+		{
+			$phpgw->preferences->delete('calendar','print_black_white');
+		}
+
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
@@ -220,6 +230,9 @@
 
 	$str = '<input type="checkbox" name="display_minicals" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'] == True?' checked':'').'>';
 	display_item(lang('Display mini calendars when printing'),$str);
+
+	$str = '<input type="checkbox" name="print_black_white" value="True"'.($phpgw_info['user']['preferences']['calendar']['print_black_white'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['print_black_white'] == True?' checked':'').'>';
+	display_item(lang('Print calendars in black & white'),$str);
 
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();

@@ -1003,11 +1003,19 @@ class calendar extends calendar_
 		$p->set_file($templates);
 		$p->set_block('month_header','monthly_header','monthly_header');
 		$p->set_block('month_header','column_title','column_title');
-
+		
 		$var = Array(
 			'bgcolor'		=> $phpgw_info['theme']['th_bg'],
 			'font_color'	=> $phpgw_info['theme']['th_text']
 		);
+		if($this->printer_friendly && @$phpgw_info['user']['preferences']['calendar']['print_black_white'])
+		{
+			$var = Array(
+				'bgcolor'		=> '',
+				'font_color'	=> ''
+			);
+		}
+
 		$p->set_var($var);
 		
 		$p->set_var('col_width','14');
@@ -1118,6 +1126,10 @@ class calendar extends calendar_
 				else
 				{
 					$day_number = $day;
+					if(@$phpgw_info['user']['preferences']['calendar']['print_black_white'])
+					{
+						$extra = '';
+					}					
 				}
 
 				$var = Array(
