@@ -18,13 +18,13 @@
   include("../header.inc.php");
 
   if ($submit) {
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdayends","calendar");
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"defaultcalendar","common");
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"defaultfilter","calendar");
+     $phpgw->preferences->change("calendar","weekdaystarts");
+     $phpgw->preferences->change("calendar","workdaystarts");
+     $phpgw->preferences->change("calendar","workdayends");
+     $phpgw->preferences->change("calendar","defaultcalendar");
+     $phpgw->preferences->change("calendar","defaultfilter");
      if ($mainscreen_showevents) {
-        $phpgw->preferences->change($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
+        $phpgw->preferences->change("calendar","mainscreen_showevents");
      } else {
         $phpgw->preferences->delete("calendar","mainscreen_showevents");
      }

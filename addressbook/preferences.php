@@ -27,10 +27,10 @@
      
      if (! $totalerrors) {
         while ($pref = each($ab_selected)) {
-          $phpgw->preferences->change($phpgw_info["user"]["account_id"],$pref[0],"addressbook","addressbook_" . $pref[1]);
+          $phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $pref[1]);
         }
         if ($mainscreen_showbirthdays) {
-           $phpgw->preferences->change($phpgw_info["user"]["account_id"],"mainscreen_showbirthdays","addressbook");
+           $phpgw->preferences->change("addressbook","mainscreen_showbirthdays");
         } else {
            $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
         }
