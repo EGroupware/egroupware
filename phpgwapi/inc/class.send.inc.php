@@ -114,11 +114,18 @@
 					$header .= 'Content-Disposition: inline'."\n"
 						. 'Content-description: Mail message body'."\n";
 				}
-				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['mail_server_type'] == 'imap' && $GLOBALS['phpgw_info']['user']['apps']['email'] && is_object($GLOBALS['phpgw']->msg))
+				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['mail_server_type'] == 'imap' && $GLOBALS['phpgw_info']['user']['apps']['email'])
 				{
-					$stream = $GLOBALS['phpgw']->msg->login('Sent');
-					$GLOBALS['phpgw']->msg->append($stream, 'Sent', $header, $body, "\\Seen");
-					$GLOBALS['phpgw']->msg->close($stream);
+					if(!is_object($GLOBALS['phpgw']->msg))
+					{
+						$GLOBALS['phpgw']->msg = CreateObject('email.mail_msg');
+					}
+					$args_array = Array();
+					$args_array['do_login'] = True;
+					$args_array['folder'] = $GLOBALS['phpgw_info']['user']['preferences']['email']['sent_folder_name'];
+					$GLOBALS['phpgw']->msg->begin_request($args_array);
+					$GLOBALS['phpgw']->msg->phpgw_append('Sent', $header."\n".$body, "\\Seen");
+					$GLOBALS['phpgw']->msg->end_request();
 				}
 				if (strlen($cc)>1)
 				{
