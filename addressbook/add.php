@@ -55,9 +55,9 @@
 		$fields["n_prefix"]			= $prefix;
 		$fields["n_suffix"]			= $suffix;
 		if ($prefix) { $pspc = " "; }
-		if ($middle) { $mspc = " "; }
+		if ($middle) { $mspc = " "; } else { $nspc = " "; }
 		if ($suffix) { $sspc = " "; }
-		$fields["fn"]				= $prefix.$pspc.$firstname.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
+		$fields["fn"]				= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
 		$fields["d_email"]			= $email;
 		$fields["d_emailtype"]		= $email_type;
 		$fields["title"]			= $title;
