@@ -28,6 +28,12 @@
 		function mainscreen()
 		{
 			$GLOBALS['phpgw']->xslttpl->add_file('app_data');
+			
+			function display_section($appname,$file,$file2='')
+			{
+				$GLOBALS['phpgw']->common->display_mainscreen($appname,$file2 ? $file2 : $file);
+			}
+
 			$GLOBALS['phpgw']->hooks->process('admin');
 
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('list' => $GLOBALS['phpgw']->common->output));
