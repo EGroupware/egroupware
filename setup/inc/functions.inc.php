@@ -147,10 +147,10 @@
   {
     global $phpgw_info, $phpgw_domain, $SetupDomain, $db;
     /* Database setup */
-    if (!isset($phpgw_info["server"]["api_dir"])) {
-      $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["server_root"]."/phpgwapi";
+    if (!isset($phpgw_info["server"]["api_inc"])) {
+      $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["server_root"]."/phpgwapi/inc";
     }
-    include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_domain[$SetupDomain]["db_type"].".inc.php");
+    include($phpgw_info["server"]["api_inc"] . "/phpgw_db_".$phpgw_domain[$SetupDomain]["db_type"].".inc.php");
     $db	          = new db;
     $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
     $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];

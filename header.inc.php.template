@@ -29,7 +29,7 @@
   \**************************************************************************/
 
   $phpgw_info["server"]["server_root"] = "__SERVER_ROOT__";
-  $phpgw_info["server"]["api_dir"]	= "__API_DIR__";
+  $phpgw_info["server"]["include_root"]	= "__INCLUDE_ROOT__";
 
   $phpgw_domain["default"] = array (
     "db_host" => "__DB_HOST__", 
@@ -78,8 +78,9 @@
   /**************************************************************************\
   * Do not edit these lines                                                  *
   \**************************************************************************/
+  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi/inc";
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
-  $phpgw_info["server"]["header_version"] = "1.6";
+  $phpgw_info["server"]["header_version"] = "1.7";
 // This is a fix for NT
   if (!isset($phpgw_info["flags"]["noapi"]) || 
       !$phpgw_info["flags"]["noapi"] == True){

@@ -21,7 +21,10 @@
   /**************************************************************************\
   * Include the apps footer files if it exists                               *
   \**************************************************************************/
-  if (file_exists ($phpgw_info["server"]["app_inc"]."/footer.inc.php")){
+  if (file_exists ($phpgw_info["server"]["app_inc"]."/footer.inc.php") 
+   && $phpgw_info["flags"]["currentapp"] != "home"
+   && $phpgw_info["flags"]["currentapp"] != "login"
+   && $phpgw_info["flags"]["currentapp"] != "logout"){
     include($phpgw_info["server"]["app_inc"]."/footer.inc.php");
   }
 

@@ -12,7 +12,7 @@
 
   /* $Id$ */
   
-  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
   if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
@@ -31,24 +31,24 @@
   /**************************************************************************\
   * Load up all the base files                                               *
   \**************************************************************************/
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_info.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_info.inc.php");
 
   /**************************************************************************\
   * Required classes                                                         *
   \**************************************************************************/
   /* Load selected database class */
   if (empty($phpgw_info["server"]["db_type"])){$phpgw_info["server"]["db_type"] = "mysql";}
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_session.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_session.inc.php");
 
   /* Load selected translation class */
   if (empty($phpgw_info["server"]["translation_system"])){$phpgw_info["server"]["translation_system"] = "sql";}
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_lang_".$phpgw_info["server"]["translation_system"].".inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_lang_".$phpgw_info["server"]["translation_system"].".inc.php");
 
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_crypto.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_template.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_common.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_crypto.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_template.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_common.inc.php");
 
   /**************************************************************************\
   * Optional classes, which can be disabled for performance increases        *
@@ -65,47 +65,47 @@
     $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
 
     if ($phpgw_info["flags"]["enable_categories_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_categories.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_categories.inc.php");
        $phpgw->categories = new categories;
     }
  
     if ($phpgw_info["flags"]["enable_network_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_network.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_network.inc.php");
        $phpgw->network = new network;
     }
    
     if ($phpgw_info["flags"]["enable_send_class"]) {
-  	 include($phpgw_info["server"]["api_dir"] . "/phpgw_send.inc.php");
+  	 include($phpgw_info["server"]["api_inc"] . "/phpgw_send.inc.php");
      $phpgw->send = new send;
     }
 
     if ($phpgw_info["flags"]["enable_nextmatchs_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_nextmatchs.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_nextmatchs.inc.php");
        $phpgw->nextmatchs = new nextmatchs;
     }
    
     if ($phpgw_info["flags"]["enable_utilities_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities.inc.php");
        $phpgw->utilities	= new utilities;
     }
 
     if ($phpgw_info["flags"]["enable_vfs_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_vfs.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_vfs.inc.php");
        $phpgw->vfs  = new vfs;
     }
 
     if ($phpgw_info["flags"]["enable_todo_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_todo.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_todo.inc.php");
        $phpgw->todo = new todo;
     }
   
     if ($phpgw_info["flags"]["enable_calendar_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_calendar.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_calendar.inc.php");
        $phpgw->calendar = new calendar;
     }
   
     if ($phpgw_info["flags"]["enable_addressbook_class"]) {
-       include($phpgw_info["server"]["api_dir"] . "/phpgw_addressbook.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/phpgw_addressbook.inc.php");
        $phpgw->addressbook = new addressbook;
     }
     
@@ -170,12 +170,12 @@
 
       /* Load selected authentication class */
       if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
  
       /* Load selected accounts class */
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_accounts_shared.inc.php");
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
   
       /**************************************************************************\
       * Continue adding the classes                                              *
@@ -363,13 +363,13 @@
      /**************************************************************************\
      * These lines load up the themes                                           *
      \**************************************************************************/
-     include($phpgw_info["server"]["api_dir"] . "/themes/" .
+     include($phpgw_info["server"]["server_root"] . "/phpgwapi/themes/" .
 	        $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
 
      if ($phpgw_info["theme"]["bg_color"] == "") {
         /* Looks like there was a problem finding that theme. Try the default */
         echo "Warning: error locating selected theme";
-        include ($phpgw_info["server"]["api_dir"] . "/themes/default.theme");
+        include ($phpgw_info["server"]["server_root"] . "/phpgwapi/themes/default.theme");
         if ($phpgw_info["theme"]["bg_color"] == "") {
            // Hope we don't get to this point.  Better then the user seeing a 
            // complety back screen and not know whats going on

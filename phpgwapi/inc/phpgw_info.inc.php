@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
   if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
@@ -98,8 +98,8 @@
       $phpgw_info["server"]["images_dir"]   = $phpgw->common->get_image_path("phpgwapi");
 //    }
  
-    $phpgw_info["server"]["app_root"]   = $phpgw_info["server"]["server_root"]."/".$phpgw_info["flags"]["currentapp"];
-    $phpgw_info["server"]["app_inc"]    = $phpgw_info["server"]["app_root"]."/inc";
+    $phpgw_info["server"]["app_root"]   = $phpgw->common->get_app_dir();
+    $phpgw_info["server"]["app_inc"]    = $phpgw->common->get_inc_dir();
     $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
     $phpgw_info["server"]["app_tpl"]    = $phpgw->common->get_tpl_dir();
   
@@ -107,8 +107,6 @@
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"
                    					     . $phpgw_info["user"]["userid"];
   
-    $phpgw_info["server"]["my_include_dir"] = $phpgw_info["server"]["app_inc"];
-
     // This shouldn't happen, but if it does get ride of the warnings it will spit out    
     if (gettype($phpgw_info["user"]["preferences"]) != "array") {
        $phpgw_info["user"]["preferences"] = array();

@@ -34,7 +34,7 @@
   } 
 */
 
-  $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"]."/templates/default";
+  $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/default";
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
 
   if (! $deny_login && ! $phpgw_info["server"]["show_domain_selectbox"]) {

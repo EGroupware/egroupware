@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
   if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
@@ -222,6 +222,40 @@
        }
        $output_text .= "</table>\n";
        return $output_text;
+    }
+
+    function get_app_dir($appname = ""){
+      global $phpgw_info;
+      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+
+      $appdir = $phpgw_info["server"]["include_root"]."/".$appname;
+      $appdir_default = $phpgw_info["server"]["server_root"]."/".$appname;
+
+      if (is_dir ($appdir)){
+        return $appdir;
+      }elseif (is_dir ($appdir_default)){
+        return $appdir_default;
+      }else{
+        return False;
+      }      
+    }
+
+    function get_inc_dir($appname = ""){
+      global $phpgw_info;
+      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+
+      $incdir = $phpgw_info["server"]["include_root"]."/".$appname."/inc";
+      $incdir_default = $phpgw_info["server"]["server_root"]."/".$appname."/inc";
+
+      if (is_dir ($incdir)){
+        return $incdir;
+      }elseif (is_dir ($incdir_default)){
+        return $incdir_default;
+      }else{
+        return False;
+      }      
     }
 
     function get_tpl_dir($appname = ""){
@@ -554,7 +588,7 @@
     function phpgw_footer()
     {
        global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
-       include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+       include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
  
        // Clean up mcrypt
        if (is_object($this->crypto)) {

@@ -19,9 +19,9 @@
   // Authorize the user to use setup app and load the database
   // include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-  $phpgw_info["server"]["api_dir"] = 
+  $phpgw_info["server"]["api_inc"] = 
 	$phpgw_info["server"]["include_root"]."/phpgwapi";
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_common.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_common.inc.php");
 
   $common = new common;
   loaddb(); 
@@ -77,8 +77,8 @@
      }
 
      if (! $error) {
-        include($phpgw_info["server"]["api_dir"] . "/phpgw_accounts_ldap.inc.php");
-        include($phpgw_info["server"]["api_dir"] . "/phpgw_accounts_shared.inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_ldap.inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $accounts = new accounts;
 
         while ($app = each($s_apps)) {

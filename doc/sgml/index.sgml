@@ -1,21 +1,11 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
 <!ENTITY introduction SYSTEM "introduction.sgml">
 <!ENTITY installation SYSTEM "installation.sgml">
+<!ENTITY installing   SYSTEM "install.sgml">
 <!ENTITY using        SYSTEM "using.sgml">
 <!ENTITY admins       SYSTEM "admins.sgml">
 <!ENTITY about        SYSTEM "about.sgml">
-<!ENTITY installing   SYSTEM "install.sgml">
-<!ENTITY trobshoot    SYSTEM "trouble.sgml">
-<!ENTITY devdocs      SYSTEM "devdocs.sgml">
-<!ENTITY devintro     SYSTEM "devintro.sgml">
-<!ENTITY devguid      SYSTEM "devguid.sgml">
-<!ENTITY devinst      SYSTEM "devinst.sgml">
-<!ENTITY devinfra     SYSTEM "devinfra.sgml">
-<!ENTITY devapi       SYSTEM "devapi.sgml">
-<!ENTITY devconfvar   SYSTEM "devconfvar.sgml">
-<!ENTITY devlangsup   SYSTEM "devlangsup.sgml">
-<!ENTITY devtemp      SYSTEM "devtemp.sgml">
-<!ENTITY devabout     SYSTEM "devabout.sgml">  	
+<!ENTITY troubleshoot SYSTEM "trouble.sgml">
 ]>
 <book>
 	<title>phpGroupWare Docs V0.05</title>
@@ -33,7 +23,7 @@
 				<authorblurb>
 					<para>&lt;dan@kuykendall.org&gt</para>
 				</authorblurb>
-				<contrib><comment>the active developer of phpGroupWare</comment></contrib>
+				<contrib><comment>the phpGroupWare project leader</comment></contrib>
 			</author>
 	</authorgroup>
 	</bookinfo>
@@ -48,7 +38,6 @@
 &installation;
 &using;
 &admins;
-&devdocs;
+$troubleshoot;
 &about;
 </book>
-

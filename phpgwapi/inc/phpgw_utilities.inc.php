@@ -12,17 +12,17 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
   if($d1 == "htt" || $d1 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
   } unset($d1);
 
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities_rssparse.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities_clientsniffer.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities_http.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities_matrixview.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_utilities_menutree.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_rssparse.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_clientsniffer.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_http.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_matrixview.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_menutree.inc.php");
 
   class utilities
   {
