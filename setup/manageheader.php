@@ -454,7 +454,7 @@
 			$setup_tpl->set_var('lang_setup_acl',lang('Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)'));
 			$setup_tpl->set_var('setup_acl',$GLOBALS['phpgw_info']['server']['setup_acl']);
 
-			if(@$GLOBALS['phpgw_info']['server']['domain_selectbox'])
+			if(@$GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 			{
 				$setup_tpl->set_var('domain_selectbox_yes',' selected');
 			}
