@@ -30,6 +30,7 @@
 
   $phpgw_info["server"]["server_root"] = "{SERVER_ROOT}";
   $phpgw_info["server"]["include_root"]	= "{INCLUDE_ROOT}";
+  $phpgw_info["server"]["header_admin_password"] = "{HEADER_ADMIN_PASSWORD}";
 
   $phpgw_domain["default"] = array (
     "db_host" => "{DB_HOST}", 
@@ -80,7 +81,7 @@
   \**************************************************************************/
   $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi/inc";
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
-  $phpgw_info["server"]["versions"]["header"] = "1.8";
+  $phpgw_info["server"]["versions"]["header"] = "1.9";
 // This is a fix for NT
   if (!isset($phpgw_info["flags"]["noapi"]) || 
       !$phpgw_info["flags"]["noapi"] == True){

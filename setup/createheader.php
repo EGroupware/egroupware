@@ -3,9 +3,21 @@
   include("./inc/functions.inc.php");
   include("../version.inc.php");
 
-  /* processing and discovery phase */
+  /* authentication phase */
+  $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
+  if ( $phpgw_info["setup"]["stage"]["header"] == 2){
+      $phpgw_setup->show_header("Please set your header admin password",True);
+  }elseif ( $phpgw_info["setup"]["stage"]["header"] == 10){
+    if (!$phpgw_setup->auth("Config")){
+      $phpgw_setup->show_header("Please login",True);
+      $phpgw_setup->login_form();
+      exit;
+    }else{ /* authentication settled. Moving to the database portion. */
+      $phpgw_setup->loaddb();
+    }
+  }
+
   $phpgw_setup->check_header();
-//echo "phpgw_info[setup][stage]: ".$phpgw_info["setup"]["stage"]."<br>";
   if ( $phpgw_info["setup"]["stage"] >= 1.4){
     if (!$phpgw_setup->header_auth()){
       $phpgw_setup->show_header("Please login",True);
@@ -20,7 +32,6 @@
       exit;
 
   }
-
 
   switch($action){
     case "download":
