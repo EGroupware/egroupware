@@ -425,6 +425,7 @@
 			/* echo '<br>total="'.$this->total_records.'"'; */
 			if($DEBUG) { echo '<br>Query returned "'.$this->total_records.'" records.'; }
 
+			@set_time_limit(0); /* Try not to die, this can take some time on slow machines... */
 			/* Use shared sorting routines, based on sort and order */
 			if($sort == 'ASC')
 			{
