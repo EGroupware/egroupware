@@ -77,7 +77,7 @@
 					include($f);
 					while(is_array($setup_info[$app_name]['hooks']) && list(,$hook) = @each($setup_info[$app_name]['hooks']))
 					{
-						if(!@$hooks->found_hooks[$hook][$app_name])
+						if(!@$hooks->found_hooks[$app_name][$hook])
 						{
 							$this->register_hook(
 								Array(
