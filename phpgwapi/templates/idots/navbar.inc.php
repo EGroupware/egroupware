@@ -36,7 +36,7 @@
 		//	== 'icons_and_text')
 			
 		$max_icons=$GLOBALS['phpgw_info']['user']['preferences']['common']['max_icons']; 
-		if(!$max_icons) $max_icons=7;
+		if(!$max_icons) $max_icons=200;
 		
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
