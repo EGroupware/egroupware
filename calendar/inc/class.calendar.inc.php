@@ -199,13 +199,13 @@ class calendar extends calendar_
 			switch($weekday)
 			{
 				case 0:
-					$sday = mktime(0,0,0,$month,$day - 6,$year);
+					$sday = mktime(2,0,0,$month,$day - 6,$year);
 					break;
 				case 1:
-					$sday = mktime(0,0,0,$month,$day,$year);
+					$sday = mktime(2,0,0,$month,$day,$year);
 					break;
 				default:
-					$sday = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
+					$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
 					break;
 			}
 		}
@@ -220,7 +220,7 @@ class calendar extends calendar_
 				5 => 'Fri',
 				6 => 'Sat'
 			);
-			$sday = mktime(0,0,0,$month,$day - $weekday,$year);
+			$sday = mktime(2,0,0,$month,$day - $weekday,$year);
 		}
 
 		$this->days = $days;
