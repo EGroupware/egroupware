@@ -245,7 +245,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='" . intval($id) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
