@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - administration                                            *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Administration                                              *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -17,26 +17,22 @@
 	$setup_info['admin']['tables']    = '';
 	$setup_info['admin']['enable']    = 1;
 
-	$setup_info['admin']['author'][] = array
-	(
-		'name'	=> 'phpGroupWare coreteam',
-		'email' => 'phpgroupware-developers@gnu.org'
+	$setup_info['admin']['author'][] = array(
+		'name'  => 'eGroupWare coreteam',
+		'email' => 'egroupware-developers@sourceforge.net'
 	);
 
-	$setup_info['admin']['maintainer'][] = array
-	(
-		'name'	=> 'phpGroupWare coreteam',
-		'email' => 'phpgroupware-developers@gnu.org',
-		'url'	=> 'www.phpgroupware.org/coredevelopers'
+	$setup_info['admin']['maintainer'][] = array(
+		'name'  => 'eGroupWare coreteam',
+		'email' => 'egroupware-developers@sourceforge.net',
+		'url'   => 'www.egroupware.org'
 	);
 
 	$setup_info['admin']['license']  = 'GPL';
-	$setup_info['admin']['description'] = 'phpGroupWare administration application';
+	$setup_info['admin']['description'] = 'eGroupWare administration application';
 
 	/* The hooks this app includes, needed for hooks registration */
-
-	$setup_info['admin']['hooks'] = array
-	(
+	$setup_info['admin']['hooks'] = array(
 		'acl_manager',
 		'add_def_pref',
 		'admin',
@@ -50,8 +46,7 @@
 	);
 
 	/* Dependencies for this app to work */
-	$setup_info['admin']['depends'][] = array
-	(
+	$setup_info['admin']['depends'][] = array(
 		'appname' => 'phpgwapi',
 		'versions' => Array('0.9.14','0.9.15')
 	);
