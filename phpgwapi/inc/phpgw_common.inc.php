@@ -574,6 +574,10 @@
        * Load the app include files if the exists                                 *
        \**************************************************************************/
        /* Then the include file */
+
+       if ($phpgw_info["flags"]["noheader"] && !$phpgw_info["flags"]["noappheader"] && file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
+          include($phpgw_info["server"]["app_inc"]."/header.inc.php");
+       }
     }
 
     function app_header() {
