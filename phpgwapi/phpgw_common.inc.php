@@ -622,7 +622,7 @@
   }
 
 
-  function hook($location = ""){
+  function hook($location = "") {
     global $phpgw, $phpgw_info;
 
     /* First include the apps own hook file */

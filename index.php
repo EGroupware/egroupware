@@ -129,10 +129,10 @@
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
-    $phpgw->db->query("select DISTINCT ab_firstname,ab_lastname from addressbook where "
-      . "ab_bday like '" . $phpgw->common->show_date(time(),"n/d",__LINE__,__FILE__)
-      . "/%' and (ab_owner='" . $phpgw_info["user"]["userid"] . "' or ab_access='"
-      . "ab_public')");
+    $phpgw->db->query("select ab_firstname,ab_lastname from addressbook where "
+                    . "ab_bday like '" . $phpgw->common->show_date(time(),"n/d")
+                    . "/%' and (ab_owner='" . $phpgw_info["user"]["account_id"] . "' or ab_access='"
+                    . "public')",__LINE__,__FILE__);
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("ab_firstname") . " "
 	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
@@ -143,7 +143,7 @@
       $phpgw->common->show_date(time(),"Y")),"n/d" );
       $phpgw->db->query("select ab_firstname,ab_lastname from addressbook where "
                       . "ab_bday like '$tommorow/%' and (ab_owner='"
-                      . $phpgw_info["user"]["userid"] . "' or ab_access='public')",__LINE__,__FILE__);
+                      . $phpgw_info["user"]["account_id"] . "' or ab_access='public')",__LINE__,__FILE__);
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang("Tommorow is x's birthday.", $phpgw->db->f("ab_firstname") . " "
 	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
