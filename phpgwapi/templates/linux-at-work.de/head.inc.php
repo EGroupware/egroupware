@@ -35,7 +35,7 @@
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
-		'charset'	=> lang('charset'),
+		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
 		'app_name'	=> $app,
 		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),

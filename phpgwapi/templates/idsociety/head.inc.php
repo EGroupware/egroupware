@@ -22,7 +22,7 @@
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
-		'charset'	=> lang('charset'),
+		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'] . $app,
 		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),

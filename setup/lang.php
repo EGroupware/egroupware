@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config') || @$_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -30,13 +30,9 @@
 
 	if (@$_POST['submit'])
 	{
-		include(PHPGW_API_INC.'/class.translation_sql.inc.php');
-		$translation = new translation;
+		$GLOBALS['phpgw_setup']->translation->setup_translation_sql();
+		$GLOBALS['phpgw_setup']->translation->sql->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
 
-		$translation->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
-	}
-	if(@$_POST['submit'] || @$_POST['cancel'])
-	{
 		Header('Location: index.php');
 		exit;
 	}

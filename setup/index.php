@@ -418,6 +418,12 @@
 				'POST','lang.php',
 				'submit',lang('Manage Languages'),
 				'');
+			// show system-charset and offer conversation
+			include(PHPGW_API_INC.'/class.translation_sql.inc.php');
+			$translation = new translation;
+			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
+				$translation->system_charset ? "'$translation->system_charset'" : lang('not set'),
+				'<a href="system_charset.php">','</a>');
 			$setup_tpl->set_var('lang_table_data',$btn_manage_lang);
 			break;
 		default:

@@ -28,9 +28,9 @@
 		var $appreg = '';
 	
 	/* table name vars */
-	var $tbl_apps;
-	var $tbl_config;
-	var $tbl_hooks;
+		var $tbl_apps;
+		var $tbl_config;
+		var $tbl_hooks;
 
 		function setup($html=False, $translation=False)
 		{
@@ -41,10 +41,10 @@
 			/* The setup application needs these */
 			$this->html	= $html ? CreateObject('phpgwapi.setup_html') : '';
 			$this->translation = $translation ? CreateObject('phpgwapi.setup_translation') : '';
-                
-//                $this->tbl_apps    = $this->get_apps_table_name();
-//                $this->tbl_config  = $this->get_config_table_name();
-                $this->tbl_hooks   = $this->get_hooks_table_name();
+
+//			$this->tbl_apps    = $this->get_apps_table_name();
+//			$this->tbl_config  = $this->get_config_table_name();
+			$this->tbl_hooks   = $this->get_hooks_table_name();
 		}
 
 		/*!

@@ -31,7 +31,7 @@
 		'email'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'email.uipreferences.preferences')),
 		'calendar'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uipreferences.preferences')),
 		'addressbook'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'addressbook.uiaddressbook.preferences')),
-		'charset'	=> lang('charset'),
+		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'] . $app,
 		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
 		'css'		=> $GLOBALS['phpgw']->common->get_css(),

@@ -39,6 +39,36 @@
 		function translation()
 		{
 			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			if (!isset($GLOBALS['phpgw_setup']))
+			{
+				$this->system_charset = $GLOBALS['phpgw_info']['server']['system_charset'];
+			}
+			else
+			{
+				$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+				if ($this->db->next_record())
+				{
+					$this->system_charset = $this->db->f(0);
+				}
+			}
+		}
+
+		/*
+		@function charset
+		@abstract returns the charset to use
+		@note this is the system_charset if set and no lang given or the charset of the language
+		*/
+		function charset($lang=False)
+		{
+			if (!$lang && $this->system_charset)
+			{
+				return $this->system_charset;
+			}
+			if ($lang)
+			{
+				$this->add_app('common',$lang);
+			}
+			return $this->translate('charset');
 		}
 
 		function init()
@@ -166,13 +196,30 @@
 		}
 
 		/*!
+		@function convert
+		@abstract converts a string $data from charset $from to charset $to
+		*/
+		function convert($data,$from='iso-8859-1',$to='utf8')
+		{
+			if ($from == 'iso-8859-1' && $to == 'utf8')
+			{
+				return utf8_encode($data);
+			}
+			if ($to == 'iso-8859-1' && $from == 'utf8')
+			{
+				return utf8_decode($data);
+			}
+			die("can't convert from '$from' to '$to' !!!");
+		}
+
+		/*!
 		@function install_langs
 		@abstract installs translations for the selected langs into the database
 		@syntax install_langs($langs,$upgrademethod='dumpold')
 		@param $langs array of langs to install (as data NOT keys (!))
 		@param $upgrademethod 'dumpold' (recommended & fastest), 'addonlynew' languages, 'addmissing' phrases
 		*/
-		function install_langs($langs,$upgrademethod='dumpold')
+		function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 		{
 			@set_time_limit(0);	// we might need some time
 
@@ -225,12 +272,13 @@
 					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
 					$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
 					$raw = array();
+					$apps = $only_app ? array($only_app) : array_keys($setup_info);
 					// Visit each app/setup dir, look for a phpgw_lang file
-					foreach($setup_info as $key => $app)
+					foreach($apps as $app)
 					{
-						$appfile = PHPGW_SERVER_ROOT . SEP . @$app['name'] . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
+						$appfile = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app['name'];
-						if($GLOBALS['phpgw_setup']->app_registered(@$app['name']) && file_exists($appfile))
+						if($GLOBALS['phpgw_setup']->app_registered($app) && file_exists($appfile))
 						{
 							//echo '<br>Including: ' . $appfile;
 							$lines = file($appfile);
@@ -246,10 +294,17 @@
 							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app['name']] = filectime($appfile);
 						}
 					}
+					$charset = @$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang);
+					//echo "<p>lang='$lang', charset='$charset', system_charset='$this->system_charset')</p>\n";
+
 					foreach($raw as $app_name => $ids)
 					{
 						foreach($ids as $message_id => $content)
 						{
+							if ($this->system_charset && $charset && $charset != $this->system_charset)
+							{
+								$content = $this->convert($content,$charset,$this->system_charset);
+							}
 							$addit = False;
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 							if ($upgrademethod == 'addmissing')
@@ -324,5 +379,69 @@
 					}
 				}
 			}
+		}
+
+		/* Following functions are called for app (un)install */
+
+		/*!
+		@function get_langs
+		@abstract return array of installed languages, e.g. array('de','en')
+		*/
+		function get_langs($DEBUG=False)
+		{
+			if($DEBUG)
+			{
+				echo '<br>get_langs(): checking db...' . "\n";
+			}
+			return array_keys($this->get_installed_langs());
+		}
+
+		/*!
+		@function drop_langs
+		@abstract delete all lang entries for an application, return True if langs were found
+		@param $appname app_name whose translations you want to delete
+		*/
+		function drop_langs($appname,$DEBUG=False)
+		{
+			if($DEBUG)
+			{
+				echo '<br>drop_langs(): Working on: ' . $appname;
+			}
+			$this->db->query("SELECT COUNT(message_id) FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
+			$this->db->next_record();
+			if($this->db->f(0))
+			{
+				$this->db->query("DELETE FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
+				return True;
+			}
+			return False;
+		}
+
+		/*!
+		@function add_langs
+		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
+		@param $appname app_name of application to process
+		*/
+		function add_langs($appname,$DEBUG=False,$force_langs=False)
+		{
+			$langs = $this->get_langs($DEBUG);
+			if(is_array($force_langs))
+			{
+				foreach($force_langs as $lang)
+				{
+					if (!in_array($lang,$langs))
+					{
+						$langs[] = $lang;
+					}
+				}
+			}
+
+			if($DEBUG)
+			{
+				echo '<br>add_langs(): chose these langs: ';
+				_debug_array($langs);
+			}
+
+			$this->install_langs($langs,'addmissing',$appname);
 		}
 	}

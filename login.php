@@ -275,7 +275,7 @@
 		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
 	}
 
-	$tmpl->set_var('charset',lang('charset'));
+	$tmpl->set_var('charset',$GLOBALS['phpgw']->translation->charset());
 	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
 	$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
 	$tmpl->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
