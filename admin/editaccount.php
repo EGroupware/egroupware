@@ -28,7 +28,7 @@
 		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_unknowns('remove');
 
-		if ($phpgw_info["server"]["ldap_extra_attributes"] && ($phpgw_info['server']['account_repository'] == 'ldap'))
+		if ($phpgw_info['server']['ldap_extra_attributes'] && ($phpgw_info['server']['account_repository'] == 'ldap'))
 		{
 			$t->set_file(array('account' => 'account_form_ldap.tpl'));
 		}
@@ -40,7 +40,7 @@
 		$t->set_block('account','form_passwordinfo','form_passwordinfo');
 		$t->set_block('account','form_buttons_','form_buttons_');
 
-		if ($_userData)
+		if (is_array($_userData))
 		{
 			$userData=$_userData;
 			@reset($userData['account_groups']);
@@ -73,59 +73,71 @@
 			}
 		}
 
-		$t->set_var('form_action',$phpgw->link('/admin/editaccount.php',
-			"account_id=$_account_id&old_loginid=".rawurlencode($userData['account_lid'])));
-
+		$error_messages = '';
 		if ($_errors) 
 		{
-			$t->set_var('error_messages','<center>' . $phpgw->common->error_list($_errors) . '</center>');
-		} 
+			$error_messages = '<center>' . $phpgw->common->error_list($_errors) . '</center>';
+		}
 
-		$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
-		$t->set_var('tr_color1',$phpgw_info['theme']['row_on']);
-		$t->set_var('tr_color2',$phpgw_info['theme']['row_off']);
-
-		$t->set_var('lang_action',lang('Edit user account'));
-		$t->set_var('lang_loginid',lang('LoginID'));
-		$t->set_var('lang_account_active',lang('Account active'));
-		$t->set_var('lang_password',lang('Password'));
-		$t->set_var('lang_reenter_password',lang('Re-Enter Password'));
-		$t->set_var('lang_lastname',lang('Last Name'));
-		$t->set_var('lang_groups',lang('Groups'));
-		$t->set_var('lang_expires',lang('Expires'));
-		$t->set_var('lang_firstname',lang('First Name'));
-		$t->set_var('lang_button',lang('Save'));
+		$var = Array(
+			'form_action'		=> $phpgw->link('/admin/editaccount.php','account_id='.$_account_id.'&old_loginid='.rawurlencode($userData['account_lid'])),
+			'error_messages'	=> $error_messages,
+			'th_bg'			=> $phpgw_info['theme']['th_bg'],
+			'tr_color1'		=> $phpgw_info['theme']['row_on'],
+			'tr_color2'		=> $phpgw_info['theme']['row_off'],
+			'lang_action'		=> lang('Edit user account'),
+			'lang_loginid'		=> lang('LoginID'),
+			'lang_account_active'	=> lang('Account active'),
+			'lang_password'	=> lang('Password'),
+			'lang_reenter_password'	=> lang('Re-Enter Password'),
+			'lang_lastname'	=> lang('Last Name'),
+			'lang_groups'		=> lang('Groups'),
+			'lang_expires'		=> lang('Expires'),
+			'lang_firstname'	=> lang('First Name'),
+			'lang_button'		=> lang('Save')
+		);
+		$t->set_var($var);
 		$t->parse('form_buttons','form_buttons_',True);
+
+		if ($phpgw_info['server']['ldap_extra_attributes']) {
+			$lang_homedir = lang('home directory');
+			$lang_shell = lang('login shell');
+			$homedirectory = '<input name="homedirectory" value="' . $userData['homedirectory']. '">';
+			$loginshell = '<input name="loginshell" value="' . $userData['loginshell']. '">';
+		}
+		else
+		{
+			$lang_homedir = '';
+			$lang_shell = '';
+			$homedirectory = '';
+			$loginshell = '';
+		}
 
 		$_y = $phpgw->sbox->getyears('account_expires_year',$userData['account_expires_year'],date('Y'),date('Y')+10);
 		$_m = $phpgw->sbox->getmonthtext('account_expires_month',$userData['account_expires_month']);
 		$_d = $phpgw->sbox->getdays('account_expires_day',$userData['account_expires_day']);
-		$t->set_var('input_expires',$phpgw->common->dateformatorder($_y,$_m,$_d,True));
-
-		$t->set_var('account_lid','<input name="account_lid" value="' . $userData['account_lid'] . '">');
-
-		if ($phpgw_info["server"]["ldap_extra_attributes"]) {
-			$t->set_var("lang_homedir",lang("home directory"));
-			$t->set_var("lang_shell",lang("login shell"));
-			$t->set_var("homedirectory",'<input name="homedirectory" value="' . $userData['homedirectory']. '">');
-			$t->set_var("loginshell",'<input name="loginshell" value="' . $userData['loginshell']. '">');
-		}
-
-		$t->set_var('account_passwd',$account_passwd);
-		$t->set_var('account_passwd_2',$account_passwd_2);
+		
+		$var = Array(
+			'input_expires'	=> $phpgw->common->dateformatorder($_y,$_m,$_d,True),
+			'account_lid'	=> '<input name="account_lid" value="' . $userData['account_lid'] . '">',
+			'lang_homedir'	=> $lang_homedir,
+			'lang_shell'	=> $lang_shell,
+			'homedirectory'	=> $homedirectory,
+			'loginshell'	=> $loginshell,
+			'account_passwd'	=> $account_passwd,
+			'account_passwd_2'	=> $account_passwd_2
+		);
+		$t->set_var($var);
 		$t->parse('password_fields','form_passwordinfo',True);
 
 		if ($userData['status']) 
 		{
-			$t->set_var('account_status','<input type="checkbox" name="account_status" value="A" checked>');
+			$account_status = '<input type="checkbox" name="account_status" value="A" checked>';
 		}
 		else
 		{
-			$t->set_var('account_status','<input type="checkbox" name="account_status" value="A">');
+			$account_status = '<input type="checkbox" name="account_status" value="A">';
 		}
-
-		$t->set_var('account_firstname','<input name="account_firstname" value="' . $userData['firstname'] . '">');
-		$t->set_var('account_lastname','<input name="account_lastname" value="' . $userData['lastname'] . '">');
 
 		$allAccounts;
 		$userGroups;
@@ -146,7 +158,6 @@
 			$groups_select .= '>' . $value['account_lid'] . '</option>';
 		}
 		$groups_select .= '</select>';
-		$t->set_var('groups_select',$groups_select);
 
 		// create list of available apps
 		$i = 0;
@@ -209,9 +220,16 @@
 			$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$phpgw_info['theme']['row_on'], $part1, $part2);
 		}
 
-		$t->set_var('permissions_list',$appRightsOutput);
+		$var = Array(
+			'account_status'		=> $account_status,
+			'account_firstname'	=> '<input name="account_firstname" value="' . $userData['firstname'] . '">',
+			'account_lastname'	=> '<input name="account_lastname" value="' . $userData['lastname'] . '">',
+			'groups_select'		=> $groups_select,
+			'permissions_list'	=> $appRightsOutput
+		);
+		$t->set_var($var);
 
-		echo $t->finish($t->parse('out','form'));
+		echo $t->fp('out','form');
 	}
 
 	// stores the userdata
@@ -282,13 +300,13 @@
 	// checks if the userdata are valid
 	// returns FALSE if the data are correct
 	// otherwise the error array
-	function userDataInvalid($_userData)
+	function userDataInvalid(&$_userData)
 	{
-		global $phpgw,$phpgw_info,$userData;
+		global $phpgw,$phpgw_info;
 
 		$totalerrors = 0;
 
-		if ($phpgw_info['server']['account_repository'] == 'ldap' && ! $allow_long_loginids) 
+		if ($phpgw_info['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
 		{
 			if (strlen($_userData['account_lid']) > 8) 
 			{
@@ -326,15 +344,16 @@
 			if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
 			{
 				$error[$totalerrors] = lang('You have entered an invalid expiration date');
+				$totalerrors++;
 			}
 			else
 			{
-				$userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
+				$_userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
 			}
 		}
 		else
 		{
-			$userData['expires'] = -1;
+			$_userData['expires'] = -1;
 		}
 
 		if ($totalerrors == 0)
@@ -374,7 +393,7 @@
 			'account_expires_year'  => $account_expires_year
 		);
 		
-		if (!$errors = userDataInvalid($userData)) 
+		if (!$errors = userDataInvalid($userData))
 		{ 
 			saveUserData($userData);
 			Header('Location: ' . $phpgw->link('/admin/accounts.php', 'cd='.$cd));
