@@ -100,12 +100,21 @@
 					 */
 					$e_password = '{md5}' . base64_encode(pack("H*",md5($password)));
 					break;
+				case 'smd5':
+					if(!function_exists('mhash'))
+					{
+						return False;
+					}
+					$salt = $this->randomstring(8);
+					$hash = mhash(MHASH_MD5, $password . $salt);
+					$e_password = '{SMD5}' . base64_encode($hash . $salt);
+					break;
 				case 'sha':
 					if(!function_exists('mhash'))
 					{
 						return False;
 					}
-					$e_password = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $userpass));
+					$e_password = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $password));
 					break;
 				case 'ssha':
 					if(!function_exists('mhash'))
@@ -163,6 +172,14 @@
 					}
 					$this->error = 'no ext crypt';
 					break;
+				case 'smd5':
+					if(!function_exists('mhash'))
+					{
+						return False;
+					}
+					$salt = $this->randomstring(8);
+					$hash = mhash(MHASH_MD5, $password . $salt);
+					return '{SMD5}' . base64_encode($hash . $salt);
 				case 'sha':
 					if(!function_exists('mhash'))
 					{
@@ -185,6 +202,27 @@
 					return md5($password);
 			}
 			$this->error = $this->error ? $this->error : 'no valid encryption available';
+			return False;
+		}
+
+		/**
+		@function smd5_compare
+		@abstract compare SHA-encrypted passwords for authentication
+		@param $form_val user input value for comparison
+		@param $db_val   stored value (from database)
+		@return boolean	 True on successful comparison
+		*/
+		function smd5_compare($form_val,$db_val)
+		{
+			/* Start with the first char after {SMD5} */
+			$hash = base64_decode(substr($db_val,6));
+			$new_hash = mhash(MHASH_MD5,$form_val);
+			//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
+
+			if(strcmp($hash,$new_hash) == 0)
+			{
+				return True;
+			}
 			return False;
 		}
 

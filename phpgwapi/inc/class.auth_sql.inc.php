@@ -44,6 +44,24 @@
 					: 'md5';
 				switch($type)
 				{
+					case 'smd5':
+						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
+							. " account_type='u' AND "
+							. " account_status ='A'",__LINE__,__FILE__);
+						$this->db->next_record();
+
+						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+						{
+							if($this->db->f('account_lid') != $username)
+							{
+								return false;
+							}
+						}
+						if($this->db->f('account_pwd'))
+						{
+							return $this->smd5_compare($passwd,$this->db->f('account_pwd'));
+						}
+						break;
 					case 'sha':
 						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
 							. " account_type='u' AND "
@@ -175,6 +193,27 @@
 				: 'md5';
 			switch($type)
 			{
+				case 'smd5':
+					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
+						. "' AND " // . " account_type='u' AND "
+						. " account_status ='A'",__LINE__,__FILE__);
+					$this->db->next_record();
+					if($this->db->f('account_pwd'))
+					{
+						if(!$admin)
+						{
+							/* Check the old_passwd to make sure this is legal */
+							if(!$this->smd5_compare($old_passwd,$this->db->f('account_pwd')))
+							{
+								return False;
+							}
+						}
+						/* old password ok, or admin called the function from
+						 * the admin application (no old passwd available).
+						 */
+						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
+					}
+					return False;
 				case 'sha':
 					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
 						. "' AND " // . " account_type='u' AND "

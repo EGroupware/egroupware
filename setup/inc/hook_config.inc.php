@@ -113,6 +113,7 @@
 		if(@function_exists('mhash'))
 		{
 			$hashes += array(
+				'smd5' => 'smd5',
 				'sha'  => 'sha',
 				'ssha' => 'ssha'
 			);
@@ -162,6 +163,7 @@
 		if(@function_exists('mhash'))
 		{
 			$hashes += array(
+				'smd5' => 'smd5',
 				'sha'  => 'sha',
 				'ssha' => 'ssha'
 			);
