@@ -1,6 +1,6 @@
 %1 records imported	infolog	fr	%1 enregistrements importés
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous devriez %2revenir%3 et décocher Tester l'import)
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachements de fichiers via des liens symboliques</b> à la place des uploads et récupération via fichier:/chemin pour les clients avec accès réseau direct
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	fr	<b>Attachements de fichiers via des liens symboliques</b> à la place des uploads et récupération via fichier:/chemin pour les clients avec accès réseau direct
 Add a file	infolog	fr	Ajouter un fichier
 Invalid filename	infolog	fr	Nom de fichier invalide
 accept	infolog	fr	Accepte
@@ -101,7 +101,7 @@ urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
 use Button to search for Address	infolog	fr	Utiliser le bouton pour rechercher une adresse
 use Button to search for Project	infolog	fr	Utiliser le bouton pour rechercher un projet
-valid path on clientside<br>eg. \ServerShare or e:	infolog	fr	chemin valide côté client<br>pe. \ServerShare ou e:
+valid path on clientside<br>eg. \ServerShare or e:	infolog	fr	Chemin valide côté client<br>p.e. \PartageServeur ou e:
 view other subs	infolog	fr	Voir les autres sous
 view subs	infolog	fr	Voir les sous
 will-call	infolog	fr	Va appeler

@@ -1,5 +1,5 @@
 account active	admin	fr	Compte actif
-account has been created	common	fr	Le compte a été créé
+account has been created	common	fr	Le compte a été crée
 account has been deleted	common	fr	Le compte a été effacé
 account has been updated	common	fr	Le compte a été mis à jour
 account permissions	admin	fr	Permissions de compte
@@ -10,6 +10,7 @@ action	admin	fr	Action
 add a new account.	admin	fr	Ajouter un nouveau compte.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	fr	Ajouter les utilisateurs auto-créés à ce groupe ('Défaut' si ceci est vide).
 add global category	admin	fr	Ajouter une catégorie globale
+add global category for x	admin	fr	Ajouter une catégorie globale pour %1
 add new account	admin	fr	Ajouter un nouveau compte
 add new application	admin	fr	Ajouter une nouvelle application
 add peer server	admin	fr	Ajouter un serveur pair
@@ -55,6 +56,7 @@ display	admin	fr	Afficher
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
 edit application	admin	fr	Modifier l'application
 edit global category	admin	fr	Modifier la catégorie globale
+edit global category for x	admin	fr	Modifier la catégorie globale pour %1
 edit group	admin	fr	Modifier le groupe
 edit login screen message	admin	fr	Modifier le message de l'écran de connexion
 edit main screen message	admin	fr	Modifier le message de l'écran principal
@@ -150,6 +152,8 @@ server password	admin	fr	Mot de passe du serveur
 server type(mode)	admin	fr	Type de serveur(mode)
 server url	admin	fr	URL du serveur
 server username	admin	fr	Nom d'utilisateur du serveur
+server x has been added	admin	fr	Le serveur %1 a été ajouté
+server x has been updated	admin	fr	Le serveur %1 a été mis à jour
 set preference values.	admin	fr	Régler les valeurs des préférences.
 show 'powered by' logo on	admin	fr	Montrer le logo 'exécuté par' sur
 site	admin	fr	Site

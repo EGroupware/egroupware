@@ -3,7 +3,7 @@ change your profile	preferences	fr	Changer votre profil
 change your settings	preferences	fr	Changer vos réglages
 date format	preferences	fr	Format de date
 default application	preferences	fr	Application par défaut
-default preferences	preferences	en	Default Preferences
+default preferences	preferences	fr	Préférences par défaut
 edit custom fields	preferences	fr	Modifier les champs personnalisés
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 forced preferences	preferences	fr	Préférences forcées
@@ -27,4 +27,4 @@ this server is located in the x timezone	preferences	fr	 Ce serveur est situé da
 time format	preferences	fr	Format d'heure
 your current theme is: x	preferences	fr	Votre thème actuel est:
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
-your preferences	preferences	en	Vos préférences
+your preferences	preferences	fr	Vos préférences
