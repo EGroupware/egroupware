@@ -30,8 +30,6 @@
 
   $phpgw_info["server"]["server_root"] = "__SERVER_ROOT__";
   $phpgw_info["server"]["include_root"]	= "__INCLUDE_ROOT__";
-  /* This is the basic include needed on each page for phpGroupWare application compliance */
-  $phpgw_info["flags"]["htmlcompliant"] = __HTMLCOMPLIANT__;
 
   $phpgw_domain["default"] = array (
     "db_host" => "__DB_HOST__", 

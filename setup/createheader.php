@@ -131,23 +131,6 @@
       <input type=hidden name=write_config value=true>
         <tr><td colspan=2><b>Server Root</b><br><input type=text name=server_root size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
         <tr><td colspan=2><b>Include Root</b><br><input type=text name=include_root size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
-      <tr><td colspan=2><b>htmlcompliant<br>
-      <select name=htmlcompliant >
-      <?
-        if($phpgw_info["flags"]["htmlcompliant"] == True) {
-      ?>
-      <option value=True selected>True
-      <option value=False>False
-      <?
-        } else {
-      ?>
-      <option value=True>True
-      <option value=False selected>False     
-      <?
-        }
-      ?>
-      </select>
-      </td></tr>
         <tr><td><b>DB Host</b><br><input type=text name=db_host value="<? echo $phpgw_info["server"]["db_host"] ?>"></td><td>Hostname/IP of Databaseserver</td></tr>
         <tr><td><b>DB Name</b><br><input type=text name=db_name value="<? echo $phpgw_info["server"]["db_name"] ?>"></td><td>Name of Database</td></tr>
         <tr><td><b>DB User</b><br><input type=text name=db_user value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>

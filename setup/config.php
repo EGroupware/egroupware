@@ -286,6 +286,18 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["htmlcompliant"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Use pure HTML compliant code (not fully working yet):</td>
+    <td>
+     <select name="newsettings[htmlcompliant]">
+      <option value="bottom"<?php echo $selected["True"]; ?>>True</option>
+      <option value="top"<?php echo $selected["False"]; ?>>False</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
    <tr bgcolor="e6e6e6">
     <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
     <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
