@@ -12,6 +12,13 @@
 
 	/* $Id$ */
 
+	/**
+	 * template editor of the eTemplate package
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class editor
 	{
 		var $debug;
@@ -94,9 +101,7 @@
 				'xml_label' => $xml_label,
 				'xml' => $xml ? '<pre>'.$this->etemplate->html->htmlspecialchars($xml)."</pre>\n" : '',
 			);
-			$options = explode(',',$this->etemplate->size);
-			reset($this->options);
-			while (list($n,$opt) = each($this->options))
+			foreach(explode(',',$this->etemplate->size) as $n => $opt)
 			{
 				$content['options'][$opt] = $options[$n];
 			}
@@ -783,6 +788,8 @@
 			}
 			else
 			{
+				// set onclick handler
+				$this->etemplate->onclick_handler = "alert('%p');";
 				$show->data[$show->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $post_vars['vals'];
 				$olds = $post_vars['olds'];
@@ -800,14 +807,13 @@
 			),'');
 		}
 
-		/*!
-		@function scan_for_extensions
-		@syntax scan_for_extensions( $app )
-		@author ralfbecker
-		@abstract search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
-		@discussion extensions are class-files in $app/inc/class.${name}_widget.inc.php
-		@result array with name => human_name of the extensions found
-		*/
+		/**
+		 * search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
+		 *
+		 * extensions are class-files in $app/inc/class.${name}_widget.inc.php
+		 *
+		 * @return  array with name => human_name of the extensions found
+		 */
 		function scan_for_extensions($app='etemplate')
 		{
 			$extensions = array();

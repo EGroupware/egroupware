@@ -45,8 +45,8 @@
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
 		 *
-		 * @param $name     name of etemplate or array with name and other keys
-		 * @param $load_via name/array with keys of other etemplate to load in order to get $name
+		 * @param string $name of etemplate or array with name and other keys
+		 * @param string/array $load_via with keys of other etemplate to load in order to get $name
 		 */
 		function etemplate($name='',$load_via='')
 		{
@@ -84,17 +84,17 @@
 		 * form as submit-url to call process_show for the template before it
 		 * ExecuteMethod's the given $method of the caller.
 		 *
-		 * @param $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
-		 * @param $content array with content to fill the input-fields of template, eg. the text-field
-		 * @param          with name 'name' gets its content from $content['name']
+		 * @param string $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
+		 * @param array $content with content to fill the input-fields of template, eg. the text-field
+		 * 		with name 'name' gets its content from $content['name']
 		 * @param $sel_options array or arrays with the options for each select-field, keys are the
-		 * @param              field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
-		 * @param              options for field 'name'. ($content['options-name'] is possible too !!!)
-		 * @param $readonlys array with field-names as keys for fields with should be readonly
-		 * @param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
-		 * @param $preserv array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
-		 * @param $output_mode int 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
-		 * @param $changes array change made in the last call if looping, only used internaly by process_exec
+		 * 		field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
+		 * 		options for field 'name'. ($content['options-name'] is possible too !!!)
+		 * @param array $readonlys with field-names as keys for fields with should be readonly
+		 * 		(eg. to implement ACL grants on field-level or to remove buttons not applicable)
+		 * @param array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
+		 * @param int $output_mode 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
+		 * @param array $changes change made in the last call if looping, only used internaly by process_exec
 		 * @return string html for $output_mode == 1, else nothing
 		 */
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$changes='')
@@ -294,14 +294,14 @@
 		 * as it deals with HTML and is so UI-dependent, use exec instead.
 		 *
 		 * @internal
-		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
-		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
-		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
-		 * @param            This is to facilitate complex ACL's which denies access on field-level !!!
-		 * @param $cname string basename of names for form-elements, means index in $_POST
-		 *               eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
-		 * @param $show_c string name/index for name expansion
-		 * @param $show_row string name/index for name expansion
+		 * @param array $content with content for the cells, keys are the names given in the cells/form elements
+		 * @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
+		 * @param array $readonlys with names of cells/form-elements to be not allowed to change
+		 * 		This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param string $cname basename of names for form-elements, means index in $_POST
+		 * 		eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param string $show_c name/index for name expansion
+		 * @param string $show_row name/index for name expansion
 		 * @return string the generated HTML
 		 */
 		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
@@ -345,15 +345,15 @@
 		 * as it deals with HTML and is so UI-dependent, use exec instead.
 		 *
 		 * @internal
-		 * @param $grid array representing a grid
-		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
-		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
-		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
-		 * @param            This is to facilitate complex ACL's which denies access on field-level !!!
-		 * @param $cname string basename of names for form-elements, means index in $_POST
-		 *               eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
-		 * @param $show_c string name/index for name expansion
-		 * @param $show_row string name/index for name expansion
+		 * @param array $grid representing a grid
+		 * @param array $content with content for the cells, keys are the names given in the cells/form elements
+		 * @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
+		 * @param array $readonlys with names of cells/form-elements to be not allowed to change
+		 * 		This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param string $cname basename of names for form-elements, means index in $_POST
+		 *		eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param string $show_c name/index for name expansion
+		 * @param string $show_row name/index for name expansion
 		 * @return string the generated HTML
 		 */
 		function show_grid(&$grid,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
@@ -522,9 +522,18 @@
 		 * calls show to generate included eTemplates. Again only an INTERMAL function.
 		 *
 		 * @internal
-		 * @param $cell array with data of the cell: name, type, ...
-		 * @param for rest see show
-		 * @return the generated HTML
+		 * @param array $cell with data of the cell: name, type, ...
+		 * @param array $content with content for the cells, keys are the names given in the cells/form elements
+		 * @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
+		 * @param array $readonlys with names of cells/form-elements to be not allowed to change
+		 * 		This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param string $cname basename of names for form-elements, means index in $_POST
+		 *		eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param string $show_c name/index for name expansion
+		 * @param string $show_row name/index for name expansion
+		 * @param string &$span on return number of cells to span or 'all' for the rest (only used for grids)
+		 * @param string &$class on return the css class of the cell, to be set in the <td> tag
+		 * @return string the generated HTML
 		*/
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class)
 		{
@@ -1331,7 +1340,8 @@
 		/**
 		 * returns the javascript to be included by exec
 		 *
-		 * @param $what &1 = returns the test, note: has to be included in the body, not the header, &2 = returns the common functions, best to be included in the header
+		 * @param int $what &1 = returns the test, note: has to be included in the body, not the header, 
+		 *		&2 = returns the common functions, best to be included in the header
 		 * @return string javascript
 		 */
 		function include_java_script($what = 3)

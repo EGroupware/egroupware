@@ -41,7 +41,10 @@
 
 		function xul_io()
 		{
-         $this->attr2xul = array(	// how to translate attr, common to all widgets
+			/**
+			 * @var array $attr2xul how to translate attr, common to all widgets
+			 */
+			$this->attr2xul = array(
 				'name' => 'id',
 				'help' => 'statustext',
 				'span' => 'span,class',
@@ -50,7 +53,10 @@
 				'readonly' => 'readonly=true',
 				'size' => 'options'
 			);
-			$this->widget2xul = array(	// how to translate widget-names and widget-spec. attr.
+			/**
+			 * @var array $widget2xul how to widget-names and widget-spec. attr., not set ones are identical
+			 */
+			$this->widget2xul = array(
 				'label' => array(
 					'.name' => 'description',
 					'label' => 'value'
@@ -100,6 +106,9 @@
 					'size' => 'style,plugins',
 				),
 			);
+			/**
+			 * @var array $xul2widget how to xul-widget names to our internal ones, not set ones are identical
+			 */
 			$this->xul2widget = array(
 				'menulist' => 'select',
 				'listbox' => 'select',
@@ -107,6 +116,13 @@
 			);
 		}
 
+		/**
+		 * sets an attribute in the xml object representing a widget
+		 *
+		 * @param object &$widget widget to set the attribute in
+		 * @param string $attr comma delimited attr = default-value pairs, eg. "type=int,min=0"
+		 * @param array $val array with values to set
+		 */
 		function set_attributes(&$widget,$attr,$val)
 		{
 			if ($attr != '')
@@ -128,6 +144,14 @@
 			}
 		}
 
+		/**
+		 * add a widget to a parent
+		 *
+		 * @param object &$parent parten to add the widget
+		 * @param array $cell widget to add
+		 * @param array &$embeded_too already embeded eTemplates
+		 * @return object reference (!) the the xml object representing the widget, so other children can be added
+		 */
 		function &add_widget(&$parent,$cell,&$embeded_too)
 		{
 			$type = $cell['type'];
@@ -276,6 +300,13 @@
 			$parent->add_node($widget);
 		}
 
+		/**
+		 * add a grid to $parent (xml object)
+		 *
+		 * @param object &$parent where to add the grid
+		 * @param array $grid grid to add
+		 * @param array &embeded_too array with already embeded eTemplates
+		 */
 		function add_grid(&$parent,$grid,&$embeded_too)
 		{
 			$xul_grid = new xmlnode('grid');
@@ -317,6 +348,12 @@
 			$parent->add_node($xul_grid);
 		}
 
+		/**
+		 * add / embed an eTemplate into the global $xul_overlay object (used by export)
+		 *
+		 * @param object &$etempl eTemplate to embed
+		 * @param array &embeded_too array with already embeded templates
+		 */
 		function add_etempl(&$etempl,&$embeded_too)
 		{
 			if (is_array($embeded_too))
@@ -352,6 +389,12 @@
 			$this->xul_overlay->add_node($template);
 		}
 
+		/**
+		 * create an XML representation of an eTemplate
+		 *
+		 * @param object $etempl eTemplate object to export
+		 * @return string the XML 
+		 */
 		function export($etempl)
 		{
 			if ($this->debug)
@@ -377,6 +420,13 @@
 			return $xml;
 		}
 
+		/**
+		 * create an eTemplate from it's XML representation
+		 *
+		 * @param object &$etempl eTemplate object to set
+		 * @param string $data the XML 
+		 * @param array/string array with names of imported templates or error-message
+		 */
 		function import(&$etempl,$data)
 		{
 			if ($this->debug)

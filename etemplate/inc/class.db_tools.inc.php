@@ -12,6 +12,13 @@
 
 	/* $Id$ */
 
+	/**
+	 * db-tools: creats and modifys eGroupWare schem-files (to be installed via setup)
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class db_tools
 	{
 		var $public_functions = array
@@ -56,12 +63,9 @@
   /* $Id$ */
 ';
 
-		/*!
-		@function db_tools
-		@syntax db_tools(  )
-		@author ralfbecker
-		@abstract constructor of class
-		*/
+		/**
+		 * constructor of class
+		 */
 		function db_tools()
 		{
 			$this->editor = CreateObject('etemplate.etemplate','etemplate.db-tools.edit');
@@ -75,12 +79,9 @@
 				$GLOBALS['phpgw_info']['apps']['etemplate']['title'].' - '.lang('DB-Tools');
 		}
 
-		/*!
-		@function edit
-		@syntax edit( $content='',$msg='' )
-		@author ralfbecker
-		@abstract this is the table editor (and the callback/submit-method too)
-		*/
+		/**
+		 * table editor (and the callback/submit-method too)
+		 */
 		function edit($content='',$msg = '')
 		{
 			if (isset($_GET['app']))
@@ -234,17 +235,15 @@
 				array('posted_table' => $this->table,'posted_app' => $this->app,'changes' => $this->changes));
 		}
 
-		/*!
-		@function needs_save
-		@syntax needs_save( $cont='',$posted_app='',$posted_table='',$edited_table='' )
-		@author ralfbecker
-		@abstract checks if table was changed and if so offers user to save changes
-		@param $cont the content of the form (if called by process_exec)
-		@param $posted_app the app the table is from
-		@param $posted_table the table-name
-		@param $edited_table the edited table-definitions
-		@result only if no changes
-		*/
+		/**
+		 * checks if table was changed and if so offers user to save changes
+		 *
+		 * @param array $cont the content of the form (if called by process_exec)
+		 * @param string $posted_app the app the table is from
+		 * @param string $posted_table the table-name
+		 * @param string $edited_table the edited table-definitions
+		 * @return only if no changes
+		 */
 		function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
 		{
 			if (!$posted_app && is_array($cont))
@@ -326,15 +325,14 @@
 			return True;	// dont continue in edit
 		}
 
-		/*!
-		@function has_single_index
-		@syntax has_single_index( $col,$index )
-		@author ralfbecker
-		@abstract checks if there is an index (only) on $col (not a multiple index incl. $col)
-		@param $col column name
-		@param $index ix or uc array of table-defintion
-		@result True if $col has a single index
-		*/
+		/**
+		 * checks if there is an index (only) on $col (not a multiple index incl. $col)
+		 *
+		 * @param string $col column name
+		 * @param array $index ix or uc array of table-defintion
+		 * @param string &$options db specific options
+		 * @return True if $col has a single index
+		 */
 		function has_single_index($col,$index,&$options)
 		{
 			foreach($index as $in)
@@ -355,14 +353,14 @@
 			return False;
 		}
 
-		/*!
-		@function table2content
-		@syntax table2content( $table )
-		@author ralfbecker
-		@abstract creates content-array from a $table
-		@param $table table-definition, eg. $phpgw_baseline[$table_name]
-		@result content-array
-		*/
+		/**
+		 * creates content-array from a table
+		 *
+		 * @param array $table table-definition, eg. $phpgw_baseline[$table_name]
+		 * @param array &$columns returns array with column-names
+		 * @param bool $extra_index add an additional index-row
+		 * @return array content-array to call exec with
+		 */
 		function table2content($table,&$columns,$extra_index=False)
 		{
 			$content = $columns = array();
@@ -414,15 +412,14 @@
 			return $content;
 		}
 
-		/*!
-		@function content2table
-		@syntax content2table( $content )
-		@author ralfbecker
-		@abstract creates table-definition from posted content
-		@param $content posted content-array
-		@note  It sets some reasonalbe defaults for not set precisions (else setup will not install)
-		@result table-definition
-		*/
+		/**
+		 * creates table-definition from posted content
+		 *
+		 * It sets some reasonalbe defaults for not set precisions (else setup will not install)
+		 *
+		 * @param array $content posted content-array
+		 * @return table-definition
+		 */
 		function content2table($content)
 		{
 			if (!is_array($this->data))
@@ -547,15 +544,12 @@
 			return $table;
 		}
 
-		/*!
-		@function read
-		@syntax read( $app,&$phpgw_baseline )
-		@author ralfbecker
-		@abstract includes $app/setup/tables_current.inc.php
-		@param $app application name
-		@param $phpgw_baseline where to put the data
-		@result True if file found, False else
-		*/
+		/**
+		 * includes $app/setup/tables_current.inc.php
+		 * @param string $app application name
+		 * @param array &$phpgw_baseline where to return the data
+		 * @return boolean True if file found, False else
+		 */
 		function read($app,&$phpgw_baseline)
 		{
 			$file = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
@@ -578,6 +572,14 @@
 			return True;
 		}
 
+		/**
+		 * returns an array as string in php-notation
+		 *
+		 * @param array $arr
+		 * @param int $depth for idention
+		 * @param string $parent
+		 * @return string
+		 */
 		function write_array($arr,$depth,$parent='')
 		{
 			if (in_array($parent,array('pk','fk','ix','uc')))
@@ -628,15 +630,13 @@
 			return $def;
 		}
 
-		/*!
-		@function write
-		@syntax write( $app,$phpgw_baseline )
-		@author ralfbecker
-		@abstract writes tabledefinitions $phpgw_baseline to file /$app/setup/tables_current.inc.php
-		@param $app app-name
-		@param $phpgw_baseline tabledefinitions
-		@return True if file writen else False
-		*/
+		/**
+		 * writes tabledefinitions $phpgw_baseline to file /$app/setup/tables_current.inc.php
+		 *
+		 * @param string $app app-name
+		 * @param array $phpgw_baseline tabledefinitions
+		 * @return boolean True if file writen else False
+		 */
 		function write($app,$phpgw_baseline)
 		{
 			$file = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
@@ -683,16 +683,13 @@
 			return True;
 		}
 
-		/*!
-		@function setup_version
-		@syntax setup_version( $app,$new = '',$tables='' )
-		@author ralfbecker
-		@abstract reads and updates the version and tables info in file $app/setup/setup.inc.php
-		@param $app the app
-		@param $new new version number to set, if $new != ''
-		@param $tables new tables to include, if $tables != ''
-		@return the version or False if the file could not be read or written
-		*/
+		/**
+		 * reads and updates the version and tables info in file $app/setup/setup.inc.php
+		 * @param string $app the app
+		 * @param string $new new version number to set, if $new != ''
+		 * @param string $tables new tables to include (comma delimited), if != ''
+		 * @return the version or False if the file could not be read or written
+		 */
 		function setup_version($app,$new = '',$tables='')
 		{
 			//echo "<p>etemplate.db_tools.setup_version('$app','$new','$tables')</p>\n";
@@ -792,16 +789,14 @@
 			return $new;
 		}
 
-		/*!
-		@function update
-		@syntax update( $app,$current,$version )
-		@author ralfbecker
-		@abstract updates file /$app/setup/tables_update.inc.php to reflect changes in $current
-		@param $app app-name
-		@param $current new tabledefinitions
-		@param $version new version
-		@return True if file writen else False
-		*/
+		/**
+		 * updates file /$app/setup/tables_update.inc.php to reflect changes in $current
+		 *
+		 * @param string $app app-name
+		 * @param array $current new tabledefinitions
+		 * @param string $version new version
+		 * @return boolean True if file writen else False
+		 */
 		function update($app,$current,$version)
 		{
 			//echo "<p>etemplate.db_tools.update('$app',...,'$version')</p>\n";
@@ -864,6 +859,12 @@
 			return True;
 		}
 
+		/**
+		 * unsets all keys in an array which have a given value
+		 *
+		 * @param array &$arr
+		 * @param mixed $val value to check against
+		 */
 		function remove_from_array(&$arr,$value)
 		{
 			foreach($arr as $key => $val)
@@ -875,6 +876,14 @@
 			}
 		}
 
+		/**
+		 * creates an update-script 
+		 *
+		 * @param string $app app-name
+		 * @param array $current new table-defintion
+		 * @param string &$tables returns comma delimited list of new table-names
+		 * @return string the update-script
+		 */
 		function update_schema($app,$current,&$tables)
 		{
 			$this->read($app,$old);
@@ -968,15 +977,13 @@
 			return $update;
 		}
 
-		/*!
-		@function normalize_index
-		@abstract orders the single-colum-indices after the columns and the multicolunm ones bedind
-		@syntax normalize_index( $index,$cols )
-		@param index array with indices
-		@param cols  array with column-defs (col-name in key)
-		@author ralfbecker
-		@result the new array
-		*/
+		/**
+		 * orders the single-colum-indices after the columns and the multicolunm ones behind
+		 * 
+		 * @param array $index array with indices
+		 * @param array $cols array with column-defs (col-name is the key)
+		 * @return array the new array of indices
+		 */
 		function normalize_index($index,$cols)
 		{
 			$normalized = array();
@@ -999,13 +1006,14 @@
 			return $normalized;
 		}
 
-		/*!
-		@function normalize
-		@syntax normalize( $table )
-		@author ralfbecker
-		@abstract sets all nullable properties to True or False
-		@result the new array
-		*/
+		/**
+		 * normalices all properties in a table-definiton, eg. all nullable properties to True or False
+		 *
+		 * this is necessary to compare two table-defitions
+		 *
+		 * @param array $table table-definition
+		 * @return array the normaliced defintion
+		 */
 		function normalize($table)
 		{
 			$all_props = array('type','precision','nullable','default');
@@ -1029,13 +1037,14 @@
 			);
 		}
 
-		/*!
-		@function tables_identical
-		@syntax tables_identical( $old,$new )
-		@author ralfbecker
-		@abstract compares two table-definitions
-		@result True if they are identical or False else
-		*/
+		/**
+		 * compares two table-definitions, by comparing normaliced string-representations (serialize)
+		 *
+		 * @param array $a
+		 * @param array $b
+		 * @return boolean true if they are identical (would create an identical schema), false otherwise
+		 * 
+		 */
 		function tables_identical($a,$b)
 		{
 			$a = serialize($this->normalize($a));
@@ -1047,6 +1056,3 @@
 			return $a == $b;
 		}
 	}
-
-
-

@@ -12,25 +12,49 @@
 
 	/* $Id$ */
 
-/*!
-@class so_sql
-@author ralfbecker
-@abstract generalized SQL Storage Object
-@discussion the class can be used in following ways:
-@discussion 1) by calling the constructor with an app and table-name or
-@discussion 2) by setting the following class-vars in a class derifed from this one
-@discussion Of cause can you derife the class and call the constructor with params.
-@param $table_name need to be set in the derived class to the db-table-name
-@param $autoinc_id db-col-name of autoincrement id or ''
-@param $db_key_cols array of all primary-key-columns in form dbName => internalName
-@discussion the save function does NOT touch any other cols in the table!!!
-@param $db_data_cols array of all data-cols
-@param $debug turns on debug-messages
-@param $empty_on_write string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
-@param $non_db_cols all cols in data which are not (direct)in the db, for data_merge
-*/
+/**
+ * generalized SQL Storage Object
+ *
+ * the class can be used in following ways:
+ * 1) by calling the constructor with an app and table-name or
+ * 2) by setting the following documented class-vars in a class derifed from this one
+ * Of cause can you derife the class and call the constructor with params.
+ *
+ * @package etemplate
+ * @author RalfBecker-AT-outdoor-training.de
+ * @license GPL
+ */
 class so_sql
 {
+ 	/** 
+ 	 * @var string $table_name need to be set in the derived class to the db-table-name 
+ 	 */
+	var $table_name;
+ 	/**
+ 	 * @var string $autoinc_id db-col-name of autoincrement id or ''
+ 	 */
+	var $autoinc_id = '';
+	/**
+	 * @var array $db_key_cols array of all primary-key-columns in form dbName => internalName
+	 *	the save function does NOT touch any other cols in the table!!!
+	 */
+	var $db_key_cols = array();
+	/**
+	 * @var array $db_data_cols array of all data-cols
+	 */
+	var $db_data_cols = array();
+	/**
+	 * @var array $non_db_cols all cols in data which are not (direct)in the db, for data_merge
+	 */
+	var $non_db_cols = array();
+	/**
+	 * @var int $debug turns on debug-messages
+	 */
+	var $debug = 0;
+	/**
+	 * @var string $empty_on_write string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
+	 */
+	var $empty_on_write = 'NULL';
 	var $public_functions = array(
 		'init'	=> True,
 		'data_merge' => True,
@@ -39,24 +63,19 @@ class so_sql
 		'delete'	=> True,
 		'search'	=> True,
 	);
-	var $db,$table_name;
-	var $autoinc_id = '';
-	var $db_key_cols = array(),$db_data_cols = array(); // key_cols mean primary keys
+	var $db;
 	var $db_uni_cols = array();
 	var $db_cols;	// = $db_key_cols + $db_data_cols
-	var $non_db_cols = array();
 	var $data;		// holds the content of all db_cols
-	var $debug = 0;
-	var $empty_on_write = 'NULL';
 
-	/*!
-	@function so_sql
-	@syntax so_sql( $app='',$table='' )
-	@author ralfbecker
-	@abstract constructor of the class
-	@discussion NEED to be called from the constructor of the derived class
-	@param $app, $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
-	*/
+	/**
+	 * constructor of the class
+	 *
+	 * NEED to be called from the constructor of the derived class !!!
+	 *
+	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
+	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
+	 */
 	function so_sql($app='',$table='')
 	{
 		$this->db = $GLOBALS['phpgw']->db;
@@ -75,14 +94,12 @@ class so_sql
 		}
 	}
 
-	/*!
-	@function setup_table
-	@syntax setup_table( $app,$table )
-	@author ralfbecker
-	@abstract reads table-definition from <app>/setup/tables_current.inc.php
-	@discussion Does NOT set a different internal-data-name. If you want this, you have to do so
-	@discussion in a derifed class !!!
-	*/
+	/**
+	 * reads table-definition from <app>/setup/tables_current.inc.php
+	 *
+	 * Does NOT set a different internal-data-name. If you want this, you have to do so
+	 * in a derifed class !!!
+	 */
 	function setup_table($app,$table)
 	{
 		include(PHPGW_SERVER_ROOT . "/$app/setup/tables_current.inc.php");
@@ -120,13 +137,11 @@ class so_sql
 		}
 	}
 
-	/*!
-	@function so_data_merge
-	@syntax so_data_merge( $new )
-	@author ralfbecker
-	@abstract merges in new values from the given new data-array
-	@param $new array in form col => new_value with values to set
-	*/
+	/**
+	 * merges in new values from the given new data-array
+	 *
+	 * @param $new array in form col => new_value with values to set
+	 */
 	function data_merge($new)
 	{
 		if (!is_array($new) || !count($new))
@@ -149,56 +164,49 @@ class so_sql
 		}
 	}
 
-	/*!
-	@function db2data
-	@abstract changes the data from the db-format to your work-format
-	@discussion it gets called everytime when data is read from the db
-	@discussion This function needs to be reimplemented in the derived class
-	@param $data if given works on that array and returns result, else works on internal data-array
-	*/
-	function db2data($data=0)
+	/**
+	 * changes the data from the db-format to your work-format
+	 *
+	 * it gets called everytime when data is read from the db
+	 * This function needs to be reimplemented in the derived class
+	 *
+	 * @param array $data if given works on that array and returns result, else works on internal data-array
+	 */
+	function db2data($data=null)
 	{
-		if ($intern = !is_array($data))
+		if (!is_array($data))
 		{
-			$data = $this->data;
+			$data = &$this->data;
 		}
 		// do the necessare changes here
 
-		if ($intern)
-		{
-			$this->data = $data;
-		}
 		return $data;
 	}
 
-	/*!
-	@function data2db
-	@abstract changes the data from your work-format to the db-format
-	@discussion It gets called everytime when data gets writen into db or on keys for db-searches
-	@discussion this needs to be reimplemented in the derived class
-	@param $data if given works on that array and returns result, else works on internal data-array
-	*/
-	function data2db($data=0)
+	/**
+	 * changes the data from your work-format to the db-format
+	 *
+	 * It gets called everytime when data gets writen into db or on keys for db-searches
+	 * this needs to be reimplemented in the derived class
+	 *
+	 * @param array $data if given works on that array and returns result, else works on internal data-array
+	 */
+	function data2db($data=null)
 	{
 		if ($intern = !is_array($data))
 		{
-			$data = $this->data;
+			$data = &$this->data;
 		}
 		// do the necessary changes here
 
-		if ($intern)
-		{
-			$this->data = $data;
-		}
 		return $data;
 	}
 
-	/*!
-	@function init
-	@abstract initializes data with the content of key
-	@param $keys array with keys in form internalName => value
-	@result void
-	*/
+	/**
+	 * initializes data with the content of key
+	 *
+	 * @param array $keys array with keys in form internalName => value
+	 */
 	function init($keys=array())
 	{
 		$this->data = array();
@@ -208,11 +216,11 @@ class so_sql
 		$this->data_merge($keys);
 	}
 
-	/*!
-	@function read
-	@abstract reads row matched by key and puts all cols in the data array
-	@param $keys array with keys in form internalName => value, may be a scalar value if only one key
-	@result data array if row could be retrived else False and data = array()
+	/**
+	 * reads row matched by key and puts all cols in the data array
+	 *
+	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
+	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($keys)
 	{
@@ -279,15 +287,15 @@ class so_sql
 		return $this->data;
 	}
 
-	/*!
-	@function save
-	@abstracts saves the content of data to the db
-	@param $keys if given $keys are copied to data before saveing => allows a save as
-	@result 0 on success and errno != 0 else
-	*/
-	function save($keys='')
+	/**
+	 * saves the content of data to the db
+	 *
+	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
+	 * @return int 0 on success and errno != 0 else
+	 */
+	function save($keys=null)
 	{
-		$this->data_merge($keys);
+		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
 		if (!$this->autoinc_id)	// no autoincrement id, so we need to find out with read if key already in db
 		{
@@ -342,13 +350,13 @@ class so_sql
 		return $this->db->errno;
 	}
 
-	/*!
-	@function delete
-	@abstract deletes row representing keys in internal data or the supplied $keys if != ''
-	@param $keys if not '', array with col => value pairs to characterise the rows to delete
-	@result affected rows, should be 1 if ok, 0 if an error
+	/**
+	 * deletes row representing keys in internal data or the supplied $keys if != null
+	 *
+	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
+	 * @return  affected rows, should be 1 if ok, 0 if an error
 	*/
-	function delete($keys='')
+	function delete($keys=null)
 	{
 		if (!is_array($keys) || !count($keys))	// use internal data
 		{
@@ -381,19 +389,20 @@ class so_sql
 		return $this->db->affected_rows();
 	}
 
-	/*!
-	@function search
-	@abstract searches db for rows matching searchcriteria
-	@discussion '*' and '?' are replaced with sql-wildcards '%' and '_'
-	@param $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	@param $only_keys True returns only keys, False returns all cols
-	@param $order_by fieldnames + {ASC|DESC} separated by colons ','
-	@param $extra_cols string to be added to the SELECT, eg. (count(*) as num)
-	@param $wildcard string appended befor and after each criteria
-	@param $empty False=empty criteria are ignored in query, True=empty have to be empty in row
-	@param $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	@result array of matching rows (the row is an array of the cols) or False
-	*/
+	/**
+	 * searches db for rows matching searchcriteria
+	 *
+	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
+	 *
+	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean $only_keys True returns only keys, False returns all cols
+	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ','
+	 * @param string $extra_cols string to be added to the SELECT, eg. (count(*) as num)
+	 * @param string $wildcard appended befor and after each criteria
+	 * @param boolean $empty False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @return array of matching rows (the row is an array of the cols) or False
+	 */
 	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND')
 	{
 		if (!is_array($criteria))
@@ -444,15 +453,13 @@ class so_sql
 		return $n ? $arr : False;
 	}
 
-	/*!
-	@function not_unique
-	@syntax not_unique( $data='' )
-	@author ralfbecker
-	@abstract Check if values for unique keys are unique
-	@param $data data-set to check, defaults to $this->data
-	@result 0: all keys are unique, 1: first key not unique, 2: ...
-	*/
-	function not_unique($data='')
+	/**
+	 * Check if values for unique keys are unique
+	 *
+	 * @param array $data data-set to check, defaults to $this->data
+	 * @return int 0: all keys are unique, 1: first key not unique, 2: ...
+	 */
+	function not_unique($data=null)
 	{
 		if (!is_array($data))
 		{
@@ -479,4 +486,4 @@ class so_sql
 		}
 		return 0;
 	}
-};
+}
