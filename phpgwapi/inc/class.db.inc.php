@@ -10,16 +10,16 @@
 
 	/* $Id$ */
 
-   /**
-	* Database abstraction library
-	*
-	* This allows eGroupWare to use multiple database backends via ADOdb
-	*
-	* @package phpgwapi
-	* @subpackage db
-	* @author RalfBecker@outdoor-training.de
-	* @license LGPL
-	*/
+	/*
+	 * Database abstraction library
+	 *
+	 * This allows eGroupWare to use multiple database backends via ADOdb
+	 *
+	 * @package phpgwapi
+	 * @subpackage db
+	 * @author RalfBecker@outdoor-training.de
+	 * @license LGPL
+	 */
 
 	if(empty($GLOBALS['phpgw_info']['server']['db_type']))
 	{
@@ -210,7 +210,6 @@
 		*/
 		function disconnect()
 		{
-
 		}
 
 		/**
@@ -296,7 +295,7 @@
 			if (!$this->connect())
 			{
 				return 0; /* we already complained in connect() about that. */
-			};
+			}
 
 			# New query, discard previous result.
 			if ($this->Query_ID)
@@ -313,7 +312,7 @@
 			}
 			if ($num_rows > 0)
 			{
-				$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,intval($offset));
+				$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,(int)$offset);
 			}
 			else
 			{
@@ -679,7 +678,7 @@
 						'table_name'      => $table,
 						'tablespace_name' => $this->Database,
 						'database'        => $this->Database
-     				);
+					);
 				}
 			}
 			return $result;
@@ -709,7 +708,7 @@
 
 		/**
 		* Implodes an array of column-value pairs for the use in sql-querys.
-		* All data is either run through addslashes() or intval().
+		* All data is either run through addslashes() or (int).
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
@@ -720,7 +719,7 @@
 		*	typicaly used to form a WHERE-clause from the primary keys
 		* @param array/boolean $column_definitions this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
-		*	If its set, the column-type-data determinates if intval() or addslashes is used.
+		*	If its set, the column-type-data determinates if (int) or addslashes is used.
 		*/
 		function column_data_implode($glue,$array,$use_key=True,$only=False,$column_definitions=False)
 		{
@@ -736,7 +735,7 @@
 					$column_type = is_array($column_definitions) ? @$colum_definitions[$key]['type'] : False;
 					$values[] = ($use_key ? $key.'=' : '').
 						($column_type == 'int' || $colum_type == 'auto' ?
-						intval($data) : "'".$this->db_addslashes($data)."'");
+						(int)$data : "'" . $this->db_addslashes($data) . "'");
 				}
 			}
 			return implode($glue,$values);
@@ -749,7 +748,7 @@
 		*
 		* @param array/boolean $column_definitions this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
-		*	If its set, the column-type-data determinates if intval() or addslashes is used.
+		*	If its set, the column-type-data determinates if (int) or addslashes is used.
 		*/
 		function set_column_definitions($column_definitions=False)
 		{

@@ -56,9 +56,9 @@
 			}
 
 			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) &&
-				intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) > 0)
+				(int)$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] > 0)
 			{
-				$this->maxmatches = intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']);
+				$this->maxmatches = (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			else
 			{
@@ -96,21 +96,11 @@
 		*/
 		function set_icon($align,$img,$label)
 		{
-			switch(strtolower($GLOBALS['phpgw_info']['user']['account_lid']))
-			{
-				case 'ceb':
-					$border = 2;
-					break;
-				default:
-					$border = 0;
-					break;
-			}
-
 			$var = array(
 				'align'  => $align,
 				'img'    => $GLOBALS['phpgw']->common->image('phpgwapi',$img),
 				'label'  => lang($label),
-				'border' => $border
+				'border' => 0
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','link');
@@ -159,7 +149,7 @@
 				{
 //					if(is_int($value))
 //					{
-//						$param = intval($value);
+//						$param = (int)$value;
 //					}
 //					else
 //					{
@@ -442,8 +432,8 @@
 		{
 			if(is_array($search_obj))
 			{
-				$params		= $search_obj;
-				$s_query	= stripslashes($params['query']);
+				$params     = $search_obj;
+				$s_query    = stripslashes($params['query']);
 				$search_obj = $params['search_obj'];
 			}
 			else
@@ -455,7 +445,7 @@
 			// Our only option is to remove it
 			if (ereg('"',$_query))
 			{
-				$_query = ereg_replace('"','',$_query);
+				$_query = str_replace('"','',$_query);
 			}
 			$var = array
 			(
@@ -530,9 +520,9 @@
 		{
 			if (is_array($yours))
 			{
-				$params	= $yours;
-				$filter	= $params['filter'];
-				$yours	= $params['yours'];
+				$params = $yours;
+				$filter = $params['filter'];
+				$yours  = $params['yours'];
 			}
 			else
 			{
@@ -604,14 +594,14 @@
 		{
 			if(is_array($data))
 			{
-				$filter	= (isset($data['filter'])?$data['filter']:'');
-				$format	= (isset($data['format'])?$data['format']:'all');
+				$filter = (isset($data['filter'])?$data['filter']:'');
+				$format = (isset($data['format'])?$data['format']:'all');
 			}
 			else
 			{
 				//$filter = get_var('filter',Array('GET','POST'));
 				$filter = $data;
-				$format	= 'all';
+				$format = 'all';
 			}
 
 			switch($format)
