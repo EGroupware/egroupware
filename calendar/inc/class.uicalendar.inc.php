@@ -729,7 +729,7 @@
 			$cal_id = get_var('cal_id',array('GET','POST'),$vcal_id);
 
 			$date = $cal_date ? $cal_date : 0;
-			$date = $date ? $date : (int)$_GET['date'];
+			$date = $date ? $date : (int)$this->bo->date;
 
 			// First, make sure they have permission to this entry
 			if ($cal_id < 1)
@@ -1037,7 +1037,7 @@
 					$extra_field_text .= '<font color="red">'.lang('please enter a filename !!!')."</font>\n";
 				}
 				if(isset($_POST['cal_id']))
-					$extra_field_text .= '   <input type="hidden" name="cal_id" value="'.$_POST['cal_id'].'">'."\n";
+					$extra_field_text .= '   '.$this->html->input_hidden('cal_id',(int)$_POST['cal_id']);
 
 				if (!isset($_POST['cal_id']) || !$_POST['cal_id'])
 				{
@@ -2365,13 +2365,14 @@
 			}
 			echo "\n<br>\n".'<form action="'.$this->page('viewmatrix').'" method="post" name="matrixform">'."\n";
 			echo ' <table cellpadding="5"><tr><td>'."\n";
-			echo '  <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
-			echo '  <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-			echo '  <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-			echo '  <input type="hidden" name="matrixtype" value="'.$_POST['matrixtype'].'">'."\n";
+			echo '  '.$this->html->input_hidden('year',$this->bo->year);
+			echo '  '.$this->html->input_hidden('month',$this->bo->month);
+			echo '  '.$this->html->input_hidden('day',$this->bo->day);
+			echo '  '.$this->html->input_hidden('matrixtype',$_POST['matrixtype']);
 			foreach($participants as $part)
 			{
-				echo '  <input type="hidden" name="participants[]" value="'.$part.'">'."\n";
+				$part = substr($part,0,2) == 'g_' ? 'g_'.(int) substr($part,2) : (int) $part;
+				echo '  '.$this->html->input_hidden('participants[]',$part);
 			}
 			echo '  <input type="submit" name="refresh" value="'.lang('Refresh').'">'."\n";
 			echo ' </td><td>'."\n";
@@ -2682,13 +2683,13 @@
 				$str = '';
 				$date_str = '';
 
-				if(isset($_GET['date']) && $_GET['date'])
+				if($this->bo->date)
 				{
-					$date_str .= '    <input type="hidden" name="date" value="'.$_GET['date'].'">'."\n";
+					$date_str .= '    '.$this->html->input_hidden('date',$this->bo->date);
 				}
-				$date_str .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-				$date_str .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-				$date_str .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
+				$date_str .= '    '.$this->html->input_hidden('month',$this->bo->month);
+				$date_str .= '    '.$this->html->input_hidden('day',$this->bo->day);
+				$date_str .= '    '.$this->html->input_hidden('year',$this->bo->year);
 
 				for($i=1; $i<=6; $i++)
 				{
@@ -3911,13 +3912,13 @@
 				'font'			=> $this->theme['font'],
 				'bg_color'		=> $this->theme['bg_text'],
 				'action_url'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
-				'common_hidden'	=> '<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
-					. '<input type="hidden" name="cal[owner]" value="'.$event['owner'].'">'."\n"
-					. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
-					. ($_GET['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$_GET['cal_id'].'">'."\n":
-					(@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":''))
+				'common_hidden'	=> $this->html->input_hidden('cal[id]',$event['id'])
+					. $this->html->input_hidden('cal[owner]',$event['owner'])
+					. $this->html->input_hidden('cal[uid]',$event['uid'])
+					. ($_GET['cal_id'] && $event['id'] == 0?$this->html->input_hidden('cal[reference]',$_GET['cal_id']) : 
+					(@isset($event['reference'])?$this->html->input_hidden('cal[reference]',$event['reference']):''))
 					. (@isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && $GLOBALS['phpgw_info']['server']['deny_user_grants_access']?
-					'<input type="hidden" name="participants[]" value="'.$this->bo->owner.'">'."\n":''),
+					$this->html->input_hidden('participants[]',$this->bo->owner):''),
 				'errormsg'		=> ($param['cd']?$GLOBALS['phpgw']->common->check_code($param['cd']):'')
 			);
 			$p->set_var($vars);
@@ -4000,14 +4001,8 @@
 			$start = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$var['startdate'] = Array(
 				'field'	=> lang('Start Date'),
-/*
-				'data'	=> $GLOBALS['phpgw']->common->dateformatorder(
-				   $sb->getYears('start[year]',(int)$GLOBALS['phpgw']->common->show_date($start,'Y')),
-				   $sb->getMonthText('start[month]',(int)$GLOBALS['phpgw']->common->show_date($start,'n')),
-				   $sb->getDays('start[mday]',(int)$GLOBALS['phpgw']->common->show_date($start,'d'))
-				)
-*/
-				'data' => $jscal->input('start[str]',$start)
+
+			'data' => $jscal->input('start[str]',$start)
 			);
 
 // Time
@@ -4025,14 +4020,8 @@
 			$end = $this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$var['enddate'] = Array(
 				'field'	=> lang('End Date'),
-/*
-				'data'	=> $GLOBALS['phpgw']->common->dateformatorder(
-				   $sb->getYears('end[year]',(int)$GLOBALS['phpgw']->common->show_date($end,'Y')),
-				   $sb->getMonthText('end[month]',(int)$GLOBALS['phpgw']->common->show_date($end,'n')),
-				   $sb->getDays('end[mday]',(int)$GLOBALS['phpgw']->common->show_date($end,'d'))
-				)
-*/
-				'data' => $jscal->input('end[str]',$end)
+
+			'data' => $jscal->input('end[str]',$end)
 			);
 
 // End Time
@@ -4104,9 +4093,9 @@
 // DEBUG START
 . '<input type="button" value="Status" onClick="javascript:show()">'."\n"
 // DEBUG END
-							. '<input type="button" onClick="javascript:modify_window(\''.$url.'&part='.$part
+							. '<input type="button" onClick="javascript:modify_window(\$url.'&part='.$part
 							. '\')" value="'.lang('Modify List of External Participants').'">'."\n"
-							. '<input type="hidden" name="ext_part_id" value="'.$part.'">'."\n";
+							. $this->html->input_hidden('ext_part_id" value="'.$part.'">'."\n";
 
 				$var[] = Array(
 					'field'	=> "\n".lang('External Participants'),
@@ -4330,7 +4319,7 @@
 			if (is_array($preserved))
 			{
 				//echo "preserving<pre>"; print_r($preserved); echo "</pre>\n";
-				$p->set_var('common_hidden',$p->get_var('common_hidden').'<input type="hidden" name="preserved" value="'.htmlspecialchars(serialize($preserved)).'">'."\n");
+				$p->set_var('common_hidden',$p->get_var('common_hidden').$this->html->input_hidden('preserved',serialize($preserved)));
 			}
 			$p->set_var('submit_button',lang('Save'));
 
