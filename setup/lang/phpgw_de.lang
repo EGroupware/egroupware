@@ -219,7 +219,7 @@ ldap import users	setup	de	LDAP-Benutzer importieren
 ldap modify	setup	de	LDAP Ändern
 ldap root password	setup	de	LDAP-Root-Passwort
 ldap rootdn	setup	de	LDAP rootdn
-limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	de	Zugang zu Setup auf die folgenden IP Adressen oder Netzwerke beschränken (z.B. 127.0.0.1,10.1.1)
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	de	mysql aufrufen -
 logout	setup	de	Abmelden
 makesure	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden

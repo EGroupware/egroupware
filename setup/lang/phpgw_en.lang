@@ -215,7 +215,7 @@ ldap import users	setup	en	LDAP import users
 ldap modify	setup	en	LDAP Modify
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
-limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	en	Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	en	Login to mysql -
 logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
