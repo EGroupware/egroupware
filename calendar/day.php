@@ -170,13 +170,14 @@ for ($i = $wkstart; date("Ymd", $i) <= date("Ymd", $monthend); $i += (24 * 3600 
 
 <?php
   if (! $friendly) {
-     echo "<p><A HREF=\"".$phpgw->link("day.php");
+     $param = "";
      if ($thisyear)
-        echo "&year=$thisyear&month=$thismonth&day=$thisday";
+        $param .= "year=$thisyear&month=$thismonth&day=$thisday&";
 
-     ?>&friendly=1" TARGET="cal_printer_friendly" onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version") . "'\">[" . lang("Printer Friendly"); ?>]</A>
-
-<?php 
+     $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+	. "status = '" . lang("Generate printer-friendly version"). "'";
+     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
+     echo "[". lang("Printer Friendly") . "]</A>";
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-   } 
+  }
 ?>

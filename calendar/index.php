@@ -168,3 +168,4 @@
      echo "[". lang("Printer Friendly") . "]</A>";
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }
+?>
