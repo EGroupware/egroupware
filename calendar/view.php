@@ -106,7 +106,7 @@
   }
   if($is_my_event && $participate)
     $phpgw->template->set_var("data","<a href=\""
-	.$phpgw->link("timematrix.php","participants=".$cal_info->owner."&date=".$cal_info->year.$cal_info->month.$cal_info->day)
+	.$phpgw->link("viewmatrix.php","participants=".$cal_info->owner."&date=".$cal_info->year.$cal_info->month.$cal_info->day."&matrixtype=free/busy")
 	."\">".$phpgw->common->grab_owner_name($cal_info->owner)."</a>");
   else
     $phpgw->template->set_var("data",$phpgw->common->grab_owner_name($cal_info->owner));

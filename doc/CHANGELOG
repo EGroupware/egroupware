@@ -22,6 +22,7 @@
         - session class will now use the HTTP_X_FORWARDED_FOR if a user is behind a proxy server.
         - Merged in patch to fix the addressbook not displaying all of the fields.
           Thanks ydario
+	- New Calendar table structures and code.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
