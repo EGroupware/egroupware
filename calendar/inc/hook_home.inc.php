@@ -22,30 +22,29 @@
 	}
 	unset($d1);
 
-	global $date;
-
 	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
-		$date = $phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'Ymd');
+		$time = time() - ((60*60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		$cal = CreateObject('calendar.uicalendar');
 		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
 			. $cal->mini_calendar(
 				Array(
-					'day'	=> $cal->bo->day,
+					'day'		=> $cal->bo->day,
 					'month'	=> $cal->bo->month,
 					'year'	=> $cal->bo->year,
 					'link'	=> 'day'
 				)
-			).'</td><td align="center">'.'<table border="0" width="100%" cellspacing="0" cellpadding="0">'
-			. '<tr><td align="center">.lang($phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'F'))
-			.' '.$cal->bo->day.', '.$cal->bo->year.'</tr></td>'.'<tr><td bgcolor="'.$phpgw_info['theme']['bg_text']
+			).'</td><td align="center"><table border="0" width="100%" cellspacing="0" cellpadding="0">'
+			. '<tr><td align="center">'.lang($phpgw->common->show_date($time,'F')).' '.$cal->bo->day.', '
+			.$cal->bo->year.'</tr></td><tr><td bgcolor="'.$phpgw_info['theme']['bg_text']
 			.'" valign="top">'.$cal->print_day(
 				Array(
-					'year'=>$cal->bo->year,
-					'month'=>$cal->bo->month,
-					'day'=>$cal->bo->day
+					'year'	=> $cal->bo->year,
+					'month'	=> $cal->bo->month,
+					'day'		=> $cal->bo->day
 				)
-			).'</td></tr></table>'."\n"."\n".'<!-- END Calendar info --></table></td></tr>'."\n";
+			).'</td></tr></table>'."\n\n".'<!-- END Calendar info --></table></td></tr>'."\n";
 		unset($cal);
 	} 
+	flush();
 ?>
