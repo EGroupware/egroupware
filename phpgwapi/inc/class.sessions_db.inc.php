@@ -295,6 +295,26 @@
 				. "'",__LINE__,__FILE__);
 		}
 
+		function phpgw_set_domain()
+		{
+			$dom = $GLOBALS['HTTP_HOST'];
+			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
+			{
+				$dom = $arr[1];
+			}
+			$parts = explode('.',$dom);
+			$this->dom = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+		}
+
+		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
+		{
+			if (!$this->dom)
+			{
+				$this->phpgw_set_domain();
+			}
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->dom); 
+		}
+
 		function create($login,$passwd = '',$passwd_type = '')
 		{
 			if (is_array($login))
@@ -352,17 +372,17 @@
 
 			if ($GLOBALS['phpgw_info']['server']['usecookies'])
 			{
-				Setcookie('sessionid',$this->sessionid);
-				Setcookie('kp3',$this->kp3);
-				Setcookie('domain',$this->account_domain);
-				Setcookie('last_domain',$this->account_domain,$now+1209600);
+				$this->phpgw_setcookie('sessionid',$this->sessionid);
+				$this->phpgw_setcookie('kp3',$this->kp3);
+				$this->phpgw_setcookie('domain',$this->account_domain);
+				$this->phpgw_setcookie('last_domain',$this->account_domain,$now+1209600);
 				if ($this->account_domain == $GLOBALS['phpgw_info']['server']['default_domain'])
 				{
-					Setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
+					$this->phpgw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
 				}
 				else
 				{
-					Setcookie('last_loginid', $login ,$now+1209600); /* For 2 weeks */
+					$this->phpgw_setcookie('last_loginid', $login ,$now+1209600); /* For 2 weeks */
 				}
 				unset($GLOBALS['phpgw_info']['server']['default_domain']); /* we kill this for security reasons */
 			}
