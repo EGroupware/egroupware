@@ -204,7 +204,7 @@
 	$phpgw->db->Database = $phpgw_info["server"]["db_name"];
 	$phpgw->db->User     = $phpgw_info["server"]["db_user"];
 	$phpgw->db->Password = $phpgw_info["server"]["db_pass"];
-	if ($this->debug) {
+	if ($phpgw->debug) {
 		 $phpgw->db->Debug = 1;
 	}
 
