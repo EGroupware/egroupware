@@ -36,9 +36,7 @@
         <br><center><a href="<?php 
           echo $phpgw->link("view.php","&con=$con&order=$order&sort=$sort&filter=$filter&start=$start&query=$query");
           ?>"><?php echo lang_common("NO"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="delete.php?sessionid=<?php
-            echo $phpgw->session->id . "&con=$con&confirm=true&order=$order&sort="
-	       . "$sort&filter=$filter&start=$start&query=$query"; 
+        <a href="<?php echo $phpgw->link("delete.php","con=$con&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"); 
             ?>"><?php echo lang_common("YES"); ?></a><center>
      <?php
 

@@ -84,10 +84,7 @@
 <FONT COLOR="<?php echo $H2COLOR;?>" SIZE="+1">
 <br>
 <?php
-    if ($phpgw->session->firstname)
-       echo $phpgw->session->firstname . " ";
-    if ($phpgw->session->lastname)
-       echo $phpgw->session->lastname;
+  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
 ?>
 </FONT></TD>
 <?php
@@ -144,7 +141,7 @@
          } else {
             echo " BGCOLOR=\"$CELLBG\">";
          }
-         print_date_entries($date,$friendly,$phpgw->session->id);
+         print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
          echo "</TD>\n";
       } else {
          echo "<TD></TD>\n";

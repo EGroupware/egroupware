@@ -78,8 +78,7 @@
   if (! strlen($error)) {
      arsort ($ids);
      for (reset($ids); $key = key($ids); next($ids)) {
-         echo "<LI><A HREF=\"view.php?sessionid=" . $phpgw->session->id
-            . "&id=$key\">" . $info[$key] . "</A>\n";
+         echo "<LI><A HREF=\"" . $phpgw->link("view.php","id=$key") . "\">" . $info[$key] . "</A>\n";
 
      }
   } else {

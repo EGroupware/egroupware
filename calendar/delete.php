@@ -31,5 +31,4 @@
      $phpgw->db->query("DELETE FROM webcal_entry_groups WHERE cal_id = $id");
   }
 
-  Header("Location: index.php?sessionid=" . $phpgw->session->id . "&"
-       . ($thisyear > 0 ? "year=$thisyear&month=$thismonth" : "") );
+  Header("Location: " . $phpgw->link("index.php,"year=$thisyear&month=$thismonth"));

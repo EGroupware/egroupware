@@ -29,8 +29,7 @@
  <tr>
   <?php
     if (! $friendly)
-       echo "<td align=\"left\"><A HREF=\"year.php?sessionid=" . $phpgw->session->id
-	  . "&year=" . ($year - 1) . "\">&lt;&lt;</A>";
+       echo "<td align=\"left\"><A HREF=\"" . $phpgw->link("year.php","year=" . ($year - 1)) . "\">&lt;&lt;</A>";
   ?>
   </td>
   </td>
@@ -39,8 +38,7 @@
   </td>
   <?php
     if (! $friendly)
-       echo "<td align=\"right\"><A HREF=\"year.php?sessionid=" . $phpgw->session->id
-	  . "&year=" . ($year + 1) . "\">&gt;&gt;</A>";
+       echo "<td align=\"right\"><A HREF=\"" . $phpgw->link("year.php","year=" . ($year + 1)) . "\">&gt;&gt;</A>";
   ?>
   </td>
  </tr>
@@ -65,8 +63,8 @@
 
 <?php
   if (! $friendly) {
-     echo "&nbsp;<A HREF=\"year.php?sessionid=" . $phpgw->session->id . "&friendly=1&"
-	. "&year=$year\"TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+     echo "&nbsp;<A HREF=\"" . $phpgw->link("year.php","friendly=1&"
+	. "&year=$year") . "\"TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	. "status = '" . lang_calendar("Generate printer-friendly version") . "'\">["
 	. lang_calendar("Printer Friendly") . "]</A>";
   }

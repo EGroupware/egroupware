@@ -16,13 +16,12 @@
 
   include("../header.inc.php");
   if (! $con)
-     Header("Location: accounts.php?sessionid=" . $phpgw->session->id);
+     Header("Location: " . $phpgw->link("accounts.php"));
 
   $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
 
   $phpgw->db->query("select * from accounts where con='$con'");
   $phpgw->db->next_record();
-
 
   ?>
    <center>

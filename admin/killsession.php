@@ -17,7 +17,7 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
-  if ($ksessionid == $phpgw->session->id) {
+  if ($ksessionid == $phpgw_info["user"]["sessionid"]) {
      Header("Location: " . $phpgw->link("currentusers.php"));
      exit;
   }
