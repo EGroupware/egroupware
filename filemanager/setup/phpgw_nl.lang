@@ -1,6 +1,94 @@
+%1 already exists as a file	filemanager	nl	%1 bestaat reeds als een bestand.
+application	filemanager	nl	Toepassing
+back to file manager	filemanager	nl	Terug naar de Filemanager
+cannot create directory because it begins or ends in a space	filemanager	nl	Can de directory niet aanmaken omdat deze begint of eindigt met een spatie
+cannot replace %1 because it is a directory	filemanager	nl	Kan %1 niet vevangen omdat het een directory is.
+command sucessfully run	filemanager	nl	Commando met succes uitgevoerd.
+comment	filemanager	nl	Opmerking
+comments cannot contain "%1"	filemanager	nl	Opmerkingen kunnen geen "%1" bevatten.
+copied %1 to %2	filemanager	nl	%1 gekopieerd naar %2.
+copy to	filemanager	nl	Kopiëren naar
+copy to:	filemanager	nl	Kopiëren naar:
+could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopiëren.
+could not create %1	filemanager	nl	Kon %1 niet aanmaken.
+could not create directory %1	filemanager	nl	Kon directory %1 niet aanmaken.
+could not delete %1	filemanager	nl	Kon %1 niet verwijderen.
+could not move %1 to %2	filemanager	nl	Kon %1 niet verplaatsen naar %2.
+could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen naar %2.
+could not save %1	filemanager	nl	Kon %1 niet opslaan.
+create file	filemanager	nl	Bestand aanmaken
+create folder	filemanager	nl	Directory aanmaken
+created	filemanager	nl	Aangemaakt
+created %1	filemanager	nl	%1 aangemaakt.
+created by	filemanager	nl	Aangemaakt door
+created directory %1	filemanager	nl	Directory %1 aangemaakt.
+date	filemanager	nl	Datum
+default number of upload fields to show	filemanager	nl	Standaard aantal uploadvelden in beeld
+delete	filemanager	nl	Verwijderen
+deleted %1	filemanager	nl	%1 verwijderd
+directory	filemanager	nl	Directory
+directory %1 already exists	filemanager	nl	Directory %1 bestaat reeds.
+directory %1 does not exist	filemanager	nl	Directory %1 bestaat niet.
+directory names cannot contain "%1"	filemanager	nl	Directorynamen kunnen geen "%1" bevatten.
+display attributes	filemanager	nl	Attributen weergeven
+download	filemanager	nl	Downloaden
+edit	filemanager	nl	Bewerken
+edit comments	filemanager	nl	Opmerkingen bewerken
+error running command	filemanager	nl	Fout bij het uitvoeren van commando
+execute	filemanager	nl	Uitvoeren
+failed to create directory	filemanager	nl	Het aanmaken van de directory is niet gelukt.
+file	filemanager	nl	Bestand
+file %1 already exists. please edit it or delete it first.	filemanager	nl	Bestand %1 bestaat reeds.
+file %1 could not be created.	filemanager	nl	Bestand %1 kon niet worden aangemaakt.
+file name	filemanager	nl	Bestandsnaam
+file names cannot contain "%1"	filemanager	nl	Bestanden kunnen geen "%1" bevatten.
+file names cannot contain \ or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 filemanager	common	nl	Filemanager
-filemanager preferences		nl	Filemanager voorkeuren
-users	filemanager	nl	gebruikers
+filemanager preferences	filemanager	nl	Filemanager voorkeuren
+files	filemanager	nl	Bestanden
+folder	filemanager	nl	Directory
+go to	filemanager	nl	Ga naar
+go to %1	filemanager	nl	Ga naar %1
+go to your home directory	filemanager	nl	Ga naar uw homedirectory
+go to:	filemanager	nl	Ga naar:
+home	filemanager	nl	Home
+locked	filemanager	nl	Gesloten
+mime type	filemanager	nl	MIME-type
+modified	filemanager	nl	Gewijzigd
+modified by	filemanager	nl	Gewijzigd door
+move to	filemanager	nl	Verplaatsen naar
+move to:	filemanager	nl	Verplaatsen naar:
+moved %1 to %2	filemanager	nl	%1 verplaatst naar %2
+no version history for this file/directory	filemanager	nl	Geen versiegeschiedenis voor dit bestand of deze directory
+operation	filemanager	nl	Actie
+owner	filemanager	nl	Eigenaar
+preview %1	filemanager	nl	Preview %1
+preview of %1	filemanager	nl	Preview van %1
+rename	filemanager	nl	Hernoemen
+renamed %1 to %2	filemanager	nl	%1 hernoemd naar %2
+replaced %1	filemanager	nl	%1 vervangen
+save %1	filemanager	nl	%1 opslaan
+save all	filemanager	nl	Alles opslaan
+saved %1	filemanager	nl	%1 opgeslagen
+show	filemanager	nl	Weergeven
+show ..	filemanager	nl	.. weergeven
+show .files	filemanager	nl	Verborgen bestanden weergeven
+show command line (experimental. dangerous.)	filemanager	nl	Commandoinvoer weergeven (EXPERIMENTEEL EN GEVAARLIJK)
+show help	filemanager	nl	Help weergeven
+size	filemanager	nl	Grootte
+sort by:	filemanager	nl	Sorteren op:
+total files	filemanager	nl	Totaal aantal bestanden
+unknown mime-type defaults to text/plain when viewing	filemanager	nl	Onbekend MIME-type standaard als text/plain weergeven
+unused space	filemanager	nl	Ongebruikte schijfruimte
+up	filemanager	nl	Naar boven
+update	filemanager	nl	Bijgewerkt
+updated comment for %1	filemanager	nl	Opmerking voor %1 bijgewerkt
+upload fields	filemanager	nl	uploadvelden
+upload files	filemanager	nl	Bestanden uploaden
+used space	filemanager	nl	Gebruikte schijfruimte
+users	filemanager	nl	Gebruikers
 version	filemanager	nl	Versie
+view documents in new window	filemanager	nl	Documenten in een nieuw venster weergeven
+view documents on server (if available)	filemanager	nl	Documenten op server weergeven (als dit mogelijk is)
 who	filemanager	nl	Wie
 you do not have access to %1	filemanager	nl	U heeft geen toedang tot %1

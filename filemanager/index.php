@@ -1,15 +1,15 @@
 <?php
 	/*
-
 	eGroupWare - http://www.egroupware.org
+	/
+	
+	/* Set this to true to skip the javascrip redirect and 
+	use the new filemager no matter what the prefs are set */
+	$experimental_new_code=true;
 
-	*/
-
-	$Experiment_New_Code=false;
-
-	if($Experiment_New_Code)
+	if($experimental_new_code)
 	{	
-		$phpgw_flags = Array(
+				$phpgw_flags = Array(
 			'currentapp'    =>      'filemanager',
 			'noheader'      =>      True,
 			'nonavbar'      =>      True,
@@ -17,23 +17,17 @@
 			'noappfooter'   =>      True,
 			'nofooter'      =>      True
 		);
+		
+				$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
 
-		$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
-
-		include('../header.inc.php');
+				include('../header.inc.php');
+		//		$GLOBALS['phpgw']->common->phpgw_exit();
 
 		Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=filemanager.uifilemanager.index'));
 		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
-	###
-	# DEV NOTE:
-	#
-	# index.php is depreciated by the inc/class.xxphpwebhosting.inc.php files.
-	# index.php is still used in the 0.9.14 release, but all future changes should be
-	# made to the inc/class.xxphpwebhosting.inc.php files (3-tiered).  This includes using templates.
-	###
-
+	
 	###
 	# Enable this to display some debugging info
 	###
@@ -104,6 +98,7 @@
 		}
 	}
 
+
 	if ($noheader || $nofooter || ($download && (count ($fileman) > 0)) || ($op == 'view' && $file) || ($op == 'history' && $file) || ($op == 'help' && $help_name))
 	{
 		$noheader = True;
@@ -122,6 +117,38 @@
 
 	include ('../header.inc.php');
 
+	if (!count ($GLOBALS['settings']))
+	{
+		$pref = CreateObject ('phpgwapi.preferences', $GLOBALS['userinfo']['username']);
+		$pref->read_repository (); 
+//		$GLOBALS['phpgw']->hooks->single ('add_def_pref', $GLOBALS['appname']);
+//		$pref->save_repository (True);
+		$pref_array = $pref->read_repository ();
+		$GLOBALS['settings'] = $pref_array[$GLOBALS['appname']];
+	}
+//experimental_new_code
+//die($GLOBALS[][experimental_new_code]);
+/*	if($GLOBALS[settings][experimental_new_code])
+	{
+		echo '
+		<script language="JavaScript">
+		<!--
+		function redirect() {
+			parent.location = "'.$GLOBALS[phpgw]->link('/index.php','menuaction=filemanager.uifilemanager.index').'"
+		}
+		setTimeout("redirect();", 0)
+		redirect();
+
+		//-->
+		</script>
+			
+		';
+
+	}
+*/	
+	
+
+	
 	if ($execute && $command_line)
 	{
 		if ($result = $GLOBALS['phpgw']->vfs->command_line (array ('command_line' => stripslashes ($command_line))))
@@ -137,6 +164,9 @@
 			$messages = $GLOBALS['phpgw']->common->error_list (array (lang('Error running command')));
 		}
 	}
+
+
+
 
 	###
 	# Page to process users
@@ -635,15 +665,6 @@ if ($messages)
 	html_text ($messages);
 }
 
-if (!count ($GLOBALS['settings']))
-{
-	$pref = CreateObject ('phpgwapi.preferences', $GLOBALS['userinfo']['username']);
-	$pref->read_repository (); 
-	$GLOBALS['phpgw']->hooks->single ('add_def_pref', $GLOBALS['appname']);
-	$pref->save_repository (True);
-	$pref_array = $pref->read_repository ();
-	$GLOBALS['settings'] = $pref_array[$GLOBALS['appname']];
-}
 
 ###
 # Start Main Table 

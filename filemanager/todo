@@ -1,23 +1,13 @@
-architectuur
-- let filemanager use templates
-- drop the f...g html_functions_file!!!
-- port it to egroupware for real!!! Someone forgot to finish his job
-
 
 display
-- clean file display table
-- header in separate color
-- icons for filetypes
 - practical out of the box userconfiguration
-- replace all icons with crystal
 - seperate colors for row off an on
-- make one statusrow with all main info like free space
-- make alignments cleaner
-- clean up conf screen
-- upload section separated and in a clean table design
-- per row buttons with edit/delete..etc
 - sort by with sort arrows so we know whats sorted
 - sidebox with basic featurelinks
+- sort by up and down
+- nicer colheads
+- toolbar cleanup
+- toolbar  prefs
 
 extra funtionality
 - sharing file with others
@@ -26,9 +16,14 @@ extra funtionality
 - not just presume a file is treated like a ascii file
 - cut/copy/paste
 - sidebox with explorerstyle (Reiner loves this)
+- other views (with image preview mode?!!)
+- download
+- new popup
+- zip
 
 remove functionaliteit
-- execute command
 - some conf options
 
-
+bugs
+- errors with errorreporting 8
+- errors with uploading thouh it works

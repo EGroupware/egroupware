@@ -19,8 +19,8 @@
 		"nonavbar" => True
 	);
 
+	var_dump($file_attributes);
 	include("../header.inc.php");
-
 	/*
 	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
 	*/
@@ -36,12 +36,6 @@
 	{
 		$phpgw->preferences->read_repository ();
 
-		reset ($file_attributes);
-		while (list ($internal, $displayed) = each ($file_attributes))
-		{
-			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
-		}
-
 		reset ($other_checkboxes);
 		while (list ($internal, $displayed) = each ($other_checkboxes))
 		{
@@ -53,6 +47,13 @@
 		{
 			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
 		}
+
+		reset ($file_attributes);
+		while (list ($internal, $displayed) = each ($file_attributes))
+		{
+			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
+		}
+
 
 		$phpgw->preferences->save_repository (True);
      
@@ -100,6 +101,7 @@
 	{
 		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
 	}
+
 
 	while (list ($internal, $displayed) = each ($file_attributes))
 	{

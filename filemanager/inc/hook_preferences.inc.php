@@ -15,7 +15,8 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-		lang('Preferences')	=> $GLOBALS['phpgw']->link('/filemanager/preferences.php')
+		'Preferences Old' => $GLOBALS['phpgw']->link('/filemanager/preferences.php'),
+		'Preferences' => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname)
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);

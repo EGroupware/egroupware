@@ -23,6 +23,7 @@
 		'add_def_pref',
 		'admin',
 		'deleteaccount',
+		'settings',
 		'preferences'
 	);
 
