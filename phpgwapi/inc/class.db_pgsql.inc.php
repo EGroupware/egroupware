@@ -232,7 +232,7 @@
 			}
 			else
 			{
-				$Query_String .= ' LIMIT ' . $num_rows . ',' . $offset;
+				$Query_String .= ' LIMIT ' . $num_rows . ' OFFSET ' . $offset;
 			}
 
 			if($this->Debug)
