@@ -39,7 +39,7 @@
 			$this->err['desc'] = ' ';
 		}
 
-		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='')
+		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 		{
 			if ($from == '')
 			{
@@ -89,14 +89,14 @@
 					$content_type ='plain';
 				}
 
-				if (ereg('Message-Boundary', $body)) 
+				if (ereg($boundary, $body)) 
 				{
 					$header .= 'Subject: ' . stripslashes($subject) . "\n"
 						. 'MIME-Version: 1.0'."\n"
 						. 'Content-Type: multipart/mixed;'."\n"
-						. ' boundary="Message-Boundary"'."\n\n"
-						. '--Message-Boundary'."\n"
-						. 'Content-type: text/' .$content_type . '; charset=US-ASCII'."\n";
+						. " boundary=\"$boundary\"\n\n"
+						. "--$boundary\n"
+						. 'Content-type: text/' .$content_type . '; charset="'.lang('charset').'"'."\n";
 //					if (!empty($msgtype))
 //					{
 //						$header .= "Content-type: text/' .$content_type . '; phpgw-type=".$msgtype."\n";
@@ -119,7 +119,8 @@
 					$header .= 'Content-Disposition: inline'."\n"
 						. 'Content-description: Mail message body'."\n";
 				}
-				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['mail_server_type'] == 'imap' && $GLOBALS['phpgw_info']['user']['apps']['email'])
+				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['mail_server_type'] == 'imap' && $GLOBALS['phpgw_info']['user']['apps']['email'] &&
+				    $GLOBALS['phpgw_info']['user']['preferences']['email']['use_sent_folder'])
 				{
 					if(!is_object($GLOBALS['phpgw']->msg))
 					{
@@ -141,7 +142,6 @@
 				{
 					$to .= ','.$bcc;
 				}
-
 				$returnccode = $this->smail($to, '', $body, $header);
 
 				return $returnccode;
@@ -153,6 +153,64 @@
 		}
 
 		// ==================================================[ some sub-functions ]===
+
+		/*!
+		@function encode_subject
+		@abstract encode 8-bit chars in subject-line
+		@author ralfbecker
+		@note the quoted subjects get a header stateing the charset (eg. "=?iso-8859-1?Q?"), the \
+			8-bit chars as '=XX' (XX is the hex-representation of the char) and a trainling '?='.
+		*/
+		function encode_subject($subject)
+		{
+			$enc_start = $enc_end = 0;
+
+			$words = explode(' ',$subject);
+			foreach($words as $w => $word)
+			{
+				$str = '';
+
+				for ($i = 0; $i < strlen($word); ++$i)
+				{
+					if (($n = ord($word[$i])) > 127 || $word[$i] == '=') {
+						$str .= sprintf('=%0X',$n);
+						if (!$enc_start)
+						{
+							$enc_start = $w+1;
+						}
+						$enc_end = $w+1;
+					}
+					else
+					{
+						$str .= $word[$i];
+					}
+				}
+				$strs[] = $str;
+				//echo "word='$word', start=$enc_start, end=$enc_end, encoded='$str'<br>\n";
+			}
+			if (!$enc_start)
+			{
+				return $subject;
+			}
+			$str = '';
+			foreach ($strs as $w => $s)
+			{
+				$str .= $str != '' ? ' ' : '';
+
+				if ($enc_start == $w+1)	// first word to encode
+				{
+					$str .= '=?'.lang('charset').'?Q?';
+				}
+				$str .= $w+1 > $enc_end ? str_replace('=3D','=',$s) : $s;
+
+				if ($enc_end == $w+1)	// last word to encode
+				{
+					$str .= '?=';
+				}
+			}
+			//echo "<p>send::encode_subject('$subject')='$str'</p>\n";
+			return $str;
+		}
 
 		function socket2msg($socket)
 		{
