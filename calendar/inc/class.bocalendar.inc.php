@@ -164,12 +164,19 @@
 				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
 			}
 
-			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:(isset($GLOBALS['HTTP_POST_VARS']['date'])?$GLOBALS['HTTP_POST_VARS']['date']:''));
-			$year = (isset($GLOBALS['HTTP_GET_VARS']['year'])?$GLOBALS['HTTP_GET_VARS']['year']:(isset($GLOBALS['HTTP_POST_VARS']['year'])?$GLOBALS['HTTP_POST_VARS']['year']:''));
-			$month = (isset($GLOBALS['HTTP_GET_VARS']['month'])?$GLOBALS['HTTP_GET_VARS']['month']:(isset($GLOBALS['HTTP_POST_VARS']['month'])?$GLOBALS['HTTP_POST_VARS']['month']:''));
-			$day = (isset($GLOBALS['HTTP_GET_VARS']['day'])?$GLOBALS['HTTP_GET_VARS']['day']:(isset($GLOBALS['HTTP_POST_VARS']['day'])?$GLOBALS['HTTP_POST_VARS']['day']:''));
+			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:'');
+			$date = ($date=='' && isset($GLOBALS['HTTP_POST_VARS']['date'])?$GLOBALS['HTTP_POST_VARS']['date']:$date);
+
+			$year = (isset($GLOBALS['HTTP_GET_VARS']['year'])?$GLOBALS['HTTP_GET_VARS']['year']:'');
+			$year = ($year=='' && isset($GLOBALS['HTTP_POST_VARS']['year'])?$GLOBALS['HTTP_POST_VARS']['year']:$year);
 			
-			if(isset($date))
+			$month = (isset($GLOBALS['HTTP_GET_VARS']['month'])?$GLOBALS['HTTP_GET_VARS']['month']:'');
+			$month = ($month=='' && isset($GLOBALS['HTTP_POST_VARS']['month'])?$GLOBALS['HTTP_POST_VARS']['month']:$month);
+			
+			$day = (isset($GLOBALS['HTTP_GET_VARS']['day'])?$GLOBALS['HTTP_GET_VARS']['day']:'');
+			$day = ($day=='' && isset($GLOBALS['HTTP_POST_VARS']['day'])?$GLOBALS['HTTP_POST_VARS']['day']:'');
+			
+			if(isset($date) && $date)
 			{
 				$this->year = intval(substr($date,0,4));
 				$this->month = intval(substr($date,4,2));
@@ -177,7 +184,7 @@
 			}
 			else
 			{
-				if(isset($year))
+				if(isset($year) && $year)
 				{
 					$this->year = $year;
 				}
@@ -185,7 +192,7 @@
 				{
 					$this->year = date('Y',time());
 				}
-				if(isset($month))
+				if(isset($month) && $month)
 				{
 					$this->month = $month;
 				}
@@ -193,7 +200,7 @@
 				{
 					$this->month = date('m',time());
 				}
-				if(isset($day))
+				if(isset($day) && $day)
 				{
 					$this->day = $day;
 				}
