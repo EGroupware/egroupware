@@ -5,6 +5,7 @@ account has been updated	common	de	Konto wurde aktualisiert
 account preferences	admin	de	Einstellungen der Benutzerkonten
 account permissions	admin	de	Zugriffsrechte
 action	admin	de	Aktion
+acl rights	admin	de	ACL Rechte
 add global category	admin	de	Globale Kategorie hinzuf&uuml;gen
 add global category for x	admin	de	Globale Kategorie f&uuml;r %1 hinzuf&uuml;gen
 add new account	admin	de	Neues Konto hinzuf&uuml;gen
@@ -30,6 +31,7 @@ edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+expires	admin	de	abgelaufen
 find and register all application hooks	admin	de	Registrieren aller Applikation hooks
 global categories	admin	de	Globale Kategorien
 group name	admin	de	Gruppenname
@@ -46,6 +48,7 @@ last login from	admin	de	Letzer Login von
 last time read	admin	de	Zuletzt gelesen
 last x logins	admin	de	Letze %1 Logins
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
+login history	admin	de	Login Kontrolle
 login screen	admin	de	Login Seite
 login time	admin	de	Login Zeit
 loginid	admin	de	LoginID
@@ -77,11 +80,13 @@ they must be removed before you can continue	admin	de	Sie müssen zuvor aus diese
 This category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
 You will need to remove the subcategories before you can delete this category	admin	de	Sie m&uuml;ssen erst die Unterkategorien l&ouml;schen befor Sie diese Kategorie l&ouml;schen k&ouml;nnen !
 total records	admin	de	Anzahl Datensätze insgesamt
+user data	admin	de	Benutzerdaten
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
 view access log	admin	de	Zugriffs-Protokoll anzeigen
 view error log	admin	de	Fehler-Protokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
+view user account	admin	de	Benutzerkonto anzeigen
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Filetyp auswählen
