@@ -84,6 +84,10 @@
 								$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
 								$GLOBALS['config_error'] = False;
 							}
+							else
+							{
+								$c->config_data[$key] = $config;
+							}
 						}
 						else
 						{
