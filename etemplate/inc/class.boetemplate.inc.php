@@ -343,55 +343,75 @@
 		*/
 		function get_cell_attribute($name,$attr)
 		{
-			reset($this->data);
-         while(list($row,$cols) = each($this->data))
-			{
-				while(list($col,$cell) = each($cols))
-				{
-					if ($cell['name'] == $name)
-					{
-						reset($this->data);
-						return $this->data[$row][$col][$attr];
-					}
-				}
-			}
-			reset($this->data);
-
-			return False;
+			return $this->set_cell_attribute($name,$attr,NULL);
 		}
 
 		/*!
 		@function set_cell_attribute
 		@syntax set_cell_attribute( $name,$attr,$val )
 		@author ralfbecker
-		@abstract set an attribute in a named cell
-		@result the number of changed cells
+		@abstract set an attribute in a named cell if val is not NULL else return the attribute
+		@param $name sting name of the cell
+		@param $attr attribute-name
+		@param $val if not NULL sets attribute else returns it
+		@result the number of changed cells or False, if none changed
 		*/
 		function set_cell_attribute($name,$attr,$val)
 		{
 			//echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val')</p>\n";
 
-			$n = 0;
+			$n = False;
 			foreach($this->data as $row => $cols)
 			{
 				foreach($cols as $col => $cell)
 				{
 					if ($cell['name'] == $name)
 					{
+						if (is_null($val))
+						{
+							return $cell[$attr];
+						}
 						$this->data[$row][$col][$attr] = $val;
 						++$n;
 					}
-					if ($cell['type'] == 'template' && (is_object($cell['obj']) || $cell['name'][0] != '@'))
+					switch($cell['type'])
 					{
-						if (!is_object($cell['obj']))
-						{
-							$this->data[$row][$col]['obj'] = CreateObject('etemplate.etemplate',$cell['name']);
-						}
-						$n += $this->data[$row][$col]['obj']->set_cell_attribute($name,$attr,$val);
+						case 'template':
+							if (is_object($cell['obj']) || $cell['name'][0] != '@')
+							{
+								if (!is_object($cell['obj']))
+								{
+									$this->data[$row][$col]['obj'] = CreateObject('etemplate.etemplate',$cell['name']);
+								}
+								$ret = $this->data[$row][$col]['obj']->set_cell_attribute($name,$attr,$val);
+								if (is_int($ret))
+								{
+									$n += $ret;
+								}
+								elseif ($ret !== False && is_null($val))
+								{
+									return $ret;
+								}
+							}
+							break;
+						case 'vbox':
+						case 'hbox':
+							for ($i = 0; $i < (int)$cell['size']; ++$i)
+							{
+								if ($cell[$i]['name'] == $name)
+								{
+									if (is_null($val))
+									{
+										return $cell[$attr];
+									}
+									$this->data[$row][$col][$i][$attr] = $val;
+									++$n;
+								}
+							}
+							break;
 					}
 				}
 			}
-
 			return $n;
 		}
 
