@@ -32,8 +32,10 @@
 	$co_modules[] = 'addressbook';
 	$co_modules[] = 'admin';
 	$co_modules[] = 'bookkeeping';
+	$co_modules[] = 'bookmarks';
 	$co_modules[] = 'calendar';
 	$co_modules[] = 'cart';
+	$co_modules[] = 'ccs';
 	$co_modules[] = 'cdb';
 	$co_modules[] = 'chat';
 	$co_modules[] = 'chora';
@@ -47,6 +49,7 @@
 	$co_modules[] = 'ftp';
 	$co_modules[] = 'headlines';
 	$co_modules[] = 'hr';
+	$co_modules[] = 'infolog';
 	$co_modules[] = 'inv';
 	$co_modules[] = 'manual';
 	$co_modules[] = 'mediadb';
@@ -67,6 +70,7 @@
 	$co_modules[] = 'squirrelmail';
 	$co_modules[] = 'stocks';
 	$co_modules[] = 'syncml-server';
+	$co_modules[] = 'timetrack';
 	$co_modules[] = 'todo';
 	$co_modules[] = 'transy';
 	$co_modules[] = 'tts';
