@@ -146,7 +146,7 @@
     <td></td>
     <td><font color="#000000" face="" size="-1">{lang_bcountry}:</font></td>
     <td>
-      <font size="-1"><input name="bcountry" value="{bcountry}"></font>
+      <font size="-1">{bcountry}</font>
     </td>
     <td><font color="#000000" face="" size="-1">{lang_timezone}:</font></td>
     <td>
@@ -275,7 +275,7 @@
     <td></td>
     <td><font color="#000000" face="" size="-1">{lang_hcountry}:</font></td>
     <td>
-      <font size="-1"><input name="hcountry" value="{hcountry}"></font>
+      <font size="-1">{hcountry}</font>
     </td>
   </tr>
   <tr>
