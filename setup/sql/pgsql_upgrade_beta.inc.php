@@ -904,7 +904,7 @@
      $phpgw_setup->db->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
      $phpgw_setup->db->query("create table phpgw_temp as select account_id,account_lid, account_pwd,"
                            . "account_firstname,account_lastname,account_lastlogin,account_lastloginfrom"
-                           . "account_lastpwd_change,account_status from accounts",__LINE__,__FILE__);
+                           . "account_lastpwd_change,account_status from phpgw_accounts",__LINE__,__FILE__);
      $sql = "create table phpgw_accounts (
        account_id             serial,
        account_lid            varchar(25) NOT NULL,
@@ -921,7 +921,7 @@
      $phpgw_setup->db->query($sql);
 
      $phpgw_setup->db->query("insert into phpgw_accounts select * from phpgw_temp",__LINE__,__FILE__);
-     $phpgw_setup->db->query("drop table accounts",__LINE__,__FILE__);
+     $phpgw_setup->db->query("drop table phpgw_accounts",__LINE__,__FILE__);
 
      $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
   }
