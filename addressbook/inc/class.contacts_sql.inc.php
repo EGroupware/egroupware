@@ -590,7 +590,7 @@
 			if ($owner)
 			{
 				$this->db->query("DELETE FROM $this->std_table WHERE owner=$owner",__LINE__,__FILE__);
-				$this->db->query("DELETE FROM $this->ext_table WHERE owner=$owner",__LINE__,__FILE__);
+				$this->db->query("DELETE FROM $this->ext_table WHERE contact_owner=$owner",__LINE__,__FILE__);
 			}
 			return;
 		}
