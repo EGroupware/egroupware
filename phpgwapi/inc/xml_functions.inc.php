@@ -669,8 +669,8 @@
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$acct_data, 'struct'));
 	}
 */
-	$GLOBALS['_xmlrpcs_auth_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_auth_doc'] = 'phpGroupWare client or server login via XML-RPC';
+	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
 	{
 		$server_name = $m->getParam(0);
@@ -701,6 +701,29 @@
 		{
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+		}
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
+	}
+
+	$GLOBALS['_xmlrpcs_logout_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_logout_doc'] = 'phpGroupWare client or server logout via XML-RPC';
+	function _xmlrpcs_logout($server,$m)
+	{
+		$xsessionid = $m->getParam(0);
+		$xkp3       = $m->getParam(1);
+
+		$sessionid = $xsessionid->scalarval();
+		$kp3       = $xkp3->scalarval();
+		$later = $GLOBALS['phpgw']->session->destroy();
+
+		if($later)
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOODBYE','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+		}
+		else
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','WHAT?','string');
 		}
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
@@ -760,6 +783,11 @@
 			'function'  => '_xmlrpcs_login',
 			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
+		),
+		'system.logout'  => array(
+			'function'  => '_xmlrpcs_logout',
+			'signature' => $GLOBALS['_xmlrpcs_logout_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_logout_doc']
 		)
 	);
 
