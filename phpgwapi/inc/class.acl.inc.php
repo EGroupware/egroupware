@@ -552,13 +552,13 @@
 		@abstract ?
 		@param $app optional defaults to $phpgw_info['flags']['currentapp'];
 		*/
-		function get_grants($app=False)
+		function get_grants($app='')
 		{
 			global $phpgw, $phpgw_info;
 
 			$db2 = $this->db;
 
-			if ($app==False)
+			if ($app=='')
 			{
 				$app = $phpgw_info['flags']['currentapp'];
 			}
@@ -568,10 +568,10 @@
 			$security = "('". $phpgw_info['user']['account_id'] ."'";
 			$myaccounts = CreateObject('phpgwapi.accounts');
 			$my_memberships = $myaccounts->memberships();
-			while($my_memberships && $groups = each($my_memberships))
+			@reset($my_memberships);
+			while($my_memberships && list($key,$group) = each($my_memberships))
 			{
-				$group = each($groups);
-				$security .= ",'" . $group[1]['account_id'] . "'";
+				$security .= ",'" . $group['account_id'] . "'";
 			}
 			$security .= ')';
 			$db2->query($sql . $security ,__LINE__,__FILE__);
