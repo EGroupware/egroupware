@@ -521,6 +521,7 @@
 
 		function update($id,$owner,$fields)
 		{
+			global $phpgw_info;
 			// First make sure that id number exists
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -553,6 +554,7 @@
 		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{
+			global $phpgw_info;
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
