@@ -321,7 +321,6 @@
 				'lang_search'  => lang('search')
 			));
 			$link_data += array(
-				'start'      => $start,
 				'order'      => $order,
 				'sort'       => $sort,
 			);
