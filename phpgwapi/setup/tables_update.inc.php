@@ -964,4 +964,17 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.009';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.99.009';
+	function phpgwapi_upgrade0_9_99_009()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn(
+			'phpgw_accounts',
+			'account_pwd',
+			array('type' => 'varchar','precision' => '100','nullable' => False)
+		);
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.010';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
