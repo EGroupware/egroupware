@@ -158,6 +158,7 @@
                                                                                    // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
+	$DEBUG = 1;
 
         list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
         if (count($stock_fieldnames)) {
@@ -169,42 +170,50 @@
 
         // the following filter section is not working yet
         if ($filter) {
-	  echo "DEBUG - Inbound filter is: #".$filter."#";
+          if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
           $filterarray = split(',',$filter);
           if ($filterarray[1]) {
-	    $i=0;
-	    while (list($name,$value) = split('=',$filterarray[$i])) {
-	      $filterfields[$i] .= array($name => $value);
-	      $i++;
-	    }
-	  } else {
-	    list($name,$value) = split('=',$filter);
-	    echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#";
-	    $filterfields = array($name => $value);
-	  }
+            $i=0;
+            while (list($name,$value) = split('=',$filterarray[$i])) {
+              $filterfields[$i] .= array($name => $value);
+              $i++;
+            }
+          } else {
+            list($name,$value) = split('=',$filter);
+            if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#"; }
+            $filterfields = array($name => $value);
+          }
 
           $i=0;
-	  while (list($name,$value) = each($filterfields)) {
-	    echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#";
-	    $filterlist .= $name."='".$value."',";
-	    $i++;
-	  }
+          while (list($name,$value) = each($filterfields)) {
+            if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#"; }
+            $filterlist .= $name."='".$value."',";
+            $i++;
+          }
+          $filterlist = substr($filterlist,0,-1);
+  
+          if ($DEBUG) { echo "<br>DEBUG - Filter output string: #".$filterlist."#"; }
 	  
-	  echo "<br>DEBUG - Filter output string: #".$filterlist."#";
-	  
-	  list($fields,$fieldnames,$extra) = $this->split_stock_and_extras($filterfields); 
+          list($fields,$fieldnames,$extra) = $this->split_stock_and_extras($filterfields); 
           
           if ($extra) {
-	    while (list($name,$value) = each($extra)) {
-	      $filterextra .= " AND contact_name='".$name."' AND contact_value='".$value."',";
+            while (list($name,$value) = each($extra)) {
+              $filterextra .= " AND contact_name='".$name."' AND contact_value='".$value."',";
             }
+            $filterextra = substr($filterextra,0,-1);
           } else {
             $filterstock = " AND ($filterlist) ";
           }
-	  $filterextra = substr($filterextra,0,-1);
+        }
+	if ($DEBUG) {
+	  if ($filterextra) {
+	    echo "<br>DEBUG - Filtering on extra fields with: #" . $filterextra . "#";
+	  } else {
+	    echo "<br>DEBUG - Filtering on standard fields with: #" . $filterstock . "#";
+          }
         }
 
-        if (!$sort)   { $sort   = "ASC";  }
+        if (!$sort)   { $sort = "ASC";  }
 
         if ($order) {
            $ordermethod = "order by $order $sort ";
@@ -219,22 +228,22 @@
                      . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
                      . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
                      . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-                     . "'%$query%' OR org_name like '%$query%') " . $ordermethod,__LINE__,__FILE__);
+                     . "'%$query%' OR org_name like '%$query%') " . $filterstock . $ordermethod,__LINE__,__FILE__);
             $this->total_records = $this->db3->num_rows();
 
             $this->db->query("SELECT * from $this->std_table WHERE (n_family like '"
                      . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
                      . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
                      . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-                     . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod . " "
+                     . "'%$query%' OR ORG_Name like '%$query%') " . $filterstock . $ordermethod . " "
 		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }  else  {
            $this->db3->query("select id,lid,tid,owner $t_fields from $this->std_table "
-                       . $filtermethod,__LINE__,__FILE__);
+                       . $filterstock,__LINE__,__FILE__);
            $this->total_records = $this->db3->num_rows();
 	
            $this->db->query("select id,lid,tid,owner $t_fields from $this->std_table "
-                       . $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
+                       . $filterstock . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }
 
         $i=0;
