@@ -109,12 +109,12 @@
      }
   }
 ?>
- <script langague="JavaScript">
+ <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
     function opennotifywindow()
     {
       window.open("<?php echo $phpgw->link("notify.php")?>", "phpGroupWare", "width=150,height=25,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
     }
- </script>
+ </SCRIPT>
 
 <?php
   echo '<p><table border="0" width="100%" align="center">';

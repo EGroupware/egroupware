@@ -221,7 +221,6 @@
       if (! $url) {
         $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
         $url = $url_root[0]."//".$url_root[2].$PHP_SELF;
-	$url = $PHP_SELF;
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&

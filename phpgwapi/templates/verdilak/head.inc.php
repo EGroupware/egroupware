@@ -11,10 +11,9 @@
 
   /* $Id$ */
 
-    if ($phpgw_info["server"]["htmlcompliant"]) {
-      $bodyheader = "BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\" ALINK=\"".$phpgw_info["theme"]["alink"]."\" LINK=\"".$phpgw_info["theme"]["link"]."\" VLINK=\"".$phpgw_info["theme"]["vlink"]."\"";
-    } else {
-	    $bodyheader = "BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\"";
+    $bodyheader = "BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\" ALINK=\"".$phpgw_info["theme"]["alink"]."\" LINK=\"".$phpgw_info["theme"]["link"]."\" VLINK=\"".$phpgw_info["theme"]["vlink"]."\"";
+    if (!$phpgw_info["server"]["htmlcompliant"]) {
+      $bodyheader .= "topmargin=\"0\" marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\"";
     }
 
     $tpl = new Template($phpgw_info["server"]["template_dir"]);
