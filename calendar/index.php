@@ -174,7 +174,7 @@
 
      $param .= "friendly=1";
      echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\" target=\"cal_printer_friendly\" onMouseOver=\"window.status='"
-	  .lang("Generate printer-friendly version")."'>[" . lang("Printer Friendly") . "]</a>";
+	  .lang("Generate printer-friendly version")."'\">[" . lang("Printer Friendly") . "]</a>";
      $phpgw->common->phpgw_footer();
   }
 ?>
