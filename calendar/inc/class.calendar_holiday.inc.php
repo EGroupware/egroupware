@@ -116,7 +116,7 @@ class calendar_holiday
 		else
 		{
 			$pos = strpos(' '.$phpgw_info['server']['webserver_url'],$HTTP_HOST);
-			if($pos == False)
+			if($pos == 0)
 			{
 				switch($SERVER_PORT)
 				{
