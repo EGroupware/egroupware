@@ -22,11 +22,14 @@
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 					<tr valign="top" width="100%">
 						<td>
-							<!-- <xsl:choose>
-								<xsl:when test="$current_app = 'help'"> -->
+							<xsl:choose>
+								<xsl:when test="$current_app = 'help'">
 									<xsl:call-template name="help"/>
-								<!-- </xsl:when>
-							</xsl:choose> -->
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of disable-output-escaping="yes" select="body_data"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</td>
 					</tr>
 					<tr valign="top">

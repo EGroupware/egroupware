@@ -612,27 +612,13 @@
 		{
 			if($this->bo->printer_friendly)
 			{
-				$new_body = '<html>'."\n"
-					.'<head>'."\n"
-					.'<STYLE type="text/css">'."\n"
-					.'<!--'."\n"
-					.'  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "'.$GLOBALS['phpgw_info']['theme']['font'].'" }'."\n"
-					.'  .tablink { color: #000000; }'."\n"
-					.' '.$this->css()."\n"
-					.'-->'."\n"
-					.'</STYLE>'."\n"
-					.'</head>'."\n"
-					.$this->bo->debug_string.$body
-					.'</body>'."\n"
-					.'</html>'."\n";
+				$GLOBALS['phpgw_info']['flags']['headonly'] = True;
 			}
 			else
 			{
 				$this->cal_header($func_header && $GLOBALS['phpgw_info']['user']['template'] == 'idots' ? $func_header : '');
-
-				$new_body = $this->bo->debug_string.$body;
 			}
-			return $new_body;
+			return $this->bo->debug_string . $body;
 		}
 
 		function month()
@@ -1587,6 +1573,11 @@
 
 			$event = $this->bo->read_entry($GLOBALS['HTTP_GET_VARS']['cal_id']);
 			$this->view_event($event);
+			$GLOBALS['phpgw']->template->set_var(array(
+				'button_left'	=> '',
+				'button_center'	=> '',
+				'button_right'	=> ''
+			));
 			$GLOBALS['phpgw']->template->fp('phpgw_body','view_event',True);
 
 			echo $this->get_response($event['id']);
