@@ -22,25 +22,25 @@
 		var $type = 'ldif';
 
 		var $import = array(
-			"title" => "title", 
-			"givenname" => "n_given",
-			"sn" => "n_family",
-			"cn" => "fn",
-			"o" => "org_name",
-			"ou" => "org_unit",
-			"streetaddress" => "adr_street",
-			"locality" => "adr_locality",
-			"st" => "adr_region",
-			"postalcode" => "adr_postalcode",
-			"countryname" => "adr_countryname",
-			"telephonenumber" => "a_tel",
-			"homephone" => "b_tel",
-			"facsimiletelephonenumber" => "c_tel",
+			"title"           => "title", 
+			"givenname"       => "n_given",
+			"sn"              => "n_family",
+			"cn"              => "fn",
+			"o"               => "org_name",
+			"ou"              => "org_unit",
+			"streetaddress"   => "adr_one_street",
+			"locality"        => "adr_one_locality",
+			"st"              => "adr_one_region",
+			"postalcode"      => "adr_one_postalcode",
+			"countryname"     => "adr_one_countryname",
+			"telephonenumber" => "tel_work",
+			"homephone"       => "tel_home",
+			"facsimiletelephonenumber" => "tel_fax",
 			"xmozillaanyphone" => "ophone",
-			"cellphone" => "mphone",
+			"cellphone" => "tel_cell",
 			"description" => "note",
-			"pagerphone" => "pager",
-			"mail" => "d_email",
+			"pagerphone" => "tel_pager",
+			"mail" => "email",
 			"homeurl" => "url",
 			"xmozillauseconferenceserver" => "",
 			"xmozillanickname" => "",
@@ -63,7 +63,10 @@
 					//echo '<br>'.$i.': '.$name.' => '.$value;
 					$entry[$i][$name] = $value;
 				}
-				$entry[$i]['d_emailtype'] = 'INTERNET';
+				$entry[$i]['email_type']      = 'INTERNET';
+				$entry[$i]['email_home_type'] = 'INTERNET';
+				$entry[$i]['adr_one_type']    = 'intl';
+				$entry[$i]['adr_two_type']    = 'intl';
 				//echo '<br>';
 				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
 			}
@@ -89,7 +92,6 @@
 		}
 
 		function import_new_attrib($buffer,$name,$value) {
-			//$value = str_replace("\n","<BR>",$value);
 			// chop leading space from value
 			$value = trim($value);
 			$value = str_replace("\r","",$value);

@@ -38,18 +38,18 @@
 			"Company" => "org_name",  //objectclass: organization
 			"Department" => "org_unit", //objectclass: organizationalPerson
 			"Job Title" => "title", //objectclass: organizationalPerson
-			"Business Street" => "address2",
-			"Business Street 2" => "",
-			"Business Street 3" => "",
-			"Business City" => "",
-			"Business State" => "",
-			"Business Postal Code" => "",
-			"Business Country" => "",
-			"Home Street" => "adr_street",
-			"Home City" => "adr_locality",
-			"Home State" => "adr_region",
-			"Home Postal Code" => "adr_postalcode",
-			"Home Country" => "adr_countryname",
+			"Business Street" => "adr_one_street",
+			"Business Street 2" => "address2",
+			"Business Street 3" => "address3",
+			"Business City" => "adr_one_locality",
+			"Business State" => "adr_one_region",
+			"Business Postal Code" => "adr_one_postalcode",
+			"Business Country" => "adr_one_countryname",
+			"Home Street" => "adr_two_street",
+			"Home City" => "adr_two_locality",
+			"Home State" => "adr_two_region",
+			"Home Postal Code" => "adr_two_postalcode",
+			"Home Country" => "adr_two_countryname",
 			"Home Street 2" => "",
 			"Home Street 3" => "",
 			"Other Street" => "",
@@ -57,21 +57,21 @@
 			"Other State" => "",
 			"Other Postal Code" => "",
 			"Other Country" => "",
-			"Assistant's Phone" => "",
-			"Business Fax" => "c_tel",
-			"Business Phone" => "a_tel",
+			"Assistant's Phone" => "tel_msg",
+			"Business Fax" => "tel_fax",
+			"Business Phone" => "tel_work",
 			"Business Phone 2" => "ophone",
 			"Callback" => "",
-			"Car Phone" => "",
+			"Car Phone" => "tel_car",
 			"Company Main Phone" => "",
 			"Home Fax" => "",
-			"Home Phone" => "b_tel",
+			"Home Phone" => "tel_home",
 			"Home Phone 2" => "", //This will make another homePhone entry
-			"ISDN" => "",
-			"Mobile Phone" => "mphone", //newPilotPerson
+			"ISDN" => "tel_isdn",
+			"Mobile Phone" => "tel_cell", //newPilotPerson
 			"Other Fax" => "",
 			"Other Phone" => "",
-			"Pager" => "pager",
+			"Pager" => "tel_pager",
 			"Primary Phone" => "",
 			"Radio Phone" => "",
 			"TTY/TDD Phone" => "",
@@ -84,9 +84,9 @@
 			"Categories" => "", 
 			"Children" => "",
 			"Directory Server" => "",
-			"E-mail Address" => "d_email",
+			"E-mail Address" => "email",
 			"E-mail Display Name" => "",
-			"E-mail 2 Address" => "",
+			"E-mail 2 Address" => "email_home",
 			"E-mail 2 Display Name" => "",
 			"E-mail 3 Address" => "", //add another...
 			"E-mail 3 Display Name" => "",
@@ -130,7 +130,10 @@
 					//echo '<br>'.$i.': '.$name.' => '.$value;
 					$entry[$i][$name] = $value;
 				}
-				$entry[$i]['d_emailtype'] = 'INTERNET';
+				$entry[$i]['email_type']      = 'INTERNET';
+				$entry[$i]['email_home_type'] = 'INTERNET';
+				$entry[$i]['adr_one_type']    = 'intl';
+				$entry[$i]['adr_two_type']    = 'intl';
 				//echo '<br>';
 				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
 			}

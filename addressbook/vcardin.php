@@ -30,8 +30,6 @@
   
 	// Some of the methods where borrowed from
 	// Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
-
-	//$sep = $phpgw->common->filesystem_separator();
 	$sep = SEP;
 
 	$uploaddir = $phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"] . $sep;
@@ -52,11 +50,6 @@
 
 			// This has to be non-interactive in case of a multi-entry vcard.
 			$filename = $uploaddir . $newfilename;
-			//$n_groups = $phpgw->accounts->array_to_string($access,$n_groups);
-      
-			//if($access == "group")
-			//	$access = $n_groups;
-			//echo $access . "<BR>";
 
 			parsevcard($filename,$access);
 			// Delete the temp file.
@@ -73,47 +66,19 @@
 		echo "<B><CENTER>You must select a vcard. (*.vcf)</B></CENTER><BR><BR>";
 	}
 
-
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array("vcardin" => "vcardin.tpl"));
-	
+
 	$vcard_header  = "<p>&nbsp;<b>" . lang("Address book - VCard in") . "</b><hr><p>";
 
 	$t->set_var(vcard_header,$vcard_header);
 	$t->set_var(action_url,$phpgw->link("/addressbook/vcardin.php"));
 	$t->set_var(lang_access,lang("Access"));
 	$t->set_var(lang_groups,lang("Which groups"));
-/*
-	$access_option = "<option value=\"private\"";
-	if($access == "private")
-		$access_option .= "selected";
-    $access_option .= ">" . lang("private");
-	$access_option .= "</option>\n";
-	$access_option .= "<option value=\"public\"\n";
-	if($access == "public")
-		$access_option .=  "selected";
-    $access_option .= ">" . lang("Global Public");
-    $access_option .= "</option>\n";
-    $access_option .= "<option value=\"group\"";
-	if($access != "private" && $access != "public" && $access != "")
-		$access_option .= "selected";
-    $access_option .= ">" . lang("Group Public"); 
-    $access_option .= "</option>\n";
-*/	
 	$t->set_var(access_option,$access_option);
-/*	
-    //$user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
-    for ($i=0;$i<count($user_groups);$i++) {
-    	$group_option = "<option value=\"" . $user_groups[$i][0] . "\"";
-        if (ereg(",".$user_groups[$i][0].",",$access)) {
-        	$group_option .= " selected";
-            $group_option .= ">" . $user_groups[$i][1];
-			$group_option .= "</option>\n";
-		}
-	}
-*/
+
 	$t->set_var(group_option,$group_option);
-	
+
 	$t->pparse("out","vcardin");
 
 	if ($action != "Load Vcard")

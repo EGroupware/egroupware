@@ -27,7 +27,7 @@
 	$phpgw_info["flags"]["enable_addressbook_class"] = True;
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	include("../header.inc.php");
-	
+
 	if (! $ab_id) {
 		Header("Location: " . $phpgw->link("/addressbook/index.php"));
 		$phpgw->common->phpgw_exit();
@@ -35,13 +35,20 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 
-	//if ($filter != "private")
-		//$filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
-	
-	$fieldlist = addressbook_read_entry($ab_id,$this->stock_contact_fields);
+ 	$extrafields = array(
+		"ophone"   => "ophone",
+		"address2" => "address2",
+		"address3" => "address3"
+	);
+	$qfields = $this->stock_contact_fields + $extrafields;
+
+	$fieldlist = addressbook_read_entry($ab_id,$qfields);
 	$fields = $fieldlist[0];
 
-	$email        = $fields["d_email"];
+	$email        = $fields["email"];
+	$emailtype    = $fields["email_type"]; if (!$emailtype) { $emailtype = 'INTERNET'; }
+	$hemail       = $fields["email_home"]; if (!$hemail) { $hemail = 'none'; }
+	$hemailtype   = $fields["email_home_type"]; if (!$hemailtype) { $hemailtype = 'INTERNET'; }
 	$fullname     = $fields["fn"];
 	$prefix       = $fields["n_prefix"];
 	$firstname    = $fields["n_given"];
@@ -49,18 +56,44 @@
 	$lastname     = $fields["n_family"];
 	$suffix       = $fields["n_suffix"];
 	$title        = $fields["title"];
-	$wphone       = $fields["a_tel"];
-	$hphone       = $fields["b_tel"];
-	$fax          = $fields["c_tel"];
-	$pager        = $fields["pager"];
-	$mphone       = $fields["mphone"];
-	$ophone       = $fields["ophone"];
-	$street       = $fields["adr_street"];
+	$aphone       = $fields["tel_work"];
+	$bphone       = $fields["tel_home"];
+	$afax         = $fields["tel_fax"];
+	$apager       = $fields["tel_pager"];
+	$amphone      = $fields["tel_cell"];
+	$aisdnphone   = $fields["tel_isdn"];
+	$acarphone    = $fields["tel_car"];
+	$avidphone    = $fields["tel_video"];
+	$amsgphone    = $fields["tel_msg"];
+	$abbsphone    = $fields["tel_bbs"];
+	$amodem       = $fields["tel_modem"];
+	$preferred    = $fields["tel_prefer"];
+	$aophone      = $fields["ophone"];
+
+	// Setup array for display of preferred phone number below
+	while (list($name,$val) = each($this->tel_types)) {
+		if ($name == $preferred) {
+			$pref[$name] .= ';PREF';
+		}
+	}
+
+	$aophone      = $fields["ophone"];
+	$astreet      = $fields["adr_one_street"];
 	$address2     = $fields["address2"];
-	$city         = $fields["adr_locality"];
-	$state        = $fields["adr_region"];
-	$zip          = $fields["adr_postalcode"];
-	$country      = $fields["adr_countryname"];
+	$acity        = $fields["adr_one_locality"];
+	$astate       = $fields["adr_one_region"];
+	$azip         = $fields["adr_one_postalcode"];
+	$acountry     = $fields["adr_one_countryname"];
+	$atype        = $fields["adr_one_type"]; if (!empty($atype)) { $atype = ';'.$atype; }
+	$label        = $fields["label"];
+
+	$bstreet      = $fields["adr_two_street"];
+	$bcity        = $fields["adr_two_locality"];
+	$bstate       = $fields["adr_two_region"];
+	$bzip         = $fields["adr_two_postalcode"];
+	$bcountry     = $fields["adr_two_countryname"];
+	$btype        = $fields["adr_two_type"]; if (!empty($btype)) { $btype = ';'.$btype; }
+
 	$company      = $fields["org_name"];
 	$dept         = $fields["org_unit"];
 	$bday         = $fields["bday"];
@@ -78,7 +111,7 @@
 			Header("Location: " . $phpgw->link("/addressbook/vcardout.php","nofname=1&ab_id=$ab_id&start=$start&order=$order&filter=" . "$filter&query=$query&sort=$sort"));
 		}
 
-		header("Content-type: text/X-VCARD");
+		header("Content-type: text/x-vcard");
 		$fn = explode("@",$email);
 		$filename = sprintf("%s.vcf", $fn[0]);
 
@@ -89,31 +122,58 @@
 		if (!$fullname) { printf("FN:%s %s\r\n", $firstname, $lastname); }
 		else            { printf("FN:%s\r\n", $fullname); }
 
-		/* This stuff is optional. */
+		
 		if($title != "") /* Title */
 			printf("TITLE:%s\r\n",$title);
+
+		// 'A' grouping - work stuff
 		if($email != "") /* E-mail */
-			printf("EMAIL;INTERNET:%s\r\n", $email);
-		if($hphone != "") /* Home Phone */
-			printf("TEL;HOME:%s\r\n", $hphone);
-		if($wphone != "") /* Work Phone */
-			printf("TEL;WORK:%s\r\n", $wphone);
-		if($mphone != "") /* Mobile Phone */
-			printf("TEL;CELL:%s\r\n", $mphone);
-		if($fax != "") /* Fax Number */
-			printf("TEL;FAX:%s\r\n", $fax);
-		if($pager != "") /* Pager Number */
-			printf("TEL;PAGER:%s\r\n", $pager);
-		//if($ophone != "") /* Other Phone */
-		//$NOTES .= "Other Phone: " .  $ophone;
-		/* The address one is pretty icky. Send it if ANY of the fields are present. */
-		if($address2 != "" || /* Street Line 1 */
-			$street != "" || /* Street Line 2 */
-			$city != "" || /* City */
-			$state != "" || /* State */
-			$zip != "")     /* Zip */
-			printf("ADR:;;%s;%s;%s;%s;%s;%s\r\n", $street,
-			$address2,$city,$state,$zip,$country);
+			printf("A.EMAIL;%s:%s\r\n", $emailtype,$email);
+
+		if($aphone != "")     printf("A.TEL%s;WORK:%s\r\n",  $pref['work'],  $aphone);
+		if($amphone != "")    printf("A.TEL%s;CELL:%s\r\n",  $pref['cell'],  $amphone);
+		if($afax != "")       printf("A.TEL%s;FAX:%s\r\n",   $pref['fax'],   $afax);
+		if($apager != "")     printf("A.TEL%s;PAGER:%s\r\n", $pref['pager'], $apager);
+		if($amsgphone != "")  printf("A.TEL%s;MSG:%s\r\n",   $pref['msg'],   $amsgphone);
+		if($acarphone != "")  printf("A.TEL%s;CAR:%s\r\n",   $pref['car'],   $acarphone);
+		if($abbs != "")       printf("A.TEL%s;BBS:%s\r\n",   $pref['fax'],   $afax);
+		if($amodem != "")     printf("A.TEL%s;MODEM:%s\r\n", $pref['modem'], $amodem);
+		if($aisdnphone != "") printf("A.TEL%s;ISDN:%s\r\n",  $pref['isdn'],  $aisdnphone);
+		if($avidphone != "")  printf("A.TEL%s;VIDEO:%s\r\n", $pref['video'], $avidphone);
+
+		if($ophone != "") $NOTES .= "Other Phone: " .  $ophone . "\r\n";
+
+		if($astreet != "" || /* Business Street Line 1 */
+			$address2 != "" || /* Business Street Line 2 */
+			$acity != "" || /* Business City */
+			$astate != "" || /* Business State */
+			$azip != "") {    /* Business Zip */
+			printf("A.ADR%s;WORK:;%s;%s;%s;%s;%s;%s\r\n", $atype,$address2,
+				$astreet,$acity,$astate,$azip,$acountry);
+		}
+		if ($label) {
+			printf("LABEL;ENCODING=QUOTED-PRINTABLE:%s\r\n",$label);
+		} else {
+			if ($address2 && $astreet && $acity && $astate && $azip && $acountry) {
+				printf("LABEL;ENCODING=QUOTED-PRINTABLE:%s=0D=0A %s=0D=0A %s,%s  %s=0D=0A %s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
+			}
+		}
+		// end 'A' grouping
+
+		// 'B' Grouping - home stuff
+		if($hemail != "") /* Home E-mail */
+			printf("B.EMAIL;%s:%s\r\n", $hemailtype,$hemail);
+		if($bphone != "") /* Home Phone */
+			printf("B.TEL%s;HOME:%s\r\n", $pref['home'],$bphone);
+
+		if(	$bstreet != "" || /* Home Street */
+			$bcity != "" || /* Home City */
+			$bstate != "" || /* Home State */
+			$bzip != "") {    /* Home Zip */
+			printf("B.ADR%s;HOME:;;%s;%s;%s;%s;%s\r\n", $btype,$bstreet,
+				$bcity,$bstate,$bzip,$bcountry);
+		}
+		// end 'B' grouping
 
 		if($bday != "" && $bday != "//") /* Birthday */
 			printf("BDAY:%s\r\n", $bday); /* This is not the right format. */

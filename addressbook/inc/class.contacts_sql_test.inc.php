@@ -383,13 +383,13 @@
 			while(list($name,$value)=each($stock_fields)) {
 				$std .= "a.".$name.",";
 			}
-			//$std = substr($std,0,-1);
+			$std = substr($std,0,-1);
 			if ($extra_fields) {
 				while(list($name,$value)=each($extra_fields)) {
 					$ext .= "b.".$name.",";
 				}
 			}
-			//$ext = substr($ext,0,-1);
+			$ext = substr($ext,0,-1);
 			if (!empty($fieldlist2)) {
 				$filtertemp = " AND " . $filterlist2 . " ";
 			}
@@ -398,21 +398,30 @@
 				echo "<br>DEBUG - Final SELECT - Filtering with: #" . $filtertemp . "#";
 			}
 
-			$qfields = $std . $ext;
-			$qfields = substr($qfields,0,-1);
+			//$qfields = $std . $ext;
+			//$qfields = substr($qfields,0,-1);
 
 			if ($query) {
 				$squery = " AND (n_family like '%$query%' OR n_middle like '"
-					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
-					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
-					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-					. "'%$query%' OR adr_countryname like '%$query%' OR "
+					. "%$query%' OR n_given like '%$query%' OR email like '%$query%' OR "
+					. "adr_one_street like '%$query%' OR adr_one_locality like '%$query%' OR adr_one_region "
+					. "like '%$query%' OR adr_one_postalcode like '%$query%' OR org_unit like "
+					. "'%$query%' OR adr_one_countryname like '%$query%' OR "
 					. "org_name like '%$query%')";
 			}
-
-			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.contact_id,'
-				. $qfields . $extra_fields.' FROM '.$this->std_table.' AS a '. $join . ' '
-				. $this->ext_table .' AS b ON a.id=b.contact_id ' . $squery;
+			if ($ext) {
+				$equery = " AND (";
+				$extf = split(',',$ext);
+				for ($i=0;$i<count($extf);$i++) {
+					$extf[$i]=ereg_replace('b.','',$extf[$i]);
+					$equery .= "contact_name='".$extf[$i]."' OR ";
+				}
+				$equery = substr($equery,0,-3);
+				$equery .= ") ";
+			}
+			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.contact_id,b.contact_value,'
+				. $std . ' FROM '.$this->std_table.' AS a '. $join . ' '
+				. $this->ext_table .' AS b ON a.id=b.contact_id ' . $squery . $equery;
 
  			$this->db3->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db3->num_rows();
@@ -431,13 +440,23 @@
 
 				if (gettype($stock_fieldnames) == "array") {
 					while (list($f_name) = each($fields)) {
-						$return_fields[$i][$f_name] = $this->db->f($f_name);
+						if ($DEBUG) { echo "<br>FNAME is '".$f_name."'"; }
+						reset($extra_fields);
+						while(list($stock)=each($extra_fields)) {
+							if ($stock ==  $f_name) {
+								if ($DEBUG) { echo " and is an extra field"; }
+								$f_value = $this->db->f('contact_value');
+							} else {
+								$f_value = $this->db->f($f_name);
+							}
+						}
+						if ($DEBUG) { echo " equal to '".$f_value."'"; }
+						$return_fields[$i][$f_name] = $f_value;
 					}
 					reset($fields);
 				}
 				$i++;
 			}
-		//	$this->db->query("DROP TABLE $tmp_table");
 			return $return_fields;
 		}
 

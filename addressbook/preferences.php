@@ -22,12 +22,13 @@
 	include("../header.inc.php");
 
 	$this = CreateObject("phpgwapi.contacts");
+
  	$extrafields = array(
-		"pager"    => "pager",
-		"mphone"   => "mphone",
 		"ophone"   => "ophone",
 		"address2" => "address2",
+		"address3" => "address3"
 	);
+
 	$qfields = $this->stock_contact_fields + $extrafields;
 
 	if ($submit) {

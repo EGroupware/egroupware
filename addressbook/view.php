@@ -57,15 +57,15 @@
 	}
 
 	// merge in extra fields
-	$extrafields = array (
-		"pager"    => "pager",
-		"mphone"   => "mphone",
+ 	$extrafields = array(
 		"ophone"   => "ophone",
 		"address2" => "address2",
+		"address3" => "address3"
 	);
 	$qfields = $this->stock_contact_fields + $extrafields;
+
 	$fields  = addressbook_read_entry($ab_id,$qfields);
-	
+
 	$record_owner  = $fields[0]["owner"];
 
 	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . $noprefs . "</b><hr><p>";
@@ -80,7 +80,7 @@
 		if ($column[0] == "url") {
 			$ref='<a href="'.$coldata.'" target="_new">';
 			$data=$coldata.'</a>';
-		} elseif ($column[0] == "email") {
+		} elseif (($column[0] == "email") || ($column[0] == "email_home")) {
 			if ($phpgw_info["user"]["apps"]["email"]) {
 			$ref='<a href="'.$phpgw->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
 			} else {
@@ -93,15 +93,6 @@
 		$columns_html .= "<td>" . $ref . $data . "</td>";
 	}
 
-/*
-	if ($access == "private") {
-		$access_link .= lang("Record Access") . " -  " . $access;
-	} elseif ($access != "private" && $access != "public") {
-		$access_link .= lang("Group access") . " - " . $phpgw->accounts->convert_string_to_names_access($access);
-	} else {
-		$access_link ="";
-	}
-*/
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
 		. $phpgw->common->grab_owner_name($record_owner) . '</td><td><b>' 
@@ -110,7 +101,7 @@
 	$editlink  = $phpgw->common->check_owner($record_owner,"/addressbook/edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
 	$vcardlink = '<form action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$donelink  = '<form action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-		
+
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);
 	$t->set_var("sort",$sort);
@@ -130,6 +121,6 @@
 
 	$t->parse("out","view");
 	$t->pparse("out","view");
-	
+
 	$phpgw->common->phpgw_footer();
 ?>

@@ -43,49 +43,42 @@
 			"n_middle"			=> "middle name",
 			"n_family"			=> "last name",  //lastname
 			"n_suffix"			=> "suffix",
-			"label"				=> "label",
-			"adr_street"		=> "street",
-			"adr_locality"		=> "city",   //city
-			"adr_region"		=> "state",     //state
-			"adr_postalcode"	=> "zip code", //zip
-			"adr_countryname"	=> "country",
-			"adr_work"			=> "",   //yn
-			"adr_home"			=> "",   //yn
-			"adr_parcel"		=> "", //yn
-			"adr_postal"		=> "", //yn
+			"label"               => "label",
+			"adr_one_street"      => "business street",
+			"adr_one_locality"    => "business city",   //city
+			"adr_one_region"      => "business state",     //state
+			"adr_one_postalcode"  => "business zip code", //zip
+			"adr_one_countryname" => "business country",
+			"adr_two_street"      => "home street",
+			"adr_two_locality"    => "home city",   //city
+			"adr_two_region"      => "home state",     //state
+			"adr_two_postalcode"  => "home zip code", //zip
+			"adr_two_countryname" => "home country",
 			"tz"				=> "time zone",
 			"geo"				=> "geo",
-			"a_tel"				=> "work phone",
-			"a_tel_work"		=> "",   //yn
-			"a_tel_home"		=> "",   //yn
-			"a_tel_voice"		=> "",  //yn
-			"a_tel_msg"			=> "",    //yn
-			"a_tel_fax"			=> "",    //yn
-			"a_tel_prefer"		=> "", //yn
-			"b_tel"				=> "home phone",
-			"b_tel_work"		=> "",   //yn
-			"b_tel_home"		=> "",   //yn
-			"b_tel_voice"		=> "",  //yn
-			"b_tel_msg"			=> "",    //yn
-			"b_tel_fax"			=> "",    //yn
-			"b_tel_prefer"		=> "", //yn
-			"c_tel"				=> "fax",
-			"c_tel_work"		=> "",   //yn
-			"c_tel_home"		=> "",   //yn
-			"c_tel_voice"		=> "",  //yn
-			"c_tel_msg"			=> "",    //yn
-			"c_tel_fax"			=> "",    //yn
-			"c_tel_prefer"		=> "", //yn
-			"d_email"			=> "email",
-			"d_emailtype"		=> "email type",   //'INTERNET','CompuServe',etc...
-			"d_email_work"		=> "",  //yn
-			"d_email_home"		=> "",  //yn
-			"pager"				=> "Pager",
-			"mphone"			=> "mobile phone",
-			"ophone"			=> "other phone",
-			"address2"			=> "address2",
+			"tel_work"		    => "work phone",   //yn
+			"tel_home"		    => "home phone",   //yn
+			"tel_voice"		    => "voice phone",  //yn
+			"tel_msg"			=> "msg phone",    //yn
+			"tel_fax"			=> "fax",    //yn
+			"tel_pager"				=> "pager",
+			"tel_cell"              => "mobile phone",
+			"tel_bbs"				=> "bbs phone",
+			"tel_modem"				=> "modem phone",
+			"tel_isdn"				=> "isdn phone",
+			"tel_car"				=> "car phone",
+			"tel_video"				=> "video phone",
+
+			"tel_prefer"		=> "prefer", //yn
+			"email"			    => "work email",
+			"email_type"		=> "work email type",   //'INTERNET','CompuServe',etc...
+			"email_home"		=> "home email",  //yn
+			"email_home_type"   => "home email type",
+			"address2"			=> "address line 2",
+			"address3"          => "address line 3",
 			"bday"				=> "birthday",
 			"url"				=> "url",
+			"pubkey"            => "public key",
 			"note"				=> "notes"
 		);
 
@@ -141,77 +134,104 @@
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 		$t->set_file(array( "form"	=> "form.tpl"));
 		
-		$email        = $fields["d_email"];
-		$emailtype    = $fields["d_emailtype"];
+		$email        = $fields["email"];
+		$emailtype    = $fields["email_type"];
+		$hemail       = $fields["email_home"];
+		$hemailtype   = $fields["email_home_type"];
 		$firstname    = $fields["n_given"];
 		$middle       = $fields["n_middle"];
 		$prefix       = $fields["n_prefix"];
 		$suffix       = $fields["n_suffix"];
 		$lastname     = $fields["n_family"];
 		$title        = $fields["title"];
-		$wphone       = $fields["a_tel"];
-		$hphone       = $fields["b_tel"];
-		$fax          = $fields["c_tel"];
-		$pager        = $fields["pager"];
-		$mphone       = $fields["mphone"];
+		$wphone       = $fields["tel_work"];
+		$hphone       = $fields["tel_home"];
+		$fax          = $fields["tel_fax"];
+		$pager        = $fields["tel_pager"];
+		$mphone       = $fields["tel_cell"];
 		$ophone       = $fields["ophone"];
-		$street       = $fields["adr_street"];
+		$msgphone     = $fields["tel_msg"];
+		$isdnphone    = $fields["tel_isdn"];
+		$carphone     = $fields["tel_car"];
+		$vidphone     = $fields["tel_video"];
+		$preferred    = $fields["tel_prefer"];
+
+		$bstreet      = $fields["adr_one_street"];
 		$address2     = $fields["address2"];
-		$city         = $fields["adr_locality"];
-		$state        = $fields["adr_region"];
-		$zip          = $fields["adr_postalcode"];
-		$country      = $fields["adr_countryname"];
+		$address3     = $fields["address3"];
+		$bcity        = $fields["adr_one_locality"];
+		$bstate       = $fields["adr_one_region"];
+		$bzip         = $fields["adr_one_postalcode"];
+		$bcountry     = $fields["adr_one_countryname"];
+		$one_dom      = $fields["one_dom"];
+		$one_intl     = $fields["one_intl"];
+		$one_parcel   = $fields["one_parcel"];
+		$one_postal   = $fields["one_postal"];
+
+		$hstreet      = $fields["adr_two_street"];
+		$hcity        = $fields["adr_two_locality"];
+		$hstate       = $fields["adr_two_region"];
+		$hzip         = $fields["adr_two_postalcode"];
+		$hcountry     = $fields["adr_two_countryname"];
+		$btype        = $fields["adr_two_type"];
+		$two_dom      = $fields["two_dom"];
+		$two_intl     = $fields["two_intl"];
+		$two_parcel   = $fields["two_parcel"];
+		$two_postal   = $fields["two_postal"];
+
 		$timezone     = $fields["tz"];
 		$bday         = $fields["bday"];
 		$notes        = stripslashes($fields["note"]);
 		$company      = $fields["org_name"];
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
-		//$access       = $fields["access"];
+		$pubkey       = $fields["pubkey"];
+
+		$this = CreateObject("phpgwapi.contacts");
 
 		if ($format != "view") {
-			$email 	   = "<input name=\"email\" value=\"$email\">";
-			$firstname = "<input name=\"firstname\" value=\"$firstname\">";
-			$lastname  = "<input name=\"lastname\" value=\"$lastname\">";
-			$middle    = "<input name=\"middle\" value=\"$middle\">";
-			$prefix    = "<input name=\"prefix\" value=\"$prefix\" size=\"10\">";
-			$suffix    = "<input name=\"suffix\" value=\"$suffix\" size=\"10\">";
-			$title     = "<input name=\"title\" value=\"$title\">";
-			$hphone    = "<input name=\"hphone\" value=\"$hphone\">";
-			$wphone	   = "<input name=\"wphone\" value=\"$wphone\">";
-			$fax       = "<input name=\"fax\" value=\"$fax\">";
-			$pager     = "<input name=\"pager\" value=\"$pager\">";
-			$mphone    = "<input name=\"mphone\" value=\"$mphone\">";
-			$ophone	   = "<input name=\"ophone\" value=\"$ophone\">";
-			$street	   = "<input name=\"street\" value=\"$street\">";
-			$address2  = "<input name=\"address2\" value=\"$address2\">";
-			$city      = "<input name=\"city\" value=\"$city\">";
-			$state     = "<input name=\"state\" value=\"$state\">";
-			$zip       = "<input name=\"zip\" value=\"$zip\">";
-			$country   = "<input name=\"country\" value=\"$country\">";
+			$email 	    = "<input name=\"email\" value=\"$email\">";
+			$firstname  = "<input name=\"firstname\" value=\"$firstname\">";
+			$lastname   = "<input name=\"lastname\" value=\"$lastname\">";
+			$middle     = "<input name=\"middle\" value=\"$middle\">";
+			$prefix     = "<input name=\"prefix\" value=\"$prefix\" size=\"10\">";
+			$suffix     = "<input name=\"suffix\" value=\"$suffix\" size=\"10\">";
+			$title      = "<input name=\"title\" value=\"$title\">";
 
-/*
-      if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-        $company  = '<select name="company">';
-	if (!$company) {
-          $company .= '<option value="0" SELECTED>'. lang("none").'</option>';
-        } else {
-          $company .= '<option value="0">'. lang("none").'</option>';
-        }
-        $phpgw->db->query("select company_id,company_name from customers order by company_name");
-        while ($phpgw->db->next_record()) {
-          $ncust = $phpgw->db->f("company_id");
-          $company .= '<option value="' . $ncust . '"';
-          if ( $company_id == $ncust ) {
-            $company .= " selected";
-          }
-          $company .= ">" . $phpgw->db->f("company_name") . "</option>";
-        }
-        $company .=  "</select>";
-      } else { */
-			$company = "<input name=\"company\" value=\"$company\">";
+			while (list($name,$val) = each($this->tel_types)) {
+				$str[$name] = "\n".'<INPUT type="radio" name="tel_prefer" value="'.$name.'"';
+				if ($name == $preferred) {
+					$str[$name] .= ' checked';
+				}
+				$str[$name] .= '>';
+			}
+			$hphone     = "<input name=\"hphone\"    value=\"$hphone\"> ".$str['home'];
+			$wphone	    = "<input name=\"wphone\"    value=\"$wphone\"> ".$str['work'];
+			$msgphone   = "<input name=\"msgphone\"  value=\"$msgphone\"> ".$str['msg'];
+			$isdnphone	= "<input name=\"isdnphone\" value=\"$isdnphone\"> ".$str['isdn'];
+			$carphone   = "<input name=\"carphone\"  value=\"$carphone\"> ".$str['car'];
+			$vidphone	= "<input name=\"vidphone\"  value=\"$vidphone\"> ".$str['video'];
+			$fax        = "<input name=\"fax\"       value=\"$fax\"> ".$str['fax'];
+			$pager      = "<input name=\"pager\"     value=\"$pager\"> ".$str['pager'];
+			$mphone     = "<input name=\"mphone\"    value=\"$mphone\"> ".$str['cell'];
+
+			$ophone	    = "<input name=\"ophone\" value=\"$ophone\">";
+			$bstreet    = "<input name=\"bstreet\" value=\"$bstreet\">";
+			$address2   = "<input name=\"address2\" value=\"$address2\">";
+			$address3   = "<input name=\"address3\" value=\"$address3\">";
+			$bcity      = "<input name=\"bcity\" value=\"$bcity\">";
+			$bstate     = "<input name=\"bstate\" value=\"$bstate\">";
+			$bzip       = "<input name=\"bzip\" value=\"$bzip\">";
+			$bcountry   = "<input name=\"bcountry\" value=\"$bcountry\">";
+			$company    = "<input name=\"company\" value=\"$company\">";
 			$department = "<input name=\"department\" value=\"$department\">";
-/*    } */
+
+			$hemail      = "<input name=\"hemail\" value=\"$hemail\">";
+			$hstreet    = "<input name=\"hstreet\" value=\"$hstreet\">";
+			$hcity      = "<input name=\"hcity\" value=\"$hcity\">";
+			$hstate     = "<input name=\"hstate\" value=\"$hstate\">";
+			$hzip       = "<input name=\"hzip\" value=\"$hzip\">";
+			$hcountry   = "<input name=\"hcountry\" value=\"$hcountry\">";
 
 			if (strlen($bday) > 2) {
 				list( $month, $day, $year ) = split( '/', $bday );
@@ -265,7 +285,6 @@
 			}
 			$time_zone .= "</select>\n";
 
-			$this = CreateObject("phpgwapi.contacts");
 			$email_type = '<select name=email_type>';
 			while ($type = each($this->email_types)) {
 				$email_type .= '<option value="'.$type[0].'"';
@@ -273,28 +292,52 @@
 					$email_type .= '>'.$type[1].'</option>';
 			}
 			$email_type .= "</select>";
-    
+
+			reset($this->email_types);
+    		$hemail_type = '<select name=hemail_type>';
+			while ($type = each($this->email_types)) {
+				$hemail_type .= '<option value="'.$type[0].'"';
+				if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
+					$hemail_type .= '>'.$type[1].'</option>';
+			}
+			$hemail_type .= "</select>";
+
+			reset($this->adr_types);
+			while (list($type,$val) = each($this->adr_types)) {
+				$badrtype .= "\n".'<INPUT type="checkbox" name="one_'.$type.'"';
+				$ot = 'one_'.$type;
+				eval("
+					if (\$$ot=='on') {
+						\$badrtype \.= ' value=\"on\" checked';
+					}
+				");
+				$badrtype .= '>'.$val;
+			}
+
+			reset($this->adr_types);
+			while (list($type,$val) = each($this->adr_types)) {
+				$hadrtype .= "\n".'<INPUT type="checkbox" name="two_'.$type.'"';
+				$tt = 'two_'.$type;
+				eval("
+					if (\$$tt=='on') {
+						\$hadrtype \.= ' value=\"on\" checked';
+					}
+				");
+				$hadrtype .= '>'.$val;
+			}
+
 			$notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
+			$pubkey  = '<TEXTAREA cols="60" name="notes" rows="6">' . $pubkey . '</TEXTAREA>';
 		} else {
 			$notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
 					. $notes . "</TEXTAREA></form>";
 			if ($bday == "//")
 				$bday = "";
-
-/*
-      if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-        $company = $company_name;
-      } else { */
-			$company = $company;
-/*    } */
 		}
 
 		if ($action) {
 			echo "<FORM action=\"".$phpgw->link('/addressbook/' . $action)."\" method=\"post\">\n";
 		}
-
-		// test:
-		//echo "Time track app status = " . $phpgw_info["apps"]["timetrack"]["enabled"];
 
 		if (! ereg("^http://",$url)) {
 			$url = "http://". $url;
@@ -302,67 +345,7 @@
 
 		$birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
 					. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
-/*
-		// This is now handled by acl code, and should go away
-		if ($format == "Edit") {
-			if ($access != "private" && $access != "public") {
-				$access_link .= '<td><font size="-1">'.lang("Group access").':</font></td>'
-							. '<td colspan="3"><font size="-1">'
-							. $phpgw->accounts->convert_string_to_names($access);
-			} else {
-				$access_link .=  '<td><font size="-1">'.lang("Access").':</font></td>'
-							. '<td colspan="3"><font size="-1">' . $access;
-			}
-		} else {
-			$access_link .= '<td><font size="-1">'.lang("Access").':</font></td>
-    <td colspan="3">
-      <font size="-1">
-      <select name="access">
-       <option value="private"';
 
-			if ($access == "private") $access_link .= ' selected>'.lang("private").'</option>';
-			else $access_link .= '>'.lang("private").'</option>';
-
-			$access_link .= '<option value="public"
-	';
-
-			if ($access == "public")
-				$access_link .= ' selected>'.lang("Global Public").'</option>';
-			else $access_link .= '>'.lang("Global Public").'</option>';
-        
-			$access_link .= '<option value="group"
-        ';
-
-			if ($access != "public" && $access != "private" && $access != "")
-				$access_link .= ' selected>'.lang("Group Public").'</option></select>';
-			else
-				$access_link .= '>'.lang("Group Public").'</option></select>';
-
-			$access_link .= '</tr>
-        ';
-		}
-
-		if ($format != "view") {
-			$access_link .= '<tr><td><font size="-1">' . lang("Which groups")
-						. ':</font></td><td colspan="3"><select name="n_groups[]" '
-						. 'multiple size="5">';
-
-			$user_groups = $phpgw->accounts->read_group_names($fields["owner"]);
-			for ($i=0;$i<count($user_groups);$i++) {
-				$access_link .= '<option value="'.$user_groups[$i][0].'"';
-				if (ereg(",".$user_groups[$i][0].",",$access))
-					$access_link .= ' selected';
-
-					$access_link .= '>'.$user_groups[$i][1].'</option>
-	    ';
-			}
-			$access_link .= '</select></font></td></tr>';
-			$t->set_var("lang_access",lang("access"));
-		} else {
-			$access_link = '';
-			$t->set_var("lang_access",'');
-		}
-*/
 		if ($format == "view")
 			$create .= '<tr><td><font size="-1">'.lang("Created by").':</font></td>'
 					. '<td colspan="3"><font size="-1">'
@@ -370,6 +353,10 @@
 		else
 			$create = '';
   
+		$t->set_var("lang_home",lang("Home"));
+		$t->set_var("lang_business",lang("Business"));
+		$t->set_var("lang_personal",lang("Personal"));
+
 		$t->set_var("lang_lastname",lang("Last Name"));
 		$t->set_var("lastname",$lastname);
 		$t->set_var("lang_firstname",lang("First Name"));
@@ -380,50 +367,83 @@
 		$t->set_var("prefix",$prefix);
 		$t->set_var("lang_suffix",lang("Suffix"));
 		$t->set_var("suffix",$suffix);
+		$t->set_var("lang_birthday",lang("Birthday"));
+		$t->set_var("birthday",$birthday);
+
 		$t->set_var("lang_company",lang("Company Name"));
 		$t->set_var("company",$company);
 		$t->set_var("lang_department",lang("Department"));
 		$t->set_var("department",$department);
 		$t->set_var("lang_title",lang("Title"));
 		$t->set_var("title",$title);
-		$t->set_var("lang_email",lang("Email"));
+		$t->set_var("lang_email",lang("Business Email"));
 		$t->set_var("email",$email);
-		$t->set_var("lang_email_type",lang("EMail Type"));
+		$t->set_var("lang_email_type",lang("Business EMail Type"));
 		$t->set_var("email_type",$email_type);
 		$t->set_var("lang_url",lang("URL"));
 		$t->set_var("url",$url);
 		$t->set_var("lang_timezone",lang("time zone offset"));
 		$t->set_var("timezone",$time_zone);
-		$t->set_var("lang_hphone",lang("Home Phone"));
-		$t->set_var("hphone",$hphone);
-		$t->set_var("lang_fax",lang("fax"));
+		$t->set_var("lang_fax",lang("Business Fax"));
 		$t->set_var("fax",$fax);
-		$t->set_var("lang_wphone",lang("Work Phone"));
+		$t->set_var("lang_wphone",lang("Business Phone"));
 		$t->set_var("wphone",$wphone);
 		$t->set_var("lang_pager",lang("Pager"));
 		$t->set_var("pager",$pager);
-		$t->set_var("lang_mphone",lang("Mobile"));
+		$t->set_var("lang_mphone",lang("Cell Phone"));
 		$t->set_var("mphone",$mphone);
+		$t->set_var("lang_msgphone",lang("Message Phone"));
+		$t->set_var("msgphone",$msgphone);
+		$t->set_var("lang_isdnphone",lang("ISDN Phone"));
+		$t->set_var("isdnphone",$isdnphone);
+		$t->set_var("lang_carphone",lang("Car Phone"));
+		$t->set_var("carphone",$carphone);
+		$t->set_var("lang_vidphone",lang("Video Phone"));
+		$t->set_var("vidphone",$vidphone);
+
 		$t->set_var("lang_ophone",lang("Other Number"));
 		$t->set_var("ophone",$ophone);
-		$t->set_var("lang_street",lang("Street"));
-		$t->set_var("street",$street);
-		$t->set_var("lang_birthday",lang("Birthday"));
-		$t->set_var("birthday",$birthday);
-		$t->set_var("lang_address2",lang("Line 2"));
+		$t->set_var("lang_bstreet",lang("Business Street"));
+		$t->set_var("bstreet",$bstreet);
+		$t->set_var("lang_address2",lang("Address Line 2"));
 		$t->set_var("address2",$address2);
-		$t->set_var("lang_city",lang("city"));
-		$t->set_var("city",$city);
-		$t->set_var("lang_state",lang("state"));
-		$t->set_var("state",$state);
-		$t->set_var("lang_zip",lang("Zip Code"));
-		$t->set_var("zip",$zip);
-		$t->set_var("lang_country",lang("Country"));
-		$t->set_var("country",$country);
-		$t->set_var("access_link",$access_link);
+		$t->set_var("lang_address3",lang("Address Line 3"));
+		$t->set_var("address3",$address3);
+		$t->set_var("lang_bcity",lang("Business City"));
+		$t->set_var("bcity",$bcity);
+		$t->set_var("lang_bstate",lang("Business State"));
+		$t->set_var("bstate",$bstate);
+		$t->set_var("lang_bzip",lang("Business Zip Code"));
+		$t->set_var("bzip",$bzip);
+		$t->set_var("lang_bcountry",lang("Business Country"));
+		$t->set_var("bcountry",$bcountry);
+		$t->set_var("lang_badrtype",lang("Address Type"));
+		$t->set_var("badrtype",$badrtype);
+		
+		$t->set_var("lang_hphone",lang("Home Phone"));
+		$t->set_var("hphone",$hphone);
+		$t->set_var("lang_hemail",lang("Home Email"));
+		$t->set_var("hemail",$hemail);
+		$t->set_var("lang_hemail_type",lang("Home EMail Type"));
+		$t->set_var("hemail_type",$hemail_type);
+		$t->set_var("lang_hstreet",lang("Home Street"));
+		$t->set_var("hstreet",$hstreet);
+		$t->set_var("lang_hcity",lang("Home City"));
+		$t->set_var("hcity",$hcity);
+		$t->set_var("lang_hstate",lang("Home State"));
+		$t->set_var("hstate",$hstate);
+		$t->set_var("lang_hzip",lang("Home Zip Code"));
+		$t->set_var("hzip",$hzip);
+		$t->set_var("lang_hcountry",lang("Home Country"));
+		$t->set_var("hcountry",$hcountry);
+		$t->set_var("lang_hadrtype",lang("Address Type"));
+		$t->set_var("hadrtype",$hadrtype);
+
 		$t->set_var("create",$create);
 		$t->set_var("lang_notes",lang("notes"));
 		$t->set_var("notes",$notes);
+		$t->set_var("lang_pubkey",lang("Public Key"));
+		$t->set_var("pubkey",$pubkey);
 		
 		$t->parse("out","form");
 		$t->pparse("out","form");
@@ -611,55 +631,28 @@
 			$i++;
 		} // All of the values that are getting filled are.
 
-/*    if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-       $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
-        . "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
-        . "ab_state,ab_zip,ab_bday,"
-        . "ab_notes,ab_company_id) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
-        . addslashes($firstname). "','"
-        . addslashes($lastname) . "','"
-        . addslashes($title)  . "','"
-        . addslashes($email)  . "','"
-        . addslashes($hphone) . "','"
-        . addslashes($wphone) . "','"
-        . addslashes($fax)    . "','"
-        . addslashes($pager)  . "','"
-        . addslashes($mphone) . "','"
-        . addslashes($ophone) . "','"
-        . addslashes($street) . "','"
-        . addslashes($address2) . "','"
-        . addslashes($city)   . "','"
-        . addslashes($state)  . "','"
-        . addslashes($zip)    . "','"
-        . addslashes($bday)   . "','"
-        . addslashes($notes)  . "','"
-        . addslashes($company). "')";
-     } else {
-*/
+		$fields["owner"]              = $phpgw_info["user"]["account_id"];
+		$fields["n_given"]            = addslashes($firstname);
+		$fields["n_family"]           = addslashes($lastname);
+		$fields["fn"]                 = addslashes($firstname . " " . $lastname);
+		$fields["title"]              = addslashes($title);
+		$fields["d_email"]            = addslashes($email);
+		$fields["tel_work"]           = addslashes($wphone);
+		$fields["tel_home"]           = addslashes($hphone);
+		$fields["tel_fax"]            = addslashes($fax);
+		$fields["tel_pager"]          = addslashes($pager);
+		$fields["tel_cell"]           = addslashes($mphone);
+		$fields["tel_msg"]            = addslashes($ophone);
+		$fields["adr_one_street"]     = addslashes($street);
+		$fields["address2"]           = addslashes($address2);
+		$fields["adr_one_locality"]   = addslashes($city);
+		$fields["adr_one_region"]     = addslashes($state);
+		$fields["adr_one_postalcode"] = addslashes($zip);
+		$fields["bday"]               = addslashes($bday);
+		$fields["url"]                = $url;
+		$fields["note"]               = addslashes($notes);
+		$fields["org_name"]           = addslashes($company);
 
-		$fields["owner"]          = $phpgw_info["user"]["account_id"];
-		//$fields["access"]         = $access;
-		$fields["n_given"]        = addslashes($firstname);
-		$fields["n_family"]       = addslashes($lastname);
-		$fields["fn"]             = addslashes($firstname . " " . $lastname);
-		$fields["title"]          = addslashes($title);
-		$fields["d_email"]        = addslashes($email);
-		$fields["a_tel"]          = addslashes($wphone);
-		$fields["b_tel"]          = addslashes($hphone);
-		$fields["c_tel"]          = addslashes($fax);
-		$fields["pager"]          = addslashes($pager);
-		$fields["mphone"]         = addslashes($mphone);
-		$fields["ophone"]         = addslashes($ophone);
-		$fields["adr_street"]     = addslashes($street);
-		$fields["address2"]       = addslashes($address2);
-		$fields["adr_locality"]   = addslashes($city);
-		$fields["adr_region"]     = addslashes($state);
-		$fields["adr_postalcode"] = addslashes($zip);
-		$fields["bday"]           = addslashes($bday);
-		$fields["url"]            = $url;
-		$fields["note"]           = addslashes($notes);
-		$fields["org_name"]       = addslashes($company);
-		
 		$this = CreateObject("phpgwapi.contacts");
 		$this->add($phpgw_info["user"]["account_id"],$fields);
 	}

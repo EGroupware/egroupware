@@ -29,10 +29,9 @@
 
 	$this = CreateObject("phpgwapi.contacts");
  	$extrafields = array(
-		"pager"    => "pager",
-		"mphone"   => "mphone",
 		"ophone"   => "ophone",
 		"address2" => "address2",
+		"address3" => "address3"
 	);
 	$qfields = $this->stock_contact_fields + $extrafields;
 
@@ -159,7 +158,7 @@
 				if ( !empty($coldata) && (substr($coldata,0,7) != 'http://') ) { $coldata = 'http://' . $coldata; }
 				$ref='<a href="'.$coldata.'" target="_new">';
 				$data=$coldata.'</a>';
-			} elseif ($column[0] == "d_email") {
+			} elseif ( ($column[0] == "email") || ($column[0] == "email_home") ) {
 				if ($phpgw_info["user"]["apps"]["email"]) {
 					$ref='<a href="'.$phpgw->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
 				} else {

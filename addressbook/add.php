@@ -47,40 +47,63 @@
 			$url = "";
 		}
 
-		$fields["org_name"]			= $company;
-		$fields["org_unit"]			= $department;
-		$fields["n_given"]			= $firstname;
-		$fields["n_family"]			= $lastname;
-		$fields["n_middle"]			= $middle;
-		$fields["n_prefix"]			= $prefix;
-		$fields["n_suffix"]			= $suffix;
+		$fields["org_name"]				= $company;
+		$fields["org_unit"]				= $department;
+		$fields["n_given"]				= $firstname;
+		$fields["n_family"]				= $lastname;
+		$fields["n_middle"]				= $middle;
+		$fields["n_prefix"]				= $prefix;
+		$fields["n_suffix"]				= $suffix;
 		if ($prefix) { $pspc = " "; }
 		if ($middle) { $mspc = " "; } else { $nspc = " "; }
 		if ($suffix) { $sspc = " "; }
-		$fields["fn"]				= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
-		$fields["d_email"]			= $email;
-		$fields["d_emailtype"]		= $email_type;
-		$fields["title"]			= $title;
-		$fields["a_tel"]			= $wphone;
-		$fields["a_tel_work"]		= "y";
-		$fields["b_tel"]			= $hphone;
-		$fields["b_tel_home"]		= "y";
-		$fields["c_tel"]			= $fax;
-		$fields["c_tel_fax"]		= "y";
-		$fields["pager"]			= $pager;
-		$fields["mphone"]			= $mphone;
-		$fields["ophone"]			= $ophone;
-		$fields["adr_street"]		= $street;
-		$fields["address2"]			= $address2;
-		$fields["adr_locality"]		= $city;
-		$fields["adr_region"]		= $state;
-		$fields["adr_postalcode"]	= $zip;
-		$fields["adr_countryname"]	= $country;
-		$fields["tz"]				= $timezone;
-		$fields["bday"]				= $bday;
-		$fields["url"]				= $url;
-		$fields["note"]				= $notes;
-	
+		$fields["fn"]					= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
+		$fields["email"]				= $email;
+		$fields["email_type"]			= $email_type;
+		$fields["title"]				= $title;
+		$fields["tel_work"]				= $wphone;
+		$fields["tel_home"]				= $hphone;
+		$fields["tel_fax"]				= $fax;
+		$fields["tel_pager"]			= $pager;
+		$fields["tel_cel"]				= $mphone;
+		$fields["tel_msg"]				= $ophone;
+		$fields["adr_one_street"]		= $bstreet;
+		$fields["adr_one_locality"]		= $bcity;
+		$fields["adr_one_region"]		= $bstate;
+		$fields["adr_one_postalcode"]	= $bzip;
+		$fields["adr_one_countryname"]	= $bcountry;
+
+		reset($this->adr_types);
+		$typed = '';
+		while (list($type,$val) = each($this->adr_types)) {
+			$ftype = 'one_'.$type;
+			eval("if (\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+		}	
+		$fields["adr_one_type"]     = substr($typed,0,-1);
+
+		$fields["address2"]				= $address2;
+		$fields["address3"]				= $address3;
+
+		$fields["adr_two_street"]		= $hstreet;
+		$fields["adr_two_locality"]		= $hcity;
+		$fields["adr_two_region"]		= $hstate;
+		$fields["adr_two_postalcode"]	= $hzip;
+		$fields["adr_two_countryname"]	= $hcountry;
+
+		reset($this->adr_types);
+		$typed = '';
+		while (list($type,$val) = each($this->adr_types)) {
+			$ftype = 'two_'.$type;
+			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+		}
+		$fields["adr_two_type"]         = substr($typed,0,-1);
+
+		$fields["tz"]					= $timezone;
+		$fields["bday"]					= $bday;
+		$fields["url"]					= $url;
+		$fields["pubkey"]				= $pubkey;
+		$fields["note"]					= $notes;
+
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 		$ab_id = addressbook_get_lastid();
 

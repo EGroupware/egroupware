@@ -37,10 +37,9 @@
 		// not checking acl here, only on submit - that ok?
 		// merge in extra fields
 		$extrafields = array(
-			"pager" => "pager",
-			"mphone" => "mphone",
 			"ophone" => "ophone",
 			"address2" => "address2",
+			"address3" => "address3"
 		);
 		$qfields = $this->stock_contact_fields + $extrafields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
@@ -55,41 +54,70 @@
 			$bday = "$bday_month/$bday_day/$bday_year";
 		}
 	
-		$fields["org_name"]			= $company;
-		$fields["org_unit"]			= $department;
-		$fields["n_given"]			= $firstname;
-		$fields["n_family"]			= $lastname;
-		$fields["n_middle"]			= $middle;
-		$fields["n_prefix"]			= $prefix;
-		$fields["n_suffix"]			= $suffix;
+		$fields["org_name"]				= $company;
+		$fields["org_unit"]				= $department;
+		$fields["n_given"]				= $firstname;
+		$fields["n_family"]				= $lastname;
+		$fields["n_middle"]				= $middle;
+		$fields["n_prefix"]				= $prefix;
+		$fields["n_suffix"]				= $suffix;
 		if ($prefix) { $pspc = " "; }
 		if ($middle) { $mspc = " "; } else { $nspc = " "; }
 		if ($suffix) { $sspc = " "; }
-		$fields["fn"]				= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
-		$fields["d_email"]			= $email;
-		$fields["d_emailtype"]		= $email_type;
-		$fields["title"]			= $title;
-		$fields["a_tel"]			= $wphone;
-		$fields["b_tel"]			= $hphone;
-		$fields["c_tel"]			= $fax;
-		$fields["pager"]			= $pager;
-		$fields["mphone"]			= $mphone;
-		$fields["ophone"]			= $ophone;
-		$fields["adr_street"]		= $street;
-		$fields["address2"]			= $address2;
-		$fields["adr_locality"]		= $city;
-		$fields["adr_region"]		= $state;
-		$fields["adr_postalcode"]	= $zip;
-		$fields["adr_countryname"]	= $country;
-		$fields["tz"]				= $timezone;
-		$fields["bday"]				= $bday;
-		$fields["url"]				= $url;
-		$fields["note"]				= $notes;
+		$fields["fn"]					= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
+		$fields["email"]				= $email;
+		$fields["email_type"]			= $email_type;
+		$fields["email_home"]			= $hemail;
+		$fields["email_home_type"]		= $hemail_type;
 
-		// this is now in functions.inc.php and will handle acl soon
-		//if (!$userid) { 
-			$userid = $phpgw_info["user"]["account_id"];
-		//}
+		$fields["title"]				= $title;
+		$fields["tel_work"]				= $wphone;
+		$fields["tel_home"]				= $hphone;
+		$fields["tel_fax"]				= $fax;
+		$fields["tel_pager"]			= $pager;
+		$fields["tel_cel"]				= $mphone;
+		$fields["tel_msg"]				= $ophone;
+		$fields["tel_prefer"]           = $tel_prefer;
+
+		$fields["adr_one_street"]		= $bstreet;
+		$fields["adr_one_locality"]		= $bcity;
+		$fields["adr_one_region"]		= $bstate;
+		$fields["adr_one_postalcode"]	= $bzip;
+		$fields["adr_one_countryname"]	= $bcountry;
+
+		reset($this->adr_types);
+		$typed = '';
+		while (list($type,$val) = each($this->adr_types)) {
+			$ftype = 'one_'.$type;
+			eval("if (\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+		}	
+		$fields["adr_one_type"]     = substr($typed,0,-1);
+
+		$fields["address2"]				= $address2;
+		$fields["address3"]				= $address3;
+
+		$fields["adr_two_street"]		= $hstreet;
+		$fields["adr_two_locality"]		= $hcity;
+		$fields["adr_two_region"]		= $hstate;
+		$fields["adr_two_postalcode"]	= $hzip;
+		$fields["adr_two_countryname"]	= $hcountry;
+
+		reset($this->adr_types);
+		$typed = '';
+		while (list($type,$val) = each($this->adr_types)) {
+			$ftype = 'two_'.$type;
+			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+		}
+		$fields["adr_two_type"]         = substr($typed,0,-1);
+
+		$fields["tz"]					= $timezone;
+		$fields["bday"]					= $bday;
+		$fields["url"]					= $url;
+		$fields["pubkey"]				= $pubkey;
+		$fields["note"]					= $notes;
+
+		$userid = $phpgw_info["user"]["account_id"];
+
 		addressbook_update_entry($ab_id,$userid,$fields);
 
 		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
