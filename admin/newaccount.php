@@ -190,7 +190,7 @@
 		$phpgw->template->set_file(array(
 			'form'              => 'account_form.tpl',
 			'form_passwordinfo' => 'account_form_password.tpl',
-			'form_buttons_'     => 'account_form_buttons.tpl',
+			'form_buttons_'     => 'account_form_buttons.tpl'
 		));
 	}
 
