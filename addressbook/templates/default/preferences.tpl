@@ -156,7 +156,7 @@
     </tr>
     <tr>
      <td colspan="5" align="center">
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="submit" value="{lang_submit}">
      </td>
     </tr>
    </table>

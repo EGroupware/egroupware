@@ -52,12 +52,12 @@
     <td><input type="checkbox" name="ab_selected[address3]"{address3_checked}>{address3}</option></td>
     <td><input type="checkbox" name="ab_selected[adr_one_locality]"{adr_one_locality_checked}>{adr_one_locality}</option></td>
     <td><input type="checkbox" name="ab_selected[adr_one_region]"{adr_one_region_checked}>{adr_one_region}</option></td>
-    <td>&nbsp;</td>
+    <td><input type="checkbox" name="ab_selected[adr_one_postalcode]"{adr_one_postalcode_checked}>{adr_one_postalcode}</option></td>
 </tr>
 <tr bgcolor="DDDDDD">
-    <td><input type="checkbox" name="ab_selected[adr_one_postalcode]"{adr_one_postalcode_checked}>{adr_one_postalcode}</option></td>
-    <td><input type="checkbox" name="ab_selected[tel_work]"{tel_work_checked}>{tel_work}</option></td>
     <td><input type="checkbox" name="ab_selected[adr_one_countryname]"{adr_one_countryname_checked}>{adr_one_countryname}</option></td>
+    <td><input type="checkbox" name="ab_selected[adr_two_type]"{adr_one_type_checked}>{adr_one_type}</option></td>
+    <td><input type="checkbox" name="ab_selected[tel_work]"{tel_work_checked}>{tel_work}</option></td>
     <td><input type="checkbox" name="ab_selected[email]"{email_checked}>{email}</option></td>
     <td colspan="2"><input type="checkbox" name="ab_selected[email_type]"{email_type_checked}>{email_type}</option></td>
 </tr>
@@ -156,7 +156,7 @@
     </tr>
     <tr>
      <td colspan="5" align="center">
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="submit" value="{lang_submit}">
      </td>
     </tr>
    </table>
