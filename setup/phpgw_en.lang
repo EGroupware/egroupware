@@ -97,6 +97,7 @@ city	addressbook	en	City
 clear	common	en	Clear
 clear form	common	en	Clear Form
 clipboard_contents	filemanager	en	Clipboard Contents
+common	transy	en	Common
 company	common	en	Company
 company name	addressbook	en	Company Name
 completed	todo	en	completed
