@@ -85,8 +85,8 @@
 				'type'		=> $type,
 				'from'		=> $from,
 				'addr'		=> $addr,
-				'addr_id'	=>	$addr_id,
-				'proj_id'	=>	$proj_id,
+				'addr_id'	=>	$id_addr,
+				'proj_id'	=>	$id_project,
 				'subject'	=> $subject,
 				'des'       => $des,
 				'pri'       => $pri,
@@ -101,7 +101,7 @@
 				'responsible' => $responsible
 			));
 	
-			if (!$addrsearch && !$projectsearch) {
+			if (!$query_addr && !$query_project) {
 				Header('Location: ' . $phpgw->link('/infolog/index.php', "cd=15&sort=$sort&order=$order&query=$query&".
 						"start=$start&filter=$filter&cat_id=$cat_id"));
 			}			
@@ -172,7 +172,7 @@
 		default:
 			$info_action = 'Info Log - Edit'; break;
 	}
-	$t->set_var('lang_info_action',lang($info_action).($addrsearch?' - '.lang('Search for:')." '$addrsearch'":''));
+	$t->set_var('lang_info_action',lang($info_action) . ($query_addr ? ' - '.lang('Search for:')." '$query_addr'" : ''));
 	$t->set_var($phpgw->infolog->setStyleSheet( ));
 	$t->set_var('lang_category',lang('Category'));
 	$t->set_var('lang_none',lang('None'));
@@ -181,76 +181,20 @@
 	$t->set_var('actionurl',$phpgw->link('/infolog/edit.php'));
 	$t->set_var('common_hidden_vars',$common_hidden_vars);
 
+	$sb2 = CreateObject('phpgwapi.sbox2');
+
 	$t->set_var('lang_owner',lang('Owner'));
-	$t->set_var('owner_info',$phpgw->infolog->accountInfo($phpgw->infolog->data['info_owner']));
+	$t->set_var('owner_info',$sb2->accountInfo($phpgw->infolog->data['info_owner']));
 	$t->set_var('lang_type',lang('Type'));
-	$t->set_var('type_list',$phpgw->infolog->getEnum('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
+	$t->set_var('type_list',$sb2->getArrayItem('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
 
 	$t->set_var('lang_prfrom', lang('From'));
 	$t->set_var('fromval', $phpgw->strip_html($phpgw->infolog->data['info_from']));
 	$t->set_var('lang_praddr', lang('Phone/Email'));
 	$t->set_var('addrval', $phpgw->strip_html($phpgw->infolog->data['info_addr']));
 
-	$t->set_var('lang_search', lang('Search'));
-	$t->set_var('lang_prproject', lang('Project'));
-	$t->set_var('lang_proj_prompt', lang('Pattern for Search in Projects'));
-	
-	if (($proj_id = $phpgw->infolog->data['info_proj_id']) || $projectsearch) {
-		$projects = createobject('projects.projects');
-
-		if ($projectsearch) {
-			$projs = $projects->read_projects( 0,0,$projectsearch );
-			if (count($projs)) {
-				$project = '<select name="proj_id">';
-				while (list( $key,$proj ) = each( $projs )) {
-					$project .= '<option value="'.$proj['id'].'">'.$phpgw->strip_html($proj['title'])."\n";
-				}
-				$project .= '<option value="0">'.lang('none')."\n";
-				$project .= '</select>';			
-			} else {
-				$project = lang( 'No entrys found for %1, try again ...',"'$projectsearch'" );
-			}					
-		} else {		// read name/company from addressbook entry info_addr_id
-			list( $proj ) = $projects->read_single_project( $proj_id );
-			if (count($proj)) {
-				$project = $proj['title'].'<input type="hidden" name="proj_id" value="' . $proj_id . '">';
-				$customer_id = $proj['customer'];
-			}			
-		}
-	}
-	if (!$project)
-		$project = '<span class=note>'.lang('not set, use Button to search for').'</span>';
-	$t->set_var('project', $project);
-	
-	$t->set_var('lang_praddrbook', lang('Addressbook'));
-	$t->set_var('lang_addr_prompt', lang('Pattern for Search in Addressbook'));
-	
-	if (($addr_id = $phpgw->infolog->data['info_addr_id']) || $addrsearch) {
-		$contacts = createobject('phpgwapi.contacts');
-
-		if ($addrsearch) {
-			$addrs = $contacts->read( 0,0,'',$addrsearch,'','DESC','org_name,n_family,n_given' );
-			if (count($addrs)) {
-				$addrbook = '<select name="addr_id">';
-				while (list( $key,$addr ) = each( $addrs )) {
-					$addrbook .= '<option value="'.$addr['id'].'">'.$phpgw->infolog->addr2name( $addr )."\n";
-				}
-				$addrbook .= '<option value="0">'.lang('none')."\n";
-				$addrbook .= '</select>';			
-			} else {
-				$addrbook = lang( 'No entrys found for %1, try again ...',"'$addrsearch'" );
-			}					
-		} else {		// read name/company from addressbook entry info_addr_id
-			list( $addr ) = $contacts->read_single_entry( $addr_id );
-			if (count($addr)) {
-				$addrbook = $phpgw->infolog->addr2name( $addr ).'<input type="hidden" name="addr_id" value="' . $addr_id . '">';
-			}			
-		}
-	}
-	if (!$addrbook)
-		$addrbook = '<span class=note>'.lang('not set, use Button to search for').'</span>';
-		
-	$t->set_var('addrbook', $addrbook);
+	$t->set_var($sb2->getProject('project',$phpgw->infolog->data['info_proj_id'],$query_project));
+	$t->set_var($sb2->getAddress('addr',$phpgw->infolog->data['info_addr_id'],$query_addr));
 			
 	$t->set_var('lang_prsubject', lang('Subject'));
 	$t->set_var('subjectval', $phpgw->strip_html($phpgw->infolog->data['info_subject']));
@@ -289,16 +233,16 @@
 	$t->set_var('days',lang('days'));
 
 	$t->set_var('lang_status',lang('Status'));
-	$t->set_var('status_list',$phpgw->infolog->getEnum('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
+	$t->set_var('status_list',$sb2->getArrayItem('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
 
 	$t->set_var('lang_priority',lang('Priority'));
-	$t->set_var('priority_list',$phpgw->infolog->getEnum('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
+	$t->set_var('priority_list',$sb2->getArrayItem('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
 
 	$t->set_var('lang_confirm',lang('Confirm'));
-	$t->set_var('confirm_list',$phpgw->infolog->getEnum('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
+	$t->set_var('confirm_list',$sb2->getArrayItem('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
 
 	$t->set_var('lang_responsible',lang('Responsible'));
-	$t->set_var('responsible_list',$phpgw->infolog->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
+	$t->set_var('responsible_list',$sb2->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
 
 	$t->set_var('lang_access_type',lang('Private'));
 	$t->set_var('access_list', '<input type="checkbox" name="access" value="True"' . ($phpgw->infolog->data['info_access'] == 'private'?' checked':'') . '>');

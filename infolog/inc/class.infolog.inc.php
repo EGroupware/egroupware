@@ -13,7 +13,7 @@
 
 	/* $Id$ */
 
-	class infolog
+	class infolog 
 	{
 		var $db,$db2;
 		var $grants;
@@ -24,7 +24,6 @@
 		function infolog( $info_id = 0) {
 			global $phpgw;
 			$this->db     = $phpgw->db;
-			$this->db2    = $phpgw->db;			// for getAccounts and accountInfo
 			$this->grants = $phpgw->acl->get_grants('infolog');
 			$this->enums = array( 'priority' => array( 'urgent' => 'urgent','high' => 'high','normal' => 'normal','low' => 'low' ),
 										 'status'	=> array( 'offer' => 'offer','ongoing' => 'ongoing','call' => 'call',
@@ -89,56 +88,22 @@
 			list( $style ) = $this->setStyleSheet(); echo $style;
 		}
 				
-		function accountInfo($id,$account_data=0) {
+		function accountInfo($id,$account_data=0,$longname=0) {
 			global $phpgw;
 			
 			if (!$id) return '&nbsp;';
 			
-			if (!$cache[$id]['lid']) {
-				if (!is_array($account_data)) {
-					$accounts = createobject('phpgwapi.accounts',$id);
-					$accounts->db = $this->db2;
-					$accounts->read_repository();
-					$account_data = $accounts->data;
-				}
-				$cache[$id]['lid'] 			= $account_data['account_lid'];
-				$cache[$id]['firstname']   = $account_data['firstname'];
-				$cache[$id]['lastname']    = $account_data['lastname'];
+			if (!is_array($account_data)) {
+				$accounts = createobject('phpgwapi.accounts',$id);
+				$accounts->db = $phpgw->db;
+				$accounts->read_repository();
+				$account_data = $accounts->data;
 			}
-			if ($this->longnames)
-			   return $cache[$id]['firstname'].' '.$cache[$id]['lastname'];
+			if ($longnames)
+			   return $account_data['firstname'].' '.$account_data['lastname'];
 				
-			return $cache[$id]['lid'];	
+			return $account_data['account_lid'];	
 		}		
-
-		function getEnum($name, $selected=0, $arr=0,$no_lang=0) {		// should be in class common.sbox
-     		if (!is_array($arr))
-				$arr = array('no','yes');
-				
-     		$out = "<select name=\"$name\">\n";
-  		
-  			while ($apair = each($arr)) {              
-  				$out .= '<option value="'.$apair[0].'"';
-  				if($selected == $apair[0]) $out .= " SELECTED";
-  				$out .= ">" . ($no_lang ? $apair[1] : lang($apair[1])) . "</option>\n";
-  			}
-        	$out .= "</select>\n";
-			
-        	return $out;
-     	}
-		
-		function getAccount($name,$selected=0) {
-			$accounts = createobject('phpgwapi.accounts');
-			$accounts->db = $this->db2;
-			$accs = $accounts->get_list('accounts'); 
-			
-			$aarr = Array(lang('not assigned'));
-			while ($a = current($accs)) {
-				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a);
-				next($accs);
-			}
-			return $this->getEnum($name,$selected,$aarr,1);			
-		}
 
 		function addr2name( $addr ) {
 			global $phpgw;
@@ -150,8 +115,9 @@
 					$name .= ', '.$addr['n_prefix'];
 			if ($addr['org_name'])
 				$name = $addr['org_name'].': '.$name;
-			return $phpgw->strip_html($name);
-		}	
+			return $phpgw->strip_html($name);			
+		}
+
 		function readProj($proj_id) {
 			if ($proj_id) {
 				if (!is_object($this->projects)) {
@@ -160,7 +126,7 @@
 				if (list( $proj ) = $this->projects->read_single_project( $proj_id ))
 					return $proj;
 			}
-			return False;
+			return False;			
 		}					
 
 		function readAddr($addr_id) {
@@ -171,7 +137,7 @@
 				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
 					return $addr;
 			}
-			return False;			
+			return False;						
 		}		
 					
 		function formatInfo($info=0,$p_id=0,$a_id=0) {	// $info: info_id or array with one row form info-db
@@ -216,17 +182,17 @@
 					$enddate = "<span class=overdue>$enddate</span>";
 			}
 			if (!($responsible = $info['info_responsible']) && $info['info_status'] == 'offer') {
-				$responsible = $phpgw->infolog->icon('status','offer');
+				$responsible = $this->icon('status','offer');
 			} else {
-				$responsible = $phpgw->infolog->accountInfo($responsible);			
+				$responsible = $this->accountInfo($responsible);			
 			}			
-			$owner = $phpgw->infolog->accountInfo($info['info_owner']);
+			$owner = $this->accountInfo($info['info_owner']);
 			if ($info['info_access'] == 'private')
 				$owner = "<span class=private>$owner</span>";
 				
 			return array(
-				'type'        => $phpgw->infolog->icon('type',$info['info_type']),
-				'status'		  => $phpgw->infolog->icon('status',$info['info_status']),
+				'type'        => $this->icon('type',$info['info_type']),
+				'status'		  => $this->icon('status',$info['info_status']),
 				'pri'         => lang($info['info_pri']),
 				'subject'     => $subject,
 				'des'			  => $info['info_des'],
@@ -234,7 +200,7 @@
 				'enddate'     => $enddate,
 				'owner'       => $owner,
 				'datecreated' => $phpgw->common->show_date($info['info_datecreated'],$phpgw_info['user']['preferences']['common']['dateformat']),
-				'responsible' => $responsible	);
+				'responsible' => $responsible	);				
 		}		
 
 		function infoHeaders( $do_sort_header=0,$sort=0,$order=0) {
@@ -251,7 +217,7 @@
 					$headers['lang_'.$f] = $lang;				
 				}
 			}
-			return $headers;
+			return $headers;			
 		}
 		
 		function debug( $str ) {
@@ -279,7 +245,7 @@
 							
 			// $this->debug("check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied"));
 			
-			return $access_ok;
+			return $access_ok;			
 		}
 		
 		function aclFilter($filter = 'none') {				// sql to be AND into a query to ensure ACL is respected (incl. _PRIVATE)
@@ -318,7 +284,7 @@
 			
 			// echo "<p>aclFilter('$filter')(user='$user') = '$filtermethod'</p>";
 			
-			return $this->acl_filter[$filter] = $filtermethod;	// cache the filter
+			return $this->acl_filter[$filter] = $filtermethod;	// cache the filter			
 		}		
 	
 		function read($info_id) {								// did _not_ ensure ACL, has to be done by the calling code
@@ -338,7 +304,7 @@
 					$this->data['info_from'] = '';
 				}				
 			}			
-			return $this->data;
+			return $this->data;			
 		}
 		
 		function init() {
@@ -356,7 +322,7 @@
 				. $phpgw_info['user']['account_id'] . "'))" ,__LINE__,__FILE__);
 				
 			if ($this->data['info_id'] == $info_id)
-				$this->init( );
+				$this->init( );				
 		}
 
 		function write($values) {								// did _not_ ensure ACL, has to be done by the calling code
@@ -399,6 +365,6 @@
 				
 			//echo '<br>edit(): query: '.$query;
 			
-			$this->db->query($query,__LINE__,__FILE__);
+			$this->db->query($query,__LINE__,__FILE__);			
 		}
 	}

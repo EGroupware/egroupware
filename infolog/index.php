@@ -28,8 +28,6 @@
 	$t->set_file(array( 'info_list_t' => 'list.tpl' ));
 	$t->set_block('info_list_t','info_list','list');
 
-	$grants = $phpgw->acl->get_grants('infolog');
-  
 	$common_hidden_vars =
 			'<input type="hidden" name="sort" value="' . $sort . '">'
 		 . '<input type="hidden" name="order" value="' . $order . '">'
@@ -54,7 +52,7 @@
 		case 'addr':
 			$common_hidden_vars	.= '<input type="hidden" name="addr_id" value="' . $addr_id . '">';
 			$addr = $phpgw->infolog->readAddr($addr_id);
-			$t->set_var(lang_info_action,lang('Info Log').' - '.$phpgw->infolog->addr2name($addr));
+			$t->set_var(lang_info_action,lang('Info Log').' - '.$phpgw->infolog->sb2->addr2name($addr));
 			break;
 		default:
 			$t->set_var(lang_info_action,lang('Info Log'));
