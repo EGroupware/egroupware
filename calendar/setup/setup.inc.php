@@ -54,7 +54,3 @@
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.14','0.9.15','0.9.16')
 	);
-
-
-
-
