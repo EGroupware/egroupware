@@ -70,9 +70,9 @@
 
   $now	= $phpgw->calendar->splitdate(mktime (2, 0, 0, $thismonth, $thisday, $thisyear));
 
-  $phpgw->template->set_file(array("day" => "day.tpl"));
+  $phpgw->template->set_file(array("day_t" => "day.tpl"));
 
-  //$phpgw->template->set_block("day");
+  //$phpgw->template->set_block("day_t");
 
   if ($friendly) {
     $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
@@ -91,12 +91,12 @@
   if (!$friendly) {
     $param = "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&friendly=1";
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
-    $phpgw->template->parse("out","day");
-    $phpgw->template->pparse("out","day");
+    $phpgw->template->parse("out","day_t");
+    $phpgw->template->pparse("out","day_t");
     $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
-    $phpgw->template->parse("out","day");
-    $phpgw->template->pparse("out","day");
+    $phpgw->template->parse("out","day_t");
+    $phpgw->template->pparse("out","day_t");
   }
 ?>
