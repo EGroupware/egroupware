@@ -59,7 +59,7 @@
 				$this->load_langs();
 			}
 			if(!@isset($this->lang[$_key]) &&
-				($this->currentapp == 'admin' || $this->currentapp == 'preferences') &&
+				($this->currentapp == 'admin' || $this->currentapp == 'preferences' || $this->currentapp == 'home') &&
 				!$this->all_loaded
 			)
 			{
@@ -117,12 +117,12 @@
 			//echo '<br>add_app(): userlang is: ' . $userlang;
 
 			$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . $userlang . '.lang';
-			if(!file_exists($fn))
+			if(!@file_exists($fn))
 			{
 				$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_en.lang';
 			}
 
-			if(file_exists($fn))
+			if(@file_exists($fn))
 			{
 				$fp = fopen($fn,'r');
 				while($data = fgets($fp,8000))
