@@ -390,10 +390,8 @@ class uical
 			{
 				$grants[] = $grant['grantor'];
 			}
-			if ($this->multiple)
-			{
-				$file[] = array(
-					'text' => "
+			$file[] = array(
+				'text' => "
 <script type=\"text/javascript\">
 function load_cal(url,id) {
 	selectBox = document.getElementById(id);
@@ -409,32 +407,16 @@ function load_cal(url,id) {
 }
 </script>
 ".
-					$this->accountsel->selection('owner','uical_select_owner',$this->owner,'calendar+',3,False,
-						' style="width: 85%;" title="'.lang('select a %1',lang('user')).'"','',$grants).
-						$this->html->submit_button('go','>>',"load_cal('".$GLOBALS['phpgw']->link('/index.php',array(
-							'menuaction' => $_GET['menuaction'],
-							'date' => $this->date,
-						))."','uical_select_owner'); return false;",True,' title="'.lang('Go!').'"'),
-					'no_lang' => True,
-					'link' => False
-				);
-
-			}
-			else
-			{
-				$file[] = array(
-					'text' => $this->accountsel->selection('owner','uical_select_owner',$this->owner,'calendar+',0,False,
-						' style="width: 85%;" title="'.lang('select a %1',lang('user')).'"',
-						"location=location+(location.search.length ? '&' : '?')+'owner='+this.value;",$grants).
-						$this->html->a_href($this->html->image('phpgwapi','users',lang('show the calendar of multiple users')),array(
-							'menuaction' => $_GET['menuaction'],
-							'multiple' => 1,
-							'date' => $this->date,
-						)),
-					'no_lang' => True,
-					'link' => False
-				);
-			}
+				$this->accountsel->selection('owner','uical_select_owner',$this->owner,'calendar+',$this->multiple ? 3 : 1,False,
+					' style="width: '.($this->multiple && $this->common_prefs['account_selection']=='selectbox' ? 100 : 85).'%;"'.
+					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
+					$GLOBALS['phpgw']->link('/index.php',array(
+						'menuaction' => $_GET['menuaction'],
+						'date' => $this->date,
+					)).'\',\'uical_select_owner\');"','',$grants),
+				'no_lang' => True,
+				'link' => False
+			);
 		}
 
 		// Import & Export
@@ -447,7 +429,7 @@ function load_cal(url,id) {
 .divSidebox
 {
 	width: '.($this->html->user_agent=='msie'?'180px':'auto').';
-	max-width: 180px;
+	/*max-width: 180px;*/
 }
 </style>'."\n";
 		$menu_title = $GLOBALS['phpgw_info']['apps'][$appname]['title'] . ' '. lang('Menu');

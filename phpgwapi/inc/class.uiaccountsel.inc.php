@@ -65,7 +65,7 @@
 		 *  Or a string which gets added as first Option with value=0, eg. lang('all')
 		 * @return the necessary html
 		 */
-		function selection($name,$element_id,$selected,$use='accounts',$lines=1,$not=False,$options='',$onchange='',$select=False)
+		function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False)
 		{
 			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options','$onchange',".print_r($select,True).")</p>\n";
 			if (!is_array($selected))
@@ -175,16 +175,22 @@
 				'app' => $app,
 				'use' => $use,
 				'element_id'  => $element_id,
-				'single'      => !$lines,	// single selection, closes after the first selection
+				'multiple' => $lines,	// single selection (multiple=0), closes after the first selection
 			));
 			$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
 			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$single = (int) !$lines;
-			if (!$lines && $use != 'groups' && $use != 'owngroups')
+			if ($lines <= 1 && $use != 'groups' && $use != 'owngroups')
 			{
-				$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');".
-					($onchange ? " else { $onchange }" : '' ).'" onclick="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');\"";
-				$select['popup'] = lang('Search').' ...';
+				if (!$lines)
+				{
+					$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');".
+						($onchange ? " else { $onchange }" : '' ).'" onclick="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');\"";
+					$select['popup'] = lang('Search').' ...';
+				}
+				elseif ($onchange)
+				{
+					$options .= ' onchange="if (this.value[0]!=\',\') { '.$onchange.' }"';
+				}
 				$need_js_popup = True;
 			}
 			elseif ($onchange)
@@ -196,19 +202,23 @@
 				$select = array($extra_label) + $select;
 			}
 			//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
-			$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines);
+			$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
 
-			if ($lines > 1 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
+			if ($lines > 0 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
 			{
 				$html .= '<a href="'.$link.'" target="uiaccountsel" onclick="'."window.open(this,this.target,'$popup_options'); return false;".'">'.
-					$this->html->image('phpgwapi','users',lang('search or select accounts')).'</a>';
+					$this->html->image('phpgwapi','users',$lines > 1 ? lang('search or select accounts') : lang('search or select multiple accounts')).'</a>';
 				$need_js_popup = True;
 			}
-
+			if ($lines == 1 && $this->account_selection == 'selectbox')
+			{
+				$html .= '<a href="#" onclick="'."if (selectBox = document.getElementById('$element_id')) { selectBox.size=3; selectBox.multiple=true; } return false;".'">'.
+					$this->html->image('phpgwapi','users',lang('select multiple accounts')).'</a>';
+			}
 			if($need_js_popup && !$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'])
 			{
 				$html .= '<script language="JavaScript">
-	function addOption(id,label,value)
+	function addOption(id,label,value,do_onchange)
 	{
 		selectBox = document.getElementById(id);
 		for (i=0; i < selectBox.length; i++) {
@@ -217,11 +227,19 @@
 				selectBox.options[i].selected = true;
 				break;
 			}
+'.//		check existing entries for an entry starting with a comma, marking a not yet finished multiple selection
+'			else if (value.slice(0,1) == "," && selectBox.options[i].value.slice(0,1) == ",") {
+				selectBox.options[i].value = value;
+				selectBox.options[i].text = "'.lang('multiple').'";
+				selectBox.options[i].title = label;
+				selectBox.options[i].selected = true;
+				break;
+			}
 		}
 		if (i >= selectBox.length) {
 			selectBox.options[selectBox.length] = new Option(label,value,false,true);
 		}
-		if (selectBox.onchange) selectBox.onchange();
+		if (selectBox.onchange && do_onchange) selectBox.onchange();
 	}
 </script>';
 				$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'] = True;
@@ -237,7 +255,7 @@
 			$use = get_var('use',array('POST','GET'));
 			$group_id = get_var('group_id',array('POST','GET'),$GLOBALS['phpgw']->accounts->data['account_primary_group']);
 			$element_id = get_var('element_id',array('POST','GET'));
-			$single = get_var('single',array('POST','GET'));
+			$multiple = get_var('multiple',array('POST','GET'));
 
 			$query = get_var('query',array('POST','GET'));
 			$query_type = get_var('query_type',array('POST','GET'));
@@ -246,7 +264,7 @@
 			$order = get_var('order',array('POST','GET'),'account_lid');
 			$sort = get_var('sort',array('POST','GET'),'ASC');
 
-			//echo "<p>uiaccountsel::popup(): app='$app', use='$use', single='$single', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
+			//echo "<p>uiaccountsel::popup(): app='$app', use='$use', multiple='$multiple', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
 
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
@@ -291,7 +309,7 @@
 				$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
 			}
 
-			if (!$single)
+			if ($multiple >= 1)
 			{
 				if (!is_object($GLOBALS['phpgw']->js))
 				{
@@ -312,7 +330,7 @@
 				'use'        => $use,
 				'group_id'   => $group_id,
 				'element_id' => $element_id,
-				'single'     => $single,
+				'multiple'   => $multiple,
 				'query_type' => $query_type,
 				'query'      => $query,
 			);
@@ -343,8 +361,8 @@
 				$link_data['group_id'] = $group['account_id'];
 
 				$GLOBALS['phpgw']->template->set_var('onclick',"addOption('$element_id','".
-					$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]')".
-					($single ? '; window.close()' : ''));
+					$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+					(!$multiple ? '; window.close()' : ''));
 
 				if (!$app || in_array($group['account_id'],$app_groups))
 				{
@@ -409,8 +427,8 @@
 					'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 					'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
 					'onclick'	=> "addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]')".
-						($single ? '; window.close()' : ''),
+						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+						(!$multiple ? '; window.close()' : ''),
 				));
 				$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
 			}
@@ -443,9 +461,20 @@
 			$GLOBALS['phpgw']->template->set_var(array(
 				'lang_selection' => lang('selection'),
 				'lang_close' => lang('close'),
+				'close_action' => 'window.close();',
 			));
+			
+			if ($multiple >= 1)
+			{
+				$GLOBALS['phpgw']->template->set_var(array(
+					'lang_close' => lang('submit'),
+					'lang_multiple' => lang('multiple'),
+					'close_action' => "oneLineSubmit('$element_id');",
+				));
+			}
+				
 
-			if (!$single)
+			if ($multiple)
 			{
 				$GLOBALS['phpgw']->template->set_var(array(
 					'selection' => $this->html->select('selected',False,array(),True,' id="uiaccountsel_popup_selection" style="width: 100%;"',13),

@@ -3,10 +3,26 @@
 <script LANGUAGE="JavaScript">
 	window.focus();
 
-	function addOption(id,label,value)
+	function addOption(id,label,value,multiple)
 	{
-		opener.addOption(id,label,value);
+		openerSelectBox = opener.document.getElementById(id);
 
+		if (multiple && openerSelectBox) {
+			select = '';
+			for(i=0; i < openerSelectBox.length; i++) {
+				with (openerSelectBox.options[i]) {
+					if (selected || openerSelectBox.selectedIndex == i) {
+						select += (value.slice(0,1)==',' ? '' : ',')+value;
+					}
+				}
+			}
+			select += (select ? ',' : '')+value;
+			opener.addOption(id,label,value,0);
+			opener.addOption(id,'{lang_multiple}',select,0);
+		}
+		else {
+			opener.addOption(id,label,value,!multiple && openerSelectBox && openerSelectBox.selectedIndex < 0);
+		}
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		if (selectBox) {
 			for (i=0; i < selectBox.length; i++) {
@@ -44,12 +60,36 @@
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		for (i=0; i < openerSelectBox.length; i++) {
 			with (openerSelectBox.options[i]) {
-				if (selected) {
+				if (selected && value.slice(0,1) != ',') {
 					selectBox.options[selectBox.length] =  new Option(text,value);
 				}
 			}
 		}
 	}
+	
+	function oneLineSubmit(id)
+	{
+		openerSelectBox = opener.document.getElementById(id);
+
+		if (openerSelectBox) {
+			if (openerSelectBox.selectedIndex >= 0) {
+				selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
+				if (selected.slice(0,1) == ',') selected = selected.slice(1);
+				opener.addOption(id,'{lang_multiple}',selected,1);
+			}
+			else {
+				for (i=0; i < openerSelectBox.length; i++) {
+					with (openerSelectBox.options[i]) {
+						if (selected) {
+							opener.addOption(id,text,value,1);
+							break;
+						}
+					}
+				}	
+			}
+		}
+		window.close();
+	}	
 </script>
 
 <style type="text/css">
@@ -196,7 +236,7 @@
 				</tr>
 				<tr>
 					<td align="center" colspan="2">
-						<input type="button" name="close" value="{lang_close}" onClick="window.close()">
+						<input type="button" name="close" value="{lang_close}" onClick="{close_action}">
 					</td>
 				</tr>
 			</table>
