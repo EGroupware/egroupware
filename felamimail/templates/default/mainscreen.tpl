@@ -50,10 +50,17 @@ doLoad();
 			checkedCounter = 0;
 		}
 		//alert(document.forms["messageList"].elements['msg[]'][10].checked);
-		for (var i = 0; i < document.forms["messageList"].elements['msg[]'].length; i++)
-		{
-			document.forms["messageList"].elements['msg[]'][i].checked = value;
-		}
+ 		if (document.forms["messageList"].elements['msg[]'].constructor == '[NodeList]')
+ 		{	
+ 			for (var i = 0; i < document.forms["messageList"].elements['msg[]'].length; i++)
+ 			{
+ 				document.forms["messageList"].elements['msg[]'][i].checked = value;
+ 			}
+ 		}
+ 		else
+ 		{   
+ 			document.forms["messageList"].elements['msg[]'].checked = value;
+ 		} 
 		folderFunctions = document.getElementById('folderFunction');
 		if(inputBox.checked)
 		{
