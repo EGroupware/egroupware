@@ -614,7 +614,7 @@
 			{
 				$this->hooks = CreateObject('phpgwapi.hooks',$this->db);
 			}
-			return $this->hooks->single($locaton,$appname);
+			return $this->hooks->single($location,$appname,True,True);
 		}
 
 		/*
