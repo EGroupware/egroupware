@@ -21,15 +21,15 @@
 if ($id > 0) {
     $can_edit = false;
     $phpgw->db->query("SELECT cal_id FROM webcal_entry_user WHERE cal_login="
-		. "'" . $phpgw->session->loginid . "' AND cal_id = $id");
+		          . "'" . $phpgw_info["user"]["userid"] . "' AND cal_id = $id");
     $phpgw->db->next_record();
     if ($phpgw->db->f("cal_id") > 0)
        $can_edit = true;
 
     $phpgw->db->query("SELECT cal_create_by, cal_date, cal_time, cal_mod_date, "
-	        . "cal_mod_time, cal_duration, cal_priority, cal_type, "
-	        . "cal_access, cal_name, cal_description FROM webcal_entry "
-	        . "WHERE cal_id=$id");
+	               . "cal_mod_time, cal_duration, cal_priority, cal_type, "
+	               . "cal_access, cal_name, cal_description FROM webcal_entry "
+	               . "WHERE cal_id=$id");
 
     $phpgw->db->next_record();
     $year = (int)($phpgw->db->f(1) / 10000);
@@ -259,8 +259,8 @@ function validate_and_submit() {
   // This will cause problems if there are more then 13 permissions.
   // The permissions class needs to be updated to handle this.
   $phpgw->db->query("select loginid, lastname, firstname from accounts where "
-	      . "status !='L' and loginid != '" . $phpgw->session->loginid . "' and "
-	      . "permissions like '%:calendar:%' order by lastname,firstname,loginid");
+	             . "status !='L' and loginid != '" . $phpgw_info["user"]["userid"] . "' and "
+	             . "permissions like '%:calendar:%' order by lastname,firstname,loginid");
 
   if ($phpgw->db->num_rows() > 50)
      $size = 15;
@@ -287,7 +287,7 @@ function validate_and_submit() {
   }
 
   echo "<input type=\"hidden\" name=\"participants[]\" value=\""
-     . $phpgw->session->loginid ."\">"
+     . $phpgw_info["user"]["userid"] ."\">"
      . "</select></td></tr>\n";
 
 ?>
@@ -403,8 +403,7 @@ function validate_and_submit() {
 
 <?php
   if ($id > 0) {
-     echo "<A HREF=\"delete.php?sessionid=" . $phpgw->session->id
-	. "&id=$id\" onClick=\"return confirm('"
+     echo "<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
 	. lang_calendar("Are you sure\\nyou want to\\ndelete this entry ?") . "');\">"
 	. lang_common("Delete") . "</A><BR>";
   } 

@@ -77,7 +77,7 @@
 <TABLE BORDER=0 WIDTH=100%>
 <TR>
 <?php if (! $friendly) { ?>
-<TD ALIGN="left"><A HREF="week.php?sessionid=<?php echo $phpgw->session->id; ?>&year=<?php echo $prevyear;?>&month=<?php echo $prevmonth;?>&day=<?php echo $prevday;?>">&lt;&lt;</A></TD>
+<TD ALIGN="left"><A HREF="week.php?sessionid=<?php echo $phpgw_info["user"]["sessionid"]; ?>&year=<?php echo $prevyear;?>&month=<?php echo $prevmonth;?>&day=<?php echo $prevday;?>">&lt;&lt;</A></TD>
 <?php } ?>
 <TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
 <?php
@@ -97,7 +97,7 @@
 <FONT SIZE="+1" COLOR="<?php echo $H2COLOR;?>">
 <?php
   $phpgw->db->query("SELECT lastname, firstname FROM accounts WHERE loginid='"
-	      . $phpgw->session->loginid . "'");
+	      . $phpgw_info["user"]["userid"]. "'");
   echo "<BR>\n";
   if ($phpgw->db->next_record()) {
      if (strlen($phpgw->db->f(0)) || strlen($phpgw->db->f(1))) {
@@ -113,8 +113,8 @@
 </TD>
 <?php 
   if (! $friendly) {
-     echo "<TD ALIGN=\"right\"><A HREF=\"week.php?sessionid=" . $phpgw->session->id
-	. "&year=$nextyear&month=$nextmonth&day=$nextday\">&gt;&gt;</A></TD>";
+     echo "<TD ALIGN=\"right\"><A HREF=\"" . $phpgw->link("week.php","&year=$nextyear&month=$nextmonth&day=$nextday")
+        . "\">&gt;&gt;</A></TD>";
   }
 ?>
 </TR>
@@ -135,7 +135,7 @@
 <TR>
 <?php
   // Pre-Load the repeated events
-  $repeated_events = read_repeated_events($phpgw->session->loginid);
+  $repeated_events = read_repeated_events($phpgw_info["user"]["userid"]);
 
   $today = mktime(2,0,0,date("m"), date("d"), date("Y"));
   for ($j = 0; $j < 7; $j++) {
@@ -148,7 +148,7 @@
     else
        echo "BGCOLOR=\"$CELLBG\">";
 
-       print_date_entries($date,$hide_icons,$phpgw->session->id);
+       print_date_entries($date,$hide_icons,$phpgw_info["user"]["sessionid"]);
 
     echo "</TD>\n";
   }

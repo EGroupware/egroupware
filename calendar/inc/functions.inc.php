@@ -386,7 +386,7 @@ function month_name ( $m ) {
 	 . "FROM webcal_entry, webcal_entry_repeats, webcal_entry_user "
 	 . "WHERE webcal_entry.cal_id = webcal_entry_repeats.cal_id "
 	 . "AND webcal_entry.cal_id = webcal_entry_user.cal_id "
-	 . "AND webcal_entry_user.cal_login = '" . $phpgw->session->loginid . "' "
+	 . "AND webcal_entry_user.cal_login = '" . $phpgw_info["user"]["userid"] . "' "
 	 . "AND webcal_entry.cal_type='M'";
 
     $phpgw->db->query($sql);
@@ -461,7 +461,7 @@ function month_name ( $m ) {
 	    . "ON webcal_entry_groups.cal_id=webcal_entry.cal_id "
 	    . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
 	    . "AND webcal_entry.cal_type != 'M' "
-	    . "AND (webcal_entry_user.cal_login='" . $phpgw->session->loginid . "' "
+	    . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
 	    . sql_search_calendar() . ") "
 	    . "ORDER BY webcal_entry.cal_priority, webcal_entry.cal_time";
     } else {
@@ -472,7 +472,7 @@ function month_name ( $m ) {
             . "FROM webcal_entry, webcal_entry_user, webcal_entry_groups "
             . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
             . "AND webcal_entry.cal_type != 'M' AND "
-            . "(webcal_entry_user.cal_login='" . $phpgw->session->loginid . "' "
+            . "(webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
             . " AND webcal_entry.cal_id=webcal_entry_user.cal_id OR "
             . "(webcal_entry_groups.cal_id=webcal_entry.cal_id  "
             . sql_search_calendar() . ")) ORDER "
@@ -632,7 +632,7 @@ function month_name ( $m ) {
 	          . "ON webcal_entry_groups.cal_id=webcal_entry.cal_id "
 	 . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
 	 . "AND webcal_entry.cal_type != 'M' "
-	 . "AND (webcal_entry_user.cal_login='" . $phpgw->session->loginid . "' "
+	 . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
 	 . sql_search_calendar() . ") "
 	 . "ORDER BY webcal_entry.cal_priority, webcal_entry.cal_time";
 

@@ -126,7 +126,7 @@ if (! $error) {
   $sql = "INSERT INTO webcal_entry (cal_create_by, cal_date, " .
     "cal_time, cal_mod_date, cal_mod_time, cal_duration, cal_priority, " .
     "cal_access, cal_type, cal_name, cal_description ) " .
-    "VALUES ('" . $phpgw->session->loginid . "', ";
+    "VALUES ('" . $phpgw_info["user"]["userid"] . "', ";
 
   $date = mktime(0,0,0,$month,$day,$year);
   $sql .= date("Ymd", $date) . ", ";
@@ -170,13 +170,13 @@ if (! $error) {
   for ($i = 0; $i < count($participants); $i++) {
       // Rewrite
       $sql = "INSERT INTO webcal_entry_user (cal_id,cal_login,cal_status ) "
-	   . "VALUES ($id, '" . $participants[$i] . "', 'A')";
+	      . "VALUES ($id, '" . $participants[$i] . "', 'A')";
       $phpgw->db->query($sql);
   }
 
   if (count($participants) == 0)
      $phpgw->db->query("insert into webcal_entry_user (cal_id,cal_login,cal_status"
-		 . ") values ($id,'" . $phpgw->session->loginid . "','A' )");
+		           . ") values ($id,'" . $phpgw_info["user"]["userid"] . "','A' )");
   }
   
   if (strlen($rpt_type) || ! strcmp($rpt_type,'none') == 0) {

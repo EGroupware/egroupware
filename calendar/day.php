@@ -81,13 +81,7 @@
 <FONT SIZE="+1" COLOR="<?php echo $H2COLOR;?>">
 <br>
 <?php
-  if (strlen($phpgw->session->firstname) || strlen($phpgw->session->lastname)) {
-     if (strlen($phpgw->session->firstname))
-        echo $phpgw->session->firstname . " ";
-     if (strlen($phpgw->session->lastname))
-        echo $phpgw->session->lastname . " ";
-  } else
-     echo $phpgw->session->loginid;
+  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
 ?>
 </FONT>
 </TD>

@@ -19,8 +19,7 @@
   if (! $keywords) {
      // If we reach this it becuase they didn't search for anything,
      // attempt to send them back to where they where.
-     Header("Location: $from?sessionid=" . $phpgw->session->id . "&date=$date"
-	  . "month=$month&day=$day&year=$year");
+     Header("Location: " . $phpgw->link($from,"date=$datemonth=$month&day=$day&year=$year"));
   }
 
   include("../header.inc.php");
@@ -49,11 +48,11 @@
          $sql = "SELECT DISTINCT webcal_entry.cal_id, webcal_entry.cal_name, "
               . "webcal_entry.cal_date,webcal_entry_repeats.cal_type "
               . "FROM webcal_entry, webcal_entry_user, webcal_entry_repeats, "
-	      . "webcal_entry_groups WHERE (UPPER(webcal_entry.cal_name) LIKE UPPER('%"
+	         . "webcal_entry_groups WHERE (UPPER(webcal_entry.cal_name) LIKE UPPER('%"
               . $words[$i] . "%') OR UPPER(webcal_entry.cal_description) "
               . "LIKE UPPER('%" .  $words[$i] . "%')) AND (webcal_entry_user.cal_login = '"
-	      . $phpgw->session->loginid. "' OR (webcal_entry.cal_access='public' "
-	      . sql_search_calendar() . ")) ORDER BY cal_date";
+	         . $phpgw_info["user"]["userid"] . "' OR (webcal_entry.cal_access='public' "
+	         . sql_search_calendar() . ")) ORDER BY cal_date";
 
          $phpgw->db->query($sql);
          while ($phpgw->db->next_record()) {

@@ -191,10 +191,9 @@
 <P>
 
 <?php
-  if ($phpgw->session->loginid == $create_by) {
-     echo "<A HREF=\"edit_entry.php?sessionid=" . $phpgw->session->id . "&id=$id\">"
-	. lang_common("Edit") . "</A><BR>\n<A HREF=\"delete.php?sessionid="
-	. $phpgw->session->id . "&id=$id\" onClick=\"return confirm('"
+  if ($phpgw_info["user"]["userid"] == $create_by) {
+     echo "<A HREF=\"" . $phpgw->link("edit_entry.php","id=$id") . "\">"
+	. lang_common("Edit") . "</A><BR>\n<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
 	. lang_calendar("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.") . "');\">" . lang_common("Delete") . "</A><BR>\n";
   }
 ?>
