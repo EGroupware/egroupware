@@ -85,9 +85,12 @@
 		echo '<center><b>The administrator must upgrade the header.inc.php file before you can continue.</b></center>';
 		exit;
 	}
-	reset($GLOBALS['phpgw_domain']);
-	list($GLOBALS['phpgw_info']['server']['default_domain']) = each($GLOBALS['phpgw_domain']);
-
+	if (!isset($GLOBALS['phpgw_info']['server']['default_domain']) ||	// allow to overwrite the default domain
+		!isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]))
+	{
+		reset($GLOBALS['phpgw_domain']);
+		list($GLOBALS['phpgw_info']['server']['default_domain']) = each($GLOBALS['phpgw_domain']);
+	}
 	if (isset($_POST['login']))	// on login
 	{
 		$GLOBALS['login'] = $_POST['login'];
