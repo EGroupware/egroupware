@@ -1,26 +1,30 @@
-(stored password will not be shown here)	admin	pt	(Senha salva não será exibida aqui)
 account active	admin	pt	Conta ativa
+account has been created	common	pt	Conta foi criada
+account has been deleted	common	pt	Conta foi apagada
+account has been updated	common	pt	Conta foi atualizada
 account permissions	admin	pt	Permissões da conta
 account preferences	admin	pt	Preferências da conta
 acl manager	admin	pt	Administração de regras de acesso
+acl rights	admin	pt	Permissões de acesso
 action	admin	pt	Ação
 add a new account.	admin	pt	Adicionar nova conta.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	pt	Adicionar usuários criados automaticamente para este grupo ('Default' será tentado se este campo estiver vazio.)
 add global category	admin	pt	Adicionar categoria global
+add global category for x	admin	pt	Adicionar categoria global para %1
 add new account	admin	pt	Adicionar nova conta
 add new application	admin	pt	Adicionar nova aplicação
 add peer server	admin	pt	Adicionar servidor remoto
 admin email	admin	pt	Email do Administrador
-admin name	admin	pt	Nome do Administrador
 administration	admin	pt	Administração
+admin name	admin	pt	Nome do Administrador
 admins	admin	pt	Administradores
+allow anonymous access to this app	admin	pt	Permitir acesso anônimo a esta aplicação
 all records and account information will be lost!	admin	pt	Todos registros e informações de contas serão perdidos!
 all users	admin	pt	Todos usuários
-allow anonymous access to this app	admin	pt	Permitir acesso anônimo a esta aplicação
 anonymous user	admin	pt	Usuário Anônimo
 application name	admin	pt	Nome da aplicação
-application title	admin	pt	Título da aplicação
 applications	admin	pt	Aplicações
+application title	admin	pt	Título da aplicação
 are you sure you want to delete this account ?	admin	pt	Tem certeza que deseja remover esta conta ?
 are you sure you want to delete this application ?	admin	pt	Tem certeza que deseja remover esta aplicação ?
 are you sure you want to delete this category ?	common	pt	Tem certeza que deseja remover esta categoria ?
@@ -30,8 +34,8 @@ are you sure you want to kill this session ?	admin	pt	Você tem certeza que desej
 attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	pt	Tentar usar mimetype correto para FTP ao invés do padrão 'application/octet-stream'
 authentication / accounts	admin	pt	Autenticação / Contas
 auto create account records for authenticated users	admin	pt	Automaticamente criar registros da conta para usuários autenticados
-bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
+bi-dir passthrough	admin	pt	bi-dir passthrough
 bottom	admin	pt	inferior
 change main screen message	admin	pt	Alterar mensagem da tela principal
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas sessões
@@ -39,11 +43,20 @@ country selection	admin	pt	Seleção de País
 create group	admin	pt	Criar Grupo
 default file system space per user	admin	pt	Espaço em disco padrão por usuário ?
 default file system space per user/group ?	admin	pt	Espaço em disco padrão por usuário/grupo ?
+deny access to applications	admin	pt	Negar acesso as aplicações
+deny access to current sessions	admin	pt	Negar acesso as sessões atuais
+deny access to global categories	admin	pt	Negar acesso as categorias globais
+deny access to groups	admin	pt	Negar acesso aos grupos
+deny access to mainscreen message	admin	pt	Negar acesso a mensagem da tela principal
+deny access to peer servers	admin	pt	Negar acesso a servidores remotos
+deny access to user accounts	admin	pt	Negar acesso as contas de usuários
 deny all users access to grant other users access to their entries ?	admin	pt	Não permitir que usuários concedam acesso a seus registros a outros usuários ?
+deny to site configuration	admin	pt	Negar acesso a configuração do servidor
 display	admin	pt	Visualizar
 do you also want to delete all global subcategories ?	admin	pt	Deseja também remover todas subcategorias globais ?
 edit application	admin	pt	Editar aplicação
 edit global category	admin	pt	Editar categoria global
+edit global category for x	admin	pt	Editar categoria global para %1
 edit group	admin	pt	Editar Grupo
 edit login screen message	admin	pt	Editar mensagem da tela de conexão
 edit main screen message	admin	pt	Editar mensagem da tela inicial
@@ -59,13 +72,17 @@ enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpg
 enter the site password for peer servers	admin	pt	Digite a senha do servidor para comunicação com servidores remotos
 enter the site username for peer servers	admin	pt	Digite o usuário do servidor para comunicação com servidores remotos
 enter the title for your site	admin	pt	Digite o título para o seu site
+enter your default FTP server	admin	pt	Digite seu servidor FTP padrão
 enter your HTTP proxy server	admin	pt	Digite o endereço do servidor proxy HTTP
 enter your HTTP proxy server port	admin	pt	Digite a porta do servidor proxy
-enter your default FTP server	admin	pt	Digite seu servidor FTP padrão
+expires	admin	pt	Expira
 find and register all application hooks	admin	pt	Procurar e registrar todas as configurações de aplicações
-force selectbox	admin	pt	Forçar tela de seleção
 global categories	admin	pt	Categorias globais
 group ?	admin	pt	grupo ?
+group has been added	common	pt	Grupo adicionado
+group has been deleted	common	pt	Grupo removido
+group has been updated	common	pt	Grupo atualizado
+group manager	admin	pt	Manutenção de grupos
 group name	admin	pt	Nome do Grupo
 hide php information	admin	pt	Esconder informações de PHP
 home directory	admin	pt	Diretório da instalação
@@ -74,6 +91,7 @@ idle	admin	pt	ocioso
 if no acl records for user or any group the user is a member of	admin	pt	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt	se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login ?
 inbound	admin	pt	Entrada
+installed applications	common	pt	Aplicativos Instalados
 interface	admin	pt	Interface
 ip	admin	pt	IP
 kill	admin	pt	Terminar
@@ -81,25 +99,28 @@ last login	admin	pt	última conexão
 last login from	admin	pt	última conexão de
 last time read	admin	pt	Última vez lido
 last x logins	admin	pt	Últimas %1 conexões
+last x logins for x	admin	pt	Últimas %1 conexões para %2
 ldap accounts context	admin	pt	contexto de contas LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
 ldap default shell (e.g. /bin/bash)	admin	pt	shell padrão LDAP (Exemplo: /bin/bash)
 ldap encryption type	admin	pt	tipo de encriptação LDAP
 ldap groups context	admin	pt	contexto de grupos LDAP
 ldap host	admin	pt	servidor LDAP
-ldap root password	admin	pt	senha do super usuário LDAP
 ldap rootdn	admin	pt	super usuário LDAP
+ldap root password	admin	pt	senha do super usuário LDAP
 list of current users	admin	pt	lista de usuários conectados
+login history	admin	pt	Histórico de conexões
+loginid	admin	pt	Código do usuário
 login screen	admin	pt	Tela de login
 login shell	admin	pt	Shell de login
 login time	admin	pt	Hora da conexão
-loginid	admin	pt	Código do usuário
 main screen message	admin	pt	Mensagem da tela principal
 manager	admin	pt	Gerenciador
 maximum account id (e.g. 65535 or 1000000)	admin	pt	id máximo para contas (Exemplo: 65535 ou 1000000)
 message has been updated	admin	pt	Mensagem foi atualizada
 minimum account id (e.g. 500 or 100, etc.)	admin	pt	id mínimo para contas (Exemplo: 500 ou 100, etc.)
 mode	admin	pt	Modo
+never	admin	pt	Nunca
 new group name	admin	pt	Nome do novo Grupo
 new password [ leave blank for no change ]	admin	pt	Nova senha [ Deixe em branco para não alterar ]
 no login history exists for this user	admin	pt	Não existe histórico de conexões para este usuário
@@ -120,26 +141,30 @@ preferences	admin	pt	Preferências
 re-enter password	admin	pt	Re-digite a senha
 remove all users from this group	admin	pt	Remover todos os usuários deste grupo
 security	admin	pt	Segurança
+selectbox	admin	pt	Tela de seleção
+select group managers	admin	pt	Selecione Manutenção de Grupos
 select permissions this group will have	admin	pt	Selecione as permissões que este grupo terá
 select users for inclusion	admin	pt	Selecione usuários para inclusão
 select where you want to store/retrieve filesystem information	admin	pt	Selecione onde você deseja guardar as informações de sitema de arquivos
 select where you want to store/retrieve user accounts	admin	pt	Selecione onde você deseja guardar as contas de usuários
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	pt	Selecione onde esta aplicação deve aparecer na barra de navegação, esquerda para direita
-selectbox	admin	pt	Tela de seleção
 server list	admin	pt	Lista de servidores
 server name	admin	pt	Nome do servidor
 server password	admin	pt	Senha do servidor
 server type(mode)	admin	pt	Tipo de servidor (modo)
 server url	admin	pt	URL do servidor
 server username	admin	pt	Usuário do servidor
+server x has been added	admin	pt	Servdor %1 foi adicionado
+server x has been updated	admin	pt	Servidor %1 foi atualizado
 set preference values.	admin	pt	Definir preferências.
-show 'powered by' logo on	admin	pt	Exibir logo do phpGroupWare
+show 'powered by' logo on	admin	pt	Área para exibição da logomarca do phpGroupWare
 site	admin	pt	Site
 site configuration	admin	pt	Configuração do servidor
 sorry, that group name has already been taken.	admin	pt	Este nome de grupo já está em uso.
 sorry, that group name has already been taking.	admin	pt	Desculpe, este grupo já existe
 sorry, the follow users are still a member of the group x	admin	pt	Desculpe, os seguintes usuários ainda são membros do grupo %1
 status	admin	pt	Status
+(stored password will not be shown here)	admin	pt	(Senha salva não será exibida aqui)
 submit changes	admin	pt	Enviar alterações
 template selection	admin	pt	Seleção de modelos
 text entry	admin	pt	Entrada de texto
@@ -163,11 +188,11 @@ trust level	admin	pt	Nível de confiança
 trust relationship	admin	pt	Relação de confiança
 use cookies to pass sessionid	admin	pt	Usar cookies para transmitir id de sessão
 use pure html compliant code (not fully working yet)	admin	pt	Usar puro código HTML (não funciona totalmente ainda)
-use theme	admin	pt	Usar tema
 user accounts	admin	pt	Contas de usuários
-user groups	admin	pt	Grupos de usuários
 userdata	admin	pt	Dados de usuário
-users choice	admin	pt	À escolha dos usuários
+user data	admin	pt	Dados de usuários
+user groups	admin	pt	Grupos de usuários
+use theme	admin	pt	Usar tema
 view access log	admin	pt	Exibir registro de acessos
 view error log	admin	pt	Exibir registro de erros
 view sessions	admin	pt	Exibir sessões
@@ -179,15 +204,8 @@ you have entered an invalid expiration date	admin	pt	A data de expiração digitad
 you must add at least 1 permission or group to this account	admin	pt	Você deve adicionar no mínimo uma permissão ou grupo para esta conta
 you must enter a group name.	admin	pt	Você deve digitar um nome de grupo.
 you must enter a loginid	admin	pt	Você deve digitar um código
-you must enter an application name and title.	admin	pt	Você deve digitar um nome e um título para aplicação.
 you must enter an application name.	admin	pt	Você deve digitar um nome para a aplicação.
+you must enter an application name and title.	admin	pt	Você deve digitar um nome e um título para aplicação.
 you must enter an application title.	admin	pt	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt	Você deve selecionar um tipo de arquivo
 you will need to remove the subcategories before you can delete this category	admin	pt	Você deverá remover as sub-categorias antes de remover esta categoria !
-account has been created	common	pt	Conta foi criada
-account has been deleted	common	pt	Conta foi apagada
-account has been updated	common	pt	Conta foi atualizada
-group has been added	common	pt	Grupo adicionado
-group has been deleted	common	pt	Grupo removido
-group has been updated	common	pt	Grupo atualizado
-installed applications	common	pt	Aplicativos Instalados

@@ -1,17 +1,21 @@
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	pt	<b>O tipo de conversão &lt;Nenhum&gt; não foi encontrado.</b>  Escolha um tipo de conversão da lista
 add custom field	addressbook	pt	Adicionar campo personalizado
+address book	common	pt	Contatos
+addressbook	common	pt	Contatos
+addressbook preferences	addressbook	pt	Preferências do Catálogo de Endereços
 address book - view	addressbook	pt	Contatos - Exibir
 address line 2	addressbook	pt	Endereço Linha 2
 address line 3	addressbook	pt	Endereço Linha 3
 address type	addressbook	pt	Tipo de endereço
-addressbook preferences	addressbook	pt	Preferências do Catálogo de Endereços
 addvcard	addressbook	pt	Adicionar VCard
 alt. csv import	addressbook	pt	Importar CSV
 are you sure you want to delete this field?	addressbook	pt	Tem certeza que deseja remover este campo ?
 bbs phone	addressbook	pt	Telefone BBS
+birthday	common	pt	Aniversário
 blank	addressbook	pt	Vazio
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	pt	<b>O tipo de conversão &lt;Nenhum&gt; não foi encontrado.</b>  Escolha um tipo de conversão da lista
 business address type	addressbook	pt	Endereço
 business city	addressbook	pt	Cidade
+business	common	pt	Comercial
 business country	addressbook	pt	País
 business email	addressbook	pt	Email
 business email type	addressbook	pt	Tipo de Email
@@ -22,16 +26,31 @@ business street	addressbook	pt	Rua
 business zip code	addressbook	pt	CEP
 car phone	addressbook	pt	Telefone veicular
 cell phone	addressbook	pt	Telefone celular
+city	common	pt	Cidade
+company	common	pt	Empresa
+company name	common	pt	Nome da empresa
+contact application	admin	pt	Aplicação de Contatos
+contact	common	pt	Contato
+contact settings	admin	pt	Preferências de Contatos
+country	common	pt	País
+custom	addressbook	pt	Personalizado
 custom fields	addressbook	pt	Campos pessoais
 default filter	addressbook	pt	Filtro padrão
+department	common	pt	Departamento
+domestic	addressbook	pt	Doméstico
 edit custom field	addressbook	pt	Editar campo personalizado
+edit custom fields	admin	pt	Editar campos personalizados
 export contacts	addressbook	pt	Exportar contatos
 export file name	addressbook	pt	Exportar arquivo
 extra	addressbook	pt	Extra
+fax	addressbook	pt	Fax
+fax number	common	pt	Fax
 field name	addressbook	pt	Nome do campo
 fields to show in address list	addressbook	pt	Campos a serem exibidos na lista de endereços
+field x has been added !	addressbook	pt	Campo x foi adicionado !
 full name	addressbook	pt	Nome Completo
 geo	addressbook	pt	GEO
+grant addressbook access	common	pt	Permitir acesso aos Contatos
 home address type	addressbook	pt	Endereço residencial
 home city	addressbook	pt	Cidade
 home country	addressbook	pt	País
@@ -44,8 +63,13 @@ home zip code	addressbook	pt	CEP
 import contacts	addressbook	pt	Importar contatos
 import file	addressbook	pt	Importar arquivo
 import from outlook	addressbook	pt	Importar do Outlook
+international	addressbook	pt	Internacional
 isdn phone	addressbook	pt	Teleone ISDN
 label	addressbook	pt	Comentário
+ldap context for contacts	admin	pt	contexto LDAP para contatos
+ldap host for contacts	admin	pt	servidor LDAP para contatos
+ldap root dn for contacts	admin	pt	super usuário LDAP para contatos
+ldap root pw for contacts	admin	pt	senha do super usuário LDAP para contatos
 line 2	addressbook	pt	Linha 2
 message phone	addressbook	pt	Telefone de mensagens
 middle name	addressbook	pt	Nome do meio
@@ -55,48 +79,29 @@ modem phone	addressbook	pt	Telefone de Dados (Modem)
 no vcard	addressbook	pt	Nenhum VCard
 other number	addressbook	pt	Outro número
 other phone	addressbook	pt	Outro telefone
+pager	common	pt	Pager
 parcel	addressbook	pt	Parcel
+phone number	common	pt	Número de telefone
+phone numbers	common	pt	Números de telefone
+postal	common	pt	Postal
 prefix	addressbook	pt	Prefixo
 public key	addressbook	pt	Chave pública
 record access	addressbook	pt	Acesso ao registro
 record owner	addressbook	pt	Dono do registro
+retrieve contacts	admin	pt	receber contatos
+select where you want to store	admin	pt	Selecione onde você deseja guardar
 show birthday reminders on main screen	addressbook	pt	Exibir lembrete de aniversários na tela principal
+state	common	pt	Estado
+street	common	pt	Rua
 successfully imported x records into your addressbook.	addressbook	pt	%1 Registros importados para o seu catálogo de endereços.
 suffix	addressbook	pt	Sufixo
 this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Catálogo de Endereços
-vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome.
-video phone	addressbook	pt	Videofone
-voice phone	addressbook	pt	Telefone voz
-work phone	addressbook	pt	Telefone de trabalho
-contact application	admin	pt	Aplicação de Contatos
-contact settings	admin	pt	Preferências de Contatos
-edit custom fields	admin	pt	Editar campos personalizados
-ldap context for contacts	admin	pt	contexto LDAP para contatos
-ldap host for contacts	admin	pt	servidor LDAP para contatos
-ldap root dn for contacts	admin	pt	super usuário LDAP para contatos
-ldap root pw for contacts	admin	pt	senha do super usuário LDAP para contatos
-retrieve contacts	admin	pt	receber contatos
-select where you want to store	admin	pt	Selecione onde você deseja guardar
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
-address book	common	pt	Contatos
-addressbook	common	pt	Contatos
-birthday	common	pt	Aniversário
-business	common	pt	Comercial
-city	common	pt	Cidade
-company	common	pt	Empresa
-company name	common	pt	Nome da empresa
-contact	common	pt	Contato
-country	common	pt	País
-department	common	pt	Departamento
-fax number	common	pt	Fax
-grant addressbook access	common	pt	Permitir acesso aos Contatos
-pager	common	pt	Pager
-phone number	common	pt	Número de telefone
-phone numbers	common	pt	Números de telefone
-postal	common	pt	Postal
-state	common	pt	Estado
-street	common	pt	Rua
 today is x's birthday!	common	pt	Hoje é o aniversário de %1.
 tomorrow is x's birthday.	common	pt	Amanhã é o aniversário de %1.
 vcard	common	pt	VCard
+vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome.
+video phone	addressbook	pt	Videofone
+voice phone	addressbook	pt	Telefone voz
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
+work phone	addressbook	pt	Telefone de trabalho
 zip code	common	pt	CEP
