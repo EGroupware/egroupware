@@ -153,6 +153,7 @@ class socalendar_ extends socalendar__
 	@syntax save_alarm($cal_id,$alarm,$id=False)
 	@param $cal_id Id of the calendar-entry
 	@param $alarm array with fields: text, owner, enabled, ..
+	@returns the id of the alarm
 	*/
 	function save_alarm($cal_id,$alarm)
 	{

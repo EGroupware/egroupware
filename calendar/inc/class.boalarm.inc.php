@@ -85,6 +85,7 @@
 		*/
 		function add(&$event,$time,$owner)
 		{
+			//echo "<p>boalarm::add(event="; print_r($event); ",time=$time,owner=$owner)</p>\n";
 			if (!$this->check_perms(PHPGW_ACL_SETALARM,$owner) || !($cal_id = $event['id']))
 			{
 				return False;
@@ -96,7 +97,6 @@
 				'enabled' => 1
 			);
 			$alarm['id'] = $this->so->save_alarm($cal_id,$alarm);
-
 			$event['alarm'][$alarm['id']] = $alarm;
 
 			return $alarm;

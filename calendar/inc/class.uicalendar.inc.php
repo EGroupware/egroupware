@@ -33,8 +33,6 @@
 		var $link_tpl;
 
 		// planner related variables
-		var $planner_html;
-
 		var $planner_header;
 		var $planner_rows;
 
@@ -133,6 +131,12 @@
 			$this->always_app_header = $this->bo->prefs['common']['template_set'] == 'idots';
 
 			print_debug('UI',$this->_debug_sqsof());
+
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$this->html = &$GLOBALS['phpgw']->html;
 		}
 
 		/* Public functions */
@@ -730,8 +734,10 @@
 						'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
 						'action_text_button'	=> lang('Edit Single'),
 						'action_confirm_button'	=> '',
-						'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'."\n"
-							. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
+						'action_extra_field'	=> $this->html->input_hidden(array(
+							'edit_type' => 'single',
+							'date' => sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day)
+						))
 					);
 					$p->set_var($var);
 					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -740,7 +746,7 @@
 						'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
 						'action_text_button'	=> lang('Edit Series'),
 						'action_confirm_button'	=> '',
-						'action_extra_field'	=> '<input type="hidden" name="edit_type" value="series">'
+						'action_extra_field'	=> $this->html->input_hidden('edit_type','series')
 					);
 					$p->set_var($var);
 					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -761,7 +767,10 @@
 					'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
 					'action_text_button'	=> lang('Alarm Management'),
 					'action_confirm_button'	=> '',
-					'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
+					'action_extra_field'	=> $this->html->input_hidden(array(
+						'cal_id' => $cal_id,
+						'return_to' => $this->bo->return_to
+					))
 				);
 				$p->set_var($var);
 				$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -775,8 +784,10 @@
 						'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
 						'action_text_button'	=> lang('Delete Single'),
 						'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this single occurence ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
-						'action_extra_field'	=> '<input type="hidden" name="delete_type" value="single">'
-							. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
+						'action_extra_field'	=> $this->html->input_hidden(array(
+							'delete_type' => 'single',
+							'date' => sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day)
+						))
 					);
 					$p->set_var($var);
 					$button_right .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -785,7 +796,7 @@
 						'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
 						'action_text_button'	=> lang('Delete Series'),
 						'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
-						'action_extra_field'	=> '<input type="hidden" name="delete_type" value="series">'
+						'action_extra_field'	=> $this->html->input_hidden('delete_type','series')
 					);
 					$p->set_var($var);
 					$button_right .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -827,7 +838,10 @@
 							'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
 							'action_text_button'	=> lang('Alarm Management'),
 							'action_confirm_button'	=> '',
-							'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
+							'action_extra_field'	=> $this->html->input_hidden(array(
+								'cal_id'    => $cal_id,
+								'return_to' => $this->bo->return_to
+							))
 						);
 						$p->set_var($var);
 						echo $p->fp('out','form_button');
@@ -839,7 +853,7 @@
 				'action_url_button'	=> $this->page('export'),
 				'action_text_button'	=> lang('Export'),
 				'action_confirm_button'	=> '',
-				'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
+				'action_extra_field'	=> $this->html->input_hidden('cal_id',$cal_id)
 			);
 			$p->set_var($var);
 			$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -993,11 +1007,11 @@
 				}
 				if ($this->bo->return_to)
 				{
-					Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction='.$this->bo->return_to));
+					$GLOBALS['phpgw']->redirect_link('/index.php','menuaction='.$this->bo->return_to);
 				}
 				else
 				{
-					Header('Location: '.$this->index());
+					$GLOBALS['phpgw']->redirect($this->index());
 				}
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
@@ -1320,10 +1334,6 @@
 				{
 					if (is_array($todos) && count($todos))
 					{
-						if (!is_object($GLOBALS['phpgw']->html))
-						{
-							$GLOBALS['phpgw']->html = CreateObject('calendar.html');
-						}
 						foreach($todos as $todo)
 						{
 							$icons = '';
@@ -1332,7 +1342,7 @@
 								$icons .= ($icons?' ':'').$GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
 							}
 							$class = $class == 'row_on' ? 'row_off' : 'row_on';
-							$content .= " <tr class=\"$class\">\n  <td valign=\"top\" nowrap>".
+							$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\"nowrap>".
 								($this->bo->printer_friendly?$icons:$GLOBALS['phpgw']->html->a_href($icons,$todo['view'])).
 								"</td>\n  <td>".($this->bo->printer_friendly?$todo['title']:
 								$GLOBALS['phpgw']->html->a_href($todo['title'],$todo['view']))."</td>\n </tr>\n";
@@ -1342,8 +1352,7 @@
 			}
 			if (!empty($content))
 			{
-				//echo "todos=<table border=\"0\">\n$content</table>\n";
-				return "<table border=\"0\">\n$content</table>\n";
+				return "<table border=\"0\" width=\"100%\">\n$content</table>\n";
 			}
 			return False;
 		}
@@ -1510,7 +1519,6 @@
 
 			// create/initialize variables directly used for HTML code generation
 			//
-			$this->planner_html   = CreateObject('calendar.html');
 			$this->planner_header = array();
 			$this->planner_rows   = array();
 
@@ -1582,7 +1590,7 @@
 
 					$hdr[2]['.'.$index] .= " bgcolor=\"$color\"";
 
-					$hdr[2][$index] = '<a href="'.$this->planner_html->link('/index.php',
+					$hdr[2][$index] = '<a href="'.$this->html->link('/index.php',
 								array(
 									'menuaction' => 'calendar.uicalendar.add',
 									'date' => $date
@@ -1661,7 +1669,7 @@
 			$intervals_per_day = $this->bo->prefs['calendar']['planner_intervals_per_day'];
 			$is_private        = !$this->bo->check_perms(PHPGW_ACL_READ,$event);
 			
-			$view = $this->planner_html->link('/index.php',
+			$view = $this->html->link('/index.php',
 				array(
 					'menuaction' => 'calendar.uicalendar.view',
 					'cal_id' => $event['id'],
@@ -1782,13 +1790,13 @@
 
 			if ($event['priority'] == 3)
 			{
-				$cel .= $this->planner_html->image('calendar','mini-calendar-bar.gif','','border="0"');
+				$cel .= $this->html->image('calendar','mini-calendar-bar.gif','','border="0"');
 			}
 			if ($event['recur_type'])
 			{
-				$cel .= $this->planner_html->image('calendar','recur.gif','','border="0"');
+				$cel .= $this->html->image('calendar','recur.gif','','border="0"');
 			}
-			$cel .= $this->planner_html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
+			$cel .= $this->html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
 			$cel .= '</a>';
 
 			if (isset($event['print_title']) && $event['print_title'] == 'yes')
@@ -1948,7 +1956,7 @@
 				_debug_array($this->planner_rows);
 				reset($this->planner_rows);
 			}
-			return $this->planner_html->table(
+			return $this->html->table(
 				array(
 					'_hdr0' => $this->planner_header[0],
 					'._hdr0' => $bgcolor,

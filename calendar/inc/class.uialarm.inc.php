@@ -47,7 +47,11 @@
 			}
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir('calendar');
 
-			$this->html = CreateObject('calendar.html');
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$this->html = &$GLOBALS['phpgw']->html;
 		}
 
 		function prep_page()
@@ -94,6 +98,10 @@
 
 		function manager()
 		{
+			if ($_POST['cancel'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction='.($_POST['return_to'] ? $_POST['return_to'] : 'calendar.uicalendar.index'));
+			}
 			if ($_POST['delete'] && count($_POST['alarm']))
 			{
 				if ($this->bo->delete($_POST['alarm']) < 0)
@@ -159,9 +167,8 @@
 						//'data'   => $alarm['text'],
 						'data'     => lang('Email Notification'),
 						'owner'    => $GLOBALS['phpgw']->common->grab_owner_name($alarm['owner']),
-						'enabled'  => ($alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','enabled.gif').'" width="13" height="13" title="'.lang('enabled').'">':
-							'<img src="'.$GLOBALS['phpgw']->common->image('calendar','disabled.gif').'" width="13" height="13" title="'.lang('disabled').'">'),
-						'select'   => '<input type="checkbox" name="alarm['.$alarm['id'].']">'
+						'enabled'  => $this->html->image('calendar',$alarm['enabled']?'enabled':'disabled',$alarm['enabled']?'enabled':'disabled','width="13" height="13"'),
+						'select'   => $this->html->checkbox("alarm[$alarm[id]]")
 					);
 					if ($this->bo->check_perms(PHPGW_ACL_DELETEALARM,$alarm['owner']))
 					{
@@ -189,9 +196,13 @@
 			}
 			$this->template->set_var(Array(
 				'action_url'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uialarm.manager')),
-				'hidden_vars'	=> $this->html->input_hidden('cal_id',$this->bo->cal_id),
+				'hidden_vars'	=> $this->html->input_hidden(array(
+					'cal_id' => $this->bo->cal_id,
+					'return_to' => $_POST['return_to']
+				)),
 				'lang_enable'	=> lang('Enable'),
-				'lang_disable'	=> lang('Disable')
+				'lang_disable'	=> lang('Disable'),
+				'input_cancel'  => $this->html->submit_button('cancel','Cancel')
 			));
 //echo "<p>alarm_management='".htmlspecialchars($this->template->get_var('alarm_management'))."'</p>\n";
 			$this->template->pfp('out','alarm_management');

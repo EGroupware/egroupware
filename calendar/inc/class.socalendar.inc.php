@@ -203,17 +203,17 @@
 
 		function save_alarm($cal_id,$alarm,$id=0)
 		{
-			$this->cal->save_alarm($cal_id,$alarm,$id);
+			return $this->cal->save_alarm($cal_id,$alarm,$id);
 		}
 
 		function delete_alarm($id)
 		{
-			$this->cal->delete_alarm($id);
+			return $this->cal->delete_alarm($id);
 		}
 
 		function delete_entry($id)
 		{
-			$this->cal->delete_event($id);
+			return $this->cal->delete_event($id);
 		}
 
 		function expunge()

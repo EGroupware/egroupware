@@ -4,8 +4,10 @@
 {hidden_vars}
   <table border="0" width="90%" align="center">
    {rows}
-   <tr><td colspan="6">
-	<br>&nbsp;{input_days}&nbsp;{input_hours}&nbsp;{input_minutes}&nbsp;{input_owner}&nbsp;{input_add}<br>&nbsp;
+   <tr><td colspan="4">
+    <br>&nbsp;{input_days}&nbsp;{input_hours}&nbsp;{input_minutes}&nbsp;{input_owner}&nbsp;{input_add}<br>&nbsp;
+   </td><td align="right">
+    {input_cancel}
    </td></tr>
   </table>
 </form>
