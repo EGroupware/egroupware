@@ -17,12 +17,14 @@
 		'currentapp' => 'admin'
 	);
 
-	if (! $app_name)
+	if (!$app_name)
 	{
 		Header("Location: " . $phpgw->link('/admin/applications.php'));
 	}
 	include('../header.inc.php');
-	$phpgw->template->set_file(array('body' => 'delete_common.tpl'));
+
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$p->set_file(array('body' => 'delete_common.tpl'));
 
 	if ($confirm)
 	{
@@ -35,10 +37,10 @@
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$phpgw->template->set_var('messages',lang('Are you sure you want to delete this application ?'));
-	$phpgw->template->set_var('no','<a href="' . $phpgw->link("/admin/applications.php") . '">' . lang('No') . '</a>');
-	$phpgw->template->set_var('yes','<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . '">' . lang('Yes') . '</a>');
-	$phpgw->template->pparse('out','body');
+	$p->set_var('messages',lang('Are you sure you want to delete this application ?'));
+	$p->set_var('no','<a href="' . $phpgw->link("/admin/applications.php") . '">' . lang('No') . '</a>');
+	$p->set_var('yes','<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . '">' . lang('Yes') . '</a>');
+	$p->pparse('out','body');
 
 	$phpgw->common->phpgw_footer();
 ?>

@@ -18,11 +18,10 @@
 	);
 	include('../header.inc.php');
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-	$p->set_file(array(
-		'list' => 'applications.tpl',
-		'row'  => 'applications_row.tpl'
-	));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$p->set_file(array('applications' => 'applications.tpl'));
+	$p->set_block('applications','list','list');
+	$p->set_block('applications','row','row');
 
 	if ($order)
 	{

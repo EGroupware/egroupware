@@ -1,3 +1,4 @@
+<!-- BEGIN form -->
 <p><b>{lang_header}</b>
 <hr><p>
 {error}
@@ -19,3 +20,11 @@
 
  </table>
 </form>
+<!-- END form -->
+
+<!-- BEGIN row -->
+  <tr bgcolor="{tr_color}">
+   <td>{label}</td>
+   <td>{value}</td>
+  </tr>
+<!-- END row -->

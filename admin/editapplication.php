@@ -25,7 +25,7 @@
 
 	include('../header.inc.php');
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 	function display_row($label, $value)
 	{
@@ -37,10 +37,9 @@
 		$p->parse('rows','row',True);
 	}
 
-	$p->set_file(array(
-		'form' => 'application_form.tpl',
-		'row'  => 'application_form_row.tpl'
-	));
+	$p->set_file(array('application' => 'application_form.tpl'));
+	$p->set_block('application','form','form');
+	$p->set_block('application','row','row');
 
 	if ($submit)
 	{

@@ -20,19 +20,19 @@
 	);
 	include('../header.inc.php');
 
-	$phpgw->template->set_file(array(
-		'form' => 'application_form.tpl',
-		'row'  => 'application_form_row.tpl'
-	));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$p->set_file(array('application' => 'application_form.tpl'));
+	$p->set_block('application','form','form');
+	$p->set_block('application','row','row');
 
 	function display_row($label, $value)
 	{
-		global $phpgw;
-		$phpgw->template->set_var('tr_color',$phpgw->nextmatchs->alternate_row_color());
-		$phpgw->template->set_var('label',$label);
-		$phpgw->template->set_var('value',$value);
+		global $phpgw,$p;
+		$p->set_var('tr_color',$phpgw->nextmatchs->alternate_row_color());
+		$p->set_var('label',$label);
+		$p->set_var('value',$value);
 
-		$phpgw->template->parse('rows','row',True);
+		$p->parse('rows','row',True);
 	}
 
 	if ($submit)
@@ -84,21 +84,21 @@
 		}
 		else
 		{
-			$phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
+			$p->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
 		}
 	}
 	else
 	{     // else submit
-		$phpgw->template->set_var("error","");
+		$p->set_var("error","");
 	}
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$phpgw->template->set_var("lang_header",lang("Add new application"));
-	$phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+	$p->set_var("lang_header",lang("Add new application"));
+	$p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-	$phpgw->template->set_var("hidden_vars","");
-	$phpgw->template->set_var("form_action",$phpgw->link("/admin/newapplication.php"));
+	$p->set_var("hidden_vars","");
+	$p->set_var("form_action",$phpgw->link("/admin/newapplication.php"));
 
 	display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
 	display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');
@@ -121,8 +121,8 @@
 
 	display_row(lang("Allow Anonymous access to this app"),'<input type="checkbox" name="n_app_anonymous" value="True">');
 
-	$phpgw->template->set_var("lang_submit_button",lang("add"));
+	$p->set_var("lang_submit_button",lang("add"));
 
-	$phpgw->template->pparse("out","form");
+	$p->pparse("out","form");
 	$phpgw->common->phpgw_footer();
 ?>
