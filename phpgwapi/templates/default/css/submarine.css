@@ -51,6 +51,13 @@ a:hover
 	width: 100%;
 }
 
+table.login
+{
+	margin-top: 150px;
+	width: 40%;
+	text-align: center;
+}
+
 .login
 {
 	background-color: #80BBFF;
