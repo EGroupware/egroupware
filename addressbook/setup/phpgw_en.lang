@@ -36,6 +36,7 @@ country	common	en	Country
 custom fields	addressbook	en	Custom Fields
 default filter	addressbook	en	Default Filter
 department	common	en	Department
+download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 export contacts	addressbook	en	Export Contacts
@@ -72,6 +73,7 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 no vcard	addressbook	en	No VCard
+none	addressbook	en	none
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
 pager	common	en	Pager
@@ -84,6 +86,7 @@ public key	addressbook	en	Public Key
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 retrieve contacts	admin	en	retrieve contacts
+select the type of conversion	addressbook	en	Select the type of conversion
 select where you want to store	admin	en	Select where you want to store
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 state	common	en	State

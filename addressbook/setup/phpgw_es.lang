@@ -41,6 +41,7 @@ default filter	preferences	es	Filtro por Defecto
 department	common	es	Departmento
 domestic	common	es	Nacional
 download	addressbook	es	Descargar Archivo
+download export file (uncheck to debug output in browser)	addressbook	es	Descargar archivo exportado
 edit custom field	admin	es	Editar Campo Personalizado
 edit custom fields	admin	es	Editar Campos Personalizados
 e-mail	addressbook	es	E-Mail
@@ -88,6 +89,7 @@ mobile	addressbook	es	Tel.Celular
 mobile phone	addressbook	es	Telefono Movil
 modem phone	addressbook	es	Telefono Modem
 no vcard	common	es	Sin VCard
+none	addressbook	es	Ninguno
 number of records to read (<=200)	addressbook	es	Registros a leer (menos de 200)
 other number	addressbook	es	Otro Numero
 other phone	addressbook	es	Otro Telefono
@@ -105,6 +107,7 @@ record access	addressbook	es	Acceso al registro
 record owner	addressbook	es	Dueño del registro
 records read (not yet imported, you may go back and uncheck test import)	addressbook	es	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
 retrieve contacts	admin	es	Recuperar Contactos
+select the type of conversion	addressbook	es	Seleccione el tipo de conversion
 select where you want to store	admin	es	Seleccione donde desea almacenar
 show birthday reminders on main screen	addressbook	es	Mostrar recordatorios de Cumplea&ntilde;os en la Pantalla Principal
 startrecord	addressbook	es	Registro Inicial

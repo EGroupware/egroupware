@@ -226,9 +226,12 @@
 				$this->template->set_var('export_text',lang('Export from Addressbook'));
 				$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export'));
 				$this->template->set_var('filename',lang('Export file name'));
+				$this->template->set_var('conversion',lang('Select the type of conversion'));
 				$this->template->set_var('conv',$conv);
 				$this->template->set_var('debug',lang(''));
 				$this->template->set_var('download',lang('Submit'));
+				$this->template->set_var('download_export',lang('Download export file (Uncheck to debug output in browser)'));
+				$this->template->set_var('none',lang('none'));
 				$this->template->set_var('start',$this->start);
 				$this->template->set_var('sort',$this->sort);
 				$this->template->set_var('order',$this->order);
