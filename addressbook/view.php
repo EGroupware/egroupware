@@ -99,7 +99,14 @@
 		. $access_link . '</b></td><td></table>';
 
 	$sfields = rawurlencode(serialize($fields[0]));
-	$editlink  = $phpgw->common->check_owner($record_owner,"/addressbook/edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
+
+	if ($rights & PHPGW_ACL_EDIT) {
+		$editlink = '<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order"
+			. "&query=$query&sort=$sort").'">';
+	} else {
+		$editlink = '';
+	}
+
 	$copylink  = '<form method="POST" action="'.$phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$vcardlink = '<form method="POST" action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$donelink  = '<form method="POST" action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
