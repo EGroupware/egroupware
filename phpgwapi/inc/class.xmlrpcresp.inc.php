@@ -29,6 +29,7 @@
 		{
 			if ($fcode!=0)
 			{
+				$this->xv = 0;
 				$this->fn = $fcode;
 				$this->fs = htmlspecialchars($fstr);
 			}

@@ -1,22 +1,35 @@
 <?php
-	// by Edd Dumbill (C) 1999-2001
-	// <edd@usefulinc.com>
-	// xmlrpc.inc,v 1.18 2001/07/06 18:23:57 edmundd
-
-	// License is granted to use or modify this software ("XML-RPC for PHP")
-	// for commercial or non-commercial use provided the copyright of the author
-	// is preserved in any distributed or derivative work.
-
-	// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESSED OR
-	// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-	// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-	// IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-	// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-	// NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
-	// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-	// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-	// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-	// THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 1999,2000,2001 Edd Dumbill.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+//
+//    * Redistributions of source code must retain the above copyright
+//      notice, this list of conditions and the following disclaimer.
+//
+//    * Redistributions in binary form must reproduce the above
+//      copyright notice, this list of conditions and the following
+//      disclaimer in the documentation and/or other materials provided
+//      with the distribution.
+//
+//    * Neither the name of the "XML-RPC for PHP" nor the names of its
+//      contributors may be used to endorse or promote products derived
+//      from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+// HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+// STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	class xmlrpc_client
 	{
@@ -25,11 +38,13 @@
 		var $port;
 		var $errno;
 		var $errstring;
-		var $debug=0;
+		var $debug = 0;
 		var $username = '';
 		var $password = '';
+		var $cert     = '';
+		var $certpass = '';
 
-		function xmlrpc_client($path='', $server='', $port=80)
+		function xmlrpc_client($path='', $server='', $port=0)
 		{
 			$this->port   = $port;
 			$this->server = $server;
@@ -54,61 +69,82 @@
 			$this->password = $p;
 		}
 
-		function send($msg, $timeout=0, $ssl=False)
+		function setCertificate($cert, $certpass)
 		{
-			// where msg is an xmlrpcmsg
-			$msg->debug = $this->debug;
+			$this->cert     = $cert;
+			$this->certpass = $certpass;
+		}
 
-			if($ssl)
+		function send($msg, $timeout=0, $method='http')
+		{
+			/* where msg is an xmlrpcmsg */
+			$msg->debug = $this->debug;
+ 
+			if ($method == 'https')
 			{
-				return $this->ssl_sendPayloadHTTP10(
+				return $this->sendPayloadHTTPS(
 					$msg,
-					$this->server, $this->port,
-					$timeout, $this->username, 
-					$this->password
+					$this->server,
+					$this->port,
+					$timeout,
+					$this->username,
+					$this->password,
+					$this->cert,
+					$this->certpass
 				);
 			}
 			else
 			{
 				return $this->sendPayloadHTTP10(
 					$msg,
-					$this->server, $this->port,
-					$timeout, $this->username, 
+					$this->server,
+					$this->port,
+					$timeout,
+					$this->username, 
 					$this->password
 				);
 			}
 		}
 
-		function sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username="", $password="")
+		function sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username='', $password='')
 		{
+			if($port == 0)
+			{
+				$port = 80;
+			}
 			if($timeout>0)
 			{
-				$fp=fsockopen($server, $port,&$this->errno, &$this->errstr, $timeout);
+				$fp = fsockopen($server, $port,&$this->errno, &$this->errstr, $timeout);
 			}
 			else
 			{
-				$fp=fsockopen($server, $port,&$this->errno, &$this->errstr);
+				$fp = fsockopen($server, $port,&$this->errno, &$this->errstr);
 			}
 			if (!$fp)
 			{
-				return 0;
+				return CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['http_error'],
+					$GLOBALS['xmlrpcstr']['http_error']
+				);
 			}
 			// Only create the payload if it was not created previously
 			if(empty($msg->payload))
 			{
 				$msg->createPayload();
 			}
-		
+
 			// thanks to Grant Rauscher <grant7@firstworld.net>
 			// for this
 			$credentials = '';
-			if ($username!="")
+			if ($username && $password)
 			{
-				$credentials = "Authorization: Basic " . base64_encode($username . ":" . $password) . "\r\n";
+				$credentials = 'Authorization: Basic ' . base64_encode($username . ':' . $password) . "\r\n";
 			}
 
-			$op = "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
-				. "Host: ". $this->server . "\r\n"
+			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
+				. 'Host: '. $this->server . "\r\n"
 				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
 				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. $credentials
@@ -118,59 +154,100 @@
 
 			if (!fputs($fp, $op, strlen($op)))
 			{
-				$this->errstr="Write error";
-				return 0;
+				$this->errstr = 'Write error';
+				return CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['http_error'],
+					$GLOBALS['xmlrpcstr']['http_error']
+				);
 			}
 			$resp = $msg->parseResponseFile($fp);
 			fclose($fp);
 			return $resp;
 		}
 
-		function ssl_sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username='', $password='')
+		/* contributed by Justin Miller <justin@voxel.net> - requires curl to be built into PHP */
+		function sendPayloadHTTPS($msg, $server, $port, $timeout=0,$username='', $password='', $cert='',$certpass='')
 		{
-			if(!function_exists(curl_init))
+			if (!function_exists('curl_init'))
 			{
-				$this->errstr = 'No curl functions available - use of ssl is invalid';
-				return False;
+				return CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['no_ssl'],
+					$GLOBALS['xmlrpcstr']['no_ssl']
+				);
 			}
-			/* curl Method borrowed from:
-			  http://sourceforge.net/tracker/index.php?func=detail&aid=427359&group_id=23199&atid=377731
-			*/
 
-			// Only create the payload if it was not created previously
+			if ($port == 0)
+			{
+				$port = 443;
+			}
+			/* Only create the payload if it was not created previously */
 			if(empty($msg->payload))
 			{
 				$msg->createPayload();
 			}
-		
-			// thanks to Grant Rauscher <grant7@firstworld.net>
-			// for this
-			$credentials = '';
-			if ($username!='')
+
+			$curl = curl_init('https://' . $server . ':' . $port . $this->path);
+
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			// results into variable
+			if ($this->debug)
 			{
-				$credentials = "Authorization: Basic " . base64_encode($username . ':' . $password) . "\r\n";
+				curl_setopt($curl, CURLOPT_VERBOSE, 1);
 			}
+			curl_setopt($curl, CURLOPT_USERAGENT, 'PHP XMLRPC 1.0');
+			// required for XMLRPC
+			curl_setopt($curl, CURLOPT_POST, 1);
+			// post the data
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $msg->payload);
+			// the data
+			curl_setopt($curl, CURLOPT_HEADER, 1);
+			// return the header too
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+				'X-PHPGW-Server: '  . $this->server,
+				'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
+				'Content-Type: text/xml'
+			));
+			if ($timeout)
+			{
+				curl_setopt($curl, CURLOPT_TIMEOUT, $timeout == 1 ? 1 : $timeout - 1);
+			}
+			if ($username && $password)
+			{
+				curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+			}
+			if ($cert)
+			{
+				curl_setopt($curl, CURLOPT_SSLCERT, $cert);
+			}
+			if ($certpass)
+			{
+				curl_setopt($curl, CURLOPT_SSLCERTPASSWD,$certpass);
+			}
+			// set cert password
 
-			$op = "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
-				. "Host: ". $this->server . "\r\n"
-				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
-				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
-				. $credentials
-				. "Content-Type: text/xml\r\nContent-Length: "
-				. strlen($msg->payload) . "\r\n\r\n"
-				. $msg->payload;
+			$result = curl_exec($curl);
 
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,$this->server);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $op);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			$response_buf = curl_exec($ch);
-			curl_close($ch);
+			if (!$result)
+			{
+				$this->errstr = 'Write error';
+				$resp = CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['curl_fail'],
+					$GLOBALS['xmlrpcstr']['curl_fail'] . ': ' . curl_error($curl)
+				);
+			}
+			else
+			{
+				$resp = $msg->parseResponse($result);
+			}
+			curl_close($curl);
 
-			$resp = $msg->parseResponse($response_buf);
 			return $resp;
 		}
-
 	}
 ?>

@@ -25,7 +25,7 @@
 		var $payload;
 		var $methodname;
 		var $params = array();
-		var $debug  = 1;
+		var $debug  = 0;
 
 		function xmlrpcmsg($meth, $pars=0)
 		{
@@ -125,11 +125,24 @@
 			xml_set_default_handler($parser, 'xmlrpc_dh');
 //			$xmlrpc_value = CreateObject('phpgwapi.xmlrpcval');
 
-			$hdrfnd=0;
+			$hdrfnd = 0;
 			if ($this->debug)
 			{
-				print '<PRE>---GOT---' . "\n" . htmlspecialchars($data) . "\n" . '---END---' . "\n" . '</PRE>';
+				echo '<PRE>---GOT---' . "\n" . htmlspecialchars($data) . "\n" . '---END---' . "\n" . '</PRE>';
 			}
+			if ($data == '')
+			{
+				error_log('No response received from server.');
+				$r = CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['no_data'],
+					$GLOBALS['xmlrpcstr']['no_data']
+				);
+				xml_parser_free($parser);
+				return $r;
+			}
+
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
 			if (ereg("^HTTP",$data) && !ereg("^HTTP/[0-9\.]+ 200 ", $data))

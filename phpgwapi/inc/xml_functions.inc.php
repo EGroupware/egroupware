@@ -71,6 +71,12 @@
 	$GLOBALS['xmlrpcstr']['introspect_unknown'] = "Can't introspect: method unknown";
 	$GLOBALS['xmlrpcerr']['http_error']         = 5;
 	$GLOBALS['xmlrpcstr']['http_error']         = "Didn't receive 200 OK from remote server.";
+	$GLOBALS['xmlrpcerr']['no_data']            = 6;
+	$GLOBALS['xmlrpcstr']['no_data']            = 'No data received from server.';
+	$GLOBALS['xmlrpcerr']['no_ssl']             = 7;
+	$GLOBALS['xmlrpcstr']['no_ssl']             = 'No SSL support compiled in.';
+	$GLOBALS['xmlrpcerr']['curl_fail']          = 8;
+	$GLOBALS['xmlrpcstr']['curl_fail']          = 'CURL error';
 
 	$GLOBALS['xmlrpc_defencoding'] = 'UTF-8';
 
