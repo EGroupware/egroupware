@@ -246,12 +246,12 @@ class vCalendar
 				if(ereg("^[\=\:]",$char))
 				{
 					$found = True;
-					$ret_str = rawurldecode(substr($str,0,$i));
+					$ret_str = str_replace('=3D','=',str_replace('%20',' ',substr($str,0,$i)));
 					$return_value[] = $ret_str;
 					$ret_array = $this->explode_param(substr($str,$i + 1),'"',False);
 					while(list($key,$value) = each($ret_array))
 					{
-						$return_value[] = rawurldecode($value);
+						$return_value[] = str_replace('=3D','=',str_replace('%20',' ',$value));
 					}
 					$i = $str_len;
 				}
@@ -259,7 +259,7 @@ class vCalendar
 			}
 			if(!$found)
 			{
-				$return_value[] = rawurldecode($str);
+				$return_value[] = str_replace('=3D','=',str_replace('%20',' ',$str));
 			}
 		}
 		else
@@ -299,7 +299,6 @@ class vCalendar
 
 	function parse_text(&$event,$value)
 	{
-	echo "VALUE = ".$value."<br>\n";
 		$return_value = $this->explode_param($value,'"',True);
 		if(count($return_value) > 0)
 		{
@@ -312,17 +311,14 @@ class vCalendar
 					case 'altrep':
 					case 'fmttype':
 					case 'cid':
-	echo "Setting ".$type[0]." = ".$type[1]."<br>\n";
 						$this->set_var($event,strtolower($type[0]),$type[1]);
 						break;
 					case 'encoding':
-	echo "Setting ".$type[0]." = ".$type[1]."<br>\n";
 						$this->set_var($event,strtolower($type[0]),$this->switch_encoding($type[1]));
 						break;
 					case 'value':
 						break;
 					default:
-	echo "Setting value(0) = ".$type[0]."<br>\n";
 						$this->set_var($event,'value',$type[0]);
 						break;
 				}
@@ -330,7 +326,6 @@ class vCalendar
 		}
 		elseif($value <> '\n')
 		{
-	echo "Setting value(text) = ".$value."<br>\n";
 			$this->set_var($event,'value',$value);
 		}
 	}
@@ -616,6 +611,9 @@ class vCalendar
 					$type[0] = str_replace('-','_',$type[0]);
 					$val = $this->split_address($type[1]);
 					break;
+				case 'dir':
+					$val = $type[1];
+					break;
 				default:
 					$val = $type[1];
 					break;
@@ -637,6 +635,25 @@ class vCalendar
 				$this->set_var($event,$type[0],$type[1]);
 			}
 		}
+	}
+
+	function from_text($str)
+	{
+		$str = str_replace("\\,",",",$str);
+		$str = str_replace("\\;",";",$str);
+		$str = str_replace("\\N","\n",$str);
+		$str = str_replace("\\n","\n",$str);
+		$str = str_replace("\\\\","\\",$str);
+		return $str;
+	}
+
+	function to_text($str)
+	{
+		$str = str_replace("\\","\\\\",$str);
+		$str = str_replace(",","\\,",$str);
+		$str = str_replace(";","\\;",$str);
+		$str = str_replace("\n","\\n",$str);
+		return $str;
 	}
 
 	function new_vcal()
@@ -680,7 +697,6 @@ class vCalendar
 			// When unfolded becomes,
 			//vcal_text[$i] = 'UID:040000008200E00074C5B7101A82E0080000000040A12C0042A2C0010000000000000000100000009BDFF7C7650ED5118DD700805FA71291'
 
-	echo "LINE : ".$vcal_text[$i]."<br>\n";
 			$colon = strpos($vcal_text[$i],':');
 			if($colon == 0)
 			{
@@ -726,12 +742,13 @@ class vCalendar
 					$this->set_var($vcal,$majortype,$value);
 					break;
 				case 'description':
-echo "Setting Description!<br>\n";
 					$event->$majortype = new class_text;
-					$this->parse_text($event->$majortype,$value);
+					$this->parse_text($event->$majortype,$this->from_text($value));
+					break;
+				case 'location':
+					$this->set_var($event,$majortype,$this->from_text($value));
 					break;
 				case 'attach':
-echo "Setting Attachment!<br>\n";
 					$attach = new class_text;
 					$this->parse_text($attach,$value);
 					$event->attach[] = $attach;
@@ -798,7 +815,7 @@ echo "Setting Attachment!<br>\n";
 		}
 		if(!empty($event->dir))
 		{
-			$str .= ';DIR="'.str_replace(' ','%20',$event->dir).'"';
+			$str .= ';DIR="'.str_replace('=','=3D',str_replace(' ','%20',$event->dir)).'"';
 		}
 		if(!empty($event->role))
 		{
@@ -844,14 +861,13 @@ echo "Setting Attachment!<br>\n";
 		}		
 		if(!empty($event->value))
 		{
-			$str .= ':'.$event->value;
+			$str .= ':'.$this->to_text($event->value);
 		}
 		else
 		{
 			$str .= ':\n';
 		}
 
-		echo "TEXT = ".$str."<br>\n";
 		return $str;
 	}
 
@@ -862,7 +878,7 @@ echo "Setting Attachment!<br>\n";
 // Still need to build recurrence portion......
 		iF(!empty($event->location))
 		{
-			$str .= $this->fold('LOCATION:'.$event->location);
+			$str .= $this->fold('LOCATION:'.$this->to_text($event->location));
 		}
 		else
 		{
