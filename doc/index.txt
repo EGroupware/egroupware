@@ -1,10 +1,40 @@
-phpGroupWare Docs V0.07
+
+
+phpGroupWare Installation
 
 Joseph Engo
 
 Dan Kuykendall  
 
+Editor: Darryl VanDorp
+
 $Id$
+
+Table of Contents
+
+1 What is phpGroupWare 
+2 Why you should use it 
+3 Installation
+    3.1 Requirements 
+    3.2 Tested Systems 
+4 Obtaining and Installing phpGroupWare 
+    4.1 Installing from TarBall 
+    4.2 Installing from CVS 
+        4.2.1 Patched Branches in CVS
+    4.3 Setting File Permissions 
+    4.4 Setup the database
+        4.4.1 Mysql (assuming an existing and working Mysql install)
+        4.4.2 Postgresql (assuming an existing and working Postgresql install)
+    4.5 Setup / Configure phpGroupWare 
+    4.6 Testing the install 
+    4.7 Installing additional applications 
+5 Trouble Shooting
+    5.1 It seems to hang when I try to read my mail 
+    5.2 When I log in I see the directory listing instead of a web page 
+    5.3 I get garbage that looks like code when I go to the phpGroupWare URL 
+6 About this document
+    6.1 History 
+    6.2 Version History 
 
 
 
@@ -123,25 +153,40 @@ Installing from a CVS is fairly easy. The files should be
 checked out in the webserver directory. Example steps (please
 adjust to your servers config):
 
-cd /home/httpd/html
+* cd /home/httpd/html
 
-cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
-login (just hit enter if prompted for a password)
+* cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
+  login (just hit enter if prompted for a password)
 
-cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
-co phpgroupware
+* cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
+  co phpgroupware
 
 or if you prefer using CVSROOT:
 
-export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'
+* export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'
 
-cvs login (just hit enter if prompted for a password)
+* cvs login (just hit enter if prompted for a password)
 
-cvs co phpgroupware
+* cvs co phpgroupware
 
 You may have to get required permissions to do this. Contact
 your system administrator if you dont have the permission
 to write to your webserver directory. 
+
+4.2.1 Patched Branches in CVS
+
+Recently the phpGroupWare developers started a branch for
+patches to released versions. This is to facilitate bugs
+being fixed in a released version without having to wait
+for the next offical release. There is a developer who has
+been assigned the responsibility for maintaining that branch
+and applying patches and fixes. To check out this version
+of the code using 0.9.9 as an example you would do the following:
+
+* login to cvs anonymously as described above
+
+* cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
+  -r Version-0_9_9-patches phpgroupware
 
 4.3 Setting File Permissions 
 
@@ -157,7 +202,8 @@ Files Directory (Required) - This can be should be the files
 dir under the phpgroupware dir. You will need to give the
 webserver account owndership of this directory.
 
-chown nobody:nobody
+chown nobody:nobody (note: this assumes your webserver runs
+as user nobody, adjust for your installation)
 
 chmod 700 /home/httpd/html/phpgroupware/files
 
@@ -213,6 +259,8 @@ is started:
   -D /var/lib/pgsq/data start (adjust for your install dirs)
 
 * create the empty database: /usr/bin/createdb phpgroupware
+
+* create a database user: /usr/bin/createuser phpgroupware
 
 For more detailed user documentation on Postgresql see their
 website : [http://www.postgresql.org]
@@ -380,7 +428,7 @@ To subscribe, go to _id=7305
 6.1 History 
 
 This document was started by Joseph Engo reworked by Dan
-Kuykendall then hacked again by Darryl VanDorp 
+Kuykendall then edited by Darryl VanDorp 
 
 6.2 Version History 
 
@@ -418,4 +466,7 @@ reformatted and touched up some sections
 
 v.0.07 (Jan 16, 2001) - Darryl VanDorp, added TOC, fixed
 some Postgresql setup instructions, added some links to
-install/compilation instructions for apache, php and mysql.
+install/compilation instructions for apache, php and mysql.`
+
+v.0.08 (Feb 22, 2001) - Darryl VanDorp, added a multipart
+html export
