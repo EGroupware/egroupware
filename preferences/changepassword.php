@@ -48,43 +48,45 @@
 	{
 		if($n_passwd != $n_passwd_2)
 		{
-			$errors[] = lang('The two passwords are not the same');
+			$GLOBALS['phpgw_info']['flags']['msgbox_data']['The two passwords are not the same']=False;
 		}
 
 		if(! $n_passwd)
 		{
-			$errors[] = lang('You must enter a password');
+			$GLOBALS['phpgw_info']['flags']['msgbox_data']['You must enter a password']=False;
 		}
-
-		if(is_array($errors))
+		sanitize($n_passwd,'password');
+		
+		if(@is_array($GLOBALS['phpgw_info']['flags']['msgbox_data']))
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
 			$GLOBALS['phpgw']->template->pfp('out','form');
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
-		}
-
-		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
-		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
-		if(!$passwd_changed)
-		{
-			// This need to be changed to show a different message based on the result
-			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=38'));
+			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 		else
 		{
-			$GLOBALS['phpgw_info']['user']['passwd'] = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
-			$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
-			$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
-			$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
-			$GLOBALS['phpgw']->hooks->process('changepassword');
-			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=18'));
+
+			$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
+			$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
+			if(!$passwd_changed)
+			{
+				// This need to be changed to show a different message based on the result
+				Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=38'));
+			}
+			else
+			{
+				$GLOBALS['phpgw_info']['user']['passwd'] = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
+				$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
+				$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
+				$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
+				$GLOBALS['phpgw']->hooks->process('changepassword');
+				Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=18'));
+			}
 		}
 	}
 	else
 	{
 		$GLOBALS['phpgw']->common->phpgw_header();
-
 		$GLOBALS['phpgw']->template->pfp('out','form');
 		$GLOBALS['phpgw']->common->phpgw_footer();
 	}

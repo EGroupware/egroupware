@@ -176,20 +176,40 @@
 					return True;
 				}
 				break;
+			case "isprint":
+				$length = strlen($string);
+				$position = 0;
+				while ($length > $position)
+				{
+					$char = substr($string, $position, 1);
+			 		if ($char < ' ' || $char > '~')
+					{
+						return False;
+					}
+					$position = $position + 1;
+				}
+				return True;
+	     	break;
+			case 'alpha':
+				if (preg_match("/^[a-z]+$/i", $string))
+				{
+					return True;
+				}
+				break;
 			case 'number':
 				if (preg_match("/^[0-9]+$/i", $string))
 				{
 					return True;
 				}
 				break;
-			case 'string':
-				if (preg_match("/^[a-z]+$/i", $string))
+			case 'alphanumeric':
+				if (preg_match("/^[a-z0-9 -._]+$/i", $string))
 				{
 					return True;
 				}
 				break;
-			case 'alpha':
-				if (preg_match("/^[a-z0-9 -._]+$/i", $string))
+			case 'string':
+				if (preg_match("/^[a-z]+$/i", $string))
 				{
 					return True;
 				}
@@ -220,6 +240,72 @@
 				{
 					return True;
 				}
+				break;
+			case "password":
+				$password_length = strlen($string);
+				$password_numbers = Array('0','1','2','3','4','5','6','7','8','9');
+				$password_special_chars = Array(' ','~','`','!','@','#','$','%','^','&','*','(',')','_','+','-','=','{','}','|','[',']',"\\",':','"',';',"'",'<','>','?',',','.','/');
+
+				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['min_length']))
+				{
+					$min_length = $GLOBALS['phpgw_info']['server']['passwd_rules']['min_length'];
+				}
+				else
+				{
+					$min_length = 1;
+				}
+				
+				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers'] == True)
+				{
+					$pass_verify_num = False;
+				}
+				else
+				{
+					$pass_verify_num = True;
+				}
+
+				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_special_char']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_special_char'] == True)
+				{
+					$pass_verify_special_char = False;
+				}
+				else
+				{
+					$pass_verify_special_char = True;
+				}
+				
+				if ($password_length >= $min_length)
+				{
+					for ($i=0; $i != $password_length; $i++)
+					{
+						$cur_test_string = substr($string, $i, 1);
+						if (in_array($cur_test_string, $password_numbers))
+						{
+							$pass_verify_num = True;
+						}
+						elseif (in_array($cur_test_string, $password_special_chars))
+						{
+							$pass_verify_special_char = True;
+						}
+					}
+				
+					if ($pass_verify_num == False)
+					{
+						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one numeric character']=False;
+					}
+
+					if ($pass_verify_special_char == False)
+					{
+						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one special character (non-letter and non-number)']=False;
+					}
+					
+					if ($pass_verify_num == True && $pass_verify_special_char == True)
+					{
+						return True;
+					}
+					return False;
+				}
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password must be at least '.$min_length.' characters']=False;
+				return False;
 				break;
 			case 'any':
 				return True;
