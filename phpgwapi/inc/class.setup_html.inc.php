@@ -23,7 +23,26 @@
 		function generate_header()
 		{
 			$GLOBALS['header_template']->set_file(array('header' => 'header.inc.php.template'));
+			$GLOBALS['header_template']->set_block('header','domain','domain');
 			$var = Array();
+
+			@reset($GLOBALS['HTTP_POST_VARS']['domains']);
+			while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['domains']))
+			{
+				if(isset($GLOBALS['HTTP_POST_VARS']['deletedomain'][$v]))
+				{
+					continue;
+				}
+				$dom = $GLOBALS['HTTP_POST_VARS']["setting_$v"];
+				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
+				while(list($x,$y) = @each($dom))
+				{
+					$GLOBALS['header_template']->set_var(strtoupper($x),$y);
+				}
+				$GLOBALS['header_template']->fp('domains','domain',True);
+			}
+
+			$GLOBALS['header_template']->set_var('domain','');
 
 			while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['setting']))
 			{

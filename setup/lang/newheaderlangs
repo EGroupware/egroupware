@@ -1,3 +1,4 @@
+add a domain	setup	en	Add a domain
 admin password to header manager	setup	en	Admin password to header manager
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 analysis	setup	en	Analysis
@@ -17,10 +18,14 @@ edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
 edit your header.inc.php	setup	en	Edit your header.inc.php
 enable mcrypt	setup	en	Enable MCrypt
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
+hostname/ip of database server	setup	en	Hostname/IP of database server
 importing old settings into the new format....	setup	en	Importing old settings into the new format....
 include root (this should be the same as server root unless you know what you are doing)	setup	en	Include Root (this should be the same as Server Root unless you know what you are doing)
 mcrypt initialization vector	setup	en	MCrypt initialization vector
 mcrypt version	setup	en	MCrypt version
+name of database	setup	en	Name of database
+name of db user phpGroupWare uses to connect	setup	en	Name of db user phpGroupWare uses to connect
+new	setup	en	New
 no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
 no mysql support found. disabling	setup	en	No MySQL support found. Disabling
 no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
@@ -29,6 +34,7 @@ no xml support found. disabling	setup	en	No XML support found. Disabling
 now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
 or	setup	en	or
 password needed for configuration	setup	en	Password needed for configuration
+password of db user	setup	en	Password of db user
 persistent connections	setup	en	Persistent connections
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 sample configuration not found. using built in defaults	setup	en	Sample configuration not found. using built in defaults
@@ -51,11 +57,11 @@ you appear to have oracle support enabled	setup	en	You appear to have Oracle sup
 you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have Oracle V8 (OCI) support enabled
 you appear to have postgres-db support enabled	setup	en	You appear to have Postgres-DB support enabled
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
-you didn't enter a config password	setup	en	You didn't enter a config password
+you didn't enter a config password for domain x	setup	en	You didn't enter a config password for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password
 you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
-your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
-your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
-your header.inc.php needs upgrading.<br><blink><font color=cc0000><b>warning!</b></font></blink><br>if you are using virtual domain support, this will <b>not</b> copy those domains over.  you will need to do this manually, <b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br>If you are using virtual domain support, this will <b>NOT</b> copy those domains over.  You will need to do this manually, <b>MAKE BACKUPS!</b>
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
+your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
+your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
+your header.inc.php needs upgrading.<br><blink><font color=cc0000><b>warning!</b></font></blink><br><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br><b>MAKE BACKUPS!</b>

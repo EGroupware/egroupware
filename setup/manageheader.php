@@ -26,18 +26,32 @@
 	unset($setup_info);
 	#include('../version.inc.php');
 
+	if($GLOBALS['HTTP_POST_VARS']['adddomain'])
+	{
+	}
+
 	function check_form_values()
 	{
-		if (! $GLOBALS['HTTP_POST_VARS']['setting']['config_pass'])
+		@reset($GLOBALS['HTTP_POST_VARS']['domains']);
+		while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['domains']))
 		{
-			$errors .= '<br>' . lang("You didn't enter a config password");
+			if(isset($GLOBALS['HTTP_POST_VARS']['deletedomain'][$v]))
+			{
+				continue;
+			}
+			$dom = $GLOBALS['HTTP_POST_VARS']["setting_$v"];
+			if(!$dom['config_pass'])
+			{
+				$errors .= '<br>' . lang("You didn't enter a config password for domain x",$v);
+			}
 		}
-		if (! $GLOBALS['HTTP_POST_VARS']['setting']['HEADER_ADMIN_PASSWORD'])
+
+		if(!$GLOBALS['HTTP_POST_VARS']['setting']['HEADER_ADMIN_PASSWORD'])
 		{
 			$errors .= '<br>' . lang("You didn't enter a header admin password");
 		}
 
-		if ($errors)
+		if($errors)
 		{
 			$GLOBALS['phpgw_setup']->html->show_header('Error',True);
 			echo $errors;
@@ -61,6 +75,7 @@
 	));
 	$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
 	$setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
+	$setup_tpl->set_block('T_setup_manage','domain','domain');
 
 	/* Detect current mode */
 	switch($GLOBALS['phpgw_info']['setup']['stage']['header'])
@@ -75,7 +90,7 @@
 			break;
 		case '3':
 			$GLOBALS['phpgw_info']['setup']['HeaderFormMSG'] = lang('Your header.inc.php needs upgrading.');
-			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br>If you are using virtual domain support, this will <b>NOT</b> copy those domains over.  You will need to do this manually, <b>MAKE BACKUPS!</b>');
+			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br><b>MAKE BACKUPS!</b>');
 			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Your header.inc.php needs upgrading.');
 			if (!$GLOBALS['phpgw_setup']->auth('Header'))
 			{
@@ -267,12 +282,47 @@
 					$default_domain = each($phpgw_domain);
 					$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 					unset($default_domain); // we kill this for security reasons
-					$GLOBALS['phpgw_info']['server']['db_host'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['db_host'];
-					$GLOBALS['phpgw_info']['server']['db_name'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['db_name'];
-					$GLOBALS['phpgw_info']['server']['db_user'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['db_user'];
-					$GLOBALS['phpgw_info']['server']['db_pass'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['db_pass'];
-					$GLOBALS['phpgw_info']['server']['db_type'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['db_type'];
 					$GLOBALS['phpgw_info']['server']['config_passwd'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
+
+					if($GLOBALS['HTTP_POST_VARS']['adddomain'])
+					{
+						$phpgw_domain[lang('new')] = array();
+					}
+
+					reset($phpgw_domain);
+					while(list($key,$val) = each($phpgw_domain))
+					{
+						$setup_tpl->set_var('lang_domain',lang('Domain'));
+						$setup_tpl->set_var('lang_delete',lang('Delete'));
+						$setup_tpl->set_var('db_domain',$key);
+						$setup_tpl->set_var('db_host',$phpgw_domain[$key]['db_host']);
+						$setup_tpl->set_var('db_name',$phpgw_domain[$key]['db_name']);
+						$setup_tpl->set_var('db_user',$phpgw_domain[$key]['db_user']);
+						$setup_tpl->set_var('db_pass',$phpgw_domain[$key]['db_pass']);
+						$setup_tpl->set_var('db_type',$phpgw_domain[$key]['db_type']);
+						$setup_tpl->set_var('config_pass',$phpgw_domain[$key]['config_passwd']);
+
+						$selected = '';
+						$db_type_option = '';
+						$found_dbtype = False;
+						while(list($k,$v) = each($supported_db))
+						{
+							if($v == $phpgw_domain[$key]['db_type'])
+							{
+								$selected = ' selected ';
+								$found_dbtype = true;
+							}
+							else
+							{
+								$selected = '';
+							}
+							$dbtype_options .= '<option ' . $selected . ' value="' . $v . '">' . $v . "\n";
+						}
+						$setup_tpl->set_var('dbtype_options',$dbtype_options);
+
+						$setup_tpl->fp('domains','domain',True);
+					}
+					$setup_tpl->set_var('domain','');
 				}
 				if (defined('PHPGW_SERVER_ROOT'))
 				{
@@ -297,15 +347,30 @@
 				$GLOBALS['phpgw_info']['flags']['htmlcompliant'] = True;
 
 				/* These are the settings for the database system */
-				$GLOBALS['phpgw_info']['server']['db_host'] = 'localhost';
-				$GLOBALS['phpgw_info']['server']['db_name'] = 'phpgroupware';
-				$GLOBALS['phpgw_info']['server']['db_user'] = 'phpgroupware';
-				$GLOBALS['phpgw_info']['server']['db_pass'] = 'your_password';
-				$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql'; //mysql, pgsql (for postgresql), or oracle
+				$setup_tpl->set_var('lang_domain',lang('Domain'));
+				$setup_tpl->set_var('lang_delete',lang('Delete'));
+				$setup_tpl->set_var('db_domain','default');
+				$setup_tpl->set_var('db_host','localhost');
+				$setup_tpl->set_var('db_name','phpgroupware');
+				$setup_tpl->set_var('db_user','phpgroupware');
+				$setup_tpl->set_var('db_pass','your_password');
+				$setup_tpl->set_var('db_type','mysql');
+				$setup_tpl->set_var('config_pass','changeme');
+
+				while(list($k,$v) = each($supported_db))
+				{
+					$dbtype_options .= '<option value="' . $v . '">' . $v . "\n";
+				}
+				$setup_tpl->set_var('dbtype_options',$dbtype_options);
+
+				$setup_tpl->fp('domains','domain',True);
+				$setup_tpl->set_var('domain','');
+
+				$setup_tpl->set_var('comment_l','<!-- ');
+				$setup_tpl->set_var('comment_r',' -->');
 
 				/* These are a few of the advanced settings */
 				$GLOBALS['phpgw_info']['server']['db_persistent'] = True;
-				$GLOBALS['phpgw_info']['server']['config_passwd'] = 'changeme';
 				$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = False;
 				$GLOBALS['phpgw_info']['server']['mcrypt_version'] = '2.6.3';
 
@@ -339,30 +404,6 @@
 			$setup_tpl->set_var('server_root',$GLOBALS['phpgw_info']['server']['server_root']);
 			$setup_tpl->set_var('include_root',$GLOBALS['phpgw_info']['server']['include_root']);
 			$setup_tpl->set_var('header_admin_password',$GLOBALS['phpgw_info']['server']['header_admin_password']);
-			$setup_tpl->set_var('db_host',$GLOBALS['phpgw_info']['server']['db_host']);
-			$setup_tpl->set_var('db_name',$GLOBALS['phpgw_info']['server']['db_name']);
-			$setup_tpl->set_var('db_user',$GLOBALS['phpgw_info']['server']['db_user']);
-			$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_info']['server']['db_pass']);
-
-			$selected = '';
-			$db_type_option = '';
-			$found_dbtype = False;
-			while(list($k,$v) = each($supported_db))
-			{
-				if($v == $GLOBALS['phpgw_info']['server']['db_type'])
-				{
-					$selected = ' selected ';
-					$found_dbtype = true;
-				}
-				else
-				{
-					$selected = '';
-				}
-				$dbtype_options .= '<option ' . $selected . ' value="' . $v . '">' . $v . "\n";
-			}
-			$setup_tpl->set_var('dbtype_options',$dbtype_options);
-
-			$setup_tpl->set_var('config_passwd',$GLOBALS['phpgw_info']['server']['config_passwd']);
 
 			if($GLOBALS['phpgw_info']['server']['db_persistent'])
 			{
@@ -413,9 +454,11 @@
 			$errors = '';
 			if(!$found_dbtype)
 			{
+				/*
 				$errors .= '<br><font color="red">' . lang('Warning!') . '<br>'
 					. lang('The db_type in defaults (x) is not supported on this server. using first supported type.',$GLOBALS['phpgw_info']['server']['db_type'])
 					. '</font>';
+				*/
 			}
 
 			if(is_writeable('../header.inc.php') ||
@@ -435,13 +478,18 @@
 			$setup_tpl->set_var('errors',$errors);
 
 			$setup_tpl->set_var('lang_settings',lang('Settings'));
+			$setup_tpl->set_var('lang_adddomain',lang('Add a domain'));
 			$setup_tpl->set_var('lang_serverroot',lang('Server Root'));
 			$setup_tpl->set_var('lang_includeroot',lang('Include Root (this should be the same as Server Root unless you know what you are doing)'));
 			$setup_tpl->set_var('lang_adminpass',lang('Admin password to header manager'));
 			$setup_tpl->set_var('lang_dbhost',lang('DB Host'));
+			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server'));
 			$setup_tpl->set_var('lang_dbname',lang('DB Name'));
+			$setup_tpl->set_var('lang_dbnamedescr',lang('Name of database'));
 			$setup_tpl->set_var('lang_dbuser',lang('DB User'));
+			$setup_tpl->set_var('lang_dbuserdescr',lang('Name of db user phpGroupWare uses to connect'));
 			$setup_tpl->set_var('lang_dbpass',lang('DB Password'));
+			$setup_tpl->set_var('lang_dbpassdescr',lang('Password of db user'));
 			$setup_tpl->set_var('lang_dbtype',lang('DB Type'));
 			$setup_tpl->set_var('lang_whichdb',lang('Which database type do you want to use with phpGroupWare?'));
 			$setup_tpl->set_var('lang_configpass',lang('Configuration Password'));

@@ -1,6 +1,7 @@
 (account deletion in SQL Only)	setup	en	(account deletion in SQL Only)
 <br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
 actions	setup	en	Actions
+add a domain	setup	en	Add a domain
 add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
@@ -108,6 +109,7 @@ has a version mismatch	setup	en	has a version mismatch
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
 host information	setup	en	Host information
+hostname/ip of database server	setup	en	Hostname/IP of database server
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
 if no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
@@ -153,7 +155,10 @@ minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+name of database	setup	en	Name of database
+name of db user phpGroupWare uses to connect	setup	en	Name of db user phpGroupWare uses to connect
 never	setup	en	never
+new	setup	en	New
 no	setup	en	No
 no algorithms available	setup	en	no algorithms available
 no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
@@ -175,6 +180,7 @@ only add languages that are not in the database already	setup	en	Only add langua
 only add new phrases	setup	en	Only add new phrases
 or	setup	en	or
 password needed for configuration	setup	en	Password needed for configuration
+password of db user	setup	en	Password of db user
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
 path information	setup	en	Path information
 persistent connections	setup	en	Persistent connections
@@ -283,7 +289,7 @@ you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have O
 you appear to have postgres-db support enabled	setup	en	You appear to have Postgres-DB support enabled
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
-you didn't enter a config password	setup	en	You didn't enter a config password
+you didn't enter a config password for domain x	setup	en	You didn't enter a config password for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password
 you do not have any languages installed. please install one now <br>	setup	en	You do not have any languages installed. Please install one now <br>
 you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
@@ -297,7 +303,7 @@ your database does not exist	setup	en	Your database does not exist
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
-your header.inc.php needs upgrading.<br><blink><font color=cc0000><b>warning!</b></font></blink><br>if you are using virtual domain support, this will <b>not</b> copy those domains over.  you will need to do this manually, <b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br>If you are using virtual domain support, this will <b>NOT</b> copy those domains over.  You will need to do this manually, <b>MAKE BACKUPS!</b>
+your header.inc.php needs upgrading.<br><blink><font color=cc0000><b>warning!</b></font></blink><br><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br><b>MAKE BACKUPS!</b>
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
