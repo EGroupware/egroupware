@@ -100,7 +100,7 @@
 	$bday         = $fields["bday"];
 	$tmp = split("/",$bday); # 12/31/1969 -> 1969-12-31
 	if ($tmp[0]) {
-		$bday = $tmp[2]."-".$tmp[0]."/".$tmp[1];
+		$bday = $tmp[2]."-".$tmp[0]."-".$tmp[1];
 	}
 
 	$notes        = ereg_replace("\r\n","=0A",$fields["note"]);
@@ -159,11 +159,12 @@
 				$astreet,$acity,$astate,$azip,$acountry);
 		}
 		if ($label) {
+			$label = ereg_replace("\r\n","=0D=0A",$label);
 			$label = ereg_replace("\n","=0D=0A",$label);
 			printf("LABEL;WORK;QUOTED-PRINTABLE:%s\n",$label);
 		} else {
 			if ($address2 && $astreet && $acity && $astate && $azip && $acountry) {
-				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s,%s  %s=0D=0A%s\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
+				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s,%s  %s=0D=0A%s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
 			}
 		}
 		// end 'A' grouping
@@ -182,7 +183,7 @@
 				$bcity,$bstate,$bzip,$bcountry);
 		}
 		if ($bstreet && $bcity && $bstate && $bzip && $bcountry) {
-			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0D=0A%s,%s  %s=0D=0A%s\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
+			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s=0D=0A%s=0D=0A%s\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
 		}
 
 		if ($url) {
@@ -195,10 +196,11 @@
 		if($company != "") /* Company Name (Really isn't company_name?) */
 			printf("ORG:%s %s\r\n", $company, $dept);
 		if($notes != "") /* Notes */
+			$notes = ereg_replace("\n","=0D=0A",$notes);
 			$NOTES .= $notes;
 
 		if($NOTES != "") /* All of the notes. */
-			printf("NOTE;QUOTED-PRINTABLE:%s\r\n", $NOTES);
+			printf("NOTE;QUOTED-PRINTABLE:%s\n", $NOTES);
 		/* End of Stuff. */
 		printf("VERSION:2.1\r\n");
 		printf("END:VCARD\r\n");
