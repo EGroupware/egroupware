@@ -4,8 +4,10 @@
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Mark Peters <skeeter@phpgroupware.org>                               *
+  * and Lars Kneschke <lkneschke@linux-at-work.de>                           *
   * Commononly used functions by phpGroupWare developers                     *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+  * Copyright (C) 2003 Lars Kneschke                                         *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
@@ -262,7 +264,10 @@
 			
 			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
 			{	
-				ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+				if(!ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3))
+				{
+					$GLOBALS['phpgw_info']['server']['ldap_version3'] = False;
+				}
 			}
 			
 			// bind as admin, we not to able to do everything
