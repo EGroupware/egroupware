@@ -1046,16 +1046,28 @@ class calendar extends calendar_
 							$pic_size = ' width="5" height="7"';
 							if($lr_events->recur_type != RECUR_NONE)
 							{
-								$pict = 'rpt.gif';
-								$pic_size = ' width="10" height="10"';
+								$pict = 'recur.gif';
+								$pic_size = ' width="12" height="12"';
 							}
 
 							$description = $this->is_private($lr_events,$owner,'description');
 
+							$p->set_var('description',$description.$this->display_status($lr_events->users_status));
+
+							if($lr_events->priority == 3)
+							{
+								$var = Array(
+									'pic_image'			=>	$phpgw->common->image('calendar','high.gif'),
+									'pic_size'			=> ' width="10" height="15"'
+								);
+								$p->set_var($var);
+								$p->parse('picture','pict',True);					
+							}
+
+
 							$var = Array(
-								'pic_image'			=>	$this->image_dir.'/'.$pict,
-								'pic_size'			=> $pic_size,
-								'description'		=>	$description.$this->display_status($lr_events->users_status)
+								'pic_image'			=>	$phpgw->common->image('calendar',$pict),
+								'pic_size'			=> $pic_size
 							);
 
 							$p->set_var($var);
@@ -1064,8 +1076,8 @@ class calendar extends calendar_
 							if(count($lr_events->participants) > 1)
 							{
 								$var = Array(
-									'pic_image'			=>	$this->image_dir.'/multi_1.gif',
-									'pic_size'			=> ' width="12" height="16"'
+									'pic_image'			=>	$phpgw->common->image('calendar','multi_3.gif'),
+									'pic_size'			=> ' width="14" height="14"'
 								);
 								$p->set_var($var);
 								$p->parse('picture','pict',True);					
@@ -1329,14 +1341,24 @@ class calendar extends calendar_
 			$time[$ind] .= '] ';
 		}
 
+		if($event->priority == 3)
+		{
+			$time[$ind] .= '<img width="14" height="14" src="'.$this->image_dir.'/high.gif" border="0" alt="' . $description . '">';
+		}
+		
 		$pict = 'circle.gif';
 		$pic_size = 'width="5" height="7"';
 		if($event->recur_type != RECUR_NONE)
 		{
-			$pict = 'rpt.gif';
+			$pict = 'recur.gif';
 			$pic_size = 'width="10" height="10"';
 		}
 		$time[$ind] .= '<img '.$pict_size.' src="'.$this->image_dir.'/'.$pict.'" border="0" alt="' . $description . '">';
+
+		if(count($event->participants) > 1)
+		{
+			$time[$ind] .= '<img width="14" height="14" src="'.$this->image_dir.'/multi_3.gif" border="0" alt="' . $description . '">';
+		}
 
 		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private')) && $this->check_perms(PHPGW_ACL_EDIT))
 		{
@@ -1348,7 +1370,7 @@ class calendar extends calendar_
 			$time[$ind] .= '<font color="CC0000">';
 		}
 		
-		$time[$ind] .= $this->is_private($event,$this->owner,'title').$this->display_status($event->users_status);
+		$time[$ind] .= '&nbsp;'.$this->is_private($event,$this->owner,'title').$this->display_status($event->users_status);
 
 		if ($event->priority == 3)
 		{
