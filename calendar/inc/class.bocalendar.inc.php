@@ -1696,6 +1696,59 @@
 			}
 		}
 
+		function remove_doubles_in_cache($firstday,$lastday)
+		{
+			for($v=$firstday;$v<=$lastday;$v += 1)
+			{
+				$daily = $this->cached_events[$v];
+
+				if($this->debug)
+				{
+					echo "<p>count(day $v)=".count($daily)."</p>\n";
+				}
+				if (!is_array($daily))
+				{
+					continue;
+				}
+
+            @reset($daily);
+				while (list($g,$event) = each($daily))
+				{
+					if($this->debug)
+					{
+						echo "<p>Event:<br>"; print_r($event); echo "</p>";
+					}
+					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
+
+					if($this->debug)
+					{
+						echo "<p>start='$start', v='$v'";
+					}
+
+					if ($start != $v)							// this is an enddate-entry --> remove it
+					{
+						unset($this->cached_events[$v][$g]);
+						if ($start < $firstday)				// start before period --> move it to the beginning
+						{
+							$this->cached_events[$firstday][] = $event;
+							if($this->debug)
+							{
+								echo "moved</p>\n";
+							}
+       				}
+						elseif($this->debug)
+						{
+							echo "removed</p>\n";
+						}
+					}
+					elseif($this->debug)
+					{
+						echo "ok</p>\n";
+					}
+				}
+			}
+		}
+
 		function _debug_array($data)
 		{
 			echo '<br>UI:';

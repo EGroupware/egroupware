@@ -859,6 +859,9 @@
 			$firstday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
 			$lastday = intval(date('Ymd',mktime(0,0,0,$this->bo->month + 1,0,$this->bo->year)));
 			
+			$this->bo->remove_doubles_in_cache($firstday,$lastday);
+
+			$rows = array();
 			for($v=$firstday;$v<=$lastday;$v += 1)
 			{
 				$daily = $this->bo->cached_events[$v];
@@ -870,8 +873,6 @@
 				for($g=0;$g<count($daily);$g++)
 				{
 					$event = $daily[$g];
-					$start = $this->bo->datetime->gmtdate($this->bo->maketime($event['start']));
-					$end   = $this->bo->datetime->gmtdate($this->bo->maketime($event['end']));
 
 					$view = $html->link('/index.php',
 						array(
@@ -880,10 +881,10 @@
 						)
 					);
 
-					$start_cell = $intervals_per_day * (intval(substr($v,6,2)) - 1);
+					$start_cell = $intervals_per_day * ($event['start']['mday'] - 1);
 					$start_cell += $interval[$event['start']['hour']];
 
-					$end_cell = $interval_per_day = $intervals_per_day * (intval(substr($v,6,2))-1);
+					$end_cell = $intervals_per_day * ($event['end']['mday'] - 1);
 					$end_cell += $interval[$event['end']['hour']];
 
 					$i = 0;					// search for row of parent category
@@ -939,7 +940,7 @@
 
 					if ($bgcolor=$cat['color'])
 					{
-						$opt .= " bgcolor=$bgcolor";
+						$opt .= ' bgcolor="'.$bgcolor.'"';
 					}
 					$opt .= ' title="'.$event['title'];
 					if ($event['description'])
@@ -950,21 +951,19 @@
 					$cel = '<a href="'.$view.'">';
 					if ($event['priority'] == 3)
 					{
-						$cel .= $html->image('calendar','mini-calendar-bar.gif','','border=0');
+						$cel .= $html->image('calendar','mini-calendar-bar.gif','','border="0"');
 					}
-					$cel .= $html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border=0');
+					$cel .= $html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
 					$cel .= '</a>';
 
 					$akt_cell = $end_cell + 1;
 				}
-				reset($rows);
 				ksort($rows);
-				reset($rows);
 				while (list($k,$r) = each($rows))
 				{
 					if (is_array($r))
 					{
-						$rows['.'.$k] = 'bgcolor='.$phpgw->nextmatchs->alternate_row_color();
+						$rows['.'.$k] = 'bgcolor="'.$phpgw->nextmatchs->alternate_row_color().'"';
 						$row = &$rows[$k];
 						$akt_cell = &$rows['.nr_'.$k];
 						if ($akt_cell <= $last_cell)
@@ -975,7 +974,7 @@
 					}
 				}
 			}
-			$bgcolor = 'bgcolor='.$phpgw_info['theme']['th_bg'];
+			$bgcolor = 'bgcolor="'.$phpgw_info['theme']['th_bg'].'"';
 			echo $html->table(
 				array(
 					'_h' => $header,
