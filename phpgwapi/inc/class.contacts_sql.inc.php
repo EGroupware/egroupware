@@ -41,9 +41,6 @@
 		var $ext_table='phpgw_addressbook_extra';
 
 		var $account_id = 0;
-		var $stock_contact_fields = array();
-		var $non_contact_fields = array();
-		var $email_types = array();
 		var $total_records = 0;
 		var $grants = '';
 
