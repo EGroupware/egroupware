@@ -5,7 +5,6 @@
    <input type="hidden" name="order" value="{order}">
    <input type="hidden" name="filter" value="{filter}">
    <input type="hidden" name="start" value="{start}">
-   <input type="hidden" name="cat_id" value="{cat_id}">
    <TABLE border="0" cellPadding="1" cellSpacing="1" width="95%">
       <TBODY>
        <tr>
