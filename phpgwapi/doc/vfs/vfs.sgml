@@ -37,7 +37,7 @@ You must explicitly enable the VFS class. To do this, set 'enable_vfs_class'
 <p>
 <verb>
 &dollar;GLOBALS&lsqb;'phpgw_info'&rsqb;&lsqb;'flags'&rsqb; = array(
-     'currentapp' =&gt; 'phpwebhosting',
+     'currentapp' =&gt; 'filemanager',
      'noheader' =&gt; False,
      'noappheader' =&gt; False,
      'enable_vfs_class' =&gt; True,
@@ -164,7 +164,7 @@ Relativity is a new feature in the VFS, and its importance cannot
 <sect>
 Basic Functions<label id="sec:basic_functions" >
 <p>
-These are two functions you'll need to know before we get into
+There are two functions you'll need to know before we get into
  relativity.
 </p>
 <sect1>

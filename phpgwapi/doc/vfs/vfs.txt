@@ -1,425 +1,610 @@
+  phpgwapi - VFS Class
+  Jason Wies
+  June 2001, February 2002
 
-Next Previous Contents
-===============================================================================
-*****  1. Introduction_and_Purpose *****
-The latest version of the VFS for phpGroupWare combines actual file system
-manipulation with fully integrated database support. It features nearly
-transparent handling of files and directories, as well as files inside and
-outside the virtual root. This document is intended to provide API and
-application developers with a guide to incorporating the VFS into their work.
-===============================================================================
-Next Previous Contents
+  The VFS, or Virtual File System, handles all file system activity for
+  phpGroupWare.
 
+  [1m1.  Introduction and Purpose[0m
 
-Next Previous Contents
-===============================================================================
-*****  2. Basics *****
-*****  2.1 Prerequisites *****
-You must explicitly enable the VFS class. To do this, set 'enable_vfs_class' to
-True in $GLOBALS['phpgw_info']['flags']. An example:
-$GLOBALS['phpgw_info']['flags'] = array(
-     'currentapp' => 'phpwebhosting',
-     'noheader' => False,
-     'noappheader' => False,
-     'enable_vfs_class' => True,
-     'enable_browser_class' => True
-);
-*****  2.2 Concepts *****
-The VFS in located in phpgwapi/inc/class.vfs_sql.inc.php. You can look over it,
-but I don't suggest trying to understand how it works. It isn't necessary to
-know its internals to use it, but you may find the inline comments helpful. The
-basic things to keep in mind:
-    * Files and directories are synonymous in almost all cases
-$GLOBALS['phpgw']->vfs->mv (array(
-     'from' => 'file1',
-     'to' => 'dir/file2'
-));
+  The latest version of the VFS for phpGroupWare combines actual file
+  system manipulation with fully integrated database support.  It
+  features nearly transparent handling of files and directories, as well
+  as files inside and outside the virtual root. This document is
+  intended to provide API and application developers with a guide to
+  incorporating the VFS into their work.
 
-$GLOBALS['phpgw']->vfs->mv (array(
-     'from' => 'dir1',
-     'to' => 'dir/dir1'
-));
+  [1m2.  Basics[0m
 
-$GLOBALS['phpgw']->vfs->rm (array(
-     'string' => 'file'
-));
+  [1m2.1.  Prerequisites[0m
 
-$GLOBALS['phpgw']->vfs->rm (array(
-     'string' => 'dir'
-));
-All work as you would except them to. The major exception is:
-$GLOBALS['phpgw']->vfs->touch (array(
-     'string' => 'file'
-));
-vs.
-$GLOBALS['phpgw']->vfs->mkdir (array(
-     'string' => 'dir'
-));
-    * Users and groups are synonymous
-As far as the actual paths are concerned, users and groups are the same. /home/
-username works the same as /home/groupname.
-    * You should never have to know the real paths of files
-One of the VFS's responsibilities is to translate paths for you. While you
-certainly can operate using full paths, it is much simpler to use the virtual
-paths. For example, instead of using:
-$GLOBALS['phpgw']->vfs->cp (array(
-     'from' => '/var/www/phpgroupware/files/home/user/file1',
-     'to' => '/var/www/phpgroupware/files/home/user/file2',
-     'relatives' => array(
-          RELATIVE_NONE|VFS_REAL,
-          RELATIVE_NONE|VFS_REAL
-     )
-));
-you might use
-$GLOBALS['phpgw']->vfs->cp (array(
-     'from' => '/home/user/file1',
-     'to' => '/home/user/file2',
-     'relatives' => array(
-          RELATIVE_NONE,
-          RELATIVE_NONE
-     )
-));
-(We'll get to the RELATIVE's in a minute.)
-Site administrators should be able to move their files dir around on their
-system and know that everything will continue to work smoothly.
-    * Relativity is vital
-Relativity is a new feature in the VFS, and its importance cannot be stressed
-enough. It will make your life much easier, especially for file system
-intensive applications, but it will take some getting used to. If something
-doesn't work right the first time, chances are great it has to do with
-incorrect relativity settings. We will deal with relativity in depth in the
-Relativity section.
-===============================================================================
-Next Previous Contents
+  You must explicitly enable the VFS class. To do this, set
+  'enable_vfs_class' to True in $GLOBALS['phpgw_info']['flags'].  An
+  example:
 
 
-Next Previous Contents
-===============================================================================
-*****  3. Basic_Functions *****
-These are two functions you'll need to know before we get into relativity.
-*****  3.1 path_parts_() *****
-The job of path_parts () is to translate any given file location into its many
-component parts for any relativity. The values passed to path_parts () are:
-string
-relatives
-object
-'string' is the path you want to translate, 'relatives' is the standard
-relativity array, and 'object' specifies how you would like the return value:
-if 'object' is True, an object will be returned; if 'object' is False, an array
-will be returned. I think you'll find the object easier to deal with, and we'll
-be using it throughout this document. The most important returned values (but
-not all) for path_parts () are:
-fake_full_path
-fake_leading_dirs
-fake_extra_path
-fake_name
-real_full_path
-real_leading_dirs
-real_extra_path
-real_name
-Just like you would think, fake_full_path contains the full virtual path of
-'string', and real_full_path contains the full real path of 'string'. The
-fake_name and real_name variables should always be the same, and contain the
-final file or directory name. The leading_dirs contain everything except the
-name, and the extra_path is everything from the / before "home" to the end of
-the leading_dirs. To better illustrate, here is an example:
-$p = $GLOBALS['phpgw']->vfs->path_parts (array(
-     'string' => '/home/jason/dir/file',
-     'relatives' => array(
-         RELATIVE_NONE
-     )
-));
-    * $p->fake_full_path - /home/jason/dir/file
-    * $p->fake_leading_dirs - /home/jason/dir
-    * $p->fake_extra_path - home/jason/dir
-    * $p->fake_name - file
-    * $p->real_full_path - /var/www/phpgroupware/files/home/jason/dir/file
-    * $p->real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir
-    * $p->real_extra_path - home/jason/dir
-    * $p->real_name - file
-As you can see, path_parts () is a very useful function and will save you from
-doing those darn substr ()'s yourself. For those of you used to the prior VFS,
-note that getabsolutepath () is depreciated. getabsolutepath () still exists
-(albeit in a much different form), and is responsible for some of the path
-translation, but it is an internal function only. Applications should only use
-path_parts (). We have shown you how to use path_parts () so you can experiment
-with it using different paths and relativities as we explore relativity.
-*****  3.2 cd_() *****
-Part of the overall goal for the VFS in phpGroupWare is to give the user a
-seamless experience during their session. For example, if they upload a file
-using a file manager to the directory /home/my_group/project1, and then go to
-download an email attachment, the default directory will be /home/my_group/
-project1. This is accomplished using the cd () function. Examples:
-/* cd to their home directory */
-$GLOBALS['phpgw']->vfs->cd (array(
-     'string' => '/'
-));
-
-/* cd to /home/jason/dir */
-$GLOBALS['phpgw']->vfs->cd (array(
-     'string' => '/home/jason/dir',
-     'relative' => False,
-     'relatives' => array(
-          RELATIVE_NONE
-     )
-));
-
-/* When following the above, cd's to /home/jason/dir/dir2 */
-$GLOBALS['phpgw']->vfs->cd (array(
-     'string' => 'dir2',
-     'relative' => True
-));
-If 'relative' is True, the 'string' is simply appended to the current path. If
-you want to know what the current path is, use $GLOBALS['phpgw']->vfs->pwd ().
-Now you're ready for relativity.
-===============================================================================
-Next Previous Contents
+  $GLOBALS['phpgw_info']['flags'] = array(
+       'currentapp' => 'filemanager',
+       'noheader' => False,
+       'noappheader' => False,
+       'enable_vfs_class' => True,
+       'enable_browser_class' => True
+  );
 
 
-Next Previous Contents
-===============================================================================
-*****  4. Relativity *****
-Ok, just one last thing before we get into relativity. You will notice
-throughout the examples the use of $fakebase. $GLOBALS['phpgw']->vfs->fakebase
-is by default '/home'. The old VFS was hard-coded to use '/home', but the
-naming choice for this is now up to administrators. See the Fakebase_directory_
-(changing_/home) section for more information. Throughout the rest of this
-document, you will see $fakebase used in calls to the VFS, and /home used in
-actual paths. You should always use $fakebase when making applications.I
-suggest doing $fakebase = $GLOBALS['phpgw']->vfs->fakebase; right off the bat
-to keep things neater.
-***** 4.1 What_is_it_and_how_does_it_work? *****
-One of the design challenges for a Virtual File System is to try to figure out
-whether the calling application is referring to a file inside or outside the
-virtual root, and if inside, exactly where. To solve this problem, the
-phpGroupWare VFS uses RELATIVE defines that are used in bitmasks passed to each
-function. The result is that any set of different relativities can be used in
-combination with each other. Let's look at a few examples. Say you want to move
-'logo.png' from the user's home directory to the current directory.
-$GLOBALS['phpgw']->vfs->mv (array(
-    'from' => 'logo.png',
-    'to' => 'logo.png',
-    'relatives' => array(
-          RELATIVE_USER,
-          RELATIVE_ALL
-     )
-));
-RELATIVE_USER means relative to the user's home directory. RELATIVE_ALL means
-relative to the current directory, as set by cd () and as reported by pwd ().
-So if the current directory was "$fakebase/my_group/project1", the call to mv
-() would be processed as:
-MOVE "$fakebase/jason/logo.png" TO "$fakebase/my_group/project1/logo.png"
-and the actual file system call would be:
-rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/
-phpgroupware/files/home/my_group/project1/logo.png');
-Those used to the old VFS will note that you do not have to translate the path
-beforehand. Let's look at another example. Suppose you were moving an email
-attachment stored in phpGroupWare's temporary directory to the 'attachments'
-directory within the user's home directory (we're assuming the attachments
-directory exists). Note that the temporary directory is outside the virtual
-root.
-$GLOBALS['phpgw']->vfs->mv (array(
-     'from' => $GLOBALS['phpgw_info']['server']['temp_dir'] . '/' . $randomdir
-. '/' . $randomfile,
-     'to' => 'attachments/actual_name.ext',
-     'relatives' => array(
-          RELATIVE_NONE|VFS_REAL,
-          RELATIVE_USER
-     )
-));
-$randomdir and $randomfile are what the directory and file might be called
-before they are given a proper name by the user, which is actual_name.ext in
-this example. RELATIVE_NONE is the define for using full path names. However,
-RELATIVE_NONE is still relative to the virtual root, so we pass along VFS_REAL
-as well, to say that the file is outside the virtual root, somewhere else in
-the file system. Once again, RELATIVE_USER means relative to the user's home
-directory. So the actual file system call might look like this (keep in mind
-that $randomdir and $randomfile are just random strings):
-rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/
-phpgroupware/files/home/jason/attachments/actual_name.ext');
-Of course you don't have to know that, nor should you be concerned with it; you
-can take it for granted that the VFS will translate the paths correctly. Let's
-take a look at one more example, this time using the RELATIVE_USER_APP define.
-RELATIVE_USER_APP is used to store quasi-hidden application files, similar to
-the Unix convention of ~/.appname. It simply appends .appname to the user's
-home directory. For example, if you were making an HTML editor application
-named 'htmledit', and wanted to keep a backup file in case something goes
-wrong, you could use RELATIVE_USER_APP to store it:
-$GLOBALS['phpgw']->vfs->write (array(
-     'string' => 'file.name~',
-     'relatives' => array(
-          RELATIVE_USER_APP
-     ),
-     'content' => $contents
-));
-This assumes that ~/.htmledit exists of course. The backup file "file.name~"
-would then be written in $fakebase/jason/.htmledit/file.name~. Note that
-storing files like this might not be as good of a solution as storing them in
-the temporary directory or in the database. But it is there in case you need
-it.
-*****  4.2 Complete_List *****
-Here is the complete list of RELATIVE defines, and what they do:
-  RELATIVE_ROOT
-      Don't translate the path at all. Just prepends a /. You'll probably want
-      to use RELATIVE_NONE though, which handles both virtual and real files.
-  RELATIVE_USER
-      User's home directory
-  RELATIVE_CURR_USER
-      Current user's home directory. If the current directory is $fakebase/
-      my_group/project1, this will return is $fakebase/my_group
-  RELATIVE_USER_APP
-      Append .appname to the user's home directory, where appname is the
-      current application's appname
-  RELATIVE_PATH
-      DO NOT USE. Relative to the current directory, used in RELATIVE_ALL
-  RELATIVE_NONE
-      Not relative to anything. Use this with VFS_REAL for files outside the
-      virtual root. Note that using RELATIVE_NONE by itself still means
-      relative to the virtual root
-  RELATIVE_CURRENT
-      An alias for the currently set RELATIVE define, or RELATIVE_ALL if none
-      is set (see the Defaults section)
-  VFS_REAL
-      File is outside of the virtual root. Usually used with RELATIVE_NONE
-  RELATIVE_ALL
-      Relative to the current directory. Use RELATIVE_ALLinstead of
-      RELATIVE_PATH
-*****  4.3 Defaults *****
-You might be thinking to yourself that passing along RELATIVE defines with
-every VFS call is overkill, especially if your application always uses the same
-relativity. The default RELATIVE define for all VFS calls is RELATIVE_CURRENT.
-RELATIVE_CURRENT itself defaults to RELATIVE_ALL (relative to the current
-path), unless your application sets a specific relativity. If your application
-requires most of the work to be done outside of the virtual root, you may wish
-to set RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is the
-function to do this. For example:
-$GLOBALS['phpgw']->vfs->set_relative (array(
-     'mask' => RELATIVE_NONE|VFS_REAL
-));
 
-$GLOBALS['phpgw']->vfs->read (array(
-     'string' => '/etc/passwd'
-));
+  [1m2.2.  Concepts[0m
 
-$GLOBALS['phpgw']->vfs->cp (array(
-     'from' => '/usr/include/stdio.h',
-     'to' => '/tmp/stdio.h'
-));
-
-$GLOBALS['phpgw']->vfs->cp (array(
-     'from' => '/usr/share/pixmaps/yes.xpm',
-     'to' => 'icons/yes.xpm',
-     'relatives' => array(
-          RELATIVE_CURRENT,
-          RELATIVE_USER
-     )
-));
-You should notice that no relativity array is needed in the other calls that
-refer to files outside the virtual root, but one is needed for calls that
-include files inside the virtual root. Any RELATIVE define can be set as the
-default and works in the same fashion. To retrieve the currently set define,
-use get_relative (). Note that the relativity is reset after each page request;
-that is, it's good only for the life of the current page loading, and is not
-stored in session management.
-===============================================================================
-Next Previous Contents
+  The VFS in located in phpgwapi/inc/class.vfs_sql.inc.php. You can look
+  over it, but I don't suggest trying to understand how it works. It
+  isn't necessary to know its internals to use it, but you may find the
+  inline comments helpful. The basic things to keep in mind:
 
 
-Next Previous Contents
-===============================================================================
-*****  5. Function_reference *****
-To view the function reference for the VFS, use the doc/inlinedocparser.php
-script that comes with phpGroupWare, ie http://localhost/doc/
-inlinedocparser.php?fn=class.vfs_sql.inc.php.
-===============================================================================
-Next Previous Contents
+  +o  Files and directories are synonymous in almost all cases
 
 
-Next Previous Contents
-===============================================================================
-*****  6. Notes *****
-*****  6.1 Database *****
-Data about the files and directories within the virtual root is kept in the SQL
-database. Currently, this information includes:
-    * File ID (used internally, primary key for table)
-    * Owner ID (phpGW account_id)
-    * Created by ID (phpGW account_id)
-    * Modified by ID (phpGW account_id)
-    * Created (date)
-    * Modified (date)
-    * Size (bytes)
-    * MIME type
-    * Deleteable (Y/N/Other?)
-    * Comment
-    * App (appname of application that created the file)
-    * Directory (directory the file or directory is in)
-    * Name (name of file or directory)
-    * Link directory (if the file or directory is linked, what the actual
-      directory is)
-    * Link name (if the file or directory is linked, what the actual name is)
-    * Version (numeric version of the file)
-The internal names of these (the database column names) are stored in the
-$GLOBALS['phpgw']->vfs->attributes array, which is useful for loops, and is
-guaranteed to be up-to-date.
-Note that no information is kept about files outside the virtual root. If a
-file is moved outside, all records of it are deleted from the database (other
-than the journaling records). If a file is moved into the virtual root, some
-information, specifically MIME-type, is not always stored in the database. The
-vital information has defaults: owner is based on where the file is being
-stored; size is correctly read; deleteable is set to Y.
-*****  6.2 ACL_support *****
-ACL support is built into the VFS. vfs->acl_check () does the actual checking,
-and is called from all VFS functions as needed. If the file or directory sent
-to acl_check () doesn't exist, the permissions for the parent directory are
-used to determine access. ACL checking can be overridden at any time by setting
-vfs->override_acl. For example:
-$GLOBALS['phpgw']->vfs->override_acl = 1;
-$GLOBALS['phpgw']->vfs->mkdir (array(
-     'string' => $GLOBALS['fakebase']. '/' . $group_array['account_name'],
-     'relatives' => array(
-          RELATIVE_NONE
-     )
-));
-$GLOBALS['phpgw']->vfs->override_acl = 0;
-*****  6.3 Function_aliases *****
-You might have noticed there are some functions that just pass the arguments on
-to other functions. These are provided in part because of legacy and in part
-for convenience. You can use either. Here is the list (alias -> actual):
-    * copy -> cp
-    * move -> rm
-    * delete -> rm
-    * dir -> ls
-*****  6.4 Fakebase_directory_(changing_/home) *****
-The old VFS was hard-coded to use '/home' as the fake base directory, even
-though the user never saw it. With the new system, crafty administrators may
-wish to change '/home' to something else, say '/users' or '/public_html'. The
-fake base directory name is stored in $GLOBALS['phpgw']->vfs->fakebase, and
-changing it will transparently change it throughout the VFS and all
-applications. However, this must be done before any data is in the VFS
-database. If you wish to change it afterwords, you'll have to manually update
-the database, replacing the old value with the new value. Application
-programmers need to recognize that /home is not absolute, and use $GLOBALS
-['phpgw']->vfs->fakebase instead. I suggest setting $fakebase = $GLOBALS
-['phpgw']->vfs->fakebase; right off the bat to keep things neater.
-===============================================================================
-Next Previous Contents
+  $GLOBALS['phpgw']->vfs->mv (array(
+       'from' => 'file1',
+       'to' => 'dir/file2'
+  ));
 
-Next Previous Contents
-===============================================================================
-***** 7. About_this_Document *****
-***** 7.1 Copyright_and_License *****
-Copyright (c) 2001, 2002 Jason Wies
-Permission is granted to copy, distribute and/or modify this document under the
-terms of the GNU Free Documentation License, Version 1.1 or any later version
-published by the Free Software Foundation; with no Invarient Sections, with no
-Front-Cover Texts, and no Back-Cover Texts.
-A copy of the license is available at http://www.gnu.org/copyleft/fdl.html.
-***** 7.2 History *****
-Original document released in June 2001 by Jason Wies.
-Updated February 2002 to include arrayized parameters, single quotes, and
-GLOBALS.
-***** 7.3 Contributing *****
-Contributions are always welcome. Please send to the current maintainer, Jason
-Wies, zone@phpgroupware.org.
-===============================================================================
-Next Previous Contents
+  $GLOBALS['phpgw']->vfs->mv (array(
+       'from' => 'dir1',
+       'to' => 'dir/dir1'
+  ));
+
+  $GLOBALS['phpgw']->vfs->rm (array(
+       'string' => 'file'
+  ));
+
+  $GLOBALS['phpgw']->vfs->rm (array(
+       'string' => 'dir'
+  ));
+
+
+
+  All work as you would except them to. The major exception is:
+
+
+  $GLOBALS['phpgw']->vfs->touch (array(
+       'string' => 'file'
+  ));
+
+
+
+  vs.
+
+
+  $GLOBALS['phpgw']->vfs->mkdir (array(
+       'string' => 'dir'
+  ));
+
+
+
+  +o  Users and groups are synonymous
+
+  As far as the actual paths are concerned, users and groups are the
+  same. /home/username works the same as /home/groupname.
+
+
+  +o  You should never have to know the real paths of files
+
+  One of the VFS's responsibilities is to translate paths for you.
+  While you certainly [4mcan[24m operate using full paths, it is much simpler
+  to use the virtual paths. For example, instead of using:
+
+
+  $GLOBALS['phpgw']->vfs->cp (array(
+       'from' => '/var/www/phpgroupware/files/home/user/file1',
+       'to' => '/var/www/phpgroupware/files/home/user/file2',
+       'relatives' => array(
+            RELATIVE_NONE|VFS_REAL,
+            RELATIVE_NONE|VFS_REAL
+       )
+  ));
+
+
+
+  you might use
+
+
+  $GLOBALS['phpgw']->vfs->cp (array(
+       'from' => '/home/user/file1',
+       'to' => '/home/user/file2',
+       'relatives' => array(
+            RELATIVE_NONE,
+            RELATIVE_NONE
+       )
+  ));
+
+
+
+  (We'll get to the RELATIVE's in a minute.)
+
+  Site administrators should be able to move their files dir around on
+  their system and know that everything will continue to work smoothly.
+
+
+  +o  Relativity is [4mvital[0m
+
+
+  Relativity is a new feature in the VFS, and its importance cannot be
+  stressed enough. It will make your life much easier, especially for
+  file system intensive applications, but it will take some getting used
+  to. If something doesn't work right the first time, chances are great
+  it has to do with incorrect relativity settings. We will deal with
+  relativity in depth in the Relativity section.
+
+  [1m3.  Basic Functions[0m
+
+  There are two functions you'll need to know before we get into
+  relativity.
+
+  [1m3.1.  path_parts ()[0m
+
+  The job of path_parts () is to translate any given file location into
+  its many component parts for any relativity. The values passed to
+  path_parts () are:
+
+
+  string
+  relatives
+  object
+
+
+
+  standard relativity array, and 'object' specifies how you would like
+  the return value: if 'object' is True, an object will be returned; if
+  'object' is False, an array will be returned. I think you'll find the
+  object easier to deal with, and we'll be using it throughout this
+  document. The most important returned values (but not all) for
+  path_parts () are:
+
+
+  fake_full_path
+  fake_leading_dirs
+  fake_extra_path
+  fake_name
+  real_full_path
+  real_leading_dirs
+  real_extra_path
+  real_name
+
+
+
+  Just like you would think, fake_full_path contains the full virtual
+  path of 'string', and real_full_path contains the full real path of
+  'string'. The fake_name and real_name variables should always be the
+  same, and contain the final file or directory name. The leading_dirs
+  contain everything except the name, and the extra_path is everything
+  from the / before "home" to the end of the leading_dirs. To better
+  illustrate, here is an example:
+
+
+  $p = $GLOBALS['phpgw']->vfs->path_parts (array(
+       'string' => '/home/jason/dir/file',
+       'relatives' => array(
+           RELATIVE_NONE
+       )
+  ));
+
+
+
+  +o  $p->fake_full_path - /home/jason/dir/file
+
+
+  +o  $p->fake_leading_dirs - /home/jason/dir
+
+  +o  $p->fake_extra_path - home/jason/dir
+
+  +o  $p->fake_name - file
+
+  +o  $p->real_full_path -
+     /var/www/phpgroupware/files/home/jason/dir/file
+
+  +o  $p->real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir
+
+
+  +o  $p->real_extra_path - home/jason/dir
+
+  +o  $p->real_name - file
+
+  As you can see, path_parts () is a very useful function and will save
+  you from doing those darn substr ()'s yourself. For those of you used
+  to the prior VFS, note that [4mgetabsolutepath[24m [4m()[24m [4mis[24m [4mdepreciated[24m.
+  getabsolutepath () still exists (albeit in a much different form), and
+  is responsible for some of the path translation, but it is an [4minternal[0m
+  function only. Applications should only use path_parts ().  We have
+  shown you how to use path_parts () so you can experiment with it using
+  different paths and relativities as we explore relativity.
+
+  [1m3.2.  cd ()[0m
+
+  Part of the overall goal for the VFS in phpGroupWare is to give the
+  user a seamless experience during their session. For example, if they
+  upload a file using a file manager to the directory
+  /home/my_group/project1, and then go to download an email attachment,
+  the default directory will be /home/my_group/project1. This is
+  accomplished using the cd () function. Examples:
+
+
+  /* cd to their home directory */
+  $GLOBALS['phpgw']->vfs->cd (array(
+       'string' => '/'
+  ));
+
+  /* cd to /home/jason/dir */
+  $GLOBALS['phpgw']->vfs->cd (array(
+       'string' => '/home/jason/dir',
+       'relative' => False,
+       'relatives' => array(
+            RELATIVE_NONE
+       )
+  ));
+
+  /* When following the above, cd's to /home/jason/dir/dir2 */
+  $GLOBALS['phpgw']->vfs->cd (array(
+       'string' => 'dir2',
+       'relative' => True
+  ));
+
+
+
+  If 'relative' is True, the 'string' is simply appended to the current
+  path. If you want to know what the current path is, use
+  $GLOBALS['phpgw']->vfs->pwd ().
+
+  Now you're ready for relativity.
+
+
+
+  [1m4.  Relativity[0m
+
+  Ok, just one last thing before we get into relativity. You will notice
+  throughout the examples the use of $fakebase.
+  $GLOBALS['phpgw']->vfs->fakebase is by default '/home'. The old VFS
+  was hard-coded to use '/home', but the naming choice for this is now
+  up to administrators. See the ``Fakebase directory (changing /home)''
+  section for more information. Throughout the rest of this document,
+  you will see $fakebase used in calls to the VFS, and /home used in
+  actual paths. [4mYou[24m [4mshould[24m [4malways[24m [4muse[24m [4m$fakebase[24m [4mwhen[24m [4mmaking[0m
+  [4mapplications.[24m I suggest doing $fakebase =
+  $GLOBALS['phpgw']->vfs->fakebase; right off the bat to keep things
+  neater.
+
+  [1m4.1.  What is it and how does it work?[0m
+
+  One of the design challenges for a Virtual File System is to try to
+  figure out whether the calling application is referring to a file
+  inside or outside the virtual root, and if inside, exactly where. To
+  solve this problem, the phpGroupWare VFS uses RELATIVE defines that
+  are used in bitmasks passed to each function. The result is that any
+  set of different relativities can be used in combination with each
+  other. Let's look at a few examples. Say you want to move
+
+
+
+  $GLOBALS['phpgw']->vfs->mv (array(
+      'from' => 'logo.png',
+      'to' => 'logo.png',
+      'relatives' => array(
+            RELATIVE_USER,
+            RELATIVE_ALL
+       )
+  ));
+
+
+
+  RELATIVE_USER means relative to the user's home directory.
+  RELATIVE_ALL means relative to the current directory, as set by cd ()
+  and as reported by pwd (). So if the current directory was
+  "$fakebase/my_group/project1", the call to mv () would be processed
+  as:
+
+
+  MOVE "$fakebase/jason/logo.png" TO "$fakebase/my_group/project1/logo.png"
+
+
+
+  and the actual file system call would be:
+
+
+  rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware/files/home/my_group/project1/logo.png');
+
+
+
+  Those used to the old VFS will note that you do not have to translate
+  the path beforehand. Let's look at another example. Suppose you were
+  moving an email attachment stored in phpGroupWare's temporary
+  directory to the 'attachments' directory within the user's home
+  directory (we're assuming the attachments directory exists). Note that
+  the temporary directory is [4moutside[24m the virtual root.
+
+
+
+  $GLOBALS['phpgw']->vfs->mv (array(
+       'from' => $GLOBALS['phpgw_info']['server']['temp_dir'] . '/' . $randomdir . '/' . $randomfile,
+       'to' => 'attachments/actual_name.ext',
+       'relatives' => array(
+            RELATIVE_NONE|VFS_REAL,
+            RELATIVE_USER
+       )
+  ));
+
+
+
+  $randomdir and $randomfile are what the directory and file might be
+  called before they are given a proper name by the user, which is
+  actual_name.ext in this example. RELATIVE_NONE is the define for using
+  full path names. However, RELATIVE_NONE is still relative to the
+  virtual root, so we pass along VFS_REAL as well, to say that the file
+  is [4moutside[24m the virtual root, somewhere else in the file system. Once
+  again, RELATIVE_USER means relative to the user's home directory. So
+  the actual file system call might look like this (keep in mind that
+  $randomdir and $randomfile are just random strings):
+
+
+  rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext');
+
+
+
+  Of course you don't have to know that, nor should you be concerned
+  with it; you can take it for granted that the VFS will translate the
+  paths correctly. Let's take a look at one more example, this time
+  using the RELATIVE_USER_APP define. RELATIVE_USER_APP is used to store
+  quasi-hidden application files, similar to the Unix convention of
+  ~/.appname. It simply appends .appname to the user's home directory.
+  For example, if you were making an HTML editor application named
+  'htmledit', and wanted to keep a backup file in case something goes
+  wrong, you could use RELATIVE_USER_APP to store it:
+
+
+  $GLOBALS['phpgw']->vfs->write (array(
+       'string' => 'file.name~',
+       'relatives' => array(
+            RELATIVE_USER_APP
+       ),
+       'content' => $contents
+  ));
+
+
+
+  This assumes that ~/.htmledit exists of course. The backup file
+  "file.name~" would then be written in
+  $fakebase/jason/.htmledit/file.name~.  Note that storing files like
+  this might not be as good of a solution as storing them in the
+  temporary directory or in the database. But it is there in case you
+  need it.
+
+  [1m4.2.  Complete List[0m
+
+  Here is the complete list of RELATIVE defines, and what they do:
+
+
+     [1mRELATIVE_ROOT[0m
+        Don't translate the path at all. Just prepends a /. You'll
+        probably want to use RELATIVE_NONE though, which handles both
+        virtual and real files.
+
+     [1mRELATIVE_USER[0m
+        User's home directory
+     [1mRELATIVE_CURR_USER[0m
+        Current user's home directory. If the current directory is
+        $fakebase/my_group/project1, this will return is
+        $fakebase/my_group
+
+     [1mRELATIVE_USER_APP[0m
+        Append .appname to the user's home directory, where appname is
+        the current application's appname
+
+     [1mRELATIVE_PATH[0m
+        DO NOT USE. Relative to the current directory, used in
+        RELATIVE_ALL
+
+     [1mRELATIVE_NONE[0m
+        Not relative to anything. Use this with VFS_REAL for files
+        outside the virtual root. Note that using RELATIVE_NONE by
+        itself still means relative to the virtual root
+
+     [1mRELATIVE_CURRENT[0m
+        An alias for the currently set RELATIVE define, or RELATIVE_ALL
+        if none is set (see the Defaults section)
+
+     [1mVFS_REAL[0m
+        File is outside of the virtual root. Usually used with
+        RELATIVE_NONE
+
+     [1mRELATIVE_ALL[0m
+        Relative to the current directory. Use RELATIVE_ALLinstead of
+        RELATIVE_PATH
+
+  [1m4.3.  Defaults[0m
+
+  You might be thinking to yourself that passing along RELATIVE defines
+  with every VFS call is overkill, especially if your application always
+  uses the same relativity. The default RELATIVE define for all VFS
+  calls is RELATIVE_CURRENT. RELATIVE_CURRENT itself defaults to
+  RELATIVE_ALL (relative to the current path), [4munless[24m your application
+  sets a specific relativity. If your application requires most of the
+  work to be done outside of the virtual root, you may wish to set
+  RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is the
+  function to do this. For example:
+
+
+  $GLOBALS['phpgw']->vfs->set_relative (array(
+       'mask' => RELATIVE_NONE|VFS_REAL
+  ));
+
+  $GLOBALS['phpgw']->vfs->read (array(
+       'string' => '/etc/passwd'
+  ));
+
+  $GLOBALS['phpgw']->vfs->cp (array(
+       'from' => '/usr/include/stdio.h',
+       'to' => '/tmp/stdio.h'
+  ));
+
+  $GLOBALS['phpgw']->vfs->cp (array(
+       'from' => '/usr/share/pixmaps/yes.xpm',
+       'to' => 'icons/yes.xpm',
+       'relatives' => array(
+            RELATIVE_CURRENT,
+            RELATIVE_USER
+       )
+  ));
+
+
+  You should notice that no relativity array is needed in the other
+  calls that refer to files outside the virtual root, but one is needed
+  for calls that include files inside the virtual root. Any RELATIVE
+  define can be set as the default and works in the same fashion. To
+  retrieve the currently set define, use get_relative (). Note that the
+  relativity is reset after each page request; that is, it's good only
+  for the life of the current page loading, and is not stored in session
+  management.
+
+  [1m5.  Function reference[0m
+
+  To view the function reference for the VFS, use the
+  doc/inlinedocparser.php script that comes with phpGroupWare, ie
+  http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php
+  <http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php>.
+
+  [1m6.  Notes[0m
+
+  [1m6.1.  Database[0m
+
+  Data about the files and directories within the virtual root is kept
+  in the SQL database. Currently, this information includes:
+
+
+  +o  File ID (used internally, primary key for table)
+
+  +o  Owner ID (phpGW account_id)
+
+  +o  Created by ID (phpGW account_id)
+
+  +o  Modified by ID (phpGW account_id)
+
+  +o  Created (date)
+
+  +o  Modified (date)
+
+  +o  Size (bytes)
+
+  +o  MIME type
+
+  +o  Deleteable (Y/N/Other?)
+
+  +o  Comment
+
+  +o  App (appname of application that created the file)
+
+  +o  Directory (directory the file or directory is in)
+
+  +o  Name (name of file or directory)
+
+  +o  Link directory (if the file or directory is linked, what the actual
+     directory is)
+
+  +o  Link name (if the file or directory is linked, what the actual name
+     is)
+
+  +o  Version (numeric version of the file)
+
+  The internal names of these (the database column names) are stored in
+  the $GLOBALS['phpgw']->vfs->attributes array, which is useful for
+  loops, and is guaranteed to be up-to-date.
+
+  Note that no information is kept about files outside the virtual root.
+  If a file is moved outside, all records of it are deleted from the
+  database (other than the journaling records). If a file is moved into
+  the virtual root, some information, specifically MIME-type, is not
+  always stored in the database. The vital information has defaults:
+  owner is based on where the file is being stored; size is correctly
+  read; deleteable is set to Y.
+
+  [1m6.2.  ACL support[0m
+
+  ACL support is built into the VFS. vfs->acl_check () does the actual
+  checking, and is called from all VFS functions as needed.  If the file
+  or directory sent to acl_check () doesn't exist, the permissions for
+  the parent directory are used to determine access.  ACL checking can
+  be overridden at any time by setting vfs->override_acl.  For example:
+
+
+  $GLOBALS['phpgw']->vfs->override_acl = 1;
+  $GLOBALS['phpgw']->vfs->mkdir (array(
+       'string' => $GLOBALS['fakebase']. '/' . $group_array['account_name'],
+       'relatives' => array(
+            RELATIVE_NONE
+       )
+  ));
+  $GLOBALS['phpgw']->vfs->override_acl = 0;
+
+
+
+  [1m6.3.  Function aliases[0m
+
+  You might have noticed there are some functions that just pass the
+  arguments on to other functions. These are provided in part because of
+  legacy and in part for convenience. You can use either. Here is the
+  list (alias -> actual):
+
+
+  +o  copy -> cp
+
+  +o  move -> rm
+
+  +o  delete -> rm
+
+  +o  dir -> ls
+
+  [1m6.4.  Fakebase directory (changing /home)[0m
+
+  The old VFS was hard-coded to use '/home' as the fake base directory,
+  even though the user never saw it. With the new system, crafty
+  administrators may wish to change '/home' to something else, say
+  '/users' or '/public_html'.  The fake base directory name is stored in
+  $GLOBALS['phpgw']->vfs->fakebase, and changing it will transparently
+  change it throughout the VFS and all applications. However, this must
+  be done [4mbefore[24m any data is in the VFS database. If you wish to change
+  it afterwords, you'll have to manually update the database, replacing
+  the old value with the new value. [4mApplication[24m [4mprogrammers[24m [4mneed[24m [4mto[0m
+  [4mrecognize[24m [4mthat[24m [4m/home[24m [4mis[24m [4mnot[24m [4mabsolute,[24m [4mand[24m [4muse[0m
+  [4m$GLOBALS['phpgw']->vfs->fakebase[24m [4minstead[24m. I suggest setting $fakebase
+  = $GLOBALS['phpgw']->vfs->fakebase; right off the bat to keep things
+  neater.
+
+  [1m7.  About this Document[0m
+
+  [1m7.1.  Copyright and License[0m
+
+  Copyright (c) 2001, 2002 Jason Wies
+
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.1 or
+  any later version published by the Free Software Foundation; with no
+  Invarient Sections, with no Front-Cover Texts, and no Back-Cover
+  Texts.
+
+  A copy of the license is available at
+  http://www.gnu.org/copyleft/fdl.html
+  <http://www.gnu.org/copyleft/fdl.html>.
+
+  [1m7.2.  History[0m
+
+  Original document released in June 2001 by Jason Wies.
+
+  Updated February 2002 to include arrayized parameters, single quotes,
+  and GLOBALS.
+
+  [1m7.3.  Contributing[0m
+
+  Contributions are always welcome. Please send to the current
+  maintainer, Jason Wies, zone@phpgroupware.org
+  <mailto:zone@phpgroupware.org>.
+
+
+
