@@ -32,6 +32,10 @@
             <td><input type="password" name="passwd2"></td>
           </tr>
           <tr>
+            <td>{create_demo_accounts}</td>
+            <td><input type="checkbox" name="create_demo" checked></td>
+          </tr>
+          <tr>
             <td colspan="2"><input type="submit" name="submit" value="{lang_submit}"> </td>
           </tr>
         </table>

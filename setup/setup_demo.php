@@ -55,6 +55,7 @@
 		$setup_tpl->set_var('adminlastname',lang('Admin last name'));
 		$setup_tpl->set_var('adminpassword',lang('Admin password'));
 		$setup_tpl->set_var('adminpassword2',lang('Re-enter password'));
+		$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 
 		$setup_tpl->set_var('lang_submit',lang('submit'));
 		$setup_tpl->pparse('out','T_setup_demo');
@@ -94,51 +95,55 @@
 		$sql .= "values (".$admingroupid.", 'Admins', 'g', '".md5($passwd)."', 'Admin', 'Group', ".time().", 'A')";
 		$phpgw_setup->db->query($sql);
 
-		/* Create records for demo accounts */
-		$accountid = mt_rand (100, 600000);
-		$sql = "insert into phpgw_accounts";
-		$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-		$sql .= "values (".$accountid.", 'demo', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo', 'Account', ".time().", 'A')";
-		$phpgw_setup->db->query($sql);
-		$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
+		/* Creation of the demo accounts is now optional - the checkbox is on by default. */
+		if ($create_demo)
+		{
+			/* Create records for demo accounts */
+			$accountid = mt_rand (100, 600000);
+			$sql = "insert into phpgw_accounts";
+			$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+			$sql .= "values (".$accountid.", 'demo', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo', 'Account', ".time().", 'A')";
+			$phpgw_setup->db->query($sql);
+			$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
 
-		$accountid = mt_rand (100, 600000);
-		$sql = "insert into phpgw_accounts";
-		$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-		$sql .= "values (".$accountid.", 'demo2', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo2', 'Account', ".time().", 'A')";
-		$phpgw_setup->db->query($sql);
-		$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_account, acl_location, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
+			$accountid = mt_rand (100, 600000);
+			$sql = "insert into phpgw_accounts";
+			$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+			$sql .= "values (".$accountid.", 'demo2', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo2', 'Account', ".time().", 'A')";
+			$phpgw_setup->db->query($sql);
+			$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_account, acl_location, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
 
-		$accountid = mt_rand (100, 600000);
-		$sql = "insert into phpgw_accounts";
-		$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-		$sql .= "values (".$accountid.", 'demo3', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo3', 'Account', ".time().", 'A')";
-		$phpgw_setup->db->query($sql);
-		$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
-		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
+			$accountid = mt_rand (100, 600000);
+			$sql = "insert into phpgw_accounts";
+			$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+			$sql .= "values (".$accountid.", 'demo3', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo3', 'Account', ".time().", 'A')";
+			$phpgw_setup->db->query($sql);
+			$phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 0)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)");
+			$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)");
+		}
 
 		/* Create records for administrator account */
 		$accountid = mt_rand (100, 600000);
