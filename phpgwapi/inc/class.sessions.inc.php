@@ -140,7 +140,7 @@
 
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
-			if ($GLOBALS['phpgw_info']['server']['use_cookies'])
+			if ($GLOBALS['phpgw_info']['server']['usecookies'])
 			{
 				$this->phpgw_set_cookiedomain();
 			}
