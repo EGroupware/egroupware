@@ -145,17 +145,15 @@
 
 		function limit($start)
 		{
-			global $phpgw_info;
-
 			echo '<b>Warning: limit() is no longer used, use limit_query()</b>';
 
 			if ($start == 0)
 			{
-				$s = 'limit ' . $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$s = 'limit ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			else
 			{
-				$s = 'limit ' . $phpgw_info['user']['preferences']['common']['maxmatchs'] . ',' . $start;
+				$s = 'limit ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] . ',' . $start;
 			}
 			return $s;
 		}
@@ -199,11 +197,9 @@
 		/* public: perform a query with limited result set */
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 		{
-			global $phpgw_info;
-
 			if (! $num_rows)
 			{
-				$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 
 			if ($offset == 0)
@@ -449,8 +445,6 @@
 
 		function halt($msg, $line = "", $file = "")
 		{
-			global $phpgw;
-
 			if($this->Halt_On_Error == "no")
 			{
 				return;
@@ -474,7 +468,7 @@
 			if ($this->Halt_On_Error == 'yes')
 			{
 				echo '<p><b>Session halted.</b>';
-				$phpgw->common->phpgw_exit(True);
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
 
