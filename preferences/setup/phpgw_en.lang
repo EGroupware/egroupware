@@ -1,11 +1,15 @@
+%1 - Preferences	preferences	en	%1 - Preferences
+acl grants have been updated	preferences	en	ACL grants have been updated
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
 date format	preferences	en	Date format
 default application	preferences	en	Default application
 default preferences	preferences	en	Default Preferences
+description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
 edit custom fields	preferences	en	edit custom fields
 enter your new password	preferences	en	Enter your new password
+error: there was a problem finding the preference file for %1 in %2	preferences	en	Error: There was a problem finding the preference file for %1 in %2
 forced preferences	preferences	en	Forced Preferences
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
@@ -21,10 +25,12 @@ show current users on navigation bar	preferences	en	Show current users on naviga
 show navigation bar as	preferences	en	Show navigation bar as
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
-theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
 the two passwords are not the same	preferences	en	The two passwords are not the same
-this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
+theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
+this server is located in the %1 timezone	preferences	en	 This server is located in the %1 timezone
 time format	preferences	en	Time format
-your current theme is: x	preferences	en	</b>
+users choice	preferences	en	Users choice
+%1 - preferences	preferences	en	%1 - Preferences
 you must enter a password	preferences	en	You must enter a password
+your current theme is: %1	preferences	en	your current theme is: %1
 your preferences	preferences	en	Your Preferences
