@@ -171,6 +171,7 @@ full description	calendar	en	Full Description
 full name	addressbook	en	Full Name
 generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
+geo	addressbook	en	GEO
 georgia    notes    en       Georgia
 global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
@@ -424,6 +425,7 @@ thursday	common	en	Thursday
 time	common	en	Time
 time created     notes         en       Time created
 time format	preferences	en	Time format
+time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 times new roman     notes      en      Times New Roman
 title	common	en	Title
