@@ -50,7 +50,9 @@
 
   $phpgw->db->query("SELECT cal_create_by, cal_date, cal_time, cal_mod_date, "
 	      . "cal_mod_time,cal_duration,cal_priority,cal_type,cal_access, "
-	      . "cal_name,cal_description FROM webcal_entry WHERE cal_id=$id");
+	      . "cal_name,cal_description,account_firstname, account_lastname "
+              . " FROM webcal_entry, accounts WHERE cal_id=$id "
+              . " and webcal_entry.cal_create_by = accounts.account_lid");
 
   $phpgw->db->next_record();
 
@@ -117,7 +119,7 @@
 <?php
   echo "<tr><TD VALIGN=\"top\"><b>" . lang("Created by") . ":</B></TD>\n";
 
-  echo "<td>" . $phpgw_info["user"]["fullname"] . "</td></tr>\n";
+  echo "<td>" . $phpgw->db->f(11) . " " . $phpgw->db->f(12) . "</td></tr>\n";
 ?>
 <tr>
   <TD VALIGN="top"><b><?php echo lang("Updated"); ?>:</B></TD>
