@@ -104,7 +104,6 @@
 			$GLOBALS['_xh'][$parser]['isf'] = 0; 
 			$GLOBALS['_xh'][$parser]['ac']  = '';
 			$GLOBALS['_xh'][$parser]['qt']  = '';
-			$GLOBALS['_xh'][$parser]['ha']  = '';
 
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
 			xml_set_element_handler($parser, "xmlrpc_se", "xmlrpc_ee");
@@ -129,7 +128,7 @@
 				return $r;
 			}
 			// gotta get rid of headers here
-			if ((!$hdrfnd) && ereg("^(.*)\r\n\r\n",$data,$_xh[$parser]['ha']))
+			if ((!$hdrfnd) && ereg("^(.*)\r\n\r\n",$data,$GLOBALS['_xh'][$parser]['ha']))
 			{
 				$data=ereg_replace("^.*\r\n\r\n", "", $data);
 				$hdrfnd=1;
