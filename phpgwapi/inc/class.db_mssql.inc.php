@@ -102,12 +102,12 @@
 		// I don't have access to M$-SQL, can someone finish these 2 functions ?  (jengo)
 		function to_timestamp($epoch)
 		{
-			return False;
+			return date('Y-m-d H:i:s', $epoch);
 		}
 
 		function from_timestamp($timestamp)
 		{
-			return False;
+			return strtotime($timestamp);
 		}
 
 		// public: perform a query with limited result set
