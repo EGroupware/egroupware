@@ -1734,12 +1734,11 @@ Date.prototype.print = function (str) {
 	var re = /%./g;
 /*
 	if (!Calendar.is_ie5 && !Calendar.is_opera)
-		return str.replace(re, re);
+		return str.replace(re, function (par) { return s[par] || par; });
 */
 	if (Calendar.is_opera || Calendar.is_ie5)
 		return str.replace(re, function(par) { return s[par] || par; });
 
-//		return str.replace(re, function (par) { return s[par] || par; });
 
 	var a = str.match(re);
 	for (var i = 0; i < a.length; i++) {
