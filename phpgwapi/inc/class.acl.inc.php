@@ -579,7 +579,11 @@
 			$db2->query($sql . $security ,__LINE__,__FILE__);
 			$rights = 0;
 			$accounts = Array();
-			if ($db2->num_rows() == 0){ return False; }
+			if ($db2->num_rows() == 0)
+			{
+				$grants[$phpgw_info['user']['account_id']] = (~ 0);
+				return $grants;
+			}
 			while ($db2->next_record())
 			{
 				$grantor = $db2->f('acl_account');
@@ -619,7 +623,9 @@
 					}
 					$grants[$grantors] |= $rights;
 				}
+				reset($accounts[$grantor]);
 			}
+			$grants[$phpgw_info['user']['account_id']] = (~ 0);
 			return $grants;
 		}
 	} //end of acl class

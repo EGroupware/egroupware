@@ -43,15 +43,13 @@
 		global $phpgw_info, $p;
 
 		$p->set_var($acl,$label.$phpgw_info['flags']['currentapp'].'['.$id.']['.$right.']');
+		$rights_set = (($rights & $right)?' checked':'');
 		if ($is_group)
 		{
 			// This is so you can't select it in the GUI
-			$p->set_var($acl.'_selected',' disabled');
+			$rights_set .= ' disabled';
 		}
-		else
-		{
-			$p->set_var($acl.'_selected',(($rights & $right)?' checked':''));
-		}
+		$p->set_var($acl.'_selected',$rights_set);
 	}
 
 	function display_row($bg_color,$label,$id,$name,$is_group)
