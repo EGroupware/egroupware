@@ -41,6 +41,9 @@ if(extension_loaded('mcal') == False)
 define('MSG_DELETED',0);
 define('MSG_MODIFIED',1);
 define('MSG_ADDED',2);
+define('MSG_REJECTED',3);
+define('MSG_TENTATIVE',4);
+define('MSG_ACCEPTED',5);
 
 define('REJECTED',0);
 define('NO_RESPONSE',1);
@@ -122,6 +125,11 @@ class calendar__
 				$event_id = $old_event->id;
 				$msgtype = '"calendar"; Version="'.$phpgw_info['server']['versions']['calendar'].'"; Id="'.$new_event->id.'"';
 				break;
+			case MSG_REJECTED:
+				$action = 'Rejected';
+				$event_id = $old_event->id;
+				$msgtype = '"calendar";';
+				break;
 		}
 
 		if($old_event != False)
@@ -174,6 +182,10 @@ class calendar__
 					case MSG_ADDED:
 						$action_date = $new_event_date;
 						$body = 'You have a meeting scheduled for '.$new_event_date;
+						break;
+					case MSG_REJECTED:
+						$action_date = $old_event_date;
+						$body = 'On '.$phpgw->common->show_date(time() - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']))).' '.$phpgw->common->grab_owner_name($phpgw_info['user']['account_id']).' REJECTED your meeting request for '.$old_event_date;
 						break;
 				}
 				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';

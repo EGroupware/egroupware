@@ -728,7 +728,18 @@ class calendar_ extends calendar__
 			TENTATIVE	=>	'T',
 			ACCEPTED	=>	'A'
 		);
-		$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+		if($status == REJECTED)
+		{
+			$temp_event = $this->event;
+			$old_event = $this->fetch_event($this->stream,$id);
+			$this->send_update(MSG_REJECTED,$old_event->participants,$old_event);
+			$this->stream->query("DELETE FROM phpgw_cal_user WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+			$this->event = $temp_event;
+		}
+		else
+		{
+			$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+		}
 		return True;
 	}
 	
