@@ -22,7 +22,8 @@ class html
 	function html()
 	{
 		// should be Ok for all HTML 4 compatible browsers
-		if (!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts))
+		if (!eregi('(Safari)/([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts) &&
+			!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
 			eregi('^([a-z_]+)/([0-9.]+)',$_SERVER['HTTP_USER_AGENT'],$parts);
 		}
@@ -248,6 +249,7 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='')
 	{
+		if (!$plugins) $plugins = 'ContextMenu,TableOperations,SpellChecker,HtmlTidy';
 		if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
 
 		if (!is_object($GLOBALS['phpgw']->js))
@@ -290,10 +292,28 @@ _editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
 
 			if (!empty($plugins)) 
 			{
-				$plg_arr = explode(',',$plugins);
-				foreach($plg_arr as $plg_name)
+				foreach(explode(',',$plugins) as $plg_name)
 				{
-					$load_plugin_string .= 'HTMLArea.loadPlugin("'.trim($plg_name).'");'."\n";
+					$plg_name = trim($plg_name);
+					$plg_dir = PHPGW_SERVER_ROOT.'/phpgwapi/js/htmlarea/plugins/'.$plg_name;
+					if (!@is_dir($plg_dir) || !@file_exists($plg_lang_script="$plg_dir/lang/lang.php") && !@file_exists($plg_lang_file="$plg_dir/lang/$lang.js"))
+					{
+						//echo "$plg_dir or $plg_lang_file not found !!!";
+						continue;	// else htmlarea fails with js errors
+					}
+					$script_name = strtolower(preg_replace('/([A-Z][a-z]+)([A-Z][a-z]+)/','\\1-\\2',$plg_name));
+					$GLOBALS['phpgw']->js->validate_file('htmlarea',"plugins/$plg_name/$script_name");
+					if ($lang == 'en' || !@file_exists($plg_lang_script))	// other lang-files are utf-8 only and incomplete (crashes htmlarea as of 3.0beta)
+					{
+						$GLOBALS['phpgw']->js->validate_file('htmlarea',"plugins/$plg_name/lang/$lang");
+					}
+					else
+					{
+						$GLOBALS['phpgw_info']['flags']['java_script'] .=
+							'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',
+							$GLOBALS['phpgw']->link("/phpgwapi/js/htmlarea/plugins/$plg_name/lang/lang.php",array('lang'=>$lang))).'"></script>'."\n";
+					}
+					//$load_plugin_string .= 'HTMLArea.loadPlugin("'.$plg_name.'");'."\n";
 					$register_plugin_string .= 'ret_editor = editor.registerPlugin("'.$plg_name.'");'."\n";
 				}
 			}
