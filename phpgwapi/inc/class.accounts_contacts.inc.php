@@ -32,6 +32,7 @@
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array();
+	$phpgw_info["server"]["global_denied_groups"] = array();
 
 	class accounts_
 	{
