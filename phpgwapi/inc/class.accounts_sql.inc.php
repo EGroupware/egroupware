@@ -302,12 +302,24 @@
 
 		function create($account_info)
 		{
-			if (isset($account_info['account_id']) && (!(int)$account_info['account_id'] || $this->id2name($account_info['account_id'])))
+			$account_data = array(
+				'account_lid'			=> $account_info['account_lid'],
+				'account_pwd'			=> $account_info['account_passwd'],
+				'account_firstname'		=> $account_info['account_firstname'],
+				'account_lastname'		=> $account_info['account_lastname'],
+				'account_status'		=> $account_info['status'],
+				'account_expires'		=> $account_info['account_expires'],
+				'account_type'			=> $account_info['account_type'],
+				'person_id'				=> $account_info['person_id'],
+				'account_primary_group'	=> $account_info['account_primary_group'],
+				'account_email'			=> $account_info['email'],
+			);
+			if (isset($account_info['account_id']) && (int)$account_info['account_id'] && !$this->id2name($account_info['account_id']))
 			{
-				// account_id already used => discard it
-				unset($account_info['account_id']);
+				// only use account_id, if it's not already used
+				$account_data['account_id'] = $account_info['account_id'];
 			}
-			$this->db->insert($this->table,$account_info,False,__LINE__,__FILE__);
+			$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__);
 
 			return $this->db->get_last_insert_id($this->table,'account_id');
 		}
