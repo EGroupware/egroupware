@@ -126,7 +126,7 @@
        }
 
        $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
-       $phpgw_info["user"]["password"]		= $this->appsession("password","phpgwapi");
+       $phpgw_info["user"]["passwd"]		= $this->appsession("password","phpgwapi");
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
           return False;
@@ -166,6 +166,7 @@
       $this->clean_sessions();
       $login_array = explode("@", $login);
       $this->account_lid = $login_array[0];
+      $now = time();
 
       if ($login_array[1]!="") {
          $this->account_domain = $login_array[1];
@@ -202,11 +203,11 @@
          Setcookie("sessionid",$this->sessionid);
          Setcookie("kp3",$this->kp3);
          Setcookie("domain",$this->account_domain);
-         Setcookie("last_domain",$this->account_domain,time()+1209600);
+         Setcookie("last_domain",$this->account_domain,$now+1209600);
          if ($this->account_domain == $phpgw_info["server"]["default_domain"]) {
-            Setcookie("last_loginid", $this->account_lid ,time()+1209600);  // For 2 weeks
+            Setcookie("last_loginid", $this->account_lid ,$now+1209600);  // For 2 weeks
          } else {
-            Setcookie("last_loginid", $login ,time()+1209600);              // For 2 weeks
+            Setcookie("last_loginid", $login ,$now+1209600);              // For 2 weeks
          }
          unset ($phpgw_info["server"]["default_domain"]);                   // we kill this for security reasons
       }
@@ -223,10 +224,10 @@
 
       $phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
                       . "','".$login."','" . $this->getuser_ip() . "','"
-                      . time() . "','" . time() . "','".$info_string."')",__LINE__,__FILE__);
+                      . $now . "','" . $now . "','".$info_string."')",__LINE__,__FILE__);
 
       $phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
-                      . "$login','" . $this->getuser_ip() . "','" . time()
+                      . "$login','" . $this->getuser_ip() . "','" . $now
                       . "','') ",__LINE__,__FILE__);
 
       $phpgw->auth->update_lastlogin($this->account_id,$this->getuser_ip());
