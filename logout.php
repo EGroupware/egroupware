@@ -22,21 +22,22 @@
   include("header.inc.php");
 //  include($phpgw_info["server"]["include_root"] . "/lang/en/" . "en" . "_logout.inc.php");
 
+  $sep = $phpgw->common->filesystem_separator();
+
 /*
   if ($installed[cron_apps] != "Y") {
      $dh = opendir($phpgw_info["server"]["temp_dir"]);
      while ($dir = readdir($dh)) {
        if ($dir != "." && $dir != "..") {
           if (substr($dir,0,strlen(time())) <= (time() - 3600)) {
-            echo $phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $dir;
-             $fh = opendir($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $dir);
+            echo $phpgw_info["server"]["temp_dir"] . $sep . $dir;
+             $fh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $dir);
              while ($file = readdir($fh)) {
                if ($file != "." && $file != "..") {
-                  unlink($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $dir
-			   . $phpgw_info["server"]["dir_separator"] . $file);
+                  unlink($phpgw_info["server"]["temp_dir"] . $sep . $dir . $sep . $file);
                }
              }
-             rmdir($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $dir);
+             rmdir($phpgw_info["server"]["temp_dir"] . $sep . $dir);
           }
        }
      }
@@ -52,16 +53,16 @@
 
 
   if ($phpgw->session->verify($sessionid)) {
-     if (file_exists($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $phpgw->session->id)) {
-        $dh = opendir($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $phpgw->session->id);
+     if (file_exists($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id)) {
+        $dh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id);
         while ($file = readdir($dh)) {
           if ($file != "." && $file != "..") {
-             unlink($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $phpgw->session->id
-	         . $phpgw_info["server"]["dir_separator"] . $file);
+             unlink($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id
+	         . $sep . $file);
           }
 
         }
-        rmdir($phpgw_info["server"]["temp_dir"] . $phpgw_info["server"]["dir_separator"] . $phpgw->session->id);
+        rmdir($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id);
      }
      $phpgw->session->destroy($phpgw->session->id);
      $phpgw->db->query("delete from app_sessions where sessionid='" . $phpgw->session->id . "'");
