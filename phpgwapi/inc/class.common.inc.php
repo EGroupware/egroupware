@@ -1,29 +1,29 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Commononly used functions                             *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * and Mark Peters <skeeter@phpgroupware.org>                               *
-  * Commononly used functions by phpGroupWare developers                     *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Commononly used functions                             *
+	* Written by Dan Kuykendall <seek3r@phpgroupware.org>                      *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* and Mark Peters <skeeter@phpgroupware.org>                               *
+	* and Bettina Gille [ceb@phpgroupware.org]                                 * 
+	* Commononly used functions by phpGroupWare developers                     *
+	* Copyright (C) 2000 - 2002 Dan Kuykendall                                 *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 
 	$d1 = strtolower(@substr(PHPGW_API_INC,0,3));
 	$d2 = strtolower(@substr(PHPGW_SERVER_ROOT,0,3));
@@ -632,7 +632,7 @@
 		@function list_themes
 		@abstract list themes available
 		*/
-		function list_themes()
+		/*function list_themes()
 		{
 			$dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
 			while ($file = readdir($dh))
@@ -643,6 +643,23 @@
 				}
 			}
 			//$dh->close();
+			reset ($list);
+			return $list;
+		} */
+
+		function list_themes()
+		{
+			$tpl_dir = $this->get_tpl_dir('phpgwapi');
+
+			$dh = opendir($tpl_dir . SEP . 'css');
+			while ($file = readdir($dh))
+			{
+				if (eregi("\.css$", $file))
+				{
+					$list[] = substr($file,0,strpos($file,'.'));
+				}
+			}
+			closedir($dh);
 			reset ($list);
 			return $list;
 		}
@@ -1319,7 +1336,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
 						. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.css';
 			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'idsociety' . SEP . 'css' . SEP . 'submarine.css'))
+			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP . 'css' . SEP . 'submarine.css'))
 			{
 				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'idsociety' . SEP . 'css' . SEP . 'submarine.css';
 			}
