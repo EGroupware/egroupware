@@ -961,11 +961,12 @@
 					'account_expires'   => -1
 				));
 			}
+			$accountid = (int)$accountid;
 			if($groupid)
 			{
-				$this->add_acl('phpgw_group',(int)$groupid,(int)$accountid);
+				$this->add_acl('phpgw_group',(int)$groupid,$accountid);
 			}
-			$this->add_acl('preferences','changepassword',(int)$accountid, (int)$changepw);
+			$this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
 
 			return $accountid;
 		}
