@@ -50,6 +50,21 @@
         </td>
        </tr>
       <?php } ?>
+
+       <tr>
+         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["theme"]] = " selected"; ?>
+        <td>Theme (colors/fonts) Selection:<br></td>
+        <td>
+         <select name="settings[theme]">
+        <?php
+          $themes = $phpgw->common->list_themes();
+          while (list ($key, $value) = each ($themes)){
+            echo '<option value="'.$value.'" '.$selected[$value].'>'.$value.'</option>';
+          }
+        ?>
+         </select>
+        </td>
+       </tr>
        <tr>
         <td><?php echo lang("Show navigation bar as"); ?>: </td>
         <td>

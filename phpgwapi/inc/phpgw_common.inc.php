@@ -334,6 +334,19 @@
       }      
     }
 
+    function list_themes(){
+      global $phpgw_info;
+      $dh = opendir($phpgw_info["server"]["server_root"] . "/phpgwapi/themes");
+      while ($file = readdir($dh)) {
+        if (eregi("\.theme$", $file)) {
+           $list[] = substr($file,0,strpos($file,"."));
+        }
+      }
+      //$dh->close();
+      reset ($list);
+      return $list;
+    }
+
     function list_templates(){
       global $phpgw_info;
       $d = dir($phpgw_info["server"]["server_root"]."/phpgwapi/templates");
