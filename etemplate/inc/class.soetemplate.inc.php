@@ -177,7 +177,15 @@
 		function set_rows_cols()
 		{
 			$this->rows = count($this->data) - 1;
-			$this->cols = count($this->data[1]); // 1 = first row, not 0
+			$this->cols = 0;
+			for($r = 1; $r <= $this->rows; ++$r)
+			{
+				$cols = count($this->data[$r]);
+				if ($this->cols < $cols)
+				{
+					$this->cols = $cols;
+				}
+			}
 		}
 
 		/*!
