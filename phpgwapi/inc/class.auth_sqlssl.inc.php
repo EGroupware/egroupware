@@ -33,7 +33,7 @@
 
 			$local_debug = False;
 
-			if ($local_debug)
+			if($local_debug)
 			{
 				echo "<b>Debug SQL: uid - $username passwd - $passwd</b>";
 			}
@@ -41,11 +41,11 @@
 			# Apache + mod_ssl provide the data in the environment
 			# Certificate (chain) verification occurs inside mod_ssl
 			# see http://www.modssl.org/docs/2.8/ssl_howto.html#ToC6
-			if (!isset($GLOBALS['HTTP_SERVER_VARS']['SSL_CLIENT_S_DN']))
+			if(!isset($GLOBALS['HTTP_SERVER_VARS']['SSL_CLIENT_S_DN']))
 			{
 				# if we're not doing SSL authentication, behave like auth_sql
 				$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
-               . "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
+					. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
 				$db->next_record();
 			}
 			else
@@ -55,7 +55,7 @@
 				$db->next_record();
 			}
 
-			if ($db->f('account_lid'))
+			if($db->f('account_lid'))
 			{
 				return True;
 			}
@@ -67,15 +67,15 @@
 
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
-			if (! $account_id)
+			if(!$account_id)
 			{
 				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
 			$encrypted_passwd = md5($new_passwd);
 
-			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
-				. "account_lastpwd_change='" . time() . "' where account_id='" . $account_id . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_pwd='" . md5($new_passwd) . "',"
+				. "account_lastpwd_change='" . time() . "' WHERE account_id='" . $account_id . "'",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 
@@ -84,13 +84,13 @@
 
 		function update_lastlogin($account_id, $ip)
 		{
-			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
-			$this->previous_login = $phpgw->db->f('account_lastlogin');
+			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
 
-			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
-				. "' where account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}
 	}
 ?>
