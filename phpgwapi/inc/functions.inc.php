@@ -817,9 +817,9 @@
 			if (@$login != '')
 			{
 				$login_array = explode("@",$login);
-				print_debug('LID : '.$login_array[0]);
+				print_debug('LID : '.$login_array[0], 'messageonly','api');
 				$login_id = $GLOBALS['phpgw']->accounts->name2id($login_array[0]);
-				print_debug('User ID : '.$login_id);
+				print_debug('User ID : '.$login_id, 'messageonly','api');
 				$GLOBALS['phpgw']->accounts->accounts($login_id);
 				$GLOBALS['phpgw']->preferences->preferences($login_id);
 			}
