@@ -187,6 +187,8 @@ ignore conflict	calendar	en	Ignore Conflict
 image	email	en	Image
 imap server type	email	en	IMAP Server Type
 import lang set	transy	en	Import lang set
+import file	addressbook	en	Import File
+import from outlook	addressbook	en	Import from Outlook
 installed applications	admin	en	Installed applications
 inventory	common	en	Inventory
 ip	admin	en	IP
