@@ -40,7 +40,10 @@
 				{
 					$session_lid = $value['session_lid'];
 				}
-
+				$tmp = time() - $value['session_dla'];
+				$secs = $tmp % 60;
+				$mins = (($tmp - $secs) % 3600) / 60;
+				$hours = ($tmp - ($mins * 60) - $secs) / 3600;
 				$_values[] = array(
 					'session_id'        => $value['session_id'],
 					'session_lid'       => $session_lid,
