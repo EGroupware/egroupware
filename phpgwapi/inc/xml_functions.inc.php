@@ -681,22 +681,22 @@
 		{
 			$server_name = $data['server_name']->scalarval();
 		}
+		if($data['domain'])
+		{
+			$domain = $data['domain']->scalarval();
+		}
 		$username    = $data['username']->scalarval();
 		$password    = $data['password']->scalarval();
 
-		$sparts = explode('.',$server_name);
-		if($sparts[1])
+		if($server_name)
 		{
-			/* we were passed an FQDN */
 			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password);
 		}
 		else
 		{
-			/* possible phpgw domain */
-			/* Milosch - jengo, does this make sense? */
-			if($server_name)
+			if($domain)
 			{
-				$user = $username.'@'.$server_name;
+				$user = $username.'@'.$domain;
 			}
 			else
 			{
@@ -704,10 +704,12 @@
 			}
 			$sessionid = $GLOBALS['phpgw']->session->create($user,$password);
 			$kp3 = $GLOBALS['phpgw']->session->kp3;
+			$domain = $GLOBALS['phpgw']->session->account_domain;
 		}
 
 		if($sessionid && $kp3)
 		{
+			$rtrn['domain'] = CreateObject('phpgwapi.xmlrpcval',$domain,'string');
 			$rtrn['sessionid'] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
 			$rtrn['kp3'] = CreateObject('phpgwapi.xmlrpcval',$kp3,'string');
 		}
