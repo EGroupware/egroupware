@@ -161,8 +161,10 @@
 				unset($cell['size']);
 				return True;
 			}
-			$tpl = new etemplate;
+			$tpl =& new etemplate;
 			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
+			// keep the editor away from the generated tmpls
+			$tpl->no_onclick = true;
 
 			$types = array(
 				'Y' => ($options&1 ? 'int' : 'select-year'),	// if options&1 set, show an int-field

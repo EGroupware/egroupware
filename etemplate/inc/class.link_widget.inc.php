@@ -85,7 +85,7 @@
 					$value = $extension_data;
 					$value['remark'] = '';
 
-					$tpl = new etemplate('etemplate.link_widget.attach');
+					$tpl =& new etemplate('etemplate.link_widget.attach');
 				}
 				elseif ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
 				{
@@ -95,7 +95,7 @@
 					$value['options-id'] = $ids;
 					$value['remark'] = '';
 
-					$tpl = new etemplate('etemplate.link_widget.create');
+					$tpl =& new etemplate('etemplate.link_widget.create');
 				}
 				else
 				{
@@ -106,7 +106,7 @@
 					$value = array_merge($extension_data,$value);
 					$value['options-app'] = $this->link->app_list();
 
-					$tpl = new etemplate('etemplate.link_widget.search');
+					$tpl =& new etemplate('etemplate.link_widget.search');
 					$tpl->set_cell_attribute('msg','disabled',$value['button'] != 'search');
 				}
 				break;
@@ -132,7 +132,7 @@
 					$value = '';
 					return True;
 				}
-				$tpl = new etemplate('etemplate.link_widget.list');
+				$tpl =& new etemplate('etemplate.link_widget.list');
 				$tpl->data[0]['A'] = $tmpl->data[0]['A'];	// set width of first col like the tmpl. calling us
 				for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 				{
@@ -149,6 +149,8 @@
 			$cell['type'] = 'template';
 			$cell['name'] = $tpl->name;
 			$cell['obj'] = &$tpl;
+			// keep the editor away from the generated tmpls
+			$tpl->no_onclick = true;			
 
 			if ($this->debug)
 			{
@@ -205,6 +207,10 @@
 						if (!is_array($value['to_id']))
 						{
 							unlink($value['file']['tmp_name']);
+						}
+						if (isset($value['primary']) && !$value['anz_links'] )
+						{
+							$value['primary'] = $link_id;
 						}
 						unset($value['file']);
 					}

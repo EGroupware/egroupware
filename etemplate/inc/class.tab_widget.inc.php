@@ -38,10 +38,12 @@
 			$helps = explode('|',$cell['help']);
 			$names = explode('|',$cell['name']);
 
-			$tab = new etemplate('etemplate.tab_widget.tab'.($dom_enabled ? '_dom' : ''));
-			$tab_active = new etemplate('etemplate.tab_widget.tab_active');
-			$tabs = new etemplate();
+			$tab =& new etemplate('etemplate.tab_widget.tab'.($dom_enabled ? '_dom' : ''));
+			$tab_active =& new etemplate('etemplate.tab_widget.tab_active');
+			$tabs =& new etemplate();
 			$tabs->init('*** generated tabs','','',0,'',0,0);	// make an empty template
+			// keep the editor away from the generated tmpls
+			$tab->no_onclick = $tab_active->no_onclick = $tabs->no_onclick = true;
 
 			foreach($names as $k => $name)
 			{
@@ -102,6 +104,7 @@
 			$tabs->size = "$cell[width],,,0,0";
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
+			$tab_widget->no_onclick = true;
 			$tab_widget->set_cell_attribute('@tabs','obj',$tabs);
 			
 			if ($dom_enabled)

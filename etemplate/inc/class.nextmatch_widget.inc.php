@@ -138,7 +138,9 @@
 			}
 			else
 			{
-				$nextmatch = new etemplate('etemplate.nextmatch_widget');
+				$nextmatch =& new etemplate('etemplate.nextmatch_widget');
+				// keep the editor away from the generated tmpls
+				$nextmatch->no_onclick = true;			
 
 				if ($value['no_cat'])
 				{

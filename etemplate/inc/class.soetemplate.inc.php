@@ -209,6 +209,11 @@
 					$rows = &$parent['rows'];
 					$row = &$data[$rows];
 					$col = count($row);
+					if (!$rows || !is_array($cell))	// create a new row
+					{
+						$row = &$data[++$rows];
+						$row = array();
+					}
 					if (is_array($cell))	// real cell to add
 					{
 						$row[soetemplate::num2chrs($col++)] = &$cell;
@@ -219,10 +224,6 @@
 							$row[soetemplate::num2chrs($col++)] = soetemplate::empty_cell();
 						}
 						if ($col > $cols) $cols = $col;
-					}
-					else	// create a new row
-					{
-						$data[++$rows] = array();
 					}
 					break;
 					
@@ -669,13 +670,13 @@
 		 *
 		 * the returned array ($data_too > 0) can be used with init to recreate the template 
 		 *
-		 * @param int $data_too 0 = no data array, 1 = data array too, 2 = serialize data array
+		 * @param int $data_too -1 = only keys, 0 = no data array, 1 = data array too, 2 = serialize data array
 		 * @return array with template-data
 		 */
 		function as_array($data_too=0)
 		{
 			$arr = array();
-			foreach($this->db_cols as $db_col => $col)
+			foreach($data_too == -1 ? $this->db_key_cols : $this->db_cols as $db_col => $col)
 			{
 				if ($col == 'data' && $data_too)
 				{
@@ -686,7 +687,7 @@
 					$arr[$col] = $this->$col;
 				}
 			}
-			if ($this->tpls_in_file) 
+			if ($data_too != -1 && $this->tpls_in_file) 
 			{
 				$arr['tpls_in_file'] = $this->tpls_in_file;
 			}
@@ -1069,7 +1070,7 @@
 		/**
 		 * applys a function to each widget in the children tree of the template
 		 *
-		 * The function should be defined as [&]func([&]$widget,[&]$extra)
+		 * The function should be defined as [&]func([&]$widget,[&]$extra[,$path])
 		 * If the function returns anything but null or sets $extra['__RETURN__NOW__'] (func has to reference $extra !!!), 
 		 * the walk stops imediatly and returns that result
 		 *
@@ -1087,18 +1088,19 @@
 				echo "<p><b>boetemplate($this->name)::widget_tree_walk</b>(".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
 				return false;
 			}
+			$path = '/';
 			foreach($this->children as $c => $nul)
 			{
 				$child = &$this->children[$c];
 				if (isset($this->widgets_with_children[$child['type']]))
 				{
-					$result =& $this->tree_walk($child,$func,$extra);
+					$result =& $this->tree_walk($child,$func,$extra,$path.$c);
 				}
 				else 
 				{
-					$result =& $func($child,$extra);
+					$result =& $func($child,$extra,$path.$c);
 				}
-				if (!is_null($result) || isset($extra['__RETURN_NOW__'])) break;
+				if (!is_null($result) || is_array($extra) && isset($extra['__RETURN_NOW__'])) break;
 			}
 			return $result;
 		}
@@ -1106,7 +1108,7 @@
 		/**
 		 * applys a function to each child in the tree of a widget (incl. the widget itself) 
 		 *
-		 * The function should be defined as [&]func([&]$widget,[&]$extra) [] = optional
+		 * The function should be defined as [&]func([&]$widget,[&]$extra[,$path]) [] = optional
 		 * If the function returns anything but null or sets $extra['__RETURN__NOW__'] (func has to reference $extra !!!), 
 		 * the walk stops imediatly and returns that result
 		 *
@@ -1117,17 +1119,19 @@
 		 * @param array $widget the widget(-tree) the function should be applied too
 		 * @param string/array $func function to use or array($obj,'method')
 		 * @param mixed &$extra extra parameter passed to function
+		 * @param string $path path of widget in the widget-tree
 		 * @return mixed return-value of func or null if nothing returned at all
 		 */
-		function &tree_walk(&$widget,$func,&$extra)
+		function &tree_walk(&$widget,$func,&$extra,$path='')
 		{
 			if (!is_callable($func))
 			{
 				echo "<p><b>boetemplate::tree_walk</b>(, ".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
 				return false;
 			}
-			$result =& $func($widget,$extra);
-			if (!is_null($result) || isset($extra['__RETURN__NOW__']) || !isset($this->widgets_with_children[$widget['type']]))
+			$result =& $func($widget,$extra,$path);
+			if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__']) || 
+				!isset($this->widgets_with_children[$widget['type']]))
 			{
 				return $result;
 			}
@@ -1143,13 +1147,13 @@
 						$child = &$widget[$n];
 						if (isset($this->widgets_with_children[$child['type']]))
 						{
-							$result =& $this->tree_walk($child,$func,$extra);
+							$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$n);
 						}
 						else
 						{
-							$result =& $func($child,$extra);
+							$result =& $func($child,$extra,$path.'/'.$n);
 						}
-						if (!is_null($result) || isset($extra['__RETURN__NOW__'])) return $result;
+						if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__'])) return $result;
 					}
 					break;
 
@@ -1166,13 +1170,13 @@
 							$child = &$data[$r][$c];
 							if (isset($this->widgets_with_children[$child['type']]))
 							{
-								$result =& $this->tree_walk($child,$func,$extra);
+								$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$r.$c);
 							}
 							else
 							{
-								$result =& $func($child,$extra);
+								$result =& $func($child,$extra,$path.'/'.$r.$c);
 							}
-							if (!is_null($result) || isset($extra['__RETURN__NOW__'])) return $result;
+							if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__'])) return $result;
 						}
 					}
 					break;

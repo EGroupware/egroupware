@@ -37,8 +37,8 @@
 		 * 3=calls to show_cell and process_show_cell
 		 */
 		var $debug;
-		var $html;	/** instance of html-class */
-		var $xslt = false;	/** do we run in the xslt framework (true) or the regular eGW one (false) */
+		var $html;	/* instance of html-class */
+		var $xslt = false;	/* do we run in the xslt framework (true) or the regular eGW one (false) */
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 		var $public_functions = array('process_exec' => True);
 
@@ -304,7 +304,7 @@
 		 * @param string $show_row name/index for name expansion
 		 * @return string the generated HTML
 		 */
-		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
+		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
 		{
 			if (!$sel_options)
 			{
@@ -328,9 +328,10 @@
 				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
 				$html .= $this->html->style($this->style)."\n\n";
 			}
-			foreach ($this->children as $child)
+			$path = '/';
+			foreach ($this->children as $n => $child)
 			{
-				$html .= $this->show_cell($child,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul);
+				$html .= $this->show_cell($child,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul,$path.$n);
 			}
 			return $html."<!-- END eTemplate $this->name -->\n\n";
 		}
@@ -354,9 +355,10 @@
 		 *		eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
 		 * @param string $show_c name/index for name expansion
 		 * @param string $show_row name/index for name expansion
+		 * @param string $path path in the widget tree
 		 * @return string the generated HTML
 		 */
-		function show_grid(&$grid,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
+		function show_grid(&$grid,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0,$path='')
 		{
 			if (!$sel_options)
 			{
@@ -465,7 +467,7 @@
 					{
 						continue;	// col is disabled
 					}
-					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$cl);
+					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$cl,$path.'/'.$r_key.$c_key);
 
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
@@ -515,6 +517,31 @@
 			}
 			return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
 		}
+		
+		/**
+		 * build the name of a form-element from a basename and name
+		 *
+		 * name and basename can contain sub-indices in square bracets, eg. basename="base[basesub1][basesub2]" 
+		 * and name = "name[sub]" gives "base[basesub1][basesub2][name][sub]"
+		 *
+		 * @param string $cname basename
+		 * @param string $name name
+		 * @return string complete form-name
+		 */
+		function form_name($cname,$name)
+		{
+			$name_parts = explode('[',str_replace(']','',$name));
+			if (!empty($cname))
+			{
+				array_unshift($name_parts,$cname);
+			}
+			$form_name = array_shift($name_parts);
+			if (count($name_parts))
+			{
+				$form_name .= '['.implode('][',$name_parts).']';
+			}
+			return $form_name;
+		}
 
 		/**
 		 * generates HTML for 1 input-field / cell
@@ -533,9 +560,10 @@
 		 * @param string $show_row name/index for name expansion
 		 * @param string &$span on return number of cells to span or 'all' for the rest (only used for grids)
 		 * @param string &$class on return the css class of the cell, to be set in the <td> tag
+		 * @param string $path path in the widget tree
 		 * @return string the generated HTML
 		*/
-		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class)
+		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
 		{
 			if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
 			{
@@ -549,16 +577,8 @@
 			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
-			$name_parts = explode('[',str_replace(']','',$name));
-			if (!empty($cname))
-			{
-				array_unshift($name_parts,$cname);
-			}
-			$form_name = array_shift($name_parts);
-			if (count($name_parts))
-			{
-				$form_name .= '['.implode('][',$name_parts).']';
-			}
+			$form_name = $this->form_name($cname,$name);
+
 			$value = $this->get_array($content,$name);
 
 			if ($readonly = $cell['readonly'] || (@$readonlys[$name] && !is_array($readonlys[$name])) || $readonlys['__ALL__'])
@@ -645,10 +665,10 @@
 			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
 			{
-				case 'label':		//  size: [[b]old][[i]talic][,link]
+				case 'label':		//  size: [[b]old][[i]talic][,link][,activate_links][,label_for]
 					if (is_array($value))
 						break;
-					list($style,$extra_link,$activate_links) = explode(',',$cell_options);
+					list($style,$extra_link,$activate_links,$label_for) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
@@ -811,7 +831,7 @@
 					{
 						$cname .= $cname == '' ? $name : '['.str_replace('[','][',str_replace(']','',$name)).']';
 					}
-					$html .= $this->show_grid($cell,$name ? $value : $content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+					$html .= $this->show_grid($cell,$name ? $value : $content,$sel_options,$readonlys,$cname,$show_c,$show_row,$path);
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if (is_object($cell['name']))
@@ -865,7 +885,13 @@
 						if (!is_array($readonlys)) $readonlys = array();
 						$readonlys['__ALL__'] = True;
 					}
-					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row/*TEST-RB,$cell['onchange'],$cell['tr_class']*/);
+					// propagate our onclick handler to embeded templates, if they dont have their own
+					if (!isset($cell['obj']->onclick_handler)) $cell['obj']->onclick_handler = $this->onclick_handler;
+					if ($cell['obj']->no_onclick)
+					{
+						$cell['obj']->onclick_proxy = $this->onclick_proxy ? $this->onclick_proxy : $this->name.':'.$path;
+					}
+					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
 					$sels = array();
@@ -955,7 +981,7 @@
 					$box_anz = 0;
 					for ($n = 1; $n <= (int) $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl);
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
 						if ($h != '' && $h != '&nbsp;')
 						{
 							if ($cell['type'] != 'hbox')
@@ -1027,7 +1053,7 @@
 					}
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul);
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$path.'/'.$n);
 						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
 						list (,$cl) = explode(',',$cell[$n]['span']);
 						$html .= $this->html->div($h,$this->html->formatOptions(array(
@@ -1079,11 +1105,17 @@
 				{
 					$label = lang($label);
 				}
+				$accesskey = false;
 				if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '' &&
 				    (($pos = strpos($accesskey,';')) === False || $pos > 5))
 				{
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
-					$label = $this->html->label($label,$form_name,$accesskey[1]);
+					$accesskey = $accesskey[1];
+				}
+				if ($accesskey || $label_for || $cell['name'])
+				{
+					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
+						$form_name,$accesskey);
 				}
 				if ($type == 'radio' || $type == 'checkbox' || strstr($label,'%s'))	// default for radio is label after the button
 				{
@@ -1112,6 +1144,15 @@
 			if (isset($GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name]))
 			{
 				$html .= ' <font color="red">'.$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name].'</font>';
+			}
+			// generate an extra div, if we have an onclick handler and NO children or it's an extension
+			//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
+			if ($this->onclick_handler && !isset($this->widgets_with_children[$cell['type']]))
+			{
+				$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$path,
+					$this->onclick_handler);
+				if ($type == 'select') $html .= '&nbsp;';
+				return $this->html->div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 			}
 			return $html;
 		}

@@ -29,6 +29,36 @@
 			'right' => 'Right',
 			'center' => 'Center'
 		);
+		var $edit_menu = array(
+			'delete' => 'delete',
+			'cut' => 'cut',
+			'copy' => 'copy',
+			'paste' => 'paste',
+			'swap' => 'swap',
+		);
+		var $grid_menu = array(
+			'row' => array(
+				'row_delete' => 'delete this row',
+				'row_insert_above' => 'insert a row above',
+				'row_insert_below' => 'insert a row below',
+				'row_swap_next' => 'swap with next row',
+				'row_prefs' => 'preferences of this row',
+			),
+			'column' => array(
+				'colum_delete' => 'delete this row',
+				'colum_insert_before' => 'insert a column before',
+				'column_insert_behind' => 'insert a column behind',
+				'column_swap_next' => 'swap with next column',
+				'column_prefs' => 'preferences of this column',
+			),				
+			'grid_prefs' => 'preferences',
+		);
+		var $box_menu = array(
+			'box_insert_before' => 'insert a widget before',
+			'box_insert_behind' => 'insert a widget behind',
+			'box_swap_next' => 'swap widget with next one',
+			'box_prefs' => 'preferences',
+		);
 		var $options = array(
 			'width',
 			'height',
@@ -52,16 +82,16 @@
 			'process_edit' => True,
 			'delete'       => True,
 			'show'         => True,
-			//'admin'       => True,
-			//'preferences' => True
+			'widget'       => True,
 		);
 
 		function editor()
 		{
 			$this->etemplate = CreateObject('etemplate.etemplate');
-			//echo '$HTTP_POST_VARS='; _debug_array($HTTP_POST_VARS);
 
 			$this->editor = new etemplate('etemplate.editor');
+			
+			$this->extensions = $GLOBALS['phpgw']->session->appsession('extensions','etemplate');
 		}
 
 		function edit($msg = '',$xml='',$xml_label='')
@@ -72,10 +102,9 @@
 			}
 			if (!is_array($this->extensions))
 			{
-				$this->extensions = $this->scan_for_extensions();
-				if (count($this->extensions))
+				if (($extensions = $this->scan_for_extensions()))
 				{
-					$msg .= lang('Extensions loaded:') . ' ' . implode(', ',$this->extensions);
+					$msg .= lang('Extensions loaded:') . ' ' . $extensions;
 					$msg_ext_loaded = True;
 				}
 			}
@@ -83,17 +112,11 @@
 			if ($app && $app != 'etemplate')
 			{
 				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
-			}
-			if ($app && $app != 'etemplate' && is_array($this->extensions) &&
-			    (!is_array($this->extensions['**loaded**']) || !$this->extensions['**loaded**'][$app]))
-			{
-				$extensions = $this->scan_for_extensions($app);
-				if (count($extensions))
+
+				if (($extensions = $this->scan_for_extensions($app)))
 				{
-					$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . implode(', ',$extensions);
-					$this->extensions += $extensions;
+					$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . $extensions;
 				}
-				$this->extensions['**loaded**'][$app] = True;
 			}
 			$content = $this->etemplate->as_array() + array(
 				'cols' => $this->etemplate->cols,
@@ -178,16 +201,14 @@
 			{
 				echo 'editor.edit: content ='; _debug_array($content);
 			}
-			$types = array_merge($this->etemplate->types,$this->extensions);
-			unset($types['**loaded**']);
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
-					'type' => $types,
+					'type' => array_merge($this->etemplate->types,$this->extensions),
 					'align' => $this->aligns,
 					'overflow' => $this->overflows
 				),
-				$no_button,$cols_spanned + array('**extensions**' => $this->extensions));
+				$no_button,$cols_spanned);
 		}
 
 		function swap(&$a,&$b)
@@ -201,7 +222,6 @@
 			{
 				echo "editor.process_edit: content ="; _debug_array($content);
 			}
-			$this->extensions = $content['**extensions**']; unset($content['**extensions**']);
 			$this->etemplate->init($content);
 
 			$opts = array();
@@ -589,10 +609,6 @@
 			{
 				$content = array();
 			}
-			if (!is_array($this->extensions) && isset($content['**extensions**']))
-			{
-				$this->extensions = $content['**extensions**']; unset($content['**extensions**']);
-			}
 			if (isset($content['name']))
 			{
 				$read_ok = $this->etemplate->read($content);
@@ -644,9 +660,7 @@
 			$delete = new etemplate('etemplate.editor.delete');
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Delete Template');
 			$delete->exec('etemplate.editor.delete',$content,array(),array(),
-				$content+$preserv+array(
-					'**extensions**' => $this->extensions
-				),'');
+				$content+$preserv,'');
 		}
 
 		function list_result($cont='',$msg='')
@@ -654,10 +668,6 @@
 			if ($this->debug)
 			{
 				echo "<p>etemplate.editor.list_result: cont="; _debug_array($cont);
-			}
-			if (!is_array($this->extensions) && is_array($cont) && isset($cont['**extensions**']))
-			{
-				$this->extensions = $cont['**extensions**']; unset($cont['**extensions**']);
 			}
 			if (!$cont || !is_array($cont))
 			{
@@ -704,6 +714,13 @@
 				$this->edit();
 				return;
 			}
+			if (isset($cont['view']))
+			{
+				list($read) = each($cont['view']);
+				$this->etemplate->read($result[$read-1]);
+				$this->show();
+				return;
+			}
 			if (!$msg)
 			{
 				$msg = lang('%1 eTemplates found',count($result));
@@ -724,7 +741,6 @@
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 			$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 				'result' => $result,
-				'**extensions**' => $this->extensions
 			),'');
 		}
 
@@ -738,9 +754,9 @@
 			{
 				$post_vars = array();
 			}
-			if (!is_array($this->extensions) && isset($post_vars['**extensions**']))
+			if (!is_array($this->extensions))
 			{
-				$this->extensions = $post_vars['**extensions**']; unset($post_vars['**extensions**']);
+				$this->scan_for_extensions();
 			}
 			if (isset($_GET['name']) && !$this->etemplate->read($_GET) ||
 			    isset($post_vars['name']) && !$this->etemplate->read($post_vars))
@@ -753,6 +769,22 @@
 					if ($this->etemplate->read($post_vars))
 					{
 						$msg = lang('only an other Version found !!!');
+					}
+					else
+					{
+						$result = $this->etemplate->search($post_vars);
+						if (count($result) > 1)
+						{
+							return $this->list_result(array('result' => $result));
+						}
+						elseif (!count($result) || !$this->etemplate->read($result[0]))
+						{
+							$msg = lang('Error: Template not found !!!');
+						}
+						elseif ($post_vars['name'] == $result[0]['name'])
+						{
+							$msg = lang('only an other Version found !!!');
+						}
 					}
 				}
 			}
@@ -770,10 +802,11 @@
 			if ($app && $app != 'etemplate')
 			{
 				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
+				$this->scan_for_extensions($app);
 			}
 			$content = $this->etemplate->as_array() + array('msg' => $msg);
 
-			$show = new etemplate('etemplate.editor.show');
+			$show =& new etemplate('etemplate.editor.show');
 			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{
 				$cont = $post_vars['cont'];
@@ -789,7 +822,18 @@
 			else
 			{
 				// set onclick handler
-				$this->etemplate->onclick_handler = "alert('%p');";
+				$this->etemplate->onclick_handler = "edit_widget('%p');";
+				// setting the javascript via the content, allows looping too
+				$content['onclick'] = '
+				<script language="javascript">
+					function edit_widget(path)
+					{
+						window.open("'.$GLOBALS['phpgw']->link('/index.php',$this->etemplate->as_array(-1)+array(
+							'menuaction' => 'etemplate.editor.widget',
+							'path'       => ''	// has to be last !
+						)).'"+path,"etemplate_editor_widget","dependent=yes,width=600,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
+					}
+				</script>';
 				$show->data[$show->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $post_vars['vals'];
 				$olds = $post_vars['olds'];
@@ -803,23 +847,341 @@
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Show Template');
 			$show->exec('etemplate.editor.show',$content,array(),'',array(
 				'olds' => $vals,
-				'**extensions**' => $this->extensions
 			),'');
+		}
+
+		/**
+		 * initialises the children arrays for the new widget type, converts boxes <--> grids
+		 *
+		 * @param array &$widget reference to the new widget data
+		 * @param array $old the old widget data
+		 */
+		function change_widget_type(&$widget,$old)
+		{
+			//echo "<p>editor::change_widget_type($widget[type]=$old[type])</p>\n";
+			$old_type = $old['type'];
+			$old_had_children = isset($this->etemplate->widgets_with_children[$old_type]);
+			
+			if (!isset($this->etemplate->widgets_with_children[$widget['type']]) ||
+				$old_had_children && ($old_type == 'grid') == ($widget['type'] == 'grid'))
+			{
+				return; // no change necessary, eg. between different box-types
+			}
+			if ($widget['type'] == 'grid')
+			{
+				$widget['data'] = array(array());
+				$widget['cols'] = $widget['rows'] = 0;
+
+				if ($old_had_children)	// box --> grid: hbox --> 1 row, other boxes --> 1 column
+				{
+					list($num) = explode(',',$old['size']);
+					for ($n = 1; is_array($old[$n]) && $n <= $num; ++$n)
+					{
+						soetemplate::add_child($widget,$old[$n]);
+						if ($old_type != 'hbox') soetemplate::add_child($widget,null);
+					}
+					$widget['size'] = '';
+				}
+				else	// 1 row with 1 column/child
+				{
+					soetemplate::add_child($widget,soetemplate::empty_cell());
+				}
+			}
+			else // a box-type
+			{
+				$widget['size'] = 0;
+				
+				if ($old_type == 'grid')
+				{
+					if ($widget['type'] == 'hbox')	// 1 row --> hbox
+					{
+						$row =& $old['data'][1];
+						for ($n = 1; $n <= $old['cols']; ++$n)
+						{
+							$cell =& $row[soetemplate::num2chrs($n)];
+							soetemplate::add_child($widget,$cell);
+							list($span) = (int)explode(',',$cell['span']);
+							if ($span == 'all') break;
+							while ($span-- > 1) ++$n;
+						}
+					}
+					else
+					{
+						for ($n = 1; $n <= $old['rows']; ++$n)
+						{
+							soetemplate::add_child($widget,$old['data'][$n][soetemplate::num2chrs(1)]);
+						}
+					}
+				}
+				if (!$widget['size']) // minimum one child
+				{
+					soetemplate::add_child($widget,soetemplate::empty_cell());
+				}
+			}
+			//_debug_array($widget);
+		}
+
+		/**
+		 * edit dialog for a widget
+		 */
+		function widget($content='',$msg='')
+		{
+			if (is_array($content))
+			{
+				$this->etemplate->read($content['name'],$content['template'],$content['lang'],$content['old_version']);
+				$widget =& $this->etemplate->get_widget_by_path($content['path']);
+				$path_parts = explode('/',$content['path']);
+				$child_id = array_pop($path_parts);
+				$parent_path = implode('/',$path_parts);
+				//echo "<p>path='$content[path]': child_id='$child_id', parent_path='$parent_path</p>\n";
+				$parent =& $this->etemplate->get_widget_by_path($parent_path);
+				
+				foreach(array('save','apply','cancel','edit','grid','box') as $n => $name)
+				{
+					if (($action = $content[$name] ? ($n < 3 ? $name : $content[$name]) : false)) break;
+					$name = '';
+				}
+				unset($content[$name]);
+				
+				//echo "<p>name='$name', parent-type='$parent[type]', action='$action'</p>\n";
+				if ($name == 'grid' && $parent['type'] != 'grid' ||
+					$name == 'box' && $parent['type'] == 'grid' ||
+					substr($action,-4) == 'prefs' && !$parent['type'])
+				{
+					$msg .= lang("parent is a '%1' !!!",lang($parent['type'] ? $parent['type'] : 'template'));
+					$action = false;
+				}
+				switch ($action)
+				{
+					case '':
+						// initialise the children arrays if type is changed to a widget with children
+						if (isset($this->etemplate->widgets_with_children[$content['cell']['type']]) &&
+							$content['cell']['type'] != $widget['type'])
+						{
+							$this->change_widget_type($content['cell'],$widget);
+						}
+						break;
+						
+					case 'paste':
+					case 'swap':
+						$clipboard = $GLOBALS['phpgw']->session->appsession('clipboard','etemplate');
+						if (!is_array($clipboard))
+						{
+							$msg .= lang('nothing in clipboard to paste !!!');
+						}
+						else
+						{
+							$content['cell'] = $clipboard;
+						}
+						if ($action == 'paste') break;
+						// fall-through
+					case 'copy':
+					case 'cut':
+						$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$widget);
+						if ($action != 'cut')
+						{
+							$msg .= lang('widget copied into clipboard');
+							break;
+						}
+						// fall-through
+					case 'delete':
+						if ($parent['type'] != 'grid')
+						{
+							// delete widget from parent
+							if ($parent['type'])	// box
+							{
+								list($num,$options) = explode('/',$parent['size'],2);
+								if ($num <= 1)	// cant delete last child --> only empty it
+								{
+									$parent[$num=1] = soetemplate::empty_cell();
+								}
+								else
+								{
+									for($n = $child_id; $n < $num; ++$n)
+									{
+										$parent[$n] = $parent[1+$n];
+									}
+									unset($parent[$num--]);
+								}
+								$parent['size'] = $num . ($options ? ','.$options : '');
+							}
+							else	// template itself
+							{
+								if (count($this->etemplate->children) <= 1)	// cat delete last child
+								{
+									$this->etemplate->children[0] = soetemplate::empty_cell();
+								}
+								else
+								{
+									unset($parent[$child_id]);
+									$this->etemplate->children = array_values($this->etemplate->children);
+								}
+							}
+							$action = 'save-no-merge';
+						}
+						else
+						{
+							$msg .= lang('cant delete a single widget from a grid !!!');
+						}
+						break;
+						
+					case 'box_prefs':
+					case 'grid_prefs':	// to edit the parent, we set it as widget
+						$content['cell'] = $parent;
+						$content['path'] = $parent_path;
+						$parent =& $this->etemplate->get_widget_by_path($parent_path,1);
+						break;
+					
+					case 'box_insert_before':
+					case 'box_insert_behind':
+						$n = $child_id + (int)($action == 'box_insert_behind');
+						if (!$parent['type'])	// template
+						{
+							$num = count($parent)-1;	// 0..count()-1
+						}
+						else // boxes
+						{
+							list($num,$options) = explode(',',$parent['size'],2);
+						}
+						for($i = $num; $i >= $n; --$i)
+						{
+							$parent[1+$i] = $parent[$i];
+						}
+						$parent[$n] = $content['cell'] = soetemplate::empty_cell();
+						$content['path'] = $parent_path.'/'.$n;
+						if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
+						$action = 'apply-no-merge';
+						break;
+						
+					case 'box_swap_next':
+						if (!$parent['type'])	// template
+						{
+							$num = count($parent)-1;	// 0..count()-1
+						}
+						else // boxes
+						{
+							list($num) = explode(',',$parent['size'],2);
+						}
+						if ($child_id < $num)
+						{
+							$content['cell'] = $parent[1+$child_id];
+							$parent[1+$child_id] = $parent[$child_id];
+							$parent[$child_id] = $content['cell'];
+							$action = 'apply';
+						}
+						else
+						{
+							$msg .= lang('no further widget !!!');
+						}
+						break;
+						
+				}
+				switch ($action)
+				{
+					case 'save': case 'apply':
+						$widget = $content['cell'];
+						// fall-through
+					case 'save-no-merge':
+					case 'apply-no-merge':
+						//$this->etemplate->echo_tmpl();
+						$ok = $this->etemplate->save($content);
+						$msg .= $ok ? lang('Template saved') : lang('Error: while saveing !!!');
+	
+						// if necessary fix the version of our opener
+						if ($content['opener']['name'] == $content['name'] &&
+							$content['opener']['template'] == $content['template'] &&
+							$content['opener']['group'] == $content['group'] &&
+							$content['opener']['lang'] == $content['lang'])
+						{
+							$content['opener']['version'] = $content['version'];
+						}
+						$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',array(
+								'menuaction' => 'etemplate.editor.show',
+							)+$content['opener'])."';";
+						if ($action == 'apply' || $action == 'apply-no-merge') break;
+						// fall through
+					case 'cancel':
+						$js .= 'window.close();';
+						echo "<html><body><script>$js</script></body></html>\n";
+						$GLOBALS['phpgw']->common->phpgw_exit();
+						break;
+				}				
+				if ($js)
+				{
+					$content['java_script'] = "<script>$js</script>";
+				}
+			}
+			else
+			{
+				//echo "<p><b>".($_GET['path']).":</b></p>\n";
+				list($name,$path) = explode(':',$_GET['path'],2);	// <name>:<path>
+				
+				if (!$this->etemplate->read($name))
+				{
+					$msg .= lang('Error: eTemplate not found !!!');
+				}
+				$widget =& $this->etemplate->get_widget_by_path($path);
+				$parent =& $this->etemplate->get_widget_by_path($path,1);
+				
+				$content = $this->etemplate->as_array();
+				$content['cell'] = $widget;
+				$content['path'] = $path;
+				
+				foreach($this->etemplate->db_key_cols as $var)
+				{
+					if (isset($_GET[$var]))
+					{
+						$content['opener'][$var] = $_GET[$var];
+					}
+				}
+			}
+			$editor =& new etemplate('etemplate.editor.widget');
+			$type_tmpl =& new etemplate;
+			if ($type_tmpl->read('etemplate.editor.widget.'.$widget['type']))
+			{
+				$editor->set_cell_attribute('etemplate.editor.widget.generic','obj',$type_tmpl);
+			}
+			$editor->set_cell_attribute('cancel','onclick','window.close();');
+			
+			$readonlys['grid'] = $parent['type'] != 'grid';
+			$readonlys['box'] = $parent['type'] == 'grid';
+			
+			$content['msg'] = $msg;
+			$content['parent_type'] = $parent['type'] ? $parent['type'] : 'template';
+			
+			$GLOBALS['phpgw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
+			$editor->exec('etemplate.editor.widget',$content,array(
+					'type'  => array_merge($this->etemplate->types,$this->extensions),
+					'align' => $this->aligns,
+					'edit'  => $this->edit_menu,
+					'grid' => $this->grid_menu,
+					'box'   => $this->box_menu,
+				),'',$this->etemplate->as_array()+array(
+					'path'        => $content['path'],
+					'old_version' => $this->etemplate->version,
+					'opener'      => $content['opener'],
+					'cell'        => $content['cell'],
+				),2);
 		}
 
 		/**
 		 * search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
 		 *
 		 * extensions are class-files in $app/inc/class.${name}_widget.inc.php
+		 * the extensions found will be saved in a class-var and in the session
 		 *
-		 * @return  array with name => human_name of the extensions found
+		 * @param string $app='etemplate' app to scan
+		 * @return string comma delimited list of new found extensions
 		 */
 		function scan_for_extensions($app='etemplate')
 		{
-			$extensions = array();
-
+			if (!is_array($this->extensions)) $this->extensions = array();
+			
+			if (isset($this->extensions['**loaded**'][$app])) return '';	// already loaded
+			
+			$labels = array();
 			$dir = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/inc');
-
 			while ($dir && ($file = readdir($dir)))
 			{
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
@@ -827,22 +1189,24 @@
 				{
 					if (is_array($ext))
 					{
-						if (!is_array($extensions))
-						{
-							$extensions = $ext;
-						}
-						else
-						{
-							$extensions += $ext;
-						}
+						$this->extensions += $ext;
+						$labels += $ext;
 					}
 					else
 					{
-						$extensions[$regs[1]] = $ext;
+						$this->extensions[$regs[1]] = $ext;
+						$labels[] = $ext;
 					}
 				}
 			}
-			return $extensions;
+			// store the information in the session, our constructor loads it from there
+			$GLOBALS['phpgw']->session->appsession('extensions','etemplate',$this->extensions);
+			$apps_loaded = $GLOBALS['phpgw']->session->appsession('apps_loaded','etemplate');
+			$apps_loaded[$app] = true;
+			$GLOBALS['phpgw']->session->appsession('apps_loaded','etemplate',$apps_loaded);
+			//_debug_array($this->extensions); _debug_array($apps_loaded);
+			
+			return implode(', ',$labels);
 		}
 	};
 
