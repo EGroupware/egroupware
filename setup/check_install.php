@@ -164,7 +164,8 @@
 		{
 			return True;	// check only under windows
 		}
-		$availible = extension_loaded($name) || @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
+		// we check for the existens of 'dl', as multithreaded webservers dont have it !!!
+		$availible = extension_loaded($name) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
 
 		echo ($availible ? $passed_icon : $warning_icon).' '.lang('Checking extension %1 is loaded or loadable',$name).': '.($availible ? lang('True') : lang('False'))."\n";
 
