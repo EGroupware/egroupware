@@ -1,148 +1,408 @@
+(account deletion in sql only)	setup	es	(borrado de cuentas sólo en SQL)
+00 (disable)	setup	es	00 (desactivar / recomendado)
+13 (ntp)	setup	es	13 (ntp)
+80 (http)	setup	es	80 (http)
 actions	setup	es	Acciones
-admin first name	setup	es	Nombre del Administrador 	
-admin last name	setup	es	Apellido del Administrador	
-admin password	setup	es	Contraseña del Administrador	
-admin username	setup	es	Nombre de usuario del Administrador	
-all applications	setup	es	Todas las aplicaciones	
-app details	setup	es	Detalles de la Apliación	
-app install/remove/upgrade	setup	es	Instalación/Eliminación/Actualización de la Aplicación	
-application data	setup	es	Datos de la Aplicación	
-application management	setup	es	Administración de Aplicaciones	
-application name and status information	setup	es	Nombre de la aplicación e Información de estado	
+add a domain	setup	es	Añadir un dominio
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es	Añadir usuarios creados automáticamente a este grupo (Si está vacío, se le asignará el grupo predeterminado)
+additional settings	setup	es	Configuración adicional
+admin first name	setup	es	Nombre del Administrador
+admin last name	setup	es	Apellido del Administrador
+admin password	setup	es	Contraseña del Administrador
+admin password to header manager	setup	es	Contraseña del administrador para el admnistrador de encabazados
+admin username	setup	es	Nombre de usuario del Administrador
+admins	setup	es	Admnistradores
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	es	Después de recuperar el fichero, póngalo en su lugar como header.inc.php. Después, pulse "continuar".
+all applications	setup	es	Todas las aplicaciones
+all core tables and the admin and preferences applications	setup	es	Todas las tablas principales y las aplicaciones de preferencias y administración
+all users	setup	es	Todos los usuarios
+analysis	setup	es	Análisis
+app details	setup	es	Detalles de la Apliación
+app install/remove/upgrade	setup	es	Instalación/Eliminación/Actualización de la Aplicación
+app process	setup	es	Proceso de la aplicación
+application data	setup	es	Datos de la Aplicación
+application list	setup	es	Lista de aplicaciones
+application management	setup	es	Administración de Aplicaciones
 application name and status	setup	es	Nombre de la Aplicación y estado
-application title	setup	es	Título de la Aplicación	
+application name and status information	setup	es	Nombre de la aplicación e Información de estado
+application title	setup	es	Título de la Aplicación
+are you sure you want to delete your existing tables and data?	setup	es	¿Seguro que desea borrar las tablas y datos existentes?
+are you sure?	setup	es	¿ESTA SEGURO?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	es	Por petición suya, este guión intentará crear la base de datos y asignar permisos al usuario de la base de datos para ella
 at your request, this script is going to attempt to install all the applications for you	setup	es	Por petición suya, este guión intentará instalar todas las aplicaciones por usted
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	es	Por petición suya, este guión intentará actualizar sus antigüas apliaciones a las versiones actuales 
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	es	A petición suya, este script va a intentar instalar las tablas principales y las aplicaciones de preferencias y administración.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	es	Por petición suya, este guión intentará actualizar sus antigüas apliaciones a las versiones actuales
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	es	A petición suya, este guión intentará actualizar sus viejas tablas al nuevo formato
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	es	A petición suya, este guión ejecutara la "demoniaca" acción de eliminar sus tablas actuales y volverlas a crear en el nuevo formato
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	es	A petición suya, este guión ejecutará la "demoniaca" acción de desinstalar todas sus aplicaciones, lo que eliminará todas sus tablas y datos actuales
-available version	setup	es	Version Disponible
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	es	Intentar usar correción del tipo MIME para FTP en lugar del predeterminado 'application/octet-stream'
+authentication / accounts	setup	es	Identificación / Cuentas
+auto create account records for authenticated users	setup	es	Crear automáticamente registros para los usuarios identificados
+auto-created user accounts expire	setup	es	Las cuentas creadas automáticamente para los usuarios expiran
+available version	setup	es	Versión disponible
+back to the previous screen	setup	es	Volver al menú anterior
+back to user login	setup	es	Volver al inicio de sesión de usuario
 backupwarn	setup	es	pero le <u>recomendamos encarecidamente que haga copia de seguridad</u> de sus tablas en caso de que el guión cause daños a su información.<br><strong>Estos guiones automáticos pueden facilmente destruir su información.</strong><br><em>¡Por favor haga copia de seguridad de su información antes de continuar!</em>
+because an application it depends upon was upgraded	setup	es	porque una aplicación de la que depende se actualizó
 because it depends upon	setup	es	porque depende de
-because it is not a user application, or access is controlled via acl	setup es	porque no es una aplicación de usuario, o el acceso a la misma no es controlado via ACL
+because it is not a user application, or access is controlled via acl	setup	es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
 because it requires manual table installation, <br>or the table definition was incorrect	setup	es	porque requiere de instalación manual de las tablas,<br> o la definición de las misma fué incorrecta
+because it was manually disabled	setup	es	porque se desactivó manualmente
 because of a failed upgrade or install	setup	es	porque ocurrió un fallo al actualizar o instalar
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	es	porque falló la actualización, o la base de datos es mas reciente que la versión instalada de esta aplicación
 because the enable flag for this app is set to 0, or is undefined	setup	es	porque el indicador de "habilitada" de esta aplicación está a 0, o no está definido
+bottom	setup	es	parte inferior
 cancel	setup	es	Cancelar
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	es	No se pudo crear el fichero header.inc.php debido a las restricciones en los ficheros. Puede %1 el fichero en su lugar.
+change system-charset	setup	es	Cambiar el juego de caracteres del sistema
 charset	setup	es	ISO-8859-1
-click here	setup	es	Pulse aquí	
-configuration completed	setup	es	Configuración completada	
+charset to convert to	setup	es	Juego de caracteres al que convertir
+check installation	setup	es	Comprobar instalación
+check ip address of all sessions	setup	es	Comprobar las direcciones ip de todas las sesiones
+checking the egroupware installation	setup	es	Comprobando la instalación de eGroupWare
+click here	setup	es	Pulse aquí
+completed	setup	es	Completado
 configuration	setup	es	Configuración
-configure now	setup	es	Configure Ahora 
-create one now	setup	es	Cree una ahora
+configuration completed	setup	es	Configuración completada
+configuration password	setup	es	Contraseña de configuración
+configure now	setup	es	Configurar ahora
+continue	setup	es	Continuar
+continue to the header admin	setup	es	Continuar en el Administrador de cabeceras
+convert	setup	es	Convertir
+could not open header.inc.php for writing!	setup	es	¡No se pudo abrir header.inc.php para escribir!
+country selection	setup	es	Seleccionar país
 create	setup	es	Crear
+create database	setup	es	Crear base de datos
+create demo accounts	setup	es	Crear cuentas de demostración
+create one now	setup	es	Crear una ahora
+create the empty database -	setup	es	Crear la base de datos en blanco
+create the empty database and grant user permissions -	setup	es	Crear la base de datos en blanco y conceder permisos de usuarios -
+create your header.inc.php	setup	es	Crear un header.inc.php propio
+created	setup	es	creado
 creating tables	setup	es	Creando Tablas
-currently installed languages: %1 <br>	setup	es	Idiomas actualmente instalados: %1 <br>
+current system-charset	setup	es	Juego de caracteres actual del sistema
+current system-charset is %1, click %2here%3 to change it.	setup	es	El juego de caracteres del sistema es actualmente %1. Pulse %2aquí%3 para cambiarlo.
 current version	setup	es	Version Actual
-delete all my tables and data	setup	es	Elimine todas mis tablas e información 
-delete all old languages and install new ones	setup	es	Elimine todos los idiomas antigüos e instale los nuevos 
+currently installed languages: %1 <br>	setup	es	Idiomas actualmente instalados: %1 <br>
+database successfully converted from '%1' to '%2'	setup	es	La base de datos se convirtió correctamen de '%1' a '%2'
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	es	Puerto de hora.<br>Si usa el puerto 13, por favor, configure las reglas del cortafuegos adecuadamente antes de enviar esta página.
+db host	setup	es	Servidor de la base de datos
+db name	setup	es	Nombre de la base de datos
+db password	setup	es	Contraseña de la base de datos
+db port	setup	es	Puerto de la base de datos
+db root password	setup	es	Contraseña del administrador de la base de datos
+db root username	setup	es	Usuario administrador de la base de datos
+db type	setup	es	Tipo de base de datos
+db user	setup	es	Usuario de la base de datos
+default file system space per user/group ?	setup	es	¿Espacio predeterminado en el sistema por usuario o grupo?
+delete	setup	es	Borrar
+delete all my tables and data	setup	es	Elimine todas mis tablas e información
+delete all old languages and install new ones	setup	es	Elimine todos los idiomas antigüos e instale los nuevos
 deleting tables	setup	es	Eliminando Tablas
 demo server setup	setup	es	Configuración de Servidor de Demostración
+deny access	setup	es	Denegar acceso
+deny all users access to grant other users access to their entries ?	setup	es	¿Denegar el acceso a que todos los usuarios puedan conceder acceso a sus propias entradas?
+dependency failure	setup	es	Fallo en las dependencias
 deregistered	setup	es	desregistrada
-details for admin account	setup	es	Detalles para la cuenta de Administrador	
+details for admin account	setup	es	Detalles para la cuenta de Administrador
+developers' table schema toy	setup	es	Juguete para el esquema de tablas de desarrollo
+did not find any valid db support!	setup	es	¡No se encontró ningún soporte válido para la base de datos!
+do you want persistent connections (higher performance, but consumes more resources)	setup	es	¿Conexiones persistentes? (mayor rendimiento, pero consume más recursos)
+do you want to manage homedirectory and loginshell attributes?	setup	es	¿Administrar el directorio personal y atributos de inicio de sesión?
 domain	setup	es	Dominio
-edit current configuration	setup	es	Editar Configuración Actual
+domain select box on login	setup	es	Cuadro de selección de dominio en el inicio de sesión
+dont touch my data	setup	es	No tocar mis datos
+download	setup	es	Descargar
+edit current configuration	setup	es	Editar configuración actual
+edit your existing header.inc.php	setup	es	Editar el fichero header.inc.php existente
+edit your header.inc.php	setup	es	Editar el fichero header.inc.php
+enable for extra debug-messages	setup	es	activar los mensajes de depuración extra
+enable ldap version 3	setup	es	Activar LDAP versión 3
+enable mcrypt	setup	es	Activar MCrypt
+enter some random text for app session encryption	setup	es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación<br>cifrado (necesita mcrypt)
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	es	Introduzca la ruta completa para los ficheros temporales.<br>Ejemplo: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br>Ejemplo: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o &nbsp; /egroupware<br><b>Sin barra invertida al final</b>
+enter the site password for peer servers	setup	es	Introduzca la contraseña del sitio para los servidores peer
+enter the site username for peer servers	setup	es	Introduzca el nombre de usuario del sitio para servidores peer
+enter the title for your site	setup	es	Introduzca el título para su sitio
+enter your default ftp server	setup	es	Introduzca el servidor FTP predeterminado
+enter your http proxy server	setup	es	Introduzca el servidor proxy HTTP
+enter your http proxy server password	setup	es	Introduzca la contraseña del servidor proxy HTTP
+enter your http proxy server port	setup	es	Introduzca el puerto del servidor proxy HTTP
+enter your http proxy server username	setup	es	Introduzca el usuario del servidor proxy HTTP
+export has been completed!  you will need to set the user passwords manually.	setup	es	Se ha completado la exportación. Necesitará poner la contraseña del usuario manualmente.
+export phpgroupware accounts from sql to ldap	setup	es	Exportar las cuentas de eGroupWare de SQL a LDAP
 export sql users to ldap	setup	es	Exportar usuarios SQL a LDAP
+file	setup	es	FICHERO
+file type, size, version, etc.	setup	es	tipo de fichero, tamaño, versión, etc
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	es	Para una instalación nueva, seleccione importar. Para convertir las cuentas SQL existentes a LDAP, seleccione exportar
-go back	setup	es	Ir Atrás	
-has a version mismatch	setup	es	No coinciden las versiones	
-hooks deregistered	setup	es	hooks deregistradas
-hooks registered	setup	es	hooks registradas
+force selectbox	setup	es	Forzar cuadro de selección
+found existing configuration file. loading settings from the file...	setup	es	Se encontró un fichero de configuración existente. Cargando la configuración desde el fichero...
+go back	setup	es	Volver
+go to	setup	es	Ir a
+grant access	setup	es	Conceder acceso
+has a version mismatch	setup	es	No coinciden las versiones
+historylog removed	setup	es	Se borró el registro del historial
+hooks deregistered	setup	es	Se borraron del registro las cadenas sueltas
+hooks registered	setup	es	Se registraron las cadenas sueltas
+host information	setup	es	Información del servidor
+hostname/ip of database server	setup	es	Nombre del servidor o dirección IP del servidor de la base de datos
 however, the application is otherwise installed	setup	es	De todas formas, la aplicación fué instalada
+however, the application may still work	setup	es	Sin embargo, puede que la aplicación todavía funcione
+if no acl records for user or any group the user is a member of	setup	es	Si no hay registros ACL ni grupo para el usuario, entonces es miembro de
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	es	Si la aplicación no ha definido tablas, seleccionando actualizar debería de remediar el problemas
+if using ldap	setup	es	Si usa LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	es	Si usa LDAP ¿desea administrar los atributos del directorio personal y línea de comandos?
 if you did not receive any errors, your applications have been	setup	es	Si no ha recibido ningún eror, sus aplicaciones han sido
-if you did not receive any errors, your tables have been	setup	es	Si no ha recibido ningún error, sus tablas han sido 
+if you did not receive any errors, your tables have been	setup	es	Si no ha recibido ningún error, sus tablas han sido
+if you running this the first time, don't forget to manualy %1 !!!	setup	es	¡¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!!
+image type selection order	setup	es	Orden de selección del tipo de imagen
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	es	Importar cuentas de LDAP a la tabla de cuentas de eGroupWare (para una instalación nueva que usa cuentas SQL)
+import has been completed!	setup	es	Se ha completado la importación
 import ldap users/groups	setup	es	Importar usuarios/grupos LDAP
-insanity	setup	es	Insanity
-install Applications	setup	es	Instalar Aplicaciones
-install language	setup	es	Instalar Idiomas
+importing old settings into the new format....	setup	es	Importar configuración antigua al nuevo formato...
+include root (this should be the same as server root unless you know what you are doing)	setup	es	Incluir raíz (la misma opción que Raíz del servidor a menos que sepa lo que está haciendo)
+insanity	setup	es	Falta de consistencia
 install	setup	es	Instalar
-is broken	setup	es	esta roto
-is disabled	setup	es	esta desabilitado
+install all	setup	es	Instalar todo
+install applications	setup	es	Instalar aplicaciones
+install language	setup	es	Instalar idiomas
+installed	setup	es	instaladas
+instructions for creating the database in %1:	setup	es	Instrucciones para crear la base de datos en %1:
+invalid ip address	setup	es	La dirección IP no es válida
+invalid password	setup	es	La contraseña no es correcta
+is broken	setup	es	está roto
+is disabled	setup	es	está desactivado
 ldap account import/export	setup	es	Importación/Exportación de cuentas LDAP
-ldap export users	setup	es	Exportar usuarios LDAP
+ldap accounts configuration	setup	es	Configuración de cuentas LDAP
+ldap accounts context	setup	es	Contexto de las cuentas LDAP
+ldap config	setup	es	Configuración LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	es	Prefijo del directorio personal predeterminado (p. ej. /home para /home/<usuario>)
+ldap default shell (e.g. /bin/bash)	setup	es	Shell LDAP predeterminada (p. ej. /bin/bash)
+ldap encryption type	setup	es	Tipo de cifrado LDAP
+ldap export users	setup	es	Usuarios de exportar LDAP
+ldap groups context	setup	es	Contexto de grupos LDAP
+ldap host	setup	es	Servidor LDAP
 ldap import users	setup	es	Importar usuarios LDAP
-logout	setup	es	Salir	
-makesure	setup	es	Asegurese que su base de datos está creada y que los permisos está configurados
-manage applications	setup	es	Administrar Aplicaciones
-manage languages	setup	es	Administrar Idiomas
+ldap modify	setup	es	Modificar LDAP
+ldap root password	setup	es	Contraseña del administrador LDAP
+ldap rootdn	setup	es	rootdn LDAP
+limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	es	Limitar el acceso a la instalación a las siguientes direcciones o redes (p. ej. 10.1.1,127.0.0.1)
+login to mysql -	setup	es	Iniciar sesión en mysql -
+logout	setup	es	Cerrar sesión
+makesure	setup	es	Asegúrese de que su base de datos está creada y que los permisos están configurados
+manage applications	setup	es	Administrar aplicaciones
+manage languages	setup	es	Administrar idiomas
+maximum account id (e.g. 65535 or 1000000)	setup	es	Id máximo de cuenta (p. ej. 65535 o 1000000)
+may be broken	setup	es	puede estar roto
+mcrypt algorithm (default tripledes)	setup	es	Algoritmo mcryp (predeterminado TRIPLEDES)
+mcrypt initialization vector	setup	es	Vector de inicialización MCrypt
+mcrypt mode (default cbc)	setup	es	Modo MCrypt (predeterminado CBC)
+mcrypt settings (requires mcrypt php extension)	setup	es	Configuración MCrypt (necesita la extensión PHP mcrypt)
+mcrypt version	setup	es	Versión MCrypt
+minimum account id (e.g. 500 or 100, etc.)	setup	es	Id mínimo para la cuenta (p. ej. 500 o 100, etc)
+modifications have been completed!	setup	es	¡Se han completado las modificaciones!
+modify	setup	es	Modificar
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	es	Modificar un almacén de cuentas LDAP existente para usar con wGroupWare (para una nueva instalación que use cuentas LDAP)
 multi-language support setup	setup	es	Configuración del soporte Multi-Idioma
-mysqlinstr	setup	es	 Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
-not complete	setup	es	no completado
-note: you will be able to customize this later	setup	es	Nota: Usted tendrá que personalizar esto luego
-not ready for this stage yet	setup	es	No está listo para esta fase todabía
-ok	setup	es	OK
+mysqlinstr	setup	es	Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+name of database	setup	es	Nombre de la base de datos
+name of db user phpgroupware uses to connect	setup	es	Nombre del usuario de la base de datos que usa eGroupWare para conectar
+never	setup	es	nunca
+new	setup	es	Nueva
+no	setup	es	No
+no algorithms available	setup	es	no hay algortimos disponibles
+no microsoft sql server support found. disabling	setup	es	No se encontró soporte para Microsoft SQL Server. Desactivando.
+no modes available	setup	es	No hay modos disponibles
+no mysql support found. disabling	setup	es	No se encontró soporte para MySQL Desactivando.
+no oracle-db support found. disabling	setup	es	No se encontró soporte para Oracle. Desactivando.
+no postgres-db support found. disabling	setup	es	No se encontró soporte para PostgreSQL. Desactivando.
+no xml support found. disabling	setup	es	No se encontró soporte para XML. Desactivando.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es	No todos los algoritmos y modos de mcrypt funcionan con eGroupWare. Si tiene problemas, intente desactivarlo.
+not complete	setup	es	sin completar
+not completed	setup	es	Sin completar
+not ready for this stage yet	setup	es	No está listo para esta fase todavía
+not set	setup	es	sin configurar
+note: you will be able to customize this later	setup	es	Nota: tendrá que personalizar esto después
+now guessing better values for defaults...	setup	es	Buscando valores óptimos predeterminados...
+ok	setup	es	Aceptar
 once the database is setup correctly	setup	es	Una vez que la base de datos esté configurada correctamente
+one month	setup	es	un mes
+one week	setup	es	una semana
 only add languages that are not in the database already	setup	es	Sólo añade los nuevos idiomas que no están ya en la base de datos
 only add new phrases	setup	es	Sólo añade las nuevas frases
-passwords did not match, please re-enter	setup	es	Las contreñas no coinciden, por favor vuelvalas a introducir
-pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb egroupware</i>
-please check for sql scripts within the application's directory	setup	es	Por favor comprueve los guiones sql en el directorio de la aplicación
-please configure eGroupWare for your environment	setup	es	Por favor configure phpGroupware para su entorno
-please install	setup	es	Por favor Instale
-please wait...	setup	es	Please Wait...
-possible solutions	setup	es	Posibles Soluciones
-potential problem	setup	es	Problema Potencial
+or	setup	es	o
+or http://webdav.domain.com (webdav)	setup	es	o http://webdav.dominio.com (WebDAV)
+or we can attempt to create the database for you:	setup	es	O podemos intentar crear la base de datos automáticamente
+password needed for configuration	setup	es	Contraseña necesaria para la configuración
+password of db user	setup	es	Contraseña del usuario de la base de datos
+passwords did not match, please re-enter	setup	es	Las contreñas no coinciden, por favor vuelva a introducirlas
+path information	setup	es	Información de la ruta
+path to user and group files has to be outside of the webservers document-root!!!	setup	es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
+persistent connections	setup	es	Conexiones persistentes
+pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb phpgroupware</i>
+phpgroupware administration manual	setup	es	Manual de administración de eGroupWare
+please check for sql scripts within the application's directory	setup	es	Por favor, compruebe los scripts sql en el directorio de la aplicación
+please check read/write permissions on directories, or back up and use another option.	setup	es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
+please configure phpgroupware for your environment	setup	es	Por favor, configure eGroupware para su entorno
+please consult the %1.	setup	es	Por favor, consulte el %1
+please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	es	Por favor, corrija los errores (%1) y advertencias (%2) de encima y %3continúe con el Administrador de encabezados%4
+please install	setup	es	Por favor, instale
+please login	setup	es	Por favor, inicie la sesión
+please login to phpgroupware and run the admin application for additional site configuration	setup	es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para la configuración adicional del sitio
+please wait...	setup	es	Por favor, espere...
+possible reasons	setup	es	Posibles razones
+possible solutions	setup	es	Posibles soluciones
+post-install dependency failure	setup	es	Fallo de dependencias en el proceso de post-instalación
+potential problem	setup	es	Problema potencial
+preferences	setup	es	Preferencias
 problem resolution	setup	es	Resolución del problema
 process	setup	es	Procesar
-re-enter password	setup	es	Reintroduzca la contraseña
+re-check my database	setup	es	Volver a comprobar mi base de datos
+re-check my installation	setup	es	Comprobar mi instalación
+re-enter password	setup	es	Confirme la contraseña
+read translations from	setup	es	Leer traducciones de
+really uninstall all applications	setup	es	REALMENTE quiere desinstalar todas las aplicaciones
+recommended: filesystem	setup	es	Recomendado: sistema de ficheros
 registered	setup	es	registrado
 remove	setup	es	Eliminar
+remove all	setup	es	Eliminar todo
 requires reinstall or manual repair	setup	es	Requiere reinstalación o reparación manual
 requires upgrade	setup	es	Requiere actualización
 resolve	setup	es	Resolver
-Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	es	Seleccione una aplicación, elija una versión objetivo, luego elija "Enviar" para realizar el proceso de actualización hasta dicha versión.<br>Si no selecciona una versión, solo la tablas de la versión base será instaladas.<br><blink>¡ESTO ELIMINARÁ TODAS LAS TABLAS DE LAS APLICACIONES PRIMERO!</blink>
-select the default applications to which your users will have access	setup	es Selecciones las aplicaciones a las que sus usuarios tendrán acceso por defecto
+return to setup	setup	es	Volver a la instalación
+sample configuration not found. using built in defaults	setup	es	No se encontró una configuración de ejemplo. Usando los valores predefinidos.
+save	setup	es	Guardar
+save this text as contents of your header.inc.php	setup	es	Guardar este texto como contenido de su header.inc.php
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	es	Seleccione una aplicación, elija una versión objetivo, luego elija "Enviar" para realizar el proceso de actualización hasta dicha versión.<br>Si no selecciona una versión, solo la tablas de la versión base será instaladas.<br><blink>¡ESTO ELIMINARÁ TODAS LAS TABLAS DE LAS APLICACIONES PRIMERO!</blink>
+select one...	setup	es	seleccionar uno...
+select the default applications to which your users will have access	setup	es	Seleccione las aplicaciones predeterminadas a las que tendrán acceso los usuarios
 select the desired action(s) from the available choices	setup	es	Seleccione las accion(es) deseadas de la lista de opciones disponibles
-select which group(s) will be exported (group membership will be maintained) setup	es	Seleccione que grupo(s) serán exportados (los componentes de un grupo serán mantenidos)
+select to download file	setup	es	Seleccione para descargar fichero
+select where you want to store/retrieve file contents	setup	es	Seleccione dónde desea guardar/recuperar contenidos de ficheros
+select where you want to store/retrieve filesystem information	setup	es	Seleccione dónde quiere guardar/recuperar información del sistema de ficheros
+select where you want to store/retrieve user accounts	setup	es	Seleccione dónde quiere guardar/recuperar información de las cuentas de usuario
+select which group(s) will be exported (group membership will be maintained)	setup	es	Seleccione qué grupos se exportarán (se mantendrán las pertenencias del grupo)
+select which group(s) will be exported (group membership will be maintained) setup	es	es	
+select which group(s) will be imported (group membership will be maintained)	setup	es	Seleccione qué grupos se importarán (se mantendrán las pertenencias del grupo)
+select which group(s) will be modified (group membership will be maintained)	setup	es	Seleccione qué grupos se modificarán (se mantendrán las pertenencias del grupo)
 select which languages you would like to use	setup	es	Seleccione que idiomas prefiere usted usar
-select which method of upgrade you would like to do	setup	es	Seleccione que método de actualización prefiere utilizar usted
-select which user(s) will be exported	setup	es	Seleccione que usuario(s) serán exportados
-select which user(s) will be imported	setup	es	Seleccione que usuario(s) serán importados
-select which user(s) will have admin privileges	setup	es	Seleccione que usuario(s) tendrán privilegios de administrador
-select your old version	setup	es	Seleccione su versión antigüa
-setup	setup	es	Configuración
-some or all of its tables are missing	setup	es	Algunas o todas de sus tablas no se encuentran 
+select which method of upgrade you would like to do	setup	es	Seleccione que método de actualización prefiere utilizar
+select which type of authentication you are using	setup	es	Seleccione el tipo de identificación que está usando
+select which user(s) will also have admin privileges	setup	es	Seleccione qué usuario(s) tendrán privilegios de administrador
+select which user(s) will be exported	setup	es	Seleccione qué usuario(s) serán exportados
+select which user(s) will be imported	setup	es	Seleccione qué usuario(s) serán importados
+select which user(s) will be modified	setup	es	Seleccione qué usuario(s) serán modficados
+select which user(s) will have admin privileges	setup	es	Seleccione qué usuario(s) tendrán privilegios de administrador
+select your old version	setup	es	Seleccione su versión anterior
+selectbox	setup	es	Cuadro de selección
+server root	setup	es	Raíz del servidor
+sessions type	setup	es	Tipo de sesiones
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	es	Ponga "old" para versiones anteriores a la 2.4.
+settings	setup	es	Configuración
+setup	setup	es	Instalación
+setup demo accounts in ldap	setup	es	Instalar cuentas de demostración en LDAP
+setup main menu	setup	es	Menú principal de la instalación
+setup the database	setup	es	Instalar la base de datos
+show 'powered by' logo on	setup	es	Mostrar el logo en
+some or all of its tables are missing	setup	es	Algunas o todas de sus tablas no se encuentran
+start the postmaster	setup	es	Iniciar el postmaster
 status	setup	es	Estado
-step 1 - simple application management	setup	es	Paso 1 - Administración Simple de Aplicaciones
+step 1 - simple application management	setup	es	Paso 1 - Administración simple de aplicaciones
 step 2 - configuration	setup	es	Paso 2 - Configuración
-step 3 - language management	setup	es	Paso 3 - Administración de Idiomas
-step 4 - advanced application management	setup	es	Paso 4 - Administración Avanzada de Aplicaciones
+step 3 - language management	setup	es	Paso 3 - Administración de idiomas
+step 4 - advanced application management	setup	es	Paso 4 - Administración avanzada de aplicaciones
 submit	setup	es	Enviar
-table change messages	setup	es	Mensages de Cambios en las Tablas
-tables dropped	setup	es	tablas eliminadas 
-tables installed, unless there are errors printed above	setup	es	tablas instaladas, a no ser que haya errores impresos sobre estas lineas
-tables upgraded	setup	es	tablas actualizadas 
-target version	setup	es	Versión Objetivo
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	es	Hubo un problema intentando conectar con su servidor LDAP.<br>Por favor comprueve la configuración de su servidor LDAP
-the tables	setup	es	las tablas	
-this program will help you upgrade or install different languages for eGroupWare	setup	es	Este programa le ayudará a actualizar o instalar diferentes idiomas para eGroupWare
-this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de eGroupWare
+table change messages	setup	es	Mensajes de cambios en las tablas
+tables dropped	setup	es	tablas eliminadas
+tables installed, unless there are errors printed above	setup	es	tablas instaladas, a no ser que haya errores impresos sobre estas líneas
+tables upgraded	setup	es	tablas actualizadas
+target version	setup	es	Versión destino
+tcp port number of database server	setup	es	Número del puerto TCP del servidor de la base de datos
+text entry	setup	es	Entrada de texto
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	es	El tipo de base de datos en predeterminados (%1) no está soportado en este servidor. Usando el primer tipo soportado
+the file	setup	es	el fichero
+the table definition was correct, and the tables were installed	setup	es	La definición de la tabla era correcta, y se instalaron las tablas
+the table definition was correct, and the tables were installed.	setup	es	La definición de las tablas fué correcta, y las tablas fueron instaladas
+the tables	setup	es	las tablas
+there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	es	Hubo un problema intentando conectar con su servidor LDAP.<br>Por favor comprueve la configuración de su servidor LDAP
+there was a problem trying to connect to your ldap server. <br>	setup	es	Hubo un problema intentando conectar al servidor LDAP.<br>
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	es	Hubo un problema intentando conecar al servidor LDAP.<br>Por favor, compruebe la configuración del servidor LDAP
+this has to be outside the webservers document-root!!!	setup	es	¡Tiene que estar fuera de la raíz de documentos del servidor web!
+this program will convert your database to a new system-charset.	setup	es	Este programa convertirá la base de datos a un nuevo juego de caracteres del sistema.
+this program will help you upgrade or install different languages for phpgroupware	setup	es	Este programa le ayudará a actualizar o instalar diferentes idiomas para eGroupWare
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	es	Esta sección le ayudará a exportar usuarios y grupos de las tablas de cuentas de eGroupWare en su árbol LDAP.
+this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de phpGroupWare
+this section will help you setup your ldap accounts for use with phpgroupware	setup	es	Esta sección le ayudará a configurar sus cuentas LDAP para usarlas con eGroupWare
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	es	Debe ser una cadena de unos 30 caracteres.<br>Nota: la predeterminada se ha generado aleatoriamente.
 this stage is completed<br>	setup	es	Esta fase está completada<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	es	Esto creará 1 cuenta de administrador y 3 cuentas de demostración<br>Los nombres de usuario/contraseñas son: demo/guest, demo2/guest and demo3/guest.<br><b>!!!ESTO ELIMINARÁ TODAS LAS CUENTAS EXISTENTES!!!</b><br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	es	Esto creará 1 cuenta de administrador y 3 cuentas de demostración<br>Los nombres de usuario y contraseñas son: demo/guest, demo2/guest and demo3/guest.<br><b>¡¡¡ESTO ELIMINARÁ TODAS LAS CUENTAS EXISTENTES!!!</b><br>
+to a version it does not know about	setup	es	a una versión que no conoce
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	es	para configurar 1 cuenta de administrador y 3 cuentas de demonstración.<br><b>Esto eliminará todas las cuentas existentes</b>
-upgraded	setup	es	actualizado
+top	setup	es	parte superior
+translations added	setup	es	Traducciones añadidas
+translations removed	setup	es	Traducciones eliminadas
+translations upgraded	setup	es	Traducciones actualizadas
+try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	es	Intente configurar su php para soportar uno de los SGBD mencionados arriba, o instale eGroupWare manualmente.
+two weeks	setup	es	dos semanas
+uninstall	setup	es	desinstalar
+uninstall all applications	setup	es	Desinstalar todas las apliaciones
+uninstalled	setup	es	desinstalado
 upgrade	setup	es	Actualizar
-upgrading tables	setup	es	Actualizando Tablas
-version mismatch	setup	es	Dispariad de Versiones
+upgrade all	setup	es	Actualizar todo
+upgraded	setup	es	actualizado
+upgrading tables	setup	es	Actualizando tablas
+use cookies to pass sessionid	setup	es	Usar cookies para pasar el id de sesión
+use pure html compliant code (not fully working yet)	setup	es	Usar código compatible HTML puro (no funciona completamente todavía)
+users choice	setup	es	A elegir por el usuario
+utf-8 (unicode)	setup	es	utf-8 (Unicode)
+version mismatch	setup	es	Disparidad de versiones
+view	setup	es	Ver
+warning!	setup	es	¡Aviso!
+we can proceed	setup	es	Podemos proceder
 we will automatically update your tables/records to %1	setup	es	Actualizaremos automáticamente sus tablas/registros a %1
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup es	Parece que está ejecutando una versión antigüa de PHP<br>Le recomedamos que actulice a una versión mas nueva.<br>Algunas versiones antigüas de PHP pueden no ejecutar eGroupWare correctamente, o simplemente no ejecutarlo.  <br><br>Por favor actualize su versión de php por lo menos a la 4.1.0
-You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es Parece que está usted ejecutando una versión pre-beta de phpGroupware.<br>Esas versiones no dispondran mas de soporte, y no hay forma de actualizarlas con esta utilidad.<br> Puede que usted desee primero actualizar a la versión 0.9.10 (la última versión que soportó actualizaciones desde las versiones pre-beta) <br>y luego actulizar desde esta a la versión actual.
-you appear to be running version %1 of eGroupWare	setup	es	Parece que está ejecutando la versión %1 de eGroupWare
-you are ready for this stage, but this stage is not yet written.<br>	setup	es Está preparado para esta fase, pero esta fase no ha sido escrita todabía.<br>
-you do not have any languages installed. please install one now <br>	setup	es No tiene soporte para ningún idioma instalado. Por favor instale uno ahora <br>
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
+which database type do you want to use with phpgroupware?	setup	es	¿Qué tipo de base de datos quiere usar con eGroupWare?
+would you like phpgroupware to cache the phpgw info array ?	setup	es	¿Desea que eGrouWare tenga en caché el array de información phpgw?
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	es	¿Desea que eGroupWare compruebe si hay una versión nueva<b>cuando un administrador inicie la sesión?
+would you like to show each application's upgrade status ?	setup	es	¿Desea mostrar el estado de la actualización de cada aplicación?
+write config	setup	es	Escribir configuración
+yes	setup	es	Sí
+you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas enla configuración.<br>Puede actualizar primero a la 0.9.10 (la última versión con soporte para actualizar pre-betas)<br>y luego actualizar desde ahí a la versión actual.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es	Parece que tiene una versión antigua de PHP<br>Se recomienda que se actualice a una versión nueva.<br>La versión anterior de PHP puede no ejecutarse correctamente en eGroupWare.<br><br>Por favor, actualice como mínimo a la versión %1
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup es	es	
+you appear to be running version %1 of phpgroupware	setup	es	Parece que está ejecutando la versión %1 de eGroupWare
+you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	es	Parece que está usando una versión de PHP anterior a a 4.1.0. eGroupWare necesita 4.1.0 o superior
+you appear to be using php3. disabling php4 sessions support	setup	es	Parece que está usando PHP3. Desactivando el soporte de sesiones PHP
+you appear to be using php4. enabling php4 sessions support	setup	es	Parece que está usando PHP4. Activando el soporte de sesiones PHP4.
+you appear to have microsoft sql server support enabled	setup	es	Parece que tiene activado el soporte Microsoft SQL Server.
+you appear to have mysql support enabled	setup	es	Parece que tiene activado el soporte MySQL
+you appear to have oracle support enabled	setup	es	Parece que tiene activado el soporte Oracle
+you appear to have oracle v8 (oci) support enabled	setup	es	Parece que tiene activado el soporte Oracle V8 (OCI)
+you appear to have postgres-db support enabled	setup	es	Parece que tiene activado el soporte Postgre-DB
+you appear to have xml support enabled	setup	es	Parece que tiene activado el soporte XML
+you are ready for this stage, but this stage is not yet written.<br>	setup	es	Está listo para esta fase, pero esta fase aún no está escrita.<br>
+you didn't enter a config password for domain %1	setup	es	No introdujo una contraseña de configuración para el dominio %1
+you didn't enter a header admin password	setup	es	No introdujo una contraseña para la administración de cabeceras
+you do not have any languages installed. please install one now <br>	setup	es	No tiene ningún idioma instalado. Por favor, instale uno ahora
+you have not created your header.inc.php yet!<br> you can create it now.	setup	es	¡No ha creado todavía el header.inc.php!<br>Puede crearlo ahora.
+you have successfully logged out	setup	es	Ha cerrado la sesión correctamente.
 you must enter a username for the admin	setup	es	Debe de introducir una nombre de usuario para el administrador
+you need to add some domains to your header.inc.php.	setup	es	Necesita añadir algunos dominios al fichero header.inc.php.
+you need to select your current charset!	setup	es	¡Necesita seleccionar el juego de caracteres!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	es	Usted puede desintalarla y volverla a instalar, o puede intentar una repación manual
+you're using an old configuration file format...	setup	es	Está usando un fichero de configuración con formato antiguo
+you're using an old header.inc.php version...	setup	es	Está usando una versión antigua del header.inc.php
 your applications are current	setup	es	Sus apliaciones están actualizadas
 your database does not exist	setup	es	Su base de datos no existe
-your database is working, but you dont have any applications installed	setup es	Su base de datos está funcionando, pero usted no tiene ninguna aplicación instalada
-your tables are current	setup	es	Sus tablas están actualizadas	
-your tables may be altered and you may lose data	setup	es	Sus tablas pueden ser alteradas y usted puede perder información	
-your tables will be dropped and you will lose data	setup	es	Sus tablas serán eliminadas y usted perderá la información que hubiese en ellas
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	es	Usted puede desintalarla y volverla a instalar, o puede intentar una repación manual	
-uninstall all applications	setup	en	Desinstalar todas las apliaciones
-possible reasons	setup	es	Posibles Razones 
-the table definition was correct, and the tables were installed.	setup	es	La definición de las tablas fué correcta, y las tablas fueron instaladas
-dont touch my data	setup	es	No tocar mi información
-re-check my installation	setup	en	Comprobar Mi Instalación
+your database is not working!	setup	es	¡Su base de datos no está funcionando!
+your database is working, but you dont have any applications installed	setup	es	Su base de datos está funcionando, pero no tiene aplicaciones instaladas
+your header admin password is not set. please set it now!	setup	es	La contraseña de administrador de cabeceras no está configurada. Por favor, ponga una ahora.
+your header.inc.php needs upgrading.	setup	es	Su header.inc.php necesita actualización
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	es	Su header.inc.php necesita actualización.<br><blink><b class="msg">¡ATENCION!</b></blink><br><b>¡HAGA COPIAS DE SEGURIDAD!</b>
+your tables are current	setup	es	Sus tablas están actualizadas
+your tables may be altered and you may lose data	setup	es	Sus tablas pueden ser alteradas y usted puede perder información
+your tables will be dropped and you will lose data	setup	es	¡¡Sus tablas serán eliminadas y usted perderá la información que hubiese en ellas!!

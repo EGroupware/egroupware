@@ -37,6 +37,7 @@ language	preferences	es	Idioma
 max matches per page	preferences	es	Número máximo de coincidencias por página
 max number of icons in navbar	preferences	es	Número máximo de iconos en la barra de navegación
 no default	preferences	es	Sin valor predeterminado
+note: this feature does *not* change your email password. this will	preferences	es	nota: esta característica NO cambia la contraseña de su correo electrónico.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	es	Nota: Esta opción no cambia la contraseña de su correo electrónico. Esto deberá hacerse manualmente.
 please, select a new theme	preferences	es	Por favor, seleccione un nuevo tema
 popup with search	preferences	es	Ventana emergente con búsqueda

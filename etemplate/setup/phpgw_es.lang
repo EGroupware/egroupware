@@ -27,6 +27,7 @@ attach file	etemplate	es	Adjuntar fichero
 blurtext	etemplate	es	Texto poco claro
 border	etemplate	es	Borde
 border-line-thickness for the table-tag	etemplate	es	Grosor de la línea del borde de la etiqueta de la tabla
+calendar	etemplate	es	Calendario
 can not have special sql-value null	etemplate	es	no puede tener el valor especial de SQL NULL
 cancel	etemplate	es	Cancelar
 category	etemplate	es	Categoría
@@ -70,6 +71,7 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	es	Borra la plantilla especificada arriba
 deletes this column	etemplate	es	Borra esta columna
 deletes this index	etemplate	es	Borra este índice
+developer_tools	etemplate	es	herrameintas de desarrollo
 discard changes	etemplate	es	Descartar cambios
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
 displayed in statusline of browser if input-field gets focus	etemplate	es	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
@@ -280,3 +282,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	es	fichero xml a importar
 xslt template	etemplate	es	Plantilla XSLT
 year	etemplate	es	Año
+1	etemplate	es	

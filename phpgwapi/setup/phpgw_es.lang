@@ -1,5 +1,16 @@
 %1 email addresses inserted	common	es	%1 direcciones de correo insertadas
+(shift-)click or drag to change value	common	es	Pulse mayúsculas o arrastre para cambiar el valor
+- click on any of the time parts to increase it	common	es	- Pulse en cualquiera de las partes de la hora para incrementarla
+- hold mouse button on any of the above buttons for faster selection.	common	es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
+- or click and drag for faster selection.	common	es	- o pulse y arrastre para una selección más rápida.
+- or shift-click to decrease it	common	es	- o pulse con la tecla mayúsculas para decrementarlo
+- use the %1, %2 buttons to select month	common	es	- Use los botones %1, %2 para seleccionar el mes
+- use the %1, %2 buttons to select year	common	es	- Use los botones %1, %2 para seleccionar el año
+00 (disable)	admin	es	00 (deactivar)
+13 (ntp)	admin	es	13 (ntp)
+80 (http)	admin	es	80 (http)
 about %1	common	es	Acerca de %1
+about the calendar	common	es	Acerca del calendario
 access	common	es	Acceso
 access not permitted	common	es	Acceso no permitido
 access type	common	es	Tipo Acceso
@@ -43,7 +54,8 @@ author	common	es	Autor
 autosave default category	common	es	Autograbar Categoria Predeterminada
 azerbaijan	common	es	AZERBAIJAN
 back	common	es	Atrás
-bad login or password	common	es	Nombre de Usuario o Clave invalido
+back to user login	common	es	Volver al inicio de sesión del usuario
+bad login or password	common	es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es	BAHAMAS
 bahrain	common	es	BAHRAIN
 bangladesh	common	es	BANGLADESH
@@ -67,6 +79,7 @@ brunei darussalam	common	es	BRUNEI DARUSSALAM
 bulgaria	common	es	BULGARIA
 burkina faso	common	es	BURKINA FASO
 burundi	common	es	BURUNDI
+calendar	common	es	Calendario
 cambodia	common	es	CAMBODIA
 cameroon	common	es	CAMEROON
 canada	common	es	CANADA
@@ -83,6 +96,7 @@ central african republic	common	es	CENTRAL AFRICAN REPUBLIC
 chad	common	es	CHAD
 change	common	es	Cambiar
 charset	common	es	iso-8859-1
+check installation	common	es	Comprobar instalación
 chile	common	es	CHILE
 china	common	es	CHINA
 choose the category	common	es	Elija la categoría
@@ -113,6 +127,8 @@ cyprus	common	es	CYPRUS
 czech republic	common	es	CZECH REPUBLIC
 date	common	es	Fecha
 date due	common	es	Fecha límite
+date selection:	common	es	Seleccionar fecha:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
 december	common	es	Diciembre
 default category	common	es	Categoría predeterminada
 delete	common	es	Eliminar
@@ -223,6 +239,7 @@ home	common	es	Inicio
 home email	common	es	correo electrónico privado
 honduras	common	es	HONDURAS
 hong kong	common	es	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
 hungary	common	es	HUNGARY
 iceland	common	es	ICELAND
 india	common	es	INDIA
@@ -293,6 +310,7 @@ marshall islands	common	es	MARSHALL ISLANDS
 martinique	common	es	MARTINIQUE
 mauritania	common	es	MAURITANIA
 mauritius	common	es	MAURITIUS
+max number of icons in navbar	common	es	Número máximo de iconos en la barra de navegación
 may	common	es	Mayo
 mayotte	common	es	MAYOTTE
 medium	common	es	Medio
@@ -357,6 +375,7 @@ original	common	es	Original
 other	common	es	Otros
 overview	common	es	Resumen
 owner	common	es	Due&ntilde;o
+page was generated in %1 seconds	common	es	La página se generó en %1 segundos
 pakistan	common	es	PAKISTAN
 palau	common	es	PALAU
 palestinian territory, occupied	common	es	PALESTINIAN TERRITORY, OCCUPIED
@@ -368,6 +387,7 @@ parent category	common	es	Categoría superior
 password	common	es	Contraseña
 password could not be changed	common	es	No se pudo cambiar la contraseña
 password has been updated	common	es	Su contraseña ha sido actualizada
+path to user and group files has to be outside of the webservers document-root!!!	common	es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 pattern for search in addressbook	common	es	Patrón de búsqueda en la Libreta de direcciones
 pattern for search in calendar	common	es	Patrón de búsqueda en el Calendario
 pattern for search in projects	common	es	Patrón de búsqueda en los proyectos
@@ -428,6 +448,7 @@ save	common	es	Grabar
 search	common	es	Buscar
 section	common	es	Sección
 select	common	es	Seleccionar
+select all %1 %2 for %3	common	es	Seleccionar todos los %1 %2 para %3
 select category	common	es	Seleccionar categoría
 select date	common	es	Seleccionar fecha
 select group	common	es	Seleccionar grupo
@@ -442,9 +463,13 @@ server %1 has been added	common	es	El servidor %1 ha sido añadido
 server name	common	es	Nombre del servidor
 session has been killed	common	es	La sesión ha sido eliminada
 setup	common	es	Instalación
+setup main menu	common	es	Menú principal de instalación
 seychelles	common	es	SEYCHELLES
 show all	common	es	mostrar todo
 show all categorys	common	es	Mostrar todas las categorías
+show page generation time	common	es	Mostrar el tiempo que tarda en generarse la página
+show page generation time on the bottom of the page?	common	es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
+show_more_apps	common	es	mostrar más aplicaciones
 showing %1	common	es	mostrando %1
 showing %1 - %2 of %3	common	es	mostrando %1 - %2 de %3
 sierra leone	common	es	SIERRA LEONA
@@ -486,6 +511,7 @@ this application requires an upgrade	common	es	Esta aplicación requiere una actu
 this name has been used already	common	es	¡Este nombre ya ha sido usado!
 thursday	common	es	Jueves
 time	common	es	Hora
+time selection:	common	es	Seleccionar hora:
 time zone	common	es	Zona horaria
 time zone offset	common	es	Diferencia de zona horaria
 timetrack	preferences	es	Seguimiento del Tiempo
