@@ -1199,15 +1199,31 @@
 			reset($allGroups);
 			while (list($key,$value) = each($allGroups)) 
 			{
-				$groups_select .= '<option value="' . $value['account_id'] . '"';
-				for ($i=0; $i<count($userGroups); $i++) 
+
+			// new way of multiple select from Mauro Donadello - NDEE
+				$groups_select .= '<input type="checkbox"  name="account_groups[]" value="' . $value['account_id'] . '"';
+				for ($i=0; $i<count($userGroups); $i++)
 				{
-					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
-					if (@$userGroups[$i]['account_id'] == $value['account_id'])
+					/* print  
+					"Los1:".$userData["account_id"].$userGroups[$i]['account_id']." :  
+					".$value['account_id']."<br>"; */
+					if (@$userGroups[$i]['account_id'] ==  
+					$value['account_id'])
 					{
-						$groups_select .= ' selected';
+						$groups_select .= ' checked';
 					}
-				}
+
+// replaced by checkboxes above
+//				$groups_select .= '<option value="' . $value['account_id'] . '"';
+//				for ($i=0; $i<count($userGroups); $i++) 
+//				{
+//					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
+//					if (@$userGroups[$i]['account_id'] == $value['account_id'])
+//					{
+//						$groups_select .= ' selected';
+//					}
+//				}
+
 				$groups_select .= '>' . $value['account_lid'] . '</option>'."\n";
 			}
 
@@ -1262,6 +1278,23 @@
 				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
 			}
 
+// new version for multiple select from Mauro Donadello - NDEE
+			$var = Array(
+				'groups_select'
+				=> '<div style="overflow:auto; height:120px;width:150px>"' .  
+				"\n".$groups_select. '</div>' . "\n",
+				'primary_group_select'
+				=> '<select  
+				name="account_primary_group">'."\n".$primary_group_select.'</ 
+				select>'."\n",
+				'permissions_list'
+               			=> $appRightsOutput,
+				'lang_app' => lang('application'),
+				'lang_acl' => lang('enabled').' / '.lang('ACL'),
+				);
+
+/*
+replaced with checkboxes
 			$var = Array(
 				'groups_select'
 					=> '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
@@ -1272,6 +1305,8 @@
 				'lang_app' => lang('application'),
 				'lang_acl' => lang('enabled').' / '.lang('ACL'),
 			);
+*/
+
 			$t->set_var($var);
 
 			// create the menu on the left, if needed
