@@ -77,21 +77,26 @@
 		$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 		$app = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app);
 	}
+
+	
+	if($app!='wiki') $robots ='<meta name="robots" content="none" />';
+	
 	$var = Array(
-		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
-		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
-		'pngfix'        => $pngfix,
-		'slider_effects'=> $slider_effects,
-		'simple_show_hide'=> $simple_show_hide,
-		'lang_code'=> $lang_code,
-		'charset'       => $GLOBALS['phpgw']->translation->charset(),
-		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
-		'website_title' => strip_tags($GLOBALS['phpgw_info']['server']['site_title']. ($app ? " [$app]" : '')),
-		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
-		'theme_css'     => $theme_css,
-		'css'           => $GLOBALS['phpgw']->common->get_css(),
-		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
-	);
+		'img_icon'      	=> PHPGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  	=> PHPGW_IMAGES_DIR . '/favicon.ico',
+		'pngfix'        	=> $pngfix,
+		'slider_effects'	=> $slider_effects,
+		'simple_show_hide'	=> $simple_show_hide,
+		'lang_code'			=> $lang_code,
+		'charset'       	=> $GLOBALS['phpgw']->translation->charset(),
+		'font_family'   	=> $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title' 	=> strip_tags($GLOBALS['phpgw_info']['server']['site_title']. ($app ? " [$app]" : '')),
+		'body_tags'     	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
+		'theme_css'     	=> $theme_css,
+		'css'           	=> $GLOBALS['phpgw']->common->get_css(),
+		'java_script'   	=> $GLOBALS['phpgw']->common->get_java_script(),
+		'meta_robots'			=> $robots
+	 );
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');
 	unset($tpl);

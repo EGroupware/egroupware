@@ -10,7 +10,7 @@
 		<meta name="copyright" content="eGroupWare http://www.egroupware.org (c) 2003" />
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="eGroupWare http://www.egroupware.org" />
-		<meta name="robots" content="none" />
+		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
 		<link href="{theme_css}" type="text/css" rel="StyleSheet" />
