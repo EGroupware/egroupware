@@ -271,18 +271,20 @@
 		$phpgw->calendar->event = $event;
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('/calendar/edit_entry_handler.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
-							'action_text_button'		=>	lang('Ignore Conflict'),
-							'action_confirm_button'	=>	''
+			'action_url_button'	=> $phpgw->link('/calendar/edit_entry_handler.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
+			'action_text_button'	=> lang('Ignore Conflict'),
+			'action_confirm_button'	=> '',
+			'action_extra_field	=> ''
 		);
 		$p->set_var($var);
 
 		$p->parse('resubmit_button','form_button');
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
-							'action_text_button'		=>	lang('Re-Edit Event'),
-							'action_confirm_button'	=>	''
+			'action_url_button'	=> $phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
+			'action_text_button'	=> lang('Re-Edit Event'),
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
 

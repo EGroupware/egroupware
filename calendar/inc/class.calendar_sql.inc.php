@@ -628,6 +628,7 @@ class calendar_ extends calendar__
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event->priority.', '
+				. 'category='.$event->category.', '
 				. "cal_type='".$type."', "
 				. 'is_public='.$event->public.', '
 				. "title='".addslashes($event->title)."', "

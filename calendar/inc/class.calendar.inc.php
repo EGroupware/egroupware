@@ -82,13 +82,11 @@ class calendar extends calendar_
 		}
 
 		$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
-		$this->phpgwapi_template_dir = $phpgw->common->get_image_path('phpgwapi');
+		$this->phpgwapi_template_dir = PHPGW_IMAGES_DIR;
 		$this->image_dir = $phpgw->common->get_image_path('calendar');
 		$this->today = $this->localdates(time());
 
 		$this->open('',intval($this->owner));
-//		$this->end_repeat_day = $this->today['raw'];
-//		$this->read_repeated_events($this->owner);
 		$this->set_filter();
 		$this->tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		
@@ -1538,14 +1536,13 @@ class calendar extends calendar_
 			}
 		}
   
-		$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
+		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 
 		$p->set_unknowns('keep');
 		$templates = Array(
   			'view_begin'	=> 'view.tpl',
   			'list'			=> 'list.tpl',
-	  		'view_end'		=> 'view.tpl',
-  			'form_button'	=> 'form_button_script.tpl'
+	  		'view_end'		=> 'view.tpl'
 		);
 		$p->set_file($templates);
 
@@ -1570,7 +1567,9 @@ class calendar extends calendar_
 
 		if ($event->category)
 		{
-			$cat = $phpgw->categories->return_single($event->category);
+			$cats = CreateObject('phpgwapi.categories');
+			$cats->categories($this->owner,'calendar');
+			$cat = $cats->return_single($event->category);
 			$var = Array(
 				'field'	=>	lang('Category'),
 				'data'	=>	$cat[0]['name']
@@ -1780,25 +1779,41 @@ class calendar extends calendar_
   			'form_button'	=> 'form_button_script.tpl'
 		);
 		$p->set_file($templates);
-	
-		$p->set_var('action_url_button',$phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.ACCEPTED));
-		$p->set_var('action_text_button','  '.lang('Accept').'  ');
-		$p->set_var('action_confirm_button','');
+
+		$var = Array(	
+			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.ACCEPTED),
+			'action_text_button'	=> '  '.lang('Accept').'  ',
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
 
-		$p->set_var('action_url_button',$phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.REJECTED));
-		$p->set_var('action_text_button','  '.lang('Reject').'  ');
-		$p->set_var('action_confirm_button','');
+		$var = Array(
+			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.REJECTED),
+			'action_text_button'	=> '  '.lang('Reject').'  ',
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
 
-		$p->set_var('action_url_button',$phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.TENTATIVE));
-		$p->set_var('action_text_button','  '.lang('Tentative').'  ');
-		$p->set_var('action_confirm_button','');
+		$var = Array(
+			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.TENTATIVE),
+			'action_text_button'	=> '  '.lang('Tentative').'  ',
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
 
-		$p->set_var('action_url_button',$phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.NO_RESPONSE));
-		$p->set_var('action_text_button','  '.lang('No Response').'  ');
-		$p->set_var('action_confirm_button','');
+		$var = Array(
+			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.NO_RESPONSE),
+			'action_text_button'	=> '  '.lang('No Response').'  ',
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		$str .= '<td>'.$p->finish($p->parse('out','form_button')).'</td>'."\n";
 
 		$str .= '</tr></table>';

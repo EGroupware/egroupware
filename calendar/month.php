@@ -25,6 +25,7 @@
 			'noappfooter'			=> True,
 			'nofooter'			=> True
 		);
+		$friendly = intval($friendly);
 	}
 	else
 	{
@@ -51,7 +52,7 @@
 
 	$m = mktime(0,0,0,$thismonth,1,$thisyear);
 
-	if ($friendly == 0)
+	if (intval($friendly) == 0)
 	{
 		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;

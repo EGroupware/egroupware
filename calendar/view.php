@@ -14,12 +14,10 @@
 
 	/* $Id$ */
 
-//	$phpgw_flags = array(
-//  		'currentapp'		=> 'calendar',
-//  		'enable_nextmatchs_class'	=> True
-//	);
-//	$phpgw_info['flags'] = $phpgw_flags;
-	$phpgw_info['flags']['currentapp'] = 'calendar';
+	$phpgw_flags = array(
+  		'currentapp'		=> 'calendar',
+	);
+	$phpgw_info['flags'] = $phpgw_flags;
   
 	include('../header.inc.php');
 
@@ -57,17 +55,25 @@
 
 	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
 	{
-		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','id='.$id.'&owner='.$owner));
-		$p->set_var('action_text_button','  '.lang('Edit').'  ');
-		$p->set_var('action_confirm_button','');
+		$var = Array(
+			'action_url_button'	=> $phpgw->link('/calendar/edit_entry.php','id='.$id.'&owner='.$owner),
+			'action_text_button'	=> lang('Edit'),
+			'action_confirm_button'	=> '',
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		echo $p->finish($p->parse('out','form_button'));
 	}
 
 	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
 	{
-		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner));
-		$p->set_var('action_text_button',lang('Delete'));
-		$p->set_var('action_confirm_button',"onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
+		$var = Array(
+			'action_url_button'	=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner),
+			'action_text_button'	=> lang('Delete'),
+			'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		echo $p->finish($p->parse('out','form_button'));
 	}
 

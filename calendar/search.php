@@ -51,16 +51,16 @@
 	$words = split(' ',$keywords);
 	for ($i=0;$i<count($words);$i++)
 	{
-		$sql = "AND (UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
-				. " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) ";
+		$sql = "AND (UPPER(phpgw_cal.title) LIKE UPPER('%".$words[$i]."%') OR "
+				. " UPPER(phpgw_cal.description) LIKE UPPER('%".$words[$i]."%')) ";
 
 // Private
 		if(strpos($phpgw->calendar->filter,'private'))
 		{
-			$sql .= "AND calendar_entry.cal_access='private' ";
+			$sql .= "AND phpgw_cal.is_public=0 ";
 		}
 		
-		$sql .= 'ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
+		$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 		$events = $phpgw->calendar->get_event_ids(True,$sql);
 
@@ -125,7 +125,7 @@
 	arsort($ids);
 	for(reset($ids);$key=key($ids);next($ids))
 	{
-		$p->set_var('url_result',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$key.'&owner='.$owner));
+		$p->set_var('url_result',$phpgw->link('/calendar/view.php','id='.$key.'&owner='.$owner));
 		$p->set_var('result_desc',$info[$key]);
 		$p->parse('output','search_list',True);
 	}

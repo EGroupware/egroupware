@@ -407,9 +407,16 @@
 
 	if ($id > 0)
 	{
-		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id));
-		$p->set_var('action_text_button',lang('Delete'));
-		$p->set_var('action_confirm_button',"onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
+		$action_url_button = $phpgw->link('/calendar/delete.php','id='.$id);
+		$action_text_button = lang('Delete');
+		$action_confirm_button = "onClick=\"return confirm('".lang("Are you sure\\nyou want to \\ndelete this entry?\\n\\nThis will delete\\nthis entry for all users.")."')\"";
+		$var = Array(
+			'action_url_button'	=> $action_url_button,
+			'action_text_button'	=> $action_text_button,
+			'action_confirm_button'	=> $action_confirm_button,
+			'action_extra_field'	=> ''
+		);
+		$p->set_var($var);
 		$p->parse('delete_button','form_button');
 		$p->pparse('out','edit_entry_end');
 	}

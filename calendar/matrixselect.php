@@ -132,10 +132,11 @@
 	$p->parse('output','list',True);
 
 	$var = Array(
-		'submit_button'			=>	lang('Submit'),
-		'action_url_button'		=> '',
-		'action_text_button'		=>	lang('Cancel'),
-		'action_confirm_button'	=>	'onClick="history.back(-1)"'
+		'submit_button'		=> lang('Submit'),
+		'action_url_button'	=> '',
+		'action_text_button'	=> lang('Cancel'),
+		'action_confirm_button'	=> 'onClick="history.back(-1)"',
+		'action_extra_field'	=> ''
 	);
 
 	$p->set_var($var);
