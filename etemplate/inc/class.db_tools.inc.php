@@ -26,8 +26,6 @@
 		(
 			'edit'         => True,
 			'needs_save'   => True,
-			//'admin'       => True,
-			//'preferences' => True
 		);
 
 		var $debug = 0;
@@ -50,18 +48,18 @@
 //			'abstime'   => 'abstime (mysql:timestamp)',
 		);
 		var $setup_header = '<?php
-  /**************************************************************************\\
-  * eGroupWare - Setup                                                       *
-  * http://www.eGroupWare.org                                                *
-  * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
-  * --------------------------------------------                             *
-  * This program is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU General Public License as published by the    *
-  * Free Software Foundation; either version 2 of the License, or (at your   *
-  * option) any later version.                                               *
-  \\**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\\
+	* eGroupWare - Setup                                                       *
+	* http://www.eGroupWare.org                                                *
+	* Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
+	* --------------------------------------------                             *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU General Public License as published by the    *
+	* Free Software Foundation; either version 2 of the License, or (at your   *
+	* option) any later version.                                               *
+	\\**************************************************************************/
+	
+	/* $Id$ */
 ';
 
 		/**
@@ -242,11 +240,12 @@
 		 * @param array $cont the content of the form (if called by process_exec)
 		 * @param string $posted_app the app the table is from
 		 * @param string $posted_table the table-name
-		 * @param string $edited_table the edited table-definitions
+		 * @param array $edited_table the edited table-definitions
 		 * @return only if no changes
 		 */
-		function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
+		function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='',$msg='')
 		{
+			//echo "<p>db_tools::needs_save(cont,'$posted_app','$posted_table',edited_table,'$msg')</p> cont=\n"; _debug_array($cont); echo "edited_table="; _debug_array($edited_table);
 			if (!$posted_app && is_array($cont))
 			{
 				if (isset($cont['yes']))
@@ -268,8 +267,15 @@
 						}
 						$this->setup_version($this->app,'',$tables);
 					}
-					$msg .= $this->write($this->app,$this->data) ?
-						lang('File writen') : lang('Error: writing file (no write-permission for the webserver) !!!');
+					if (!$this->write($this->app,$this->data))
+					{
+						$this->app = $cont['new_app'];	// these are the ones, the users whiches to change too
+						$this->table = $cont['new_table'];
+
+						return $this->needs_save('',$cont['app'],$cont['table'],$cont['edited_table'],
+							lang('Error: writing file (no write-permission for the webserver) !!!'));
+					}
+					$msg = lang('File writen');
 				}
 				$this->changes = array();
 				// return to edit with everything set, so the user gets the table he asked for
@@ -299,6 +305,7 @@
 				return False;	// continue edit
 			}
 			$content = array(
+				'msg' => $msg,
 				'app' => $posted_app,
 				'table' => $posted_table,
 				'version' => $this->setup_version($posted_app)
@@ -733,7 +740,7 @@
 			
 			if ($tables != '')
 			{
-				if ($setup_info[$app]['tables'])	// if there is already tables array, update it
+				if (isset($setup_info[$app]['tables']))	// if there is already tables array, update it
 				{
 					$fnew = preg_replace('/(.*\\$'."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*/i","\\1$tables",$fwas=$fnew);
 
@@ -801,7 +808,6 @@
 		function update($app,$current,$version)
 		{
 			//echo "<p>etemplate.db_tools.update('$app',...,'$version')</p>\n";
-
 			if (!is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
 			{
 				return False;
