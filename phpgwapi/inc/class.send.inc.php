@@ -90,7 +90,7 @@ class send {
           }
           if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"] == "imap" && $phpgw_info["user"]["apps"]["email"] && is_object($phpgw->msg)){
             $stream = $phpgw->msg->login("Sent");
-            $phpgw->msg->append($stream, "Sent", $header, $body);
+            $phpgw->msg->append($stream, "Sent", $header, $body, "\\Seen");
             $phpgw->msg->close($stream);
           }
           if (strlen($cc)>1) $to .= ",".$cc;
