@@ -15,10 +15,11 @@
 	// I don't think this is needed anymore
 
 	// Perform acl check, set $rights
+
 	if(!isset($owner)) { $owner = 0; } 
 
 	$grants = $phpgw->acl->get_grants('addressbook');
-  
+
 	if(!isset($owner) || !$owner) {
 		$owner = $phpgw_info['user']['account_id'];
 		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
@@ -51,13 +52,13 @@
 			"adr_one_region"      => "business state",
 			"adr_one_postalcode"  => "business zip code",
 			"adr_one_countryname" => "business country",
-			"adr_one_type"        => "",
+			"adr_one_type"        => "business address type",
 			"adr_two_street"      => "home street",
 			"adr_two_locality"    => "home city",
 			"adr_two_region"      => "home state",
 			"adr_two_postalcode"  => "home zip code",
 			"adr_two_countryname" => "home country",
-			"adr_two_type"        => "",
+			"adr_two_type"        => "home address type",
 			"tz"                  => "time zone",
 			"geo"                 => "geo",
 			"tel_work"            => "business phone",
@@ -121,7 +122,7 @@
 		}
 	}
 
-	function addressbook_add_entry($userid,$fields) {
+	function addressbook_add_entry($userid,$fields,$access) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_ADD) {
 			$this->add($userid,$fields);
@@ -136,10 +137,10 @@
 		return $ab_id;
 	}
 	
-	function addressbook_update_entry($id,$userid,$fields) {
+	function addressbook_update_entry($id,$userid,$fields,$access) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_EDIT) {
-			$this->update($id,$userid,$fields);
+			$this->update($id,$userid,$fields,$access);
 		}
 		return;
 	}
@@ -204,6 +205,13 @@
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
 		$pubkey       = $fields["pubkey"];
+		$access       = $fields["access"];
+
+		if ($access == 'private') {
+			$access_check = ' checked';
+		} else {
+			$access_check = '';
+		}
 
 		if ($customfields) {
 			while(list($name,$value) = each($customfields)) {
@@ -451,6 +459,7 @@
 		$t->set_var("label",$label);
 		$t->set_var("lang_pubkey",lang("Public Key"));
 		$t->set_var("pubkey",$pubkey);
+		$t->set_var("access_check",$access_check);
 
 		$t->set_var('lang_private',lang('Private'));
 		if ($customfields) {

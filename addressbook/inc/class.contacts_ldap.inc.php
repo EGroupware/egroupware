@@ -75,11 +75,11 @@
 				"url"                 => "url",
 				"pubkey"              => "publickey",
 
-				"org_name"            => "phpgworgname",  // company
-				"org_unit"            => "phpgworgunit",  // division
+				"org_name"            => "o",  // company
+				"org_unit"            => "ou",  // division
 				"title"               => "title",
 
-				"adr_one_street"      => "street",
+				"adr_one_street"      => "streetaddress",
 				"adr_one_locality"    => "locality", 
 				"adr_one_region"      => "st", 
 				"adr_one_postalcode"  => "postalcode",
