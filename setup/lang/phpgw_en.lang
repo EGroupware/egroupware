@@ -148,6 +148,7 @@ please check for sql scripts within the application's directory	setup	en	Please 
 please configure phpGroupWare for your environment	setup	en	Please configure phpGroupWare for your environment
 please install	setup	en	Please install
 please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
+please wait...	setup	en	Please Wait...
 possible solutions	setup	en	Possible Solutions
 potential problem	setup	en	Potential Problem
 Preferences	setup	en	Preferences

@@ -125,6 +125,7 @@ please configure phpGroupWare for your environment	setup	ja	Please configure php
 please install	setup	ja	Please install
 please login	setup	ja	ログイン
 please login to phpgroupware and run the admin application for additional site configuration	setup	ja	phpGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
+please wait...	setup	ja	Please Wait...
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
 preferences	setup	ja	ユーザ設定情報

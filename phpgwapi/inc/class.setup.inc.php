@@ -67,7 +67,7 @@
 		@abstract authenticate the setup user
 		@param	$auth_type	???
 		*/
-		function auth($auth_type='Config')
+		function auth($auth_type='Config',$ConfigPW='',$HeaderPW='')
 		{
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
@@ -76,8 +76,8 @@
 			$FormPW       = get_var('FormPW',      array('POST'));
 
 			$ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
-			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
-			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
+			$ConfigPW     = $ConfigPW ? $ConfigPW : get_var('ConfigPW',    array('POST','COOKIE'));
+			$HeaderPW     = $HeaderPW ? $HeaderPW : get_var('HeaderPW',    array('POST','COOKIE'));
 			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 
 			/* 6 cases:
@@ -89,13 +89,16 @@
 				6. None of the above
 			*/
 
+			$expire = time() + 1200; /* Expire login in 20 minutes. */
+
 			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
 				/* header admin login */
 				if($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
 				{
-					setcookie('HeaderPW',"$FormPW");
-					return True;
+					setcookie('HeaderPW',"$FormPW","$expire");
+					header('Location: manageheader.php');
+					echo '<meta http-equiv="Refresh" content="1">' . lang('Please Wait...');
 				}
 				else
 				{
@@ -109,10 +112,10 @@
 				/* config login */
 				if($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'])
 				{
-					setcookie('ConfigPW',"$FormPW");
-					setcookie('ConfigDomain',"$FormDomain");
-					setcookie('ConfigLang',"$ConfigLang");
-					return True;
+					setcookie('ConfigPW',"$FormPW","$expire");
+					setcookie('ConfigDomain',"$FormDomain","$expire");
+					setcookie('ConfigLang',"$ConfigLang","$expire");
+					echo '<meta http-equiv="Refresh" content="1">' . lang('Please Wait...');
 				}
 				else
 				{

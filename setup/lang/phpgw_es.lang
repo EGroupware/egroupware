@@ -82,6 +82,7 @@ pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>
 please check for sql scripts within the application's directory	setup	es	Por favor comprueve los guiones sql en el directorio de la aplicación
 please configure phpGroupWare for your environment	setup	es	Por favor configure phpGroupware para su entorno
 please install	setup	es	Por favor Instale
+please wait...	setup	es	Please Wait...
 possible solutions	setup	es	Posibles Soluciones
 potential problem	setup	es	Problema Potencial
 problem resolution	setup	es	Resolución del problema

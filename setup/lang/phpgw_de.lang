@@ -82,6 +82,7 @@ pgsqlinstr	setup	de	Hinweise zum erstellen der Datenbank in PostgreSQL:<br>Start
 please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
 please configure phpGroupWare for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare f&uuml;r Ihre Umgebung
 please install	setup	de	Bitte installieren
+please wait...	setup	de	Please Wait...
 possible solutions	setup	de	M&ouml;gliche L&ouml;sungen
 potential problem	setup	de	Potentielles Problem
 problem resolution	setup	de	Problem L&ouml;sung

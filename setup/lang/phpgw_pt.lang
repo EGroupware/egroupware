@@ -160,6 +160,7 @@ please check for sql scripts within the application's directory	setup	pt	Procure
 please configure phpGroupWare for your environment	setup	pt	Por favor configure o phpGroupWare para o seu ambiente
 please install	setup	pt	Por favor instale
 please login to phpgroupware and run the admin application for additional site configuration	setup	pt	Por favor, conecte no phpgroupware e execute a aplicação de administração para outras configurações do servidor
+please wait...	setup	pt	Please Wait...
 possible solutions	setup	pt	Possíveis soluções
 potential problem	setup	pt	Problema em potencial
 problem resolution	setup	pt	Solução do problema
