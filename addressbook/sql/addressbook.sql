@@ -60,7 +60,7 @@ CREATE TABLE phpgw_addressbook (
    d_email_work enum('y','n') DEFAULT 'n' NOT NULL,
    d_email_home enum('y','n') DEFAULT 'n' NOT NULL,
    PRIMARY KEY (id),
-   UNIQUE id (id),
+   UNIQUE id (id)
 );
 
 CREATE TABLE phpgw_addressbook_extra (
