@@ -184,6 +184,10 @@
 						$acl->add('phpgw_group',$defaultgroupid,1);
 					}
 
+					// Now add the acl to let them change their password
+					$acl->delete('preferences','changepassword',$thisacctid,1);
+					$acl->add('preferences','changepassword',$thisacctid,1);
+
 					// Save these new acls.
 					$acl->save_repository();
 				}
