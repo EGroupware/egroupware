@@ -39,7 +39,7 @@
    </tr>
    <?php $selected = array(); ?>
 
-   <?php $selected[$current_config["useframes"]] = " selected"; ?>
+   <?php/* $selected[$current_config["useframes"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Frame support:</td>
     <td>
@@ -50,7 +50,7 @@
      </select>
     </td>
    </tr>
-   <?php $selected = array(); ?>
+   <?php $selected = array(); */?>
 
    <?php $selected[$current_config["htmlcompliant"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">

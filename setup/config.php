@@ -32,20 +32,22 @@
   }
 
   if ($submit) {
-    @$phpgw_setup->db->query("delete from config");
-    while ($newsetting = each($newsettings)) {
-   	  if ($newsetting[0] == "nntp_server") {
+     @$phpgw_setup->db->query("delete from config");
+     // This is only temp.
+     $phpgw_setup->db->query("insert into config (config_name, config_value) values ('useframes','never')");
+     while ($newsetting = each($newsettings)) {
+        if ($newsetting[0] == "nntp_server") {
  	      $phpgw_setup->db->query("select config_value FROM config WHERE config_name='nntp_server'");
-	      if ($phpgw_setup->db->num_rows()) {
-	        $phpgw_setup->db->next_record();
-  	      if ($phpgw_setup->db->f("config_value") <> $newsetting[1]) {
-	          $phpgw_setup->db->query("DELETE FROM newsgroups");
+           if ($phpgw_setup->db->num_rows()) {
+              $phpgw_setup->db->next_record();
+              if ($phpgw_setup->db->f("config_value") <> $newsetting[1]) {
+                 $phpgw_setup->db->query("DELETE FROM newsgroups");
 //   	        $phpgw_setup->db->query("DELETE FROM users_newsgroups");
-   	      }
-	      }
-   	  }
-      $phpgw_setup->db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
-        . "','" . addslashes($newsetting[1]) . "')");
+              }
+           }
+        }
+        $phpgw_setup->db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
+                              . "','" . addslashes($newsetting[1]) . "')");
     }
     if ($newsettings["auth_type"] == "ldap") {
       Header("Location: ldap.php");
