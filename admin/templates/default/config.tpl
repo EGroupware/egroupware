@@ -209,6 +209,25 @@
        </select>
     </td>
    </tr>
+
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_Mail_settings}</b></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enter_your_default_mail_domain_(_From:_user@domain_)}:</td>
+    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Enter_your_SMTP_server_hostname_or_IP_address}:</td>
+    <td><input name="newsettings[smtp_server]" value="{value_smtp_server}"></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enter_your_SMTP_server_port}:</td>
+    <td><input name="newsettings[smtp_port]" value="{value_smtp_port}"></td>
+   </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->
