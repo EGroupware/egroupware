@@ -119,8 +119,9 @@
 		}
 
 		// send this the id and whatever fields you want to see
-		function read_single_entry($id,$fields)
+		function read_single_entry($id,$fields="")
 		{
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
@@ -156,11 +157,56 @@
 			return $return_fields;
 		}
 
-		// send this the range,query,sort,order
-		// and whatever fields you want to see
-		function read($start,$offset,$fields=array(),$query="",$filter="",$sort="",$order="",$rights="")
+		function read_last_entry($fields="")
+		{
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
+			list($stock_fields,$stock_fieldnames,$extra_fields) =
+				$this->split_stock_and_extras($fields);
+
+			if (count($stock_fieldnames)) {
+				$t_fields = "," . implode(",",$stock_fieldnames);
+				if ($t_fields == ",") {
+					unset($t_fields);
+				}
+			}
+
+			$this->db2 = $this->db;
+ 
+			$this->db->query("select max(id) from $this->std_table");
+			$this->db->next_record();
+       
+			$id = $this->db->f("max(id)");
+			
+			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
+			$this->db->next_record();
+			
+			$return_fields[0]["id"]		= $this->db->f("id"); // unique id
+			$return_fields[0]["lid"]    = $this->db->f("lid"); // lid for group/account records
+			$return_fields[0]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
+			$return_fields[0]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
+			if (gettype($stock_fieldnames) == "array") {
+				while (list($f_name) = each($stock_fieldnames)) {
+					$return_fields[0][$f_name] = $this->db->f($f_name);
+				}
+			}
+			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
+			while ($this->db2->next_record()) {
+				// If its not in the list to be returned, don't return it.
+				// This is still quicker then 5(+) separate queries
+				if ($extra_fields[$this->db2->f("contact_name")]) {
+					$return_fields[0][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+				}
+			}
+			return $return_fields;
+		}
+
+
+		// send this the range, query, sort, order and whatever fields you want to see
+		// 'rights' is unused at this time
+		function read($start,$offset,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
 		{
 			global $phpgw,$phpgw_info;
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 1;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
