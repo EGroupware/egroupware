@@ -390,7 +390,7 @@ class calendar_
 		}
 	}
 
-	function is_private($cal_info,$owner)
+	function is_private($cal_info,$owner,$field)
 	{
 		global $phpgw, $phpgw_info;
 
@@ -419,13 +419,13 @@ class calendar_
 		{
 			$str = 'private';
 		}
-		elseif (strlen($cal_info->name) > 19)
+		elseif (strlen($cal_info->$field) > 19)
 		{
-			$str = substr($cal_info->name, 0 , 19) . '...';
+			$str = substr($cal_info->$field, 0 , 19) . '...';
 		}
 		else
 		{
-			$str = $cal_info->name;
+			$str = $cal_info->$field;
 		}
 		return $str;
 	}
@@ -860,7 +860,8 @@ class calendar_
 									'month_column'		=> 'month_column.tpl',
 									'month_day'			=> 'month_day.tpl',
 									'week_day_event'	=> 'week_day_event.tpl',
-									'week_day_events'	=> 'week_day_events.tpl'
+									'week_day_events'	=> 'week_day_events.tpl',
+									'link_pict'			=>	'link_pict.tpl'
 		);
 		$p->set_file($templates);
 //      $p->set_block('month_header','month_header');
@@ -943,8 +944,20 @@ class calendar_
 								$pict = "rpt.gif";
 							}
 						}
-//						$p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $this->is_private($lr_events,$owner).' - '.$lr_events->description));
-						$p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $lr_events->description));
+						
+						$p->set_var('link_entry','');
+						$description = $this->is_private($lr_events,$owner,'description');
+
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						{
+							$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$$lr_events->id.'&owner='.$owner));
+							$p->set_var('lang_view',lang('View this entry'));
+							$p->set_var('pic_image',$phpgw->common->get_image_path('calendar').'/'.$pict);
+							$p->set_var('description',$description);
+							$p->parse('link_entry','link_pict');
+						}
+
+//						$p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $this->is_private($lr_events,$owner,'description')));
 						if (intval($phpgw->common->show_date($lr_events->datetime,"Hi")))
 						{
 							if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12")
@@ -985,7 +998,15 @@ class calendar_
 							$p->set_var('end_time','');
 						}
 						
-						$p->set_var('name',$this->is_private($lr_events,$owner));
+						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+						{
+							$p->set_var('close_view_link','</a>');
+						}
+						else
+						{
+							$p->set_var('close_view_link','');
+						}
+						$p->set_var('name',$this->is_private($lr_events,$owner,'name'));
 						$p->parse('events','week_day_event',True);
 					}
 				}
@@ -1480,7 +1501,9 @@ class calendar_
 			$this->hour_arr[$ind] = '';
 		}
 
-		if ($this->printer_friendly == False)
+		$description = $this->is_private($event,$this->owner,'description');
+		
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$this->hour_arr[$ind] .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
 								.'/calendar/view.php','id='.$event->id.'&owner='.$this->owner)
@@ -1518,10 +1541,11 @@ class calendar_
 				$this->rowspan_arr[$ind] = $this->rowspan;
 			}
 		}
-		$this->hour_arr[$ind] .= '] ';
-		$this->hour_arr[$ind] .= '<img src="'.$phpgw->common->get_image_path('calendar').'/circle.gif" border="0" alt="' . $event->description . '">';
 
-		if ($this->printer_friendly == False)
+		$this->hour_arr[$ind] .= '] ';
+		$this->hour_arr[$ind] .= '<img src="'.$phpgw->common->get_image_path('calendar').'/circle.gif" border="0" alt="' . $description . '">';
+
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$this->hour_arr[$ind] .= '</a>';
 		}
@@ -1531,7 +1555,7 @@ class calendar_
 			$this->hour_arr[$ind] .= '<font color="CC0000">';
 		}
 		
-		$this->hour_arr[$ind] .= $event->name;
+		$this->hour_arr[$ind] .= $this->is_private($event,$this->owner,'name');
 
 		if ($event->priority == 3)
 		{
