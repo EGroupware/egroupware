@@ -104,7 +104,7 @@
         $this->cal_event = CreateObject('calendar.calendar_item');
         $this->stream->next_record();
         // Load the calendar event data from the db into the cal_event structure
-        // Use http://www.php.net/manual/en/function.mcal-fetch-event.phpas the reference
+        // Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
       }
       else
       {
@@ -794,7 +794,8 @@
     function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0) {
       global $phpgw;
       global $phpgw_info;
-
+      global $rights;
+      
       $str = '';
       $gr_events = CreateObject('calendar.calendar_item');
       $lr_events = CreateObject('calendar.calendar_item');
@@ -830,8 +831,23 @@
           }
 
           if (!$this->printer_friendly) {
-            $str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day']).'">'
-                 . '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right"></a>';
+            $str = '';
+            if($rights & PHPGW_ACL_ADD) {
+              $str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day']).'">';
+            }
+            
+            $str .= '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" ';
+            
+            if($rights & PHPGW_ACL_ADD) {
+              $str .= 'alt="'.lang('New Entry').'" ';
+            }
+            
+            $str .= 'border="0" align="right">';
+            
+            if($rights & PHPGW_ACL_ADD) {
+              $str .= '</a>';
+            }
+            
             $p->set_var('new_event_link',$str);
             $str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year']).'">'.$date['day'].'</a>';
             $p->set_var('day_number',$str);

@@ -50,21 +50,21 @@
        else
           $thisyear = $year;
     }
-  }
+    
+    if(!isset($owner)) { $owner = 0; } 
 
-  if(!isset($owner)) { $owner = 0; } 
-
-  if(!isset($owner) || !$owner) {
-    $owner = $phpgw_info['user']['account_id'];
-    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE;
-  } else {
-    $grants = $phpgw->acl->get_grants('calendar');
-    if($grants[$owner])
-    {
-      $rights = $grants[$owner];
-      if (!($rights & PHPGW_ACL_READ))
+    if(!isset($owner) || !$owner) {
+      $owner = $phpgw_info['user']['account_id'];
+      $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+    } else {
+      $grants = $phpgw->acl->get_grants('calendar');
+      if($grants[$owner])
       {
-        $owner = $phpgw_info['user']['account_id'];
+        $rights = $grants[$owner];
+        if (!($rights & PHPGW_ACL_READ))
+        {
+          $owner = $phpgw_info['user']['account_id'];
+        }
       }
     }
   }

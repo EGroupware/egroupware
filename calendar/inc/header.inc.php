@@ -16,7 +16,7 @@
 
   if (floor($PHP_VERSION ) == 4) {
     global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-    global $matrixtype, $participants, $owner, $phpgw;
+    global $matrixtype, $participants, $owner, $phpgw, $grants, $rights;
   }
 
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
@@ -24,9 +24,21 @@
 
   if(!isset($owner)) { $owner = 0; } 
 
+  $grants = $phpgw->acl->get_grants('calendar');
+  
   if(!isset($owner) || !$owner) {
     $owner = $phpgw_info['user']['account_id'];
-    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE;
+    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+  } else {
+    if($grants[$owner])
+    {
+      $rights = $grants[$owner];
+      if (!($rights & PHPGW_ACL_READ))
+      {
+        $owner = $phpgw_info['user']['account_id'];
+        $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+      }
+    }
   }
 
   if(!isset($filter) || !$filter) 
@@ -119,7 +131,6 @@
    </td>
   </form>
 <?php
-    $grants = $phpgw->acl->get_grants('calendar');
     if(count($grants) > 0)
     {
 ?>
@@ -138,7 +149,7 @@
 <?php } ?>
     <select name="owner" onchange="document.setowner.submit()">
 <?php
-      while(list($grantor,$rights) = each($grants))
+      while(list($grantor,$temp_rights) = each($grants))
       {
 ?>
       <option value="<?php echo $grantor; ?>"<?php if($grantor==$owner) echo " selected"; ?>><?php echo $phpgw->common->grab_owner_name($grantor); ?></option>
