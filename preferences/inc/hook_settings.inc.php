@@ -112,6 +112,7 @@
 		
 	$account_sels = array(
 		'selectbox' => lang('Selectbox'),
+		'primary_group' => lang('Selectbox with primary group and search'),
 		'popup'     => lang('Popup with search')
 	);
 	create_select_box('How do you like to select accounts','account_selection',$account_sels,
