@@ -6,7 +6,7 @@
   <!--
     .event
     {
-      width: 93%
+      width: 91%
       color: #{font_color};
       font-family: {font};
       font-weight: 100;
@@ -17,7 +17,7 @@
 
     .time
     {
-      width: 7%;
+      width: 9%;
       background-image: url('{bg_time_image}');
       color: #{font_color};
       font-family: {font};
@@ -29,7 +29,7 @@
   -->
  </style>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 {row}
 </table>
 
