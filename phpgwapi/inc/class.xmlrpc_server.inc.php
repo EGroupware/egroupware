@@ -311,7 +311,7 @@
 						}
 						else
 						{
-							if(function_exists($dmap[$methName]['function']))
+							if (function_exists($dmap[$methName]['function']))
 							{
 								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
 								$code = ereg_replace(',,',",'',",$code);
@@ -319,31 +319,32 @@
 							}
 							else
 							{
-								/* phpgw mod - finally, execute the function call and return the values */
+								// phpgw mod - finally, execute the function call and return the values
 								$params = $GLOBALS['_xh'][$parser]['params'][0];
 								$code = '$p = '  . $params . ';';
 								eval($code);
 								$params = $p->getval();
 
 								// _debug_array($params);
-								$this->reqtoarray($params);
+								//$this->reqtoarray($params);
 								//_debug_array($this->req_array);
-								if(ereg('^service',$method))
+								if (ereg('^service',$method))
 								{
 									$res = ExecMethod('phpgwapi.service.exec',array($service,$methName,$this->req_array));
 								}
 								else
 								{
-									$res = ExecMethod($method,$this->req_array);
+//									$res = ExecMethod($method,$this->req_array);
+									$r = ExecMethod($method,$params);
 								}
-								/* $res = ExecMethod($method,$params); */
-								/* _debug_array($res);exit; */
+
+								// _debug_array($res);exit;
 								$this->resp_struct = array();
 								$this->build_resp($res);
-								/*_debug_array($this->resp_struct); */
+								//_debug_array($this->resp_struct);
 								@reset($this->resp_struct);
-								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
-								/* _debug_array($r); */
+//								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
+								// _debug_array($r);
 							}
 						}
 					}
