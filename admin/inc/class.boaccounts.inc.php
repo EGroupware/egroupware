@@ -493,7 +493,6 @@
 
 			// Set group acl
 			$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
-//			$acl->read_repository();
 			$old_group_list = $acl->get_ids_for_location($group_info['account_id'],1,'phpgw_group');
 			@reset($old_group_list);
 			while($old_group_list && list($key,$user_id) = each($old_group_list))
@@ -508,9 +507,6 @@
 					$GLOBALS['phpgw']->session->delete_cache($user_id);
 				}
 			}
-
-//			$acl->save_repository();
-//			$acl->read_repository();
 
 			@reset($group_info['account_user']);
 			while(list($user_id,$dummy) = each($group_info['account_user']))
@@ -549,18 +545,11 @@
 				{
 					$GLOBALS['pref']->save_repository();
 				}
-
-				// This is down here so we are sure to catch the acl changes
-				// for LDAP to update the memberuid attribute
-				$group->save_repository();
 			}
 
-		/*
-			// Update any other options here, since the above save_repository () depends
-			// on a group having users
-			$group->data['file_space'] = $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'];
+			// This is down here so we are sure to catch the acl changes
+			// for LDAP to update the memberuid attribute
 			$group->save_repository();
-		*/
 
 			$GLOBALS['phpgw']->db->unlock();
 
