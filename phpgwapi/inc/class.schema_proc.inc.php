@@ -227,7 +227,7 @@
 		// other colum or function to set the value of a new or changed column
 		function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 		{
-			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',<pre>".print_r($aTableDef,True).")\n\nm_aTables[$sTableName]=".print_r($this->m_aTables[$sTableName],True)."</pre>\n"; }
+			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>m_aTables[$sTableName]="._debug_array($this->m_aTables[$sTableName],False)."\n"; }
 			$old_fd = $this->m_aTables[$sTableName]['fd'];
 
 			$Ok = $this->m_oDeltaProc->RefreshTable($this, $this->m_aTables, $sTableName, $aTableDef);
