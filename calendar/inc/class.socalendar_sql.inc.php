@@ -584,8 +584,8 @@
 			$this->stream->lock($locks);
 			if($event['id'] == 0)
 			{
-				$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public,category) '
-					. "values('".$this->stream->db_addslashes($event['title'])
+				$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
+					. "values('*new*','".$this->stream->db_addslashes($event['title'])
 					. "',".(int)$event['owner'].','.(int)$event['priority'].','.(int)$event['public'].",'"
 					. $event['category']."')",__LINE__,__FILE__);
 				$event['id'] = $this->stream->get_last_insert_id('phpgw_cal','cal_id');
