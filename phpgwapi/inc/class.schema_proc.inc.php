@@ -32,6 +32,7 @@
 		var $debug = 0;	// 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
 		var $max_index_length=array(	// if known
 			'sapdb' => 32,
+			'oracle' => 30,
 		);
 		var $sType;	// type of the database, set by the the constructor
 		var $max_varchar_length = 255;	// maximum length of a varchar column, everything above get converted to text
@@ -921,6 +922,7 @@
 				{
 					case 'sapdb':
 					case 'maxdb':
+					case 'oracle':
 						$name = strtolower($column->name);
 						break;
 					default:
@@ -1038,6 +1040,7 @@
 				{
 					case 'sapdb':
 					case 'maxdb':
+					case 'oracle':
 						array_walk($primary,create_function('&$s','$s = strtolower($s);'));
 						break;
 				}
@@ -1054,6 +1057,7 @@
 					{
 						case 'sapdb':
 						case 'maxdb':
+						case 'oracle':
 							array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
 							break;
 					}
