@@ -22,7 +22,7 @@
   // Note: I need to add checks to make sure these apps are installed.
 
   if ($cd=="yes" && $phpgw_info["user"]["preferences"]["default_app"]
-      && $phpgw_info["user"]["permissions"][$phpgw_info["user"]["preferences"]["default_app"]]) {
+      && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["default_app"]]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
 							  . $phpgw_info["user"]["preferences"]["default_app"]));
      exit;
