@@ -226,12 +226,16 @@
 
 		function transaction_begin()
 		{
+			/* disable transactions in PG for now */
+			return True;
 			return $this->query('begin');
 		}
 
 		function transaction_commit()
 		{
-			if (! $this->Errno)
+			/* disable transactions in PG for now */
+			return True;
+			if(!$this->Errno)
 			{
 				return pg_Exec($this->Link_ID,'commit');
 			}
@@ -243,6 +247,7 @@
 
 		function transaction_abort()
 		{
+			return True;
 			return pg_Exec($this->Link_ID,'rollback');
 		}
 
