@@ -47,11 +47,8 @@
 			echo "<tr><td align=\"left\">" . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
 		}
 
-		$tomorrow = $phpgw->common->show_date(mktime(0,0,0,
-		$phpgw->common->show_date(time(),"m"),
-		$phpgw->common->show_date(time(),"d")+1,
-		$phpgw->common->show_date(time(),"Y")),"n/d" );
-		//echo $tomorrow."\n";
+		$tomorrow = $phpgw->common->show_date($now + 86400,'n/d');
+//		echo $tomorrow."\n";
 
 		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$phpgw_info["user"]["account_id"]);
 
