@@ -412,16 +412,24 @@
 				#reset($this->stock_contact_fields);
 				#$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
 
-				// don't search about any fields any more
-				$search_filter = array(
-					'fn'		=> 'cn',
-					'n_given'	=> 'givenname',
-					'n_family'	=> 'sn',
-					'email'		=> 'mail',
-					'org_name'	=> 'o',
-					'org_unit'	=> 'ou'
-				);
-				$myfilter = $this->makefilter($filterfields,$search_filter,$query,$DEBUG);
+				if(is_array($query))
+				{
+					// must be fixed somehow Milosch????
+					$myfilter = $this->makefilter($filterfields,$query,'',$DEBUG);
+				}
+				else
+				{
+					// don't search about any fields any more
+					$search_filter = array(
+						'fn'		=> 'cn',
+						'n_given'	=> 'givenname',
+						'n_family'	=> 'sn',
+						'email'		=> 'mail',
+						'org_name'	=> 'o',
+						'org_unit'	=> 'ou'
+					);
+					$myfilter = $this->makefilter($filterfields,$search_filter,$query,$DEBUG);
+				}
 			}
 			else
 			{
@@ -534,7 +542,6 @@
 				if($DEBUG) { echo '<br>Searching...'; }
 				foreach($extra as $name => $value)
 				{
-
 					$qarray[] = array($value => $query);
 				}
 			}

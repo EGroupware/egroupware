@@ -83,6 +83,82 @@
 			return $ret;
 		}
 
+		/**
+		* Get the the person data what you want. Wrapper function to be compatible with phpgroupware
+		*
+		* @author Lars Kneschke <lars@kneschke.de>
+		* @param array $fields The fields that you can see from person
+		* @param integer $limit Limit of records that you want
+		* @param integer $ofset Ofset of record that you want start
+		* @param string $orderby The field which you want order
+		* @param string $sort ASC | DESC depending what you want
+		* @param mixed $criteria All criterias what you want
+		* @param mixed $criteria_token same like $criteria but builded<br>with sql_criteria class, more powerfull
+		* @return array with records
+		*/
+		function get_persons($_fields, $start='', $limit='', $orderby='', $sort='', $_criteria='', $token_criteria='')
+		{
+			// transform fields from phpgw to egw structure
+			foreach($_fields as $fieldValue)
+			{
+				switch($fieldValue)
+				{
+					case 'per_first_name':
+						$fields['n_given']='n_given';
+					case 'per_last_name':
+						$fields['n_family']='n_family';
+					default:
+						$fields[$fieldValue]=$fieldValue;
+				}
+			}
+			
+			// transform criteria from phpgw to egw structure
+			if(is_array($_criteria))
+			{
+				foreach($_criteria as $criteriaKey => $criteriaValue)
+				{
+					if($GLOBALS['phpgw_info']['server']['contact_repository'] == 'ldap')
+					{
+						switch($criteriaKey)
+						{
+							case 'contact_id':
+							$criteria['uid']=$criteriaValue;
+									break;
+							default:
+								$criteria[$criteriaKey] = $criteria[$criteriaValue];
+								break;
+						}
+					}
+					else
+					{
+						switch($criteriaKey)
+						{
+							case 'contact_id':
+							$criteria['id']=$criteriaValue;
+									break;
+							default:
+								$criteria[$criteriaKey] = $criteria[$criteriaValue];
+								break;
+						}
+					}
+				}
+			}
+			$entries = $this->read($start,$limit,$fields,$criteria,'',$sort,$orderby);
+			
+			// transform entries from egw to phpgw structure
+			if(is_array($entries))
+			{
+				foreach($entries as $entryKey => $entryValue)
+				{
+					$entryValue['per_first_name'] 	= $entryValue['n_given'];
+					$entryValue['per_last_name'] 	= $entryValue['n_family'];
+					$entryValue['contact_id']	= $entryValue['id'];
+					$entries[$entryKey]		= $entryValue;
+				}
+			}
+			return $entries;
+		}
+
 		function split_stock_and_extras($fields)
 		{
 			settype($fields, 'array');
