@@ -1274,7 +1274,7 @@
 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_msg tel_video varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_prefer tel_prefer varchar(32)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email email varchar(64)");
-		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_tyoe email_type varchar(32) DEFAULT 'INTERNET' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_type email_type varchar(32) DEFAULT 'INTERNET' NOT NULL");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_work email_home varchar(64)");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_home email_home_type varchar(32) DEFAULT 'INTERNET' NOT NULL");
 		$phpgw_setup->db->query("alter table phpgw_addressbook drop b_tel_prefer");
