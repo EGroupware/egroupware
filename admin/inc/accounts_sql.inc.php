@@ -184,16 +184,16 @@
      $phpgw->db->lock($table_locks);
 
      for ($i=0; $i<count($cal_id); $i++) {
-        $phpgw->db->query("delete from webcal_entry_repeats where cal_id='$cal_id[$i]'");
-        $phpgw->db->query("delete from webcal_entry_groups where cal_id='$cal_id[$i]'");
+        $phpgw->db->query("delete from webcal_entry_repeats where cal_id='".$cal_id[$i]."'");
+        $phpgw->db->query("delete from webcal_entry_groups where cal_id='".$cal_id[$i]."'");
      }
 
-     $phpgw->db->query("delete from webcal_entry where cal_create_by='$account_id'");
-     $phpgw->db->query("delete from webcal_entry_user where cal_login='$account_id'");
+     $phpgw->db->query("delete from webcal_entry where cal_create_by='".$account_id."'");
+     $phpgw->db->query("delete from webcal_entry_user where cal_login='".$account_id."'");
 
-     $phpgw->db->query("delete from todo where todo_owner='$account_id'");
-     $phpgw->db->query("delete from addressbook where ab_owner='$account_id'");
-     $phpgw->db->query("delete from accounts where account_lid='$account_id'");
+     $phpgw->db->query("delete from todo where todo_owner='".$account_id."'");
+     $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'");
+     $phpgw->db->query("delete from accounts where account_id='".$account_id."'");
      
      $phpgw->common->preferences_delete("all",$account_id);
 

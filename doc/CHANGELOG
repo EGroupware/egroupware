@@ -6,6 +6,7 @@
 		- Fixed a problem with the email folders only reporting back the number of messages
 		  in the INBOX regardless of which folder it is in.
 		- Added calendar day view to home page.
+		- Fixed problem with deletion of accounts.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
