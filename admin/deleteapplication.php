@@ -16,6 +16,8 @@
   if (! $app_name)
      Header("Location: " . $phpgw->link("applications.php"));
 
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
@@ -46,6 +48,6 @@
        </tr>
       </table>
      </center>
-     <?
+     <?php
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-
+     ?>     

@@ -15,6 +15,8 @@
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
@@ -27,8 +29,8 @@
         $error = lang("You must enter an application name and title.");
      } else {
         $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values('"
-			    . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
-			    . "$n_app_enabled')");
+			    . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "',"
+			    . "$n_app_enabled)");
 
         Header("Location: " . $phpgw->link("applications.php"));
         exit;
@@ -61,3 +63,4 @@
   $t->pparse("out","form");
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?>

@@ -16,6 +16,8 @@
   }
 
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.
@@ -53,7 +55,7 @@
   }
 
   if ($confirm) {
-     $phpgw->db->query("select loginid from accounts where con='$con'");
+     $phpgw->db->query("select loginid from accounts where con=$con");
      $phpgw->db->next_record();
      $lid = $phpgw->db->f(0);
 

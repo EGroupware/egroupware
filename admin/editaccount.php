@@ -14,6 +14,8 @@
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
 
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
   if (! $con)
      Header("Location: " . $phpgw->link("accounts.php"));
@@ -28,7 +30,7 @@
   }
 
   if ($submit) {
-    $phpgw->db->query("select loginid from accounts where con='$con'");
+    $phpgw->db->query("select loginid from accounts where con=$con");
     $phpgw->db->next_record();
     $lid = $phpgw->db->f("loginid");
 
@@ -113,11 +115,11 @@
   $phpgw->common->header();
   $phpgw->common->navbar();
   
-  $phpgw->db->query("select loginid from accounts where con='$con'");
+  $phpgw->db->query("select loginid from accounts where con=$con");
   $phpgw->db->next_record();
   $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
 
-  $phpgw->db->query("select * from accounts where con='$con'");
+  $phpgw->db->query("select * from accounts where con=$con");
   $phpgw->db->next_record();
   $account_status = $phpgw->db->f("status");
 ?>

@@ -15,6 +15,8 @@
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   
@@ -27,7 +29,7 @@
   $t->set_file(array("form"	=> "groups_form.tpl"));
 
   if ($submit) {
-     $phpgw->db->query("select group_name from groups where group_id='$group_id'");
+     $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
 
      $old_group_name = $phpgw->db->f("group_name");
@@ -45,7 +47,7 @@
         $phpgw->accounts->add_app($n_group_permissions);        
         $phpgw->db->query("update groups set group_name='$n_group', group_apps='"
 				    . $phpgw->accounts->add_app("",True)
-				    . "' where group_id='$group_id'");
+				    . "' where group_id=$group_id");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
 	   $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
@@ -100,7 +102,7 @@
         $selected_permissions[$n_group_permissions[$i]] = " selected";
      }
   } else {
-     $phpgw->db->query("select group_name from groups where group_id='$group_id'");
+     $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
 
      $t->set_var("group_name_value",$phpgw->db->f("group_name"));
@@ -118,7 +120,7 @@
      }
   }
 
-  $phpgw->db->query("select * from groups where group_id='$group_id'");
+  $phpgw->db->query("select * from groups where group_id=$group_id");
   $phpgw->db->next_record();
 
   $t->set_var("form_action",$phpgw->link("editgroup.php"));
@@ -143,8 +145,8 @@
      $user_list .= "<option value=\"" . $phpgw->db->f("con") . "\""
     	            . $selected_users[$phpgw->db->f("con")] . ">"
 	            . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
-								   		  $phpgw->db->f("firstname"),
-								   		  $phpgw->db->f("lastname")) . "</option>";
+						       $phpgw->db->f("firstname"),
+						       $phpgw->db->f("lastname")) . "</option>";
   }
   $t->set_var("user_list",$user_list);
 
@@ -162,3 +164,4 @@
   $t->pparse("out","form");
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?>
