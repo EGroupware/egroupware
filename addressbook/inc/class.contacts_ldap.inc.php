@@ -49,64 +49,69 @@
 			global $phpgw, $phpgw_info;
 
 			$this->db = $phpgw->db;
-			$this->ldap = $phpgw->common->ldapConnect([$phpgw_info['server']'ldap_contact_dn'],$phpgw_info['server']'ldap_contact_pw']);
+			$this->ldap = $phpgw->common->ldapConnect(
+				$phpgw_info['server']['ldap_contact_host'],
+				$phpgw_info['server']['ldap_contact_dn'],
+				$phpgw_info['server']['ldap_contact_pw']
+			);
 			$this->account_id = $phpgw_info["user"]["account_id"];
 
+			// The left side are the array elements used throughout phpgw, right side are the ldap attributes
     	    $this->stock_contact_fields = array(
-				"id"                     => "uidnumber",
-				"lid"                    => "uid",
-				"tid"                    => "phpgwcontacttyoe",
-				"owner"                  => "phpgwowner",
-				"fn"                     => "cn",        // 'prefix given middle family suffix'
-				"n_given"                => "givenname",   // firstname
-				"n_family"               => "sn",  // lastname
-				"n_middle"               => "middlename",
-				"n_prefix"               => "prefix",
-				"n_suffix"               => "suffix",
-				"sound"                  => "sound",
-				"bday"                   => "birthday",
-				"note"                   => "description",
-				"tz"                     => "tz",
-				"geo"                    => "geo",
-				"url"                    => "url",
-				"pubkey"                 => "pubkey",
+				"id"                  => "uidnumber",
+				"lid"                 => "uid",
+				"tid"                 => "phpgwcontacttype",
+				"owner"               => "phpgwowner",
+				"fn"                  => "cn",        // 'prefix given middle family suffix'
+				"n_given"             => "givenname",   // firstname
+				"n_family"            => "sn",  // lastname
+				"n_middle"            => "middlename",
+				"n_prefix"            => "prefix",
+				"n_suffix"            => "suffix",
+				"sound"               => "audio",
+				"bday"                => "birthday",
+				"note"                => "description",
+				"tz"                  => "tz",
+				"geo"                 => "geo",
+				"url"                 => "url",
+				"pubkey"              => "publickey",
 
-				"org_name"               => "o",  // company
-				"org_unit"               => "ou",  // division
-				"title"                  => "title",
+				"org_name"            => "o",  // company
+				"org_unit"            => "ou",  // division
+				"title"               => "title",
 
-				"adr_one_street"         => "street",
-				"adr_one_locality"       => "locality", 
-				"adr_one_region"         => "st", 
-				"adr_one_postalcode"     => "postalcode",
-				"adr_one_countryname"    => "countryname",
-				"adr_one_type"           => "adr_one_type", // address is domestic/intl/postal/parcel/work/home
-				"label"                  => "", // address label
+				"adr_one_street"      => "street",
+				"adr_one_locality"    => "locality", 
+				"adr_one_region"      => "st", 
+				"adr_one_postalcode"  => "postalcode",
+				"adr_one_countryname" => "countryname",
+				"adr_one_type"        => "phpgwadronetype", // address is domestic/intl/postal/parcel/work/home
+				"label"               => "phpgwaddresslabel", // address label
 
-				"adr_two_street"         => "adr_two_street",
-				"adr_two_locality"       => "adr_two_locality", 
-				"adr_two_region"         => "adr_two_region", 
-				"adr_two_postalcode"     => "adr_two_postalcode",
-				"adr_two_countryname"    => "adr_two_countryname",
-				"adr_two_type"           => "adr_two_type", // address is domestic/intl/postal/parcel/work/home
+				"adr_two_street"      => "phpgwadrtwostreet",
+				"adr_two_locality"    => "phpgwadrtwolocality", 
+				"adr_two_region"      => "phpgwadrtworegion", 
+				"adr_two_postalcode"  => "phpgwadrtwopostalcode",
+				"adr_two_countryname" => "phpgwadrtwocountryname",
+				"adr_two_type"        => "phpgwadrtwotype", // address is domestic/intl/postal/parcel/work/home
 
-				"tel_work"               => "telephonenumber",
-				"tel_home"               => "homephone",
-				"tel_voice"              => "voicephone",
-				"tel_fax"                => "facsimiletelephonenumber", 
-				"tel_msg"                => "msgphone",
-				"tel_cell"               => "cellphone",
-				"tel_pager"              => "pagerphone",
-				"tel_bbs"                => "bbsphone",
-				"tel_modem"              => "modemphone",
-				"tel_car"                => "carphone",
-				"tel_isdn"               => "isdnphone",
-				"tel_video"              => "videophone",
-				"tel_prefer"             => "preferphone", // home, work, voice, etc
-				"email"                  => "mail",
-				"email_type"             => "mail_type", //'INTERNET','CompuServe',etc...
-				"email_home"             => "mail_home",
-				"email_home_type"        => "mail_home_type" //'INTERNET','CompuServe',etc...
+				"tel_work"            => "telephonenumber",
+				"tel_home"            => "homephone",
+				"tel_voice"           => "voicetelephonenumber",
+				"tel_fax"             => "facsimiletelephonenumber", 
+				"tel_msg"             => "msgtelephonenumber",
+				"tel_cell"            => "cellphone",
+				"tel_pager"           => "pagertelephonenumber",
+				"tel_bbs"             => "bbstelephonenumber",
+				"tel_modem"           => "modemtelephonenumber",
+				"tel_car"             => "mobiletelephonenumber",
+				"tel_isdn"            => "isdnphonenumber",
+				"tel_video"           => "videophonenumber",
+				"tel_prefer"          => "preferphone", // home, work, voice, etc
+				"email"               => "mail",
+				"email_type"          => "mailtype", //'INTERNET','CompuServe',etc...
+				"email_home"          => "mailhome",
+				"email_home_type"     => "mailhometype" //'INTERNET','CompuServe',etc...
 			);
 
 			/* Used to flag an address as being:
@@ -188,7 +193,7 @@
 				}
 			}
 			if ($return_fields[0]["adr_two_type"]) {
-				$two_type = $return_fields[0]"adr_two_type"];
+				$two_type = $return_fields[0]["adr_two_type"];
 				reset($this->adr_types);
 				while (list($name,$val) = each($this->adr_types)) {
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
@@ -242,7 +247,7 @@
 				}
 			}
 			if ($return_fields[0]["adr_two_type"]) {
-				$two_type = $return_fields[0]"adr_two_type"];
+				$two_type = $return_fields[0]["adr_two_type"];
 				reset($this->adr_types);
 				while (list($name,$val) = each($this->adr_types)) {
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
@@ -439,15 +444,21 @@
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			if (!$ldap_fields[0]['dn'] {
-				$ldap_fields[0]['dn'] = 'uid=' . $id . ',' . $phpgw_info["server"]["ldap_contact_context"];
-				$ldap_fields[0]['phpgwowner'] = $owner;
-
+			if (!$ldap_fields[0]['dn'][0]) {
 				if (gettype($stock_fieldnames) == "array") {
 					while(list($name,$value)=each($stock_fieldnames)) {
 						$ldap_fields[0][$value][0] = $stock_fields[0][$name];
+						echo '<br>'.$ldap_fields[0][$value][0];
 					}
 				}
+
+				$time = gettimeofday();
+				$ldap_fields[0]['uid'][0] = time().$time["usec"].":".$ldap_fields[0]['givenname'][0];
+				$ldap_fields[0]['dn'][0] = 'uid=' . $ldap_fields[0]['uid'][0].',' . $phpgw_info["server"]["ldap_contact_context"];
+				$ldap_fields[0]['phpgwowner'][0] = $owner;
+				$ldap_fields[0]['uidnumber'][0] = $id;
+
+		echo $ldap_fields[0]['dn'][0]; exit;
 
 				$err = ldap_add($this->ldap, $ldap_fields[0]["dn"], $ldap_fields[0]);
 
