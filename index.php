@@ -156,7 +156,8 @@
     echo "<!-- Calendar info -->\n";
   } 
 
-
+  //$phpgw->common->debug_phpgw_info();
+  //$phpgw->common->debug_list_core_functions();
 ?>
 <TR><TD></TD></TR>
 </TABLE>
