@@ -183,7 +183,7 @@
 		*/
 		function return_single($id = '')
 		{
-			$this->db->query("select * from phpgw_categories where cat_id='$id'",__LINE__,__FILE__);
+			$this->db->query('select * from phpgw_categories where cat_id='.$id,__LINE__,__FILE__);
 
 			if ($this->db->next_record())
 			{
@@ -338,8 +338,8 @@
 				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
 			}
 
-			$cat_values['descr'] = addslashes($cat_values['descr']);
-			$cat_values['name']  = addslashes($cat_values['name']);
+			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
+			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
 			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
 							. "cat_description,cat_data,cat_main,cat_level) values ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access'] . "','"
@@ -391,8 +391,8 @@
 				$cat_values['level'] = 0;
 			}
 
-			$cat_values['descr'] = addslashes($cat_values['descr']);
-			$cat_values['name'] = addslashes($cat_values['name']);
+			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
+			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
 			$this->db->query("update phpgw_categories set cat_name='" . $cat_values['name'] . "', cat_description='"
 							. $cat_values['descr'] . "', cat_data='" . $cat_values['data'] . "', cat_parent='"
@@ -403,8 +403,16 @@
 
 		function name2id($cat_name)
 		{
-			$this->db->query("select cat_id from phpgw_categories where cat_name='"
-				. "$cat_name'",__LINE__,__FILE__);
+			$this->db->query('SELECT cat_id FROM phpgw_categories '
+				. "WHERE cat_name='".$cat_name."' AND "
+				. "cat_appname='".$this->app_name."' AND "
+				. "cat_owner=".$this->account_id,__LINE__,__FILE__);
+				
+			if(!$this->db->num_rows())
+			{
+				return 0;
+			}
+			
 			$this->db->next_record();
 
 			return $this->db->f('cat_id');
@@ -462,7 +470,7 @@
 
 			if ($cat_name)
 			{
-				$cat_exists = " cat_name='" . addslashes($cat_name) . "' "; 
+				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' "; 
 			}
 
 			if ($cat_id)
@@ -472,7 +480,7 @@
 
 			if ($cat_name && $cat_id)
 			{
-				$cat_exists = " cat_name='" . addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
+				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
 			}
 
 			$this->db->query("select count(cat_id) from phpgw_categories where $cat_exists $filter",__LINE__,__FILE__);
