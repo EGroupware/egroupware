@@ -164,6 +164,7 @@
 		// send this the id and whatever fields you want to see
 		function read_single_entry($id,$fields="")
 		{
+			global $phpgw_info;
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
