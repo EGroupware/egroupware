@@ -234,7 +234,13 @@
 		{
 			if (!is_array($this->charsets))
 			{
-				$this->db->query("SELECT DISTINCT l.lang,ln.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
+				$distinct = 'DISTINCT';
+				switch($this->db->Type)
+				{
+					case 'mssql':
+						$distinct = '';	// cant use distinct on text columns (l.content is text)
+				}
+				$this->db->query("SELECT $distinct l.lang,lx.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
 					return False;
@@ -242,8 +248,11 @@
 				while ($this->db->next_record())
 				{
 					$data = &$this->charsets[$charset = strtolower($this->db->f('charset'))];
-					$data .= ($data ? ', ' : $charset.': ').
-						$this->db->f('lang_name').' ('.$this->db->f('lang').')';
+					$lang = $this->db->f('lang_name').' ('.$this->db->f('lang').')';
+					if ($distinct || strstr($data,$lang) === false)
+					{
+						$data .= ($data ? ', ' : $charset.': ').$lang;
+					}						
 				}
 			}
 			return $this->charsets;
