@@ -30,26 +30,26 @@ var dhtmlMenu;
 //add more menus simply by adding more "blocks" of same code below
 
 dhtmlMenu = new NavBarMenu(60, 120);
-dhtmlMenu.addItem(new NavBarMenuItem("Home", "{webserver_url}/"));
+dhtmlMenu.addItem(new NavBarMenuItem("Home", "{home}"));
 myNavBar1.addMenu(dhtmlMenu);
 
 dhtmlMenu = new NavBarMenu(60, 140);
 dhtmlMenu.addItem(new NavBarMenuItem("Edit", ""));
-dhtmlMenu.addItem(new NavBarMenuItem("Add new Appointment", "{webserver_url}/calendar/day.php"));
-dhtmlMenu.addItem(new NavBarMenuItem("Add new Todo", "{webserver_url}/todo/add.php"));
+dhtmlMenu.addItem(new NavBarMenuItem("Add new Appointment", "{appt}"));
+dhtmlMenu.addItem(new NavBarMenuItem("Add new Todo", "{todo}"));
 myNavBar1.addMenu(dhtmlMenu);
 
 dhtmlMenu = new NavBarMenu(125, 140);
 dhtmlMenu.addItem(new NavBarMenuItem("Preferences", ""));
-dhtmlMenu.addItem(new NavBarMenuItem("General", "{webserver_url}/preferences"));
-dhtmlMenu.addItem(new NavBarMenuItem("Email", "{webserver_url}/email/preferences.php"));
-dhtmlMenu.addItem(new NavBarMenuItem("Calendar", "{webserver_url}/calendar/preferences.php"));
-dhtmlMenu.addItem(new NavBarMenuItem("Addressbook", "{webserver_url}/addressbook/preferences.php"));
+dhtmlMenu.addItem(new NavBarMenuItem("General", "{prefs}"));
+dhtmlMenu.addItem(new NavBarMenuItem("Email", "{email}"));
+dhtmlMenu.addItem(new NavBarMenuItem("Calendar", "{calendar}"));
+dhtmlMenu.addItem(new NavBarMenuItem("Addressbook", "{addressbook}"));
 myNavBar1.addMenu(dhtmlMenu);
 
 dhtmlMenu = new NavBarMenu(62, 120);
 dhtmlMenu.addItem(new NavBarMenuItem("Help", ""));
-dhtmlMenu.addItem(new NavBarMenuItem("General", "/"));
+dhtmlMenu.addItem(new NavBarMenuItem("General", ""));
 myNavBar1.addMenu(dhtmlMenu);
 
 //set menu colors
