@@ -160,7 +160,7 @@
 			while(!feof($f))
 			{
 				$line = trim(fgets($f)); ++$n;
-echo "$n: $line<br>";
+
 				if (empty($line)) continue;
 				
 				if (substr($line,0,9) == 'charset: ')
