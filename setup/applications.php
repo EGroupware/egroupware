@@ -28,7 +28,7 @@
 	);
 	include ('./inc/functions.inc.php');
 
-	set_time_limit(0);
+	@set_time_limit(0);
 
 	// Check header and authentication
 	if (!$GLOBALS['phpgw_setup']->auth('Config'))
