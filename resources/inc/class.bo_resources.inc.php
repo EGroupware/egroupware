@@ -26,6 +26,7 @@ class bo_resources
 		$this->acl = CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
 		$this->vfs = CreateObject('phpgwapi.vfs');
+		$this->link = CreateObject('infolog.bolink');
 	}
 
 	/*!
@@ -112,7 +113,7 @@ class bo_resources
 			return lang('You are not permitted to edit this reource!');
 		}
 		
-		// we need an id to save pictures
+		// we need an id to save pictures and make links...
 		if(!$resource['id'])
 		{
 			$resource['id'] = $this->so->save($resource);
@@ -158,6 +159,12 @@ class bo_resources
 		if($resource['picture_src'] != 'own_src')
 		{
 			$this->remove_picture($resource['id']);
+		}
+
+		// save links
+		if(is_array($resource['link_to']['to_id']))
+		{
+			$this->link->link('resources',$resource['id'],$resource['link_to']['to_id']);
 		}
 		
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');

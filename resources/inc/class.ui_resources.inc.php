@@ -89,62 +89,64 @@ class ui_resources
 
 	/*!
 		@function edit
+		@syntax edit($content=0)
+		@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@abstract invokes add or edit dialog for resources
-		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
-		@param mixed $content int for resource_id to edit ( 0 for new ). array if callback from dialog.
-		@param string $msg message to display on top of dialog
+		@param $content   Content from the eTemplate Exec call or id on inital call
 	*/
-	function edit($content='',$msg='')
+	function edit($content=0)
 	{
+		if (is_array($content))
+		{
+			if(isset($content['save']) || isset($content['delete']))
+			{
+				if(isset($content['save']))
+				{
+					unset($content['save']);
+					if($content['id'] != 0)
+					{
+						// links are already saved by eTemplate
+						unset($resource['link_to']['to_id']);
+					}
+					$content['msg'] = $this->bo->save($content);
+				}
+				if(isset($content['delete']))
+				{
+					unset($content['delete']);
+					$content['msg'] = $this->delete($content['id']);
+				}
+				return $content['msg'] ? $this->edit($content) : $this->index();
+			}
+			elseif($content['cancel'])
+			{
+				return $this->index();
+			}
+		}
+		else
+		{
+			$resource_id = $content;
+			$content = array('resource_id' => $resource_id);
+			
+			if ($resource_id > 0)
+			{
+				$content = $this->bo->read($resource_id);
+				$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
+				$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
+				$content['link_to'] = array(
+					'to_id' => $resource_id,
+					'to_app' => 'resources'
+				);
+// 				$sel_options += array('acc_list' => $this->bo->get_acc_list($resource_id));
+			}
+			
+			$content['resource_picture'] = $this->bo->get_picture($resource_id,$content['picture_src'],$size=true);
+		}	
 		$sel_options = array(
 				'cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD),
 				'gen_src_list' => $this->bo->get_genpicturelist()
 		);
-		$no_button = array();
-		
-		if (is_array($content))
-		{
-			if(isset($content['delete']))
-			{
-				return $this->delete($content['id']);
-			}
-			if(isset($content['save']))
-			{
-				if(!$content['cat_id'] || !$content['name'])
-				{
-					$content['msg'] = lang('You need to choose at least a name and a category!');
-					$this->tmpl->read('resources.edit');
-					$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button);
-					return;
-				}
-				
-				$content['msg'] = $this->bo->save($content);
-				if($content['msg'])
-				{
-					$this->tmpl->read('resources.edit');
-					$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button);
-				}
-			}
-			return $this->index();
-		}
-		
-		if ($content > 0)
-		{
-			$preserv = array('id' => $content);
-			$content = $this->bo->read($content);
-			$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
-			$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
-			$content['link_id'] = $content;
-			$sel_options += array('acc_list' => $this->bo->get_acc_list($content['id']));
-			
-		}
-		else
-		{
-			$content = array();
-		}
-		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
-		$content['msg'] = $msg;
-		$preserv = (array)$preserv + $content; // debug for eTemplate tabs don't know if really needed atm.
+		$no_button = array(); // TODO: show delete button only if allowed to delete resource
+		$preserv = $content;
 		$this->tmpl->read('resources.edit');
 		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv);
 		
