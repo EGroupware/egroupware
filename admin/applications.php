@@ -23,11 +23,24 @@
 	$p->set_block('applications','list','list');
 	$p->set_block('applications','row','row');
 
-	$applications = array();
-
 	$offset = $phpgw_info['user']['preferences']['common']['maxmatchs'];
 
-	$apps = $phpgw_info['apps'];
+	$phpgw->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+	if($phpgw->db->num_rows())
+	{
+		while ($phpgw->db->next_record())
+		{
+			$name   = $phpgw->db->f('app_name');
+			$title  = $phpgw->db->f('app_title');
+			$status = $phpgw->db->f('app_enabled');
+			$apps[$name] = array(
+				'title'  => $title,
+				'name'   => $name,
+				'status' => $status
+			);
+		}
+	}
+	@reset($apps);
 	$total = count($apps);
 
 	if(!$sort)
@@ -66,20 +79,14 @@
 	{
 		$limit = $total;
 	}
-/*
-	echo 'START: ' . $start;
-	echo 'LIMIT: ' . $limit;
-	echo 'TOTAL: ' . $total;
-*/
+
 	$i = 0;
+	$applications = array();
 	while(list($app,$data) = @each($apps))
 	{
 		if($i >= $start && $i<= $limit)
 		{
-			if ($data['status'] < 3)
-			{
-				$applications[$app] = $data;
-			}
+			$applications[$app] = $data;
 		}
 		$i++;
 	}
@@ -88,10 +95,17 @@
 	$p->set_var('bg_color',$phpgw_info['theme']['bg_color']);
 	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-	$p->set_var('sort_title',$phpgw->nextmatchs->show_sort_order($sort,'app_title','app_title','/admin/applications.php',lang('Title')));
+	$p->set_var('sort_title',$phpgw->nextmatchs->show_sort_order($sort,'title','title','/admin/applications.php',lang('Title')));
+	$p->set_var('lang_showing',$phpgw->nextmatchs->show_hits($total,$start));
+	$p->set_var('left',$phpgw->nextmatchs->left('/admin/applications.php',$start,$total));
+	$p->set_var('right',$phpgw->nextmatchs->right('/admin/applications.php',$start,$total));
+
 	$p->set_var('lang_edit',lang('Edit'));
 	$p->set_var('lang_delete',lang('Delete'));
 	$p->set_var('lang_enabled',lang('Enabled'));
+
+	$p->set_var('new_action',$phpgw->link('/admin/newapplication.php'));
+	$p->set_var('lang_add',lang('add'));
 
 	@reset($applications);
 	while (list($key,$app) = @each($applications))
@@ -130,33 +144,7 @@
 		$p->parse('rows','row',True);
 	}
 
-	if (($start + $limit) > $total)
-	{
-		$lang_showing = lang('showing x - x of x',($start + 1),$limit,$total);
-	}
-	elseif ($total > $limit)
-	{
-		$lang_showing=lang('showing x - x of x',($start + 1),($start + $limit),$total);
-	}
-	else
-	{
-		$lang_showing=lang('showing x',$total);
-	}
-	$p->set_var('lang_showing',$lang_showing);
-
-	$left = $phpgw->nextmatchs->left('/admin/applications.php',$start,$total);
-	$right = $phpgw->nextmatchs->right('/admin/applications.php',$start,$total);
-	$p->set_var('left',$left);
-	$p->set_var('right',$right);
-
-	$p->set_var('new_action',$phpgw->link('/admin/newapplication.php'));
-	$p->set_var('lang_add',lang('add'));
-
 	$p->pparse('out','list');
-/*
-	echo '<pre>';
-	print_r($applications);
-	echo '</pre>';
-*/
+
 	$phpgw->common->phpgw_footer();
 ?>
