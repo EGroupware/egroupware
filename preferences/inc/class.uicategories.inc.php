@@ -70,7 +70,6 @@
 			$GLOBALS['phpgw']->template->set_var('user_name',$this->user);
 			$GLOBALS['phpgw']->template->set_var('lang_search',lang('Search'));
 			$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
-			$GLOBALS['phpgw']->template->set_var('lang_done',lang('done'));
 			$GLOBALS['phpgw']->template->set_var('lang_sub',lang('Add sub'));
 			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
 			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
@@ -288,11 +287,6 @@
 				'cats_level'  => $cats_level
 			);
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Add %1 category for',
-				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
-
 			$new_parent      = $_POST['new_parent'];
 			$cat_parent      = get_var('cat_parent',array('POST','GET'));
 			$cat_name        = $_POST['cat_name'];
@@ -338,9 +332,14 @@
 				else
 				{
 					$this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been added !', $cat_name));
+					return $this->index();
+					//$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been added !', $cat_name));
 				}
 			}
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Add %1 category for',
+				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
@@ -403,11 +402,6 @@
 				$GLOBALS['phpgw']->link_redirect('/index.php',$link_data);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Edit %1 category for',
-				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
-
 			$new_parent			= $_POST['new_parent'];
 			$cat_parent			= $_POST['cat_parent'];
 			$cat_name			= $_POST['cat_name'];
@@ -457,9 +451,15 @@
 				else
 				{
 					$cat_id = $this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been updated !',$cat_name));
+					return $this->index();
+					//$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been updated !',$cat_name));
 				}
 			}
+
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Edit %1 category for',
+				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 
 			$cats = $this->bo->cats->return_single($cat_id);
 

@@ -56,11 +56,12 @@
 				<input type="submit" value="{lang_add}">
 			</form>
 		</td>
-		<td align="right">
+		<td>
 			<form method="POST" action="{doneurl}">
-				<input type="submit" name="done" value="{lang_done}">
+				<input type="submit" name="done" value="{lang_cancel}">
 			</form>
 		</td>
+		<td width="80%">&nbsp;</td>
 	</tr>
 </table>
 

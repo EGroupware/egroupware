@@ -32,8 +32,8 @@
 <!-- BEGIN add -->
 
 	<tr valign="bottom" height="50">
-		<td colspan="2"><input type="submit" name="save" value="{lang_save}"></form></td>
-		<td align="right"><form method="POST" action="{cancel_url}">
+		<td><input type="submit" name="save" value="{lang_save}"></form></td>
+		<td><form method="POST" action="{cancel_url}">
 			<input type="submit" name="cancel" value="{lang_cancel}"></form></td>
 	</tr>
 </table>
