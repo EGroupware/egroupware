@@ -335,15 +335,18 @@
     }
 
     function add($app, $location, $id, $id_type, $rights){
-    }
-
-    function edit($app, $location, $id, $id_type, $rights){
-    }
-
-    function replace($app, $location, $id, $id_type, $rights){
+      $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+      $sql .= " values('".$app."', '".$location."', ".$id.", '".$id_type."', ".$rights.")";
+      $phpgw->db->query($sql ,__LINE__,__FILE__);
+      return True;
     }
 
     function delete($app, $location, $id, $id_type){
+      $sql = "delete from phpgw_acl where acl_appname='".$app."'";
+      $sql .= " and acl_location ='".$location."' and ";
+      $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id.")";
+      $phpgw->db->query($sql ,__LINE__,__FILE__);
+      return True;
     }
 
     function view($app, $location, $id, $id_type){
