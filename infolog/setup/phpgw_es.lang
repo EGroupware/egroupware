@@ -120,7 +120,7 @@ infolog - new	infolog	es	Registro - Nuevo
 infolog - new subproject	infolog	es	Registro - Nuevo subproyecto
 infolog - subprojects from	infolog	es	Registro - Subproyectos de
 infolog preferences	common	es	Preferencias del registro
-infolog-fieldname	infolog	es	Info Log - Nombre del Campo
+infolog-fieldname	infolog	es	Registro - Nombre del Campo
 invalid filename	infolog	es	El nombre de archivo no es válido
 label<br>helptext	infolog	es	Marca<br>Texto de ayuda
 last changed	infolog	es	último cambio
@@ -254,4 +254,4 @@ you can\'t delete one of the stock types !!!	infolog	es	¡¡No puede borrar uno de
 you have entered an invalid ending date	infolog	es	Ha introducido una fecha de finalización que no es válida
 you have entered an invalid starting date	infolog	es	Ha introducido una fecha de inicio que no es válida
 you have to enter a name, to create a new typ!!!	infolog	es	¡Debe introducir un nombre para crear un tipo nuevo!
-you must enter a subject or a description	infolog	es	Debe introducir un asunto o descripcion
+you must enter a subject or a description	infolog	es	Debe introducir un asunto o descripción
