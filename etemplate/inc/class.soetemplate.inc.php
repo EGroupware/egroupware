@@ -158,6 +158,10 @@
 		{
 			$this->init($name,$template,$lang,$group,$version);
 
+			if ($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' && $this->readfile())
+			{
+				return True;
+			}
 			if ($this->name)
 			{
 				$this->test_import($this->name);	// import updates in setup-dir
@@ -203,6 +207,43 @@
 				return False;
 			}
 			$this->db2obj();
+
+			return True;
+		}
+
+		/*!
+		@function readfile
+		@abstract Reads an eTemplate from the filesystem, the keys are already set by init in read
+		@result True if a template is found, else False
+		*/
+		function readfile()
+		{
+			list($app,$name) = split("\.",$this->name,2);
+			$template = $this->template == '' ? 'default' : $this->template;
+			$file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name";
+			if ($this->lang)
+			{
+				$file .= '.' . $this->lang;
+			}
+			$file .= '.xul';
+
+			if (!is_readable($file) || !($f = fopen($file,'r')))
+			{
+				//echo "<p>Can't open '$file' !!!</p>\n";
+				return False;
+			}
+			$xul = fread ($f, filesize ($file));
+			fclose($f);
+
+			if (!is_object($this->xul_io))
+			{
+				$this->xul_io = CreateObject('etemplate.xul_io');
+			}
+			if ($this->xul_io->import(&$this,$xul) != '')
+			{
+				return False;
+			}
+			$this->name = $app . '.' . $name;	// if template was copied or app was renamed
 
 			return True;
 		}

@@ -404,7 +404,7 @@
 			{
 				mkdir($dir .= "/$template");
 			}
-			$file = "$dir/$name";
+			$file = $dir . '/' . substr($name,strlen($app)+1);
 			if ($this->etemplate->lang)
 			{
 				$file .= '.' . $this->etemplate->lang;
@@ -420,8 +420,11 @@
 			{
 				return 0;
 			}
-			$xul_io = CreateObject('etemplate.xul_io');
-			$xul = $xul_io->export(&$this->etemplate);
+			if (!is_object($this->etemplate->xul_io))
+			{
+				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+			}
+			$xul = $this->etemplate->xul_io->export(&$this->etemplate);
 
 			fwrite($f,$xul);
 			fclose($f);
@@ -438,8 +441,11 @@
 			$xul = fread ($f, filesize ($file));
 			fclose($f);
 
-			$xul_io = CreateObject('etemplate.xul_io');
-			$msg = $xul_io->import(&$this->etemplate,$xul);
+			if (!is_object($this->etemplate->xul_io))
+			{
+				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+			}
+			$msg = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
 
 			if (!$msg)
 			{
