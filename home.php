@@ -100,8 +100,10 @@
 		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
 			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+#			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
+#			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 		}
 		else
 		{
@@ -195,7 +197,7 @@
 	//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
 	echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
 
-	$GLOBALS['phpgw']->common->hook('home',array('email','calendar','news','addressbook'));
+	$GLOBALS['phpgw']->common->hook('home',array('email','calendar','news','addressbook','squirrelmail'));
 
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
