@@ -445,10 +445,10 @@
        } else {
           $app = $phpgw_info["flags"]["currentapp"];
        }
-       $phpgw_info["navbar"]["about"]["title"] = lang("About x",$about);    // We handle this here
+       $phpgw_info["navbar"]["about"]["title"] = lang("About x",$app);      // We handle this here
                                                                             // becuase its special
        $phpgw_info["navbar"]["about"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                               . "/about.php");
+                                               . "/about.php","app=$app");
        $phpgw_info["navbar"]["about"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
                                                . $phpgw_info["server"]["template_set"] . "/images/about.gif";
 
