@@ -99,6 +99,19 @@
 		function vfs ()
 		{
 			$this->basedir = $GLOBALS['phpgw_info']['server']['files_dir'];
+
+			// test if the files-dir is inside the document-root, and refuse working if so
+			//
+			if (strstr($this->basedir,PHPGW_SERVER_ROOT) || strstr($this->basedir,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']))
+			{
+				$GLOBALS['phpgw']->common->phpgw_header();
+				if ($GLOBALS['phpgw_info']['flags']['noheader']) 
+				{
+					echo parse_navbar();
+				}
+				echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
 			$this->fakebase = "/home";
 			$this->working_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->working_lid = $GLOBALS['phpgw']->accounts->id2name($this->working_id);
