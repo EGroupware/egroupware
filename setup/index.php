@@ -65,6 +65,7 @@
     exit;
   }
 
+//$phpgw_setup->app_status();
   $phpgw_info["server"]["app_images"] = "templates/default/images";
 
   echo "<table border=\"1\" width=\"100%\" cellspacing=\"0\" cellpadding=\"2\">";

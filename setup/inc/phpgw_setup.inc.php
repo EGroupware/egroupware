@@ -308,21 +308,44 @@
       }
       $d->close();
     }
+
+    function app_status($appname = ""){
+      global $phpgw_info;
+      $this->execute_script("version");
+      reset ($phpgw_info["server"]["versions"]);
+
+      $this->db->query("select * from applications");
+      while ($this->db->next_record()){
+        $phpgw_info["server"]["current_versions"][$this->db->f("app_name")] = $this->db->f("app_version");
+      }
+      while (list($key, $value) = each ($phpgw_info["server"]["versions"])){
+        if ($key != "header" && $key != "current_header" && $key != "" && $key != "mcrypt"){
+          if (!isset($phpgw_info["server"]["current_versions"][$key])){
+            $phpgw_info["server"]["current_versions"][$key] = "new";
+            $phpgw_info["setup"][$key]["status"] = "new";
+          }elseif ($value != $phpgw_info["server"]["current_versions"][$key]){
+              $phpgw_info["setup"][$key]["status"] = "upgrade";
+          }else{
+              $phpgw_info["setup"][$key]["status"] = "current";
+          }
+echo "phpgw_info[setup][$key][status]: ".$phpgw_info["setup"][$key]["status"]."<br>";
+        }
+      }
+
+    }
   
     function execute_script($script, $appname = ""){
       global $phpgw_info, $phpgw_domain;
       if ($appname == ""){
         $d = dir($phpgw_info["server"]["server_root"]);
         while($entry=$d->read()) {
-          $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/version.inc.php";
-          if (file_exists ($f)){
-            include($f);
+          if ($script == "version"){
+            $f = $phpgw_info["server"]["server_root"]."/".$entry."/version.inc.php";
+            if (file_exists ($f)){include($f); }
           }else{
-            $phpgw_info["server"]["versions"][$entry] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
+            $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
+            if (file_exists ($f)){include($f);}
           }
-  
-          $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
-          if (file_exists ($f)){include($f);}
         }
         $d->close();
       }else{
@@ -337,7 +360,7 @@
       $this->db->query("update applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where app_name='".$appname."'");
     }
   
-    function manage_tables(){
+    function manage_tables($appname=""){
       global $phpgw_domain, $phpgw_info;
       if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "drop"){
         $this->execute_script("droptables");
