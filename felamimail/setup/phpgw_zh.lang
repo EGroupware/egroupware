@@ -1,0 +1,382 @@
+(no subject)	felamimail	zh	(无主题)
+(only Cc/Bcc)	felamimail	zh	(仅抄送/暗送)
+(unknown sender)	felamimail	zh	(未知发件人)
+ACLfri	felamimail	zh	五
+activate	felamimail	zh	激活
+activate script	felamimail	zh	激活脚本
+add	felamimail	zh	添加
+add address	felamimail	zh	添加地址
+add rule	felamimail	zh	添加规则
+add script	felamimail	zh	添加脚本
+add to %1	felamimail	zh	添加至%1
+add to address book	felamimail	zh	添加至通讯录
+add to addressbook	felamimail	zh	添加至通讯录
+additional info	felamimail	zh	附加信息
+address book	felamimail	zh	通讯录
+address book search	felamimail	zh	查找通讯录
+after message body	felamimail	zh	在邮件内容后
+all address books	felamimail	zh	所有通讯录
+all folders	felamimail	zh	所有邮件夹
+always show html emails	felamimail	zh	总是显示HTML邮件
+anyone	felamimail	zh	任何人
+as a subfolder of	felamimail	zh	作为该邮件夹的子邮件夹
+attachments	felamimail	zh	附件
+auto refresh folder list	felamimail	zh	自动刷新邮件夹列表
+back to folder	felamimail	zh	返回邮件夹
+bad reque	felamimail	zh	无效请求
+based upon given criteria, incoming messages can have different background colors in the message list.  This helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	zh	根据给定标准, 邮件列表中的到达邮件可以使用不同的背景颜色. 该设定有助于区分邮件发送者, 这在邮件列表中尤有助益.
+bcc	felamimail	zh	暗送
+before headers	felamimail	zh	在邮件头部前
+between headers and message body	felamimail	zh	在邮件头部和内容之间
+body part	felamimail	zh	內容部份
+can't connect to inbox!!	felamimail	zh	无法连结收件箱！
+cc	felamimail	zh	抄送
+change folder	felamimail	zh	更改邮件夹
+checkbox	felamimail	zh	复选框
+click here to log back in.	felamimail	zh	点击此处重新登录.
+click here to return to %1	felamimail	zh	点击此处返回%1
+close all	felamimail	zh	关闭全部
+close this page	felamimail	zh	关闭该页面
+close window	felamimail	zh	关闭窗口
+color	felamimail	zh	颜色
+compose	felamimail	zh	撰写
+configuration	felamimail	zh	全局配置
+contains	felamimail	zh	包含
+compress folder	felamimail	zh	压缩邮件夹
+create	felamimail	zh	创建
+create folder	felamimail	zh	创建邮件夹
+create sent	felamimail	zh	创建发件箱
+create subfolder	felamimail	zh	创建子邮件夹
+create trash	felamimail	zh	创建回收站
+created folder successfully!	felamimail	zh	邮件夹创建成功!
+dark blue	felamimail	zh	暗蓝色
+dark cyan	felamimail	zh	暗青色
+dark gray	felamimail	zh	暗灰色
+dark green	felamimail	zh	暗绿色
+dark magenta	felamimail	zh	暗紫色
+dark yellow	felamimail	zh	暗黄色
+date	felamimail	zh	日期
+date(newest first)	felamimail	zh	日期 (最近邮件优先)
+date(oldest first)	felamimail	zh	日期 (最早邮件优先)
+deactivate script	felamimail	zh	停用脚本
+Default sorting order	felamimail	zh	默认排序方式
+delete	felamimail	zh	删除
+delete all	felamimail	zh	全部删除
+delete folder	felamimail	zh	删除邮件夹
+delete selected	felamimail	zh	删除选定
+delete selected messages	felamimail	zh	删除选定邮件
+deleted	felamimail	zh	已删除
+deleted folder successfully!	felamimail	zh	邮件夹删除成功!
+disable	felamimail	zh	禁用
+display message in new window	felamimail	zh	打开新窗口以查看邮件
+display of html emails	felamimail	zh	显示HTML邮件
+display only when no plain text is available	felamimail	zh	仅当邮件非纯文本时显示
+display preferences	felamimail	zh	显示个性化配置
+do it!	felamimail	zh	就这么办!
+do not use sent	felamimail	zh	不使用发件箱
+do not use trash	felamimail	zh	不使用回收站
+do you really want to delete the '%1' folder?	felamimail	zh	确定要删除邮件夹'%1'吗?
+don't use sent	felamimail	zh	不使用发件箱
+don't use trash	felamimail	zh	不使用回收站
+does not contain	felamimail	zh	不包含
+does not match	felamimail	zh	不符合
+does not match regexp	felamimail	zh	不符合条件
+done	felamimail	zh	完成
+down	felamimail	zh	down
+download	felamimail	zh	下载
+download this as a file	felamimail	zh	作为文件下载
+e-mail	felamimail	zh	电子邮件
+e-mail address	felamimail	zh	邮件地址
+edit rule	felamimail	zh	编辑规则
+enable	felamimail	zh	启用
+enter your default mail domain ( from: user@domain )	admin	zh	输入您的默认邮件域
+enter your smtp server hostname or ip address	admin	zh	输入您的SMTP服务器的主机名或者IP地址
+enter your smtp server port	admin	zh	输入您的SMTP服务器的端口
+EMail Address	felamimail	zh	邮件地址
+Email Header	felamimail	zh	邮件头
+e-mail folders	felamimail	zh	邮件夹
+edit	felamimail	zh	编辑
+edit filter	felamimail	zh	编辑过滤器
+edit selected	felamimail	zh	编辑选定
+email signature	felamimail	zh	签名档
+empty trash	felamimail	zh	清空回收站
+Enter your IMAP mail server hostname or IP address	admin	zh	请输入IMAP邮件服务器主机名或IP地址
+Enter your SIEVE server hostname or IP address	admin	zh	请输入过滤服务器主机名或IP地址
+Enter your SIEVE server port	admin	zh	请输入过滤服务器端口
+erro	felamimail	zh	错误
+error	felamimail	zh	错误
+error connecting to IMAP serv	felamimail	zh	连接IMAP服务器时出错
+error opening 	felamimail	zh	打开错误
+expunge	felamimail	zh	擦除
+felamimail	common	zh	哆啦咪快邮
+file into	felamimail	zh	文件加入
+files	felamimail	zh	文件
+filter active	felamimail	zh	启用过滤器
+filter name	felamimail	zh	过滤器名称
+first name	felamimail	zh	名字
+flagged	felamimail	zh	已标记
+flags	felamimail	zh	标记
+folder acl	felamimail	zh	邮件夹权限
+folder name	felamimail	zh	邮件夹名称
+foldername	felamimail	zh	邮件夹名称
+folder path	felamimail	zh	邮件夹路径
+folder preferences	felamimail	zh	邮件夹个性化配置
+folder settings	felamimail	zh	邮件夹配置
+folder status	felamimail	zh	邮件夹状态
+folderlist	felamimail	zh	邮件夹列表
+folders	felamimail	zh	邮件夹
+folders created successfully!	felamimail	zh	邮件夹创建成功!
+follow	felamimail	zh	follow
+for mail to be send - not functional yet	felamimail	zh	For mail to be send - not functional yet
+for received mail	felamimail	zh	For received mail
+forward	felamimail	zh	转发
+found	felamimail	zh	Found
+from	felamimail	zh	发件人
+from(A->Z)	felamimail	zh	发件人 (按字母升序排列)
+from(Z->A)	felamimail	zh	发件人 (按字母降序排列)
+full name	felamimail	zh	姓名
+Have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about Squirrelmail.<br>	felamimail	zh	请访问网站<a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>以了解Squirrelmail详情.<br>
+Header Lines	felamimail	zh	邮件头
+help	felamimail	zh	显示提示信息
+hide header	felamimail	zh	隐藏邮件头部
+html	felamimail	zh	HTML
+Icons and text	felamimail	zh	显示图标和文字
+Icons only	felamimail	zh	只显示图标
+identifying name	felamimail	zh	正在识别名称
+if	felamimail	zh	如果
+illegal folder name.  please select a different name.	felamimail	zh	邮件夹名称无效. 请指定其他名称.
+imap	felamimail	zh	IMAP
+IMAP Server	felamimail	zh	IMAP服务器
+imap server address	felamimail	zh	IMAP服务器主机名或地址
+imap server type	felamimail	zh	IMAP服务器类型
+imaps authentication	felamimail	zh	支持身份验证的IMAPS服务器
+imaps encryption only	felamimail	zh	仅支持加密的IMAPS服务器
+in	felamimail	zh	收件箱
+in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	zh	欲使用SquirrelMail提供的完整选项, 请创建下列邮件夹. 方法：选中复选框并点击创建按钮.
+in the center	felamimail	zh	居中
+index order	felamimail	zh	索引顺序
+info	felamimail	zh	信息
+invalid user name or password	felamimail	zh	用户名或密码无效
+javaScript	felamimail	zh	JavaScript
+language	felamimail	zh	语言
+last name	felamimail	zh	姓氏
+left	felamimail	zh	左对齐
+less	felamimail	zh	少于
+let this folder contain subfolders	felamimail	zh	使该邮件夹包含子邮件夹
+light blue	felamimail	zh	亮蓝色
+light cyan	felamimail	zh	亮青色
+light gray	felamimail	zh	亮灰色
+light green	felamimail	zh	亮绿色
+light magenta	felamimail	zh	亮紫色
+light yellow	felamimail	zh	亮黄色
+list all	felamimail	zh	全部列出
+location of buttons when composing	felamimail	zh	撰写邮件时按钮位置
+location of folder list	felamimail	zh	邮件夹列表位置
+mail server login type	admin	zh	邮件服务器登陆类型
+mail settings	felamimail	zh	邮件配置
+mainmessage	felamimail	zh	邮件内容
+manage folders	felamimail	zh	邮件夹管理
+manage folders	preferences	zh	邮件夹管理
+Manage Sieve	felamimail	zh	邮件过滤器
+Manage Sieve	preferences	zh	邮件过滤器
+mark as deleted	felamimail	zh	标记为已删除
+mark messages as	felamimail	zh	将选定邮件标记为
+mark selected as flagged	felamimail	zh	标记选定邮件
+mark selected as read	felamimail	zh	将选定邮件标记为已读
+mark selected as unflagged	felamimail	zh	清除选定邮件标记
+mark selected as unread	felamimail	zh	将选定邮件标记为未读
+Match	felamimail	zh	符合
+matches	felamimail	zh	符合
+matches regexp	felamimail	zh	符合规则
+Medium Gray	felamimail	zh	灰色
+Message Highlighting	felamimail	zh	高亮显示邮件
+Message List	felamimail	zh	邮件列表
+messages	felamimail	zh	邮件
+message	felamimail	zh	内容
+mon	felamimail	zh	一
+Minute	felamimail	zh	分钟
+Minutes	felamimail	zh	分钟
+more	felamimail	zh	更多
+move	felamimail	zh	移动
+move messages	felamimail	zh	移动邮件
+move selected to	felamimail	zh	将选定邮件移至
+move to trash	felamimail	zh	移动至回收站
+Must be unique	felamimail	zh	必须唯一
+Name	felamimail	zh	名称
+never display html emails	felamimail	zh	不显示HTML邮件
+New	felamimail	zh	未读
+new filter	felamimail	zh	新建过滤器
+Next	felamimail	zh	下一封
+next message	felamimail	zh	下一封邮件
+Nickname	felamimail	zh	昵称
+no filter	felamimail	zh	无过滤器
+No folders found	felamimail	zh	未发现邮件夹
+No folders were found to subscribe to!	felamimail	zh	No folders were found to subscribe to!
+No folders were found to unsubscribe from!	felamimail	zh	No folders were found to unsubscribe from!
+No highlighting is defined	felamimail	zh	未定义高亮显示
+No messages were selected.	felamimail	zh	未选定任何邮件.
+no next Message	felamimail	zh	已到达最后一封邮件
+No notification	felamimail	zh	无通知
+No personal address book is defined. Contact administrator.	felamimail	zh	未定义个人通讯录. 联系人管理员.
+No persons matching your search was found	felamimail	zh	未找到符合条件的联系人
+no previous Message	felamimail	zh	已到达第一封邮件
+no valid emailprofile selected!!	felamimail	zh	指定的邮件帐户无效!!
+none	felamimail	zh	none
+Number of Messages to Index	felamimail	zh	待编号邮件数
+on behalf of	felamimail	zh	代表
+Only INBOX	felamimail	zh	仅收件箱
+Only unseen	felamimail	zh	仅未读邮件
+open all	felamimail	zh	全部打开
+Options	felamimail	zh	选项
+organization	felamimail	zh	组织
+Organization name	admin	zh	组织名称
+Oth	felamimail	zh	Oth
+participants	felamimail	zh	参与者
+Personal Information	felamimail	zh	个人信息
+posting	felamimail	zh	发送中
+Preference file %1 not found. Exiting abnormally	felamimail	zh	未找到个性化配置文件%1. 应用程序异常中止
+Preference file, %1, does not exist. Log out, and log back in to create a default preference file.	felamimail	zh	个性化配置文件%1不存在. 请注销后重新登录以创建默认个性化配置文件.
+Previous	felamimail	zh	上一封
+previous message	felamimail	zh	上一封邮件
+print it	felamimail	zh	打印
+print this page	felamimail	zh	打印该页面
+purge	felamimail	zh	彻底删除
+Quicksearch	felamimail	zh	快速查找
+read	felamimail	zh	已读
+Read da	felamimail	zh	Read da
+reading	felamimail	zh	读取中
+Reason Giv	felamimail	zh	Reason Giv
+recent	felamimail	zh	最近
+refresh folder list	felamimail	zh	刷新邮件夹列表
+Refresh Page	felamimail	zh	刷新页面
+Refresh time in minutes	felamimail	zh	每隔多久检查新邮件(单位: 分钟)
+remove	felamimail	zh	删除
+remove immediately	felamimail	zh	立刻删除
+Rename	felamimail	zh	重命名
+Rename a Folder	felamimail	zh	重命名邮件夹
+rename folder	felamimail	zh	重命名邮件夹
+Renamed successfully!	felamimail	zh	重命名成功!
+replied	felamimail	zh	已回复
+Reply	felamimail	zh	回复
+Reply All	felamimail	zh	全部回复
+Reply To	felamimail	zh	回复至
+ReplyTo	felamimail	zh	回复至
+Return	felamimail	zh	返回
+Return to options page	felamimail	zh	返回选项页面
+Right	felamimail	zh	右对齐
+rule	felamimail	zh	规则
+Running SquirrelMail version %1 (c) 1999-2000.	felamimail	zh	SquirrelMail 版本号 %1 (c) 1999-2000.
+Same Window - not functional yet	felamimail	zh	Same Window - not functional yet
+sat	felamimail	zh	六
+save	felamimail	zh	保存
+Search	felamimail	zh	查找
+Search for	felamimail	zh	查找
+Seconds	felamimail	zh	秒
+Select	felamimail	zh	选择
+Select All	felamimail	zh	全选
+select emailprofile	felamimail	zh	选择帐户
+Select home email address	felamimail	zh	指定家庭EMail地址
+Select work email address	felamimail	zh	指定工作EMail地址
+select your mail server type	admin	zh	选择你的邮件服务器种类
+send	felamimail	zh	发送
+Sent Fold	felamimail	zh	发件箱
+Sent Folder	felamimail	zh	发件箱
+Server respond	felamimail	zh	服务器回应
+show header	felamimail	zh	显示邮件头部
+show new messages on main screen	felamimail	zh	在首页上显示新邮件
+Sieve settings	admin	zh	过滤配置
+Signature	felamimail	zh	签名
+simply click the target-folder	felamimail	zh	点击目标文件夹
+site configuration	felamimail	zh	全局配置
+Size	felamimail	zh	大小
+size(0->...)	felamimail	zh	大小 (从小到大排列)
+size(...->0)	felamimail	zh	大小 (从大到小排列)
+Size of editor window	felamimail	zh	编辑窗口大小
+small view	felamimail	zh	仅显示部分邮件
+SMTP settings	admin	zh	SMTP配置
+Some or all of the help documents are not present!	felamimail	zh	部分甚或全部文档不存在!
+Source	felamimail	zh	源
+Special Folder Options	felamimail	zh	特殊邮件夹选项
+Squirrelmail	felamimail	zh	Squirrelmail
+subject	felamimail	zh	标题
+subject(A->Z)	felamimail	zh	标题 (按字母升序排列)
+subject(Z->A)	felamimail	zh	标题 (按字母降序排列)
+Submit	felamimail	zh	提交
+Subscribe	felamimail	zh	订阅
+subscribed	felamimail	zh	已订阅
+Subscribed successfully!	felamimail	zh	订阅成功!
+Successfully saved display preferences!	felamimail	zh	显示个性化配置保存成功!
+Successfully saved folder preferences!	felamimail	zh	邮件夹个性化配置保存成功!
+Successfully saved personal information!	felamimail	zh	个人信息保存成功!
+sun	felamimail	zh	日
+then	felamimail	zh	然后
+switch current folder to	felamimail	zh	将当前邮件夹切换至
+Table of Contents	felamimail	zh	目录
+Text only	felamimail	zh	只显示文字
+The connection to the IMAP Server failed!!	felamimail	zh	连接IMAP服务器失败!!
+The help has not been translated to %1.  It will be displayed in English instead.	felamimail	zh	帮助文件尚未译成%1, 将显示英文帮助.
+The index order is the order that the columns are arranged in the message index.  You can add, remove, and move columns around to customize them to fit your needs.	felamimail	zh	在邮件索引中, 栏将按照索引顺序排列. 您可以根据需要自行添加、删除或移动栏.
+The order of the message index can be rearanged and changed to contain the headers in any order you want.	felamimail	zh	您可以随意安排邮件索引的顺序.
+Theme	felamimail	zh	界面主题
+These settings change the way your folders are displayed and manipulated.	felamimail	zh	这些选项用于控制邮件夹的显示和操作方式.
+This contains personal information about yourself such as your name, your email address, etc.	felamimail	zh	此处包括您的个人信息, 比如名字，EMail地址等等.
+THIS FOLDER IS EMPTY	felamimail	zh	该邮件夹是空的
+This port is based on Squirrelmail, which is a standalone IMAP client.<br>	felamimail	zh	该端口基于独立的IMAP客户端 - Squirrelmail.<br>
+this php has no imap support compiled in!!	felamimail	zh	您的PHP没有编译成支持IMAP的形式
+thu	felamimail	zh	四
+tue	felamimail	zh	二
+to	felamimail	zh	收件人
+to the left	felamimail	zh	to the left
+to the right	felamimail	zh	to the right
+Top	felamimail	zh	Top
+Translation location	felamimail	zh	翻译位置
+Translation Preferences	felamimail	zh	翻译个性化配置
+Translation server	felamimail	zh	翻译服务器
+Trash Fold	felamimail	zh	回收站
+trash folder	felamimail	zh	回收站
+type	felamimail	zh	类型
+Unable to list addresses from %1	felamimail	zh	无法列出%1的地址
+unflagged	felamimail	zh	已清除标记
+Unknown err	felamimail	zh	未知错误
+Unknown error	felamimail	zh	未知错误
+Unknown Sender	felamimail	zh	未知发件人
+Unknown user or password incorrect.	felamimail	zh	用户名或密码错误.
+unread	felamimail	zh	未读
+unseen	felamimail	zh	未读
+Unseen and Total	felamimail	zh	Unseen and Total
+Unseen message notification	felamimail	zh	未读邮件通知
+Unseen message notification type	felamimail	zh	未读邮件通知类型
+Unselect All	felamimail	zh	取消全选
+Unsubscribe	felamimail	zh	取消订阅
+unsubscribed	felamimail	zh	已取消订阅
+Unsubscribed successfully!	felamimail	zh	订阅取消成功!
+up	felamimail	zh	up
+Update address	felamimail	zh	更新地址
+Use a signature	felamimail	zh	使用签名
+Use a signature?	felamimail	zh	是否使用签名?
+Use Addresses	felamimail	zh	使用地址
+use custom settings	felamimail	zh	使用自定义配置
+Use Javascript or HTML addressbook?	felamimail	zh	使用Javascript还是HTML通讯录?
+Use SMTP auth	admin	zh	启用SMTP身份验证
+use <a href="%1">emailadmin</a> to create profiles	felamimail	zh	使用 <a href="%1">邮件管理</a> 来建立账号
+users can define their own emailaccounts	admin	zh	用户可以定义自己的邮件账户
+vacation	felamimail	zh	假期
+wed	felamimail	zh	三
+View full header	felamimail	zh	查看完整邮件头部
+View message	felamimail	zh	查看邮件
+Viewing full header	felamimail	zh	正在查看完整邮件头部
+Viewing message	felamimail	zh	正在查看邮件
+Viewing messages	felamimail	zh	正在查看邮件
+Welcome to %1's WebMail system	felamimail	zh	欢迎使用%1的Web邮件系统
+when deleting messages	felamimail	zh	当删除邮件时
+White	felamimail	zh	白色
+Width of folder list	felamimail	zh	邮件列表宽度
+Wrap incoming text at	felamimail	zh	Wrap incoming text at
+wrote	felamimail	zh	wrote
+You can change the way that SquirrelMail looks and displays information to you, such as the colors, the language, and other settings.	felamimail	zh	您可以更改SquirrelMail的外观和显示信息, 例如颜色、语言和其他配置.
+You can only edit one address at the time	felamimail	zh	每次只能编辑一个地址
+You must login first.	felamimail	zh	请先登录.
+You need a valid user and password to access this page!	felamimail	zh	访问该页面需要提供有效的用户名和密码!
+Your search failed with the following error(s)	felamimail	zh	查找失败. 错误信息如下:
+writing	felamimail	zh	编辑中
+1	felamimail	zh	1
