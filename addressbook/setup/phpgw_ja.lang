@@ -13,6 +13,7 @@ alt. csv import	addressbook	ja	CSVインポート
 are you sure you want to delete this field?	addressbook	ja	この項目を削除してもよろしいですか。
 bbs phone	addressbook	ja	BBS電話
 birthday	common	ja	誕生日
+blank	addressbook	ja	空白
 business address type	addressbook	ja	アドレスタイプ
 business	common	ja	ビジネス
 business city	addressbook	ja	市区町村
@@ -34,6 +35,7 @@ country	common	ja	国
 csv-filename	addressbook	ja	CSVファイル名
 custom fields	addressbook	ja	カスタム項目
 custom field	addressbook	ja	カスタム項目
+default filter	addressbook	ja	既定のフィルタ
 department	common	ja	部署
 edit field	addressbook	ja	カスタム項目訂正
 export contacts	addressbook	ja	エクスポート
