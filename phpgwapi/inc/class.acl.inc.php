@@ -85,7 +85,7 @@
     function delete($app, $location, $id, $id_type){
       $sql = "delete from phpgw_acl where acl_appname='".$app."'";
       $sql .= " and acl_location ='".$location."' and ";
-      $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id.")";
+      $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
