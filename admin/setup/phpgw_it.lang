@@ -5,7 +5,9 @@ active	admin	it	Attivo
 add global category	admin	it	Aggiungi categoria globale
 add new account	admin	it	Aggiungi un nuovo account
 add new application	admin	it	Aggiungi una nuova applicazione
-allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
+admin options	admin	it	Opzioni di Amministrazione
+allow anonymous access to this app	admin	it
+Consenti accesso anonimo a questa applicazione
 all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
 anonymous user	admin	it	Utente anonimo
 application name	admin	it	Nome applicazione
@@ -46,7 +48,7 @@ last login from	admin	it	ultimo login da
 last time read	admin	it	Ultima volta letto
 last x logins	admin	it	Ultimi %1 login
 listings displayed	admin	it	Elementi Visualizzati
-list of current users	admin	it	lista utenti attuali
+list of current users	admin	it	lista utenti attivi
 loginid	admin	it	LoginID
 login screen	admin	it	Schermo di login
 login shell	admin	it	Shell di login
@@ -71,7 +73,9 @@ select permissions this group will have	admin	it	Seleziona i permessi che questo
 select users for inclusion	admin	it	Seleziona utenti per l'inclusione
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	it	Seleziona in quale punto della Barra di Navigazione, dal più basso (sinistra) al più alto (destra)
 site	admin	it	Sito
-sorry, that group name has already been taking.	admin	it	Peccato, quel nome di gruppo è già stato preso.
+site configuration	admin	it	Configurazione per tutto il Sito
+sorry, that group name has already been taking. admin	it Peccato, quel nome di gruppo &egrave; gi&agrave; stato
+preso.
 sorry, the follow users are still a member of the group x	admin	it	Peccato, i seguenti utenti sono ancora membri del gruppo %1
 station	admin	it	Stazione
 stations	admin	it	Stazioni
@@ -96,4 +100,13 @@ themes	admin	it	Temi
 cron	admin	it	cron
 inc	admin	it	inc
 todo	admin	it	Da-fare
-who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTE le registrazioni di questo utente?
+who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi 
+trasferire TUTTI i dati di questo utente?
+delete all records	admin	it	Elimina tutto
+phpinfo	admin	it	phpinfo
+calendar holiday management	admin	it	Gestione Festivit&agrave;
+change forum settings	admin	it	Cambia le preferenze dei Forum
+daily comics	admin	it	Fumetti Quotidiani
+global options	admin	it	Opzioni Globali
+global comics	admin	it	Fumetti Disponibili
+reset comic data	admin	it	Cancella i dati sui Fumetti
