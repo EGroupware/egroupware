@@ -29,8 +29,8 @@ a:link
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: mediumblue;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -41,9 +41,9 @@ a:visited
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
-	color: #80BBFF;
-	font-style: bold;
-	font-weight: bold;
+	color: mediumblue;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -55,8 +55,8 @@ a:active
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: mediumblue;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -68,8 +68,8 @@ a:hover
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: #cc0000;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -148,6 +148,7 @@ a:hover
 {
 	font-style: bold;
 	font-weight: bold;
+	color: #000000;
 }
 
 .appheader
