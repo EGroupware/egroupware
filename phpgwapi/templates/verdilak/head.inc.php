@@ -23,6 +23,7 @@
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
+	$tpl->set_var('charset',lang('charset'));
 	$tpl->set_var('website_title', $phpgw_info['server']['site_title']);
 	$tpl->set_var('body_tags',$bodyheader);
 	$tpl->pfp('out','head');

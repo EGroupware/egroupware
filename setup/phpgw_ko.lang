@@ -46,7 +46,7 @@ cc	email	ko	참조
 change	common	ko	변경
 change your password	preferences	ko	암호 변경
 change your settings	preferences	ko	설정 바꾸기
-charset	common	ko	iso-8859-1
+charset	common	ko	euc-kr
 chat	common	ko	대화
 city	addressbook	ko	도시
 clear	common	ko	초기화

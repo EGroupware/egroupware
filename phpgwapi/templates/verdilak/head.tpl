@@ -3,7 +3,7 @@
 <!-- BEGIN head -->
 <HEAD>
 
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META http-equiv="Content-Type" content="text/html; charset={charset}">
 <META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
 <META NAME="description" CONTENT="phpGroupWare">
 <META NAME="keywords" CONTENT="phpGroupWare">

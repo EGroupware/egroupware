@@ -53,10 +53,12 @@
 	if (! $deny_login && ! $phpgw_info['server']['show_domain_selectbox'])
 	{
 		$tmpl->set_file(array('login_form'  => 'login.tpl'));
+		$tmpl->set_var('charset',lang('charset'));
 	}
 	else if ($phpgw_info['server']['show_domain_selectbox'])
 	{
 		$tmpl->set_file(array('login_form'  => 'login_selectdomain.tpl'));
+		$tmpl->set_var('charset',lang('charset'));
 	}
 	else
 	{
