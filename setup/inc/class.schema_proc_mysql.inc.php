@@ -167,7 +167,8 @@
 					break;
 				case 'enum':
 					/* Here comes a nasty assumption */
-					$sTranslated =  "'type' => 'varchar', 'precision' => 255";
+					/* $sTranslated =  "'type' => 'varchar', 'precision' => 255"; */
+					$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
 					break;
 				case 'varchar':
 					if ($iPrecision > 0 && $iPrecision < 256)
@@ -223,7 +224,20 @@
 				$colinfo = explode('(',$oProc->m_odb->f(1));
 				$prec = ereg_replace(')','',$colinfo[1]);
 				$scales = explode(',',$prec);
-				if ($scales[1])
+
+				if($colinfo[0] == 'enum')
+				{
+					/* set prec to length of longest enum-value */
+					for($prec=0; list($nul,$name) = @each($scales);)
+					{
+						if($prec < (strlen($name) - 2))
+						{
+							/* -2 as name is like "'name'" */
+							$prec = (strlen($name) - 2);
+						}
+					}
+				}
+				elseif ($scales[1])
 				{
 					$prec  = $scales[0];
 					$scale = $scales[1];
