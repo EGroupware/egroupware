@@ -124,10 +124,14 @@
     ?>
    </TD>
    <TD align=left>
-     <a href="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort");?>">Vcard</a>
+    <form action="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>" method="post" name="Vcardform">
+     <input type="submit" value="Vcard">
+    </form>
    </TD>
    <TD align="left">
-    <a href="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>">Done</a>
+    <form action="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>" method="post" name="Doneform">
+     <input type="submit" value="Done">
+    </form>
    </TD>
   </TR>
  </TABLE>
