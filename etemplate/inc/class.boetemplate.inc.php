@@ -59,7 +59,8 @@
 			$this->soetemplate();
 
 			$this->public_functions += array(
-				'disable_cells' => True
+				'disable_cells' => True,
+				'set_cell_attribute' => True
 			);
 		}
 
@@ -207,10 +208,35 @@
 		}
 
 		/*!
-		@function disable_cells($name)
-		@abstract disables all cells with name == $name
+		@function get_cell_attribute($name,$attr)
+		@abstract gets an attribute in a named cell
+		@returns the attribute or False if named cell not found
 		*/
-		function disable_cells($name)
+		function get_cell_attribute($name,$attr)
+		{
+			reset($this->data);
+         while(list($row,$cols) = each($this->data))
+			{
+				while(list($col,$cell) = each($cols))
+				{
+					if ($cell['name'] == $name)
+					{
+						reset($this->data);
+						return $this->data[$row][$col][$attr];
+					}
+				}
+			}
+			reset($this->data);
+
+			return False;
+		}
+
+		/*!
+		@function set_cell_attribute($name,$attr,$val)
+		@abstract set an attribute in a named cell
+		@returns the number of changed cells
+		*/
+		function set_cell_attribute($name,$attr,$val)
 		{
 			reset($this->data);
 			$n = 0;
@@ -220,7 +246,7 @@
 				{
 					if ($cell['name'] == $name)
 					{
-						$this->data[$row][$col]['disabled'] = True;
+						$this->data[$row][$col][$attr] = $val;
 						++$n;
 					}
 				}
@@ -228,6 +254,40 @@
 			reset($this->data);
 
 			return $n;
+		}
+
+		/*!
+		@function set_cell_attribute($name,$attr,$val)
+		@abstract set an attribute in a named cell
+		@returns the number of changed cells
+		*/
+		function set_cell_attribute($name,$attr,$val)
+		{
+			reset($this->data);
+			$n = 0;
+         while(list($row,$cols) = each($this->data))
+			{
+				while(list($col,$cell) = each($cols))
+				{
+					if ($cell['name'] == $name)
+					{
+						$this->data[$row][$col][$attr] = $val;
+						++$n;
+					}
+				}
+			}
+			reset($this->data);
+
+			return $n;
+		}
+
+		/*!
+		@function disable_cells($name)
+		@abstract disables all cells with name == $name
+		*/
+		function disable_cells($name)
+		{
+			return $this->set_cell_attribute($name,'disabled',True);
 		}
 
 		/*!
