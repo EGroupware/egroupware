@@ -1024,7 +1024,7 @@
 			return $accountid;
 		}
 
-		function get_account_name($accountid,&$lid,&$fname,&$lname)
+		function get_account_name($account_id,&$lid,&$fname,&$lname)
 		{
 			$acct_type = $this->get_type($account_id);
 
