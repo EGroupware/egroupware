@@ -1092,7 +1092,7 @@ class calendar extends calendar_
 
 		$description = $this->is_private($event,$this->owner,'description');
 		
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private')) && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$time[$ind] .= '<a href="'.$phpgw->link('/calendar/view.php',
 								  'id='.$event->id.'&owner='.$this->owner)
@@ -1106,14 +1106,11 @@ class calendar extends calendar_
 			$time[$ind] .= ' - ' . $phpgw->common->show_date($event->edatetime,$format);
 			$end_t_h = intval($phpgw->common->show_date($event->edatetime,'H'));
 			$end_t_m = intval($phpgw->common->show_date($event->edatetime,'i'));
+			$this->rowspan = $end_t_h - $ind;
 			
-			if (end_t_m == 0)
+			if ($end_t_m > 0)
 			{
-				$this->rowspan = $end_t_h - $ind;
-			}
-			else
-			{
-				$this->rowspan = $end_t_h - $ind + 1;
+				$this->rowspan += 1;
 			}
 			
 			if(isset($this->rowspan_arr[$ind]))
@@ -1134,7 +1131,7 @@ class calendar extends calendar_
 		$time[$ind] .= '] ';
 		$time[$ind] .= '<img src="'.$this->image_dir.'/circle.gif" border="0" alt="' . $description . '">';
 
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
+		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private')) && $this->check_perms(PHPGW_ACL_EDIT))
 		{
 			$time[$ind] .= '</a>';
 		}
