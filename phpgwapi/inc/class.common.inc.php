@@ -55,10 +55,10 @@
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
-			//echo "$regs[0] - $regs2[0]";
+			//echo "<br>$regs[0] - $regs2[0]";
 			for($i=1;$i<5;$i++)
 			{
-				//echo "<br>$regs[$i] - $regs2[$i]";
+				echo "<br>$i: $regs[$i] - $regs2[$i]";
 				if($regs2[$i] == $regs[$i])
 				{
 					continue;
@@ -81,27 +81,33 @@
 		@param $str1
 		@param $str2
 		*/
-		function cmp_version_long($str1,$str2)
+		function cmp_version_long($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
-			//echo "$regs[0] - $regs2[0]";
+			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
+
 			for($i=1;$i<6;$i++)
 			{
-				//echo "<br>$regs[$i] - $regs2[$i]";
+				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
+
 				if($regs2[$i] == $regs[$i])
 				{
+					if($debug) { echo ' are equal...'; }
 					continue;
 				}
 				if($regs2[$i] > $regs[$i])
 				{
+					if($debug) { echo ', and a > b'; }
 					return 1;
 				}
 				elseif($regs2[$i] < $regs[$i])
 				{
+					if($debug) { echo ', and a < b'; }
 					return 0;
 				}
 			}
+			if($debug) { echo ' - all equal.'; }
 		}
 
 		// Convert an array into the format needed for the access column.
