@@ -326,6 +326,10 @@
 					'account_expires_never' => $_POST['never_expires']
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
+				if ($userData['account_primary_group'] && !in_array($userData['account_primary_group'],$userData['account_groups']))
+				{
+					$userData['account_groups'][] = intval($userData['account_primary_group']);
+				}
 				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
 					$jscal = CreateObject('phpgwapi.jscalendar',False);
@@ -349,7 +353,9 @@
 					$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
 					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
 					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
-					$GLOBALS['phpgw']->hooks->process('addaccount');
+					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+						'location' => 'addaccount'
+					));
 					ExecMethod('admin.uiaccounts.list_users');
 					return False;
 				}
@@ -567,6 +573,10 @@
 					'account_expires_never' => $_POST['never_expires']
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
+				if ($userData['account_primary_group'] && !in_array($userData['account_primary_group'],$userData['account_groups']))
+				{
+					$userData['account_groups'][] = intval($userData['account_primary_group']);
+				}
 				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
 					$jscal = CreateObject('phpgwapi.jscalendar',False);
@@ -579,7 +589,9 @@
 					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
 					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
 					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
-					$GLOBALS['phpgw']->hooks->process('editaccount');
+					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+						'location' => 'editaccount'
+					));
 
 					// check if would create a menu
 					// if we do, we can't return to the users list, because
@@ -775,7 +787,9 @@
 				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
 				$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
-				$GLOBALS['phpgw']->hooks->process('changepassword');
+				$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'changepassword'
+				));
 			}
 
 			$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
