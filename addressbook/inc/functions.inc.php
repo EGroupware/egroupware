@@ -253,7 +253,7 @@
 	    . ":</font></td><td colspan=\"3\"><select name=\"n_groups[]\" "
 	    . "multiple size=\"5\">";
 
-        $user_groups = $phpgw->groups->read_names($fields["owner"]);
+        $user_groups = $phpgw->accounts->read_group_names($fields["owner"]);
         for ($i=0;$i<count($user_groups);$i++) {
             echo "<option value=\"" . $user_groups[$i][0] . "\"";
             if (ereg(",".$user_groups[$i][0].",",$access))

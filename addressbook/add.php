@@ -31,7 +31,7 @@
      else
         $bday = "$bday_month/$bday_day/$bday_year";
 
-     $access = $phpgw->groups->array_to_string($access,$n_groups);
+     $access = $phpgw->accounts->array_to_string($access,$n_groups);
 
      $sql = "insert into addressbook (owner,access,firstname,lastname,email,"
        	  . "hphone,wphone,fax,pager,mphone,ophone,street,city,state,zip,bday,"
