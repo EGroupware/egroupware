@@ -27,11 +27,9 @@
 		);
 	}
 
-	$phpgw_info['flags'] = array(
-		'currentapp'            => 'addressbook',
-		'enable_contacts_class' => True,
-		'enable_browser_class'  => True
-	);
+	$phpgw_info['flags']['currentapp'] = 'addressbook';
+	$phpgw_info['flags']['enable_contacts_class'] = True;
+	$phpgw_info['flags']['enable_browser_class'] = True;
 	include('../header.inc.php');
 
 	$sep = SEP;
