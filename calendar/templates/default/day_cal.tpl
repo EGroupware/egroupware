@@ -3,8 +3,8 @@
 <div class="th">
  <table width="100%" cellpadding="0">
 {row}
- </div>
 </table>
+ </div>
 <!-- END day -->
 <!-- BEGIN day_row -->
     <tr>{time}{event}
