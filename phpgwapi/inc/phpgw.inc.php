@@ -195,6 +195,7 @@
         $this->preferences->account_id = $phpgw_info["user"]["account_id"];
 
      }
+
       $this->translation   = new translation;
       $this->acl           = new acl;
 

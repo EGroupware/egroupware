@@ -62,6 +62,55 @@
     var $key = "";
     var $crypto;
 
+    // return a array of installed languages
+    function getInstalledLanguages()
+    {
+    	global $phpgw;
+    	
+    	$phpgw->db->query("select distinct lang from lang");
+    	while (@$phpgw->db->next_record()) 
+    	{
+    		$installedLanguages[$phpgw->db->f("lang")] = $phpgw->db->f("lang");
+    	}   
+    	
+    	return $installedLanguages;
+    }
+
+    // return the preferred language of the users
+    // it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
+    // and ...(to find out which languages are installed)
+    function getPreferredLanguage()
+    {
+        global $HTTP_ACCEPT_LANGUAGE;
+        
+        // create a array of languages the user is accepting
+        $userLanguages = explode(",",$HTTP_ACCEPT_LANGUAGE);
+        $supportedLanguages = $this->getInstalledLanguages();
+
+	// find usersupported language
+        while (list($key,$value) = each($userLanguages))
+        {
+        	// remove everything behind "-" example: de-de
+                $value = trim($value);
+                $pieces = explode("-", $value);
+                $value = $pieces[0];
+                # print "current lang $value<br>";
+                if ($supportedLanguages[$value])
+                {
+                        $retValue=$value;
+                        break;
+                }
+        }
+
+	// no usersupported language found -> return english
+        if (empty($retValue))
+        {
+                $retValue="en";
+        }
+        
+        return $retValue;
+    }      
+
     // connect to the ldap server and return a handle
     function ldapConnect($host = "", $dn = "", $passwd = "")
     {
