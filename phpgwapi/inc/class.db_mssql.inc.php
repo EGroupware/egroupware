@@ -371,5 +371,32 @@
 		{
 			return False;
 		}
+		function CreateDatabase($adminname='', $adminpasswd='')
+		{
+			$currentUser = $this->User;
+			$currentPassword = $this->Password;
+			$currentDatabase = $this->Database;
+
+			if($adminname != '')
+			{
+				$this->User = $adminname;
+				$this->Password = $adminpasswd;
+				$this->Database = 'master';
+			}
+			$this->disconnect();
+			$outval = $this->query("CREATE DATABASE $currentDatabase");
+			$this->disconnect();
+
+			if(!$outval)
+			{
+				echo 'Database creation failure <BR>';
+				echo 'please setup the MSSQL database manually<BR>';
+			}
+
+			$this->User = $currentUser;
+			$this->Password = $currentPassword;
+			$this->Database = $currentDatabase;
+			$this->connect();
+		}
 	}
 ?>
