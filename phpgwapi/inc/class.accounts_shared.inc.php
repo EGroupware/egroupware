@@ -55,15 +55,15 @@
     function memberships($account_id = False)
     {
       global $phpgw_info, $phpgw;
-      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
-      elseif (gettype($account_id) == "string") { $account_id = $this->name2id($account_id); }
+      if ($account_id == ''){ $account_id = $phpgw_info['user']['account_id']; }
+      elseif (gettype($account_id) == 'string') { $account_id = $this->name2id($account_id); }
 
       $security_equals = Array();
-      $security_equals = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, intval($account_id));
+      $security_equals = $phpgw->acl->get_location_list_for_id('phpgw_group', 1, intval($account_id));
       if (!$security_equals) { return False; }
       for ($idx=0; $idx<count($security_equals); $idx++){
         $name = $this->id2name(intval($security_equals[$idx]));
-        $this->memberships[] = Array("account_id" => $security_equals[$idx], "account_name" => "$name");
+        $this->memberships[] = Array('account_id' => $security_equals[$idx], 'account_name' => "$name");
       }
       return $this->memberships;
     }

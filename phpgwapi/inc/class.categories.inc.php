@@ -34,17 +34,17 @@
      {
         switch ($type)
         {
-           case "subs":  $s = " and cat_parent != '0'"; break;
-           case "mains": $s = " and cat_parent = '0'"; break;
+           case 'subs':  $s = " and cat_parent != '0'"; break;
+           case 'mains': $s = " and cat_parent = '0'"; break;
         }
         return $s;
      }
 
-     function return_array($type = "all", $id = "")
+     function return_array($type = 'all', $id = '')
      {
         $filter = $this->filter($type);
 
-        if ($type == "single") {
+        if ($type == 'single') {
            $filter = " and cat_id='$id'";
         }
 
@@ -53,25 +53,25 @@
                        . $this->app_name . "' $filter",__LINE__,__FILE__);
         $i = 0;
         while ($this->db->next_record()) {
-           $cats[$i]["id"]          = $this->db->f("cat_id");
-           $cats[$i]["parent"]      = $this->db->f("cat_parent");
-           $cats[$i]["name"]        = $this->db->f("cat_name");
-           $cats[$i]["description"] = $this->db->f("cat_description");
-           $cats[$i]["data"]        = $this->db->f("cat_data");
+           $cats[$i]['id']          = $this->db->f('cat_id');
+           $cats[$i]['parent']      = $this->db->f('cat_parent');
+           $cats[$i]['name']        = $this->db->f('cat_name');
+           $cats[$i]['description'] = $this->db->f('cat_description');
+           $cats[$i]['data']        = $this->db->f('cat_data');
            $i++;
         }
         return $cats;
      }
 
-     function categories($account_id = "",$app_name = "")
+     function categories($account_id = '',$app_name = '')
      {
         global $phpgw, $phpgw_info;
 
         if (! $account_id) {
-           $account_id = $phpgw_info["user"]["account_id"];
+           $account_id = $phpgw_info['user']['account_id'];
         }
         if (! $app_name) {
-           $app_name   = $phpgw_info["flags"]["currentapp"];
+           $app_name   = $phpgw_info['flags']['currentapp'];
         }
 
         $this->account_id = $account_id;
@@ -86,15 +86,15 @@
         global $phpgw;
         $filter = $this->filter($type);
 
-        if ($format == "select") {
+        if ($format == 'select') {
            $this->db->query("select * from phpgw_categories where cat_owner='" . $this->account_id
                            . "' $filter",__LINE__,__FILE__);
            while ($this->db->next_record()) {
-              $s .= '<option value="' . $this->db->f("cat_id") . '"';
-              if ($this->db->f("cat_id") == $selected) {
-                 $s .= " selected";
+              $s .= '<option value="' . $this->db->f('cat_id') . '"';
+              if ($this->db->f('cat_id') == $selected) {
+                 $s .= ' selected';
               }
-              $s .= '>' . $phpgw->strip_html($this->db->f("cat_name"))
+              $s .= '>' . $phpgw->strip_html($this->db->f('cat_name'))
                   . '</option>';
            }
            return $s;
@@ -102,9 +102,9 @@
 
      }
 
-     function add($cat_name,$cat_parent,$cat_description = "", $cat_data = "")
+     function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '')
      {
-        $this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,"
+        $this->db->query('insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,'
                        . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','"
                        . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
                        . "','$cat_data')",__LINE__,__FILE__);
@@ -116,7 +116,7 @@
                   . $this->account_id . "'",__LINE__,__FILE__);
      }
 
-     function edit($cat_id,$cat_parent,$cat_name,$cat_description = "",$cat_data = "")
+     function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '')
      {
          $this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
                         . "cat_description='" . addslashes($cat_description) . "', cat_data='"
@@ -129,10 +129,10 @@
          $this->db->query("select cat_name from phpgw_categories where cat_id='"
                         . "$cat_id'",__LINE__,__FILE__);
          $this->db->next_record();
-         if ($this->db->f("cat_name")) {
-            return $this->db->f("cat_name");
+         if ($this->db->f('cat_name')) {
+            return $this->db->f('cat_name');
          } else {
-            return "--";
+            return '--';
          }
      }
 

@@ -36,7 +36,7 @@
                 . "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
        $db->next_record();
 
-       if ($db->f("account_lid")) {
+       if ($db->f('account_lid')) {
           return True;
        } else {
           return False;

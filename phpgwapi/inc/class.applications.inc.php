@@ -45,15 +45,15 @@
     function read_repository()
     {
       global $phpgw, $phpgw_info;
-      if (gettype($phpgw_info["apps"]) != "array") {
+      if (gettype($phpgw_info['apps']) != 'array') {
         $this->read_installed_apps();
       }
       $this->data = Array();
-      reset($phpgw_info["apps"]);
-      while ($app = each($phpgw_info["apps"])) {
-        $check = $phpgw->acl->check("run",1,$app[0]);
+      reset($phpgw_info['apps']);
+      while ($app = each($phpgw_info['apps'])) {
+        $check = $phpgw->acl->check('run',1,$app[0]);
         if ($check) {
-          $this->data[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
+          $this->data[$app[0]] = array('title' => $phpgw_info['apps'][$app[0]]['title'], 'name' => $app[0], 'enabled' => True, 'status' => $phpgw_info['apps'][$app[0]]['status']);
         } 
       }
       reset($this->data);
@@ -68,12 +68,12 @@
 
     function add($apps) {
       global $phpgw_info;
-      if(gettype($apps) == "array") {
+      if(gettype($apps) == 'array') {
         while($app = each($apps)) {
-          $this->data[$app[1]] = array("title" => $phpgw_info["apps"][$app[1]]["title"], "name" => $app[1], "enabled" => True, "status" => $phpgw_info["apps"][$app[1]]["status"]);
+          $this->data[$app[1]] = array('title' => $phpgw_info['apps'][$app[1]]['title'], 'name' => $app[1], 'enabled' => True, 'status' => $phpgw_info['apps'][$app[1]]['status']);
         }
       } elseif(gettype($apps)) {
-          $this->data[$apps] = array("title" => $phpgw_info["apps"][$apps]["title"], "name" => $apps, "enabled" => True, "status" => $phpgw_info["apps"][$apps]["status"]);
+          $this->data[$apps] = array('title' => $phpgw_info['apps'][$apps]['title'], 'name' => $apps, 'enabled' => True, 'status' => $phpgw_info['apps'][$apps]['status']);
       }
       reset($this->data);
       return $this->data;
@@ -119,7 +119,7 @@
       }
       @reset($this->data);
       while (list ($key) = each ($this->data)) {
-          $app[] = $this->data[$key]["name"];
+          $app[] = $this->data[$key]['name'];
       }
       return $app;
     }

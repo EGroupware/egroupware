@@ -33,15 +33,15 @@
       //  these are just "warnings" and can be ignored.....
       error_reporting(0); 
       
-      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
+      $ldap = ldap_connect($phpgw_info['server']['ldap_host']);
       
       // find the dn for this uid, the uid is not always in the dn
-      $sri = ldap_search($ldap, $phpgw_info["server"]["ldap_context"], "uid=$username");
+      $sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
       $allValues = ldap_get_entries($ldap, $sri);
-      if($allValues["count"] > 0)
+      if($allValues['count'] > 0)
       {
       	// we only care about the first dn
-      	$userDN = $allValues[0]["dn"];
+      	$userDN = $allValues[0]['dn'];
 
       	// generate a bogus password to pass if the user doesn't give us one 
 	// this gets around systems that are anonymous search enabled 
@@ -63,9 +63,9 @@
       $ldap = $phpgw->common->ldapConnect();
 
       $encrypted_passwd = $phpgw->common->encrypt_password($new_passwd);
-      $entry["userpassword"] = $encrypted_passwd;
-      #$entry["phpgw_lastpasswd_change"] = time();
-      $dn = $phpgw_info["user"]["account_dn"];
+      $entry['userpassword'] = $encrypted_passwd;
+      #$entry['phpgw_lastpasswd_change'] = time();
+      $dn = $phpgw_info['user']['account_dn'];
 
       if (!@ldap_modify($ldap, $dn, $entry)) return false;
 

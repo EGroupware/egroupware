@@ -32,10 +32,10 @@
       global $phpgw, $phpgw_info;
       $key = $vars[0];
       $iv = $vars[1];
-      if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-      	if ($phpgw_info["server"]["versions"]["mcrypt"] == "old") {
+      if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt')) {
+      	if ($phpgw_info['server']['versions']['mcrypt'] == 'old') {
           $this->td = false;
-          if (PHP_VERSION > "4.0.2pl1") {
+          if (PHP_VERSION > '4.0.2pl1') {
             $keysize = mcrypt_get_key_size(MCRYPT_TRIPLEDES);
             $ivsize  = mcrypt_get_iv_size(MCRYPT_TRIPLEDES,MCRYPT_MODE_CBC);
           } else {
@@ -44,7 +44,7 @@
           }
         } else {
       	  // Start up mcrypt
-          $this->td = mcrypt_module_open (MCRYPT_TRIPLEDES, "", MCRYPT_MODE_CBC, "");
+          $this->td = mcrypt_module_open (MCRYPT_TRIPLEDES, '', MCRYPT_MODE_CBC, '');
 
           $ivsize  = mcrypt_enc_get_iv_size($this->td);
       	  $keysize = mcrypt_enc_get_key_size($this->td);
@@ -62,7 +62,7 @@
         for ($i = 0; $i < $keysize; $i++) {
           $this->key .= $key[$i % $x];
         }
-        if ($phpgw_info["server"]["versions"]["mcrypt"] != "old") {
+        if ($phpgw_info['server']['versions']['mcrypt'] != 'old') {
           mcrypt_generic_init ($this->td, $this->key, $this->iv);
         } 
       } 
@@ -73,8 +73,8 @@
     {
       global $phpgw_info;
 
-      if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-        if ($phpgw_info["server"]["versions"]["mcrypt"] != "old") {
+      if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt')) {
+        if ($phpgw_info['server']['versions']['mcrypt'] != 'old') {
           mcrypt_generic_end ($this->td);
         } 
       }
@@ -82,7 +82,7 @@
     function hex2bin($data)
     {
        $len = strlen($data);
-       return pack("H" . $len, $data);
+       return pack('H' . $len, $data);
     }
 
     function encrypt($data) {
@@ -91,10 +91,10 @@
       $data = serialize($data);
 
       // Disable all encryption if the admin didn't set it up
-      if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
-      	switch ($phpgw_info["server"]["versions"]["mcrypt"]) {
+      if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt')) {
+      	switch ($phpgw_info['server']['versions']['mcrypt']) {
     	    // The old code, only works with mcrypt <= 2.2.x
-      	  case "old": {	 
+      	  case 'old': {	 
             $encrypteddata = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_ENCRYPT);
             break;
           }
@@ -113,12 +113,12 @@
       global $phpgw_info;
 
       // Disable all encryption if the admin didn't set it up
-      if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
+      if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt')) {
         $data = $this->hex2bin($encrypteddata);
 
-      	switch ($phpgw_info["server"]["versions"]["mcrypt"]) {
+      	switch ($phpgw_info['server']['versions']['mcrypt']) {
    	     // The old code, only works with mcrypt <= 2.2.x
-          case "old": {	 
+          case 'old': {	 
             $data = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_DECRYPT);
             break;
           }

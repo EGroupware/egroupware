@@ -25,34 +25,34 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
-  $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  $d3 = strtolower(substr($phpgw_info["server"]["app_inc"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp" || $d3 == "htt" || $d3 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
+  $d1 = strtolower(substr($phpgw_info['server']['api_inc'],0,3));
+  $d2 = strtolower(substr($phpgw_info['server']['server_root'],0,3));
+  $d3 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+  if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp') {
+    echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
     exit;
   } unset($d1);unset($d2);unset($d3);
 
   class common
   {
     var $phpgw;
-    var $iv = "";
-    var $key = "";
+    var $iv = '';
+    var $key = '';
     var $crypto;
 
     // Convert an array into the format needed for the access column.
     function array_to_string($access,$array)
     {
-      $s = "";
-      if ($access == "group" || $access == "public" || $access == "none") {
+      $s = '';
+      if ($access == 'group' || $access == 'public' || $access == 'none') {
          if (count($array)) {
             while ($t = each($array)) {
-   			$s .= "," . $t[1];
+   			$s .= ',' . $t[1];
             }
-            $s .= ",";
+            $s .= ',';
          }
-         if (! count($array) && $access == "none") {
-            $s = "";
+         if (! count($array) && $access == 'none') {
+            $s = '';
          }
       }
       return $s;
@@ -64,12 +64,12 @@
     {
       global $phpgw, $phpgw_info;
 
-      $s = "";
+      $s = '';
       if (!$owner) {
-         $owner = $phpgw_info["user"]["account_id"];
+         $owner = $phpgw_info['user']['account_id'];
       }
       $groups = $phpgw->accounts->memberships(intval($owner));
-      if (gettype($groups) == "array") {
+      if (gettype($groups) == 'array') {
          while ($group = each($groups)) {
            $s .= " or $table like '%," . $group[2] . ",%'";
         }
@@ -82,10 +82,10 @@
     {
     	global $phpgw;
     	
-    	$phpgw->db->query("select distinct lang from lang");
+    	$phpgw->db->query('select distinct lang from lang');
     	while (@$phpgw->db->next_record()) 
     	{
-    		$installedLanguages[$phpgw->db->f("lang")] = $phpgw->db->f("lang");
+    		$installedLanguages[$phpgw->db->f('lang')] = $phpgw->db->f('lang');
     	}   
     	
     	return $installedLanguages;
@@ -99,17 +99,17 @@
         global $HTTP_ACCEPT_LANGUAGE;
         
         // create a array of languages the user is accepting
-        $userLanguages = explode(",",$HTTP_ACCEPT_LANGUAGE);
+        $userLanguages = explode(',',$HTTP_ACCEPT_LANGUAGE);
         $supportedLanguages = $this->getInstalledLanguages();
 
 	// find usersupported language
         while (list($key,$value) = each($userLanguages))
         {
-        	// remove everything behind "-" example: de-de
+        	// remove everything behind '-' example: de-de
                 $value = trim($value);
-                $pieces = explode("-", $value);
+                $pieces = explode('-', $value);
                 $value = $pieces[0];
-                # print "current lang $value<br>";
+                # print 'current lang $value<br>';
                 if ($supportedLanguages[$value])
                 {
                         $retValue=$value;
@@ -120,27 +120,27 @@
 	// no usersupported language found -> return english
         if (empty($retValue))
         {
-                $retValue="en";
+                $retValue='en';
         }
         
         return $retValue;
     }      
 
     // connect to the ldap server and return a handle
-    function ldapConnect($host = "", $dn = "", $passwd = "")
+    function ldapConnect($host = '', $dn = '', $passwd = '')
     {
    	global $phpgw_info;
    	
    	if (! $host) {
-   	   $host = $phpgw_info["server"]["ldap_host"];
+   	   $host = $phpgw_info['server']['ldap_host'];
    	}
 
    	if (! $dn) {
-   	   $dn = $phpgw_info["server"]["ldap_root_dn"];
+   	   $dn = $phpgw_info['server']['ldap_root_dn'];
    	}
 
    	if (! $passwd) {
-   	   $passwd = $phpgw_info["server"]["ldap_root_passwd"];
+   	   $passwd = $phpgw_info['server']['ldap_root_passwd'];
    	}
 
 	
@@ -174,12 +174,12 @@
 
     function randomstring($size)
     {
-      $s = "";
+      $s = '';
       srand((double)microtime()*1000000);
-      $random_char = array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f",
-                           "g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v",
-                           "w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L",
-                           "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+      $random_char = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
+                           'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+                           'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
+                           'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 
       for ($i=0; $i<$size; $i++) {
          $s .= $random_char[rand(1,61)];
@@ -195,7 +195,7 @@
 
     function error_list($error)
     {
-       $html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang("error") . '</b>: </td><td align="left">' . $error[0] . '</td></tr>';
+       $html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang('error') . '</b>: </td><td align="left">' . $error[0] . '</td></tr>';
 
        for ($i=1; $i<count($error); $i++) {
           $html_error .= '<tr><td>&nbsp;</td><td align="left">' . $error[$i] . '</td></tr>';
@@ -203,17 +203,17 @@
        return $html_error . '</table>';
     }
 
-    function check_owner($record,$link,$label,$extravars = "")
+    function check_owner($record,$link,$label,$extravars = '')
     {
        global $phpgw, $phpgw_info;
 
        $s = '<a href="' . $phpgw->link($link,$extravars) . '"> ' . lang($label) . ' </a>';
        if (ereg("^[0-9]+$",$record)) {
-          if ($record != $phpgw_info["user"]["account_id"]) {
+          if ($record != $phpgw_info['user']['account_id']) {
              $s = "&nbsp;";
           }
        } else {
-          if ($record != $phpgw_info["user"]["userid"]) {
+          if ($record != $phpgw_info['user']['userid']) {
              $s = "&nbsp";
           }
       }
@@ -221,13 +221,13 @@
       return $s;
     }    
 
-    function display_fullname($lid = "", $firstname = "", $lastname = "")
+    function display_fullname($lid = '', $firstname = '', $lastname = '')
     {
       if (! $lid && ! $firstname && ! $lastname) {
          global $phpgw_info;
-         $lid       = $phpgw_info["user"]["account_lid"];
-         $firstname = $phpgw_info["user"]["firstname"];
-         $lastname  = $phpgw_info["user"]["lastname"];
+         $lid       = $phpgw_info['user']['account_lid'];
+         $firstname = $phpgw_info['user']['firstname'];
+         $lastname  = $phpgw_info['user']['lastname'];
       }
     
       if (! $firstname && ! $lastname) {
@@ -250,17 +250,17 @@
       global $phpgw;
 
       $db = $phpgw->db;
-      $db->query("select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id=".$id,__LINE__,__FILE__);
+      $db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$id,__LINE__,__FILE__);
       $db->next_record();
 
-      return $phpgw->common->display_fullname($db->f("account_lid"),$db->f("account_firstname"),$db->f("account_lastname"));
+      return $phpgw->common->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
     }  
 
-    function create_tabs($tabs, $selected, $fontsize = "")
+    function create_tabs($tabs, $selected, $fontsize = '')
     {
        global $phpgw_info;
        $output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-       $ir = $phpgw_info["server"]["images_dir"];
+       $ir = $phpgw_info['server']['images_dir'];
 
        if ($fontsize) {
           $fs  = '<font size="' . $fontsize . '">';
@@ -275,7 +275,7 @@
             }
      
             $output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
-                          . $tab[1]["link"] . '" class="tablink">' . $fs . $tab[1]["label"]
+                          . $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
                           . $fse . '</a></b>&nbsp;</td>';
             if ($i == count($tabs)) {
                $output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
@@ -287,7 +287,7 @@
                $output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
             }
             $output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
-                          . $tab[1]["link"] . '" class="tablink">' . $fs . $tab[1]["label"] . $fse
+                          . $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
                           . '</a></b>&nbsp;</td>';
             if (($i + 1) == $selected) {
                $output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
@@ -312,17 +312,17 @@
        return $output_text;
     }
 
-    function get_app_dir($appname = ""){
+    function get_app_dir($appname = ''){
       global $phpgw_info;
-      if ($appname == "") { 
-         $appname = $phpgw_info["flags"]["currentapp"];
+      if ($appname == '') { 
+         $appname = $phpgw_info['flags']['currentapp'];
       }
-      if ($appname == "home" || $appname == "logout" || $appname == "login") {
-         $appname = "phpgwapi";
+      if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
+         $appname = 'phpgwapi';
       }
 
-      $appdir         = PHPGW_INCLUDE_ROOT . "/".$appname;
-      $appdir_default = PHPGW_SERVER_ROOT . "/".$appname;
+      $appdir         = PHPGW_INCLUDE_ROOT . '/'.$appname;
+      $appdir_default = PHPGW_SERVER_ROOT . '/'.$appname;
 
       if (is_dir ($appdir)){
         return $appdir;
@@ -333,19 +333,19 @@
       }      
     }
 
-    function get_inc_dir($appname = "")
+    function get_inc_dir($appname = '')
     {
        global $phpgw_info;
   
        if (! $appname){
-          $appname = $phpgw_info["flags"]["currentapp"];
+          $appname = $phpgw_info['flags']['currentapp'];
        }
-       if ($appname == "home" || $appname == "logout" || $appname == "login") {
-          $appname = "phpgwapi";
+       if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
+          $appname = 'phpgwapi';
        }
  
-       $incdir         = PHPGW_INCLUDE_ROOT . "/" . $appname . "/inc";
-       $incdir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/inc";
+       $incdir         = PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc';
+       $incdir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/inc';
  
        if (is_dir ($incdir)) {
           return $incdir;
@@ -358,10 +358,10 @@
 
     function list_themes()
     {
-       $dh = opendir(PHPGW_SERVER_ROOT . "/phpgwapi/themes");
+       $dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
        while ($file = readdir($dh)) {
          if (eregi("\.theme$", $file)) {
-            $list[] = substr($file,0,strpos($file,"."));
+            $list[] = substr($file,0,strpos($file,'.'));
          }
        }
        //$dh->close();
@@ -371,16 +371,16 @@
 
     function list_templates(){
       global $phpgw_info;
-      $d = dir(PHPGW_SERVER_ROOT . "/phpgwapi/templates");
+      $d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
       while ($entry=$d->read()) {
-         if ($entry != "CVS" && $entry != "." && $entry != ".."){
-            $list[$entry]["name"] = $entry;
-            $f = PHPGW_SERVER_ROOT . "/phpgwapi/templates/" . $entry . "/details.inc.php";
+         if ($entry != 'CVS' && $entry != '.' && $entry != '..'){
+            $list[$entry]['name'] = $entry;
+            $f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
             if (file_exists ($f)){
                include($f);
-               $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
+               $list[$entry]['title'] = 'Use '.$phpgw_info['template'][$entry]['title'].'interface';
             } else {
-               $list[$entry]["title"] = $entry;
+               $list[$entry]['title'] = $entry;
             }
          }
       }
@@ -389,30 +389,30 @@
       return $list;
     }
 
-    function get_tpl_dir($appname = "")
+    function get_tpl_dir($appname = '')
     {
        global $phpgw_info;
        if (! $appname) {
-          $appname = $phpgw_info["flags"]["currentapp"];
+          $appname = $phpgw_info['flags']['currentapp'];
         }
-        if ($appname == "home" || $appname == "logout" || $appname == "login") {
-           $appname = "phpgwapi";
+        if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
+           $appname = 'phpgwapi';
         }
 
         // Setting this for display of template choices in user preferences
-        if ($phpgw_info["server"]["template_set"] == "user_choice") {
-           $phpgw_info["server"]["usrtplchoice"] = "user_choice";
+        if ($phpgw_info['server']['template_set'] == 'user_choice') {
+           $phpgw_info['server']['usrtplchoice'] = 'user_choice';
         }
 
-        if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
-           $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["common"]["template_set"];
-        } elseif ($phpgw_info["server"]["template_set"] == "user_choice" || !isset($phpgw_info["server"]["template_set"])) {
-           $phpgw_info["server"]["template_set"] = "default";
+        if ($phpgw_info['server']['template_set'] == 'user_choice' && isset($phpgw_info['user']['preferences']['common']['template_set'])) {
+           $phpgw_info['server']['template_set'] = $phpgw_info['user']['preferences']['common']['template_set'];
+        } elseif ($phpgw_info['server']['template_set'] == 'user_choice' || !isset($phpgw_info['server']['template_set'])) {
+           $phpgw_info['server']['template_set'] = 'default';
         }
 
-        $tpldir         = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/"
-                        . $phpgw_info["server"]["template_set"];
-        $tpldir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/default";
+        $tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
+                        . $phpgw_info['server']['template_set'];
+        $tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
 
         if (is_dir($tpldir)) {
            return $tpldir;
@@ -423,19 +423,19 @@
         }      
     }
 
-    function get_image_dir($appname = ""){
+    function get_image_dir($appname = ''){
       global $phpgw_info;
-      if ($appname == "") {
-         $appname = $phpgw_info["flags"]["currentapp"];
+      if ($appname == '') {
+         $appname = $phpgw_info['flags']['currentapp'];
       }
-      if (empty($phpgw_info["server"]["template_set"])) {
-         $phpgw_info["server"]["template_set"] = "default";
+      if (empty($phpgw_info['server']['template_set'])) {
+         $phpgw_info['server']['template_set'] = 'default';
       }
 
-      $imagedir            = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/"
-                           . $phpgw_info["server"]["template_set"] . "/images";
-      $imagedir_default    = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/default/images";
-      $imagedir_olddefault = PHPGW_SERVER_ROOT . "/" . $appname . "/images";
+      $imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
+                           . $phpgw_info['server']['template_set'] . '/images';
+      $imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
+      $imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
       if (is_dir ($imagedir)){
          return $imagedir;
@@ -448,25 +448,25 @@
       }      
     }
 
-    function get_image_path($appname = ""){
+    function get_image_path($appname = ''){
       global $phpgw_info;
-      if ($appname == "") {
-         $appname = $phpgw_info["flags"]["currentapp"];
+      if ($appname == '') {
+         $appname = $phpgw_info['flags']['currentapp'];
       }
-      if (empty($phpgw_info["server"]["template_set"])) { 
-         $phpgw_info["server"]["template_set"] = "default";
+      if (empty($phpgw_info['server']['template_set'])) { 
+         $phpgw_info['server']['template_set'] = 'default';
       }
 
-      $imagedir            = PHPGW_SERVER_ROOT . "/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
-      $imagedir_default    = PHPGW_SERVER_ROOT . "/".$appname."/templates/default/images";
-      $imagedir_olddefault = PHPGW_SERVER_ROOT . "/".$appname."/images";
+      $imagedir            = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
+      $imagedir_default    = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
+      $imagedir_olddefault = PHPGW_SERVER_ROOT . '/'.$appname.'/images';
 
       if (is_dir ($imagedir)){
-        return $phpgw_info["server"]["webserver_url"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
+        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
       }elseif (is_dir ($imagedir_default)){
-        return $phpgw_info["server"]["webserver_url"]."/".$appname."/templates/default/images";
+        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/default/images';
       }elseif (is_dir ($imagedir_olddefault)){
-        return $phpgw_info["server"]["webserver_url"]."/".$appname."/images";
+        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/images';
       }else{
         return False;
       }      
@@ -476,70 +476,70 @@
     {    
        global $phpgw_info, $phpgw;
 
-       $phpgw_info["navbar"]["home"]["title"] = "Home";
-       $phpgw_info["navbar"]["home"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php");
-       $phpgw_info["navbar"]["home"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
-                                              . $phpgw_info["server"]["template_set"] . "/images/home.gif";
+       $phpgw_info['navbar']['home']['title'] = 'Home';
+       $phpgw_info['navbar']['home']['url']   = $phpgw->link($phpgw_info['server']['webserver_url'] . '/index.php');
+       $phpgw_info['navbar']['home']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+                                              . $phpgw_info['server']['template_set'] . '/images/home.gif';
 
-       reset($phpgw_info["user"]["apps"]);
-       while ($permission = each($phpgw_info["user"]["apps"])) {
+       reset($phpgw_info['user']['apps']);
+       while ($permission = each($phpgw_info['user']['apps'])) {
           if (is_long($permission[0])) { continue; }
-          if ($phpgw_info["apps"][$permission[0]]["status"] != 2) {
-             $phpgw_info["navbar"][$permission[0]]["title"] = $phpgw_info["apps"][$permission[0]]["title"];
-             $phpgw_info["navbar"][$permission[0]]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                                            . "/" . $permission[0] . "/index.php");
-            $icon_file = PHPGW_SERVER_ROOT . "/".$permission[0] . "/templates/". $phpgw_info["server"]["template_set"]. "/images/navbar.gif";
+          if ($phpgw_info['apps'][$permission[0]]['status'] != 2) {
+             $phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
+             $phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
+                                                            . '/' . $permission[0] . '/index.php');
+            $icon_file = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
             if (file_exists($icon_file)){
-              $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
-                . $permission[0] . "/templates/" . $phpgw_info["server"]["template_set"] . "/images/navbar.gif";
+              $phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
+                . $permission[0] . '/templates/' . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
             }else{
-              $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
-                . $permission[0] . "/templates/default/images/navbar.gif";
+              $phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
+                . $permission[0] . '/templates/default/images/navbar.gif';
             }
           }
        }
-       $phpgw_info["navbar"]["preferences"]["title"] = "preferences";
-       $phpgw_info["navbar"]["preferences"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                                     . "/preferences/index.php");
-       $phpgw_info["navbar"]["preferences"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/preferences/templates/"
-                                                     . $phpgw_info["server"]["template_set"] . "/images/navbar.gif";
+       $phpgw_info['navbar']['preferences']['title'] = 'preferences';
+       $phpgw_info['navbar']['preferences']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
+                                                     . '/preferences/index.php');
+       $phpgw_info['navbar']['preferences']['icon']  = $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
+                                                     . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
 
-       if ($phpgw_info["flags"]["currentapp"] == "home" || $phpgw_info["flags"]["currentapp"] == "preferences" || $phpgw_info["flags"]["currentapp"] == "about") {
-          $app = "phpGroupWare";
+       if ($phpgw_info['flags']['currentapp'] == 'home' || $phpgw_info['flags']['currentapp'] == 'preferences' || $phpgw_info['flags']['currentapp'] == 'about') {
+          $app = 'phpGroupWare';
        } else {
-          $app = $phpgw_info["flags"]["currentapp"];
+          $app = $phpgw_info['flags']['currentapp'];
        }
-       $phpgw_info["navbar"]["about"]["title"] = lang("About x",$app);      // We handle this here
+       $phpgw_info['navbar']['about']['title'] = lang('About x',$app);      // We handle this here
                                                                             // becuase its special
-       $phpgw_info["navbar"]["about"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                               . "/about.php","app=$app");
-       $phpgw_info["navbar"]["about"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
-                                               . $phpgw_info["server"]["template_set"] . "/images/about.gif";
+       $phpgw_info['navbar']['about']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
+                                               . '/about.php','app='.$app);
+       $phpgw_info['navbar']['about']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+                                               . $phpgw_info['server']['template_set'] . '/images/about.gif';
 
-       $phpgw_info["navbar"]["logout"]["title"] = "Logout";
-       $phpgw_info["navbar"]["logout"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                                . "/logout.php");
-       $phpgw_info["navbar"]["logout"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
-                                                . $phpgw_info["server"]["template_set"] . "/images/logout.gif";
+       $phpgw_info['navbar']['logout']['title'] = 'Logout';
+       $phpgw_info['navbar']['logout']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
+                                                . '/logout.php');
+       $phpgw_info['navbar']['logout']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+                                                . $phpgw_info['server']['template_set'] . '/images/logout.gif';
     }
 
 
     function app_header()
     {
-       if (file_exists(PHPGW_APP_INC . "/header.inc.php")) {
-          include(PHPGW_APP_INC . "/header.inc.php");
+       if (file_exists(PHPGW_APP_INC . '/header.inc.php')) {
+          include(PHPGW_APP_INC . '/header.inc.php');
        }
     }
 
     function phpgw_header() {
       global $phpgw, $phpgw_info;
 
-      include(PHPGW_INCLUDE_ROOT . "/phpgwapi/templates/" . $phpgw_info["server"]["template_set"]
-                                 . "/head.inc.php");
+      include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
+                                 . '/head.inc.php');
       $this->navbar(False);
-      include(PHPGW_INCLUDE_ROOT . "/phpgwapi/templates/" . $phpgw_info["server"]["template_set"]
-                                 . "/navbar.inc.php");
-      if ((! isset($phpgw_info["flags"]["nonavbar"]) || ! $phpgw_info["flags"]["nonavbar"]) && ! $phpgw_info["flags"]["navbar_target"]) {
+      include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
+                                 . '/navbar.inc.php');
+      if ((! isset($phpgw_info['flags']['nonavbar']) || ! $phpgw_info['flags']['nonavbar']) && ! $phpgw_info['flags']['navbar_target']) {
          echo parse_navbar();
       }
     }
@@ -548,8 +548,8 @@
     {
        global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
 
-       if (!isset($phpgw_info["flags"]["nofooter"]) || !$phpgw_info["flags"]["nofooter"]) {
-          include(PHPGW_API_INC . "/footer.inc.php");
+       if (!isset($phpgw_info['flags']['nofooter']) || !$phpgw_info['flags']['nofooter']) {
+          include(PHPGW_API_INC . '/footer.inc.php');
        }
  
        // Clean up mcrypt
@@ -562,7 +562,7 @@
     function hex2bin($data)
     {
        $len = strlen($data);
-       return pack("H" . $len, $data);
+       return pack('H' . $len, $data);
     }
 
     function encrypt($data) {
@@ -605,11 +605,11 @@
   {
      global $phpgw, $phpgw_info;
      
-     if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
+     if ($phpgw_info['server']['ldap_encryption_type'] == 'DES') {
          $salt       = $this->randomstring(2);
          $e_password = $this->des_cryptpasswd($password, $salt);
       }
-      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
+      if ($phpgw_info['server']['ldap_encryption_type'] == 'MD5') {
 //         $salt       = $this->randomstring(9);
          $salt       = $this->randomstring(8);			// patch
          $e_password = $this->md5_cryptpasswd($password, $salt);
@@ -617,31 +617,31 @@
       return $e_password;
   }
 
-  function hook($location = "", $order = ""){
+  function hook($location = '', $order = ''){
     global $phpgw, $phpgw_info;
-    if ($order == ""){$order[] = $phpgw_info["flags"]["currentapp"];}
+    if ($order == ''){$order[] = $phpgw_info['flags']['currentapp'];}
     /* First include the ordered apps hook file */
     reset ($order);
     while (list (, $appname) = each ($order)){
-       $f = PHPGW_SERVER_ROOT . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-    	if ($location != "") {
-    	   $f .= "_".$location.".inc.php";
+       $f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
+    	if ($location != '') {
+    	   $f .= '_'.$location.'.inc.php';
     	} else {
-    	   $f .= ".inc.php";
+    	   $f .= '.inc.php';
     	}
   	  if (file_exists($f)) {include($f);}
       $completed_hooks[$appname] = True;
     }
     /* Then add the rest */
-    reset ($phpgw_info["user"]["apps"]);
-    while ($permission = each($phpgw_info["user"]["apps"])) {
+    reset ($phpgw_info['user']['apps']);
+    while ($permission = each($phpgw_info['user']['apps'])) {
        if ($completed_hooks[$permission[0]] != True){
           $appname = $permission[0];
-          $f = PHPGW_SERVER_ROOT . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-      	if ($location != "") {
-      	   $f .= "_".$location.".inc.php";
+          $f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
+      	if ($location != '') {
+      	   $f .= '_'.$location.'.inc.php';
       	} else {
-      	   $f .= ".inc.php";
+      	   $f .= '.inc.php';
       	}
     	  if (file_exists($f)) {
     	     include($f);
@@ -650,19 +650,19 @@
     }
   }
 
-  function hook_single($location = "", $appname = "")
+  function hook_single($location = '', $appname = '')
   {
      global $phpgw, $phpgw_info;
      if (! $appname) {
-        $appname = $phpgw_info["flags"]["currentapp"];
+        $appname = $phpgw_info['flags']['currentapp'];
      }
      $s = $phpgw->common->filesystem_separator();
      /* First include the ordered apps hook file */
-     $f = PHPGW_SERVER_ROOT . $s . $appname . $s . "inc" . $s . "hook_".$appname;
-     if ($location != "") {
-        $f .= "_".$location.".inc.php";
+     $f = PHPGW_SERVER_ROOT . $s . $appname . $s . 'inc' . $s . 'hook_'.$appname;
+     if ($location != '') {
+        $f .= '_'.$location.'.inc.php';
      } else {
-        $f .= ".inc.php";
+        $f .= '.inc.php';
      }
      if (file_exists($f)) {
         include($f);
@@ -672,39 +672,39 @@
      }
   }
 
-  function hook_count($location = ""){
+  function hook_count($location = ''){
     global $phpgw, $phpgw_info;
     $count = 0;
-    reset($phpgw_info["user"]["apps"]);
-    while ($permission = each($phpgw_info["user"]["apps"])) {
-      $f = PHPGW_SERVER_ROOT . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-    	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
+    reset($phpgw_info['user']['apps']);
+    while ($permission = each($phpgw_info['user']['apps'])) {
+      $f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
+    	if ($location != ''){$f .= '_'.$location.'.inc.php';}else{$f .= '.inc.php'; }
   	  if (file_exists($f)) {++$count;}
     }
     return $count;
   }
 
   /* Wrapper to the session->appsession() */
-  function appsession($data = "##NOTHING##") {
+  function appsession($data = '##NOTHING##') {
     global $phpgw_info, $phpgw;
     return $phpgw->session->appsession($data);
   }
 
-    function show_date($t = "", $format = "")
+    function show_date($t = '', $format = '')
     {
       global $phpgw_info;
 
       if (! $t)
          $t = time();
 
-      $t = $t + ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
+      $t = $t + ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
 
       if (! $format) {
-         $format = $phpgw_info["user"]["preferences"]["common"]["dateformat"] . " - ";
-         if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-            $format .= "h:i:s a";
+         $format = $phpgw_info['user']['preferences']['common']['dateformat'] . ' - ';
+         if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12') {
+            $format .= 'h:i:s a';
          } else {
-            $format .= "H:i:s";
+            $format .= 'H:i:s';
          }
       }
       return date($format,$t);
@@ -713,8 +713,8 @@
     function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
     {
       global $phpgw_info;
-      $dateformat = strtolower($phpgw_info["user"]["preferences"]["common"]["dateformat"]);
-      $sep = substr($phpgw_info["user"]["preferences"]["common"]["dateformat"],1,1);
+      $dateformat = strtolower($phpgw_info['user']['preferences']['common']['dateformat']);
+      $sep = substr($phpgw_info['user']['preferences']['common']['dateformat'],1,1);
 
       $dlarr[strpos($dateformat,'y')] = $yearstr;
       $dlarr[strpos($dateformat,'m')] = $monthstr;
@@ -724,20 +724,20 @@
       if ($add_seperator) {
          return (implode($sep,$dlarr));
       } else {
-         return (implode(" ",$dlarr));      
+         return (implode(' ',$dlarr));      
       }
     } 
 
-    function formattime($hour,$min,$sec="")
+    function formattime($hour,$min,$sec='')
     {
       global $phpgw_info;
 
       $h12 = $hour;
-      if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12') {
          if ($hour > 12) 
-            $ampm = " pm";
+            $ampm = ' pm';
          else
-            $ampm = " am";
+            $ampm = ' am';
          $h12 %= 12;
          if ($h12 == 0 && $hour)
             $h12 = 12;
@@ -755,99 +755,99 @@
     // This will be moved into the applications area.
     function check_code($code)
     {
-      $s = "<br>";
+      $s = '<br>';
       switch ($code)
       {
-        case 13:	$s .= lang("Your message has been sent");break;
-        case 14:	$s .= lang("New entry added sucessfully");break;
-        case 15:	$s .= lang("Entry updated sucessfully");	break;
-        case 16:	$s .= lang("Entry has been deleted sucessfully"); break;
-        case 18:	$s .= lang("Password has been updated");	break;
-        case 38:	$s .= lang("Password could not be changed");	break;
-        case 19:	$s .= lang("Session has been killed");	break;
-        case 27:	$s .= lang("Account has been updated");	break;
-        case 28:	$s .= lang("Account has been created");	break;
-        case 29:	$s .= lang("Account has been deleted");	break;
-        case 30:	$s .= lang("Your settings have been updated"); break;
-        case 31:	$s .= lang("Group has been added");	break;
-        case 32:	$s .= lang("Group has been deleted");	break;
-        case 33:	$s .= lang("Group has been updated");	break;
-        case 34:    $s .= lang("Account has been deleted") . "<p>"
-		             .  lang("Error deleting x x directory",lang("users")," ".lang("private")." ") 
- 		             .  ",<br>" . lang("Please x by hand",lang("delete")) . "<br><br>"
-		             .  lang("To correct this error for the future you will need to properly set the")
-		             .  "<br>" . lang("permissions to the files/users directory")
-	          	   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			        . $phpgw_info["server"]["files_dir"] . "/users/"); 
+        case 13:	$s .= lang('Your message has been sent');break;
+        case 14:	$s .= lang('New entry added sucessfully');break;
+        case 15:	$s .= lang('Entry updated sucessfully');	break;
+        case 16:	$s .= lang('Entry has been deleted sucessfully'); break;
+        case 18:	$s .= lang('Password has been updated');	break;
+        case 38:	$s .= lang('Password could not be changed');	break;
+        case 19:	$s .= lang('Session has been killed');	break;
+        case 27:	$s .= lang('Account has been updated');	break;
+        case 28:	$s .= lang('Account has been created');	break;
+        case 29:	$s .= lang('Account has been deleted');	break;
+        case 30:	$s .= lang('Your settings have been updated'); break;
+        case 31:	$s .= lang('Group has been added');	break;
+        case 32:	$s .= lang('Group has been deleted');	break;
+        case 33:	$s .= lang('Group has been updated');	break;
+        case 34:    $s .= lang('Account has been deleted') . '<p>'
+		             .  lang('Error deleting x x directory',lang('users'),' '.lang('private').' ') 
+ 		             .  ',<br>' . lang('Please x by hand',lang('delete')) . '<br><br>'
+		             .  lang('To correct this error for the future you will need to properly set the')
+		             .  '<br>' . lang('permissions to the files/users directory')
+	          	   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			        . $phpgw_info['server']['files_dir'] . '/users/'); 
        		break;
-      case 35:	$s .= lang("Account has been updated") . "<p>"
-		   .  lang("Error renaming x x directory",lang("users"),
-		     " ".lang("private")." ") 
-		   .  ",<br>" . lang("Please x by hand",
-		      lang("rename")) . "<br><br>"
-		   .  lang("To correct this error for the future you will need to properly set the")
-		   .  "<br>" . lang("permissions to the files/users directory")
-		   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			. $phpgw_info["server"]["files_dir"] . "/users/"); 
+      case 35:	$s .= lang('Account has been updated') . '<p>'
+		   .  lang('Error renaming x x directory',lang('users'),
+		     ' '.lang('private').' ') 
+		   .  ',<br>' . lang('Please x by hand',
+		      lang('rename')) . '<br><br>'
+		   .  lang('To correct this error for the future you will need to properly set the')
+		   .  '<br>' . lang('permissions to the files/users directory')
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			. $phpgw_info['server']['files_dir'] . '/users/'); 
 		break;
-      case 36:	$s .= lang("Account has been created") . "<p>"
-		   .  lang("Error creating x x directory",lang("users"),
-		     " ".lang("private")." ") 
-		   .  ",<br>" . lang("Please x by hand",
-		      lang("create")) . "<br><br>"
-		   .  lang("To correct this error for the future you will need to properly set the")
-		   .  "<br>" . lang("permissions to the files/users directory")
-		   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			. $phpgw_info["server"]["files_dir"] . "/users/"); 
+      case 36:	$s .= lang('Account has been created') . '<p>'
+		   .  lang('Error creating x x directory',lang('users'),
+		     ' '.lang('private').' ') 
+		   .  ',<br>' . lang('Please x by hand',
+		      lang('create')) . '<br><br>'
+		   .  lang('To correct this error for the future you will need to properly set the')
+		   .  '<br>' . lang('permissions to the files/users directory')
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			. $phpgw_info['server']['files_dir'] . '/users/'); 
 		break;
-      case 37:	$s .= lang("Group has been added") . "<p>"
-		   .  lang("Error creating x x directory",lang("groups")," ")
-		   .  ",<br>" . lang("Please x by hand",
-		      lang("create")) . "<br><br>"
-		   .  lang("To correct this error for the future you will need to properly set the")
-		   .  "<br>" . lang("permissions to the files/users directory")
-		   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			. $phpgw_info["server"]["files_dir"] . "/groups/"); 
+      case 37:	$s .= lang('Group has been added') . '<p>'
+		   .  lang('Error creating x x directory',lang('groups'),' ')
+		   .  ',<br>' . lang('Please x by hand',
+		      lang('create')) . '<br><br>'
+		   .  lang('To correct this error for the future you will need to properly set the')
+		   .  '<br>' . lang('permissions to the files/users directory')
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
-      case 38:	$s .= lang("Group has been deleted") . "<p>"
-		   .  lang("Error deleting x x directory",lang("groups")," ")
-		   .  ",<br>" . lang("Please x by hand",
-		      lang("delete")) . "<br><br>"
-		   .  lang("To correct this error for the future you will need to properly set the")
-		   .  "<br>" . lang("permissions to the files/users directory")
-		   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			. $phpgw_info["server"]["files_dir"] . "/groups/"); 
+      case 38:	$s .= lang('Group has been deleted') . '<p>'
+		   .  lang('Error deleting x x directory',lang('groups'),' ')
+		   .  ',<br>' . lang('Please x by hand',
+		      lang('delete')) . '<br><br>'
+		   .  lang('To correct this error for the future you will need to properly set the')
+		   .  '<br>' . lang('permissions to the files/users directory')
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
-      case 39:	$s .= lang("Group has been updated") . "<p>"
-		   .  lang("Error renaming x x directory",lang("groups")," ")
-		   .  ",<br>" . lang("Please x by hand",
-		      lang("rename")) . "<br><br>"
-		   .  lang("To correct this error for the future you will need to properly set the")
-		   .  "<br>" . lang("permissions to the files/users directory")
-		   .  "<br>" . lang("On *nix systems please type: x","chmod 707 "
-			. $phpgw_info["server"]["files_dir"] . "/groups/"); 
+      case 39:	$s .= lang('Group has been updated') . '<p>'
+		   .  lang('Error renaming x x directory',lang('groups'),' ')
+		   .  ',<br>' . lang('Please x by hand',
+		      lang('rename')) . '<br><br>'
+		   .  lang('To correct this error for the future you will need to properly set the')
+		   .  '<br>' . lang('permissions to the files/users directory')
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
-      case 40: $s .= lang("You have not entered a\nBrief Description").".";
+      case 40: $s .= lang('You have not entered a\nBrief Description').'.';
 		break;
-      case 41: $s .= lang("You have not entered a\nvalid time of day.");
+      case 41: $s .= lang('You have not entered a\nvalid time of day.');
 		break;
-      case 42: $s .= lang("You have not entered a\nvalid date.");
+      case 42: $s .= lang('You have not entered a\nvalid date.');
 		break;
-      default:	return "";
+      default:	return '';
     }
     return $s;
   }
     
-    function phpgw_error($error,$line = "", $file = "") 
+    function phpgw_error($error,$line = '', $file = '') 
     {
-       echo "<p><b>phpGroupWare internal error:</b><p>$error";
+       echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
        if ($line) {
-          echo "Line: $line";
+          echo 'Line: '.$line;
        }
        if ($file) {
-          echo "File: $file";
+          echo 'File: '.$file;
        }
-       echo "<p>Your session has been halted.";
+       echo '<p>Your session has been halted.';
        exit;
     }
 
@@ -912,10 +912,10 @@
     // This will return a list of functions in the API
     function debug_list_core_functions()
     {
-       echo "<br><b>core functions</b><br>";
-       echo "<pre>";
-       chdir(PHPGW_INCLUDE_ROOT . "/phpgwapi");
+       echo '<br><b>core functions</b><br>';
+       echo '<pre>';
+       chdir(PHPGW_INCLUDE_ROOT . '/phpgwapi');
        system("grep -r '^[ \t]*function' *");
-       echo "</pre>";
+       echo '</pre>';
     }    
   }//end common class
