@@ -115,11 +115,12 @@
 				if ($check)
 				{
 					$this->data[$app[0]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
-						'name'    => $app[0],
-						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[0]]['id']
+						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
+						'name'		=> $app[0],
+						'enabled'	=> True,
+						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
+						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[0]]['id'],
+						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[0]]['version']
 					);
 				} 
 			}
@@ -154,22 +155,24 @@
 				while($app = each($apps))
 				{
 					$this->data[$app[1]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'    => $app[1],
-						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
+						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
+						'name'		=> $app[1],
+						'enabled'	=> True,
+						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
+						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
 					);
 				}
 			}
 			elseif(gettype($apps))
 			{
 				$this->data[$apps] = array(
-					'title'   => $GLOBALS['phpgw_info']['apps'][$apps]['title'],
-					'name'    => $apps,
-					'enabled' => True,
-					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status'],
-					'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
+					'title'		=> $GLOBALS['phpgw_info']['apps'][$apps]['title'],
+					'name'		=> $apps,
+					'enabled'	=> True,
+					'status'	=> $GLOBALS['phpgw_info']['apps'][$apps]['status'],
+					'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
+					'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
 				);
 			}
 			reset($this->data);
@@ -261,11 +264,12 @@
 				if ($this->is_system_enabled($app[1]))
 				{
 					$this->data[$app[1]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'    => $app[1],
-						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
+						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
+						'name'		=> $app[1],
+						'enabled'	=> True,
+						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
+						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
 					);
 				}
 			}
@@ -289,12 +293,13 @@
 				while ($this->db->next_record())
 				{
 					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array(
-						'title'   => $this->db->f('app_title'),
-						'name'    => $this->db->f('app_name'),
-						'enabled' => True,
-						'status'  => $this->db->f('app_enabled'),
-						'id'      => intval($this->db->f('app_id')),
-						'order'   => intval($this->db->f('app_order'))
+						'title'		=> $this->db->f('app_title'),
+						'name'		=> $this->db->f('app_name'),
+						'enabled'	=> True,
+						'status'	=> $this->db->f('app_enabled'),
+						'id'		=> intval($this->db->f('app_id')),
+						'order'		=> intval($this->db->f('app_order')),
+						'version'	=> $this->db->f('app_version') 
 					);
 				}
 			}
