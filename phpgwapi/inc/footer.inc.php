@@ -40,15 +40,15 @@
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
 		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 	{
-		if ($menuaction)
+		if ($GLOBALS['HTTP_GET_VARS']['menuaction'])
 		{
 //			list($app,$class,$method) = explode('.',$menuaction);
 //			if ($app && $class && $method)
 //			{
-//				$obj = CreateObject(sprintf('%s.%s',$app,$class));
-				if (is_array($obj->public_functions) && $obj->public_functions['footer'])
+//				$GLOBALS['obj'] = CreateObject(sprintf('%s.%s',$GLOBALS['app'],$GLOBALS['class']));
+				if (is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['footer'])
 				{
-					eval("\$obj->footer();");
+					eval("\$GLOBALS['obj']->footer();");
 				}
 				elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
 				{
