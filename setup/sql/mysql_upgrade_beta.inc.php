@@ -788,6 +788,11 @@
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9pre1";
   }
 
+  $test[] = "0.9.9pre1";
+  function upgrade0_9_9pre1(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9";
+  }
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

@@ -40,6 +40,8 @@
   $phpgw_setup->db->query("DROP TABLE languages");
   $phpgw_setup->db->query("drop sequence categories_cat_id_seq");
   $phpgw_setup->db->query("DROP TABLE categories");
+  $phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq");
+  $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("DROP sequence notes_note_id_seq");
   $phpgw_setup->db->query("DROP TABLE notes");
 ?>
