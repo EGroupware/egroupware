@@ -13,6 +13,7 @@
 
   function v7122000to8032000(){
     global $currentver, $db;
+    $didupgrade = True;
     if ($currentver == "7122000"){
       echo "  <tr bgcolor=\"e6e6e6\">\n";
 //      echo "    <td>Upgrade from 7122000 to 8032000 is completed.</td>\n";
@@ -23,6 +24,7 @@
   }
   function v8032000to8072000(){
     global $currentver, $db;
+    $didupgrade = True;
     if ($currentver == "8032000"){
       echo "  <tr bgcolor=\"e6e6e6\">\n";
 //      echo "    <td>Upgrade from 8032000 to 8072000 is completed.</td>\n";
@@ -34,6 +36,7 @@
   
   function v8072000to8212000(){
     global $currentver, $db;
+    $didupgrade = True;
     if ($currentver == "8072000"){
 
       $sql = "CREATE TABLE applications ("
@@ -68,6 +71,7 @@
   }
   function v8212000to9052000(){
     global $currentver, $db;
+    $didupgrade = True;
     if ($currentver == "8212000"){
       $db->query("alter table chat_channel change name name varchar(10) not null");
       $db->query("alter table chat_messages change channel channel char(20) not null");
@@ -85,6 +89,7 @@
   }
   function v9052000to9072000(){
     global $currentver, $db;
+    $didupgrade = True;
     if ($currentver == "9052000"){
       echo "  <tr bgcolor=\"e6e6e6\">\n";
 //      echo "    <td>Upgrade from 9052000 to 9072000 is completed.</td>\n";
@@ -95,6 +100,7 @@
   }
   function v9072000to0_9_1(){
     global $currentver, $newversion, $db;
+    $didupgrade = True;
     if ($currentver == "9072000"){
 
       $db->query("alter table accounts     change con               account_id             int(11)     DEFAULT '0' NOT NULL auto_increment");
@@ -191,6 +197,12 @@
   v9052000to9072000();
   v9072000to0_9_1();
   $db->query("update applications set app_version='$newversion' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
+
+  if (!$didupgrade == True){
+    echo "  <tr bgcolor=\"e6e6e6\">\n";
+    echo "    <td>No table changes were needed. The script only updated your version setting.</td>\n";
+    echo "  </tr>\n";
+  }
 
   echo "</table>\n";
 ?>

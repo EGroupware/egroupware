@@ -44,6 +44,12 @@
 //  $db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 
+  if (!isset($oldversion)){
+    $db->query("select app_version from applications where app_name='admin'");
+    $db->next_record();
+    $oldversion = $db->f("app_version");
+  }
+
   switch($msg){
     case "1":
       return "You have been successfully logged out";
@@ -55,6 +61,36 @@
 
   /* Database setup */
   switch($action){
+    case "regularversion":
+      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+      echo "<body bgcolor='#ffffff'>\n"; 
+      echo "<table border=\"0\" align=\"center\">\n";
+      echo "  <tr bgcolor=\"486591\">\n";
+      echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
+      echo "  </tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>You appear to be running version $oldversion of phpGroupWare.<br>\n";
+      echo "    We will automaticly update your tables/records to $newversion, but we highly recommend backing up your tables incase the script causes damage to your data.\n";
+      echo "    These automated scripts can easily destroy your data. Please backup before going any further!</td>\n";
+      echo "  </tr>\n";
+      echo "  </tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>";
+      echo "      <form method=\"POST\" action=$PHP_SELF>\n";
+      echo "      <input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
+      echo "      <input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
+      echo "      <input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
+      echo "      <input type=\"submit\" name=\"action\" value=\"Dump my old tables\">\n";
+      echo "      </form>\n";
+      echo "      <form method=\"POST\" action=\"config.php\">\n";
+      echo "      <input type=\"submit\" name=\"action\" value=\"Dont touch my data\">\n";
+      echo "      </form>\n";
+      echo "    </td>";
+      echo "  </tr>\n";
+      echo "</table>\n";
+      echo "</body></html>\n";
+
+      break;
     case "prebetaversion":
       echo "<html><head><title>phpGroupWare Setup</title></head>\n";
       echo "<body bgcolor='#ffffff'>\n"; 
@@ -65,7 +101,7 @@
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>You appear to be running a pre-beta version of phpGroupWare<br>\n";
       echo "    We are providing an automated upgrade system, but we highly recommend backing up your tables incase the script causes damage to your data.<br>\n";
-      echo "    These automated scripts can easily destroy your data. Please backup before gonig any further!</td>\n";
+      echo "    These automated scripts can easily destroy your data. Please backup before going any further!</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
 ?>
@@ -142,8 +178,8 @@
       $db->Halt_On_Error = "report";
       include ("upgradetables_".$phpgw_info["server"]["db_type"].".inc.php");
 //      include ("default_records.inc.php");
-      include ("lang_records.inc.php");
       $db->Halt_On_Error = "no";
+      include ("lang_records.inc.php");
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
@@ -155,10 +191,8 @@
       echo "</table>\n";
       break;      
     default:
-      $db->query("select * from config");
-      if ($db->num_rows() == 0){
-        $db->query("select * from accounts");
-        if ($db->num_rows() == 0){
+      if (isset($oldversion)){
+        if ($newversion == $oldversion){
           echo "<html><head><title>phpGroupWare Setup</title></head>\n";
           echo "<body bgcolor='#ffffff'>\n"; 
           echo "<table border=\"0\" align=\"center\">\n";
@@ -166,38 +200,58 @@
           echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
           echo "  </tr>\n";
           echo "  <tr bgcolor=\"e6e6e6\">\n";
-          echo "    <td>You appear to be running a new install of phpGroupWare, so the tables will be created for you.</td>\n";
-          echo "  </tr>\n";
-          $db->Halt_On_Error = "report";
-          include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
-          include ("default_records.inc.php");
-          include ("lang_records.inc.php");
-          $db->Halt_On_Error = "no";
-          echo "  <tr bgcolor=\"486591\">\n";
-          echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
-          echo "  </tr>\n";
-          echo "  <tr bgcolor=\"e6e6e6\">\n";
-          echo "    <td>If you did not recieve any errors, your tables have been created.<br>\n";
+          echo "    <td>Your database is to date with version $oldversion.<br>\n";
           echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
           echo "  </tr>\n";
           echo "</table>\n";
         }else{
-          Header("Location: $PHP_SELF?action=prebetaversion");
+          Header("Location: $PHP_SELF?action=regularversion");
         }
       }else{
-        echo "<html><head><title>phpGroupWare Setup</title></head>\n";
-        echo "<body bgcolor='#ffffff'>\n"; 
-        echo "<table border=\"0\" align=\"center\">\n";
-        echo "  <tr bgcolor=\"486591\">\n";
-        echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
-        echo "  </tr>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Your database seems to be current.<br>\n";
-        echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
-        echo "  </tr>\n";
-        echo "</table>\n";
+        $db->query("select * from config");
+        if ($db->num_rows() == 0){
+          $db->query("select * from accounts");
+          if ($db->num_rows() == 0){
+            echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+            echo "<body bgcolor='#ffffff'>\n"; 
+            echo "<table border=\"0\" align=\"center\">\n";
+            echo "  <tr bgcolor=\"486591\">\n";
+            echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
+            echo "  </tr>\n";
+            echo "  <tr bgcolor=\"e6e6e6\">\n";
+            echo "    <td>You appear to be running a new install of phpGroupWare, so the tables will be created for you.</td>\n";
+            echo "  </tr>\n";
+            $db->Halt_On_Error = "report";
+            include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
+            include ("default_records.inc.php");
+            include ("lang_records.inc.php");
+            $db->Halt_On_Error = "no";
+            echo "  <tr bgcolor=\"486591\">\n";
+            echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
+            echo "  </tr>\n";
+            echo "  <tr bgcolor=\"e6e6e6\">\n";
+            echo "    <td>If you did not recieve any errors, your tables have been created.<br>\n";
+            echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+            echo "  </tr>\n";
+            echo "</table>\n";
+          }else{
+            Header("Location: $PHP_SELF?action=prebetaversion");
+          }
+        }else{
+          echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+          echo "<body bgcolor='#ffffff'>\n"; 
+          echo "<table border=\"0\" align=\"center\">\n";
+          echo "  <tr bgcolor=\"486591\">\n";
+          echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
+          echo "  </tr>\n";
+          echo "  <tr bgcolor=\"e6e6e6\">\n";
+          echo "    <td>Your database seems to be current.<br>\n";
+          echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+          echo "  </tr>\n";
+          echo "</table>\n";
+        }
       }
-  }
+    }
 
   echo "</body></html>";
   //db->disconnect();
