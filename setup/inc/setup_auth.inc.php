@@ -61,7 +61,9 @@
         exit;
       }
     }else{
-      if ($FormPW != $phpgw_info["server"]["config_passwd"]) {
+      print "$FormPW<br>";
+	print $phpgw_domain["default"]["config_passwd"];
+      if ($FormPW != $phpgw_domain["default"]["config_passwd"]) {
         loginForm("Invalid password.");
         exit;
       } 
@@ -77,7 +79,7 @@
         exit;
       }
     }else{
-      if ($SetupCookie != $phpgw_info["server"]["config_passwd"]) {
+      if ($SetupCookie != $phpgw_domain["default"]["config_passwd"]) {
         setcookie("SetupCookie","");  // scrub the old one
         loginForm("Invalid session cookie (cookies must be enabled)");
         exit;
