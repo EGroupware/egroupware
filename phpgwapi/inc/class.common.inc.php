@@ -929,7 +929,7 @@
 			{
 				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 				if (file_exists($f) &&
-					($phpgw_info['user']['apps'][$appname]) || ($location == 'preferences'))
+					( $phpgw_info['user']['apps'][$appname] || ( ($location == 'preferences') && $appname) ) )
 				{
 					//echo '<br>including: ' . $f;
 					include($f);
