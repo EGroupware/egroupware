@@ -59,6 +59,7 @@
 	{
 		case 'notes':
 		case 'property':
+		case 'filemanager':
 			$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
 			break;
 	}
