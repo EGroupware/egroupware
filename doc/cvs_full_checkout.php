@@ -67,7 +67,6 @@
 	$co_modules[] = 'phpgwapi';
 	$co_modules[] = 'phpgwnetsaint';
 	$co_modules[] = 'phpsysinfo';
-	$co_modules[] = 'phpwebhosting';
 	$co_modules[] = 'polls';
 	$co_modules[] = 'preferences';
 	$co_modules[] = 'projects';

@@ -720,7 +720,7 @@
 				'projects'    => True,
 				'phonelog'    => True,
 				'infolog'     => True,
-				'phpwebhosting' => True
+				'filemanager' => True
 			);
 
 			$sbox = createobject('phpgwapi.sbox');

@@ -376,7 +376,7 @@
 						'email',
 						'notes',
 						'todo',
-						'phpwebhosting',
+						'filemanager',
 						'manual'
 					);
 

@@ -152,7 +152,7 @@
 
 		/* Group perms for the default group */
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpwebhosting','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('filemanager','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $defaultgroupid . ", 1)");
@@ -199,7 +199,7 @@
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('admin','run'," . $accountid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $accountid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpwebhosting','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('filemanager','run'," . $accountid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $accountid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $accountid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $accountid . ", 1)");
