@@ -38,6 +38,35 @@
 		}
 	}
 
+	/* Generic formatted list function */
+	function formatted_list($name,$list,$id='',$default=False,$java=False)
+	{
+		if ($java)
+		{
+			$jselect = ' onChange="this.form.submit();"';
+		}
+
+		$select  = "\n" .'<select name="' . $name . '"' . $jselect . ">\n";
+		if($default)
+		{
+			$select .= '<option value="">' . lang('Please Select') . '</option>'."\n";
+		}
+		while (list($key,$val) = each($list))
+		{
+			$select .= '<option value="' . $key . '"';
+			if ($key == $id && $id != '')
+			{
+				$select .= ' selected';
+			}
+			$select .= '>' . $val . '</option>'."\n";
+		}
+
+		$select .= '</select>'."\n";
+		$select .= '<noscript><input type="submit" name="' . $name . '_select" value="True"></noscript>' . "\n";
+
+		return $select;
+	}
+
 	function read_custom_fields($start='',$limit='',$query='',$sort='ASC')
 	{
 		global $phpgw,$phpgw_info;

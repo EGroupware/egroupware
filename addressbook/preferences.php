@@ -78,7 +78,15 @@
 			{
 				$phpgw->preferences->delete('addressbook','mainscreen_showbirthdays');
 			}
-
+ 			if ($default_filter)
+			{
+				$phpgw->preferences->delete('addressbook','default_filter');
+				$phpgw->preferences->add('addressbook','default_filter');
+			}
+			else
+			{
+				$phpgw->preferences->delete('addressbook','default_filter');
+			}
  			if ($autosave_category)
 			{
 				$phpgw->preferences->delete('addressbook','autosave_category');
@@ -163,34 +171,42 @@
 				. '>' . $cf . '</option></td>' . "\n"
 				. '</tr>' . "\n";
 		}
-		$t->set_var(custom_fields,$custom_var);
+		$t->set_var('custom_fields',$custom_var);
 	}
 	else
 	{
-		$t->set_var(custom_fields,'');
+		$t->set_var('custom_fields','');
 	}
 
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 	$t->set_var(tr_color,$tr_color);
-	$t->set_var(lang_showbirthday,lang('show birthday reminders on main screen'));
+	$t->set_var('lang_showbirthday',lang('show birthday reminders on main screen'));
 
 	if ($phpgw_info['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
-		$t->set_var(show_birthday,' checked');
+		$t->set_var('show_birthday',' checked');
 	}
 	else
 	{
-		$t->set_var(show_birthday,'');
+		$t->set_var('show_birthday','');
 	}
 
-	$t->set_var(lang_autosave,lang('Autosave default category'));
+	$list = array(
+		''        => lang('All'),
+		'private' => lang('Private'),
+		'blank'   => lang('Blank')
+	);
+	$t->set_var('lang_default_filter',lang('Default Filter'));
+	$t->set_var('filter_select',formatted_list('default_filter',$list,$phpgw_info['user']['preferences']['addressbook']['default_filter']));
+
+	$t->set_var('lang_autosave',lang('Autosave default category'));
 	if ($phpgw_info['user']['preferences']['addressbook']['autosave_category'])
 	{
-		$t->set_var(autosave,' checked');
+		$t->set_var('autosave',' checked');
 	}
 	else
 	{
-		$t->set_var(autosave,'');
+		$t->set_var('autosave','');
 	}
 	$t->set_var('lang_defaultcat',lang('Default Category'));
 	$t->set_var('cat_select',cat_option($phpgw_info['user']['preferences']['addressbook']['default_category']));
@@ -203,6 +219,10 @@
 	$t->set_var('lang_other',lang('Other').' '.lang('Fields'));
 	$t->set_var('lang_otherprefs',lang('Other').' '.lang('Preferences'));
 	$t->set_var('lang_submit',lang('submit'));
+	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$t->set_var('th_text',$phpgw_info['theme']['th_text']);
+	$t->set_var('row_on',$phpgw_info['theme']['row_on']);
+	$t->set_var('row_off',$phpgw_info['theme']['row_off']);
 
 	$t->pparse('out','preferences');
 	$phpgw->common->phpgw_footer();

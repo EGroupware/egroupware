@@ -115,13 +115,25 @@
 		$offset = 30;
 	}
 
-	// Set qfilter to display entries where tid=n (normal contact entry),
-	//   else they may be accounts, etc.
-	if (!$filter) { $filter = 'none'; }
+	if (!$filter)
+	{
+		$filter = 'none';
+	}
+	if($phpgw_info['user']['preferences']['addressbook']['default_filter'])
+	{
+		$filter = $phpgw_info['user']['preferences']['addressbook']['default_filter'];
+	}
 
+	/*
+	Set qfilter to display entries where tid=n (normal contact entry),
+	else they may be accounts, etc.
+	*/
 	$qfilter = 'tid=n';
-	
-	switch ($filter) {
+	switch ($filter)
+	{
+		case 'blank':
+			$nosearch = True;
+			break;
 		case 'none':
 			break;
 		case 'private':
@@ -132,7 +144,8 @@
 		default:
 			$qfilter .= ',owner='.$filter;
 	}
-	if ($cat_id) {
+	if ($cat_id)
+	{
 		$qfilter .= ',cat_id='.$cat_id;
 	}		
 
@@ -164,8 +177,16 @@
  
 	if (!$userid) { $userid = $phpgw_info['user']['account_id']; }
 
-	// read the entry list
-	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
+	if ($nosearch && !$query)
+	{
+		$entries = array();
+		$this->total_records = 0;
+	}
+	else
+	{
+		/* read the entry list */
+		$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
+	}
 
 	$search_filter = $phpgw->nextmatchs->show_tpl('/addressbook/index.php',
 		$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
