@@ -2886,6 +2886,25 @@
 			return $ret;
 		}
 
+		/* This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4 */
+		function list_cals_add($id,&$users,&$groups)
+		{
+			$name = $GLOBALS['phpgw']->common->grab_owner_name($id);
+			if (($type = $GLOBALS['phpgw']->accounts->get_type($id)) == 'g')
+			{
+				$arr = &$groups;
+			}
+			else
+			{
+				$arr = &$users;
+			}
+			$arr[$name] = Array(
+				'grantor' => $id,
+				'value'   => ($type == 'g' ? 'g_' : '') . $id,
+				'name'    => $name
+			);
+		}
+
 		/*!
 		@function list_cals
 		@abstract generate list of user- / group-calendars for the selectbox in the header
@@ -2893,39 +2912,22 @@
 		*/
 		function list_cals()
 		{
-			function add($id,&$users,&$groups)
-			{
-				$name = $GLOBALS['phpgw']->common->grab_owner_name($id);
-				if (($type = $GLOBALS['phpgw']->accounts->get_type($id)) == 'g')
-				{
-					$arr = &$groups;
-				}
-				else
-				{
-					$arr = &$users;
-				}
-				$arr[$name] = Array(
-					'grantor'	=> $id,
-					'value'		=> ($type == 'g' ? 'g_' : '') . $id,
-					'name'		=> $name
-				);
-			}
 			$users = $groups = array();
 			foreach($this->grants as $id => $rights)
 			{
-				add($id,$users,$groups);
+				$this->list_cals_add($id,$users,$groups);
 			}
 			if ($memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				foreach($memberships as $group_info)
 				{
-					add($group_info['account_id'],$users,$groups);
+					$this->list_cals_add($group_info['account_id'],$users,$groups);
 
 					if ($account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar'))
 					{
 						foreach($account_perms as $id)
 						{
-							add($id,$users,$groups);
+							$this->list_cals_add($id,$users,$groups);
 						}
 					}
 				}
