@@ -38,26 +38,26 @@
   echo "<center>phpGroupWare version " . $phpgw_info["server"]["version"] . " setup</center><p>";
 
   if ($submit) {
-     $db->query("delete from config");
+     @$db->query("delete from config");
      while ($newsetting = each($newsettings)) {
-	if($newsetting[0] == "nntp_server") {
-	  $db->query("select config_value FROM config WHERE config_name='nntp_server'");
-	  if($db->num_rows()) {
-	    $db->next_record();
-	    if($db->f("config_value") <> $newsetting[1]) {
-	      $db->query("DELETE FROM newsgroups");
-	      $db->query("DELETE FROM users_newsgroups");
-	    }
-	  }
-	}
-        $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
-        		  . "','" . addslashes($newsetting[1]) . "')");
+   	if ($newsetting[0] == "nntp_server") {
+ 	     $db->query("select config_value FROM config WHERE config_name='nntp_server'");
+	      if ($db->num_rows()) {
+	         $db->next_record();
+  	       if ($db->f("config_value") <> $newsetting[1]) {
+	            $db->query("DELETE FROM newsgroups");
+   	         $db->query("DELETE FROM users_newsgroups");
+   	      }
+	      }
+   	}
+       $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
+    	  	  . "','" . addslashes($newsetting[1]) . "')");
      }
      echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
   }
 
-  $db->query("select * from config");
-  while ($db->next_record()) {
+  @$db->query("select * from config");
+  while (@$db->next_record()) {
     $current_config[$db->f("config_name")] = $db->f("config_value");
   }
 ?>  
