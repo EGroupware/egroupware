@@ -174,7 +174,7 @@
 		
 		$cal_info->datetime += $tz_offset;
 		$cal_info->edatetime += $tz_offset;
-		$overlapping_events = $phpgw->calendar->overlap($cal_info->datetime,$cal_info->edatetime,$cal_info->participants,$cal_info->groups,$cal_info->owner,$cal_info->id);
+		$overlapping_events = $phpgw->calendar->overlap($cal_info->datetime,$cal_info->edatetime,$cal_info->participants,$cal_info->owner,$cal_info->id);
 	}
 	else
 	{

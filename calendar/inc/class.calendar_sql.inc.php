@@ -31,12 +31,7 @@ class calendar_
 	var $re = 0;
 	var $checkd_re = 0;
 	var $sorted_re = 0;
-	var $hour_arr = Array();
-	var $rowspan_arr = Array();
 	var $days = Array();
-	var $first_hour;
-	var $last_hour;
-	var $rowspan;
 	var $weekstarttime;
 	var $daysinweek = 7;
 	var $filter;
@@ -132,23 +127,57 @@ class calendar_
 		}
 
 		$datetime = $this->makegmttime(0,0,0,$startMonth,$startDay,$startYear);
-		$startDate = ' AND (datetime >= '.$datetime.') ';
+		$startDate = ' AND (calendar_entry.datetime >= '.$datetime.') ';
 	  
 		if($endYear != '' && $endMonth != '' && $endDay != '')
 		{
 			$edatetime = $this->makegmttime(23,59,59,intval($endMonth),intval($endDay),intval($endYear));
-			$endDate = ' AND (edatetime <= '.$edatetime.') ';
+			$endDate = 'AND (calendar_entry.edatetime <= '.$edatetime.') ';
 		}
 		else
 		{
 			$endDate = '';
 		}
 
-		// Still need to write a common query that we pass extra query parameters to.
-		// then just return an array of the id's that match the condition.
-		// Something like......
-		// $events = $this->get_event_ids($startDate.$endDate);
-		return $events;
+		return $this->get_event_ids(False,$startDate.$endDate);
+	}
+
+	/***************** Local functions for SQL based Calendar *****************/
+
+	function get_event_ids($search_repeats=False,$extra='')
+	{
+		if($search_repeats == True)
+		{
+			$repeats_from = ', calendar_entry_repeats ';
+			$repeats_where = 'AND (calendar_entry_repeats.cal_id = calendar_entry.cal_id) ';
+		}
+		else
+		{
+			$repeats_from = ' ';
+			$repeats_where = '';
+		}
+		
+		$sql = 'SELECT DISTINCT calendar_entry.cal_id '
+				. 'FROM calendar_entry, calendar_entry_user'
+				. $repeats_from
+				. 'WHERE (calendar_entry_user.cal_id = calendar_entry.cal_id) '
+				. $repeats_where . $extra;
+
+		$this->stream->query($sql,__LINE__,__FILE__);
+		
+		if($this->stream->num_rows() == 0)
+		{
+			return False;
+		}
+
+		$retval = Array();
+
+		while($this->stream->next_record())
+		{
+			$retval[] = intval($this->stream->f('cal_id'));
+		}
+
+		return $retval;
 	}
 // End of ICal style support.......
 
@@ -342,100 +371,6 @@ class calendar_
 		return $this->localdates(mktime(0,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
 	}
 
-	function overlap($starttime,$endtime,$participants,$groups,$owner=0,$id=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		$retval = Array();
-		$ok = False;
-
-		$starttime -= ((60 * 60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
-		$endtime -= ((60 * 60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
-
-		if($starttime == $endtime)
-		{
-			$endtime = mktime($phpgw->common->show_date($starttime,'H'),$phpgw->common->show_date($starttime,'i'),0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']) - 1;
-		}
-
-		$sql = 'SELECT DISTINCT calendar_entry.cal_id '
-			. 'FROM calendar_entry, calendar_entry_user '
-			. 'WHERE (calendar_entry_user.cal_id = calendar_entry.cal_id) AND '
-			. '  ((('.$starttime.' <= calendar_entry.cal_datetime) AND ('.$endtime.' >= calendar_entry.cal_datetime) AND ('.$endtime.' <= calendar_entry.cal_edatetime)) '
-			. 'OR (('.$starttime.' >= calendar_entry.cal_datetime) AND ('.$starttime.' < calendar_entry.cal_edatetime) AND ('.$endtime.' >= calendar_entry.cal_edatetime)) '
-			. 'OR (('.$starttime.' <= calendar_entry.cal_datetime) AND ('.$endtime.' >= calendar_entry.cal_edatetime)) '
-			. 'OR (('.$starttime.' >= calendar_entry.cal_datetime) AND ('.$endtime.' <= calendar_entry.cal_edatetime))) ';
-
-		if(count($participants) || is_array($groups))
-		{
-			$p_g = '';
-			if(count($participants))
-			{
-				$p_g .= '(';
-				for($i=0;$i<count($participants);$i++)
-				{
-					if($i)
-					{
-						$p_g .= ' OR ';
-					}
-					$p_g .= 'calendar_entry_user.cal_login='.$participants[$i];
-				}
-				$p_g .= ') ';
-			}
-			$group = $this->group_search($owner);
-			if ($group)
-			{
-				if ($p_g)
-				{
-					$p_g .= 'OR ';
-				}
-				$p_g .= $group;
-			}
-			if($p_g)
-			{
-				$sql .= ' AND (' . $p_g . ')';
-			}
-		}
-      
-		if($id)
-		{
-			$sql .= ' AND calendar_entry.cal_id <> '.$id;
-		}
-
-		$db2 = $phpgw->db;
-
-		$phpgw->db->query($sql,__LINE__,__FILE__);
-		if(!$phpgw->db->num_rows())
-		{
-			return false;
-		}
-		while($phpgw->db->next_record())
-		{
-			$cal_id  = intval($phpgw->db->f('cal_id'));
-			$db2->query('SELECT cal_type FROM calendar_entry_repeats WHERE cal_id='.$cal_id,__LINE__,__FILE__);
-			if(!$db2->num_rows())
-			{
-				$retval[] = $cal_id;
-				$ok = True;
-			}
-			else
-			{
-				if($db2->f('cal_type') <> 'monthlyByDay')
-				{
-					$retval[] = $cal_id;
-					$ok = True;
-				}
-			}
-		}
-		if($ok)
-		{
-			return $retval;
-		}
-		else
-		{
-			return False;
-		}
-	}
-
 	function is_private($cal_info,$owner,$field)
 	{
 		global $phpgw, $phpgw_info;
@@ -483,10 +418,7 @@ class calendar_
 		$this->re = 0;
 		$this->set_filter();
 		$owner = $owner == 0?$phpgw_info['user']['account_id']:$owner;
-		$sql = 'SELECT calendar_entry.cal_id '
-			. 'FROM calendar_entry, calendar_entry_repeats, calendar_entry_user '
-			. 'WHERE calendar_entry.cal_id=calendar_entry_repeats.cal_id AND '
-			. "calendar_entry.cal_id = calendar_entry_user.cal_id AND calendar_entry.cal_type='M' AND ";
+		$sql = "AND calendar_entry.cal_type='M' AND ";
 		$sqlfilter='';
 		
 // Private
@@ -527,22 +459,16 @@ class calendar_
 		
 		$sql .= $orderby;
 
-		$db2->query($sql,__LINE__,__FILE__);
+		$events = $this->get_event_ids(True,$sql);
 
-		$i = 0;
-		
-		if($db2->num_rows())
+		if($events == False)
 		{
-			while ($db2->next_record())
-			{
-				$repeated_event_id[$i++] = (int)$db2->f('cal_id');
-			}
-			$this->re = $i;
-			$this->repeated_events = $this->getevent($repeated_event_id);
+			$this->repeated_events = Null;
 		}
 		else
 		{
-			$this->repeated_events = Null;
+			$this->re = count($events);
+			$this->repeated_events = $this->getevent($events);
 		}
 	}
 
@@ -1075,101 +1001,6 @@ class calendar_
 		return $p->finish($p->parse('out','month_header'));
 	}
 
-	function display_large_month($month,$year,$showyear,$owner=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		if($owner == $phpgw_info['user']['account_id'])
-		{
-			$owner = 0;
-		}
-		
-		$this->read_repeated_events($owner);
-
-		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-		$p->set_unknowns('remove');
-
-		$templates = Array(
-			'month'			=>	'month.tpl',
-			'month_filler'	=>	'month_filler.tpl',
-			'month_header'	=>	'month_header.tpl'
-		);
-		$p->set_file($templates);
-		
-		$p->set_var('month_filler_text',$this->large_month_header($month,$year,False));
-		$p->parse('row','month_filler',True);
-
-		$monthstart = intval(date('Ymd',mktime(0,0,0,$month    ,1,$year)));
-		$monthend   = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
-
-		$cellcolor = $phpgw_info['theme']['row_on'];
-
-		for ($i=$this->weekstarttime;intval(date('Ymd',$i))<=$monthend;$i += (24 * 3600 * 7))
-		{
-			$cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
-			$p->set_var('month_filler_text',$this->display_week($i,False,$cellcolor,False,$owner,$monthstart,$monthend));
-			$p->parse('row','month_filler',True);
-		}
-		return $p->finish($p->parse('out','month'));
-	}
-
-	function display_large_week($day,$month,$year,$showyear,$owners=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-		$p->set_unknowns('remove');
-
-		$templates = Array(
-			'month'			=>	'month.tpl',
-			'month_filler'	=>	'month_filler.tpl',
-			'month_header'	=>	'month_header.tpl'
-		);
-		$p->set_file($templates);
-		
-		$start = $this->get_weekday_start($year, $month, $day);
-
-		$cellcolor = $phpgw_info['theme']['row_off'];
-
-		$true_printer_friendly = $this->printer_friendly;
-
-		if(is_array($owners))
-		{
-			$display_name = True;
-			$counter = count($owners);
-			$owners_array = $owners;
-		}
-		else
-		{
-			$display_name = False;
-			$counter = 1;
-			$owners_array[0] = $owners;
-		}
-		$p->set_var('month_filler_text',$this->large_month_header($month,$year,$display_name));
-		$p->parse('row','month_filler',True);
-
-		for($i=0;$i<$counter;$i++)
-		{
-			$this->repeated_events = Null;
-			$owner = $owners_array[$i];
-			
-			if($owner <> $phpgw_info['user']['account_id'] && $owner <> 0)
-			{
-				$this->printer_friendly = True;
-			}
-			else
-			{
-				$this->printer_friendly = $true_printer_friendly;
-			}
-			
-			$this->read_repeated_events($owner);
-			$p->set_var('month_filler_text',$this->display_week($start,True,$cellcolor,$display_name,$owner));
-			$p->parse('row','month_filler',True);
-		}
-		$this->printer_friendly = $true_printer_friendly;
-		return $p->finish($p->parse('out','month'));
-	}
-
 // This function may be removed in the near future.....
 	function pretty_small_calendar($day,$month,$year,$link='')
 	{
@@ -1394,284 +1225,6 @@ class calendar_
 		$str .= '</table>';
 		return $str;
 	}
-
-	function html_for_event_day_at_a_glance ($event)
-	{
-		global $phpgw, $phpgw_info;
-
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			$format = 'h:i a';
-		}
-		else
-		{
-			$format = 'H:i';
-		}
-
-		$ind = intval($phpgw->common->show_date($event->datetime,'H'));
-
-		if($ind<$this->first_hour || $ind>$this->last_hour)
-		{
-			$ind = 99;
-		}
-
-		if(!isset($this->hour_arr[$ind]) || !$this->hour_arr[$ind])
-		{
-			$this->hour_arr[$ind] = '';
-		}
-
-		$description = $this->is_private($event,$this->owner,'description');
-		
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
-		{
-			$this->hour_arr[$ind] .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
-								.'/calendar/view.php','id='.$event->id.'&owner='.$this->owner)
-								. "\" onMouseOver=\"window.status='"
-								. lang('View this entry')."'; return true;\">";
-		}
-
-		$this->hour_arr[$ind] .= '[' . $phpgw->common->show_date($event->datetime,$format);
-		if ($event->datetime <> $event->edatetime)
-		{
-			$this->hour_arr[$ind] .= ' - ' . $phpgw->common->show_date($event->edatetime,$format);
-			$end_t_h = intval($phpgw->common->show_date($event->edatetime,'H'));
-			$end_t_m = intval($phpgw->common->show_date($event->edatetime,'i'));
-			
-			if (end_t_m == 0)
-			{
-				$this->rowspan = $end_t_h - $ind;
-			}
-			else
-			{
-				$this->rowspan = $end_t_h - $ind + 1;
-			}
-			
-			if(isset($this->rowspan_arr[$ind]))
-			{
-				$r = $this->rowspan_arr[$ind];
-			}
-			else
-			{
-				$r = 0;
-			}
-			
-			if ($this->rowspan > $r && $this->rowspan > 1)
-			{
-				$this->rowspan_arr[$ind] = $this->rowspan;
-			}
-		}
-
-		$this->hour_arr[$ind] .= '] ';
-		$this->hour_arr[$ind] .= '<img src="'.$phpgw->common->get_image_path('calendar').'/circle.gif" border="0" alt="' . $description . '">';
-
-		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
-		{
-			$this->hour_arr[$ind] .= '</a>';
-		}
-		
-		if ($event->priority == 3)
-		{
-			$this->hour_arr[$ind] .= '<font color="CC0000">';
-		}
-		
-		$this->hour_arr[$ind] .= $this->is_private($event,$this->owner,'name');
-
-		if ($event->priority == 3)
-		{
-			$this->hour_arr[$ind] .= '</font>';
-		}
-		
-		$this->hour_arr[$ind] .= '<br>';
-	}
-
-	function print_day_at_a_glance($date,$owner=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		$this->read_repeated_events($owner);
-
-		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-		$p->set_unknowns('remove');
-
-		$templates = Array(
-			'day_cal'			=>	'day_cal.tpl',
-			'mini_week'			=> 'mini_week.tpl',
-//			'day_row'			=>	'day_row.tpl',
-			'day_row_event'	=> 'day_row_event.tpl',
-			'day_row_time'		=>	'day_row_time.tpl'
-		);
-      $p->set_file($templates);
-      
-		if (! $phpgw_info['user']['preferences']['calendar']['workdaystarts'] &&
-			 ! $phpgw_info['user']['preferences']['calendar']['workdayends'])
-		{
-
-			$phpgw_info['user']['preferences']['calendar']['workdaystarts'] = 8;
-			$phpgw_info['user']['preferences']['calendar']['workdayends']   = 16;
-		}
-
-		$this->first_hour = (int)$phpgw_info['user']['preferences']['calendar']['workdaystarts'] + 1;
-		$this->last_hour  = (int)$phpgw_info['user']['preferences']['calendar']['workdayends'] + 1;
-
-		$events = array(CreateObject('calendar.calendar_item'));
-
-		$events = $this->get_sorted_by_date($date['raw']);
-
-		if(!$events)
-		{
-      }
-      else
-      {
-			$event = CreateObject('calendar.calendar_item');
-			for($i=0;$i<count($events);$i++)
-			{
-				$event = $events[$i];
-				if($event)
-				{
-					$this->html_for_event_day_at_a_glance($event);
-				}
-			}
-		}
-
-		// squish events that use the same cell into the same cell.
-		// For example, an event from 8:00-9:15 and another from 9:30-9:45 both
-		// want to show up in the 8:00-9:59 cell.
-		$this->rowspan = 0;
-		$this->last_row = -1;
-		for ($i=0;$i<24;$i++)
-		{
-			if(isset($this->rowspan_arr[$i]))
-			{
-				$r = $this->rowspan_arr[$i];
-			}
-			else
-			{
-				$r = 0;
-			}
-			
-			if(isset($this->hour_arr[$i]))
-			{
-				$h = $this->hour_arr[$i];
-			}
-			else
-			{
-				$h = '';
-			}
-			
-			if ($this->rowspan > 1)
-			{
-				if (strlen($h))
-				{
-					$this->hour_arr[$this->last_row] .= $this->hour_arr[$i];
-					$this->hour_arr[$i] = '';
-					$this->rowspan_arr[$i] = 0;
-				}
-				$this->rowspan--;
-			}
-			elseif ($r > 1)
-			{
-				$this->rowspan = $this->rowspan_arr[$i];
-				$this->last_row = $i;
-			}
-		}
-		$p->set_var('time_bgcolor',$phpgw_info['theme']['cal_dayview']);
-		$p->set_var('bg_time_image',$phpgw->common->get_image_path('phpgwapi').'/navbar_filler.jpg');
-		$p->set_var('font_color',$phpgw_info['theme']['bg_text']);
-		$p->set_var('font',$phpgw_info['theme']['font']);
-		if (isset($this->hour_arr[99]) && strlen($this->hour_arr[99]) > 0)
-		{
-			$p->set_var('event',$this->hour_arr[99]);
-			$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
-			$p->parse('monthweek_day','day_row_event',False);
-        
-			$p->set_var('open_link','');
-			$p->set_var('close_link','');
-			$p->set_var('time','&nbsp;');
-			$p->parse('monthweek_day','day_row_time',True);
-			$p->parse('row','mini_week',True);
-			$p->set_var('monthweek_day','');
-		}
-		$this->rowspan = 0;
-		$times = 0;
-		for ($i=$this->first_hour;$i<=$this->last_hour;$i++)
-		{
-			if(isset($this->hour_arr[$i]))
-			{
-				$h = $this->hour_arr[$i];
-			}
-			else
-			{
-				$h = '';
-			}
-			
-			$time = $this->build_time_for_display($i * 10000);
-			$p->set_var('extras','');
-			$p->set_var('event','&nbsp');
-			if ($this->rowspan > 1)
-			{
-				// this might mean there's an overlap, or it could mean one event
-				// ends at 11:15 and another starts at 11:30.
-				if (strlen($h))
-				{
-					$p->set_var('event',$this->hour_arr[$i]);
-					$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
-					$p->parse('monthweek_day','day_row_event',False);
-				}
-				$this->rowspan--;
-			}
-			else
-			{
-				if (!strlen($h))
-				{
-					$p->set_var('event','&nbsp;');
-					$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
-					$p->parse('monthweek_day','day_row_event',False);
-				}
-				else
-				{
-					$this->rowspan = isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0;
-					if ($this->rowspan > 1)
-					{
-						$p->set_var('extras',' rowspan="'.$this->rowspan.'"');
-						$p->set_var('event',$this->hour_arr[$i]);
-						$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
-						$p->parse('monthweek_day','day_row_event',False);
-					}
-					else
-					{
-						$p->set_var('event',$this->hour_arr[$i]);
-						$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
-						$p->parse('monthweek_day','day_row_event',False);
-					}
-				}
-			}
-			$p->set_var('open_link','');
-			$p->set_var('close_link','');
-			$str = ' - ';
-			
-			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
-			{
-				$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
-						. '/calendar/edit_entry.php','year='.$date['year']
-						. '&month='.$date['month'].'&day='.$date['day']
-						. '&hour='.substr($time,0,strpos($time,':'))
-						. '&minute='.substr($time,strpos($time,':')+1,2).'&owner='.$this->owner).'">';
-			}
-			
-			$p->set_var('open_link',$str);
-			$p->set_var('time',(intval(substr($time,0,strpos($time,':'))) < 10 ? '0'.$time : $time) );
-			
-			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
-			{
-				$p->set_var('close_link','</a>');
-			}
-			
-			$p->parse('monthweek_day','day_row_time',True);
-			$p->parse('row','mini_week',True);
-			$p->set_var('monthweek_day','');
-		}	// end for
-		return $p->finish($p->parse('out','day_cal'));
-	}	// end function
 
 	function prep($calid)
 	{
