@@ -57,7 +57,7 @@
 	$t->set_var('doneurl',$phpgw->link('/addressbook/fields.php'));
 	$t->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
 
-	$t->set_var('lang_name',lang('Server name'));
+	$t->set_var('lang_name',lang('Field name'));
 
 	$t->set_var('lang_add',lang('Add'));
 	$t->set_var('lang_reset',lang('Clear Form'));
