@@ -164,7 +164,7 @@
 			}
 			elseif(isset($this->owner) && $GLOBALS['phpgw']->accounts->get_type($this->owner) == 'g')
 			{
-				$this->set_owner_to_group($this->owner);
+				$this->set_owner_to_group(intval($this->owner));
 			}
 
 			$this->prefs['common']    = $GLOBALS['phpgw_info']['user']['preferences']['common'];

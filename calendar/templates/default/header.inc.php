@@ -171,20 +171,30 @@
 			$GLOBALS['phpgw']->accounts->get_account_name($grantor,$lid,$fname,$lname);
 			$drop_down[$lname.' '.$fname] = Array(
 				'grantor'	=> $grantor,
-				'value'		=> $grantor,
+				'value'		=> ($GLOBALS['phpgw']->accounts->get_type($grantor)=='g'?'g_':'')
+					. $grantor,
 				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
 			);
 		}
 		$memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
 		while($memberships != False && list($key,$group_info) = each($memberships))
 		{
+			$GLOBALS['phpgw']->accounts->get_account_name($group_info['account_id'],$lid,$fname,$lname);
+			$drop_down[$lname.' '.$fname] = Array(
+				'grantor'	=> $group_info['account_id'],
+				'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_info['account_id'])=='g'?'g_':'')
+					.$group_info['account_id'],
+				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
+			);
+
 			$account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar');
 			while($account_perms && list($key,$group_id) = each($account_perms))
 			{
 				$GLOBALS['phpgw']->accounts->get_account_name($group_id,$lid,$fname,$lname);
 				$drop_down[$lname.' '.$fname] = Array(
 					'grantor'	=> $group_id,
-					'value'		=> 'g_'.$group_id,
+					'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_id)=='g'?'g_':'')
+						.$group_id,
 					'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
 				);
 			}
