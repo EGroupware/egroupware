@@ -1,0 +1,30 @@
+change your password	preferences	cs	Zmìnit va¹e heslo
+change your profile	preferences	cs	Zmìnit profil
+change your settings	preferences	cs	Zmìnit nastavení
+date format	preferences	cs	Formát datumu
+default application	preferences	cs	Implicitní aplikace
+default sorting order	preferences	cs	Implicitní tøídìní
+email signature	preferences	cs	E-Mail Podpis
+enter your new password	preferences	cs	Vlo¾te va¹e heslo
+language	preferences	cs	Jazyk
+max matchs per page	preferences	cs	Poèet záznamù na stránku
+monitor newsgroups	preferences	cs	Sleduj Newsgroups
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	cs	Poznámka: Tímto *nezmìníte* va¹e heslo pro E-mail. To je tøeba udìlat ruènì
+please, select a new theme	preferences	cs	Prosím vyberte nové barevné téma
+re-enter your password	preferences	cs	Opakujte va¹e heslo
+select different theme	preferences	cs	Zmìnit barevné téma
+select headline news sites	preferences	cs	Vyberte sítì pro titulky
+show birthday reminders on main screen	preferences	cs	Ukázat pøipomenutí narozenin na hlavní obrazovce
+show current users on navigation bar	preferences	cs	Ukázat poèet souèasných u¾ivatelù na navigaèním øádku
+show high priority events on main screen	preferences	cs	Ukázat události s vysokou prioritou na hlavní obrazovce
+show new messages on main screen	preferences	cs	Ukázat nové zprávy na hlavní obrazovce
+show text on navigation icons	preferences	cs	Ukázat text na navigaèních ikonách
+the two passwords are not the same	preferences	cs	Hesla nejsou shodná
+this server is located in the x timezone	preferences	cs	Tento server je v %1 èasové zónì
+time format	preferences	cs	Formát èasu
+time zone offset	preferences	cs	Èasová zóna (rozdíl)
+weekday starts on	preferences	cs	Týden zaèíná v 
+work day ends on	preferences	cs	Pracovní dny konèí v
+work day starts on	preferences	cs	Pracovní dny zaèínají v
+you must enter a password	preferences	cs	Musíte vlo¾it heslo
+your current theme is: x	preferences	cs	Va¹e barevné téma je: <b>%1</b>
