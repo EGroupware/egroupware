@@ -130,6 +130,8 @@
                     adr_postal          boolean DEFAULT 'n' NOT NULL,
                     tz                  varchar(8),
                     geo                 varchar(32),
+					url					varchar(128),
+					bday				varchar(32),
                     a_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
                     a_tel_work          boolean DEFAULT 'n' NOT NULL,
                     a_tel_home          boolean DEFAULT 'n' NOT NULL,
@@ -164,7 +166,7 @@
                     contact_id          int,
                     contact_owner       int,
                     contact_name        varchar(255),
-                    contact_value       varchar(255)
+                    contact_value       text
                 )";
 
   $phpgw_setup->db->query($sql);
