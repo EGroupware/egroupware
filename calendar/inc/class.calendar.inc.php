@@ -1011,7 +1011,7 @@ class calendar extends calendar_
 								$start_time = $phpgw->common->show_date($lr_events->datetime,$this->users_timeformat);
 							}
                 
-							if($lr_events->edatetime > ($date['raw'] + 86400))
+							if($lr_events->edatetime >= ($date['raw'] + 86400))
 							{
 								$temp_time = $this->makegmttime(23,59,59,$date['month'],$date['day'],$date['year']);
 								$end_time = ' - '.$phpgw->common->show_date($temp_time['raw'],$this->users_timeformat);
