@@ -453,11 +453,11 @@
 		@param $selected ?
 		@param $fontsize optional
 		*/
-		function create_tabs($tabs, $selected, $fontsize = '')
+		function create_tabs($tabs, $selected)
 		{
-			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+			$output_text = '<table cellspacing="0" cellpadding="0"><tr>';
 
-			/* This is a php3 workaround */
+			/* This is a php3 workaround
 			if(PHPGW_IMAGES_DIR == 'PHPGW_IMAGES_DIR')
 			{
 				$ir = ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi');
@@ -465,13 +465,7 @@
 			else
 			{
 				$ir = PHPGW_IMAGES_DIR;
-			}
-
-			if ($fontsize)
-			{
-				$fs  = '<font size="' . $fontsize . '">';
-				$fse = '</font>';
-			}
+			} */
 
 			$i = 1;
 			while ($tab = each($tabs))
@@ -480,54 +474,54 @@
 				{
 					if ($i == 1)
 					{
-						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
+						$output_text .= '<td align="right"><img src="' . $this->image('phpgwapi','tabs-start1') . '"></td>';
 					}
 
-					$output_text .= '<td align="left" nowrap background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" nowrap background="' . $this->image('phpgwapi','tabs-bg1') . '">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
 						. $fse . '</a></b>&nbsp;</td>';
 					if ($i == count($tabs))
 					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
+						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end1') . '"></td>';
 					}
 					else
 					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
+						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepr') . '"></td>';
 					}
 				}
 				else
 				{
 					if ($i == 1)
 					{
-						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
+						$output_text .= '<td align="right"><img src="' . $this->image('phpgwapi','tabs-start0') . '"></td>';
 					}
-					$output_text .= '<td align="left" nowrap background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" nowrap background="' . $this->image('phpgwapi','tabs-bg0') . '">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
 						. '</a></b>&nbsp;</td>';
 					if (($i + 1) == $selected)
 					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
+						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepl') . '"></td>';
 					}
 					elseif ($i == $selected || $i != count($tabs))
 					{
-						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
+						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepm') . '"></td>';
 					}
 					elseif ($i == count($tabs))
 					{
 						if ($i == $selected)
 						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
+							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end1') . '"></td>';
 						}
 						else
 						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
+							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end0') . '"></td>';
 						}
 					}
 					else
 					{
 						if ($i != count($tabs))
 						{
-							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
+							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepr') . '"></td>';
 						}
 					}
 				}
