@@ -507,6 +507,15 @@
 	 \****************************************************************************/
 	define('SEP',filesystem_separator());
 
+	/*****************************************************************************\
+	* ACL defines - moved here to work for xml-rpc/soap, also                     *
+	\*****************************************************************************/
+	define('PHPGW_ACL_READ',1);
+	define('PHPGW_ACL_ADD',2);
+	define('PHPGW_ACL_EDIT',4);
+	define('PHPGW_ACL_DELETE',8);
+	define('PHPGW_ACL_PRIVATE',16);
+
 	 /****************************************************************************\
 	 * Stuff to use if logging in or logging out                                  *
 	 \****************************************************************************/
@@ -545,13 +554,15 @@
 		define('PHPGW_IMAGES', ExecMethod('phpgwapi.phpgw.common.get_image_path'));
 		define('PHPGW_APP_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir'));
 
-		//	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir());
+		/*	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir()); */
 
+		/* Moved outside of this logic
 		define('PHPGW_ACL_READ',1);
 		define('PHPGW_ACL_ADD',2);
 		define('PHPGW_ACL_EDIT',4);
 		define('PHPGW_ACL_DELETE',8);
 		define('PHPGW_ACL_PRIVATE',16);
+		*/
 
 		/********* This sets the user variables *********/
 		$GLOBALS['phpgw_info']['user']['private_dir'] = $GLOBALS['phpgw_info']['server']['files_dir']
