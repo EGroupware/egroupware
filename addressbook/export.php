@@ -52,19 +52,22 @@
 
 		$t->set_var("lang_cancel",lang("Cancel"));
 		$t->set_var("lang_cat",lang("Select Category"));
-		$t->set_var("cat_id",cat_option($cat_id,'ncat_id',True));
-		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php",
-			"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+		$t->set_var("cat_link",cat_option($cat_id,'ncat_id',True));
+		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
 		$t->set_var("export_text",lang("Export from Addressbook"));
-		$t->set_var("action_url",$phpgw->link("/addressbook/export.php",
-			"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+		$t->set_var("action_url",$phpgw->link("/addressbook/export.php"));
 		$t->set_var("filename",lang("Export file name"));
 		$t->set_var("conv",$conv);
 		$t->set_var("debug",lang(""));
 		$t->set_var("download",lang("Submit"));
-
+		$t->set_var("start",$start);
+		$t->set_var("sort",$sort);
+		$t->set_var("order",$order);
+		$t->set_var("filter",$filter);
+		$t->set_var("query",$query);
+		$t->set_var("cat_id",$cat_id);
 		$t->pparse("out","export");
 
 		$phpgw->common->phpgw_footer();
@@ -119,7 +122,7 @@
 			echo $buffer;
 			echo "\n</pre>\n";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php",
-				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
 				. '">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();
 		}

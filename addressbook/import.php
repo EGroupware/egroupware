@@ -53,14 +53,12 @@
 
 		$t->set_var("lang_cancel",lang("Cancel"));
 		$t->set_var("lang_cat",lang("Select Category"));
-		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php",
-			"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
 		$t->set_var("import_text",lang("Import from LDIF, CSV, or VCard"));
-		$t->set_var("action_url",$phpgw->link("/addressbook/import.php",
-			"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
-		$t->set_var("cat_id",cat_option($cat_id,True));
+		$t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
+		$t->set_var("cat_link",cat_option($cat_id));
 		$t->set_var("tsvfilename","");
 		$t->set_var("conv",$conv);
 		$t->set_var("debug",lang("Debug output in browser"));
@@ -68,7 +66,12 @@
 		$t->set_var("basedn",$basedn);
 		$t->set_var("context",$context);
 		$t->set_var("download",lang("Submit"));
-
+		$t->set_var("start",$start);
+		$t->set_var("sort",$sort);
+		$t->set_var("order",$order);
+		$t->set_var("filter",$filter);
+		$t->set_var("query",$query);
+		$t->set_var("cat_id",$cat_id);
 		$t->pparse("out","import");
 		$phpgw->common->phpgw_footer();
 	} else {
@@ -171,14 +174,14 @@
 			} else {
 				echo "<pre>$buffer</pre>";
 				echo '<a href="'.$phpgw->link("/addressbook/index.php",
-					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
 					. '">'.lang("OK").'</a>';
 				$phpgw->common->phpgw_footer();
 			}
 		} else {
 			echo "<pre>$buffer</pre>";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php",
-				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
 				. '">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();
 		}
