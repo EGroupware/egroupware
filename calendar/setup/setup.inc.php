@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Calendar                                                  *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Calendar                                                    *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -22,9 +22,7 @@
 		'Powerful calendar with meeting request system and ACL security.';
 	$setup_info['calendar']['note'] =
 		'Bassed on Webcalendar by <a href="http://www.radix.net/~cknudsen" target="_blank">Craig Knudsen</a>.<p>
-		<b>More information</b> about the calendar and the current development-status can be found on the 
-		<a href="http://www.phpgroupware.org/wiki/calendar" target="_blank">Calendar page in our Wiki</a> or
-		<a href="http://www.phpgroupware.org/wiki/calendarFAQs" target="_blank">Calendar FAQs</a>.';
+		';
 	$setup_info['calendar']['maintainer'] = array(
 		'name'  => 'Ralf Becker',
 		'email' => 'RalfBecker@outdoor-training.de'
