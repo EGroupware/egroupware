@@ -57,6 +57,6 @@
 
 		$GLOBALS['phpgw']->portalbox->set_params(array('app_id'	=> $app_id,
 														'title'	=> lang('calendar')));
-		$GLOBALS['phpgw']->portalbox->draw($GLOBALS['extra_data'])
+		$GLOBALS['phpgw']->portalbox->draw($GLOBALS['extra_data']);
 	}
 ?>
