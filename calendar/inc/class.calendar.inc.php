@@ -844,8 +844,6 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info, $grants;
 
-		$startdate -= 7200;
-
 		if($owner == 0) { $owner= $phpgw_info['user']['account_id']; }
 
 		$str = '';
