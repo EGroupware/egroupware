@@ -272,7 +272,7 @@
       if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs)) 
         if(($regs[1] == "10") && ($regs[3] >= "6"))
 	  $config_table="phpgw_config";
-      $this->db->query("select config_value from $config_table where config_name='freshinstall'");
+      @$this->db->query("select config_value from $config_table where config_name='freshinstall'");
       $this->db->next_record();
       $configed = $this->db->f("config_value");
       if ($configed){

@@ -2080,7 +2080,7 @@
         account_type           char(1),
         unique(account_lid)
       )";
-      $phpgw_setup->db->query($sql);
+      $phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
 		$phpgw_setup->db->query("insert into phpgw_accounts select * from phpgw_accounts_temp",__LINE__,__FILE__);
 		$phpgw_setup->db->query("drop table phpgw_accounts_temp",__LINE__,__FILE__);
@@ -2095,6 +2095,8 @@
 		global $phpgw_info, $phpgw_setup;
 
 		$phpgw_setup->db->query("create table phpgw_cal_temp as select * from phpgw_cal",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_cal",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop sequence phpgw_cal_cal_id_seq",__LINE__,__FILE__);
 		$sql = "CREATE TABLE phpgw_cal (
 			cal_id		serial,
 			owner		int DEFAULT 0 NOT NULL,
@@ -2131,6 +2133,7 @@
 
 		$phpgw_setup->db->query("drop table phpgw_cal_temp",__LINE__,__FILE__);
 
+		$phpgw_setup->db->query("drop sequence phpgw_cal_holidays_hol_id_seq",__LINE__,__FILE__);
 		$phpgw_setup->db->query("drop table phpgw_cal_holidays",__LINE__,__FILE__);
 
 		$sql = "CREATE TABLE phpgw_cal_holidays (
@@ -2139,7 +2142,7 @@
 			name		varchar(50) NOT NULL,
 			date_time	int4 DEFAULT 0 NOT NULL
 		)";
-      $phpgw_setup->db->query($sql);
+      $phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.007';
 	}
@@ -2150,6 +2153,8 @@
 		global $phpgw_info, $phpgw_setup;
 
 		$phpgw_setup->db->query("drop table phpgw_cal_holidays",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop sequence phpgw_cal_holidays_hol_id_seq",__LINE__,__FILE__);
+
 		$sql = "CREATE TABLE phpgw_cal_holidays (
 			hol_id		serial,
 			locale		char(2) NOT NULL,
@@ -2159,7 +2164,7 @@
 			occurence	int DEFAULT 0,
 			dow		int DEFAULT 0
 		)";
-		$phpgw_setup->db->query($sql);
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.008';
 	}
