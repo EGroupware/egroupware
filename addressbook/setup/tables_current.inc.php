@@ -72,21 +72,21 @@
 				'email_home_type' => array('type' => 'varchar', 'precision' => 32,'nullable' => False,'default' => 'INTERNET')
 			),
 			'pk' => array('id'),
-			'fk' => array(''),
-			'ix' => array(''),
-			'uc' => array('')
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		),
 		'phpgw_addressbook_extra' => array(
 			'fd' => array(
-				'contact_id' => array('type' => 'int', 'precision' => 11,'nullable' => True),
+				'contact_id' => array('type' => 'int', 'precision' => 4, 'nullable' => True),
 				'contact_owner' => array('type' => 'int', 'precision' => 8,'nullable' => True),
 				'contact_name' => array('type' => 'varchar', 'precision' => 255,'nullable' => True),
 				'contact_value' => array('type' => 'text','nullable' => True)
 			),
-			'pk' => array(''),
-			'fk' => array(''),
-			'ix' => array(''),
-			'uc' => array('')
+			'pk' => array(),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		),
 	);
 ?>
