@@ -369,7 +369,7 @@
 			}
 			$extra_label = True;
 
-			if (!$this->types[$cell['type']] && $this->haveExtension($cell['type']))
+			if (!$this->types[$cell['type']] && $this->haveExtension($cell['type'],'pre_process'))
 			{
 				$type = $cell['type'];
 				$extra_label = $this->extensionPreProcess($cell,$value,$readonlys[$name]);
@@ -590,7 +590,7 @@
 						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
 					break;
 				default:
-					if ($this->haveExtension($cell['type']))
+					if ($this->haveExtension($cell['type'],'render'))
 					{
 						$html .= $this->extensionRender($cell,$form_name,$value,$readonly);
 					}
