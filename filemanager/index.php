@@ -777,7 +777,7 @@ if ($edit)
 
 	if ($edit_preview)
 	{
-		$edit_file_decoded = string_decode ($edit_file, 1);
+		$edit_file_decoded = base64_decode (string_decode ($edit_file, 1));
 		$content = $$edit_file;
 
 		html_break (1);
@@ -794,7 +794,7 @@ if ($edit)
 	}
 	elseif ($edit_save)
 	{
-		$edit_file_decoded = string_decode ($edit_file, 1);
+		$edit_file_decoded = base64_decode (string_decode ($edit_file, 1));
 		$content = $$edit_file;
 
 		if ($phpgw->vfs->write ($edit_file_decoded, $content))
@@ -851,7 +851,7 @@ if ($edit)
 		# being previewed or saved
 		###
 
-		if ($edit_file && ($fileman_decoded != $edit_file))
+		if ($edit_file && ($fileman_decoded != base64_decode ($edit_file)))
 		{
 			continue;
 		}
@@ -866,7 +866,7 @@ if ($edit)
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
 			html_form_input ("hidden", "edit", True);
-			html_form_input ("hidden", "edit_file", "$fileman[$j]");
+			html_form_input ("hidden", "edit_file", base64_encode ($fileman[$j]));
 
 			###
 			# We need to include all of the fileman entries for each file's form,
@@ -880,7 +880,7 @@ if ($edit)
 
 			html_table_row_begin ();
 			html_table_col_begin ();
-			html_form_textarea ($fileman[$j], 35, 75, $content);
+			html_form_textarea (base64_encode ($fileman[$j]), 35, 75, $content);
 			html_table_col_end ();
 			html_table_col_begin ("center");
 			html_form_input ("submit", "edit_preview", "Preview $fileman_decoded");
@@ -995,19 +995,20 @@ elseif ($renamefiles)
 {
 	while (list ($file) = each ($renamefiles))
 	{
-		$file_decoded = string_decode ($file, 1);
+		$from_file_decoded = string_decode ($file, 1);
+		$to_file_decoded = string_decode ($renamefiles[$file], 1);
 
-		if (ereg ("/", $renamefiles[$file]))
+		if (ereg ("/", $to_file_decoded))
 		{
 			echo $phpgw->common->error_list (array ("File names cannot contain /"));
 		}
-		elseif (!$phpgw->vfs->mv ($file_decoded, $renamefiles[$file]))
+		elseif (!$phpgw->vfs->mv ($from_file_decoded, $to_file_decoded))
 		{
-			echo $phpgw->common->error_list (array ("Could not rename $disppath/$file_decoded to $disppath/$renamefiles[$file]"));
+			echo $phpgw->common->error_list (array ("Could not rename $disppath/$from_file_decoded to $disppath/$to_file_decoded"));
 		}
 		else
 		{
-			html_text_summary ("Renamed $disppath/$file_decoded to $disppath/$renamefiles[$file]");
+			html_text_summary ("Renamed $disppath/$from_file_decoded to $disppath/$to_file_decoded");
 		}
 	}
 
