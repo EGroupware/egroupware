@@ -10,9 +10,13 @@
 <CENTER><TABLE border=1 bgcolor="{row_on}">
 <!-- END msgbox_start -->
 
-<!-- BEGIN msgbox_row -->
-<TR><TD bgcolor="{msgbox_row_color}">[{msgbox_img_alt}] {msgbox_text}</TD></TR>
-<!-- END msgbox_row -->
+<!-- BEGIN msgbox_row_good -->
+<TR><TD bgcolor="{msgbox_row_color}">[<font color="green">O</font>] {msgbox_text}</TD></TR>
+<!-- END msgbox_row_good -->
+
+<!-- BEGIN msgbox_row_bad -->
+<TR><TD bgcolor="{msgbox_row_color}">[<font color="red">X</font>] {msgbox_text}</TD></TR>
+<!-- END msgbox_row_bad -->
 
 <!-- BEGIN msgbox_end -->
 </TABLE></CENTER>

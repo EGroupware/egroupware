@@ -984,7 +984,8 @@
 				return;
 			}
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_start');
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_row');
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_row_good');
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_row_bad');
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_end');
 			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_start');
 			
@@ -994,16 +995,6 @@
 				$row = 1;
 				while (list($key,$value) = each($text))
 				{
-					if ($value == True)
-					{
-						$type_img = 'good';
-						$type_img_alt = 'O';
-					}
-					else
-					{
-						$type_img = 'bad';
-						$type_img_alt = 'X';
-					}
 					if ($row == 1)
 					{
 						$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
@@ -1016,28 +1007,28 @@
 					}
 
 					$GLOBALS['phpgw']->template->set_var('msgbox_text',$key);
-					$GLOBALS['phpgw']->template->set_var('msgbox_img',$type_img);
-					$GLOBALS['phpgw']->template->set_var('msgbox_img_alt',$type_img_alt);
-					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
+					if ($value == True)
+					{
+						$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_good',True);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_bad',True);
+					}
 				}
 			}
 			else
 			{
+				$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
+				$GLOBALS['phpgw']->template->set_var('msgbox_text',$text);
 				if ($type == True)
 				{
-					$type_img = 'good';
-					$type_img_alt = 'O';
+					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_good',True);
 				}
 				else
 				{
-					$type_img = 'bad';
-					$type_img_alt = 'X';
+					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_bad',True);
 				}
-				$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
-				$GLOBALS['phpgw']->template->set_var('msgbox_text',$text);
-				$GLOBALS['phpgw']->template->set_var('msgbox_img',$type_img);
-				$GLOBALS['phpgw']->template->set_var('msgbox_img_alt',$type_img_alt);
-				$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
 			}
 			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_end',True);
 
@@ -1186,7 +1177,7 @@
 			//}
 			if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && !@$GLOBALS['phpgw_info']['flags']['nonavbar'])
 			{
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
+				$this->msgbox('',False,'out');
 				$GLOBALS['phpgw']->hooks->process('after_navbar');
 			}
 		}
