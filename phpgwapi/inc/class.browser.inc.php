@@ -39,67 +39,65 @@
 			/*
 				Determine browser and version
 			*/
-			if (ereg( 'MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			if(ereg('MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER = $log_version[1];
 				$this->BROWSER_AGENT = 'IE';
 			}
-			elseif (ereg( 'Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
-				ereg( 'Opera/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			elseif(ereg('Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
+				ereg('Opera/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'OPERA';
 			}
-			elseif ( eregi( 'iCab ([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version) ||
-				eregi( 'iCab/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version))
+			elseif(eregi('iCab ([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version) ||
+				eregi('iCab/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'iCab';
 			} 
-			elseif ( eregi( 'Netscape6/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version)) 
+			elseif(eregi('Netscape6/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version)) 
 			{
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'Netscape';
 			}
-
-			elseif (ereg( 'Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
+			elseif(ereg('Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
 				ereg( 'Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='Konqueror';
+				$this->BROWSER_VER   = $log_version[1];
+				$this->BROWSER_AGENT = 'Konqueror';
 			}
-
-			elseif (ereg( 'Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			elseif(ereg('Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='MOZILLA';
+				$this->BROWSER_VER   = $log_version[1];
+				$this->BROWSER_AGENT = 'MOZILLA';
 			}
 			else
 			{
-				$this->BROWSER_VER=0;
-				$this->BROWSER_AGENT='OTHER';
+				$this->BROWSER_VER   = 0;
+				$this->BROWSER_AGENT = 'OTHER';
 			}
 
 			/*
 				Determine platform
 			*/
-			if (strstr($HTTP_USER_AGENT,'Win'))
+			if(strstr($HTTP_USER_AGENT,'Win'))
 			{
 				$this->BROWSER_PLATFORM='Win';
 			}
-			else if (strstr($HTTP_USER_AGENT,'Mac'))
+			elseif(strstr($HTTP_USER_AGENT,'Mac'))
 			{
 				$this->BROWSER_PLATFORM='Mac';
 			}
-			else if (strstr($HTTP_USER_AGENT,'Linux'))
+			elseif(strstr($HTTP_USER_AGENT,'Linux'))
 			{
 				$this->BROWSER_PLATFORM='Linux';
 			}
-			else if (strstr($HTTP_USER_AGENT,'Unix'))
+			elseif(strstr($HTTP_USER_AGENT,'Unix'))
 			{
 				$this->BROWSER_PLATFORM='Unix';
 			}
-			else if (strstr($HTTP_USER_AGENT,'Beos'))
+			elseif(strstr($HTTP_USER_AGENT,'Beos'))
 			{
 				$this->BROWSER_PLATFORM='Beos';
 			}
@@ -110,34 +108,27 @@
 
 			/*
 			echo "\n\nAgent: $HTTP_USER_AGENT";
-			echo "\nIE: ".browser_is_ie();
-			echo "\nMac: ".browser_is_mac();
-			echo "\nWindows: ".browser_is_windows();
-			echo "\nPlatform: ".browser_get_platform();
-			echo "\nVersion: ".browser_get_version();
-			echo "\nAgent: ".browser_get_agent();
+			echo "\nIE: "       . $this->is_ie();
+			echo "\nMac: "      . $this->is_mac();
+			echo "\nWindows: "  . $this->is_windows();
+			echo "\nPlatform: " . $this->get_platform();
+			echo "\nVersion: "  . $this->get_version();
+			echo "\nAgent: "    . $this->get_agent();
 			*/
 
-			// The br and p functions are supposed to return the correct
+			// The br and p vars are supposed to return the correct
 			// value for tags that do not need to be closed.  This is
 			// per the xhmtl spec, so we need to fix this to include
 			// all compliant browsers we know of.
-			if ($this->BROWSER_AGENT == 'IE')
+			if($this->BROWSER_AGENT == 'IE')
 			{
 				$this->br = '<br/>';
+				$this->p  = '<p/>';
 			}
 			else
 			{
 				$this->br = '<br>';
-			}
-
-			if ($this->BROWSER_AGENT =='IE')
-			{
-				$this->p = '<p/>';
-			}
-			else
-			{
-				$this->p = '<p>';
+				$this->p  = '<p>';
 			}
 		}
 
@@ -169,7 +160,7 @@
 
 		function is_linux()
 		{
-			if ($this->get_platform()=='Linux')
+			if($this->get_platform()=='Linux')
 			{
 				return true;
 			}
@@ -181,7 +172,7 @@
 
 		function is_unix()
 		{
-			if ($this->get_platform()=='Unix')
+			if($this->get_platform()=='Unix')
 			{
 				return true;
 			}
@@ -193,7 +184,7 @@
 
 		function is_beos()
 		{
-			if ($this->get_platform()=='Beos')
+			if($this->get_platform()=='Beos')
 			{
 				return true;
 			}
@@ -205,7 +196,7 @@
 
 		function is_mac()
 		{
-			if ($this->get_platform()=='Mac')
+			if($this->get_platform()=='Mac')
 			{
 				return true;
 			}
@@ -217,7 +208,7 @@
 
 		function is_windows()
 		{
-			if ($this->get_platform()=='Win')
+			if($this->get_platform()=='Win')
 			{
 				return true;
 			}
@@ -229,7 +220,7 @@
 
 		function is_ie()
 		{
-			if ($this->get_agent()=='IE')
+			if($this->get_agent()=='IE')
 			{
 				return true;
 			}
@@ -241,7 +232,7 @@
 
 		function is_netscape()
 		{
-			if ($this->get_agent()=='MOZILLA')
+			if($this->get_agent()=='MOZILLA')
 			{
 				return true;
 			}
@@ -253,7 +244,7 @@
 
 		function is_opera()
 		{
-			if ($this->get_agent()=='OPERA')
+			if($this->get_agent()=='OPERA')
 			{
 				return true;
 			}
@@ -266,31 +257,31 @@
 		// Echo content headers for file downloads
 		function content_header($fn='',$mime='',$length='',$nocache=True)
 		{
-			if (!$mime)
+			if(!$mime)
 			{
 				$mime='application/octet-stream';
 			}
-			if ($fn)
+			if($fn)
 			{
-				if ($this->get_agent() == 'IE') // && browser_get_version() == "5.5")
+				if($this->get_agent() == 'IE')
 				{
 					$attachment = '';
+					header('Cache-control: private');
 				}
 				else
 				{
 					$attachment = ' attachment;';
 				}
 
-				// Show this for all
-				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
-				header('Content-type: '.$mime);
+				header('Content-type: ' . $mime);
+				header('Content-disposition:' . $attachment . ' filename="' . $fn . '"');
 
-				if ($length)
+				if($length)
 				{
 					header('Content-length: '.$length);
 				}
 
-				if ($nocache)
+				if($nocache)
 				{
 					header('Pragma: no-cache');
 					header('Expires: 0');
