@@ -33,8 +33,12 @@
 <!-- END reference_list_of_types -->
 
 <!-- BEGIN abstract -->
-	<R>Abstract: {abstract}</P>
+	Abstract: {abstract}<br>
 <!-- END abstract -->
+
+<!-- BEGIN generic -->
+	{generic_name}: {generic_value}<br>
+<!-- END generic -->
 
 <!-- BEGIN params -->
 	<TABLE border="1">

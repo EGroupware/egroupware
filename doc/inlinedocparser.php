@@ -323,6 +323,7 @@
 	$GLOBALS['template']->set_block('tpl_file', 'group');
 	$GLOBALS['template']->set_block('tpl_file', 'object');
 	$GLOBALS['template']->set_block('tpl_file','border_bottom');
+	$GLOBALS['template']->set_block('tpl_file','generic');
 	$GLOBALS['template']->set_block('tpl_file','abstract');
 	$GLOBALS['template']->set_block('tpl_file','params');
 	$GLOBALS['template']->set_block('tpl_file','param_entry');
@@ -336,11 +337,16 @@
 		while(list($object_key, $object_value) = each($group_value))
 		{
 			$GLOBALS['template']->set_var('object_name',$object_key);
-//			while(list($object_key, $object_value) = each($group_value))
-//			{
-//			}
-
-			$GLOBALS['template']->fp('group_contents','object',True);
+			if(is_array($object_value))
+			{
+				while(list($docline_key, $docline_value) = each($object_value))
+				{
+					$GLOBALS['template']->set_var('generic_name',$docline_key);
+					$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
+					$GLOBALS['template']->fp('object_contents','generic',True);
+				}
+				$GLOBALS['template']->fp('group_contents','object',True);
+			}
 		}
 		$GLOBALS['template']->fp('doc','group',True);
 	}
