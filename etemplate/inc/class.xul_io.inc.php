@@ -87,7 +87,10 @@
 				'button' => array(
 					'.name' => 'button',
 					'size'  => 'image,ro_image'
-				)
+				),
+				'htmlarea' => array(
+					'size' => 'style,plugins',
+				),
 			);
 			$this->xul2widget = array(
 				'menulist' => 'select',
