@@ -20,18 +20,18 @@
       echo "</pre></body></html>";
       break;
     case "write config":
-      if(!is_writeable ("../header.inc.php")){
-        show_header("Error generating header.inc.php");
-        echo "Could not open header.inc.php for writing!<br>\n";
-        echo "Please check read/write permissions on directories or back up and use another option.<br>";
-        echo "</td></tr></table></body></html>";
-      }else{
+      if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
         show_header("Saved header.inc.php");
         $newheader = generate_header();
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
         echo "Created header.inc.php!<br>";
+      }else{
+        show_header("Error generating header.inc.php");
+        echo "Could not open header.inc.php for writing!<br>\n";
+        echo "Please check read/write permissions on directories or back up and use another option.<br>";
+        echo "</td></tr></table></body></html>";
       }
       break;
     default:
@@ -189,15 +189,16 @@
       echo "<br>";
       echo "<form>";
     
-      if(is_writeable ("../header.inc.php")){
+      if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
         echo '<input type=submit name="action" value="write config">';
+        echo' or <input type=submit name="action" value="download"> or <input type=submit name="action" value="view"> the file.</form>';
       }else{
         echo 'Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can ';
         echo'<input type=submit name="action" value="download">or <input type=submit name="action" value="view"> the file.</form>';
-        echo '<form action="index.php" method=post>';
-        echo'<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
-        echo'<input type=submit name="junk" value="continue">';
       }
+      echo '<form action="index.php" method=post>';
+      echo'<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
+      echo'<input type=submit name="junk" value="continue">';
       echo "</form>";
       echo "</body>";
       echo "</html>";
