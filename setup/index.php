@@ -43,6 +43,9 @@
    *                                                                    *
   \**********************************************************************/
 
+  /*  Commenting out the following header since it breaks necessary
+      redirections in the setup code (core_setup.inc.php).  -mr_e
+
   echo ' <table border="0" width="100%"><tr>'
     . '<td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '
     . $phpgw_info["server"]["version"] . ' setup</font></td><td align="right" bgcolor="486591">';
@@ -51,6 +54,7 @@
   echo "      <input type='submit' name='Logout' value='Logout'>\n";
   echo "    </form>\n";
   echo "</td></tr></table>";
+  */
 
   $ok = true;
   $baseDir = $phpgw_info["server"]["server_root"];
