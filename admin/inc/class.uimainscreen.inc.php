@@ -23,8 +23,8 @@
 		function index()
 		{
 
-		   $html = createObject('phpgwapi.html');
-		   $section     = addslashes($_POST['section']);
+			$html = createObject('phpgwapi.html');
+			$section     = addslashes($_POST['section']);
 			$select_lang = addslashes($_POST['select_lang']);
 			$message     = addslashes($_POST['message']);
 
@@ -52,7 +52,7 @@
 			{
 				$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_lang WHERE message_id='$section" . "_message' AND app_name='"
 					. "$section' AND lang='$select_lang'",__LINE__,__FILE__);
-				$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_lang VALUES ('$section" . "_message','$section','$select_lang','"
+				$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_lang (message_id,app_name,lang,content)VALUES ('$section" . "_message','$section','$select_lang','"
 					. $message . "')",__LINE__,__FILE__);
 					$feedback_message = '<center>'.lang('message has been updated').'</center>';
 				
