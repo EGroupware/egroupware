@@ -134,4 +134,53 @@
 		}
 		return $out;
 	}
+
+	function sql_passwdhashes($config)
+	{
+		$hashes = array(
+			'md5' => 'md5'
+		);
+
+		/* Check for available crypt methods based on what is defined by php */ 
+		if(@defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+		{
+			$hashes['blowish_crypt'] = 'blowish_crypt';
+		}
+		if(@defined('CRYPT_MD5') && CRYPT_MD5 == 1)
+		{
+			$hashes['md5_crypt'] = 'md5_crypt'; 
+		}
+		if(@defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+		{
+			$hashes['ext_crypt'] = 'ext_crypt';
+		}
+		if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
+		{
+			$hashes['crypt'] = 'crypt';
+		}
+
+		if(@function_exists('mhash'))
+		{
+			$hashes += array(
+				'sha'  => 'sha',
+				'ssha' => 'ssha'
+			);
+		}
+
+		while(list($key, $value) = each($hashes))
+		{
+			if($config['sql_encryption_type'] == $value)
+			{
+				$selected = ' selected';
+			}
+			else
+			{
+				$selected = '';
+			}
+			$descr = strtoupper($value);
+
+			$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
+		}
+		return $out;
+	}
 ?>
