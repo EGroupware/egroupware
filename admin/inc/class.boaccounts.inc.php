@@ -74,11 +74,6 @@
 			}
 		}
 
-		function account_total($account_type,$query='')
-		{
-			return $this->so->account_total($account_type,$query);
-		}
-
 		function delete_group()
 		{
 			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
@@ -304,7 +299,7 @@
 			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_users();
+				$ui->list_users();
 				return False;
 			}
 
@@ -336,7 +331,7 @@
 				{
 					$this->so->add_user($userData);
 					$ui = createobject('admin.uiaccounts');
-				  $ui->list_users();
+					$ui->list_users();
 					return False;
 				}
 				else
@@ -519,7 +514,7 @@
 			$GLOBALS['phpgw']->db->unlock();
 
 			$ui = createobject('admin.uiaccounts');
-		  $ui->list_groups();
+			$ui->list_groups();
 			return False;
 		}
 
@@ -528,7 +523,7 @@
 			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_users();
+				$ui->list_users();
 				return False;
 			}
 
@@ -565,20 +560,20 @@
 					if (!$menuClass->createHTMLCode('edit_user'))
 					{
 						$ui = createobject('admin.uiaccounts');
-					  $ui->list_users();
+						$ui->list_users();
 						return False;
 					}
 					else
 					{
 						$ui = createobject('admin.uiaccounts');
-					  $ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
+						$ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
 						return False;
 					}
 				}
 				else
 				{
 						$ui = createobject('admin.uiaccounts');
-					  $ui->create_edit_user($userData['account_id'],$userData,$errors);
+						$ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
 			}
 		}

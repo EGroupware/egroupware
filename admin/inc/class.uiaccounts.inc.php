@@ -70,13 +70,13 @@
 
 			if ($GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
 			{
-				$total = $this->bo->account_total('g',$query);
 				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
+				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 			else
 			{
-				$total = $this->bo->account_total('g',$query);
 				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
+				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 
 			$url = $GLOBALS['phpgw']->link('/index.php');
@@ -172,13 +172,14 @@
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
 			}
 
-			if(!$param_cd)
+			if($param_cd)
 			{
 				$cd = $param_cd;
 			}
 
-			$query = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
-
+			$GLOBALS['query'] = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
+			$start = (isset($GLOBALS['HTTP_POST_VARS']['start'])?intval($GLOBALS['HTTP_POST_VARS']['start']):'');
+			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -196,13 +197,13 @@
 
 			if ($GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
-				$total = $this->bo->account_total('u',$query);
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query,$total);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$GLOBALS['query'],$total);
+				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 			else
 			{
-				$total = $this->bo->account_total('u',$query);
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query,$total);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$GLOBALS['query'],$total);
+				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 
 			$url = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
@@ -213,9 +214,9 @@
 				'left_next_matchs'	=> $this->nextmatchs->left($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
 				'lang_user_accounts'	=> lang('user accounts'),
 				'right_next_matchs'	=> $this->nextmatchs->right($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
-				'lang_loginid'		=> $this->nextmatchs->show_sort_order($sort,'account_lid',$order,$url,lang('LoginID'),'menuaction=admin.uiaccounts.list_users'),
-				'lang_lastname'		=> $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,$url,lang('last name'),'menuaction=admin.uiaccounts.list_users'),
-				'lang_firstname'	=> $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,$url,lang('first name'),'menuaction=admin.uiaccounts.list_users'),
+				'lang_loginid'		=> $this->nextmatchs->show_sort_order($sort,'account_lid',$order,$url,lang('LoginID')),
+				'lang_lastname'		=> $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,$url,lang('last name')),
+				'lang_firstname'	=> $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,$url,lang('first name')),
 				'lang_edit'		=> lang('edit'),
 				'lang_delete'		=> lang('delete'),
 				'lang_view'		=> lang('view'),
