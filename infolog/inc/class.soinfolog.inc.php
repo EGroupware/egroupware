@@ -19,27 +19,30 @@
 		var $grants;
 		var $data = array( );
 
-		function soinfolog( $info_id = 0) {
+		function soinfolog( $info_id = 0)
+		{
 			global $phpgw;
 			$this->db     = $phpgw->db;
 			$this->grants = $phpgw->acl->get_grants('infolog');
 			
-			$this->read( $info_id);
+			$this->read( $info_id );
 		}
 				
 
-		function readProj($proj_id) {
+		function readProj($proj_id)
+		{
 			if ($proj_id) {
 				if (!is_object($this->projects)) {
 					$this->projects = createobject('projects.projects');
 				}            
-				if (list( $proj ) = $this->projects->read_single_project( $proj_id ))
+				if (list( $proj ) = $this->projects->read_single_project( $proj_id))
 					return $proj;
 			}
 			return False;         
 		}               
 
-		function readAddr($addr_id) {
+		function readAddr($addr_id)
+		{
 			if ($addr_id) {
 				if (!is_object($this->contacts)) {
 					$this->contacts = createobject('phpgwapi.contacts');
@@ -51,57 +54,86 @@
 		}      
 					
 		
-		function check_access( $info_id,$required_rights ) {
+		function check_access( $info_id,$required_rights )
+		{
 			global $phpgw_info;
-			if ($info_id != $this->data['info_id']) {      // already loaded?
-				$private_info = $this;                      // dont change our own internal data, dont use new as it changes $phpgw->db
+			if ($info_id != $this->data['info_id'])      	// already loaded?
+			{
+				// dont change our own internal data,
+				// dont use new as it changes $phpgw->db
+				$private_info = $this;                      
 				$info = $private_info->read($info_id);
-			} else {
+			}
+			else
+			{
 				$info = $this->data;
 			}
 			if (!$info || !$info_id)
+			{
 				return False;
-			
+			}
 			$owner = $info['info_owner'];
 			$user  = $phpgw_info['user']['account_id'];
+
 			$access_ok = $owner == $user ||                // user has all rights
-							 !!($this->grants[$owner] & $required_rights) &&    // ACL only on public entrys || $owner granted _PRIVATE
-							 ($info['info_access'] == 'public' || !!($this->grants[$owner] & PHPGW_ACL_PRIVATE));   
+							 // ACL only on public entrys || $owner granted _PRIVATE
+							 !!($this->grants[$owner] & $required_rights) &&
+							 ($info['info_access'] == 'public' ||
+							 !!($this->grants[$owner] & PHPGW_ACL_PRIVATE));   
 							
 			// echo "check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied");
 			
 			return $access_ok;         
 		}
-		
-		function aclFilter($filter = 'none') {            // sql to be AND into a query to ensure ACL is respected (incl. _PRIVATE)
-			global $phpgw_info;                           // filter: none    - list all entrys user have rights to see
-																		//         private - list only his personal entrys (incl. those he is responsible for !!!)            
+
+		// sql to be AND into a query to ensure ACL is respected (incl. _PRIVATE)
+		// filter: none    - list all entrys user have rights to see
+		//         private - list only his personal entrys
+		//							(incl. those he is responsible for !!!)            
+		function aclFilter($filter = 'none')
+		{
+			global $phpgw_info;
 			if (isset($this->acl_filter[$filter]))
-				return $this->acl_filter[$filter];         // used cached filter if found
-				
-			if (is_array($this->grants)) {
-				while (list($user,$grant) = each($this->grants)) {
-						// echo "<p>grants: user=$user, grant=$grant</p>";
+			{
+				return $this->acl_filter[$filter];  // used cached filter if found
+			}
+			if (is_array($this->grants))
+			{
+				while (list($user,$grant) = each($this->grants))
+				{
+					// echo "<p>grants: user=$user, grant=$grant</p>";
 					if ($grant & (PHPGW_ACL_READ|PHPGW_ACL_EDIT))
+					{
 						$public_user_list[] = $user;
+					}
 					if ($grant & PHPGW_ACL_PRIVATE)
+					{
 						$private_user_list[] = $user;
+					}
 				}
-				if (count($private_user_list)) {               
-					$has_private_access = 'info_owner IN ('.implode(',',$private_user_list).')';
+				if (count($private_user_list))
+				{               
+					$has_private_access = 'info_owner IN ('.
+												 implode(',',$private_user_list).')';
 				}            
 			}
 			$user = $phpgw_info['user']['account_id'];
 			
-			$filtermethod = " (info_owner=$user";         // user has all rights
+			$filtermethod = " (info_owner=$user"; // user has all rights
 
-			if ($filter == 'private') {                  // private means own entrys plus the one user is responsible for (and has rights to see)
+			// private: own entries plus the one user is responsible for 
+			if ($filter == 'private')
+			{
 				$filtermethod .= " OR info_responsible=$user AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
-			} else {      // none --> all entrys user has rights to see
-				if ($has_private_access) {
+			}
+			else      				// none --> all entrys user has rights to see
+			{
+				if ($has_private_access)
+				{
 					$filtermethod .= " OR $has_private_access";
 				}
-				if (count($public_user_list)) {         
+				if (count($public_user_list))
+				{ 
 					$filtermethod .= " OR (info_access='public' AND info_owner IN(" . implode(',',$public_user_list) . '))';
 				}
 			}
@@ -109,46 +141,57 @@
 			
 			// echo "<p>aclFilter('$filter')(user='$user') = '$filtermethod'</p>";
 			
-			return $this->acl_filter[$filter] = $filtermethod;   // cache the filter         
+			return $this->acl_filter[$filter] = $filtermethod;  // cache the filter
 		}      
 	
-		function init() {
+		function init()
+		{
 			global $phpgw_info;
 			
 			$this->data = array( 'info_owner' => $phpgw_info['user']['account_id'],
 										'info_pri'    => 'normal' );
 		}      
 				
-		function read($info_id) {                        // did _not_ ensure ACL, has to be done by the calling code
+		function read($info_id)		// did _not_ ensure ACL
+		{
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
 										(!$this->db->query("select * FROM phpgw_infolog where info_id='$info_id'") ||   !$this->db->next_record())) 
 			{
 				$this->init( );
 				return False;
 			}
-			if ($info_id != $this->data['info_id']) {      // data yet read in
+			if ($info_id != $this->data['info_id'])      // data yet read in
+			{
 				$this->data = $this->db->Record;
 			}         
 			return $this->data;         
 		}
 		
-		function delete($info_id) { // did _not_ ensure ACL, has to be done by the calling code
+		function delete($info_id)  // did _not_ ensure ACL
+		{
 			global $phpgw_info;
+
 			$this->db->query("delete FROM phpgw_infolog where info_id='$info_id' or info_id_parent='"
 				. "$info_id' AND ((info_access='public' and info_owner != '"
 				. $phpgw_info['user']['account_id'] . "') or (info_owner='"
 				. $phpgw_info['user']['account_id'] . "'))" ,__LINE__,__FILE__);
 				
 			if ($this->data['info_id'] == $info_id)
+			{
 				$this->init( );            
+			}
 		}
 
-		function write($values) { // did _not_ ensure ACL, has to be done by the calling code
-			while (list($key,$val) = each($values)) {
+		function write($values)  // did _not_ ensure ACL
+		{
+			while (list($key,$val) = each($values))
+			{
 				$this->data['info_'.$key] = $val;   // update internal data
-				switch ($key) {
+
+				switch ($key)
+				{
 					case 'info_id':
-						break;         // later in where clause
+						break;
 					case 'des': case 'subject': case 'from': case 'addr':
 						$val = addslashes($val);
 					default:
@@ -156,17 +199,88 @@
 						$query .= "info_$key='$val'";
 				}
 			}
-			if ($values['info_id']) {
-				$query = 'update phpgw_infolog set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
-			} else {
+			if ($values['info_id'])
+			{
+				$query = 'update phpgw_infolog set '.$query.' where info_id=\'' .
+							$values['info_id'] .'\'';
+			}
+			else
+			{
 				$query = 'insert INTO phpgw_infolog set '.$query;
 				/*
 				 * need to set $this->data['info_id'] with assigned autoincrement id
+				 * now data will be rereaded
 				 */
 			}                  
-				
-			//echo '<br>edit(): query: '.$query;
-			
 			$this->db->query($query,__LINE__,__FILE__);         
+		}
+
+		function anzSubs( $info_id )
+		{
+			$this->db->query('select count(*) FROM phpgw_infolog where '.
+								  "info_id_parent=$info_id",__LINE__,__FILE__);
+
+			$this->db->next_record();
+
+			return $this->db->f(0);
+		}
+
+		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$addr_id,
+									$proj_id,$info_id,$ordermethod,&$start,&$total)
+		{
+			if ($order)
+			{
+			  $ordermethod = 'order by ' . $order . ' ' . $sort;
+			}
+			else
+			{
+			  $ordermethod = 'order by info_datecreated desc';   // newest first
+			}
+			if (!$filter)
+			{
+			  $filter = 'none';
+			}
+			$filtermethod = $this->aclFilter($filter);
+
+			if ($cat_id)
+			{
+			  $filtermethod .= " AND info_cat='$cat_id' "; 
+			}
+			switch ($action)
+			{
+				case 'addr':	$filtermethod .= " AND info_addr_id=$addr_id ";
+									break;
+				case 'proj':	$filtermethod .= " AND info_proj_id=$proj_id ";
+									break;
+			}
+			if ($query)			  // we search in _from, _subject and _des for $query
+			{
+				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
+								 "like '%$query%' OR info_des like '%$query%') ";
+			}
+			$pid = 'AND info_id_parent='.($action == 'sp' ? $info_id : 0);  
+
+			if (!$phpgw_info['user']['preferences']['infolog']['listNoSubs'] &&
+				 $action != 'sp')
+			{
+				$pid = '';
+			}
+			$this->db->query("SELECT COUNT(*) FROM phpgw_infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
+
+			$this->db->next_record();
+			$total = $this->db->f(0);
+
+			if (!$start || $start > $total)
+			{
+				$start = 0;
+			}
+			$this->db->limit_query("SELECT info_id,info_id_parent FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
+
+			$ids = array( );
+			while ($this->db->next_record())
+			{
+				$ids[$this->db->f('info_id')] = $this->db->f('info_parent_id');
+			}
+			return $ids;
 		}
 	}

@@ -28,8 +28,10 @@
 		var $data;
 		var $enums;
 
-		function uiinfolog( ) {
+		function uiinfolog( )
+		{
 			global $phpgw;
+
 			$this->bo = CreateObject('infolog.boinfolog');
 			$this->data = &$this->bo->data;
 			$this->enums = &$this->bo->enums;
@@ -64,51 +66,68 @@
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 		}
 				
-		function menuaction($action = 'get_list') {
+		function menuaction($action = 'get_list')
+		{
 			return array( 'menuaction' => "infolog.uiinfolog.$action" );
 		}
 
-		function icon($cat,$id,$status='') {
-			// echo "<br>icon('$cat','$id','$status')";
+		function icon($cat,$id,$status='')
+		{
 			global $phpgw,$DOCUMENT_ROOT;
+
 			$icons = &$this->icons[$cat];
 
-			if (!$status || !($icon = $icons[$id.'_'.$status]))
+			if (!$status || !($icon = $icons[$id.'_'.$status])) {
 				$icon = $icons[$id];
-			if ($icon) {
+			}
+			if ($icon)
+			{
 				$fname = $phpgw->common->get_image_dir() . '/' . $icon; 
-				if (!is_readable($fname)) {
+				
+				if (!is_readable($fname))
+				{
 					$icon = False;      // echo "<br>Can't read '$fname' !!!";
-				} else {            
+				}
+				else
+				{            
 					$icon = $phpgw->common->get_image_path() . '/' . $icon;
 				}            
 			}
 			if (!$status || !($alt = $icons[$id.'_'.$status.'_alt']))
+			{
 				if (!($alt = $icons[$id.'_alt']))
+				{
 					$alt = $id;
-			
+				}
+			}
 			return ($icon ? "<img src='$icon' alt='" : '') . lang($alt) .
 					 ($icon ? '\' border=0>' : '');
 		}
 		
-		function setStyleSheet( ) {
+		function setStyleSheet( )
+		{
 			global $phpgw;
+
 			return array (
 				'info_css' => '<link rel="stylesheet" type="text/css" href="'.
-									str_replace( '/images','',$phpgw->common->get_image_path()).'/info.css">' );
+									str_replace( '/images','',
+									$phpgw->common->get_image_path()).'/info.css">'
+			);
 		}
 		
 		/*
 		 * $info: info_id or array with one row form info-db
 		 * no Proj.Info if proj_id == p_id / no Addr.Info if addr_id == a_id
 		 */
-		function formatInfo($info=0,$p_id=0,$a_id=0) {
+		function formatInfo($info=0,$p_id=0,$a_id=0)
+		{
 			global $phpgw,$phpgw_info;
 			
 			if (!is_array($info) && (!$info ||
 				 !is_array($info=$this->bo->read($info))))
+			{
 				$info = $this->data;
-			
+			}
 			$done = $info['info_status'] == 'done' ||
 					  $info['info_status'] == 'billed';   
 
@@ -133,15 +152,18 @@
 									array( 'filter' => $filter,'action' => 'addr',
 											 'addr_id' => $addr_id )));
 			}
-			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from))) {
+			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from)))
+			{
 				if ($addr) $subject .= '<br>';
 				$subject .= '<b>'.$from.'</b>';
 			}
-			if ($info['info_addr']) {
+			if ($info['info_addr'])
+			{
 				if ($addr || $from) $subject .= ': ';
 				$subject .= $info['info_addr'];
 			}
-			if ($proj || $addr || $from || $info['info_addr']) {
+			if ($proj || $addr || $from || $info['info_addr'])
+			{
 				$subject .= '<br>';
 			}
 			$subject .= '<b>';
@@ -149,72 +171,85 @@
 							substr($info['info_des'],0,60).' ...';
 			$subject .= '</b></span>';
 
-			if (!$info['info_enddate']) {
+			if (!$info['info_enddate'])
+			{
 				$enddate = '&nbsp;';
-			} else {
-				$enddate = $phpgw->common->show_date($info['info_enddate'],$phpgw_info['user']['preferences']['common']['dateformat']);
+			}
+			else
+			{
+				$enddate = $phpgw->common->show_date($info['info_enddate'],
+						$phpgw_info['user']['preferences']['common']['dateformat']);
 				
 				if (!$done && $info['info_enddate'] < time()+(60*60)*$phpgw_info['user']['preferences']['common']['tz_offset'])
+				{
 					$enddate = "<span class=overdue>$enddate</span>";
+				}
 			}
 			if (!($responsible = $info['info_responsible']) &&
 				 $info['info_status'] == 'offer')
 			{
 				$responsible = $this->icon('status','offer');
-			} else {
+			}
+			else
+			{
 				$responsible = $this->bo->accountInfo($responsible);         
 			}         
 			$owner = $this->bo->accountInfo($info['info_owner']);
 			if ($info['info_access'] == 'private')
+			{
 				$owner = "<span class=private>$owner</span>";
-				
+			}
 			return array(
 				'type'        => $this->icon('type',$info['info_type']),
 				'status'      => $this->icon('status',$info['info_status']),
 				'pri'         => lang($info['info_pri']),
 				'subject'     => $subject,
 				'des'         => $info['info_des'],
-				'startdate'   => $phpgw->common->show_date($info['info_startdate'],$phpgw_info['user']['preferences']['common']['dateformat']),
+				'startdate'   => $phpgw->common->show_date($info['info_startdate'],
+						$phpgw_info['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
 				'owner'       => $owner,
-				'datecreated' => $phpgw->common->show_date($info['info_datecreated'],$phpgw_info['user']['preferences']['common']['dateformat']),
-				'responsible' => $responsible   );            
+				'datecreated' => $phpgw->common->show_date($info['info_datecreated']							,$phpgw_info['user']['preferences']['common']['dateformat']),
+				'responsible' => $responsible
+			);            
 		}
 
-		function infoHeaders( $do_sort_header=0,$sort=0,$order=0) {
+		function infoHeaders( $do_sort_header=0,$sort=0,$order=0)
+		{
 			global $phpgw,$phpgw_info;
 			
 			$headers['th_bg'] = $phpgw_info['theme']['th_bg'];
 			
 			$fields = array( 'type','status','urgency','subject','startdate',
 								  'enddate','owner','datecreated','responsible' );
-			for ( ;$f = $h = current($fields); $f = next($fields)) {
+			for ( ;$f = $h = current($fields); $f = next($fields))
+			{
 				$lang = lang(ucfirst( $f ));
 				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,'&menuaction=infolog.uiinfolog.get_list') : $lang;            
 			}
 			return $headers;         
 		}
 		
-		function get_referer( ) {
+		function get_referer( )
+		{
 			global $phpgw_info,$HTTP_REFERER,$referer;
+
 			if (!$referer)
 				$referer = $HTTP_REFERER;
-
-			//echo "<p>get_referer: referer=$referer, webserver_url=".$phpgw_info['server']['webserver_url'];
 
 			$url = parse_url(str_replace($phpgw_info['server']['webserver_url'],'',
 										  		  $referer));
 			$referer = $url['path'];
 
 			if ($url['query'])
+			{
 				$referer .= '?'.$url['query'];
-
-			//echo " --> $referer</p>";
-
+			}
 			return $referer;
 		}
 
-	 	function get_list($for_include=0) {
+	 	function get_list($for_include=0)
+		{
 			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$addr_id,$proj_id,$info_id;
@@ -223,8 +258,6 @@
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 			}
-			$db = $phpgw->db;
-			$db2 = $phpgw->db;
 			$t = &$this->template; $html = &$this->html;
 
 			$t->set_file(array( 'info_list_t' => 'list.tpl' ));
@@ -241,18 +274,22 @@
 			$referer = $PHP_SELF.($QUERY_STRING ? '?'.$QUERY_STRING : '');
 
 			$action_vars = array( 'action' => 'new' );
-			switch ($action) {
+			switch ($action)
+			{
 				case 'sp':        // Sub-List
 					$action_vars = array('action'=>'sp','info_id'=>$info_id);
-				  	$t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
+				  $t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
 					break;
 			  case 'proj':
-					$action_vars += array('id_project' => $proj_id,'proj_id' => $proj_id);
+					$action_vars += array( 'id_project' => $proj_id,
+												  'proj_id' => $proj_id);
 					$proj = $this->bo->readProj($proj_id);
-					$t->set_var(lang_info_action,lang('Info Log').' - '. $proj['title']);
+					$t->set_var(lang_info_action,lang('Info Log').' - '. 
+									$proj['title']);
 					break;
 			  case 'addr':
-					$action_vars += array( 'id_addr' => $addr_id, 'addr_id' => $addr_id );
+					$action_vars += array( 'id_addr' => $addr_id,
+												  'addr_id' => $addr_id );
 					$addr = $this->bo->readAddr($addr_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$this->bo->addr2name($addr));
@@ -264,23 +301,29 @@
 			$t->set_var($this->setStyleSheet( ));
 
 			if (!$for_include)
+			{
 				$t->set_var('add_button',$html->form_1button('add_button','Add',
 							$hidden_vars+$action_vars+array('referer'=>$referer),
 							'/index.php',$this->menuaction('edit')));
-
-			$t->set_var('cat_form',$html->link('/index.php',ereg_replace('&*cat_id=[0-9]*','',$QUERY_STRING))); //RB:$this->menuaction()));
+			}
+			$t->set_var('cat_form',$html->link('/index.php',
+							ereg_replace('&*cat_id=[0-9]*','',$QUERY_STRING)));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_all',lang('All'));
 			$t->set_var('lang_select',lang('Select'));
 			$t->set_var('categories',$this->categories->formated_list('select',
-																				'all',$cat_id,'True'));
-			$icons = array( 'task'	=> lang('add Task'),
-								 'phone'	=> lang('add Phonecall'),
-								 'note'	=>	lang('add Note') );
+																			'all',$cat_id,'True'));
 			$add_icons = lang('Add').':';
-			while (list($type,$lang) = each($icons)) {
+
+			$icons = array( 'task'	=> True,
+								 'phone'	=> True,
+								 'note'	=>	True
+							  );
+
+			while (list($type,$nul) = each($icons))
+			{
 				$add_icons .= $html->a_href($this->icon('type',$type),'/index.php',
-							 $this->menuaction('edit')+$action_vars+array('type'=>$type));
+						 $this->menuaction('edit')+$action_vars+array('type'=>$type));
 			}
 			$t->set_var('add_icons',$add_icons);
 
@@ -292,46 +335,19 @@
 			$t->set_var(h_lang_action,lang('Action'));
 			// -------------- end header declaration -----------------
 
-			if (! $start) {
-			  $start = 0;
-			}
-
-			if ($order) {
-			  $ordermethod = 'order by ' . $order . ' ' . $sort;
-			} else {
-			  $ordermethod = 'order by info_datecreated desc';        // newest first
-			}
-			if (!$filter)     {
-			  $filter = 'none';
-			}
-			$filtermethod = $this->bo->aclFilter($filter);
-
-			if ($cat_id) {
-			  $filtermethod .= " AND info_cat='$cat_id' "; 
-			}
-			if ($action == 'addr') $filtermethod .= " AND info_addr_id=$addr_id ";
-			if ($action == 'proj') $filtermethod .= " AND info_proj_id=$proj_id ";
-									  // we search in _from, _subject and _des for $query
-			if ($query)
-				$sql_query = "AND (info_from like '%$query%' OR info_subject like '%$query%' OR info_des like '%$query%') ";
-
-			$pid = 'AND info_id_parent='.($action == 'sp' ? $info_id : 0);  
-			if (!$phpgw_info['user']['preferences']['infolog']['listNoSubs'] &&
-				 $action != 'sp')
-				$pid = '';
-
-			$db->query("SELECT COUNT(*) FROM phpgw_infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
-			$db->next_record();
-			$total = $db->f(0);
-
-			if ($total <= $start) $start = 0;
+			$ids = $this->bo->readIdArray($order,$sort,$filter,$cat_id,$query,
+								  					$action,$addr_id,$proj_id,$info_id,
+													$ordermethod,$start,$total);
 
 			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-			if ($total > $maxmatchs) {
+			if ($total > $maxmatchs)
+			{
 			  $to = $start + $maxmatchs;
 			  if ($to > $total) $to = $total;
 			  $total_matchs = lang('showing x - x of x',($start + 1),$to,$total);
-			} else {
+			}
+			else
+			{
 			  $total_matchs = lang('showing x',$total);
 			}
 			$t->set_var('total_matchs',$total_matchs);
@@ -340,10 +356,10 @@
 			// project description if subprojectlist
 			// ==========================================
 
-
 			$t->set_block('info_list_t','projdetails','projdetailshandle');
 
-			switch ($action) {
+			switch ($action)
+			{
 			  case 'sp':        // details of parent
 					$t->set_var( $this->infoHeaders(  ));
 					$t->set_var( $this->formatInfo( $info_id ));
@@ -363,86 +379,91 @@
 			if (!$for_include || $total > $maxmatchs ||
 				 $query || $filter != 'none' || $cat_id)
 			{
-				//echo "<p>for_include=$for_include, total=$total, maxmatchs=$maxmatchs, query=$query, filter=$filter, cat_id=$cat_id</p>";
-
 				$t->parse('cat_selectionhandle','cat_selection',True);
 
 			// ===========================================
 			// nextmatch variable template-declarations
 			// ===========================================
 				if (!($q_string = strstr($QUERY_STRING,'menuaction')))
+				{
 					$q_string = "menuaction=infolog.uiinfolog.get_list";
+				}
 				if (!strstr($q_string,'cat_id'))
+				{
 					$q_string .= "&cat_id=$cat_id";
-				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,$total,
-											'&'.$q_string,'95%',$phpgw_info['theme']['th_bg']);
+				}
+				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
+							$total,'&'.$q_string,'95%',$phpgw_info['theme']['th_bg']);
+
 				$t->set_var('next_matchs',$next_matchs);
+
 				if ($total > $maxmatchs)
+				{
 					$t->set_var('next_matchs_end',$next_matchs);
+				}
 			}
 
 			// ---------- end nextmatch template --------------------
 
-			$sql="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod";
-			$db->limit_query($sql,$start,__LINE__,__FILE__);
-
-			while ($db->next_record()) {
-				// ========================================
-				// check if actual project has subprojects
-				// ========================================
-				$db2->query("select count(*) as cnt FROM phpgw_infolog where info_id_parent=" .$db->f('info_id'),__LINE__,__FILE__);
-				$db2->next_record();
-				if ($db2->f('cnt') > 0) {
-					$subproact = 1;
-				} else {
-					$subproact = 0;
-				}
-				// -----------------------------------------
+			while (list($id,$parent) = each($ids))
+			{
+				$subproact = $this->bo->anzSubs($id);
 
 				$this->nextmatchs->template_alternate_row_color(&$t);
 
-				$t->set_var( $this->formatInfo( $db->Record,$proj_id,$addr_id ));
+				$t->set_var( $this->formatInfo( $id,$proj_id,$addr_id ));
 
-				if ($this->bo->check_access($db->f('info_id'),PHPGW_ACL_EDIT)) {
+				if ($this->bo->check_access($id,PHPGW_ACL_EDIT))
+				{
 					$t->set_var('edit',$html->a_href(
 						$this->icon('action','edit'),'/index.php',
-						$hidden_vars+array('info_id' => $db->f('info_id'))+
+						$hidden_vars+array('info_id' => $id)+
 						$this->menuaction('edit')));
-				} else {
+				}
+				else
+				{
 					$t->set_var('edit','');
 				}
 
-			  if ($this->bo->check_access($db->f('info_id'),PHPGW_ACL_DELETE)) {
+				if ($this->bo->check_access($id,PHPGW_ACL_DELETE))
+				{
 					$t->set_var('delete',$html->a_href(
-						$this->icon('action','delete'),'/index.php',
-						$hidden_vars+array('info_id' => $db->f('info_id'))+
-						$this->menuaction('delete')));
-			  } else {
+									$this->icon('action','delete'),'/index.php',
+									$hidden_vars+array('info_id' => $id)+
+									$this->menuaction('delete')));
+			  }
+			  else
+			  {
 					$t->set_var('delete','');
 			  }
 			  $t->set_var('subadd', '');        // defaults no icons
 			  $t->set_var('viewsub', '');
 			  $t->set_var('viewparent', '');
 
-			  if ($subproact > 0) {  // if subprojects exist, display VIEW SUB icon
+			  if ($subproact > 0)   // if subprojects exist, display VIEW SUB icon
+			  {
 					$t->set_var('viewsub', $html->a_href(
 						$this->icon('action','view'),'/index.php',
-						$this->menuaction()+array( 'info_id' => $db->f('info_id'),
+						$this->menuaction()+array( 'info_id' => $id,
 						'filter' => $filter, 'action' => 'sp')));
-			  } else {                          // else display ADD SUB-Icon
-					if ($this->bo->check_access($db->f('info_id'),PHPGW_ACL_ADD)) {
+			  }
+			  else                           // else display ADD SUB-Icon
+			  {
+					if ($this->bo->check_access($id,PHPGW_ACL_ADD))
+					{
 						$t->set_var('subadd',$html->a_href(
 							$this->icon('action','new'),'/index.php',
 							$this->menuaction('edit')+
-							array('info_id' => $db->f('info_id'),'filter' => $filter,
+							array('info_id' => $id,'filter' => $filter,
 									'action' => 'sp')));
 					}            
-			}                       // if parent --> display VIEW SUBS of Parent
-				if ($db->f('info_id_parent') && $action != 'sp') {
+				}                       // if parent --> display VIEW SUBS of Parent
+				if ($parent && $action != 'sp')
+				{
 					$t->set_var('viewparent',$html->a_href(
 						$this->icon('action','parent'),'/index.php',
 						$this->menuaction()+
-						array('info_id' => $db->f('info_id_parent'),
+						array('info_id' => $parent,
 								'filter' => $filter,'action' => 'sp')));
 			  }
 			  
@@ -454,16 +475,18 @@
 			// back2project list href declaration for subproject list
 			// =========================================================
 
-			if ($action && !$for_include) {
+			if ($action && !$for_include)
+			{
 				$t->set_var('back2projects',
-								$html->form_1button('back','Back to Projectlist','',
-								'/index.php',$this->menuaction()+array('filter'=>$filter)));
+						$html->form_1button('back','Back to Projectlist','',
+						'/index.php',$this->menuaction()+array('filter'=>$filter)));
 			}
 
 			$t->pfp('out','info_list_t',true);
 		}
 
-		function edit( ) {
+		function edit( )
+		{
 			global $phpgw,$phpgw_info;
 			global $cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$info_id,$save,$add,$query_addr,$query_project;
@@ -481,69 +504,86 @@
 
 			$referer = $this->get_referer();
 
-			if ((!isset($info_id) || !$info_id) && !$action)   {
+			if ((!isset($info_id) || !$info_id) && !$action)
+			{
 				Header('Location: ' . 
 						 $html->link('/index.php',$hidden_vars+$this->menuaction()));
 			}
 
 			// check wether to write dates or not
-			if ($selfortoday) {
+			if ($selfortoday)
+			{
 				$startdate = time();     // startdate is today (checkbox is clicked)
-			} else {
-				if ($sday) {
+			}
+			else
+			{
+				if ($sday)
+				{
 					if ($sday && !$smonth) $smonth = date('m',time());
 					if ($sday && !$syear)  $syear  = date('Y',time());
-					if (! checkdate($smonth,$sday,$syear)) {
+
+					if (! checkdate($smonth,$sday,$syear))
+					{
 						$error[] = lang('You have entered an invalid starting date');
-					} else {
+					}
+					else
+					{
 						$startdate = mktime(12,0,0,$smonth, $sday, $syear);
 					}
-				} else {
-					if (isset($sday))
-						$startdate = 0;
+				}
+				else
+				{
+					if (isset($sday)) $startdate = 0;
 				}         
 			}
 
 			// Check ending date
-			if ($dur_days > 0)   {
-				$enddate = mktime(12,0,0,date('m',$startdate), date('d',$startdate)+$dur_days, date('Y',$startdate));
-			} else
-				if ($eday) {
+			if ($dur_days > 0)
+			{
+				$enddate = mktime(12,0,0,date('m',$startdate),
+								date('d',$startdate)+$dur_days, date('Y',$startdate));
+			}
+			else
+			{
+				if ($eday)
+				{
 					if ($eday && !$emonth) $emonth = date('m',time());
 					if ($eday && !$eyear)  $eyear  = date('Y',time());
-					if (!checkdate($emonth,$eday,$eyear)) {
+
+					if (!checkdate($emonth,$eday,$eyear))
+					{
 						$error[] = lang('You have entered an invalid ending date');
-					} else {
+					}
+					else
+					{
 						$enddate = mktime(12,0,0,$emonth,$eday,$eyear);
 					}
-				} else {
-					if (isset($eday))
-						$enddate = 0;
 				}
-
-			if ($save || $add) {
-				if (strlen($des) >= 8000) {
+				else
+				{
+					if (isset($eday)) $enddate = 0;
+				}
+			}
+			if ($save || $add)		// form submited
+			{
+				if (strlen($des) >= 8000)
+				{
 					$error[] = lang('Description can not exceed 8000 characters in length');
 				}
-				if (!$subject && !$des) {
+				if (!$subject && !$des)
+				{
 					$error[] = lang('You must enter a subject or a description');
 				}
 
-				if ($enddate < $startdate && $enddate && $startdate) {
+				if ($enddate < $startdate && $enddate && $startdate)
+				{
 					$error[] = lang('Ending date can not be before start date');
 				}
 
-				if ($access) {
-					$access = 'private';
-				} else {
-					$access = 'public';
-				}
+				$access = $access ? 'private' : 'public';
 
-				if ($status == 'done') {
-					$enddate = time();
-				}
-
-				if (! is_array($error)) {
+				if (! is_array($error))
+				{
 					$this->bo->write(array(
 						'type'      => $type,
 						'from'      => $from,
@@ -564,14 +604,18 @@
 						'responsible' => $responsible
 					));
 			
-					if (!$query_addr && !$query_project) {
+					if (!$query_addr && !$query_project)
+					{
 						Header('Location: ' . $html->link($referer, array('cd'=>15)));
 					}
 				}
 			}
 			$this->bo->read( $info_id );
-			if ($info_id && $action == 'sp') {   // new SubProject
-				if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD)) {
+
+			if ($info_id && $action == 'sp')    // new SubProject
+			{
+				if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD))
+				{
 					Header('Location: ' .  $html->link($referer));
 					$phpgw->common->phpgw_exit();
 				}
@@ -579,21 +623,26 @@
 				$this->data['info_id'] = $info_id = 0;
 				$this->data['info_owner'] = $phpgw_info['user']['account_id'];
 				$this->data['info_id_parent'] = $parent['info_id'];
-				if ($parent['info_type'] == 'task' && $parent['info_status'] == 'offer') {
-					$this->data['info_type'] = 'confirm';
-					$this->data['info_responsible'] = $parent['info_owner'];   // confirmation to parent
+				if ($parent['info_type']=='task' && $parent['info_status']=='offer')
+				{
+					$this->data['info_type'] = 'confirm';   // confirmation to parent
+					$this->data['info_responsible'] = $parent['info_owner'];
 				}
 				$this->data['info_status'] = 'ongoing';
 				$this->data['info_confirm'] = 'not';
-				$this->data['info_subject'] = lang('Re:').' '.$parent['info_subject'];
+				$this->data['info_subject']=lang('Re:').' '.$parent['info_subject'];
 				$this->data['info_des'] = '';
-			} else {
-				if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT)) {
+			}
+			else
+			{
+				if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
+				{
 					Header('Location: ' .  $html->link($referer));
 					$phpgw->common->phpgw_exit();
 				}
 			}      
 			$id_parent = $this->data['info_id_parent'];
+
 			$common_hidden_vars =  $html->input_hidden( $hidden_vars + array(
 				'info_id' => $info_id,
 				'action' => $action,
@@ -614,12 +663,16 @@
 			$t->set_block('info_edit', 'edit', 'edithandle');
 			$t->set_block('info_edit', 'subpro', 'subprohandle');
 			  
-			if (is_array($error)) {
+			if (is_array($error))
+			{
 				$t->set_var('error_list',$phpgw->common->error_list($error));
 			}
-			switch ($action) {
+
+			switch ($action)
+			{
 				case 'sp':
-					$info_action = 'Info Log - New Subproject'; break;
+					$info_action = 'Info Log - New Subproject';
+					break;
 				case 'new': case 'addr': case 'proj':
 					$info_action = 'Info Log - New';
 					if ($info_type && isset($this->enums['type'][$info_type]))
@@ -628,12 +681,14 @@
 				default:
 					$info_action = 'Info Log - Edit'; break;
 			}
-			$t->set_var('lang_info_action',lang($info_action) . ($query_addr ? ' - '.lang('Search for:')." '$query_addr'" : ''));
+			$t->set_var('lang_info_action',lang($info_action) .
+					($query_addr ? ' - '.lang('Search for:')." '$query_addr'" : ''));
 			$t->set_var($this->setStyleSheet( ));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_none',lang('None'));
 			if (!isset($info_cat)) $info_cat = $this->data['info_cat'];
-			$t->set_var('cat_list',$this->categories->formated_list('select','all',$info_cat,'True'));
+			$t->set_var('cat_list',$this->categories->formated_list('select',
+																		'all',$info_cat,'True'));
 
 			$t->set_var('actionurl',$html->link('/index.php',
 							$this->menuaction('edit')));
@@ -647,14 +702,15 @@
 
 			$t->set_var('lang_type',lang('Type'));
 			if (!isset($type)) $type = $this->data['info_type'];
-			$t->set_var('type_list',$sb->getArrayItem('type',$type,$this->enums['type']));
+			$t->set_var('type_list',$sb->getArrayItem('type',$type,
+																			$this->enums['type']));
 
 			$t->set_var('lang_prfrom', lang('From'));
-			if (!isset($from)) $from = $phpgw->strip_html($this->data['info_from']);
+			if (!isset($from)) $from =$phpgw->strip_html($this->data['info_from']);
 			$t->set_var('fromval', $from);
 
 			$t->set_var('lang_praddr', lang('Phone/Email'));
-			if (!isset($addr)) $addr = $phpgw->strip_html($this->data['info_addr']);
+			if (!isset($addr)) $addr =$phpgw->strip_html($this->data['info_addr']);
 			$t->set_var('addrval', $addr);
 
 			if (!isset($id_project)) $id_project = $this->data['info_proj_id'];
@@ -664,7 +720,9 @@
 			$t->set_var($sb->getAddress('addr',$id_addr,$query_addr));
 					
 			$t->set_var('lang_prsubject', lang('Subject'));
-			if (!isset($subject)) $subject = $phpgw->strip_html($this->data['info_subject']);
+			if (!isset($subject)) {
+				$subject = $phpgw->strip_html($this->data['info_subject']);
+			}
 			$t->set_var('subjectval', $subject);
 
 			$t->set_var('lang_prdesc', lang('Description'));
@@ -673,11 +731,13 @@
 
 			$t->set_var('lang_start_date',lang('Start Date'));
 			if (!isset($startdate)) $startdate = $this->data['info_startdate'];
-			$t->set_var('start_select_date',$sb->getDate('syear','smonth','sday',$startdate));
+			$t->set_var('start_select_date',
+							$sb->getDate('syear','smonth','sday',$startdate));
 
 			$t->set_var('lang_end_date',lang('End Date'));
 			if (!isset($enddate)) $enddate = $this->data['info_enddate'];
-			$t->set_var('end_select_date',$sb->getDate('eyear','emonth','eday',$enddate));
+			$t->set_var('end_select_date',
+							$sb->getDate('eyear','emonth','eday',$enddate));
 
 			$t->set_var('lang_selfortoday',lang('Today'));
 			$t->set_var('selfortoday',$html->checkbox('selfortoday',0));
@@ -686,19 +746,23 @@
 
 			$t->set_var('lang_status',lang('Status'));
 			if (!isset($status)) $status = $this->data['info_status'];
-			$t->set_var('status_list',$sb->getArrayItem('status',$status,$this->enums['status']));
+			$t->set_var('status_list',$sb->getArrayItem('status',$status,
+																	$this->enums['status']));
 
 			$t->set_var('lang_priority',lang('Priority'));
 			if (!isset($pri)) $pri = $this->data['info_pri'];
-			$t->set_var('priority_list',$sb->getArrayItem('pri',$pri,$this->enums['priority']));
+			$t->set_var('priority_list',$sb->getArrayItem('pri',$pri,
+																	$this->enums['priority']));
 
 			$t->set_var('lang_confirm',lang('Confirm'));
 			if (!isset($confirm)) $confirm = $this->data['info_confirm'];
-			$t->set_var('confirm_list',$sb->getArrayItem('confirm',$confirm,$this->enums['confirm']));
+			$t->set_var('confirm_list',$sb->getArrayItem('confirm',$confirm,
+																	$this->enums['confirm']));
 
 			$t->set_var('lang_responsible',lang('Responsible'));
-			if (!isset($responsible)) $responsible = $this->data['info_responsible'];
-			$t->set_var('responsible_list',$sb->getAccount('responsible',$responsible));
+			if (!isset($responsible)) $responsible=$this->data['info_responsible'];
+			$t->set_var('responsible_list',$sb->getAccount('responsible',
+																		  $responsible));
 
 			$t->set_var('lang_access_type',lang('Private'));
 			if (!isset($access)) $access = $this->data['info_access'] == 'private';
@@ -706,7 +770,8 @@
 			  
 			$t->set_var('edit_button',$html->submit_button('save','Save'));
 			 
-			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE)) {
+			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
+			{
 				$t->set_var('delete_button',$html->form_1button('delete','Delete',
 					array('referer'=>$referer),'/index.php',
 					$this->menuaction('delete')+array('info_id'=>$info_id)));
@@ -718,7 +783,8 @@
 			$t->pfp('edithandle','edit');
 		}
 
-		function delete( ) {
+		function delete( )
+		{
 			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $info_id,$confirm;
@@ -736,11 +802,14 @@
 			{
 				Header('Location: ' .  $html->link($referer));
 			}
-			if ($confirm) {
+			if ($confirm)
+			{
 				$this->bo->delete($info_id);
 
 				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
-			} else {
+			}
+			else
+			{
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 
@@ -750,7 +819,8 @@
 				$t->set_var( $this->formatInfo( $info_id ));
 				$t->set_var('lang_info_action',lang('Info Log - Delete'));
 
-				$t->set_var('deleteheader',lang('Are you sure you want to delete this entry'));
+				$t->set_var('deleteheader',
+								lang('Are you sure you want to delete this entry'));
 				$t->set_var('no_button',$html->form_1button('no_button',
 					'No - Cancel','',$referer));
 				$t->set_var('yes_button',$html->form_1button('yes_button',
@@ -761,26 +831,29 @@
 			}
 		}
 
-		function preferences( ) {
+		function preferences( )
+		{
 			global $phpgw,$phpgw_info;
 			global $save;
 
 			$prefs = array(
-				'homeShowEvents' => 'Show open Events: Tasks/Calls/Notes on main screen',
-				'listNoSubs'	=> 'List no Subs/Childs',
-				'longNames'	=> 'Show full usernames'
+				'homeShowEvents'	=> 'Show open Events: Tasks/Calls/Notes on main screen',
+				'listNoSubs'		=> 'List no Subs/Childs',
+				'longNames'			=> 'Show full usernames'
 			);
 			$phpgw->preferences->read_repository();
 
-			if ($save) {
-				while (list($pref,$lang) = each($prefs)) {
+			if ($save)
+			{
+				while (list($pref,$lang) = each($prefs))
+				{
 					$phpgw->preferences->add('infolog',$pref);
 				}
 				$phpgw->preferences->save_repository(True);
 
 				Header('Location: '.$phpgw->link('/preferences/index.php'));
 				$phpgw->common->phpgw_exit();
-			} else {
+			}
 			$phpgw->common->phpgw_header();
 			echo parse_navbar();
 
@@ -799,13 +872,15 @@
 			$t->set_var($vars);
 
 			$t->set_block('info_prefs', 'pref_line', 'pref_linehandle');
-			while (list($pref,$lang) = each($prefs)) {
+
+			while (list($pref,$lang) = each($prefs))
+			{
 				$t->set_var('bg_nm_color',$this->nextmatchs->alternate_row_color());
 				$t->set_var('field',lang($lang));
-				$t->set_var('data',$html->checkbox($pref,$phpgw_info['user']['preferences']['infolog'][$pref]));
+				$t->set_var('data',$html->checkbox($pref,
+								$phpgw_info['user']['preferences']['infolog'][$pref]));
 				$t->parse('pref_linehandle','pref_line',True);
 			}
 			$t->pfp('out','info_prefs');
-			}
 		}
 	}

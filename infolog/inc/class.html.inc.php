@@ -79,7 +79,8 @@ class html
 		return $html;
 	}
 
-	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$method='POST')
+	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',
+								 $method='POST')
 	{
 		return $this->form($this->submit_button($name,$lang),
 								 $hidden_vars,$url,$url_vars,$method);
@@ -116,7 +117,8 @@ class html
 	{
 		$html = str_replace('<select','<select onChange="this.form.submit()" ',
 								  $sbox);
-		if ($no_script) {
+		if ($no_script)
+		{
 			$html .= '<noscript>'.$this->submit_button('send','>').'</noscript>';
 		}
 		return $html;
@@ -127,16 +129,25 @@ class html
 		global $phpgw;
 
 		$html = '<img src="'.$phpgw->common->image($app,$name).'"';
-		if ($alt) $html .= ' alt="'.$alt.'"';
-		if ($opts) $html .= " $opts";
+
+		if ($alt) 
+		{
+			$html .= ' alt="'.$alt.'"';
+		}
+		if ($opts)
+		{
+			$html .= " $opts";
+		}
 		return $html . '>';
 	}
 
-	function a_href( $content,$url,$vars='') {
+	function a_href( $content,$url,$vars='')
+	{
 		return '<a href="'.$this->link($url,$vars).'">'.$content.'</a>';
 	}
 	
-	function bold($content) {
+	function bold($content)
+	{
 		return '<b>'.$content.'</b>';
 	}
 }

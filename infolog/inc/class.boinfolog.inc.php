@@ -22,11 +22,12 @@
 			'write'		=>	True,
 			'delete'		=>	True,
 			'check_access'	=> True,
-			'aclFilter'	=>	True,
 			'readProj'	=> True,
 			'readAddr'	=>	True,
+			'anzSubs'	=>	True,
+			'readIdArray' => True,
 			'accountInfo'	=> True,	// in class boinfolog (this class)
-			'addr2name'	=>	True
+			'addr2name'	=>	True,
 		);
 		var $enums;
 		var $so;
@@ -165,5 +166,17 @@
 				$values['from'] = $this->addr2name( $this->readAddr( $values['addr_id'] ));
 
 			$this->so->write($values);
+		}
+		
+		function anzSubs( $info_id ) {
+			return $this->so->anzSubs( $info_id );
+		}
+
+		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$addr_id,
+									$proj_id,$info_id,$ordermethod,&$start,&$total)
+		{
+			return $this->so->readIdArray($order,$sort,$filter,$cat_id,$query,
+								  					$action,$addr_id,$proj_id,$info_id,
+													$ordermethod,$start,$total);
 		}
 	}
