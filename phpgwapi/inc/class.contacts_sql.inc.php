@@ -538,19 +538,22 @@
 
 		function add($owner,$fields,$access='',$cat_id='',$tid='n')
 		{
-			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-
-			$fields['tid'] = trim($fields['tid']);
-			if(empty($fields['tid']))
+			$tid = $fields['tid'] ? trim($fields['tid']) : $tid;
+			unset($fields['tid']);
+			if(empty($tid))
 			{
-				$fields['tid'] = 'n';
+				$tid = 'n';
 			}
 
 			if ($fields['lid'])
 			{
 				$lid[0] = 'lid,';
 				$lid[1] = $fields['lid']."','";
+				unset($fields['lid']);
 			}
+
+			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+
 			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,".$lid[0]
 				. implode(",",$this->stock_contact_fields)
 				. ") VALUES ('$owner','$access','$cat_id','$tid','".$lid[1]

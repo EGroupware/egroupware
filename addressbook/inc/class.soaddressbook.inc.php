@@ -104,7 +104,18 @@
 			}
 			if ($this->rights & PHPGW_ACL_ADD)
 			{
-				$id = $this->contacts->add($fields['owner'],$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
+				$ab_id  = $fields['ab_id'];
+				$owner  = $fields['owner'];
+				$access = $fields['access'];
+				$cat_id = $fields['cat_id'];
+				$tid    = $fields['tid'];
+				unset($fields['owner']);
+				unset($fields['access']);
+				unset($fields['cat_id']);
+				unset($fields['ab_id']);
+				unset($fields['tid']);
+
+				$id = $this->contacts->add($owner,$fields,$access,$cat_id,$tid);
 			}
 			return $id;
 		}
@@ -120,9 +131,17 @@
 		{
 			if ($this->rights & PHPGW_ACL_EDIT)
 			{
-				$owner = $fields['owner'];
+				$ab_id  = $fields['ab_id'];
+				$owner  = $fields['owner'];
+				$access = $fields['access'];
+				$cat_id = $fields['cat_id'];
 				unset($fields['owner']);
-				$this->contacts->update($fields['ab_id'],$owner,$fields,$fields['access'],$fields['cat_id']);
+				unset($fields['access']);
+				unset($fields['cat_id']);
+				unset($fields['ab_id']);
+				unset($fields['tid']);
+
+				$this->contacts->update($ab_id,$owner,$fields,$access,$cat_id);
 			}
 			return;
 		}
