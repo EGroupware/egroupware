@@ -1326,8 +1326,8 @@ class calendar extends calendar_
 
 		$p->set_var($var);
 
-		$first_hour = (int)$phpgw_info['user']['preferences']['calendar']['workdaystarts'] + 1;
-		$last_hour  = (int)$phpgw_info['user']['preferences']['calendar']['workdayends'] + 1;
+		$first_hour = (int)$phpgw_info['user']['preferences']['calendar']['workdaystarts'];
+		$last_hour  = (int)$phpgw_info['user']['preferences']['calendar']['workdayends'];
 
 		$events = Array(
 			CreateObject('calendar.calendar_item')
@@ -1634,18 +1634,19 @@ class calendar extends calendar_
 		}
 
 		$str = '';
-		for($i=0;$i<count($event->participants);$i++)
+		reset($event->participants);
+		while (list($key,$value) = each($event->participants))
 		{
-			if($i)
+			if($str)
 			{
 				$str .= '<br>';
 			}
 
-			$status = $this->get_long_status($event->status[$i]);
+			$status = $this->get_long_status($event->status[$key]);
 			
-			$str .= $phpgw->common->grab_owner_name($event->participants[$i]).' (';
+			$str .= $phpgw->common->grab_owner_name($event->participants[$key]).' (';
 			
-			if($event->participants[$i] == $this->owner && $this->check_perms(PHPGW_ACL_EDIT) == True)
+			if($event->participants[$key] == $this->owner && $this->check_perms(PHPGW_ACL_EDIT) == True)
 			{
 				$str .= '<a href="'.$phpgw->link('/calendar/edit_status.php','owner='.$this->owner.'&id='.$event->id).'">'.$status.'</a>';
 			}
@@ -1653,7 +1654,7 @@ class calendar extends calendar_
 			{
 				$str .= $status;
 			}
-			$str .= ')';
+			$str .= ')'."\n";
 		}
 		$var = Array(
 			'field'	=>	lang('Participants'),

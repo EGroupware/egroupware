@@ -127,7 +127,7 @@
 	for ($i=0; $i<24; $i++)
 	{
 		$str .= '<option value="'.$i.'"'.$t_workdaystarts[$i].'>'
-			. $phpgw->common->formattime($i+1,'00') . '</option>';
+			. $phpgw->common->formattime($i,'00') . '</option>';
 	}
 	$str .= '</select>';
 	display_item(lang('work day starts on'),$str);
@@ -137,7 +137,7 @@
 	for ($i=0; $i<24; $i++)
 	{
 		$str .= '<option value="'.$i.'"'.$t_workdayends[$i].'>'
-			. $phpgw->common->formattime($i+1,'00') . '</option>';
+			. $phpgw->common->formattime($i,'00') . '</option>';
 	}
 	$str .= '</select>';
 	display_item(lang('work day ends on'),$str);
