@@ -39,6 +39,7 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		 *            $id_name  id of previosly selected entry
 		 *            $content  from id (eg. 'company: lastname, givenname' for address $id) if $id != 0, or
 		 *                      array with searchresult (id's as key), if array is empty if search was unsucsessful
+		 *            $multipe	present a multiple selectable box instead of one selector-button
 		 * Returns:  array with vars to set in temaplate, the vars are:
 		 *           {doSearchFkt}  Javascript Funktion, place somewhere in Template (before rest of the vars)
 		 *           {$name.'_title} button with titel $lang_name (if JS) or just $lang_name
@@ -46,14 +47,14 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		 *           {$name.'_nojs}  searchfield + button if we have no JavaScript, else empty
 		 *
 		 * To use call $template->set_var(getIdSearch( ... ));
-		 * the template should look like {doSeachFkt} <tr><td>{XXX_title}</td><td>{XXX}</td><td>{XXX_nojs}</td></tr>   (XXX is content of $name)
+		 * the template should look like {doSearchFkt} <tr><td>{XXX_title}</td><td>{XXX}</td><td>{XXX_nojs}</td></tr>   (XXX is content of $name)
 		 * In the submitted page the vars $query_XXX and $id_XXX are set according to what is selected, see getAddress as Example
 		 */
 
-		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='')
+		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='',$multiple=False)
 		{
 			// echo "<p>getId('$name','$lang_name','$prompt',$id_name,'$content') =";
-			$ret['doSearchFkt'] = 
+			$ret['doSearchFkt'] =
 '<script language="JavaScript">'."\n".
 " function doSearch(field,ask) {\n".
 "  field.value = prompt(ask,'');\n".
@@ -66,7 +67,7 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 " }\n".
 '</script>';
 
-			$ret[$name.'_title'] = is_array($content) && count($content) ? $lang_name : 
+			$ret[$name.'_title'] = is_array($content) && count($content) ? $lang_name :
 '<script language="JavaScript">'."\n".
 " document.writeln('<input type=\"hidden\" name=\"query_$name\" value=\"\">');\n".
 " document.writeln('<input type=\"button\" onClick=\"doSearch(this.form.query_$name,\'$prompt\')\" value=\"$lang_name\">');\n".
@@ -84,7 +85,14 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 				else
 				{
 					$ret[$name.'_OK'] = '';	// flag we have something so select
-					$ret[$name] = "<select name=\"id_$name\">\n";
+					if ($multiple)
+					{
+						$ret[$name] = '<select name="id_'.$name.'[]" size=10 multiple>'."\n";
+					}
+					else
+					{
+						$ret[$name] = '<select name="id_'.$name.'">'."\n";
+					}
 					while (list( $id,$text ) = each( $content ))
 					{
 						$ret[$name] .= "<option value=\"$id\">" . $GLOBALS['phpgw']->strip_html($text) . "\n";
@@ -140,14 +148,15 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		 * Parameters	$name 		string with basename of all variables (not to conflict with the name other template or submitted vars !!!)
 		 *					$id_name		id of the address for edit or 0 if none selected so far
 		 *					$query_name have to be called $query_XXX, the search pattern after the submit, has to be passed back to the function
+		 *					$multipe	present a multiple selectable box instead of one selector-button
 		 * On Submit	$id_XXX		contains the selected address (if != 0)
 		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
 		 * Returns		array with vars to set for the template, set with: $template->set_var( getAddress( ... )); (see getId( ))
 		 *
 		 * Note			As query's for an address are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
-		 
-		function getAddress( $name,$id_name,$query_name,$title='')
+
+		function getAddress( $name,$id_name,$query_name,$title='',$multiple=False)
 		{
 			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
@@ -176,8 +185,7 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			{
 				$title = lang('Addressbook');
 			}
-			
-			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'));
+			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'),$multiple);
 		}
 
 		function addr2email( $addr,$home='' )
@@ -266,10 +274,14 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			// echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
 			{
-				$projects = createobject('projects.projects');
+				$projects = createobject('projects.boprojects');
+				if (!is_object($projects))
+				{
+					return '';
+				}
 				if ($query_name)
 				{
-					$projs = $projects->read_projects( 0,0,$query_name,'','','','',0 );
+					$projs = $projects->list_projects( 0,0,$query_name,'','','','',0,'mains','' );
 					$content = array();
 					while ($projs && list( $key,$proj ) = each( $projs ))
 					{
@@ -314,16 +326,23 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			{
 				$options .= ' MULTIPLE SIZE='.(0+$multiple);
 				if (substr($name,-2) != '[]')
+				{
 					$name .= '[]';
+				}
 			}
 			$out = "<select name=\"$name\" $options>\n";
 
-			if (is_array($key)) $key = implode(',',$key);
-
+			if (is_array($key))
+			{
+				$key = implode(',',$key);
+			}
 			while (list($k,$text) = each($arr))
 			{
 				$out .= '<option value="'.$k.'"';
-				if($k == $key || strstr(",$key,",",$k,")) $out .= " SELECTED";
+				if($k == $key || strstr(",$key,",",$k,"))
+				{
+					$out .= " SELECTED";
+				}
 				$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
 			}
 			$out .= "</select>\n";
@@ -334,8 +353,9 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		function getPercentage($name, $selected=0,$options='')
 		{	// reimplemented using getArrayItem
 			for ($i=0; $i <= 100; $i+=10)
+			{
 				$arr[$i] = "$i%";
-
+			}
 			return $this->getArrayItem($name,$selected,$arr,1,$options);
 		}
 
@@ -349,9 +369,9 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		function getAccessList($name,$selected='private',$options='')
 		{	// reimplemented using getArrayItem
 			$arr = array(
-				"private" => "Private",
-				"public" => "Global public",
-				"group" => "Group public"
+				'private' => 'Private',
+				'public' => 'Global public',
+				'group' => 'Group public'
 			);
 
 			if (strstr($selected,','))
@@ -411,8 +431,9 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			$accs = $accounts->get_list($type);
 
 			if ($multiple < 0)
+			{
 				$aarr[] = lang('not assigned');
-
+			}
 			while ($a = current($accs))
 			{
 				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
@@ -424,9 +445,13 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		function getDate($n_year,$n_month,$n_day,$date,$options='')
 		{
 			if (is_array($date))
+			{
 				list($year,$month,$day) = $date;
+			}
 			elseif (!$date)
+			{
 				$day = $month = $year = 0;
+			}
 			else
 			{
 				$day = date('d',$date);
@@ -443,8 +468,9 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 		function getCategory($name,$cat_id='',$notall=False,$jscript=True,$multiple=0,$options='')
 		{
 			if (!is_object($this->cat))
+			{
 				$this->cat = CreateObject('phpgwapi.categories');
-
+			}
 			if ($jscript)
 			{
 				$options .= ' onChange="this.form.submit();"';
@@ -453,7 +479,9 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			{
 				$options .= ' MULTIPLE SIZE='.(0+$multiple);
 				if (substr($name,-2) != '[]')
+				{
 					$name .= '[]';
+				}
 			}
 			/* Setup all and none first */
 			$cats_link  = "\n<SELECT NAME=\"$name\" $options>\n";
@@ -471,6 +499,7 @@ if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
 			/* Get global and app-specific category listings */
 			$cats_link .= $this->cat->formated_list('select','all',$cat_id,True);
 			$cats_link .= '</select>'."\n";
+
 			return $cats_link;
 		}
 
