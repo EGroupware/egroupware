@@ -223,7 +223,8 @@ function Tabs(nrTabs,activeCSSclass,inactiveCSSclass,HTMLtabID,HTMLtabcontentID,
     else
      {
       // getting the active tab from the selector if set
-      if(document.getElementById(this.HTMLtabselectorID))
+      // the check for != '' is needed for Konqueror
+      if(document.getElementById(this.HTMLtabselectorID) && this.HTMLtabselectorID != '')
        tab = document.getElementById(this.HTMLtabselectorID).selectedIndex+1;
       else
        tab = 1;
