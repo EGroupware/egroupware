@@ -93,7 +93,7 @@
 	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.21';
+	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.22';
 	/* This is a fix for NT */
 	if(!isset($GLOBALS['phpgw_info']['flags']['noapi']) || !$GLOBALS['phpgw_info']['flags']['noapi'] == True)
 	{
