@@ -41,12 +41,15 @@
 														'title'	=> lang('addressbook')));
 		while(list($key,$val) = @each($bdays))
 		{
-			$GLOBALS['phpgw']->portalbox->data[] = array
-			(
-				'text'					=> lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-				'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
-				'lang_link_statustext'	=> lang('show contact')
-			);
+			if (substr($val['bday'],0,strlen($today)) == $today)
+			{
+				$GLOBALS['phpgw']->portalbox->data[] = array
+				(
+					'text'					=> lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
+					'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
+					'lang_link_statustext'	=> lang('show contact')
+				);
+			}
 		}
 
 		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
@@ -55,12 +58,15 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$GLOBALS['phpgw']->portalbox->data[] = array
-			(
-				'text'					=> lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
-				'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
-				'lang_link_statustext'	=> lang('show contact')
-			);
+			if (substr($val['bday'],0,strlen($tomorrow)) == $tomorrow)
+			{
+				$GLOBALS['phpgw']->portalbox->data[] = array
+				(
+					'text'					=> lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
+					'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
+					'lang_link_statustext'	=> lang('show contact')
+				);
+			}
 		}
 		$GLOBALS['phpgw']->portalbox->draw();
 	}
