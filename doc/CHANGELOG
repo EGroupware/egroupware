@@ -1,3 +1,5 @@
+[0.9.5] - Fixed NNTP preferences.
+
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
 		- You now have to specify which API classes need to be loaded.
