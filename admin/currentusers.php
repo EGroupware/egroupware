@@ -35,8 +35,8 @@
 
 	$p->set_var('lang_current_users',lang('List of current users'));
 	$p->set_var('bg_color',$phpgw_info['theme'][bg_color]);
-	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('currentusers.php',$start,$total));
-	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('currentusers.php',$start,$total));
+	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('/admin/currentusers.php',$start,$total));
+	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('/admin/currentusers.php',$start,$total));
 	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
 	$p->set_var('sort_loginid',$phpgw->nextmatchs->show_sort_order($sort,'session_lid',$order,
