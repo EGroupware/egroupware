@@ -82,7 +82,7 @@
   $db->query($sql);
 
   $sql = "create table access_log (
-   sessionid    varchar(30),
+   sessionid    varchar(255),
    loginid      varchar(30),
    ip           varchar(30),
    li           int,

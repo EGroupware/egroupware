@@ -185,6 +185,20 @@
     }
   }
 
+
+  function v0_9_1to0_9_2()
+  {
+    global $currentver, $newversion, $db;
+    $didupgrade = True;
+    if ($currentver == "9072000") {
+       $db->query("alter table access_log change lo lo varchar(255)");
+    }
+    echo "  <tr bgcolor=\"e6e6e6\">\n";
+    echo "    <td>Upgrade from 0.9.1 to 0.9.2 is completed.</td>\n";
+    echo "  </tr>\n";
+    $currentver = "0_9_2";
+  }
+
   echo "<table border=\"0\" align=\"center\">\n";
   echo "  <tr bgcolor=\"486591\">\n";
   echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Table Upgrades</b></font></td>\n";
@@ -195,6 +209,7 @@
   v8212000to9052000();
   v9052000to9072000();
   v9072000to0_9_1();
+  v0_9_1to0_9_2();
   $db->query("update applications set app_version='$newversion' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   if (!$didupgrade == True){
