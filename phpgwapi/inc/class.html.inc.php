@@ -110,7 +110,7 @@ class html
 		//  First match things beginning with http:// (or other protocols)
 		$Protocol = '(http|ftp|https):\/\/';
 		$Domain = '([\w]+.[\w]+)';
-		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
+		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
 		
 		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3</a>", $result );
