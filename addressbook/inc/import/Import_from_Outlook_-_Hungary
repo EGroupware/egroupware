@@ -1,0 +1,178 @@
+<?php
+// This file defines a set of functions and an associative array.
+// The key of the array corresponds to a header in the source
+// import file and the value of the array item will be used in
+// the creation of the output file.
+//
+// An exported Outlook file looks like this:
+//
+// Title<tab>First Name<tab>Middle Name<tab>Last Name<tab>...
+// <tab>Patrick<tab><tab>Walsh<tab>...
+//
+// Where the first line explains each optional field.  This is what
+// will be looked up in the key.
+//
+// The array need not be in any order and any fields not defined will
+// not be transferred.  If the val='+', the value will be appended to
+// the previous field and any text after the '+' will be appended
+// before the value.  For example, the following would add a comma and
+// a space between LastName and FirstName and store it in FullName:
+//
+//	array('LastName' => 'FullName','FirstName' => '+, ');
+//
+// Also start with a '#' symbol and a comma separated list will be
+// turned into a number of the same entries.
+
+  /* $Id$ */
+
+	class import_conv
+	{
+		var $currentrecord = array(); //used for buffering to allow uid lines to go first
+		var $id;
+		var $type = 'csv';
+
+		var $import = array(
+			'Cím' => 'n_prefix',
+			'Utónév' => 'n_given',
+			'Középsõ' => 'n_middle',
+			'Vezetéknév' => 'n_family',
+			'Utótag' => 'n_suffix',
+			'Cég' => 'org_name',  //objectclass: organization
+			'Osztály' => 'org_unit', //objectclass: organizationalPerson
+			'Beosztás' => 'title', //objectclass: organizationalPerson
+			'Mukahely címe' => 'adr_one_street',
+			'2. vállalati utcacím' => 'address2',
+			'3. vállalati utcacím' => 'address3',
+			'Város (hivatal)' => 'adr_one_locality',
+			'Megye (hivatal)' => 'adr_one_region',
+			'Munkahely irányítószám' => 'adr_one_postalcode',
+			'Ország (hivatal)' => 'adr_one_countryname',
+			'Lakcím' => 'adr_two_street',
+			'Város (lakás)' => 'adr_two_locality',
+			'Megye (lakás)' => 'adr_two_region',
+			'Irányítószám (lakás)' => 'adr_two_postalcode',
+			'Ország (lakás)' => 'adr_two_countryname',
+			'2. otthoni utcacím' => '',
+			'3. otthoni utcacím' => '',
+			'Más utcacím' => '',
+			'Más város' => '',
+			'Más állam' => '',
+			'Más irányítószám' => '',
+			'Más ország' => '',
+			"Titkár telefonszáma" => 'tel_msg',
+			'Hivatali fax' => 'tel_fax',
+			'Hivatali telefon' => 'tel_work',
+			'Másik hivatali telefon' => 'ophone',
+			'Visszahívás' => '',
+			'Autótelefon' => 'tel_car',
+			'Cég fõvonala' => '',
+			'Otthoni fax' => '',
+			'Otthoni telefon' => 'tel_home',
+			'Másik otthoni telefon' => '', //This will make another homePhone entry
+			'ISDN' => 'tel_isdn',
+			'Mobiltelefon' => 'tel_cell', //newPilotPerson
+			'Egyéb fax' => '',
+			'Egyéb telefon' => '',
+			'Személyhívó' => 'tel_pager',
+			'Elsõdleges telefon' => '',
+			'Rádiótelefon' => '',
+			'TTY/TDD telefon' => '',
+			'Telex' => '', //organization
+			'Címkiszolgáló' => '',
+			'Évforduló' => '',
+			"Titkár neve" => '', //newPilotPerson
+			'Számlaadatok' => '',
+			'Születésnap' => 'bday',
+			'Kategóriák' => '',
+			'Gyerekek' => '',
+			'Címkiszolgáló' => '',
+			'Elektronikus levélcím' => 'email',
+			'Elektronikus levélhez megjelenítendõ név' => '',
+			'2. elektronikus levélcím' => 'email_home',
+			'2. elektronikus levélhez megjelenítendõ név' => '',
+			'3. elektronikus levélcím' => '', //add another...
+			'3. elektronikus levélhez megjelenítendõ név' => '',
+			'Nem' => '',
+			'Kormányzati azonosító' => '',
+			'Hobbi' => '',
+			'Monogram' => '',
+			'Elfoglaltság közzététele az Interneten' => '',
+			'Kulcsszavak' => '',
+			'Nyelv' => '',
+			'Hely' => '',
+			"Felettes neve" => '',
+			'Távolság' => '',
+			'Feljegyzések' => 'note',
+			'Iroda helye' => '',
+			'Szervezeti azonosító' => '',
+			'Egyéb cím, postafiók' => '',
+			'Prioritás' => '',
+			'Magánjellegû' => '',
+			'Referencia' => '',
+			'Sensitivity' => '',
+			'Házastárs' => '',
+			'Felhasználói 1' => '',
+			'Felhasználói 2' => '',
+			'Felhasználói 3' => '',
+			'Felhasználói 4' => '',
+			'Weblap' => 'url'
+		);
+
+		function import_start_file($buffer)
+		{
+			return $buffer;
+		}
+
+		function import_start_record($buffer)
+		{
+			$top = array();
+			++$this->id;
+			$this->currentrecord = $top;
+			return $buffer;
+		}
+
+		function import_new_attrib($buffer,$name,$value)
+		{
+			$value = trim($value);
+			$value = str_replace('\n','<BR>',$value);
+			$value = str_replace('\r','',$value);
+			$this->currentrecord += array($name => $value);
+
+			return $buffer;
+		}
+
+		function import_end_record($buffer)
+		{
+			$buffer[$this->id] = '';
+			while(list($name, $value) = each($this->currentrecord))
+			{
+				$buffer[$this->id][$name] = $value;
+				//echo '<br>'.$name.' => '.$value;
+			}
+			return $buffer;
+		}
+
+		function import_end_file($buffer,$access='private',$cat_id=0)
+		{
+			$contacts = CreateObject('phpgwapi.contacts');
+			//echo '<br>';
+			for($i=1;$i<=count($buffer);$i++)
+			{
+				while(list($name,$value) = @each($buffer[$i]))
+				{
+					//echo '<br>'.$i.': '.$name.' => '.$value;
+					$entry[$i][$name] = $value;
+				}
+				$entry[$i]['email_type']      = 'INTERNET';
+				$entry[$i]['email_home_type'] = 'INTERNET';
+				$entry[$i]['adr_one_type']    = 'intl';
+				$entry[$i]['adr_two_type']    = 'intl';
+				$entry[$i]['fn'] = $entry[$i]['n_family'] . ' ' . $entry[$i]['n_given'];
+				//echo '<br>';
+				$contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
+			}
+			$num = $i - 1;
+			return lang('Successfully imported %1 records into your addressbook.',$num);
+		}
+	}
+?>
