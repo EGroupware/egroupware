@@ -16,7 +16,7 @@
 
   $phpgw_flags["currentapp"] = "preferences";
   include("../header.inc.php");
-  $installed_themes = array('default','blue','mojo','heaven');
+  $installed_themes = array('default','blue','mojo','heaven','yellows');
 
   if ($phpgw_info["user"]["permissions"]["anonymous"]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
