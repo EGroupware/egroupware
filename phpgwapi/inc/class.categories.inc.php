@@ -139,11 +139,6 @@
 				$querymethod = " AND (cat_name like '%$query%' OR cat_description like '%$query%') ";
 			}
 
-			if ($limit)
-			{
-				$limitmethod = " " . $this->db->limit($start);
-			}
-
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $parent_filter AND "
 				. " $grant_cats) $public_cats $querymethod $filter";
 
@@ -151,7 +146,14 @@
 
 			$this->total_records = $this->db2->num_rows();
 
-			$this->db->query($sql . $ordermethod . $limitmethod,__LINE__,__FILE__);
+			if ($limit)
+			{
+				$this->db->limit_query($sql . $ordermethod,$start,__LINE__,__FILE__);
+			}
+			else
+			{
+				$this->db->query($sql . $ordermethod,__LINE__,__FILE__);
+			}
 
 			//echo '<b>TEST:</b>' . $sql;
 
