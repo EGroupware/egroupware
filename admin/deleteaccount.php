@@ -82,7 +82,7 @@
      $phpgw->db->query("delete from addressbook where owner='$lid'");
      $phpgw->db->query("delete from accounts where loginid='$lid'");
      $phpgw->db->query("delete from users_headlines where owner='$lid'");
-     $phpgw->db->query("delete from profiles where owner='$lid'");
+     //$phpgw->db->query("delete from profiles where owner='$lid'");
 
      $phpgw->db->unlock();
 

@@ -61,10 +61,10 @@
 	   $phpgwpermissions->add("anonymous");
 
           $sql = "insert into accounts (loginid,passwd,firstname,lastname,"
-	       . "permissions,groups,status) values ('$n_loginid'"
+	       . "permissions,groups,status,lastpasswd_change) values ('$n_loginid'"
 	       . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
 	       . addslashes($n_lastname) . "','" . $phpgw->permissions->add_rebuild()
-	       . "','" . $phpgw->groups->array_to_string("none",$n_groups) . "','A')";
+	       . "','" . $phpgw->groups->array_to_string("none",$n_groups) . "','A',0)";
 
           $phpgw->db->query($sql);
           $phpgw->db->unlock();
