@@ -2,6 +2,7 @@
 
 2) Use tabs for formatting, NOT SPACES.  Tabs create smaller files and editors allow
 	developers to view a tab as however many spaces as they prefer.  Spaces do not allow this.
+	There is one exception (see #11 below).
 
 3) Use ' instead of " for strings.  This is a performance issue, and prevents
 	a lot of inconsistent coding styles.
@@ -76,7 +77,7 @@
 		'var2' => 'value2'
 	);
 
-	Note that spaces are permitted between the => 's
+	Note that spaces are preferred around the '=>'.
 
 12) Use the long format for <?php.  Do NOT use <?.
 
