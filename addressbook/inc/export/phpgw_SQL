@@ -24,74 +24,82 @@
 		var $type = 'sql';
 				
 		var $export= array(
-			"id"                     => "id",
-			"lid"                    => "lid",
-			"tid"                    => "tid",
-			"owner"                  => "owner",
-			"fn"                     => "fn",
-			"n_given"                => "n_given",
-			"n_family"               => "n_family",
-			"n_middle"               => "n_middle",
-			"n_prefix"               => "n_prefix",
-			"n_suffix"               => "n_suffix",
-			"sound"                  => "sound",
-			"bday"                   => "bday",
-			"note"                   => "note",
-			"tz"                     => "tz",
-			"geo"                    => "geo",
-			"url"                    => "url",
-			"pubkey"                 => "pubkey",
+			'id'                  => 'id',
+			'lid'                 => 'lid',
+			'tid'                 => 'tid',
+			'owner'               => 'owner',
+			'fn'                  => 'fn',
+			'n_given'             => 'n_given',
+			'n_family'            => 'n_family',
+			'n_middle'            => 'n_middle',
+			'n_prefix'            => 'n_prefix',
+			'n_suffix'            => 'n_suffix',
+			'sound'               => 'sound',
+			'bday'                => 'bday',
+			'note'                => 'note',
+			'tz'                  => 'tz',
+			'geo'                 => 'geo',
+			'url'                 => 'url',
+			'pubkey'              => 'pubkey',
 
-			"org_name"               => "org_name",
-			"org_unit"               => "org_unit",
-			"title"                  => "title",
+			'org_name'            => 'org_name',
+			'org_unit'            => 'org_unit',
+			'title'               => 'title',
 
-			"adr_one_street"         => "adr_one_street",
-			"adr_one_locality"       => "adr_one_locality", 
-			"adr_one_region"         => "adr_one_region", 
-			"adr_one_postalcode"     => "adr_one_postalcode",
-			"adr_one_countryname"    => "adr_one_countryname",
-			"adr_one_type"           => "adr_one_type",
-			"label"                  => "label",
+			'adr_one_street'      => 'adr_one_street',
+			'adr_one_locality'    => 'adr_one_locality', 
+			'adr_one_region'      => 'adr_one_region', 
+			'adr_one_postalcode'  => 'adr_one_postalcode',
+			'adr_one_countryname' => 'adr_one_countryname',
+			'adr_one_type'        => 'adr_one_type',
+			'label'               => 'label',
 
-			"adr_two_street"         => "adr_two_street",
-			"adr_two_locality"       => "adr_two_locality", 
-			"adr_two_region"         => "adr_two_region", 
-			"adr_two_postalcode"     => "adr_two_postalcode",
-			"adr_two_countryname"    => "adr_two_countryname",
-			"adr_two_type"           => "adr_two_type",
+			'adr_two_street'      => 'adr_two_street',
+			'adr_two_locality'    => 'adr_two_locality', 
+			'adr_two_region'      => 'adr_two_region', 
+			'adr_two_postalcode'  => 'adr_two_postalcode',
+			'adr_two_countryname' => 'adr_two_countryname',
+			'adr_two_type'        => 'adr_two_type',
 
-			"tel_work"               => "tel_work",
-			"tel_home"               => "tel_home",
-			"tel_voice"              => "tel_voice",
-			"tel_fax"                => "tel_fax", 
-			"tel_msg"                => "tel_msg",
-			"tel_cell"               => "tel_cell",
-			"tel_pager"              => "tel_pager",
-			"tel_bbs"                => "tel_bbs",
-			"tel_modem"              => "tel_modem",
-			"tel_car"                => "tel_car",
-			"tel_isdn"               => "tel_isdn",
-			"tel_video"              => "tel_video",
-			"tel_prefer"             => "tel_prefer",
-			"email"                  => "email",
-			"email_type"             => "email_type",
-			"email_home"             => "email_home",
-			"email_home_type"        => "email_home_type"
+			'tel_work'            => 'tel_work',
+			'tel_home'            => 'tel_home',
+			'tel_voice'           => 'tel_voice',
+			'tel_fax'             => 'tel_fax', 
+			'tel_msg'             => 'tel_msg',
+			'tel_cell'            => 'tel_cell',
+			'tel_pager'           => 'tel_pager',
+			'tel_bbs'             => 'tel_bbs',
+			'tel_modem'           => 'tel_modem',
+			'tel_car'             => 'tel_car',
+			'tel_isdn'            => 'tel_isdn',
+			'tel_video'           => 'tel_video',
+			'tel_prefer'          => 'tel_prefer',
+			'email'               => 'email',
+			'email_type'          => 'email_type',
+			'email_home'          => 'email_home',
+			'email_home_type'     => 'email_home_type'
 		);
 
 		// This will store the contacts object
 		var $contacts = '';
 
 		// Read full list of user's contacts only to get id's for each
-		function export_start_file($buffer,$ncat_id='') {
+		function export_start_file($buffer,$ncat_id='')
+		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = "tid=n,cat_id=".$ncat_id; }
-			else          { $filter = "tid=n"; }
+			if ($ncat_id)
+			{
+				$filter = 'tid=n,cat_id=' . $ncat_id;
+			}
+			else
+			{
+				$filter = 'tid=n';
+			}
 			$this->contacts = CreateObject('phpgwapi.contacts');
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
-			for ($i=0;$i<count($tmp);$i++) {
+			for ($i=0;$i<count($tmp);$i++)
+			{
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
 			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
@@ -100,7 +108,8 @@
 		}
 
 		// Read each entry
-		function export_start_record($buffer) {
+		function export_start_record($buffer)
+		{
 			$this->id++;
 			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
@@ -109,8 +118,10 @@
 
 		// Read each attribute, populate buffer array
 		// name/value are the fields from the export array above
-		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name]) {
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name])
+			{
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
@@ -118,18 +129,22 @@
 		}
 
 		// Tack on some extra values - none for this file
-		function export_end_record($buffer) {
+		function export_end_record($buffer)
+		{
 			return $buffer;
 		}
 
 		// Parse it all into a string
-		function export_end_file($buffer) {
+		function export_end_file($buffer)
+		{
 			$top = 'INSERT INTO phpgw_addressbook(';
 			reset($this->ids);
-			for ($i=0;$i<count($this->ids);$i++) {
+			for ($i=0;$i<count($this->ids);$i++)
+			{
 				reset($this->export);
 				$fields = $values = "";
-				while (list($name,$value) = each($this->export)) {
+				while (list($name,$value) = each($this->export))
+				{
 					$fields .= $value . ",";
 					$values .= "'" . $buffer[$i][$value] . "',";
 				}

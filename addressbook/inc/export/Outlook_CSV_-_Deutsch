@@ -71,8 +71,14 @@
 		function export_start_file($buffer,$ncat_id='')
 		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
-			else          { $filter = 'tid=n'; }
+			if ($ncat_id)
+			{
+				$filter = 'tid=n,cat_id='.$ncat_id;
+			}
+			else
+			{
+				$filter = 'tid=n';
+			}
 			$this->contacts = CreateObject('phpgwapi.contacts');
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
@@ -120,7 +126,7 @@
 			{
 				$entries .= $value . ',';
 			}
-			$entries = substr($entries,0,-1);		
+			$entries = substr($entries,0,-1);
 			$entries .= "\r\n";
 
 			// Now add all the data

@@ -92,8 +92,14 @@
 		function export_start_file($buffer,$ncat_id='')
 		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
-			else          { $filter = 'tid=n'; }
+			if ($ncat_id)
+			{
+				$filter = 'tid=n,cat_id='.$ncat_id;
+			}
+			else
+			{
+				$filter = 'tid=n';
+			}
 			/* Setup the contact and vcard objects, and the export fields var */
 			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->vcard = CreateObject('phpgwapi.vcard');
