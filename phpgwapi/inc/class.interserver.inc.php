@@ -275,7 +275,7 @@
 				}
 			}
 
-			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
+			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr);
 			/* print_r($soap_message);exit; */
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
 			$soap->username = $this->sessionid;
@@ -284,9 +284,8 @@
 			if($r = $soap->send($soap_message,$method_name))
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				$v = $r->decode();
-				$this->result = $v['return'];
-				return $v;
+				$this->result = $r->decode();
+				return $this->result;
 			}
 			else
 			{
@@ -322,18 +321,17 @@
 					}
 				}
 			}
-			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
+			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr);
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
 			$soap->username = $this->sessionid;
 			$soap->password = $this->kp3;
 			/* _debug_array($soap_message); */
 			if($r = $soap->send($soap_message,$method_name))
 			{
-				_debug_array($soap->outgoing_payload);
+				_debug_array(htmlentities($soap->outgoing_payload));
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				$v = $r->decode();
-				$this->result = $v['return'];
-				return $v;
+				$this->result = $r->decode();
+				return $this->result;
 			}
 			else
 			{
