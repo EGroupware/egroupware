@@ -1,4 +1,5 @@
 %1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 accounts utenti
+%1 - %2 of %3 user groups	admin	it	%1 - %2 di %3 gruppi utenti
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile !!!
 (stored password will not be shown here)	admin	it	(La password memorizzata non verrà mostrata qui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestione Applicazioni] !!!)
@@ -13,6 +14,7 @@ account preferences	admin	it	Preferenze account
 acl manager	admin	it	Gestione ACL
 acl rights	common	it	Diritti ACL
 action	admin	it	Azione
+activate wysiwyg-editor	admin	it	attiva editor WYSIWYG
 add a category	admin	it	aggiungi una categoria
 add a group	admin	it	aggiungi un gruppo
 add a new account.	admin	it	Aggiungi un nuovo account.
@@ -76,6 +78,8 @@ change config settings	admin	it	Cambia le impostazioni di configurazione
 change main screen message	admin	it	Cambia il messaggio della schermata principale
 check ip address of all sessions	admin	it	controlla l'indirizzo ip di tutte le sessioni
 check items to <b>%1</b> to %2 for %3	admin	it	Controlla voci a <b>%1</b> a %2 per %3
+click to select a color	admin	it	Clicca per selezionare un colore
+color	admin	it	Colore
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
 crontab only (recomended)	admin	it	solo crontab (raccomandato)
@@ -113,6 +117,7 @@ deny access to user accounts	admin	it	Nega l'accesso alla gestione degli account
 deny all users access to grant other users access to their entries ?	admin	it	Nega a tutti gli utenti l'accesso ai dati inseriti dagli altri utenti ?
 description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più lunga di 255 caratteri!
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
+disable wysiwyg-editor	admin	it	disabilita editor WYSIWYG
 disabled (not recomended)	admin	it	disabilitato (non consigliato)
 display	admin	it	Visualizza
 do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
@@ -153,8 +158,11 @@ enter the title of your logo	admin	it	Inserisci il titolo del tuo logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	it	Inserisci l'URL o il nome del file (in phpgwapi/templates/default/images) del tuo logo
 enter the url where your logo should link to	admin	it	Inserisci l'url a cui punterà il tuo logo
 enter your default ftp server	admin	it	Inserire il server FTP predefinito
+enter your default mail domain ( from: user@domain )	admin	it	Inserisci il dominio predefinito per l'email ( Da: utente@dominio )
 enter your http proxy server	admin	it	Inserire il proxy HTTP
 enter your http proxy server port	admin	it	Inserire la porta del proxy HTTP
+enter your smtp server hostname or ip address	admin	it	Inserisci l'host o l'IP del server SMTP
+enter your smtp server port	admin	it	Inserisci la porta del server SMTP
 error canceling timer, maybe there's none set !!!	admin	it	Errore cancellando il timer, forse non è impostato !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	it	Errore impostando il timer, sintassi sbagliata o forse uno è già in esecuzione !!!
 error: %1 not found or other error !!!	admin	it	Errore: %1 non trovato o altro errore !!!
@@ -180,6 +188,7 @@ host information	admin	it	Informazioni host
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
+icon	admin	it	Icona
 idle	admin	it	inattivo
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
@@ -199,7 +208,7 @@ last login from	admin	it	ultimo login da
 last time read	admin	it	Ultima volta letto
 ldap accounts context	admin	it	contesto account LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	it	prefisso predefinito per le homedirectory LDAP (es. /home per /home/username)
-ldap default shell (e.g. /bin/bash)	admin	it	shel predefinita LDAP (es: /bin/bash)
+ldap default shell (e.g. /bin/bash)	admin	it	shell predefinita LDAP (es: /bin/bash)
 ldap encryption type	admin	it	tipo di cifratura LDAP
 ldap groups context	admin	it	contesto gruppi LDAP
 ldap host	admin	it	host LDAP
@@ -216,6 +225,7 @@ login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
 loginid	admin	it	LoginID
+mail settings	admin	it	Impostazioni Mail
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
@@ -240,6 +250,7 @@ no permission to create groups	admin	it	nessun permesso di creazione gruppi
 note: ssl available only if php is compiled with curl support	admin	it	Nota: SSL dispobile solo con il PHP compilato con il supporto curl
 outbound	admin	it	in uscita
 passthrough	admin	it	passthrough
+password for smtp-authentication	admin	it	Password per autenticazione SMTP
 path information	admin	it	Informazioni sul Path
 peer server list	admin	it	Lista Peer server
 peer servers	admin	it	Peer servers
@@ -318,6 +329,7 @@ the loginid can not be more then 8 characters	admin	it	La loginid non può essere
 the testjob sends you a mail everytime it is called.	admin	it	Il TestJob invia una e-mail ogni volta che viene richiamato.
 the two passwords are not the same	admin	it	Le due password non coincidono
 the users bellow are still members of group %1	admin	it	L'utente sottostante fa ancora parte del gruppo %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	it	C'è già un gruppo con questo nome. L'ID utente non può avere lo stesso nome di un gruppo.
 they must be removed before you can continue	admin	it	Devono essere rimossi prima di poter proseguire
 this application is current	admin	it	Questa è l'applicazione corrente
 this application requires an upgrade	admin	it	Questa applicazione ha bisogno di un aggiornamento
@@ -335,13 +347,14 @@ use pure html compliant code (not fully working yet)	admin	it	Usa codice HTML co
 use theme	admin	it	Utilizza il tema
 user accounts	admin	it	Account utenti
 user data	admin	it	dati utente
+user for smtp-authentication (leave it empty if no auth required)	admin	it	User per autenticazione SMTP (lascia vuoto se non è richiesta autenticazione)
 user groups	admin	it	Gruppi utenti
 userdata	admin	it	dati utente
 users choice	admin	it	Scelta dell'utente
-view access log	admin	it	Visualizza elenco collegamenti
-view account	admin	it	Visualiza account
+view access log	admin	it	Visualizza Log accessi
+view account	admin	it	Visualizza account
 view category	admin	it	Visualizza categoria
-view error log	admin	it	Visualizza il log degli errori
+view error log	admin	it	Visualizza Log errori
 view sessions	admin	it	Visualizza sessioni
 view this user	admin	it	visualizza questo utente
 view user account	admin	it	Visualizza account utente
@@ -362,7 +375,3 @@ you must enter an application name.	admin	it	Devi inserire un nome per l'applica
 you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
 you must select a file type	admin	it	Devi selezionare un tipo di file
 you will need to remove the subcategories before you can delete this category	admin	it	E' necessario rimuovere le sotto-categorie prima di cancellare questa categoria
-enter your default mail domain ( from: user@domain )	admin	it	Inserisci il dominio predefinito per l'email ( Da: utente@dominio )
-enter your smtp server hostname or ip address	admin	it	Inserisci l'host o l'IP del server SMTP
-enter your smtp server port	admin	it	Inserisci la porta del server SMTP
-mail settings	admin	it	Impostazioni Mail

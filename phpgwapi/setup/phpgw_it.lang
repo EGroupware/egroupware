@@ -1,19 +1,22 @@
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
+%1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
-(shift-)click or drag to change value	jscalendar	it	(Shift-)Click o drag per cambiare valore
-- click on any of the time parts to increase it	jscalendar	it	- Premi su ogni parte della data per aumentarla
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti sovrastanti per una selezione veloce.
+(shift-)click or drag to change value	jscalendar	it	(Shift-)Click o trascina per cambiare valore
+- click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
 - or click and drag for faster selection.	jscalendar	it	- o click e drag per una selezione rapida.
 - or shift-click to decrease it	jscalendar	it	- or Shift-click per diminuirlo
 - use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
 - use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
 13 (ntp)	admin	it	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Giorno
+3 number of chars for month-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Mese
 80 (http)	admin	it	80 (http)
-about	common	it	About
-about %1	common	it	About %1
+about	common	it	Info
+about %1	common	it	Info su %1
 about the calendar	jscalendar	it	Informazioni sull'Agenda
-about this editor	htmlarea	it	Informazioni su quest'Editor
+about this editor	htmlarea	it	Informazioni su questo Editor
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
 account has been created	common	it	Account creato
@@ -24,8 +27,8 @@ acl	common	it	ACL
 action	common	it	Azione
 active	common	it	Attivo
 add	common	it	Aggiungi
-add %1 category for	common	it	Aggiungi categoria %1 per
-add category	common	it	Aggiungi una categoria
+add %1 category for	common	it	Aggiungi %1 categoria per
+add category	common	it	Aggiungi categoria
 add sub	common	it	Aggiungi Sotto-
 addressbook	common	it	Rubrica
 admin	common	it	Amministra
@@ -34,12 +37,13 @@ afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 all	common	it	Tutto
+all fields	common	it	tutti i campi
 alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
-american samoa	common	it	AMERICAN SAMOA
+american samoa	common	it	SAMOA AMERICANA
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
 anguilla	common	it	ANGUILLA
-antarctica	common	it	ANTARTICO
+antarctica	common	it	ANTARTIDE
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
 apply	common	it	Applica
 april	common	it	Aprile
@@ -59,7 +63,7 @@ automatically hide the sidebox menus?	common	it	Nascondo automaticamente i menù 
 autosave default category	common	it	Categoria predefinita per il salvataggio automatico
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
-back to user login	common	it	Torna al login utente
+back to user login	common	it	Torna al Login utente
 background color	htmlarea	it	Colore di Sfondo
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
@@ -102,16 +106,16 @@ cc	common	it	Cc
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
-charset	common	it	iso-8859-1
-check installation	common	it	Controllo installazione
+charset	common	it	set caratteri
+check installation	common	it	Controlla installazione
 chile	common	it	CILE
 china	common	it	CINA
-choose the category	common	it	Scegli una categoria
-choose the parent category	common	it	scegli la categoria superiore
+choose the category	common	it	Scegli la categoria
+choose the parent category	common	it	Scegli la categoria superiore
 christmas island	common	it	ISOLA DI NATALE
 clear	common	it	Pulisci
 clear form	common	it	Svuota il modulo
-click	common	it	Click
+click	common	it	Clicca
 click or mouse over to show menu's	common	it	Click o Mouse Over per visualizzare i menu
 click or mouse over to show menu's?	common	it	Click o Mouse Over per visualizzare i menu?
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
@@ -121,6 +125,8 @@ cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 colombia	common	it	COLOMBIA
 comoros	common	it	COMORE
 company	common	it	Azienda
+config password	common	it	Configura Password
+config username	common	it	Configura Nome Utente
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 cook islands	common	it	ISOLE COOK
@@ -142,7 +148,7 @@ czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
 date due	common	it	Data richiesta
 date selection:	jscalendar	it	Selezione data:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Datetime port.<br>Per usare la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
 decrease indent	htmlarea	it	Riduci Rientro
 default category	common	it	Categoria Predefinita
@@ -155,7 +161,9 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menu sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disabled	common	it	Disabilitato
+display %s first	jscalendar	it	Mostra prima %1
 display monday first	jscalendar	it	Visualizza prima Lunedì
 display sunday first	jscalendar	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
@@ -195,6 +203,7 @@ error deleting %1 %2 directory	common	it	Errore durante l'eliminazione della dir
 error renaming %1 %2 directory	common	it	Errore durante la rinomina della directory %1 %2
 estonia	common	it	ESTONIA
 ethiopia	common	it	ETIOPIA
+exact	common	it	esatta
 falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
 fax number	common	it	numero di fax
@@ -210,7 +219,7 @@ first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI !
 font color	htmlarea	it	Colore Carattere
-force selectbox	common	it	Forza Elenco a discesa
+force selectbox	common	it	Forza Casella di Selezione
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
 french polynesia	common	it	POLINESIA FRANCESE
@@ -220,7 +229,7 @@ ftp	common	it	FTP
 fullname	common	it	Nome completo
 gabon	common	it	GABON
 gambia	common	it	GAMBIA
-general menu	common	it	Menu Principale
+general menu	common	it	Menù Generale
 georgia	common	it	GEORGIA
 germany	common	it	GERMANIA
 ghana	common	it	GHANA
@@ -228,7 +237,7 @@ gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
 go today	jscalendar	it	Vai a Oggi
-grant access	common	it	Permetti Accesso
+grant access	common	it	Autorizza Accesso
 greece	common	it	GRECIA
 greenland	common	it	GROENLANDIA
 grenada	common	it	GRENADA
@@ -249,12 +258,15 @@ guinea	common	it	GUINEA
 guinea-bissau	common	it	GUINEA-BISSAU
 guyana	common	it	GUIANA
 haiti	common	it	HAITI
+header admin login	common	it	Login Gestione Header
+header password	common	it	Password Header
+header username	common	it	Nome Utente Header
 heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
 help	common	it	Aiuto
 help using editor	htmlarea	it	Aiuto per l'editor
 high	common	it	Alta
 highest	common	it	Più Alta
-holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
+holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITTA' DEL VATICANO)
 home	common	it	Home
 home email	common	it	e-mail abitazione
 honduras	common	it	HONDURAS
@@ -269,7 +281,7 @@ indonesia	common	it	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert image	htmlarea	it	Inserisci Immagine
 insert table	htmlarea	it	Inserisci Tabella
-insert web link	htmlarea	it	Inserisci Link
+insert web link	htmlarea	it	Inserisci Link Web
 international	common	it	Internazionale
 invalid ip address	common	it	Indirizzo IP errato
 invalid password	common	it	Password errata
@@ -277,8 +289,8 @@ iran, islamic republic of	common	it	IRAN, REPUBBLICA ISLAMICA DELL
 iraq	common	it	IRAQ
 ireland	common	it	IRLANDA
 israel	common	it	ISRAELE
-it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
-it is recommended that you run setup to upgrade your tables to the current version	common	it	&Egrave; raccomandato eseguire il setup per aggiornare le tabelle alla versione attuale.
+it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 giorni da quando hai cambiato la password
+it is recommended that you run setup to upgrade your tables to the current version	common	it	E' consigliato eseguire il setup per aggiornare le tabelle alla versione attuale.
 italic	common	it	Corsivo
 italy	common	it	ITALIA
 jamaica	common	it	GIAMAICA
@@ -286,6 +298,7 @@ january	common	it	Gennaio
 japan	common	it	GIAPPONE
 jordan	common	it	GIORDANIA
 july	common	it	Luglio
+jun	common	it	Giu
 june	common	it	Giugno
 justify center	htmlarea	it	Centrato
 justify full	htmlarea	it	Giustificato
@@ -313,6 +326,7 @@ libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
 list	common	it	Lista
+list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
 local	common	it	Locale
 login	common	it	Login
@@ -327,7 +341,7 @@ madagascar	common	it	MADAGASCAR
 mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
-maintainer	common	it	Mantenitore
+maintainer	common	it	Manutentore
 malawi	common	it	MALAWI
 malaysia	common	it	MALESIA
 maldives	common	it	MALDIVE
@@ -341,7 +355,7 @@ mauritius	common	it	MAURITIUS
 max number of icons in navbar	common	it	Numero massimo di icone della barra di navigazione
 may	common	it	Maggio
 mayotte	common	it	MAYOTTE
-medium	common	it	Media
+medium	common	it	Medio
 menu	common	it	Menu
 message	common	it	Messaggio
 mexico	common	it	MESSICO
@@ -367,7 +381,7 @@ new entry added sucessfully	common	it	Nuova voce aggiunto con successo
 new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
-next	common	it	Avanti
+next	common	it	Successivo
 next month (hold for menu)	jscalendar	it	Mese successivo (premi per menu)
 next page	common	it	Pagina successiva
 next year (hold for menu)	jscalendar	it	Anno successivo (premi per menu)
@@ -376,7 +390,7 @@ niger	common	it	NIGER
 nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
-no entries found, try again ...	common	it	nessun risultato, prova ancora ...
+no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
 no history for this record	common	it	Nessuna history per questo record
 no subject	common	it	Nessun Oggetto
 none	common	it	Nessuno
@@ -393,17 +407,18 @@ october	common	it	Ottobre
 ok	common	it	OK
 old value	common	it	Vecchio Valore
 oman	common	it	OMAN
-on *nix systems please type: %1	common	it	Sui sistemi *nix inserisci: %1
-on mouse over	common	it	Sul Mouse Over
+on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
+on mouse over	common	it	Al passaggio del mouse
 only private	common	it	solo privati
 only yours	common	it	solo personali
 open notify window	common	it	Apri finestra di Notifica
-open popup window	common	it	Apro finestra popup
-ordered list	htmlarea	it	Elenco Numerato
+open popup window	common	it	Apri finestra popup
+ordered list	htmlarea	it	Elenco ordinato
 original	common	it	Originale
 other	common	it	Altro
 overview	common	it	Overview
 owner	common	it	Proprietario
+page	common	it	Pagina
 page was generated in %1 seconds	common	it	La pagina è stata generata in %1 secondi
 pakistan	common	it	PAKISTAN
 palau	common	it	PALAU
@@ -418,7 +433,7 @@ password could not be changed	common	it	La password non può essere cambiata
 password has been updated	common	it	La password è stata aggiornata
 paste from clipboard	htmlarea	it	Incolla dagli appunti
 path	htmlarea	it	Percorso
-path to user and group files has to be outside of the webservers document-root!!!	common	it	Il path per i files degli utenti e dei gruppi DEVE ESSERE ESTERNA alladocument-root del webserver!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
 pattern for search in addressbook	common	it	Pattern per la Ricerca nella Rubrica
 pattern for search in calendar	common	it	Pattern per la Ricerca nell'Agenda
 pattern for search in projects	common	it	Pattern per la Ricerca nei Progetti
@@ -453,9 +468,10 @@ public	common	it	pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 read	common	it	Leggi
-read this list of methods.	common	it	Leggi questa lista di metodi.
+read this list of methods.	common	it	Leggi questo elenco di metodi.
 redoes your last action	htmlarea	it	Ripeti l'ultima azione
 reject	common	it	Rifiuta
+remove selected accounts	common	it	rimuovi gli account selezionati
 rename	common	it	Rinomina
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
@@ -476,6 +492,8 @@ saturday	common	it	Sabato
 saudi arabia	common	it	ARABIA SAUDITA
 save	common	it	Salva
 search	common	it	Cerca
+search %1 '%2'	common	it	Cerca %1 '%2'
+search or select accounts	common	it	Cerca o seleziona account
 section	common	it	Sezione
 select	common	it	Seleziona
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
@@ -486,6 +504,7 @@ select home email address	common	it	Selezione indirizzo e-mail abitazione
 select one	common	it	Seleziona uno
 select user	common	it	Selezione utente
 select work email address	common	it	Selezione indirizzio e-mail ufficio
+selection	common	it	Selezione
 send	common	it	Invia
 senegal	common	it	SENEGAL
 september	common	it	Settembre
@@ -493,7 +512,8 @@ server %1 has been added	common	it	Server %1 aggiunto
 server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
 setup	common	it	Setup
-setup main menu	common	it	Setup Menù Principale
+setup main menu	common	it	Menù Principale Setup
+setup/config admin login	common	it	Login Amministrazione Setup/Configurazione
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
@@ -516,6 +536,7 @@ spain	common	it	SPAGNA
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
+start with	common	it	Inizia con
 status	common	it	Status
 strikethrough	htmlarea	it	Barrato
 subject	common	it	Oggetto
@@ -549,8 +570,8 @@ time zone	common	it	Fuso orario
 time zone offset	common	it	Differenza di fuso orario
 title	common	it	Titolo
 to	common	it	A
-to correct this error for the future you will need to properly set the	common	it	Per correggere questo errore devi selezionare correttamente il
-to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, premi <a href="%1">qui</a>
+to correct this error for the future you will need to properly set the	common	it	Per correggere questo errore devi impostare correttamente il
+to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, clicca <a href="%1">qui</a>
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
 toggle first day of week	jscalendar	it	Togli il primo giorno della settimana
@@ -609,16 +630,17 @@ year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
-you are required to change your password during your first login	common	it	Ti sarà richiesto di cambiare la password al primo login
+you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
 you are running a newer version of phpgroupware than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
 you have not entered a title	common	it	Non hai inserito un titolo
 you have not entered a valid date	common	it	Non hai inserito una data valida
-you have not entered a valid time of day	common	it	Non hai inserito un ora del giorno valida
-you have not entered participants	common	it	Non hai inserito participanti
+you have not entered a valid time of day	common	it	Non hai inserito un'ora del giorno valida
+you have not entered participants	common	it	Non hai inserito i partecipanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
-you have successfully logged out	common	it	Sei stato sconnesso correttamente
+you have successfully logged out	common	it	Ti sei disconesso con successo
+you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
 your search returned %1 matchs	common	it	la tua ricerca ha resttuito %1 risultati

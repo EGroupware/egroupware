@@ -1,16 +1,18 @@
-%1 - preferences	preferences	it	%1 - Preferenze
+%1 - preferences	preferences	it	Preferenze %1
 %1 hours	preferences	it	%1 ore
 12 hour	preferences	it	12 ore
 24 hour	preferences	it	24 ore
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	it	Il template definisce il layout di eGroupWare e contiene le icone per ogni applicazione.
-a theme defines the colors and fonts used by the template.	preferences	it	Un tema definisce i colori e i font usati dai template.
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	it	Un Template definisce il layout di eGroupWare e contiene le icone per ogni applicazione.
+a theme defines the colors and fonts used by the template.	preferences	it	Un Tema definisce i colori e i tipi di carattere usati dal template.
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in eGroupWare visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
 change your settings	preferences	it	Cambia le tue impostazioni
-country	preferences	it	Stato
+click to select a color	preferences	it	Clicca per selezionare un colore
+color	preferences	it	Colore
+country	preferences	it	Nazione
 date format	preferences	it	Formato data
 default	preferences	it	predefinito
 default application	preferences	it	Applicazione predefinita
@@ -21,6 +23,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
 error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un errore nel trovare il file delle preferenze per %1 in %2
+failed to change password.  please contact your administrator.	preferences	it	Impossibile cambiare la password. Prego contatta l'amministratore.
 forced preferences	preferences	it	Preferenze Forzate
 help off	preferences	it	Nessun Aiuto
 hours	preferences	it	ore
@@ -29,10 +32,11 @@ how do you like to select accounts	preferences	it	Come vuoi selezionare gli acco
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	it	Quante ora è avanti o indietro il fuso orario del tuo server.<br>Se stai usando il fuso orario del server seleziona 0 altrimenti seleziona il tuo fuso orario locale.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	it	Quante icone devono essere visualizzare nella barra di navigazione in cima alla pagina. Le altre icone saranno nel menu a discesa richiamabile dall'icona all'estrema destra della barra di navigazione.
 how should phpgroupware display dates for you.	preferences	it	Come eGroupWare deve visualizzare le date.
+icon	preferences	it	Icona
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
 in which country are you. this is used to set certain defaults for you.	preferences	it	In quale nazione sei. Sarà usato per impostare alcuni parametri predefiniti.
-interface/template selection	preferences	it	Selezione Interfaccia/Aspetto
+interface/template selection	preferences	it	Selezione Interfaccia/Template
 language	preferences	it	Lingua
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
@@ -44,11 +48,12 @@ re-enter your password	preferences	it	Reinserisci la password
 select different theme	preferences	it	Seleziona un tema differente
 select one	preferences	it	Seleziona uno
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di eGroupWare.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
-selectbox	preferences	it	Selectbox
-set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	it	Impostalo come preferisci.  Per ragioni di sicurezza, puoi forzare di non visualizzare la tua Username in pubblico.
-should the number of active sessions be displayed for you all the time.	preferences	it	Il numero di sessioni attive sarà sempre visualizzato.
+selectbox	preferences	it	Casella di selezione
+selectbox with primary group and search	preferences	it	Casella di selezione con gruppo primario e ricerca
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	it	Impostalo come preferisci. Per ragioni di sicurezza, puoi forzare di non visualizzare la tua Username in pubblico.
+should the number of active sessions be displayed for you all the time.	preferences	it	Il numero di sessioni attive sarà sempre visualizzato per te.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	it	Questo messaggio di aiuto sarà sempre visualizzato quando si modificano le preferenze, o solo su richiesta.
-show helpmessages by default	preferences	it	Di default visualizza il messaggio di aiuto
+show helpmessages by default	preferences	it	Per default visualizza i messaggi di aiuto
 show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show number of current users	preferences	it	Visualizza il numero degli utenti correnti
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
@@ -67,5 +72,5 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you do not have permission to set acl's in this mode!	preferences	it	Non hai il permesso di stabilire i permessi ACL in questa modo!
 you do not have permission to set acl\'s in this mode!	preferences	it	Non sei autorizzato ad impostare l'ACL in questo modo!
 you must enter a password	preferences	it	Devi inserire una password
-your current theme is: %1	preferences	it	il tuo tema è: %1
+your current theme is: %1	preferences	it	il tuo tema attuale è: %1
 your preferences	preferences	it	Preferenze personali

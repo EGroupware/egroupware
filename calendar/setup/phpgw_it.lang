@@ -1,7 +1,7 @@
 %1 %2 in %3	calendar	it	%1 %2 in %3
 %1 matches found	calendar	it	Trovate %1 occorrenze
-%1 records imported	calendar	it	%1 record importato
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	it	%1 record letto (non ancora importato, torna indietro e deseleziona Test Import)
+%1 records imported	calendar	it	%1 record importato/i
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	it	%1 record letto/i (non ancora importato/i, torna indietro e deseleziona Test Import)
 (for weekly)	calendar	it	(per settimana)
 (i/v)cal	calendar	it	(i/v)Cal
 1 match found	calendar	it	Trovata 1 occorrenza
@@ -50,8 +50,8 @@ country	calendar	it	Nazione
 created by	calendar	it	Creato da
 csv-fieldname	calendar	it	Campi-CSV
 csv-filename	calendar	it	Nomefile-CSV
-custom fields	calendar	it	Customizza i Campi
-custom fields and sorting	common	it	Customizzazione e Ordinamento dei campi
+custom fields	calendar	it	Personalizza i Campi
+custom fields and sorting	common	it	Personalizzazione e Ordinamento dei Campi
 daily	calendar	it	Giornaliero
 daily matrix view	calendar	it	Visualizzazione Matrice Giornaliera
 days	calendar	it	giorni
@@ -71,11 +71,12 @@ deleted	calendar	it	Eliminato
 description	calendar	it	Descrizione
 disable	calendar	it	Disabilita
 disabled	calendar	it	disabilitato
-display interval in day view	calendar	it	Visualizza intervallo nella Visualizzazione Giornalira
+display interval in day view	calendar	it	Visualizza intervallo nella Visualizzazione Giornaliera
 display mini calendars when printing	calendar	it	Visualizza mini calendari quando stampi
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	it	Visualizzare la tua vista agenda predefinita sulla pagina iniziale (la pagina che appare quando entri in eGroupWare o clicchi sull'icona HOME) ?
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	it	Mostra la visualizzazione predefinita nella prima pagina (la pagina che vedi quando entri in eGroupWare o cliccando sull'icona homepage)?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi una notifica sui nuovi appuntamenti o su quelli cambiati? Sarai avvertito sui cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. Each item includes all the notification listed above it. Tutte le modifiche includono il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi una notifica per i nuovi appuntamenti o per quelli cambiati? Sarai avvertito dei cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. TUTTE LE VOCI include tutte le notifiche elencate sopra di esso. TUTTE LE MODIFICHE include il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
 do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
 download	calendar	it	Download
@@ -115,7 +116,7 @@ global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gr
 global public only	calendar	it	Solo Pubblico Globale
 go!	calendar	it	Vai!
 grant calendar access	common	it	Permetti accesso all'Agenda
-group planner	calendar	it	Pianificatore di Grouppo
+group planner	calendar	it	Pianificatore di Gruppo
 group public only	calendar	it	Solo Pubblico per il Gruppo
 here is your requested alarm.	calendar	it	la tua richiesta di allarme.
 high priority	calendar	it	priorità alta
@@ -193,6 +194,7 @@ planner	calendar	it	Pianificatore
 planner by category	calendar	it	Pianificatore per categorie
 planner by user	calendar	it	Pianificatore per utente
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	it	Per favore conferma, accetta, rifiuta o esamina i cambiamenti della voce corrispondente nel tuo calendario
+please enter a filename !!!	calendar	it	Prego inserire un nome File !!!
 preselected group for entering the planner	calendar	it	Gruppo predefinito per aggiunte al pianificatore
 print calendars in black & white	calendar	it	Stampa agende in bianco & nero
 print the mini calendars	calendar	it	Stampa la mini agenda

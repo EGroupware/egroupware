@@ -1,6 +1,7 @@
 %1 records imported	infolog	it	%1 record importati
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	it	%1 record letti (non ancora importati, puoi tornare %2indietro%3 e deselezionare Test Importazione)
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	it	%1 record letti (non ancora importati, è possibile tornare indietro e deselezionare Test Importazione)
-- subprojects from	infolog	it	- Sub progetto da
+- subprojects from	infolog	it	- Sottoprogetti da
 0%	infolog	it	0%
 10%	infolog	it	10%
 20%	infolog	it	20%
@@ -11,7 +12,8 @@
 70%	infolog	it	70%
 80%	infolog	it	80%
 90%	infolog	it	90%
-a short subject for the entry	infolog	it	un piccolo oggetto per la nota
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	it	<b>allegati via symlinks</b> invece che caricamento e recupero via file:/path per i lan-client diretti
+a short subject for the entry	infolog	it	un breve soggetto per la nota
 abort without deleting	infolog	it	Annulla senza cancellare
 accept	infolog	it	accetta
 action	infolog	it	Azione
@@ -74,6 +76,7 @@ default status for a new log entry	infolog	it	stato predefinito per le nuove voc
 delegation	infolog	it	Delega
 delete	infolog	it	Cancella
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	it	Cancella tutti i sub (se non sono sub saranno sub le voci di questo padre, oppure senza padre)
+delete one record by passing its id.	infolog	it	Cancella un record fornendo la sua ID
 delete the entry	infolog	it	Cancella la voce
 delete this entry	infolog	it	Cancella questa voce
 deletes the selected typ	infolog	it	cancella il tipo selezionato
@@ -85,7 +88,7 @@ determines the order the fields are displayed	infolog	it	determina l'ordine di v
 disables a status without deleting it	infolog	it	disabilita lo stato senza cancellarlo
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	it	vuoi una conferma dal responsabile su: accettazione, completamento dei ToDo o entrambe
 done	infolog	it	finiti
-download	infolog	it	Scarica
+download	infolog	it	Download
 duration	infolog	it	Durata
 each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
 edit	infolog	it	Modifica
@@ -119,19 +122,20 @@ infolog - import csv-file	infolog	it	InfoLog - Importa File CSV
 infolog - new	infolog	it	InfoLog - Nuovo
 infolog - new subproject	infolog	it	InfoLog - Nuovo Sub progetto
 infolog - subprojects from	infolog	it	InfoLog - Sub progetto da
-infolog list	infolog	it	Lista di InfoLog
+infolog list	infolog	it	Elenco di InfoLog
 infolog preferences	common	it	InfoLog Preferenze
 infolog-fieldname	infolog	it	InfoLog - Nome del Campo
 invalid filename	infolog	it	Nome di Campo non valido
 label<br>helptext	infolog	it	Etichetta<br>Testo di Help
-last changed	infolog	it	Ultimo modificato
-last modified	infolog	it	Ultimo modificato
+last changed	infolog	it	Ultima modifica
+last modified	infolog	it	Ultima modifica
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
 length<br>rows	infolog	it	Lunghezza<br>Righe
 link	infolog	it	Link
 links	infolog	it	Links
 links of this entry	infolog	it	Links della voce
+list all categories	infolog	it	Elenca tutte le categorie
 list no subs/childs	infolog	it	Non elencare Sub/figli
 longer textual description	infolog	it	lunga descrizione testuale
 low	infolog	it	Bassa
@@ -150,6 +154,7 @@ normal	infolog	it	Normale
 not	infolog	it	non
 not assigned	infolog	it	non assegnato
 note	infolog	it	Nota
+number of records to read (%1)	infolog	it	Numero di record da leggere (%1)
 number of records to read (<=200)	infolog	it	Numero di records da leggere (<=200)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	it	numeri di righe per la casella di inserimento multilinea o linee per una select-box multipla
 offer	infolog	it	offerta
@@ -176,11 +181,13 @@ priority	infolog	it	Priorità
 private	infolog	it	Privato
 project	infolog	it	Progetto
 re:	infolog	it	Re:
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	it	espressione regolare per indirizzi IP Locali<br>es.^192\.168\.1\.
-remark	infolog	it	Remark
+read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	it	espressione corretta per indirizzi IP Locali<br>es.^192\.168\.1\.
+remark	infolog	it	Osservazione
 remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce)
 responsible	infolog	it	Responsabile
 responsible user, priority, ...	infolog	it	responsabile, priorità, ...
+returns a list / search for records.	infolog	it	Restituisce un elenco / cerca record
 save	infolog	it	Salva
 saves the changes made and leaves	infolog	it	salva i cambiamenti ed esci
 saves this entry	infolog	it	Salva questa voce
@@ -201,8 +208,9 @@ should this entry only be visible to you and people you grant privat access via 
 show full usernames	infolog	it	Mostra nomi utente completi
 show in the infolog list	infolog	it	Visualizza nella lista di InfoLog
 show list of upcoming entries	infolog	it	visualizza la lista delle voci imminenti
+show open entries: tasks/calls/notes on main screen	infolog	it	Mostra voci aperte: Compiti/Chiamate/Note sulla videata principale
 show open events: tasks/calls/notes on main screen	infolog	it	Mostra gli eventi ancora aperti: ToDo/Chiamate/Note sulla schermata principale
-small view	infolog	it	vista rimpicciolita
+small view	infolog	it	vista ridotta
 start a new search, cancel this link	infolog	it	inizia una nuova ricerca, annulla questo link
 startdate	infolog	it	Data Inizio
 startdate enddate	infolog	it	Data Inizio Data Fine
@@ -242,6 +250,7 @@ view the parent of this entry and all his subs	infolog	it	Visualizza i padri di 
 view this linked entry in its application	infolog	it	visualizza le voci linkate nella sua applicazione
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
 will-call	infolog	it	chiamerà
+write (add or update) a record by passing its fields.	infolog	it	Scrivi (aggiungi o aggiorna) un record fornendo i suoi campi.
 yes - delete	infolog	it	Sì - Cancella
 you can't delete one of the stock types !!!	infolog	it	Non puoi cancellare uno dei tipi predefiniti !!!
 you have entered an invalid ending date	infolog	it	E' stata inserita una data di fine non valida
