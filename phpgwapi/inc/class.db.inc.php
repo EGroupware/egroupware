@@ -1116,17 +1116,25 @@
 
 					if (is_array($data))
 					{
+						$or_null = '';
 						foreach($data as $k => $v)
 						{
+							if (!$not_null && $use_key===True && is_null($v))
+							{
+								$or_null = ' OR '.$this->name_quote($key).' IS NULL)';
+								unset($data[$k]);
+								continue;
+							}
 							$data[$k] = $this->quote($v,$column_type,$not_null);
 						}
-						$values[] = ($use_key===True ? $key.' IN ' : '') . '('.implode(',',$data).')';
+						$values[] = ($or_null?'(':'').(!count($data) ? '' : ($use_key===True ? 
+							$this->name_quote($key).' IN ' : '') . '('.implode(',',$data).')').$or_null;
 					}
 					elseif (is_int($key) && $use_key===True)
 					{
 						$values[] = $data;
 					}
-					elseif ($use_key === True && !$not_null && is_null($data))
+					elseif ($glue != ',' && $use_key === True && !$not_null && is_null($data))
 					{
 						$values[] = $this->name_quote($key) .' IS NULL';
 					}
