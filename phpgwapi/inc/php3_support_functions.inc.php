@@ -352,7 +352,6 @@
 					break;  
 			}
 		}
-		echo '<br>' . $pm;
 		return $pm;
 	}
 
