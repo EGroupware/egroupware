@@ -1293,7 +1293,7 @@
 				'print'				=> $print,
 				'lang_todos'		=> $todo_label,
 				'todos'				=> $this->bo->printer_friendly ? $todos :
-					"<div style=\"overflow: auto; height: 200px\">\n$todos</div>\n"
+					"<div style=\"overflow: auto; max-height: 200px\">\n$todos</div>\n"
 			);
 
 			$p->set_var($var);
@@ -1312,14 +1312,14 @@
 			));
 
 			$content = $todo_label = '';
-			if (is_array($todos_from_hook))
+			if (is_array($todos_from_hook) && count($todos_from_hook))
 			{
+				$todo_label = lang("open ToDo's:");
+
 				foreach($todos_from_hook as $todos)
 				{
 					if (is_array($todos) && count($todos))
 					{
-						$todo_label = lang("open ToDo's:");
-
 						if (!is_object($GLOBALS['phpgw']->html))
 						{
 							$GLOBALS['phpgw']->html = CreateObject('calendar.html');
