@@ -356,6 +356,21 @@
 
 		function select_widget($ui)
 		{
+			foreach($this->monthnames as $k => $name)
+			{
+				if ($name)
+				{
+					$this->monthnames[$k] = lang($name);
+				}
+			}
+			foreach($this->countrys as $k => $name)
+			{
+				if (($translated = lang($name)) != $name.'*')
+				{
+					$this->countrys[$k] = $translated;
+				}
+			}
+			asort($this->countrys);
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
