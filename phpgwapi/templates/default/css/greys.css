@@ -1,0 +1,195 @@
+body
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif; 
+	font-size: 10pt; 
+	font-style: normal; 
+	color: #222222;
+	line-height: normal; 
+	font-weight: normal; 
+	letter-spacing: 0em; 
+	word-spacing: 0em; 
+	background-color: #dfdfdf;
+}
+
+table
+{   
+	background-color: #eeeeee;
+	border: 0px; 
+	font-family: Verdana,Arial,Helvetica,sans-serif; 
+	font-size: 10pt;
+	font-style: normal; 
+	line-height: normal; 
+	font-weight: normal; 
+	color: #000000; 
+	text-decoration: none;
+	letter-spacing: 0em; 
+	word-spacing: 0em; 
+	padding: 2em;
+}
+
+th
+{	
+	background-color: #eeeeee;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+td
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	color: #000000;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+td.row-on
+{
+	background-color: #eeeeee;
+}
+
+td.row-off
+{
+	background-color: #cccccc;
+}
+
+
+a:link
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #0000ff;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:visited
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #5555ff;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:active
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: black;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:hover
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: black;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.navbar
+{
+	background-color: #aaaaaa;
+	color: #000000;
+}
+
+.navbar:spezial_logo
+{
+	background-image: url(logo_003300.gif);	
+}
+
+.calendar:today
+{
+	background-color: #FBF1C5;
+}
+
+.calendar:dayview
+{
+	background-color: #F9E99F;
+}
+
+.email:folder
+{
+	background-color: #EAD688;
+	color: #000000;
+}
+
+.bg01
+{
+	background-color: #eeeeee;
+}
+
+.bg02
+{
+	background-color: #cccccc;
+}
+
+.bg03
+{
+	background-color: #bbbbbb;
+}
+
+.bg04
+{
+	background-color: #aaaaaa;
+}
+
+.bg05
+{
+	background-color: #999999;
+}
+
+.bg06
+{
+	background-color: #888888;
+}
+
+.bg07
+{
+	background-color: #777777;
+
+}
+.bg08
+{
+	background-color: #666666;
+}
+
+.bg09
+{
+	background-color: #555555;
+}
+
+.bg10
+{
+	background-color: #444444;
+}
