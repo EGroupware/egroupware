@@ -1861,6 +1861,34 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
 	}
 
+	$test[] = '0.9.10';
+	function upgrade0_9_10()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+                $phpgw_setup->db->query("create table phpgw_temp as select * from notes",__LINE__,__FILE__);
+
+                $phpgw_setup->db->query("drop sequence notes_note_id_seq",__LINE__,__FILE__);
+
+                $phpgw_setup->db->query("drop table notes",__LINE__,__FILE__);
+
+                $sql = "CREATE TABLE phpgw_notes (
+                        note_id        	serial,
+                        note_owner     	int,
+			note_access	char(7),
+                        note_date      	int,
+                        note_category  	int,
+                        note_content   	text
+                )";
+                $phpgw_setup->db->query($sql);
+
+                $phpgw_setup->db->query("insert into phpgw_notes select * from phpgw_temp",__LINE__,__FILE__);
+
+                $phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
+	}
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

@@ -294,11 +294,12 @@
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_notes (
-           note_id        serial, 
-           note_owner     int,
-           note_date      int,
-           note_category  int,
-           note_content   text
+            note_id        	serial, 
+            note_owner     	int,
+	    note_access		char(7),    
+            note_date      	int,
+            note_category  	int,
+            note_content   	text
           )";
   $phpgw_setup->db->query($sql);
 
@@ -316,7 +317,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>

@@ -1469,6 +1469,16 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
 	}
 
+	$test[] = '0.9.10';
+	function upgrade0_9_10()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+                $phpgw_setup->db->query("alter table phpgw_notes add column note_access char(7) after note_owner");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
