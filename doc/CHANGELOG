@@ -5,6 +5,7 @@
 	- Enhanced Free/Busy calendar view.
 	- Fix for repeating events not showing in calendar.
 	- Fix for Day View warning in calendar.
+	- Fix for TTS with Update by non-email user.
 
 [0.9.6] - Fix user permissions where not being checked properly.
 
