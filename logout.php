@@ -25,17 +25,17 @@
 
 	if ($phpgw->session->verify($sessionid))
 	{
-		if (file_exists($phpgw_info['server']['temp_dir'] . sep . $sessionid))
+		if (file_exists($phpgw_info['server']['temp_dir'] . SEP . $sessionid))
 		{
-			$dh = opendir($phpgw_info['server']['temp_dir'] . sep . $sessionid);
+			$dh = opendir($phpgw_info['server']['temp_dir'] . SEP . $sessionid);
 			while ($file = readdir($dh))
 			{
 				if ($file != '.' && $file != '..')
 				{
-					unlink($phpgw_info['server']['temp_dir'] . sep . $sessionid . sep . $file);
+					unlink($phpgw_info['server']['temp_dir'] . SEP . $sessionid . SEP . $file);
 				}
 			}
-			rmdir($phpgw_info['server']['temp_dir'] . sep . $sessionid);
+			rmdir($phpgw_info['server']['temp_dir'] . SEP . $sessionid);
 		}
 		$phpgw->common->hook('logout');
 		$phpgw->session->destroy();
