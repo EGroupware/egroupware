@@ -70,47 +70,54 @@
 			}
 		}
 
-		function asc_sort($a,$b) { 
+		function asc_sort($a,$b)
+		{
 			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0; 
-			return ($a[1]>$b[1])?1:-1; 
+			if($a[1]==$b[1]) return 0;
+			return ($a[1]>$b[1])?1:-1;
 		}
 
-		function desc_sort($a,$b) { 
+		function desc_sort($a,$b)
+		{
 			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0; 
-			return ($a[1]<$b[1])?1:-1; 
+			if($a[1]==$b[1]) return 0;
+			return ($a[1]<$b[1])?1:-1;
 		}
 
-		/** 
-		** comesafter ($s1, $s2) 
-		** 
-		** Returns 1 if $s1 comes after $s2 alphabetically, 0 if not. 
-		**/ 
-		function comesafter ($s1, $s2) { 
-			/** 
-			** We don't want to overstep the bounds of one of the strings and segfault, 
-			** so let's see which one is shorter. 
-			**/ 
+		/**
+		** comesafter ($s1, $s2)
+		**
+		** Returns 1 if $s1 comes after $s2 alphabetically, 0 if not.
+		**/
+		function comesafter ($s1, $s2)
+		{
+			/**
+			** We don't want to overstep the bounds of one of the strings and segfault,
+			** so let's see which one is shorter.
+			**/
 			$order = 1;
 
-			if ( (strlen($s1) == 0) ) {
+			if ( (strlen($s1) == 0) )
+			{
 				return 0;
 			}
-			
-			if ( (strlen($s2) == 0) ) {
+
+			if ( (strlen($s2) == 0) )
+			{
 				return 1;
 			}
 
-			if (strlen ($s1) > strlen ($s2)) {
+			if (strlen ($s1) > strlen ($s2))
+			{
 				$temp = $s1;
 				$s1 = $s2;
 				$s2 = $temp;
 				$order = 0;
 			}
 
-			for ($index = 0; $index < strlen ($s1); $index++) { 
-				/* $s1 comes after $s2 */ 
+			for ($index = 0; $index < strlen ($s1); $index++)
+			{
+				/* $s1 comes after $s2 */
 				if (strtolower($s1[$index]) > strtolower($s2[$index])) { return ($order); }
 
 				/* $s1 comes before $s2 */
@@ -118,7 +125,7 @@
 			}
 				/* Special case in which $s1 is a substring of $s2 */
 
-			return ($order); 
+			return ($order);
 		}
 
 		/*
@@ -176,36 +183,48 @@
 			for($i=0;$i<count($ldap_fields);$i++) {
 				$yes = True;
 
-				reset($filterfields);
-				while (list($col,$filt) = each($filterfields))
+				if ($ldap_fields[$i]["uidnumber"][0])
 				{
-					if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-					if ($ldap_fields[$i][$col][0] == $filt)
+					reset($filterfields);
+					while (list($col,$filt) = each($filterfields))
 					{
-						if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
-						$yes &= True;
-						$match++;
+						if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
+						if ($ldap_fields[$i][$col][0] == $filt)
+						{
+							if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+							$yes &= True;
+							$match++;
+						}
+						else
+						{
+							if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+							$yes &= False;
+							$match--;
+						}
+					}
+
+					if ($yes)
+					{
+						if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
+						$new_ldap[] = $ldap_fields[$i];
 					}
 					else
 					{
-						if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
-						$yes &= False;
-						$match--;
+						if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' did not match all.'."<br>"; }
 					}
 				}
-
-				if ($yes)
+			}
+			if($DEBUG)
+			{
+				if($match)
 				{
-					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
-					$new_ldap[] = $ldap_fields[$i];
+					echo '<br>'.$match.' total matches.'."\n";
 				}
 				else
 				{
-					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' did not match all.'."<br>"; }
+					echo '<br>No matches :('."\n";
 				}
 			}
-			if ($match) { if($DEBUG) { echo '<br'.$match.' total matches.'."\n"; } }
-			else        { if($DEBUG) { echo '<br>No matches :('."\n"; } }
 			$this->total_records = count($new_ldap);
 
 			return $new_ldap;
