@@ -14,7 +14,9 @@
   // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
 
   $sql = "CREATE TABLE config (
-    config_string   blob
+    config_name     varchar(255) NOT NULL,
+    config_value    varchar(100),
+    UNIQUE config_name (config_name)
   )";
   $db->query($sql);  
  
@@ -54,11 +56,13 @@
   )";
   $db->query($sql);  
 
-  $sql = "create table preferences ( 
-    preference_owner       int,
-    preference_value       text
+  $sql = "CREATE TABLE preferences (
+    preference_owner   varchar(20),
+    preference_name    varchar(50),
+    preference_value   varchar(50),
+    preference_appname varchar(50)
   )";
-  $db->query($sql); 
+  $db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_sessions (
     session_id        varchar(255) NOT NULL,
@@ -287,7 +291,7 @@
           )";
   $db->query($sql);
 
-  $currentver = "0.9.8pre3";
+  $currentver = "0.9.7";
   $oldversion = $currentver;
   update_version_table();
 ?>

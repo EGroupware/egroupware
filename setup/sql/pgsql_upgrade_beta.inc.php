@@ -745,9 +745,9 @@
     if ($currentver == "0.9.7" || ereg ("^0\.9\.8pre", $currentver)){
       if ($currentver == "0.9.7") {
         // upgrade code starts here
-        $db->query("drop table config");
-        $db->query("CREATE TABLE config ( config_string   text )");
-        echo "<b>Note: You will need to re-submit your config data.</b>";
+
+        /* The format completly changed, so I just removed these sections. */
+
         // upgrade code ends here
         $currentver = "0.9.8pre2";
         update_version_table();
@@ -775,6 +775,20 @@
         $currentver = "0.9.8pre3";
         update_version_table();
       }
+      if ($currentver == "0.9.8pre3") {
+        // upgrade code starts here
+
+        $sql = "CREATE TABLE config (
+          config_name     varchar(255) NOT NULL UNIQUE,
+          config_value    varchar(100) NOT NULL
+        )";
+        @$db->query($sql);
+
+        // upgrade code ends here
+        $currentver = "0.9.8pre3";
+        update_version_table();
+      }
+
       if ($oldversion != $currentver){
         echo "  </tr><td>\n";
         echo "  <tr bgcolor=\"e6e6e6\">\n";

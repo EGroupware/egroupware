@@ -13,46 +13,7 @@
 
   function add_default_server_config(){
     global $db, $phpgw_info, $currentver;
-
-    $phpgw_info["server"]["default_tplset"] = "default";
-          $phpgw_info["server"]["temp_dir"]="/path/to/tmp";
-          $phpgw_info["server"]["files_dir"]="/path/to/phpgroupware/files";
-          $phpgw_info["server"]["webserver_url"]="/phpgroupware";
-          $phpgw_info["server"]["mail_server"]="localhost";
-          $phpgw_info["server"]["mail_server_type"]="imap";
-          $phpgw_info["server"]["imap_server_type"]="UWash";
-          $phpgw_info["server"]["mail_suffix"]="yourdomain.com";
-          $phpgw_info["server"]["mail_login_type"]="standard";
-          $phpgw_info["server"]["smtp_server"]="localhost";
-          $phpgw_info["server"]["smtp_port"]="25";
-          $phpgw_info["server"]["auth_type"]="sql";
-          $phpgw_info["server"]["account_repository"]="sql";
-          $phpgw_info["server"]["ldap_host"]="localhost";
-          $phpgw_info["server"]["ldap_context"]="ou=People,dc=my-domain,dc=com";
-          $phpgw_info["server"]["ldap_root_dn"]="cn=Manager,dc=my-domain,dc=com";
-          $phpgw_info["server"]["ldap_root_pw"]="secret";
-          $phpgw_info["server"]["ldap_encryption_type"]="DES";
-          $phpgw_info["server"]["usecookies"]="True";
-          $phpgw_info["server"]["encryptkey"]="change this phrase 2 something else";
-          $phpgw_info["server"]["default_ftp_server"]="localhost";
-          $phpgw_info["server"]["httpproxy_server"]="";
-          $phpgw_info["server"]["httpproxy_port"]="";
-          $phpgw_info["server"]["showpoweredbyon"]="top";
-          $phpgw_info["server"]["site_title"]="phpGroupWare";
-          $phpgw_info["server"]["hostname"]="localhost";
-          $phpgw_info["server"]["nntp_server"]="yournewsserver.com";
-          $phpgw_info["server"]["nntp_port"]="119";
-          $phpgw_info["server"]["nntp_sender"]="complaints@yourserver.com";
-          $phpgw_info["server"]["nntp_organization"]="phpGroupWare";
-          $phpgw_info["server"]["nntp_admin"]="admin@yourserver.com";
-          $phpgw_info["server"]["nntp_login_username"]="";
-          $phpgw_info["server"]["nntp_login_password"]="";
-    
-    $db->query("insert into config values('" . serialize($phpgw_info["server"]) . "')");
-
-    // I disabled a lot of this for temp. (jengo)
-
-/*    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
+    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
     $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
     $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
     $db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
@@ -134,11 +95,10 @@
       echo "  </tr>\n";
       echo "</table>\n";
       add_default_server_config();
-    } 
-  }else{ */
-  }
+    }
+  }else{
     add_default_server_config();
-//  }
+  }
 
   include($phpgw_info["server"]["server_root"] . "/setup/sql/default_applications.inc.php");
 

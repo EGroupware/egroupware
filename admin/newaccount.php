@@ -21,7 +21,7 @@
   {
      global $phpgw;
 
-     $phpgw->common->preferences_add($account_id,"maxmatchs","common","15");
+/*     $phpgw->common->preferences_add($account_id,"maxmatchs","common","15");
      $phpgw->common->preferences_add($account_id,"theme","common","default");
      $phpgw->common->preferences_add($account_id,"tz_offset","common","0");
      $phpgw->common->preferences_add($account_id,"dateformat","common","m/d/Y");
@@ -29,14 +29,14 @@
      $phpgw->common->preferences_add($account_id,"lang","common","en");
      $phpgw->common->preferences_add($account_id,"company","addressbook","True");
      $phpgw->common->preferences_add($account_id,"lastname","addressbook","True");
-     $phpgw->common->preferences_add($account_id,"firstname","addressbook","True");
+      $phpgw->common->preferences_add($account_id,"firstname","addressbook","True"); */
 
      // Even if they don't have access to the calendar, we will add these.
      // Its better then the calendar being all messed up, they will be deleted
      // the next time the update there preferences.
-     $phpgw->common->preferences_add($account_id,"weekstarts","calendar","Monday");
+/*     $phpgw->common->preferences_add($account_id,"weekstarts","calendar","Monday");
      $phpgw->common->preferences_add($account_id,"workdaystarts","calendar","9");
-     $phpgw->common->preferences_add($account_id,"workdayends","calendar","17");  
+     $phpgw->common->preferences_add($account_id,"workdayends","calendar","17");   */
   }
 
   
