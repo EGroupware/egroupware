@@ -67,7 +67,8 @@
 
 		function htmlspecialchars($str)
 		{
-			return htmlspecialchars($str,ENT_COMPAT,$this->charset);
+			// add @ by lkneschke to supress warning about unknown charset
+			return @htmlspecialchars($str,ENT_COMPAT,$this->charset);
 		}
 
 		/*!
