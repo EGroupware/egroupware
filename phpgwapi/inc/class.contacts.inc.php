@@ -61,6 +61,42 @@
         return array($ab_fields,$ab_fieldnames,$extra_fields);
      }
 
+     function read_single_entry($id,$fields)
+     {
+        list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
+        if (count($ab_fieldnames)) {
+           $t_fields = ",ab_" . implode(",ab_",$ab_fieldnames);
+           if ($t_fields == ",ab_") {
+              unset($t_fields);
+           }
+        }
+
+        $this->db2 = $this->db;
+ 
+        $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook WHERE ab_id='$id'");
+        $this->db->next_record();
+       
+        $return_fields[0]["id"]     = $this->db->f("ab_id");
+        $return_fields[0]["owner"]  = $this->db->f("ab_owner");
+        $return_fields[0]["access"] = $this->db->f("ab_access");
+        if (gettype($ab_fieldnames) == "array") {
+          while (list($f_name) = each($ab_fieldnames)) {
+            $return_fields[0][$f_name] = $this->db->f("ab_" . $f_name);
+          }
+        }
+        $this->db2->query("select contact_name,contact_value from phpgw_contacts where contact_id='"
+                           . $this->db->f("ab_id") . "'",__LINE__,__FILE__);
+        while ($this->db2->next_record()) {
+          // If its not in the list to be return, don't return it.
+          // This is still quicker then 5(+) seperate querys
+          if ($extra_fields[$this->db2->f("contact_name")]) {
+            $return_fields[0][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+          }
+        }
+
+        return $return_fields;
+     }
+
      function read($start,$offset,$access,$filters,$fields)
      {
         list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
