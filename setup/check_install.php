@@ -394,8 +394,9 @@
 				{
 					echo $error_icon.$msg;
 				}
-				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
-				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."\n";
+				echo "<br/>";
+				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."<br>\n";
+				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."<br></span>\n";
 			}
 		}
 		echo "\n";
