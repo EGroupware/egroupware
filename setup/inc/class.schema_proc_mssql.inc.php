@@ -78,8 +78,6 @@
 					}
 					break;
 				case 'longtext':
-					$sTranslated = 'longtext';
-					break;
 				case 'text':
 					$sTranslated = 'text';
 					break;
@@ -311,7 +309,7 @@
 		function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 		{
 			$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
-			$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
+			$query = "ALTER TABLE $sTableName ADD $sColumnName $sFieldSQL";
 
 			return !!($oProc->m_odb->query($query));
 		}
