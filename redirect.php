@@ -22,6 +22,16 @@
 	  "<a href=\"$webserverURL/redirect.php?go=".htmlentities(urlencode('http://www.egroupware.org')).'">'
 	*/
 
+	if(!function_exists('html_entity_decode'))
+	{
+		function html_entity_decode($given_html, $quote_style = ENT_QUOTES)
+		{
+			$trans_table = array_flip(get_html_translation_table( HTML_SPECIALCHARS, $quote_style));
+			$trans_table['&#39;'] = "'";
+			return(strtr($given_html, $trans_table));
+		}
+	}
+
 	if($_GET['go'])
 	{
 		Header('Location: ' . html_entity_decode(urldecode($_GET['go'])));
