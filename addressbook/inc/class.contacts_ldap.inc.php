@@ -461,6 +461,11 @@
 		function add($owner,$fields)
 		{
 			global $phpgw,$phpgw_info;
+
+			if (!$phpgw_info["server"]["ldap_contact_context"]) {
+				return False;
+			}
+
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			$free = 0;
@@ -535,6 +540,11 @@
 		function update($id,$owner,$fields)
 		{
 			global $phpgw_info;
+
+			if (!$phpgw_info["server"]["ldap_contact_context"]) {
+				return False;
+			}
+
 			// First make sure that id number exists
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -625,6 +635,11 @@
 		function delete_($id)
 		{
 			global $phpgw_info;
+
+			if (!$phpgw_info["server"]["ldap_contact_context"]) {
+				return False;
+			}
+
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
@@ -638,9 +653,15 @@
 			}
 		}
 
+		// This is for testing, not intended for release
 		function delete_all()
 		{
 			global $phpgw_info;
+
+			if (!$phpgw_info["server"]["ldap_contact_context"]) {
+				return False;
+			}
+
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=*");
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
@@ -648,6 +669,7 @@
 			while (list($null,$entry) =  each($ldap_fields)) {
 				$err = ldap_delete($this->ldap,$entry['dn']);
 			}
+			return;
 		}
 	}
 
