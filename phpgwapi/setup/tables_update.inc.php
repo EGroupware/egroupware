@@ -59,37 +59,14 @@
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
-	class phpgw
-	{
-		var $common;
-		var $accounts;
-		var $applications;
-		var $db;
-	}
 	$test[] = '0.9.13.004';
 	function phpgwapi_upgrade0_9_13_004()
 	{
-		global $setup_info, $phpgw_setup, $phpgw_info, $phpgw;
+		global $setup_info, $phpgw_setup;
 
 		$phpgw_setup->oProc->AddColumn('phpgw_access_log','account_id',array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False));
 
-		$phpgw = new phpgw;
-		$phpgw->common = CreateObject('phpgwapi.common');
-
-		$phpgw_setup->oProc->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
-		while ($phpgw_setup->oProc->next_record())
-		{
-			$config[$phpgw_setup->oProc->f('config_name')] = $phpgw_setup->oProc->f('config_value');
-		}
-		$phpgw_info['server']['ldap_host']          = $config['ldap_host'];
-		$phpgw_info['server']['ldap_context']       = $config['ldap_context'];
-		$phpgw_info['server']['ldap_group_context'] = $config['ldap_group_context'];
-		$phpgw_info['server']['ldap_root_dn']       = $config['ldap_root_dn'];
-		$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
-		$phpgw_info['server']['account_repository'] = $config['account_repository'];
-
-		$accounts = CreateObject('phpgwapi.accounts');
-		$accounts->db = $phpgw_setup->db;
+		$phpgw_setup->setup_account_object();
 
 		$phpgw_setup->oProc->query("select * from phpgw_access_log");
 		while($phpgw_setup->oProc->next_record())
