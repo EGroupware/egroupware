@@ -565,7 +565,7 @@
 
 			$oProc->m_odb->query($query);
 			$this->_GetColumns($oProc, $sTableName . '_tmp', $sColumns, $sColumnName);
-			$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . '_tmp';
+			$query = "INSERT INTO $sTableName($sColumns) SELECT $sColumns FROM $sTableName" . '_tmp';
 			$bRet = !!($oProc->m_odb->query($query));
 			return ($bRet && $this->DropTable($oProc, $aTables, $sTableName . '_tmp'));
 		}
