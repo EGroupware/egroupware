@@ -157,7 +157,7 @@
 	}
 
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$p->set_file(array("form" => "groups_form.tpl"));
+	$p->set_file(array("form" => "group_form.tpl"));
 
 	if ($error)
 	{

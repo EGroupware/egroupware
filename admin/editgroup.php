@@ -161,7 +161,7 @@
 	}
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-	$p->set_file(array('form'	=> 'groups_form.tpl'));
+	$p->set_file(array('form'	=> 'group_form.tpl'));
 
 	if ($error)
 	{
