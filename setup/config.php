@@ -20,7 +20,7 @@
   // Authorize the user to use setup app
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-  
+
   if ($newsettings["auth_type"] != "ldap") {
      setup_header();
   }
