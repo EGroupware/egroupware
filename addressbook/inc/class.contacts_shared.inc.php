@@ -32,16 +32,21 @@
 
 		function split_stock_and_extras($fields)
 		{
-			while (list($field,$value) = each($fields)) {
+			while (list($field,$value) = each($fields))
+			{
 				// Depending on how the array was build, this is needed.
 				// Yet, I can't figure out why ....
-				if (gettype($value) == "integer") {
-					$field = $value;
+				if (gettype($value) == "integer")
+				{
+					$value = $field;
 				}
-				if ($this->stock_contact_fields[$field]) {
+				if ($this->stock_contact_fields[$field])
+				{
 					$stock_fields[$field]     = $value;
 					$stock_fieldnames[$field] = $this->stock_contact_fields[$field];
-				} else {
+				}
+				else
+				{
 					$extra_fields[$field] = $value;
 				}
 			}
