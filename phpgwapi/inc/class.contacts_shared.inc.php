@@ -220,38 +220,42 @@
 				'adr_two_countryname' => 'adr_two_countryname'
 			);
 
-			$address = $this->read_single_entry($id,$fields);
-
-			if($address[0]['title'])
+			list($address) = $this->read_single_entry($id,$fields);
+			foreach($address as $k => $val)
 			{
-				$title = $address[0]['title'] . '&nbsp;';
+				$address[$k] = $GLOBALS['phpgw']->strip_html($val);
+			}
+
+			if ($address['title'])
+			{
+				$title = $address['title'] . '&nbsp;';
 			}
 
 			if($business)
 			{
-				if($address[0]['org_name'])
+				if ($address['org_name'])
 				{
-					$company = $address[0]['org_name'];
+					$company = $address['org_name'];
 				}
 				else
 				{
-					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
 				}
 
-				$street  = $address[0]['adr_one_street'];
-				$city    = $address[0]['adr_one_locality'];
-				$zip     = $address[0]['adr_one_postalcode'];
-				$state   = $address[0]['adr_one_region'];
-				$country = $address[0]['adr_one_countryname'];
+				$street  = $address['adr_one_street'];
+				$city    = $address['adr_one_locality'];
+				$zip     = $address['adr_one_postalcode'];
+				$state   = $address['adr_one_region'];
+				$country = $address['adr_one_countryname'];
 			}
 			else
 			{
-				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
-				$street  = $address[0]['adr_two_street'];
-				$city    = $address[0]['adr_two_locality'];
-				$zip     = $address[0]['adr_two_postalcode'];
-				$state   = $address[0]['adr_two_region'];
-				$country = $address[0]['adr_two_countryname'];
+				$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
+				$street  = $address['adr_two_street'];
+				$city    = $address['adr_two_locality'];
+				$zip     = $address['adr_two_postalcode'];
+				$state   = $address['adr_two_region'];
+				$country = $address['adr_two_countryname'];
 			}
 
 			if(!$country)
@@ -276,7 +280,7 @@
 			$a .= $t->set_var('font',$afont);
 			$a .= $t->set_var('fontsize',$asize);
 			$a .= $t->set_var('company',$company);
-			$a .= $t->set_var('department',$address[0]['org_unit']);
+			$a .= $t->set_var('department',$address['org_unit']);
 			$a .= $t->set_var('street',$street);
 			$a .= $t->set_var('city',$city);
 			$a .= $t->set_var('zip',$zip);
@@ -322,42 +326,46 @@
 				'email_home'          => 'email_home'
 			);
 
-			$address = $this->read_single_entry($id,$fields);
-
-			if($address[0]['title'])
+			list($address) = $this->read_single_entry($id,$fields);
+			foreach($address as $k => $val)
 			{
-				$title = $address[0]['title'] . '&nbsp;';
+				$address[$k] = $GLOBALS['phpgw']->strip_html($val);
+			}
+
+			if ($address['title'])
+			{
+				$title = $address['title'] . '&nbsp;';
 			}
 
 			if($business)
 			{
-				if($address[0]['org_name'])
+				if ($address['org_name'])
 				{
-					$company = $address[0]['org_name'];
+					$company = $address['org_name'];
 				}
 				else
 				{
-					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
 				}
 
-				$street  = $address[0]['adr_one_street'];
-				$city    = $address[0]['adr_one_locality'];
-				$zip     = $address[0]['adr_one_postalcode'];
-				$state   = $address[0]['adr_one_region'];
-				$country = $address[0]['adr_one_countryname'];
-				$tel     = $address[0]['tel_work'];
-				$email   = $address[0]['email'];
+				$street		= $address['adr_one_street'];
+				$city		= $address['adr_one_locality'];
+				$zip		= $address['adr_one_postalcode'];
+				$state		= $address['adr_one_region'];
+				$country	= $address['adr_one_countryname'];
+				$tel		= $address['tel_work'];
+				$email		= $address['email'];
 			}
 			else
 			{
-				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
-				$street  = $address[0]['adr_two_street'];
-				$city    = $address[0]['adr_two_locality'];
-				$zip     = $address[0]['adr_two_postalcode'];
-				$state   = $address[0]['adr_two_region'];
-				$country = $address[0]['adr_two_countryname'];
-				$tel     = $address[0]['tel_home'];
-				$email   = $address[0]['email_home'];
+				$company	= $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
+				$street		= $address['adr_two_street'];
+				$city		= $address['adr_two_locality'];
+				$zip		= $address['adr_two_postalcode'];
+				$state		= $address['adr_two_region'];
+				$country	= $address['adr_two_countryname'];
+				$tel		= $address['tel_home'];
+				$email		= $address['email_home'];
 			}
 
 			if(!$country)
@@ -386,15 +394,15 @@
 			$a .= $t->set_var('lang_fax',lang('fax number'));
 			$a .= $t->set_var('lang_fon',lang('phone number'));
 			$a .= $t->set_var('company',$company);
-			$a .= $t->set_var('department',$address[0]['org_unit']);
+			$a .= $t->set_var('department',$address['org_unit']);
 			$a .= $t->set_var('street',$street);
 			$a .= $t->set_var('city',$city);
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
 			$a .= $t->set_var('email',$email);
 			$a .= $t->set_var('tel',$tel);
-			$a .= $t->set_var('fax',$address[0]['tel_fax']);
-			$a .= $t->set_var('url',$address[0]['url']);
+			$a .= $t->set_var('fax',$address['tel_fax']);
+			$a .= $t->set_var('url',$address['url']);
 
 			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
@@ -429,38 +437,42 @@
 				'adr_two_countryname' => 'adr_two_countryname'
 			);
 
-			$address = $this->read_single_entry($id,$fields);
-
-			if($address[0]['title'])
+			list($address) = $this->read_single_entry($id,$fields);
+			foreach($address as $k => $val)
 			{
-				$title = $address[0]['title'] . '&nbsp;';
+				$address[$k] = $GLOBALS['phpgw']->strip_html($val);
+			}
+
+			if ($address['title'])
+			{
+				$title = $address['title'] . '&nbsp;';
 			}
 
 			if($business)
 			{
-				if($address[0]['org_name'])
+				if ($address['org_name'])
 				{
-					$company = $address[0]['org_name'];
+					$company = $address['org_name'];
 				}
 				else
 				{
-					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
 				}
 
-				$street  = $address[0]['adr_one_street'];
-				$city    = $address[0]['adr_one_locality'];
-				$zip     = $address[0]['adr_one_postalcode'];
-				$state   = $address[0]['adr_one_region'];
-				$country = $address[0]['adr_one_countryname'];
+				$street  = $address['adr_one_street'];
+				$city    = $address['adr_one_locality'];
+				$zip     = $address['adr_one_postalcode'];
+				$state   = $address['adr_one_region'];
+				$country = $address['adr_one_countryname'];
 			}
 			else
 			{
-				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
-				$street  = $address[0]['adr_two_street'];
-				$city    = $address[0]['adr_two_locality'];
-				$zip     = $address[0]['adr_two_postalcode'];
-				$state   = $address[0]['adr_two_region'];
-				$country = $address[0]['adr_two_countryname'];
+				$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
+				$street  = $address['adr_two_street'];
+				$city    = $address['adr_two_locality'];
+				$zip     = $address['adr_two_postalcode'];
+				$state   = $address['adr_two_region'];
+				$country = $address['adr_two_countryname'];
 			}
 
 			if(!$country)
