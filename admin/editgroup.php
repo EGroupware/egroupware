@@ -59,10 +59,15 @@
 
         $sep = $phpgw->common->filesystem_separator();
 
-        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "groups" . $sep;
 
-        if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
-	   $cd = 39;
+        if ($old_group_name <> $n_group) {
+           $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "groups" . $sep;
+
+           if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
+	      $cd = 39;
+           } else {
+              $cd = 33;
+           }
         } else {
            $cd = 33;
         }
