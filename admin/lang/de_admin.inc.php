@@ -46,8 +46,17 @@
        case "application title":	$s = "Titel der Anwendung";	break;
        case "edit application":		$s = "Anwendung editieren";	break;
 
+       case "select permissions this group will have":
+	$s = "W&auml;hlen Sie die Zugriffsrechte f&uuml;r diese Gruppe.";	break;
+
+       case "sorry, that group name has already been taking.":
+	$s = "Dieser Gruppenname ist bereits vergeben.";	break;
+
        case "you must enter an application name and title.":
 	$s = "Sie m&uuml;ssen der Anwendung einen Namen und einen Titel geben.";	break;
+
+       case "are you sure you want to delete this application ?":
+	$s = "Sind Sie sicher, da&szlig; Sie diese Anwendung l&ouml;schen wollen ?";	break;
 
        case "are you sure you want to delete this group ?":
 	$s = "Sind Sie sicher, da&szlig; Sie diese Gruppe l&ouml;schen wollen ?"; break;
