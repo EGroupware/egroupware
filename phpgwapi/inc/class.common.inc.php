@@ -619,7 +619,7 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about')
 			{
 				$appname = 'phpgwapi';
 			}
