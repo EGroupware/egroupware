@@ -117,7 +117,8 @@
 			{
 				$select .= '<option value="">' . lang('Please Select') . '</option>'."\n";
 			}
-			while(list($key,$val) = each($list))
+//			while(list($key,$val) = each($list))
+			foreach($list as $key => $val)
 			{
 				$select .= '<option value="' . $key . '"';
 				if($key == $id && $id != '')
@@ -234,7 +235,8 @@
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['name'];
 				$namedfields[$y['name']] = $y['title'];
@@ -255,7 +257,8 @@
 
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
-			while($column = each($this->bo->stock_contact_fields))
+//			while($column = each($this->bo->stock_contact_fields))
+			foreach($this->bo->stock_contact_fields as $column => $nul)
 			{
 				$test = strtolower($column[0]);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
@@ -274,7 +277,8 @@
 			}
 			/* Setup the columns for non-standard fields, since we don't allow sorting */
 			$nonstd = $this->extrafields + $customfields;
-			while($column = @each($nonstd))
+//			while($column = @each($nonstd))
+			foreach($nonstd as $column => $nul)
 			{
 				$test = strtolower($column[1]);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
@@ -475,11 +479,12 @@
 				$myowner = $entries[$i]['owner'];
 
 				/* each entry column */
-				@reset($columns_to_display);
-				while($column = @each($columns_to_display))
+//				@reset($columns_to_display);
+//				while($column = @each($columns_to_display))
+				foreach($columns_to_display as $column => $nul)
 				{
 					$ref = $data='';
-					$coldata = $entries[$i][$column[0]];
+					$coldata = $entries[$i][$column];
 					/* echo '<br>coldata="' . $coldata . '"'; */
 					/* Some fields require special formatting. */
 					if($column[0] == 'url')
@@ -598,15 +603,15 @@
 			$this->bo->add_entry($fields);
 			$ab_id = $this->bo->get_lastid();
 
-			Header('Location: '
-				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
+			$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer);
 		}
 
 		function copy()
 		{
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
 			}
@@ -652,7 +657,8 @@
 			echo parse_navbar();
 
 			$custom = $this->fields->read_custom_fields();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
 			}
@@ -711,7 +717,8 @@
 			/* Read in user custom fields, if any */
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
 			}
@@ -823,11 +830,31 @@
 			}
 		}
 
+		function rebuild_referer($val)
+		{
+			$val = urldecode($val);
+			$vars = split('&',$val);
+			$i = 0;
+			foreach($vars as $key => $var)
+			{
+				$pair = split('=',$var);
+				if($pair[0] == 'sq')
+				{
+					$pair[1] = $GLOBALS['phpgw']->session->sq;
+				}
+				$vars[$i] = implode('=',$pair);
+				$i++;
+			}
+			$val = implode('&',$vars);
+			echo $val;
+			return $val;
+		}
+
 		function view()
 		{
 			$ab_id   = $_GET['ab_id'];
 			$submit  = $_POST['submit'];
-			$referer = urldecode($_GET['referer']);
+			$referer = $this->rebuild_referer($_GET['referer']);
 
 			/* First, make sure they have permission to this entry */
 			if(!$ab_id || !$this->bo->check_perms($ab_id,PHPGW_ACL_READ))
@@ -850,13 +877,15 @@
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
 			}
 
 			/* _debug_array($this->prefs); */
-			while(list($column,$x) = each($this->bo->stock_contact_fields))
+//			while(list($column,$x) = each($this->bo->stock_contact_fields))
+			foreach($this->bo->stock_contact_fields as $column => $x)
 			{
 				if(isset($this->prefs[$column]) && $this->prefs[$column])
 				{
@@ -884,8 +913,9 @@
 			unset($qfields['email_type']);		// noone is useing that any more
 			unset($qfields['email_home_type']);
 
-			@reset($qfields);
-			while(list($column,$null) = @each($qfields))
+//			@reset($qfields);
+//			while(list($column,$null) = @each($qfields))
+			foreach($qfields as $column => $nul)
 			{
 				if($this->display_name($colname[$column]))
 				{
@@ -911,7 +941,8 @@
 						$datarray = explode("\n",$coldata);
 						if($datarray[1])
 						{
-							while(list($key,$info) = each($datarray))
+//							while(list($key,$info) = each($datarray))
+							foreach($datarray as $key => $info)
 							{
 								if($key)
 								{
@@ -978,7 +1009,8 @@
 			$cats = explode(',',$fields[0]['cat_id']);
 			if($cats[1])
 			{
-				while(list($key,$contactscat) = each($cats))
+//				while(list($key,$contactscat) = each($cats))
+				foreach($cats as $key => $contactscat)
 				{
 					if($contactscat)
 					{
@@ -1081,7 +1113,8 @@
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
-			while(list($x,$y) = @each($custom))
+//			while(list($x,$y) = @each($custom))
+			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['name'];
 			}
@@ -1124,7 +1157,8 @@
 			$i = 0; $j = 0;
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 
-			while(list($col, $descr) = each($qfields))
+//			while(list($col, $descr) = each($qfields))
+			foreach($qfields as $col => $descr)
 			{
 				/* echo '<br>test: $col - $i $j - ' . count($abc); */
 				$i++; $j++;
@@ -1155,7 +1189,7 @@
 ';
 				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 				$i = 0;
-				while( list($cf) = each($customfields) )
+				while(list($cf) = each($customfields))
 				{
 					if(!($i % 6))
 					{
@@ -1341,7 +1375,8 @@
 			$fields['adr_two_type'] = substr($typeb,0,-1);
 
 			$custom = $this->fields->read_custom_fields();
-			while(list($name,$val) = @each($custom))
+//			while(list($name,$val) = @each($custom))
+			foreach($custom as $name => $val)
 			{
 				$fields[$val['name']] = $entry[$val['name']];
 			}
@@ -1467,7 +1502,8 @@
 
 			if($customfields)
 			{
-				while(list($name,$value) = each($customfields))
+//				while(list($name,$value) = each($customfields))
+				foreach($customfields as $name => $value)
 				{
 					$value = str_replace('_',' ',$value);
 					$custom .= '
@@ -1485,7 +1521,8 @@
 				/* Preferred phone number radio buttons */
 				$pref[0] = '<font size="-2">';
 				$pref[1] = '(' . lang('pref') . ')</font>';
-				while(list($name,$val) = each($this->bo->tel_types))
+//				while(list($name,$val) = each($this->bo->tel_types))
+				foreach($this->bo->tel_types  as $name => $val)
 				{
 					$str[$name] = "\n".'      <input type="radio" name="entry[tel_prefer]" value="'.$name.'"';
 					if($name == $preferred)
@@ -1560,26 +1597,35 @@
 				$time_zone .= '</select>' . "\n";
 
 				$email_type = '<select name=entry[email_type]>';
-				while($type = each($this->bo->email_types))
+//				while($type = each($this->bo->email_types))
+				foreach($this->bo->email_types as $type => $name)
 				{
-					$email_type .= '<option value="' . $type[0] . '"';
-					if($type[0] == $emailtype) { $email_type .= ' selected'; }
-					$email_type .= '>' . $type[1] . '</option>';
+					$email_type .= '<option value="' . $type . '"';
+					if($type == $emailtype)
+					{
+						$email_type .= ' selected';
+					}
+					$email_type .= '>' . $name . '</option>';
 				}
 				$email_type .= '</select>';
 
-				reset($this->bo->email_types);
+//				reset($this->bo->email_types);
 				$hemail_type = '<select name=entry[hemail_type]>';
-				while($type = each($this->bo->email_types))
+//				while($type = each($this->bo->email_types))
+				foreach($this->bo->email_types as $type => $name)
 				{
-					$hemail_type .= '<option value="' . $type[0] . '"';
-					if($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
-					$hemail_type .= '>' . $type[1] . '</option>';
+					$hemail_type .= '<option value="' . $type . '"';
+					if($type == $hemailtype)
+					{
+						$hemail_type .= ' selected';
+					}
+					$hemail_type .= '>' . $name . '</option>';
 				}
 				$hemail_type .= '</select>';
 
-				reset($this->bo->adr_types);
-				while(list($type,$val) = each($this->bo->adr_types))
+//				reset($this->bo->adr_types);
+//				while(list($type,$val) = each($this->bo->adr_types))
+				foreach($this->bo->adr_types as $type => $val)
 				{
 					$badrtype .= "\n".'<INPUT type="checkbox" name="entry[one_'.$type.']"';
 					$ot = 'one_'.$type;
@@ -1591,8 +1637,9 @@
 					$badrtype .= '>'.$val;
 				}
 
-				reset($this->bo->adr_types);
-				while(list($type,$val) = each($this->bo->adr_types))
+//				reset($this->bo->adr_types);
+//				while(list($type,$val) = each($this->bo->adr_types))
+				foreach($this->bo->adr_types as $type => $val)
 				{
 					$hadrtype .= "\n".'<INPUT type="checkbox" name="entry[two_'.$type.']"';
 					$tt = 'two_'.$type;
