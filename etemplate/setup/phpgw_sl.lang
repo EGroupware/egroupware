@@ -1,0 +1,251 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sl	%1 (%2 novih) sporočil napisanih za program '%3' in jezik '%4'
+%1 etemplates deleted	etemplate	sl	%1 predlog zbrisanih
+%1 etemplates for application '%2' dumped to '%3'	etemplate	sl	%1 ePredlog za program '%2' premaknjenih na '%3'
+%1 etemplates found	etemplate	sl	%1 najdenih ePredlog
+%1 matches on search criteria	etemplate	sl	%1 zadetkov za iskani kriterij
+%1 new etemplates imported for application '%2'	etemplate	sl	%1 novih ePredlog uvoženih za program '%2'
+%s disabled	etemplate	sl	%s onemogočenih
+%s needed	etemplate	sl	%s potrebnih
+%s notranslation	etemplate	sl	%s brez prevoda
+%s readonly	etemplate	sl	%s samo za branje
+'%1' has an invalid format !!!	etemplate	sl	'%1' ima nepravilen format
+'%1' is not a valid floatingpoint number !!!	etemplate	sl	'%1' ni pravilno decimalno število
+'%1' is not a valid integer !!!	etemplate	sl	'%1' ni pravilno celo število
+a pattern to be searched for	etemplate	sl	iskani vzorec
+add a new column (after the existing ones)	etemplate	sl	Dodaj nov stolpec (za obstoječimi)
+add a new multi-column index	etemplate	sl	Dodaj novo kazalo z več stolpci
+add column	etemplate	sl	Dodaj stolpec
+add index	etemplate	sl	Dodaj kazalo
+add table	etemplate	sl	Dodaj tabelo
+align	etemplate	sl	Poravnaj
+alignment of label and input-field in table-cell	etemplate	sl	poravnava napisov in vnosnih polj v tabeli
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
+application	etemplate	sl	Program
+application name needed to write a langfile or dump the etemplates !!!	etemplate	sl	Ime programa, ki je potreben za zapis jezikovne datoteke ali skladiščenje ePredlog
+attach	etemplate	sl	Pripni
+attach file	etemplate	sl	Pripni datoteko
+blurtext	etemplate	sl	Zamaži tekst
+border	etemplate	sl	Rob
+border-line-thickness for the table-tag	etemplate	sl	Debelina robov
+can not have special sql-value null	etemplate	sl	Posebna SQL vrednost ne more biti NULL
+cancel	etemplate	sl	Prekliči
+category	etemplate	sl	Kategorija
+cells	etemplate	sl	Celice
+cellspacing for the table-tag	etemplate	sl	Razmik med celicami
+center	etemplate	sl	Sredina
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sl	preveri, če naj bo vsebina samo prikazana in ne spremenjena (na ta način ni poslana nazaj!)
+check if field has to be filled by user	etemplate	sl	preveri, če naj uporabnik izpolni polja
+class	etemplate	sl	Razred
+click here to attach the file	etemplate	sl	kliknite sem, da boste pripeli datoteko
+click here to create the link	etemplate	sl	kliknite sem, da boste ustvarili povezavo
+click here to start the search	etemplate	sl	Kliknite sem, da boste začeli iskanje
+click here to upload the file	etemplate	sl	Kliknite sem, da boste prenesli datoteko
+click to order after that criteria	etemplate	sl	kliknite za soritanje po tem kriteriju
+columnname	etemplate	sl	Ime stolpca
+comment	etemplate	sl	Komentar
+create a new table for the application	etemplate	sl	Naredi novo tabelo za program
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
+css-styles	etemplate	sl	CSS - stili
+date+time	etemplate	sl	Datim+Čas
+datum	etemplate	sl	Datum
+day	etemplate	sl	Dan
+db ensures that every row has a unique value in that column	etemplate	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
+db-tools	etemplate	sl	Orodja podatkovne baze
+default	etemplate	sl	Privzeto
+delete	etemplate	sl	Zbriši
+delete a single entry by passing the id.	etemplate	sl	Zbriši en vnos z vnosom idja.
+delete all selected etemplates, without further inquiry	etemplate	sl	zbriši VSE izbrane ePredloge BREZ potrditve
+delete column	etemplate	sl	Zbriši stolpec
+delete index	etemplate	sl	Zbriši kazalo
+delete this etemplate	etemplate	sl	zbriši to ePredlogo
+delete whole column (can not be undone!!!)	etemplate	sl	zbriši celoten stolpec (tega NI mogoče razveljaviti)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	sl	zbriše zgornjo ePredlogo iz podatkovne baze, brez razveljavitve
+deletes the etemplate spez. above	etemplate	sl	zbriše ePredloge
+deletes this column	etemplate	sl	Zbriše ta stolpec
+deletes this index	etemplate	sl	Zbriše to kazalo
+discard changes	etemplate	sl	Razveljavi spremembe
+displayed in statusline of browser if input-field gets focus	etemplate	sl	prikazano v statusni vrstici brskalnika, če se vnosno polje označi
+do you want to save the changes you made in table %s?	etemplate	sl	Ali želite shraniti spremembe v tabeli %s?
+documentation	etemplate	sl	Dokumentacija
+drop a table - this can not be undone	etemplate	sl	Spusti tabelo - ni mogoče razveljaviti
+drop table	etemplate	sl	Spusti tabelo
+edit	etemplate	sl	Uredi
+editable templates - db-tools	etemplate	sl	Spremenljive predloge - Orodja podatkovne baze
+editable templates - delete template	etemplate	sl	Spremenljive predloge - Zbriši predlogo
+editable templates - editor	etemplate	sl	Spremenljive predloge - Urejevalnik
+editable templates - search	etemplate	sl	Spremenljive predloge - Iskanje
+editable templates - show template	etemplate	sl	Spremenljive predloge - Prikaži predlogo
+enter '' for an empty default, nothing mean no default	etemplate	sl	vnesite '' za prazno privzeto vrednost, brez vnosa pomeni, da privzete vrednosti ni
+enter a search pattern	etemplate	sl	Vnesite iskalni niz
+enter filename to upload and attach, use [browse...] to search for it	etemplate	sl	Vnesite ime datoteke za prenos na strežnik in priponko, uporabite [Poišči...] da jo izberete
+enter the new version number here (> old_version), empty for no update-file	etemplate	sl	vnesite novo številko verzije tukaj (> stara_verzija), prazno za ne-obnovo datoteke
+enter the new version number here (has to be > old_version)	etemplate	sl	vnesite novo število verzije tukaj (mora biti > stara_verzija)
+entry saved	etemplate	sl	Vnos shranjen
+error: template not found !!!	etemplate	sl	Napaka: ne najdem predloge!
+error: webserver is not allowed to write into '%1' !!!	etemplate	sl	Napaka: spletni strežnik nima pravic za pisanje v '%1' !
+error: while saveing !!!	etemplate	sl	Napaka pri shranjevanju
+error: writeing !!!	etemplate	sl	Napaka pri pisanju
+error: writing file (no write-permission for the webserver) !!!	etemplate	sl	Napaka pri zapisovanju datoteke (nimam pravic za pisanje na spletnem strežniku)
+etemplate	common	sl	ePredloga
+etemplate '%1' imported, use save to put it in the database	etemplate	sl	ePredloga '%1' uvožena, uporabite Shrani za vnos v podatkovno bazo
+etemplate '%1' written to '%2'	etemplate	sl	ePredloga '%1' zapisana v '%2'
+etemplate editor	etemplate	sl	ePredloga - urejevalnik
+etemplate referenz	etemplate	sl	ePredloga - sklici
+etemplate tutorial	etemplate	sl	ePredloga - priročnik
+exchange this row with the one above	etemplate	sl	zamenjaj to vrstico z gornjo
+exchange this two columns	etemplate	sl	zamenjaj ta dva stolpca
+export the loaded etemplate into a xml-file	etemplate	sl	izvozi naloženo ePredlogo v xml-datoteko
+export xml	etemplate	sl	Izvozi XML
+extensions loaded:	etemplate	sl	Končnice naložene:
+field must not be empty !!!	etemplate	sl	Polje ne sme biti prazno
+file	etemplate	sl	Datoteka
+file contains more than one etemplate, last one is shown !!!	etemplate	sl	Datoteka vsebuje več kot eno ePredlogo, prikazana je zadnja.
+file writen	etemplate	sl	Datoteka zapisana
+fileupload	etemplate	sl	Prenos datoteke
+first	etemplate	sl	Prvi
+floating point	etemplate	sl	Decimalna vejica
+foreign key	etemplate	sl	Tuji ključ
+formatted text (html)	etemplate	sl	Oblikovano besedilo (HTML)
+go to the first entry	etemplate	sl	pojdi na prvi vnos
+go to the last entry	etemplate	sl	pojdi na zadnji vnos
+go to the next page of entries	etemplate	sl	pojdi na naslednjo stran vnosov
+go to the previous page of entries	etemplate	sl	pojdi na prejšnjo stran vnosov
+height	etemplate	sl	Širina
+height, disabled	etemplate	sl	Širina, izključeno
+help	etemplate	sl	Pomoč
+horizontal rule	etemplate	sl	Vodoravno ravnilo
+hour	etemplate	sl	Ura
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sl	če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
+image	etemplate	sl	Slika
+import	etemplate	sl	Uvoz
+import an etemplate from a xml-file	etemplate	sl	uvozi ePredlogo iz xml-datoteke
+import table-definitions from existing db-table	etemplate	sl	Uvozi definicije tabele iz obstoječe tabele podatkovne baze
+import xml	etemplate	sl	Uvozi XML
+index/name of returned content (name of the template, link / method for image)	etemplate	sl	kazalo/ime vrnjene vsebine (ime Predloge, povezava / metoda za sliko)
+indexed	etemplate	sl	V kazalu
+indexoptions	etemplate	sl	Nastavitve kazala
+insert new column behind this one	etemplate	sl	vstavi nov stolpec pred tem
+insert new column in front of all	etemplate	sl	vstavi nov stolpec pred vsemi
+insert new row after this one	etemplate	sl	vstavi novo vrstico za to
+insert new row in front of first line	etemplate	sl	vstavi novo vrstico pred prvo vrsto
+integer	etemplate	sl	Celo število
+key	etemplate	sl	Ključ
+label	etemplate	sl	Napis
+lang	etemplate	sl	Jezik
+last	etemplate	sl	Zadnji
+left	etemplate	sl	Levi
+link	etemplate	sl	Povezava
+linklist	etemplate	sl	Povezava - seznam
+linkstring	etemplate	sl	Povezava - besedilo
+linkto	etemplate	sl	Povezava na
+load this template into the editor	etemplate	sl	naloži to predlogo v urejevalnik
+minute	etemplate	sl	Minuta
+month	etemplate	sl	Mesec
+multicolumn indices	etemplate	sl	Kazala več stolpcev
+name	etemplate	sl	Ime
+name of other table where column is a key from	etemplate	sl	ime druge tabele, kjer je stolpec ključ iz
+name of table to add	etemplate	sl	Ime tabele za dodati
+new search	etemplate	sl	Novo iskanje
+new table created	etemplate	sl	Nova tabela ustvarjena
+newer version '%1' exists !!!	etemplate	sl	obstaja novejša verzija '%1'
+nextmatch	etemplate	sl	Naslednji zadetek
+no file	etemplate	sl	ni datoteke
+no filename given or selected via browse...	etemplate	sl	nobena datoteka ni bila izbrana prek Poišči...
+nothing found - try again !!!	etemplate	sl	Ne najdem ničesar - poskusi znova
+nothing matched search criteria !!!	etemplate	sl	Nobenih zadetkov na iskan kriterij
+of	etemplate	sl	od
+only an other version found !!!	etemplate	sl	najdena je samo druga verzija
+optional note about the link	etemplate	sl	morebitni zapiski o povezavi
+options	etemplate	sl	Nastavitve
+overflow	etemplate	sl	Prenasičenost
+padding	etemplate	sl	Polnenje
+please enter table-name first !!!	etemplate	sl	Prosim, vnesite najprej ime tabele
+precision	etemplate	sl	Natančnost
+primary key	etemplate	sl	Primarni ključ
+primary key for the table, gets automaticaly indexed	etemplate	sl	Primarni ključ za tabelo, je avtomatsko registriran
+radiobutton	etemplate	sl	Izbirno polje
+read	etemplate	sl	Beri
+read a list of entries.	etemplate	sl	Beri seznam vnosov.
+read a single entry by passing the id and fieldlist.	etemplate	sl	Bere posamezen vnos z pošiljanjem idja in seznama polj.
+read etemplate from database (for the keys above)	etemplate	sl	bere ePredlogo iz podatkovne baze (za zgornje ključe)
+remove row (can not be undone!!!)	etemplate	sl	odstrani vrstico (ni mogoče razveljaviti)
+remove this link (not the entry itself)	etemplate	sl	Odstrani to povezavo (ne samega vnosa)
+returns savely, without deleting	etemplate	sl	Vrne varno, brez brisanja
+right	etemplate	sl	Desno
+save	etemplate	sl	Shrani
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sl	shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
+saves changes to tables_current.inc.php	etemplate	sl	shrani spremembe v tables_current.inc.php
+scale	etemplate	sl	Skala
+scale for float	etemplate	sl	Skaza za decimalko
+search	etemplate	sl	Išči
+select a category	etemplate	sl	izberite kategorijo
+select a primary contact, to show in the list	etemplate	sl	Označite primarni kontakt za prikaz na seznamu
+select account	etemplate	sl	Izberite račun
+select an app first !!!	etemplate	sl	Najprej izberite program
+select an app to search in	etemplate	sl	Izberite program za iskanje
+select an application	etemplate	sl	Izberite program
+select an application, (*) = uninstalled	etemplate	sl	Izberite program, (*) = odstranjen
+select an entry to link with	etemplate	sl	Izberite vnos za povezavo
+select an table of the application	etemplate	sl	Izberite tabelo programa
+select application	etemplate	sl	Izberite program
+select category	etemplate	sl	Izberite kategorijo
+select country	etemplate	sl	Izberite državo
+select day	etemplate	sl	Vnesite dan
+select if content of field should not be translated (label gets always translated)	etemplate	sl	označite, če naj vsebina polja ne bi bila prevedena (napis je vedno preveden)
+select month	etemplate	sl	Vnesite mesec
+select number	etemplate	sl	Vnesite število
+select one ...	etemplate	sl	Izberite eno ...
+select percentage	etemplate	sl	Izberite odstotek
+select priority	etemplate	sl	Vnesite prioriteto
+select state	etemplate	sl	Označite državo
+select the indexed columns in their desired order	etemplate	sl	Označite stolpce v želenem vrstnem redu
+select this etemplate to delete it	etemplate	sl	označite to ePredlogo da jo boste zbrisali
+select which values to show	etemplate	sl	označite vrednosti za prikaz
+select year	etemplate	sl	Vnesite leto
+selectbox	etemplate	sl	Izbirno polje
+sets today as date	etemplate	sl	določi današnji datum za trenutni datum
+show	etemplate	sl	Prikaži
+show (no save)	etemplate	sl	Prikaži (ne shrani)
+show values	etemplate	sl	Prikaži vrednosti
+showing	etemplate	sl	prikazujem
+shows / allows you to enter values into the etemplate for testing	etemplate	sl	prikaže / omogoči vnos vrednosti v ePredlogo za testiranje
+shows/displays etemplate for testing, does not save it before	etemplate	sl	prikaže ePredlogo za testiranje, vendar je pred tem ne shrani
+spacing	etemplate	sl	Razmik
+stack	etemplate	sl	Kopičenje
+start a new search, cancel this link	etemplate	sl	začne novo iskanje, prekliče to povezavo
+start new search for the above pattern	etemplate	sl	začne novo iskanje po zgornjem vzorcu
+submitbutton	etemplate	sl	Potrditveni gumb
+table unchanged, no write necessary !!!	etemplate	sl	Tabela je nespremenjena, pisanje ni potrebno.
+tablename	etemplate	sl	Ime tabele
+template	etemplate	sl	Predloga
+template deleted	etemplate	sl	Predloga zbrisana
+template saved	etemplate	sl	Predloga shranjena
+text	etemplate	sl	Besedilo
+textarea	etemplate	sl	Območje besedila
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	sl	to besedilo je prikazano, če je vnosno polje prazno in neoznačeno (zamegljeno)
+time	etemplate	sl	Čas
+to start the db-tools	etemplate	sl	za zagon orodij podatkovne baze
+to start the etemplate editor	etemplate	sl	za zagon urejevalnika ePredloge
+to start the search	etemplate	sl	za začetek iskanja
+today	etemplate	sl	Danes
+type	etemplate	sl	Vpišite
+type of the column	etemplate	sl	tip stolpca
+type of the field (select label if field should be empty)	etemplate	sl	tip polja (označi napis, če naj bo polje prazno)
+unique	etemplate	sl	Edinstven
+unlink	etemplate	sl	Odstrani povezavo
+update a single entry by passing the fields.	etemplate	sl	Posodobi posamezen vnos s pošiljanjem polj
+update from version '%s' to	etemplate	sl	Posodobi z verzije '%s' na
+upload	etemplate	sl	Prenesi
+value	etemplate	sl	Vrednost
+value has to be at least '%1' !!!	etemplate	sl	Vrednost mora biti vsaj '%1' !
+value has to be at maximum '%1' !!!	etemplate	sl	Vrednost je lahko največ '%1' !
+version	etemplate	sl	Verzija
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sl	številka verzije, mora biti oblike: večja.manjša.revizija.številka (npr. 0.9.13.001 , vsa števila zapolnjena z ničlami)
+view this linked entry in its application	etemplate	sl	poglej ta povezan vnos v svojem programu
+width	etemplate	sl	Širina
+width, disabled	etemplate	sl	Širina, onemogočeno
+write langfile	etemplate	sl	Zapiši jezikovno datoteko
+write tables	etemplate	sl	Zapiši tabele
+xml-file to import	etemplate	sl	xml-datoteka za izvoz
+xslt template	etemplate	sl	XSLT predloga
+year	etemplate	sl	Leto
