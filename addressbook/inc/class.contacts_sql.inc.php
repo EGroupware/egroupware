@@ -174,6 +174,7 @@
 			$return_fields[0]["lid"]       = $this->db->f("lid"); // lid for group/account records
 			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
 			$return_fields[0]["owner"]     = $this->db->f("owner"); // id of owner/parent for the record
+			$return_fields[0]["access"]    = $this->db->f("access"); // public/private
 
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
@@ -235,6 +236,7 @@
 			$return_fields[0]["lid"]    = $this->db->f("lid");
 			$return_fields[0]["tid"]    = $this->db->f("tid");
 			$return_fields[0]["owner"]  = $this->db->f("owner");
+			$return_fields[0]["access"] = $this->db->f("access"); // public/private
 
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
@@ -269,10 +271,9 @@
 			return $return_fields;
 		}
 
-
 		// send this the range, query, sort, order and whatever fields you want to see
-		// 'rights' is unused at this time
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
+		// 'rights' and 'access' are unused at this time
+		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="",$access="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -418,6 +419,7 @@
 				$return_fields[$i]["lid"]    = $this->db->f("lid");
 				$return_fields[$i]["tid"]    = $this->db->f("tid");
 				$return_fields[$i]["owner"]  = $this->db->f("owner");
+				$return_fields[$i]["access"] = $this->db->f("access"); // public/private
 
 				if (gettype($stock_fieldnames) == "array") {
 					while (list($f_name) = each($stock_fieldnames)) {
@@ -439,14 +441,14 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields)
+		function add($owner,$fields,$access='')
 		{
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//$this->db->lock(array("contacts"));
-			$this->db->query("insert into $this->std_table (owner,"
+			$this->db->query("insert into $this->std_table (owner,access,"
 				. implode(",",$this->stock_contact_fields)
-				. ") values ('$owner','"
+				. ") values ('$owner','$access','"
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
 			$this->db->query("select max(id) from $this->std_table ",__LINE__,__FILE__);
@@ -481,7 +483,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields)
+		function update($id,$owner,$fields,$access='')
 		{
 			// First make sure that id number exists
 			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
@@ -499,7 +501,7 @@
 				if ($field_s == ",") {
 					unset($field_s);
 				}
-				$this->db->query("update $this->std_table set owner='$owner' $fields_s where "
+				$this->db->query("update $this->std_table set owner='$owner', access='$access' $fields_s where "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 

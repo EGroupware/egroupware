@@ -59,10 +59,11 @@
 
 			// The left side are the array elements used throughout phpgw, right side are the ldap attributes
     	    $this->stock_contact_fields = array(
-				"id"                  => "uidnumber",
-				"lid"                 => "uid",
-				"tid"                 => "phpgwcontacttype",
-				"owner"               => "phpgwowner",
+//				"id"                  => "uidnumber",
+//				"lid"                 => "uid",
+//				"tid"                 => "phpgwcontacttype",
+//				"owner"               => "phpgwowner",
+//				"access"              => "phpgwaccess",
 				"fn"                  => "cn",        // 'prefix given middle family suffix'
 				"n_given"             => "givenname",   // firstname
 				"n_family"            => "sn",  // lastname
@@ -180,6 +181,12 @@
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
+			$return_fields[0]["id"]     = $ldap_fields[0]["uidnumber"][0];
+			$return_fields[0]["lid"]    = $ldap_fields[0]["uid"][0];
+			$return_fields[0]["tid"]    = $ldap_fields[0]["phpgwcontacttype"][0];
+			$return_fields[0]["owner"]  = $ldap_fields[0]["phpgwowner"][0];
+			$return_fields[0]["access"] = $ldap_fields[0]["phpgwaccess"][0];
+
 			if (gettype($stock_fieldnames) == "array") {
 				while(list($name,$value)=each($stock_fieldnames)) {
 					$return_fields[0][$name] = $ldap_fields[0][$value][0];
@@ -234,6 +241,12 @@
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
+			$return_fields[0]["id"]     = $ldap_fields[0]["uidnumber"][0];
+			$return_fields[0]["lid"]    = $ldap_fields[0]["uid"][0];
+			$return_fields[0]["tid"]    = $ldap_fields[0]["phpgwcontacttype"][0];
+			$return_fields[0]["owner"]  = $ldap_fields[0]["phpgwowner"][0];
+			$return_fields[0]["access"] = $ldap_fields[0]["phpgwaccess"][0];
+
 			if (gettype($stock_fieldnames) == "array") {
 				while(list($name,$value)=each($stock_fieldnames)) {
 					$return_fields[0][$name] = $ldap_fields[0][$value][0];
@@ -268,8 +281,8 @@
 		}
 
 		// send this the range, query, sort, order and whatever fields you want to see
-		// 'rights' is unused at this time
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
+		// 'rights' and 'access' are  unused at this time
+		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="",$access="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -372,27 +385,27 @@
 				echo '<br>first total="'.$total.'"';
 
 				// Now, remove duplicate rows
-				$tmp = array_unique($ldap_fields);
-				$ldap_fields = $tmp;
-/*
+				//$tmp = array_unique($ldap_fields); PHP 4.X only
+				//$ldap_fields = $tmp;
+
 				$ldap_fields = $this->asortbyindex($ldap_fields,'uidnumber');
 				reset($ldap_fields);
 				if (count($ldap_fields) > 0) {
 					for ($a = 0; $a < count($ldap_fields); $a++) {
 						if ($ldap_fields[$a]) {
-							echo '<br>comparing "'.$ldap_fields[$a]['uidnumber'][0]
-								.'" to "'.$ldap_fields[$a - 1]['uidnumber'][0].'"';
+							//echo '<br>comparing "'.$ldap_fields[$a]['uidnumber'][0]
+							//	.'" to "'.$ldap_fields[$a - 1]['uidnumber'][0].'"';
 							if (($ldap_fields[$a]['uidnumber'][0] <> $ldap_fields[$a - 1]['uidnumber'][0])
 								) {
 								$uniquearray[$a] = $ldap_fields[$a];
 							} else {
-								echo '<br>deleting "'.$ldap_fields[$a -1 ]['uidnumber'][0];
+								//echo '<br>deleting "'.$ldap_fields[$a -1 ]['uidnumber'][0];
 							}
 						}
 					}
 					$ldap_fields = $uniquearray;
 				}
-*/
+
 				$this->total_records = count($ldap_fields);
 				echo '<br>total="'.$this->total_records.'"';
 			}  else  {
@@ -435,6 +448,7 @@
 					$return_fields[$j]["lid"]    = $ldap_fields[$i]["uid"][0];
 					$return_fields[$j]["tid"]    = $ldap_fields[$i]["phpgwcontacttype"][0];
 					$return_fields[$j]["owner"]  = $ldap_fields[$i]["phpgwowner"][0];
+					$return_fields[$j]["access"] = $ldap_fields[$i]["phpgwaccess"][0];
 
 					if (gettype($stock_fieldnames) == "array") {
 						reset($stock_fieldnames);
@@ -458,7 +472,7 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields)
+		function add($owner,$fields,$access='')
 		{
 			global $phpgw,$phpgw_info;
 
@@ -493,7 +507,8 @@
 			$ldap_fields['uid'] = time().$time["usec"].":".$ldap_fields['givenname'];
 			
 			$dn = 'uid=' . $ldap_fields['uid'].',' . $phpgw_info["server"]["ldap_contact_context"];
-			$ldap_fields['phpgwowner'] = $owner;
+			$ldap_fields['phpgwowner']  = $owner;
+			$ldap_fields['phpgwaccess'] = $access;
 			$ldap_fields['uidnumber'] = $this->nextid;
 			$ldap_fields['objectclass'][0] = 'person';
 			$ldap_fields['objectclass'][1] = 'organizationalPerson';
@@ -537,7 +552,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields)
+		function update($id,$owner,$fields,$access='')
 		{
 			global $phpgw_info;
 
@@ -553,7 +568,8 @@
 				$dn = $ldap_fields[0]['dn'];
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 				if (gettype($stock_fieldnames) == "array") {
-					$stock_fields['phpgwowner'] = $owner;
+					$stock_fields['phpgwowner']  = $owner;
+					if ($access) { $stock_fields['phpgwaccess'] = $access; }
 					// Check each value, add our extra attributes if they are missing, and
 					// otherwise fix the entry while we can.
 					//
@@ -578,12 +594,21 @@
 					}
 
 					// Verify owner
-					if (empty($ldap_fields[0]['owner'])) {
+					if (empty($ldap_fields[0]['phpgwowner'])) {
 						$stock_fields['phpgwowner']          = $owner;
-						$err = ldap_modify($this->ldap,$dn,array('owner' => $stock_fields['phpgwowner']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
 					} elseif (!$ldap_fields[0]['owner']) {
 						$stock_fields['phpgwowner']          = $owner;
-						$err = ldap_mod_add($this->ldap,$dn,array('owner' => $stock_fields['phpgwowner']));
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
+					}
+
+					// Verify access
+					if (empty($ldap_fields[0]['phpgwaccess'])) {
+						$stock_fields['phpgwaccess']         = $access;
+						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
+					} elseif (!$ldap_fields[0]['owner']) {
+						$stock_fields['phpgwaccess']         = $access;
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
 					}
 
 					// Verify objectclasses are there
