@@ -48,4 +48,6 @@
     echo "Your database seems to be current. Would you like to configure the environment now?<br>\n"; 
   }
 
+include ("createtables_mysql.inc.php");
+
 ?>
