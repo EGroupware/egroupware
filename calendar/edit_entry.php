@@ -268,7 +268,10 @@
 			}
 			if(!isset($users[intval($id)]))
 			{
-				$users[intval($id)] = $phpgw->common->grab_owner_name(intval($id));
+				if($phpgw->accounts->exists(intval($id)) == True)
+				{
+					$users[intval($id)] = $phpgw->common->grab_owner_name(intval($id));
+				}
 				if($phpgw->accounts->get_type(intval($id)) == 'g')
 				{
 					build_part_list($users,$phpgw->acl->get_ids_for_location(intval($id),1,'phpgw_group'),$owner);
@@ -281,8 +284,6 @@
 	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
 	$users = Array();
 	build_part_list($users,$accounts,$owner);
-//	unset($users[$owner]);
-echo "Owner = ".$users[$owner]."<br>\n";
 	while(list($key,$status) = each($event->participants))
 	{
 		$parts[$key] = ' selected';
@@ -298,7 +299,7 @@ echo "Owner = ".$users[$owner]."<br>\n";
 		{
 			continue;
 		}
-		elseif($phpgw->accounts->exists($id) == True)
+		else
 		{
 			$str .= '    <option value="' . $id . '"'.$parts[$id].'>('.$phpgw->accounts->get_type($id).') '.$name.'</option>'."\n";
 		}
