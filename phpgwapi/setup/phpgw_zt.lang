@@ -1,12 +1,12 @@
 %1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
-(shift-)click or drag to change value	jscalendar	zt	
-- click on any of the time parts to increase it	jscalendar	zt	
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	zt	
-- or click and drag for faster selection.	jscalendar	zt	
-- or shift-click to decrease it	jscalendar	zt	
-- use the %1, %2 buttons to select month	jscalendar	zt	
-- use the %1, %2 buttons to select year	jscalendar	zt	
+(shift-)click or drag to change value	jscalendar	zt	(Shift鍵加)點選或拖拉滑鼠游標來改變數值
+- click on any of the time parts to increase it	jscalendar	zt	- 點選任意時間區來增加它
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zt	- 按住滑鼠來快速選取上面的按鈕
+- or click and drag for faster selection.	jscalendar	zt	- 或是用滑鼠拖拉來快速點選
+- or shift-click to decrease it	jscalendar	zt	- 或是用Shift加滑鼠鍵來增加
+- use the %1, %2 buttons to select month	jscalendar	zt	- 使用按鈕 %1,%2來選擇月份
+- use the %1, %2 buttons to select year	jscalendar	zt	- 使用案牛 %1,%2來選擇年
 00 (disable)	admin	zt	00 (關閉)
 13 (ntp)	admin	zt	13 (ntp)
 80 (http)	admin	zt	80 (http)
@@ -81,7 +81,7 @@ brazil	common	zt	BRAZIL
 british indian ocean territory	common	zt	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	zt	BRUNEI DARUSSALAM
 bulgaria	common	zt	BULGARIA
-bulleted list	htmlarea	zt	
+bulleted list	htmlarea	zt	核選清單
 burkina faso	common	zt	BURKINA FASO
 burundi	common	zt	BURUNDI
 calendar	common	zt	行事曆
@@ -117,6 +117,8 @@ cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
 colombia	common	zt	COLOMBIA
 comoros	common	zt	COMOROS
 company	common	zt	公司
+config password	common	zt	設定管理員密碼
+config username	common	zt	設定管理員帳號
 congo	common	zt	CONGO
 congo, the democratic republic of the	common	zt	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	zt	COOK ISLANDS
@@ -147,10 +149,10 @@ denmark	common	zt	DENMARK
 description	common	zt	說明
 detail	common	zt	詳細
 details	common	zt	詳細
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
 disable internet explorer png-image-bugfix	common	zt	停用 IE png-image-bugfix
 disable slider effects	common	zt	停用切換效果
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
 disabled	common	zt	停用
 display monday first	jscalendar	zt	星期一在首
 display sunday first	jscalendar	zt	星期日在首
@@ -180,7 +182,7 @@ enabled	common	zt	啟用
 end date	common	zt	結束日期
 end time	common	zt	結束時間
 enlarge editor	htmlarea	zt	放大編輯器
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入eGroupWare的網址<br>例如：http://www.domain.com/egroupware &nbsp; 或 &nbsp; /egroupware<br><b>最後面不要有斜線</b>
 entry has been deleted sucessfully	common	zt	資料已成功移除
 entry updated sucessfully	common	zt	資料已成功更新
 equatorial guinea	common	zt	EQUATORIAL GUINEA
@@ -245,6 +247,9 @@ guinea	common	zt	GUINEA
 guinea-bissau	common	zt	GUINEA-BISSAU
 guyana	common	zt	GUYANA
 haiti	common	zt	HAITI
+header admin login	common	zt	頁首管理員登入
+header password	common	zt	密碼
+header username	common	zt	帳號
 heard island and mcdonald islands	common	zt	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	zt	協助
 help using editor	htmlarea	zt	協助使用編輯器
@@ -256,7 +261,7 @@ home email	common	zt	主要信箱
 honduras	common	zt	HONDURAS
 hong kong	common	zt	香港
 horizontal rule	htmlarea	zt	合併規則
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	在導覽列要顯示多少圖示(每頁的最上方)，多出的圖示會顯示在另外一個導覽列最右方的下拉式選單
 hungary	common	zt	HUNGARY
 iceland	common	zt	ICELAND
 increase indent	htmlarea	zt	增加邊緣
@@ -391,7 +396,7 @@ ok	common	zt	確定
 old value	common	zt	原始值
 oman	common	zt	OMAN
 on *nix systems please type: %1	common	zt	在*nix系統請輸入：%1
-on mouse over	common	zt	
+on mouse over	common	zt	當滑鼠移過
 only private	common	zt	只有私人的
 only yours	common	zt	屬於您的資料
 open notify window	common	zt	開啟警示視窗
@@ -490,14 +495,15 @@ server %1 has been added	common	zt	伺服器 %1 已經完成新增
 server name	common	zt	伺服器名稱
 session has been killed	common	zt	連線已被中斷
 setup	common	zt	安裝
-setup main menu	common	zt	
+setup main menu	common	zt	安裝主要選單
+setup/config admin login	common	zt	安裝/設定管理員登入
 seychelles	common	zt	SEYCHELLES
 show all	common	zt	顯示全部
-show all categorys	common	zt	
-show menu	common	zt	
-show page generation time	common	zt	
-show page generation time on the bottom of the page?	common	zt	
-show_more_apps	common	zt	
+show all categorys	common	zt	顯示全部類別
+show menu	common	zt	顯示選單
+show page generation time	common	zt	顯示網頁產生時間
+show page generation time on the bottom of the page?	common	zt	將網頁產生時間顯示在頁尾？
+show_more_apps	common	zt	show_more_apps
 showing %1	common	zt	顯示 %1
 showing %1 - %2 of %3	common	zt	顯示 %1 - %2 之 %3
 sierra leone	common	zt	SIERRA LEONE
@@ -514,14 +520,14 @@ sri lanka	common	zt	SRI LANKA
 start date	common	zt	開始日期
 start time	common	zt	開始時間
 status	common	zt	狀態
-strikethrough	htmlarea	zt	
+strikethrough	htmlarea	zt	突破
 subject	common	zt	主題
 submit	common	zt	送出
-subscript	htmlarea	zt	
+subscript	htmlarea	zt	下標
 substitutions and their meanings:	common	zt	替代項目與他們的意義：
 sudan	common	zt	SUDAN
 sunday	common	zt	星期日
-superscript	htmlarea	zt	
+superscript	htmlarea	zt	上標
 suriname	common	zt	SURINAME
 svalbard and jan mayen	common	zt	SVALBARD AND JAN MAYEN
 swaziland	common	zt	SWAZILAND
@@ -541,17 +547,17 @@ this application requires an upgrade	common	zt	這個應用程式需要升級
 this name has been used already	common	zt	這個名字已被使用！
 thursday	common	zt	星期四
 time	common	zt	時間
-time selection:	jscalendar	zt	
+time selection:	jscalendar	zt	選取的時間：
 time zone	common	zt	時區
 time zone offset	common	zt	時區時差
 title	common	zt	標題
-to	common	zt	
+to	common	zt	到
 to correct this error for the future you will need to properly set the	common	zt	為了在未來修正這個錯誤，您必須正確的設定
 to go back to the msg list, click <a href= %1 >here</a>	common	zt	點選<a href="%1">這裡</a>回到訊息清單
 today	common	zt	今天
 todays date, eg. "%1"	common	zt	今天日期, 例： "%1"
-toggle first day of week	jscalendar	zt	鎖定每星期的第一天
-toggle html source	htmlarea	zt	
+toggle first day of week	jscalendar	zt	每星期的第一天
+toggle html source	htmlarea	zt	HTML原始碼
 togo	common	zt	TOGO
 tokelau	common	zt	TOKELAU
 tonga	common	zt	TONGA
@@ -566,8 +572,8 @@ turks and caicos islands	common	zt	TURKS AND CAICOS ISLANDS
 tuvalu	common	zt	TUVALU
 uganda	common	zt	UGANDA
 ukraine	common	zt	UKRAINE
-underline	htmlarea	zt	
-undoes your last action	htmlarea	zt	
+underline	htmlarea	zt	底線
+undoes your last action	htmlarea	zt	還原上一個動作
 united arab emirates	common	zt	UNITED ARAB EMIRATES
 united kingdom	common	zt	UNITED KINGDOM
 united states	common	zt	UNITED STATES
