@@ -12,68 +12,70 @@
   /* $Id$ */
 
   $phpgw_info = array();
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
+  $phpgw_info['flags'] = array('noheader' => True, 'nonavbar' => True, 'currentapp' => 'admin');
 
   if (! $group_id) {
-     Header("Location: " . $phpgw->link("groups.php"));
+     Header('Location: ' . $phpgw->link('groups.php'));
   }
-  include("../header.inc.php");
+  include('../header.inc.php');
   $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-  $p->set_file(array("body" => "delete_common.tpl"));
+  $p->set_file(array('body' => 'delete_common.tpl',
+                     'message_row' => 'message_row.tpl'));
 
   if ((($group_id) && ($confirm)) || $removeusers) {
      if ($removeusers) {
-        $old_group_list = $phpgw->acl->get_ids_for_location("$group_id",1,"phpgw_group","u");
+        $old_group_list = $phpgw->acl->get_ids_for_location(intval($group_id),1,'phpgw_group');
         @reset($old_group_list);
         while($old_group_list && $id = each($old_group_list)) {
-          $phpgw->acl->delete("phpgw_group","$group_id",intval($id[1]),"u");
+          $phpgw->acl->delete_repository('phpgw_group',$group_id,intval($id[1]));
         }
      }
 
-     $phpgw->db->query("select group_name from groups where group_id=$group_id",__LINE__,__FILE__);
-     $phpgw->db->next_record();
+     $group_name = $phpgw->accounts->id2name($group_id);
 
-     $group_name = $phpgw->db->f("group_name");
-
-     $old_group_list = $phpgw->acl->get_ids_for_location("$group_id",1,"phpgw_group","u");
+     $old_group_list = $phpgw->acl->get_ids_for_location(intval($group_id),1,'phpgw_group');
      if ($old_group_list) {
         $phpgw->common->phpgw_header();
         echo parse_navbar();
 
-        echo '<p><center>';
-	    echo lang("Sorry, the follow users are still a member of the group x",$group_name)
-	      . '<br>' . lang("They must be removed before you can continue")
-	      . '</td></tr>';
-
-        echo '<table border="0"><tr><td>';
+        $p->set_var('message_display','<tr><td>'
+                . lang('Sorry, the follow users are still a member of the group x',$group_name)
+                . '<br>' . lang('They must be removed before you can continue') . '</td></td>');
+        $p->parse('messages','message_row',True);
+        
+        $p->set_var('message_display','<tr><td><table border="0">');
+        $p->parse('messages','message_row',True);
 
         while (list(,$id) = each($old_group_list)) {
-          echo '<tr><td><a href="' . $phpgw->link("editaccount.php","account_=" . $id) . '">' . $phpgw->common->grab_owner_name($id) . '</a></tr></td>';
+          $p->set_var('message_display','<tr><td><a href="' . $phpgw->link('editaccount.php','account_=' . $id) . '">' . $phpgw->common->grab_owner_name($id) . '</a></tr></td>');
+          $p->parse('messages','message_row',True);
         }
-        echo "</table></center>";
-        echo "<a href=\"" . $phpgw->link("deletegroup.php","group_id=" . $group_id . "&removeusers=True")
-	   . "\">" . lang("Remove all users from this group") . "</a>";
+        $p->set_var('message_display','</table></center></td></tr><tr><td>'
+             . '<a href="' . $phpgw->link('deletegroup.php','group_id=' . $group_id . '&removeusers=True')
+             . '">' . lang('Remove all users from this group') . '</a></td></tr>');
+        $p->parse('messages','message_row',True);
+        $p->set_var('yes','');
+        $p->set_var('no','');
+        $p->pparse('out','body');
         $phpgw->common->phpgw_exit();
      }
 
      if ($confirm) {
-        $phpgw->db->query("select group_name from groups where group_id=$group_id",__LINE__,__FILE__);
-        $phpgw->db->next_record();
-        $group_name = $phpgw->db->f("group_name");
-
-        $phpgw->db->query("delete from groups where group_id=$group_id",__LINE__,__FILE__);
-
-        $sep = $phpgw->common->filesystem_separator();
-
-        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
+        $phpgw->db->lock(array('phpgw_accounts','phpgw_acl'));
+        $phpgw->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$group_id,__LINE__,__FILE__);
+        $phpgw->acl->delete_repository('%%','run',intval($group_id));
+  
+        $basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
 
         if (! @rmdir($basedir . $group_name)) {
-   	   $cd = 38;
+   	       $cd = 38;
         } else {
            $cd = 32;
         }
 
-        Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
+        $phpgw->db->unlock();
+
+        Header('Location: ' . $phpgw->link('groups.php','cd='.$cd));
         $phpgw->common->phpgw_exit();
      }
   } else {
@@ -81,12 +83,12 @@
     $phpgw->common->phpgw_header();
     echo parse_navbar();
 
-    $p->set_var("message_display",lang("Are you sure you want to delete this group ?"));
-    $p->parse("messages","message_row");
-    $p->set_var("yes",'<a href="' . $phpgw->link("deletegroup.php","group_id=$group_id&confirm=true") . '">' . lang("Yes") . '</a>');
-    $p->set_var("no",'<a href="' . $phpgw->link("groups.php") . '">' . lang("No") . '</a>');
+    $p->set_var('message_display',lang('Are you sure you want to delete this group ?'));
+    $p->parse('messages','message_row');
+    $p->set_var('yes','<a href="' . $phpgw->link('deletegroup.php',"group_id=$group_id&confirm=true") . '">' . lang('Yes') . '</a>');
+    $p->set_var('no','<a href="' . $phpgw->link('groups.php') . '">' . lang('No') . '</a>');
 
-    $p->pparse("out","body");
+    $p->pparse('out','body');
 
     $phpgw->common->phpgw_footer();
   }
