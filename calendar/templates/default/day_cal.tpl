@@ -39,6 +39,6 @@
      <td class="event" bgcolor="{bgcolor}"{extras}>{event}</td>
 <!-- END day_event -->
 <!-- BEGIN day_time -->
-     <td class="time">{open_link}{time}{close_link}</td>
+     <td class="time"><nobr>{open_link}{time}{close_link}</nobr></td>
 <!-- END day_time -->
 
