@@ -166,60 +166,67 @@
 				switch ($type)
 				{
 					case 'lang':
-					$t->set_var($value,lang($newval));
-					break;
+						$t->set_var($value,lang($newval));
+						break;
 					case 'value':
-					$newval = ereg_replace(' ','_',$newval);
-					/* Don't show passwords in the form */
-					if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
-					{
-						$t->set_var($value,'');
-					}
-					else
-					{
-						$t->set_var($value,$current_config[$newval]);
-					}
-					break;
+						$newval = ereg_replace(' ','_',$newval);
+						/* Don't show passwords in the form */
+						if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
+						{
+							$t->set_var($value,'');
+						}
+						else
+						{
+							$t->set_var($value,$current_config[$newval]);
+						}
+						break;
 					/*
 					case 'checked':
-					$newval = ereg_replace(' ','_',$newval);
-					if ($current_config[$newval])
-					{
-						$t->set_var($value,' checked');
-					}
-					else
-					{
-						$t->set_var($value,'');
-					}
-					break;
+						$newval = ereg_replace(' ','_',$newval);
+						if ($current_config[$newval])
+						{
+							$t->set_var($value,' checked');
+						}
+						else
+						{
+							$t->set_var($value,'');
+						}
+						break;
 					*/
 					case 'selected':
-					$configs = array();
-					$config  = '';
-					$newvals = explode(' ',$newval);
-					$setting = end($newvals);
-					for ($i=0;$i<(count($newvals) - 1); $i++)
-					{
-						$configs[] = $newvals[$i];
-					}
-					$config = implode('_',$configs);
-					/* echo $config . '=' . $current_config[$config]; */
-					if ($current_config[$config] == $setting)
-					{
-						$t->set_var($value,' selected');
-					}
-					else
-					{
-						$t->set_var($value,'');
-					}
-					break;
+						$configs = array();
+						$config  = '';
+						$newvals = explode(' ',$newval);
+						$setting = end($newvals);
+						for ($i=0;$i<(count($newvals) - 1); $i++)
+						{
+							$configs[] = $newvals[$i];
+						}
+						$config = implode('_',$configs);
+						/* echo $config . '=' . $current_config[$config]; */
+						if ($current_config[$config] == $setting)
+						{
+							$t->set_var($value,' selected');
+						}
+						else
+						{
+							$t->set_var($value,'');
+						}
+						break;
 					case 'hook':
-					$newval = ereg_replace(' ','_',$newval);
-					$t->set_var($value,$newval($current_config));
-					break;
+						$newval = ereg_replace(' ','_',$newval);
+						if(function_exists($newval))
+						{
+							$t->set_var($value,$newval($current_config));
+						}
+						else
+						{
+							$t->set_var($value,'');
+						}
+						break;
 					default:
-					$t->set_var($value,'');
-					break;
+						$t->set_var($value,'');
+						break;
 				}
 			}
 
