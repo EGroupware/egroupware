@@ -363,7 +363,7 @@
 						}
 					}
 
-					if ($apps_after)
+/*					if ($apps_after)
 					{
 						$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$userData['account_id']);
 						$GLOBALS['phpgw']->common->hook_single('add_def_pref','admin');
@@ -375,10 +375,10 @@
 							}
 						}
 						$GLOBALS['pref']->save_repository(False);
-					}
+					} */
 
-					$apps->account_apps = Array(Array());
-					$apps_after = Array(Array());
+					$apps->account_apps = array(array());
+					$apps_after = array(array());
 
 					$GLOBALS['phpgw']->db->unlock();
 
