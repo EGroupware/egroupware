@@ -59,12 +59,71 @@ class html
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
 	}
 
-	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$method='POST')
+	function form($content,$hidden_vars,$url,$url_vars='',$method='POST')
 	{
 		$html = "<form method=\"$method\" action=\"".$this->link($url,$url_vars)."\">\n";
 		$html .= $this->input_hidden($hidden_vars);
-		$html .= $this->submit_button($name,$lang);
-		$html .= "</form>\n";
+
+		if ($content) {
+			$html .= $content;
+			$html .= "</form>\n";
+		}
 		return $html;
+	}
+
+	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$method='POST')
+	{
+		return $this->form($this->submit_button($name,$lang),
+								 $hidden_vars,$url,$url_vars,$method);
+	}
+
+	/*
+	 * Example: $rows = array ( '1'	=> array( 1 => 'cell1', '.1' => 'colspan=3',
+	 * 														 2 => 'cell2',
+	 *														 3 => '3,, '.3' => 'width="10%"' ),
+ 	 *									 '.1'	=> 'bgcolor="#0000FF"' );
+	 * table($rows,'width="100%"');
+	 */
+	function table($rows,$params = '')
+	{
+		$html = "<table $params>\n";
+
+		while (list($key,$row) = each($rows)) {
+			if (!is_array($row))
+				continue;					// parameter
+			$html .= "\t<tr ".$rows['.'.$key].">\n";
+			while (list($key,$cell) = each($row)) {
+				if ($key[0] == '.')
+					continue;				// parameter
+				$html .= "\t\t<td ".$row['.'.$key].">$cell</td>\n";
+			}
+			$html .= "\t</tr>\n";
+		}
+		$html .= "</table>\n";
+		
+		return $html;
+	}
+	
+	function sbox_submit( $sbox,$no_script=0 )
+	{
+		$html = str_replace('<select','<select onChange="this.form.submit()" ',
+								  $sbox);
+		if ($no_script) {
+			$html .= '<noscript>'.$this->submit_button('send','>').'</noscript>';
+		}
+		return $html;
+	}
+
+	function image( $app,$name,$alt='',$opts='' )
+	{
+		global $phpgw;
+
+		$html = '<img src="'.$phpgw->common->image($app,$name).'"';
+		if ($alt) $html .= ' alt="'.$alt.'"';
+		if ($opts) $html .= " $opts";
+		return $html . '>';
+	}
+	function a_href( $content,$url,$vars='') {
+		return '<a href="'.$this->link($url,$vars).'">'.$content.'</a>';
 	}
 }
