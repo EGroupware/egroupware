@@ -574,7 +574,7 @@
 				'cal_title'		=> $event['title'],
 				'cal_description'=> $event['description'],
 				'cal_location'	=> $event['location'],
-				'cal_groups'	=> count($event['groups']) ? ','.implode(',',$event['groups']).',' : '',
+				'cal_groups'	=> is_array($event['groups']) ? ','.implode(',',$event['groups']).',' : '',
 				'cal_reference'	=> $event['reference'],
 			),array('cal_id' => $event['id']),__LINE__,__FILE__);
 
