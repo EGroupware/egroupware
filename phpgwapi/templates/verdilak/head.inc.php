@@ -26,3 +26,4 @@
 	$tpl->set_var('website_title', $phpgw_info['server']['site_title']);
 	$tpl->set_var('body_tags',$bodyheader);
 	$tpl->pfp('out','head');
+	unset($tpl);
