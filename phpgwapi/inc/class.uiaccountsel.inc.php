@@ -63,9 +63,11 @@
 		 * @param $select array/bool/string array with id's as keys or values. If the id is in the key and the value is a string,
 		 *	it gets appended to the user-name. Or false if the selectable values for the selectbox are determined by use.
 		 *  Or a string which gets added as first Option with value=0, eg. lang('all')
+		 * @param $nohtml boolean if true, returns an array with the key 'selected' as the selected participants,
+		 *  and with the key 'participants' as the participants data as would fit in a select.
 		 * @return the necessary html
 		 */
-		function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False)
+		function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false)
 		{
 			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options','$onchange',".print_r($select,True).")</p>\n";
 			if (!is_array($selected))
@@ -200,6 +202,14 @@
 			if ($extra_label)
 			{
 				$select = array($extra_label) + $select;
+			}
+			
+			if ($nohtml)
+			{
+				return array(
+					'selected' => $selected,
+					'participants' => $select
+				);	
 			}
 			//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
 			$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
