@@ -216,7 +216,7 @@
 				'status'      => $this->icon('status',$info['info_status']),
 				'pri'         => lang($info['info_pri']),
 				'subject'     => $subject,
-				'des'         => $info['info_des'],
+				'des'         => nl2br($info['info_des']),
 				'startdate'   => $phpgw->common->show_date($info['info_startdate'],
 						$phpgw_info['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
