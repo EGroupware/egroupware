@@ -219,7 +219,7 @@
 			$this->app_name			= $app_name;
 			$this->db				= $phpgw->db;
 			$this->db2				= $this->db;
-			$this->total_records	= $this->db->num_rows();
+			$this->total_records	= $this->db2->num_rows();
 			$this->grants			= $phpgw->acl->get_grants($app_name);
 			$this->cats				= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
@@ -286,28 +286,34 @@
 
 				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
 
+				$this->total_records = $this->db2->num_rows();
+
 				$s  = '<table border="0" cellpadding="2" cellspacing="2">' . "\n";
 
-				for ($i=0;$i<count($cats);$i++)
+				if ($this->total_records > 0)
 				{
-					$image_set = '&nbsp;';
-
-					if ($this->in_array($cats[$i]['id'],$selected))
+					for ($i=0;$i<count($cats);$i++)
 					{
-						$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
+						$image_set = '&nbsp;';
+
+						if ($this->in_array($cats[$i]['id'],$selected))
+						{
+							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
+						}
+
+						if (($cats[$i]['level'] == 0) && !$this->in_array($cats[$i]['id'],$selected))
+						{
+							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
+						}
+
+						$space_set = str_repeat($space,$cats[$i]['level']);
+
+						$s .= '<tr>' . "\n";
+						$s .= '<td width="8">' . $image_set . '</td>' . "\n";
+						$s .= '<td>' . $space_set . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name'])
+									. '</a></td>' . "\n";
+						$s .= '</tr>' . "\n";
 					}
-
-					if (($cats[$i]['level'] == 0) && !$this->in_array($cats[$i]['id'],$selected))
-					{
-						$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
-					}
-
-					$space_set = str_repeat($space,$cats[$i]['level']);
-
-					$s .= '<tr>' . "\n";
-					$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-					$s .= '<td>' . $space_set . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name']) . '</a></td>' . "\n";
-					$s .= '</tr>' . "\n";
 				}
 				$s .= '</table>' . "\n";
 				return $s;
