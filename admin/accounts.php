@@ -64,6 +64,7 @@
   $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid from accounts $querymethod "
 	             . "$ordermethod limit $limit");
 
+  $i = 0;
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var("tr_color",$tr_color);
@@ -95,7 +96,6 @@
     if ($phpgw->db->num_rows() != ++$i) {
        $t->parse("output","row",True);
     }
-
   }
 
   $t->set_var("actionurl",$phpgw->link("newaccount.php"));
