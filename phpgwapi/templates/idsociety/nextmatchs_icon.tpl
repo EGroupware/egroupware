@@ -1,0 +1,1 @@
+<td width="2%" align="{align}">&nbsp;{link}</td>
