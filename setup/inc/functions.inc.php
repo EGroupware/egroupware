@@ -88,9 +88,19 @@
 
 	define('SEP',filesystem_separator());
 
+	/*!
+	 @function get_account_id
+	 @abstract Return a properly formatted account_id.
+	 @author skeeter
+	 @discussion This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
+	 @syntax get_account_id($accountid);
+	 @example $account_id = get_account_id($accountid);
+	 @param $account_id either a name or an id
+	 @param $default_id either a name or an id
+	*/
 	function get_account_id($account_id = '',$default_id = '')
 	{
-		if (gettype($account_id) == 'integer')
+		if (is_int($account_id))
 		{
 			return $account_id;
 		}
@@ -98,15 +108,15 @@
 		{
 			if ($default_id == '')
 			{
-				return $GLOBALS['phpgw_info']['user']['account_id'];
+				return (isset($GLOBALS['phpgw_info']['user']['account_id'])?$GLOBALS['phpgw_info']['user']['account_id']:0);
 			}
-			elseif (gettype($default_id) == 'string')
+			elseif (is_string($default_id))
 			{
 				return $GLOBALS['phpgw']->accounts->name2id($default_id);
 			}
 			return intval($default_id);
 		}
-		elseif (gettype($account_id) == 'string')
+		elseif (is_string($account_id))
 		{
 			if($GLOBALS['phpgw']->accounts->exists(intval($account_id)) == True)
 			{
