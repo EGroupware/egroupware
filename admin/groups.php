@@ -21,9 +21,9 @@
 
 		if ($query) {
 			$querymethod = " AND account_firstname LIKE '%$query%' OR account_lastname LIKE "
-					. "'%$query%' OR account_lid LIKE '%$query%' ";
+				. "'%$query%' OR account_lid LIKE '%$query%' ";
 		}
-     
+ 
 		$phpgw->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='g'".$querymethod,__LINE__,__FILE__);
 		$phpgw->db->next_record();
 
@@ -37,7 +37,6 @@
 		'empty_row' => 'accounts_row_empty.tpl'
 	));
 
-	$account_info = $phpgw->accounts->get_list('groups',$start,$sort, $order, $query, $total);
 	$total = account_total($query);
  
 	$p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
