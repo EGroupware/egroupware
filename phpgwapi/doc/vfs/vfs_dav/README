@@ -1,0 +1,122 @@
+vfs_dav: WebDAV support for phpGroupWare
+----------------------------------------
+
+WARNING::This is still alpha-quality code, and may delete all your files,
+corrupt all your data, and run away with your daughter.  Dont use it unless
+you know what your doing.
+
+
+This package contains classes and patches implementing a virtual filesystem
+for phpGroupWare (0.9.14) that uses a WebDAV file repository as a
+storage area.  This allows you to store your files online in phpgroupware,
+in a way that cooperates well with other web applications (for instance,
+in Windows you can then access your files as a "web folder", and similarly
+KDE, Gnome, MacOSX, and a multitude of applications all include some way of
+browsing files on a WebDAV share)
+
+Features
+--------
+-	(should be) fully compatible with the WebDAV standard, as specified in
+	RFC2518	http://www.ietf.org/rfc/rfc2518.txt (NB : this doesn't imply that it
+	is :) only that I consider it a bug if it isn't )
+-	Maps vfs properties (eg creator_id etc) to the Dublin Core metadata 
+	specification (http://dublincore.org/) (eg "author") where possible, and
+	stores them as DAV properties
+-	Limited Access control support - when you create a dir in groupware, it
+	puts a .htaccess file in it with "limit user <username>" in it.  Combined
+	with an Apache module authenticating against your phpgroupware account 
+	database, this provides reasonable user-security (proper ACL support is
+	trickier to implement though :(
+
+TODO:
+-----
+-	DELTA-V versioning extensions, using the subversion DELTA-V server
+-	Journalling -> Versioning.  Journalling is currently unimplemented
+-	Locking (phpGroupWare doesn't really have any locking mechanism yet)
+-	ACL support for users accessing through an external webdav client.
+
+Installation
+------------
+To install:
+
+1/	Setup a WebDAV server - currently this code has only been well tested using
+	Apache's mod_dav (http://www.webdav.org/mod_dav/).  To setup mod_dav ensure 
+	that you have the module installed correctly ( RTFM :) and create a virtual
+	host (eg files.yourdomain.com) something like this:
+	
+		<VirtualHost files.yourdomain.com:80>
+			AccessFileName .htaccess
+			ServerAdmin webmaster@yourdomain.com
+			DocumentRoot /var/files
+			<Location />
+				AllowOverride All
+				Options +Indexes
+				DAV on
+				DirectoryIndex /
+				RemoveHandler .php .php4 .php3 .phtml
+			</Location>
+			<Files ~ "^\.ht">
+				#This ensures phpgroupware can modify .htaccess files
+				order deny,allow
+				deny from all
+				#make sure your phpgroupware server is included here.
+				allow from localhost .localdomain 192.168. 
+			</Files>
+			ServerName files.yourdomain.com
+			ErrorLog logs/dav_err
+			CustomLog logs/dav_acc combined
+		</VirtualHost>
+	
+2/	On the setup page (phpgroupware/setup/config.php) specify
+	the WebDAV server URL (eg http://files.yourdomain.com ) in the: "Full path 
+	for users and groups files" text area, and select DAV in:
+	"Select where you want to store/retrieve filesystem information"
+	combo.  If your file repository supports SSL you might want to enter 
+	'https://files.yourdomain.com' instead - note that phpGroupWare itself wont
+	use SSL to access the repository, but when it redirects the users browser to 
+	the repository it will use the secure https url.
+	
+3/	Make sure your WebDAV repository contains a "home" directory (important!)
+	So if your WebDAV directory is /var/files, you would need:
+		/var/files/
+		/var/files/home/
+
+4/	To enable authentication you must use a third-party Apache authentication
+	module.  Which you use depends on how you have setup authentication in
+	phpGroupWare - for instance if you use an SQL DB (the default) then set up
+	mod_auth_pgsql (http://www.giuseppetanzilli.it/mod_auth_pgsql/) or
+	mod_auth_mysql (http://modauthmysql.sourceforge.net/)
+	An example .htaccess file is included for postgresql - mysql would be 
+	similar. Your file repository also needs to be configured to allow 
+	phpGroupWare to write .htaccess files (the setup in (3) will allow this)
+
+	Note that using an Apache module for authentication is not strictly
+	required in order to use WebDAV within phpGroupWare.
+
+Authors
+-------
+Jonathon Sim <sim@zeald.com> for Zeald Ltd (http://zeald.com), Paolo Andreetto 
+<paolo@prosa.it>.  Also contains code from the Net_HTTP_Client PHP class 
+(http://lwest.free.fr/doc/php/lib/net_http_client-en.html) by Leo West 
+<west_leo@yahoo.com>.
+
+License
+-------
+By using this software you agree to the terms of the GNU LGPL: this is the same
+license that the phpGroupWare API is distributed under:
+
+Copyright (C) 2002 Zeald Ltd.
+
+This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 2.1 of the License,
+or any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA

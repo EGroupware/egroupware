@@ -1,0 +1,21 @@
+		php_flag engine off
+		RemoveHandler cgi-script .cgi .pl
+		RemoveType application/x-httpd-php .php .php3
+		RemoveType application/x-httpd-php-source .phps
+
+AuthName "Groupware File Repository"
+AuthType basic
+Auth_PG_cache_passwords on
+Auth_PG_host orion.zeald.com
+Auth_PG_database gw_zeald
+Auth_PG_user zeald
+Auth_PG_pwd password
+Auth_PG_pwd_table phpgw_accounts
+Auth_PG_grp_table phpgw_accounts
+Auth_PG_uid_field account_lid
+Auth_PG_pwd_field account_pwd
+Auth_PG_gid_field account_groups
+Auth_PG_hash_type MD5
+Auth_PG_pwd_whereclause " AND account_status='A' AND account_type='u' AND account_expires<NOW()"
+Auth_PG_grp_whereclause " AND account_status='A' AND account_type='g' AND account_expires<NOW()"
+require valid-user
