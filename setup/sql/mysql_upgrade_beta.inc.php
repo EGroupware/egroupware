@@ -513,7 +513,6 @@
         )";
         $db->query($sql);  
       
-        $db->query("DROP TABLE acl");
         $sql = "CREATE TABLE phpgw_acl (
           acl_appname       varchar(50),
           acl_location      varchar(255),
