@@ -33,12 +33,18 @@
 	
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
 
+	if (!$GLOBALS['phpgw_info']['login_theme'])
+	{
+		$GLOBALS['phpgw_info']['login_theme'] = 'submarine';
+	}
+
 	$GLOBALS['phpgw']->xslttpl = CreateObject('phpgwapi.xslttemplates',$GLOBALS['phpgw_info']['server']['template_dir']);
 	$GLOBALS['phpgw']->xslttpl->add_file(array('login'));
 
 	$data = array
 	(
-		'login_theme'				=> 'phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'] . '/css/submarine.css',
+		'phpgw_theme'				=> 'phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'] . '/css/phpgw.css',
+		'login_theme'				=> 'phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'] . '/css/' . $GLOBALS['phpgw_info']['login_theme'] . '.css',
 		'phpgw_head_charset'		=> lang('charset'),
 		'phpgw_head_website_title'	=> $GLOBALS['phpgw_info']['server']['site_title']
 	);
