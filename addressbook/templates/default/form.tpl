@@ -269,8 +269,7 @@
   </tr>
   <tr bgcolor="{row_off}">
     <td><font size="-1">{lang_cats}:</font></td>
-    <td>{cats_link}</td>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="4">{cats_link}</td>
   </tr>
   <tr bgcolor="{th_bg}">
 	<td colspan="5"><font color="{row_text}" face="" size="-1">{lang_custom}</font></td>
