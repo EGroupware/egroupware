@@ -40,4 +40,6 @@
   if (!$phpgw_info["flags"]["noapi"] == True){
     include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
   }
-?>
+
+  // Leave off the final php closing tag, some editors will add
+  // a \n or space after which will mess up cookies later on
