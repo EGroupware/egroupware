@@ -309,7 +309,8 @@
 						$selected = '';
 						$dbtype_options = '';
 						$found_dbtype = False;
-						while(list($k,$v) = each($supported_db))
+						@reset($supported_db);
+						while(list($k,$v) = @each($supported_db))
 						{
 							if($v == $GLOBALS['phpgw_domain'][$key]['db_type'])
 							{
