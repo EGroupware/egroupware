@@ -20,6 +20,7 @@
   if ($code != 10 && $phpgw_info["server"]["usecookies"] == False) {
     Setcookie("sessionid");
     Setcookie("kp3");
+    Setcookie("domain");
   }
 */
   $deny_login = False;  
@@ -69,6 +70,7 @@
       case "10":
         Setcookie("sessionid");
         Setcookie("kp3");
+        Setcookie("domain");
         return "<font color=FF0000>" . "Your session could not be verified." . "</font>";
         break;
       default:
