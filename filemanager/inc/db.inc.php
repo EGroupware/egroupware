@@ -26,7 +26,7 @@ function db_fetch_array ($query_id)
 	global $phpgw;
 	global $phpgw_info;
 
-	$phpgw->db->Query_ID = $query_id;
+//	$phpgw->db->Query_ID = $query_id;
 	$phpgw->db->next_record ();
 	return $phpgw->db->Record;
 }
@@ -40,7 +40,7 @@ function db_call ($function, $query_id)
 	global $phpgw;
 	global $phpgw_info;
 
-	$phpgw->db->Query_ID = $query_id;
+//	$phpgw->db->Query_ID = $query_id;
 	return $phpgw->db->$function ();
 }
 
