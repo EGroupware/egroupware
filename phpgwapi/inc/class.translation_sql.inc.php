@@ -44,6 +44,7 @@
 	{
 		var $userlang = 'en';
 		var $loaded_apps = array();
+		var $line_rejected = array();
 
 		function translation($warnings = False)
 		{
@@ -412,6 +413,13 @@
 							$lines = file($appfile);
 							foreach($lines as $line)
 							{
+								$line = eregi_replace("\t+", "\t", $line);
+								$_f_buffer = split("\t", $line);
+								if( count($_f_buffer) > 4 )
+								{
+									$this->line_rejected[] = Array("appfile" => $appfile, "line" => $line);
+								}
+								
 								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
 								list($message_id,$app_name,,$content) = explode("\t",$line);
 								$content=str_replace("\n",'',$content);
