@@ -222,7 +222,7 @@
        if ($access != "private" && $access != "public") {
 	  echo "<td><font size=\"-1\">" . lang_common("Group access") . ":</font></td>"
 	     . "<td colspan=\"3\"><font size=\"-1\">"
-	     . $phpgw->groups->convert_string_to_names($access);
+	     . $phpgw->accounts->convert_string_to_names($access);
        } else {
 	  echo "<td><font size=\"-1\">" . lang_common("access") . ":</font></td>"
 	     . "<td colspan=\"3\"><font size=\"-1\">"
