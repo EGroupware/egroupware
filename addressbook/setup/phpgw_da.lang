@@ -1,27 +1,122 @@
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	da	<b>Ingen konverteringstype &lt;none&gt; blev fundet.</b>  Vælg venligst en konverteringstype fra listen
+<b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	da	<b>Ingen konverteringstype &lt;none&gt; blev fundet.</b>  Vælg venligst en konverteringstype fra listen
+add custom field	addressbook	da	Tilføj valgfrit felt
 address book	common	da	Adressebog
-addressbook	common	da	Adressebog
-addressbook preferences	common	da	Adressebog preferencer
+address book - vcard in	addressbook	da	Adressebog - importer VCard
 address book - view	addressbook	da	Adressebog - kig
-birthday	addressbook	da	Fødselsdag
-city	addressbook	da	By
-company name	addressbook	da	Firma navn
+address line 2	addressbook	da	Adresse Linie 2
+address line 3	addressbook	da	Adresse Linie 3
+address type	addressbook	da	Adresse Type
+addressbook	common	da	Adressebog
+addressbook preferences	addressbook	da	Adressebog preferencer
+addvcard	addressbook	da	Tilføj VCard
+alt. csv import	addressbook	da	Alt. CSV Importering
+are you sure you want to delete this field?	addressbook	da	Er du sikker på at du vil slette dette felt?
+bbs phone	addressbook	da	BBS Telefonnummer
+birthday	common	da	Fødselsdag
+blank	addressbook	da	Blank
+business	common	da	Firma
+business address type	addressbook	da	Firma Adresse Type
+business city	addressbook	da	Firma By
+business country	addressbook	da	Firma Land
+business email	addressbook	da	Firma EMail
+business email type	addressbook	da	Firma EMail Type
+business fax	addressbook	da	Firma Fax
+business phone	addressbook	da	Firma Telefonnummer
+business state	addressbook	da	Firma Stat
+business street	addressbook	da	Firma Adresse
+business zip code	addressbook	da	Firma Postnummer
+car phone	addressbook	da	Bil telefonnummer
+cell phone	addressbook	da	Mobil telefonnummer
+city	common	da	By
+company	common	da	Firma
+company name	common	da	Firma navn
+contact	common	da	Kontakt
+contact application	admin	da	Kontakt applikation
+contact settings	admin	da	Kontakt Indstillinger
+country	common	da	Land
+csv-filename	addressbook	da	CVS-Filnavn
+custom	addressbook	da	Valgfri
+custom fields	addressbook	da	Valgfri Felter
+default filter	addressbook	da	Standard Filter
+department	common	da	Afdeling
+domestic	common	da	Indlands
+download	addressbook	da	Download
 e-mail	addressbook	da	E-mail
+edit custom field	addressbook	da	Ret Valgfrit Felt
+edit custom fields	admin	da	Ret Valgfrie Felter
+export contacts	addressbook	da	Eksporter Kontakter
+export file name	addressbook	da	Eksporter filnavn
+export from addressbook	addressbook	da	Eksporter fra adressebogen
+extra	addressbook	da	Ekstra
 fax	addressbook	da	Fax
+fax number	common	da	Faxnummer
+field name	addressbook	da	Feltnavn
+field x has been added !	addressbook	da	Feltet $1 er blevet tilføjet!
+fields to show in address list	addressbook	da	Felter der skal vises på adresselisten
+fieldseparator	addressbook	da	Feltseperator
 first name	addressbook	da	Fornavn
-home phone	addressbook	da	Hjemme telefon
+full name	addressbook	da	Fulde Navn
+geo	addressbook	da	GEO
+grant addressbook access	common	da	Tildel adgang til adressbogen
+home address type	addressbook	da	Hjem Adresse Type
+home city	addressbook	da	Hjem By
+home country	addressbook	da	Hjem Land
+home email	addressbook	da	Hjem EMail
+home email type	addressbook	da	Hjem EMail Type
+home phone	addressbook	da	Hjem telefon
+home state	addressbook	da	Hjem Stat
+home street	addressbook	da	Hjem Adresse
+home zip code	addressbook	da	Hjem Postnummer
+import contacts	addressbook	da	Importer Kontakter
+import csv-file into addressbook	addressbook	da	Importer CVS-fil til adressebogen
+import file	addressbook	da	Importer Fil
+import from ldif, csv, or vcard	addressbook	da	Importer fra LDIF, CVS eller VCard
+import from outlook	addressbook	da	Importer fra Outlook
+international	common	da	International
+isdn phone	addressbook	da	ISDN Telefonnummer
+label	addressbook	da	Mærkat
 last name	addressbook	da	Efternavn
+ldap context for contacts	admin	da	
+ldap host for contacts	admin	da	LDAP vært for kontakter
+ldap root dn for contacts	admin	da	
+ldap root pw for contacts	admin	da	
 line 2	addressbook	da	Linie 2
+message phone	addressbook	da	Meddellelses Telefonnummer
+middle name	addressbook	da	Mellemnavn(e)
 mobile	addressbook	da	Mobil
+mobile phone	addressbook	da	Mobiltelefonnummer
+modem phone	addressbook	da	Modem telefonnummer
+no vcard	addressbook	da	Ingen VCard
 other number	addressbook	da	Andet nummer
-pager	addressbook	da	Pager
+other phone	addressbook	da	Andet Telefonnummer
+pager	common	da	Pager
+parcel	addressbook	da	Pakke
+phone number	common	da	Telefonnummer
+phone numbers	common	da	Telefonnumre
+postal	common	da	Post
+pref	common	da	foretrukket
+prefix	addressbook	da	Prefix
+public key	addressbook	da	Offentlig Nøgle
 record access	addressbook	da	Posterings adgang
 record owner	addressbook	da	Posterings ejer
+retrieve contacts	admin	da	hent kontakter
+select where you want to store	admin	da	Vælg hvor du vil gemme
 show birthday reminders on main screen	addressbook	da	Påmind om fødselsdage på forsiden
-state	addressbook	da	Land
-street	addressbook	da	Vejnavn
+state	common	da	Land
+street	common	da	Vejnavn
+successfully imported x records into your addressbook.	addressbook	da	Imported %1 posteringer til din adressebog.
+suffix	addressbook	da	Suffix
+this person's first name was not in the address book.	addressbook	da	Denne persons fornavn var ikke i adressebogen.
+time zone offset	addressbook	da	tidszone forskel
 title	addressbook	da	Titel
 today is x's birthday!	common	da	I dag er det %1's fødselsdag!
 tomorrow is x's birthday.	common	da	I morgen er det %1's fødselsdag.
 url	addressbook	da	URL
+vcard	common	da	VCard
+vcards require a first name entry.	addressbook	da	VCards kræver et fornavn indtastet.
+video phone	addressbook	da	Video telefonnummer
+voice phone	addressbook	da	Voice telefonnummer
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	da	ADVARSEL!! LDAP er kun tilgængeligt hvis du ikke bruger kontakter til at gemme kontoer!
 work phone	addressbook	da	Arbejds telefon
-zip code	addressbook	da	Postnummer
+zip code	common	da	Postnummer
