@@ -180,6 +180,10 @@
 			$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['HeaderFormMSG'], False, 'header');
 
 			$detected  = $GLOBALS['phpgw_info']['setup']['PageMSG'];
+
+			$detected .= '<p><b>Please consult the <a href="../doc/en_US/html/admin/" target="manual">phpGroupWare Administration Manual</a>.</b></p>';
+			$detected .= '<b>If you running this the first time, don\'t forget to manualy <a href="../doc/en_US/html/admin/x62.html#AEN134" target="manual">Setup the database</a> !!!</b>'; 
+
 			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="2">';
 			$detected .= '<tr bgcolor="486591"><td align="center" colspan="2"><font color="fefefe">' . lang('Analysis') . '</font></td></tr><tr><td colspan="2">';
 
@@ -264,7 +268,7 @@
 			*/
 
 			$no_guess = False;
-			if(file_exists('../header.inc.php') && is_file('../header.inc.php'))
+			if(file_exists('../header.inc.php') && is_file('../header.inc.php') && is_readable('../header.inc.php'))
 			{
 				$detected .= lang('Found existing configuration file. Loading settings from the file...') . '<br>' . "\n";
 				$GLOBALS['phpgw_info']['flags']['noapi'] = True;
