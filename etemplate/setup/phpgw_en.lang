@@ -53,9 +53,11 @@ enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
+file writen	etemplate	en	File writen
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
 group/-user	etemplate	en	Group/-User
@@ -92,11 +94,14 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+new table created	etemplate	en	New table created
 no	etemplate	en	No
+not found !!!	etemplate	en	Not found !!!
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 only an other version found !!!	etemplate	en	only an other Version found !!!
+please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
@@ -117,6 +122,7 @@ scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
+select an app first !!!	etemplate	en	Select an app first !!!
 select an application	etemplate	en	Select an application
 select an table of the application	etemplate	en	Select an table of the application
 select cathegory	etemplate	en	Select Cathegory
@@ -124,6 +130,7 @@ select country	etemplate	en	Select Country
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	select if content should only be displayed but not altered (the content is not send back then!)
 select if label and other content (depending on fieldtype) should not be translated	etemplate	en	select if label and other content (depending on fieldtype) should not be translated
+select one ...	etemplate	en	Select one ...
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
