@@ -71,7 +71,8 @@
 		@discussion Author: Seek3r <br>
 		Reads ACL records for $acl->account_id and returns array along with storing it in $acl->data.  <br>
 		Syntax: array read_repository() <br>
-		Example1: acl->read_repository();
+		Example1: acl->read_repository(); <br>
+		Should only be called within this class
 		*/
     function read_repository()
     {
@@ -107,7 +108,7 @@
 		@discussion Author: Seek3r <br>
 		Returns ACL records from $acl->data. <br>
 		Syntax: array read() <br>
-		Example1: acl->read();
+		Example1: acl->read(); <br>
 		*/
     function read()
     {
@@ -122,6 +123,9 @@
 		@discussion Adds ACL record to $acl->data. <br>
 		Syntax: array add() <br>
 		Example1: acl->add();
+		@param $appname default False derives value from $phpgw_info['flags']['currentapp']
+		@param $location location
+		@param $rights rights
 		*/
     function add($appname = False, $location, $rights)
     {
@@ -139,7 +143,8 @@
     	@discussion 
     	Syntax <br>
     	Example: <br>
-    	@param $location
+    	@param $appname optional defaults to $phpgw_info['flags']['currentapp']
+    	@param $location app location
     	*/
     function delete($appname = False, $location)
     {
@@ -190,9 +195,10 @@
     \**************************************************************************/
 		/*!
 		@function get_rights
-		@abstract get rights from the repository
+		@abstract get rights from the repository not specific to this->account_id (?)
 		@discussion 
-		@param $location 
+		@param $location app location to get rights from
+		@param $appname optional defaults to $phpgw_info['flags']['currentapp'];
 		*/
     function get_rights($location,$appname = False){
       global $phpgw, $phpgw_info;
@@ -216,13 +222,25 @@
       }
       return $rights;
     }
-
+		/*!
+		@function check
+		@abstract check required rights (not specific to this->account_id?)
+		@param $location app location
+		@param $required required right to check against
+		@param $appname optional defaults to currentapp
+		*/
     function check($location, $required, $appname = False){
       global $phpgw, $phpgw_info;
       $rights = $this->get_rights($location,$appname);
       return !!($rights & $required);
     }
-
+		/*!
+		@function get_specific_rights
+		@abstract get specific rights for this->account_id for an app location
+		@param $location app location
+		@param $appname optional defaults to currentapp
+		@result $rights ?
+		*/
     function get_specific_rights($location, $appname = False){
       global $phpgw, $phpgw_info;
 
@@ -245,12 +263,24 @@
       }
       return $rights;
     }
-
+		/*!
+		@function check_specific
+		@abstract check specific
+		@param $location app location
+		@param $required required rights
+		@param $appname optional defaults to currentapp
+		@result boolean
+		*/
     function check_specific($location, $required, $appname = False){
       $rights = $this->get_specific_rights($location,$appname);
       return !!($rights & $required);
     }
-
+		/*!
+		@function get_location_list
+		@abstract ?
+		@param $app appname
+		@param $required ?
+		*/
     function get_location_list($app, $required){
       global $phpgw, $phpgw_info;
       // User piece
@@ -312,7 +342,14 @@ It should use the values in the $this->data
     /**************************************************************************\
     * These are the generic functions. Not specific to $this->account_id       *
     \**************************************************************************/
-
+		/*!
+		@function add_repository
+		@abstract add repository information for an app
+		@param $app appname
+		@param $location location
+		@param $account_id account id
+		@param $rights rights
+		*/
     function add_repository($app, $location, $account_id, $rights)
     {
       $this->delete_repository($app, $location, $account_id);
@@ -321,7 +358,13 @@ It should use the values in the $this->data
       $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
-
+		/*!
+		@function delete_repository
+		@abstract delete repository information for an app
+		@param $app appname
+		@param $location location
+		@param $account_id account id
+		*/
     function delete_repository($app, $location, $account_id){
       $sql = "delete from phpgw_acl where acl_appname like '".$app."'"
            . " and acl_location like '".$location."' and "
@@ -330,7 +373,13 @@ It should use the values in the $this->data
       return $this->db->num_rows();
     }
 
-
+		/*!
+		@function get_app_list_for_id
+		@abstract get application list for an account id
+		@param $location location
+		@param $required ?
+		@param $account_id account id defaults to $phpgw_info['user']['account_id'];
+		*/
     function get_app_list_for_id($location, $required, $account_id = False){
       global $phpgw, $phpgw_info;
       if ($account_id == False){ $account_id = $this->account_id; }
@@ -348,7 +397,14 @@ It should use the values in the $this->data
       }
       return $apps;
     }
-
+		/*!
+		@function get_location_list_for_id
+		@abstract get location list for id
+		@discussion ?
+		@param $app app
+		@param $required required
+		@param $account_id optional defaults to $phpgw_info['user']['account_id'];
+		*/
     function get_location_list_for_id($app, $required, $account_id = False){
       global $phpgw, $phpgw_info;
       if ($account_id == False){ $account_id = $phpgw_info['user']['account_id']; }
@@ -367,7 +423,13 @@ It should use the values in the $this->data
       }
       return $locations;
     }
-
+		/*!
+		@function get_ids_for_location
+		@abstract get ids for location
+		@param $location location
+		@param $required required
+		@param $app app optional defaults to $phpgw_info['flags']['currentapp'];
+		*/
     function get_ids_for_location($location, $required, $app = False){
       global $phpgw, $phpgw_info;
       if ($app == False){
@@ -387,7 +449,12 @@ It should use the values in the $this->data
       }
       return $accounts;
     }
-
+		/*!
+		@function get_user_applications
+		@abstract get a list of applications a user has rights to
+		@param $account_id optional defaults to $phpgw_info['user']['account_id'];
+		@result $apps array containing list of apps
+		*/
 	function get_user_applications($account_id = False)
 	{
       global $phpgw, $phpgw_info;
@@ -425,7 +492,11 @@ It should use the values in the $this->data
 		}
 		return $apps;
 	}
-
+		/*!
+		@function get_grants
+		@abstract ?
+		@param $app optional defaults to $phpgw_info['flags']['currentapp'];
+		*/
 	function get_grants($app=False){
       global $phpgw, $phpgw_info;
       
