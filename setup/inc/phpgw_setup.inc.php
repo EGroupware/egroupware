@@ -278,13 +278,13 @@
 
     function get_template_list(){
       global $phpgw_info;
-      $d = dir($phpgw_info["server"]["server_root"]."/phpgwapi/templates");
+      $d = dir(PHPGW_SERVER_ROOT."/phpgwapi/templates");
       $list["user_choice"]["name"] = "user_choice";
       $list["user_choice"]["title"] = "Users Choice";
       while($entry=$d->read()) {
         if ($entry != "CVS" && $entry != "." && $entry != ".."){
           $list[$entry]["name"] = $entry;
-          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/".$entry."/details.inc.php";
+          $f = PHPGW_SERVER_ROOT."/phpgwapi/templates/".$entry."/details.inc.php";
           if (file_exists ($f)){
             include($f);
             $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
@@ -300,9 +300,9 @@
   
     function app_setups($appname = ""){
       global $phpgw_info;
-      $d = dir($phpgw_info["server"]["server_root"]);
+      $d = dir(PHPGW_SERVER_ROOT);
       while($entry=$d->read()) {
-        if (is_dir ($phpgw_info["server"]["server_root"]."/".$entry."/setup")){
+        if (is_dir (PHPGW_SERVER_ROOT."/".$entry."/setup")){
           echo $entry."<br>\n";
         }
       }
@@ -341,15 +341,15 @@
       /* First include the ordered setup script file */
       reset ($order);
       while (list (, $appname) = each ($order)){
-        $f = $phpgw_info["server"]["server_root"]."/".$appname."/setup/".$script.".inc.php";
+        $f = PHPGW_SERVER_ROOT."/".$appname."/setup/".$script.".inc.php";
     	  if (file_exists($f)) {include($f);}
         $completed_scripts[$appname] = True;
       }
       /* Then add the rest */
-      $d = dir($phpgw_info["server"]["server_root"]);
+      $d = dir(PHPGW_SERVER_ROOT);
       while ($entry=$d->read()){
         if ($entry != "" && $completed_scripts[$entry] != True){
-          $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
+          $f = PHPGW_SERVER_ROOT."/".$entry."/setup/".$script.".inc.php";
       	  if (file_exists($f)) {include($f);}
         }
       }
@@ -357,9 +357,9 @@
   
     function get_versions(){
       global $phpgw_info, $phpgw_domain, $current_config, $newsetting, $phpgw_setup, $SERVER_NAME;
-      $d = dir($phpgw_info["server"]["server_root"]);
+      $d = dir(PHPGW_SERVER_ROOT);
       while($entry=$d->read()) {
-        $f = $phpgw_info["server"]["server_root"]."/".$entry."/version.inc.php";
+        $f = PHPGW_SERVER_ROOT."/".$entry."/version.inc.php";
         if (file_exists ($f)){include($f); }
       }
       $d->close();
