@@ -334,3 +334,5 @@ your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planif
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:
 weekview without weekend	calendar	fr	Vue Hebdo sans Weekend
+All categories	calendar	fr	Toutes catégories
+No filter	calendar	fr	Pas de filtres
