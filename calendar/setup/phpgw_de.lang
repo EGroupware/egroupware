@@ -1,5 +1,6 @@
 (for weekly)	calendar	de	(für wöchentlich)
 1 match found	calendar	de	1 Treffer gefunden
+alarm management	calendar	de	Alarm Management
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 brief description	calendar	de	Kurzbeschreibung
@@ -13,8 +14,10 @@ daily matrix view	calendar	de	Matrix-Ansicht des Tages
 days repeated	calendar	de	wiederholte Tage
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
+Display interval in Day View	calendar	de	Intervall der Tagesansicht
 duration	calendar	de	Dauer
 end date/time	calendar	de	Enddatum/-zeit
+export	calendar	de	Exportieren
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
 frequency	calendar	de	Häufigkeit
@@ -27,6 +30,7 @@ go!	calendar	de	Go!
 grant calendar access	common	de	Berechtigungen f&uuml;r Kalenderzugriffe
 i participate	calendar	de	Ich nehme teil
 ignore conflict	calendar	de	Konflikt ignorieren
+import	calendar	de	Importieren
 minutes	calendar	de	Minuten
 mo	calendar	de	Mo
 mon	calendar	de	Mo
@@ -65,9 +69,9 @@ view this entry	calendar	de	Diesen Eintrag anzeigen
 we	calendar	de	Mi
 wed	calendar	de	Mi
 week	calendar	de	Woche
-weekday starts on	calendar	de	Wochentag beginnt um
+weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
-work day ends on	calendar	de	Arbeitstag ended um
+work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 x matches found	calendar	de	%1 Treffer gefunden
 year	calendar	de	Jahr

@@ -21,6 +21,7 @@ daily matrix view	calendar	en	Daily Matrix View
 days repeated	calendar	en	days repeated
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
+Display interval in Day View	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
 duration	calendar	en	Duration
@@ -43,6 +44,7 @@ grant calendar access	common	en	Grant Calendar Access
 group public only	calendar	en	Group Public Only
 ignore conflict	calendar	en	Ignore Conflict
 i participate	calendar	en	I Participate
+import	calendar	en	Import
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 minutes	calendar	en	minutes
