@@ -71,56 +71,87 @@
 			}
 		}
 
-		// sort a multi-dimensional array on an array element
-		// using the named element
-		// This is neither used (yet) or guaranteed to work
-		function qsort_multiarray($array,$column,$order = "ASC",$left = 0,$right = -1,$num=0) 
-		{ 
-			if($right == -1)
-				{ $right = count($array) - 1; }
+		function asc_sort($a,$b) { 
+			echo "<br>A:'".$a."' B:'".$b;
+			if($a[1]==$b[1]) return 0; 
+			return ($a[1]>$b[1])?1:-1; 
+		}
 
-			$i=0;
-			
-			if (!$num) {
-				$num=0;
-				echo "nonum";
-				if ($column && !empty($column)) {
-					while (list($name,$value) = each($array[0])) {
-						if ($column == $name) {
-							$num = $i;
-							break;
-						}
-						$i++;
+		function desc_sort($a,$b) { 
+			echo "<br>A:'".$a."' B:'".$b;
+			if($a[1]==$b[1]) return 0; 
+			return ($a[1]<$b[1])?1:-1; 
+		}
+
+		/** 
+		** comesafter ($s1, $s2) 
+		** 
+		** Returns 1 if $s1 comes after $s2 alphabetically, 0 if not. 
+		**/ 
+		function comesafter ($s1, $s2) { 
+			/** 
+			** We don't want to overstep the bounds of one of the strings and segfault, 
+			** so let's see which one is shorter. 
+			**/ 
+			$order = 1;
+
+			if (strlen ($s1) > strlen ($s2)) {
+				$temp = $s1;
+				$s1 = $s2;
+				$s2 = $temp;
+				$order = 0;
+			}
+
+			for ($index = 0; $index < strlen ($s1); $index++) { 
+				/* $s1 comes after $s2 */ 
+				if (strtolower($s1[$index]) > strtolower($s2[$index])) { return ($order); }
+
+				/* $s1 comes before $s2 */
+				if (strtolower($s1[$index]) < strtolower($s2[$index])) { return (1 - $order); }
+			}
+				/* Special case in which $s1 is a substring of $s2 */
+
+			return ($order); 
+		}
+
+		/*
+		* asortbyindex ($sortarray, $index)
+		*
+		* Sort a multi-dimensional array by a second-degree index. For instance, the 0th index
+		* of the Ith member of both the group and user arrays is a string identifier. In the
+		* case of a user array this is the username; with the group array it is the group name.
+		* asortby
+		*/
+		function asortbyindex ($sortarray, $index) {
+			$lastindex = count ($sortarray) - 1;
+			for ($subindex = 0; $subindex < $lastindex; $subindex++) {
+				$lastiteration = $lastindex - $subindex;
+				for ($iteration = 0; $iteration < $lastiteration; $iteration++) {
+					$nextchar = 0;
+					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index])) {
+						$temp = $sortarray[$iteration];
+						$sortarray[$iteration] = $sortarray[$iteration + 1];
+						$sortarray[$iteration + 1] = $temp;
 					}
 				}
 			}
-			echo "<br>". $num ." - name='".$name."', value='". $value . "'";
+			return ($sortarray);
+		}
 
-			$lefts = $left;
-			$rights = $right;
-			$middle = $array[($left + $right) / 2][$num];
-
-			if($rights > $lefts) {
-				do {
-					if($order == "ASC") {
-						while($array[$lefts][$num]<$middle) $lefts++; 
-						while($array[$rights][$num]>$middle) $rights--; 
-					} else {
-						while($array[$lefts][$num]>$middle) $lefts++;
-						while($array[$rights][$num]<$middle) $rights--;
+		function arsortbyindex ($sortarray, $index) {
+			$lastindex = count ($sortarray) - 1;
+			for ($subindex = $lastindex; $subindex > 0; $subindex--) {
+				$lastiteration = $lastindex - $subindex;
+				for ($iteration = $lastiteration; $iteration > 0; $iteration--) {
+					$nextchar = 0;
+					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index])) {
+						$temp = $sortarray[$iteration];
+						$sortarray[$iteration] = $sortarray[$iteration - 1];
+						$sortarray[$iteration - 1] = $temp;
 					}
-
-					if($lefts <= $rights) {
-						$tmp = $array[$lefts];
-						$array[$lefts++] = $array[$rights];
-						$array[$rights--] = $tmp;
-					}
-				} while($lefts <= $rights);
-
-				$array = $this->qsort_multiarray($array,"",$order,$left,$rights,$num); 
-				$array = $this->qsort_multiarray($array,"",$order,$lefts,$right,$num); 
-			} 
-			return $array; 
+				}
+			}
+			return ($sortarray);
 		}
 	}
 ?>
