@@ -944,7 +944,7 @@
 					{
 						$cel .= $html->image('calendar','mini-calendar-bar.gif','','border=0');
 					}
-					$cel .= $html->image('calendar',count($event['participants)']>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border=0');
+					$cel .= $html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border=0');
 					$cel .= '</a>';
 
 					$akt_cell = $end_cell + 1;
@@ -1982,6 +1982,11 @@
 		{
 			global $phpgw, $phpgw_info;
 
+			if(!$event['participants'][$this->bo->owner])
+			{
+				return '<center>'.lang('You do not have permission to read this record!').'</center>';
+			}
+
 			$pri = Array(
   				1	=> lang('Low'),
   				2	=> lang('Normal'),
@@ -2110,7 +2115,7 @@
 				$str_extra = '';
 				if ($event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['year'] != 0)
 				{
-					$recur_end = $this-bo->maketime($event['recur_enddate']);
+					$recur_end = $this->bo->maketime($event['recur_enddate']);
 					if($recur_end != 0)
 					{
 						$recur_end -= $this->bo->datetime->tz_offset;
