@@ -436,7 +436,7 @@
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
 			if ($query) {
-				$this->db3->query("SELECT * FROM $this->std_table WHERE (n_family LIKE '"
+				$this->db3->query("SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
 					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
 					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
 					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
