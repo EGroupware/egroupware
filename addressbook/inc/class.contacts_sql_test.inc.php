@@ -373,9 +373,9 @@
 			if ($phpgw_info["server"]["db_type"]=="pgsql") { $join = " JOIN "; }
 			else { $join = " LEFT JOIN "; }
 
-			for ($i=0;$i<count($tempinsert);$i++) {
-				$this->db->query($tempinsert[$i]);
-			}
+			//for ($i=0;$i<count($tempinsert);$i++) {
+			//	$this->db->query($tempinsert[$i]);
+			//}
 
 			reset($stock_fields);
 			if ($extra_fields) { reset($extra_fields); }
@@ -411,8 +411,8 @@
 			}
 
 			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.contact_id,'
-				. $qfields . $extra_fields' FROM '.$this->std_table.' AS a $join '
-				. $this->ext_table .' AS b ON a.id=b.contact_d ' . $squery;
+				. $qfields . $extra_fields.' FROM '.$this->std_table.' AS a '. $join . ' '
+				. $this->ext_table .' AS b ON a.id=b.contact_id ' . $squery;
 
  			$this->db3->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db3->num_rows();
@@ -437,7 +437,7 @@
 				}
 				$i++;
 			}
-			$this->db->query("DROP TABLE $tmp_table");
+		//	$this->db->query("DROP TABLE $tmp_table");
 			return $return_fields;
 		}
 
