@@ -133,8 +133,8 @@
 				exit;
 			}
 
-			$field      = $GLOBALS['HTTP_POST_VARS']['field'];
-			$field_name = $GLOBALS['HTTP_POST_VARS']['field_name'];
+			$field      = stripslashes($GLOBALS['HTTP_POST_VARS']['field']);
+			$field_name = stripslashes($GLOBALS['HTTP_POST_VARS']['field_name']);
 			$start      = $GLOBALS['HTTP_POST_VARS']['start'];
 			$query      = $GLOBALS['HTTP_POST_VARS']['query'];
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort'];
@@ -161,7 +161,6 @@
 
 				if(!$error)
 				{
-					$field_name = addslashes($field_name);
 					$this->save_custom_field($field,$field_name);
 				}
 			}
@@ -210,8 +209,8 @@
 				exit;
 			}
 
-			$field      = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];
-			$field_name = $GLOBALS['HTTP_POST_VARS']['field_name'];
+			$field      = stripslashes($GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field']);
+			$field_name = stripslashes($GLOBALS['HTTP_POST_VARS']['field_name']);
 			$start      = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
 			$query      = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
@@ -238,8 +237,6 @@
 				{
 					$error[$errorcount++] = lang('Please enter a name for that field!');
 				}
-
-				$field_name = addslashes($field_name);
 
 				if(!$error)
 				{
@@ -338,7 +335,7 @@
 				$GLOBALS['phpgw']->template->set_var('no',$nolink);
 
 				$yeslinkf = $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifieldsdelete&field_id=' . $field_id . '&confirm=True');
-				$yeslinkf = '<form method="POST" name="yesbutton" action="' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.delete') . '\">'
+				$yeslinkf = '<form method="POST" name="yesbutton" action="' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.delete') . '">'
 					. $hidden_vars
 					. '<input type="hidden" name="field_id"  value="' . $field_id . '">'
 					. '<input type="hidden" name="confirm"   value="True">'
