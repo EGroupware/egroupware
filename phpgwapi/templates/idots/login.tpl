@@ -15,7 +15,7 @@
 <p>&nbsp;</p>
 <TABLE class=sidebox cellSpacing=1 cellPadding=0  border=0  align=center>
 <TR> 
-<TD class="sideboxtitle" align="center"  height=28>{lang_title}</TD>
+<TD class="sideboxtitle" align="center"  height=28>{website_title}</TD>
 </TR>
 <TR> 
 <TD class="sideboxcontent" bgColor="#efefef">
