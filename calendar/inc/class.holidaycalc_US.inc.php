@@ -15,25 +15,25 @@
 
 	class holidaycalc
 	{
-		function add($holiday,&$holidays,$year,&$i,$day_offset=0)
+		function add($holiday,&$holidays,$year,$day_offset=0)
 		{
-			$i++;
-			$holidays[$i]= $holiday;
 			if ($day_offset)
 			{
-				$holidays[$i]['name'] .= ' (Observed)';
+				$holiday['name'] .= ' (Observed)';
 			}
-			$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$holiday['day']+$day_offset,$year);
+			$holiday['date'] = mktime(0,0,0,$holiday['month'],$holiday['day']+$day_offset,$year);
 			foreach(array('day'=>'d','month'=>'m','occurence'=>'Y') as $key => $frmt)
 			{
-				$holidays[$i][$key] = date($frmt,$holidays[$i]['date']);
+				$holiday[$key] = date($frmt,$holiday['date']);
 			}
-			$holidays[$i]['obervance_rule'] = 0;
+			$holiday['obervance_rule'] = 0;
 
-			//echo "<p>holidaycalc::add(".print_r($holiday,True).",,$year,,$day_offset)=".print_r($holidays[$i],True)."</p>";
+			$holidays[]= $holiday;
+
+			//echo "<p>holidaycalc::add(,,$year,,$day_offset)=".print_r($holiday,True)."</p>";
 		}
 
-		function calculate_date($holiday, &$holidays, $year, &$i)
+		function calculate_date($holiday, &$holidays, $year)
 		{
 			//echo "<p>holidaycalc::calculate_date(".print_r($holiday,True).",,$year,)</p>";
 
@@ -71,7 +71,7 @@
 					// 0 = sundays are observed on monday (+1), 6 = saturdays are observed on fridays (-1)
 					if($dow == 0 || $dow == 6)
 					{
-						$this->add($holiday,$holidays,$year,$i,$dow == 0 ? 1 : -1);
+						$this->add($holiday,$holidays,$year,$dow == 0 ? 1 : -1);
 					}
 					if ($holiday['month'] == 1 && $day == 1)
 					{
@@ -79,10 +79,10 @@
 						// checking if next year's newyear might be observed in this year
 						if ($dow == 6)
 						{
-							$this->add($holiday,$holidays,$year+1,$i,-1);
+							$this->add($holiday,$holidays,$year+1,-1);
 						}
 						// add the next years newyear, to show it in a week- or month-view
-						$this->add($holiday,$holidays,$year+1,$i);
+						$this->add($holiday,$holidays,$year+1);
 					}
 					// checking if last year's new year's eve might be observed in this year
 					if ($holiday['month'] == 12 && $day == 31)
@@ -90,10 +90,10 @@
 						$dow = $GLOBALS['phpgw']->datetime->day_of_week($year-1,$holiday['month'],$day);
 						if ($dow == 0)
 						{
-							$this->add($holiday,$holidays,$year-1,$i,1);
+							$this->add($holiday,$holidays,$year-1,1);
 						}
 						// add the last years new year's eve, to show it in a week- or month-view
-						$this->add($holiday,$holidays,$year-1,$i);
+						$this->add($holiday,$holidays,$year-1);
 					}
 				}
 			}

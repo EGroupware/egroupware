@@ -387,9 +387,9 @@
 			}
 
 			$temp_locale = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
-			for($i=0;$i<count($holidays);$i++)
+			foreach($holidays as $i => $holiday)
+			//for($i=0;$i<count($holidays);$i++)
 			{
-				$c = $i;
 				if($i == 0 || $holidays[$i]['locale'] != $holidays[$i - 1]['locale'])
 				{
 					if(is_object($holidaycalc))
@@ -399,11 +399,7 @@
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
 					$holidaycalc = CreateObject('calendar.holidaycalc');
 				}
-				$holidays[$i]['date'] = $holidaycalc->calculate_date($holidays[$i], $holidays, $this->year, $c);
-				if($c != $i)
-				{
-					$i = $c;
-				}
+				$holidays[$i]['date'] = $holidaycalc->calculate_date($holiday, $holidays, $this->year);
 			}
 			unset($holidaycalc);
 			$this->holidays = $this->sort_holidays_by_date($holidays);
