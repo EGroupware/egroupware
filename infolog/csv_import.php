@@ -26,7 +26,7 @@
 	}
 	if (isset($_FILES['csvfile']['tmp_name']))
 	{
-		$csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/infolog_import_'.basename($csvfile);
+		$csvfile = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],$GLOBALS['phpgw_info']['flags']['currentapp']."_");
 		$GLOBALS['phpgw']->session->appsession('csvfile','',$csvfile);
 		$_POST['action'] = move_uploaded_file($_FILES['csvfile']['tmp_name'],$csvfile) ?
 			'download' : '';
