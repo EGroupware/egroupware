@@ -754,69 +754,74 @@
 
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
-		function create_emailpreferences()
+		function create_emailpreferences($prefs,$account_id=0)
 		{
-			global $phpgw_info;
-			
-			/* Add default preferences info */    
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["userid"]))
+			global $phpgw, $phpgw_info;
+
+			if($account_id==0)
 			{
-				if ($phpgw_info["server"]["mail_login_type"] == "vmailmgr")
+				$account_id = $phpgw_info['user']['account_id'];
+			}
+			
+			/* Add default preferences info */
+			if (!isset($prefs['email']['userid']))
+			{
+				if ($phpgw_info['server']['mail_login_type'] == 'vmailmgr')
 				{
-					$phpgw_info["user"]["preferences"]["email"]["userid"] = $phpgw_info["user"]["userid"]
-						. "@" . $phpgw_info[server][mail_suffix];
+					$prefs['email']['userid'] = $phpgw->accounts->id2name($account_id)
+						. '@' . $phpgw_info['server']['mail_suffix'];
 				}
 				else
 				{
-					$phpgw_info["user"]["preferences"]["email"]["userid"] = $phpgw_info["user"]["userid"];
+					$prefs['email']['userid'] = $phpgw->accounts->id2name($account_id);
 				}
 			}
 			/* Set Server Mail Type if not defined */
-			if (empty($phpgw_info["server"]["mail_server_type"]))
+			if (empty($phpgw_info['server']['mail_server_type']))
 			{
-				$phpgw_info["server"]["mail_server_type"] = "imap";
+				$phpgw_info['server']['mail_server_type'] = 'imap';
 			}
 
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["passwd"]))
+			if (!isset($prefs['email']['passwd']))
 			{
-				$phpgw_info["user"]["preferences"]["email"]["passwd"] = $phpgw_info["user"]["passwd"];
+				$prefs['email']['passwd'] = $phpgw_info['user']['passwd'];
 			}
 			else
 			{
-				$phpgw_info["user"]["preferences"]["email"]["passwd"] = $this->decrypt($phpgw_info["user"]["preferences"]["email"]["passwd"]);
+				$prefs['email']['passwd'] = $this->decrypt($prefs['email']['passwd']);
 			}
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["address"]))
+			if (!isset($prefs['email']['address']))
 			{
-				$phpgw_info["user"]["preferences"]["email"]["address"] = $phpgw_info["user"]["userid"]
-					. "@" . $phpgw_info["server"]["mail_suffix"];
+				$prefs['email']['address'] = $phpgw->accounts->id2name($account_id)
+					. '@' . $phpgw_info['server']['mail_suffix'];
 			}
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["mail_server"]))
+			if (!isset($prefs['email']['mail_server']))
 			{
-				$phpgw_info["user"]["preferences"]["email"]["mail_server"] = $phpgw_info["server"]["mail_server"];
+				$prefs['email']['mail_server'] = $phpgw_info['server']['mail_server'];
 			}
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]))
+			if (!isset($prefs['email']['mail_server_type']))
 			{
-				$phpgw_info["user"]["preferences"]["email"]["mail_server_type"] = $phpgw_info["server"]["mail_server_type"];
+				$prefs['email']['mail_server_type'] = $phpgw_info['server']['mail_server_type'];
 			}
-			if (!isset($phpgw_info["user"]["preferences"]["email"]["imap_server_type"]))
+			if (!isset($prefs['email']['imap_server_type']))
 			{
-				$phpgw_info["user"]["preferences"]["email"]["imap_server_type"] = $phpgw_info["server"]["imap_server_type"];
+				$prefs['email']['imap_server_type'] = $phpgw_info['server']['imap_server_type'];
 			}
 
 			/* These sets the mail_port server variable */
-			if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]=="imap")
+			if ($prefs['email']['mail_server_type']=='imap')
 			{
-				$phpgw_info["user"]["preferences"]["email"]["mail_port"] = "143";
+				$prefs['email']['mail_port'] = '143';
 			}
-			elseif ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]=="pop3")
+			elseif ($prefs['mail']['mail_server_type']=='pop3')
 			{
-				$phpgw_info["user"]["preferences"]["email"]["mail_port"] = "110";
+				$prefs['email']['mail_port'] = '110';
 			}
 
 			/* This is going to be used to switch to the nntp class */
-			if ($phpgw_info["flags"]["newsmode"])
+			if ($phpgw_info['flags']['newsmode'])
 			{
-				$phpgw_info["user"]["preferences"]["email"]["mail_server_type"] = "nntp";
+				$prefs['email']['mail_server_type'] = 'nntp';
 			}
 		}
 

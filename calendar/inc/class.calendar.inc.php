@@ -126,6 +126,35 @@ class calendar extends calendar_
 		}
 	}
 
+	function send_update($event)
+	{
+		global $phpgw, $phpgw_info;
+		
+		$msg = CreateObject('email.send');
+
+		$subject = 'Calendar Event #'.$event->id.': '.$event->start->year.' '.lang(date(mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year),'F')).' '.$event->start->mday.'  '.$event->start->hour.':'.$event->start->min.':'.$event->start->sec.'Z';
+		$body = 'An event in your calendar @ '.$phpgw_info['server']['site_title'].' has been altered.  Please review it now.';
+		$msgtype = 'phpGW-calendar-'.$event->id;
+
+		$to = '';
+		for($i=0;$i<count($event->participants);$i++)
+		{
+			if($event->participants[$i] != $phpgw_info['user']['account_id'])
+			{
+				if($to != '')
+				{
+					$to .= ', ';
+				}
+				$preferences = CreateObject('phpgwapi.preferences',$event->participants[$i]);
+				$part_prefs = $preferences->read_repository();
+				$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,$event->participants[$i]);
+				$to .= $part_prefs['email']['address'];
+			}
+		}
+		$msg->msg('email',$to,$subject,$body,$msgtype);
+		unset($msg);
+	}
+
 	function set_filter()
 	{
 		global $phpgw_info, $phpgw, $filter;
@@ -295,21 +324,18 @@ class calendar extends calendar_
 		}
 		
 		$link = Array();
-//		$date = $this->gmtdate($datetime);
 		$search_date_full = date('Ymd',$datetime);
 		$search_date_year = date('Y',$datetime);
 		$search_date_month = date('m',$datetime);
 		$search_date_day = date('d',$datetime);
 		$search_date_dow = date('w',$datetime);
 		$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
-//		$date = $this->localdates($datetime);
 		for ($i=0;$i<count($this->repeated_events);$i++)
 		{
 			$rep_events = $this->repeating_events[$i];
 			$id = $rep_events->id;
 			$event_beg_day = mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year);
 			$event_recur_time = mktime($rep_events->recur_enddate->hour,$rep_events->recur_enddate->min,$rep_events->recur_enddate->sec,$rep_events->recur_enddate->month,$rep_events->recur_enddate->mday,$rep_events->recur_enddate->year);
-//			$start = $this->localdates($rep_events->datetime);
 			if($event_recur_time != 0)
 			{
 				$end_recur_date = date('Ymd',$event_recur_time);
