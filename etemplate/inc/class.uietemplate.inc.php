@@ -958,7 +958,7 @@
 					if (!isset($cell['obj']->onclick_handler)) $cell['obj']->onclick_handler = $this->onclick_handler;
 					if ($cell['obj']->no_onclick)
 					{
-						$cell['obj']->onclick_proxy = $this->onclick_proxy ? $this->onclick_proxy : $this->name.':'.$path;
+						$cell['obj']->onclick_proxy = $this->onclick_proxy ? $this->onclick_proxy : $this->name.':'.$this->version.':'.$path;
 					}
 					$html = $cell['obj']->show($content,$this->sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
@@ -1253,7 +1253,7 @@
 			//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
 			if ($this->onclick_handler && !isset($this->widgets_with_children[$cell['type']]))
 			{
-				$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$path,
+				$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$this->version.':'.$path,
 					$this->onclick_handler);
 				if ($type == 'button' || !$label)	// add something to click on
 				{

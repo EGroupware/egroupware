@@ -1529,13 +1529,16 @@
 			if (is_array($content))
 			{
 				$path = $content['goto'] ? $content['goto'] : ($content['goto2'] ? $content['goto2'] : $content['path']);
-				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],$content['old_version']);
+				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],0,$path ? $content['version'] : $content['old_version']);
 			}
 			else
 			{
 				//echo "<p><b>".($_GET['path']).":</b></p>\n";
-				list($name,$path) = explode(':',$_GET['path'],2);	// <name>:<path>
-				$Ok = $this->etemplate->read($name);
+				list($name,$version,$path) = explode(':',$_GET['path'],3);	// <name>:<version>:<path>
+				$Ok = $this->etemplate->read(array(
+					'name'    => $name,
+					'version' => $version,
+				));
 			}
 			if (!$Ok && !$content['cancel'])
 			{
