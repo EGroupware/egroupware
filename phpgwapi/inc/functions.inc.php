@@ -86,6 +86,39 @@
 		error_reporting(E_ERROR | E_WARNING | E_PARSE);
 		return $obj;
 	}
+
+	/*!
+	@function ExecObj
+	@abstract Execute a function, and load a class and include the class file if not done so already.
+	@discussion Author: seek3r<br>
+	This function is used to create an instance of a class,  
+	and if the class file has not been included it will do so. <br>
+	Syntax: CreateObject('app.class', 'constructor_params'); <br>
+	Example1: ExecObj('phpgwapi.acl.read');
+	@param $object to execute
+	@param $functionparams function param should be an array
+	@param $loglevel developers choice of logging level
+	@param $classparams params to be sent to the contructor
+	*/
+	function ExecObj($object, $functionparams, $loglevel, $classparams)
+	{
+		global $GLOBAL;
+		$objparts = explode (".", $object);
+		$appname = $objparts[0];
+		$classname = $objparts[1];
+		$functionname = $objparts[2];
+		$code = 'global $'.$classname.';';
+		eval($code);
+		if (!is_object($$classname))
+		{
+			$classname = CreateObject($appname.'.'.$classname);
+			$code = '$'.$classname.' = CreateObject('.$appname.'.'.$classname.')';';
+			/*	$code = '$'.$classname.' = new '.$classname.';'; */
+			eval($code);
+		}
+		${$GLOBAL[$classname]}->${$functionname};
+	}
+
 	/*!
 	@function lang
 	@abstract function to handle multilanguage support
