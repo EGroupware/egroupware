@@ -21,8 +21,8 @@
 
 
 <!-- BEGIN form -->
-<form method="POST" action="{action}" name="{form_name}">
 <td width="2%" align="{align}" valign="top">
+<form method="POST" action="{action}" name="{form_name}">
 	{hidden}
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
@@ -31,8 +31,8 @@
 		</td>
 	</tr>
 	</table>
-</td>
 </form>
+</td>
 <!-- END form -->
 
 
