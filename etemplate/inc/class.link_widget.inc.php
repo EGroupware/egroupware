@@ -140,11 +140,11 @@
 				case 'create':
 					if ($value['to_app'])						// make the link
 					{
-						$this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
+						$link_id = $this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
 						//echo "<p>link($value[to_app],$value[to_id],$value[app],$value[id],'$value[remark]')</p>\n";
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
-							$value['primary'] = $value['app'].'/'.$value['id'];
+							$value['primary'] = $link_id;
 						}
 					}
 					// fall-trough

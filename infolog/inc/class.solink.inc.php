@@ -61,7 +61,7 @@
 		*/
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 		{
-			if ($this->debug)
+			//if ($this->debug)
 			{
 				echo "<p>solink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
 			}
@@ -167,6 +167,10 @@
 		*/
 		function get_link($app_link_id,$id='',$app2='',$id2='')
 		{
+			if ($this->debug)
+			{
+				echo "<p>solink.get_link('$app_link_id',$id,'$app2','$id2')</p>\n";
+			}
 			$sql = "SELECT * FROM $this->db_name WHERE ";
 			if (intval($app_link_id) > 0)
 			{
@@ -185,6 +189,10 @@
 
 			if ($this->db->next_record())
 			{
+				if ($this->debug)
+				{
+					_debug_array($this->db->Record);
+				}
 				return $this->db->Record;
 			}
 			return False;

@@ -143,7 +143,6 @@
 		{
 			$referer = is_array($values) ? $values['referer'] : $referer;
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]')</p>\n";
-			
 			if (!is_array($values))
 			{
 				$values = array('nm' => $GLOBALS['phpgw']->session->appsession('session_data','infolog'));
@@ -262,6 +261,7 @@
 		{
 			if (is_array($content))
 			{
+				//echo "uiinfolog::edit: content="; _debug_array($content);
 				$info_id   = $content['info_id'];
 				$action    = $content['action'];
 				$action_id = $content['action_id'];
@@ -271,7 +271,7 @@
 				{
 					$content['info_link_id'] = $content['link_to']['primary'];
 				}
-				if (!$this->link->get_link($content['info_link_id']))
+				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
 				{
 					$content['info_link_id'] = 0;	// link has been deleted
 				}
@@ -288,16 +288,23 @@
 
 						if (!$info_id && is_array($content['link_to']['to_id']))	// writing link for new entry
 						{
-							$info_id = $this->bo->so->data['info_id'];
-							$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
+							$content['info_id'] = $this->bo->so->data['info_id'];
+							$this->link->link('infolog',$content['info_id'],$content['link_to']['to_id']);
 							if (strstr($content['info_link_id'],':') !== False)
 							{
 								list($app,$id) = explode(':',$content['info_link_id']);
-								$content['info_link_id'] = $this->link->get_link('info_log',$info_id,$app,$id);
+								$link = $this->link->get_link('infolog',$content['info_id'],$app,$id);
+								$content['info_link_id'] = $link['link_id'];
+
+								if ($content['info_from'] == '')
+								{
+									$content['info_from'] = $this->bo->link_id2title($content);
+								}
 								$this->bo->write(array(
-									'info_id' => $info_id,
-									'info_link_id' => $content['info_link_id']
-								));
+									'info_id' => $content['info_id'],
+									'info_link_id' => $content['info_link_id'],
+									'info_from' => $content['info_from']
+								),False);
 							}
 						}
 					}

@@ -179,7 +179,7 @@
 			$this->so->delete($info_id);
 		}
 
-		function write($values)
+		function write($values,$check_defaults=True)
 		{
 			while (list($key,$val) = each($values))
 			{
@@ -189,21 +189,24 @@
 					unset($values[$key]);
 				}
 			}
-			if ($values['info_responsible'] && $values['info_status'] == 'offer')
+			if ($check_defaults)
 			{
-				$values['info_status'] = 'ongoing';   // have to match if not finished
-			}
-			if (!$values['info_id'] && !$values['info_owner'])
-			{
-				$values['info_owner'] = $this->so->user;
-			}
-			if (!$values['info_subject'])
-			{
-				$values['info_subject'] = substr($values['info_des'],0,60).' ...';
-			}
-			if ($values['info_link_id'] && $values['info_from'] == '')
-			{
-				$values['info_from'] = $this->link_id2title($values);
+				if ($values['info_responsible'] && $values['info_status'] == 'offer')
+				{
+					$values['info_status'] = 'ongoing';   // have to match if not finished
+				}
+				if (!$values['info_id'] && !$values['info_owner'])
+				{
+					$values['info_owner'] = $this->so->user;
+				}
+				if (!$values['info_subject'])
+				{
+					$values['info_subject'] = substr($values['info_des'],0,60).' ...';
+				}
+				if ($values['info_link_id'] && $values['info_from'] == '')
+				{
+					$values['info_from'] = $this->link_id2title($values);
+				}
 			}
 			$values['info_datemodified'] = time();
 			$values['info_modifier'] = $this->so->user;

@@ -208,7 +208,7 @@
 			}
 			else
 			{
-				ExecMethod($session_data['method'],$this->complete_array_merge($content,$session_data['preserv']));
+				ExecMethod($session_data['method'],$this->complete_array_merge($session_data['preserv'],$content));
 			}
 		}
 
@@ -358,10 +358,14 @@
 							each($cols);	// skip next cell(s)
 						}
 					}
-					elseif ($opts[$col])	// width only once for a non colspan cell
+					else
 					{
-						$row_data[".$col"] .= ' WIDTH='.$opts[$col];
-						$opts[$col] = 0;
+						list($width,$disable) = explode(',',$opts[$col]);
+						if ($width)		// width only once for a non colspan cell
+						{
+							$row_data[".$col"] .= " WIDTH=\"$width\"";
+							$opts[$col] = "0,$disable";
+						}
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
 					list(,$cl) = explode(',',$cell['span']);
