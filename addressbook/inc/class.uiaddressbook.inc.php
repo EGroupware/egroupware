@@ -1086,6 +1086,7 @@
 
 			/* _debug_array($this->prefs); */
 			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
 			while(list($x,$y) = @each($custom))
 			{
 				$customfields[$y['name']] = $y['name'];
