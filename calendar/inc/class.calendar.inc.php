@@ -732,9 +732,12 @@ class calendar extends calendar_
 				}
 				else
 				{
-					$p->set_var('day_image','');
-					$p->set_var('bgcolor2','#FEFEFE');
-					$p->set_var('dayname','');
+//					$p->set_var('day_image','');
+//					$p->set_var('bgcolor2','#FEFEFE');
+//					$p->set_var('dayname','');
+ 
+					$p->set_var('bgcolor2','#FEFEFE');   
+					$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="minicalendargrey">'.$cal['day'].'</a>');
 				}
 				
 				$p->parse('monthweek_day','mini_day',True);
