@@ -13,7 +13,7 @@
 	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'resources';
-	$setup_info['resources']['version']	= '0.0.1.012';
+	$setup_info['resources']['version']	= '0.0.1.014';
 	$setup_info['resources']['app_order']	= 1;
 	$setup_info['resources']['tables']	= array('egw_resources');
 	$setup_info['resources']['enable']	= 1;
@@ -41,6 +41,8 @@
 		 'appname' => 'etemplate',
 		 'versions' => Array('1.0.0')
 	);
+
+
 
 
 

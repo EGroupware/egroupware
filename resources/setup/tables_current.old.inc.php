@@ -27,7 +27,6 @@
 				'buyable' => array('type' => 'varchar','precision' => '1'),
 				'prize' => array('type' => 'varchar','precision' => '200'),
 				'long_description' => array('type' => 'longtext'),
-				'picture' => array('type' => 'blob'),
 				'accessories' => array('type' => 'varchar','precision' => '50'),
 				'picture_src' => array('type' => 'varchar','precision' => '20')
 			),
