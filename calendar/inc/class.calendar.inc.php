@@ -212,7 +212,7 @@ class calendar extends calendar_
 	{
 		global $phpgw_info;
 
-		$weekday = date('w',mktime(2,0,0,$month,$day,$year));
+		$weekday = intval(date('w',mktime(2,0,0,$month,$day,$year)));
 
 		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 		{
@@ -327,7 +327,7 @@ class calendar extends calendar_
 		if($phpgw_info['server']['calendar_type'] == 'sql')
 		{
 			$this->stream->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
-			$this->stream->query('UPDATE phpgw_cal_user SET login='.$new_owner.' WHERE login='.$account_id);
+			$this->stream->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
 		}
 	}
 
@@ -337,8 +337,8 @@ class calendar extends calendar_
 
 		$this->set_filter();
 		$owner = $owner == 0?$phpgw_info['user']['account_id']:$owner;
-		$sql = "AND (phpgw_cal.type='M') "
-			. 'AND (phpgw_cal_user.login='.$owner.' '
+		$sql = "AND (phpgw_cal.cal_type='M') "
+			. 'AND (phpgw_cal_user.cal_login='.$owner.' '
 			. 'AND ((phpgw_cal_repeats.recur_enddate >= '.$this->end_repeat_day.') OR (phpgw_cal_repeats.recur_enddate=0))';
 
 // Private
@@ -519,11 +519,11 @@ class calendar extends calendar_
 		$this->set_filter();
 		$owner = !$owner?$phpgw_info['user']['account_id']:$owner;
 		$repeating_events_matched = $this->check_repeating_entries($datetime - $this->tz_offset);
-		$sql = "AND (phpgw_cal.type != 'M') "
+		$sql = "AND (phpgw_cal.cal_type != 'M') "
 				. 'AND ((phpgw_cal.datetime >= '.$datetime.' AND phpgw_cal.datetime <= '.($datetime + 86399).') '
 				.   'OR (phpgw_cal.datetime <= '.$datetime.' AND phpgw_cal.edatetime >= '.($datetime + 86399).') '
 				.   'OR (phpgw_cal.edatetime >= '.$datetime.' AND phpgw_cal.edatetime <= '.($datetime + 86399).')) '
-				. 'AND (phpgw_cal_user.login='.$owner;
+				. 'AND (phpgw_cal_user.cal_login='.$owner;
 
 // Private
 		if(strpos($this->filter,'private'))
@@ -791,7 +791,7 @@ class calendar extends calendar_
 					{
 						$p_g .= ' OR ';
 					}
-					$p_g .= 'phpgw_cal_user.login='.$participants[$i];
+					$p_g .= 'phpgw_cal_user.cal_login='.$participants[$i];
 				}
 			}
 			if($p_g)
@@ -802,7 +802,7 @@ class calendar extends calendar_
       
 		if($id)
 		{
-			$sql .= ' AND phpgw_cal.id <> '.$id;
+			$sql .= ' AND phpgw_cal.cal_id <> '.$id;
 		}
 
 		$db2 = $phpgw->db;
@@ -814,7 +814,7 @@ class calendar extends calendar_
 		}
 		for($i=0;$i<count($events);$i++)
 		{
-			$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE id='.$events[$i],__LINE__,__FILE__);
+			$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
 			if($db2->num_rows() == 0)
 			{
 				$retval[] = $events[$i];
@@ -1570,9 +1570,10 @@ class calendar extends calendar_
 
 		if ($event->category)
 		{
+			$cat = $phpgw->categories->return_single($event->category);
 			$var = Array(
 				'field'	=>	lang('Category'),
-				'data'	=>	$event->category
+				'data'	=>	$cat[0]['name']
 			);
 			$p->set_var($var);
 			$p->parse('output','list',True);
@@ -1698,7 +1699,10 @@ class calendar extends calendar_
 				$recur_end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
 				if($recur_end != 0)
 				{
-					$str .= lang('ends').': '.$phpgw->common->show_date($recur_end,'l, F d, Y').' ';
+					$recur_end -= $this->tz_offset;
+					$str .= lang('ends').': '.lang($phpgw->common->show_date($recur_end,'l'));
+					$str .= ', '.lang($phpgw->common->show_date($recur_end,'F'));
+					$str .= ' '.$phpgw->common->show_date($recur_end,'d, Y').' ';
 				}
 			}
 			if($event->recur_type == RECUR_WEEKLY || $event->recur_type == RECUR_DAILY)
@@ -1942,7 +1946,7 @@ class calendar extends calendar_
 								$index = ($hour + (($m * $increment) * 100));
 								$time_slice[$index]['marker'] = '-';
 								$time_slice[$index]['color'] = $phpgw_info['theme']['bg01'];
-								$time_display = $phpgw->common->show_date($eventstart['raw'],$$this->users_timeformat).'-'.$phpgw->common->show_date($eventend['raw'],$this->user_timeformat);
+								$time_display = $phpgw->common->show_date($eventstart['raw'],$this->users_timeformat).'-'.$phpgw->common->show_date($eventend['raw'],$this->user_timeformat);
 								$time_slice[$index]['description'] = '('.$time_display.') '.$this->is_private($event,$participants[$i],'title').$this->display_status($event->users_status);
 							}
 						}

@@ -32,7 +32,7 @@ class calendar_item
 	var $category = 0;
 	var $title = "Unnamed Event";
 	var $description = "Unnamed Event";
-	var $public = 0;
+	var $public = 1;
 	var $alarm = 0;
 	var $start;
 	var $end;

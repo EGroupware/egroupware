@@ -108,15 +108,15 @@
 			$private = 'public';
 		}
 
+		$is_public = ($private == 'public'?1:0);
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init($cal_stream);
-//		$cat = $phpgw->categories->return_single($category);
 		$phpgw->calendar->event_set_category($cal_stream,$category);
 		$phpgw->calendar->event_set_title($cal_stream,$title);
 		$phpgw->calendar->event_set_description($cal_stream,$description);
 		$phpgw->calendar->event_set_start($cal_stream,$start[year],$start[month],$start[mday],$start[hour],$start[min],0);
 		$phpgw->calendar->event_set_end($cal_stream,$end[year],$end[month],$end[mday],$end[hour],$end[min],0);
-		$phpgw->calendar->event_set_class($cal_stream,($private == 'public'));
+		$phpgw->calendar->event_set_class($cal_stream,$is_public);
 
 		if($id != 0)
 		{

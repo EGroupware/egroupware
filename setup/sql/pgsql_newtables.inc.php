@@ -186,7 +186,7 @@
   $phpgw_setup->db->query($sql);
 
 	$sql = "CREATE TABLE phpgw_cal (
-		id		serial,
+		cal_id		serial,
 		owner		int DEFAULT 0 NOT NULL,
 		category	int DEFAULT 0 NOT NULL,
 		groups	varchar(255),
@@ -194,7 +194,7 @@
 		mdatetime	int4,
 		edatetime	int4,
 		priority		int DEFAULT 2 NOT NULL,
-		type		varchar(10),
+		cal_type		varchar(10),
 		is_public	int DEFAULT 1 NOT NULL,
 		title		varchar(80) NOT NULL,
 		desription	text
@@ -202,14 +202,14 @@
   $phpgw_setup->db->query($sql);
 
 	$sql = "CREATE TABLE phpgw_cal_user (
-		id       int DEFAULT 0 NOT NULL,
-		login    int DEFAULT 0 NOT NULL,
-		status   char(1) DEFAULT 'A'
+		cal_id       int DEFAULT 0 NOT NULL,
+		cal_login    int DEFAULT 0 NOT NULL,
+		cal_status   char(1) DEFAULT 'A'
 	)";
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_cal_repeats (
-  	 id		int DEFAULT 0 NOT NULL,
+  	 cal_id		int DEFAULT 0 NOT NULL,
     recur_type		int DEFAULT 0 NOT NULL,
   	 recur_use_end	int DEFAULT 0,
     recur_enddate	int4 DEFAULT 0,

@@ -32,7 +32,10 @@
   $phpgw_setup->db->query("drop sequence phpgw_addressbook_id_seq");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
-
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal");
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal_user");
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal_repeats");
+  $phpgw_setup->db->query("drop sequence phpgw_cal_cal_id_seq");
   $phpgw_setup->db->query("DROP TABLE phpgw_nextid");
 
   $phpgw_setup->db->query("drop sequence todo_todo_id_seq");
@@ -49,7 +52,7 @@
   $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
   $phpgw_setup->db->query("DROP sequence phpgw_cal_id_seq");
   $phpgw_setup->db->query("drop sequence calendar_entry_cal_id_seq");
-
+  
   $phpgw_setup->db->query("drop sequence newsgroups_con_seq");
   $phpgw_setup->db->query("DROP TABLE newsgroups");
   $phpgw_setup->db->query("DROP TABLE lang");

@@ -1897,7 +1897,7 @@
 		$temp_db = $phpgw_setup->db;
 
 		$sql = "CREATE TABLE phpgw_cal (
-			id		serial,
+			cal_id		serial,
 			owner		int DEFAULT 0 NOT NULL,
 			category	int DEFAULT 0 NOT NULL,
 			groups	varchar(255),
@@ -1905,7 +1905,7 @@
 			mdatetime	int4,
 			edatetime	int4,
 			priority		int DEFAULT 2 NOT NULL,
-			type		varchar(10),
+			cal_type		varchar(10),
 			is_public	int DEFAULT 1 NOT NULL,
 			title		varchar(80) NOT NULL,
 			desription	text
@@ -1930,7 +1930,7 @@
 			$public = $phpgw_setup->db->f('cal_access');
 			$title = $phpgw_setup->db->f('cal_name');
 			$description = $phpgw_setup->db->f('cal_description');
-			$temp_db->query("INSERT INTO phpgw_cal(id,owner,category,groups,datetime,mdatetime,edatetime,priority,type,is_public,title,description)
+			$temp_db->query("INSERT INTO phpgw_cal(cal_id,owner,category,groups,datetime,mdatetime,edatetime,priority,cal_type,is_public,title,description)
 				values($id,$owner,0,'$groups',$datetime,$mdatetime,$edatetime,$priority,'$type',$public,'$title','$description')",__LINE__,__FILE__);
 		}
 
@@ -1938,7 +1938,7 @@
 		$phpgw_setup->db->query("drop sequence calender_entry_cal_id_seq",__LINE__,__FILE__);
 
 		$sql = "CREATE TABLE phpgw_cal_repeats (
-			id		int DEFAULT 0 NOT NULL,
+			cal_id		int DEFAULT 0 NOT NULL,
 			recur_type		int DEFAULT 0 NOT NULL,
 			recur_use_end	int DEFAULT 0,
 			recur_enddate	int4 DEFAULT 0,
@@ -1964,15 +1964,15 @@
 			$recur_data += (substr($days,4,1)=='Y'?M_THURSDAY:0);
 			$recur_data += (substr($days,5,1)=='Y'?M_FRIDAY:0);
 			$recur_data += (substr($days,6,1)=='Y'?M_SATURDAY:0);
-			$temp_db->query("INSERT INTO phpgw_cal_repeats(id,recur_type,recur_use_end,recur_enddate,recur_interval,recur_data)
+			$temp_db->query("INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_use_end,recur_enddate,recur_interval,recur_data)
 				VALUES($id,$recur_type,$recur_use_end,$recur_end,$recur_interval,$recur_data)",__LINE__,__FILE__);
 		}
 		$phpgw_setup->db->query("drop table calendar_entry_repeats",__LINE__,__FILE__);
 
 		$sql = "CREATE TABLE phpgw_cal_user (
-			id       int DEFAULT 0 NOT NULL,
-			login    int DEFAULT 0 NOT NULL,
-			status   char(1) DEFAULT 'A'
+			cal_id       int DEFAULT 0 NOT NULL,
+			cal_login    int DEFAULT 0 NOT NULL,
+			cal_status   char(1) DEFAULT 'A'
 		)";
 		$phpgw_setup->db->query($sql);  
 
@@ -1982,7 +1982,7 @@
 			$id = $phpgw_setup->db->f('cal_id');
 			$login = $phpgw_setup->db->f('cal_login');
 			$status = $phpgw_setup->db->f('cal_status');
-			$temp_db->query("INSERT INTO phpgw_cal_user(id,login,status) VALUES($id,$login,'$status')",__LINE__,__FILE__);
+			$temp_db->query("INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) VALUES($id,$login,'$status')",__LINE__,__FILE__);
 		}
 		$phpgw_setup->db->query("drop table calendar_entry_user",__LINE__,__FILE__);
 		

@@ -211,7 +211,7 @@
   $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_cal (
-    id		int(11) DEFAULT '0' NOT NULL auto_increment,
+    cal_id		int(11) DEFAULT '0' NOT NULL auto_increment,
     owner		int(11) DEFAULT '0' NOT NULL,
     category	int(11) DEFAULT '0' NOT NULL ,
     groups		varchar(255),
@@ -219,16 +219,16 @@
     mdatetime	int(11),
     edatetime	int(11),
     priority	int(11) DEFAULT '2' NOT NULL,
-    type		varchar(10),
+    cal_type		varchar(10),
     is_public		int DEFAULT '1' NOT NULL,
     title		varchar(80) NOT NULL,
     description	text,
-    PRIMARY KEY (id)
+    PRIMARY KEY (cal_id)
   )";
   $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_cal_repeats (
-    id		int(11) DEFAULT '0' NOT NULL,
+    cal_id		int(11) DEFAULT '0' NOT NULL,
     recur_type		int DEFAULT '0' NOT NULL,
     recur_use_end	int DEFAULT '0',
     recur_enddate	int(11) DEFAULT '0',
@@ -238,9 +238,9 @@
   $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_cal_user (
-    id       int(11) DEFAULT '0' NOT NULL,
-    login    int(11) DEFAULT '0' NOT NULL,
-    status   char(1) DEFAULT 'A',
+    cal_id       int(11) DEFAULT '0' NOT NULL,
+    cal_login    int(11) DEFAULT '0' NOT NULL,
+    cal_status   char(1) DEFAULT 'A',
     PRIMARY KEY (cal_id, cal_login)
   )";
   $phpgw_setup->db->query($sql);  

@@ -77,17 +77,17 @@ class calendar_ extends calendar__
     
 	function delete_calendar($stream='',$calendar='')
 	{
-		$this->stream->query('SELECT id FROM phpgw_cal WHERE owner='.$calendar,__LINE__,__FILE__);
+		$this->stream->query('SELECT cal_id FROM phpgw_cal WHERE owner='.$calendar,__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
 			while($this->stream->next_record())
 			{
-				$this->delete_event($stream,intval($this->stream->f('id')));
+				$this->delete_event($stream,intval($this->stream->f('cal_id')));
 			}
 			$this->expunge($stream);
 		}
 		$this->stream->lock(array('phpgw_cal_user'));
-		$this->stream->query('DELETE FROM phpgw_cal_user WHERE login='.$calendar,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_login='.$calendar,__LINE__,__FILE__);
 		$this->stream->unlock();
 			
 		return $calendar;
@@ -104,7 +104,7 @@ class calendar_ extends calendar__
 	  
 		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats'));
 
-		$this->stream->query('SELECT * FROM phpgw_cal WHERE id='.$event_id,__LINE__,__FILE__);
+		$this->stream->query('SELECT * FROM phpgw_cal WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		
 		if($this->stream->num_rows() > 0)
 		{
@@ -119,7 +119,7 @@ class calendar_ extends calendar__
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
 			
 			$this->event->owner = $this->stream->f('owner');
-			$this->event->id = intval($this->stream->f('id'));
+			$this->event->id = intval($this->stream->f('cal_id'));
 			$this->event->public = intval($this->stream->f('is_public'));
 			$this->event->category = intval($this->stream->f('category'));
 			$this->event->title = $phpgw->strip_html($this->stream->f('title'));
@@ -172,7 +172,7 @@ class calendar_ extends calendar__
 				}
 			}
 
-			$this->stream->query('SELECT * FROM phpgw_cal_repeats WHERE id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('SELECT * FROM phpgw_cal_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				$this->stream->next_record();
@@ -205,17 +205,17 @@ class calendar_ extends calendar__
 			}
 			
 		//Legacy Support
-			$this->stream->query('SELECT * FROM phpgw_cal_user WHERE id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('SELECT * FROM phpgw_cal_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				while($this->stream->next_record())
 				{
 					if($this->stream->f('cal_login') == $this->user)
 					{
-						$this->event->users_status = $this->stream->f('status');
+						$this->event->users_status = $this->stream->f('cal_status');
 					}
-					$this->event->participants[] = $this->stream->f('login');
-					$this->event->status[] = $this->stream->f('status');
+					$this->event->participants[] = $this->stream->f('cal_login');
+					$this->event->status[] = $this->stream->f('cal_status');
 				}
 			}
 		}
@@ -535,7 +535,7 @@ class calendar_ extends calendar__
 
 			for($k=0;$k<count($locks);$k++)
 			{
-				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE id='.$event_id,__LINE__,__FILE__);
+				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE cal_id='.$event_id,__LINE__,__FILE__);
 			}
 		}
 		$this->stream->unlock();
@@ -551,7 +551,7 @@ class calendar_ extends calendar__
 		if($search_repeats == True)
 		{
 			$repeats_from = ', phpgw_cal_repeats ';
-			$repeats_where = 'AND (phpgw_cal_repeats.id = phpgw_cal.id) ';
+			$repeats_where = 'AND (phpgw_cal_repeats.cal_id = phpgw_cal.cal_id) ';
 		}
 		else
 		{
@@ -559,12 +559,12 @@ class calendar_ extends calendar__
 			$repeats_where = '';
 		}
 		
-		$sql = 'SELECT DISTINCT phpgw_cal.id,'
+		$sql = 'SELECT DISTINCT phpgw_cal.cal_id,'
 				. 'phpgw_cal.datetime,phpgw_cal.edatetime,'
 				. 'phpgw_cal.priority '
 				. 'FROM phpgw_cal, phpgw_cal_user'
 				. $repeats_from
-				. 'WHERE (phpgw_cal_user.id = phpgw_cal.id) '
+				. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
 				. $repeats_where . $extra;
 
 		$this->stream->query($sql,__LINE__,__FILE__);
@@ -578,7 +578,7 @@ class calendar_ extends calendar__
 
 		while($this->stream->next_record())
 		{
-			$retval[] = intval($this->stream->f('id'));
+			$retval[] = intval($this->stream->f('cal_id'));
 		}
 
 		return $retval;
@@ -603,9 +603,9 @@ class calendar_ extends calendar__
 			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
 			$this->stream->query('INSERT INTO phpgw_cal(title,owner,category,priority,is_public) '
 				. "values('".$temp_name."',".$event->owner.",'".$category."',".$event->priority.",".$event->public.")");
-			$this->stream->query("SELECT id FROM phpgw_cal WHERE title='".$temp_name."'");
+			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
-			$event->id = $this->stream->f('id');
+			$event->id = $this->stream->f('cal_id');
 		}
 
 		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
@@ -628,15 +628,15 @@ class calendar_ extends calendar__
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event->priority.', '
-				. "type='".$type."', "
-				. 'is_public='.$event->access.', '
-				. "title='".addslashes($event->name)."', "
+				. "cal_type='".$type."', "
+				. 'is_public='.$event->public.', '
+				. "title='".addslashes($event->title)."', "
 				. "description='".addslashes($event->description)."' "
-				. 'WHERE id='.$event->id;
+				. 'WHERE cal_id='.$event->id;
 				
 		$this->stream->query($sql,__LINE__,__FILE__);
 		
-		$this->stream->query('DELETE FROM phpgw_cal_user WHERE id='.$event->id,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
 
 		reset($event->participants);
 		while (list($key,$value) = each($event->participants))
@@ -649,7 +649,7 @@ class calendar_ extends calendar__
 			{
 				$status = $event->status[$key];
 			}
-			$this->stream->query('INSERT INTO phpgw_cal_user(id,login,status) '
+			$this->stream->query('INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) '
 				. 'VALUES('.$event->id.','.$value.",'".$status."')",__LINE__,__FILE__);
 		}
 
@@ -664,26 +664,26 @@ class calendar_ extends calendar__
 				$end = '0';
 			}
 
-			$this->stream->query('SELECT count(id) FROM phpgw_cal_repeats WHERE id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
 			$this->stream->next_record();
 			$num_rows = $this->stream->f(0);
 			if($num_rows == 0)
 			{
-				$this->stream->query('INSERT INTO phpgw_cal_repeats(id,recur_type,recur_enddate,recur_data,recur_interval) '
-					.'VALUES('.$event->id.",'".$event->recur_type."',".$end.','.$event->recur_data.','.$event->recur_interval.')',__LINE__,__FILE__);
+				$this->stream->query('INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_enddate,recur_data,recur_interval) '
+					.'VALUES('.$event->id.','.$event->recur_type.','.$end.','.$event->recur_data.','.$event->recur_interval.')',__LINE__,__FILE__);
 			}
 			else
 			{
 				$this->stream->query('UPDATE phpgw_cal_repeats '
-					."SET recur_type='".$event->rpt_type."', "
-					."recur_end='".$end."', "
-					."recur_data='".$event->recur_data."', recur_interval=".$event->recur_interval.' '
-					.'WHERE id='.$event->id,__LINE__,__FILE__);
+					.'SET recur_type='.$event->recur_type.', '
+					.'recur_enddate='.$end.', '
+					.'recur_data='.$event->recur_data.', recur_interval='.$event->recur_interval.' '
+					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
 			}
 		}
 		else
 		{
-			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
 		}
 		
 		$this->stream->unlock();
@@ -706,7 +706,7 @@ class calendar_ extends calendar__
 			TENTATIVE	=>	'T',
 			ACCEPTED	=>	'A'
 		);
-		$this->stream->query("UPDATE phpgw_cal_user SET status='".$status_code_short[$status]."' WHERE id=".$id." AND login=".$owner,__LINE__,__FILE__);
+		$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
 		return True;
 	}
 	

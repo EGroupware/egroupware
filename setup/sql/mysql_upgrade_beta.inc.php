@@ -1507,7 +1507,7 @@
 		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='0' WHERE cal_access='private'",__LINE__,__FILE__);
 		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='1' WHERE cal_access='public'",__LINE__,__FILE__);
 		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='2' WHERE cal_access='group'",__LINE__,__FILE__);
-		$phpgw_setup->db->query("alter table calendar_entry change cal_id id int(11) DEFAULT '0' NOT NULL auto_increment",__LINE__,__FILE__);
+//		$phpgw_setup->db->query("alter table calendar_entry change cal_id cal_id int(11) DEFAULT '0' NOT NULL auto_increment",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_owner owner int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry add column category int(11) DEFAULT '0' NOT NULL after owner",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_group groups varchar(255)",__LINE__,__FILE__);
@@ -1515,7 +1515,7 @@
 		$phpgw_setup->db->query("alter table calendar_entry change cal_mdatetime mdatetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_edatetime edatetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_priority priority int(11) DEFAULT '2' NOT NULL",__LINE__,__FILE__);
-		$phpgw_setup->db->query("alter table calendar_entry change cal_type type varchar(10)",__LINE__,__FILE__);
+//		$phpgw_setup->db->query("alter table calendar_entry change cal_type cal_type varchar(10)",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_access is_public int DEFAULT '1' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_name title varchar(80) NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_description description text",__LINE__,__FILE__);
@@ -1538,7 +1538,7 @@
 			$new_days += (substr($days,6,1)=='Y'?M_SATURDAY:0);
 			$temp_db->query("UPDATE calendar_entry_repeats SET cal_days = '".$new_days."' WHERE cal_id=".$id,__LINE__,__FILE__);
 		}
-		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_id id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+//		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_id cal_id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_type recur_type int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 // I'm thinking I can delete the use_end field and just check to see if the end is != 0....
 //		$phpgw_setup->db->query("alter table calendar_entry_repeats drop recur_use_end",__LINE__,__FILE__);
@@ -1550,12 +1550,12 @@
 
 		while(list($key,$value) = each($rpt_type))
 		{
-			$phpgw_setup->db->query("UPDATE phpgw_cal_repeats SET recur_type=".$value." WHERE id=".$key,__LINE__,__FILE__);
+			$phpgw_setup->db->query("UPDATE phpgw_cal_repeats SET recur_type=".$value." WHERE cal_id=".$key,__LINE__,__FILE__);
 		}
 		
-		$phpgw_setup->db->query("alter table calendar_entry_user change cal_id id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
-		$phpgw_setup->db->query("alter table calendar_entry_user change cal_login login int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
-		$phpgw_setup->db->query("alter table calendar_entry_user change cal_status status char(1) DEFAULT 'A'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_id cal_id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_login cal_login int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_status cal_status char(1) DEFAULT 'A'",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry_user rename phpgw_cal_user",__LINE__,__FILE__);
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
