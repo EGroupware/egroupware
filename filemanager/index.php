@@ -1,6 +1,6 @@
 <?php
 
-if ($download || $op == "view" || $op == "history")
+if ($download || $op == "view" || $op == "history" || $op == help)
 {
 	$noheader = True;
 }
@@ -153,9 +153,11 @@ if (($path == $homedir) && !$phpgw->vfs->file_exists ($homedir, array (RELATIVE_
 }
 elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
 {
-	if (!$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+	if (!$phpgw->vfs->file_exists ($path, array (RELATIVE_NONE)))
 	{
+		$phpgw->vfs->override_acl = 1;
 		$phpgw->vfs->mkdir ($path, array (RELATIVE_NONE));
+		$phpgw->vfs->override_acl = 0;
 
 		$group_id = $phpgw->accounts->name2id ($matches[1]);
 		$phpgw->vfs->set_attributes ($path, array (RELATIVE_NONE), array ("owner_id" => $group_id, "createdby_id" => $group_id));
@@ -222,6 +224,7 @@ if ($path == $fakebase)
 		}
 
 		$ls_array = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+
 		$files_array[] = $ls_array[0];
 
 		$numoffiles++;
@@ -312,6 +315,28 @@ if ($op == "history" && $file)
 	$phpgw->common->phpgw_exit ();
 }
 
+if ($op == "help" && $help_name)
+{
+	while (list ($num, $help_array) = each ($help_info))
+	{
+		if ($help_array[0] != $help_name)
+			continue;
+
+		html_font_set ("4");
+		$title = ereg_replace ("_", " ", $help_array[0]);
+		$title = ucwords ($title);
+		html_text ($title);
+		html_font_end ();
+
+		html_break (2);
+
+		html_font_set ("2");
+		html_text ($help_array[1]);
+		html_font_end ();
+	}
+	
+}
+
 ###
 # Start Main Page
 ###
@@ -349,7 +374,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_table_col_begin ("left");
 		
 		if ($path != "/")
+		{
 			html_link ("$appname/index.php?path=$lesspath", html_image ("images/folder-up.gif", "Up", "left", 0, NULL, 1));
+			html_help_link ("up");
+		}
 		
 		html_table_col_end ();
 		html_table_col_begin ("center");
@@ -367,11 +395,15 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_font_set (4, HTML_TABLE_FILES_HEADER_TEXT_COLOR);
                 html_text_bold (strtoupper ($disppath));
 		html_font_end ();
+		html_help_link ("directory_name");
 		html_table_col_end ();
 		html_table_col_begin ("right");
 		
 		if ($path != $homedir)
+		{
 			html_link ("$appname/index.php?path=$homedir", html_image ("images/folder-home.gif", "Home", "right", 0, NULL, 1));
+			html_help_link ("home");
+		}
 
 		html_table_col_end ();
 		html_table_row_end ();
@@ -387,6 +419,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 		html_table_col_begin ();
 		html_text ("Sort by:" . html_nbsp (1, 1), NULL, NULL, 1);
+		html_help_link ("sort_by");
 		html_table_col_end ();
 
 		reset ($file_attributes);
@@ -396,6 +429,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			{
 				html_table_col_begin ();
 				html_link ("$appname/index.php?path=$path&sortby=$internal", html_text_bold ("$displayed", 1, 1));
+				html_help_link (strtolower (ereg_replace (" ", "_", $displayed)));
 				html_table_col_end ();
 			}
 		}
@@ -644,7 +678,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			if ($settings["version"])
 			{
 				html_table_col_begin ();
-				html_link ("$appname/index.php?op=history&file=$files[name]&path=$path", $files["version"], NULL, NULL, NULL, "_new");
+				html_link ("$appname/index.php?op=history&file=" . string_encode ($files[name], 1) . "&path=$path", $files["version"], NULL, NULL, NULL, "_new");
 				html_table_col_end ();
 			}
 
@@ -687,24 +721,28 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			if (!$rename && !$edit_comments)
 			{
 				html_form_input ("submit", "edit", "Edit");
+				html_help_link ("edit");
 				html_nbsp (3);
 			}
 
 			if (!$edit_comments)
 			{
 				html_form_input ("submit", "rename", "Rename");
+				html_help_link ("rename");
 				html_nbsp (3);
 			}
 
 			if (!$rename && !$edit_comments)
 			{
 				html_form_input ("submit", "delete", "Delete");
+				html_help_link ("delete");
 				html_nbsp (3);
 			}
 
 			if (!$rename)
 			{
 				html_form_input ("submit", "edit_comments", "Edit comments");
+				html_help_link ("edit_comments");
 			}
 		}
 	}
@@ -721,12 +759,15 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		
 		html_break (1);
 		html_form_input ("submit", "go", "Go to:");
+		html_help_link ("go_to");
 
 		if ($path != "/" && $path != $fakebase)
 		{
 			html_form_input ("submit", "copy", "Copy to:");
+			html_help_link ("copy_to");
 
 			html_form_input ("submit", "move", "Move to:");
+			html_help_link ("move_to");
 		}
 
 		html_form_select_begin ("todir");
@@ -798,23 +839,28 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		}
 
 		html_form_select_end ();
+		html_help_link ("directory_list");
 
 		if ($path != "/" && $path != $fakebase)
 		{
 			html_break (1);
 
 			html_form_input ("submit", "download", "Download");
+			html_help_link ("download");
 			html_nbsp (3);
 
 			html_form_input ("text", "createdir", NULL, 255, 15);
 			html_form_input ("submit", "newdir", "Create Folder");
+			html_help_link ("create_folder");
 		}
 
 		html_break (1);
 		html_form_input ("submit", "update", "Update");
+		html_help_link ("update");
 
 		html_form_end ();
 
+		html_help_link ("file_stats");
 		html_break (1);
 		html_text_bold ("Files: ");
 		html_text ($numoffiles);
@@ -849,9 +895,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_table_row_begin ("center");
 			html_table_col_begin ();
 			html_text_bold ("File");
+			html_help_link ("upload_file");
 			html_table_col_end ();
 			html_table_col_begin ();
 			html_text_bold ("Comment");
+			html_help_link ("upload_comment");
 			html_table_col_end ();
 			html_table_row_end ();
 
@@ -865,6 +913,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_table_row_end ();
 			html_table_end ();
 			html_form_input ("submit", "upload_files", "Upload files");
+			html_help_link ("upload_files");
 			html_form_end ();
 		}
 	}
@@ -1052,7 +1101,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 		{
 			if ($fileinfo["name"] && $fileinfo["deleteable"] != "N")
 			{
-				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => $comment[$i]));
+				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => stripslashes ($comment[$i])));
 				$phpgw->vfs->cp ($file[$i], "$file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 
 				html_text_summary ("Replaced $disppath/$file_name[$i]", $file_size[$i]);
@@ -1060,7 +1109,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 			else
 			{
 				$phpgw->vfs->cp ($file[$i], $file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
-				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => $comment[$i]));
+				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => stripslashes ($comment[$i])));
 
 				html_text_summary ("Created $disppath/$file_name[$i]", $file_size[$i]);
 			}

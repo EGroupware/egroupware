@@ -445,4 +445,17 @@ function html_image ($src = NULL, $alt = NULL, $align = NULL, $border = NULL, $s
 	return (eor ($rstring, $return));
 }
 
+function html_help_link ($help_name)
+{
+	global $settings;
+	global $appname;
+
+	if (!$settings["show_help"])
+		return 0;
+
+	$rstring = html_link ("$appname/index.php?op=help&help_name=$help_name", "[?]", 1, 1, 0, "_new");
+
+	echo $rstring;
+}
+
 ?>
