@@ -37,7 +37,6 @@
 			'author',
 			'license',
 			'based_on',
-			'based_on_url',
 			'maintainer'
 		);
 		while (list(,$field) = each($fields))
@@ -48,6 +47,11 @@
 			{
 				$app_data[$field] = lang($setup_info[$app][$field]);
 			}
+		}
+
+		if (isset($app_data['note']) && !empty($app_data['note']))
+		{
+			$app_data['note'] = lang($app_data['note']);
 		}
 	}
 

@@ -56,7 +56,7 @@
 		<xsl:if test="note != ''">
 			<tr>
 				<td colspan="2">
-					<i><xsl:value-of select="note"/></i>
+					<i><xsl:value-of disable-output-escaping="yes" select="note"/></i>
 				</td>
 			</tr>
 		</xsl:if>
