@@ -2920,7 +2920,7 @@
 			{
 				if(intval($id) != intval($this->bo->owner))
 				{
-					$str .= '    <option value="' . $id . '"'.($event['participants'][$id]?' selected':'').'>('.$GLOBALS['phpgw']->accounts->get_type($id).') '.$name.'</option>'."\n";
+					$str .= '    <option value="' . intval($id) . '"'.($event['participants'][intval($id)]?' selected':'').'>('.$GLOBALS['phpgw']->accounts->get_type(intval($id)).') '.$name.'</option>'."\n";
 				}
 			}
 			$var[] = Array(
