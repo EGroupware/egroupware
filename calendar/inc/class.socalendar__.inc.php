@@ -65,6 +65,7 @@ class socalendar__
 	var $users_status;
 	var $datetime;
 	var $debug = False;
+//	var $debug = True;
 
 	function socalendar__()
 	{

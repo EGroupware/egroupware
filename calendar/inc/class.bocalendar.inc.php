@@ -547,6 +547,10 @@
 					$GLOBALS['phpgw']->common->phpgw_exit();
 	   		}
 
+				if($this->debug)
+				{
+					echo '<!-- Prior to fix_update_time() -->'."\n";
+				}
 				$this->fix_update_time($l_start);
 				$this->fix_update_time($l_end);
 
@@ -709,28 +713,26 @@
 				}
 
 				$overlapping_events = $this->overlap(
-//												$this->maketime($event['start']) - $this->datetime->tz_offset,
-//												$this->maketime($event['end']) - $this->datetime->tz_offset,
-												$this->maketime($event['start']),
-												$this->maketime($event['end']),
-												$event['participants'],
-												$event['owner'],
-												$event_ids
+					$this->maketime($event['start']),
+					$this->maketime($event['end']),
+					$event['participants'],
+					$event['owner'],
+					$event_ids
 				);
 			}
 
 			if($overlapping_events)
 			{
-            if($send_to_ui)
-            {
+				if($send_to_ui)
+				{
 					unset($GLOBALS['phpgw_info']['flags']['noheader']);
 					unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				   ExecMethod('calendar.uicalendar.overlap',
-				   	Array(
-				   		'o_events'	=> $overlapping_events,
-				   		'this_event'	=> $event
-				   	)
-				   );
+					ExecMethod('calendar.uicalendar.overlap',
+				   		Array(
+				   			'o_events'	=> $overlapping_events,
+				   			'this_event'	=> $event
+				   		)
+					);
 					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 				else
@@ -742,21 +744,34 @@
 			{
 				if(!$event['id'])
 				{
-   				$this->so->add_entry($event);
-	   			$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
+					if($this->debug)
+					{
+						echo '<!-- Creating a new event. -->'."\n";
+					}
+					$this->so->cal->event = $event;
+					$this->so->add_entry($event);
+					$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
+					if($this->debug)
+					{
+						echo '<!-- New event ID = '.$event['id'].' -->'."\n";
+					}
 				}
 				else
 				{
+					if($this->debug)
+					{
+						echo '<!-- Updating an existing event. -->'."\n";
+					}
 					$new_event = $event;
 					$old_event = $this->read_entry($event['id']);
 					$this->prepare_recipients($new_event,$old_event);
 					$this->so->cal->event = $event;
-   				$this->so->add_entry($event);
+					$this->so->add_entry($event);
 				}
-            $date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
-            if($send_to_ui)
-            {
-				   Execmethod('calendar.uicalendar.index');
+				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
+				if($send_to_ui)
+				{
+					Execmethod('calendar.uicalendar.index');
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 			}
