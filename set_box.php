@@ -29,6 +29,7 @@
 //	unset($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
 //	$GLOBALS['phpgw']->preferences->save_repository();
 
+	$GLOBALS['app_box'] = intval(get_var('app',Array('GET')));
 	function move_boxes($curr_position,$new_order,$offset,$value_to_check,$max_num)
 	{
 		if(isset($GLOBALS['phpgw_info']['user']['preferences']['portal_order'][$new_order]))
@@ -60,15 +61,15 @@
 			}
 		}
 		$GLOBALS['phpgw']->preferences->delete('portal_order',$new_order);
-		$GLOBALS['phpgw']->preferences->add('portal_order',$new_order,intval($GLOBALS['HTTP_GET_VARS']['app']));
+		$GLOBALS['phpgw']->preferences->add('portal_order',$new_order,$GLOBALS['app_box']);
 			
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
 
-	switch($GLOBALS['HTTP_GET_VARS']['control'])
+	switch(get_var('control',Array('GET')))
 	{
 		case 'up':
-			$curr_position = $GLOBALS['phpgw']->common->find_portal_order(intval($GLOBALS['HTTP_GET_VARS']['app']));
+			$curr_position = $GLOBALS['phpgw']->common->find_portal_order($GLOBALS['app_box']);
 			$max_count = count($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) - 1;
 			$offset = -1;
 			if($curr_position == 0)
@@ -82,7 +83,7 @@
 			move_boxes($curr_position,$new_order,$offset,0,$max_count);
 			break;
 		case 'down':
-			$curr_position = $GLOBALS['phpgw']->common->find_portal_order(intval($GLOBALS['HTTP_GET_VARS']['app']));
+			$curr_position = $GLOBALS['phpgw']->common->find_portal_order($GLOBALS['app_box']);
 			$max_count = count($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) - 1;
 			$offset = 1;
 			if($curr_position == $max_count)
