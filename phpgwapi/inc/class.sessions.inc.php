@@ -35,6 +35,7 @@
 		var $data;
 		var $db;
 		var $db2;
+		var $variableNames;
 
 		/*************************************************************************\
 		* Constructor just loads up some defaults from cookies                    *
@@ -47,6 +48,8 @@
 			$this->db2       = $phpgw->db;
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
+			// this want work because of crypto not ready at this point
+			#$this->restore();
 		}
 
 		/*************************************************************************\
@@ -418,22 +421,22 @@
 		function save()
 		{
 			global $phpgw;
-				
+			
 			if (is_array($this->variableNames))
 			{
 				reset($this->variableNames);
 				while(list($key, $value) = each($this->variableNames))
 				{
-					if ($value == 'registered')
+					if ($value == "registered")
 					{
 						global $$key;
 						$sessionData[$key] = $$key;
 					}
 				}
-				$this->appsession($sessionData);
+				$this->appsession('session','',$sessionData);
 			}
 		}
-			
+		
 		// create a list a variable names, wich data need's to be restored
 		function register($_variableName)
 		{
