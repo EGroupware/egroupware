@@ -168,8 +168,6 @@
 
 			if($convert)
 			{
-				$buffer = $this->bo->export($conv_type,$cat_id);
-
 				if($conv_type == 'none')
 				{
 					$GLOBALS['phpgw_info']['flags']['noheader'] = False;
@@ -181,6 +179,8 @@
 					$GLOBALS['phpgw']->common->phpgw_footer();
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
+
+				$buffer = $this->bo->export($conv_type,$cat_id);
 
 				if(($download == 'on') || ($o->type == 'pdb'))
 				{
