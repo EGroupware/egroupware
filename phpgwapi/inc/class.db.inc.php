@@ -1148,8 +1148,13 @@
 						$sql_append = ' UPDATE DUPLICATES';
 						break;
 					case 'mysql':
-						$cmd = 'REPLACE';
-						break;
+						// use replace if primary keys are included
+						if (count(array_intersect(array_keys($where),$table_def['pk'])) == count($table_def['pk']))
+						{
+							$cmd = 'REPLACE';
+							break;
+						}
+						// fall through !!!
 					default:
 						$this->select($table,'count(*)',$where,$line,$file);
 						if ($this->next_record() && $this->f(0))
