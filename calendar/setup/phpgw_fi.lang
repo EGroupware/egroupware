@@ -1,0 +1,132 @@
+1 match found	calendar	fi	1 löytyi
+(i/v)cal	calendar	fi	(i/v)Cal
+a	calendar	fi	a
+accept	calendar	fi	Hyväksy
+accepted	calendar	fi	Hyväksytty
+add alarm	calendar	fi	Lisää muistutus
+added	calendar	fi	Lisätty
+alarm management	calendar	fi	Muistutusten hallinta
+all day	calendar	fi	Koko päivä
+are you sure\nyou want to\ndelete this entry ?	calendar	fi	Haluatko poistaa?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fi	Haluatko poistaa?\n\nPoisto vaikuttaa\nkaikkiin käyttäjiin.
+are you sure you want to delete this holiday ?	calendar	fi	Poistetaanko juhlapäivä?
+brief description	calendar	fi	Lyhyt kuvaus
+calendar	common	fi	Kalenteri
+calendar - [iv]cal importer	calendar	fi	Kalenteri - [iv]Cal Tuonti
+calendar - add	calendar	fi	Kalenteri - Lisää
+calendar - edit	calendar	fi	Kalenteri - Muuta
+calendar event	calendar	fi	Kalenteritapahtuma
+calendar holiday management	admin	fi	Juhlapäivien hallinta
+calendar settings	admin	fi	Kalenterin asetukset
+daily	calendar	fi	Päivittäin
+daily matrix view	calendar	fi	Päivänäkymä
+days repeated	calendar	fi	toistokerrat
+default calendar filter	calendar	fi	Oletusrajaus
+default calendar view	calendar	fi	Oletusnäkymä
+deleted	calendar	fi	Poistettu
+do you wish to autoload calendar holidays files dynamically?	admin	en	Haluatko ladata juhlapäivät automaattisesti?
+Display interval in Day View	calendar	fi	Päivänäkymän tarkkuus
+display mini calendars when printing	calendar	fi	Käytä minikalentereja tulostettaessa
+display status of events	calendar	fi	Tapahtumien tila
+duration	calendar	fi	Kesto
+edit series	calendar	fi	Muokkaa sarja
+edit single	calendar	fi	Muokkaa kerta
+end date/time	calendar	fi	Loppu päivä/aika
+ends	calendar	fi	päättyy
+export	calendar	fi	Vie
+(for weekly)	calendar	fi	(viikoittaiselle)
+fr	calendar	fi	Pe
+free/busy	calendar	fi	Vapaa/varattu
+frequency	calendar	fi	Jakso
+fri	calendar	fi	Perjantai
+full description	calendar	fi	Kuvaus
+generate printer-friendly version	calendar	fi	Tulostettava versio
+global public and group public	calendar	fi	Julkaise kaikille ja omalle ryhmälle
+global public only	calendar	fi	Julkaise kaikille
+go!	calendar	fi	Tee!
+grant calendar access	common	fi	Pääsy kalenteriin
+group public only	calendar	fi	Julkaise omalle ryhmälle
+ignore conflict	calendar	fi	Ohita päällekkäiset
+has been canceled	calendar	fi	on peruttu
+has been rescheduled to	calendar	fi	on siirtynyt aikaan
+i participate	calendar	fi	Osallistun
+import	calendar	fi	Tuo
+interval	calendar	fi	Jakso
+load [iv]cal	calendar	fi	Lataa [iv]Cal
+location	calendar	fi	Sijainti
+location to autoload from	admin	fi	Mistä ladataan automaattisesti
+minutes	calendar	fi	minuuttia
+mo	calendar	fi	Ma
+modified	calendar	fi	Muutettu
+mon	calendar	fi	Maanantai
+month	calendar	fi	Kuukausi
+monthly (by date)	calendar	fi	Kuukausittain (päiväys)
+monthly (by day)	calendar	fi	Kuukausittain (viikonpäivä)
+monthly	calendar	fi	Kuukausittain
+new entry	calendar	fi	Uusi tapahtuma
+no matches found.	calendar	fi	Ei löytynyt.
+no repsonse	calendar	fi	Ei vastausta.
+no response	calendar	fi	Ei vastausta
+participant	calendar	fi	Osallistuja
+participants	calendar	fi	Osallistujat
+participates	calendar	fi	Osallistuu
+printer friendly	calendar	fi	Tulostettavaksi
+private and global public	calendar	fi	Yksityinen ja Kaikille
+private and group public	calendar	fi	Yksityinen ja Oma ryhmä
+private only	calendar	fi	Yksityinen
+re-edit event	calendar	fi	Muokkaa tapahtumaa
+refresh	calendar	fi	Päivitä
+reject	calendar	fi	Hylkää
+rejected	calendar	fi	Hylätty
+repeat day	calendar	fi	Toistumispäivä
+repeat end date	calendar	fi	Viimeisen kerran
+repeating event information	calendar	fi	Toistuvat tapahtuman tiedot
+repeat type	calendar	fi	Toistuvuus
+repetition	calendar	fi	Toisto
+sa	calendar	fi	La
+sat	calendar	fi	Lauantai
+scheduling conflict	calendar	fi	Päällekkäisyys aikatauluissa
+search results	calendar	fi	Haun tulokset
+send/Receive updates via email	calendar	fi	Lähetä/vastaanota päivityksiä sähköpostilla
+send updates via email	common	fi	Lähetä päivityksiä sähköpostilla
+show day view on main screen	calendar	fi	Päivänäkymä päänäytöllä
+show high priority events on main screen	calendar	fi	Näytä tärkeät tapahtumat päänäytöllä
+sorry, the owner has just deleted this event	calendar	fi	Valitan, omistaja poisti tapahtuman
+start date/time	calendar	fi	Alku päivä/aika
+su	calendar	fi	Su
+sun	calendar	fi	Sunnuntai
+tentative	calendar	fi	Alustava
+th	calendar	fi	To
+the following conflicts with the suggested time:<ul>x</ul>	calendar	fi	Ehdotetun ajan kanssa päällekkäin:<ul>%1</ul>
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fi	Uutispalvelimeen ei saatu yhteyttä.<br>Tarkista ylläpidolta palvelin, tunnus ja salasana.
+this month	calendar	fi	Tämä kuukausi
+this week	calendar	fi	Tämä viikko
+this year	calendar	fi	Tämä vuosi
+thu	calendar	fi	Torstai
+today	calendar	fi	Tänään
+tu	calendar	fi	Ti
+tue	calendar	fi	Tiistai
+use end date	calendar	fi	Käytä loppumispäivää
+view this entry	calendarfi	Näytä tapahtuma
+we	calendar	fi	Ke
+wed	calendar	fi	Keskiviikko
+week	calendar	fi	Viikko
+weekday starts on	calendar	fi	Viikon ensimmäinen päivä
+weekly	calendar	fi	Viikoittain
+when creating new events default set to private	calendar	fi	Luo uudet tapahtumat yksityisinä
+work day ends on	calendar	fi	Työpäivä päättyy
+work day starts on	calendar	fi	Työpäivä alkaa
+x matches found	calendar	fi	%1 löytyi
+year	calendar	fi	Vuosi
+yearly	calendar	fi	Vuosittain
+you have 1 high priority event on your calendar today.	common	fi	Kalenterissasi on tälle päivälle yksi tärkeä tapahtuma.
+you have x high priority events on your calendar today.	common	fi	Kalenterissasi on tälle päivälle %1 tärkeää tapahtumaa.
+you have a meeting scheduled for	calendar	fi	Sinulla on kokous
+you have not entered a valid date	calendar	fi	Et ole antanut päivämäärää
+you have not entered a title	calendar	fi	Et ole antanut otsikkoa
+you have not entered a valid time of day	calendar	fi	Et ole antanut kellonaikaa
+you have not entered participants	calendar	fi	Et ole antanut osallistujia
+you must enter one or more search keywords	calendar	fi	Anna ainakin yksi hakusana
+your meeting scheduled for	calendar	fi	Kokouksesi kello
+your meeting that was scheduled for	calendar	fi	Kokouksesi jonka piti olla
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fi	Ehdottamasi aika <B> %1 - %2 </B> on päällekkäin näiden tapahtumien kanssa:

@@ -1,0 +1,207 @@
+account active	admin	fi	Tunnus aktiivinen
+account has been created	common	fi	Tunnus luotu
+account has been deleted	common	fi	Tunnus poistettu
+account has been updated	common	fi	Tunnus päivitetty
+account permissions	admin	fi	Tunnuksen oikeudet
+account preferences	admin	fi	Tunnuksen asetukset
+acl manager	admin	fi	ACL -hallinta
+acl rights	admin	fi	ACL Oikeudet
+action	admin	fi	Toimenpide
+add a new account.	admin	fi	Uusi tunnus.
+add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	fi	Lisää automaattisesti luodut käyttäjät ryhmään (käytetään ryhmää 'Default' jollei tässä toisi määritellä.)
+add global category	admin	fi	Lisää yleinen luokka
+add new account	admin	fi	Uusi tunnus
+add new application	admin	fi	Uusi sovellus
+add peer server	admin	fi	Lisää rinnakkaispalvelin
+admin email	admin	fi	Sähköpostin hallinta
+administration	admin	fi	Ylläpito
+admin name	admin	fi	Ylläpitäjän nimi
+admins	admin	fi	Ylläpitäjät
+allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
+all records and account information will be lost!	admin	fi	Kaikki tietueet ja tunnuksen tiedot poistetaan!
+all users	admin	fi	Kaikki käyttäjät
+anonymous user	admin	fi	Kirjautumaton käyttäjä
+application name	admin	fi	Sovelluksen nimi
+applications	admin	fi	Sovellukset
+application title	admin	fi	Sovelluksen otsikko
+are you sure you want to delete this account ?	admin	fi	Haluatko poistaa tunnuksen ?
+are you sure you want to delete this application ?	admin	fi	Haluatko poistaa sovelluksen ?
+are you sure you want to delete this category ?	common	fi	Haluatko poistaa luokan ?
+are you sure you want to delete this group ?	admin	fi	Haluatko poistaa ryhmän ?
+are you sure you want to delete this server?	admin	fi	Haluatko poistaa palvelimen ?
+are you sure you want to kill this session ?	admin	fi	Haluatko keskeyttää tämän istunnon ?
+attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	fi	Yritä käytä oikeaa mime-tyyppiä FTP siirrossa oletuksen'application/octet-stream' sijasta
+authentication / accounts	admin	fi	Käyttäjäntunnistus / Käyttäjätunnukset
+auto create account records for authenticated users	admin	fi	Luo tunnus automaattisesti tunnistetuille käyttäjille
+bi-directional	admin	fi	kaksisuuntainen
+bi-dir passthrough	admin	fi	kaksisuuntainen läpäisy
+bottom	admin	fi	alas
+change main screen message	admin	fi	Vaihda päänäytön viesti
+check ip address of all sessions	admin	fi	tarkista IP-osoite kaikille istunnoille
+country selection	admin	fi	Maan valinta
+create group	admin	fi	Uusi ryhmä
+default file system space per user	admin	fi	Tallennustila per käyttäjä
+default file system space per user/group ?	admin	fi	Tallennustila per käyttäjä/ryhmä ?
+deny access to applications	admin	fi	Estä pääsy sovelluksiin
+deny access to current sessions	admin	fi	Estä pääsy nykyisiin istuntoihin
+deny access to global categories	admin	fi	Estä pääsy yleisiin luokkiin
+deny access to groups	admin	fi	Estä pääsy ryhmiin
+deny access to mainscreen message	admin	fi	Estä pääsy päänäytön viestiin
+deny access to peer servers	admin	fi	Estä pääsy rinnakkaispalvelimille
+deny access to user accounts	admin	fi	Estä pääsy käyttäjätunnuksiin
+deny all users access to grant other users access to their entries ?	admin	fi	Estä kaikilta käyttäjiltä tietojensa julkistaminen?
+deny to site configuration	admin	fi	Estä pääsy palvelun asetuksiin
+display	admin	fi	Näytä
+do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myös yleiset alaluokat?
+edit application	admin	fi	Muokkaa sovellusta
+edit global category	admin	fi	Muokkaa yleistä luokkaa
+edit group	admin	fi	Muokkaa ryhmää
+edit login screen message	admin	fi	Muokkaa kirjautumisnäytön viestiä
+edit main screen message	admin	fi	Muokkaa päänäytön viestiä
+edit peer server	admin	fi	Muokkaa rinnakkaispalvelinta
+edit table format	admin	fi	Muokkaa taulukon muotoa
+edit user account	admin	fi	Muokkaa käyttäjätunnusta
+enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkejä alustaaksesi app_session <br>salauksen (vaatii mcrypt)
+enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen isäntänimi (hostname)
+enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	fi	Anna phpGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/phpgroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
+enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvelimille
+enter the site username for peer servers	admin	fi	Anna käyttäjätunnus rinnakkaispalvelimille
+enter the title for your site	admin	fi	Anna palvelun nimi
+enter your default FTP server	admin	fi	Anna oletuksena käytettävä FTP-palvelin
+enter your HTTP proxy server	admin	fi	Anna HTTP-välityspalvelin
+enter your HTTP proxy server port	admin	fi	Anna HTTP-välityspalvelimen portti
+expires	admin	fi	Vanhentuu
+find and register all application hooks	admin	fi	Etsi ja rekisteröi kaikki sovelluskoukut
+global categories	admin	fi	Yleiset luokat
+group ?	admin	fi	ryhmä ?
+group has been added	common	fi	Ryhmä lisätty
+group has been deleted	common	fi	Ryhmä poistettu
+group has been updated	common	fi	Ryhmä päivitetty
+group name	admin	fi	Ryhmän nimi
+hide php information	admin	fi	piilota php-tiedot
+home directory	admin	fi	Kotihakemisto
+host information	admin	fi	Palvelimen tiedot
+idle	admin	fi	vapaa
+if no acl records for user or any group the user is a member of	admin	fi	Jos käyttäjälle tai ryhmälle ei ole ACL -tietueita, kuuluu käyttäjä ryhmään
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
+inbound	admin	fi	tuleva
+installed applications	common	fi	Asennetut sovellukset
+interface	admin	fi	Käyttöliittymä
+ip	admin	fi	IP
+kill	admin	fi	Keskeytä
+last login	admin	fi	kirjautunut viimeksi
+last login from	admin	fi	kirjautunut viimeksi osoitteesta
+last time read	admin	fi	Luettu viimeksi
+last x logins	admin	fi	Viimeiset %1 kirjautumista
+last x logins for x	admin	fi	Viimeiset %1 kirjautumista käyttäjälle %2
+ldap accounts context	admin	fi	LDAP -tunnusten konteksti
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
+ldap default shell (e.g. /bin/bash)	admin	fi	LDAP oletus-shell (esim. /bin/bash)
+ldap encryption type	admin	fi	LDAP salaustapa
+ldap groups context	admin	fi	LDAP -ryhmien konteksti
+ldap host	admin	fi	LDAP palvelin
+ldap rootdn	admin	fi	LDAP rootdn
+ldap root password	admin	fi	LDAP root salasana
+list of current users	admin	fi	nykyiset käyttäjät
+login history	admin	fi	Kirjautumisten historia
+login screen	admin	fi	Kirjautumisnäyttö
+login shell	admin	fi	Kirjautumis-shell
+login time	admin	fi	Kirjautumisaika
+loginid	admin	fi	LoginID
+main screen message	admin	fi	Päänäytön viesti
+manager	admin	fi	Hallinnoija
+maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
+message has been updated	admin	fi	viesti päivitetty
+minimum account id (e.g. 500 or 100, etc.)	admin	fi	Pienin tunnus-id (esim. 100 tai 500)
+mode	admin	fi	Moodi
+never	admin	fi	Ei koskaan
+new group name	admin	fi	Uuden ryhmän nimi
+new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhjä = ei muutosta ]
+no login history exists for this user	admin	fi	Käyttäjällä ei ole kirjautumishistoriaa
+no matchs found	admin	fi	Yhtään kohdetta ei löytynyt
+outbound	admin	fi	lähtevä
+passthrough	admin	fi	läpikulku
+path information	admin	fi	Polut
+peer servers	admin	fi	Rinnakkaispalvelimet
+percent of users that logged out	admin	fi	Uloskirjautuneiden käyttäjien osuus
+percent this user has logged out	admin	fi	Tämä käyttäjä on lopettanut istunnon
+permissions	admin	fi	Oikeudet
+permissions this group has	admin	fi	Tämän ryhmän oikeudet
+phpinfo	admin	fi	PHP-tiedot
+please enter a name	admin	fi	Anna nimi
+please enter a name for that server !	admin	fi	Anna palvelimen nimi!
+please run setup to become current	admin	fi	Aja setup-sovellus päivittääksesi
+preferences	admin	fi	Asetukset
+re-enter password	admin	fi	Salasana uudestaan
+remove all users from this group	admin	fi	Poista käyttäjät ryhmästä
+security	admin	fi	Tietoturva
+selectbox	admin	fi	Valintalista
+select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
+select users for inclusion	admin	fi	Valitse mukaan otettavat käyttäjät
+select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostojärjestelmän tiedot
+select where you want to store/retrieve user accounts	admin	fi	Valitse minne haluat tallentaa/noutaa käyttätunnukset
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fi	Valitse missä sovellus sijaitsee työkalupalkissa, alimmaisesta (vasen) ylimmäiseen (oikea)
+server list	admin	fi	Palvelimet
+server name	admin	fi	Palvelimen nimi
+server password	admin	fi	Palvelimen salasana
+server type(mode)	admin	fi	Palvelimen tyyppi(moodi)
+server url	admin	fi	Palvelimen URL
+server x has been added	admin	fi	Palvelin %1 lisätty
+server x has been updated	admin	fi	Palvelin %1 päivitetty
+server username	admin	fi	Palvelimen käyttäjätunnus
+set preference values.	admin	fi	Tee asetukset.
+show 'powered by' logo on	admin	fi	'Tämä on' -logon paikka
+site	admin	fi	Palvelu
+site configuration	admin	fi	Palvelun asetukset
+sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
+sorry, that group name has already been taking.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
+sorry, the follow users are still a member of the group x	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
+status	admin	fi	Tila
+(stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei näytetä)
+submit changes	admin	fi	Lähetä muutokset
+template selection	admin	fi	Pohjan valinta
+text entry	admin	fi	Tekstille
+that application name already exists.	admin	fi	Sovelluksen nimi on jo käytössä.
+that application order must be a number.	admin	fi	Järjestyksen pitää olla numero.
+that loginid has already been taken	admin	fi	Käyttäjätunnus on jo käytössä
+that name has been used already	admin	fi	Nimi on jo käytössä
+that server name has been used already !	admin	fi	Palvelimen nimi on jo käytössä
+the api is current	admin	fi	API on ajan tasalla
+the api requires an upgrade	admin	fi	API vaatii päivityksen
+the login and password can not be the same	admin	fi	Käyttäjätunnus ja salasana eivät voi olla samat
+the loginid can not be more then 8 characters	admin	fi	Käyttäjätunnus voi olla vain 8 merkkiä pitkä
+the two passwords are not the same	admin	fi	Salasanat eivät täsmää
+they must be removed before you can continue	admin	fi	Ne on poistettava ennen kuin voit jatkaa
+this application is current	admin	fi	Sovellus on ajan tasalla
+this application requires an upgrade	admin	fi	Sovellus vaatii päivityksen
+this category is currently being used by applications as a parent category	admin	fi	Sovellus käyttää tätä luokkaa yläluokkana.
+top	admin	fi	ylös
+total records	admin	fi	Tietueita
+trust level	admin	fi	Luottamuksen taso
+trust relationship	admin	fi	Luottosuhde
+use cookies to pass sessionid	admin	fi	Käytä evästeitä (cookie) istuntotunnuksen välitykseen
+use pure html compliant code (not fully working yet)	admin	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin)
+use theme	admin	fi	Käytä teemaa
+user accounts	admin	fi	Käyttäjätunnukset
+user data	admin	fi	Käyttäjän data
+user groups	admin	fi	Käyttäjäryhmät
+userdata	admin	fi	käyttäjän data
+view access log	admin	fi	Näytä käyttöloki
+view error log	admin	fi	Näytä virheloki
+view sessions	admin	fi	Näytä istunnot
+who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
+would you like phpgroupWare to cache the phpgw info array ?	admin	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
+would you like phpgroupWare to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
+would you like to show each application's upgrade status ?	admin	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
+you have entered an invalid expiration date	admin	fi	Vanhenemispäivä ei kelpaa
+you must add at least 1 permission or group to this account	admin	fi	Lisää tunnukseen ainakin yksi oikeus tai ryhmä
+you must enter a group name.	admin	fi	Anna ryhmän nimi.
+you must enter a loginid	admin	fi	Anna käyttäjätunnus
+you must enter an application name.	admin	fi	Anna sovelluksen nimi.
+you must enter an application name and title.	admin	fi	Anna sovelluksen nimi ja otsikko.
+you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
+you must select a file type	admin	fi	Anna tiedostotyyppi
+you will need to remove the subcategories before you can delete this category	admin	fi	Aliluokat on poistettava ennen kuin voit poistaa luokan!
