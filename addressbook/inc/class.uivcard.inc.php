@@ -66,6 +66,7 @@
 
 			$this->template->set_file(array('vcardin' => 'vcardin.tpl'));
 
+			$this->template->set_var('lang_load_vcard', lang('load vcard'));
 			$this->template->set_var('vcard_header','<p>&nbsp;<b>' . lang('Address book - VCard in') . '</b><hr><p>');
 			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.in'));
 			$this->template->set_var('lang_access',lang('Access'));
