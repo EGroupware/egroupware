@@ -92,7 +92,7 @@
 		$phpgw_setup->db->query($sql);  
 
 		// create an extra db object for the two nested queries below
-		$db1 = $db2 = $db3 = $phpgw_setup->db;
+		$db1 = $db2 = $db3 = $db4 = $phpgw_setup->db;
 		
 		// read in old addressbook
 		$db1->query("select * from addressbook");
@@ -135,16 +135,16 @@
 				. $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."',"
 				. $fields["owner"].")";
 
-			$db1->query($sql);
+			$db2->query($sql);
 
 			// fetch the id just inserted
-			$db2->query("SELECT max(id) FROM phpgw_addressbook ",__LINE__,__FILE__);
-			$db2->next_record();
-			$id = $db2->f(0);
+			$db3->query("SELECT max(id) FROM phpgw_addressbook ",__LINE__,__FILE__);
+			$db3->next_record();
+			$id = $db3->f(0);
 
 			// insert extra data for this record into extra fields table
 			while (list($name,$value) = each($extra)) {
-				$db3->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
+				$db4->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 			}
 		}
