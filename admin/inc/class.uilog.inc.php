@@ -9,6 +9,7 @@
 	* Free Software Foundation; either version 2 of the License, or (at your    *
 	* option) any later version.                                                *
 	\***************************************************************************/
+
 	/* $Id$ */
 
 	class uilog
@@ -32,11 +33,11 @@
 			$editable = $GLOBALS['HTTP_GET_VARS']['editable'];
 			$modifytable = $GLOBALS['HTTP_GET_VARS']['modifytable'] ? $GLOBALS['HTTP_GET_VARS']['modifytable'] : $GLOBALS['HTTP_POST_VARS']['modifytable'];
 
-			$this->bolog					= CreateObject('admin.bolog',True);
-			$this->html						= createobject('admin.html');
-			$this->t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
-			$this->lastid					= '';
-			$this->editmode					= false;
+			$this->bolog    = CreateObject('admin.bolog',True);
+			$this->html     = createobject('admin.html');
+			$this->t        = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
+			$this->lastid   = '';
+			$this->editmode = False;
 
 			// Handle the Edit Table Button
 			if (isset($editable))
@@ -68,7 +69,7 @@
 				}
 
 				// Reset Mode to display...
-				$this->editmode = false;
+				$this->editmode = False;
 				$this->layout = $layout;
 
 				// Save the fields_inc values in Session and User Preferences...
@@ -146,7 +147,7 @@
 
 		function list_log()
 		{
-			if (false) // add some errors to the log...
+			if (False) // add some errors to the log...
 			{
 				// Test 1: single Error line immedeately to errorlog 
 				// (could be type Debug, Info, Warning, or Error)
