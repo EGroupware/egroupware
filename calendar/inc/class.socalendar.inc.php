@@ -50,7 +50,6 @@
 				echo '<!-- SO cat_id : '.$this->cat_id.' -->'."\n";
 			}
 			$this->cal = CreateObject('calendar.socalendar_');
-			$this->db = &$this->db;
 
 			foreach($this->cal->all_tables as $name => $table)
 			{
@@ -217,7 +216,7 @@
 
 		function find_uid($uid)
 		{
-			$sql = " AND ($this->table.cal_uid=".(int)$uid.' )';
+			$sql = " AND ($this->table.cal_uid=".$this->db->quote($uid).')';
 
 			$found = $this->cal->get_event_ids(False,$sql);
 			if(!$found)
