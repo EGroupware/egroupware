@@ -60,7 +60,7 @@
 				return False;
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
-			$attributes	= array( "uid", "dn" );
+			$attributes	= array('uid', 'dn');
 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
 			{
 				$filter = "(&(uid=$username)(phpgwaccountstatus=A))";
@@ -118,7 +118,7 @@
 			}
 	
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], "uidnumber=$_account_id");
+			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 	
 			$entry['userpassword'] = $this->encrypt_password($new_passwd);
@@ -153,7 +153,7 @@
 			$entry['phpgwaccountlastloginfrom'] = $ip;
 
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . $_account_id);
+			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			$dn = $allValues[0]['dn'];
