@@ -20,7 +20,6 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	class sbox
@@ -283,6 +282,17 @@
 			'ZW'=>'ZIMBABWE'
 		);
 
+		var $weekdays = array(
+			'',
+			'Monday',
+			'Tuesday',
+			'wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday',
+			'Sunday'
+		);
+
 		function sbox()
 		{
 			foreach ($this->country_array as $key => $name)
@@ -360,6 +370,16 @@
 				. $this->sec_minute_text($sec_name,$sec_selected)
 				. $this->ap_text($ap_name,$ap_selected);
 			return $s;
+		}
+
+		function getWeekdays($name, $selected=0)
+		{
+			$out = '';
+			for($i=0;$i<count($this->weekdays);$i++)
+			{
+				$out .= '<option value="'.$i.'"'.($selected!=$i?'':' selected').'>'.($this->weekdays[$i]!=''?lang($this->weekdays[$i]):'').'</option>'."\n";
+			}
+			return '<select name="'.$name.'">'."\n".$out.'</select>'."\n";
 		}
 
 		function getMonthText($name, $selected=0)
