@@ -1632,7 +1632,7 @@
 			'phpgw_nextid', array(
 				'fd' => array(
 					'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => False),
-					'id' => array('type' => 'int', 'precision' => 4),
+					'id' => array('type' => 'int', 'precision' => 4)
 				),
 				'pk' => array(),
 				'fk' => array(),
@@ -1905,7 +1905,6 @@
 
 		$phpgw_setup->oProc->AddColumn('phpgw_access_log','account_id',array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False));
 
-		global $phpgw;
 		class phpgw
 		{
 			var $common;
