@@ -51,8 +51,7 @@
 
         $sep = $phpgw->common->filesystem_sepeartor();
 
-        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-	         . "groups" . $sep;
+        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
 
         $cd = 31;
 
