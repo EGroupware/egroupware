@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Auth from NIS	                                     *
+	* eGroupWare API - Auth from NIS	                                       *
 	* Authentication based on NIS maps                                         *
 	* by Dylan Adams <dadams@jhu.edu>                                          *
 	* Copyright (C) 2001 Dylan Adams                                           *
@@ -23,7 +23,7 @@
 
 	/* $Id$ */
 
-	class auth
+	class auth_
 	{
 		function authenticate($username, $passwd)
 		{

@@ -23,14 +23,18 @@
 
 	/* $Id$ */
 
-	class auth
+	class auth_
 	{
+		var $db = '';
 		var $previous_login = -1;
+
+		function auth_()
+		{
+			copyobj($GLOBALS['phpgw']->db,$this->db);
+		}
 
 		function authenticate($username, $passwd)
 		{
-			$db = $GLOBALS['phpgw']->db;
-
 			$local_debug = False;
 
 			if($local_debug)
@@ -41,18 +45,18 @@
 			# Apache + mod_ssl provide the data in the environment
 			# Certificate (chain) verification occurs inside mod_ssl
 			# see http://www.modssl.org/docs/2.8/ssl_howto.html#ToC6
-			if(!isset($GLOBALS['HTTP_SERVER_VARS']['SSL_CLIENT_S_DN']))
+			if(!isset($_SERVER['SSL_CLIENT_S_DN']))
 			{
 				# if we're not doing SSL authentication, behave like auth_sql
-				$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
+				$this->db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
 					. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
-				$db->next_record();
+				$this->db->next_record();
 			}
 			else
 			{
 				# use username only for authentication, ignore X.509 subject in $passwd for now
-				$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND account_status ='A'",__LINE__,__FILE__);
-				$db->next_record();
+				$this->db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND account_status ='A'",__LINE__,__FILE__);
+				$this->db->next_record();
 			}
 
 			if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
@@ -62,7 +66,7 @@
 					return false;
 				}
 			}
-			if($db->f('account_lid'))
+			if($this->db->f('account_lid'))
 			{
 				return True;
 			}

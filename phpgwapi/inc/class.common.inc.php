@@ -10,7 +10,7 @@
   * Copyright (C) 2003 Lars Kneschke                                         *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.phpgroupware.org/api                                          *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -128,7 +128,8 @@
 			{
 				if (count($array))
 				{
-					while ($t = each($array)) {
+					while ($t = each($array))
+					{
 						$s .= ',' . $t[1];
 					}
 					$s .= ',';
@@ -146,7 +147,7 @@
 		@function sql_search
 		@abstract this function is used for searching the access fields
 		@param $table
-		@param $owner 
+		@param $owner
 		*/
 		function sql_search($table,$owner=0)
 		{
@@ -176,7 +177,7 @@
 		function getInstalledLanguages()
 		{
 			$GLOBALS['phpgw']->db->query('SELECT DISTINCT lang FROM phpgw_lang');
-			while (@$GLOBALS['phpgw']->db->next_record()) 
+			while (@$GLOBALS['phpgw']->db->next_record())
 			{
 				$installedLanguages[$GLOBALS['phpgw']->db->f('lang')] = $GLOBALS['phpgw']->db->f('lang');
 			}
@@ -261,7 +262,7 @@
 				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
 				return False;
 			}
-			
+
 			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
 			{
 				if(!ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3))
@@ -459,7 +460,7 @@
 					$name .= implode(', ',$a);
 					break;
 				case 'firstall':
-					if ($lid) 
+					if ($lid)
 					{
 						$name = ' ['.$lid.']';
 					}
@@ -579,7 +580,7 @@
 		@function get_app_dir
 		@abstract get directory of application
 		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
-		@param $appname name of application 
+		@param $appname name of application
 		*/
 		function get_app_dir($appname = '')
 		{
@@ -613,7 +614,7 @@
 		@function get_inc_dir
 		@abstract get inc (include dir) of application
 		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
-		@param $appname name of application 
+		@param $appname name of application
 		*/
 		function get_inc_dir($appname = '')
 		{
@@ -625,10 +626,10 @@
 			{
 				$appname = 'phpgwapi';
 			}
- 
+
 			$incdir         = PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc';
 			$incdir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/inc';
- 
+
 			if (@is_dir ($incdir))
 			{
 				return $incdir;
@@ -689,8 +690,8 @@
 			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-				if ($entry != 'CVS' && $entry != '.' && $entry != '..' 
-					&& $entry != 'phpgw_website' 
+				if ($entry != 'CVS' && $entry != '.' && $entry != '..'
+					&& $entry != 'phpgw_website'
 					&& is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
 				{
 					$list[$entry]['name'] = $entry;
@@ -1047,7 +1048,7 @@
 			unset($index);
 			unset($value);
 			unset($newarray);
-			
+
 			foreach($GLOBALS['phpgw_info']['user']['apps'] as $app => $data)
 			{
 				if (is_long($app))
@@ -1209,7 +1210,7 @@
 		* Used by the template headers for including javascript in the header
 		*
 		* The method is included here to make it easier to change the js support
-		* in phpgw.  One change then all templates will support it (as long as they 
+		* in phpgw.  One change then all templates will support it (as long as they
 		* include a call to this method).
 		*
 		* @author Dave Hall (*vaguely based* on verdilak? css inclusion code)
@@ -1284,99 +1285,14 @@
 		}
 
 		/*!
-		@function des_cryptpasswd
-		@abstract des encrypt a password
-		@param $userpass userpassword
-		@param $random random seed
-		*/
-		function des_cryptpasswd($userpass, $random)
-		{
-			$lcrypt = '{crypt}';
-			$password = crypt($userpass, $random);
-			$ldappassword = sprintf('%s%s', $lcrypt, $password);
-			return $ldappassword;
-		}
-
-		/*!
-		@function md5_cryptpasswd
-		@abstract md5 encrypt password
-		@param $userpass user password
-		@param $random random seed
-		*/ 
-		function old_md5_cryptpasswd($userpass, $random)
-		{
-			$bsalt = '$1$';
-			$esalt = '$';
-			$lcrypt = '{crypt}';
-			$modsalt = sprintf('%s%s%s', $bsalt, $random, $esalt);
-			$password = crypt($userpass, $modsalt);
-			$ldappassword = sprintf('%s%s', $lcrypt, $password);
-
-			return $ldappassword;
-		}
-
-		/* New method taken from the openldap-software list as recommended by
-		 * Kervin L. Pierre" <kervin@blueprint-tech.com>
-		 */
-		function md5_cryptpasswd($userpass, $random)
-		{
-			$ldappassword = '{md5}' . base64_encode(pack("H*",md5($userpass)));
-			return $ldappassword;
-		}
-
-		/* http://www.thomas-alfeld.de/frank/index.php?file=CodeSnippets%2FPHP%2Fldap_passwd.php */
-		function sha_cryptpasswd($userpass, $random)
-		{
-			if(!function_exists('mhash'))
-			{
-				return False;
-			}
-			$ldappassword = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $userpass));
-			return $ldappassword;
-		}
-
-		/* http://www.thomas-alfeld.de/frank/index.php?file=CodeSnippets%2FPHP%2Fldap_passwd.php */
-		function ssha_cryptpasswd($userpass,$random)
-		{
-			if(!function_exists('mhash'))
-			{
-				return False;
-			}
-			$hash = mhash(MHASH_SHA1, $password . $random);
-			$ldappassword = '{SSHA}' . base64_encode($hash . $random);
-			return $ldappassword;
-		}
-
-		/*!
 		@function encrypt_password
-		@abstract encrypt password
+		@abstract legacy wrapper for newer auth class function, encrypt_password
 		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
 		@param $password password to encrypt
 		*/
 		function encrypt_password($password)
 		{
-			$type = strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']);
-			$salt = '';
-			switch($type)
-			{
-				case 'des':
-					$salt       = $this->randomstring(2);
-					$e_password = $this->des_cryptpasswd($password, $salt);
-					break;
-				case 'md5':
-					$e_password = $this->md5_cryptpasswd($password,$salt);
-					break;
-				case 'sha':
-					$e_password = $this->sha_cryptpasswd($password,$salt);
-					break;
-				case 'ssha':
-					$salt       = $this->randomstring(8);
-					$e_password = $this->ssha_cryptpasswd($password, $salt);
-					break;
-				default:
-					return False;
-			}
-			return $e_password;
+			return $GLOBALS['phpgw']->auth->encrypt_password($password);
 		}
 
 		/*!
@@ -1456,7 +1372,7 @@
 			{
 				$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
 			}
-			
+
 			if (!$t || (int)$t <= 0)
 			{
 				$t = $GLOBALS['phpgw']->datetime->gmtnow;
@@ -1464,7 +1380,7 @@
 
 			//  + (date('I') == 1?3600:0)
 			$t += $GLOBALS['phpgw']->datetime->tz_offset;
-			
+
 			if (! $format)
 			{
 				$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] . ' - ';
@@ -1477,12 +1393,16 @@
 					$format .= 'H:i';
 				}
 			}
+			if(PHP_OS == 'Windows' && (int)$t < 21600)
+			{
+				$t = 21600;
+			}
 			return date($format,$t);
 		}
 
 		/*!
 		@function dateformatorder
-		@abstract 
+		@abstract
 		@param $yearstr year - string
 		@param $monthstr month - string
 		@param $day day - string
@@ -1506,7 +1426,7 @@
 			{
 				return (implode(' ',$dlarr));
 			}
-		} 
+		}
 
 		/*!
 		@function formattime
@@ -1520,7 +1440,7 @@
 			$h12 = $hour;
 			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12')
 			{
-				if ($hour >= 12) 
+				if ($hour >= 12)
 				{
 					$ampm = ' pm';
 				}
@@ -1540,7 +1460,7 @@
 					$h12 = 0;
 				}
 			}
-			else 
+			else
 			{
 				$h12 = $hour;
 			}
@@ -1627,10 +1547,10 @@
 		function create_emailpreferences($prefs,$accountid='')
 		{
 			$account_id = get_account_id($accountid);
-			
+
 			// NEW EMAIL PASSWD METHOD (shared between SM and aeromail)
 			$prefs['email']['passwd'] = $this->get_email_passwd_ex();
-			
+
 			// Add default preferences info
 			if (!isset($prefs['email']['userid']))
 			{
@@ -1649,7 +1569,7 @@
 			{
 				$GLOBALS['phpgw_info']['server']['mail_server_type'] = 'imap';
 			}
-			
+
 			// OLD EMAIL PASSWD METHOD
 			if (!isset($prefs['email']['passwd']))
 			{
@@ -1660,7 +1580,7 @@
 				$prefs['email']['passwd'] = $this->decrypt($prefs['email']['passwd']);
 			}
 			// NEW EMAIL PASSWD METHOD Located at the begining of this function
-			
+
 			if (!isset($prefs['email']['address']))
 			{
 				$prefs['email']['address'] = $GLOBALS['phpgw']->accounts->id2name($account_id)
@@ -1687,14 +1607,14 @@
 			{
 				$prefs['email']['mail_port'] = '110';
 			}
- 			elseif ($prefs['email']['mail_server_type']=='imaps')
- 			{
- 				$prefs['email']['mail_port'] = '993';
- 			}
- 			elseif ($prefs['email']['mail_server_type']=='pop3s')
- 			{
- 				$prefs['email']['mail_port'] = '995';
- 			}
+			elseif ($prefs['email']['mail_server_type']=='imaps')
+			{
+				$prefs['email']['mail_port'] = '993';
+			}
+			elseif ($prefs['email']['mail_server_type']=='pop3s')
+			{
+				$prefs['email']['mail_port'] = '995';
+			}
 			// This is going to be used to switch to the nntp class
 			if (isset($phpgw_info['flags']['newsmode']) &&
 				$GLOBALS['phpgw_info']['flags']['newsmode'])
@@ -1733,32 +1653,32 @@
 				case 32:	$s .= lang('Group has been deleted');	break;
 				case 33:	$s .= lang('Group has been updated');	break;
 				case 34:	$s .= lang('Account has been deleted') . '<p>'
-						. lang('Error deleting %1 %2 directory',lang('users'),' '.lang('private').' ') 
+						. lang('Error deleting %1 %2 directory',lang('users'),' '.lang('private').' ')
 						. ',<br>' . lang('Please %1 by hand',lang('delete')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/');
 					break;
 				case 35:	$s .= lang('Account has been updated') . '<p>'
 						. lang('Error renaming %1 %2 directory',lang('users'),
-						' '.lang('private').' ') 
+						' '.lang('private').' ')
 						. ',<br>' . lang('Please %1 by hand',
 						lang('rename')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/');
 					break;
 				case 36:	$s .= lang('Account has been created') . '<p>'
 						. lang('Error creating %1 %2 directory',lang('users'),
-						' '.lang('private').' ') 
+						' '.lang('private').' ')
 						. ',<br>' . lang('Please %1 by hand',
 						lang('create')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/');
 					break;
 				case 37:	$s .= lang('Group has been added') . '<p>'
 						. lang('Error creating %1 %2 directory',lang('groups'),' ')
@@ -1767,7 +1687,7 @@
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/');
 					break;
 				case 38:	$s .= lang('Group has been deleted') . '<p>'
 						. lang('Error deleting %1 %2 directory',lang('groups'),' ')
@@ -1776,7 +1696,7 @@
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/');
 					break;
 				case 39:	$s .= lang('Group has been updated') . '<p>'
 						. lang('Error renaming %1 %2 directory',lang('groups'),' ')
@@ -1785,7 +1705,7 @@
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
-						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
+						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/');
 					break;
 				case 40: $s .= lang('You have not entered a title').'.';
 					break;
@@ -1802,11 +1722,11 @@
 		/*!
 		@function phpgw_error
 		@abstract process error message
-		@param $error error 
+		@param $error error
 		@param $line line
 		@param $file file
 		*/
-		function phpgw_error($error,$line = '', $file = '') 
+		function phpgw_error($error,$line = '', $file = '')
 		{
 			echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
 			if ($line)

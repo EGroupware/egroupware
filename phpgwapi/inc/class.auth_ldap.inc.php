@@ -25,7 +25,7 @@
 
 	/* $Id$ */
   
-	class auth
+	class auth_
 	{
 		var $previous_login = -1;
 
@@ -121,7 +121,7 @@
 			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], "uidnumber=$_account_id");
 			$allValues = ldap_get_entries($ds, $sri);
 	
-			$entry['userpassword'] = $GLOBALS['phpgw']->common->encrypt_password($new_passwd);
+			$entry['userpassword'] = $this->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];
 	
 			if (!@ldap_modify($ds, $dn, $entry)) 

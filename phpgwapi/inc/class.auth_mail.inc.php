@@ -23,7 +23,7 @@
 
   /* $Id$ */
 
-	class auth
+	class auth_
 	{
 		var $previous_login = -1;
 
