@@ -1453,9 +1453,9 @@
 		$db1 = $phpgw_setup->db;
 
 		$phpgw_setup->db->query("drop sequence phpgw_addressbook_id_seq");
-		$phpgw_setup->db->query("create sequence phpgw_addressbook_temp_id_seq_");
+		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook RENAME TO phpgw_addressbook_old",__LINE__,__FILE__);
 
-		$sql="CREATE TABLE phpgw_addressbook_temp (
+		$sql="CREATE TABLE phpgw_addressbook (
 		   id    serial,
 		   lid   varchar(32),
 		   tid   char(1),
@@ -1511,7 +1511,7 @@
 
 		$phpgw_setup->db->query($sql);
 
-		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook");
+		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook_old");
 		while ($phpgw_setup->db->next_record()) {
                     $fields['id']                  = $phpgw_setup->db->f("id");
                     $fields['owner']               = $phpgw_setup->db->f("owner");
@@ -1534,7 +1534,7 @@
                     $fields['note']                = $phpgw_setup->db->f("note");
                     $fields['url']                 = $phpgw_setup->db->f("url");
 
-			$sql="INSERT INTO phpgw_addressbook_temp (org_name,n_given,n_family,fn,email,email_type,title,tel_work,"
+			$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,email,email_type,title,tel_work,"
 				. "tel_home,tel_fax,adr_one_street,adr_one_locality,adr_one_region,adr_one_postalcode,adr_one_countryname,"
 				. "owner,bday,url,note)"
 				. " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
@@ -1546,9 +1546,7 @@
 			$db1->query($sql,__LINE__,__FILE__);
 		}
 
-		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
-		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook_temp RENAME TO phpgw_addressbook",__LINE__,__FILE__);
-		$phpgw_setup->db->query("ALTER SEQUENCE phpgw_addressbook_temp_id_seq RENAME TO phpgw_addressbook_id_seq",__LINE__,__FILE__);
+		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook_old");
 
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
 		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
