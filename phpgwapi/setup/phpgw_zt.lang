@@ -1,12 +1,12 @@
 access	common	zt	存取權限
-access not permitted	common	zt	拒絕存取
-acl	common	zt	存取條件
+access not permitted	common	zt	存取遭拒
+acl	common	zt	控管權限
 active	common	zt	啟用
 add	common	zt	新增
-add category	common	zt	新增分類項目
-add x category for	common	zt	新增 %1 組分類項目給
-admin	common	zt	管理者
-administration	common	zt	管理者
+add category	common	zt	新增分類
+add x category for	common	zt	新增 %1 子分類給
+admin	common	zt	系統管理
+administration	common	zt	系統管理
 afghanistan	common	zt	AFGHANISTAN
 albania	common	zt	ALBANIA
 algeria	common	zt	ALGERIA
@@ -18,14 +18,14 @@ anguilla	common	zt	ANGUILLA
 antarctica	common	zt	ANTARCTICA
 antigua and barbuda	common	zt	ANTIGUA AND BARBUDA
 april	common	zt	四月
+are you sure you want to delete this entry ?	common	zt	您確定要刪除此筆資料？
 argentina	common	zt	ARGENTINA
 armenia	common	zt	ARMENIA
 aruba	common	zt	ARUBA
-are you sure you want to delete this entry ?	common	zt	您確定要移除此筆資料嗎？
 august	common	zt	八月
 australia	common	zt	AUSTRALIA
 austria	common	zt	AUSTRIA
-autosave default category	common	zt	自動儲存預設的分類項目
+autosave default category	common	zt	自動儲存預設分類目錄
 azerbaijan	common	zt	AZERBAIJAN
 bad login or password	login	zt	錯誤的使用者代碼或密碼
 bahamas	common	zt	BAHAMAS
@@ -53,73 +53,73 @@ cameroon	common	zt	CAMEROON
 canada	common	zt	CANADA
 cancel	common	zt	取消
 cape verde	common	zt	CAPE VERDE
-categories	common	zt	分類項目
-categories for	common	zt	分類項目 for
-category	common	zt	分類項目
-category x has been added !	common	zt	成功新增分類項目 %1！
-category x has been updated !	common	zt	成功更新分類項目 %1！
+categories	common	zt	Categories
+categories for	common	zt	categories for
+category	common	zt	Category
+category x has been added !	common	zt	已新增分類 %1 ！
+category x has been updated !	common	zt	已更新分類 %1 ！
 cayman islands	common	zt	CAYMAN ISLANDS
 central african republic	common	zt	CENTRAL AFRICAN REPUBLIC
 chad	common	zt	CHAD
-change	common	zt	更新
+change	common	zt	更換
 charset	common	zt	big5
 chile	common	zt	CHILE
 china	common	zt	CHINA
-choose the parent category	common	zt	選擇上一層分類項目
+choose the parent category	common	zt	選擇上一層分類
 christmas island	common	zt	CHRISTMAS ISLAND
-clear	common	zt	清空
-clear form	common	zt	清空
+clear	common	zt	清除
+clear form	common	zt	清除表單
 cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
 colombia	common	zt	COLOMBIA
 comoros	common	zt	COMOROS
 congo	common	zt	CONGO
-"congo, the democratic republic of the"	common	zt	"CONGO, THE DEMOCRATIC REPUBLIC OF THE"
+congo, the democratic republic of the	common	zt	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	zt	COOK ISLANDS
 copy	common	zt	複製
 costa rica	common	zt	COSTA RICA
 cote d ivoire	common	zt	COTE D IVOIRE
-create	common	zt	新增
-created by	common	zt	已新增
+create	common	zt	建立
+created by	common	zt	建立者
 croatia	common	zt	CROATIA
 cuba	common	zt	CUBA
-currency	common	zt	貨幣
-current users	common	zt	目前使用者
+currency	common	zt	Currency
+current users	common	zt	Current users
 cyprus	common	zt	CYPRUS
 czech republic	common	zt	CZECH REPUBLIC
 date	common	zt	日期
 date due	common	zt	到期日期
 december	common	zt	十二月
-default category	common	zt	預設分類項目
+default category	common	zt	預設分類
 delete	common	zt	移除
 denmark	common	zt	DENMARK
 description	common	zt	說明
 disabled	common	zt	停用
 djibouti	common	zt	DJIBOUTI
+do you also want to delete all subcategories ?	common	zt	您確定要刪除所有的子分類？
 dominica	common	zt	DOMINICA
 dominican republic	common	zt	DOMINICAN REPUBLIC
 done	common	zt	完成
-do you also want to delete all subcategories ?	common	zt	您確定要移除所有的子分類項目嗎？
 east timor	common	zt	EAST TIMOR
 ecuador	common	zt	ECUADOR
 edit	common	zt	編輯
-edit category	common	zt	編輯分類項目
-edit categories	common	zt	編輯分類項目
-edit x category for	common	zt	編輯分類項目 %1 for
+edit categories	common	zt	編輯分類
+edit category	common	zt	編輯分類
+edit x category for	common	zt	編輯分類 %1 給
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
-e-mail	common	zt	電子郵件
-email	common	zt	電子郵件
+email	common	zt	E-Mail
+e-mail	common	zt	E-Mail
 enabled	common	zt	啟用
 end date	common	zt	結束日期
 end time	common	zt	結束時間
-entry has been deleted sucessfully	common	zt	成功移除該筆資料
-entry updated sucessfully	common	zt	成功更新該筆資料
+entry has been deleted sucessfully	common	zt	資料已成功移除
+entry updated sucessfully	common	zt	資料已成功更新
 equatorial guinea	common	zt	EQUATORIAL GUINEA
 eritrea	common	zt	ERITREA
 error	common	zt	錯誤
-error creating x x directory	common	zt	錯誤，無法建立目錄 %1%2
-error deleting x x directory	common	zt	錯誤，無法刪除目錄 %1%2
-error renaming x x directory	common	zt	錯誤，無法將目錄 %1%2 更名
+error creating x x directory	common	zt	無法建立目錄 %1%2
+error deleting x x directory	common	zt	無法移除目錄 %1%2
+error renaming x x directory	common	zt	無法更名目錄 %1%2
 estonia	common	zt	ESTONIA
 ethiopia	common	zt	ETHIOPIA
 falkland islands (malvinas)	common	zt	FALKLAND ISLANDS (MALVINAS)
@@ -128,7 +128,7 @@ february	common	zt	二月
 fields	common	zt	欄位
 fiji	common	zt	FIJI
 files	common	zt	檔案
-filter	common	zt	過濾器
+filter	common	zt	篩選
 finland	common	zt	FINLAND
 first name	common	zt	名
 firstname	common	zt	名
@@ -145,15 +145,15 @@ germany	common	zt	GERMANY
 ghana	common	zt	GHANA
 gibraltar	common	zt	GIBRALTAR
 global	common	zt	全區
-global public	common	zt	群區共用
-grant access	common	zt	權限控管
+global public	common	zt	全區共用
+grant access	common	zt	存取權限開放
 greece	common	zt	GREECE
 greenland	common	zt	GREENLAND
 grenada	common	zt	GRENADA
-group access	common	zt	群組權限
-group	common	zt	群組權限
-group public	common	zt	全組共用
-groups	common	zt	群組權限
+group	common	zt	群組
+group access	common	zt	群組存取
+group public	common	zt	群組共用
+groups	common	zt	群組
 guadeloupe	common	zt	GUADELOUPE
 guam	common	zt	GUAM
 guatemala	common	zt	GUATEMALA
@@ -162,22 +162,22 @@ guinea-bissau	common	zt	GUINEA-BISSAU
 guyana	common	zt	GUYANA
 haiti	common	zt	HAITI
 heard island and mcdonald islands	common	zt	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	zt	協助
 holy see (vatican city state)	common	zt	HOLY SEE (VATICAN CITY STATE)
+home	common	zt	住家
 honduras	common	zt	HONDURAS
 hong kong	common	zt	HONG KONG
-help	common	zt	說明
-home	common	zt	首頁
 hungary	common	zt	HUNGARY
 iceland	common	zt	ICELAND
 india	common	zt	INDIA
 indonesia	common	zt	INDONESIA
-"iran, islamic republic of"	common	zt	"IRAN, ISLAMIC REPUBLIC OF"
+iran, islamic republic of	common	zt	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	zt	IRAQ
 ireland	common	zt	IRELAND
 israel	common	zt	ISRAEL
+it has been more then x days since you changed your password	common	zt	距離您上次更改密碼已經 %1 天了
+it is recommended that you run setup to upgrade your tables to the current version	common	zt	建議您執行設定程式將資料表升級至目前的版本。
 italy	common	zt	ITALY
-it is recommended that you run setup to upgrade your tables to the current version	common	zt	建議您執行安裝程式將資料庫表格升級至目前的版本
-it has been more then x days since you changed your password	common	zt	距離上次您更動密碼的時間已經有 %1 天了
 jamaica	common	zt	JAMAICA
 january	common	zt	一月
 japan	common	zt	JAPAN
@@ -187,15 +187,13 @@ june	common	zt	六月
 kazakstan	common	zt	KAZAKSTAN
 kenya	common	zt	KENYA
 kiribati	common	zt	KIRIBATI
-"korea, democratic peoples republic of"	common	zt	"KOREA, DEMOCRATIC PEOPLES REPUBLIC OF"
-"korea, republic of"	common	zt	"KOREA, REPUBLIC OF"
+korea, democratic peoples republic of	common	zt	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	zt	KOREA, REPUBLIC OF
 kuwait	common	zt	KUWAIT
 kyrgyzstan	common	zt	KYRGYZSTAN
 lao peoples democratic republic	common	zt	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	zt	姓
 lastname	common	zt	姓
-login	common	zt	登入
-logout	common	zt	登出
 latvia	common	zt	LATVIA
 lebanon	common	zt	LEBANON
 lesotho	common	zt	LESOTHO
@@ -203,11 +201,13 @@ liberia	common	zt	LIBERIA
 libyan arab jamahiriya	common	zt	LIBYAN ARAB JAMAHIRIYA
 liechtenstein	common	zt	LIECHTENSTEIN
 lithuania	common	zt	LITHUANIA
+login	common	zt	登入
+logout	common	zt	登出
 luxembourg	common	zt	LUXEMBOURG
 macau	common	zt	MACAU
-"macedonia, the former yugoslav republic of"	common	zt	"MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF"
+macedonia, the former yugoslav republic of	common	zt	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	zt	MADAGASCAR
-main category	common	zt	主要分類項目
+main category	common	zt	主要分類
 main screen	common	zt	主畫面
 malawi	common	zt	MALAWI
 malaysia	common	zt	MALAYSIA
@@ -225,8 +225,8 @@ mayotte	common	zt	MAYOTTE
 medium	common	zt	中等
 message	common	zt	訊息
 mexico	common	zt	MEXICO
-"micronesia, federated states of"	common	zt	"MICRONESIA, FEDERATED STATES OF"
-"moldova, republic of"	common	zt	"MOLDOVA, REPUBLIC OF"
+micronesia, federated states of	common	zt	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	zt	MOLDOVA, REPUBLIC OF
 monaco	common	zt	MONACO
 monday	common	zt	星期一
 mongolia	common	zt	MONGOLIA
@@ -242,7 +242,7 @@ netherlands	common	zt	NETHERLANDS
 netherlands antilles	common	zt	NETHERLANDS ANTILLES
 new caledonia	common	zt	NEW CALEDONIA
 new entry added sucessfully	common	zt	成功新增資料
-new main category	common	zt	新增主要分類項目
+new main category	common	zt	新的主要分類
 new zealand	common	zt	NEW ZEALAND
 next	common	zt	下一個
 nicaragua	common	zt	NICARAGUA
@@ -250,45 +250,46 @@ niger	common	zt	NIGER
 nigeria	common	zt	NIGERIA
 niue	common	zt	NIUE
 no	common	zt	否
+no subject	common	zt	無主題
 none	common	zt	無
 norfolk island	common	zt	NORFOLK ISLAND
 northern mariana islands	common	zt	NORTHERN MARIANA ISLANDS
 norway	common	zt	NORWAY
-no subject	common	zt	無標題
 note	common	zt	備註
-notes	common	zt	備註
+notes	common	zt	備忘
 november	common	zt	十一月
 october	common	zt	十月
-ok	common	zt	確定
+ok	common	zt	OK
 oman	common	zt	OMAN
-only yours	common	zt	您唯一的
+only yours	common	zt	屬於您的資料
 open notify window	common	zt	開啟警示視窗
-other	common	zt	其他的
+other	common	zt	其它
 overview	common	zt	總覽
 owner	common	zt	擁有者
 pakistan	common	zt	PAKISTAN
 palau	common	zt	PALAU
-"palestinian territory, occupied"	common	zt	"PALESTINIAN TERRITORY, OCCUPIED"
+palestinian territory, occupied	common	zt	PALESTINIAN TERRITORY, OCCUPIED
 panama	common	zt	PANAMA
 papua new guinea	common	zt	PAPUA NEW GUINEA
 paraguay	common	zt	PARAGUAY
-parent category	common	zt	上一層分類項目
+parent category	common	zt	上一層分類
 password	common	zt	密碼
-password has been updated	common	zt	成功更新密碼
-personal	common	zt	個人的
+password has been updated	common	zt	已成功更新密碼
+personal	common	zt	個人
 peru	common	zt	PERU
 philippines	common	zt	PHILIPPINES
 pitcairn	common	zt	PITCAIRN
 please enter a name	common	zt	請輸入名稱！
-please set your preferences for this application	common	zt	請設定此應用程式的喜好設定
+please run setup to become current	common	zt	請執行設定程式以到目前的
+please set your preferences for this application	common	zt	請設定這個應用程式的個人喜好設定
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
-powered by phpgroupware version x	common	zt	此軟體為 <a href=http://www.phpgroupware.org>phpGroupWare</a> %1 版，中文化版本由<a href=http://www.dottech.com>達科數位</a>提供。
+powered by phpgroupware version x	common	zt	此軟體為 <a href=http://www.phpgroupware.org>phpGroupWare</a> %1 版，中文化版本由<a href=http://www.dottech.com.tw>達科數位</a>提供。
 preferences	common	zt	喜好設定
-print	common	zt	列出
-priority	common	zt	重要性
-private	common	zt	私人的
-public	common	zt	公開的
+print	common	zt	列印
+priority	common	zt	優先權
+private	common	zt	私人
+public	common	zt	共用
 puerto rico	common	zt	PUERTO RICO
 qatar	common	zt	QATAR
 read	common	zt	讀取
@@ -309,10 +310,10 @@ saturday	common	zt	星期六
 saudi arabia	common	zt	SAUDI ARABIA
 save	common	zt	儲存
 search	common	zt	搜尋
-select category	common	zt	選擇分類項目
+select category	common	zt	選擇分類
 senegal	common	zt	SENEGAL
 september	common	zt	九月
-session has been killed	common	zt	成功刪除該連線
+session has been killed	common	zt	連線已被中斷
 seychelles	common	zt	SEYCHELLES
 show all	common	zt	顯示全部
 showing x	common	zt	顯示 %1
@@ -323,7 +324,7 @@ slovakia	common	zt	SLOVAKIA
 slovenia	common	zt	SLOVENIA
 solomon islands	common	zt	SOLOMON ISLANDS
 somalia	common	zt	SOMALIA
-"sorry, your login has expired"	login	zt	很抱歉，您的帳號已經失效
+sorry, your login has expired	login	zt	抱歉，您的帳號已經過期
 south africa	common	zt	SOUTH AFRICA
 south georgia and the south sandwich islands	common	zt	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	zt	SPAIN
@@ -331,7 +332,7 @@ sri lanka	common	zt	SRI LANKA
 start date	common	zt	開始日期
 start time	common	zt	開始時間
 status	common	zt	狀態
-subject	common	zt	標題
+subject	common	zt	主題
 submit	common	zt	送出
 sudan	common	zt	SUDAN
 sunday	common	zt	星期日
@@ -341,20 +342,25 @@ swaziland	common	zt	SWAZILAND
 sweden	common	zt	SWEDEN
 switzerland	common	zt	SWITZERLAND
 syrian arab republic	common	zt	SYRIAN ARAB REPUBLIC
-"taiwan, province of china"	common	zt	"TAIWAN, PROVINCE OF CHINA"
+taiwan, province of china	common	zt	TAIWAN, PROVINCE OF CHINA
 tajikistan	common	zt	TAJIKISTAN
-"tanzania, united republic of"	common	zt	"TANZANIA, UNITED REPUBLIC OF"
+tanzania, united republic of	common	zt	TANZANIA, UNITED REPUBLIC OF
 thailand	common	zt	THAILAND
-this name has been used already	common	zt	這個名稱已經被使用了！
-thursday	common	zt	星期日
+the api is current	common	zt	應用程式介面是最新的
+the api requires an upgrade	common	zt	應用程式介面需要升級
+the following applications require upgrades	common	zt	下列應用程式需要升級
+this application is current	common	zt	這個應用程式是最新的
+this application requires an upgrade	common	zt	這個應用程式需要升級
+this name has been used already	common	zt	這個名字已被使用！
+thursday	common	zt	星期四
 time	common	zt	時間
 time zone	common	zt	時區
 time zone offset	common	zt	時區時差
-title	common	zt	主題
+title	common	zt	標題
 togo	common	zt	TOGO
 tokelau	common	zt	TOKELAU
 tonga	common	zt	TONGA
-total	common	zt	全部
+total	common	zt	總計
 trinidad and tobago	common	zt	TRINIDAD AND TOBAGO
 tuesday	common	zt	星期二
 tunisia	common	zt	TUNISIA
@@ -368,9 +374,9 @@ united arab emirates	common	zt	UNITED ARAB EMIRATES
 united kingdom	common	zt	UNITED KINGDOM
 united states	common	zt	UNITED STATES
 united states minor outlying islands	common	zt	UNITED STATES MINOR OUTLYING ISLANDS
+update	common	zt	更新
 url	common	zt	網址
 uruguay	common	zt	URUGUAY
-update	common	zt	更新
 user	common	zt	使用者
 username	common	zt	使用者名稱
 users	common	zt	使用者
@@ -379,23 +385,24 @@ vanuatu	common	zt	VANUATU
 venezuela	common	zt	VENEZUELA
 viet nam	common	zt	VIET NAM
 view	common	zt	檢視
-"virgin islands, british"	common	zt	"VIRGIN ISLANDS, BRITISH"
-"virgin islands, u.s."	common	zt	"VIRGIN ISLANDS, U.S."
+virgin islands, british	common	zt	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	zt	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	zt	WALLIS AND FUTUNA
 wednesday	common	zt	星期三
 western sahara	common	zt	WESTERN SAHARA
-which groups	common	zt	哪一個群組
+which groups	common	zt	哪個群組
 written by:	common	zt	作者：
 yemen	common	zt	YEMEN
 yes	common	zt	是
-you are running a newer version of phpGroupWare than your database is setup for	common	zt	您目前所使用的 phpGroupWare 版本較資料庫還新。
-you have selected an invalid date	common	zt	您選擇不合法的日期！
-you have selected an invalid main category	common	zt	您選擇的不合法的主要分類項目！
+you are running a newer version of phpGroupWare than your database is setup for	common	zt	您現在所使用的 phpGroupWare 版本比您的資料庫設定的版本還新。
+you have been successfully logged out	login	zt	您已經成功登出。
+you have selected an invalid date	common	zt	您選擇了不合法的日期！
+you have selected an invalid main category	common	zt	您選擇了錯誤的分類！
 your search returned 1 match	common	zt	搜尋到 1 筆資料
-your search returned x matchs	common	zt	搜尋到 %1 筆資料
-your settings have been updated	common	zt	成功更新您的設定
+your search returned x matchs	common	zt	搜尋到 %s 筆資料
+your session could not be verified.	login	zt	您的連線不合法。
+your settings have been updated	common	zt	您的設定已經更新。
 yugoslavia	common	zt	YUGOSLAVIA
-you have been successfully logged out	login	zt	成功登出
-your session could not be verified.	login	zt	無法確認您的連線。
 zambia	common	zt	ZAMBIA
 zimbabwe	common	zt	ZIMBABWE
+

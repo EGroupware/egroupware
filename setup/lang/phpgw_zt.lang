@@ -1,157 +1,205 @@
-"<br><center>Import has been completed!  Click <a href=""index.php"">here</a> to return to setup </center>"	setup	zt	"<br><center>已成功匯入！點選<a href=""index.php""此處</a>回到設定畫面。</center>"
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	zt	<br><center>匯入完成！點選<a href="index.php">此處</a>回到設定畫面。</center>
 actions	setup	zt	動作
+Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	zt	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
 admin first name	setup	zt	管理者名
 admin last name	setup	zt	管理者姓
 admin password	setup	zt	管理者密碼
-admin username	setup	zt	管理者使用者代號
+admin username	setup	zt	管理者帳號
+Admins	setup	zt	管理者
 all applications	setup	zt	所有的應用程式
+All Users	setup	zt	所有使用者
 app details	setup	zt	應用程式詳細內容
-app install/remove/upgrade	setup	zt	安裝／移除／升級應用程式
+app install/remove/upgrade	setup	zt	應用程式安裝╱移除╱升級
 application data	setup	zt	應用程式資料
 application management	setup	zt	應用程式管理
 application name and status	setup	zt	應用程式名稱及狀態
 application name and status information	setup	zt	應用程式名稱及狀態資訊
 application title	setup	zt	應用程式標題
-"at your request, this script is going to attempt to create the database and assign the db user rights to it"	setup	zt	"At your request, this script is going to attempt to create the database and assign the db user rights to it"
-"at your request, this script is going to attempt to install all the applications for you"	setup	zt	"At your request, this script is going to attempt to install all the applications for you"
-"at your request, this script is going to attempt to upgrade your old applications to the current versions"	setup	zt	"At your request, this script is going to attempt to upgrade your old applications to the current versions"
-"at your request, this script is going to attempt to upgrade your old tables to the new format"	setup	zt	"At your request, this script is going to attempt to upgrade your old tables to the new format"
-"at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format"	setup	zt	"At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format"
-"at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data"	setup	zt	"At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data"
-available version	setup	zt	Available Version
-backupwarn	setup	zt	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
-because it depends upon	setup	zt	because it depends upon
-"because it is not a user application, or access is controlled via acl"	setup	zt	"because it is not a user application, or access is controlled via acl"
-"because it requires manual table installation, <br>or the table definition was incorrect"	setup	zt	"because it requires manual table installation, <br>or the table definition was incorrect"
-because it was manually disabled	setup	zt	because it was manually disabled
-because of a failed upgrade or install	setup	zt	because of a failed upgrade or install
-"because of a failed upgrade, or the database is newer than the installed version of this app"	setup	zt	"because of a failed upgrade, or the database is newer than the installed version of this app"
-"because the enable flag for this app is set to 0, or is undefined"	setup	zt	"because the enable flag for this app is set to 0, or is undefined"
-cancel	setup	zt	Cancel
-charset	setup	zt	ISO-8859-1
-click here	setup	zt	Click Here
-configuration completed	setup	zt	Configuration completed
-configuration	setup	zt	Configuration
-configure now	setup	zt	Configure Now
-create database	setup	zt	Create Database
-create one now	setup	zt	Create one now
-create	setup	zt	Create
-creating tables	setup	zt	Creating Tables
-currently installed languages: x <br>	setup	zt	Currently installed languages: %1 <br>
-current version	setup	zt	Current Version
-db root password	setup	zt	DB root password
-db root username	setup	zt	DB root username
-delete all my tables and data	setup	zt	Delete all my tables and data
-delete all old languages and install new ones	setup	zt	Delete all old languages and install new ones
-deleting tables	setup	zt	Deleting Tables
-demo server setup	setup	zt	Demo Server Setup
-deregistered	setup	zt	deregistered
-details for admin account	setup	zt	Details for Admin account
-domain	setup	zt	Domain
-dont touch my data	setup	zt	Dont touch my data
-edit current configuration	setup	zt	Edit Current Configuration
-export sql users to ldap	setup	zt	Export SQL users to LDAP
-"for a new install, select import.  to convert existing sql accounts to ldap, select export"	setup	zt	"For a new install, select import.  To convert existing SQL accounts to LDAP, select export"
-go back	setup	zt	Go back
-has a version mismatch	setup	zt	has a version mismatch
-hooks deregistered	setup	zt	hooks deregistered
-hooks registered	setup	zt	hooks registered
-"however, the application is otherwise installed"	setup	zt	"However, the application is otherwise installed"
-"if the application has no defined tables, selecting upgrade should remedy the problem"	setup	zt	"If the application has no defined tables, selecting upgrade should remedy the problem"
-"if you did not receive any errors, your applications have been"	setup	zt	"If you did not receive any errors, your applications have been"
-"if you did not receive any errors, your tables have been"	setup	zt	"If you did not receive any errors, your tables have been"
-import ldap users/groups	setup	zt	Import LDAP users/groups
-insanity	setup	zt	Insanity
-install Applications	setup	zt	Install Applications
-install language	setup	zt	Install Language
-install	setup	zt	Install
-installed	setup	zt	installed
-is broken	setup	zt	is broken
-is disabled	setup	zt	is disabled
-ldap account import/export	setup	zt	LDAP account import/export
-ldap export users	setup	zt	LDAP export users
-ldap import users	setup	zt	LDAP import users
-logout	setup	zt	Logout
-makesure	setup	zt	Make sure that your database is created and the account permissions are set
-manage applications	setup	zt	Manage Applications
-manage languages	setup	zt	Manage Languages
-multi-language support setup	setup	zt	Multi-Language support setup
-mysqlinstr	setup	zt	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
-not complete	setup	zt	not complete
-note: you will be able to customize this later	setup	zt	Note: You will be able to customize this later
-not ready for this stage yet	setup	zt	Not ready for this stage yet
-ok	setup	zt	OK
-once the database is setup correctly	setup	zt	Once the database is setup correctly
-only add languages that are not in the database already	setup	zt	Only add languages that are not in the database already
-only add new phrases	setup	zt	Only add new phrases
-"passwords did not match, please re-enter"	setup	zt	"Passwords did not match, please re-enter"
-pgsqlinstr	setup	zt	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
-please check for sql scripts within the application's directory	setup	zt	Please check for sql scripts within the application's directory
-please configure phpGroupWare for your environment	setup	zt	Please configure phpGroupWare for your environment
-please install	setup	zt	Please install
-please login to phpgroupware and run the admin application for additional site configuration	setup	zt	Please login to phpgroupware and run the admin application for additional site configuration
-possible solutions	setup	zt	Possible Solutions
-potential problem	setup	zt	Potential Problem
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	zt	跟據您的要求，系統現在將會嘗試建立資料庫以及相關資料庫的使用權組態。
+at your request, this script is going to attempt to install all the applications for you	setup	zt	跟據您的要求，系統現在將會嘗試自動安裝所有的應用程式。
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	zt	跟據您的要求，系統現在將會嘗試將所有舊版本的應用程式升級。
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	zt	跟據您的要求，系統現在將會嘗試將您的資料表升級成新的架構。
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	zt	跟據您的要求，系統現在將會將您原始的資料表及其中的資料完全移除，並以新的資料表格式重新建立資料表。
+at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	zt	跟據您的要求，系統現在將會移除所有的應用程式並移除所有的資料表及其中的資料。
+Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	zt	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
+Authentication / Accounts	setup	zt	認證／帳號
+Auto create account records for authenticated users	setup	zt	自動建立所有授權使用者的帳號資料
+available version	setup	zt	可使用的版本
+backupwarn	setup	zt	但是我們<u>強烈建議您備份您的資料表</u>，以免系統自動作業時損傷到您的資料，<br><strong>這個自動作業程式很容意造成資料的損傷</strong>，<br><em>請在進行任何動作前完整備份您的資料！</em>
+because it depends upon	setup	zt	因為此應用程式被關聯到
+because it is not a user application, or access is controlled via acl	setup	zt	因為此應用程式不是一個使用者端的應用程式，或是由權限控管存取權限。
+because it requires manual table installation, <br>or the table definition was incorrect	setup	zt	因為此應用程式它需要手動安裝資料表或是資料表的定義不正確。
+because it was manually disabled	setup	zt	因為此應用程式已經被手動停用了。
+because of a failed upgrade or install	setup	zt	因為此應用程式升級或安裝失敗。
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	zt	因為升級失敗，或是資料庫比此應用程式的版本還要新。
+because the enable flag for this app is set to 0, or is undefined	setup	zt	因為此應用程式的啟用設定值被設定為 0 或是為被設定。
+cancel	setup	zt	取消
+charset	setup	zt	big5
+check ip address of all sessions	setup	zt	檢查所有連線的網路位址
+click here	setup	zt	點選此處
+configuration	setup	zt	組態設定
+configuration completed	setup	zt	組態設定完成
+configure now	setup	zt	組態設定中
+Country Selection	setup	zt	選擇國別
+create	setup	zt	建立
+create database	setup	zt	建立資料庫
+create one now	setup	zt	馬上建立
+creating tables	setup	zt	正在建立資料表
+current version	setup	zt	目前的版本
+currently installed languages: x <br>	setup	zt	目前已安裝的語言：%1 <br>
+db root password	setup	zt	資料庫 ROOT 密碼
+db root username	setup	zt	資料庫 ROOT 帳號
+Default file system space per user/group ?	setup	zt	預設各使用者／群組可使用的檔案空間？
+delete all my tables and data	setup	zt	移除所有的資料表及資料
+delete all old languages and install new ones	setup	zt	移除所有舊的語言資訊檔並安裝新的語言資訊檔
+deleting tables	setup	zt	正在移除資料表
+demo server setup	setup	zt	示範伺服器安裝
+Deny all users access to grant other users access to their entries ?	setup	zt	不允許任何使用者將自己的資料開放給其它使用者存取？
+deregistered	setup	zt	取消註冊
+details for admin account	setup	zt	管理者帳號詳細內容
+domain	setup	zt	網域
+dont touch my data	setup	zt	不要動我的資料
+edit current configuration	setup	zt	編輯目前的組態設定
+Enter some random text for app_session <br>encryption (requires mcrypt)	setup	zt	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br>
+Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
+Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
+Enter the hostname of the machine on which this server is running	setup	zt	輸入這個伺服器主機的主機名稱
+Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
+Enter the site password for peer servers	setup	zt	輸入對接伺服器的主機密碼
+Enter the site username for peer servers	setup	zt	輸入對接伺服器的主機名稱
+Enter the title for your site	setup	zt	輸入網站標題
+Enter your default FTP server	setup	zt	輸入預設的檔案傳輸伺服器主機名稱
+Enter your HTTP proxy server	setup	zt	輸入網頁代理伺服器主機名稱
+Enter your HTTP proxy server port	setup	zt	輸入網頁代理伺服器主機埠
+export sql users to ldap	setup	zt	將 SQL 使用者資料匯出至 LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	zt	第一次安裝請選擇「匯入」；要轉換現存於 SQL 中的帳號資料到 LDAP請選擇「匯出」
+go back	setup	zt	回到上一頁
+has a version mismatch	setup	zt	版本不符
+hooks deregistered	setup	zt	取消附掛註冊
+hooks registered	setup	zt	附掛註冊
+Host information	setup	zt	主機資訊
+however, the application is otherwise installed	setup	zt	但是此應用程式已安裝過
+If no ACL records for user or any group the user is a member of	setup	zt	如果使用者沒有任何權限設定或是不屬於任何群組，則將該使用者的群組視為
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	zt	如果應用程式沒有任何定義好的資料表，可使用「升級」功能修正此問題。
+If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	zt	如果您使用 LDAP，您希望能管理使用者的家目錄及登入環境變數嗎？
+if you did not receive any errors, your applications have been	setup	zt	如果您沒有看到任何錯誤訊息，您的應用程式已經
+if you did not receive any errors, your tables have been	setup	zt	如果您沒有看到任何錯誤訊息，您的資料表已經
+import ldap users/groups	setup	zt	匯入 LDAP 使用者／群組
+insanity	setup	zt	建議不使用
+install	setup	zt	安裝
+install Applications	setup	zt	安裝應用程式
+install language	setup	zt	安裝語言
+installed	setup	zt	安裝
+is broken	setup	zt	損壞
+is disabled	setup	zt	被停用
+ldap account import/export	setup	zt	LDAP 使用者帳號匯入／匯出
+LDAP accounts context	setup	zt	LDAP 使用者帳號內容
+LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	zt	LDAP 預設家目錄前置目錄﹝如：/home/username 的前置目錄為 /home﹞
+LDAP Default shell (e.g. /bin/bash)	setup	zt	LDAP 預設登入命令處理器﹝如：/bin/bash﹞
+LDAP encryption type	setup	zt	LDAP 加密類型
+ldap export users	setup	zt	LDAP 匯出使用者
+LDAP groups context	setup	zt	LDAP 群組內容
+LDAP host	setup	zt	LDAP 主機
+ldap import users	setup	zt	LDAP 匯入使用者
+LDAP root password	setup	zt	LDAP 管理者密碼
+LDAP rootdn	setup	zt	LDAP 主要端點﹝rootdn﹞
+logout	setup	zt	登出
+makesure	setup	zt	確認您的資料庫已經安裝完成、使用者帳號權限設定完成
+manage applications	setup	zt	管理應用程式
+manage languages	setup	zt	管理語言
+Maximum account id (e.g. 65535 or 1000000)	setup	zt	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
+Minimum account id (e.g. 500 or 100, etc.)	setup	zt	使用者帳號編碼最小值﹝如：500 或 100﹞
+multi-language support setup	setup	zt	多國語言設定
+mysqlinstr	setup	zt	在 MySQL 中建立資料庫的方法：<br>登入 MySQL 系統 -<br><i>[user@server user]# mysql -u root -p</i><br>建立空的資料庫並授權使用者使用 -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	zt	尚未完成
+not ready for this stage yet	setup	zt	先前的步驟尚未執行。
+note: you will be able to customize this later	setup	zt	備註：稍後您還可以做更動。
+ok	setup	zt	正常
+once the database is setup correctly	setup	zt	資料庫設定正確
+only add languages that are not in the database already	setup	zt	只新增未在資料庫中的語言
+only add new phrases	setup	zt	只加入新的詞句
+passwords did not match, please re-enter	setup	zt	密碼不符，請重新輸入
+Path information	setup	zt	路徑資訊
+pgsqlinstr	setup	zt	在 PostgreSQL 中建立資料庫的方法：<br>起用 PostgreSQL 系統<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>建立空的資料庫 -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	zt	請檢查應用程式目錄下的 SQL 命令檔
+please configure phpGroupWare for your environment	setup	zt	請為您現在的環境設定 phpGroupWare 的相關組態
+please install	setup	zt	請安裝
+please login to phpgroupware and run the admin application for additional site configuration	setup	zt	請登入 phpGroupWare 並執行管理者應用程式設定其餘的組態設定
+possible solutions	setup	zt	可能的解決方法
+potential problem	setup	zt	可能的問題
+Preferences	setup	zt	喜好設定
 problem resolution	setup	zt	Problem resolution
-process	setup	zt	Process
-re-check my database	setup	zt	Re-Check my database
-re-check my installation	setup	zt	Re-Check My Installation
-re-enter password	setup	zt	Re-enter password
-registered	setup	zt	registered
-remove	setup	zt	Remove
-requires reinstall or manual repair	setup	zt	Requires reinstall or manual repair
-requires upgrade	setup	zt	Requires upgrade
+process	setup	zt	處理程序
+re-check my database	setup	zt	再次確認資料庫
+re-check my installation	setup	zt	再次確認軟體安裝
+re-enter password	setup	zt	重新輸入密碼
+registered	setup	zt	註冊
+remove	setup	zt	移除
+requires reinstall or manual repair	setup	zt	需要重新安裝或是手動修復
+requires upgrade	setup	zt	需要升級
 resolve	setup	zt	Resolve
-select the default applications to which your users will have access	setup	zt	Select the default applications to which your users will have access
-select the desired action(s) from the available choices	setup	zt	Select the desired action(s) from the available choices
-select which group(s) will be exported (group membership will be maintained)	setup	zt	Select which group(s) will be exported (group membership will be maintained)
-select which group(s) will be imported (group membership will be maintained)	setup	zt	Select which group(s) will be imported (group membership will be maintained)
-select which languages you would like to use	setup	zt	Select which languages you would like to use
-select which method of upgrade you would like to do	setup	zt	Select which method of upgrade you would like to do
-select which user(s) will be exported	setup	zt	Select which user(s) will be exported
-select which user(s) will be imported	setup	zt	Select which user(s) will be imported
-select which user(s) will have admin privileges	setup	zt	Select which user(s) will have admin privileges
-select your old version	setup	zt	Select your old version
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	zt	選擇一個應用程式，輸入版本編號並開始設定應用程式到這個版本。<br>若您沒有輸入版本編號，系統只會安裝這個應用程式的基本系統資料表。<br><blink>這個動作將不會移除任何應用程式的資料表！</blink>
+select the default applications to which your users will have access	setup	zt	選擇您的使用者預設使用的應用程式
+select the desired action(s) from the available choices	setup	zt	在現有的選項中選擇所需的動作
+Select where you want to store/retrieve filesystem information	setup	zt	選擇您欲儲存／取得的檔案系統資訊
+Select where you want to store/retrieve user accounts	setup	zt	選擇您欲儲存／取得使用者帳號的方式
+select which group(s) will be exported (group membership will be maintained)	setup	zt	選擇您欲匯出的群組﹝群組使用者將不會做任何更動﹞
+select which group(s) will be imported (group membership will be maintained)	setup	zt	選擇您欲匯入的群組﹝群組使用者將不會做任何更動﹞
+select which languages you would like to use	setup	zt	選擇您欲使用的語言
+select which method of upgrade you would like to do	setup	zt	選擇您欲使用的升級方式
+select which user(s) will be exported	setup	zt	選擇您欲匯出的使用者
+select which user(s) will be imported	setup	zt	選擇您欲匯入的使用者
+select which user(s) will have admin privileges	setup	zt	選擇擁有管理者權限的使用者
+select your old version	setup	zt	選擇舊的版本
+Selectbox	setup	zt	勾選方塊
 setup	setup	zt	Setup
-some or all of its tables are missing	setup	zt	Some or all of its tables are missing
-status	setup	zt	Status
-step 1 - simple application management	setup	zt	Step 1 - Simple Application Management
-step 2 - configuration	setup	zt	Step 2 - Configuration
-step 3 - language management	setup	zt	Step 3 - Language Management
-step 4 - advanced application management	setup	zt	Step 4 - Advanced Application Management
-submit	setup	zt	Submit
-table change messages	setup	zt	Table Change Messages
-tables dropped	setup	zt	tables dropped
-"tables installed, unless there are errors printed above"	setup	zt	"tables installed, unless there are errors printed above"
-tables upgraded	setup	zt	tables upgraded
-target version	setup	zt	Target Version
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	zt	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
-the tables	setup	zt	the tables
-"the table definition was correct, and the tables were installed"	setup	zt	"The table definition was correct, and the tables were installed"
-this program will help you upgrade or install different languages for phpGroupWare	setup	zt	This program will help you upgrade or install different languages for phpGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	zt	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	zt	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
-this stage is completed<br>	setup	zt	This stage is completed<br>
-"this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>"	setup	zt	"This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>"
-"Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"	setup	zt	"Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zt	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
-uninstall all applications	setup	zt	Uninstall all applications
-uninstalled	setup	zt	uninstalled
-upgraded	setup	zt	upgraded
-upgrade	setup	zt	Upgrade
-upgrading tables	setup	zt	Upgrading Tables
-version mismatch	setup	zt	Version Mismatch
-we will automatically update your tables/records to x	setup	zt	We will automatically update your tables/records to %1
-"you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16"	setup	zt	"You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16"
-"You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version."	setup	zt	"You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version."
-you appear to be running version x of phpGroupWare	setup	zt	You appear to be running version %1 of phpGroupWare
-"you are ready for this stage, but this stage is not yet written.<br>"	setup	zt	"You are ready for this stage, but this stage is not yet written.<br>"
-you do not have any languages installed. please install one now <br>	setup	zt	You do not have any languages installed. Please install one now <br>
-you must enter a username for the admin	setup	zt	You must enter a username for the admin
-your applications are current	setup	zt	Your applications are current
-your database does not exist	setup	zt	Your database does not exist
-"your database is working, but you dont have any applications installed"	setup	zt	"Your database is working, but you dont have any applications installed"
-your tables are current	setup	zt	Your tables are current
-your tables may be altered and you may lose data	setup	zt	Your tables may be altered and you may lose data
-your tables will be dropped and you will lose data	setup	zt	Your tables will be dropped and you will lose data
-"you should either uninstall and then reinstall it, or attempt manual repairs"	setup	zt	"You should either uninstall and then reinstall it, or attempt manual repairs"
+Show 'powered by' logo on	setup	zt	顯示「powered by」圖示位置
+some or all of its tables are missing	setup	zt	遺失部份或所有的資料表
+status	setup	zt	狀態
+step 1 - simple application management	setup	zt	步驟一、基本應用程式管理
+step 2 - configuration	setup	zt	步驟二、組態設定
+step 3 - language management	setup	zt	步驟三、語言管理
+step 4 - advanced application management	setup	zt	步驟四、進階應用程式管理
+submit	setup	zt	送出
+table change messages	setup	zt	資料表更動訊息
+tables dropped	setup	zt	資料表已移除
+tables installed, unless there are errors printed above	setup	zt	資料表已安裝，若有錯誤則顯示訊息於上
+tables upgraded	setup	zt	資料表已升級
+target version	setup	zt	目標版本
+Text Entry	setup	zt	文字記錄
+the table definition was correct, and the tables were installed	setup	zt	資料表定義正確且資料表已正確安裝
+the tables	setup	zt	資料表
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	zt	無法正確連結到 LDAP 伺服器主機。<br>請檢查 LDAP 伺服器主機的設定。
+this program will help you upgrade or install different languages for phpGroupWare	setup	zt	這個程式將協助您升級或安裝 phpGroupWare 內不同的語言
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	zt	這個部份將協助您從 phpGroupWare 的資料表匯出使用者及群組設定到 LDAP 主機中
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	zt	這個部份將協助您從 phpGroupWare 的資料表匯入使用者及群組設定到 LDAP 主機中
+this stage is completed<br>	setup	zt	這個步驟已經完成<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	zt	這個動作將會建立一個管理者帳號及三個示範帳號。<br>使用者代碼及密碼分別為：demo/guest、demo2/guest 及 demo3/guest。<br><b>！！！這個動作將會移除所有的帳號！！！</b><br>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zt	設定一個管理者帳號及三個示範帳號。<br><b>這個動作將會移除所有的帳號</b>
+uninstall all applications	setup	zt	移除所有應用程式
+uninstalled	setup	zt	已經移除
+upgrade	setup	zt	升級
+upgraded	setup	zt	已經升級
+upgrading tables	setup	zt	正在升級資料表內容
+Use cookies to pass sessionid	setup	zt	使用 COOKIE 傳遞連線代碼
+Use pure HTML compliant code (not fully working yet)	setup	zt	使用標準 HTML 原始碼（尚未完全支援）
+Users Choice	setup	zt	使用者的選擇
+version mismatch	setup	zt	版本不符
+we will automatically update your tables/records to x	setup	zt	我們將自動幫您更新您的資料表及資料到 %1
+Would you like phpGroupWare to cache the phpgw info array ?	setup	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
+Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
+Would you like to show each application's upgrade status ?	setup	zt	您希望顯示每一個應用程式升級的資訊嗎？
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zt	您目前安裝的為測試版本的 phpGroupWare。<br>目前已經不再支援這個版本，建議您先升級到 0.9.10 版﹝最後一個測試版本﹞ <br>再升級到現在的版本。
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	zt	您目前所使用的 PHP 版本太舊，<br>建議您升級到較新的版本，<br>因為舊版本的 PHP 可能會造成 phpGroupWare 運作不正常。<br><br>建議您至少升級到 3.0.16 版
+you appear to be running version x of phpGroupWare	setup	zt	您目前所使用的 phpGroupWare 版本為 %1
+you are ready for this stage, but this stage is not yet written.<br>	setup	zt	您已經準備好要使用這個步驟，但這個步驟尚未開發完成。<br>
+you do not have any languages installed. please install one now <br>	setup	zt	您目前沒有安裝任何的語言，請安裝至少一種語言。<br>
+you must enter a username for the admin	setup	zt	您必須輸入管理者的帳號名稱
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	zt	您應該要移除並重新安裝應用程式或試著手動安裝
+your applications are current	setup	zt	您的應用程式目前狀態
+your database does not exist	setup	zt	找不到您的資料庫系統。
+your database is working, but you dont have any applications installed	setup	zt	您的資料庫正常運作中，但沒有安裝任何應用程式。
+your tables are current	setup	zt	您的資料表目前狀態
+your tables may be altered and you may lose data	setup	zt	您的資料表已經被更動過並有可能遺失部份資料
+your tables will be dropped and you will lose data	setup	zt	您的資料表將會被完全移除，您也將會遺失所有的資料。
+
