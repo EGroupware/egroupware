@@ -113,7 +113,7 @@
 			"User 2" => "",
 			"User 3" => "",
 			"User 4" => "",
-			"Web Page" => ""
+			"Web Page" => "url"
 		);
 
 		function import_start_file($buffer,$j="",$k="") {
