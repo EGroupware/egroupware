@@ -56,9 +56,9 @@ db_init ();
 
 define ('HTML_TABLE_FILES_HEADER_BG_COLOR', '');
 define ('HTML_TABLE_FILES_HEADER_TEXT_COLOR', 'maroon');
-define ('HTML_TABLE_FILES_COLUMN_HEADER_BG_COLOR', '');
-define ('HTML_TABLE_FILES_COLUMN_HEADER_TEXT_COLOR', 'maroon');
-define ('HTML_TABLE_FILES_BG_COLOR', '');
+define ('HTML_TABLE_FILES_COLUMN_HEADER_BG_COLOR', '#cccccc');
+define ('HTML_TABLE_FILES_COLUMN_HEADER_TEXT_COLOR', '#000000');
+define ('HTML_TABLE_FILES_BG_COLOR', '#dedede');
 define ('HTML_TABLE_FILES_TEXT_COLOR', 'maroon');
 define ('HTML_TEXT_ERROR_COLOR', 'red');
 define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', lang('Back to file manager'));
