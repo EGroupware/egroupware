@@ -100,9 +100,9 @@
 
 	$sfields = rawurlencode(serialize($fields[0]));
 	$editlink  = $phpgw->common->check_owner($record_owner,"/addressbook/edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
-	$copylink  = '<form action="'.$phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$vcardlink = '<form action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$donelink  = '<form action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$copylink  = '<form method="POST" action="'.$phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$vcardlink = '<form method="POST" action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$donelink  = '<form method="POST" action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);

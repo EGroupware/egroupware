@@ -153,8 +153,8 @@
 	$t->set_var("lang_cancel",lang("cancel"));
 	$t->set_var("lang_delete",lang("delete"));
 	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("cancel_link",'<form action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start") . '">');
-	$t->set_var("delete_link",'<form action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
+	$t->set_var("cancel_link",'<form method="POST" action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start") . '">');
+	$t->set_var("delete_link",'<form method="POST" action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
 	
 	$t->parse("out","edit");
 	$t->pparse("out","edit");
