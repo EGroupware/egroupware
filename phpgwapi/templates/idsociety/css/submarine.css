@@ -84,6 +84,11 @@ a:hover
 	border-style: ridge;
 }
 
+.portal_text
+{
+	color: #FFFFFF;
+}
+
 .bodytext
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
