@@ -48,10 +48,10 @@ DHTML Calendar Widget
 <h1 class=title align=center><br><br>DHTML Calendar Widget</h1>
 <p></p>
 <div align=center>
-Mihai Bazon, <tt>&lt;mishoo@infoiasi.ro&gt;</tt><p>November 5, 2003<br></p>
+Mihai Bazon, <tt>&lt;mishoo@infoiasi.ro&gt;</tt><p>February 6, 2004<br></p>
 <p></p>
 <p>
-<span class=small>calendar version: 0.9.5 &#8220;Your favorite time, bis&#8221;</span>
+<span class=small>calendar version: 0.9.6 &#8220;Keep cool but don&#8217;t freeze&#8221;</span>
 </p>
 </div>
 <p></p>
@@ -102,7 +102,7 @@ Mihai Bazon, <tt>&lt;mishoo@infoiasi.ro&gt;</tt><p>November 5, 2003<br></p>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.10"></a><a href="#node_sec_4.3.10">4.3.10&nbsp;&nbsp;<tt>Calendar.showAt</tt></a><br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.11"></a><a href="#node_sec_4.3.11">4.3.11&nbsp;&nbsp;<tt>Calendar.showAtElement</tt></a><br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.12"></a><a href="#node_sec_4.3.12">4.3.12&nbsp;&nbsp;<tt>Calendar.setDate</tt></a><br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.13"></a><a href="#node_sec_4.3.13">4.3.13&nbsp;&nbsp;<tt>Calendar.setMondayFirst</tt></a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.13"></a><a href="#node_sec_4.3.13">4.3.13&nbsp;&nbsp;<tt>Calendar.setFirstDayOfWeek</tt></a><br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.14"></a><a href="#node_sec_4.3.14">4.3.14&nbsp;&nbsp;<tt>Calendar.parseDate</tt></a><br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3.15"></a><a href="#node_sec_4.3.15">4.3.15&nbsp;&nbsp;<tt>Calendar.setRange</tt></a><br>
 </p>
@@ -218,7 +218,7 @@ this in your document&#8217;s <tt>&lt;head&gt;</tt> section, also make sure you 
 correct paths to the scripts.</p>
 <p>
 </p>
-<pre class=verbatim>&lt;style type=&quot;text/css&quot;&gt;@import url(calendar-win2k-1.css)&lt;/style&gt;
+<pre class=verbatim>&lt;style type=&quot;text/css&quot;&gt;@import url(calendar-win2k-1.css);&lt;/style&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;calendar.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;lang/calendar-en.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;calendar-setup.js&quot;&gt;&lt;/script&gt;
@@ -244,9 +244,9 @@ insert the following code immediately <em>after</em> the HTML form:</p>
 <pre class=verbatim>&lt;script type=&quot;text/javascript&quot;&gt;
   Calendar.setup(
     {
-      inputField  : &quot;data&quot;,      // ID of the input field
-      ifFormat    : &quot;M d, y&quot;,    // the date format
-      button      : &quot;trigger&quot;    // ID of the button
+      inputField  : &quot;data&quot;,         // ID of the input field
+      ifFormat    : &quot;%m %d, %Y&quot;,    // the date format
+      button      : &quot;trigger&quot;       // ID of the button
     }
   );
 &lt;/script&gt;
@@ -373,13 +373,12 @@ as a CSS class and appended to the date element.  If this string is
 <a href="#node_sec_4.3.8">4.3.8</a>.
 </td><td valign=top >null
 </td></tr>
-<tr><td valign=top ><tt>mondayFirst</tt>
-</td><td valign=top >boolean </td><td valign=top >If <tt>true</tt> (default) then the calendar will display with
-Monday being the first day of week.  If <tt>false</tt> then Sunday will be
-the first day of week.  This has changed from default <tt>false</tt> to
-default <tt>true</tt> because the ISO 8601 defines week as starting Monday
-and this definition is used for computing the week number.
-</td><td valign=top >true
+<tr><td valign=top ><tt>firstDay</tt>
+</td><td valign=top >integer </td><td valign=top >Specifies which day is to be displayed as the first day of
+week.  Possible values are 0 to 6; 0 means Sunday, 1 means Monday, ..., 6
+means Saturday.  The end user can easily change this too, by clicking on the
+day name in the calendar header.
+</td><td valign=top >0
 </td></tr>
 <tr><td valign=top ><tt>weekNumbers</tt>
 </td><td valign=top >boolean </td><td valign=top >If &#8220;true&#8221; then the calendar will display week numbers.
@@ -444,6 +443,27 @@ allow time selection.
 </td><td valign=top >string </td><td valign=top >Set this to &#8220;12&#8221; or &#8220;24&#8221; to configure the way that the
 calendar will display time.
 </td><td valign=top >&#8220;24&#8221;
+</td></tr>
+<tr><td valign=top ><tt>electric</tt>
+</td><td valign=top >boolean </td><td valign=top >Set this to &#8220;false&#8221; if you want the calendar to update the
+field only when closed (by default it updates the field at each date change,
+even if the calendar is not closed) </td><td valign=top >true
+</td></tr>
+<tr><td valign=top ><tt>position</tt>
+</td><td valign=top >array </td><td valign=top >Specifies the [x, y] position, relative to page&#8217;s top-left corner,
+where the calendar will be displayed.  If not passed then the position will
+be computed based on the &#8220;align&#8221; parameter.  Defaults to &#8220;null&#8221; (not
+used). </td><td valign=top >null
+</td></tr>
+<tr><td valign=top ><tt>cache</tt>
+</td><td valign=top >boolean </td><td valign=top >Set this to &#8220;true&#8221; if you want to cache the calendar object.
+This means that a single calendar object will be used for all fields that
+require a popup calendar </td><td valign=top >false
+</td></tr>
+<tr><td valign=top ><tt>showOthers</tt>
+</td><td valign=top >boolean </td><td valign=top >If set to &#8220;true&#8221; then days belonging to months overlapping
+with the currently displayed month will also be displayed in the calendar
+(but in a &#8220;faded-out&#8221; color) </td><td valign=top >false
 
 </td></tr></table>
 
@@ -675,7 +695,7 @@ i.e. highlight them differently).  Details in section
 Synopsis:</p>
 <p>
 </p>
-<pre class=verbatim>var calendar = Calendar(mondayFirst, date, onSelect, onClose);
+<pre class=verbatim>var calendar = Calendar(firstDayOfWeek, date, onSelect, onClose);
 </pre><p></p>
 <p>
 Parameters are as follows:</p>
@@ -683,8 +703,9 @@ Parameters are as follows:</p>
 </p>
 <ul><p>
 </p>
-<li><p><b>mondayFirst</b>&nbsp;&nbsp; &#8212; boolean, if it&#8217;s <tt>true</tt> the calendar will have
-Monday as first day of week, if false weeks start on Sunday.</p>
+<li><p><b>firstDayOfWeek</b>&nbsp;&nbsp; &#8212; specifies which day is to be displayed as the first
+day of week.  Possible values are 0 to 6; 0 means Sunday, 1 means Monday,
+..., 6 means Saturday.</p>
 <p>
 </p>
 <li><p><b>date</b>&nbsp;&nbsp; &#8212; a JavaScript Date object or <tt>null</tt>.  If <tt>null</tt>
@@ -791,9 +812,9 @@ variable to <tt>false</tt> <em>before</em> calling <tt>Calendar.create</tt>.</p>
 selector will be in 12-hour format.  It is in 24-hour format by default.</p>
 <p>
 </p>
-<li><p><tt>mondayFirst</tt> &#8212; if <tt>true</tt> then the calendar uses Monday
-as first day of week, otherwise Sunday.  This variable is set from constructor,
-but you still have a chance to modify it <em>before</em> calling
+<li><p><tt>firstDayOfWeek</tt> &#8212; specifies the first day of week (0 to 6, pass
+0 for Sunday, 1 for Monday, ..., 6 for Saturday).  This variable is set from
+constructor, but you still have a chance to modify it <em>before</em> calling
 <tt>Calendar.create</tt>.</p>
 <p>
 </p>
@@ -903,7 +924,7 @@ There are more algorithms for computing the week number.  All
 three specifiers currently implement the same one, as defined by ISO 8601:
 &#8220;the week 01 is the week that has the Thursday in the current year, which is
 equivalent to the week that contains the fourth day of January.  Weeks start on
-Monday.</p>
+Monday.&#8221;</p>
 <p>
 </p>
 <a name="node_sec_4.3.6"></a>
@@ -1126,8 +1147,7 @@ calendar aligned to the right margin of the element).</p>
 </p>
 <a name="node_sec_Temp_10"></a>
 <h4><a href="#node_toc_node_sec_Temp_10">Default values</a></h4><p>If the &#8220;<tt>align</tt>&#8221; parameter is missing the calendar will choose
-&#8220;<tt>Bl</tt>&#8221;.  This resembles the behavior of older versions (prior to
-0.9.3) which did not support custom alignment.</p>
+&#8220;<tt>Br</tt>&#8221;.</p>
 <p>
 </p>
 <a name="node_sec_4.3.12"></a>
@@ -1142,13 +1162,13 @@ calendar.  If the calendar is visible the new date is displayed immediately.</p>
 <p>
 </p>
 <a name="node_sec_4.3.13"></a>
-<h3><a href="#node_toc_node_sec_4.3.13">4.3.13&nbsp;&nbsp;<tt>Calendar.setMondayFirst</tt></a></h3><p></p>
+<h3><a href="#node_toc_node_sec_4.3.13">4.3.13&nbsp;&nbsp;<tt>Calendar.setFirstDayOfWeek</tt></a></h3><p></p>
 <p>
-Changes the first day of week.  If the parameter is <tt>true</tt> then Monday
-will be the first day of week, otherwise Sunday.</p>
+Changes the first day of week.  The parameter has to be a numeric value ranging
+from 0 to 6.  Pass 0 for Sunday, 1 for Monday, ..., 6 for Saturday.</p>
 <p>
 </p>
-<pre class=verbatim>calendar.setMondayFirst(false); // use Sunday
+<pre class=verbatim>calendar.setFirstDayOfWeek(5); // start weeks on Friday
 </pre><p></p>
 <p>
 </p>
@@ -1247,13 +1267,19 @@ feature and pay me for implementing it) or donate some money please
 </p>
 <ul><p>
 </p>
+<li><p>Sunny Chowdhury (<a href="http://www.ex3.com">www.ex3.com</a>)</p>
+<p>
+</p>
+<li><p>Ian Barrack (<a href="http://www.simban.com">www.simban.com</a>)</p>
+<p>
+</p>
 <li><p>Himanshukumar Shah</p>
 <p>
 </p>
-<li><p>Seyhan Ersoy (<a href="http://www.oocgi.com">http://www.oocgi.com</a>)</p>
+<li><p>Seyhan Ersoy (<a href="http://www.oocgi.com">www.oocgi.com</a>)</p>
 <p>
 </p>
-<li><p>Jon Stokkeland (<a href="http://www.sauen.com">http://www.sauen.com</a>)</p>
+<li><p>Jon Stokkeland (<a href="http://www.sauen.com">www.sauen.com</a>)</p>
 <p>
 </p>
 </ul><p></p>
@@ -1283,7 +1309,7 @@ in other supported browsers. </p>
 <p><a name="footnote_Temp_5"></a><a href="#call_footnote_Temp_5"><sup><small>4</small></sup></a> user interface</p>
 </div>
 <div align=right class=colophon>
-<i>Last modified: Wed, Nov 5, 2003, 7:30 pm<br>
+<i>Last modified: Fri, Feb 6, 2004, 8:53 pm<br>
 HTML conversion by <a href="http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html">TeX2page 4r8f</a></i>
 </div>
 </body>

@@ -1,4 +1,4 @@
-This directory contains the (unchanged) Version 0.9.5 of jsCalendar
+This directory contains the (unchanged) Version 0.9.6 of jsCalendar
 
 jsCalendar is called by the jscalendar wrapper-class in the phpGW API
 
@@ -9,5 +9,6 @@ translations from the database for the language the user has spec. in his prefs.
 RalfBecker@outdoor-training.de
 
 History:
+06-May-2004 updated to version 0.9.6
 11-Nov-2003 updated to version 0.9.5
 17-Aug-2003 inital import of version 0.9.3

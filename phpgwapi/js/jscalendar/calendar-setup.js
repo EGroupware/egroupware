@@ -36,8 +36,8 @@
  *   ifFormat      | date format that will be stored in the input field
  *   daFormat      | the date format that will be used to display the date in displayArea
  *   singleClick   | (true/false) wether the calendar is in single click mode or not (default: true)
- *   mondayFirst   | (true/false) if true Monday is the first day of week, Sunday otherwise (default: true)
- *   align         | alignment (default: "Bl"); if you don't know what's this see the calendar documentation
+ *   firstDay      | numeric: 0 to 6.  "0" means display Sunday first, "1" means display Monday first, etc.
+ *   align         | alignment (default: "Br"); if you don't know what's this see the calendar documentation
  *   range         | array with 2 elements.  Default: [1900, 2999] -- the range of years available
  *   weekNumbers   | (true/false) if it's true (default) the calendar will display week numbers
  *   flat          | null or element ID; if not null the calendar will be a flat calendar having the parent with the given ID
@@ -49,6 +49,11 @@
  *   date          | the date that the calendar will be initially displayed to
  *   showsTime     | default: false; if true the calendar will include a time selector
  *   timeFormat    | the time format; can be "12" or "24", default is "12"
+ *   electric      | if true (default) then given fields/date areas are updated for each move; otherwise they're updated only on close
+ *   step          | configures the step of the years in drop-down boxes; default: 2
+ *   position      | configures the calendar absolute position; default: null
+ *   cache         | if "true" (but default: "false") it will reuse the same calendar object, where possible
+ *   showOthers    | if "true" (but default: "false") it will show days from other months too
  *
  *  None of them is required, they all have default values.  However, if you
  *  pass none of "inputField", "displayArea" or "button" you'll get a warning
@@ -66,8 +71,8 @@ Calendar.setup = function (params) {
 	param_default("singleClick",    true);
 	param_default("disableFunc",    null);
 	param_default("dateStatusFunc", params["disableFunc"]);	// takes precedence if both are defined
-	param_default("mondayFirst",    true);
-	param_default("align",          "Bl");
+	param_default("firstDay",       0); // defaults to "Sunday" first
+	param_default("align",          "Br");
 	param_default("range",          [1900, 2999]);
 	param_default("weekNumbers",    true);
 	param_default("flat",           null);
@@ -78,6 +83,11 @@ Calendar.setup = function (params) {
 	param_default("date",           null);
 	param_default("showsTime",      false);
 	param_default("timeFormat",     "24");
+	param_default("electric",       true);
+	param_default("step",           2);
+	param_default("position",       null);
+	param_default("cache",          false);
+	param_default("showOthers",     false);
 
 	var tmp = ["inputField", "displayArea", "button"];
 	for (var i in tmp) {
@@ -91,35 +101,36 @@ Calendar.setup = function (params) {
 	}
 
 	function onSelect(cal) {
-		if (cal.params.flat) {
-			if (typeof cal.params.flatCallback == "function") {
-				cal.params.flatCallback(cal);
-			} else {
+		var p = cal.params;
+		var update = (cal.dateClicked || p.electric);
+		if (update && p.flat) {
+			if (typeof p.flatCallback == "function")
+				p.flatCallback(cal);
+			else
 				alert("No flatCallback given -- doing nothing.");
-			}
 			return false;
 		}
-		if (cal.params.inputField) {
-			cal.params.inputField.value = cal.date.print(cal.params.ifFormat);
+		if (update && p.inputField) {
+			p.inputField.value = cal.date.print(p.ifFormat);
+			if (typeof p.inputField.onchange == "function")
+				p.inputField.onchange();
 		}
-		if (cal.params.displayArea) {
-			cal.params.displayArea.innerHTML = cal.date.print(cal.params.daFormat);
-		}
-		if (cal.params.singleClick && cal.dateClicked) {
+		if (update && p.displayArea)
+			p.displayArea.innerHTML = cal.date.print(p.daFormat);
+		if (update && p.singleClick && cal.dateClicked)
 			cal.callCloseHandler();
-		}
-		if (typeof cal.params.onUpdate == "function") {
-			cal.params.onUpdate(cal);
-		}
+		if (update && typeof p.onUpdate == "function")
+			p.onUpdate(cal);
 	};
 
 	if (params.flat != null) {
-		params.flat = document.getElementById(params.flat);
+		if (typeof params.flat == "string")
+			params.flat = document.getElementById(params.flat);
 		if (!params.flat) {
 			alert("Calendar.setup:\n  Flat specified but can't find parent.");
 			return false;
 		}
-		var cal = new Calendar(params.mondayFirst, params.date, params.onSelect || onSelect);
+		var cal = new Calendar(params.firstDay, params.date, params.onSelect || onSelect);
 		cal.showsTime = params.showsTime;
 		cal.time24 = (params.timeFormat == "24");
 		cal.params = params;
@@ -137,8 +148,8 @@ Calendar.setup = function (params) {
 		var dateFmt = params.inputField ? params.ifFormat : params.daFormat;
 		var mustCreate = false;
 		var cal = window.calendar;
-		if (!window.calendar) {
-			window.calendar = cal = new Calendar(params.mondayFirst,
+		if (!(cal && params.cache)) {
+			window.calendar = cal = new Calendar(params.firstDay,
 							     params.date,
 							     params.onSelect || onSelect,
 							     params.onClose || function(cal) { cal.hide(); });
@@ -147,8 +158,12 @@ Calendar.setup = function (params) {
 			cal.weekNumbers = params.weekNumbers;
 			mustCreate = true;
 		} else {
+			if (params.date)
+				cal.setDate(params.date);
 			cal.hide();
 		}
+		cal.showsOtherMonths = params.showOthers;
+		cal.yearStep = params.step;
 		cal.setRange(params.range[0], params.range[1]);
 		cal.params = params;
 		cal.setDateStatusHandler(params.dateStatusFunc);
@@ -157,7 +172,10 @@ Calendar.setup = function (params) {
 			cal.create();
 		cal.parseDate(dateEl.value || dateEl.innerHTML);
 		cal.refresh();
-		cal.showAtElement(params.displayArea || params.inputField, params.align);
+		if (!params.position)
+			cal.showAtElement(params.button || params.displayArea || params.inputField, params.align);
+		else
+			cal.showAt(params.position[0], params.position[1]);
 		return false;
 	};
 };

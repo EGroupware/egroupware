@@ -1,5 +1,5 @@
 // Author: Hartwig Weinkauf h_weinkauf@gmx.de
-// Überarbeitet und fehlende Texte hinzugefügt von Gerhard Neinert (gerhard at neinert punkt de)
+// ï¿½erarbeitet und fehlende Texte hinzugefgt von Gerhard Neinert (gerhard at neinert punkt de)
 // Feel free to use / redistribute under the GNU LGPL.
 // ** I18N
 
@@ -32,7 +32,7 @@ Calendar._SDN_len = 2;
 Calendar._MN = new Array
 ("Januar",
  "Februar",
- "März",
+ "M\u00e4rz",
  "April",
  "Mai",
  "Juni",
@@ -47,7 +47,7 @@ Calendar._MN = new Array
 Calendar._SMN = new Array
 ("Jan",
  "Feb",
- "Mär",
+ "M\u00e4r",
  "Apr",
  "Mai",
  "Jun",
@@ -68,33 +68,33 @@ Calendar._TT["ABOUT"] =
 "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
 "Datumsauswahl:\n" +
-"- Jahr auswählen mit \xab und \xbb\n" +
-"- Monat auswählen mit " + String.fromCharCode(0x2039) + " und " + String.fromCharCode(0x203a) + "\n" +
-"- Für Auswahl aus Liste Maustaste gedrückt halten.";
+"- Jahr ausw\u00e4hlen mit \xab und \xbb\n" +
+"- Monat ausw\u00e4hlen mit " + String.fromCharCode(0x2039) + " und " + String.fromCharCode(0x203a) + "\n" +
+"- Fr Auswahl aus Liste Maustaste gedr\u00fcckt halten.";
 
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
-"Zeit wählen:\n" +
+"Zeit w\u00e4hlen:\n" +
 "- Stunde/Minute weiter mit Mausklick\n" +
-"- Stunde/Minute zurück mit Shift-Mausklick\n" +
-"- oder für schnellere Auswahl nach links oder rechts ziehen.";
+"- Stunde/Minute zurck mit Shift-Mausklick\n" +
+"- oder f\u00fcr schnellere Auswahl nach links oder rechts ziehen.";
 
 
-Calendar._TT["TOGGLE"] = "Ersten Tag der Woche waehlen";
-Calendar._TT["PREV_YEAR"] = "Jahr zurück (halten -> Auswahlmenue)";
-Calendar._TT["PREV_MONTH"] = "Monat zurück (halten -> Auswahlmenue)";
+Calendar._TT["TOGGLE"] = "Ersten Tag der Woche w\u00e4hlen";
+Calendar._TT["PREV_YEAR"] = "Jahr zur\u00fcck (halten -> Auswahlmen\u00fc)";
+Calendar._TT["PREV_MONTH"] = "Monat zur\u00fcck (halten -> Auswahlmen\u00fc)";
 Calendar._TT["GO_TODAY"] = "Gehe zum heutigen Datum";
-Calendar._TT["NEXT_MONTH"] = "Monat vor (halten -> Auswahlmenue)";
-Calendar._TT["NEXT_YEAR"] = "Jahr vor (halten -> Auswahlmenue)";
-Calendar._TT["SEL_DATE"] = "Datum auswaehlen";
+Calendar._TT["NEXT_MONTH"] = "Monat vor (halten -> Auswahlmen\u00fc)";
+Calendar._TT["NEXT_YEAR"] = "Jahr vor (halten -> Auswahlmen\u00fc)";
+Calendar._TT["SEL_DATE"] = "Datum ausw\u00e4hlen";
 Calendar._TT["DRAG_TO_MOVE"] = "Klicken und halten um zu verschieben";
 Calendar._TT["PART_TODAY"] = " (heute)";
 Calendar._TT["MON_FIRST"] = "Wochenanzeige mit Montag beginnen";
 Calendar._TT["SUN_FIRST"] = "Wochenanzeige mit Sonntag beginnen";
-Calendar._TT["CLOSE"] = "Schliessen";
+Calendar._TT["CLOSE"] = "Schlie\u00dfen";
 Calendar._TT["TODAY"] = "Heute";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "dd-mm-y";
-Calendar._TT["TT_DATE_FORMAT"] = "Datum auswählen";
+Calendar._TT["TT_DATE_FORMAT"] = "Datum ausw\u00e4hlen";
 
 Calendar._TT["WK"] = "KW";

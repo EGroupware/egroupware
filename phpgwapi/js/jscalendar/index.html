@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<! DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ro" lang="ro">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <!-- $Id$ -->
 
 <head>
 <meta http-equiv="content-type" content="text/xml; charset=utf-8" />
 <title>The Coolest DHTML Calendar - Online Demo</title>
 <link rel="alternate stylesheet" type="text/css" media="all" href="calendar-blue.css" title="winter" />
+<link rel="alternate stylesheet" type="text/css" media="all" href="calendar-blue2.css" title="blue" />
 <link rel="alternate stylesheet" type="text/css" media="all" href="calendar-brown.css" title="summer" />
 <link rel="alternate stylesheet" type="text/css" media="all" href="calendar-green.css" title="green" />
 <link rel="stylesheet" type="text/css" media="all" href="calendar-win2k-1.css" title="win2k-1" />
@@ -58,14 +59,14 @@ function selected(cal, date) {
 // destroying it.
 function closeHandler(cal) {
   cal.hide();                        // hide the calendar
-  cal.destroy();
+//  cal.destroy();
   calendar = null;
 }
 
 // This function shows the calendar under the element having the given id.
 // It takes care of catching "mousedown" signals on document and hiding the
 // calendar if the click was outside.
-function showCalendar(id, format, showsTime) {
+function showCalendar(id, format, showsTime, showsOtherMonths) {
   var el = document.getElementById(id);
   if (calendar != null) {
     // we already have some calendar created
@@ -78,6 +79,9 @@ function showCalendar(id, format, showsTime) {
     if (typeof showsTime == "string") {
       cal.showsTime = true;
       cal.time24 = (showsTime == "24");
+    }
+    if (showsOtherMonths) {
+      cal.showsOtherMonths = true;
     }
     calendar = cal;                  // remember it in the global var
     cal.setRange(1900, 2070);        // min/max year allowed.
@@ -160,13 +164,15 @@ padding: 0px 5px; cursor: default; font-size: 80%; }
 <body onload="showFlatCalendar()">
 
 <h2><a href="http://dynarch.com/mishoo/calendar.epl"
-title="Visit the project website">jscalendar</a>-0.9.5
-"Your favorite time, bis"</h2>
+title="Visit the project website">jscalendar</a>-0.9.6
+"Keep cool but don't freeze"</h2>
 
 <p>
 <div style="float: right; border: 1px solid #b87; padding: 2px; font-size: 90%; background: #ffb;">
 Theme:<br />
 <a href="#" onclick="return setActiveStyleSheet(this, 'winter');">winter</a>
+|
+<a href="#" onclick="return setActiveStyleSheet(this, 'blue');">blue</a>
 |
 <a href="#" onclick="return setActiveStyleSheet(this, 'summer');">summer</a>
 |
@@ -215,12 +221,12 @@ Popup examples
 
 <b>Date #1:</b> <input type="text" name="date1" id="sel1" size="30"
 ><input type="reset" value=" ... "
-onclick="return showCalendar('sel1', '%Y-%m-%d [%W] %H:%M', '24');"> %Y-%m-%d [%W] %H:%M -- single
+onclick="return showCalendar('sel1', '%Y-%m-%d [%W] %H:%M', '24', true);"> %Y-%m-%d [%W] %H:%M -- single
 click<br />
 
 <b>Date #2:</b> <input type="text" name="date2" id="sel2" size="30"
 ><input type="reset" value=" ... "
-onclick="return showCalendar('sel2', '%a, %b %e, %Y [%I:%M%p]', '12');"> %a, %b %e, %Y [%I:%M%p]
+onclick="return showCalendar('sel2', '%a, %b %e, %Y [%I:%M %p]', '12');"> %a, %b %e, %Y [%I:%M %p]
 -- double click
 
 <br /><br />
@@ -253,8 +259,9 @@ double click
 
 </form>
 
-<p>This is release <b>0.9.5</b>.  Works on MSIE/Win 5.0 or better, Opera 7,
-Mozilla, Netscape 6.x, 7.0 and all other Gecko-s, Konqueror and Safari.</p>
+<p>This is release <b>0.9.6</b>.  Works on MSIE/Win 5.0 or better (really),
+Opera 7, Mozilla, Netscape 6.x, 7.0 and all other Gecko-s, Konqueror and
+Safari.</p>
 
 <p class="help">You can click on "Mo"/"Su" (first day name displayed) to
 change the first day of week (Sunday/Monday) (since 0.8 this is also mapped

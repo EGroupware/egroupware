@@ -13,7 +13,108 @@
   <body>
     <h1>jscalendar release notes</h1>
 
-    <p>This release compiled at Wednesday,  5 Nov 2003 (19:30).</p>
+    <p>This release compiled at Friday,  6 Feb 2004 (21:40).</p>
+
+    <h2>0.9.6</h2>
+
+    <ul>
+
+      <li>
+        "Smart" (TM :-) positioning algorithm.  The new algorithm will
+        try to keep the calendar in the browser view, which is helpful
+        in situations when the input field is near the bottom or the
+        right edge.  This code is only tested with IE and Mozilla, but
+        it should work with other browsers too.  Many thanks to <a
+        href="http://www.ex3.com">Sunny Chowdhury</a> for sponsoring
+        this feature!
+      </li>
+
+      <li>
+        Support for IE5/Win is back.  I also want to thank Janusz
+        Piwowarski for keeping his eye on the CVS ;-) He reviewed my
+        IE5-related changes and sent me a much cleaner patch.
+      </li>
+
+      <li>
+        The calendar will now allow any day of week to be "the first
+        day of week".  This was requested long time ago, by someone
+        whose name I forgot (sorry).  The reason was that in certain
+        countries weeks start on Saturday.  So I thought that instead
+        of having a "mondayFirst" and a "saturdayFirst" parameter,
+        :-), it's better to have a "firstDayOfWeek" parameter; now
+        it's present and its meaning is: "0 for Sunday", "1 for
+        Monday", "2 for Tuesday", etc.  The equivalent parameter for
+        Calendar.setup is "firstDay".  The end user can also change
+        it very easy: click on the day name in the calendar display.
+      </li>
+
+      <li>
+        The above feature triggered one <b>important change</b>: the
+        notion of "weekend" is now defined in the language file.
+        Added parameters:
+
+        <pre>
+          Calendar._TT["WEEKEND"] = "0,6";
+          Calendar._TT["DAY_FIRST"] = "Display %s first";</pre>
+
+        "WEEKEND" specifies a string with comma-separated numbers from
+        0 to 7; they define what days are marked as "weekend".  5 and
+        6 mean, of course, "Sunday" and "Saturday".  Day first is the
+        tooltip displayed when a day name is hovered; "%s" will get
+        replaced with the day name.  Updated languages are "en" and
+        "ro", which I maintain.  Please note that languages wich are
+        not updated <b>will not work</b>.  If yours is one of them,
+        please consider fixing it and sending me the fix so that I can
+        include it in the distro.
+      </li>
+
+      <li>
+        The calendar can now display days from the months adjacent to
+        the currently displayed one.  This is optional, of course, and
+        the parameter name is "showsOtherMonths" (or "showOthers" in
+        Calendar.setup).  All theme files were updated.
+      </li>
+
+      <li>
+        Displays "Time:" near the time selector, only if defined in
+        the language file.
+      </li>
+
+      <li>
+        Some bugs fixed in the date parsing code (which has also been
+        rewritten a little bit cleaner).
+      </li>
+
+      <li>
+        Calendar.setup will now configure the calendar to trigger the
+        input fields' "onchange" event, if specified, when a date is
+        selected.
+      </li>
+
+      <li>
+        New parameter in Calendar.setup: "cache" (<b>defaults to
+        false</b>).  If set to true then the popup calendar object
+        will be "cached", meaning, it will be created only once, no
+        matter how many input fields are there in the page.  Sometimes
+        this is not desirable, which is why I've added this
+        parameter.  Please note that it defaults to "false" (thus the
+        default behavior has changed).
+      </li>
+
+      <li>
+        Added a simple PHP wrapper.  It provides code which loads all
+        the required scripts and theme file, and one function which
+        creates and configures an input field for date input.  It
+        takes care of creating and assigning unique ID-s for the
+        calendar fields and it also creates the "Calendar.setup" code.
+        Functions to create more specialized fields can be added very
+        easily.  This feature was requested by the FreeMED.org project
+        (thanks for donating!).
+      </li>
+
+    </ul>
+
+    <p>Wow, there were quite some changes :-D  Enjoy it!</p>
 
     <h2>0.9.5</h2>
 
@@ -36,7 +137,7 @@
 	correctly when it was configured for an input field inside a
 	<b>scrolling area</b>.  <b>Many thanks</b> to Ian Barrack (<a
 	href="http://www.simban.com">Simban.com</a>) who pointed it up and
-	donated quote some money for the Calendar project!
+	donated quite some money for the Calendar project!
       </li>
 
       <li>
