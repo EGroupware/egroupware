@@ -1098,6 +1098,14 @@
 					$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
 					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('calendar', $event['id'], 'add', time());
 					print_debug('New Event ID',$event['id']);
+					
+					// set a new recur_exception
+					if ($event['reference'] && (int) $l_cal['new_exception'])
+					{
+						$recur_event = $this->read_entry($event['reference']);
+						$recur_event['recur_exception'][] = (int) $l_cal['new_exception'];
+						$this->so->add_entry($recur_event);
+					}
 				}
 				else
 				{
@@ -1123,7 +1131,6 @@
 					$this->prepare_recipients($new_event,$old_event);
 				}
 
-				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 				// check if infolog is availible
 				if(isset($GLOBALS['phpgw_info']['apps']['infolog']) && isset($l_cal['project']))
 				{
@@ -1219,6 +1226,7 @@
 				'hour'  => (int)(date('H',$time)),
 				'min'   => (int)(date('i',$time)),
 				'sec'   => (int)(date('s',$time)),
+				'raw'   => $time,
 				'alarm' => (int)($alarm)
 			);
 		}
