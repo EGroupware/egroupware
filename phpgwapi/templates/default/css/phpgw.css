@@ -28,6 +28,11 @@ a:link,a:visited,a:active,a:hover
 	text-decoration: none;
 }
 
+a.th,a.th_text
+{
+	font-weight: bold;
+}
+
 table.portal
 {
 	width: 100%;
@@ -62,18 +67,18 @@ table.login
 	font-size: 80%;
 }
 
-.headertext
+.header_text
 {
 	font-size: 110%;
 	font-weight: bold;
 }
 
-.th_text.app_header_text
+.th_text,.app_header_text
 {
 	font-weight: bold;
 }
 
-.app_header
+.app_header,.th
 {
 	font-weight: bold;
 }

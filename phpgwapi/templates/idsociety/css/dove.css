@@ -40,6 +40,11 @@ a:hover
 	background-color: #486591;
 }
 
+a.th,a.th_text
+{
+	color: #000000;
+}
+
 .cal_dayview
 {
 	background-color: #C0C0C0;
