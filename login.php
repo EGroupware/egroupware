@@ -15,9 +15,10 @@
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
-		'login'                  => True,
-		'currentapp'             => 'login',
-		'noheader'               => True
+		'login'			=> True,
+		'currentapp'	=> 'login',
+		'noheader'		=> True,
+		'nodisplay'		=> True
 	);
 
 	if(file_exists('./header.inc.php'))
@@ -211,17 +212,27 @@
 
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		$data['login_standard']['domain_select'] = True;
 		reset($phpgw_domain);
-		unset($domain_select);      // For security ... just in case
 		while ($domain = each($phpgw_domain))
 		{
-			$domain_select .= '<option value="' . $domain[0] . '"';
 			if ($domain[0] == $last_domain)
 			{
-				$domain_select .= ' selected';
+				$select = 'selected';
 			}
-			$domain_select .= '>' . $domain[0] . '</option>';
+
+			$data['login_standard']['domain_select'] = array
+			(
+				'domain'	=> $domain[0],
+				'selected'	=> $selected
+			);
+		}
+
+		for ($i=0;$i<count($data['login_standard']['domain_select']);$i++)
+		{
+			if ($data['login_standard']['domain_select'][$i]['selected'] != 'selected')
+			{
+				unset($data['login_standard']['domain_select'][$i]['selected']);
+			}
 		}
 	}
 
@@ -242,10 +253,13 @@
 	/*$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
 	$GLOBALS['phpgw']->template->set_var('registration_url','registration/');*/
 
+	$data['login_standard']['website_title']	= $GLOBALS['phpgw_info']['server']['site_title'];
 	$data['login_standard']['msgbox']			= $GLOBALS['phpgw']->common->msgbox('',False);
 	$data['login_standard']['login_url']		= 'login.php' . $extra_vars;
 	$data['login_standard']['cookie']			= show_cookie();
 	$data['login_standard']['lang_username']	= lang('username');
+	$data['login_standard']['lang_powered_by']	= lang('powered by');
+	$data['login_standard']['lang_version']		= lang('version');
 	$data['login_standard']['phpgw_version']	= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 	$data['login_standard']['lang_password']	= lang('password');
 	$data['login_standard']['lang_login']		= lang('login');
