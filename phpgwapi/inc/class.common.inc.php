@@ -995,7 +995,7 @@
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_row');
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_end');
 			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_start');
-			
+
 			if (is_array($text))
 			{
 				reset($text);
@@ -1055,7 +1055,7 @@
 				return $GLOBALS['phpgw']->template->varvals['msgbox'];
 			}
 		}
-		
+
 		/*!
 		@function navbar
 		@abstract Build the application navigation bar based on user's accessible applications
@@ -1178,7 +1178,7 @@
 			if(!function_exists('parse_navbar'))
 			{
 				$this->navbar(False);
-				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']	. '/navbar.inc.php');
+				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/navbar.inc.php');
 			}
 			if (!@$GLOBALS['phpgw_info']['flags']['nonavbar'] && !@$GLOBALS['phpgw_info']['flags']['navbar_target'])
 			{
@@ -1248,7 +1248,7 @@
 				$GLOBALS['phpgw']->db->disconnect();
 				parse_navbar_end();
 			}
-		 	
+
 			/* Clean up mcrypt */
 			if (@is_object($GLOBALS['phpgw']->crypto))
 			{
@@ -1293,7 +1293,7 @@
 			$lcrypt = '{crypt}';
 			$password = crypt($userpass);
 			$ldappassword = sprintf('%s%s', $lcrypt, $password);
- 
+
 			return $ldappassword;
 		}
 		/*!
@@ -1301,7 +1301,7 @@
 		@abstract md5 encrypt password
 		@param $userpass user password
 		@param $random random seed
-		*/ 
+		*/
 		function md5_cryptpasswd($userpass, $random)
 		{
 			$bsalt = '$1$';
@@ -1313,7 +1313,11 @@
 
 			return $ldappassword;
 		}
-
+		/*!
+		@function sha_cryptpasswd
+		@abstract sha encrypt password
+		@param $userpass user password
+		*/
 		function sha_cryptpasswd($userpass)
 		{
 			$hash = base64_encode(mhash(MHASH_SHA1, $userpass));
