@@ -111,10 +111,9 @@
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('cron_apps', 'cron_apps', 0, 0, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 1, 13, NULL, '".$currentver."')");
-  
-  $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A')");
-  
-  $db->query("insert into groups (group_name) values ('Default')");
+
+  $db->query("insert into groups (group_name) values ('Default')");  
+  $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1:0,','A')");
   
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','maxmatchs','10','common')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','timeformat','12','common')");
