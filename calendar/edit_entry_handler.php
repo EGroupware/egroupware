@@ -121,6 +121,13 @@
 			$phpgw->calendar->event->id = $id;
 		}
 
+		if($rpt_use_end != 'y')
+		{
+			$recur_enddate[year] = 0;
+			$recur_enddate[month] = 0;
+			$recur_enddate[mday] = 0;
+		}
+
 		switch($recur_type)
 		{
 			case RECUR_NONE:

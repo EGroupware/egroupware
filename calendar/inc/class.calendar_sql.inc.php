@@ -260,7 +260,7 @@ class calendar_ extends calendar__
 				// But until then, do it this way...
 		//Legacy Support
 				$rpt_type = strtolower($this->stream->f('cal_type'));
-				$this->event->rpt_type = !$rpt_type?'none':$rpt_type;
+				$this->event->rpt_type = (!$rpt_type?'none':$rpt_type);
 				
 		//Legacy Support (New)
 				switch($this->event->rpt_type)
@@ -297,8 +297,8 @@ class calendar_ extends calendar__
 				//$this->event->recur_enddate = unserialize($this->stream->f('recur_enddate'));
 				// But until then, do it this way...
 		//Legacy Support
-				$this->event->recur_use_end = $this->stream->f('cal_use_end');
-				if($this->event->recur_use_end == True)
+				$this->event->rpt_end_use = $this->stream->f('cal_use_end');
+				if($this->event->rpt_end_use == True)
 				{
 					$date = $this->localdates($this->stream->f('cal_end'));
 		//Legacy Support
@@ -319,6 +319,7 @@ class calendar_ extends calendar__
 				else
 				{
 		//Legacy Support
+					$this->event->rpt_end_use = 0;
 					$this->event->rpt_end = 0;
 					$this->event->rpt_end_day = 0;
 					$this->event->rpt_end_month = 0;
@@ -357,7 +358,7 @@ class calendar_ extends calendar__
 				$this->event->recur_data += (substr($rpt_days,3,1)=='Y'?M_WEDNESDAY:0);
 				$this->event->recur_data += (substr($rpt_days,4,1)=='Y'?M_THURSDAY:0);
 				$this->event->recur_data += (substr($rpt_days,5,1)=='Y'?M_FRIDAY:0);
-				$this->event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SAYURDAY:0);
+				$this->event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SATURDAY:0);
 			}
 			
 		//Legacy Support
@@ -681,13 +682,13 @@ class calendar_ extends calendar__
 
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 
-		$this->event->rpt_sun = (intval($weekdays) & M_SUNDAY	?1:0);
-		$this->event->rpt_mon = (intval($weekdays) & M_MONDAY	?1:0);
-		$this->event->rpt_tue = (intval($weekdays) & M_TUESDAY	?1:0);
-		$this->event->rpt_wed = (intval($weekdays) & M_WEDNESDAY?1:0);
-		$this->event->rpt_thu = (intval($weekdays) & M_THURSDAY	?1:0);
-		$this->event->rpt_fri = (intval($weekdays) & M_FRIDAY	?1:0);
-		$this->event->rpt_sat = (intval($weekdays) & M_SATURDAY	?1:0);
+		$this->event->rpt_sun = (intval($weekdays) & M_SUNDAY    ? 1 : 0);
+		$this->event->rpt_mon = (intval($weekdays) & M_MONDAY	   ? 1 : 0);
+		$this->event->rpt_tue = (intval($weekdays) & M_TUESDAY   ? 1 : 0);
+		$this->event->rpt_wed = (intval($weekdays) & M_WEDNESDAY ? 1 : 0);
+		$this->event->rpt_thu = (intval($weekdays) & M_THURSDAY  ? 1 : 0);
+		$this->event->rpt_fri = (intval($weekdays) & M_FRIDAY    ? 1 : 0);
+		$this->event->rpt_sat = (intval($weekdays) & M_SATURDAY  ? 1 : 0);
 
 		$this->event->rpt_days =
 			  ($this->event->rpt_sun == 1?'y':'n')
@@ -900,7 +901,7 @@ class calendar_ extends calendar__
 			}
 			else
 			{
-				$end = 'NULL';
+				$end = '0';
 				$use_end = 0;
 			}
 
