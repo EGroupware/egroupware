@@ -50,16 +50,21 @@
 
   function check_logoutcode($code)
   {
-    if ($code == "1") {
-      return lang_login("You have been successfully logged out");
-    }
-    else if ($code == "2") {
-      return lang_login("Sorry, your login has expired");
-    }
-    else if ($code == "5") {
-      return "<font color=FF0000>" . lang_login("Bad login or password") . "</font>";
-    }
-    else {
+    global $phpgw_info;
+    switch($code){
+      case "1":
+        return lang_login("You have been successfully logged out");
+        break;
+      case "2":
+        return lang_login("Sorry, your login has expired");
+        break;
+      case "5":
+        return "<font color=FF0000>" . lang_login("Bad login or password") . "</font>";
+        break;
+      case "10":
+        return "<font color=FF0000>" . lang_login("Your session could not be verified.") . "</font>";
+        break;
+      default:
       return "&nbsp;";
     }
   }
@@ -72,17 +77,15 @@
 
   if ($submit) {
     if (getenv(REQUEST_METHOD) != "POST") {
-      Header("Location: " . $phpgw->link("", "cd=5"));
+      Header("Location: " . $phpgw->link("", "code=5"));
     }
 
-    if (!($phpgw->auth->authenticate($login, $passwd))) {
+    $sessionid = $phpgw->session->create($login,$passwd);
+    if (!$sessionid) {
       Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
     } else {
-      // Make sure the server allows us to use cookies
-      if (! $phpgw_info["server"]["usecookies"]) {
-        $usecookies = False;
-      }
-      $phpgw->session->create($phpgw->db->f("loginid"),$passwd, $usecookies);
+      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]) . "/", "cd=yes");
+    }
 
       // Create the users private_dir if not exist
 /*
@@ -92,12 +95,15 @@
         if(!is_dir($basedir . $phpgw->db->f("loginid")))
           mkdir($basedir . $phpgw->db->f("loginid"), 0707);
 */
-//      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
-//                                                           . "/", $usecookies));
+
+/*
+      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
+                                                           . "/", $usecookies));
       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                            . "/", "cd=yes"));
       exit;
     }
+*/
   } else {
     if ($last_loginid) {
       $phpgw->db->query("select value from preferences where owner='$last_loginid' "

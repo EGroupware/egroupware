@@ -63,6 +63,12 @@
 <?php
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
 
+  switch($code){
+    case "5":
+      echo lang("You do not have permissions to that application");
+      break;
+  }
+
   if ($phpgw_info["user"]["permissions"]["email"]
   && $phpgw_info["user"]["preferences"]["mainscreen_showmail"]) {
     echo "<!-- Mailox info -->\n";
@@ -90,7 +96,7 @@
     echo "<!-- Birthday info -->\n";
     $phpgw->db->query("select DISTINCT firstname,lastname from addressbook where "
       . "bday like '" . $phpgw->common->show_date(time(),"n/d")
-      . "/%' and (owner='" . $phpgw->session->loginid . "' or access='"
+      . "/%' and (owner='" . $phpgw_info["user"]["userid"] . "' or access='"
       . "public')");
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang_common("Today is x's birthday!", $phpgw->db->f("firstname") . " "
@@ -102,7 +108,7 @@
       $phpgw->common->show_date(time(),"Y")),"n/d" );
       $phpgw->db->query("select firstname,lastname from addressbook where "
         . "bday like '$tommorow/%' and (owner='"
-        . $phpgw->session->loginid . "' or access='public')");
+        . $phpgw_info["user"]["userid"] . "' or access='public')");
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang_common("Tommorow is x's birthday.", $phpgw->db->f("firstname") . " "
 	  . $phpgw->db->f("lastname")) . "</td></tr>\n";
@@ -119,10 +125,10 @@
   && $phpgw_info["user"]["preferences"]["mainscreen_showevents"]) {
     echo "<!-- Calendar info -->\n";
     include($phpgw_info["server"]["server_root"] . "/calendar/inc/functions.inc.php");
-    $repeated_events = read_repeated_events($phpgw->session->loginid);
+    $repeated_events = read_repeated_events($phpgw_info["user"]["userid"]);
     $phpgw->db->query("select count(*) from webcal_entry,webcal_entry_user"
       . " where cal_date='" . $phpgw->common->show_date(time(),"Ymd")
-      . "' and (webcal_entry_user.cal_login='" . $phpgw->session->loginid
+      . "' and (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"]
       . "' and webcal_entry.cal_id = webcal_entry_user.cal_id) and "
       . "(cal_priority='3')");
     $phpgw->db->next_record();
