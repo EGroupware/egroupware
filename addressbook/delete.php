@@ -31,7 +31,7 @@
 
 
   if ($confirm != "true") {
-    $phpgw->db->query("select ab_owner from addressbook where ab_id='$ab_id'");
+    $phpgw->db->query("select owner from addressbook where id='$ab_id'");
     $phpgw->db->next_record();
 
     if ($phpgw->db->f("ab_owner") != $phpgw_info["user"]["account_id"]) {
