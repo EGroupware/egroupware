@@ -777,7 +777,7 @@
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
-					while (false !== ($entry = $d->read()))
+					while (false != ($entry = $d->read()))
 					{
 						if ($entry != '.' && $entry != '..')
 						{
@@ -790,7 +790,7 @@
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
-					while (false !== ($entry = $d->read()))
+					while (false != ($entry = $d->read()))
 					{
 						if ($entry != '.' && $entry != '..')
 						{
@@ -803,7 +803,7 @@
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir);
-					while (false !== ($entry = $d->read()))
+					while (false != ($entry = $d->read()))
 					{
 						if ($entry != '.' && $entry != '..')
 						{
@@ -814,7 +814,19 @@
 				}
 			}
 
-			if(isset($this->found_files[$appname]['images'][$image]))
+			if(isset($this->found_files[$appname]['images'][$image.'.png']))
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.png'].'/'.$image;
+			}
+			elseif(isset($this->found_files[$appname]['images'][$image.'.jpg']))
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.jpg'].'/'.$image;
+			}
+			elseif(isset($this->found_files[$appname]['images'][$image.'.gif']))
+			{
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.gif'].'/'.$image;
+			}
+			elseif(isset($this->found_files[$appname]['images'][$image]))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image].'/'.$image;
 			}
@@ -848,6 +860,25 @@
 				return '';
 			}
 		}
+
+		function image_on($appname,$image,$extension='_on')
+		{
+			$with_extension = $this->find_image($appname,$image.$extension);
+			$without_extension = $this->find_image($appname,$image);
+			if($with_extension != '')
+			{
+				return $with_extension;
+			}
+			elseif($without_extension != '')
+			{
+				return $without_extension;
+			}
+			else
+			{
+				return '';
+			}
+		}
+
 		/*!
 		@function navbar
 		@abstract none yet
@@ -872,8 +903,18 @@
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['title'] = $GLOBALS['phpgw_info']['apps'][$permission[0]]['title'];
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['url']   = $GLOBALS['phpgw']->link('/' . $permission[0] . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['name']  = $permission[0];
-
+/*
+					if ($permission[0] != $GLOBALS['phpgw_info']['flags']['currentapp'])
+					{
+						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image($permission[0],'navbar');
+					}
+					else
+					{
+						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image_on($permission[0],'navbar','-over');
+					}
+*/
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image($permission[0],'navbar.gif');
+
 					if($GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon'] == '')
 					{
 						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image('phpgwapi','nonav.gif');
