@@ -31,6 +31,7 @@ edit group	admin	it	Modifica Gruppo
 edit user account	admin	it	Modifica account dell'utente
 enabled	admin	it	Attivo
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
+expires	admin	it	Scade
 forecast	admin	it	Previsione
 forecast zone	admin	it	Zona di previsione
 fzone	admin	it	ZonaF
@@ -56,6 +57,7 @@ login time	admin	it	Ora Login
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
 metar	admin	it	Metar
+never	admin	it	Mai
 new group name	admin	it	Nome nuovo gruppo
 new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
 no matchs found	admin	it	Nessuna corrispondenza trovata.
@@ -81,7 +83,7 @@ station	admin	it	Stazione
 stations	admin	it	Stazioni
 submit changes	admin	it	Invia Cambiamenti
 table	admin	it	Tabella
-that category name has been used already !	admin	it	Quel nome di categoria è gia' stato usato !
+that category name has been used already !	admin	it	Quel nome di categoria &egrave; gi&agrave; stato usato !
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto
 the login and password can not be the same	admin	it	La login e la pasword non possono essere uguali
 they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
@@ -89,6 +91,7 @@ total records	admin	it	Inserimenti totali
 user accounts	admin	it	Account utenti
 user groups	admin	it	Gruppi utenti
 view access log	admin	it	Visualizza elenco collegamenti
+view user account	admin	it	Visualizza account dell'utente
 view sessions	admin	it	Visualizza sessioni
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
 you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
@@ -100,8 +103,7 @@ themes	admin	it	Temi
 cron	admin	it	cron
 inc	admin	it	inc
 todo	admin	it	Da-fare
-who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi 
-trasferire TUTTI i dati di questo utente?
+who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
 delete all records	admin	it	Elimina tutto
 phpinfo	admin	it	phpinfo
 calendar holiday management	admin	it	Gestione Festivit&agrave;
@@ -110,3 +112,5 @@ daily comics	admin	it	Fumetti Quotidiani
 global options	admin	it	Opzioni Globali
 global comics	admin	it	Fumetti Disponibili
 reset comic data	admin	it	Cancella i dati sui Fumetti
+enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
+show 'powered by' logo on 	admin	it	Visualizza il logo 'creato con'
