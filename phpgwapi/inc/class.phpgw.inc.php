@@ -99,18 +99,14 @@
       /* Load selected accounts class */
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->accounts = CreateObject("phpgwapi.accounts");
-
-      include($phpgw_info["server"]["api_inc"] . "/class.preferences.inc.php");
-      $this->preferences   = new preferences(0);
-      //$this->preferences = CreateObject("phpgwapi.preferences", 0);
+      $this->preferences = CreateObject("phpgwapi.preferences", 0);
 
       include($phpgw_info["server"]["api_inc"] . "/class.crypto.inc.php");
       $this->session = CreateObject("phpgwapi.sessions");
 
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
-        //$this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
-        $this->preferences   = new preferences($log[0]);
+        $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
       }else{
         if (! $this->session->verify()) {
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
@@ -118,8 +114,7 @@
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
-        //$this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
-        $this->preferences = new preferences(intval($phpgw_info["user"]["account_id"]));
+        $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
      }
 
       $this->translation = CreateObject("phpgwapi.translation");

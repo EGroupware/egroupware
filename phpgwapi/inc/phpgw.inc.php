@@ -24,16 +24,15 @@
   * Direct functions, which are not part of the API class                      *
   * for whatever reason.                                                       *
   \****************************************************************************/
-  function CreateObject($classname, $val = ""){
+  function CreateObject($classname, $constructor_param = ""){
     global $phpgw, $phpgw_info, $phpgw_domain;
     $classpart = explode (".", $classname);
-    $includedChk = sprintf("%s_INC_PHP_INCLUDED", strtoupper($classpart[1]));
-    //$includedChk = sprintf("%s_PHP3_INCLUDED", strtoupper($classpart[1]));
-    if (!isset($GLOBALS["$includedChk"])){
+    if (!$phpgw_info["flags"]["included_classes"][$classpart[1]]){
+      $phpgw_info["flags"]["included_classes"][$classpart[1]] = True;   
       include($phpgw_info["server"]["include_root"]."/".$classpart[0]."/inc/class.".$classpart[1].".inc.php");
-      $obj = new $classpart[1]($val);
-      return $obj;
     }
+    $obj = new $classpart[1]($constructor_param);
+    return $obj;
   }
 
   function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
