@@ -101,7 +101,8 @@
     <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
     <?php
        while ($column = each($abc)) {
-          if ($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+          if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
+	      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
              echo '<td height="21">';
              echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
              echo $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
@@ -133,8 +134,9 @@
   </form>
 
 <?php
-  if ($query) {
-     if ($phpgw_info["apps"]["timetrack"]["enabled"]){
+  if (isset($query) && $query) {
+     if (isset($phpgw_info["apps"]["timetrack"]["enabled"]) &&
+	 $phpgw_info["apps"]["timetrack"]["enabled"]) {
         $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
                         . "a.ab_email,a.ab_wphone,c.company_name "
                         . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
@@ -234,11 +236,19 @@
   </table>
 
   <form method="POST" action="<?php echo $phpgw->link("add.php"); ?>">
+<?php if(isset($sort) && $sort) { ?>
    <input type="hidden" name="sort" value="<?php echo $sort; ?>">
+<?php } ?>
+<?php if(isset($order) && $order) { ?>
    <input type="hidden" name="order" value="<?php echo $order; ?>">
+<?php } ?>
+<?php if(isset($query) && $query) { ?>
    <input type="hidden" name="query" value="<?php echo $query; ?>">
+<?php } ?>
    <input type="hidden" name="start" value="<?php echo $start; ?>">
+<?php if(isset($filter) && $filter) { ?>
    <input type="hidden" name="filter" value="<?php echo $filter; ?>">
+<?php } ?>
   <table width="75%" border="0" cellspacing="0" cellpadding="4">
     <tr> 
       <td width="4%"> 
