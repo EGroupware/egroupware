@@ -1321,10 +1321,8 @@
 				{
 					echo \'<!-- For Date : \'.$v.\' : Count of items : \'.count($daily).\' -->\'."\n";
 				}
-				for($g=0;$g<count($daily);$g++)
+				while (list($nul,$event) = @each($daily))
 				{
-					$event = $daily[$g];
-
 					$view = $html->link(\'/index.php\',
 						array(
 							\'menuaction\' => \'calendar.uicalendar.view\',
