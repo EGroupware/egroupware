@@ -11,7 +11,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	
-	/* $Id: */
+	/* $Id$*/
 	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'resources';

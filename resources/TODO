@@ -3,7 +3,6 @@ TODO:
 	don't use vfs
 	picture size
 	thumbnail size (problem with general thumbs / icons)
-- sideboxmenu with add resource ..., and admin section
 - advanced search dialog, accessable via sideboxmenu
 - delete dialog --> also delete pictures from vfs
 - show dialog
