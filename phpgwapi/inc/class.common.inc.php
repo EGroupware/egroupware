@@ -892,6 +892,24 @@
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
 			asort($GLOBALS['phpgw_info']['user']['apps']);
+
+			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']))
+			{
+				$newarray['admin'] = $GLOBALS['phpgw_info']['user']['apps']['admin'];
+				while(list($index,$value) = each($GLOBALS['phpgw_info']['user']['apps']))
+				{
+					if($index != 'admin')
+					{
+						$newarray[$index] = $value;
+					}
+				}
+				$GLOBALS['phpgw_info']['user']['apps'] = $newarray;
+				reset($GLOBALS['phpgw_info']['user']['apps']);
+			}
+			unset($index);
+			unset($value);
+			unset($newarray);
+			
 			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				if (is_long($permission[0]))
