@@ -10,7 +10,7 @@ account has been updated	common	da	Kontoen er opdateret
 account list	admin	da	Konto liste
 account permissions	admin	da	Konto rettigheder
 account preferences	admin	da	Konto præferencer
-acl manager	admin	da	ACL Manager
+acl manager	admin	da	ACL Håndtering
 acl rights	admin	da	ACL rettigheder
 action	admin	da	Handling
 add a category	admin	da	tilføj en kategori
@@ -128,7 +128,8 @@ edit this user	admin	da	redigér denne bruger
 edit user	admin	da	redigér bruger
 edit user account	admin	da	Redigér bruger konto
 enable debug-messages	admin	da	Aktivere debug-beskeder
-enabled - hidden from navbar	admin	da	aktiveret - Gemt fra navigationsbjælken
+enabled - hidden from navbar	admin	da	Aktiveret - Gemt fra navigationsbjælken
+enabled - popup window	admin	da	Aktiveret - Popup vindue
 enter a description for the category	admin	da	indtast en beskrivelse for kategorien
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	da	Indtast noget forskelligt tekst til app_session<br>kryptering (kræver mcrypt)
 enter the background color for the login page	admin	da	Indtast baggrundsfarven for login siden
@@ -210,6 +211,7 @@ loginid	admin	da	LoginID
 main screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
+maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
 message has been updated	admin	da	beskeden er opdateret
 method	admin	da	Metode
 minimum account id (e.g. 500 or 100, etc.)	admin	da	Minimum konto id (f.eks 500 eller 100, osv.)
@@ -282,6 +284,7 @@ soap	admin	da	SOAP
 sorry, that group name has already been taken.	admin	da	Beklager, det gruppenavn er allerede brugt.
 sorry, the above users are still a member of the group %1	admin	da	Beklager, overstående brugere er stadig medlem af gruppen %1
 sorry, the follow users are still a member of the group %1	admin	da	Beklager, følgende brugere er stadig medlem af gruppen %1
+sort the entries	admin	da	sorter resultaterne
 ssl	admin	da	ssl
 standard	admin	da	standart
 start testjob!	admin	da	Start TestJob!
@@ -296,6 +299,7 @@ that name has been used already	admin	da	Det navn er allerede brugt
 that server name has been used already !	admin	da	Det servernavn er allerede brugt!
 the api is current	admin	da	API'en er den nyeste version
 the api requires an upgrade	admin	da	API'en behøver en opgradering
+the groups must include the primary group	admin	da	Grupperne skal indeholde en primær gruppe
 the login and password can not be the same	admin	da	Brugernavn og adgangskode kan ikke være ens
 the loginid can not be more then 8 characters	admin	da	LoginID kan ikke være længere end 8 tegn
 the two passwords are not the same	admin	da	De to adgangskoder er ikke ens
@@ -309,6 +313,8 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for s
 times	admin	da	Gange
 top	admin	da	top
 total records	admin	da	Total posteringer
+trust level	admin	da	Tillids niveau
+trust relationship	admin	da	Tillids forhold
 use cookies to pass sessionid	admin	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	admin	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
 use theme	admin	da	Brug tema
