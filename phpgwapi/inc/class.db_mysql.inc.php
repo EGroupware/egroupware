@@ -170,15 +170,6 @@ class db {
   {
     global $phpgw_info;
 
-    if ($Query_String == '')
-      return 0;
-
-    if (!$this->connect())
-      return 0; // we already complained in connect() about that.
-
-    if ($this->Query_ID)
-      $this->free();
-
     if ($this->Debug)
       printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
 
@@ -187,14 +178,7 @@ class db {
 
     $Query_String .= ' LIMIT ' . $offset . ',' . $num_rows;
 
-    $this->Query_ID = @mysql_query($Query_String, $this->Link_ID);
-    $this->Row   = 0;
-    $this->Errno = mysql_errno();
-    $this->Error = mysql_error();
-    if (!$this->Query_ID)
-       $this->halt('Invalid SQL: ' . $Query_String, $line, $file);
-
-    return $this->Query_ID;
+    return $this->query($Query_String, $line, $file);
   }
 
   /* public: walk result set */

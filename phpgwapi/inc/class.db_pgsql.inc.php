@@ -105,6 +105,22 @@ class db {
     return $this->Query_ID;
   }
 
+  // public: perform a query with limited result set
+  function limit_query($Query_String, $offset, $num_rows, $line = '', $file = '')
+  {
+    global $phpgw_info;
+
+    if ($this->Debug)
+      printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+
+    if (!IsSet($num_rows) || $num_rows < 1)
+      $num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+
+    $Query_String .= ' LIMIT ' . $offset . ',' . $num_rows;
+
+    return $this->query($Query_String, $line, $file);
+  }
+
   // public: discard the query result
   function free() {
     @pg_freeresult($this->Query_ID);
