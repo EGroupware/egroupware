@@ -14,6 +14,13 @@
 
   /* $Id$ */
 
+if ($phpgw_info['flags']['included_classes']['calendar_'] == True)
+{
+	return;
+}
+
+$phpgw_info['flags']['included_classes']['calendar_'] = True;
+
 class calendar_ extends calendar__
 {
 	var $deleted_events = Array();
@@ -348,7 +355,7 @@ class calendar_ extends calendar__
 				{
 					if($this->stream->f('cal_login') == $this->user)
 					{
-						$this->users_status = $this->stream->f('cal_status');
+						$this->event->users_status = $this->stream->f('cal_status');
 					}
 					$this->event->participants[] = $this->stream->f('cal_login');
 					$this->event->status[] = $this->stream->f('cal_status');

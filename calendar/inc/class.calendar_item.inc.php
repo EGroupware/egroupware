@@ -39,6 +39,7 @@
     var $recur_enddate;
     var $recur_data = 0;
 
+	var $users_status = 'U';
 // Legacy Support
     var $owner;
     var $name = "Unnamed Event";

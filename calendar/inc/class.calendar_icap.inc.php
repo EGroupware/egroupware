@@ -12,6 +12,13 @@
 
   /* $Id$ */
 
+if ($phpgw_info['flags']['included_classes']['calendar_'] == True)
+{
+	return;
+}
+
+$phpgw_info['flags']['included_classes']['calendar_'] = True;
+
 class calendar_ extends calendar__
 {
 	function open($calendar='',$user='',$passwd='',$options='')

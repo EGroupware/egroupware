@@ -21,7 +21,8 @@ if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded('mcal') 
 }
 // The following line can be removed when vCalendar is implemented....
 $phpgw_info['server']['calendar_type'] = 'sql';
-include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar__.inc.php');
+//CreateObject('calendar.vCalendar');
+CreateObject('calendar.calendar__');
 include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
 
 class calendar extends calendar_
@@ -198,7 +199,7 @@ class calendar extends calendar_
 			$p->set_unknowns('remove');
 			$p->set_file(array('link_pict' => 'link_pict.tpl'));
 //			$p->set_block('link_pict','link_pict');
-			$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$id.'&owner='.$this->owner));
+			$p->set_var('link_link',$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$this->owner));
 			$p->set_var('lang_view',lang('View this entry'));
 			$p->set_var('pic_image',$this->image_dir.'/'.$pic);
 			$p->set_var('description',$description);
@@ -246,7 +247,8 @@ class calendar extends calendar_
 			$str = $event->$field;
 		}
 
-		$str .= ' ('.$this->get_long_status($this->users_status).')';
+//		$str .= ' ('.$this->get_long_status($this->users_status).')';
+//		$str .= ' ('.$this->users_status.')';
 		
 		return $str;
 	}
@@ -875,7 +877,7 @@ class calendar extends calendar_
 								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
 								'lang_view'			=>	lang('View this entry'),
 								'pic_image'			=>	$this->image_dir.'/'.$pict,
-								'description'		=>	$description
+								'description'		=>	$description.(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$lr_events->users_status.')':'')
 							);
 							$p->set_var($var);
 							$p->parse('link_entry','link_pict');
@@ -935,7 +937,7 @@ class calendar extends calendar_
 							'start_time'		=>	$start_time,
 							'end_time'			=>	$end_time,
 							'close_view_link'	=> $close_link,
-							'name'				=>	$this->is_private($lr_events,$owner,'name')
+							'name'				=>	$this->is_private($lr_events,$owner,'name').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$lr_events->users_status.')':'')
 						);
 						$p->set_var($var);
 						$p->parse('events','week_day_event',True);
@@ -1142,7 +1144,7 @@ class calendar extends calendar_
 			$time[$ind] .= '<font color="CC0000">';
 		}
 		
-		$time[$ind] .= $this->is_private($event,$this->owner,'name');
+		$time[$ind] .= $this->is_private($event,$this->owner,'name').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$event->users_status.')':'');
 
 		if ($event->priority == 3)
 		{
@@ -1746,6 +1748,10 @@ class calendar extends calendar_
 								$time_slice[$index]['marker'] = '-';
 								$time_slice[$index]['color'] = $phpgw_info['theme']['bg01'];
 								$time_slice[$index]['description'] = $this->is_private($event,$participants[$i],'title');
+								if(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True)
+								{
+									$time_slice[$index]['description'] .= ' ('.$event->users_status.')';
+								}
 							}
 						}
 					}
