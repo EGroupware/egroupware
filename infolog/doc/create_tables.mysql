@@ -1,8 +1,8 @@
 # $Id$
 
-#DROP TABLE infolog;
+#DROP TABLE phpgw_infolog;
 
-CREATE TABLE infolog (
+CREATE TABLE phpgw_infolog (
 	info_id				int(11) unsigned PRIMARY KEY NOT NULL auto_increment,
 	info_type			enum('task','phone','note','confirm','reject','email','fax') NOT NULL,	# type of entry
 	info_addr_id		int(11) DEFAULT '0' NOT NULL,						# concerning address: e.g. call from or to (if applicable or 0)
@@ -25,32 +25,3 @@ CREATE TABLE infolog (
 	info_status			enum('offer','ongoing','call','will-call','done','billed') DEFAULT 'done', # offer means responsible person wanted/searched
 	info_confirm		enum('not','accept','finish','both') DEFAULT 'not'	# confirmation, not or when task is accepted or finished or on both
 );	
-
-# some test data: 
-# phone-calls	
-INSERT INTO infolog 	(info_type,info_addr_id,info_from,info_addr,info_subject,info_des,info_owner,info_responsible,info_access,info_pri,info_status) VALUES
-						('phone',0,'Hugo X.','+49 (631) 12345','Was steht an','...',599440,599441,'public','urgent','call'),
-						('phone',1,'','','Besprechungstermin','Wann treffen wir uns wegen',599441,599440,'public','normal','call');
-
-# notes
-INSERT INTO infolog 	(info_type,info_addr_id,info_from,info_subject,info_des,info_owner) VALUES
-						('note',0,'Hugo X.','Wie geht das','so und so',599440),
-						('note',1,'','zus‰tzliche Daten','1. + 2. + 3.',599441);
-						
-# tasks
-INSERT INTO infolog 	(info_type,info_addr_id,info_from,info_subject,info_des,info_owner,info_responsible,info_access,info_pri,info_status,info_confirm) VALUES
-						('task',0,'','Bauauftrag','wir brauche 10 Mohawks',599440,0,'public','low','offer','both'),
-						('task',2,'Ralf','Konzept vorlegen','Wann treffen wir uns wegen',599440,599441,'privat','high','ongoing','done');
-						
-# confirmation
-INSERT INTO infolog 	(info_type,info_id_parent,info_subject,info_des,info_owner,info_status,info_time) VALUES
-						('confirm',6,'war ne harte Nuﬂ','blah blah blah',599441,'done',10);
-						
-# email	
-INSERT INTO infolog 	(info_type,info_addr_id,info_from,info_addr,info_subject,info_des,info_owner,info_responsible,info_access,info_pri) VALUES
-						('email',0,'Ralf Becker','RalfBecker@outdoor-training.de','Was steht an','...',599440,0,'public','normal'),
-						('email',1,'Birgit Becker','BirgitBecker@outdoor-training.de','Besprechungstermin','Wann treffen wir uns wegen',599441,599440,'public','urgent');
-
-
-
-
