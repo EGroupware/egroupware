@@ -206,7 +206,7 @@
 				// If its not in the list to be returned, don't return it.
 				// This is still quicker then 5(+) separate queries
 				if ($extra_fields[$this->db->f("contact_name")]) {
-					$return_fields[0][$this->db->f("contact_name")] = $this->db2->f("contact_value");
+					$return_fields[0][$this->db->f("contact_name")] = $this->db->f("contact_value");
 				}
 			}
 			return $return_fields;
