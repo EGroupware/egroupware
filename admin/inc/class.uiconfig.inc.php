@@ -22,6 +22,11 @@
 			{
 				$GLOBALS['phpgw']->redirect_link('/index.php');
 			}
+
+			if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
+			{
+				$_POST['newsettings'] = array_map("stripslashes", $_POST['newsettings']);
+			}
 			
 			switch($_GET['appname'])
 			{
