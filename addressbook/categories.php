@@ -104,7 +104,7 @@
                       'descr' => $descr));
 
 
-    $t->set_var('addressbook',$phpgw->link('/addressbook/index.php',"filter=$cat_id"));
+    $t->set_var('addressbook',$phpgw->link('/addressbook/index.php',"cat_id=$cat_id"));
 
     if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
     $t->set_var('edit',$phpgw->link('/addressbook/editcategory.php',"cat_id=$cat_id"));                                                                                                                
