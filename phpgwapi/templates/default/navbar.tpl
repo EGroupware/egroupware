@@ -11,13 +11,13 @@
   <td align="left">
    {powered_by}
   </td>
-  <td align="right">
-   {current_users}
-  </td>
  </tr>
  <tr>
   <td align="left" colspan="2">
    {user_info}
+  </td>
+  <td align="right">
+   {current_users}
   </td>
  </tr>
 </table><p>
