@@ -74,8 +74,13 @@
 
 			if (!is_array($account_data))
 			{
-				$GLOBALS['phpgw']->accounts->read_repository();
-				$account_data = $GLOBALS['phpgw']->accounts->data;
+				if (!isset($this->account_data[$id]))		// do some cacheing
+				{
+					$GLOBALS['phpgw']->accounts->accounts($id);
+					$GLOBALS['phpgw']->accounts->read_repository();
+					$this->account_data[$id] = $GLOBALS['phpgw']->accounts->data;
+				}
+				$account_data = $this->account_data[$id];
 			}
 			if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['longNames'])
 			{
