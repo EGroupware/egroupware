@@ -1,21 +1,20 @@
-<!-- BEGIN head -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xml:lang="nl" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<!--
 		HTML Coding Standards;
 
-		1. use lowercase is possible, because of xhtml validation
+		1. use lowercase if possible, because of xhtml validation
 		2. make your template validate either html 4.01 or xhtml 1
-		3. make your application validat both if possible
-		4. always use "" when possible (please help me I don't know the English word)
-		5. use png-graphics if possible, but keep in ming IE has a transparency bug when it renders png's
+		3. make your application validate both if possible
+		4. always use quotes ("") when possible
+		5. use png-graphics if possible, but keep in mind IE has a transparency bug when it renders png's
 
 		-->
 
 		<!-- LAY-OUT BUGS 
 		
-		1. in IE no link cursor is displayd when for png's that link
+		1. in IE no link cursor is displayed when png's are used for that link
 		2. tabs are ugly in preferences
 		3. spacers inside sidebox
 
@@ -119,7 +118,3 @@
 				<td id="tdAppbox" valign="top">
 				<div id="divAppboxHeader">{lang_setup} {configdomain}</div>
 				<div id="divAppbox">
-
-
-<!-- end head.tpl -->
-
