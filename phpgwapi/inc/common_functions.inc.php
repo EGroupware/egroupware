@@ -21,16 +21,16 @@
 	 * along with this library; if not, write to the Free Software Foundation,  *
 	 * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	 \**************************************************************************/
-	
+
 	/* $Id$ */
-	
+
 	/****************************************************************************\
-	 * Direct functions, which are not part of the API class                      *
-	 * because they are require to be availble at the lowest level.               *
-	 \****************************************************************************/
+	 * Direct functions which are not part of the API classes                    *
+	 * because they are required to be available at the lowest level.            *
+	 \***************************************************************************/
 	/*!
 	 @collection_start direct functions
-	 @abstract Direct functions, which are not part of the API class because they are require to be availble at the lowest level.
+	 @abstract Direct functions which are not part of the API classes because they are required to be available at the lowest level.
 	*/
 	/*!
 	 @function print_debug_subarray
@@ -152,7 +152,7 @@
 			}
 		}
 	}
-	
+
 	/*!
 	 @function sanitize
 	 @abstract Validate data.
@@ -364,7 +364,8 @@
 				case 'GLOBAL':
 					if(@isset($GLOBALS[$variable]))
 					{
-						$var = $GLOBALS[$variable];					}
+						$var = $GLOBALS[$variable];
+					}
 					break;
 				case 'POST':
 				case 'GET':
@@ -384,7 +385,7 @@
 		}
 		return (@$var?$var:'');
 	}
-	
+
 	/*!
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
