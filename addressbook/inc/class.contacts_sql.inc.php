@@ -39,7 +39,7 @@
 		var $ext_table="phpgw_addressbook_extra";
 
 		var $account_id;
-		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
+		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id
 		var $email_types;				// VCard email type array
 		var $total_records;			// This will contain numrows for data retrieved
 		var $grants;					// This holds all of the users that have granted access to there entrys
@@ -110,7 +110,6 @@
 			   domestic OR  international(default)
 			   parcel(default)
 			   postal(default)
-			   work(default) OR home
 			*/
 			$this->adr_types = array(
 				"dom"    => lang("Domestic"),
@@ -211,7 +210,6 @@
 			}
 			return $return_fields;
 		}
-
 
 		function read_last_entry($fields="")
 		{
@@ -476,7 +474,7 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//$this->db->lock(array("contacts"));
-			$this->db->query("insert into $this->std_table (owner,access,cat_id"
+			$this->db->query("insert into $this->std_table (owner,access,cat_id,"
 				. implode(",",$this->stock_contact_fields)
 				. ") values ('$owner','$access','$cat_id','"
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
