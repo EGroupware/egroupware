@@ -175,7 +175,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		foreach($this->MetaColumns($tabname) as $fld) {
 			if (!$dropflds || !in_array($fld->name,$dropflds)) {
 				$copyflds[] = $fld->name;
-				// identify the sequenze name and the fld its on
+				// identify the sequence name and the fld its on
 				if ($fld->primary_key && $fld->has_default && 
 					preg_match("/nextval\('([^']+)'::text\)/",$fld->default_value,$matches)) {
 					$seq_name = $matches[1];

@@ -1116,7 +1116,7 @@
 		}
 
 		/**
-		* Insert a row of data into a table, all data is quoted according to it's type
+		* Insert a row of data into a table or updates it if $where is given, all data is quoted according to it's type
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*

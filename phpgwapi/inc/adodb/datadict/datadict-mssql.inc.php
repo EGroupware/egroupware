@@ -17,8 +17,8 @@ class ADODB2_mssql extends ADODB_DataDict {
 	var $databaseType = 'mssql';
 	
 	var $dropIndex = 'DROP INDEX %2$s.%1$s';
-	var $renameTable = "EXEC sp_rename '%1','%2'";
-	var $renameColumn = "EXEC sp_rename '%1.%2','%3'";
+	var $renameTable = "EXEC sp_rename '%s','%s'";
+	var $renameColumn = "EXEC sp_rename '%s.%s','%s'";
 	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{

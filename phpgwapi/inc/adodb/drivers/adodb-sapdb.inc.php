@@ -36,16 +36,19 @@ class ADODB_SAPDB extends ADODB_odbc {
 		$this->ADODB_odbc();
 	}
 	
+	function ServerInfo()
+	{
+		$info = ADODB_odbc::ServerInfo();
+		if (!$info['version'] && preg_match('/([0-9.]+)/',$info['description'],$matches)) {
+			$info['version'] = $matches[1];
+		}
+		return $info;
+	}
+
  	function &MetaIndexes ($table, $primary = FALSE)
 	{
-		if ($primary) {
-			return array(
-				'SYSPRIMARYKEYINDEX' => array(
-					'unique' => True,	// by definition
-					'columns' => $this->MetaPrimaryKeys($table),
-				));
-		}
 		$table = $this->Quote(strtoupper($table));
+
 		$sql = "SELECT INDEXNAME,TYPE,COLUMNNAME FROM INDEXCOLUMNS ".
 			" WHERE TABLENAME=$table".
 			" ORDER BY INDEXNAME,COLUMNNO";
@@ -71,6 +74,16 @@ class ADODB_SAPDB extends ADODB_odbc {
             $indexes[$row[0]]['unique'] = $row[1] == 'UNIQUE';
             $indexes[$row[0]]['columns'][] = $row[2];
     	}
+		if ($primary) {
+			$columns = array();
+			foreach($this->GetAll("SELECT columnname FROM COLUMNS WHERE tablename=$table AND mode='KEY' ORDER BY pos") as $row) {
+				$columns[] = $row['COLUMNNAME'];
+			}
+			$indexes['SYSPRIMARYKEYINDEX'] = array(
+					'unique' => True,	// by definition
+					'columns' => $columns,
+				);
+		}
         return $indexes;
 	}
 

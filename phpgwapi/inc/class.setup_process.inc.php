@@ -97,6 +97,12 @@
 				/* stuff the rest of the apps, but only those with available upgrades */
 				while(list($key,$value) = @each($setup_info))
 				{
+					if (isset($value['only_db']) && (
+						is_array($value['only_db']) && !in_array($GLOBALS['phpgw_setup']->db->Type,$value['only_db']) ||
+						!is_array($value['only_db']) && $GLOBALS['phpgw_setup']->db->Type != $value['only_db']))
+					{
+						continue;	// app does not support this db-type, dont try installing it
+					}
 					if(($value['name'] != 'phpgwapi') && ($value['status'] == 'U'))
 					{
 						if(($passed[$value['name']]['status'] != 'F') && ($passed[$value['name']]['status'] != 'C'))

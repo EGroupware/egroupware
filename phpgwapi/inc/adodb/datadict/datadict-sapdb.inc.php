@@ -18,7 +18,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 	
 	var $databaseType = 'sapdb';
 	var $seqField = false;	
-	var $renameCol = 'RENAME COLUMN %s.%s TO %s';
+	var $renameColumn = 'RENAME COLUMN %s.%s TO %s';
  	
  	function ActualType($meta)
 	{

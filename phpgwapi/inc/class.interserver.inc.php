@@ -191,7 +191,7 @@
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$uri, $hostpart, 443);
 			$c->setCredentials($this->sessionid,$this->kp3);
-			$c->setDebug(0);
+			$c->setDebug($debug);
 			$r = $c->send($f,0,'https');
 			if (!$r)
 			{
@@ -244,7 +244,7 @@
 			$c = CreateObject('phpgwapi.xmlrpc_client',$uri, $hostpart, 80);
 			$c->setCredentials($this->sessionid,$this->kp3);
 //			_debug_array($c);
-			$c->setDebug(0);
+			$c->setDebug($debug);
 			$r = $c->send($f);
 			if (!$r)
 			{

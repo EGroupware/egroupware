@@ -696,7 +696,7 @@
 	 @param $classname name of class
 	 @param $p1-$p16 class parameters (all optional)
 	*/
-	function CreateObject($class,
+	function &CreateObject($class,
 		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
 		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
@@ -758,6 +758,10 @@
 				}
 				$code = substr($code,0,-1) . ');';
 				eval($code);
+			}
+			if (!is_object($obj))
+			{
+				function_backtrace(1);
 			}
 			/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
 			return $obj;
