@@ -82,7 +82,7 @@
 						<!-- END left_part -->
 						</td>
 						<td height="100%" width="100%" valign="top" align="center">
-							<table valign="top" cellpadding="2" cellspacing="0" width="100%">
+							<table valign="top" cellpadding="2" cellspacing="2" width="100%">
 								<xsl:choose>
 									<xsl:when test="app_header">
 										<tr>
