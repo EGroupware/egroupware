@@ -110,6 +110,13 @@
 	{
 		global $t;
 
+		if ($GLOBALS['type'] != 'user')	// for default and forced we need a 3. setting
+		{
+			return create_select_box($label_name,$preference_name,array(
+				'0' => lang('No'),
+				'1' => lang('Yes')
+			));
+		}
 		$_appname = check_app();
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 		$t->set_var('row_name',lang($label_name));
@@ -119,18 +126,7 @@
 			return True;
 		}
 
-		switch ($GLOBALS['type'])
-		{
-			case 'user':
-				$s = '<input type="checkbox" name="user[' . $preference_name . ']" value="1"' . ($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] ? ' CHECKED' : '') . '">';
-				break;
-			case 'default':
-				$s = '<input type="checkbox" name="default[' . $preference_name . ']" value="1"' . ($GLOBALS['dp']->data[$_appname][$preference_name] ? ' CHECKED' : '') . '">';
-				break;
-			case 'forced':
-				$s = '<input type="checkbox" name="forced[' . $preference_name . ']" value="1"' . ($GLOBALS['gp']->data[$_appname][$preference_name] ? ' CHECKED' : '') . '">';
-				break;
-		}
+		$s = '<input type="checkbox" name="user[' . $preference_name . ']" value="1"' . ($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] ? ' CHECKED' : '') . '">';
 		$t->set_var('row_value',$s);
 
 		$t->fp('rows','row',True);
