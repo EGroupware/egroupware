@@ -27,6 +27,7 @@ australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
 autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
+bad login or password	login	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
@@ -157,95 +158,239 @@ groups	common	en	Groups
 guadeloupe	common	en	GUADELOUPE
 guam	common	en	GUAM
 guatemala	common	en	GUATEMALA
-
-
-
+guinea	common	en	GUINEA
+guinea-bissau	common	en	GUINEA-BISSAU
+guyana	common	en	GUYANA
+haiti	common	en	HAITI
+heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
+holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
+honduras	common	en	HONDURAS
+hong kong	common	en	HONG KONG
 help	common	en	Help
 high	common	en	High
 home	common	en	Home
+hungary	common	en	HUNGARY
+iceland	common	en	ICELAND
+india	common	en	INDIA
+indonesia	common	en	INDONESIA
+iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	en	IRAQ
+ireland	common	en	IRELAND
+israel	common	en	ISRAEL
+italy	common	en	ITALY
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+jamaica	common	en	JAMAICA
 january	common	en	January
+japan	common	en	JAPAN
+jordan	common	en	JORDAN
 july	common	en	July
 june	common	en	June
+kazakstan	common	en	KAZAKSTAN
+kenya	common	en	KENYA
+kiribati	common	en	KIRIBATI
+korea, democratic peoples republic of	common	en	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	en	KOREA, REPUBLIC OF
+kuwait	common	en	KUWAIT
+kyrgyzstan	common	en	KYRGYZSTAN
+lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	en	Last name
 lastname	common	en	Lastname
 login	common	en	Login
 logout	common	en	Logout
+latvia	common	en	LATVIA
+lebanon	common	en	LEBANON
+lesotho	common	en	LESOTHO
+liberia	common	en	LIBERIA
+libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
+liechtenstein	common	en	LIECHTENSTEIN
+lithuania	common	en	LITHUANIA
 low	common	en	Low
+luxembourg	common	en	LUXEMBOURG
+macau	common	en	MACAU
+macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	en	MADAGASCAR
 main category	common	en	Main category
 main screen	common	en	Main screen
+malawi	common	en	MALAWI
+malaysia	common	en	MALAYSIA
+maldives	common	en	MALDIVES
+mali	common	en	MALI
+malta	common	en	MALTA
 manual	common	en	Manual
 march	common	en	March
+marshall islands	common	en	MARSHALL ISLANDS
+martinique	common	en	MARTINIQUE
+mauritania	common	en	MAURITANIA
+mauritius	common	en	MAURITIUS
 may	common	en	May
+mayotte	common	en	MAYOTTE
 medium	common	en	Medium
 message	common	en	Message
+mexico	common	en	MEXICO
+micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
+monaco	common	en	MONACO
 monday	common	en	Monday
+mongolia	common	en	MONGOLIA
+montserrat	common	en	MONTSERRAT
+morocco	common	en	MOROCCO
+mozambique	common	en	MOZAMBIQUE
+myanma	common	en	MYANMA
 name	common	en	Name
+namibia	common	en	NAMIBIA
+nauru	common	en	NAURU
+nepal	common	en	NEPAL
+netherlands	common	en	NETHERLANDS
+netherlands antilles	common	en	NETHERLANDS ANTILLES
+new caledonia	common	en	NEW CALEDONIA
 new entry added sucessfully	common	en	New entry added sucessfully
 new main category	common	en	New main category
+new zealand	common	en	NEW ZEALAND
 next	common	en	Next
+nicaragua	common	en	NICARAGUA
+niger	common	en	NIGER
+nigeria	common	en	NIGERIA
+niue	common	en	NIUE
 no	common	en	No
 none	common	en	None
+norfolk island	common	en	NORFOLK ISLAND
 normal	common	en	Normal
+nothern mariana islands	common	en	NORTHERN MARIANA ISLANDS
+norway	common	en	NORWAY
 no subject	common	en	No Subject
 note	common	en	Note
 notes	common	en	Notes
 november	common	en	November
 october	common	en	October
 ok	common	en	OK
+oman	common	en	OMAN
 only yours	common	en	only yours
 open notify window	common	en	Open Notify Window
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
+pakistan	common	en	PAKISTAN
+palau	common	en	PALAU
+palestinian territory, occupied	common	en	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	en	PANAMA
+papua new guinea	common	PAPUA NEW GUINEA
+paraguay	common	en	PARAGUAY
 parent category	common	en	Parent Category
 password	common	en	Password
 password has been updated	common	en	Password has been updated
 personal	common	en	Personal
+peru	common	en	PERU
+philippines	common	en	PHILIPPINES
+pitcairn	common	en	PITCAIRN
 please enter a name	common	en	Please enter a name !
 please set your preferences for this application	common	en	Please set your preferences for this application
+poland	common	en	POLAND
+portugal	common	en	PORTUGAL
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	en	Preferences
 print	common	en	Print
 priority	common	en	Priority
 private	common	en	Private
 public	common	en	public
+puerto rico	common	en	PUERTO RICO
+quatar	common	en	QATAR
 read	common	en	Read
 rename	common	en	Rename
+reunion	common	en	REUNION
+romania	common	en	ROMANIA
+russian federation	common	en	RUSSIAN FEDERATION
+rwanda	common	en	RWANDA
+saint helena	common	en	SAINT HELENA
+saint kitts and nevis	common	en	SAINT KITTS AND NEVIS
+saint lucia	common	en	SAINT LUCIA
+saint pierre and miquelon	common	en	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	en	SAINT VINCENT AND THE GRENADINES
+samoa	common	en	SAMOA
+san marino	common	en	SAN MARINO
+sao tome and principe	common	en	SAO TOME AND PRINCIPE
 saturday	common	en	Saturday
+saudi arabia	common	en	SAUDI ARABIA
 save	common	en	Save
 search	common	en	Search
 select category	common	en	Select Category
+senegal	common	en	SENEGAL
 september	common	en	September
 session has been killed	common	en	Session has been killed
+esychelles	common	en	SEYCHELLES
 show all	common	en	show all
 showing x	common	en	showing %1
 showing x - x of x	common	en	showing %1 - %2 of %3
+sierra leone	common	en	SIERRA LEONE
+singapore	common	en	SINGAPORE
+slovakia	common	en	SLOVAKIA
+slovenia	common	en	SLOVENIA
+solomon islands	common	en	SOLOMON ISLANDS
+somalia	common	en	SOMALIA
 sorry, your login has expired	login	en	Sorry, your login has expired
+south africa	common	en	SOUTH AFRICA
+south georgia and the south sandwich islands	common	en	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	en	SPAIN
+sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
 status	common	en	Status
 subject	common	en	Subject
 submit	common	en	Submit
+sudan	common	en	SUDAN
 sunday	common	en	Sunday
+suriname	common	en	SURINAME
+svalbard and jan mayen	common	en	SVALBARD AND JAN MAYEN
+swaziland	common	en	SWAZILAND
+sweden	common	en	SWEDEN
+switzerland	common	en	SWITZERLAND
+syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
+taiwan, province of china	common	en	TAIWAN, PROVINCE OF CHINA
+tajikistan	common	en	TAJIKISTAN
+tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
+thailand	common	en	THAILAND
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
+togo	common	en	TOGO
+tokelau	common	en	TOKELAU
+tonga	common	en	TONGA
 total	common	en	Total
+trinidad and tobago	common	en	TRINIDAD AND TOBAGO
 tuesday	common	en	Tuesday
+tunisia	common	en	TUNISIA
+turkey	common	en	TURKEY
+turkmenistan	common	en	TURKMENISTAN
+turks and caicos islands	common	en	TURKS AND CAICOS ISLANDS
+tuvalu	common	en	TUVALU
+uganda	common	en	UGANDA
+ukraine	common	en	UKRAINE
+united arab emirates	common	en	UNITED ARAB EMIRATES
+united kingdom	common	en	UNITED KINGDOM
+united states	common	en	UNITED STATES
+united states minor outlying islands	common	en	UNITED STATES MINOR OUTLYING ISLANDS
 url	common	en	URL
+uruguay	common	en	URUGUAY
 updated	common	en	Updated
 user	common	en	User
 username	common	en	Username
 users	common	en	users
+uzbekistan	common	en	UZBEKISTAN
+vanuatu	common	en	VANUATU
+venezuela	common	en	VENEZUELA
+viet nam	common	en	VIET NAM
 view	common	en	View
+virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	en	WALLIS AND FUTUNA
 wednesday	common	en	Wednesday
+western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
 written by:	common	en	Written by:
+yemen	common	en	YEMEN
 yes	common	en	Yes
 you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.
 you have selected an invalid date	common	en	You have selected an invalid date !
@@ -253,7 +398,8 @@ you have selected an invalid main category	common	en	You have selected an invali
 your search returned 1 match	common	en	your search returned 1 match
 your search returned x matchs	common	en	your search returned %1 matches
 your settings have been updated	common	en	Your settings have been Updated
-bad login or password	login	en	Bad login or password
-username	login	en	Username
+yugoslavia	common	en	YUGOSLAVIA
 you have been successfully logged out	login	en	You have been successfully logged out
 your session could not be verified.	login	en	Your session could not be verified.
+zambia	common	en	ZAMBIA
+zimbabwe	common	en	ZIMBABWE
