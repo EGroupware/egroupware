@@ -87,7 +87,7 @@ function borkb ($size, $enclosed = NULL, $return = 0)
 
 function bad_chars ($string, $return = 0)
 {
-	if (preg_match("-([\\\|/|<|>|\"])-", $string, $badchars))
+	if (preg_match("-([\\/<>\"])-", $string, $badchars))
 		$rstring = $badchars[1];
 
 	return trim ((eor ($rstring, $return)));
