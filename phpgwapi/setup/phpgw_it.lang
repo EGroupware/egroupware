@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	it	%1 indirizzi email inseriti
+%1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
 (shift-)click or drag to change value	jscalendar	it	(Shift-)Click o drag per cambiare valore
 - click on any of the time parts to increase it	jscalendar	it	- Premi su ogni parte della data per aumentarla
@@ -18,7 +18,7 @@ access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
 account has been created	common	it	Account creato
 account has been deleted	common	it	Account cancellato
-account has been updated	common	it	Account modificato
+account has been updated	common	it	Account aggiornato
 account is expired	common	it	L'account è scaduto
 acl	common	it	ACL
 action	common	it	Azione
@@ -26,7 +26,7 @@ active	common	it	Attivo
 add	common	it	Aggiungi
 add %1 category for	common	it	Aggiungi categoria %1 per
 add category	common	it	Aggiungi una categoria
-add sub	common	it	Aggiungi Sub
+add sub	common	it	Aggiungi Sotto-
 addressbook	common	it	Rubrica
 admin	common	it	Amministra
 administration	common	it	Amministrazione
@@ -54,7 +54,7 @@ austria	common	it	AUSTRIA
 author	common	it	Autore
 autohide sidebox menu's	common	it	Nascondi automaticamente i menu laterali
 automatically hide the sidebox menu's?	common	it	Nascondi automaticamente i menu laterali?
-autosave default category	common	it	Categoria default per il salvataggio automatico
+autosave default category	common	it	Categoria predefinita per il salvataggio automatico
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al login utenti
@@ -105,7 +105,7 @@ check installation	common	it	Controllo installazione
 chile	common	it	CILE
 china	common	it	CINA
 choose the category	common	it	Scegli una categoria
-choose the parent category	common	it	scegli la categoria padre
+choose the parent category	common	it	scegli la categoria superiore
 christmas island	common	it	ISOLA DI NATALE
 clear	common	it	Pulisci
 clear form	common	it	Cancella il modulo
@@ -155,9 +155,9 @@ disabled	common	it	Disabilitato
 display monday first	jscalendar	it	Visualizza prima Lunedì
 display sunday first	jscalendar	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
-do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sottocategorie?
+do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
 domain	common	it	Dominio
-domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo email, es. "%1"
+domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-mail, es. "%1"
 domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
@@ -175,7 +175,7 @@ egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login blocc
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 email	common	it	E-Mail
-email-address of the user, eg. "%1"	common	it	Indirizzo email per l'utente, es. "%1"
+email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
 enabled	common	it	Abilitato
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
@@ -206,7 +206,7 @@ first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	FIXME!
 font color	htmlarea	it	Colore Carattere
-force selectbox	common	it	Forza Menu a discesa
+force selectbox	common	it	Forza Elenco a discesa
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
 french polynesia	common	it	POLINESIA FRANCESE
@@ -232,7 +232,7 @@ group	common	it	Gruppo
 group access	common	it	Accesso Gruppo
 group has been added	common	it	Gruppo aggiunto
 group has been deleted	common	it	Gruppo cancellato
-group has been updated	common	it	Gruppo modificato
+group has been updated	common	it	Gruppo aggiornato
 group name	common	it	nome gruppo
 group public	common	it	Gruppo Pubblico
 groups	common	it	Gruppi
@@ -252,7 +252,7 @@ high	common	it	Alta
 highest	common	it	Più Alta
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
 home	common	it	Home
-home email	common	it	email abitazione
+home email	common	it	e-mail abitazione
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 horizontal rule	htmlarea	it	Linea Orrizzontale
@@ -320,7 +320,7 @@ luxembourg	common	it	LUSSEMBURGO
 macau	common	it	MACAO
 macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA DI YUGOSLAVIA
 madagascar	common	it	MADAGASCAR
-mail domain, eg. "%1"	common	it	dominio email, es. "%1"
+mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
 maintainer	common	it	Mantenitore
@@ -409,10 +409,10 @@ panama	common	it	PANAMA
 papua new guinea	common	it	PAPUA NUOVA GUINEA
 paraguay	common	it	PARAGUAY
 parcel	common	it	Parcella
-parent category	common	it	Categoria padre
+parent category	common	it	Categoria superiore
 password	common	it	Password
 password could not be changed	common	ir	La oassword non può essere cambiato
-password has been updated	common	it	La password è stata modificata
+password has been updated	common	it	La password è stata aggiornata
 paste from clipboard	htmlarea	it	Incolla dagli appunti
 path	htmlarea	it	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il path per i files degli utenti e dei gruppi DEVE ESSERE ESTERNA alladocument-root del webserver!!!
@@ -478,10 +478,10 @@ select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	jscalendar	it	Selezione data
 select group	common	it	Selezione gruppo
-select home email address	common	it	Selezione indirizzo email abitazione
+select home email address	common	it	Selezione indirizzo e-mail abitazione
 select one	common	it	Seleziona uno
 select user	common	it	Selezione utente
-select work email address	common	it	Selezione indirizzio email ufficio
+select work email address	common	it	Selezione indirizzio e-mail ufficio
 send	common	it	Invia
 senegal	common	it	SENEGAL
 september	common	it	Settembre
@@ -493,6 +493,7 @@ setup main menu	common	it	Main Menu Setup
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
+show menu	common	it	visualizza menu
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
 show_more_apps	common	it	ancora
@@ -598,12 +599,12 @@ welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
 wk	jscalendar	it	wk
-work email	common	it	email ufficio
+work email	common	it	e-mail ufficio
 written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in TEXT MODE.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
 you are required to change your password during your first login	common	it	Ti sarà richiesto di cambiare la password al primo login
 you are running a newer version of phpGroupWare than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
@@ -619,7 +620,7 @@ your message has been sent	common	it	Il tuo messaggio è stato inviato
 your search returned %1 matchs	common	it	la tua ricerca ha resttuito %1 risultati
 your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
 your session could not be verified.	login	it	La tua sessione non può essere verificata.
-your settings have been updated	common	it	I tuoi settaggi sono aggiornati
+your settings have been updated	common	it	Le tuoe impostazioni sono state aggiornate
 yugoslavia	common	it	YUGOSLAVIA
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
