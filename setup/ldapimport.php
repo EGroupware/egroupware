@@ -310,11 +310,25 @@
 								$acl->delete('phpgw_group',$thisacctid,1);
 								$acl->add('phpgw_group',$thisacctid,1);
 
-								// Now add the acl to let them change their password
+								/* Now add the acl to let them change their password */
 								$acl->delete('preferences','changepassword',1);
 								$acl->add('preferences','changepassword',1);
 
 								$acl->save_repository();
+
+								/* Add prefs for selected apps here, since they are per-user.
+									App access is added below.
+								*/
+								$pref = CreateObject('phpgwapi.preferences',$tmpid);
+								$pref->db = $phpgw_setup->db;
+								$pref->account_id = intval($tmpid);
+								$pref->read_repository();
+								@reset($s_apps);
+								while (list($key,$app) = each($s_apps))
+								{
+									$phpgw->common->hook_single('add_def_pref',$app);
+								}
+								$pref->save_repository();
 							}
 						}
 						/* Now give this group some rights */

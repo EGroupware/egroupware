@@ -15,7 +15,7 @@
 <tr bgcolor="e6e6e6">
 	<td {td_align}>
 		{select_box_desc}
-		<form action="lang.php">
+		<form method="POST" action="lang.php">
 		{hidden_var1}
 		<select name="lang_selected[]" multiple size="10">
 		{select_box_langs}

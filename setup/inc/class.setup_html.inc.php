@@ -52,7 +52,7 @@
 
 		function show_header($title = '',$nologoutbutton = False, $logoutfrom = 'config', $configdomain = '')
 		{
-			global $phpgw_info, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $setup_tpl, $HTTP_SERVER_VARS;
 
 			$setup_tpl->set_var('lang_charset',lang('charset'));
 			if ($nologoutbutton)
@@ -61,7 +61,7 @@
 			}
 			else
 			{
-				$btn_logout = '<a href="'.$PHP_SELF.'?FormLogout='.$logoutfrom.'" class="link">'.lang('Logout').'</a>';
+				$btn_logout = '<a href="'.basename($HTTP_SERVER_VARS['REQUEST_URI']).'?FormLogout='.$logoutfrom.'" class="link">'.lang('Logout').'</a>';
 			}
 
 			$setup_tpl->set_var('lang_setup', lang('setup'));
@@ -82,7 +82,7 @@
 
 		function show_footer()
 		{
-			global $phpgw_info, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $setup_tpl;
 
 			$setup_tpl->pparse('out','T_footer');
 			unset($setup_tpl);
@@ -90,7 +90,7 @@
 
 		function show_alert_msg($alert_word='Setup alert',$alert_msg='setup alert (generic)')
 		{
-			global $phpgw_info, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $setup_tpl;
 
 			$setup_tpl->set_var('V_alert_word',$alert_word);
 			$setup_tpl->set_var('V_alert_msg',$alert_msg);
@@ -100,7 +100,7 @@
 		function make_frm_btn_simple($pre_frm_blurb='',$frm_method='POST',$frm_action='',$input_type='submit',$input_value='',$post_frm_blurb='')
 		{
 			// are these golbals necessary?
-			global $phpgw_info, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $setup_tpl;
 
 			// a simple form has simple components
 			$simple_form = 
@@ -115,7 +115,7 @@
 		function make_href_link_simple($pre_link_blurb='',$href_link='',$href_text='default text',$post_link_blurb='')
 		{
 			// are these golbals necessary?
-			global $phpgw_info, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $setup_tpl;
 
 			// a simple href link has simple components
 			$simple_link =
@@ -127,7 +127,7 @@
 
 		function login_form()
 		{
-			global $phpgw_info, $phpgw_domain, $setup_tpl, $PHP_SELF;
+			global $phpgw_info, $phpgw_domain, $setup_tpl;
 			
 			// begin use TEMPLATE login_main.tpl
 			$setup_tpl->set_var('ConfigLoginMSG',$phpgw_info['setup']['ConfigLoginMSG']);

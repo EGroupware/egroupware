@@ -32,7 +32,52 @@
 		define('PHPGW_INCLUDE_ROOT','..');
 	}
 
-	function CreateObject($classname, $constructor_param = "")
+	function CreateObject($class,
+		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
+		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
+		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
+		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
+	{
+		global $phpgw_info, $phpgw, $phpgw_domain;
+
+		/* error_reporting(0); */
+		list($appname,$classname) = explode(".", $class);
+
+		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
+			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
+		{
+			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;   
+			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+		}
+		if ($p1 == '_UNDEF_' && $p1 != 1)
+		{
+			eval('$obj = new ' . $classname . ';');
+		}
+		else
+		{
+			$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
+			$i = 1;
+			$code = '$obj = new ' . $classname . '(';
+			while (list($x,$test) = each($input))
+			{
+				if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
+				{
+					break;
+				}
+				else
+				{
+					$code .= '$p' . $i . ',';
+				}
+				$i++;
+			}
+			$code = substr($code,0,-1) . ');';
+			eval($code);
+		}
+		/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
+		return $obj;
+	}
+
+	function oldCreateObject($classname, $constructor_param = "")
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
 		$classpart = explode (".", $classname);
@@ -42,7 +87,6 @@
 		{
 			$phpgw_info["flags"]["included_classes"][$classname] = True;
 			include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
-//			include("/var/www/phpgroupware/".$appname."/inc/class.".$classname.".inc.php");
 		}
 		if ($constructor_param == "")
 		{

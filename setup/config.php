@@ -52,7 +52,7 @@
 		$current_config['temp_dir'] = '/path/to/temp/dir';
 	}
 
-	if ($cancel)
+	if ($HTTP_POST_VARS['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -69,12 +69,14 @@
 		$configtbl = 'phpgw_config';
 	}
 
-	if ($submit && $newsettings)
+	if ($HTTP_POST_VARS['submit'] && $HTTP_POST_VARS['newsettings'])
 	{
 		$phpgw_setup->db->transaction_begin();
 		/* This is only temp: */
 		$phpgw_setup->db->query("DELETE FROM $configtbl WHERE config_name='useframes'");
 		$phpgw_setup->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) values ('phpgwapi','useframes','never')");
+
+		$newsettings = $HTTP_POST_VARS['newsettings'];
 
 		while (list($setting,$value) = @each($newsettings))
 		{

@@ -42,8 +42,10 @@
 		$submit              = True;
 	}
 
-	if ($submit)
+	if ($HTTP_POST_VARS['submit'])
 	{
+		$lang_selected = $HTTP_POST_VARS['lang_selected'];
+		$upgrademethod = $HTTP_POST_VARS['upgrademethod'];
 		$phpgw_setup->db->transaction_begin();
 		if (count($lang_selected))
 		{
@@ -134,13 +136,13 @@
 	}
 	else
 	{
-		if ($cancel)
+		if ($HTTP_POST_VARS['cancel'])
 		{
 			Header("Location: index.php");
 			exit;
 		}
 
-		if (! $included)
+		if (!$included)
 		{
 			$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 			$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);

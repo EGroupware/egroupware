@@ -109,17 +109,22 @@
 	//var_dump($setup_info);exit;
 	@ksort($setup_info);
 
-	if ($cancel)
+	if ($HTTP_POST_VARS['cancel'])
 	{
 		Header("Location: index.php");
 		exit;
 	}
 
-	if ($submit)
+	if ($HTTP_POST_VARS['submit'])
 	{
 		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
+
+		$appname = $HTTP_POST_VARS['appname'];
+		$remove  = $HTTP_POST_VARS['remove'];
+		$install = $HTTP_POST_VARS['install'];
+		$upgrade = $HTTP_POST_VARS['upgrade'];
 
 		while (list($appname,$key) = @each($remove))
 		{
@@ -202,8 +207,9 @@
 		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
 	}
 
-	if($detail)
+	if($HTTP_GET_VARS['detail'])
 	{
+		$detail = $HTTP_GET_VARS['detail'];
 		@ksort($setup_info[$detail]);
 		@reset($setup_info[$detail]);
 		$setup_tpl->set_var('description',lang('App details') . ':');
@@ -238,8 +244,11 @@
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
-	elseif ($resolve)
+	elseif ($HTTP_GET_VARS['resolve'])
 	{
+		$resolve  = $HTTP_GET_VARS['resolve'];
+		$version  = $HTTP_GET_VARS['version'];
+		$notables = $HTTP_GET_VARS['notables'];
 		$setup_tpl->set_var('description',lang('Problem resolution'). ':');
 		$setup_tpl->pparse('out','header');
 		if ($badinstall)

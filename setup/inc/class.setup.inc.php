@@ -27,21 +27,29 @@
 		*/
 		function loaddb()
 		{
-			global $phpgw_info, $phpgw_domain, $ConfigDomain;
-			/* Database setup */
-			if (!isset($phpgw_info["server"]["api_inc"]))
-			{
-				$phpgw_info["server"]["api_inc"] = PHPGW_SERVER_ROOT . "/phpgwapi/inc";
-			}
-			include($phpgw_info["server"]["api_inc"] . "/class.db_".$phpgw_domain[$ConfigDomain]["db_type"].".inc.php");
-			$this->db	        = new db;
-			$this->db->Host     = $phpgw_domain[$ConfigDomain]["db_host"];
-			$this->db->Type     = $phpgw_domain[$ConfigDomain]["db_type"];
-			$this->db->Database = $phpgw_domain[$ConfigDomain]["db_name"];
-			$this->db->User     = $phpgw_domain[$ConfigDomain]["db_user"];
-			$this->db->Password = $phpgw_domain[$ConfigDomain]["db_pass"];
+			global $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
 
-			//$phpgw_schema_proc = new phpgw_schema_proc($phpgw_domain[$ConfigDomain]["db_type"]);
+			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+			if(empty($ConfigDomain))
+			{
+				/* This is to fix the reading of this value immediately after the cookie was set on login */
+				$ConfigDomain = $HTTP_POST_VARS['FormDomain'];
+			}
+			$phpgw_domain = $GLOBALS['phpgw_domain'];
+			$phpgw_info   = $GLOBALS['phpgw_info'];
+
+			/* Database setup */
+			if (!isset($phpgw_info['server']['api_inc']))
+			{
+				$phpgw_info['server']['api_inc'] = PHPGW_SERVER_ROOT . '/phpgwapi/inc';
+			}
+			include($phpgw_info['server']['api_inc'] . '/class.db_'.$phpgw_domain[$ConfigDomain]['db_type'].'.inc.php');
+			$this->db	        = new db;
+			$this->db->Host     = $phpgw_domain[$ConfigDomain]['db_host'];
+			$this->db->Type     = $phpgw_domain[$ConfigDomain]['db_type'];
+			$this->db->Database = $phpgw_domain[$ConfigDomain]['db_name'];
+			$this->db->User     = $phpgw_domain[$ConfigDomain]['db_user'];
+			$this->db->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
 		}
 
 		/*!
@@ -51,7 +59,21 @@
 		*/
 		function auth($auth_type = "Config")
 		{
-			global $phpgw_domain, $phpgw_info, $HTTP_POST_VARS, $FormLogout, $ConfigLogin, $HeaderLogin, $FormDomain, $FormPW, $ConfigDomain, $ConfigPW, $HeaderPW, $ConfigLang;
+			global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
+
+			$phpgw_domain = $GLOBALS['phpgw_domain'];
+			$phpgw_info   = $GLOBALS['phpgw_info'];
+
+			$FormLogout   = $HTTP_GET_VARS['FormLogout'];
+			$ConfigLogin  = $HTTP_POST_VARS['ConfigLogin']  ? $HTTP_POST_VARS['ConfigLogin']  : $HTTP_COOKIE_VARS['ConfigLogin'];
+			$HeaderLogin  = $HTTP_POST_VARS['HeaderLogin']  ? $HTTP_POST_VARS['HeaderLogin']  : $HTTP_COOKIE_VARS['HeaderLogin'];
+			$FormDomain   = $HTTP_POST_VARS['FormDomain'];
+			$FormPW       = $HTTP_POST_VARS['FormPW'];
+			$ConfigDomain = $HTTP_POST_VARS['ConfigDomain'] ? $HTTP_POST_VARS['ConfigDomain'] : $HTTP_COOKIE_VARS['ConfigDomain'];
+			$ConfigPW     = $HTTP_POST_VARS['ConfigPW']     ? $HTTP_POST_VARS['ConfigPW']     : $HTTP_COOKIE_VARS['ConfigPW'];
+			$HeaderPW     = $HTTP_POST_VARS['HeaderPW'];
+			$ConfigLang   = $HTTP_POST_VARS['ConfigLang']   ? $HTTP_POST_VARS['ConfigLang']   : $HTTP_COOKIE_VARS['ConfigLang'];
+
 			if (isset($FormLogout))
 			{
 				if ($FormLogout == 'config' ||

@@ -34,7 +34,11 @@
 		*/
 		function init_process()
 		{
-			global $phpgw_domain,$ConfigDomain;
+			global $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+
+			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+			$phpgw_domain = $GLOBALS['phpgw_domain'];
+			$phpgw_info   = $GLOBALS['phpgw_info'];
 
 			$this->oProc = CreateObject('setup.schema_proc',$phpgw_domain[$ConfigDomain]['db_type']);
 			//$this->oProc = CreateObject('setup.schema_proc','pgsql');

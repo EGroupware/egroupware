@@ -52,7 +52,7 @@
 	$phpgw_info['setup']['stage']['header'] = $phpgw_setup->check_header();
 	if ($phpgw_info['setup']['stage']['header'] != '10')
 	{
-		Header("Location: manageheader.php");
+		Header('Location: manageheader.php');
 		exit;
 	}
 	elseif (!$phpgw_setup->auth('Config'))
@@ -145,7 +145,7 @@
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
-			switch ($phpgw_domain[$ConfigDomain]["db_type"])
+			switch ($phpgw_domain[$ConfigDomain]['db_type'])
 			{
 				case 'mysql':
 					$setup_tpl->set_var('instr',lang('mysqlinstr'));
@@ -197,24 +197,24 @@
 			// FIXME : CAPTURE THIS OUTPUT
 			$phpgw_setup->db->Halt_On_Error = 'report';
 
-			switch ($phpgw_info["setup"]["currentver"]["phpgwapi"])
+			switch ($phpgw_info['setup']['currentver']['phpgwapi'])
 			{
-				case "dbcreate":
+				case 'dbcreate':
 					$phpgw_setup->db->create_database($db_root, $db_pass);
 					break;
-				case "drop":
+				case 'drop':
 					$setup_info = $phpgw_setup->get_versions($setup_info);
 					$setup_info = $phpgw_setup->process_droptables($setup_info);
 					break;
-				case "new":
+				case 'new':
 					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG);
 					$included = True;
 					include('lang.php');
-					$phpgw_info["setup"]["currentver"]["phpgwapi"] = "oldversion";
+					$phpgw_info['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
-				case "oldversion":
+				case 'oldversion':
 					$setup_info = $phpgw_setup->process_pass($setup_info,'upgrade',$DEBUG);
-					$phpgw_info["setup"]["currentver"]["phpgwapi"] = "oldversion";
+					$phpgw_info['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 			}
 
@@ -246,7 +246,7 @@
 
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step 2 - Configuration'));
-	$phpgw_info["setup"]["stage"]["config"] = $phpgw_setup->check_config();
+	$phpgw_info['setup']['stage']['config'] = $phpgw_setup->check_config();
 
 	// begin DEBUG code
 	//$phpgw_info['setup']['stage']['config'] = 10;
