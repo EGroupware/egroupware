@@ -90,7 +90,7 @@
 				$owner_name = lang('Group').' ('.$owner_name.')';
 			}
 			unset($acct);
-			$this->acl = CreateObject('phpgwapi.acl',intval($owner));
+			$this->acl = CreateObject('phpgwapi.acl',(int)$owner);
 			$this->acl->read_repository();
 
 			if ($_POST['submit'])
@@ -250,16 +250,16 @@
 			$vars = $this->template->get_undefined('row_colspan');
 			while (list(,$var) = each($vars))
 			{
-				if (ereg('lang_',$var))
+				if(strstr($var,'lang_'))
 				{
-					$value = ereg_replace('lang_','',$var);
-					$value = ereg_replace('_',' ',$value);
+					$value = str_replace('lang_','',$var);
+					$value = str_replace('_',' ',$value);
 
 					$this->template->set_var($var,lang($value));
 				}
 			}
 
-			if (intval($s_groups) <> count($groups))
+			if ((int)$s_groups <> count($groups))
 			{
 				$this->template->set_var('string',lang('Groups'));
 				$this->template->parse('row','row_colspan',True);

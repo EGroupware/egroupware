@@ -156,7 +156,7 @@
 		}
 		if (isset($prefs[$name]))
 		{
-			$prefs[$name] = intval(!!$prefs[$name]);	// to care for '' and 'True'
+			$prefs[$name] = (int)(!!$prefs[$name]);	// to care for '' and 'True'
 		}
 		
 		return create_select_box($label,$name,array(
@@ -424,11 +424,11 @@
 		$GLOBALS['type'] = 'user';
 	}
 	$show_help = "$session_data[show_help]" != '' && $session_data['appname'] == $_GET['appname'] ? 
-		$session_data['show_help'] : intval($GLOBALS['phpgw_info']['user']['preferences']['common']['show_help']);
+		$session_data['show_help'] : (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['show_help'];
 
 	if ($toggle_help = get_var('toggle_help','POST'))
 	{
-		$show_help = intval(!$show_help);
+		$show_help = (int)(!$show_help);
 	}
 	$has_help = 0;
 
@@ -557,7 +557,7 @@
 	}
 	$t->set_var('lang_submit', lang('save'));
 	$t->set_var('lang_cancel', lang('cancel'));
-	$t->set_var('show_help',intval($show_help));
+	$t->set_var('show_help',(int)$show_help);
 	$t->set_var('help_button',$has_help ? '<input type="submit" name="toggle_help" value="'.
 		($show_help ? lang('help off') : lang('help')).'">' : '');
 
