@@ -5,7 +5,7 @@
 *
 * @author		Marc Logemann [loge@mail.com]
 * @version	0.9
-* 
+* $Id$
 */
 class sbox {
 	
@@ -110,15 +110,17 @@ class sbox {
       return $out;
    }
 
-	function getYears($name, $selected=0)
+	function getYears($name, $selected=0, $startYear=0)
    {
+
+	if(!$startYear) $startYear = date("Y");
    	$out = "<select name=\"$name\">\n";
 		
 		$out .= "<option value=\"\"";
 		if($selected == 0 OR $selected == "") $out .= " SELECTED";
 		$out .= "></option>\n";
 		
-		for($i=date("Y");$i<date("Y")+5;$i++)
+		for($i=$startYear - 1;$i<$startYear + 5;$i++)
 		{              
 			$out .= "<option value=\"$i\"";
 			if($selected==$i) $out .= " SELECTED";
@@ -185,11 +187,12 @@ class sbox {
       return $out;
    }
    
-   function getGroups($groups, $selected="")
+   function getGroups($groups, $selected="", $name="")
    {
       global $phpgw;
 
-  	$out = '<select name="n_groups[]" multiple>';
+	if(!$name) $name = "n_groups[]";
+  	$out = '<select name="' . $name . '" multiple>';
       while (list($null,$group) = each($groups)) {
          $out .= '<option value="' . $group[0] . '"';
          if (ereg("," . $group[0] . ",", $selected))
