@@ -32,6 +32,7 @@
 
 	function check_form_values()
 	{
+		$errors = '';
 		@reset($GLOBALS['HTTP_POST_VARS']['domains']);
 		while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['domains']))
 		{
