@@ -139,7 +139,6 @@
 			$GLOBALS['phpgw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
 			while($GLOBALS['phpgw']->db->next_record())
 			{
-				$_found = True;
 				$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
 				$_app_name    = $GLOBALS['phpgw']->db->f('app_name');
 				$_versionfile = $GLOBALS['phpgw']->common->get_app_dir($_app_name) . '/setup/setup.inc.php';
@@ -152,6 +151,7 @@
 
 					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
 					{
+						$_found = True;
 						$_app_string .= '<br>' . lang($_app_title);
 					}
 					unset($_file_version);
