@@ -133,7 +133,6 @@
 	$test[] = '0.0.1.016';
 	function resources_upgrade0_0_1_016()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('egw_resources','accessories','picture_src');
 		$GLOBALS['phpgw_setup']->oProc->DropColumn('egw_resources',array(
 			'fd' => array(
 				'id' => array('type' => 'auto'),
@@ -177,16 +176,31 @@
 			'ix' => array(),
 			'uc' => array()
 		),'relatives');
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','picture_src',array(
-			'type' => 'varchar',
-			'precision' => '20'
-		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_resources','accessoriy_of',array(
+		$GLOBALS['phpgw_setup']->oProc->DropColumn('egw_resources',array(
+			'fd' => array(
+				'id' => array('type' => 'auto'),
+				'name' => array('type' => 'varchar','precision' => '100'),
+				'short_description' => array('type' => 'varchar','precision' => '100'),
+				'cat_id' => array('type' => 'int','precision' => '11','nullable' => False),
+				'quantity' => array('type' => 'int','precision' => '11','default' => '1'),
+				'useable' => array('type' => 'int','precision' => '11','default' => '1'),
+				'location' => array('type' => 'varchar','precision' => '100'),
+				'bookable' => array('type' => 'varchar','precision' => '1'),
+				'buyable' => array('type' => 'varchar','precision' => '1'),
+				'prize' => array('type' => 'varchar','precision' => '200'),
+				'long_description' => array('type' => 'longtext'),
+				'picture_src' => array('type' => 'varchar','precision' => '20')
+			),
+			'pk' => array('id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),'accessories');
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','accessory_of',array(
 			'type' => 'int',
 			'precision' => '11',
 			'default' => '-1'
 		));
-
 		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.017';
 		return $GLOBALS['setup_info']['resources']['currentver'];
 	}

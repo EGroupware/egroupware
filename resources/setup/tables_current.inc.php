@@ -28,7 +28,7 @@
 				'prize' => array('type' => 'varchar','precision' => '200'),
 				'long_description' => array('type' => 'longtext'),
 				'picture_src' => array('type' => 'varchar','precision' => '20'),
-				'accessoriy_of' => array('type' => 'int','precision' => '11','default' => '-1')
+				'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1')
 			),
 			'pk' => array('id'),
 			'fk' => array(),
