@@ -280,6 +280,11 @@ class calendar_holiday
 	{
 		global $phpgw;
 
+		if($this->holidays == Null)
+		{
+			return False;
+		}
+		
 		$c_holidays = count($this->holidays);
 		for($i=0;$i<$c_holidays;$i++)
 		{

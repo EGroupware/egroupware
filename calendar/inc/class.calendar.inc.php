@@ -448,7 +448,7 @@ class calendar extends calendar_
 
 		$this->repeating_event_matches = 0;
 
-		if(count($this->repeated_events) <= 0)
+		if($this->repeated_events == Null)
 		{
 			return False;
 		}
