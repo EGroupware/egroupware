@@ -28,46 +28,23 @@
 
 		var $soap_functions = array(
 			'read_entries' => array(
-				'in' => array(
-					'int',
-					'int',
-					'struct',
-					'string',
-					'int'
-				),
-				'out' => array(
-					'array'
-				)
+				'in'  => array('int','int','struct','string','int'),
+				'out' => array('array')
 			),
 			'read_entry' => array(
-				'in' => array(
-					'int',
-					'struct'
-				),
-				'out' => array(
-					'array'
-				)
+				'in'  => array('int','struct'),
+				'out' => array('array')
 			),
 			'read_last_entry' => array(
-				'in' => array(
-					'struct'
-				),
-				'out' => array(
-					'array'
-				)
+				'in'  => array('struct'),
+				'out' => array('array')
 			),
 			'add_entry' => array(
-				'in' => array(
-					'int',
-					'struct'
-				),
+				'in'  => array('int','struct'),
 				'out' => array()
 			),
 			'update_entry' => array(
-				'in' => array(
-					'int',
-					'struct'
-				),
+				'in'  => array('int','struct'),
 				'out' => array()
 			)
 		);
@@ -88,8 +65,6 @@
 
 		function boaddressbook($session=False)
 		{
-			global $phpgw;
-
 			$this->so = CreateObject('addressbook.soaddressbook');
 			$this->rights = $this->so->rights;
 			$this->grants = $this->so->grants;
@@ -99,23 +74,43 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			global $start,$limit,$query,$sort,$order,$filter,$cat_id,$fcat_id;
+			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
+			/* Might change this to '' at the end---> */
+			$query   = $GLOBALS['query'];
+			$sort    = $GLOBALS['sort'];
+			$order   = $GLOBALS['order'];
+			$filter  = $GLOBALS['filter'];
+			$cat_id  = $GLOBALS['cat_id'];
+			$fcat_id = $GLOBALS['fcat_id'];
 
-			if(!empty($start) || ($start == "0" ))
+			if(!empty($start) || ($start == '0') || ($start == 0))
 			{
 				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
 				$this->start = $start;
 			}
 			if($limit)  { $this->limit  = $limit;  }
-			if(isset($query))   { $this->query  = $query;  }
+			if((empty($query) && !empty($this->query)) ||
+				!empty($query))
+			{
+				$this->query  = $query;
+			}
+			if(isset($fcat_id) || $fcat_id == '0' || $fcat_id == 0) { $this->cat_id = $fcat_id; }
 			if(isset($sort))    { $this->sort   = $sort;   }
 			if(isset($order))   { $this->order  = $order;  }
 			if(isset($filter))  { $this->filter = $filter; }
-			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
 		}
 
 		function list_methods($_type='xmlrpc')
 		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+			if (is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
 			switch($_type)
 			{
 				case 'xmlrpc':
@@ -144,6 +139,11 @@
 							'function'  => 'read_entries',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Read a list of entries.')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
 						)
 					);
 					return $xml_functions;
@@ -161,17 +161,14 @@
 		{
 			if ($this->use_session)
 			{
-				global $phpgw;
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$phpgw->session->appsession('session_data','addressbook',$data);
+				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			global $phpgw;
-
-			$data = $phpgw->session->appsession('session_data','addressbook');
+			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
@@ -185,8 +182,6 @@
 
 		function strip_html($dirty = '')
 		{
-			global $phpgw;
-
 			if ($dirty == '')
 			{
 				$dirty = array();
@@ -197,12 +192,12 @@
 				{
 					while (list($name,$value) = @each($dirty[$i]))
 					{
-						$cleaned[$i][$name] = $phpgw->strip_html($dirty[$i][$name]);
+						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
 					}
 				}
 				else
 				{
-					$cleaned[$i] == $phpgw->strip_html($dirty[$i]);
+					$cleaned[$i] == $GLOBALS['phpgw']->strip_html($dirty[$i]);
 				}
 			}
 			return $cleaned;
@@ -230,15 +225,15 @@
 
 		function add_vcard()
 		{
-			global $phpgw,$phpgw_info,$uploadedfile;
+			global $uploadedfile;
 
 			if($uploadedfile == 'none' || $uploadedfile == '')
 			{
-				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uivcard.in&action=GetFile'));
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.in&action=GetFile'));
 			}
 			else
 			{
-				$uploaddir = $phpgw_info['server']['temp_dir'] . SEP;
+				$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
 
 				srand((double)microtime()*1000000);
 				$random_number = rand(100000000,999999999);
@@ -255,7 +250,7 @@
 				$vcard = CreateObject('phpgwapi.vcard');
 				$entry = $vcard->in_file($filename);
 				/* _debug_array($entry);exit; */
-				$entry['owner'] = $phpgw_info['user']['account_id'];
+				$entry['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
 				$entry['access'] = 'private';
 				$entry['tid'] = 'n';
 				/* _debug_array($entry);exit; */
@@ -265,13 +260,13 @@
 				/* Delete the temp file. */
 				unlink($filename);
 				unlink($filename . '.info');
-				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
 			}
 		}
 
 		function add_email()
 		{
-			global $phpgw_info,$name,$referer;
+			global $name,$referer;
 
 			$named = explode(' ', $name);
 			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
@@ -289,11 +284,11 @@
 			$fields['email']    = $add_email;
 			$referer = urlencode($referer);
 
-			$this->so->add_entry($phpgw_info['user']['account_id'],$fields,'private','','n');
+			$this->so->add_entry($GLOBALS['phpgw_info']['user']['account_id'],$fields,'private','','n');
 			$ab_id = $this->get_lastid();
 
 			Header('Location: '
-				. $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
+				. $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
 		}
 
 		function add_entry($fields)
@@ -318,8 +313,7 @@
 
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
 		{
-			global $phpgw;
-			$phpgw->preferences->read_repository();
+			$GLOBALS['phpgw']->preferences->read_repository();
 			if (is_array($prefs))
 			{
 				/* _debug_array($prefs);exit; */
@@ -328,45 +322,45 @@
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
 					if ($prefs[$pref] == 'on')
 					{
-						$phpgw->preferences->add('addressbook',$pref,'addressbook_on');
+						$GLOBALS['phpgw']->preferences->add('addressbook',$pref,'addressbook_on');
 					}
 					else
 					{
-						$phpgw->preferences->delete('addressbook',$pref);
+						$GLOBALS['phpgw']->preferences->delete('addressbook',$pref);
 					}
 				}
 			}
 
 			if(is_array($other))
 			{
-				$phpgw->preferences->delete('addressbook','mainscreen_showbirthdays');
+				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
 	 			if ($other['mainscreen_showbirthdays'])
 				{
-					$phpgw->preferences->add('addressbook','mainscreen_showbirthdays');
+					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays');
 				}
 
-				$phpgw->preferences->delete('addressbook','default_filter');
+				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
 	 			if ($other['default_filter'])
 				{
-					$phpgw->preferences->add('addressbook','default_filter');
+					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter');
 				}
 
-				$phpgw->preferences->delete('addressbook','autosave_category');
+				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
 	 			if ($other['autosave_category'])
 				{
-					$phpgw->preferences->add('addressbook','autosave_category',True);
+					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
 				}
 			}
 
 			if($fcat_id)
 			{
-				$phpgw->preferences->delete('addressbook','default_category');
-				$phpgw->preferences->add('addressbook','default_category',$fcat_id);
+				$GLOBALS['phpgw']->preferences->delete('addressbook','default_category');
+				$GLOBALS['phpgw']->preferences->add('addressbook','default_category',$fcat_id);
 			}
 
-			$phpgw->preferences->save_repository(True);
+			$GLOBALS['phpgw']->preferences->save_repository(True);
 			/* _debug_array($prefs);exit; */
-			Header('Location: ' . $phpgw->link('/preferences/index.php'));
+			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
 		}
 	}
 ?>
