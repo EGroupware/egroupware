@@ -70,8 +70,7 @@ class ui_resources
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= lang('Category');
 		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['options-filter']= array('0' => lang('all categories'));
-		$content['nm']['options-filter']+= $this->bo->acl->get_cats(PHPGW_ACL_READ);
+		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
 		$content['nm']['no_filter2']	= True;
 		$content['nm']['no_cat']	= True;
 		

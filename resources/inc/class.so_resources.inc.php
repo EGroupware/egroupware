@@ -47,7 +47,7 @@ class so_resources
 		{
 			$wherecats .= ($wherecats ? " OR " : " AND ( " ) .'cat_id' . "='".$cat_id."'";
 		}
-		$wherecats .= " ) ";
+		$wherecats .= $wherecats ? " ) " : "";
 
 		$this->db->query( 'SELECT '.$select." FROM ".$this->rs_table." WHERE ".$where.$wherecats.
 				($order_by != '' ? " ORDER BY $order_by" : ''),__LINE__,__FILE__);
