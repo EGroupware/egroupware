@@ -277,7 +277,7 @@
 				else
 				{
 					$this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been added !', $values['name']));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been added !', $values['name']));
 				}
 			}
 
@@ -346,7 +346,7 @@
 				else
 				{
 					$this->cat_id = $this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been updated !',$values['name']));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been updated !',$values['name']));
 				}
 			}
 
