@@ -46,4 +46,30 @@
 		// identical to 1.0.0.001, only created to get a new version of the final 1.0 packages
 		return phpgwapi_upgrade1_0_0_001();
 	}
+	
+	$test[] = '1.0.0.004';
+	function phpgwapi_upgrade1_0_0_004()
+	{
+		phpgwapi_upgrade1_0_0_001();
+		
+		// we skip the 1.0.1.001 update as its identitcal to the 1.0.0.003 update, which we already have
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.002';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '1.0.1.001';
+	function phpgwapi_upgrade1_0_1_001()
+	{
+		// removing the ACL entries of deleted accounts
+		$GLOBALS['phpgw_setup']->setup_account_object();
+		if (($all_accounts = $GLOBALS['phpgw']->accounts->search(array('type'=>'both'))))
+		{
+			$all_accounts = array_keys($all_accounts);
+			$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).")",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
+		}
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.002';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>
