@@ -1,6 +1,7 @@
 <?php
 	/**************************************************************************\
 	* eGroupWare API - Contacts manager for SQL                                *
+	* Reworked with new DB-functions by RalfBecker-AT-outdoor-training.de      *
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	*   and Miles Lott <milosch@groupwhere.org>                                *
 	* View and manipulate contact records using SQL                            *
@@ -148,6 +149,8 @@
 		{
 //			$this->db = $GLOBALS['phpgw']->db;
 			copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db->set_app('phpgwapi');
+
 			if($useacl)
 			{
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
@@ -185,7 +188,7 @@
 				}
 			}
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id=" . (int)$id);
+			$this->db->select($this->std_table,'id,lid,tid,owner,access,cat_id'.$t_fields,array('id' => $id),__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -210,7 +213,7 @@
 				$one_type = $this->db->f('adr_one_type');
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
+					if (strstr($one_type,$name)) $return_fields[0]['one_'.$name] = 'on';
 				}
 			}
 			if ($this->db->f('adr_two_type'))
@@ -218,11 +221,11 @@
 				$two_type = $this->db->f('adr_two_type');
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
+					if (strstr($two_type,$name)) $return_fields[0]['two_'.$name] = 'on';
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id=" . (int)$this->db->f('id'),__LINE__,__FILE__);
+			$this->db->select($this->ext_table,'contact_name,contact_value',array('contact_id'=>$id),__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				if ($extra_fields[$this->db->f('contact_name')])
@@ -233,72 +236,13 @@
 			return $return_fields;
 		}
 
+		// better use get_last_insert_id !!!
 		function read_last_entry($fields='')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			list($stock_fields,$stock_fieldnames,$extra_fields) =
-				$this->split_stock_and_extras($fields);
-
-			if (count($stock_fieldnames))
-			{
-				$t_fields = ',' . implode(',',$stock_fieldnames);
-				if ($t_fields == ',')
-				{
-					unset($t_fields);
-				}
-			}
-
-			$this->db->query('SELECT max(id) FROM '.$this->std_table,__LINE__,__FILE__);
+			$this->db->select($this->std_table,'max(id)',False,__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$id = $this->db->f(0);
-
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id=" . (int)$id,__LINE__,__FILE__);
-			$this->db->next_record();
-
-			$return_fields[0]['id']     = $this->db->f('id');
-			$return_fields[0]['lid']    = $this->db->f('lid');
-			$return_fields[0]['tid']    = $this->db->f('tid');
-			$return_fields[0]['owner']  = $this->db->f('owner');
-			$return_fields[0]['access'] = $this->db->f('access');
-			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
-			$return_fields[0]['rights'] = (int)$this->grants[$this->db->f('owner')];
-
-			if (@is_array($stock_fieldnames))
-			{
-				foreach($stock_fieldnames as $f_name)
-				{
-					$return_fields[0][$f_name] = $this->db->f($f_name);
-				}
-			}
-
-			/* Setup address type fields for ui forms display */
-			if($this->db->f('adr_one_type'))
-			{
-				$one_type = $this->db->f('adr_one_type');
-				foreach($this->adr_types as $name => $val)
-				{
-					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
-				}
-			}
-			if($this->db->f('adr_two_type'))
-			{
-				$two_type = $this->db->f('adr_two_type');
-				foreach($this->adr_types as $name => $val)
-				{
-					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
-				}
-			}
-
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id=" . (int)$this->db->f('id'),__LINE__,__FILE__);
-			while ($this->db->next_record())
-			{
-				if ($extra_fields[$this->db->f('contact_name')])
-				{
-					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
-				}
-			}
-			return $return_fields;
+			return $this->read_single_entry($this->db->f(0),$fields);
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
@@ -514,7 +458,7 @@
 					$query = strtoupper($this->db->db_addslashes($query));
 
 					$sql = "SELECT * FROM $this->std_table WHERE (";
-					$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
+					$sqlcount = "SELECT COUNT(*) FROM $this->std_table WHERE (";
 					foreach($this->stock_contact_fields as $f => $x)
 					{
 						$sql .= " UPPER($f) LIKE '%$query%' OR ";
@@ -529,8 +473,7 @@
 			{
 				$sql = "SELECT id,lid,tid,owner,access,cat_id,last_mod $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
-				$sqlcount = "SELECT COUNT(id) FROM $this->std_table " . $fwhere
-					. $filtermethod;
+				$sqlcount = "SELECT COUNT(*) FROM $this->std_table " . $fwhere . $filtermethod;
 			}
 			if($DEBUG)
 			{
@@ -587,8 +530,7 @@
 					}
 					reset($stock_fieldnames);
 				}
-				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id="
-					. (int)$this->db->f('id') . $filterextra,__LINE__,__FILE__);
+				$db2->select($this->ext_table,'contact_name,contact_value',array('contact_id'=>$this->db->f('id')),__LINE__,__FILE__);
 				while($db2->next_record())
 				{
 					if($extra_fields[$db2->f('contact_name')])
@@ -604,7 +546,6 @@
 		function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
 			$owner = (int)$owner;
-			$lid   = array();
 			// access, cat_id and tid can be in $fields now or as extra params
 			foreach(array('access','cat_id','tid') as $extra)
 			{
@@ -617,11 +558,10 @@
 			{
 				$fields['tid'] = 'n';
 			}
-			if(isset($fields['lid']))
+			// setting the following fields to empty if unset, as the addressbook does not seem to set them anymore and I dont want to change the db-default atm.
+			foreach(array('tel_voice','tel_bbs','tel_modem') as $name)
 			{
-				//fix by pim
-				//$lid = array('lid,' => $fields['lid']."','");
-				$lid = array('lid,', $fields['lid'] . "','");
+				if (!isset($fields[$name])) $fields[$name] = '';
 			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
@@ -629,21 +569,28 @@
 			$this->stock_contact_fields['last_mod'] = 'last_mod';
 			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
 
-			$sql = 'INSERT INTO ' . $this->std_table . " (owner,access,cat_id,tid," . $lid[0]
-				. implode(',',$this->stock_contact_fields)
-				. ') VALUES (' . $owner . ",'" . $fields['access'] . "','" . $fields['cat_id']
-				. "','" . $fields['tid'] . "','" . $lid[1]
-				. implode("','",$this->loop_addslashes($stock_fields)) . "')";
-			$this->db->query($sql,__LINE__,__FILE__);
+			$data = array(
+				'owner'		=> $owner,
+				'access'	=> $fields['access'],
+				'cat_id'	=> $fields['cat_id'],
+				'tid'		=> $fields['tid'],
+			);
+			if (isset($fields['lid'])) $data['lid'] = $fields['lid'];
+
+			$this->db->insert($this->std_table,array_merge($data,$stock_fields),False,__LINE__,__FILE__);
 
 			$id = $this->db->get_last_insert_id($this->std_table, 'id');
 
-			if(count($extra_fields))
+			if($id && count($extra_fields))
 			{
 				foreach($extra_fields as $name => $value)
 				{
-					$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'" . $owner . "','"
-						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
+					$this->db->insert($this->ext_table,array(
+							'contact_id'	=> $id,
+							'contact_owner'	=> $owner,
+							'contact_name'	=> $name,
+							'contact_value'	=> $value,
+						),False,__LINE__,__FILE__);
 				}
 			}
 			return ($id ? $id : False);
@@ -651,30 +598,36 @@
 
 		function field_exists($id,$field_name)
 		{
-			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id=" . (int)$id . " AND contact_name='"
-				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
+			$this->db->select($this->ext_table,'COUNT(*)',array(
+					'contact_id'	=> $id,
+					'contact_name'	=> $field_name,
+				),__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
 		}
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'".(int)$owner."','" . $this->db->db_addslashes($field_name)
-				. "','" . $this->db->db_addslashes($field_value) . "')",__LINE__,__FILE__);
+			$this->db->insert($this->ext_table,array(
+					'contact_id'	=> $id,
+					'contact_owner'	=> $owner,
+					'contact_name'	=> $field_name,
+					'contact_value'	=> $field_value,
+				),False,__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
-			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id=" . (int)$id . " AND contact_name='"
-				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
+			$this->db->delete($this->ext_table,array(
+					'contact_id'	=> $id,
+					'contact_name'	=> $field_name,
+				),__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
-			$owner = (int)$owner;
-			$id    = (int)$id;
 			/* First make sure that id number exists */
-			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id=$id",__LINE__,__FILE__);
+			$this->db->select($this->std_table,'COUNT(*)',array('id'=>$id),__LINE__,__FILE__);
 			$this->db->next_record();
 			if (!$this->db->f(0))
 			{
@@ -697,18 +650,8 @@
 
 			if (count($stock_fields))
 			{
-				foreach($stock_fields as $name => $value)
-				{
-					$ta[] = $name . "='" . $this->db->db_addslashes($value) . "'";
-				}
-				$ta[] = 'last_mod=' . $GLOBALS['phpgw']->datetime->gmtnow;
-				$fields_s = implode(',',$ta);
-				if ($field_s == ',')
-				{
-					unset($field_s);
-				}
-				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
-					. "id=$id",__LINE__,__FILE__);
+				$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
+				$this->db->update($this->std_table,$stock_fields,array('id'=>$id),__LINE__,__FILE__);
 			}
 			if (is_array($extra_fields))
 			{
@@ -722,9 +665,13 @@
 						}
 						else
 						{
-							$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
-								. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
-								. "' AND contact_id=$id",__LINE__,__FILE__);
+							$this->db->update($this->ext_table,array(
+									'contact_value'	=> $x_value,
+									'contact_owner'	=> $owner,
+								),array(
+									'contact_name'	=> $x_name,
+									'contact_id'	=> $id,
+								),__LINE__,__FILE__);
 						}
 					}
 					elseif($x_value)	// dont write emtpy extra-fields
@@ -739,31 +686,28 @@
 		/* Used by admin to change ownership on account delete */
 		function change_owner($old_owner,$new_owner)
 		{
-			$old_owner = (int) $old_owner;
-			$new_owner = (int) $new_owner;
-			if (!$new_owner || !$old_owner)
+			if (!(int)$new_owner || !(int)$old_owner)
 			{
 				return False;
 			}
-			$this->db->query("UPDATE $this->std_table SET owner='$new_owner' WHERE owner=$old_owner",__LINE__,__FILE__);
-			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
+			$this->db->update($this->std_table,array('owner'=>$new_owner),array('owner'=>$old_owner),__LINE__,__FILE__);
+			$this->db->update($this->ext_table,array('contact_owner'=>$new_owner),array('owner'=>$old_owner),__LINE__,__FILE__);
 		}
 
 		/* This is where the real work of delete() is done, shared class file contains calling function */
 		function delete_($id)
 		{
-			$this->db->query("DELETE FROM $this->std_table WHERE id=" . (int)$id,__LINE__,__FILE__);
-			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id=" . (int)$id,__LINE__,__FILE__);
+			$this->db->delete($this->std_table,array('id'=>$id),__LINE__,__FILE__);
+			$this->db->delete($this->ext_table,array('contact_id'=>$id),__LINE__,__FILE__);
 		}
 
 		/* This is for the admin script deleteaccount.php */
 		function delete_all($owner=0)
 		{
-			$owner = (int) $owner;
 			if ($owner)
 			{
-				$this->db->query("DELETE FROM $this->std_table WHERE owner=$owner",__LINE__,__FILE__);
-				$this->db->query("DELETE FROM $this->ext_table WHERE contact_owner=$owner",__LINE__,__FILE__);
+				$this->db->delete($this->std_table,array('owner'=>$owner),__LINE__,__FILE__);
+				$this->db->delete($this->ext_table,array('contact_owner'=>$owner),__LINE__,__FILE__);
 			}
 		}
 	}
