@@ -32,11 +32,11 @@
     $db->User       = $phpgw_info["server"]["db_user"];
     $db->Password   = $phpgw_info["server"]["db_pass"];
   }else{
-    $db->Host       = $domains[$SetupDomain]["db_host"];
-    $db->Type       = $domains[$SetupDomain]["db_type"];
-    $db->Database   = $domains[$SetupDomain]["db_name"];
-    $db->User       = $domains[$SetupDomain]["db_user"];
-    $db->Password   = $domains[$SetupDomain]["db_pass"];
+    $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
+    $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];
+    $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
+    $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
+    $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
   }
 
   if ($newsettings["auth_type"] != "ldap") {

@@ -27,7 +27,7 @@
 
   function loginForm($err="")
   {
- 	global $phpgw_info, $domains, $SetupDomain, $SetupCookie, $FormDomain, $PHP_SELF;
+ 	global $phpgw_info, $phpgw_domain, $SetupDomain, $SetupCookie, $FormDomain, $PHP_SELF;
  	
  	setup_header("Please login");
 
@@ -56,7 +56,7 @@
 
   if (isset($FormPW)) {
     if ($phpgw_info["multiable_domains"] == True){
-      if ($FormPW != $domains[$FormDomain]["config_passwd"]) {
+      if ($FormPW != $phpgw_domain[$FormDomain]["config_passwd"]) {
         loginForm("Invalid password.");
         exit;
       }
@@ -70,7 +70,7 @@
     $SetupCookie = $FormPW;
   } else if (isset($SetupCookie)) {
     if ($phpgw_info["multiable_domains"] == True){
-      if ($SetupCookie != $domains[$SetupDomain]["config_passwd"]) {
+      if ($SetupCookie != $phpgw_domain[$SetupDomain]["config_passwd"]) {
         setcookie("SetupCookie","");  // scrub the old one
         setcookie("SetupDomain","");  // scrub the old one
         loginForm("Invalid session cookie (cookies must be enabled)");
