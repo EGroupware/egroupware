@@ -49,13 +49,13 @@ define('_BASE64',1);
 
 define('OTHER',99);
 
-class mailto
+class class_mailto
 {
 	var $user;
 	var $host;
 }
 
-class attendee
+class class_address
 {
 	var $cn = 'Unknown';
 	var $dir;
@@ -70,7 +70,7 @@ class attendee
 	var $partstat = NEEDS_ACTION;
 }
 
-class vCalendar_time
+class class_datetime
 {
 	var $year;
 	var $month;
@@ -88,7 +88,7 @@ class class_geo
 	var $lon;
 }
 
-class rrule
+class class_recur
 {
 	var $freq;
 	var $enddate;
@@ -107,39 +107,50 @@ class class_text
 	var $language;
 	var $value;
 }
+class class_x_type
+{
+	var $name;
+	var $value;
+}
 
 class vCalendar_item
 {
-	var $type;
+	var $alarm = Array();
+	var $attach;
 	var $attendee = Array();
-	var $organizer;
+	var $calscale;
+	var $categories;
+	var $comment;
+	var $completed;
+	var $class;
+	var $created;
+	var $description;
 	var $dtstart;
 	var $dtend;
 	var $dtstamp;
 	var $due;
-	var $created;
-	var $last_modified;
-	var $completed;
 	var $duration;
 	var $freebusy;
+	var $geo;
+	var $last_modified;
 	var $location;
-	var $categories;
-	var $transp;
-	var $sequence;
+	var $organizer;
 	var $percent_complete;
-	var $attach;
-	var $calscale;
-	var $tzid;
-	var $uid;
-	var $description;
-	var $comment;
-	var $summary;
-	var $status;
 	var $priority;
-	var $class;
 	var $rrule;
 	var $resources;
 	var $request_status;
+	var $sequence;
+	var $status;
+	var $summary;
+	var $transp;
+	var $type;
+	var $tzname;
+	var $tzoffsetto;
+	var $tzoffsetfrom;
+	var $tzid;
+	var $uid;
+	var $x_type = Array();
 }
 
 class vCal
@@ -149,6 +160,9 @@ class vCal
 	var $method;
 	var $event = Array();
 	var $todo = Array();
+	var $journal = Array();
+	var $freebusy = Array();
+	var $timezone = Array();
 }	
 
 class vCalendar
@@ -156,6 +170,9 @@ class vCalendar
 	var $vcal;
 	var $event = Array();
 	var $todo = Array();
+	var $journal = Array();
+	var $freebusy = Array();
+	var $timezone = Array();
 	var $property;
 
 	/*
@@ -165,271 +182,516 @@ class vCalendar
 	function vCalendar()
 	{
 		$this->property = Array(
-			'dtstart'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'required',
-					'vtodo'    => 'optional',
-					'vfreebusy'=> 'optional',
-					'vtimezone'=> 'required'
-				)
-			),
-			'dtend'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vfreebusy'=> 'optional'
-				)
-			),
-			'dtstamp'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'required',
-					'vtodo'    => 'required',
-					'vjournal' => 'required',
-					'vfreebusy'=> 'required'
-				)
-			),			
-			'due'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vtodo'    => 'optional'
-				)
-			),
-			'completed'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vtodo'    => 'optional'
-				)
-			),
-			'created'		=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
-				)
-			),
-			'last_modified'	=> Array(
-				'type'  => 'date-time',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vtimezone'=> 'optional'
-				)
-			),
-			'duration'		=> Array(
-				'type'  => 'duration',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vfreebusy'=> 'optional',
-					'valarm'   => 'optional'
-				)
-			),
-			'freebusy'		=> Array(
-				'type'  => 'freebusy',
-				'mangle'=> False,
-				'state' => Array(
-					'vfreebusy'=> 'optional'
+			'attach'		=> Array(
+				'type'		=> 'uri',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
 				)
 			),
 			'attendee'		=> Array(
-				'type'  => 'cal-address',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
+				'type'		=> 'cal-address',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
 				)
 			),			
-			'organizer'		=> Array(
-				'type'  => 'cal-address',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vfreebusy'=> 'optional'
-				)
-			),			
-			'rrule'		=> Array(
-				'type'  => 'recur',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vtimezone'=> 'optional'
-				)
-			),
-			'comment'		=> Array(
-				'type'  => 'uri',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vtimezone'=> 'optional',
-					'vfreebusy'=> 'optional'
-				)
-			),
-			'summary'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'valarm'   => 'optional'
-				)
-			),
-			'resources'		=> Array(
-				'type'  => 'text',
-				'mangle'=> False,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional'
-				)
-			),
-			'description'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'valarm'   => 'optional'
-				)
-			),
-			'location'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional'
-				)
-			),
-			'priority'		=> Array(
-				'type'  => 'integer',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional'
-				)
-			),
 			'calscale'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'valarm'   => 'optional'
-				)
-			),
-			'transp'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional'
-				)
-			),
-			'tzid'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vtimezone' => 'required'
-				)
-			),
-			'geo'		=> Array(
-				'type'  => 'float',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional'
-				)
-			),
-			'uid'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vfreebusy'=> 'optional'
-				)
-			),
-			'percent_complete'	=> Array(
-				'type'  => 'integer',
-				'mangle'=> True,
-				'state' => Array(
-					'vtodo'    => 'optional'
-				)
-			),
-			'sequence'		=> Array(
-				'type'  => 'integer',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
-				)
-			),
-			'status'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
-				)
-			),
-			'class'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
 				)
 			),
 			'categories'		=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional'
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'class'			=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'comment'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				)
+			),
+			'completed'		=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'created'		=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'description'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'dtend'			=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'dtstamp'		=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),			
+			'dtstart'		=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtimezone'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> True
+				)
+			),
+			'due'			=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'duration'		=> Array(
+				'type'		=> 'duration',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'freebusy'		=> Array(
+				'type'		=> 'freebusy',
+				'to_text'	=> False,
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				)
+			),
+			'geo'			=> Array(
+				'type'		=> 'float',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'last_modified'		=> Array(
+				'type'		=> 'date-time',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtimezone'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				)
+			),
+			'location'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'organizer'		=> Array(
+				'type'		=> 'cal-address',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),			
+			'percent_complete'	=> Array(
+				'type'		=> 'integer',
+				'to_text'	=> False,
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'priority'		=> Array(
+				'type'		=> 'integer',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'resources'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
 				)
 			),
 			'request_status'	=> Array(
-				'type'  => 'text',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'vfreebusy'=> 'optional'
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
 				)
 			),
-			'attach'		=> Array(
-				'type'  => 'uri',
-				'mangle'=> True,
-				'state' => Array(
-					'vevent'   => 'optional',
-					'vtodo'    => 'optional',
-					'vjournal' => 'optional',
-					'valarm'   => 'optional'
+			'rrule'			=> Array(
+				'type'		=> 'recur',
+				'to_text'	=> False,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vtimezone'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'sequence'		=> Array(
+				'type'		=> 'integer',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'status'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'summary'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'transp'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'tzid'			=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vtimezone'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				)
+			),
+			'tzname'		=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vtimezone'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'tzoffsetfrom'		=> Array(
+				'type'		=> 'utc-offset',
+				'to_text'	=> True,
+				'vtimezone'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				)
+			),
+			'tzoffsetto'		=> Array(
+				'type'		=> 'utc-offset',
+				'to_text'	=> True,
+				'vtimezone'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				)
+			),
+			'tzurl'			=> Array(
+				'type'		=> 'uri',
+				'to_text'	=> True,
+				'vtimezone'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				)
+			),
+			'uid'			=> Array(
+				'type'		=> 'text',
+				'to_text'	=> True,
+				'vevent'	=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vtodo'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
 				)
 			)
 		);
@@ -561,9 +823,9 @@ class vCalendar
 	 * Parse Functions
 	 */
 
-	function parse_date($value)
+	function parse_datetime($value)
 	{
-		$dtime = new vCalendar_time;
+		$dtime = new class_datetime;
 		if(strpos($value,':'))
 		{
 			$pos = explode(':',$value);
@@ -587,7 +849,7 @@ class vCalendar
 		return $dtime;		
 	}
 
-	function parse_address($address)
+	function parse_host_user($address)
 	{
 		if(strpos(' '.$address,':'))
 		{
@@ -598,7 +860,7 @@ class vCalendar
 		$parts = explode('@',$address);
 		if(count($parts) == 2)
 		{
-			$temp_address = new mailto;
+			$temp_address = new class_mailto;
 			$temp_address->user = $parts[0];
 			$temp_address->host = $parts[1];
 			return $temp_address;
@@ -617,6 +879,15 @@ class vCalendar
 			$event->lat = $return_value[0];
 			$event->lon = $return_value[1];
 		}
+	}
+
+	function parse_xtype(&$event,$majortype,$value)
+	{
+		$temp_x_type = new class_x_type;
+		$temp_x_type->name = strtoupper(substr($majortype,2));
+		$temp_x_type->value = $value;
+		$event[] = $temp_x_type;
+		unset($temp_x_type);
 	}
 
 	function parse_text(&$event,$value)
@@ -656,7 +927,7 @@ class vCalendar
 		}
 	}
 
-	function parse_attendee(&$event,$value)
+	function parse_address(&$event,$value)
 	{
 		$param = $this->explode_param($value,'"',True);
 
@@ -679,7 +950,7 @@ class vCalendar
 				case 'delegated-to':
 				case 'mailto':
 					$type[0] = str_replace('-','_',$type[0]);
-					$val = $this->parse_address($type[1]);
+					$val = $this->parse_host_user($type[1]);
 					break;
 				case 'dir':
 					$val = $type[1];
@@ -710,7 +981,7 @@ class vCalendar
 	 * Build-Card Functions
 	 */
 
-	function out_organizer_attendee($event)
+	function build_cal_address($event)
 	{
 		$str = '';
 		if(!empty($event->cn) && $event->cn <> 'Unknown')
@@ -744,7 +1015,7 @@ class vCalendar
 		return $str;
 	}
 
-	function build_text($event,$mangle)
+	function build_text($event,$to_text)
 	{
 		$str = '';
 		if(!empty($event->cid))
@@ -765,21 +1036,16 @@ class vCalendar
 		}		
 		if(!empty($event->value))
 		{
-			if($mangle)
+			if($to_text)
 			{
 				$event->value = $this->to_text($event->value);
 			}
 			$str .= ':'.$event->value;
 		}
-//		else
-//		{
-//			$str .= ':\n';
-//		}
-
 		return $str;
 	}
 
-	function build_rrule($event)
+	function build_recur($event)
 	{
 		$var = Array(
 			'freq',
@@ -794,12 +1060,18 @@ class vCalendar
 				$str[] = strtoupper($var[$i]).'='.$event->{$var[$i]};
 			}
 		}
-		return implode($str,';');
+		$recur = ':'.implode($str,';');
+		return $recur;
 	}
 
-	function build_time($event)
+	function build_datetime($event)
 	{
-		return ':'.date('Ymd\THms\Z',mktime($event->year,$event->month,$event->mday,$event->hour,$event->min,$event->sec));
+		return ':'.date('Ymd\THms\Z',mktime($event->hour,$event->min,$event->sec,$event->month,$event->mday,$event->year));
+	}
+
+	function build_xtype($x_type)
+	{
+		return $this->fold('X-'.$x_type->name.':'.$x_type->value);
 	}
 
 	function build_card_internals($ical_item,$event)
@@ -809,8 +1081,9 @@ class vCalendar
 		{
 			$value  = $key;
 			$type   = $varray['type'];
-			$mangle = $varray['mangle'];
-			$state  = $varray['state'][$ical_item];
+			$to_text = $varray['to_text'];
+			$state  = @$varray[$ical_item]['state'];
+			$multiples  = @$varray[$ical_item]['multiples'];
 			if(@$state == 'optional' || @$state == 'required')
 			{
 				switch($type)
@@ -824,7 +1097,17 @@ class vCalendar
 							default:
 								if(!empty($event->$value))
 								{
-									$str .= $this->fold(strtoupper($value).$this->build_time($event->$value));
+									if($multiples)
+									{
+										for($i=0;$i<count($event->$value);$i++)
+										{
+											$str .= $this->fold(strtoupper($value).$this->build_datetime($event->{$value}[$i]));
+										}
+									}
+									else
+									{
+										$str .= $this->fold(strtoupper($value).$this->build_datetime($event->$value));
+									}
 								}
 								elseif($value == 'dtstamp' || $value == 'created')
 								{
@@ -838,14 +1121,24 @@ class vCalendar
 						{
 							for($i=0;$i<count($event->$value);$i++)
 							{
-								$str .= $this->fold(strtoupper($value).$this->build_text($event->{$value}[$i],$mangle));
+								$str .= $this->fold(strtoupper($value).$this->build_text($event->{$value}[$i],$to_text));
 							}
 						}
 						break;
 					case 'recur':
 						if(!empty($event->$value))
 						{
-							$str .= $this->fold(strtoupper($value).':'.$this->build_rrule($event->$value));
+							if($multiples)
+							{
+								for($i=0;$i<count($event->$value);$i++)
+								{
+									$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_recur($event->{$value}[$i]));
+								}
+							}
+							else
+							{
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_recur($event->$value));
+							}
 						}
 						break;
 					case 'integer':
@@ -871,10 +1164,40 @@ class vCalendar
 						}
 						if(!empty($event->$value))
 						{
-							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->$value,$mangle));
+							if($multiples)
+							{
+								for($i=0;$i<count($event->$value);$i++)
+								{
+									$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->{$value}[$i],$to_text));
+								}
+							}
+							else
+							{
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->$value,$to_text));
+							}
+						}
+						break;
+					case 'cal-address':
+						if(!empty($event->$value))
+						{
+							for($j=0;$j<count($event->$value);$j++)
+							{
+								$temp_output = $this->build_cal_address($event->{$value}[$j]);
+								if($temp_output)
+								{
+									$str .= $this->fold(strtoupper($value).$temp_output);
+								}
+							}
 						}
 						break;
 				}
+			}
+		}
+		if(!empty($event->x_type))
+		{
+			for($i=0;$i<count($event->x_type);$i++)
+			{
+				$str .= $this->build_xtype($event->x_type[$i]);
 			}
 		}
 		return $str;
@@ -1202,23 +1525,31 @@ class vCalendar
 			else
 			{
 				$min_value = min($colon,$semi_colon);
-				$majortype = strtolower(substr($vcal_text[$i],0,$min_value));
+				$majortype = str_replace('-','_',strtolower(substr($vcal_text[$i],0,$min_value)));
 				$vcal_text[$i] = chop(substr($vcal_text[$i],$min_value + 1));
 				$value = $vcal_text[$i];
 			}
-
-			$mtype = str_replace('-','_',$majortype);
 			
-			if($mtype == 'begin' || $mtype == 'end')
-			{
-				$mode = 'none';
-			}
+//			if($majortype == 'begin' || $majortype == 'end')
+//			{
+//				$mode = 'none';
+//			}
 
-			if($mode != 'none')
+			if($mode != 'none' && ($majortype != 'begin' && $majortype != 'end'))
 			{
-				if(isset($this->property[$mtype]))
+				if(isset($this->property[$majortype]))
 				{
-					$state = @$this->property[$mtype]['state']["$mode"];
+					$state = @$this->property[$majortype]["$mode"]['state'];
+					$type = @$this->property[$majortype]['type'];
+					$multiples = @$this->property[$majortype]["$mode"]['multiples'];
+					$do_to_text = @$this->property[$majortype]['to_text'];
+				}
+				elseif(substr($majortype,0,2) == 'x_')
+				{
+					$state = 'optional';
+					$type = 'xtype';
+					$multiples = True;
+					$do_to_test = True;
 				}
 				else
 				{
@@ -1232,112 +1563,197 @@ class vCalendar
 
 			if($state == 'optional' || $state == 'required')
 			{
-				switch($mtype)
+				if($majortype == 'begin')
 				{
-					case 'begin':
-						switch(strtolower($value))
-						{
-							case 'vcalendar':
-								$vcal = $this->new_vcal();
-								break;
-							case 'vevent':
-								$mode = 'vevent';
-								$event = new vCalendar_item;
-								$event->type = strtolower($value);
-								break;
-							case 'vtodo':
-								$mode = 'vtodo';
-								$event = new vCalendar_item;
-								$event->type = strtolower($value);
-								break;
-						}
-						break;
-					case 'prodid':
-					case 'version':
-					case 'method':
-						$this->parse_text($vcal->$majortype,$this->from_text($value));
-						break;
-					case 'geo':
-						$event->$majortype = new class_geo;
-						$this->parse_geo($event->$majortype,$value);
-						break;
-					case 'description':
-					case 'location':
-					case 'summary':
-					case 'calscale':
-					case 'tzid':
-					case 'transp':
-					case 'uid':
-					case 'class':
-					case 'status':
-					case 'categories':
-					case 'resources':
-					case 'request_status':
-						$event->$majortype = new class_text;
-						$this->parse_text($event->$majortype,$this->from_text($value));
-						break;
-					case 'attach':
-						$attach = new class_text;
-						$this->parse_text($attach,$this->from_text($value));
-						$event->attach[] = $attach;
-						unset($attach);
-						break;
-					case 'comment':
-						$comment = new class_text;
-						$this->parse_text($comment,$this->from_text($value));
-						$event->comment[] = $comment;
-						unset($comment);
-						break;
-					case 'percent_complete':
-						$this->set_var($event,str_replace('-','_',$majortype),$value);
-						break;
-					case 'attendee':
-						$attendee = new attendee;
-						$this->parse_attendee($attendee,$value);
-						$event->attendee[] = $attendee;
-						unset($attendee);
-						break;
-					case 'organizer':
-						$event->$majortype = new attendee;
-						$this->parse_attendee($event->$majortype,$value);
-						break;
-					case 'due':
-					case 'completed':
-					case 'duration':
-					case 'freebusy':
-					case 'dtstart':
-					case 'dtend':
-					case 'dtstamp':
-					case 'created':
-					case 'last_modified':
-						$this->set_var($event,$majortype,$this->parse_date($value));
-						break;
-					case 'rrule':
-						$event->$majortype = new $majortype;
-						$this->parse_recurrence($event->$majortype,$value);
-						break;
-					case 'end':
-						$mode = 'none';
-						switch(strtolower($value))
-						{
-							case 'vevent':
-								$this->event[] = $event;
-								unset($event);
-								break;
-							case 'vtodo':
-								$this->todo[] = $event;
-								unset($event);
-								break;
-							case 'vcalendar':
-								$this->vcal = $vcal;
-								$this->vcal->event = $this->event;
-								$this->vcal->todo = $this->todo;
-								break 2;
-						}
-						break;
-					default:
-						$this->set_var($event,$majortype,$value);
-						break;
+					switch(strtolower($value))
+					{
+						case 'vcalendar':
+							$vcal = $this->new_vcal();
+							break;
+						case 'vevent':
+							$mode = 'vevent';
+							$event = new vCalendar_item;
+							$event->type = strtolower($value);
+							break;
+						case 'vfreebusy':
+							$mode = 'vfreebusy';
+							$event = new vCalendar_item;
+							$event->type = strtolower($value);
+							break;
+							break;
+						case 'vjournal':
+							$mode = 'vjournal';
+							$event = new vCalendar_item;
+							$event->type = strtolower($value);
+							break;
+						case 'vtimezone':
+							$mode = 'vtimezone';
+							$event = new vCalendar_item;
+							$event->type = strtolower($value);
+							break;
+							break;
+						case 'vtodo':
+							$mode = 'vtodo';
+							$event = new vCalendar_item;
+							$event->type = strtolower($value);
+							break;
+						case 'valarm':
+							if($mode == 'vevent' || $mode == 'vtodo')
+							{
+								$tmode = $mode;
+								$mode = 'valarm';
+								$alarm = new vCalendar_alarm;
+							}
+							break;
+					}
+				}
+				elseif($majortype == 'end')
+				{
+					$mode = 'none';
+					switch(strtolower($value))
+					{
+						case 'valarm':
+							if($mode == 'valarm')
+							{
+								$event->alarm[] = $alarm;
+								unset($alarm);
+								$mode = $tmode;
+							}
+							break;
+						case 'vevent':
+							$this->event[] = $event;
+							unset($event);
+							break;
+						case 'vfreebusy':
+							$this->freebusy[] = $event;
+							unset($event);
+							break;
+						case 'vjournal':
+							$this->journal[] = $event;
+							unset($event);
+							break;
+						case 'vtimezone':
+							$this->timezone[] = $event;
+							unset($event);
+							break;
+						case 'vtodo':
+							$this->todo[] = $event;
+							unset($event);
+							break;
+						case 'vcalendar':
+							$this->vcal = $vcal;
+							$this->vcal->event = $this->event;
+							$this->vcal->freebusy = $this->freebusy;
+							$this->vcal->journal = $this->journal;
+							$this->vcal->timezone = $this->timezone;
+							$this->vcal->todo = $this->todo;
+							break 2;
+					}
+				}
+				elseif($majortype == 'prodid' || $majortype == 'version' || $majortype == 'method')
+				{
+					$this->parse_text($vcal->$majortype,$this->from_text($value));
+					
+				}
+				else
+				{
+					if($do_to_text)
+					{
+						$value = $this->from_text($value);
+					}
+					switch($type)
+					{
+						case 'text':
+							$text_class = new class_text;
+							$this->parse_text($text_class,$value);
+							if($multiples)
+							{
+								$event->{$majortype}[] = $text_class;
+							}
+							else
+							{
+								$this->set_var($event,$majortype,$text_class);
+							}
+							unset($text_class);
+							break;
+						case 'integer':
+							if($multiples)
+							{
+								$event->{$majortype}[] = intval($value);
+							}
+							else
+							{
+								$this->set_var($event,$majortype,intval($value));
+							}
+							break;
+						case 'date-time':
+							$date_class = $this->parse_datetime($value);
+							if($multiples)
+							{
+								$event->{$majortype}[] = $date_class;
+							}
+							else
+							{
+								$this->set_var($event,$majortype,$date_class);
+							}
+							unset($date_class);
+							break;
+						case 'float':
+							$event->$majortype = new class_geo;
+							$this->parse_geo($event->$majortype,$value);
+							break;
+						case 'cal-address':
+							$address = new class_address;
+							$this->parse_address($address,$value);
+							if($multiples)
+							{
+								$event->{$majortype}[] = $address;
+							}
+							else
+							{
+								$this->set_var($event,$majortype,$address);
+							}
+							unset($address);
+							break;
+						case 'recur':
+							$recur = new class_recur;
+							$this->parse_recurrence($recur,$value);
+							if($multiples)
+							{
+								$event->{$majortype}[] = $recur;
+							}
+							else
+							{
+								$this->set_var($event,$majortype,$recur);
+							}
+							unset($recur);
+							break;
+						case 'uri':
+							$new_var = new class_text;
+							$this->parse_text($new_var,$value);
+							if($multiples)
+							{
+								switch($mode)
+								{
+									case 'valarm':
+										$alarm->attach[] = $new_var;
+										break;
+									default:
+										$event->{$majortype}[] = $new_var;
+										break;
+								}
+							}
+							else
+							{
+								$event->{$majortype} = $new_var;
+							}
+							unset($new_var);
+							break;
+						case 'xtype':
+							$this->parse_xtype($event->x_type,$majortype,$value);
+							break;
+
+					}
 				}
 			}
 			$i++;
@@ -1347,39 +1763,28 @@ class vCalendar
 
 	function build_vcal($vcal)
 	{
+		$var = Array(
+			'timezone',
+			'event',
+			'todo',
+			'journal',
+			'freebusy'
+		);
+
 		$str = 'BEGIN:VCALENDAR'."\r\n";
 		$str .= $this->fold('PRODID'.$this->build_text($vcal->prodid));
 		$str .= $this->fold('VERSION'.$this->build_text($vcal->version));
 		$str .= $this->fold('METHOD'.$this->build_text($vcal->method));
-		if($vcal->event)
+		while(list($key,$vtype) = each($var))
 		{
-			for($i=0;$i<count($vcal->event);$i++)
+			if($vcal->$vtype)
 			{
-				$str .= 'BEGIN:VEVENT'."\r\n";
-				for($j=0;$j<count($vcal->event[$i]->attendee);$j++)
+				for($i=0;$i<count($vcal->$vtype);$i++)
 				{
-					$temp_attendee = $this->out_organizer_attendee($vcal->event[$i]->attendee[$j]);
-
-					if($temp_attendee)
-					{
-						$str .= $this->fold('ATTENDEE'.$temp_attendee);
-					}
+					$str .= 'BEGIN:V'.strtoupper($vtype)."\r\n";
+					$str .= $this->build_card_internals('v'.$vtype,$vcal->{$vtype}[$i]);
+					$str .= 'END:V'.strtoupper($vtype)."\r\n";
 				}
-				if(!empty($vcal->event[$i]->organizer))
-				{
-					$str .= $this->fold('ORGANIZER'.$this->out_organizer_attendee($vcal->event[$i]->organizer));
-				}
-				$str .= $this->build_card_internals('vevent',$vcal->event[$i]);
-				$str .= 'END:VEVENT'."\r\n";
-			}
-		}
-		if($vcal->todo)
-		{
-			for($i=0;$i<count($vcal->todo);$i++)
-			{
-				$str .= 'BEGIN:VTODO'."\r\n";
-				$str .= $this->build_card_internals('vtodo',$vcal->todo[$i]);
-				$str .= 'END:VTODO'."\r\n";
 			}
 		}
 		$str .= 'END:VCALENDAR'."\r\n";
