@@ -37,6 +37,9 @@
 		var $newfile;
 
 		var $fileman = Array();
+		var $changes = Array();
+		var $upload_comment = Array();
+		var $upload_file = Array();
 		var $op;
 		var $file;
 		var $help_name;
@@ -74,14 +77,24 @@
 				'todir',
 				'sortby',
 				'fileman',
+				'upload_file',
+				'upload_comment',
+				'upload_name',
 				'messages',
 				'help_name',
 				'renamefiles',
 				'comment_files',
 				'show_upload_boxes',
 				'submit',
+				'cancel',
 				'rename',
+				'upload',
+				'edit_comments',
+				'apply_edit_comment',
+				'apply_edit_name',
+				'changes',
 				'delete',
+				'edit',
 				'go',
 				'copy',
 				'move',
@@ -152,13 +165,22 @@
 			if(!$this->path)
 			{
 				$this->path = $this->vfs->pwd();
-				if (!$this->path || $this->vfs->pwd(False) == '')
+				if (!$this->path || $this->vfs->pwd(array(
+					'full' => False
+					)) == '')
 				{
 					$this->path = $this->homedir;
 				}
 			}
-			$this->vfs->cd(False,False,Array(RELATIVE_NONE));
-			$this->vfs->cd($this->path,False,Array(RELATIVE_NONE));
+			$this->vfs->cd(array(
+				'relative' => False,
+				'relatives'=>Array(RELATIVE_NONE)
+				));
+			$this->vfs->cd(array(
+				'string' => $this->path,
+				'relative' => False,
+				'relatives' => Array(RELATIVE_NONE)
+				));
 
 			$this->pwd = $this->vfs->pwd();
 
@@ -200,8 +222,11 @@
 					. 'fakebase: '.$this->fakebase.'<br>'
 					. 'homedir: '.$this->homedir.'<p>'
 					. '<b>phpGW debug:</b><br>'
-					. 'real getabsolutepath: '.$this->vfs->getabsolutepath(False, False, False).'<br>'
-					. 'fake getabsolutepath: '.$this->vfs->getabsolutepath(False).'<br>'
+					. 'real cabsolutepath: '.$this->vfs->getabsolutepath(array(
+									'string' => False, 
+									'fake' => False
+									)).'<br>'
+					. 'fake getabsolutepath: '.$this->vfs->getabsolutepath().'<br>'
 					. 'appsession: '.$GLOBALS['phpgw']->session->appsession('vfs','').'<br>'
 					. 'pwd: '.$this->vfs->pwd().'<br>';
 			}
@@ -243,6 +268,20 @@
 		function initialize_vars($name)
 		{
 			$var = get_var($name,Array('GET','POST'));
+			
+			//to get the file uploads, without requiring register_globals in php.ini
+			if(phpversion() >= '4.2.0')
+			{
+				$meth = '_FILES';
+			}
+			else
+			{
+				$meth = 'HTTP_POST_FILES';
+			}
+			if(@isset($GLOBALS[$meth][$name]))
+			{
+				$var = $GLOBALS[$meth][$name];
+			}
 			if($this->debug)
 			{
 				echo '<!-- '.$name.' = '.$var.' -->'."\n";
@@ -282,12 +321,23 @@
 
 			if ($this->path == $this->fakebase)
 			{
-				if (!$this->vfs->file_exists($this->homedir,Array(RELATIVE_NONE)))
+				if (!$this->vfs->file_exists(array(
+					'string' => $this->homedir,
+					'relatives' =>Array(RELATIVE_NONE)
+					)))
 				{
-					$this->vfs->mkdir($this->homedir,Array(RELATIVE_NONE));
+					$this->vfs->mkdir(array(
+						'string' => $this->homedir,
+						'relatives' => Array(RELATIVE_NONE)
+						));
 				}
 
-				$ls_array = $this->vfs->ls($this->homedir,Array(RELATIVE_NONE),False,False,True);
+				$ls_array = $this->vfs->ls(array(
+					'string' => $this->homedir,
+					'relatives' =>Array(RELATIVE_NONE),
+					'checksubdirs' => False,
+					'nofiles' => True
+					));
 				$this->files_array[] = $ls_array[0];
 
 				reset ($this->memberships);
@@ -302,20 +352,40 @@
 						continue;
 					}
 
-					if (!$this->vfs->file_exists($this->fakebase.'/'.$group_array['account_name'],Array(RELATIVE_NONE)))
+					if (!$this->vfs->file_exists(array(
+						'string' => $this->fakebase.'/'.$group_array['account_name'],
+						'relatives' => Array(RELATIVE_NONE)
+						)))
 					{
-						$this->vfs->mkdir($this->fakebase.'/'.$group_array['account_name'],Array(RELATIVE_NONE));
-						$this->vfs->set_attributes($this->fakebase.'/'.$group_array['account_name'],Array(RELATIVE_NONE),Array('owner_id' => $group_array['account_id'], 'createdby_id' => $group_array['account_id']));
+						$this->vfs->mkdir(array(
+							'string' => $this->fakebase.'/'.$group_array['account_name'],
+							'relatives' => Array(RELATIVE_NONE)
+							));
+						$this->vfs->set_attributes(array(
+							'string' => $this->fakebase.'/'.$group_array['account_name'],
+							'relatives' => Array(RELATIVE_NONE),
+							'attributes'=> Array('owner_id' => $group_array['account_id'], 'createdby_id' => $group_array['account_id'])
+							));
 					}
 
-					$ls_array = $this->vfs->ls($this->fakebase.'/'.$group_array['account_name'],Array(RELATIVE_NONE),False,False,True);
+					$ls_array = $this->vfs->ls(array(
+						'string' => $this->fakebase.'/'.$group_array['account_name'],
+						'relatives' => Array(RELATIVE_NONE),
+						'checksubdirs' => False,
+						'nofiles' => True
+						));
 
 					$this->files_array[] = $ls_array[0];
 				}
 			}
 			else
 			{
-				$ls_array = $this->vfs->ls($this->path,Array(RELATIVE_NONE),False,False,False,$this->sortby);
+				$ls_array = $this->vfs->ls(array(
+					'string' => $this->path,
+					'relatives' => Array(RELATIVE_NONE),
+					'checksubdirs' => False,
+					'orderby' =>$this->sortby
+					));
 
 				if ($this->debug)
 				{
@@ -335,7 +405,6 @@
 			{
 				$this->files_array = Array();
 			}
-
 			return $this->files_array;
 		}
 
@@ -360,6 +429,87 @@
 		{
 			$this->path = $this->todir;
 		}
+		function f_apply_edit_comment()
+		{
+			$result='';
+			for ($i=0; $i<count($this->fileman) ; $i++)
+			{
+				$file = $this->fileman[$i];
+				
+				if (!$this->vfs->set_attributes (array (
+					'string'	=> $file,
+					'relatives'	=> array (RELATIVE_ALL),
+					'attributes'	=> array (
+							'comment' => stripslashes ($this->changes[$file])
+						)
+					)
+				))
+				{
+					$result .= lang(' Error: failed to change comment for :').$file."\n";
+				}
+			}
+
+			return $result;
+		}
+		
+		function f_apply_edit_name()
+		{
+			$result='';
+			while (list ($from, $to) = each ($this->changes))
+			{
+				if ($badchar = $this->bad_chars ($to, True, True))
+				{
+			         $result .= 'File names cannot contain "'.$badchar.'"';
+					continue;
+				}
+		
+				if (ereg ("/", $to) || ereg ("\\\\", $to))
+				{
+					//echo $GLOBALS['phpgw']->common->error_list (array ("File names cannot contain \\ or /"));
+		        	$result .= "File names cannot contain \\ or /";
+				}
+				elseif (!$this->vfs->mv (array (
+							'from'	=> $from,
+							'to'	=> $to
+					))
+				)
+				{
+					//echo $GLOBALS['phpgw']->common->error_list (array ('Could not rename '.$disppath.'/'.$from.' to '.$disppath.'/'.$to));
+		        	$result .= 'Could not rename '.$this->path.'/'.$from.' to '.$this->path.'/'.$to;
+				}
+				else 
+				{
+					$result .= 'Renamed '.$this->path.'/'.$from.' to '.$this->path.'/'.$to;
+				}
+			}
+		   /*html_break (2);
+		   html_link_back ();*/
+		
+		
+			/*echo "f_apply_edit_name()";
+			print_r($this->fileman);
+			echo '<br />';
+			print_r($this->changes);
+			die();
+			
+			$result='';
+			for ($i=0; $i<count($this->fileman) ; $i++)
+			{
+				$file = $this->fileman[$i];
+				
+				if (!$this->vfs->mv (array (
+					'from'	=> $file,
+					'relatives'	=> array (RELATIVE_ALL),
+					'to'	=> $this->changes[$file]
+					)
+				))
+				{
+					$result .= lang(' Error: failed to rename :').$file."\n";
+				}
+			}
+*/
+			return $result;
+		}
 
 		function f_delete()
 		{
@@ -368,7 +518,12 @@
 			{
 				if($this->fileman[$i])
 				{
-					$ls_array = $this->vfs->ls($this->path.SEP.$this->fileman[$i],Array(RELATIVE_NONE),False,False,True);
+					$ls_array = $this->vfs->ls(array(
+						'string' => $this->path.SEP.$this->fileman[$i],
+						'relatives' => Array(RELATIVE_NONE),
+						'checksubdirs' =>False,
+						'nofiles' => True
+						));
 					$fileinfo = $ls_array[0];
 					if($fileinfo)
 					{
@@ -380,7 +535,10 @@
 						{
 							$mime_type = 'File';
 						}
-						if($this->vfs->delete($this->path.SEP.$this->fileman[$i],Array(RELATIVE_USER_NONE)))
+						if($this->vfs->delete(array(
+							'string' => $this->path.SEP.$this->fileman[$i],
+							'relatives' => Array(RELATIVE_USER_NONE)
+							)))
 						{
 							$errors[] = '<font color="#0000FF">'.$mime_type.' Deleted: '.$this->path.SEP.$this->fileman[$i].'</font>';
 						}
@@ -405,7 +563,11 @@
 			{
 				if($this->fileman[$i])
 				{
-					if($this->vfs->cp($this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i],Array(RELATIVE_NONE,RELATIVE_NONE)))
+					if($this->vfs->cp(array(
+						'from' => $this->path.SEP.$this->fileman[$i],
+						'to' => $this->todir.SEP.$this->fileman[$i],
+						'relatives' => Array(RELATIVE_NONE,RELATIVE_NONE)
+						)))
 					{
 						$errors[] = '<font color="#0000FF">File copied: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
@@ -425,7 +587,11 @@
 			{
 				if($this->fileman[$i])
 				{
-					if($this->vfs->mv($this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i],Array(RELATIVE_NONE,RELATIVE_NONE)))
+					if($this->vfs->mv(array(
+						'from' => $this->path.SEP.$this->fileman[$i],
+						'to' => $this->todir.SEP.$this->fileman[$i],
+						'relatives' => Array(RELATIVE_NONE,RELATIVE_NONE)
+						)))
 					{
 						$errors[] = '<font color="#0000FF">File moved: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
@@ -443,7 +609,10 @@
 			$numoffiles = count($this->fileman);
 			for($i=0;$i!=$numoffiles;$i++)
 			{
-				if($this->fileman[$i] && $this->vfs->file_exists($this->bo->path.SEP.$this->bo->fileman[$i],Array(RELATIVE_NONE)))
+				if($this->fileman[$i] && $this->vfs->file_exists(array(
+					'string' => $this->bo->path.SEP.$this->bo->fileman[$i],
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
 					execmethod($this->appname.'.ui'.$this->appname.'.view_file',
 						Array(
@@ -477,7 +646,12 @@
 					return $errors;
 				}
 
-				$ls_array = $this->vfs->ls($this->path.SEP.$this->createdir,Array(RELATIVE_NONE),False,False,True);
+				$ls_array = $this->vfs->ls(array(
+					'string' => $this->path.SEP.$this->createdir,
+					'relatives' => Array(RELATIVE_NONE),
+					'checksubdirs' => False,
+					'nofiles' => True
+					));
 				$fileinfo = $ls_array[0];
 
 				if ($fileinfo['name'])
@@ -493,7 +667,10 @@
 				}
 				else
 				{
-					if ($this->vfs->mkdir($this->path.SEP.$this->createdir,Array(RELATIVE_NONE)))
+					if ($this->vfs->mkdir(array(
+						'string' => $this->path.SEP.$this->createdir,
+						'relatives' => Array(RELATIVE_NONE)
+						)))
 					{
 						$errors[] = '<font color="#0000FF">Created directory '.$this->path.SEP.$this->createdir.'</font>';
 //						$this->path = $this->path.SEP.$this->createdir;
@@ -516,12 +693,18 @@
 					$errors[] = '<font color="#FF0000">Filenames cannot contain "'.$badchar.'"</font>';
 					return $errors;
 				}
-				if($this->vfs->file_exists($this->path.SEP.$this->createfile,Array(RELATIVE_NONE)))
+				if($this->vfs->file_exists(array(
+					'string' => $this->path.SEP.$this->createfile,
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
 					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' already exists.  Please edit it or delete it first.</font>';
 					return $errors;
 				}
-				if(!$this->vfs->touch($this->path.SEP.$this->createfile,Array(RELATIVE_NONE)))
+				if(!$this->vfs->touch(array(
+					'string' => $this->path.SEP.$this->createfile,
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
 					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' could not be created.</font>';
 				}
@@ -532,7 +715,144 @@
 			}
 			return $errors;
 		}
+		
+		function f_upload()
+		{
+		/*	echo 'sub:'.$this->show_upload_boxes .' uf: ';
+			
+			print_r($this->upload_file);
+			echo  ' cf: '; print_r($this->upload_comment);
+			echo ' files: '; print_r($HTTP_POST_FILES);
+			die();*/
+			//echo (($show_upload_boxes > 1) ? $head_pre.$msg_top : $head_top);
+			for ($i = 0; $i != $this->show_upload_boxes; $i++)
+			{
+				if ($badchar = $this->bad_chars ($this->upload_file['name'][$i], True, True))
+				{
+					array_push($err_msgs,$this->html_encode ('Filenames cannot contain "'.$badchar.'"', 1));
+		         //echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Filenames cannot contain "'.$badchar.'"', 1)));
+					continue;
+				}
+		
+				###
+				# Check to see if the file exists in the database, and get its info at the same time
+				###
+		
+				$ls_array = $this->vfs->ls (array (
+						'string'	=> $this->path . '/' . $this->upload_file['name'][$i],
+						'relatives'	=> array (RELATIVE_NONE),
+						'checksubdirs'	=> False,
+						'nofiles'	=> True
+					)
+				);
+		
+				$fileinfo = $ls_array[0];
+		
+				if ($fileinfo['name'])
+				{
+					if ($fileinfo['mime_type'] == 'Directory')
+					{
+						array_push($err_msgs,'Cannot replace '.$fileinfo['name'].' because it is a directory');
+		            //echo $GLOBALS['phpgw']->common->error_list (array ('Cannot replace '.$fileinfo['name'].' because it is a directory'));
+						continue;
+					}
+				}
+		
+				if ($this->upload_file['size'][$i] > 0)
+				{
+					if ($fileinfo['name'] && $fileinfo['deleteable'] != 'N')
+					{
+						if (
+		      				$this->vfs->cp (array (
+		                     'from'	=> $this->upload_file['tmp_name'][$i],
+		                     'to'	=> $this->upload_file['name'][$i],
+		                     'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
+		                  )
+		               )
+		            ) {
+		               $this->vfs->set_attributes (array (
+		                     'string'	=> $this->upload_file['name'][$i],
+		                     'relatives'	=> array (RELATIVE_ALL),
+		                     'attributes'	=> array (
+		                              'owner_id' => $GLOBALS['userinfo']['username'],
+		                              'modifiedby_id' => $GLOBALS['userinfo']['username'],
+		                              'modified' => $now,
+		                              'size' => $this->upload_file['size'][$i],
+		                              'mime_type' => $this->upload_file['type'][$i],
+		                              'deleteable' => 'Y',
+		                              'comment' => stripslashes ($upload_comment[$i])
+		                           )
+		                  )
+		               );
+		               
+		            } else {
+		               array_push($err_msgs,'Failed to upload file: '.$this->upload_file['name'][$i]);
+		               continue;
+		            }
+		           
+						$result .=' Replaced '.$disppath.'/'.$this->upload_file['name'][$i].' '.$this->upload_file['size'][$i];
+					}
+					else
+					{
+						if (
+		               $this->vfs->cp (array (
+		                     'from'	=> $this->upload_file['tmp_name'][$i],
+		                     'to'	=> $this->upload_file['name'][$i],
+		                     'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
+		                  )
+		               )
+		            ) {
+		
+		               $this->vfs->set_attributes (array (
+		                     'string'	=> $this->upload_file['name'][$i],
+		                     'relatives'	=> array (RELATIVE_ALL),
+		                     'attributes'	=> array (
+		                              'mime_type' => $this->upload_file_['type'][$i],
+		                              'comment' => stripslashes ($this->upload_comment[$i])
+		                           )
+		                  )
+		               );
+		            } else {
+		               array_push($err_msgs,'Failed to upload file: '.$this->upload_file['name'][$i]);
+		               continue;
+		            }
+						$result .= 'Created '.$this->path.'/'.$this->upload_file['name'][$i] .' '. $this->upload_file['size'][$i];
+					}
+				}
+				elseif ($this->upload_file['name'][$i])
+				{
+					$this->vfs->touch (array (
+							'string'	=> $this->upload_file['name'][$i],
+							'relatives'	=> array (RELATIVE_ALL)
+						)
+					);
+		
+					$this->vfs->set_attributes (array (
+							'string'	=> $this->upload_file['name'][$i],
+							'relatives'	=> array (RELATIVE_ALL),
+							'attributes'	=> array (
+										'mime_type' => $this->upload_file['type'][$i],
+										'comment' => $this->upload_comment[$i]
+									)
+						)
+					);
+		
+					$result .= 'Created '.$this->path.'/'.$this->upload_file['name'][$i].' '. $this->file_size[$i];
+				}
+			}
+		
+		   //output any error messages
+		 //  $backlink = ($show_upload_boxes > 1) ? '<a href="javascript:window.close();">Back to file manager</a>' : html_link_back(1);
+		   $refreshjs = '
+		   <script language="javascript">
+		      window.opener.processIt(\'update\');
+		   </script>';
+		   
+//		   if (sizeof($err_msgs)) echo $GLOBALS['phpgw']->common->error_list ($err_msgs,'Error',$backlink);
 
+			return $result.$err_msgs;
+		
+		}
 		function load_help_info()
 		{
 			$this->help_info = Array(

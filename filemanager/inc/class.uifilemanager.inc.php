@@ -2,23 +2,19 @@
   /**************************************************************************\
   * phpGroupWare                                                             *
   * This file written by Mark A Peters (Skeeter) <skeeter@phpgroupware.org>  *
-  * This class user interface for the filemanager app                        *
-  * Copyright (C) 2002 Mark A Peters                                         *
-  * -------------------------------------------------------------------------*
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  * Modified by Jonathon Sim <sim@zeald.com> for Zeald Ltd                   *
+  * User interface for the filemanager app                                   *
+  * Copyright (C) 2002 Mark A Peters  (C) 2003 Zeald Ltd                     *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
   \**************************************************************************/
 
+
   /* $Id$ */
+  define('UI_DEBUG', 0);
 
 	class uifilemanager
 	{
@@ -30,17 +26,51 @@
 			'history'	=> True,
 			'view'	=> True,
 			'view_file'	=> True,
-			'edit'	=> True
+			'edit'	=> True,
+			'rename' => True,
+			'edit_comments' => True
 		);
-
+		
 		var $bo;
 		var $nextmatchs;
 		var $browser;
 		var $template_dir;
 		var $help_info;
+		var $mime_ico = array (
+   'application/pdf' => 'pdf',
+   'application/postscript' => 'postscript',
+   'application/msword' => 'word',
+   'application/vnd.ms-excel' => 'excel',
+   'application/vnd.ms-powerpoint' => 'ppt',
+   'application/x-gzip' => 'tgz',
+   'application/x-bzip' => 'tgz',
+   'application/zip' => 'tgz',
+   'application/x-debian-package' => 'deb',
+   'application/x-rpm' => 'rpm',
+   'application' => 'document',
+   'application/octet-stream' => 'unknown',
+   'audio' => 'sound',
+   'audio/mpeg' => 'sound',
+   'Directory' => 'folder',
+   'exe' => 'exe',
+   'image' => 'image',
+   'text' => 'txt',
+   'text/html' => 'html',
+   'text/plain' => 'txt',
+   'text/xml' => 'html',
+   'text/x-vcalendar' => 'vcalendar',
+   'text/calendar' => 'vcalendar',
+   'text/x-vcard' => 'vcard',
+   'text/x-tex' => 'tex',
+   'unknown' => 'unknown',
+   'video' => 'video',
+   'message' => 'message'
+);
 
 		function uifilemanager()
 		{
+			$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
+			$this->actions = CreateObject('filemanager.uiactions');
 			$this->bo = CreateObject('filemanager.bofilemanager');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->browser = CreateObject('phpgwapi.browser');
@@ -49,6 +79,8 @@
 			$this->create_home_dir();
 			$this->verify_path();
 			$this->update();
+			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
+		
 		}
 
 		function load_header()
@@ -62,7 +94,10 @@
 
 		function check_access()
 		{
-			if($this->bo->path != $this->bo->homedir && $this->bo->path != $this->bo->fakebase && $this->bo->path != '/' && !$this->bo->vfs->acl_check($this->bo->path,Array(RELATIVE_NONE),PHPGW_ACL_READ))
+			if($this->bo->path != $this->bo->homedir && $this->bo->path != $this->bo->fakebase && $this->bo->path != '/' && !$this->bo->vfs->acl_check(array(
+				'string'=>$this->bo->path,
+				'relatives' => Array(RELATIVE_NONE),
+				'operation' => PHPGW_ACL_READ)))
 			{
 				$this->no_access_exists(lang('You do not have access to %1',$this->bo->path));			
 			}
@@ -72,8 +107,8 @@
 
 		function set_col_headers(&$p,$var,$append=True)
 		{
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers',$append);
+		//	$p->set_var($var);
+		//	$p->parse('col_headers','column_headers',$append);
 		}
 
 		function no_access_exists($error_msg)
@@ -105,7 +140,7 @@
 			);
 			$p->parse('errors','ind_error',True);
 			$p->pfp('output','error_page');
-			$GLOBALS['phpgw']->common->phpgw_exit();	
+			exit();
 		}
 
 		function create_home_dir()
@@ -121,21 +156,33 @@
 				echo 'DEBUG: ui.create_home_dir: PATH = '.urlencode($this->bo->path).'<br>'."\n";
 			}
 
-			if(($this->bo->path == $this->bo->homedir) && !$this->bo->vfs->file_exists($this->bo->homedir,Array(RELATIVE_NONE)))
+			if(($this->bo->path == $this->bo->homedir) && !$this->bo->vfs->file_exists(array(
+					'string' => $this->bo->homedir,
+					'relatives' => Array(RELATIVE_NONE)
+				)))
 			{
-				//$this->bo->vfs->override_acl = 1;
-				if (!$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE)))
+				$this->bo->vfs->override_acl = 1;
+				if (!$this->bo->vfs->mkdir(array(
+					'string' => $this->bo->homedir,
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
 					echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
 				}
-				//$this->bo->vfs->override_acl = 0;
+				$this->bo->vfs->override_acl = 0;
 			}
 			elseif(preg_match("|^".$this->bo->fakebase."\/(.*)$|U",$this->bo->path,$this->bo->matches))
 			{
-				if (!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
+				if (!$this->bo->vfs->file_exists(array(
+					'string' => $this->bo->path,
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
 					//$this->bo->vfs->override_acl = 1;
-					if (!$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE)))
+					if (!$this->bo->vfs->mkdir(array(
+						'string' => $this->bo->homedir,
+						'relatives' => Array(RELATIVE_NONE)
+						)))
 					{
 						echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
 					}
@@ -150,7 +197,11 @@
 					$group_id = $GLOBALS['phpgw']->accounts->name2id($this->bo->matches[1]);
 					if($group_id)
 					{
-						$this->bo->vfs->set_attributes($this->bo->path,Array(RELATIVE_NONE),Array('owner_id' => $group_id, 'createdby_id' => $group_id));
+						$this->bo->vfs->set_attributes(array(
+							'string' => $this->bo->path,
+							'relatives' => Array(RELATIVE_NONE),
+							'attributes' => Array('owner_id' => $group_id, 'createdby_id' => $group_id)
+							));
 					}
 				}
 			}
@@ -165,13 +216,18 @@
 			if($this->bo->debug)
 			{
 				echo 'DEBUG: ui.verify_path: PATH = '.$this->bo->path.'<br>'."\n";
-				echo 'DEBUG: ui.verify_path: exists = '.$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)).'<br>'."\n";
+				echo 'DEBUG: ui.verify_path: exists = '.$this->bo->vfs->file_exists(array(
+					'string' => $this->bo->path,
+					'relatives' => Array(RELATIVE_NONE))).'<br>'."\n";
 			}
 			
 			if($this->bo->path != $this->bo->homedir &&
 				$this->bo->path != '/' &&
 				$this->bo->path != $this->bo->fakebase &&
-				!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
+				!$this->bo->vfs->file_exists(array(
+					'string' => $this->bo->path,
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 			{
 				$this->no_access_exists(lang('Directory %1 does not exist',$this->bo->path));
 			}
@@ -183,7 +239,10 @@
 			srand((double)microtime() * 1000000);
 			if($this->bo->update || rand(0,19) == 4)
 			{
-				$this->bo->vfs->update_real($this->bo->path,Array(RELATIVE_NONE));
+				$this->bo->vfs->update_real( array(
+					'string' => $this->bo->path,
+					'relatives' =>Array(RELATIVE_NONE)
+					));
 			}
 			if($this->bo->update)
 			{
@@ -197,9 +256,17 @@
 				);
 			}
 		}
-
+		//Dispatches various file manager actions to the appropriate handler
 		function action()
 		{
+			if (UI_DEBUG)
+			{
+				echo " Debug mode <br>";
+				echo "function : ".$this->bo->$function;
+				print_r($_POST);
+				die();
+
+			}
 			$actions = Array(
 				'rename'	=> lang('Rename'),
 				'delete'	=> lang('Delete'),
@@ -208,34 +275,82 @@
 				'move'	=> lang('Move To'),
 				'download'	=> lang('Download'),
 				'newdir'	=> lang('Create Folder'),
-				'newfile'	=> lang('Create File')
+				'newfile'	=> lang('Create File'),
+				'edit'		=> lang('Edit'),
+				'edit_comments'		=> lang('Edit Comments'),
+				'apply_edit_comment'		=> '1',
+				'apply_edit_name'		=> '1',
+				'cancel'	=> lang('Cancel'),
+				'upload'  => lang('Upload Files')
 			);
+			
+			$local_functions = array(
+				'rename',
+				'edit_comments'			
+			);
+			$bo_functions = array(
+				'apply_edit_comment',
+				'apply_edit_name',
+				'copy',
+				'delete',
+				'move',
+				'newdir',
+				'newfile',
+				'go',
+				'upload',
+				'download'
+			);
+			if (trim(strtolower($this->bo->cancel)) == strtolower(lang('Cancel'))) {
+				$this->cancel();
+				exit();
+			}
+			//If the action is a "uiaction" (ie it has its own seperate interface), this will run it
+			$this->actions->dispatch($this);
 			@reset($actions);
 			while(list($function,$text) = each($actions))
 			{
 				if(isset($this->bo->$function) && !empty($this->bo->$function) && trim(strtolower($this->bo->$function)) == strtolower($text))
 				{
-					$f_function = 'f_'.$function;
-					$errors = $this->bo->$f_function();
-					$var = Array(
-						'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-						'path'	=> urlencode($this->bo->path)
-					);
-					if($function == 'newfile')
+					//If the action is provided by this class, this'l do it
+					if (in_array($function, $local_functions))
 					{
+						echo " uifunction $function "; 
+						//Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));
+						$this->$function();
+						exit();
+					} //For actions provided by the back-end, with no gui
+					elseif (in_array($function, $bo_functions))
+					{
+						echo " bofunction $function ";
+						$f_function = 'f_'.$function;
+						$errors = $this->bo->$f_function();
 						$var = Array(
-							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.edit',
-							'path'	=> urlencode($this->bo->path),
-							'file'	=> urlencode($this->bo->createfile)
+							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+							'path'	=> urlencode($this->bo->path)
 						);
-					}
-					elseif(is_array($errors))
-					{
-						$var['errors'] = urlencode(base64_encode(serialize($errors)));
-					}
-					Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));
+						if($function == 'newfile')
+						{
+							$var = Array(
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.edit',
+								'path'	=> urlencode($this->bo->path),
+								'file'	=> urlencode($this->bo->createfile)
+							);
+						}
+						elseif(strlen($errors))
+						{
+							$var['errors'] = $errors;
+						}
+						Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));
+						exit();
+					}	
 				}
+
 			}
+			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',Array(
+							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+							'path'	=> urlencode($this->bo->path),
+							'errors' => lang('Unknown Action!')
+						)));
 		}
 
 		function help()
@@ -256,7 +371,7 @@
 				echo '<font size="+4">'."\n".ucwords(str_replace('_',' ',$help_array[0]))."\n".'</font></br>'."\n";
 				echo '<font size="+2">'."\n".$help_array[1].'</font>';
 			}
-			$GLOBALS['phpgw']->common->phpgw_exit ();
+			exit();
 		}
 
 		function build_help($help_option,$text='')
@@ -283,7 +398,7 @@
 				return '';
 			}
 		}
-
+/*
 		function image($image,$alt)
 		{
 			return '<img src="'.$GLOBALS['phpgw']->common->image($this->bo->appname,$image).'" alt="'.$alt.'" align="center" border="0">';
@@ -329,47 +444,49 @@
 				)
 			);
 		}
-
+*/
 		function display_buttons()
 		{
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_file(
-				Array(
-					'_buttons'	=> 'small_table.tpl'
-				)
-			);
-			$p->set_block('_buttons','table','table');
-			$p->set_block('_buttons','column_headers','column_headers');
-			$p->set_block('_buttons','column_headers_normal','column_headers_normal');
-			$p->set_block('_buttons','column_rows','column_rows');
+			$var = array();
 
-			$var = Array(
-				'table_extras'	=> '',
-				'tr_extras'	=> '',
-				'td_extras'	=> ' align="center" width="25%"'
-			);
+			$button['type'] = 'submit';
+			$button['name'] = 'uiaction_edit';
+			$button['value'] = lang('Edit');
+			$button['caption'] = $this->build_help('edit');
+			
+			$var[] = array('widget' => $button);
+			$button['name'] = "rename";
+			$button['value'] =lang('Rename');
+			$button['caption'] = $this->build_help('rename');
+			
+			$var[] = array('widget' => $button);
+			$button['name'] = "delete";
+			$button['value'] =lang('Delete');
+			$button['caption'] = $this->build_help('delete');
+			$var[] = array('widget' => $button);
+			
+			$button['name'] = "edit_comments";
+			$button['value'] =lang('Edit Comments');
+			$button['caption'] = $this->build_help('edit_comments');
+			$var[] = array('widget' => $button);	
+	
+			$var[] = array('widget' => array( 'type' => 'seperator' ));
 
-			$var['column_header']	= '<input type="submit" name="edit" value="     '.lang('Edit').'     ">'.$this->build_help('edit');
-			$this->set_col_headers($p,$var,False);
+			$button['name'] = "go";
+			$button['value'] = lang('Go To');
+			$button['caption'] = $this->build_help('go_to');
+			$var[] = array('widget' => $button);
+			
+			$button['name'] = "copy";
+			$button['value'] = lang('Copy To');
+			$button['caption'] = $this->build_help('copy_to');
+			$var[] = array('widget' => $button);
+			
+			$button['name'] = "move";
+			$button['value'] = lang('Move To');
+			$button['caption'] =$this->build_help('move_to');
+			$var[] = array('widget' => $button);
 
-			$var['column_header']	= '<input type="submit" name="rename" value="  '.lang('Rename').'  ">'.$this->build_help('rename');
-			$this->set_col_headers($p,$var);
-
-			$var['column_header']	= '<input type="submit" name="delete" value="     '.lang('Delete').'     ">'.$this->build_help('delete');
-			$this->set_col_headers($p,$var);
-
-			$var['column_header']	= '<input type="submit" name="edit_comments" value=" '.lang('Edit Comments').' ">'.$this->build_help('edit_comments');
-			$this->set_col_headers($p,$var);
-			$p->parse('list','column_rows',True);
-
-			$var['column_header']	= '<input type="submit" name="go" value="  '.lang('Go To').'  ">'.$this->build_help('go_to');
-			$this->set_col_headers($p,$var,False);
-
-			$var['column_header']	= '<input type="submit" name="copy" value=" '.lang('Copy To').' ">'.$this->build_help('copy_to');
-			$this->set_col_headers($p,$var);
-
-			$var['column_header']	= '<input type="submit" name="move" value=" '.lang('Move To').' ">'.$this->build_help('move_to');
-			$this->set_col_headers($p,$var);
 
 			###
 			# First we get the directories in their home directory
@@ -379,7 +496,11 @@
 				'directory' => $this->bo->fakebase,
 				'name' => $this->bo->userinfo['account_lid']
 			);
-			$ls_array = $this->bo->vfs->ls($this->bo->homedir,Array(RELATIVE_NONE),True,'Directory');
+			$ls_array = $this->bo->vfs->ls(array(
+				'string' => $this->bo->homedir,
+				'relatives' => Array(RELATIVE_NONE),
+				'nofiles' => True,
+				'mime_type' => 'Directory'));
 			while(list($num,$dir) = each($ls_array))
 			{
 				$dirs[] = $dir;
@@ -406,14 +527,19 @@
 					'name' => $group_array['account_name']
 				);
 
-				$ls_array = $this->bo->vfs->ls($this->bo->fakebase.SEP.$group_array['account_name'],Array(RELATIVE_NONE),True,'Directory');
+				$ls_array = $this->bo->vfs->ls(array(
+					'string' => $this->bo->fakebase.SEP.$group_array['account_name'],
+					'relatives' => Array(RELATIVE_NONE),
+					'nofiles' => True,
+					'mime_type' => 'Directory'
+					));
 				while(list($num,$dir) = each($ls_array))
 				{
 					$dirs[] = $dir;
 				}
 			}
 
-			$dir_list = '';
+			$dir_list = array();
 			reset($dirs);
 			while(list($num, $dir) = each($dirs))
 			{
@@ -441,97 +567,86 @@
 				# No point in displaying the current directory, or a directory that doesn't exist
 				###
 			
-				if((($dir['directory'].$dir['name']) != $this->bo->path) && $this->bo->vfs->file_exists($dir['directory'].$dir['name'],Array(RELATIVE_NONE)))
+				if((($dir['directory'].$dir['name']) != $this->bo->path) && $this->bo->vfs->file_exists(array(
+					'string' => $dir['directory'].$dir['name'],
+					'relatives' => Array(RELATIVE_NONE)
+					)))
 				{
-					$dir_list .= '<option value="'.urlencode($dir['directory'].$dir['name']).'"'.$selected.'>'.$dir['directory'].$dir['name'].'</option>';
+					$dir_list[] =array('option'=> array('value'=> urlencode($dir['directory'].$dir['name']),
+							'selected' => $selected,
+							'caption' => $dir['directory'].$dir['name']
+							));
 				}
 			}
 
-			$var['column_header']	= '<select name="todir">'.$dir_list.'</select>'.$this->build_help('directory_list');
-			$this->set_col_headers($p,$var);
-			$p->parse('list','column_rows',True);
-			$p->set_var('col_headers','');
-
-			$var = Array(
-				'tr_extras'	=> '',
-				'td_extras'	=> ' colspan="2" align="center" width="50%"'
-			);
+			$var[]	= array('widget' => array( 'type' => 'select',
+									'name'=> 'todir',
+									'options' => $dir_list,
+									'caption' => $this->build_help('directory_list')
+									));
 
 			if($this->bo->path != '/' && $this->bo->path != $this->bo->fakebase)
 			{
-				$var['column_header']	= '<input type="submit" name="download" value=" '.lang('Download').' ">'.$this->build_help('download');
-				$this->set_col_headers($p,$var);
-
-				$var['column_header']	= '&nbsp;&nbsp;&nbsp;<input type="text" name="createdir" maxlength="255" size="15">&nbsp;<input type="submit" name="newdir" value=" '.lang('Create Folder').' ">'.$this->build_help('create_folder');
-				$this->set_col_headers($p,$var);
-				$p->parse('list','column_rows',True);
+				$var[]	= array('widget' => array('type'=>'submit',
+											'name'=> 'download',
+											'value' => lang('Download'),
+											'caption' => $this->build_help('download')
+											));
+				$var[] = array('widget' => array( 'type' => 'seperator' ));
+				$var[]	= array('widget' => array('type' => 'text',
+												 'name' => 'createdir',
+												 'maxlength' => '255',
+												 'size' => '15'
+												 ));
+				$var[]	= array('widget' => array('type' => 'submit',
+													'name' => 'newdir',
+													'value' => lang('Create Folder'),
+													'caption' => $this->build_help('create_folder')
+												));
+				$var[] = array('widget' => array( 'type' => 'seperator' ));
 			}
-
-			$var['column_header']	= '<input type="submit" name="update" value="     '.lang('Update').'     ">'.$this->build_help('update');
-			$this->set_col_headers($p,$var,False);
-
+	/*		$var[] = array('widget' => array('type' => 'submit',
+											'name' => 'update',
+											'value' => lang('Update'),
+											'caption' => $this->build_help('update')
+										));
+*/
 			if($this->bo->path != '/' && $this->bo->path != $this->bo->fakebase)
 			{
-				$var['column_header']	= '&nbsp;&nbsp;&nbsp;<input type="text" name="createfile" maxlength="255" size="15">&nbsp;<input type="submit" name="newfile" value="    '.lang('Create File').'    ">'.$this->build_help('create_file');
+				$var[] = array('widget' => array( 'type' => 'text',
+												'name' => 'createfile',
+												'maxlength' => '255',
+												'size' => '15'
+											));
+				$var[] = array('widget' => array('type' => 'submit',
+												 'name' => 'newfile',
+												 'value' => lang('Create File'),
+												 'caption' => $this->build_help('create_file')
+												));
+				$var[] = array('widget' => array( 'type' => 'seperator' ));
 			}
-			else
-			{
-				$var['column_header']	= '&nbsp;';
-			}
-			$this->set_col_headers($p,$var);
-			$p->parse('list','column_rows',True);
-			$p->set_var('col_headers','');
 
 			if($this->bo->settings['show_command_line'])
 			{
-				$var = Array(
-					'tr_extras'	=> '',
-					'td_extras'	=> ' colspan="4" align="center" width="100%"',
-					'column_header'	=> '<input type="text" name="command_line" size="50">'.$this->build_help('command_line').'</br><input type="submit" name="execute" value="'.lang('Execute').'">'.$this->build_help('execute')
-				);
-				$this->set_col_headers($p,$var);
-				$p->parse('list','column_rows',True);
-				$p->set_var('col_headers','');
+	
+				$var[] = array('widget' => array( 'type' => 'text' ,
+												'name'=> 'command_line',
+												'size' => '50',
+												'caption' => $this->build_help('command_line')
+											));
+				$var[] = array('widget' => array( 'type' => 'submit',
+												'name' => 'execute',
+												'value' => lang('Execute'),
+												'caption' => $this->build_help('execute')
+											));
+				$var[] = array('widget' => array( 'type' => 'seperator' ));
 			}
-			return $p->fp('output','table');
+			return $var;
 		}
 
 		function display_summary_info($numoffiles,$usedspace)
 		{
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_file(
-				Array(
-					'_info'	=> 'small_table.tpl'
-				)
-			);
-			$p->set_block('_info','table','table');
-			$p->set_block('_info','column_headers','column_headers');
-			$p->set_block('_info','column_headers_normal','column_headers_normal');
-			$p->set_block('_info','column_rows','column_rows');
-			$this_homedir = ($this->bo->path == $this->bo->homedir || $this->bo->path == $this->bo->fakedir);
-			$info_columns = 4 + ($this_homedir?2:0);
 
-			$var = Array(
-				'table_extras'	=> ' cols="'.$info_columns.'"',
-				'tr_extras'	=> '',
-				'td_extras'	=> ' colspan="'.$info_columns.'" align="center" width="100%"',
-				'column_header'	=> $this->build_help('file_stats')
-			);
-			$this->set_col_headers($p,$var,False);
-			$p->parse('list','column_rows',True);
-			$p->set_var('col_headers','');
-
-			$var = Array(
-				'tr_extras'	=> '',
-				'td_extras'	=> ' align="right"'
-			);
-				
-			$var['column_header'] = '<b>'.lang('Files').'</b>:';
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',False);
-
-			$var['td_extras']	= ' align="left"';
-			$var['column_header'] = $numoffiles;
 			$p->set_var($var);
 			$p->parse('col_headers','column_headers_normal',True);
 
@@ -569,7 +684,10 @@
 				$p->parse('col_headers','column_headers_normal',False);
 
 				$var['td_extras']	= ' colspan="'.($info_columns / 2).'" align="left" width="50%"';
-				$var['column_header'] = count($this->bo->vfs->ls($this->bo->path,Array(RELATIVE_NONE)));
+				$var['column_header'] = count($this->bo->vfs->ls(array(
+					'string' => $this->bo->path,
+					'relatives' => Array(RELATIVE_NONE)
+					)));
 				$p->set_var($var);
 				$p->parse('col_headers','column_headers_normal',True);
 
@@ -582,375 +700,367 @@
 		function display_uploads()
 		{
 
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_file(
-				Array(
-					'_uploads'	=> 'small_table.tpl'
-				)
-			);
-			$p->set_block('_uploads','table','table');
-			$p->set_block('_uploads','column_headers','column_headers');
-			$p->set_block('_uploads','column_headers_normal','column_headers_normal');
-			$p->set_block('_uploads','column_rows','column_rows');
+			$var_head[] = array('widget' => array('type' => 'label',
+				'caption' => lang('File').$this->build_help('upload_file')
+				));
 
-			$var = Array(
-				'table_extras'	=> ' cols="3"',
-				'tr_extras'	=> ''
-			);
 
-			$var['td_extras']	= ' align="right" width="45%"';
-			$var['column_header'] = '<b>'.lang('File').'</b>'.$this->build_help('upload_file');
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',False);
-
-			$var['td_extras']	= ' align="center" width="10%"';
-			$var['column_header'] = '&nbsp;';
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',True);
-
-			$var['td_extras']	= ' align="left" width="45%"';
-			$var['column_header'] = '<b>'.lang('Comment').'</b>'.$this->build_help('upload_comment');
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',True);
-
-			$p->parse('list','column_rows',True);
-
-			$input_file = '<input type="file" name="upload_file[]" maxlength="255">';
-			$input_comment = '<input type="text" name="upload_comment[]">';
-
-			$var['tr_extras'] = '';
-			$var['td_extras'] = ' colspan="3" align="center"';
-			$var['column_header'] = '<input type="hidden" name="show_upload_boxes" value="'.$this->bo->show_upload_boxes.'">'."\n".$input_file.$input_comment;
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',False);
-			$p->parse('list','column_rows',True);
-
-			for($i=1;$i<$this->bo->show_upload_boxes;$i++)
+			$var_head[] = array('widget' => array('type' => 'label',
+				'caption' => lang('Comment').$this->build_help('upload_comment')
+				));
+			$table_head [] =array('table_col' => $var_head);		
+		//	$var[] = array('widget' => array('type' => 'seperator'));	
+			for($i=0;$i<$this->bo->show_upload_boxes;$i++)
 			{
-				$var['column_header'] = $input_file.$input_comment;
-				$p->set_var($var);
-				$p->parse('col_headers','column_headers_normal',False);
-				$p->parse('list','column_rows',True);
+					$var = array();
+					$var[] = array('widget' => array('type' => 'file',
+							 'name' => 'upload_file[]' ,
+							 'maxlength'=> '255'
+							 ));
+							 
+					$var[] = array('widget' => array('type' => 'text',
+							 'name' => 'upload_comment[]' 
+							 ));
+
+/*					$var[] = array('widget' => array('type' => 'label',
+									'caption' => $input_file.$input_comment		 
+								));	*/
+					$table_rows [] = array('table_col' => $var);		
 			}
+			$var = array();
+			$var[] =  array('widget' => array('type' =>'submit',
+											'name' => 'upload',
+											'value' => lang('Upload Files'),
+											'caption' => $this->build_help('upload_files')
+											));
+					
+			$var[] = array('widget' => array('type' => 'hidden',
+							 'name' => 'show_upload_boxes',
+							 'value' => $this->bo->show_upload_boxes
+							 ));
+				
+			$table_rows [] = array('table_col' => $var);					 
 
-			$var['column_header'] = '<input type="submit" name="upload_files" value="'.lang('Upload Files').'">'.$this->build_help('upload_files');
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',False);
-			$p->parse('list','column_rows',True);
-
-			$var['column_header'] = lang('Show').'&nbsp;&nbsp;'.$this->build_upload_choices(5).$this->build_upload_choices(10).$this->build_upload_choices(20).$this->build_upload_choices(30).lang('upload fields').$this->build_help('show_upload_fields');
-			$p->set_var($var);
-			$p->parse('col_headers','column_headers_normal',False);
-			$p->parse('list','column_rows',True);
-
-			return '<form action="'.$GLOBALS['phpgw']->link('/index.php',
-					Array(
-						'menuaction'	=> $this->bo->appname.'.bo'.$this->bo->appname.'.upload',
-						'path'	=> $this->bo->path
-					)
-				).'" method="post" enctype="multipart/form-data">'."\n".$p->fp('output','table').'</form>'."\n";
+					
+			return array('table' => array('table_head' =>$table_head ,
+						'table_row' => $table_rows)
+						);
 		}
 
-		function index()
+		function dirs_first($files_array)
+		{
+			$dirs = array();
+			$files = array();
+			$result = array(); 
+						
+			for($i=0;$i!=count($files_array);$i++)
+			{
+				$file = $files_array[$i];
+				if ($file['mime_type'] == 'Directory')
+				{
+					$dirs[] = $file;
+				}
+				else
+				{
+					$files[] = $file;
+				}
+			}
+			return array_merge($dirs, $files);
+		}
+		
+		function index( $edit=array())
 		{
 			$this->load_header();
 			$files_array = $this->bo->load_files();
+			$usage = 0;
+			$files_array = $this->dirs_first($files_array);
 			if(count($files_array) || $this->bo->cwd)
 			{
-				$p = CreateObject('phpgwapi.Template',$this->template_dir);
-				$p->set_unknowns('remove');
-
-				$p->set_file(
-					Array(
-						'_index'	=> 'index.tpl'
+				$file_output = array();
+				for($i=0;$i!=count($files_array);$i++)
+				{
+					$file = $files_array[$i];
+					$usage += $file['size'];
+		         	if (!count($edit) )
+		         	{
+			         	$file_attributes['checkbox'] = '';
+			            $file_output[$i]['checkbox'] =array('widget' => array( 'type' => 'checkbox',
+			            		'name' => 'fileman[]',
+			            		'value' => $file['name']
+			            	));
+					}
+            
+					@reset($this->bo->file_attributes);
+					while(list($internal,$displayed) = each($this->bo->file_attributes))
+					{
+						if ($this->bo->settings[$internal])
+						{
+							if ($internal==$edit[$file['name']])
+							{
+								$file_output[$i][$internal] = array('widget' => array('type' => 'text',
+									'name' => 'changes['.$file['name'].']',
+									'value' => $file[$internal]
+									));
+							}
+							else
+							{
+								switch($internal)
+								{
+									case 'owner_id':
+									case 'owner':
+									case 'createdby_id':
+									case 'modifiedby_id':
+										$name = $GLOBALS['phpgw']->accounts->id2name($file[$internal]) ;
+										$file_output[$i][$internal] = $name ? $name: '';
+										break;
+									case 'created':
+									case 'modified':
+										//Convert ISO 8601 date format used by DAV into something people can read
+										$file_output[$i][$internal] =  $this->bo->convert_date($file[$internal]);
+										break;
+									case 'name':
+										$mime_parts = explode('/',$file['mime_type']);		
+							            $file_icon = $this->mime_ico[$file['mime_type']];
+							            if (!$file_icon) {
+							               $file_icon = ( $this->mime_ico[$mime_parts[0]]) ?  $this->mime_ico[$mime_parts[0]] :  $this->mime_ico['unknown'];
+							               if (strpos($file['name'],'.exe') !== false) $file_icon =  $this->mime_ico['exe'];
+							            }
+				
+							            $file_output[$i]['name']['icon'] = array(
+		            						'widget' => array( 'type' => 'img',
+											  	'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,$file_icon)
+											   	));
+	
+										if ($file['mime_type']=='Directory')
+										{
+											$href = array('menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+													'path'		=> $this->bo->path.SEP.$file['name']
+													);
+										}
+										else
+										{
+											$href = Array( 'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.view',
+															'path'		=> urlencode($this->bo->path),
+															'file'		=> urlencode($file['name'])
+														);
+										
+										}
+										$file_output[$i]['name']['link'] = array(
+												"widget"=> array(
+														'type' => 'link',
+														'caption' => $file['name'],
+														'href' =>  $GLOBALS['phpgw']->link('/index.php', $href)
+												));
+										if ($mime_parts[0] == 'text')
+		          					  	{
+		          					  		$href['menuaction'] = $this->bo->appname.'.ui'.$this->bo->appname.'.action';
+		          					  		$href['uiaction'] = 'edit';
+			          					  	$file_output[$i]['name']['edit'] = array('widget' => array( 'type' => 'img',
+			            							'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'pencil'),
+			            							'link' =>  $GLOBALS['phpgw']->link('/index.php', $href)
+			            							));	
+			            				}	
+										break;
+									default:
+										$file_output[$i][$internal] = $file[$internal];
+										
+								}
+							}
+							$file_attributes[$internal] = array("widget"=> array(
+									'type' => 'link',
+									'caption' => $displayed,
+									'href' =>  $GLOBALS['phpgw']->link('/index.php', array(
+										'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+										'path'=>$this->bo->path,
+										'sortby' => $internal
+									))
+								));
+						}
+					}
+				}
+				
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('summary' =>  array(
+						'file_count' => count($files_array),
+						'usage' => $usage					
+				)));
+				
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('file_attributes' => $file_attributes));
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array(
+					'files' => array(
+						'file' => $file_output
+						)
 					)
 				);
-				$p->set_block('_index','index','index');
-				$p->set_block('_index','column_headers','column_headers');
-				$p->set_block('_index','column_headers_normal','column_headers_normal');
-				$p->set_block('_index','column_rows','column_rows');
+				$GLOBALS['phpgw']->xslttpl->add_file(array('index',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
 				
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
 				$var = Array(
-					'error'	=> (isset($this->bo->errors) && is_array(unserialize(base64_decode($this->bo->errors)))?$GLOBALS['phpgw']->common->error_list(unserialize(base64_decode($this->bo->errors)),'Results'):''),
-					'tr_extras'	=> ' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"',
 					'form_action'	=> $GLOBALS['phpgw']->link('/index.php',
 							Array(
 								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.action',
 								'path'		=> urlencode($this->bo->path)
 							)
-						),
-					'img_up'	=> $this->link(Array(
-								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-								'path'		=> urlencode($this->bo->lesspath)
 							),
-						$this->image('folder_up.gif',lang('Up'))),
+					'error'	=> (isset($this->bo->errors) && is_array(unserialize(base64_decode($this->bo->errors)))?$GLOBALS['phpgw']->common->error_list(unserialize(base64_decode($this->bo->errors)),'Results'):''),
+					'img_up' => array('widget' => array('type' => 'img',
+											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'up'),
+											'alt' => lang('Up'),
+											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
+													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+													'path'		=> urlencode($this->bo->lesspath)
+												))
+											)),
 					'help_up'	=> $this->build_help('up'),
-					'img_home'	=> $this->image('folder_home.gif',lang('Folder')),
-					'dir'		=> '<font size="4" color="maroon" >'."\n"
-				       . '       <b>'.strtoupper($this->bo->path).'</b>'."\n"
-				       . '      </font>',
+					'img_home'	=> array('widget' => array('type' => 'img',
+											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_home'),
+											'alt' => lang('Folder'),
+											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
+													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+													'path' => urlencode($this->bo->homedir)
+												))										
+											)),					
+					'dir' => $this->bo->path,
+					'img_dir' => array('widget' => array('type' => 'img',
+											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_large'),
+											'alt' => lang('Folder'),						'link' => $GLOBALS['phpgw']->link('/index.php',Array(
+											'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+											'path' => urlencode($this->bo->path)
+												))								
+											)),
 					'help_home'	=> $this->build_help('home'),
-					'col_headers'	=> '',
-					'column_header'	=> ''
 				);	
-				$p->set_var($var);
+				if (strlen($this->bo->errors))
+				{
+					$var['errors'] = $this->bo->errors;
+				}
 				
-				$this->column_header($p,'sort_by','Sort By',False);
+				if (count($edit))
+				{
+					$var['img_cancel'] = array('widget' => array('type' => 'img',
+											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'button_cancel'),
+											'alt' => lang('Folder')									
+						));
+					$var['button_cancel'] = array('widget' => array('type' => 'submit',
+										'name' => 'cancel',
+										'value' => lang('Cancel')
+						));
+					$var['img_ok'] = array('widget' => array('type' => 'img',
+											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'button_ok'),
+											'alt' => lang('Folder')									
+						));
+					$var['button_ok'] = array('widget' => array('type' => 'submit',
+										'name' => 'submit',
+										'value' => lang('OK')
+						));
+					@reset($edit);
+					while( list($file,$prop) = each($edit))
+					{
+						$var['fileman'][] = array('widget' => array('type'=>'hidden',
+										'name' => 'fileman[]',
+										'value' => $file
+							));
+					}
+					@reset($edit); list($file,$prop) = each($edit);
+					$var['action'] = array('widget' => array('type'=>'hidden',
+										'name' => 'apply_edit_'.$prop,
+										'value' => 1
+							));
+				}
+				
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('index' => $var));
 
-				$columns = 1;
 				@reset($this->bo->file_attributes);
-				while(list($internal,$displayed) = each($this->bo->file_attributes))
-				{
-					if ($this->bo->settings[$internal])
-					{
-						$this->column_header($p,$internal,$displayed,True);
-						$columns++;
-					}
-				}
-				$p->parse('col_row','column_rows',True);
-				$p->set_var('col_headers','');
-
-//				$var = Array(
-//					'tr_extras'	=> ' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"'
-//				);
-//				$this->set_col_headers($p,$var,True);
-
-				$p->set_var('colspan',$columns);
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('settings' => $this->bo->settings));
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('display_settings' => $GLOBALS['phpgw_info']['theme']));
 				
-				if($this->bo->settings['dotdot'] && $this->bo->settings['name'] && $this->bo->path != '/')
+				if(!count($edit))
 				{
-					$this->set_col_headers(
-						$p,
-						Array(
-							'tr_extras'	=> ' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"',
-							'col_headers'	=> '',
-							'td_extras'	=> '',
-							'column_header'	=> '&nbsp;'
-						)
-					);
-
-					$this->set_col_headers(
-						$p,
-						Array(
-							'column_header'	=> $this->image('folder.gif','folder')
-								.$this->link(
-									Array(
-										'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-										'path'		=> $this->bo->lesspath
-									),
-									'<b>..</b>'
-								)
-						)
-					);
-
-					$loop_cntr = 2;
-
-					if($this->bo->settings['mime_type'])
-					{
-						$this->set_col_headers(
-							$p,
-							Array(
-								'column_header'	=> 'Directory'
-							)
-						);
-						$loop_cntr++;
-					}
-
-					for($i=$loop_cntr;$i<$columns;$i++)
-					{
-						$this->set_col_headers(
-							$p,
-							Array(
-								'column_header'	=> '&nbsp;'
-							)
-						);
-					}
-					$p->parse('col_row','column_rows',True);
-					$p->set_var('col_headers','');
+					$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('buttons'=> array('button' => $this->display_buttons()) ));
+					$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('uploads' =>  $this->display_uploads() ));
 				}
-
-				$usedspace = 0;
-				reset($files_array);
-				$numoffiles = count($files_array);
-				for($i=0;$i!=$numoffiles;$i++)
-				{
-					$files = $files_array[$i];
-					$var = Array(
-						'tr_extras'	=> ' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"',
-						'td_extras'	=> '',
-						'column_header'	=> '<input type="checkbox" name="fileman[]" value="'.urlencode($files['name']).'">'
-					);
-					$this->set_col_headers($p,$var,False);
-//					$p->set_var($var);
-//					$p->parse('col_headers','column_headers');
-
-					$usedspace += $files['size'];
-
-					@reset($this->bo->file_attributes);
-					while(list($internal,$displayed) = each($this->bo->file_attributes))
-					{
-						if($this->bo->settings[$internal])
-						{
-							$var = Array(
-								'td_extras'	=> ''
-							);
-							switch($internal)
-							{
-								case 'name':
-									switch($files['mime_type'])
-									{
-										case 'Directory':
-											$var['column_header']	= $this->image('folder.gif','folder')
-													.$this->link(
-														Array(
-															'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-															'path'		=> $this->bo->path.SEP.$files['name']
-														),
-														'<b>'.$files['name'].'</b>'
-													);
-											break;
-										default:
-											$var['column_header']	= $this->link(
-												Array(
-													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.view',
-													'path'		=> urlencode($this->bo->path),
-													'file'		=> urlencode($files['name'])
-												),
-												'<b>'.$files['name'].'</b>'
-											);
-											break;
-									}
-									break;
-								case 'deletable':
-									if ($files['deleteable'] == 'N')
-									{
-										$var['column_header'] = $this->image('locked.gif','locked');
-									}
-									else
-									{
-										$var['column_header'] = '&nbsp;';
-									}
-									break;
-								case 'size':
-									$var['column_header']	= $this->bo->borkb($files['size']);
-									$var['td_extras']	= ' align="right"';
-									break;
-								case 'version':
-									$var['column_header']	= $this->link(
-										Array(
-											'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.history',
-											'path'	=> $this->bo->path,
-											'file'	=> $files['name']
-										),
-										$files['version']
-									);
-									break;
-								case 'modified':
-								case 'created':
-									$var['column_header'] = $this->bo->convert_date($files[$internal]);
-									break;
-								case 'owner':
-								case 'createdby_id':
-								case 'modifiedby_id':
-									switch($internal)
-									{
-										case 'owner':
-											$ivar = 'owner_id';
-											break;
-										default:
-											$ivar = $internal;
-											break;
-									}
-									$var['column_header']	= ($files[$ivar]?$GLOBALS['phpgw']->accounts->id2name($files[$ivar]):'&nbsp;');
-									break;
-								default:
-									$var['column_header']	= ($files[$internal]?$files[$internal]:'&nbsp;');
-									break;
-							}
-							$this->set_col_headers($p,$var);
-						}
-					}
-					$p->parse('col_row','column_rows',True);
-					$p->set_var('col_headers','');
-				}
-
-				$p->set_var('buttons',$this->display_buttons());
-				$p->set_var('info',$this->display_summary_info($numoffiles,$usedspace));
-				$p->set_var('uploads',$this->display_uploads());
-
-				$p->pfp('output','index');
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('index' => $var));
 			}
-		}
 
-		function view()
+		}
+		function cancel()
 		{
-			$this->load_header();
-			if($this->bo->vfs->file_exists($this->bo->path.'/'.$this->bo->file,Array(RELATIVE_NONE)))
-			{
-				$content_type = $this->bo->vfs->file_type($this->bo->path.$this->bo->dispsep.$this->bo->file,Array(RELATIVE_NONE));
-				if($content_type)
-				{
-					$cont_type = explode('/',$content_type);
-					$content_type = $cont_type[1];
-				}
-				else
-				{
-				}
-				switch($content_type)
-				{
-					case 'jpeg':
-					case 'gif':
-					case 'bmp':
-					case 'png':
-						$alignment = 'center';
-						$file_content = '<img src="'.$GLOBALS['phpgw']->link('/index.php',
-								Array(
-									'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.view_file',
-									'op'		=> 'view',
-									'path'		=> urlencode($this->bo->path),
-									'file'		=> urlencode($this->bo->file)
-								)
-							).'">'."\n";
-						break;
-					default:
-						$alignment = 'left';
-						$file_content = nl2br($this->bo->vfs->read($this->bo->path.$this->bo->dispsep.$this->bo->file,Array(RELATIVE_NONE)));
-						break;
-				}
-				$file = $this->bo->path.$this->bo->dispsep.$this->bo->file;
-				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
-			
-				echo '<table border="0" align="center" border="1">'."\n"
-					. ' <tr align="left" bgcolor="'.$this->nextmatchs->alternate_row_color().'">'."\n"
-					. '  <td>'."\n"
-					. '   <b>TYPE:</b> '.$this->bo->vfs->file_type($file,Array(RELATIVE_NONE)).'<br>'."\n"
-					. '  </td>'."\n"
-					. ' </tr>'."\n"
-					. ' <tr align="left" bgcolor="'.$this->nextmatchs->alternate_row_color().'">'."\n"
-					. '  <td>'."\n"
-					. '   <b>FILENAME:</b> '.$file."\n"
-					. '  </td>'."\n"
-					. ' </tr>'."\n"
-					. ' <tr align="left" bgcolor="'.$this->nextmatchs->alternate_row_color().'">'."\n"
-					. '  <td>'."\n"
-					. '   <b>VERSION:</b> '.$this->bo->vfs->get_version($file,Array(RELATIVE_NONE))."\n"
-					. '  </td>'."\n"
-					. ' </tr>'."\n"
-					. ' <tr align="'.$alignment.'" bgcolor="'.$this->nextmatchs->alternate_row_color().'">'."\n"
-					. '  <td>'."\n"
-					. $file_content."\n"
-					. '  </td>'."\n"
-					. ' </tr>'."\n"
-					. '</table>'."\n";
-			}
+			$var = Array(
+					'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+					'path'	=> urlencode($this->bo->path)
+				);
+			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));	
 		}
-
+		function rename()
+		{
+			$edit=array();
+			for ($i=0; $i!=count($this->bo->fileman);$i++)
+			{
+				$edit[$this->bo->fileman[$i]] = 'name';
+			}
+			$this->index($edit);
+		}
+		function edit_comments()
+		{
+			$edit=array();
+			for ($i=0; $i!=count($this->bo->fileman);$i++)
+			{
+				$edit[$this->bo->fileman[$i]] = 'comment';
+			}
+			$this->index($edit);
+		}
+		function view()
+		{	
+			//Some VFSs (ie WebDAV) are able to provide their own more efficent view method
+			//than just reading the file into memory then dumping it back out again
+			if ($this->bo->vfs->options('VIEW'))
+			{
+				$this->bo->vfs->view(array (
+					'string'	=> $this->bo->path.'/'.$this->bo->file,
+					'relatives'	=> array (RELATIVE_NONE)
+				));
+			} 
+			else 
+			{
+				
+				$GLOBALS['phpgw_info']['flags']['noheader'] = true;
+				$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
+				$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
+				$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
+				$ls_array = $this->bo->vfs->ls (array (
+						'string'	=>  $this->bo->path.'/'.$this->bo->file,
+						'relatives'	=> array (RELATIVE_ALL),
+						'checksubdirs'	=> False,
+						'nofiles'	=> True
+					)
+				);
+			
+				if ($ls_array[0]['mime_type'])
+				{
+					$mime_type = $ls_array[0]['mime_type'];
+				}
+				elseif ($GLOBALS['settings']['viewtextplain'])
+				{
+					$mime_type = 'text/plain';
+				}
+			
+				header('Content-type: ' . $mime_type);
+				echo $this->bo->vfs->read (array (
+						'string'	=> $this->bo->path.'/'.$this->bo->file,
+						'relatives'	=> array (RELATIVE_NONE)
+					)
+				);
+			}
+			exit();;
+		}
+		
 		function history()
 		{
 			$this->load_header();
 			$file = $this->bo->path.$this->bo->dispsep.$this->bo->file;
-			if($this->bo->vfs->file_exists($file,Array(RELATIVE_NONE)))
+			if($this->bo->vfs->file_exists(array(
+				'string' => $file,
+				'relatives' => Array(RELATIVE_NONE)
+				)))
 			{
 				$col_headers = Array(
 					'Date'	=> 'created',
@@ -1003,7 +1113,10 @@
 				$p->parse('col_row','column_rows',True);
 				$p->set_var('col_headers','');
 
-				$journal_array = $this->bo->vfs->get_journal($file,Array(RELATIVE_NONE));
+				$journal_array = $this->bo->vfs->get_journal(array(
+					'string' => $file,
+					'relatives' => Array(RELATIVE_NONE)
+					));
 				while(list($num,$journal_entry) = each($journal_array))
 				{
 					@reset($col_headers);
@@ -1039,22 +1152,32 @@
 				$this->bo->file = $file_array['file'];
 			}
 			$file = $this->bo->path.SEP.$this->bo->file;
-			if($this->bo->vfs->file_exists($file,Array(RELATIVE_NONE)))
+			if($this->bo->vfs->file_exists(array(
+				'string' => $file,
+				'relatives' => Array(RELATIVE_NONE)
+				)))
 			{
 				$browser = CreateObject('phpgwapi.browser');
-				$browser->content_header($this->bo->file,$this->bo->vfs->file_type($file,Array(RELATIVE_NONE)),$this->bo->vfs->get_size($file,Array(RELATIVE_NONE)),True);
+				$browser->content_header($this->bo->file,$this->bo->vfs->file_type(array(
+						'string' => $file,
+						'relatives' => Array(RELATIVE_NONE))),
+					$this->bo->vfs->get_size(array(
+						'string' => $file,
+						'relatives' => Array(RELATIVE_NONE),
+						'checksubdirs' => True
+						)));
 //				$browser->content_header($this->bo->file);
-				echo $this->bo->vfs->read($file,Array(RELATIVE_NONE));
+				echo $this->bo->vfs->read(array(
+					'string' => $file,
+					'relatives' => Array(RELATIVE_NONE)
+					));
 				flush();
 			}
 			if(!is_array($file_array))
 			{
-				$GLOBALS['phpgw']->common->phpgw_exit ();
+				exit();
 			}
 		}
 
-		function edit()
-		{
-			$this->load_header();
-		}
+
 	}
