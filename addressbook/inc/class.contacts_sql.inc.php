@@ -197,9 +197,7 @@
           
           if ($extra) {
             while (list($name,$value) = each($extra)) {
-              if ($name == "access" && $value != "private") {
-                $value = "%," . $value . ",%";
-              }
+              $value = "%," . $value . ",%";
               $filterextra .= " AND contact_name='".$name."' AND contact_value like '".$value."',";
             }
             $filterextra = substr($filterextra,0,-1);
