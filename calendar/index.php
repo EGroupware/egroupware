@@ -78,8 +78,8 @@
   $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->mini_calendar($thisday,$next["month"],$next["year"],"day.php"));
   $phpgw->template->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
-    $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1&filter=".$filter;
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</a>");
     $phpgw->template->parse("out","index_t");
     $phpgw->template->pparse("out","index_t");

@@ -1169,9 +1169,11 @@
 	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
 	  $p->set_unknowns("remove");
       $p->set_file(array('day_cal' => 'day_cal.tpl',
+      					 'mini_week' => 'mini_week.tpl',
       					 'day_row_99' => 'day_row_99.tpl',
-      					 'day_row' => 'day_row.tpl'));
-      $p->set_block('day_cal','day_row_99','day_row');
+      					 'day_row_event' => 'day_row_event.tpl',
+      					 'day_row_time' => 'day_row_time.tpl'));
+      $p->set_block('day_cal','mini_week','day_row_99','day_row_event','day_row_time');
 
 
       if (! $phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"] &&
@@ -1222,11 +1224,13 @@
         $p->set_var('text',$this->hour_arr[99]);
         $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
         $p->set_var('time','&nbsp;');
-        $p->parse('row','day_row',True);
+        $p->parse('mini_week','day_row_99',False);
+        $p->parse('row','mini_week',True);
       }
       $this->rowspan = 0;
       $p->set_var('bgcolor1',$phpgw_info["theme"]["cal_dayview"]);
       $p->set_var('font_color',$phpgw_info["theme"]["bg_text"]);
+      $times = 0;
       for ($i=$this->first_hour;$i<=$this->last_hour;$i++) {
         $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
         if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
@@ -1236,17 +1240,28 @@
         if ($this->rowspan > 1) {
           // this might mean there's an overlap, or it could mean one event
           // ends at 11:15 and another starts at 11:30.
-          if (strlen($h))
+          if (strlen($h)) {
             $p->set_var('event',$this->hour_arr[$i]);
+            $p->parse('monthweek_day','day_row_event',False);
+            $rows = 1;
+          }
           $this->rowspan--;
         } else {
-          if (strlen($h)) {
+          if (!strlen($h)) {
+            $p->set_var('event','&nbsp;');
+            $p->parse('monthweek_day','day_row_event',False);
+            $rows = 1;
+          } else {
             $this->rowspan = isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0;
             if ($this->rowspan > 1) {
-              $p->set_var('extras','valign="top" rowspan="'.$this->rowspan.'"');
+              $p->set_var('extras',' valign="top" rowspan="'.$this->rowspan.'"');
               $p->set_var('event',$this->hour_arr[$i]);
+              $p->parse('monthweek_day','day_row_event',False);
+              $rows = $this->rowspan;
             } else {
               $p->set_var('event',$this->hour_arr[$i]);
+              $p->parse('monthweek_day','day_row_event',False);
+              $rows = 1;
             }
           }
         }
@@ -1262,7 +1277,11 @@
         if(!$this->printer_friendly) {
           $p->set_var('close_link','</a>');
         }
-        $p->parse('row','day_row',True);
+      $p->parse('monthweek_day','day_row_time',True);
+//      $times++;
+//      if ($times == $rows) { $p->set_var('monthweek_day',''); $times = 0; }
+      $p->parse('row','mini_week',True);
+      $p->set_var('monthweek_day','');
       }	// end for
       return $p->finish($p->parse('out','day_cal'));
     }	// end function

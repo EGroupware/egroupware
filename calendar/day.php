@@ -88,8 +88,8 @@
   $phpgw->template->set_var("small_calendar",$phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"));
 
   if (!$friendly) {
-    $param = "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&friendly=1&filter=".$filter;
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
+    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
     $phpgw->template->parse("out","day_t");
     $phpgw->template->pparse("out","day_t");
   } else {
