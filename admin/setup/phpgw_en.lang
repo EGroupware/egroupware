@@ -41,6 +41,7 @@ applications	admin	en	Applications
 apply	admin	en	apply
 are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
+are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
 are you sure you want to delete this category ?	common	en	Are you sure you want to delete this category ?
 are you sure you want to delete this global category ?	admin	en	Are you sure you want to delete this global category ?
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
@@ -180,11 +181,10 @@ new user	admin	en	New User
 no algorithms available	admin	en	no algorithms available
 no login history exists for this user	admin	en	No login history exists for this user
 no matches found	admin	en	No matches found
+no modes available	admin	en	no modes available
 no permission to add groups	admin	en	no permission to add groups
 no permission to add users	admin	en	no permission to add users
 no permission to create groups	admin	en	no permission to create groups
-note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
-no modes available	admin	en	no modes available
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
 open popup window	admin	en	open popup window
 outbound	admin	en	outbound

@@ -1,5 +1,7 @@
+%1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
+accesslog and bruteforce defense	admin	fr	Protection contre les attaques accès aux logs et attaque systématique
 account active	admin	fr	Compte actif
 account has been created	common	fr	Le compte a été crée
 account has been deleted	common	fr	Le compte a été effacé
@@ -21,18 +23,23 @@ add new account	admin	fr	Ajouter un nouveau compte
 add new application	admin	fr	Ajouter une nouvelle application
 add peer server	admin	fr	Ajouter un serveur pair
 admin email	admin	fr	Email de l'administrateur
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?	admin	fr	Adresses EMail des administrateurs (séparées par des virgules) à prévenir en cas de blocage (vide pour aucune notification) ?
 admin name	admin	fr	Nom de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
 anonymous user	admin	fr	Utilisateur anonyme
+anonymous user<br>(not shown in list sessions)	admin	fr	Utilisateur anonyme<br>(non montré dans la liste des sessions)
 application	admin	fr	Application
 application name	admin	fr	Nom d'application
 application title	admin	fr	Titre d'application
 applications	admin	fr	Applications
 apply	admin	fr	Appliquer
+are you sure you want to delete the application %1 ?	admin	fr	Etes-vous sûr de vouloir effacer l'application %1 ?
 are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir effacer ce compte ?
 are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir effacer cette application ?
 are you sure you want to delete this category ?	common	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
@@ -48,6 +55,7 @@ bi-dir passthrough	admin	fr	passage bi-dir
 bi-directional	admin	fr	bi-directionnel
 bottom	admin	fr	bas
 category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
+category list	admin	fr	Liste de catégories
 change main screen message	admin	fr	Changer le message de l'écran principal
 check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les sessions
 check items to <b>%1</b> to %2 for %3	admin	fr	Vérifier les objets vers <b>%1</b> à %2 pour %3
@@ -97,6 +105,9 @@ edit user account	admin	fr	Modifier le compte de l'utilisateur
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enter a description for the category	admin	fr	Entrez une description pour la catégorie
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le <br>chiffrement de l'app_session (nécessite mcrypt)
+enter the background color for the login page	admin	fr	Entrez la couleur de fond pour la page de connexion
+enter the background color for the site title	admin	fr	Entrez la couleur de fond pour le titre du site
+enter the file name of your logo	admin	fr	Entrez le nom du fichier de votre logo
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
 enter the hostname of the machine on which this server is running	admin	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
@@ -105,6 +116,8 @@ enter the search string. to show all entries, empty this field and press the sub
 enter the site password for peer servers	admin	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	admin	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
 enter the title for your site	admin	fr	Entrez le titre pour votre site
+enter the title of your logo	admin	fr	Entrez le titre de votre logo
+enter the url where your logo should link to	admin	fr	Entrez l'URL vers laquelle votre logo doit rediriger
 enter your default ftp server	admin	fr	Entrez votre serveur FTP par défaut
 enter your http proxy server	admin	fr	Entrez votre serveur proxy HTTP
 enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy HTTP
@@ -123,6 +136,8 @@ group name	admin	fr	Nom du groupe
 hide php information	admin	fr	Cacher les informations sur php
 home directory	admin	fr	Répertoire maison
 host information	admin	fr	Informations sur l'hôte
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès, avant d'être effacées (90 par défaut) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
 idle	admin	fr	Disponible
 if no acl records for user or any group the user is a member of	admin	fr	Si pas d'enregistrements dans les droits d'accès pour l'utilisateur ou n'importe quel groupe, l'utilisateur est membre de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire maison et shell de connexion?
@@ -159,14 +174,19 @@ maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.
 message has been updated	admin	fr	le message a été mis à jour
 minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.e. 500 ou 100, etc.)
 mode	admin	fr	Mode
+new group	admin	fr	Nouveau groupe
 new group name	admin	fr	Nouveau nom de groupe
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
+new user	admin	fr	Nouvel utilisateur
+no algorithms available	admin	fr	Pas d'algorithme disponible
 no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
 no matches found	admin	fr	Aucune occurrence trouvée
+no modes available	admin	fr	Pas de modes disponibles
 no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
 no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
 no permission to create groups	admin	fr	Aucune permission pour créer des groupes
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
+open popup window	admin	fr	Ouvrir une fenêtre Popup
 outbound	admin	fr	sortant
 passthrough	admin	fr	passage
 path information	admin	fr	Information sur le chemin
@@ -179,8 +199,10 @@ phpinfo	admin	fr	Informations PHP
 please enter a name	admin	fr	SVP entrez un nom
 please enter a name for that server !	admin	fr	SVP entrez un nom pour ce serveur !
 please run setup to become current	admin	fr	SVP exécutez setup pour vous mettre à jour
+please select	admin	fr	SVP choisissez
 preferences	admin	fr	Préférences
 re-enter password	admin	fr	Ré-entrez le mot de passe
+read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
 remove all users from this group ?	admin	fr	Retirer tous les utilisateurs de ce groupe ?
 return to admin mainscreen	admin	fr	Retourner à l'écran principal de l'administration
@@ -228,6 +250,8 @@ they must be removed before you can continue	admin	fr	Ils doivent être enlevés a
 this application is current	admin	fr	Cette application est à jour
 this application requires an upgrade	admin	fr	Cette application nécessite une mise à jour
 this category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente
+timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)
 top	admin	fr	Haut
 total records	admin	fr	Enregistrements totaux
 trust level	admin	fr	Niveau de confiance
