@@ -17,19 +17,20 @@ account permissions	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 account preferences	common	ja	¥¢¥«¥¦¥ó¥È¥æ¡¼¥¶ÀßÄê
 acl	common	ja	µö²ÄÀßÄê
 action	admin	ja	¥¢¥¯¥·¥ç¥ó
-active	admin	ja	¥¢¥¯¥Æ¥£¥Ö
+active	common	ja	¥¢¥¯¥Æ¥£¥Ö
 add	bookkeeping	ja	ÄÉ²Ã
 add	common	ja	ÄÉ²Ã
 add a field	addressbook	ja	¹àÌÜÄÉ²Ã
 add a note for	notes	ja	¥Î¡¼¥ÈÄÉ²Ã
-add a single phrase	transy	ja	Add a single phrase
+add a single phrase	transy	ja	Add a single pharse
 add addressbook category for	common	ja	¥¢¥É¥ì¥¹Ä¢¥«¥Æ¥´¥êÄÉ²Ã
+add address	squirrelmail	ja	ÄÉ²Ã
 add category	common	ja	¥«¥Æ¥´¥êÄÉ²Ã
 add global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄÉ²Ã
 add new account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄÉ²Ã
 add new application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄÉ²Ã
 add new entry	notes	ja	¿·µ¬ºîÀ®
-add new phrase	transy	ja	Add new phrase
+add new phrase	transy	ja	Add new pharse
 add new ticket	tts	ja	ÄÉ²Ã
 add note	notes	ja	ÄÉ²Ã
 add notes category for	common	ja	¥Î¡¼¥È¥«¥Æ¥´¥êÄÉ²Ã
@@ -37,8 +38,11 @@ add sub	todo	ja	¥µ¥ÖÄÉ²Ã
 add ticket	tts	ja	ÄÉ²Ã
 add todo category for	common	ja	¥×¥í¥¸¥§¥¯¥È¥«¥Æ¥´¥êÄÉ²Ã
 add to addressbook	email	ja	¥¢¥É¥ì¥¹Ä¢¤ØÄÉ²Ã
+add to x 	squirrelmail	ja	%1 ÄÉ²Ã
+add x category for	common	ja	%1 ¥«¥Æ¥´¥êÄÉ²Ã
 add_expense	bookkeeping	ja	»Ù½ĞÄÉ²Ã
 add_income	bookkeeping	ja	¼ıÆşÄÉ²Ã
+additional info	squirrelmail	ja	ÄÉ²Ã¾ğÊó
 address book	addressbook	ja	¥¢¥É¥ì¥¹Ä¢
 address book	common	ja	¥¢¥É¥ì¥¹Ä¢
 address book - view	addressbook	ja	¥¢¥É¥ì¥¹Ä¢ - É½¼¨
@@ -47,6 +51,7 @@ address line 3	addressbook	ja	Ä®°è£³
 address type	addressbook	ja	¥¢¥É¥ì¥¹¥¿¥¤¥×
 addressbook	common	ja	¥¢¥É¥ì¥¹Ä¢
 addressbook preferences	common	ja	¥¢¥É¥ì¥¹Ä¢¥æ¡¼¥¶ÀßÄê
+addresses	common	ja	¥¢¥É¥ì¥¹Ä¢
 addsub	todo	ja	¥µ¥ÖÄÉ²Ã
 addvcard	common	ja	VCardÄÉ²Ã
 admin	bookkeeping	ja	´Ä¶­ÀßÄê
@@ -70,17 +75,20 @@ are you sure you want to delete this application ?	admin	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 are you sure you want to delete this category ?	common	ja	¤³¤Î¥«¥Æ¥´¥ê¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this entry	todo	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this entry ?	common	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
+are you sure you want to delete this field?	addressbook	ja	¤³¤Î¹àÌÜ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this group ?	admin	ja	¤³¤Î¥°¥ë¡¼¥×¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this news site ?	admin	ja	¤³¤Î¥Ë¥å¡¼¥¹¥µ¥¤¥È¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this note	notes	ja	¤³¤Î¥Î¡¼¥È¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this note ?	notes	ja	¤³¤Î¥Î¡¼¥È¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to kill this session ?	admin	ja	¤³¤Î¥»¥Ã¥·¥ç¥ó¤òÀÚÃÇ¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
-
 are you sure\nyou want to\ndelete this entry ?	calendar	ja	¤³¤Î¹àÌÜ¤ò\nºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡£¡Ë
 arial	notes	ja	Arial
+as a subfolder of	squirrelmail	ja	¿Æ¥Õ¥©¥ë¥À
+attach:	squirrelmail	ja	ÅºÉÕ¥Õ¥¡¥¤¥ë
 attach file	email	ja	ÅºÉÕ¥Õ¥¡¥¤¥ë
 attach signature	email	ja	½ğÌ¾ÄÉ²Ã
+attachments	squirrelmail	ja	ÅºÉÕ¥Õ¥¡¥¤¥ë
 august	common	ja	£¸·î
 author	nntp	ja	ºîÀ®¼Ô
 autosave default category	common	ja	¥Ç¥Õ¥©¥ë¥È¥«¥Æ¥´¥ê¤ò¼«Æ°ÊİÂ¸
@@ -90,7 +98,9 @@ back to projectlist	todo	ja	¥×¥í¥¸¥§¥¯¥È¥ê¥¹¥È¤Ø
 bad login or password	login	ja	¥Ñ¥¹¥ï¡¼¥É¤¬¸í¤Ã¤Æ¤¤¤Ş¤¹
 base url	admin	ja	Base URL
 bbs phone	addressbook	ja	BBSÅÅÏÃ
+bcc:	squirrelmail	ja	£Â£Ã£Ã¡§
 birthday	addressbook	ja	ÃÂÀ¸Æü
+body	squirrelmail	ja	ËÜÊ¸
 book marks	common	ja	¥Ö¥Ã¥¯¥Ş¡¼¥¯
 bookkeeping	common	ja	·ĞÍı
 bookkeeping admins	common	ja	·ĞÍı´Ä¶­ÀßÄê
@@ -110,6 +120,7 @@ business zip code	common	ja	Í¹ÊØÈÖ¹æ
 calendar	common	ja	¥«¥ì¥ó¥À¡¼
 calendar - add	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÄÉ²Ã
 calendar - edit	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÊÔ½¸
+calendar holiday management	calendar	ja	µÙÆüÀßÄê
 calendar preferences	common	ja	¥«¥ì¥ó¥À¡¼¥æ¡¼¥¶ÀßÄê
 cancel	common	ja	¼è¾Ã
 cancel	filemanager	ja	¼è¾Ã
@@ -122,7 +133,8 @@ categories for	common	ja	¥«¥Æ¥´¥ê
 category name	admin	ja	¥«¥Æ¥´¥êÌ¾
 category x has been added !	common	ja	¥«¥Æ¥´¥ê %1 ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
 category x has been updated !	common	ja	¥«¥Æ¥´¥ê %1 ¤òÄûÀµ¤·¤Ş¤·¤¿¡£
-cc	email	ja	CC
+cc	common	ja	£Ã£Ã
+cc:	squirrelmail	ja	£Ã£Ã¡§
 cell phone	addressbook	ja	cell ÅÅÏÃ
 center	weather	ja	Ãæ±û
 change	common	ja	ÊÑ¹¹
@@ -133,48 +145,59 @@ change your profile	preferences	ja	¥×¥í¥Õ¥£¡¼¥ëÊÑ¹¹
 change your settings	preferences	ja	ÀßÄêÊÑ¹¹
 charset	common	ja	EUC-JP
 chat	common	ja	¥Á¥ã¥Ã¥È
+checkbox	squirrelmail	ja	¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+checked messages	squirrelmail	ja	»ØÄê¥á¥Ã¥»¡¼¥¸
 choose a font	notes	ja	¥Õ¥©¥ó¥È
 choose font size	notes	ja	¥Õ¥©¥ó¥È¥µ¥¤¥º
 choose the font size	notes	ja	¥Õ¥©¥ó¥È¥µ¥¤¥º
-choose the category	notes	ja	¥«¥Æ¥´¥êÁªÂò
+choose the category	common	ja	¥«¥Æ¥´¥êÁªÂò
 city	addressbook	ja	»Ô¶èÄ®Â¼
 city	admin	ja	»Ô¶èÄ®Â¼
 city	weather	ja	»Ô¶èÄ®Â¼
 clear	common	ja	¥¯¥ê¥¢
 clear form	common	ja	ºÆÆşÎÏ
 clear form	todo	ja	ºÆÆşÎÏ
-clipboard_contents	filemanager	ja	¸µ¥Õ¥¡¥¤¥ë
+clipboard contents: x	filemanager	ja	¸µ¥Õ¥¡¥¤¥ë: %1
+color	squirrelmail	ja	¿§
 common	transy	ja	¶¦ÄÌ
 company	addressbook	ja	²ñ¼ÒÌ¾
 company	common	ja	²ñ¼Ò
 company name	addressbook	ja	²ñ¼ÒÌ¾
 completed	todo	ja	Ã£À®Î¨
-compose	email	ja	¿·µ¬ºîÀ®
+compose	common	ja	¿·µ¬ºîÀ®
 contact	common	ja	Ï¢ÍíÀè
 copy	common	ja	¥³¥Ô¡¼
 copy_as	filemanager	ja	¥³¥Ô¡¼Àè
-country	addressbook	ja	¹ñ
-country	weather	ja	¹ñ
+countries	calendar	ja	¹ñ°ìÍ÷
+country	common	ja	¹ñ
 courier new	notes	ja	Courier New
 create	common	ja	ºîÀ®
 create	filemanager	ja	ºîÀ®
+create a folder	email	ja	¥Õ¥©¥ë¥ÀºîÀ®
+create folder	squirrelmail	ja	¥Õ¥©¥ë¥ÀºîÀ®
+Created folder successfully!	squirrelmail	ja	¥Õ¥©¥ë¥À¤òºîÀ®¤·¤Ş¤·¤¿¡£
 create group	admin	ja	¥°¥ë¡¼¥×ºîÀ®
 create lang.sql file	transy	ja	lang.sql ¥Õ¥¡¥¤¥ëºîÀ®
-create new language set	transy	ja	Create new language set
+create new language set	transy	ja	Create new langague set
 created by	common	ja	ºîÀ®¼Ô
 cron	common	ja	Cron
 currency	common	ja	ÄÌ²ß
 currency	preferences	ja	ÄÌ²ß
+current folder	squirrelmail	ja	¸½ºß¤Î¥Õ¥©¥ë¥À
+current folder:	squirrelmail	ja	¸½ºß¤Î¥Õ¥©¥ë¥À
 current users	common	ja	¸½ºß¤Î¥æ¡¼¥¶
 current_file	filemanager	ja	¸½ºß¤Î¥Õ¥¡¥¤¥ë
+current file	filemanager	ja	¸½ºß¤Î¥Õ¥¡¥¤¥ë
 custom	common	ja	¥«¥¹¥¿¥à
 custom email settings	email	ja	¥«¥¹¥¿¥àÀßÄê
 custom fields	addressbook	ja	¥«¥¹¥¿¥à¹àÌÜ
-daily	calendar	ja	ËèÆü
-daily matrix view	calendar	ja	ÆüÉ½¼¨
+custom field	addressbook	ja	¥«¥¹¥¿¥à¹àÌÜ
+daily	calendar	ja	ÆüÃ±°Ì
+daily matrix view	calendar	ja	ÆüÄøÉ½¼¨
 date	bookkeeping	ja	Æü
 date	common	ja	Æü
 date	email	ja	Á÷¿®ÆüÉÕ
+date:	squirrelmail	ja	Á÷¿®ÆüÉÕ¡§
 date	nntp	ja	Æü
 date due	todo	ja	¤½¤ÎÆü
 date format	preferences	ja	ÆüÉÕ½ñ¼°
@@ -188,39 +211,49 @@ default category	admin	ja	´ûÄê¤Î¥«¥Æ¥´¥ê
 default category	common	ja	´ûÄê¤Î¥«¥Æ¥´¥ê
 default sorting order	email	ja	¥½¡¼¥È½ç¡Ê´ûÄê¡Ë
 delete	common	ja	ºï½ü
+delete a folder	email	ja	¥Õ¥©¥ë¥Àºï½ü
+delete folder	squirrelmail	ja	¥Õ¥©¥ë¥Àºï½ü
+deleted folder successfully!	squirrelmail	ja	¥Õ¥©¥ë¥À¤òºï½ü¤·¤Ş¤·¤¿¡£
 delete all records	admin	ja	ºï½ü¤¹¤ë
+delete selected	squirrelmail	ja	ºï½ü
 department	addressbook	ja	Éô½ğ
 description	common	ja	¾ÜºÙ
 detail	tts	ja	ÌÀºÙ
 disabled	admin	ja	ÉÔ²Ä
 display	admin	ja	É½¼¨
-display missing phrases in lang set	transy	ja	Display missing phrases in lang set
+display missing phrases in lang set	transy	ja	Display missing pharases in lang set
 display note for	notes	ja	¥Î¡¼¥ÈÉ½¼¨
 display status of events	calendar	ja	¥¤¥Ù¥ó¥È¾õ¶·É½¼¨
 displaying subprojects of following project	todo	ja	¥µ¥Ö¥×¥í¥¸¥§¥¯¥È°ìÍ÷
-do_delete	filemanager	ja	¤òºï½ü¤·¤Ş¤¹¤«
-do you also want to delete all subcategories ?	admin	ja	¥µ¥Ö¥«¥Æ¥´¥ê¤âÆ±»ş¤Ëºï½ü¤·¤Ş¤¹¤«¡£
+do_delete x	filemanager	ja	%1 ¤òºï½ü¤·¤Ş¤¹¤«
+do you also want to delete all subcategories ?	common	ja	¥µ¥Ö¥«¥Æ¥´¥ê¤âÆ±»ş¤Ëºï½ü¤·¤Ş¤¹¤«¡£
 domestic	common	ja	¹ñÆâ
 done	common	ja	½ªÎ»
-download	filemanager	ja	¥À¥¦¥ó¥í¡¼¥É
+down	squirrelmail	ja	²¼
+download	common	ja	¥À¥¦¥ó¥í¡¼¥É
+download this as a file	squirrelmail	ja	¤³¤Î¥á¥Ã¥»¡¼¥¸¤ò¥À¥¦¥ó¥í¡¼¥É
 duration	calendar	ja	·ÑÂ³»ş´Ö
 e-mail	addressbook	ja	ÅÅ»Ò¥á¡¼¥ë
 e-mail	common	ja	ÅÅ»Ò¥á¡¼¥ë
 e-mail preferences	common	ja	ÅÅ»Ò¥á¡¼¥ë¥æ¡¼¥¶ÀßÄê
+e-mail address	squirrelmail	ja	ÅÅ»Ò¥á¡¼¥ë
 edit	common	ja	ÄûÀµ
 edit addressbook category for	common	ja	¥¢¥É¥ì¥¹Ä¢¥«¥Æ¥´¥êÄûÀµ
 edit application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄûÀµ
 edit categories	common	ja	¥«¥Æ¥´¥êÄûÀµ
 edit category	common	ja	¥«¥Æ¥´¥êÄûÀµ
 edit custom fields	preferences	ja	¥«¥¹¥¿¥à¹àÌÜÄûÀµ
+edit field	addressbook	ja	¥«¥¹¥¿¥à¹àÌÜÄûÀµ
 edit global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄûÀµ
 edit group	admin	ja	¥°¥ë¡¼¥×ÄûÀµ
 edit login screen message	admin	ja	¥í¥°¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÄûÀµ
 edit main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÄûÀµ
 edit note for	notes	ja	¥Î¡¼¥ÈÄûÀµ
 edit notes category for	common	ja	¥Î¡¼¥È¥«¥Æ¥´¥êÄûÀµ
+edit selected	squirrelmail	ja	ÄûÀµ
 edit todo category for	common	ja	¥×¥í¥¸¥§¥¯¥È¥«¥Æ¥´¥êÄûÀµ
 edit user account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄûÀµ
+edit x category for	common	ja	%1 ¥«¥Æ¥´¥êÄûÀµ
 edit_expense	bookkeeping	ja	»Ù½ĞÄûÀµ
 edit_income	bookkeeping	ja	¼ıÆşÄûÀµ
 email	common	ja	ÅÅ»Ò¥á¡¼¥ë
@@ -245,6 +278,7 @@ error	common	ja	¥¨¥é¡¼
 error creating x x directory	common	ja	¥¨¥é¡¼¡§¥Ç¥£¥ì¥¯¥È¥ê %1%2 ¤¬ºîÀ®¤Ç¤­¤Ş¤»¤ó¡£
 error deleting x x directory	common	ja	¥¨¥é¡¼¡§¥Ç¥£¥ì¥¯¥È¥ê %1%2 ¤¬ºï½ü¤Ç¤­¤Ş¤»¤ó¡£
 error renaming x x directory	common	ja	¥¨¥é¡¼¡§¥Ç¥£¥ì¥¯¥È¥ê %1%2 ¤ÎÌ¾Á°¤òÊÑ¹¹¤Ç¤­¤Ş¤»¤ó¡£
+everywhere	squirrelmail	ja	¤¹¤Ù¤Æ
 exit	common	ja	ÊÄ¤¸¤ë
 exit	filemanager	ja	ÊÄ¤¸¤ë
 expense	bookkeeping	ja	»Ù½Ğ
@@ -257,6 +291,9 @@ failed to find your station	weather	ja	failed to find your station
 fax	addressbook	ja	Fax
 february	common	ja	£²·î
 field list	addressbook	ja	¹àÌÜ°ìÍ÷
+field name	addressbook	ja	¹àÌÜÌ¾
+field x has been added !	addressbook	ja	¹àÌÜ %1 ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
+field x has been updated !	addressbook	ja	¹àÌÜ %1 ¤òÄûÀµ¤·¤Ş¤·¤¿¡£
 fields	common	ja	¹àÌÜ
 fields to show in address list	addressbook	ja	¥¢¥É¥ì¥¹¥ê¥¹¥È¤ËÉ½¼¨¤¹¤ë¹àÌÜ
 file manager	common	ja	¥Õ¥¡¥¤¥ë¥Ş¥Í¡¼¥¸¥ã
@@ -271,21 +308,24 @@ first page	common	ja	ÀèÆ¬¥Ú¡¼¥¸
 firstname	bookkeeping	ja	À«
 firstname	email	ja	À«
 folder	email	ja	¥Õ¥©¥ë¥À
+folder maintenance	email	ja	¥Õ¥©¥ë¥À¥á¥ó¥Æ¥Ê¥ó¥¹
+folders	common	ja	¥Õ¥©¥ë¥À
 forecast	admin	ja	Å·µ¤Í½Êó
 forecast	weather	ja	Å·µ¤Í½Êó
 forecast zone	admin	ja	Å·µ¤Í½Êó
 forecasts	weather	ja	Å·µ¤Í½Êó
 forum	common	ja	¥Õ¥©¡¼¥é¥à
-forward	email	ja	Å¾Á÷
+forward	common	ja	Å¾Á÷
 fr	calendar	ja	¶â
 free/busy	calendar	ja	»ş´ÖÉ½
 frequency	calendar	ja	´Ö³Ö
 fri	calendar	ja	¶â
 friday	common	ja	¶âÍËÆü
-from	email	ja	º¹½Ğ¿Í
+from	common	ja	º¹½Ğ¿Í
+from:	squirrelmail	ja	º¹½Ğ¿Í¡§
 ftp	common	ja	FTP
 full description	calendar	ja	¾ÜºÙ
-full name	addressbook	ja	Ì¾Á°
+full name	common	ja	Ì¾Á°
 fzone	admin	ja	fzone
 fzone	weather	ja	fzone
 generate new lang.sql file	transy	ja	¿·¤·¤¤ lang.sql ¥Õ¥¡¥¤¥ë¤òºîÀ®¤·¤Ş¤¹¡£
@@ -299,9 +339,10 @@ global public	common	ja	¥Ñ¥Ö¥ê¥Ã¥¯
 global public and group public	calendar	ja	¥Ñ¥Ö¥ê¥Ã¥¯¤È½êÂ°¥°¥ë¡¼¥×
 global public only	calendar	ja	¥Ñ¥Ö¥ê¥Ã¥¯
 go!	calendar	ja	Go!
-grant addressbook access	common	ja	¥¢¥É¥ì¥¹Ä¢ÍøÍÑµö²Ä
-grant calendar access	common	ja	¥«¥ì¥ó¥À¡¼ÍøÍÑµö²Ä
-grant todo access	common	ja	¥×¥í¥¸¥§¥¯¥ÈÍøÍÑµö²Ä
+grant access	common	ja	ÍøÍÑµö²ÄÀßÄê
+grant addressbook access	common	ja	ÍøÍÑµö²ÄÀßÄê
+grant calendar access	common	ja	ÍøÍÑµö²ÄÀßÄê
+grant todo access	common	ja	ÍøÍÑµö²ÄÀßÄê
 group	common	ja	¥°¥ë¡¼¥×
 group access	common	ja	¥°¥ë¡¼¥×
 group has been added	common	ja	¥°¥ë¡¼¥×¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
@@ -320,6 +361,8 @@ help	common	ja	¥Ø¥ë¥×
 helvetica	notes	ja	Helvetica
 hide php information	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó¤òÊÄ¤¸¤ë
 high	common	ja	¹â
+holiday	calendar	ja	µÙÆü
+holidays	calendar	ja	µÙÆü°ìÍ÷
 home	common	ja	¥Û¡¼¥à
 home address type	addressbook	ja	½»½ê
 home city	addressbook	ja	»Ô¶èÄ®Â¼
@@ -337,9 +380,10 @@ icons and text	preferences	ja	¥¢¥¤¥³¥ó¤È¥Æ¥­¥¹¥È
 icons only	preferences	ja	¥¢¥¤¥³¥ó¤Î¤ß
 id	admin	ja	ID
 id	weather	ja	ID
+identifying name	squirrelmail	ja	ÄêµÁÌ¾
 idle	admin	ja	¥¢¥¤¥É¥ë
 if applicable	email	ja	Å¬ÍÑ»ş
-ignore conflict	calendar	ja	Ignore Conflict
+ignore conflict	calendar	ja	Ìµ»ë
 image	email	ja	Image
 images	common	ja	Images
 imap server type	email	ja	IMAP ¥µ¡¼¥Ğ¥¿¥¤¥×
@@ -350,6 +394,8 @@ import from outlook	addressbook	ja	¥¤¥ó¥İ¡¼¥È¡ÊOutlook¡Ë
 import lang set	transy	ja	Import lang set
 inc	common	ja	Inc
 income	bookkeeping	ja	¼ıÆş
+index order	squirrelmail	ja	É½¼¨¹àÌÜÀßÄê
+info	squirrelmail	ja	ÄÉ²Ã¾ğÊó
 installed applications	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó°ìÍ÷
 interface/template selection	preferences	ja	¥Æ¥ó¥×¥ì¡¼¥ÈÁªÂò
 international	common	ja	¹ñºİ
@@ -391,6 +437,7 @@ low	common	ja	Äã
 mail folder(uw-maildir)	email	ja	¥á¡¼¥ë¥Õ¥©¥ë¥À¡ÊUW-MailDir¡Ë
 mail server	email	ja	¥á¡¼¥ë¥µ¡¼¥Ğ
 mail server type	email	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¥¿¥¤¥×
+main category	common	ja	¥á¥¤¥ó¥«¥Æ¥´¥ê
 main screen	common	ja	¥á¥¤¥ó²èÌÌ
 main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸
 manager	admin	ja	´ÉÍı¼Ô
@@ -400,7 +447,9 @@ max matchs per page	preferences	ja	£±¥Ú¡¼¥¸ºÇÂç¹Ô¿ô
 may	common	ja	£µ·î
 medium	common	ja	Ãæ
 message	common	ja	¥á¥Ã¥»¡¼¥¸
+message list	squirrelmail	ja	¥á¥Ã¥»¡¼¥¸°ìÍ÷
 message has been updated	admin	ja	¥á¥Ã¥»¡¼¥¸¤òÊÑ¹¹¤·¤Ş¤·¤¿¡£
+message highlighting	squirrelmail	ja	¥á¥Ã¥»¡¼¥¸¶¯Ä´É½¼¨
 message phone	addressbook	ja	¥á¥Ã¥»¡¼¥¸
 message x	nntp	ja	%1 ¤Ä¤Î¥á¥Ã¥»¡¼¥¸
 messages	email	ja	¥á¥Ã¥»¡¼¥¸
@@ -416,23 +465,31 @@ modem phone	common	ja	¥â¥Ç¥à
 mon	calendar	ja	·î
 monday	common	ja	·îÍËÆü
 monitor	common	ja	´Æ»ë
-monitor newsgroups	preferences	ja	¥Í¥Ã¥È¥Ë¥å¡¼¥¹¤Î´Æ»ë
+monitor newsgroups	preferences	ja	¹ØÆÉÀßÄê
 month	calendar	ja	·î
 month	todo	ja	·î
-monthly	calendar	ja	·î´Ö
-monthly (by date)	calendar	ja	Ëè·î(Æü)
-monthly (by day)	calendar	ja	Ëè·î(ÍËÆü)
-monthlybydate	calendar	ja	Ëè·î(Æü)
-monthlybyday	calendar	ja	Ëè·î(ÍËÆü)
+monthly	calendar	ja	·îÃ±°Ì
+monthly (by date)	calendar	ja	·îÃ±°Ì(Æü)
+monthly (by day)	calendar	ja	·îÃ±°Ì(ÍËÆü)
+monthlybydate	calendar	ja	·îÃ±°Ì(Æü)
+monthlybyday	calendar	ja	·îÃ±°Ì(ÍËÆü)
+move	squirrelmail	ja	°ÜÆ°
+move & follow	squirrelmail	ja	°ÜÆ°¤ÈÁªÂò
+move selected to:	squirrelmail	ja	ÁªÂò¥á¥Ã¥»¡¼¥¸°ÜÆ°Àè
 move selected messages into	email	ja	ÁªÂò¥á¥Ã¥»¡¼¥¸¤ò°ÜÆ°
+must be unique	squirrelmail	ja	½ÅÊ£¤·¤Ê¤¤ÃÍ¤òÆşÎÏ
 name	common	ja	Ì¾Á°
-network news	admin	ja	¥Í¥Ã¥È¥ï¡¼¥¯ÀßÄê
+network news	admin	ja	¹ØÆÉÀßÄê
 never	admin	ja	Ì¤
+new	squirrelmail	ja	¿·µ¬ºîÀ®
 new entry	calendar	ja	¹àÌÜÄÉ²Ã
 new entry added sucessfully	common	ja	¿·¤·¤¤¹àÌÜ¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
+newest -> oldest	email	ja	¿·¤«¤éµì
 new file	filemanager	ja	¿·µ¬¥Õ¥¡¥¤¥ë
 new group name	admin	ja	¿·¥°¥ë¡¼¥×Ì¾
+new main category	common	ja	¿·µ¬¥á¥¤¥ó¥«¥Æ¥´¥ê
 new message	email	ja	¿·Ãå¥á¥Ã¥»¡¼¥¸
+new name:	squirrelmail	ja	¿·¤·¤¤¥Õ¥©¥ë¥ÀÌ¾¡§
 new password [ leave blank for no change ]	admin	ja	¿·¥Ñ¥¹¥ï¡¼¥É [ Leave blank for no change ]
 new phrase has been added	transy	ja	¿·¤·¤¤¥Õ¥ì¡¼¥º¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
 new ticket	tts	ja	¿·¤·¤¤¥Á¥±¥Ã¥È
@@ -444,8 +501,15 @@ news type	admin	ja	¥Ë¥å¡¼¥¹¥¿¥¤¥×
 newsgroups	common	ja	¥Ë¥å¡¼¥¹¥°¥ë¡¼¥×
 next	common	ja	¼¡
 next page	common	ja	¼¡¥Ú¡¼¥¸
+nickname	squirrelmail	ja	¥Ë¥Ã¥¯¥Í¡¼¥à
 nntp	common	ja	¥Í¥Ã¥È¥Ë¥å¡¼¥¹
 no	common	ja	¤¤¤¤¤¨
+no folders found	squirrelmail	ja	¥Õ¥©¥ë¥À¤Ê¤·
+no folders were found to subscribe to!	squirrelmail	ja	É½¼¨²ÄÇ½¤Ê¥Õ¥©¥ë¥À¤¬¤¢¤ê¤Ş¤»¤ó¡£
+no folders were found to unsubscribe from!	squirrelmail	ja	ÈóÉ½¼¨²ÄÇ½¤Ê¥Õ¥©¥ë¥À¤¬¤¢¤ê¤Ş¤»¤ó¡£
+no highlighting is defined	squirrelmail	ja	¶¯Ä´É½¼¨¤ÏÌ¤ÄêµÁ¤Ç¤¹¡£
+no messages found	squirrelmail	ja	¥á¥Ã¥»¡¼¥¸¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
+no messages were selected.	squirrelmail	ja	¥á¥Ã¥»¡¼¥¸¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 no matches found.	calendar	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
 no matchs found	admin	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
 no response	calendar	ja	ÊÖÅú¤Ê¤·
@@ -456,26 +520,33 @@ non-standard	email	ja	´ûÄêÃÍ¤ò»ÈÍÑ¤·¤Ê¤¤
 none	common	ja	¤Ê¤·
 normal	common	ja	É¸½à
 not applicable	weather	ja	Å¬ÍÑ¤Ç¤­¤Ş¤»¤ó¡£
-note has been added for x notes	notes	ja	%1 ¤Î¥Î¡¼¥È¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
+note has been added for x !	notes	ja	%1 ¤Î¥Î¡¼¥È¤òÄÉ²Ã¤·¤Ş¤·¤¿¡£
 note has been deleted	notes	ja	¥Î¡¼¥È¤òºï½ü¤·¤Ş¤·¤¿¡£
-note has been updated for x notes	notes	ja	%1 ¤Î¥Î¡¼¥È¤òÄûÀµ¤·¤Ş¤·¤¿¡£
+note has been updated for: x ! 	notes	ja	%1 ¤Î¥Î¡¼¥È¤òÄûÀµ¤·¤Ş¤·¤¿¡£
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	¢¨Ãí°Õ¡§ÅÅ»Ò¥á¡¼¥ë¤Î¥Ñ¥¹¥ï¡¼¥É¤ÏÊÑ¹¹¤·¤Ş¤»¤ó¡£ÅÅ»Ò¥á¡¼¥ë¤Î¥Ñ¥¹¥ï¡¼¥É¤Ï¡¢¼êÆ°¤ÇÊÑ¹¹¤·¤Æ¤¯¤À¤µ¤¤¡£
 notes	common	ja	¥Î¡¼¥È
-notes categories	preferences	ja	¥«¥Æ¥´¥êÄûÀµ
+notes access	preferences	ja	¥Î¡¼¥ÈÍøÍÑµö²Ä
+notes categories	preferences	ja	¥«¥Æ¥´¥êÀßÄê
 notes list	notes	ja	¥Î¡¼¥È°ìÍ÷
 notes preferences	common	ja	¥Î¡¼¥È¥æ¡¼¥¶ÀßÄê
 november	common	ja	£±£±·î
 observations	weather	ja	´ÑÂ¬
+observance rule	calendar	ja	µÙÆü¤Î¥ë¡¼¥ë¤òÅ¬ÍÑ
+occurence	calendar	ja	ÍËÆü»ØÄê
 october	common	ja	£±£°·î
 ok	common	ja	OK
 on *nix systems please type: x	common	ja	On *nix systems please type: %1
-only yours	common	ja	¸Ä¿Í
+only yours	common	ja	½êÍ­¼Ô
+oldest -> newest	email	ja	µì¤«¤é¿·
+options	squirrelmail	ja	¥ª¥×¥·¥ç¥ó
 or: days from startdate:	todo	ja	¤Ş¤¿¤Ï¡¢³«»ÏÆü¤«¤é¤ÎÆü¿ô
 or: select for today:	todo	ja	¤Ş¤¿¤Ï¡¢º£Æü¤òÀßÄê
 original	transy	ja	¥ª¥ê¥¸¥Ê¥ë
+original message	squirrelmail	ja	Original Message
 other	common	ja	¤½¤ÎÂ¾
 other number	addressbook	ja	¤½¤ÎÂ¾ÈÖ¹æ
 other phone	common	ja	¤½¤ÎÂ¾ÈÖ¹æ
+outcharset	common	ja	ISO-2022-JP
 owner	common	ja	½êÍ­¼Ô
 pager	addressbook	ja	¥Ú¡¼¥¸¥ã¡¼
 parcel	addressbook	ja	¶è²è
@@ -493,13 +564,16 @@ permissions	admin	ja	¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó
 permissions this group has	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 permissions to the files/users directory	common	ja	permissions to the files/users directory
 personal	common	ja	¸Ä¿Í
+personal address book	squirrelmail	ja	¸Ä¿Í¥¢¥É¥ì¥¹Ä¢
+personal information	squirrelmail	ja	¸Ä¿Í¾ğÊó
 personalized notes for	notes	ja	ÅÅ»Ò¥Î¡¼¥È
 phrase in english	transy	ja	¥Õ¥ì¡¼¥º¡Ê±Ñ¸ì¡Ë
-phrase in new language	transy	ja	¥Õ¥ì¡¼¥º¡Ê¿·¸À¸ì¡Ë
+phrase in new langague	transy	ja	¥Õ¥ì¡¼¥º¡Ê¿·¸À¸ì¡Ë
 phone numbers	addressbook	ja	ÅÅÏÃÈÖ¹æ
 php information	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó
 phpgroupware login	login	ja	phpGroupWare login
 please enter a name for that category !	admin	ja	¥«¥Æ¥´¥êÌ¾¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
+Please enter a name for that field!	addressbook	ja	¹àÌÜÌ¾¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
 please select a message first	email	ja	¥á¥Ã¥»¡¼¥¸¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 please set your preferences for this app	common	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥æ¡¼¥¶ÀßÄê¤ò¹Ô¤Ã¤Æ²¼¤µ¤¤¡£
 please x by hand	common	ja	Please %1 by hand
@@ -512,22 +586,23 @@ pref	common	ja	Í¥Àè
 prefer	common	ja	¹¥¤ß
 preferences	common	ja	¥æ¡¼¥¶ÀßÄê
 prefix	addressbook	ja	¥×¥ì¥Õ¥£¥Ã¥¯¥¹
-previous	email	ja	Á°
+previous	common	ja	Á°
 previous page	common	ja	Á°¥Ú¡¼¥¸
 print	common	ja	°õºş
 printer friendly	calendar	ja	°õºşÍÑ¤Ø
 priority	common	ja	Í¥Àè½ç°Ì
-private	common	ja	¸Ä¿Í
-private and global public	calendar	ja	¸Ä¿Í¤È¥Ñ¥Ö¥ê¥Ã¥¯
-private and group public	calendar	ja	¸Ä¿Í¤È½êÂ°¥°¥ë¡¼¥×
-private only	calendar	ja	¸Ä¿Í
+private	common	ja	¥×¥é¥¤¥Ù¡¼¥È
+private and global public	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤È¶¦Í­
+private and group public	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤È½êÂ°¥°¥ë¡¼¥×
+private only	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤Î¤ß
 private_files	filemanager	ja	¸Ä¿Í¥Õ¥¡¥¤¥ë
 proceed	bookkeeping	ja	Â³¹Ô
 project description	todo	ja	¥×¥í¥¸¥§¥¯¥ÈÀâÌÀ
 project name	todo	ja	¥×¥í¥¸¥§¥¯¥ÈÌ¾
+projectname	todo	ja	¥×¥í¥¸¥§¥¯¥ÈÌ¾
 public	common	ja	¶¦Í­
 public key	addressbook	ja	¥Ñ¥Ö¥ê¥Ã¥¯¥­¡¼
-re-edit event	calendar	ja	Re-Edit Event
+re-edit event	calendar	ja	ºÆÊÔ½¸
 re-enter password	admin	ja	¥Ñ¥¹¥ï¡¼¥ÉºÆÆşÎÏ
 re-enter your password	preferences	ja	¥Ñ¥¹¥ï¡¼¥É¤òºÆÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
 read	common	ja	É½¼¨
@@ -535,14 +610,19 @@ recent	weather	ja	ºÇ¶á
 record access	addressbook	ja	¥¢¥¯¥»¥¹¸¢
 record owner	addressbook	ja	½êÍ­¼Ô
 refresh	calendar	ja	ºÆÉ½¼¨
+refresh folder list	squirrelmail	ja	¥Õ¥©¥ë¥ÀºÆÉ½¼¨
 region	admin	ja	ÃÏ°è
 region	weather	ja	ÃÏ°è
 regions	admin	ja	ÃÏ°è
 regions	weather	ja	ÃÏ°è
 reject	calendar	ja	µñÈİ
+rejected	calendar	ja	µñÈİºÑ¤ß
+remove	squirrelmail	ja	ºï½ü
 remove all users from this group	admin	ja	¤³¤Î¥°¥ë¡¼¥×¤ÎÁ´¤Æ¤Î¥æ¡¼¥¶¤òºï½ü¤·¤Ş¤¹¡£
 rename	common	ja	Ì¾Á°¤ÎÊÑ¹¹
 rename	filemanager	ja	Ì¾Á°¤ÎÊÑ¹¹
+rename a folder	squirrelmail	ja	¥Õ¥©¥ë¥ÀÌ¾¤ÎÊÑ¹¹
+renamed successfully!	squirrelmail	ja	¥Õ¥©¥ë¥ÀÌ¾¤òÊÑ¹¹¤·¤Ş¤·¤¿¡£
 rename_to	filemanager	ja	Ì¾Á°ÊÑ¹¹
 repeat day	calendar	ja	ÍËÆü¤Î·«ÊÖ¤·
 repeat end date	calendar	ja	·«ÊÖ¤·¤Î½ªÎ»Æü
@@ -550,23 +630,28 @@ repeat type	calendar	ja	¥¿¥¤¥×
 repeating event information	calendar	ja	·«ÊÖ¤·¥¤¥Ù¥ó¥È
 repetition	calendar	ja	·«ÊÖ¤·
 repitition	calendar	ja	·«ÊÖ¤·
-reply	email	ja	ÊÖ¿®
-reply all	email	ja	Á´°÷¤ËÊÖ¿®
-reply to	email	ja	¥ê¥×¥é¥¤
+reply	common	ja	ÊÖ¿®
+reply all	common	ja	Á´°÷¤ËÊÖ¿®
+replyto	common	ja	¥ê¥×¥é¥¤
+reply to	squirrelmail	ja	¥ê¥×¥é¥¤
 reports	bookkeeping	ja	¥ì¥İ¡¼¥È
+reset	calendar	ja	ºÆÆşÎÏ
 sa	calendar	ja	ÅÚ
 sat	calendar	ja	ÅÚ
 saturday	common	ja	ÅÚÍËÆü
 save	common	ja	ÊİÂ¸
 save	filemanager	ja	ÊİÂ¸
 save note	notes	ja	ÊİÂ¸
+scheduling conflict	calendar	ja	Í½Äê¤ò³ÎÇ§
 search	common	ja	¸¡º÷
 search results	calendar	ja	¸¡º÷·ë²Ì
 section	admin	ja	É½¼¨¾ì½ê
 section	email	ja	Section
-select	todo	ja	ÁªÂò
+select	common	ja	ÁªÂò
+select all	squirrelmail	ja	Á´¤ÆÁªÂò
 select application	transy	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 select category	common	ja	¥«¥Æ¥´¥êÁªÂò
+select country for including holidays	calendar	ja	µÙÆü¥Ç¡¼¥¿ÁªÂò
 select different theme	preferences	ja	°Û¤Ê¤ë¥Æ¡¼¥Ş¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 select email address	email	ja	ÅÅ»Ò¥á¡¼¥ë¥¢¥É¥ì¥¹
 select headline news sites	common	ja	¥Ø¥Ã¥É¥é¥¤¥ó¥Ë¥å¡¼¥¹¥µ¥¤¥È¤ÎÁªÂò
@@ -575,11 +660,12 @@ select parent category	common	ja	¿Æ¥«¥Æ¥´¥êÁªÂò
 select permissions this group will have	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 select users for inclusion	admin	ja	½êÂ°¤¹¤ë¥æ¡¼¥¶
 select which application for this phrase	transy	ja	¥Õ¥ì¡¼¥º¤ò»ÈÍÑ¤¹¤ë¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
+select which langauge for this pharse	transy	ja	¥Õ¥ì¡¼¥º¤Î¸À¸ì¤òÁªÂò
 select which language for this phrase	transy	ja	¥Õ¥ì¡¼¥º¤Î¸À¸ì¤òÁªÂò
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ja	¥Ê¥Ó¥²¡¼¥·¥ç¥ó¥Ğ¡¼¤Î°ÌÃÖ¡Ê¿ô¤¬¾®¤µ¤¤¤Èº¸¤ËÇÛÃÖ¡Ë
 select home email address	email	ja	ÅÅ»Ò¥á¡¼¥ë¡Ê¸Ä¿Í¡Ë
 select work email address	email	ja	ÅÅ»Ò¥á¡¼¥ë¡Ê»Å»ö¡Ë
-send	email	ja	Á÷¿®
+send	common	ja	Á÷¿®
 send deleted messages to the trash	email	ja	ºï½ü¥á¥Ã¥»¡¼¥¸¤ò¥´¥ßÈ¢¤Ø
 send updates via email	common	ja	¹¹¿·¾ğÊó¤òÅÅ»Ò¥á¡¼¥ë¤Ç¼õ¼è¤ë
 september	common	ja	£¹·î
@@ -598,6 +684,7 @@ show text on navigation icons	preferences	ja	¥Ê¥Ó¥²¡¼¥·¥ç¥ó¥¢¥¤¥³¥ó¤Ë¥Æ¥­¥¹¥ÈÉ½¼
 showing # x of x	weather	ja	É½¼¨¿ô %1 of %2
 showing x	common	ja	É½¼¨¿ô %1
 showing x - x of x	common	ja	É½¼¨¿ô %1 - %2 of %3
+signature	squirrelmail	ja	½ğÌ¾
 site	admin	ja	Site
 size	email	ja	¥µ¥¤¥º
 small	common	ja	¾®
@@ -625,9 +712,12 @@ street	addressbook	ja	Ä®°è
 su	calendar	ja	Æü
 sub	todo	ja	¥µ¥Ö
 subject	common	ja	·ïÌ¾
+subject:	common	ja	·ïÌ¾¡§
 submit	common	ja	¼Â¹Ô
 submit changes	admin	ja	ÊÑ¹¹
 subproject description	todo	ja	¥µ¥Ö¥×¥í¥¸¥§¥¯¥ÈÀâÌÀ
+subscribe	squirrelmail	ja	É½¼¨
+subscribed successfully!	squirrelmail	ja	É½¼¨¤Ë¤·¤Ş¤·¤¿¡£
 suffix	addressbook	ja	·É¾Î
 sun	calendar	ja	Æü
 sunday	common	ja	ÆüÍËÆü
@@ -635,11 +725,13 @@ switch current folder to	email	ja	¥«¥ì¥ó¥È¥Õ¥©¥ë¥ÀÊÑ¹¹
 switch to	bookkeeping	ja	ÆşÂØ
 table	admin	ja	¥Æ¡¼¥Ö¥ë
 tables	weather	ja	¥Æ¡¼¥Ö¥ë
+tahoma	notes	ja	Tahoma
 target language	transy	ja	ÂĞ¾İ¸À¸ì
 tentative	calendar	ja	²¾¾µÂú
 text only	preferences	ja	¥Æ¥­¥¹¥È¤Î¤ß
 th	calendar	ja	ÌÚ
 that category name has been used already !	common	ja	¥«¥Æ¥´¥êÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
+that field name has been used already !	addressbook	ja	¹àÌÜÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
 that loginid has already been taken	admin	ja	¥í¥°¥¤¥óID¤Ï´û¤ËÅĞÏ¿ºÑ¤ß¤Ç¤¹¡£
 that phrase already exists	common	ja	¥Õ¥ì¡¼¥º¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
 that site has already been entered	admin	ja	¥µ¥¤¥È¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£
@@ -649,10 +741,11 @@ the two passwords are not the same	common	ja	£²¤Ä¤Î¥Ñ¥¹¥ï¡¼¥É¤¬Åù¤·¤¯¤¢¤ê¤Ş¤»¤ó
 theme (colors/fonts) selection	preferences	ja	¥Æ¡¼¥Ş¡Ê¿§¡¦¥Õ¥©¥ó¥È¡ËÁªÂò
 themes	common	ja	Themes
 there was an error trying to connect to your mail server.	common	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£
-there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£<BR>ÅÅ»Ò¥á¡¼¥ë¤Î¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	common	ja	¥á¡¼¥ë¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£<BR>ÅÅ»Ò¥á¡¼¥ë¤Î¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	nntp	ja	¥Ë¥å¡¼¥¹¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£<BR>´ÉÍı¼Ô¤Ë¥Ë¥å¡¼¥¹¥µ¡¼¥ĞÌ¾¡¢¥æ¡¼¥¶Ì¾¡¢¥Ñ¥¹¥ï¡¼¥É¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£
 they must be removed before you can continue	admin	ja	ºï½ü¤Ç¤­¤Ş¤»¤ó¡£
-this folder is empty	email	ja	¥á¥Ã¥»¡¼¥¸¤Ï¤¢¤ê¤Ş¤»¤ó¡£
+this contains personal information about yourself such as your name, your email address, etc.	squirrelmail	ja	ÅÅ»Ò¥á¡¼¥ë¥¢¥É¥ì¥¹¤äÁ÷¿®¼ÔÌ¾¤Ê¤É¤Î¸Ä¿Í¾ğÊó¤òÀßÄê¤·¤Ş¤¹¡£
+this folder is empty	common	ja	¥á¥Ã¥»¡¼¥¸¤Ï¤¢¤ê¤Ş¤»¤ó¡£
 this month	calendar	ja	º£·î
 this person's first name was not in the address book.	addressbook	ja	¥¢¥É¥ì¥¹Ä¢¤ËÌ¾Á°¤¬¤¢¤ê¤Ş¤»¤ó¡£
 this server is located in the x timezone	preferences	ja	 ¥¿¥¤¥à¥¾¡¼¥ó
@@ -669,11 +762,13 @@ time zone offset	common	ja	»şº¹
 times new roman	notes	ja	Times New Roman	
 title	common	ja	¥¿¥¤¥È¥ë
 to	email	ja	°¸Àè
+to	squirrelmail	ja	£ô£ï
+to:	squirrelmail	ja	°¸Àè¡§
 to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
 today	calendar	ja	º£Æü
 today is x's birthday!	common	ja	º£Æü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
 todo	common	ja	¥×¥í¥¸¥§¥¯¥È
-todo categories	preferences	ja	¥«¥Æ¥´¥êÄûÀµ
+todo categories	preferences	ja	¥«¥Æ¥´¥êÀßÄê
 todo list	common	ja	¥×¥í¥¸¥§¥¯¥È¥ê¥¹¥È
 todo list	todo	ja	¥×¥í¥¸¥§¥¯¥È¥ê¥¹¥È
 todo list - add	todo	ja	¥×¥í¥¸¥§¥¯¥È¥ê¥¹¥È - ÄÉ²Ã
@@ -692,12 +787,18 @@ tue	calendar	ja	²Ğ
 tuesday	common	ja	²ĞÍËÆü
 undisclosed recipients	email	ja	¼õ¿®¼ÔÌ¤¸ø³«
 undisclosed sender	email	ja	Á÷¿®¼ÔÌ¤¸ø³«
+unsubscribe	squirrelmail	ja	ÈóÉ½¼¨
+unsubscribed successfully!	squirrelmail	ja	ÈóÉ½¼¨¤Ë¤·¤Ş¤·¤¿¡£
+unselect all	squirrelmail	ja	Á´¤ÆÁªÂò²ò½ü
+up	squirrelmail	ja	¾å
 update	admin	ja	¹¹¿·
 update	nntp	ja	¹¹¿·
+update address	squirrelmail	ja	¥¢¥É¥ì¥¹¹¹¿·
 updated	common	ja	¹¹¿·Æü»ş
 upload	filemanager	ja	¥¢¥Ã¥×¥í¡¼¥É
 urgency	todo	ja	Í¥ÀèÅÙ
 url	addressbook	ja	URL
+use a signature?	squirrelmail	ja	½ğÌ¾¤ò»ÈÍÑ
 use cookies	login	ja	Cookie ¤ò»ÈÍÑ
 use custom settings	email	ja	¥«¥¹¥¿¥àÀßÄê¤ò»ÈÍÑ
 use end date	calendar	ja	½ªÎ»Æü»ØÄê
@@ -717,14 +818,20 @@ view	bookkeeping	ja	É½¼¨
 view	common	ja	É½¼¨
 view access log	admin	ja	¥¢¥¯¥»¥¹¥í¥°»²¾È
 view all tickets	tts	ja	¥Á¥±¥Ã¥ÈÉ½¼¨
-view matrix of actual month	todo	ja	·îÉ½É½¼¨
+view full header	squirrelmail	ja	¥Ø¥Ã¥ÀÉ½¼¨
+view matrix of actual month	todo	ja	¥°¥é¥ÕÉ½¼¨
 view notes	notes	ja	¥Î¡¼¥ÈÉ½¼¨
 view only open tickets	tts	ja	¥ª¡¼¥×¥ó¥Á¥±¥Ã¥ÈÉ½¼¨
 view sessions	admin	ja	¥»¥Ã¥·¥ç¥ó»²¾È
 view this entry	calendar	ja	¹àÌÜÉ½¼¨
+view user account	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥ÈÉ½¼¨
 view/edit/delete all phrases	transy	ja	É½¼¨/ÄûÀµ/ºï½ü¡¡Á´¤Æ¤Î¥Õ¥ì¡¼¥º
 view_expense	bookkeeping	ja	»Ù½ĞÉ½¼¨
 view_income	bookkeeping	ja	¼ıÆşÉ½¼¨
+viewing full header	squirrelmail	ja	¥Ø¥Ã¥ÀÉ½¼¨
+viewing message	squirrelmail	ja	É½¼¨¿ô
+view messages	squirrelmail	ja	¥á¥Ã¥»¡¼¥¸É½¼¨
+viewing messages	squirrelmail	ja	É½¼¨¿ô
 viewsub	todo	ja	¥µ¥ÖÉ½¼¨
 voice phone	addressbook	ja	ÅÅÏÃ
 we	calendar	ja	¿å
@@ -737,8 +844,8 @@ wed	calendar	ja	¿å
 wednesday	common	ja	¿åÍËÆü
 week	calendar	ja	½µ
 weekday starts on	calendar	ja	½µ¤Î½é¤á
-weekly	calendar	ja	Ëè½µ
-when creating new events default set to private	calendar	ja	¸Ä¿ÍÍÑ¤È¤¹¤ë¡Ê¿·µ¬ºîÀ®»ş¡Ë
+weekly	calendar	ja	½µÃ±°Ì
+when creating new events default set to private	calendar	ja	¥×¥é¥¤¥Ù¡¼¥ÈÍÑ¤È¤¹¤ë¡Ê¿·µ¬ºîÀ®»ş¡Ë
 which groups	common	ja	¥°¥ë¡¼¥×ÁªÂò
 which groups	todo	ja	¥°¥ë¡¼¥×ÁªÂò
 who would you like to transfer all records owned by the deleted user to?	admin	ja	ºï½ü¥æ¡¼¥¶¤Îµ­Ï¿¤òÅ¾Á÷¤¹¤ë¥æ¡¼¥¶¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
@@ -749,7 +856,7 @@ x matches found	calendar	ja	%1 ·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
 x messages have been deleted	email	ja	%1 ·ïºï½ü¤·¤Ş¤·¤¿¡£
 year	calendar	ja	Ç¯
 year	todo	ja	Ç¯
-yearly	calendar	ja	ËèÇ¯
+yearly	calendar	ja	Ç¯Ã±°Ì
 yes	common	ja	¤Ï¤¤
 yes	filemanager	ja	¤Ï¤¤
 you are required to change your password during your first login	common	ja	½é²ó¥í¥°¥¤¥ó»ş¤Ë¥Ñ¥¹¥ï¡¼¥ÉÊÑ¹¹
@@ -788,7 +895,7 @@ your search returned 1 match	common	ja	£±·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
 your search returned x matchs	common	ja	%1 ·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
 your session could not be verified.	login	ja	Your session could not be verified.
 your settings have been updated	common	ja	Your settings have been Updated
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ja	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> ¤Ë¤Ï¡¢ÊÌ¤ÎÍ½Äê¤¬¤¢¤ê¤Ş¤¹¡£
 zip code	addressbook	ja	Í¹ÊØÈÖ¹æ
 zone	admin	ja	ÃÏ°è
 zone	weather	ja	ÃÏ°è

@@ -173,6 +173,7 @@ display missing phrases in lang set	transy	en	Display missing phrases in lang se
 display note for	notes	en	Display note for
 display status of events	calendar	en	Display Status of Events
 do_delete	filemanager	en	Delete
+do_delete x	filemanager	en	Delete %1
 domestic	common	en	Domestic
 done	common	en	Done
 download	filemanager	en	Download
