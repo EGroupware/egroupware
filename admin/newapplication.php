@@ -47,7 +47,7 @@
      $t->set_var("error","");
   }
 
-  $t->set_var("session_hidden_var","");
+  $t->set_var("hidden_vars","");
   $t->set_var("form_action",$phpgw->link("newapplication.php"));
   $t->set_var("lang_app_name",lang("application name"));
   $t->set_var("lang_app_title",lang("application title"));
