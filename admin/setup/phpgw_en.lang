@@ -65,7 +65,6 @@ enter your default FTP server	admin	en	Enter your default FTP server
 enter your HTTP proxy server	admin	en	Enter your HTTP proxy server
 enter your HTTP proxy server port	admin	en	Enter your HTTP proxy server port
 find and register all application hooks	admin	en	Find and Register all Application Hooks
-force selectbox	admin	en	Force SelectBox
 global categories	admin	en	Global Categories
 group ?	admin	en	group ?
 group has been added	common	en	Group has been added
@@ -173,7 +172,6 @@ use pure html compliant code (not fully working yet)	admin	en	Use pure HTML comp
 user accounts	admin	en	User accounts
 userdata	admin	en	userdata
 user groups	admin	en	User groups
-users choice	admin	en	Users Choice
 use theme	admin	en	Use theme
 view access log	admin	en	View access log
 view error log	admin	en	View error log

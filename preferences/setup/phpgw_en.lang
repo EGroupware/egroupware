@@ -23,3 +23,7 @@ this server is located in the x timezone	preferences	en	 This server is located 
 time format	preferences	en	Time format
 your current theme is: x	preferences	en	</b>
 you must enter a password	preferences	en	You must enter a password
+your preferences	preferences	en	Your Preferences
+default preferences	preferences	en	Default Preferences
+forced preferences	preferences	en	Forced Preferences
+select one	preferences	en	Select one

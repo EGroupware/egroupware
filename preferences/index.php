@@ -12,14 +12,15 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags']['currentapp'] = 'preferences';
+	$phpgw_info = array();
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'preferences';
 	include('../header.inc.php');
 
 	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array(
 		'pref' => 'index.tpl'
 	);
-	
+
 	$pref_tpl->set_file($templates);
 
 	$pref_tpl->set_block('pref','list');
@@ -30,15 +31,13 @@
 
 	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
 	{
-		// This is where we will keep track of our postion.
+		// This is where we will keep track of our position.
 		// Developers won't have to pass around a variable then
 		$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
 
 		if (! is_array($session_data))
 		{
-			$session_data = array(
-				'type' => 'user'
-			);
+			$session_data = array('type' => 'user');
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
@@ -49,30 +48,28 @@
 		else
 		{
 			$type = $GLOBALS['HTTP_GET_VARS']['type'];
-			$session_data = array(
-				'type' => $type
-			);
+			$session_data = array('type' => $type);
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
 		$tabs[] = array(
-			'label' => 'Your preferences',
+			'label' => lang('Your preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=user')
 		);
 		$tabs[] = array(
-			'label' => 'Default preferences',
+			'label' => lang('Default preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=default')
 		);
 		$tabs[] = array(
-			'label' => 'Forced preferences',
+			'label' => lang('Forced preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=forced')
 		);
 
 		switch($type)
 		{
-			case 'user':		$selected = 0; break;
-			case 'default':	$selected = 1; break;
-			case 'forced':		$selected = 2; break;
+			case 'user':    $selected = 0; break;
+			case 'default': $selected = 1; break;
+			case 'forced':  $selected = 2; break;
 		}
 		$pref_tpl->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
 	}
@@ -80,10 +77,10 @@
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='',$appname='')
 	{
-		global $phpgw_info, $pref_tpl;
+		global $pref_tpl;
 
-		$pref_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
-//		$pref_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
+		$pref_tpl->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
+//		$pref_tpl->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 		$pref_tpl->set_var('a_name',$appname);
 		$pref_tpl->set_var('app_name',lang($name));
 		$pref_tpl->set_var('app_icon',$icon);
@@ -133,7 +130,7 @@
 		section_end(); 
 	}
 
-	$phpgw->hooks->process('preferences',array('preferences'));
+	$GLOBALS['phpgw']->hooks->process('preferences',array('preferences'));
 	$pref_tpl->pfp('out','list');
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

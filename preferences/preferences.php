@@ -62,7 +62,7 @@
 		}
 		else
 		{
-			return False;		
+			return False;
 		}
 	}
 
@@ -81,11 +81,14 @@
 
 		switch ($GLOBALS['type'])
 		{
-			case 'user':		$s = '<input name="user[' . $preference_name . ']" value="' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '">';
+			case 'user':
+				$s = '<input name="user[' . $preference_name . ']" value="' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '">';
 				break;
-			case 'default':	$s = '<input name="default[' . $preference_name . ']" value="' . $GLOBALS['dp']->data[$_appname][$preference_name] . '">';
+			case 'default':
+				$s = '<input name="default[' . $preference_name . ']" value="' . $GLOBALS['dp']->data[$_appname][$preference_name] . '">';
 				break;
-			case 'forced':		$s = '<input name="forced[' . $preference_name . ']" value="' . $GLOBALS['gp']->data[$_appname][$preference_name] . '">';
+			case 'forced':
+				$s = '<input name="forced[' . $preference_name . ']" value="' . $GLOBALS['gp']->data[$_appname][$preference_name] . '">';
 				break;
 		}
 		$t->set_var('row_value',$s);
@@ -218,23 +221,23 @@
 		}
 
 		$tabs[] = array(
-			'label' => 'Your preferences',
+			'label' => lang('Your preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=user')
 		);
 		$tabs[] = array(
-			'label' => 'Default preferences',
+			'label' => lang('Default preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=default')
 		);
 		$tabs[] = array(
-			'label' => 'Forced preferences',
+			'label' => lang('Forced preferences'),
 			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=forced')
 		);
 
 		switch($GLOBALS['type'])
 		{
-			case 'user':		$selected = 0; break;
-			case 'default':	$selected = 1; break;
-			case 'forced':		$selected = 2; break;
+			case 'user':    $selected = 0; break;
+			case 'default': $selected = 1; break;
+			case 'forced':  $selected = 2; break;
 		}
 		$t->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
 	}
@@ -260,7 +263,7 @@
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
-			process_array($GLOBALS['dp'], $default);		
+			process_array($GLOBALS['dp'], $default);
 		}
 
 		if ($GLOBALS['type'] == 'forced' && is_admin())
@@ -302,7 +305,7 @@
 		if (! $GLOBALS['phpgw']->hooks->single('settings',$GLOBALS['HTTP_GET_VARS']['appname']))
 		{
 			$error = True;
-		}	
+		}
 	}
 
 	if ($error)

@@ -25,7 +25,6 @@ text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the x timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
-user choice	preferences	ja	選択して下さい
 use selectbox	preferences	ja	セレクトボックス
 use text entry	preferences	ja	テキスト入力
 your current theme is: x	preferences	ja	</b>

@@ -138,6 +138,7 @@ filter	common	en	Filter
 finland	common	en	FINLAND
 first name	common	en	First name
 firstname	common	en	Firstname
+force selectbox	common	en	Force SelectBox
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
 french polynesia	common	en	FRENCH POLYNESIA
@@ -397,6 +398,7 @@ uruguay	common	en	URUGUAY
 user	common	en	User
 username	common	en	Username
 users	common	en	users
+users choice	common	en	Users Choice
 uzbekistan	common	en	UZBEKISTAN
 vanuatu	common	en	VANUATU
 venezuela	common	en	VENEZUELA
