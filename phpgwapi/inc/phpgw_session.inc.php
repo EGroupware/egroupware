@@ -32,9 +32,10 @@
        $db  = $phpgw->db;
        $db2 = $phpgw->db;
 
-       $phpgw->common->key  = $kp3;
-       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-       $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
+       // PHP 3 complains that these are not defined when the already are defined.
+       @$phpgw->common->key  = $kp3;
+       @$phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
+       $phpgw->crypto = new crypto(@$phpgw->common->key,@$phpgw->common->iv);
 
        $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
        $db->next_record();
@@ -77,8 +78,9 @@
        if (! $phpgw_info["user"]["userid"] ) {
           return False;
        } else {
-          $phpgw->preferences->preferences = $phpgw_info["user"]["preferences"];
-          $phpgw->preferences->account_id = $phpgw_info["user"]["account_id"];
+          // PHP 3 complains that these are not defined when the already are defined.
+          @$phpgw->preferences->preferences = $phpgw_info["user"]["preferences"];
+          @$phpgw->preferences->account_id  = $phpgw_info["user"]["account_id"];
           return True;
        }
     }

@@ -53,9 +53,13 @@
        $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
        $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
                                                                  // database for security.
-
-       $db->query("update phpgw_sessions set session_info='" . $phpgw->crypto->encrypt($phpgw_info_temp)
-                . "' where session_id='" . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
+       if ($PHP_VERSION < "4.0.0") {
+          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
+       } else {
+          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);       
+       }
+       $db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
+                . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
     }
 
     function add_app($appname,$rebuild = False)

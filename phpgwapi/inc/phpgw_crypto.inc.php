@@ -89,9 +89,8 @@
             $encrypteddata = mcrypt_generic($this->td, $data);
           }    
         }
-        
         $encrypteddata = bin2hex($encrypteddata);
-      	return $encrypteddata;
+        return $encrypteddata;
       } else {  // No mcrypt == insecure !
         return $data;
       }  
