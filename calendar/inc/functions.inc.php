@@ -1157,7 +1157,7 @@
       if ($event->priority == 3) {
         $this->hour_arr[$ind] .= "</font>";
       }
-      $this->hour_arr[$ind] .= "<BR>";
+      $this->hour_arr[$ind] .= "<br>";
     }
 
     function print_day_at_a_glance($date,$owner=0) {
