@@ -1022,6 +1022,144 @@
                 $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
   }
 
+    $test[] = '0.9.10pre12';
+    function upgrade0_9_10pre12()
+    {
+	global $phpgw_info, $phpgw_setup;
+	$db1 = $phpgw_setup->db;
+	$db2 = $phpgw_setup->db;
+
+	$sql = "DROP TABLE IF EXISTS phpgw_addressbook";
+        $db1->query($sql,__LINE__,__FILE__);
+
+	$sql = "DROP TABLE IF EXISTS phpgw_addressbook_extra";
+	$db1->query($sql,__LINE__,__FILE__);
+
+	$sql = "CREATE TABLE phpgw_addressbook (
+
+		    id int(8) PRIMARY KEY DEFAULT '0' NOT NULL auto_increment,
+		    lid varchar(32),
+		    tid char(1),
+		    owner int(8),
+		    fn varchar(64),
+		    sound varchar(64),
+		    org_name varchar(64),
+		    org_unit varchar(64),
+		    title varchar(64),
+		    n_family varchar(64),
+		    n_given varchar(64),
+		    n_middle varchar(64),
+		    n_prefix varchar(64),
+		    n_suffix varchar(64),
+		    label text,
+		    adr_poaddr varchar(64),
+		    adr_extaddr varchar(64),
+		    adr_street varchar(64),
+		    adr_locality varchar(32),
+		    adr_region varchar(32),
+		    adr_postalcode varchar(32),
+		    adr_countryname varchar(32),
+		    adr_work enum('n','y') NOT NULL,
+		    adr_home enum('n','y') NOT NULL,
+		    adr_parcel enum('n','y') NOT NULL,
+		    adr_postal enum('n','y') NOT NULL,
+		    tz varchar(8),
+		    geo varchar(32),
+		    a_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		    a_tel_work enum('n','y') NOT NULL,
+		    a_tel_home enum('n','y') NOT NULL,
+		    a_tel_voice enum('n','y') NOT NULL,
+		    a_tel_msg enum('n','y') NOT NULL,
+		    a_tel_fax enum('n','y') NOT NULL,
+		    a_tel_prefer enum('n','y') NOT NULL,
+		    b_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		    b_tel_work enum('n','y') NOT NULL,
+		    b_tel_home enum('n','y') NOT NULL,
+		    b_tel_voice enum('n','y') NOT NULL,
+		    b_tel_msg enum('n','y') NOT NULL,
+		    b_tel_fax enum('n','y') NOT NULL,
+		    b_tel_prefer enum('n','y') NOT NULL,
+		    c_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		    c_tel_work enum('n','y') NOT NULL,
+		    c_tel_home enum('n','y') NOT NULL,
+		    c_tel_voice enum('n','y') NOT NULL,
+		    c_tel_msg enum('n','y') NOT NULL,
+		    c_tel_fax enum('n','y') NOT NULL,
+		    c_tel_prefer enum('n','y') NOT NULL,
+		    d_emailtype enum('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX') NOT NULL,
+		    d_email varchar(64),
+		    d_email_work enum('n','y') NOT NULL,
+		    d_email_home enum('n','y') NOT NULL,
+		    UNIQUE (id)
+		    )";
+
+	$db1->query($sql,__LINE__,__FILE__);
+
+	$sql = "CREATE TABLE phpgw_addressbook_extra (
+		    contact_id int(11),
+		    contact_owner int(11),
+		    contact_name varchar(255),
+		    contact_value varchar(255)
+                )";
+
+	$db1->query($sql,__LINE__,__FILE__);
+
+	$db1->query("SELECT * FROM addressbook",__LINE__,__FILE__);               
+
+	    $fields = $extra = array();
+
+                while ($db1->next_record()) {
+                    $fields['id']	  = $db1->f("ab_id");
+                    $fields['owner']      = $db1->f("ab_owner");
+                    $fields['n_given']    = $db1->f("ab_firstname");
+                    $fields['n_family']   = $db1->f("ab_lastname");
+                    $fields['d_email']    = $db1->f("ab_email");
+                    $fields['b_tel']      = $db1->f("ab_hphone");
+                    $fields['a_tel']      = $db1->f("ab_wphone");
+                    $fields['c_tel']      = $db1->f("ab_fax");
+                    $fields['fn']         = $db1->f("ab_firstname")." ".$db1->f("ab_lastname");
+                    $fields["a_tel_work"] = "y";
+                    $fields["b_tel_home"] = "y";
+                    $fields["c_tel_fax"]  = "y";
+                    $fields['org_name']   = $db1->f("ab_company");
+                    $fields['title']      = $db1->f("ab_title");
+                    $fields['adr_street'] = $db1->f("ab_street");
+                    $fields['adr_locality']       = $db1->f("ab_city");
+                    $fields['adr_region']         = $db1->f("ab_state");
+                    $fields['adr_postalcode']     = $db1->f("ab_zip");
+
+                    $extra['pager']       = $db1->f("ab_pager");
+                    $extra['mphone']      = $db1->f("ab_mphone");
+                    $extra['ophone']      = $db1->f("ab_ophone");
+                    $extra['bday']        = $db1->f("ab_bday");
+                    $extra['notes']       = $db1->f("ab_notes");
+                    $extra['address2']    = $db1->f("ab_address2");
+                    $extra['url']         = $db1->f("ab_url");
+
+	$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
+                                . "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner)"
+                                . " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
+                                . $fields["fn"]."','".$fields["d_email"]."','".$fields["title"]."','".$fields["a_tel"]."','"
+                                . $fields["a_tel_work"]."','".$fields["b_tel"]."','".$fields["b_tel_home"]."','"
+                                . $fields["c_tel"]."','".$fields["c_tel_fax"]."','".$fields["adr_street"]."','"
+                                . $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."','"
+                                . $fields["owner"] ."')";
+
+	$db2->query($sql,__LINE__,__FILE__);
+
+		while (list($name,$value) = each($extra)) {
+	                    
+			$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
+                                        . addslashes($name) . "','" . addslashes($value) . "')";
+
+
+    		$db2->query($sql,__LINE__,__FILE__);
+		}
+	    }
+
+    $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
+    }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

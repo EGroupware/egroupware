@@ -102,34 +102,73 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE addressbook (
-    ab_id       int(11) NOT NULL auto_increment,
-    ab_owner    varchar(25),
-    ab_access   varchar(10),
-    ab_firstname varchar(255),
-    ab_lastname varchar(255),
-    ab_email    varchar(255),
-    ab_hphone   varchar(255),
-    ab_wphone   varchar(255),
-    ab_fax      varchar(255),
-    ab_pager    varchar(255),
-    ab_mphone   varchar(255),
-    ab_ophone   varchar(255),
-    ab_street   varchar(255),
-    ab_city     varchar(255),
-    ab_state    varchar(255),
-    ab_zip      varchar(255),
-    ab_bday     varchar(255),
-    ab_notes    text,
-    ab_company  varchar(255),
-    ab_company_id int(10) unsigned,
-    ab_title    varchar(60),
-    ab_address2 varchar(60),
-    ab_url      varchar(255),
-    PRIMARY KEY (ab_id)
-  )";
-  $phpgw_setup->db->query($sql);  
+  $sql = "CREATE TABLE phpgw_addressbook (
 
+                    id 			int(8) PRIMARY KEY DEFAULT '0' NOT NULL auto_increment,
+                    lid 		varchar(32),
+                    tid 		char(1),
+                    owner 		int(8),
+                    fn 			varchar(64),
+                    sound 		varchar(64),
+                    org_name 		varchar(64),
+                    org_unit 		varchar(64),
+                    title 		varchar(64),
+                    n_family 		varchar(64),
+                    n_given 		varchar(64),
+                    n_middle 		varchar(64),
+                    n_prefix 		varchar(64),
+                    n_suffix 		varchar(64),
+                    label 		text,
+                    adr_poaddr 		varchar(64),
+                    adr_extaddr 	varchar(64),
+                    adr_street 		varchar(64),
+                    adr_locality 	varchar(32),
+                    adr_region 		varchar(32),
+                    adr_postalcode 	varchar(32),
+                    adr_countryname 	varchar(32),
+                    adr_work 		enum('n','y') NOT NULL,
+                    adr_home 		enum('n','y') NOT NULL,
+                    adr_parcel 		enum('n','y') NOT NULL,
+                    adr_postal 		enum('n','y') NOT NULL,
+                    tz 			varchar(8),
+                    geo 		varchar(32),
+                    a_tel 		varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    a_tel_work 		enum('n','y') NOT NULL,
+                    a_tel_home 		enum('n','y') NOT NULL,
+                    a_tel_voice 	enum('n','y') NOT NULL,
+                    a_tel_msg 		enum('n','y') NOT NULL,
+                    a_tel_fax 		enum('n','y') NOT NULL,
+                    a_tel_prefer 	enum('n','y') NOT NULL,
+                    b_tel 		varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    b_tel_work 		enum('n','y') NOT NULL,
+                    b_tel_home 		enum('n','y') NOT NULL,
+                    b_tel_voice 	enum('n','y') NOT NULL,
+                    b_tel_msg 		enum('n','y') NOT NULL,
+                    b_tel_fax 		enum('n','y') NOT NULL,
+                    b_tel_prefer 	enum('n','y') NOT NULL,
+                    c_tel 		varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    c_tel_work 		enum('n','y') NOT NULL,
+                    c_tel_home 		enum('n','y') NOT NULL,
+                    c_tel_voice 	enum('n','y') NOT NULL,
+                    c_tel_msg 		enum('n','y') NOT NULL,
+                    c_tel_fax 		enum('n','y') NOT NULL,
+                    c_tel_prefer 	enum('n','y') NOT NULL,
+                    d_emailtype 	enum('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX') NOT NULL, 
+                    d_email 		varchar(64),
+                    d_email_work 	enum('n','y') NOT NULL,
+                    d_email_home 	enum('n','y') NOT NULL,
+                    UNIQUE (id)
+		    )";
+  $phpgw_setup->db->query($sql);
+
+        $sql = "CREATE TABLE phpgw_addressbook_extra (
+                    contact_id 		int(11),
+                    contact_owner 	int(11),
+                    contact_name 	varchar(255),
+                    contact_value 	varchar(255)
+            	    )";
+
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE customers (
     company_id int(10) unsigned NOT NULL auto_increment,
@@ -292,7 +331,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

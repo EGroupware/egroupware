@@ -22,7 +22,8 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_access_log");
   $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("DROP TABLE profiles");
-  $phpgw_setup->db->query("DROP TABLE addressbook");
+  $phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
+  $phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
   $phpgw_setup->db->query("DROP TABLE todo");
   $phpgw_setup->db->query("DROP TABLE calendar_entry");
   $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");

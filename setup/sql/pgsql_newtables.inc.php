@@ -100,31 +100,73 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table addressbook (
-    ab_id       serial,
-    ab_owner    varchar(25),
-    ab_access   varchar(10),
-    ab_firstname varchar(255),
-    ab_lastname varchar(255),
-    ab_email    varchar(255),
-    ab_hphone   varchar(255),
-    ab_wphone   varchar(255),
-    ab_fax      varchar(255),
-    ab_pager    varchar(255),
-    ab_mphone   varchar(255),
-    ab_ophone   varchar(255),
-    ab_street   varchar(255),
-    ab_city     varchar(255),
-    ab_state    varchar(255),
-    ab_zip      varchar(255),
-    ab_bday     varchar(255),
-    ab_notes    varchar(255),
-    ab_company  varchar(255),
-    ab_company_id int,
-    ab_title    varchar(60),   
-    ab_address2 varchar(60),
-    ab_url      varchar(255)
-  )";
+  $sql = "create table phpgw_addressbook (
+
+                    id                  serial,
+                    lid                 varchar(32),
+                    tid                 char(1),
+                    owner               int,
+                    fn                  varchar(64),
+                    sound               varchar(64),
+                    org_name            varchar(64),
+                    org_unit            varchar(64),
+                    title               varchar(64),
+                    n_family            varchar(64),
+                    n_given             varchar(64),
+                    n_middle            varchar(64),
+                    n_prefix            varchar(64),
+                    n_suffix            varchar(64),
+                    label               text,       
+                    adr_poaddr          varchar(64),
+                    adr_extaddr         varchar(64),
+                    adr_street          varchar(64),
+                    adr_locality        varchar(32),
+                    adr_region          varchar(32),
+                    adr_postalcode      varchar(32),
+                    adr_countryname     varchar(32),
+                    adr_work            boolean DEFAULT 'n' NOT NULL,
+                    adr_home            boolean DEFAULT 'n' NOT NULL,
+                    adr_parcel          boolean DEFAULT 'n' NOT NULL,
+                    adr_postal          boolean DEFAULT 'n' NOT NULL,
+                    tz                  varchar(8),
+                    geo                 varchar(32),
+                    a_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    a_tel_work          boolean DEFAULT 'n' NOT NULL,
+                    a_tel_home          boolean DEFAULT 'n' NOT NULL,
+                    a_tel_voice         boolean DEFAULT 'n' NOT NULL,
+                    a_tel_msg           boolean DEFAULT 'n' NOT NULL,
+                    a_tel_fax           boolean DEFAULT 'n' NOT NULL,
+                    a_tel_prefer        boolean DEFAULT 'n' NOT NULL,
+                    b_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    b_tel_work          boolean DEFAULT 'n' NOT NULL,
+                    b_tel_home          boolean DEFAULT 'n' NOT NULL,
+                    b_tel_voice         boolean DEFAULT 'n' NOT NULL,
+                    b_tel_msg           boolean DEFAULT 'n' NOT NULL,
+                    b_tel_fax           boolean DEFAULT 'n' NOT NULL,
+                    b_tel_prefer        boolean DEFAULT 'n' NOT NULL,
+                    c_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    c_tel_work          boolean DEFAULT 'n' NOT NULL,
+                    c_tel_home          boolean DEFAULT 'n' NOT NULL,
+                    c_tel_voice         boolean DEFAULT 'n' NOT NULL,
+                    c_tel_msg           boolean DEFAULT 'n' NOT NULL,
+                    c_tel_fax           boolean DEFAULT 'n' NOT NULL,
+                    c_tel_prefer        boolean DEFAULT 'n' NOT NULL,
+                    d_emailtype         text check(status in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
+                    d_email             varchar(64),
+                    d_email_work        boolean DEFAULT 'n' NOT NULL,
+                    d_email_home        boolean DEFAULT 'n' NOT NULL,
+                    UNIQUE (id)
+		    )";
+
+  $phpgw_setup->db->query($sql);
+
+       $sql = "CREATE TABLE phpgw_addressbook_extra (
+                    contact_id          int,
+                    contact_owner       int,
+                    contact_name        varchar(255),
+                    contact_value       varchar(255)
+                )";
+
   $phpgw_setup->db->query($sql);
 
   $sql = "create table todo (
@@ -265,7 +307,7 @@
           );";
   $phpgw_setup->db->query($sql);  
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
