@@ -23,11 +23,15 @@
      if (! count($ab_selected)) {
         $errors[$totalerrors++] = lang("You must select at least 1 column to display");
      }
-     
      if (! $totalerrors) {
-        while ($pref = each($ab_selected)) {
-          $phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $pref[1]);
+        while (list($pref[0]) = each($abc)) {
+           if ($ab_selected["$pref[0]"]) {
+              $phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
+           } else {
+              $phpgw->preferences->delete("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
+          }
         }
+
         if ($mainscreen_showbirthdays) {
            $phpgw->preferences->change("addressbook","mainscreen_showbirthdays");
         } else {
@@ -62,7 +66,7 @@
          $i++; $j++;
 
          echo '<td><input type="checkbox" name="ab_selected[' . $col . ']" value="True"'
-            . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . $descr
+            . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . lang($descr)
             . '</option></td>';
 
          if ($i == 3) {
