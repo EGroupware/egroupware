@@ -23,7 +23,7 @@ The instructions are as follows:
 <p>
 <?php
   while (list($key, $val) = each($phpgw_info["apps"])) {
-    echo "\n<A HREF='navbar-sel.php?filename=".$phpgw_info["server"]["server_root"]."/$key/images/navbar.gif'>";
+    echo "\n<A HREF='".$phpgw->link("navbar-sel.php")."&filename=".$phpgw_info["server"]["server_root"]."/$key/images/navbar.gif'>";
     echo $phpgw_info["apps"][$key]["title"]."</A><BR>";
   }
 
