@@ -46,7 +46,7 @@
 	// (if they can get to the admin page, the admin app is enabled, hence it is shown)
 
 	$phpgw->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled=1 OR app_enabled=2 ORDER BY app_title",__LINE__,__FILE__);
-  
+
 	// Stuff it in an array in the off chance the admin includes need the db
 	while ($phpgw->db->next_record())
 	{

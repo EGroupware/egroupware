@@ -12,18 +12,19 @@
   /* $Id$ */
 
 	$phpgw_info = array();
-	$phpgw_info['flags'] = array('currentapp' => 'admin', 'enable_nextmatchs_class' => True);  
+	$phpgw_info['flags'] = array('currentapp' => 'admin', 'enable_nextmatchs_class' => True);
 	include('../header.inc.php');
 
 	function account_total($query)
 	{
 		global $phpgw;
 
-		if ($query) {
+		if ($query)
+		{
 			$querymethod = " AND (account_firstname LIKE '%$query%' OR account_lastname LIKE "
-					. "'%$query%' OR account_lid LIKE '%$query%') ";
+				. "'%$query%' OR account_lid LIKE '%$query%') ";
 		}
-     
+
 		$phpgw->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='u'".$querymethod,__LINE__,__FILE__);
 		$phpgw->db->next_record();
 
@@ -87,12 +88,12 @@
 			$p->set_var('row_firstname',$firstname);
 			$p->set_var('row_lastname',$lastname);
 			$p->set_var('row_edit','<a href="'.$phpgw->link('/admin/editaccount.php','account_id='
-	       				     . $account_id) . '"> ' . lang('Edit') . ' </a>');
+				. $account_id) . '"> ' . lang('Edit') . ' </a>');
 	
 			if ($phpgw_info['user']['userid'] != $account['account_lid'])
 			{
 				$p->set_var('row_delete','<a href="' . $phpgw->link('/admin/deleteaccount.php','account_id='
-	      						. $account_id) . '"> '.lang('Delete').' </a>');
+					. $account_id) . '"> '.lang('Delete').' </a>');
 			}
 			else
 			{
@@ -100,7 +101,7 @@
 			}
 	
 			$p->set_var('row_view','<a href="' . $phpgw->link('/admin/viewaccount.php','account_id='
-	   				         . $account_id) . '"> ' . lang('View') . ' </a>');
+				. $account_id) . '"> ' . lang('View') . ' </a>');
 	
 			$p->parse('rows','row',True);
 		}

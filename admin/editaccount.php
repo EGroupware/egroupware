@@ -9,7 +9,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	/* $Id$ */
-  	
+
 	$phpgw_info['flags'] = array(
 		'noheader'          => True,
 		'nonavbar'          => True,
@@ -24,7 +24,7 @@
 	function createPageBody($_account_id,$_userData='',$_errors='')
 	{
 		global $phpgw, $phpgw_info;
-  
+
 		$t = new Template($phpgw->common->get_tpl_dir('admin'));
 		$t->set_unknowns('remove');
 
@@ -405,18 +405,18 @@
 	}	
 	return;
 
-	//////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
 	//
 	//			the old code
 	//
-	/////////////////////////////////////////////////////////////////////////////////////////  	
-       
+	/////////////////////////////////////////////////////////////////////////////////////////
+
 	// The following sets any default preferences needed for new applications..
 	// This is smart enough to know if previous preferences were selected, use them.
 
 	$pref = CreateObject('phpgwapi.preferences',intval($account_id));
 	$t = $pref->get_preferences();
-        
+
 	$docommit = False;
 	$after_apps = explode(':',$apps_after);
 	for ($i=1;$i<count($after_apps) - 1;$i++)
@@ -446,12 +446,12 @@
 	while ($app = each($apps_after))
 	{
 		$phpgw->common->hook_single('update_user_data', $app[0]);
-	}       
+	}
 
 	$includedSomething = False;
 	// start inlcuding other admin tools
 	while($app = each($apps_after))
 	{
 		$phpgw->common->hook_single('show_user_data', $app[0]);
-	}       
+	}
 ?>

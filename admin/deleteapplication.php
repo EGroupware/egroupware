@@ -11,29 +11,34 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
+	$phpgw_info['flags'] = array(
+		'noheader' => True,
+		'nonavbar' => True,
+		'currentapp' => 'admin'
+	);
 
-  if (! $app_name) {
-     Header("Location: " . $phpgw->link("/admin/applications.php"));
-  }
-  include("../header.inc.php");
-  $phpgw->template->set_file(array("body" => "delete_common.tpl"));
+	if (! $app_name)
+	{
+		Header("Location: " . $phpgw->link('/admin/applications.php'));
+	}
+	include('../header.inc.php');
+	$phpgw->template->set_file(array('body' => 'delete_common.tpl'));
 
-  if ($confirm) {
-        $phpgw->db->query("delete from phpgw_applications where app_name='$app_name'",__LINE__,__FILE__);
+	if ($confirm)
+	{
+		$phpgw->db->query("delete from phpgw_applications where app_name='$app_name'",__LINE__,__FILE__);
 
-        Header("Location: " . $phpgw->link("/admin/applications.php"));
-        $phpgw->common->phpgw_exit();
-  }
+		Header("Location: " . $phpgw->link('/admin/applications.php'));
+		$phpgw->common->phpgw_exit();
+	}
 
-  $phpgw->common->phpgw_header();
-  echo parse_navbar();
+	$phpgw->common->phpgw_header();
+	echo parse_navbar();
 
-  $phpgw->template->set_var("messages",lang("Are you sure you want to delete this application ?"));
-  $phpgw->template->set_var("no",'<a href="' . $phpgw->link("/admin/applications.php")
-                               . '">' . lang("No") . '</a>');
-  $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . '">' . lang("Yes") . '</a>');
-  $phpgw->template->pparse("out","body");
+	$phpgw->template->set_var('messages',lang('Are you sure you want to delete this application ?'));
+	$phpgw->template->set_var('no','<a href="' . $phpgw->link("/admin/applications.php") . '">' . lang('No') . '</a>');
+	$phpgw->template->set_var('yes','<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . '">' . lang('Yes') . '</a>');
+	$phpgw->template->pparse('out','body');
 
-  $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>

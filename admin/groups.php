@@ -12,8 +12,11 @@
   /* $Id$ */
 
 	$phpgw_info = array();
-	$phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
-	include("../header.inc.php");
+	$phpgw_info['flags'] = array(
+		'currentapp' => 'admin',
+		'enable_nextmatchs_class' => True
+	);
+	include('../header.inc.php');
 
 	function account_total($query)
 	{
@@ -39,15 +42,15 @@
 
 	$total = account_total($query);
  
-	$p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-	$p->set_var("left_nextmatchs",$phpgw->nextmatchs->left("/admin/groups.php",$start,$total));
-	$p->set_var("right_nextmatchs",$phpgw->nextmatchs->right("/admin/groups.php",$start,$total));
-	$p->set_var("lang_groups",lang("user groups"));
+	$p->set_var('left_nextmatchs',$phpgw->nextmatchs->left('/admin/groups.php',$start,$total));
+	$p->set_var('right_nextmatchs',$phpgw->nextmatchs->right('/admin/groups.php',$start,$total));
+	$p->set_var('lang_groups',lang('user groups'));
 
-	$p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"/admin/groups.php",lang("name")));
-	$p->set_var("header_edit",lang("Edit"));
-	$p->set_var("header_delete",lang("Delete"));
+	$p->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"/admin/groups.php",lang("name")));
+	$p->set_var('header_edit',lang('Edit'));
+	$p->set_var('header_delete',lang('Delete'));
 
 	$account_info = $phpgw->accounts->get_list('groups',$start,$sort, $order, $query, $total);
 
@@ -66,23 +69,23 @@
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 			$p->set_var("tr_color",$tr_color);
 
-			if (! $group_name)  $group_name  = '&nbsp;';
+			if (! $group_name) { $group_name = '&nbsp;'; }
 
-			$p->set_var("group_name",$group_name); 
-			$p->set_var("edit_link",'<a href="' . $phpgw->link("/admin/editgroup.php","group_id=" . $group_id) . '"> ' . lang("Edit") . ' </a>');
-			$p->set_var("delete_link",'<a href="' . $phpgw->link("/admin/deletegroup.php","group_id=" . $group_id) . '"> ' . lang("Delete") . ' </a>');
-			$p->parse("rows","row",True);
+			$p->set_var('group_name',$group_name); 
+			$p->set_var('edit_link','<a href="' . $phpgw->link('/admin/editgroup.php','group_id=' . $group_id) . '"> ' . lang('Edit') . ' </a>');
+			$p->set_var('delete_link','<a href="' . $phpgw->link('/admin/deletegroup.php','group_id=' . $group_id) . '"> ' . lang('Delete') . ' </a>');
+			$p->parse('rows','row',True);
 
 		}
 	}
 
-	$p->set_var("new_action",$phpgw->link("/admin/newgroup.php"));
-	$p->set_var("lang_add",lang("add"));
+	$p->set_var('new_action',$phpgw->link('/admin/newgroup.php'));
+	$p->set_var('lang_add',lang('add'));
 
-	$p->set_var("search_action",$phpgw->link("/admin/groups.php"));
-	$p->set_var("lang_search",lang("search"));
+	$p->set_var('search_action',$phpgw->link('/admin/groups.php'));
+	$p->set_var('lang_search',lang('search'));
 
-	$p->pparse("out","list");
+	$p->pparse('out','list');
 
 	$phpgw->common->phpgw_footer();
 ?>

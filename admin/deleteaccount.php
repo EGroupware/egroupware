@@ -15,11 +15,14 @@
 
 	if ($delete_account || !$account_id)
 	{
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info['flags'] = array(
+			'noheader' => True,
+			'nonavbar' => True
+		);
 	}
 
-	$phpgw_info["flags"]["currentapp"] = "admin";
-	include("../header.inc.php");
+	$phpgw_info['flags']['currentapp'] = 'admin';
+	include('../header.inc.php');
 	// Make sure they are not attempting to delete their own account, or they have cancelled.
 	// If they are, they should not reach this point anyway.
 	if($cancel || $phpgw_info['user']['account_id'] == $account_id)
@@ -30,7 +33,7 @@
 	
 	if ($account_id && !$delete_account)
 	{
-		$phpgw->template->set_file(array("form" => "delete_account.tpl"));
+		$phpgw->template->set_file(array('form' => 'delete_account.tpl'));
 		
 		$phpgw->template->set_var('form_action',$phpgw->link('/admin/deleteaccount.php'));
 		$phpgw->template->set_var('account_id',$account_id);
@@ -51,7 +54,7 @@
 		$phpgw->template->set_var('new_owner_select',$str);
 		$phpgw->template->set_var('cancel',lang('cancel'));
 		$phpgw->template->set_var('delete',lang('delete'));
-		$phpgw->template->pparse("out","form");
+		$phpgw->template->pparse('out','form');
 
 		$phpgw->common->phpgw_footer();
 	}
@@ -90,7 +93,7 @@
 			$cd = 29;
 		}
 
-		Header("Location: " . $phpgw->link("/admin/accounts.php","cd=$cd"));
+		Header("Location: " . $phpgw->link('/admin/accounts.php',"cd=$cd"));
 		$phpgw->common->phpgw_exit();
 	}
 ?>

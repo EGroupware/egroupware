@@ -2,7 +2,7 @@
   /**************************************************************************\
   * phpGroupWare - Admin                                                     *
   * (http://www.phpgroupware.org)                                            *
-  * Written by Bettina Gille [ceb@phpgroupware.org]                          *    
+  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
   * -----------------------------------------------                          *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -11,58 +11,66 @@
   \**************************************************************************/
   /* $Id$ */
 
-    if ($confirm) {
-    $phpgw_info["flags"] = array('noheader' => True, 
-                                  'nonavbar' => True);
-    }
+	if ($confirm)
+	{
+		$phpgw_info['flags'] = array(
+			'noheader' => True, 
+			'nonavbar' => True
+		);
+	}
 
-    $phpgw_info["flags"]["currentapp"] = 'admin';
-    include('../header.inc.php');
+	$phpgw_info['flags']['currentapp'] = 'admin';
+	include('../header.inc.php');
 
-    $c = CreateObject('phpgwapi.categories');
-    $c->categories($phpgw_info['user']['account_id'],'phpgw');
+	$c = CreateObject('phpgwapi.categories');
+	$c->categories($phpgw_info['user']['account_id'],'phpgw');
 
-    if (! $cat_id) {
-    Header('Location: ' . $phpgw->link('/admin/categories.php'));
-    }
+	if (! $cat_id)
+	{
+		Header('Location: ' . $phpgw->link('/admin/categories.php'));
+	}
 
-    if ($confirm) {
-	if ($subs) { $c->delete($cat_id,'True'); }
-	else { $c->delete($cat_id); }    
-	Header('Location: ' . $phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
-    }
-    else {
-    $hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
-                        . "<input type=\"hidden\" name=\"order\" value=\"$order\">\n"
-                        . "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
-                        . "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
-                        . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n"
-                        . "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
+	if ($confirm)
+	{
+		if ($subs) { $c->delete($cat_id,'True'); }
+		else { $c->delete($cat_id); }
+		Header('Location: ' . $phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+	}
+	else
+	{
+		$hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
+			. "<input type=\"hidden\" name=\"order\" value=\"$order\">\n"
+			. "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
+			. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
+			. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n"
+			. "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
 
-    $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-    $t->set_file(array('category_delete' => 'delete_cat.tpl'));
-    $t->set_var('messages',lang('Are you sure you want to delete this category ?'));
-    $t->set_var('hidden_vars',$hidden_vars);
-    
-    $exists = $c->exists('subs',$cat_name='',$cat_id);
-    
-    if ($exists==True) {
-	$t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
-	$t->set_var('subs','<input type="checkbox" name="subs" value="True">');
-    }
-    else {
-        $t->set_var('lang_subs','');
-        $t->set_var('subs', '');
-    }
+		$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+		$t->set_file(array('category_delete' => 'delete_cat.tpl'));
+		$t->set_var('messages',lang('Are you sure you want to delete this category ?'));
+		$t->set_var('hidden_vars',$hidden_vars);
 
-    $t->set_var('nolink',$phpgw->link('/admin/categories.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
-    $t->set_var('lang_no',lang('No'));
+		$exists = $c->exists('subs',$cat_name='',$cat_id);
 
-    $t->set_var('action_url',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id"));
-    $t->set_var('lang_yes',lang('Yes'));
+		if ($exists==True)
+		{
+			$t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
+			$t->set_var('subs','<input type="checkbox" name="subs" value="True">');
+		}
+		else
+		{
+			$t->set_var('lang_subs','');
+			$t->set_var('subs', '');
+		}
 
-    $t->pparse('out','category_delete');
-    }
+		$t->set_var('nolink',$phpgw->link('/admin/categories.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+		$t->set_var('lang_no',lang('No'));
 
-    $phpgw->common->phpgw_footer();
+		$t->set_var('action_url',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id"));
+		$t->set_var('lang_yes',lang('Yes'));
+
+		$t->pparse('out','category_delete');
+	}
+
+$phpgw->common->phpgw_footer();
 ?>
