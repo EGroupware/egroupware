@@ -512,9 +512,11 @@
 					}
 					if(get_magic_quotes_gpc() && isset($value))
 					{
-						// we need to stripslash 2 levels of arrays
+						// we need to stripslash 3 levels of arrays
 						// because of the password function in preferences
 						// it's named ['user']['variablename']['pw']
+						// or something like this in projects
+						// $values['budgetBegin']['1']['year']
 						if(@is_array($value))
 						{
 							/* stripslashes on the first level of array values */
@@ -524,7 +526,17 @@
 								{
 									foreach($val as $name2 => $val2)
 									{
-										$value[$name][$name2] = stripslashes($val2);
+										if(@is_array($val2))
+										{
+											foreach($val2 as $name3 => $val3)
+											{
+												$value[$name][$name2][$name3] = stripslashes($val3);
+											}
+										}
+										else
+										{
+											$value[$name][$name2] = stripslashes($val2);
+										}
 									}
 								}
 								else

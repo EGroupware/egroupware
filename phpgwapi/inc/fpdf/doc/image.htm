@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<TITLE>Image</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="../fpdf.css">
+</HEAD>
+<BODY>
+<H2>Image</H2>
+<TT>Image(<B>string</B> file, <B>float</B> x, <B>float</B> y [, <B>float</B> w [, <B>float</B> h [, <B>string</B> type [, <B>mixed</B> link]]]])</TT>
+<H4 CLASS='st'>Version</H4>
+1.1
+<H4 CLASS='st'>Description</H4>
+Puts an image in the page. The upper-left corner must be given. The dimensions can be specified
+in different ways:
+<UL>
+<LI>explicit width and height (expressed in user unit)
+<LI>one explicit dimension, the other being calculated automatically in order to keep the original
+proportions
+<LI>no explicit dimension, in which case the image is put at 72 dpi
+</UL>
+Supported formats are JPEG and PNG.
+<BR>
+<BR>
+For JPEG, all flavors are allowed:
+<UL>
+<LI>gray scales
+<LI>true colors (24 bits)
+<LI>CMYK (32 bits)
+</UL>
+For PNG, are allowed:
+<UL>
+<LI>gray scales on at most 8 bits (256 levels)
+<LI>indexed colors
+<LI>true colors (24 bits)
+</UL>
+but are not supported:
+<UL>
+<LI>Interlacing
+<LI>Alpha channel
+</UL>
+If a transparent color is defined, it will be taken into account (but will be only interpreted
+by Acrobat 4 and above).
+<BR>
+The format can be specified explicitly or inferred from the file extension.
+<BR>
+It is possible to put a link on the image.
+<BR>
+<BR>
+Remark: if an image is used several times, only one copy will be embedded in the file.
+<H4 CLASS='st'>Parameters</H4>
+<TT><U>file</U></TT>
+<BLOCKQUOTE>
+Name of the file containing the image.
+</BLOCKQUOTE>
+<TT><U>x</U></TT>
+<BLOCKQUOTE>
+Abscissa of the upper-left corner.
+</BLOCKQUOTE>
+<TT><U>y</U></TT>
+<BLOCKQUOTE>
+Ordinate of the upper-left corner.
+</BLOCKQUOTE>
+<TT><U>w</U></TT>
+<BLOCKQUOTE>
+Width of the image in the page. If not specified or equal to zero, it is automatically
+calculated.
+</BLOCKQUOTE>
+<TT><U>h</U></TT>
+<BLOCKQUOTE>
+Height of the image in the page. If not specified or equal to zero, it is automatically
+calculated.
+</BLOCKQUOTE>
+<TT><U>type</U></TT>
+<BLOCKQUOTE>
+Image format. Possible values are (case insensitive): <TT>JPG</TT>, <TT>JPEG</TT>, <TT>PNG</TT>.
+If not specified, the type is inferred from the file extension.
+</BLOCKQUOTE>
+<TT><U>link</U></TT>
+<BLOCKQUOTE>
+URL or identifier returned by AddLink().
+</BLOCKQUOTE>
+<H4 CLASS='st'>See also</H4>
+<A HREF="addlink.htm">AddLink()</A>.
+<H6></H6>
+<HR>
+<DIV ALIGN="CENTER"><A HREF="index.htm">Index</A></DIV>
+</BODY>
+</HTML>

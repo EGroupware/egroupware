@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<TITLE>Cell</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="../fpdf.css">
+</HEAD>
+<BODY>
+<H2>Cell</H2>
+<TT>Cell(<B>float</B> w [, <B>float</B> h [, <B>string</B> txt [, <B>mixed</B> border [, <B>int</B> ln [, <B>string</B> align [, <B>int</B> fill [, <B>mixed</B> link]]]]]]])</TT>
+<H4 CLASS='st'>Version</H4>
+1.0
+<H4 CLASS='st'>Description</H4>
+Prints a cell (rectangular area) with optional borders, background color and character string.
+The upper-left corner of the cell corresponds to the current position. The text can be aligned
+or centered. After the call, the current position moves to the right or to the next line. It is
+possible to put a link on the text.
+<BR>
+If automatic page breaking is enabled and the cell goes beyond the limit, a page break is
+done before outputting.
+<H4 CLASS='st'>Parameters</H4>
+<TT><U>w</U></TT>
+<BLOCKQUOTE>
+Cell width. If <TT>0</TT>, the cell extends up to the right margin.
+</BLOCKQUOTE>
+<TT><U>h</U></TT>
+<BLOCKQUOTE>
+Cell height.
+Default value: <TT>0</TT>.
+</BLOCKQUOTE>
+<TT><U>txt</U></TT>
+<BLOCKQUOTE>
+String to print.
+Default value: empty string.
+</BLOCKQUOTE>
+<TT><U>border</U></TT>
+<BLOCKQUOTE>
+Indicates if borders must be drawn around the cell. The value can be either a number:
+<UL>
+<LI><TT>0</TT>: no border
+<LI><TT>1</TT>: frame
+</UL>
+or a string containing some or all of the following characters (in any order):
+<UL>
+<LI><TT>L</TT>: left
+<LI><TT>T</TT>: top
+<LI><TT>R</TT>: right
+<LI><TT>B</TT>: bottom
+</UL>
+Default value: <TT>0</TT>.
+</BLOCKQUOTE>
+<TT><U>ln</U></TT>
+<BLOCKQUOTE>
+Indicates where the current position should go after the call. Possible values are:
+<UL>
+<LI><TT>0</TT>: to the right
+<LI><TT>1</TT>: to the beginning of the next line
+<LI><TT>2</TT>: below
+</UL>
+Putting <TT>1</TT> is equivalent to putting <TT>0</TT> and calling Ln() just after.
+Default value: <TT>0</TT>.
+</BLOCKQUOTE>
+<TT><U>align</U></TT>
+<BLOCKQUOTE>
+Allows to center or align the text. Possible values are:
+<UL>
+<LI><TT>L</TT> or empty string: left align (default value)
+<LI><TT>C</TT>: center
+<LI><TT>R</TT>: right align
+</UL>
+</BLOCKQUOTE>
+<TT><U>fill</U></TT>
+<BLOCKQUOTE>
+Indicates if the cell background must be painted (<TT>1</TT>) or transparent (<TT>0</TT>).
+Default value: <TT>0</TT>.
+</BLOCKQUOTE>
+<TT><U>link</U></TT>
+<BLOCKQUOTE>
+URL or identifier returned by AddLink().
+</BLOCKQUOTE>
+<H4 CLASS='st'>Example</H4>
+<TABLE WIDTH="100%" BGCOLOR="#E0E0E0"><TR><TD>
+<TT>
+//Set font<BR>
+$pdf-&gt;SetFont('Arial','B',16);<BR>
+//Move to 8 cm to the right<BR>
+$pdf-&gt;Cell(80);<BR>
+//Centered text in a framed 20*10 mm cell and line break<BR>
+$pdf-&gt;Cell(20,10,'Title',1,1,'C');
+</TT>
+</TD></TR></TABLE><BR>
+<H4 CLASS='st'>See also</H4>
+<A HREF="setfont.htm">SetFont()</A>,
+<A HREF="setdrawcolor.htm">SetDrawColor()</A>,
+<A HREF="setfillcolor.htm">SetFillColor()</A>,
+<A HREF="settextcolor.htm">SetTextColor()</A>,
+<A HREF="setlinewidth.htm">SetLineWidth()</A>,
+<A HREF="addlink.htm">AddLink()</A>,
+<A HREF="ln.htm">Ln()</A>,
+<A HREF="multicell.htm">MultiCell()</A>,
+<A HREF="write.htm">Write()</A>,
+<A HREF="setautopagebreak.htm">SetAutoPageBreak()</A>.
+<H6></H6>
+<HR>
+<DIV ALIGN="CENTER"><A HREF="index.htm">Index</A></DIV>
+</BODY>
+</HTML>

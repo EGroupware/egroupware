@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<TITLE>Output</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="../fpdf.css">
+</HEAD>
+<BODY>
+<H2>Output</H2>
+<TT><B>string</B> Output([<B>string</B> name [, <B>string</B> dest]])</TT>
+<H4 CLASS='st'>Version</H4>
+1.0
+<H4 CLASS='st'>Description</H4>
+Send the document to a given destination: string, local file or browser. In the last case, the
+plug-in may be used (if present) or a download ("Save as" dialog box) may be forced.
+<BR>
+The method first calls Close() if necessary to terminate the document.
+<H4 CLASS='st'>Parameters</H4>
+<TT><U>name</U></TT>
+<BLOCKQUOTE>
+The name of the file. If not given, the document will be sent to the browser
+(destination <TT>I</TT>) with the name <TT>doc.pdf</TT>.
+</BLOCKQUOTE>
+<TT><U>dest</U></TT>
+<BLOCKQUOTE>
+Destination where to send the document. It can take one of the following values:
+<UL>
+<LI><TT>I</TT>: send the file inline to the browser. The plug-in is used if available.
+The name given by <TT>name</TT> is used when one selects the "Save as" option on the
+link generating the PDF.
+<LI><TT>D</TT>: send to the browser and force a file download with the name given by
+<TT>name</TT>.
+<LI><TT>F</TT>: save to a local file with the name given by <TT>name</TT>.
+<LI><TT>S</TT>: return the document as a string. <TT>name</TT> is ignored.
+</UL>
+If the parameter is not specified but a name is given, destination is <TT>F</TT>. If no
+parameter is specified at all, destination is <TT>I</TT>.<BR>
+<BR>
+Note: for compatibility with previous versions, a boolean value is also accepted
+(<TT>false</TT> for <TT>F</TT> and <TT>true</TT> for <TT>D</TT>).
+</BLOCKQUOTE>
+<H4 CLASS='st'>See also</H4>
+<A HREF="close.htm">Close()</A>.
+<H6></H6>
+<HR>
+<DIV ALIGN="CENTER"><A HREF="index.htm">Index</A></DIV>
+</BODY>
+</HTML>
