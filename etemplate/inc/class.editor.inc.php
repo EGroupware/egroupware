@@ -94,7 +94,7 @@
 
 		function editor()
 		{
-			$this->etemplate = CreateObject('etemplate.etemplate');
+			$this->etemplate =& CreateObject('etemplate.etemplate');
 
 			$this->extensions = $GLOBALS['phpgw']->session->appsession('extensions','etemplate');
 		}
@@ -491,14 +491,13 @@
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
-						$ui = @CreateObject($name.'.'.($class = 'ui'.$name));
-						if (!is_object($ui))
+						foreach(array('ui'.$name,'ui',$name,'bo'.$name) as $class)
 						{
-							$ui = @CreateObject($name.'.'.($class = 'ui'));
-						}
-						if (!is_object($ui))
-						{
-							$ui = @CreateObject($name.'.'.($class = $name));
+							if (file_exists(EGW_INCLUDE_ROOT.'/'.$name.'/inc/class.'.$class.'.inc.php') &&
+								($ui =& CreateObject($name.'.'.$class)) && is_object($ui))
+							{
+								break;
+							}
 						}
 						if (is_object($ui) && @$ui->public_functions['writeLangFile'])
 						{
@@ -538,7 +537,7 @@
 
 			if (!is_object($this->etemplate->xul_io))
 			{
-				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+				$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
 			}
 			$xml = $this->etemplate->xul_io->export($this->etemplate);
 
@@ -577,7 +576,7 @@
 			}
 			if (!is_object($this->etemplate->xul_io))
 			{
-				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+				$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
 			}
 			$xml = $this->etemplate->xul_io->export($this->etemplate);
 
@@ -598,7 +597,7 @@
 
 			if (!is_object($this->etemplate->xul_io))
 			{
-				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+				$this->etemplate->xul_io =& CreateObject('etemplate.xul_io');
 			}
 			$imported = $this->etemplate->xul_io->import($this->etemplate,$xml);
 			$this->etemplate->modified = @filemtime($f);
@@ -914,14 +913,13 @@
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
-						$ui = @CreateObject($app.'.'.($class = 'ui'.$app));
-						if (!is_object($ui))
+						foreach(array('ui'.$name,'ui',$name,'bo'.$name) as $class)
 						{
-							$ui = @CreateObject($app.'.'.($class = 'ui'));
-						}
-						if (!is_object($ui))
-						{
-							$ui = @CreateObject($app.'.'.($class = $app));
+							if (file_exists(EGW_INCLUDE_ROOT.'/'.$name.'/inc/class.'.$class.'.inc.php') &&
+								($ui =& CreateObject($name.'.'.$class)) && is_object($ui))
+							{
+								break;
+							}
 						}
 						if (is_object($ui) && @$ui->public_functions['writeLangFile'])
 						{
@@ -1018,7 +1016,7 @@
 					// create the needed cells, if they dont exist
 					for ($n = 1; $n <= (int) $widget['size']; ++$n)
 					{
-						if (!is_array($widget[$n])) $widget[$n] = soetemplate::empty_cell();
+						if (!is_array($widget[$n])) $widget[$n] = $n == 1 ? $old : soetemplate::empty_cell();
 					}
 				}
 				return; // no change necessary, eg. between different box-types
