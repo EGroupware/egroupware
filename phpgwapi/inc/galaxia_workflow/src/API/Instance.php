@@ -196,7 +196,7 @@ class Instance extends Base {
     $this->owner = $user;
     // save database
     $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_owner`=? where `wf_instance_id`=?";
-    $this->query($query,array($owner,(int)$this->instanceId));  
+    $this->query($query,array($this->owner,(int)$this->instanceId));  
   }
   
   /*!
