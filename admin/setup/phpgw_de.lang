@@ -30,6 +30,7 @@ edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
+find and register all application hooks	admin	de	Registrieren aller Applikation hooks
 global categories	admin	de	Globale Kategorien
 group name	admin	de	Gruppenname
 group has been added	common	de	Gruppe wurde hinzugef&uuml;gt
@@ -53,6 +54,7 @@ manager	admin	de	Manager
 never	admin	de	Nie
 new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+peer servers	admin	de	Server Verbund
 percent of users that logged out	admin	de	Prozent der User, die sich korrekt abgemeldet haben
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
