@@ -45,12 +45,73 @@
 	{
 		var $tz_offset;
 		var $days = Array();
+		var $gmtnow;
+		var $gmtdate;
 
 		function datetime()
 		{
 			$this->tz_offset = ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+/*
+ * This is not advanced enough to automatically recalc Daylight Savings time
+			if(date('I') == 1)
+			{
+				$this->tz_offset += 3600;
+			}
+ */
+			$this->gmtdate = gmdate('D, d M Y H:i:s',time()).' GMT';
+			$this->gmtnow = $this->convert_rfc_to_epoch($this->gmtdate);
 		}
-	
+
+		function convert_rfc_to_epoch($date_str)
+		{
+			$comma_pos = strpos($date_str,',');
+			if($comma_pos)
+			{
+				$date_str = substr($date_str,$comma_pos+1);
+			}
+
+			// This may need to be a reference to the different months in native tongue....
+			$month= array(
+				'Jan' => 1,
+				'Feb' => 2,
+				'Mar' => 3,
+				'Apr' => 4,
+				'May' => 5,
+				'Jun' => 6,
+				'Jul' => 7,
+				'Aug' => 8,
+				'Sep' => 9,
+				'Oct' => 10,
+				'Nov' => 11,
+				'Dec' => 12
+			);
+			$dta = array();
+			$ta = array();
+
+			// Convert "15 Jul 2000 20:50:22 +0200" to unixtime
+			$dta = explode(' ',$date_str);
+			$ta = explode(':',$dta[4]);
+
+			if(substr($dta[5],0,3) <> 'GMT')
+			{
+				$tzoffset = substr($dta[5],0,1);
+				$tzhours = intval(substr($dta[5],1,2));
+				$tzmins = intval(substr($dta[5],3,2));
+				switch ($tzoffset)
+				{
+					case '-':
+						(int)$ta[0] += $tzhours;
+						(int)$ta[1] += $tzmins;
+						break;
+					case '+':
+						(int)$ta[0] -= $tzhours;
+						(int)$ta[1] -= $tzmins;
+						break;
+				}
+			}
+			return mktime($ta[0],$ta[1],$ta[2],$month[$dta[2]],$dta[1],$dta[3]);
+		}
+
 		function get_weekday_start($year,$month,$day)
 		{
 			$weekday = $this->day_of_week($year,$month,$day);
@@ -79,7 +140,6 @@
 							$sday = mktime(2,0,0,$month,$day - ($weekday + 1),$year);
 							break;
 					}
-					return $sday;
 					break;
 				case 'Monday':
 					$this->days = Array(
@@ -103,7 +163,6 @@
 							$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
 							break;
 					}
-					return $sday - (60 * 60 * 2);
 					break;
 				case 'Sunday':
 				default:
@@ -116,9 +175,10 @@
 						5 => 'Fri',
 						6 => 'Sat'
 					);
-					return mktime(2,0,0,$month,$day - $weekday,$year);
+					$sday = mktime(2,0,0,$month,$day - $weekday,$year);
 					break;
 			}
+			return $sday - 7200;
 		}
 
 		function is_leap_year($year)
