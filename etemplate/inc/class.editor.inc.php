@@ -949,7 +949,7 @@
 			if (!$msg && isset($content['values']) && !isset($content['vals']))
 			{
 				$r = 1;
-				foreach($content['cont'] as $key => $val)
+				foreach((array)$content['cont'] as $key => $val)
 				{
 					$vals["@$r"] = $key;
 					$vals["A$r"] = is_array($val) ? htmlspecialchars(serialize($val)).'#SeR#' : $val;
@@ -957,7 +957,7 @@
 				}
 				$editor->data[$editor->rows]['A']['name'] = 'etemplate.editor.values';
 				$editor->data[$editor->rows]['A']['size'] = 'vals';
-				$new_content['olds'] = $vals;
+				$new_content['vals'] = $vals;
 			}
 			else
 			{
@@ -1483,7 +1483,7 @@
 		{
 			if ($widget2content)
 			{
-				if (preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$widget['onclick'],$matches))
+				if (preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);?$/',$widget['onclick'],$matches))
 				{
 					$cell_content['onclick'] = $matches[1];
 					$cell_content['onclick_type'] = 'confirm';
@@ -1495,7 +1495,7 @@
 			}
 			else	// content --> widget
 			{
-				if (preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$cell_content['onclick'],$matches) ||
+				if (preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);?$/',$cell_content['onclick'],$matches) ||
 					$cell_content['onclick_type'] != 'custom' && $cell_content['onclick'])
 				{
 					$cell_content['onclick_type'] = 'confirm';
@@ -1811,8 +1811,8 @@
 			$keys = $this->etemplate->as_array(-1); unset($keys['group']);
 			$sources[''] = lang('eTemplate').': '.implode(':',$keys);
 			list($app) = explode('.',$this->etemplate->name);
-			$app_templates = opendir(PHPGW_SERVER_ROOT.'/'.$app.'/templates');
-			while (($template = readdir($app_templates)) !== false)
+			$app_templates = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/templates');
+			while (($template = @readdir($app_templates)) !== false)
 			{
 				$dir = PHPGW_SERVER_ROOT.'/'.$app.'/templates/'.$template;
 				if ($template[0] == '.' || $template == 'CVS' || !is_dir($dir.'/images')) continue;	// not a template-dir

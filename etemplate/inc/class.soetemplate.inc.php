@@ -669,7 +669,9 @@
 				{
 					$arr[$key] = $this->compress_array($val,$remove_objs);
 				}
-				elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array'))
+				elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array') &&
+					// this test prevents an infinit recursion of templates calling itself, atm. etemplate.editor.new
+					$GLOBALS['phpgw_info']['etemplate']['as_array'][$this->name]++ < 2)
 				{
 					$arr['obj'] = $val->as_array(2);
 				}
@@ -693,6 +695,7 @@
 		 */
 		function as_array($data_too=0,$db_keys=false)
 		{
+			//echo "<p>soetemplate::as_array($data_too,$db_keys) name='$this->name', ver='$this->version'</p>\n";
 			$arr = array();
 			switch($data_too)
 			{

@@ -135,7 +135,7 @@
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
 					),'/etemplate/process_exec.php?menuaction='.$method,'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
-			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']);
+			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']); 
 			if (!$this->xslt)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
@@ -172,7 +172,7 @@
 						}
 					}
 					echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;
-	
+
 					if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] &&
 					    (!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
 					{
@@ -229,6 +229,7 @@
 
 			if (!$_POST['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
 			{
+				//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 				// this prevents an empty screen, if the sessiondata gets lost somehow
 				$this->location(array('menuaction' => $_GET['menuaction']));
 			}
@@ -482,6 +483,7 @@
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
 						continue;
 					}
+					/* TEST-RB
 					if ($cell['onclick'])	// can only be set via source at the moment
 					{
 						$row_data[".$col"] .= ' onClick="'.$cell['onclick'].'"';
@@ -490,7 +492,7 @@
 						{
 							$row_data[".$col"] .= ' ID="'.$cell['id'].'"';
 						}
-					}
+					}*/
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
 					if ($colspan > 1)
 					{
@@ -590,7 +592,7 @@
 
 			$value = $this->get_array($content,$name);
 
-			if ($readonly = $cell['readonly'] || (@$readonlys[$name] && !is_array($readonlys[$name])) || $readonlys['__ALL__'])
+			if ($readonly = $cell['readonly'] || @$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
 			{
 				$options .= ' READONLY';
 			}
@@ -797,15 +799,16 @@
 					list($app) = explode('.',$this->name);
 					list($img,$ro_img) = explode(',',$cell_options);
 					$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
-					if ($cell['onclick'])
+					if ($cell['onclick'] &&
+						($onclick = $this->expand_name($cell['onclick'],$show_c,$show_row,$content['.c'],$content['.row'],$content)))
 					{
-						$onclick = $this->expand_name($cell['onclick'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-						if ($onclick && preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$onclick,$matches))
+						
+						if (preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$onclick,$matches))
 						{
 							$url = $GLOBALS['phpgw']->link($matches[1],$matches[2]);
 							$onclick = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$onclick);
 						}
-						elseif ($onclick && preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$cell['onclick'],$matches))
+						elseif (preg_match('/^return confirm\(["\']{1}(.*)["\']{1}\);?$/',$cell['onclick'],$matches))
 						{
 							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 							$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
@@ -813,8 +816,9 @@
 					}
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
-						$onclick = ($onclick ? preg_replace('/^return(.*);?/','if (\\1) ',$onclick) : '').
-							(($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange'].'; return false;');
+						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
+							(($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange']).'; return false;';
+						
 						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 						{
 							$html .= $this->html->progressbar($percent,$title,'onclick="'.$onclick.'" '.$options);
@@ -832,9 +836,9 @@
 							$options .= ' title="'.$title.'"';
 						}
 						if ($cell['onchange'] && $cell['onchange'] != 1)
-						{
-							$onclick = ($onclick ? preg_replace('/^return(.*);?/','if (\\1) ',$onclick) : '').$cell['onchange'];
-						}
+						{echo "onclick='$onclick'";
+							$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').$cell['onchange'];
+				echo "onclick='$onclick'";		}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$onclick,
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
 							$this->html->image($app,$ro_img);
@@ -931,7 +935,7 @@
 					}
 					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
-				case 'select':	// size:[linesOnMultiselect]
+				case 'select':	// size:[linesOnMultiselect|emptyLabel]
 					$sels = array();
 					list($multiple) = explode(',',$cell_options);
 					if (!empty($multiple) && 0+$multiple <= 0)
@@ -984,14 +988,33 @@
 					{
 						$sels += $content["options-$name"];
 					}
+					if ($multiple && !is_array($value)) $value = explode(',',$value);
 					if ($readonly)
 					{
-						$html .= $cell['no_lang'] ? $sels[$value] : lang($sels[$value]);
+						if ($multiple)
+						{
+							foreach($value as $val)
+							{
+								$html .= ($html?', ':'').$this->html->htmlspecialchars($cell['no_lang'] ? $sels[$val] : lang($sels[$val]));
+							}
+						}
+						else
+						{
+							$html .= $this->html->htmlspecialchars($cell['no_lang'] ? $sels[$value] : lang($sels[$value]));
+						}
 					}
 					else
 					{
-						$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-							$cell['no_lang'],$options,$multiple);
+						if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
+						{
+							$html .= $this->html->checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
+								$cell['no_lang'],$options,$multiple);
+						}
+						else
+						{
+							$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
+								$cell['no_lang'],$options,$multiple);
+						}
 						if (!isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
 						{
 							$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];

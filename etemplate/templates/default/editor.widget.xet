@@ -101,7 +101,7 @@
 					</hbox>
 				</row>
 				<row>
-					<template content="cell" span="all" id="etemplate.editor.widget.generic"/>
+					<template content="cell" span="all" id="etemplate.editor.widget.generic" obj="etemplate.editor.widget.generic"/>
 				</row>
 				<row disabled="!@grid_row">
 					<groupbox span="all" orient="horizontal">
@@ -125,7 +125,7 @@
 					<hbox span="all">
 						<button label="Save" id="save" statustext="saves the template with given version number and closes the window"/>
 						<button label="Apply" id="apply" statustext="applies the changes to the given version of the template"/>
-						<button label="Cancel" id="cancel" statustext="closes the window without saving the changes"/>
+						<button label="Cancel" id="cancel" statustext="closes the window without saving the changes" onclick="window.close();"/>
 					</hbox>
 				</row>
 			</rows>
