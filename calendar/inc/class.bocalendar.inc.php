@@ -527,7 +527,6 @@
 
 		function read_entry($id,$ignore_acl=False)
 		{
-			$bolink = createObject('infolog.bolink');
 			if (is_array($id) && count($id) == 1)
 			{
 				list(,$id) = each($id);
@@ -535,16 +534,21 @@
 			if($ignore_acl || $this->check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
-				$linkIDs = $bolink->get_links('calendar', $id);
-				if(is_array($linkIDs))
+		
+				if (isset($GLOBALS['phpgw_info']['apps']['infolog']))	// check if infolog is installed
 				{
-					foreach($linkIDs as $linkData)
+					$bolink = createObject('infolog.bolink');
+					$linkIDs = $bolink->get_links('calendar', $id);
+					if(is_array($linkIDs))
 					{
-						//$event['projectID'] = 8;
-						if($linkData['app'] == 'projects')
+						foreach($linkIDs as $linkData)
 						{
-							$event['projectID'] = $linkData['id'];
-							continue;
+							//$event['projectID'] = 8;
+							if($linkData['app'] == 'projects')
+							{
+								$event['projectID'] = $linkData['id'];
+								continue;
+							}
 						}
 					}
 				}
@@ -1117,7 +1121,8 @@
 				}
 
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
-				if(isset($l_cal['project']))
+				// check if infolog is availible
+				if(isset($GLOBALS['phpgw_info']['apps']['infolog']) && isset($l_cal['project']))
 				{
 					$bolink = createObject('infolog.bolink');
 					$bolink->unlink(0,'calendar',$event['id']);
@@ -3100,7 +3105,7 @@
 
 			$var['updated'] = Array(
 				'field'	=> lang('Updated'),
-				'data'	=> $GLOBALS['phpgw']->common->show_date($this->maketime($event['modtime']) - $GLOBALS['phpgw']->datetime->tz_offset)
+				'data'	=> $GLOBALS['phpgw']->common->show_date($this->maketime($event['modtime']))
 			);
 
 			$var['access'] = Array(
