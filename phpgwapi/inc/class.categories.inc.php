@@ -725,7 +725,7 @@
 				case 'main':	$value = 'cat_main'; break;
 				case 'level':	$value = 'cat_level'; break;
 				case 'parent':	$value = 'cat_parent'; break;
-				case 'name':
+				case 'name':	$value = 'cat_name'; break;
 				default:		$value = 'cat_parent'; break;
 			}
 
