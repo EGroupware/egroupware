@@ -19,7 +19,7 @@
 <!-- END link_text_old -->
 
 <!-- BEGIN link_text -->
-<nobr>&nbsp;<span style="color: black">{time}</span> {users_status}</nobr><br><b>{title}</b><br><i>{desc}</i><br>(<span style="font-size:7px;">{location})</span>
+<nobr>&nbsp;<span style="color: black">{time}</span> {users_status}</nobr><br><b>{title}</b><br><i>{desc}</i><br><b>{location}</b>
 <!-- END link_text -->
 
 <!-- BEGIN link_close -->
