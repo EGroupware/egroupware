@@ -23,6 +23,7 @@ class db {
   var $Password = "";
 
   /* public: configuration parameters */
+  var $use_pconnect      = True;
   var $auto_stripslashes = False;
   var $Auto_Free     = 0;     ## Set to 1 for automatic mysql_free_result()
   var $Debug         = 0;     ## Set to 1 for debugging messages.
@@ -74,10 +75,16 @@ class db {
       $Password = $this->Password;
 
     /* establish connection, select database */
-    if ( 0 == $this->Link_ID ) {
-      $this->Link_ID=mysql_pconnect($Host, $User, $Password);
-      if (!$this->Link_ID) {
-        $this->halt("pconnect($Host, $User, \$Password) failed.");
+    if ( 0 == $this->Link_ID )
+    {
+      if ($this->use_pconnect)
+        $this->Link_ID=mysql_pconnect($Host, $User, $Password);
+      else
+        $this->Link_ID=mysql_connect($Host, $User, $Password);
+
+      if (!$this->Link_ID)
+      {
+        $this->halt("connect($Host, $User, \$Password) failed.");
         return 0;
       }
 
@@ -155,6 +162,38 @@ class db {
     }
 
     # Will return nada if it fails. That's fine.
+    return $this->Query_ID;
+  }
+
+  // public: perform a query with limited result set
+  function limit_query($Query_String, $offset, $num_rows, $line = '', $file = '')
+  {
+    global $phpgw_info;
+
+    if ($Query_String == '')
+      return 0;
+
+    if (!$this->connect())
+      return 0; // we already complained in connect() about that.
+
+    if ($this->Query_ID)
+      $this->free();
+
+    if ($this->Debug)
+      printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+
+    if (!IsSet($num_rows) || $num_rows < 1)
+      $num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+
+    $Query_String .= ' LIMIT ' . $offset . ',' . $num_rows;
+
+    $this->Query_ID = @mysql_query($Query_String, $this->Link_ID);
+    $this->Row   = 0;
+    $this->Errno = mysql_errno();
+    $this->Error = mysql_error();
+    if (!$this->Query_ID)
+       $this->halt('Invalid SQL: ' . $Query_String, $line, $file);
+
     return $this->Query_ID;
   }
 
