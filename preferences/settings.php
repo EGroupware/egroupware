@@ -24,13 +24,17 @@
      $phpgw->common->navbar();
   }
 
-  function display_option($text,$check,$option) {
+  function display_option($text,$check,$option,$indent) {
     global $phpgw, $phpgw_info;
     if ($phpgw_info["user"]["apps"][$check]) {
 ?>
       <tr>
        <td>
-        <?php echo lang($text); ?> ?
+        <?php
+         for ($i=0; $i < $indent; $i++, print '<blockquote>') {};
+         echo lang($text);
+         for ($i=0; $i < $indent; $i++, print '</blockquote>') {};
+         ?>
        </td>
        <td>
         <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"][$option]) echo " checked"; ?>>
@@ -143,9 +147,9 @@
          </td>
        </tr>
 <?php
-         display_option("show current users on navigation bar","admin","show_currentusers");
-         display_option("show new messages on main screen","email","mainscreen_showmail");
-         display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays");
+         display_option("show current users on navigation bar","admin","show_currentusers",0);
+         display_option("show new messages on main screen","email","mainscreen_showmail",0);
+         display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
          
          if ($phpgw_info["user"]["apps"]["calendar"]) {
             ?>
@@ -226,6 +230,13 @@
              </tr>
 <?php
          }
+         if ($phpgw_info["user"]["apps"]["addressbook"]) {
+             echo "<tr><td>Addressbook columns :</td><tr>";
+             $abc = get_abc();		# AddressBook Columns
+             while (list($col, $descr) = each($abc)) {
+                 display_option($descr,"addressbook","addressbook_view_".$col,1);
+             }
+         }
 
          if ($phpgw_info["user"]["apps"]["headlines"]) {
 ?>
@@ -302,6 +313,10 @@
      if ($phpgw_info["user"]["apps"]["addressbook"]) {
         if ($mainscreen_showbirthdays) {
            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays");
+        }
+        $abc = get_abc();	# AddressBook Columns
+        while (list($col, $descr) = each($abc)) {
+            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"addressbook_view_".$col);
         }
      }
 

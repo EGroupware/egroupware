@@ -76,21 +76,45 @@
 ?>
 
   <table width=75% border=0 cellspacing=1 cellpadding=3>
-    <tr bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>"> 
-      <td width=29% height="21">
-       <font size="-1" face="Arial, Helvetica, sans-serif">
-        <?php echo $phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"index.php",
-			      lang("Last Name"));
-        ?>
-       </font>
-      </td>
-      <td width="63%" height="21" bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>">
-       <font face="Arial, Helvetica, sans-serif" size="-1">
-        <?php echo $phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"index.php",
-			      lang("First Name"));
-        ?>
-       </font>
-      </td>
+    <tr bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>">
+    <?php
+       if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == "True" ) {
+          echo '<td height="21">';
+          echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+          echo $phpgw->nextmatchs->show_sort_order($sort,"company",$order,"index.php",
+                              lang("Company Name"));
+          echo '</font></td>';
+       }
+       if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == "True" ) {
+           echo '<td height="21">';
+           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+           echo $phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"index.php",
+                              lang("Last Name"));
+           echo '</font></td>';
+       }
+       if ( $phpgw_info["user"]["preferences"]["addressbook_view_firstname"] == "True" ) {
+           echo '<td height="21">';
+           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+           echo $phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"index.php",
+                              lang("First Name"));
+           echo '</font></td>';
+        }
+       if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == "True" ) {
+           echo '<td height="21">';
+           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+           echo $phpgw->nextmatchs->show_sort_order($sort,"email",$order,"index.php",
+                              lang("Email"));
+           echo '</font></td>';
+       }
+       if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == "True" ) {
+           echo '<td height="21">';
+           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+           echo $phpgw->nextmatchs->show_sort_order($sort,"wphone",$order,"index.php",
+                              lang("Work Phone"));
+           echo '</font></td>';
+       }
+    ?>
+
       <td width="3%" height="21">
        <font face="Arial, Helvetica, sans-serif" size="-1">
          <?php echo lang("View"); ?>
@@ -103,6 +127,7 @@
       </td>
     </tr>
   </form>
+
 
 <?php
   if ($query) {
@@ -121,32 +146,51 @@
 
     $firstname	= $phpgw->db->f("firstname");
     $lastname 	= $phpgw->db->f("lastname");
+    $email      = $phpgw->db->f("email");
+    $company    = $phpgw->db->f("company");
+    $wphone     = $phpgw->db->f("wphone");
     $con	= $phpgw->db->f("con");
 
-    /* This for for just showing the company name stored in lastname. */
-    if (($lastname) && (! $firstname))
-       $t_colspan = " colspan=2";
-    else {
-       $t_colspan = "";
-       if ($firstname == "") $firstname = "&nbsp;";
-       if ($lastname  == "") $lastname  = "&nbsp;";
-    }
+    if($firstname == "") $firstname = "&nbsp;";
+    if($lastname  == "") $lastname  = "&nbsp;";
+    if($email     == "") $email     = "&nbsp;";
+    if($company   == "") $company   = "&nbsp;";
+    if($wphone    == "") $wphone    = "&nbsp;";
 
     ?>
-      <tr bgcolor=<?php echo $tr_color; ?>>
-       <td valign=top width=29%<?php echo $t_colspan; ?>>
-        <font face=Arial, Helvetica, sans-serif size=2>
-	 <?php echo $lastname; ?> 
-        </font> 
-       </td>
-      <?php if (! $t_colspan)
-         echo "
-       <td valign=top width=63%>
-        <font face=Arial, Helvetica, sans-serif size=2>
-	 $firstname
-        </font>
-       </td>";
-      ?>
+    <?php
+     echo '<tr bgcolor="#'.$tr_color.'";>';
+     if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == 'True' ) {
+         echo '<td valign=top>';
+         echo '<font face=Arial, Helvetica, sans-serif size=2>';
+         echo $company;
+         echo '</font></td>';
+     };
+     if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == 'True' ) {
+         echo '<td valign=top>';
+         echo '<font face=Arial, Helvetica, sans-serif size=2>';
+         echo $lastname;
+         echo '</font></td>';
+     };
+     if ( $phpgw_info["user"]["preferences"]["addressbook_view_firstname"] == 'True' ) {
+         echo '<td valign=top>';
+         echo '<font face=Arial, Helvetica, sans-serif size=2>';
+         echo $firstname;
+         echo '</font></td>';
+     };
+     if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == 'True' ) {
+         echo '<td valign=top>';
+         echo '<font face=Arial, Helvetica, sans-serif size=2>';
+         echo $email;
+         echo '</font></td>';
+     };
+     if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == 'True' ) {
+         echo '<td valign=top>';
+         echo '<font face=Arial, Helvetica, sans-serif size=2>';
+         echo $wphone;
+         echo '</font></td>';
+     };
+     ?>
        <td valign=top width=3%>
 	<font face=Arial, Helvetica, sans-serif size=2>
           <a href="<?php echo $phpgw->link("view.php","con=$con&start=$start&order=$order&filter="

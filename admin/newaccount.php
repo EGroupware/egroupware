@@ -45,6 +45,9 @@
         $phpgw->common->preferences_add($n_loginid,"dateformat","m/d/Y");
         $phpgw->common->preferences_add($n_loginid,"timeformat","12");
         $phpgw->common->preferences_add($n_loginid,"lang","en");
+        $phpgw->common->preferences_add($n_loginid,"addressbook_view_company","True");
+        $phpgw->common->preferences_add($n_loginid,"addressbook_view_lastname","True");
+        $phpgw->common->preferences_add($n_loginid,"addressbook_view_firstname","True");
 
         // Even if they don't have access to the calendar, we will add these.
         // Its better then the calendar being all messed up, they will be deleted
