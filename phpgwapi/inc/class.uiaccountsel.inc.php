@@ -206,7 +206,8 @@
 
 			if ($lines > 0 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
 			{
-				$html .= '<a href="'.$link.'" target="uiaccountsel" onclick="'."window.open(this,this.target,'$popup_options'); return false;".'">'.
+				// $html .= '<a href="'.$link.'" target="uiaccountsel" onclick="'."window.open(this,this.target,'$popup_options'); return false;".'">'.
+				$html .= '<a href="#" target="uiaccountsel" onclick="'."window.open('".$link."','uiaccountsel','$popup_options'); return false;".'">'.				
 					$this->html->image('phpgwapi','users',$lines > 1 ? lang('search or select accounts') : lang('search or select multiple accounts')).'</a>';
 				$need_js_popup = True;
 			}
