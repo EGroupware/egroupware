@@ -33,6 +33,52 @@
 		}
 	}
 
+	function read_custom_fields($start='',$limit='',$query='',$sort='ASC')
+	{
+		global $phpgw,$phpgw_info;
+		$phpgw->preferences->read_repository($phpgw_info['user']['account_id']);
+
+		$i=0;$j=0;
+		while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"]))
+		{
+			if ( substr($col,0,6) == 'extra_' )
+			{
+				$fields[$j]['name'] = ereg_replace('extra_','',$col);
+				$fields[$j]['name'] = ereg_replace(' ','_',$fields[$j]['name']);
+				$fields[$j]['id'] = $i;
+
+				if ($query && ($fields[$j]['name'] != $query))
+				{
+					unset($fields[$j]['name']);
+					unset($fields[$j]['id']);
+				}
+				else
+				{
+					//echo "<br>".$j.": '".$fields[$j]['name']."'";
+					$j++;
+				}
+			}
+			$i++;
+		}
+		return $fields;
+	}
+
+	function save_custom_field($old='',$new='')
+	{
+		global $phpgw,$phpgw_info;
+		
+		$phpgw->preferences->read_repository($phpgw_info['user']['account_id']);
+		if ($old)
+		{
+			$phpgw->preferences->delete("addressbook","extra_".$old);
+		}
+		if($new)
+		{
+			$phpgw->preferences->add("addressbook","extra_".$new);
+		}
+		$phpgw->preferences->save_repository(1);
+	}
+
 	// Return a select form element with the categories option dialog in it
 	function cat_option($cat_id='',$notall=False,$java=True) {
 		global $phpgw_info;
