@@ -30,7 +30,7 @@ department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
 export contacts	addressbook	de	Kontakte exportieren
 extra	addressbook	de	Extra
-fax	common	de	Fax
+fax	common	de	Telefax
 fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 full name	addressbook	de	vollständiger Name
@@ -60,7 +60,7 @@ other number	addressbook	de	andere Nr.
 pager 	common	de	Pager
 parcel	addressbook	de	Lieferadresse
 personal	addressbook	de	Persönlich
-phone number	common	de	Telefonnummer
+phone number	common	de	Telefon
 phone numbers	common	de	Telefonnummern
 postal	common	de	Postanschrift
 pref	addressbook	de	pref

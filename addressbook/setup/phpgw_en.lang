@@ -41,7 +41,7 @@ edit custom fields	admin	en	Edit Custom Fields
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 extra	addressbook	en	Extra
-fax	common	en	Fax
+fax number	common	en	Fax Number
 field name	addressbook	en	Field Name
 fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name
