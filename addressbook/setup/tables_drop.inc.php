@@ -9,6 +9,8 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id $ */
+  /* $Id$ */
 
+	$oProc->DropTable('phpgw_addressbook');
+	$oProc->DropTable('phpgw_addressbook_extra');
 ?>
