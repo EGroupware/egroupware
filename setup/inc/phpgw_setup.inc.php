@@ -348,7 +348,7 @@
       /* Then add the rest */
       $d = dir($phpgw_info["server"]["server_root"]);
       while ($entry=$d->read()){
-        if ($entry != "" && $completed_scripts[$appname] != True){
+        if ($entry != "" && $completed_scripts[$entry] != True){
           $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
       	  if (file_exists($f)) {include($f);}
         }

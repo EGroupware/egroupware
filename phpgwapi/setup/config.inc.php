@@ -1,5 +1,5 @@
    <tr bgcolor="486591">
-    <td colspan="2"><font color="fefefe">&nbsp;<b>Directory information</b></font></td>
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Path information</b></font></td>
    </tr>
    
    </tr>
