@@ -1021,7 +1021,12 @@
 				if (!$only || $only === True && isset($column_definitions[$key]) || is_array($only) && in_array($key,$only))
 				{
 					$keys[] = $this->name_quote($key);
-
+					
+					if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]))
+					{
+						// give a warning that we have no column-type
+						$this->halt("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+					}
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 
 					if (is_array($data))
@@ -1116,7 +1121,7 @@
 		* @param $line int line-number to pass to query
 		* @param $file string file-name to pass to query
 		* @param $app mixed string with name of app or False to use the current-app
-		* @return the return-value of the call to db::query
+		* @return object/boolean Query_ID of the call to db::query, or True if we had to do an update
 		*/
 		function insert($table,$data,$where,$line,$file,$app=False)
 		{
@@ -1127,17 +1132,18 @@
 			$sql_append = '';
 			if (is_array($where) && count($where))
 			{
-				if ($this->Type == 'sapdb')
+				switch($this->Type)
 				{
-					$sql_append = ' UPDATE DUPLICATES';
-				}
-				else
-				{
-					$this->select($table,'count(*)',$where,$line,$file);
-					if ($this->next_record() && $this->f(0))
-					{
-						return $this->update($table,$data,$where,$line,$file,$app);
-					}
+					case 'sapdb': case 'maxdb':
+						$sql_append = ' UPDATE DUPLICATES';
+						break;
+					default:
+						$this->select($table,'count(*)',$where,$line,$file);
+						if ($this->next_record() && $this->f(0))
+						{
+							return !!$this->update($table,$data,$where,$line,$file,$app);
+						}
+						break;
 				}
 				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
@@ -1161,11 +1167,29 @@
 		*/
 		function update($table,$data,$where,$line,$file,$app=False)
 		{
+			if ($this->Debug) echo "<p>db::update('$table',".print_r($data,true).','.print_r($where,true).",$line,$file,'$app')</p>\n";
+			$table_def = $this->get_table_definitions($app,$table);
+			
+			// use insert for MaxDB (with UPDATE DUBLICATES) if $data and $where dont intersect 
 			if ($this->Type == 'sapdb')
 			{
-				$this->insert($table,$data,$where,$line,$file,$app);
+				// check if data contains any LONG columns
+				foreach($data as $col => $val)
+				{
+					switch ($table_def['fd'][$col]['type'])
+					{
+						case 'text':
+						case 'longtext':
+						case 'blob':
+							if (!count(array_intersect_assoc($data,$where)))
+							{
+								if ($this->Debug) echo "<p>db::update using db::insert('$table',,$line,$file,'$app') db::Type='$this->Type'</p>\n";
+								return $this->insert($table,$data,$where,$line,$file,$app);
+							}
+							break;
+					}
+				}
 			}
-			$table_def = $this->get_table_definitions($app,$table);
 			$sql = "UPDATE $table SET ".
 				$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.
 				$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
@@ -1233,7 +1257,7 @@
 						$ignore_next += !$arg ? 2 : 0;
 						break;
 					case 'array':
-						$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def);
+						$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def['fd']);
 						break;
 				}
 			}
@@ -1252,10 +1276,11 @@
 		* @param $line int line-number to pass to query
 		* @param $file string file-name to pass to query
 		* @param $offset int/bool offset for a limited query or False (default)
+		* @param string $append string to append to the end of the query, eg. ORDER BY ...
 		* @param $app mixed string with name of app or False to use the current-app
 		* @return the return-value of the call to db::query
 		*/
-		function select($table,$cols,$where,$line,$file,$offset=False,$app=False)
+		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False)
 		{
 			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
 
@@ -1268,7 +1293,8 @@
 			{
 				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 			}
-			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1');
+			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1').
+				($append ? ' '.$append : '');
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
