@@ -145,7 +145,7 @@
 
 		function msg2socket($str,$expected_response,&$response)
 		{
-			if(!$this->socket && substr($expected_response,1,1) == '+')
+			if(!$this->socket)
 			{
 				return $this->set_error('521','socket does not exist',
 					'The required socked does not exist.  The settings for your mail server may be wrong.');
