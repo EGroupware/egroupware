@@ -16,6 +16,7 @@
 	$title = $appname;
 	$file = Array(
 		'Site Configuration'         => $phpgw->link('/admin/config.php','appname=' . $appname),
+		'Peer Servers'               => $phpgw->link('/admin/servers.php'),
 		'User Accounts'              => $phpgw->link('/admin/accounts.php'),
 		'User Groups'                => $phpgw->link('/admin/groups.php'),
 		'Applications'               => $phpgw->link('/admin/applications.php'),
@@ -23,7 +24,7 @@
 		'Change Main Screen Message' => $phpgw->link('/admin/mainscreen_message.php'),
 		'View Sessions'              => $phpgw->link('/admin/currentusers.php'),
 		'View Access Log'            => $phpgw->link('/index.php','menuaction=admin.uiaccess_history.list_history'),
-		'View Error Log'             => $phpgw->link('/admin/log.php'),    //j3rry
+		'View Error Log'             => $phpgw->link('/admin/log.php'),
 		'phpInfo'                    => $phpgw->link('/admin/phpinfo.php')
 	);
 //Do not modify below this line
