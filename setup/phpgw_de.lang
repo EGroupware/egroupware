@@ -57,6 +57,7 @@ calendar	common	de	Kalender
 calendar - add	calendar	de	Kalender - Add
 calendar - edit	calendar	de	Kalender - Edit
 calendar preferences 	common	de	Kalender Einstellungen
+grant calendar access	common	de	Berechtigungen f&uuml;r Kalenderzugriffe
 cancel	filemanager	de	Abbrechen
 cancel	common	de	Abbruch
 cannot display the requested article from the requested newsgroup	nntp	de	Der gew&uuml;nschte Artikel kann leider nicht angezeigt werden
@@ -484,3 +485,4 @@ personalized notes for	notes	de	Pers&ouml;nliche Notizen von
 notes list	notes	de	Notizliste
 add note	notes	de	Notiz hinzuf&uuml;gen
 add a note for	notes	de	Notiz hinzuf&uuml;gen f&uuml;r
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	de	Die Verbindung zum Mailserver ist leider fehlgeschlagen.<br>Bitte prüfen sie Ihren Usernamen und Ihr Passwort, oder setzen Sie sich mit Ihrem Administrator in Verbindung.
