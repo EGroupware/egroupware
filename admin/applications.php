@@ -24,7 +24,8 @@
 
   echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'
      . $phpgw_info["theme"][bg_color] . '">'
-     . '<td align="center">' . lang_admin("Installed applications") . '</td></tr>';
+     . '<td align="center" colspan=4><b>' . lang_admin("Installed applications") . '</b></td></tr>'
+     . '<tr><td colspan=4>&nbsp;</td></tr>';
 
   echo "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
      . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang_admin("title")) . "</td><td>"
