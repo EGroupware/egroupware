@@ -428,7 +428,7 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 *** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez pas à jour votre base de donnée via l'installateur, si la mise à jour venez a être pertubé par l'option « max_execution_time », vous laisserez votre base de donnée dans un état irrécupérable (vos données seront perdues)
 register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off	setup	fr	L'option « Register Globals» est activé, eGroupWare n'a pas besoin de cela et cela est généralement plus sécurisant de le désactiver.
 memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures	setup	fr	L'option « Memory Limit » est positionnée en dessous des 16M; <br/>Certaines applications ont besoin de plus de 8M, cela peut entrainer des problèmes.
-max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «Max Execution Time» est positionnée en dessous des 30 secondes; Parfois, eGroupware aura besoin de plus de temps.
+max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «Max Execution Time» est positionnée en dessous des 30 secondes; <br>Parfois, eGroupware aura besoin de plus de temps.
 include_path need to contain "." - the current directory	setup	fr	« include_path » a besoin de contenir "." - le répertoire courant
 readable by the webserver	setup	fr	lisible par le serveur Web
 writable by the webserver	setup	fr	accès en écriture pour le serveur Web
@@ -443,7 +443,7 @@ This might take a while, please wait ...	setup	fr	Cela peu prendre un certain mo
 Please make the following change in your php.ini	setup	fr	S'il vous plait, effectuez des changements dans votre configuration PHP.
 AND reload your webserver, so the above changes take effect !!!	setup	fr	ET redémarrez votre serveur Web pour qu'ils soient pris en compte.
 Checking for GD support...	setup	fr	Vérification du support GD ...
-Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.	setup	fr	Votre installation de PHP n'a pas de support GD approprié. Vous avez besoin de la bibliothèque GD supérieur ou égale à la version 1.8 pour voir certaines fonctionnalités dans le module « Projets »
+Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.	setup	fr	Votre installation de PHP n'a pas de support GD approprié. <br/>Vous avez besoin de la bibliothèque GD supérieur ou égale à la version 1.8 pour voir certaines fonctionnalités dans le module « Projets »
 Please Select your language	S'il-vous-plait	setup	fr	sélectionnez votre langue
 Please fix the above errors (%1) and warnings(%2)	setup	fr	S'il-vous-plait, Résolvez les errors (%1) et les messages d'avertissements (%2)
 Click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
