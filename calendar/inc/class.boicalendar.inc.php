@@ -1434,7 +1434,6 @@
 					);
 					$value = chop($temp[5]);
 					$this->debug('Value would be = '.$value);
-					flush();
 				}
 			}
 			else
@@ -1449,7 +1448,6 @@
 					);
 					$value = chop($temp[5]);
 					$this->debug('Value would be = '.$value);
-					flush();
 				}
 			}
 
