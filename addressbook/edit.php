@@ -25,10 +25,9 @@
 	$this = CreateObject('phpgwapi.contacts');
 
 	// First, make sure they have permission to this entry
-	$phpgw->db->query("select owner from phpgw_addressbook where id='$ab_id'");
-	$phpgw->db->next_record();
+	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
 
-	if (! $this->check_perms($this->grants[$phpgw->db->f('owner')],PHPGW_ACL_EDIT) && $phpgw->db->f('owner') != $phpgw_info['user']['account_id'])
+	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
 		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$phpgw->common->phpgw_exit();
@@ -151,11 +150,17 @@
 		$fields["note"]					= $notes;
 		$fields["label"]                = $label;
 
+		if ($access == True) {
+			$fields["access"]           = 'private';
+		} else {
+			$fields["access"]           = 'public';
+		}
+
 		$userid = $phpgw_info["user"]["account_id"];
 
-		addressbook_update_entry($ab_id,$userid,$fields);
+		addressbook_update_entry($ab_id,$userid,$fields,$fields['access']);
 
-		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -169,7 +174,7 @@
 	$t->set_var("lang_cancel",lang("cancel"));
 	$t->set_var("lang_delete",lang("delete"));
 	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("cancel_link",'<form method="POST" action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start") . '">');
+	$t->set_var("cancel_link",'<form method="POST" action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&query=$query") . '">');
 	$t->set_var("delete_link",'<form method="POST" action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
 	
 	$t->parse("out","edit");

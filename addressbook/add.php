@@ -141,7 +141,13 @@
 		$fields["note"]					= $notes;
 		$fields["label"]                = $label;
 
-		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
+		if ($access == True) {
+			$fields["access"]           = 'private';
+		} else {
+			$fields["access"]           = 'public';
+		}
+
+		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"]);
 		$ab_id = addressbook_get_lastid();
 
 		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
