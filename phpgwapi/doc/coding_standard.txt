@@ -112,15 +112,19 @@ if ($a)
 15) (int)$var is preferred vs. intval($var).  Also, is_int()/is_string()/is_array()
   should be used instead of gettype() where possible.
 
-16) Use the api function, copyobj($oldobject,$newobject), instead of
+16) str_ functions should be used instead of ereg_ for simple text replacement, etc.
+  For example, ereg_replace(';','',$string) is much slower than str_replace(';','',$string.
+  Of course, for complicated regular expressions, you may still need ereg_.
+
+17) Use the api function, copyobj($oldobject,$newobject), instead of
   $newobject = $oldobject.  This is for performance when using php5.
 
-17) Try to avoid creating new objects when the api-created ones will work.
+18) Try to avoid creating new objects when the api-created ones will work.
   This is a performance issue.  You might also be able to use copyobj() and then
   call the constructor of the class if another version of the object exists
   already.
 
-18) Do not use, e.g., global $var; unless absolutely necessary.  Please
+19) Do not use, e.g., global $var; unless absolutely necessary.  Please
 consider developing with register_globals=off to understand why.
 
-19) Thanks for following these rules :)
+20) Thanks for following these rules :)
