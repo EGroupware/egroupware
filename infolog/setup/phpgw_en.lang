@@ -78,7 +78,6 @@ private	infolog	en	Private
 project	infolog	en	Project
 reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 re:	infolog	en	Re:
-reject	infolog	en	reject
 responsible	infolog	en	Responsible
 search for:	infolog	en	Search for:
 select	infolog	en	Select
