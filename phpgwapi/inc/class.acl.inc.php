@@ -25,7 +25,7 @@
 
 	/*!
 		@class acl
-		@abstract Acces Control List Security System
+		@abstract Access Control List Security System
 		@discussion This class provides an ACL security scheme.
 		This can manage rights to 'run' applications, and limit certain features within an application.
 		It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
@@ -68,7 +68,7 @@
 			}
 		}
 
-		function list_methods($_type='xmlrpc')
+		function DONTlist_methods($_type='xmlrpc')
 		{
 			/*
 			  This handles introspection or discovery by the logged in client,
@@ -111,7 +111,7 @@
 					return array();
 					break;
 			}
- 		}
+		}
 
 		/**************************************************************************\
 		* These are the standard $this->account_id specific functions              *
