@@ -1038,7 +1038,7 @@
 						$parts = array('tmp_name','type','size','name');
 						while (list(,$part) = each($parts))
 						{
-							$value[$part] = $this->get_array($GLOBALS['HTTP_POST_FILES'][$name],$part.$index);
+							$value[$part] = is_array($_FILES[$name]) ? $this->get_array($_FILES[$name],$part.$index) : False;
 						}
 						$value['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
 						$value['ip'] = get_var('REMOTE_ADDR',Array('SERVER'));
