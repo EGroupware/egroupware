@@ -13,8 +13,8 @@
 
 	if (! $cat_id)
 	{
-		Header('Location: ' . $phpgw->link('/admin/categories.php',"sort=$sort&order=$order&query=$query&start=$start"
-											. "&filter=$filter"));
+		Header('Location: ' . $phpgw->link('/admin/categories.php','sort=' . $sort . '&order=' . $order . '&query=' . $query
+										. '&start=' . $start . '&filter=' . $filter));
 	}
 
 	$phpgw_info['flags']['currentapp'] = 'admin';
@@ -41,7 +41,7 @@
 
 		if (!$cat_name)
 		{
-			$error[$errorcount++] = lang('Please enter a name for that category !');
+			$error[$errorcount++] = lang('Please enter a name');
 		}
 
 		if (!$error)
@@ -57,7 +57,7 @@
 
 			if ($exists == True)
 			{
-				$error[$errorcount++] = lang('That category name has been used already !');
+				$error[$errorcount++] = lang('That name has been used already');
 			}
 		}
 
@@ -66,7 +66,7 @@
 			$main = $c->return_main($cat_parent);
 			if ($main != $cat_main)
 			{
-				$error[$errorcount++] = lang('You selected an invalid main category !');
+				$error[$errorcount++] = lang('You have selected an invalid main category !');
 			}
 		}
 
@@ -99,13 +99,14 @@
 
 	$t->set_var('title_categories',lang('Edit global category'));
 	$t->set_var('lang_parent',lang('Parent category'));
-	$t->set_var('lang_select_parent',lang('Select parent category'));
+	$t->set_var('lang_select_parent',lang('Choose the parent category'));
 	$t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
-	$t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
-	$t->set_var('doneurl',$phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+	$t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
+									. '&order=' . $order . '&filter=' . $filter));
+	$t->set_var('doneurl',$phpgw->link('/admin/categories.php','start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order=' . $order . '&filter=' . $filter));
 	$t->set_var('hidden_vars',$hidden_vars);
-	$t->set_var('lang_name',lang('Category name'));
-	$t->set_var('lang_descr',lang('Category description'));
+	$t->set_var('lang_name',lang('Name'));
+	$t->set_var('lang_descr',lang('Description'));
 	$t->set_var('lang_done',lang('Done'));
 	$t->set_var('lang_edit',lang('Edit'));
 	$t->set_var('lang_delete',lang('Delete'));

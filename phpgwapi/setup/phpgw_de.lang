@@ -25,9 +25,13 @@ cancel	common	de	Abbruch
 category	common	de	Kategorie
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
+category x has been added !	common	de	Kategorie %1 wurde hinzugef&uuml;gt !
+category x has been updated !	common	de	Kategorie %1 wurde &uuml;berarbeitet !
 change	common	de	Ändern
 charset	common	de	iso-8859-1
 chat	common	de	Chat
+choose a category	common	de	W&auml;hlen einer Kategorie
+choose the parent category	common	de	W&auml;hlen der &uuml;bergeordneten Kategorie
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 company	common	de	Firma
@@ -47,7 +51,9 @@ e-mail	common	de	E-Mail
 e-mail preferences	common	de	E-Mail Einstellungen
 edit	common	de	Editieren
 email	common	de	E-Mail
+edit category	common	de	Kategorie editieren
 edit categories	common	de	Kategorien editieren
+edit x category for	common	de	%1 Kategorie editieren f&uuml;r
 email signature	common	de	E-Mail Signatur
 email type	common	de	E-Mail Typ
 end date	common	de	Enddatum
@@ -68,7 +74,7 @@ first page	common	de	erste Seite
 forum	common	de	Forum
 friday	common	de	Freitag
 ftp	common	de	FTP
-global	common	de	Globale
+global	common	de	Global
 global categories	common	de	Globale Kategorien
 global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
@@ -103,6 +109,7 @@ last page	common	de	letzte Seite
 login	common	de	Login
 logout	common	de	Logout
 low	common	de	Niedrig
+main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 manual	common	de	Handbuch
 march	common	de	März
@@ -113,6 +120,7 @@ mobile phone	common	de	Tel Funk
 monday	common	de	Montag
 name	common	de	Name
 new entry added sucessfully	common	de	Neuer Eintrag erfolgreich hinzugefügt
+new main category	common	de	neue Hauptkategorie
 news headlines	common	de	News headlines
 news reader	common	de	News Reader
 newsgroups	common	de	Newsgroups
@@ -131,10 +139,12 @@ only yours	common	de	nur eigene
 original	common	de	Original
 other phone	common	de	Tel sonst.
 owner	common	de	Besitzer
+parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
-please set your preferences for this app	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
+please enter a name	common	de	Bitte geben Sie einen Namen ein !
+please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
 please x by hand	common	de	Bitte manuell %1
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	de	Einstellungen
@@ -168,6 +178,7 @@ submit	common	de	Absenden
 sunday	common	de	Sonntag
 that phrase already exists	common	de	Diese Phrase existiert bereits
 the two passwords are not the same	common	de	Die Eingaben stimmen nicht überein
+this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 time	common	de	Zeit
 time zone	common	de	Zeitzone
@@ -201,6 +212,7 @@ you have 1 high priority event on your calendar today.	common	de	Sie haben heute
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!
 you have messages!	common	de	Sie haben Nachrichten!
 you have no new messages	common	de	Keine neuen Nachrichten
+you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you have x new messages!	common	de	Sie haben %1 neue Nachrichten!
 your message has been sent	common	de	Ihre Nachricht wurde versandt

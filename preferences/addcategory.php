@@ -42,7 +42,7 @@
 
 		if (!$cat_name)
 		{
-			$error[$errorcount++] = lang('Please enter a name for that category !');
+			$error[$errorcount++] = lang('Please enter a name');
 		}
 
 		if (!$error)
@@ -58,7 +58,7 @@
 
 			if ($exists == True)
 			{
-				$error[$errorcount++] = lang('That category name has been used already !');
+				$error[$errorcount++] = lang('That name has been used already');
 			}
 		}
 
@@ -67,7 +67,7 @@
 			$main = $c->return_main($cat_parent);
 			if ($main != $cat_main)
 			{
-				$error[$errorcount++] = lang('You selected an invalid main category !');
+				$error[$errorcount++] = lang('You have selected an invalid main category');
 			}		    
 		}
 
@@ -133,7 +133,7 @@
 			$category_list = $c->formated_list('select','all',$cat_parent);
 		}
 
-		$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
+		$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Choose the parent category') . '</option>' . $category_list .'</select>');
 		$t->set_var('lang_parent',lang('Parent category'));
 	}
 	else

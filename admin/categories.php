@@ -115,7 +115,8 @@
 
 			if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'])
 			{
-				$t->set_var('edit',$phpgw->link('/admin/editcategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+				$t->set_var('edit',$phpgw->link('/admin/editcategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
+												. '&order=' . $order . '&filter=' . $filter));
 				$t->set_var('lang_edit_entry',lang('Edit'));
 			}
 			else
@@ -126,7 +127,8 @@
 
 			if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'])
 			{
-				$t->set_var('delete',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+				$t->set_var('delete',$phpgw->link('/admin/deletecategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order='
+												. $order . '&filter=' . $filter));
 				$t->set_var('lang_delete_entry',lang('Delete'));
 			}
 			else

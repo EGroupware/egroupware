@@ -68,6 +68,7 @@ that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
 that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
 the login and password can not be the same	admin	de	Login und Passwort dürfen nicht identisch sein
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
+This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.<br>Sie m&uuml;ssen erst die untergeordneten Kategorien l&ouml;schen !
 total records	admin	de	Anzahl Datensätze insgesamt
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen

@@ -38,7 +38,8 @@
 		{
 			$c->delete($cat_id);
 		}
-		Header('Location: ' . $phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+		Header('Location: ' . $phpgw->link('/admin/categories.php','start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order=' . $order
+											. '&filter=' . $filter));
 	}
 	else
 	{
@@ -54,13 +55,14 @@
 		$t->set_block('category_delete','delete','deletehandle');
 		$t->set_block('category_delete','done','donehandle');
 
-		$nolink = $phpgw->link('/admin/categories.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter");
+		$nolink = $phpgw->link('/admin/categories.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order=' . $order
+								. '&filter=' . $filter);
 
 		$apps_cats = $c->exists('subs',$cat_name='',$cat_id);
 
 		if ($apps_cats==True)
 		{
-			$t->set_var('messages',lang('This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category !'));
+			$t->set_var('messages',lang('This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category'));
 			$t->set_var('hidden_vars',$hidden_vars);
 			$t->set_var('lang_subs','');
 			$t->set_var('subs','');
