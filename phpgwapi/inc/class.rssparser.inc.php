@@ -1,14 +1,14 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API -                                                       *
-  * http://www.phpgroupware.org/api                                          *
+  * phpGroupWare API - rss parser                                            *
   * ------------------------------------------------------------------------ *
-  * This file is not part of the phpGroupWare API                            *
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  * http://www.phpgroupware.org/                                             * 
   * ------------------------------------------------------------------------ *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
+  * This program is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published    *
+  * by the Free Software Foundation; either version 2.1 of the License, or   *
+  * any later version.                                                       *
   \**************************************************************************/
 
   /* $Id$ */
@@ -22,17 +22,17 @@
  *
  *      Version 0.4
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
+ *      This library is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU Lesser General Public License as published by
+ *      the Free Software Foundation; either version 2.1 of the License, or
  *      (at your option) any later version.
  *      
- *      This program is distributed in the hope that it will be useful,
+ *      This library is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ *      GNU Lesser General Public License for more details.
  *      
- *      You should have received a copy of the GNU General Public License
+ *      You should have received a copy of the GNU Lesser General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation,Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
@@ -40,8 +40,8 @@
  *      rssparse.php3 is a small PHP script for parsing RDF/RSS XML data. It has been
  *      tested with a number of popular web news and information sites such as 
  *      slashdot.org, lwn.net, and freshmeat.net. This is not meant to be exhaustive 
- *      but merely to provide the basic necessities. It will grow in capabilities with 
- *      time, I'm sure.
+ *      but merely to provide the basic necessities. It will grow in capabilities 
+ *      with time, I'm sure.
  *
  *      This is code I wrote for Nerds WithOut Wires, http://nwow.org.
  *
@@ -87,7 +87,6 @@
  *      This requires PHP's XML routines. You must configure PHP with --with-xml.
  */
 
- /* $Id$ */
 
 function _rssparse_start_elem ($parser, $elem, $attrs) {
   global $_rss;
@@ -246,5 +245,4 @@ function rssparse ($fp) {
   
   return $_rss;
 }
-
-  
+?>

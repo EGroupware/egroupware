@@ -1,17 +1,17 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API -                                                       *
-  * http://www.phpgroupware.org/api                                          *
+  * phpGroupWare API - MS SQL Server support                                 *
   * (C) Copyright 1998 Cameron Taggart (cameront@wolfenet.com)               *
   *  Modified by Guarneri carmelo (carmelo@melting-soft.com)                 *
-  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                  *
+  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                     *
   * ------------------------------------------------------------------------ *
-  * This file is not part of the phpGroupWare API                            * 
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  * http://www.phpgroupware.org/                                             * 
   * ------------------------------------------------------------------------ *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
+  * This program is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published    *
+  * by the Free Software Foundation; either version 2.1 of the License, or   *
+  * any later version.                                                       *
   \**************************************************************************/
 
   /* $Id$ */
