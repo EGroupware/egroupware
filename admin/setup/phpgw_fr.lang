@@ -172,6 +172,7 @@ error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
 error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
 expires	admin	fr	Expire
+fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 find and register all application hooks	admin	fr	Trouver et enregistrer tous les "application hooks"
@@ -365,7 +366,7 @@ view sessions	admin	fr	Voir les sessions
 view this user	admin	fr	Voir cet utilisateur
 view user account	admin	fr	Voir le compte utilisateur
 who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé?
-would you like egroupware to cache the egw info array ?	admin	fr	Voudriez-vous que eGroupWare cache le champ egw info ?
+would you like egroupware to cache the egw info array ?	admin	fr	Voulez-vous qu'eGroupWare mette le tableau d'informations egw en cache ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	fr	Voulez-vous que eGroupWare vérifie les mises à jour<br>quand un administrateur se connecte ?
 would you like egroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que eGroupWare vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	fr	Voulez-vous automatiquement charger les nouveaux fichiers de langues (à la connexion) ?
