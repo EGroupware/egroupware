@@ -83,7 +83,7 @@
 				}
 			}
 		}
-		
+
 		if ($GLOBALS['object_type'].' '.$GLOBALS['HTTP_GET_VARS']['object'] == $t)
 		{
 			$GLOBALS['special_request'] = $output[$t];
@@ -100,7 +100,6 @@
 	*/
 	function parsesimpleobject($input)
 	{
-		
 		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 		$input = ereg_replace ("@", "@#", $input);
 		$new = explode("@",$input);
@@ -157,7 +156,7 @@
 	{
 		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
 	}
-	
+
 	$app = $GLOBALS['HTTP_GET_VARS']['app'];
 	$fn  = $GLOBALS['HTTP_GET_VARS']['fn'];
 
@@ -282,7 +281,7 @@
 		unset($sstype);
 		unset($idx);
 		reset($startstop);
-		
+
 		/**************************************************************************\
 		* Now that I have the list groups and which records belong in which groups *
 		* its time to parse each function and stick it under the appropriate group *
@@ -440,7 +439,6 @@
 		}
 	}
 
-	
 	$GLOBALS['template']->fp('doc','border_top',True);
 	reset($doc_array);
 	while(list($group_key, $group_value) = each($doc_array))
@@ -461,7 +459,7 @@
 			}
 			if(is_array($object_value))
 			{
-				parsedetails($object_value);	
+				parsedetails($object_value);
 				$GLOBALS['template']->set_var('generic_name',$docline_key);
 				$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
 				$GLOBALS['template']->fp('group_contents','object',True);
