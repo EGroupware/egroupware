@@ -20,7 +20,7 @@
   * along with this library; if not, write to the Free Software Foundation,  *
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
-	
+
   /* $Id$ */
 
 	class network
@@ -83,7 +83,7 @@
 			{
 				$this->socket = fsockopen($server,$port,&$errcode,&$errmsg);
 			}
-			if (!$this->socket)
+			if(!$this->socket)
 			{
 				return $this->set_error('Error',$errcode.':'.$errmsg,'Connection to '.$server.':'.$port.' failed - could not open socket.');
 			}
@@ -111,7 +111,7 @@
 		function write_port($str)
 		{
 			$ok = fputs($this->socket,$this->add_crlf($str));
-			if (!$ok)
+			if(!$ok)
 			{
 				return $this->set_error('Error','Connection Lost','lost connection to server');
 			}
@@ -123,7 +123,7 @@
 
 		function bs_write_port($str,$bytes=0)
 		{
-			if ($bytes)
+			if($bytes)
 			{
 				$ok = fwrite($this->socket,$this->add_crlf($str),$bytes);
 			}
@@ -131,7 +131,7 @@
 			{
 				$ok = fwrite($this->socket,$this->add_crlf($str));
 			}
-			if (!$ok)
+			if(!$ok)
 			{
 				return $this->set_error('Error','Connection Lost','lost connection to server');
 			}
@@ -148,7 +148,7 @@
 				return $this->set_error('521','socket does not exist',
 					'The required socked does not exist.  The settings for your mail server may be wrong.');
 			}
-			if (!$this->write_port($str))
+			if(!$this->write_port($str))
 			{
 				if(substr($expected_response,1,1) == '+')
 				{
@@ -160,12 +160,12 @@
 				}
 			}
 			$response = $this->read_port();
-			if (!ereg(strtoupper($expected_response),strtoupper($response)))
+			if(!ereg(strtoupper($expected_response),strtoupper($response)))
 			{
 				if(substr($expected_response,1,1) == '+')
 				{
 					return $this->set_error('550','','');
-				}	
+				}
 				$pos = strpos(' ',$response);
 				return $this->set_error(substr($response,0,$pos),
 					'invalid response('.$expected_response.')',
@@ -177,28 +177,42 @@
 			}
 		}
 
-		// return contents of a web url as an array or false if timeout
-		function gethttpsocketfile($file)
+		/*
+		 Return contents of a web url as an array or false if timeout.
+		 If $string is set (True), a string is returned with all \r and \n removed.
+		 This allows for parsing of xml where the formatting was not ideal (elements
+		 opened and closed on a single line).
+		*/
+		function gethttpsocketfile($file,$string=False)
 		{
 			$server = str_replace('http://','',$file);
 			$file = strstr($server,'/');
 			$server = str_replace($file,'',$server);
-			if ($GLOBALS['phpgw_info']['server']['httpproxy_server'])
+			if($GLOBALS['phpgw_info']['server']['httpproxy_server'])
 			{
 				if ($this->open_port($server,80, 15))
 				{
-					if (! $this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n\n"))
+					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n\n"))
 					{
 						return False;
 					}
 					$i = 0;
-					while ($line = $this->read_port())
+					while($line = $this->read_port())
 					{
-						if (feof($this->socket))
+						if(feof($this->socket))
 						{
 							break;
 						}
-						$lines[] = $line;
+						if($string)
+						{
+							$line = ereg_replace("\n",'',$line);
+							$line = ereg_replace("\r",'',$line);
+							$lines .= $line;
+						}
+						else
+						{
+							$lines[] = $line;
+						}
 						$i++;
 					}
 					$this->close_port();
@@ -211,15 +225,24 @@
 			}
 			else
 			{
-				if ($this->open_port($server, 80, 15))
+				if($this->open_port($server, 80, 15))
 				{
-					if (!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n\n"))
+					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n\n"))
 					{
 						return 0;
 					}
-					while ($line = $this->read_port())
+					while($line = $this->read_port())
 					{
-						$lines[] = $line;
+						if($string)
+						{
+							$line = ereg_replace("\n",'',$line);
+							$line = ereg_replace("\r",'',$line);
+							$lines .= $line;
+						}
+						else
+						{
+							$lines[] = $line;
+						}
 					}
 					$this->close_port();
 					return $lines;
