@@ -23,6 +23,8 @@
 // Also start with a '#' symbol and a comma separated list will be
 // turned into a number of the same entries.
 
+  /* $Id$ */
+
 	class import_conv
 	{
 		var $currentrecord = array(); //used for buffering to allow uid lines to go first
@@ -169,7 +171,7 @@
 				$contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
 			}
 			$num = $i - 1;
-			return lang('Successfully imported x records into your addressbook.',$num);
+			return lang('Successfully imported %1 records into your addressbook.',$num);
 		}
 	}
 ?>
