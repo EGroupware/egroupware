@@ -99,6 +99,73 @@
 
 		function encrypt($data)
 		{
+			$data = serialize($data);
+			$data = addslashes($data);
+			
+			// Disable all encryption if the admin didn't set it up
+			if ($this->enabled)
+			{
+				switch ($this->mcrypt_version)
+				{
+					// The old code, only works with mcrypt <= 2.2.x
+					case 'old':
+					{
+						$encrypteddata = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_ENCRYPT);
+						break;
+					}
+					default:
+					{ // Handle 2.4 and newer API
+						mcrypt_generic_init ($this->td, $this->key, $this->iv);
+						$encrypteddata = mcrypt_generic($this->td, $data);
+						break;
+					}
+				}
+				$encrypteddata = bin2hex($encrypteddata);
+				return $encrypteddata;
+			}
+			else
+			{ // No mcrypt == insecure !
+				return $data;
+			}
+		}
+
+		function decrypt($encrypteddata)
+		{
+			// Disable all encryption if the admin didn't set it up
+			if ($this->enabled)
+			{
+				$data = $this->hex2bin($encrypteddata);
+				switch ($this->mcrypt_version)
+				{
+					// The old code, only works with mcrypt <= 2.2.x
+					case 'old':
+						$data = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_DECRYPT);
+						break;
+					// Handle 2.4 and newer API
+					default:
+						mcrypt_generic_init ($this->td, $this->key, $this->iv);
+						$data = mdecrypt_generic($this->td, $data);
+						break;
+				}
+			}
+			else
+			{
+				$data = $encrypteddata;
+			}
+			
+			if(!strpos(' '.$data,'O:8:"stdClass"'))
+			{
+				return unserialize($data);
+			}
+			else
+			{
+				$data = stripslashes($data);
+				return $data;
+			}
+		}
+
+		function encrypt_mail_pass($data)
+		{
 			// Disable all encryption if the admin didn't set it up
 			if ($this->enabled)
 			{
@@ -132,7 +199,7 @@
 			}
 		}
 
-		function decrypt($encrypteddata)
+		function decrypt_mail_pass($encrypteddata)
 		{
 			// Disable all encryption if the admin didn't set it up
 			if ($this->enabled)
