@@ -2895,7 +2895,7 @@ class boicalendar
 
 		function import_file()
 		{
-			if($GLOBALS['uploadedfile'] == 'none' || $GLOBALS['uploadedfile'] == '')
+			if($_FILES['uploadedfile']['tmp_name'] == 'none' || $_FILES['uploadedfile']['tmp_name'] == '')
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
 						Array(
@@ -2910,12 +2910,12 @@ class boicalendar
 
 			srand((double)microtime()*1000000);
 			$random_number = rand(100000000,999999999);
-			$newfilename = md5($GLOBALS['uploadedfile'].", ".$uploadedfile_name.", "
+			$newfilename = md5($_FILES['uploadedfile']['tmp_name'].", ".$uploadedfile_name.", "
 				. time() . getenv("REMOTE_ADDR") . $random_number );
 
 			$filename = $uploaddir . $newfilename;
 
-			copy($GLOBALS['uploadedfile'], $filename);
+			move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $filename);
 //			$ftp = fopen($uploaddir . $newfilename . '.info','wb');
 //			fputs($ftp,$uploadedfile_type."\n".$uploadedfile_name."\n");
 //			fclose($ftp);
@@ -2924,7 +2924,7 @@ class boicalendar
 
 		function import($mime_msg='')
 		{
-			if($GLOBALS['uploadedfile'] != 'none' && $GLOBALS['uploadedfile'] != '')
+			if($_FILES['uploadedfile']['tmp_name'] != 'none' && $_FILES['uploadedfile']['tmp_name'] != '')
 			{
 				$filename = $this->import_file();
 				$fp=fopen($filename,'rt');
