@@ -1,8 +1,9 @@
-%1 already exists as a file	filemanager	zh	已存在文件%1
+%1 already exists as a file	filemanager	zh	文件%1已存在
 application	filemanager	zh	应用程序
 back to file manager	filemanager	zh	返回文件管理器
-cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录，目录名开头或末尾不能带有空格
-cannot replace %1 because it is a directory	filemanager	zh	%1是目录，无法被替换
+cancel editing %1 without saving	filemanager	zh	取消编辑%1, 不保存
+cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
+cannot replace %1 because it is a directory	filemanager	zh	%1是目录, 无法被替换
 command sucessfully run	filemanager	zh	命令执行成功
 comment	filemanager	zh	注释
 comments cannot contain "%1"	filemanager	zh	注释不能包含"%1"
@@ -20,17 +21,18 @@ create file	filemanager	zh	创建文件
 create folder	filemanager	zh	创建文件夹
 created	filemanager	zh	已创建
 created %1	filemanager	zh	%1已创建
+created %1,%2	filemanager	zh	%1,%2已创建
 created by	filemanager	zh	创建者
 created directory %1	filemanager	zh	目录%1已创建
 date	filemanager	zh	日期
-default number of upload fields to show	filemanager	zh	显示的默认上传区域数
+default number of upload fields to show	filemanager	zh	默认上传区域数
 delete	filemanager	zh	删除
 deleted %1	filemanager	zh	%1删除
 directory	filemanager	zh	目录
 directory %1 already exists	filemanager	zh	目录%1已存在
 directory %1 does not exist	filemanager	zh	目录%1不存在
 directory names cannot contain "%1"	filemanager	zh	目录名不能包含"%1"
-display attributes	filemanager	zh	显示属性
+display attributes	filemanager	zh	显示哪些文件属性
 download	filemanager	zh	下载
 edit	filemanager	zh	编辑
 edit comments	filemanager	zh	编辑注释
@@ -38,57 +40,71 @@ error running command	filemanager	zh	命令执行出错
 execute	filemanager	zh	执行
 failed to create directory	filemanager	zh	创建目录失败
 file	filemanager	zh	文件
-file %1 already exists. please edit it or delete it first.	filemanager	zh	文件%1已存在，请先编辑或删除它.
+file %1 already exists. please edit it or delete it first.	filemanager	zh	文件%1已存在, 请先编辑或删除它.
 file %1 could not be created.	filemanager	zh	文件 %1 不能创建.
 file name	filemanager	zh	文件名
 file names cannot contain "%1"	filemanager	zh	文件名不能包含"%1"
 file names cannot contain \ or /	filemanager	zh	文件名不能包含\或/
 filemanager	common	zh	文件管理
-filemanager preferences	filemanager	zh	文件管理个性化配置
+filemanager preferences	filemanager	zh	首选项
 files	filemanager	zh	文件
+files is this directory	filemanager	zh	文件总数
 folder	filemanager	zh	文件夹
+folder up	filemanager	zh	向上
+go home	filemanager	zh	返回首页
 go to	filemanager	zh	跳转到
 go to %1	filemanager	zh	跳转到%1
 go to your home directory	filemanager	zh	跳转到主目录
-go to:	filemanager	zh	跳转到：
+go to:	filemanager	zh	跳转到:
+go up	filemanager	zh	向上
 home	filemanager	zh	主页面
+location	filemanager	zh	位置
 locked	filemanager	zh	已锁定
 mime type	filemanager	zh	MIME类型
 modified	filemanager	zh	已修改
 modified by	filemanager	zh	修改者
 move to	filemanager	zh	移动到
-move to:	filemanager	zh	移动到：
+move to:	filemanager	zh	移动到:
 moved %1 to %2	filemanager	zh	%1已移动到%2
+no files in this directory.	filemanager	zh	该目录为空.
 no version history for this file/directory	filemanager	zh	该文件/文件夹无版本历史
 operation	filemanager	zh	操作
 owner	filemanager	zh	所有者
+please select a file to delete.	filemanager	zh	请选择待删除文件.
+preferences old	preferences	zh	首选项
 preview %1	filemanager	zh	预览%1
 preview of %1	filemanager	zh	%1的预览
+reload	filemanager	zh	重新载入
 rename	filemanager	zh	重命名
 renamed %1 to %2	filemanager	zh	 %1已重命名为%2
 replaced %1	filemanager	zh	%1已替换
 save %1	filemanager	zh	保存%1
+save %1, and go back to file listing	filemanager	zh	保存%1并返回文件列表
 save all	filemanager	zh	全部保存
+save changes	filemanager	zh	保存更改
 saved %1	filemanager	zh	%1已保存
 show	filemanager	zh	显示
-show ..	filemanager	zh	显示...
+show ..	filemanager	zh	显示上级目录
 show .files	filemanager	zh	显示.文件
-show command line (experimental. dangerous.)	filemanager	zh	显示命令行(警告：仅用于测试)
-show help	filemanager	zh	显示帮助
+show command line (experimental. dangerous.)	filemanager	zh	显示命令行(本功能尚在测试阶段)
+show help	filemanager	zh	显示提示信息
 size	filemanager	zh	大小
 sort by:	filemanager	zh	排序方式
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	zh	文件管理器前瞻版, 仅用于测试, 欢迎报告Bug.
 total files	filemanager	zh	所有文件
 unknown mime-type defaults to text/plain when viewing	filemanager	zh	以文本方式查看未知mime类型的文件
 unused space	filemanager	zh	可用空间
 up	filemanager	zh	上级目录
 update	filemanager	zh	更新
 updated comment for %1	filemanager	zh	%1的注释已更新
+upload	filemanager	zh	上传
 upload fields	filemanager	zh	上传区域
 upload files	filemanager	zh	上传文件
+use new experimental filemanager?	filemanager	zh	是否使用文件管理器前瞻版?
 used space	filemanager	zh	已用空间
 users	filemanager	zh	用户
 version	filemanager	zh	版本
-view documents in new window	filemanager	zh	打开新窗以查看文档
-view documents on server (if available)	filemanager	zh	可能的话，在服务器上查看文档
+view documents in new window	filemanager	zh	打开新窗口以查看文档
+view documents on server (if available)	filemanager	zh	可能的话, 在服务器上查看文档
 who	filemanager	zh	谁
 you do not have access to %1	filemanager	zh	无权访问%1

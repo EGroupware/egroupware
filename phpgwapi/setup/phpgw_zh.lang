@@ -121,13 +121,13 @@ display sunday first	common	zh	从星期日开始
 djibouti	common	zh	吉布提
 do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗?
 domain	common	zh	域
-domain name for mail-address, eg. "%1"	common	zh	email地址的域名，例如:"%1"
+domain name for mail-address, eg. "%1"	common	zh	EMail地址的域名，例如:"%1"
 domestic	common	zh	国内
 dominica	common	zh	多米尼加
 dominican republic	common	zh	多米尼加共和国
 done	common	zh	完成
 drag to move	common	zh	拖动
-e-mail	common	zh	E-Mail
+e-mail	common	zh	电子邮件
 east timor	common	zh	东帝汶
 ecuador	common	zh	厄瓜多尔
 edit	common	zh	编辑
@@ -137,8 +137,8 @@ edit category	common	zh	编辑类别
 egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare:用户'%1', IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
-email	common	zh	E-Mail
-email-address of the user, eg. "%1"	common	zh	该用户的Email地址，例如:"%1"
+email	common	zh	电子邮件
+email-address of the user, eg. "%1"	common	zh	用户的EMail地址，例如:"%1"
 enabled	common	zh	已启用
 end date	common	zh	终止日期
 end time	common	zh	终止时间
@@ -162,7 +162,7 @@ files	common	zh	文件
 filter	common	zh	范围
 finland	common	zh	芬兰
 first name	common	zh	名
-first name of the user, eg. "%1"	common	zh	该用户的名字，例如:"%1"
+first name of the user, eg. "%1"	common	zh	用户的名字，例如:"%1"
 first page	common	zh	第一页
 firstname	common	zh	名
 fixme!	common	zh	FIXME!
@@ -206,7 +206,7 @@ guinea-bissau	common	zh	几内亚比绍首都
 guyana	common	zh	圭亚那
 haiti	common	zh	HAITI
 heard island and mcdonald islands	common	zh	赫德与麦克唐纳群岛
-help	common	zh	帮助
+help	common	zh	显示提示信息
 high	common	zh	高
 highest	common	zh	最高
 holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
@@ -246,7 +246,7 @@ kyrgyzstan	common	zh	吉尔吉斯坦
 language	common	zh	语言
 lao peoples democratic republic	common	zh	老挝
 last name	common	zh	姓
-last name of the user, eg. "%1"	common	zh	该用户的姓，例如:"%1"
+last name of the user, eg. "%1"	common	zh	用户的姓氏，例如:"%1"
 last page	common	zh	尾页
 lastname	common	zh	姓
 latvia	common	zh	拉脱维亚
@@ -287,7 +287,7 @@ may	common	zh	五月
 mayotte	common	zh	马约特岛
 medium	common	zh	中间
 menu	common	zh	菜单
-message	common	zh	邮件
+message	common	zh	内容
 mexico	common	zh	墨西哥
 micronesia, federated states of	common	zh	密克罗尼西亚联邦
 moldova, republic of	common	zh	摩尔多瓦共和国
@@ -383,7 +383,7 @@ prev. year (hold for menu)	common	zh	去年(hold for menu)
 previous page	common	zh	前一页
 print	common	zh	打印
 priority	common	zh	优先级
-private	common	zh	私有条目（他人无权访问）
+private	common	zh	私有条目
 project	common	zh	项目
 public	common	zh	所有已授权者皆可访问
 puerto rico	common	zh	波多黎各
@@ -430,6 +430,7 @@ setup	common	zh	安装程序
 seychelles	common	zh	塞舌尔
 show all	common	zh	全部显示
 show all categorys	common	zh	显示所有类别
+show menu	common	zh	显示菜单
 showing %1	common	zh	共有%1项
 showing %1 - %2 of %3	common	zh	共有%3项，正显示中的第%1～%2项
 sierra leone	common	zh	塞拉利昂

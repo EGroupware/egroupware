@@ -22,7 +22,7 @@ edit custom fields	preferences	zh	编辑自定义字段
 enter your new password	preferences	zh	请输入新密码
 error: there was a problem finding the preference file for %1 in %2	preferences	zh	错误：%1的个性化配置文件%2不正确。
 forced preferences	preferences	zh	内定个性化配置
-help off	preferences	zh	关闭帮助
+help off	preferences	zh	不显示提示信息
 hours	preferences	zh	小时
 how do you like to display accounts	preferences	zh	以何种方式显示帐户
 how do you like to select accounts	preferences	zh	以何种方式选择帐户
@@ -47,8 +47,8 @@ select the language of texts and messages within phpgroupware.<br>some languages
 selectbox	preferences	zh	选择框
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	zh	该选项视情况而定。出于安全性考虑，通常选择不显示登录名。
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目。
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	设置个性化配置，总是显示该帮助信息
-show helpmessages by default	preferences	zh	默认显示帮助信息
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	设置个性化配置，总是显示该提示信息
+show helpmessages by default	preferences	zh	默认显示提示信息
 show navigation bar as	preferences	zh	工具栏显示方式
 show_more_apps	common	zh	显示更多的应用程序
 show number of current users	preferences	zh	显示当前用户数
