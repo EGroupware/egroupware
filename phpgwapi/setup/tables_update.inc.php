@@ -18,7 +18,7 @@
 	include('tables_update_0_9_12.inc.php');
 	include('tables_update_0_9_14.inc.php');
 
-
+	// updates from the stable 1.0.0 branch
 	$test[] = '1.0.0.001';
 	function phpgwapi_upgrade1_0_0_001()
 	{
@@ -31,5 +31,12 @@
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '1.0.0.002';
+	function phpgwapi_upgrade1_0_0_002()
+	{
+		// identical to 1.0.0.001, only created to get a new version of the packages
+		return phpgwapi_upgrade1_0_0_001();
 	}
 ?>
