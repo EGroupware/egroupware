@@ -98,7 +98,7 @@
 			break;
 	}
 
-	switch($HTTP_POST_VARS['action'])
+	switch(@$GLOBALS['HTTP_POST_VARS']['action'])
 	{
 		case 'download':
 			check_form_values();
