@@ -41,7 +41,7 @@
 			'height',
 			'border',
 			'class',
-			'spaceing',
+			'spacing',
 			'padding',
 			'overflow'
 		);
