@@ -58,10 +58,26 @@
     global $phpgw_info, $ldap;
 
     $filter = "(|(uid=*))";
-    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid"));
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("uid"));
     $info = ldap_get_entries($ldap, $sr);
 
     return count($info);
+  }
+  
+  function account_view($loginid)
+  {
+    global $phpgw_info, $ldap;
+
+    $filter = "(|(uid=$loginid))";
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid","uidnumber"));
+    $aci = ldap_get_entries($ldap, $sr);
+    
+    $account_info["account_id"]        = $aci[0]["uid"][0];
+    $account_info["account_lid"]       = $aci[0]["uidnumber"][0];
+    $account_info["account_lastname"]  = $aci[0]["sn"][0];
+    $account_info["account_firstname"] = $aci[0]["givenname"][0];
+
+    return $account_info;
   }
 
   function account_read($method,$start,$sort,$order)
@@ -69,11 +85,12 @@
     global $phpgw_info, $ldap;
   
     $filter = "(|(uid=*))";
-    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid"));
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid","uidnumber"));
     $info = ldap_get_entries($ldap, $sr);
   
     for ($i=0; $i<count($info); $i++) {
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
+          $account_info[$i]["account_id"]        = $info[$i]["uidnumber"][0];
           $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
           $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];
           $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];

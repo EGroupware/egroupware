@@ -18,19 +18,27 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
 
   include("../header.inc.php");
+  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
+        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
   }
 
   $phpgw->db->query("select account_lid from accounts where account_id='$account_id'");
   $phpgw->db->next_record();
-  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("account_lid"));
+  $loginid = $phpgw->db->f("account_lid");
+  
+  $db_perms = $phpgw->accounts->read_apps($loginid);
+  $account_info = account_view($loginid);
 
-  $phpgw->db->query("select * from accounts where account_id='$account_id'");
+  $phpgw->db->query("select account_lastlogin,account_lastloginfrom,account_status from accounts "
+  				. "where account_id='$account_id'");
   $phpgw->db->next_record();
   
   $account_lastlogin      = $phpgw->db->f("account_lastlogin");
   $account_lastloginfrom  = $phpgw->db->f("account_lastloginfrom");
+  $account_status	     = $phpgw->db->f("account_status");
 
   ?>
    <center>
@@ -42,17 +50,17 @@
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
      <td width="40%"><?php echo lang("LoginID"); ?></td>
-     <td width="60%"><?php echo $phpgw->db->f("account_lid"); ?></td>
+     <td width="60%"><?php echo $loginid; ?></td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
      <td width="40%"><?php echo lang("First Name"); ?></td>
-     <td width="60%"><?php echo $phpgw->db->f("account_firstname"); ?>&nbsp;</td>
+     <td width="60%"><?php echo $account_info["account_firstname"]; ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
      <td width="40%"><?php echo lang("Last Name"); ?></td>
-     <td width="60%"><?php echo $phpgw->db->f("account_lastname"); ?>&nbsp;</td>
+     <td width="60%"><?php echo $account_info["account_lastname"]; ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
