@@ -22,6 +22,8 @@
 	*/
 	class boetemplate extends soetemplate
 	{
+		var $extensions = array();
+
 		var $types = array(
 			'label'	=> 'Label',			// Label $cell['label'] is (to be translated) textual content
 			'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
@@ -34,7 +36,7 @@
 			'hrule'	=> 'Horizontal Rule',
 			'template' => 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
 			'image' => 'Image',			// label = url, name=link or method, help=alt or title
-			'date'	=> 'Date', 			// Datefield, size='' timestamp or size=format like 'm/d/Y'
+			'date'	=> '', 			// Datefield, size='' timestamp or size=format like 'm/d/Y'
 			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
 												// if size > 1 then multiple selections, size lines showed
 			'select-percent' => 'Select Percentage',
@@ -47,12 +49,6 @@
 																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
 		);
-		var $aligns = array(
-			'' => 'Left',
-			'right' => 'Right',
-			'center' => 'Center'
-		);
-
 		/*!
 		@function boetemplate
 		@abstract constructor of class
@@ -61,6 +57,10 @@
 		function boetemplate()
 		{
 			$this->soetemplate();
+
+			$this->public_functions += array(
+				'disable_cells' => True
+			);
 		}
 
 		/*!
@@ -218,5 +218,41 @@
 			reset($this->data);
 
 			return $n;
+		}
+
+		/*!
+		@function loadExtension($name,$ui='')
+		@abstact trys to load the Extension / Widget-class from the app or etemplate
+		@param $name name of the extension the classname should be class.${name}_widget.inc.php
+		@note the $name might be "$name.$app" to give a app-name (default is the current app)
+		*/
+		function loadExtension($name,&$parent,$ui='html')
+		{
+			list($class,$app) = explode('.',$name);
+			$class .= '_widget';
+
+			if ($app == '')
+			{
+				$app = $GLOBALS['phpgw_info']['flags']['current_app'];
+			}
+			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			{
+				$app = 'etemplate';
+			}
+			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			{
+				return $this->extension[$name] = False;
+			}
+			$this->extension[$name] = CreateObject($app.'.'.$class,$ui);
+
+			if(floor(phpversion()) >= 4)
+			{
+				$this->extension[$name]->et = &$parent;
+			}
+			else
+			{
+				$this->extension[$name]->et = $parent;
+			}
+			return $this->extension[$name];
 		}
 	};

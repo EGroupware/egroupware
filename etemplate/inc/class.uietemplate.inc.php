@@ -326,6 +326,14 @@
 				$cell = $this->empty_cell(); // show nothing
 				$value = '';
 			}
+			$extra_label = True;
+
+			if (!$this->types[$cell['type']] &&
+			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
+			{
+				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value);
+				$content[$name] = $value;	// set result for template
+			}
 			if ($cell['help'])
 			{
 				$options .= " onFocus=\"self.status='".addslashes(lang($cell['help']))."'; return true;\"";
@@ -374,34 +382,6 @@
 					$html .= $this->html->textarea($form_name,$value,
 						$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
 					break;
-				case 'date':
-					if ($cell['size'] != '')
-					{
-						$date = split('[/.-]',$value);
-						$mdy  = split('[/.-]',$cell['size']);
-						for ($value=array(),$n = 0; $n < 3; ++$n)
-						{
-							switch($mdy[$n])
-							{
-								case 'Y': $value[0] = $date[$n]; break;
-								case 'm': $value[1] = $date[$n]; break;
-								case 'd': $value[2] = $date[$n]; break;
-							}
-						}
-					}
-					else
-					{
-						$value = array(date('Y',$value),date('m',$value),date('d',$value));
-					}
-					if ($readonly)
-					{
-						$html .= $GLOBALS['phpgw']->common->dateformatorder($value[0],$value[1],$value[2]);
-					}
-					else
-					{
-						$html .= $this->sbox->getDate($name.'[Y]',$name.'[m]',$name.'[d]',$value,$options);
-					}
-					break;
 				case 'checkbox':
 					if ($value)
 					{
@@ -419,6 +399,7 @@
 				case 'button':
 					$html .= $this->html->submit_button($form_name,$cell['label'],'',
 						strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
+					$extra_label = False;
 					break;
 				case 'hrule':
 					$html .= $this->html->hr($cell['size']);
@@ -446,7 +427,7 @@
 					{
 						$readonlys['__ALL__'] = True;
 					}
-					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($name);
+					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name']);
 					$html .= $templ->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
@@ -495,12 +476,20 @@
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
 						$cell['label'],lang($cell['help']),'BORDER=0');
 					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
+					$extra_label = False;
 					break;
 				default:
-					$html .= '<i>unknown type</i>';
+					if (!isset($this->extension[$cell['type']]))
+					{
+						$html .= '<i>unknown type</i>';
+					}
+					else
+					{
+						$html .= $this->extension[$cell['type']]->render($cell,$form_name,$value,$readonly);
+					}
 					break;
 			}
-			if ($cell['type'] != 'button' && $cell['type'] != 'image' && (($label = $cell['label']) != '' || $html == ''))
+			if ($extra_label && (($label = $cell['label']) != '' || $html == ''))
 			{
 				if (strlen($label) > 1)
 				{
@@ -667,7 +656,7 @@
 			}
 			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
 			{
-				echo "<p>process_show_cell(c=$c, r=$r, name='$name',type='${cell['type']}) start: isset(value)=".(0+isset($value)).", value=";
+				echo "<p>process_show_cell(c=$c, r=$r, name='$name',type='${cell['type']}') start: isset(value)=".(0+isset($value)).", value=";
 				if (is_array($value))
 				{
 					_debug_array($value);
@@ -693,42 +682,6 @@
 						$value = stripslashes($value);
 					}
 					break;
-				case 'date':
-					if ($value['d'])
-					{
-						if (!$value['m'])
-						{
-							$value['m'] = date('m');
-						}
-						if (!$value['Y'])
-						{
-							$value['Y'] = date('Y');
-						}
-						if ($cell['size'] == '')
-						{
-							$value = mktime(0,0,0,$value['m'],$value['d'],$value['Y']);
-						}
-						else
-						{
-							for ($n = 0,$str = ''; $n < strlen($cell['size']); ++$n)
-							{
-								if (strstr('Ymd',$c = $cell['size'][$n]))
-								{
-									$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
-								}
-								else
-								{
-									$str .= $c;
-								}
-							}
-							$value = $str;
-						}
-					}
-					else
-					{
-						$value = '';
-					}
-					break;
 				case 'checkbox':
 					if (!isset($value))	// checkbox was not checked
 					{
@@ -748,6 +701,13 @@
 					}
 					break;
 				default: // do nothing, $value is correct as is
+					if ((isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)) &&
+					    isset($this->extension[$cell['type']]->public_functions['post_process']))
+					{
+						//echo "value for post_process: "; _debug_array($value);
+						$this->extension[$cell['type']]->post_process($cell,$value);
+						//echo "<p>value after post_process: '$value'";
+					}
 			}
 			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
 			{

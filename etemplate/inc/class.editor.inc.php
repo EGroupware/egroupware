@@ -24,6 +24,12 @@
 			'error_writing' => 'Error: while saveing !!!',
 			'other_version' => 'only an other Version found !!!'
 		);
+		var $aligns = array(
+			'' => 'Left',
+			'right' => 'Right',
+			'center' => 'Center'
+		);
+		var $extensions = '';
 
 		var $public_functions = array
 		(
@@ -56,6 +62,15 @@
 			if (isset($get_vars['name']) && !$this->etemplate->read($get_vars))
 			{
 				$msg .= $this->messages['not_found'];
+			}
+			if ($this->extensions == '')
+			{
+				$this->extensions = $this->scan_for_extensions();
+				list($app) = explode('.',$this->name);
+				if ($app != '' && $app != 'etemplate')
+				{
+					$this->extensions += $this->scan_for_extensions($app);
+				}
 			}
 			$content = $this->etemplate->as_array() + array(
 				'cols' => $this->etemplate->cols,
@@ -123,10 +138,10 @@
 			}
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
-					'type' => $this->etemplate->types,
-					'align' => $this->etemplate->aligns
+					'type' => array_merge($this->etemplate->types,$this->extensions),
+					'align' => $this->aligns
 				),
-				$no_button,$cols_spanned);
+				$no_button,$cols_spanned + array('**extensions**' => $this->extensions));
 		}
 
 		function swap(&$a,&$b)
@@ -136,12 +151,11 @@
 
 		function process_edit($content)
 		{
-			//$content = $GLOBALS['HTTP_POST_VARS']['cont'];
-
 			if ($this->debug)
 			{
 				echo "editor.process_edit: content ="; _debug_array($content);
 			}
+			$this->extensions = $content['**extensions**']; unset($content['**extensions**']);
 			$this->etemplate->init($content);
 			$this->etemplate->size = $content['size'];
 			$this->etemplate->style = $content['style'];
@@ -306,7 +320,7 @@
 				if (substr($content['name'],0,9) == 'etemplate')
 				{
 					$m = new editor(False);
-					$additional = $m->messages + $this->etemplate->types + $this->etemplate->aligns;
+					$additional = $m->messages + $this->etemplate->types + $this->aligns;
 				}
 				$msg = $this->etemplate->writeLangFile($content['name'],'en',$additional);
 			}
@@ -392,7 +406,7 @@
 			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{
 				$cont = $post_vars['cont'];
-				$this->etemplate->process_show($cont);	// need to be done manually as name is set to $this->etemplate object 
+				$this->etemplate->process_show($cont);	// need to be done manually as name is set to $this->etemplate object
 				for ($r = 1; list($key,$val) = @each($cont); ++$r)
 				{
 					$vals["@$r"] = $key;
@@ -414,6 +428,29 @@
 				}
 			}
 			$show->exec('etemplate.editor.show',$content,array(),$no_buttons,array('olds' => $vals),'');
+		}
+
+		/*!
+		@function scan_for_extensions()
+		@abstract search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
+		@note extensions are class-files in $app/inc/class.${name}_widget.inc.php
+		@returns array with name => human_name of the extensions found
+		*/
+		function scan_for_extensions($app='etemplate')
+		{
+			$extensions = array();
+
+			$dir = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/inc');
+
+			while ($dir && ($file = readdir($dir)))
+			{
+				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
+					 ($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
+				{
+					$extensions[$regs[1]] = $ext->human_name;
+				}
+			}
+			return $extensions;
 		}
 	};
 
