@@ -379,6 +379,7 @@ time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
+to go back to the msg list, click <a href= x >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
