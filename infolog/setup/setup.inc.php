@@ -21,6 +21,8 @@
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
 	$setup_info['infolog']['hooks'][] = 'admin';
+	$setup_info['infolog']['hooks'][] = 'addressbook_view';
+	$setup_info['infolog']['hooks'][] = 'projects_view';
 
 	/* Dependacies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
