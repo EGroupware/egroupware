@@ -1,12 +1,10 @@
+%d etemplates deleted	etemplate	en	%d eTemplates deleted
 %d etemplates found	etemplate	en	%d eTemplates found
-%s disabled	etemplate	en	%s Disabled
+%s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
-%s no transl.	etemplate	en	%s No Transl.
 %s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
-%s readonly	etemplate	en	%s Readonly
--1	etemplate	en	-1
-../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
+%s readonly	etemplate	en	%s readonly
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
@@ -15,9 +13,7 @@ alignment of label and input-field in table-cell	etemplate	en	alignment of label
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
-application name needed to write a langfile !!!	etemplate	en	Application name needed to write a langfile !!!
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
-array	etemplate	en	Array
 attach	etemplate	en	Attach
 attach file	etemplate	en	attach file
 border	etemplate	en	Border
@@ -32,12 +28,12 @@ center	etemplate	en	Center
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
-class	etemplate	en	class
+class	etemplate	en	Class
 class, valign	etemplate	en	class, Valign
 click here to attach the file	etemplate	en	click here to attach the file
 click here to create the link	etemplate	en	click here to create the Link
-click here to start the search	etemplate	en	click here to start the search
-click here to upload the file	etemplate	en	click here to upload the file
+click here to start the search	etemplate	en	Click here to start the search
+click here to upload the file	etemplate	en	Click here to upload the file
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
 create a new table for the application	etemplate	en	Create a new table for the application
@@ -45,19 +41,16 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
-day	etemplate	en	Day
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
 db-tools	etemplate	en	DB-Tools
 default	etemplate	en	Default
 delete	etemplate	en	Delete
+delete all selected etemplates, without further inquiry	etemplate	en	delete ALL selected eTemplates, WITHOUT further inquiry
 delete column	etemplate	en	Delete Column
-delete template	etemplate	en	Delete Template
 delete this etemplate	etemplate	en	delete this eTemplate
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
-deletes the etemplate	etemplate	en	deletes the eTemplate
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
-disabled	etemplate	en	Disabled
 discard changes	etemplate	en	discard changes
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
@@ -77,20 +70,16 @@ enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 enter a search pattern	etemplate	en	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter filename to upload and attach, use [Browse...] to search for it
-enter filename to upload and attach, use browse to search for it	etemplate	en	Enter filename to upload and attach, use Browse to search for it
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
-enter the query pattern	etemplate	en	Enter the query pattern
-entries	etemplate	en	entries
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
-etemplate	common	en	eTempalte
+etemplate	common	en	eTemplate
 etemplate '%s' imported, use save to put it in the database	etemplate	en	eTemplate '%s' imported, use Save to put it in the database
 etemplate '%s' written to '%s'	etemplate	en	eTemplate '%s' written to '%s'
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this row with the one above	etemplate	en	exchange this row with the one above
 exchange this two columns	etemplate	en	exchange this two columns
-exchange this two rows	etemplate	en	exchange this two rows
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
@@ -103,11 +92,9 @@ go to the first entry	etemplate	en	go to the first entry
 go to the last entry	etemplate	en	go to the last entry
 go to the next page of entries	etemplate	en	go to the next page of entries
 go to the previous page of entries	etemplate	en	go to the previous page of entries
-group/-user	etemplate	en	Group/-User
 hbox	etemplate	en	HBox
 height	etemplate	en	Height
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
-height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
 height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
@@ -127,14 +114,9 @@ insert new row after this one	etemplate	en	insert new row after this one
 insert new row in front of first line	etemplate	en	insert new row in front of first Line
 integer	etemplate	en	Integer
 key	etemplate	en	Key
-l. after	etemplate	en	L. after
 label	etemplate	en	Label
-label:[b[old]][i[tylic]] text:[len][,max] textarea:[rows][,cols] radiobutton:value h.rule:[width] template:[indexincontent] select:[multiselectlines] date:[values: eg. 'y-m-d']	etemplate	en	Label:[b[old]][i[tylic]] Text:[len][,max] Textarea:[rows][,cols] Radiobutton:value H.Rule:[width] Template:[IndexInContent] Select:[multiselectLines] Date:[values: eg. 'Y-m-d']
-label:[b[old]][i[tylic]] text:[length][,maxlength] textarea:[rows][,cols] radiobutton:valueifchecked horizontalrule:[width] template:[indexincontent] select:[multiselectlinesdisplayed]	etemplate	en	Label:[b[old]][i[tylic]] Text:[length][,maxLength] Textarea:[rows][,cols] Radiobutton:valueIfChecked HorizontalRule:[width] Template:[IndexInContent] Select:[multiselectLinesDisplayed]
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	en	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 lang	etemplate	en	Lang
-language	etemplate	en	Language
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 last	etemplate	en	Last
 left	etemplate	en	Left
@@ -143,7 +125,6 @@ link	etemplate	en	Link
 linklist	etemplate	en	LinkList
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
-month	etemplate	en	Month
 name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
@@ -157,15 +138,12 @@ no	etemplate	en	No
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nullable	etemplate	en	Nullable
-number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
-number of rows in a vbox or cols in a hbox	etemplate	en	number of rows in a VBox or cols in a HBox
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
-options:	etemplate	en	Options:
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
 precision	etemplate	en	Precision
@@ -174,15 +152,12 @@ primary key for the table, gets automaticaly indexed	etemplate	en	Primary key fo
 radiobutton	etemplate	en	Radiobutton
 read	etemplate	en	Read
 read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
-read template from database (for the keys above)	etemplate	en	read template from database (for the keys above)
-readonly	etemplate	en	Readonly
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 save	etemplate	en	Save
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
-save the template under the above keys (name, ...), change them for a saveas	etemplate	en	save the template under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
@@ -199,12 +174,11 @@ select category	etemplate	en	Select Category
 select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
-select if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	select if content should only be displayed but not altered (the content is not send back then!)
-select if label and other content (depending on fieldtype) should not be translated	etemplate	en	select if label and other content (depending on fieldtype) should not be translated
 select month	etemplate	en	Select Month
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
+select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
 show (no save)	etemplate	en	Show (no save)
@@ -212,10 +186,7 @@ show values	etemplate	en	Show Values
 showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
-shows/displays the template for testing, does not save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
-size	etemplate	en	Size
 spacing	etemplate	en	Spacing
-span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
@@ -230,7 +201,6 @@ textarea	etemplate	en	Textarea
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
-total %s notes	etemplate	en	Total %s notes
 type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
@@ -247,20 +217,11 @@ what happens with overflowing content: visible (default), hidden, scroll, auto (
 width	etemplate	en	Width
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
-width, disable	etemplate	en	Width, Disable
 width, disabled	etemplate	en	Width, Disabled
-width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
-width, height, border	etemplate	en	Width, Height, Border
-width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
-width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
-width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
-width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)
-width, height, border-line-thickness, css-class name, celspacing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspacing, Cellpadding (for TABLE tag)
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
 xml-file to import	etemplate	en	xml-file to import
 xslt template	etemplate	en	XSLT Template
-year	etemplate	en	Year
 yes	etemplate	en	Yes
