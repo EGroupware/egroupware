@@ -26,6 +26,9 @@
 		'phpgw_vfs'
 	);
 
+	/* Hooks this app uses */
+	$setup_info['phpwebhosting']['hooks'] = array ('preferences', 'admin');
+
 	/* Dependencies for this app to work */
 	$setup_info['phpwebhosting']['depends'][] = array(
 		 'appname' => 'phpgwapi',
