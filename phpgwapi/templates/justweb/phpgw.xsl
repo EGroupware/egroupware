@@ -24,8 +24,6 @@
 	<xsl:variable name="prefs_title"><xsl:value-of select="prefs_title"/></xsl:variable>
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
-	<xsl:variable name="side_bar_top_img"><xsl:value-of select="side_bar_top_img"/></xsl:variable>
-	<xsl:variable name="side_bar_bottom_img"><xsl:value-of select="side_bar_bottom_img"/></xsl:variable>
 	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
 		<html>
 			<head>
@@ -92,11 +90,14 @@
 						<!-- BEGIN left_part -->
 							<table width="59" cellspacing="0" cellpadding="0" height="100%" valign="top">
 								<tr>
-									<td height="7" width="59" valign="top" class="left_top"> </td>
+									<td height="7" width="59" valign="top" class="left_top"/>
 								</tr>
 								<xsl:apply-templates select="applications"/>
 								<tr>
-									<td height="7" width="59" valign="top" class="left_bottom"> </td>
+									<td width="59" height="100%" valign="top" class="left"/>
+								</tr>
+								<tr>
+									<td height="7" width="59" valign="top" class="left_bottom"/>
 								</tr>
 							</table>
 						<!-- END left_part -->

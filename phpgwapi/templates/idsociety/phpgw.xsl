@@ -89,10 +89,10 @@
 					<tr valign="top">
 						<td>
 						<!-- BEGIN left_part -->
-							<table cellspacing="0" cellpadding="0" valign="top" class="left">
+							<table cellspacing="0" cellpadding="0" valign="top" class="left" height="100%">
 								<xsl:apply-templates select="applications"/>
 								<tr>
-									<td><img src="{$nav_bar_left_top_bg_img}"/></td>
+									<td class="left" valign="top" height="100%"><img src="{$nav_bar_left_top_bg_img}"/></td>
 								</tr>
 							</table>
 						<!-- END left_part -->
