@@ -103,13 +103,13 @@
 				$sql .= (!$this->is_group?$this->owner:implode(',',$this->g_owner));
 			}
 
-			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
-			@reset($member_groups);
-			while(list($key,$group_info) = each($member_groups))
-			{
-				$member[] = $group_info['account_id'];
-			}
-			@reset($member);
+//			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
+//			@reset($member_groups);
+//			while(list($key,$group_info) = each($member_groups))
+//			{
+//				$member[] = $group_info['account_id'];
+//			}
+//			@reset($member);
 //			$sql .= ','.implode(',',$member).') ';
 //			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') ';
 //			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
