@@ -81,7 +81,7 @@
 
   $phpgw->template->set_var("field",lang("View"));
   $str = "<select name=\"view\">";
-  $str .= "<option value=\"free/busy\">".lang("Free/Busy").</option>\n";
+  $str .= "<option value=\"free/busy\">".lang("free/busy")."</option>\n";
   $str .= "<option value=\"weekly\">".lang("Weekly")."</option>\n";
   $str .= "</select>\n";
   $phpgw->template->set_var("data",$str);
