@@ -66,6 +66,8 @@ create	setup	en	Create
 create database	setup	en	Create Database
 create demo accounts	setup	en	Create demo accounts
 create one now	setup	en	Create one now
+create the empty database -	setup	en	Create the empty database -
+create the empty database and grant user permissions -	setup	en	Create the empty database and grant user permissions -
 create your header.inc.php	setup	en	Create your header.inc.php
 created	setup	en	created
 creating tables	setup	en	Creating Tables
@@ -152,6 +154,7 @@ install all	setup	en	Install All
 install applications	setup	en	Install Applications
 install language	setup	en	Install Language
 installed	setup	en	installed
+instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
 invalid ip address	setup	en	Invalid IP address
 invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
@@ -171,6 +174,7 @@ ldap modify	setup	en	LDAP Modify
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	en	Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)
+login to mysql -	setup	en	Login to mysql -
 logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
@@ -187,7 +191,6 @@ modifications have been completed!	setup	en	Modifications have been completed!
 modify	setup	en	Modify
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
-mysqlinstr	setup	en	Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 name of database	setup	en	Name of database
 name of db user phpgroupware uses to connect	setup	en	Name of db user phpGroupWare uses to connect
 never	setup	en	never
@@ -220,7 +223,6 @@ passwords did not match, please re-enter	setup	en	Passwords did not match, pleas
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 persistent connections	setup	en	Persistent connections
-pgsqlinstr	setup	en	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
 phpgroupware administration manual	setup	en	phpGroupWare Administration Manual
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
@@ -281,6 +283,7 @@ setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup the database	setup	en	Setup the database
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
+start the postmaster	setup	en	Start the postmaster
 status	setup	en	Status
 step 1 - simple application management	setup	en	Step 1 - Simple Application Management
 step 2 - configuration	setup	en	Step 2 - Configuration
@@ -337,7 +340,7 @@ would you like to show each application's upgrade status ?	setup	en	Would you li
 write config	setup	en	Write config
 yes	setup	en	Yes
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
 you appear to be running version %1 of phpgroupware	setup	en	You appear to be running version %1 of phpGroupWare
 you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	en	You appear to be using PHP earlier than 4.1.0. phpGroupWare now requires 4.1.0 or later
 you appear to be using php3. disabling php4 sessions support	setup	en	You appear to be using PHP3. Disabling PHP4 sessions support

@@ -68,6 +68,8 @@ create	setup	de	erstellen
 create database	setup	de	Datenbank erzeugen
 create demo accounts	setup	de	Demo Benutzer anlegen
 create one now	setup	de	Jetzt erstellen
+create the empty database -	setup	de	Leere Datenbank anlegen -
+create the empty database and grant user permissions -	setup	de	Leere Datenbank anlegen und Benutzerrechte daran gewähren -
 create your header.inc.php	setup	de	Datei header.inc.php anlegen
 created	setup	de	erzeugt
 creating tables	setup	de	Erstelle Tabellen
@@ -154,6 +156,7 @@ install all	setup	de	Alle Installieren
 install applications	setup	de	Applikationen installieren
 install language	setup	de	Sprachen installieren
 installed	setup	de	installiert
+instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter '%1' anzulegen:
 invalid ip address	setup	de	Ungültige IP Adresse
 invalid password	setup	de	Ungültiges Passwort
 is broken	setup	de	ist kaputt
@@ -173,6 +176,7 @@ ldap modify	setup	de	LDAP Ändern
 ldap root password	setup	de	LDAP Root Passwort
 ldap rootdn	setup	de	LDAP rootdn
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	de	Zugang zu Setup auf die folgenden IP Adressen oder Netzwerke beschränken (z.B. 127.0.0.1,10.1.1)
+login to mysql -	setup	de	mysql aufrufen -
 logout	setup	de	Abmelden
 makesure	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Applikationen verwalten
@@ -189,7 +193,6 @@ modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modify	setup	de	Ändern
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP Benutzerkonten für die Benutzung durch phpGroupWare anpassen (für eine neue Installation mit LDAP Konten)
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
-mysqlinstr	setup	de	Hinweise zum erstellen der Datenbank in MySQL:<br>Login zu mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Erstellen Sie die leere Datenbank und bewilligen Sie Benutzer Erlaubnis -<br><i>mysql&gt; create database phpgroupware;</i><br><i>mysql&gt grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i> 
 name of database	setup	de	Name der Datenbank
 name of db user phpgroupware uses to connect	setup	de	Name des Datenbank-Benutzers den phpGroupWare verwendet
 never	setup	de	niemals
@@ -222,7 +225,6 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (Document-root) des Webservers sein!!!
 persistent connections	setup	de	Permanennte Verbindungen
-pgsqlinstr	setup	de	Hinweise zum erstellen der Datenbank in PostgreSQL:<br>Starten des postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Erstellen Sie die leere Datenbank -<br><i>[user@server user]# createdb phpgroupware</i>
 phpgroupware administration manual	setup	de	phpGroupWare Adminsitrationsmanual (nur in englisch)
 please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
@@ -283,6 +285,7 @@ setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup the database	setup	de	Datenbank einzurichten
 show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
+start the postmaster	setup	de	Starten den postmaster
 status	setup	de	Status
 step 1 - simple application management	setup	de	Schritt 1 - Einfache Applikations Verwaltung
 step 2 - configuration	setup	de	Schritt 2 - Konfiguration
@@ -340,7 +343,7 @@ would you like to show each application's upgrade status ?	setup	de	Soll der Upg
 write config	setup	de	Konfiguration schreiben
 yes	setup	de	Ja
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten phpGroupWare nicht korrekt laufen lassen, wenn überhaupt. <br><br>Biite aktualisieren Sie
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten phpGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of phpgroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
 you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. phpGroupWare benötigt nun Version 4.1.0 oder höher.
 you appear to be using php3. disabling php4 sessions support	setup	de	Sie scheinen PHP3 zu verwenden. Schalte PHP4 Session Unterstützung ab.
