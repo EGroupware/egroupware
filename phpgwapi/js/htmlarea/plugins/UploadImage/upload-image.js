@@ -1,16 +1,18 @@
-// UploadImage Plugin for HTMLArea-3.0
-// Implementation by Mihai Bazon.  Sponsored by http://thycotic.com
-//
-// htmlArea v3.0 - Copyright (c) 2002 interactivetools.com, inc.
-// This notice MUST stay intact for use (see license.txt).
-//
-// A free WYSIWYG editor replacement for <textarea> fields.
-// For full source code and docs, visit http://www.interactivetools.com/
-//
-// Version 3.0 developed by Mihai Bazon for InteractiveTools.
-//   http://dynarch.com/mishoo
-//
-// $Id$
+/**************************************************************************\
+* eGroupWare - UploadImage-plugin for htmlArea in eGroupWare               *
+* http://www.eGroupWare.org                                                *
+* Written and (c) by Xiang Wei ZHUO <wei@zhuo.org>                         *
+* Used code fragments from plugins by Mihai Bazon                          *
+* Modified for eGW by and (c) by Pim Snel <pim@lingewoud.nl>               *
+* --------------------------------------------                             *
+* This program is free software; you can redistribute it and/or modify it  *
+* under the terms of the GNU General Public License as published by the    *
+* Free Software Foundation; version 2 of the License.                      *
+\**************************************************************************/
+
+// $id$ 
+
+// FIXME: clean up code
 
 function UploadImage(editor) {
 	this.editor = editor;
@@ -36,12 +38,12 @@ function UploadImage(editor) {
 };
 
 UploadImage._pluginInfo = {
-	name          : "UploadImage",
+	name          : "UploadImage for eGroupWare",
 	version       : "1.0",
 	developer     : "Pim Snel",
 	developer_url : "http://lingewoud.com",
-	c_owner       : "Mihai Bazon",
-	sponsor       : "Lingewoud b.v. - Netherlands",
+	c_owner       : "Pim Snel, Xiang Wei ZHUO, Mihai Bazon",
+	sponsor       : "Lingewoud bv., Netherlands",
 	sponsor_url   : "http://lingewoud.com",
 	license       : "GPL"
 };

@@ -1,0 +1,48 @@
+UploadImage for HtmlArea in eGroupWare
+-----------------------------------------------------------
+Original Author:          Xiang Wei ZHUO <wei@zhuo.org>
+Author for eGW:           Pim Snel <pim@lingewoud.nl>
+Last Updated:             Mon Sep 20 19:55:03 CEST 2004
+Requirements:             eGroupWare 1.x, htmlArea 3rc or higher
+Note:                     UploadImage only works as plugin for htmlArea in eGroupWare.
+-----------------------------------------------------------
+
+UploadImage adds an image_upload-icon in the htmlArea-toolbar. When the icon is clicked 
+the user can Select an image from the Upload Directory or upload an Image to the directory 
+the upload directory eGW-developer has specified. After insertion the image is shown in the 
+htmlarea. Future features will be: resizing images, cropping images, rotating images etc ....
+
+To use the plugin you have to do the following:
+
+// thirst setup the sessionvariables UploadImage Need
+$sessdata = array(
+		'UploadImageBaseDir' =>  /path/to/eg/egw/images ,      // absolute path to the base directory
+		'UploadImageBaseURL' =>   http://yourhost/egw/images,  // the complete URL to the base images directory
+		'UploadImageMaxWidth' =>  500,                         // max, image width in pixels
+		'UploadImageMaxHeight' => 500                          // max. image height in pixels 
+		);
+
+$GLOBALS['phpgw']->session->appsession('UploadImage','phpgwapi',$sessdata);
+
+
+// then init the html class and call the htmlarea class-method with the UploadPlugin as argument
+if (!is_object($GLOBALS['phpgw']->html))
+{
+	$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+}
+
+$htmlarea = $GLOBALS['phpgw']->html->htmlarea($field_name, $value,$style,false,'UploadImage',$custom_toolbar);
+
+-----------------------------------------------------------
+SECURITY WARNING!!!
+-----------------------------------------------------------
+When you are implementing the UploadImage plugin make sure 
+your UploadImageBaseDir is set correctly because else it 
+might give access to other directories apache has access to.
+
+
+-----------------------------------------------------------
+Known issues:
+- Create directory doesn't work
+- In some cases the OK and cancel buttons won't work anymore (javascript issue)
+

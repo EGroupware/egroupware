@@ -1,0 +1,9 @@
+Mon Sep 20 22:23:52 CEST 2004
+-----------------------------
+- made UploadImage finally working
+- integrated with egroupware using appsession vars
+- added max sizes when uploading
+- added this CHANGELOG
+- added the README for developer instructions
+- checked copyrights
+- changed icon

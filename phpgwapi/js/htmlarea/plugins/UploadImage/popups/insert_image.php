@@ -7,15 +7,49 @@
    ** Last changed..:	8 Mar 2003 
    ** Notes.........:	Configuration in config.inc.php 
 
-   - Only compatible with IE 5.5+
+   - FIXME Only compatible with IE 5.5+
 
    ***********************************************************************/
 
+   /* $id */
+
    include 'ImageManager/config.inc.php';
    $no_dir = false;
-   if(!is_dir($BASE_DIR.$BASE_ROOT)) {
+   if(!is_dir($BASE_DIR)) {
 	  $no_dir = true;
    }
+
+//   _debug_array($_GET);
+//   die();
+   function dirs($dir,$abs_path) 
+   {
+	  $d = dir($dir);
+	  $dirs = array();
+	  while (false !== ($entry = $d->read())) 
+	  {
+		 if(is_dir($dir.'/'.$entry) && substr($entry,0,1) != '.') 
+		 {
+			$path['path'] = $dir.'/'.$entry;
+			$path['name'] = $entry;
+			$dirs[$entry] = $path;
+		 }
+	  }
+	  $d->close();
+
+	  ksort($dirs);
+	  for($i=0; $i<count($dirs); $i++) 
+	  {
+		 $name = key($dirs);
+		 $current_dir = $abs_path.'/'.$dirs[$name]['name'];
+		 echo "<option value=\"$current_dir\">$current_dir</option>\n";
+		 dirs($dirs[$name]['path'],$current_dir);
+		 next($dirs);
+	  }
+   }
+
+
+
+
 ?>
 <html style="width: 580; height: 440;">
    <head>
@@ -326,38 +360,12 @@ function toggleConstrains(constrains)
 																	 <td>
 																		<select name="dirPath" id="dirPath" style="width:30em" onChange="updateDir(this)">
 																		   <option value="/">/</option>
-																		   <?
-
-
-																		   function dirs($dir,$abs_path) 
-																		   {
-																			  $d = dir($dir);
-																			  $dirs = array();
-																			  while (false !== ($entry = $d->read())) {
-																				 if(is_dir($dir.'/'.$entry) && substr($entry,0,1) != '.') 
-																				 {
-																					$path['path'] = $dir.'/'.$entry;
-																					$path['name'] = $entry;
-																					$dirs[$entry] = $path;
-																				 }
-																			  }
-																			  $d->close();
-
-																			  ksort($dirs);
-																			  for($i=0; $i<count($dirs); $i++) 
+																		   <?php
+																			  if($no_dir == false) 
 																			  {
-																				 $name = key($dirs);
-																				 $current_dir = $abs_path.'/'.$dirs[$name]['name'];
-																				 echo "<option value=\"$current_dir\">$current_dir</option>\n";
-																				 dirs($dirs[$name]['path'],$current_dir);
-																				 next($dirs);
+																				 dirs($BASE_DIR,'');	
 																			  }
-																		   }
-
-																		   if($no_dir == false) {
-																			  dirs($BASE_DIR.$BASE_ROOT,'');	
-																		   }
-																		?>
+																		   ?>
 																	 </select>
 																  </td>
 																  <td class="buttonOut" onMouseOver="pviiClassNew(this,'buttonHover')" onMouseOut="pviiClassNew(this,'buttonOut')">
