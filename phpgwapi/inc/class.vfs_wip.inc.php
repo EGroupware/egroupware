@@ -80,9 +80,10 @@ class vfs
 		$this->fakebase = "/home";
 		$this->working_id = $phpgw_info["user"]["account_id"];
 		$this->working_lid = $phpgw->accounts->id2name ($this->working_id);
+		$this->now = date ("Y-m-d");
 
 		/* File/dir attributes, each corresponding to a database field.  Useful for use in loops */
-		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deletable", "comment", "app", "directory", "name");
+		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name");
 	}
 
 	/*!
@@ -152,6 +153,20 @@ class vfs
 		{
 			return True;
 		}
+	}
+
+	/*!
+	@function db_clean
+	@abstract Clean $string for use in database queries
+	@param $string String to clean
+	@result Cleaned version of $string
+	*/
+
+	function db_clean ($string)
+	{
+		$string = ereg_replace ("'", "\'", $string);
+
+		return $string;
 	}
 
 	/*!
@@ -552,7 +567,9 @@ class vfs
 		}
 		else
 		{
-			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created=NOW(), size=0, deleteable='Y', app='$this->currentapp', directory='$p->fake_leading_dirs', name='$p->fake_name'");
+			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', directory='$p->fake_leading_dirs', name='$p->fake_name'");
+
+			$this->set_attributes ($p->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp), array (RELATIVE_NONE));
 			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 		}
 
@@ -603,11 +620,15 @@ class vfs
 
 				if ($this->file_exists ($to, array ($relatives[1])))
 				{
-					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', mime_type='$record[mime_type]', deleteable='$record[deletable]', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$t->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'");
+					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs', name='$t->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'");
+
+					$this->set_attributes ($t->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]), array (RELATIVE_NONE));
 				}
 				else
 				{
-					$phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='$account_id', created = NOW(), size='$size', deleteable='$record[deleteable]', comment='$record[comment]', app='$record[app]', directory='$t->fake_leading_dirs', name='$t->fake_name'");
+					$this->touch ($t->fake_full_path, array (RELATIVE_NONE));
+
+					$this->set_attributes ($t->fake_full_path, array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]), array (RELATIVE_NONE));
 				}
 
 				$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
@@ -689,7 +710,9 @@ class vfs
 			$ls = $this->ls ($f->fake_full_path, array (RELATIVE_NONE));
 
 			$this->delete ($t->fake_full_path, array (RELATIVE_NONE));
-			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name', directory='$t->fake_leading_dirs', modifiedby_id='$account_id', modified=NOW() WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'");
+			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name', directory='$t->fake_leading_dirs' WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'");
+
+			$this->set_attributes ($t->fake_full_path, array ("modifiedby_id" => $account_id, modified => $this->now), array (RELATIVE_NONE));
 			$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
 
 			$rr = rename ($f->real_full_path, $t->real_full_path);
@@ -819,6 +842,7 @@ class vfs
 		global $phpgw;
 		global $phpgw_info;
 
+		$account_id = $phpgw_info["user"]["account_id"];
 		$currentapp = $phpgw_info["flags"]["currentapp"];
 
 		$p = $this->path_parts ($dir, array ($relatives[0]));
@@ -839,7 +863,9 @@ class vfs
 		{
 			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array (RELATIVE_NONE)))
 			{
-				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', createdby_id='" . $phpgw_info["user"]["account_id"] . "', name='$p->fake_name', size=1024, mime_type='Directory', created=NOW(), modified='', deleteable='Y', app='$currentapp', directory='$p->fake_leading_dirs'");
+				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', name='$p->fake_name', directory='$p->fake_leading_dirs'");
+
+				$this->set_attributes ($p->fake_full_path, array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp), array (RELATIVE_NONE));
 
 				$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
 			}
@@ -905,6 +931,8 @@ class vfs
 			{
 				$$attribute = $record[$attribute];
 			}
+
+			$$attribute = $this->db_clean ($$attribute);
 		}
 
 		$query = $phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$owner_id', createdby_id='$createdby_id', modifiedby_id='$modifiedby_id', created='$created', modified='$modified', size='$size', mime_type='$mime_type', deleteable='$deleteable', comment='$comment', app='$app' WHERE file_id='$record[file_id]'");
@@ -1072,7 +1100,7 @@ class vfs
 			$phpgw->db->next_record ();
 			$record = $phpgw->db->Record;
 
-			$rarray = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deletable" => $record["deletable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
+			$rarray = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
 
 			return $rarray;
 		}
@@ -1104,7 +1132,7 @@ class vfs
 				continue;
 			}
 
-			$rarray[] = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deletable" => $record["deletable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
+			$rarray[] = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
 		}
 
 		return $rarray;
