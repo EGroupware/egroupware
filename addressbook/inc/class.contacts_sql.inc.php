@@ -483,14 +483,18 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields,$access='',$cat_id='')
+		function add($owner,$fields,$access='',$cat_id='',$tid='n')
 		{
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//$this->db->lock(array("contacts"));
-			$this->db->query("insert into $this->std_table (owner,access,cat_id,"
+			if ($fields['lid']) {
+				$lid[0] = 'lid,';
+				$lid[1] = $fields['lid']."','";
+			}
+			$this->db->query("insert into $this->std_table (owner,access,cat_id,tid,".$lid[0]
 				. implode(",",$this->stock_contact_fields)
-				. ") values ('$owner','$access','$cat_id','"
+				. ") values ('$owner','$access','$cat_id','$tid','".$lid[1]
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
 			$this->db->query("select max(id) from $this->std_table ",__LINE__,__FILE__);

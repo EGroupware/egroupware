@@ -61,7 +61,7 @@
 		$addnew['owner'] = $phpgw_info["user"]["account_id"];
 		$addnew['id']    = '';
 
-		if ($account=True) { addressbook_add_entry($addnew['owner'],$addnew,'','',True); }
+		if ($addnew['tid']) { addressbook_add_entry($addnew['owner'],$addnew,'','',$addnew['tid']); }
 		else { addressbook_add_entry($addnew['owner'],$addnew); }
 
 		$fields = addressbook_read_last_entry($qfields);
