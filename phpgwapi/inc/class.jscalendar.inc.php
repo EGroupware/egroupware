@@ -35,7 +35,7 @@
 			if ($do_header && !strstr($GLOBALS['phpgw_info']['flags']['java_script'],'jscalendar'))
 			{
 				$GLOBALS['phpgw_info']['flags']['java_script'] .=
-'<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+'<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
 <script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
 <script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/jscalendar-setup.php')).'"></script>
 ';
