@@ -44,6 +44,21 @@
        case "installed applications":
 	$s = "Installed applications";						break;
 
+
+
+       case "add new application":
+	$s = "Add new application";						break;
+
+       case "application name":
+	$s = "Application name";						break;
+
+       case "application title":
+	$s = "Application title";						break;
+
+
+
+
+
        case "are you sure you want to delete this group ?":
 	$s = "Are you sure you want to delete this group ?"; break;
 
