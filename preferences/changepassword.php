@@ -75,7 +75,7 @@
 
    if ($phpgw_info["server"]["auth_type"] == "sql") {
       $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "' "
-	                  . "where account_lid='" . $phpgw_info["user"]["userid"] . "'");
+	                  . "where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
    }
 
    if ($phpgw_info["server"]["auth_type"] == "ldap") {
@@ -93,14 +93,12 @@
       @ldap_modify($ldap, $dn, $entry);
    }
 
-   // Since they are logged in, we need to change the password in sessions
-   // in case they decied to check there mail.   
-   $phpgw->db->query("update phpgw_sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd)
- 	               . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
-
    // Update there last password change
    $phpgw->db->query("update accounts set account_lastpwd_change='" . time() . "' where account_id='"
-   			    	. $phpgw_info["user"]["account_id"] . "'");
+   			    	. $phpgw_info["user"]["account_id"] . "'",__LINE__,__FILE__);
+
+   $phpgw_info["user"]["passwd"] = $n_passwd;
+   $phpgw->accounts->sync();
 
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=18"));
 }
