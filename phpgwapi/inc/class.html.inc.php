@@ -45,7 +45,8 @@ class html
 	 *
 	 * Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
 	 *
-	 * @param $text string text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	 * @param $text string/boolean text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	 *	Or if False the content (innerHTML) of the element itself is used.
 	 * @param $do_lang boolean (default False) should the text be run though lang()
 	 * @param $options array param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	 *  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
@@ -72,7 +73,9 @@ class html
 				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_numeric($value)?$value:"'$value'").'; ';
 			}
 		}
-		return ' onmouseover="'.$opt_out.'return escape(\''.addslashes(@htmlentities(str_replace("\n",' ',$text),ENT_COMPAT,$this->charset)).'\')"';
+		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
+
+		return ' onmouseover="'.$opt_out.'return escape(\''.addslashes(@htmlentities(str_replace(array("\n","\r"),' ',$text),ENT_COMPAT,$this->charset)).'\')"';
 	}
 
 	function activate_links($content)
@@ -368,13 +371,13 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
 		if (!is_array($vars))
 		{
-		parse_str($vars,$vars);
+			parse_str($vars,$vars);
 		}
 		list($url,$v) = explode('?',$url);	// url may contain additional vars
 		if ($v)
 		{
-		parse_str($v,$v);
-		$vars += $v;
+			parse_str($v,$v);
+			$vars += $v;
 		}
 		return $GLOBALS['phpgw']->link($url,$vars);
 	}
