@@ -1308,22 +1308,15 @@
 			return False;
 		}
 
-		function overlap($starttime,$endtime,$participants,$owner=0,$id=0,$restore_cache=False)
+		function overlap($starttime,$endtime,$participants,$owner=0,$ids=0,$restore_cache=False)
 		{
-//			$retval = Array();
-//			$ok = False;
-
-/* This needs some attention.. by commenting this chunk of code it will fix bug #444265 */
+			$retval = False;
 
 			if($restore_cache)
 			{
 				$temp_cache_events = $this->cached_events;
 			}
 
-//			$temp_start = (int)$GLOBALS['phpgw']->common->show_date($starttime,'Ymd');
-//			$temp_start_time = (int)($GLOBALS['phpgw']->common->show_date($starttime,'Hi');
-//			$temp_end = (int)$GLOBALS['phpgw']->common->show_date($endtime,'Ymd');
-//			$temp_end_time = (int)$GLOBALS['phpgw']->common->show_date($endtime,'Hi');
 			$temp_start = (int)(date('Ymd',$starttime));
 			$temp_start_time = (int)(date('Hi',$starttime));
 			$temp_end = (int)(date('Ymd',$endtime));
@@ -1337,7 +1330,7 @@
 			$users = Array();
 			if(count($participants))
 			{
-				while(list($user,$status) = each($participants))
+				foreach($participants as $user => $status)
 				{
 					$users[] = $user;
 				}
@@ -1359,43 +1352,37 @@
 				)
 			);
 
-			if($this->debug)
+			for($ts = $starttime; $ts <= $endtime; $ts += 24*60*60)
 			{
-				echo '<!-- Possible Conflicts ('.($temp_start - 1).'): '.count($possible_conflicts[$temp_start - 1]).' -->'."\n";
-				echo '<!-- Possible Conflicts ('.$temp_start.'): '.count($possible_conflicts[$temp_start]).' '.count($id).' -->'."\n";
-			}
-
-			if($possible_conflicts[$temp_start] || $possible_conflicts[$temp_end])
-			{
-				if($temp_start == $temp_end)
+				$check_ymd = (int) date('Ymd',$ts);
+				if (isset($possible_conflicts[$check_ymd]) && is_array($possible_conflicts[$check_ymd]) &&
+					count($possible_conflicts[$check_ymd]))
 				{
 					if($this->debug)
 					{
-						echo '<!-- Temp_Start == Temp_End -->'."\n";
+						echo '<!-- Found '.count($possible_conflicts[$check_ymd]).' possible conflicts for date '.$check_ymd.' -->'."\n";
 					}
-					@reset($possible_conflicts[$temp_start]);
-					while(list($key,$event) = each($possible_conflicts[$temp_start]))
+					foreach($possible_conflicts[$check_ymd] as $event)
 					{
 						$found = False;
-						if($id)
+						if(is_array($ids))
 						{
-							@reset($id);
-							while(list($key,$event_id) = each($id))
+							foreach($ids as $event_id)
 							{
 								if($this->debug)
 								{
-									echo '<!-- $id['.$key.'] = '.$id[$key].' = '.$event_id.' -->'."\n";
-									echo '<!-- '.$event['id'].' == '.$event_id.' -->'."\n";
+									echo '<!-- Checking '.$event['id'].' == '.$event_id.' -->'."\n";
 								}
 								if($event['id'] == $event_id)
 								{
-									$found = True;
+									$found = True;	// conflict with original event, is no conflict
+									break;
 								}
 							}
 						}
 						if($this->debug)
 						{
-							echo '<!-- Item found: '.$found.' -->'."<br>\n";
+							echo '<!-- conflict with a different event: '.($found?'No':'Yes').' -->'."<br>\n";
 						}
 						if(!$found)
 						{
@@ -1432,16 +1419,10 @@
 					}
 				}
 			}
-			else
-			{
-				$retval = False;
-			}
-
 			if($restore_cache)
 			{
 				$this->cached_events = $temp_cache_events;
 			}
-
 			return $retval;
 		}
 
