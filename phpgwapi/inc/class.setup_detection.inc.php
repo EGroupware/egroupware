@@ -4,7 +4,7 @@
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   * This file written by Dan Kuykendall<seek3r@phpgroupware.org>             *
-  *  and Miles Lott<milosch@phpgroupware.org>                                *
+  *  and Miles Lott<milos@groupwhere.org>                                    *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-	class setup_detection 
+	class setup_detection
 	{
 		function get_versions()
 		{
@@ -146,13 +146,13 @@
 				/* Does this app have any depends */
 				if(isset($value['depends']))
 				{
-                                /* If so find out which apps it depends on */
+					/* If so find out which apps it depends on */
 					foreach($value['depends'] as $depkey => $depvalue)
 					{
 						/* I set this to False until we find a compatible version of this app */
 						$setup_info['depends'][$depkey]['status'] = False;
 						/* Now we loop thru the versions looking for a compatible version */
-                                        
+
 						foreach($depvalue['versions'] as $depskey => $depsvalue)
 						{
 							$currentver = $setup_info[$depvalue['appname']]['currentver'];
