@@ -12,12 +12,12 @@
 	/* $Id$ */
 
 	$phpgw_flags = Array(
-		'currentapp'					=>	'calendar',
+		'currentapp'			=>	'calendar',
 		'enable_nextmatchs_class'	=>	True,
-		'noheader'						=> True,
-		'nonavbar'						=> True,
-		'noappheader'					=> True,
-		'noappfooter'					=> True
+		'noheader'			=>	True,
+		'nonavbar'			=>	True,
+		'noappheader'			=>	True,
+		'noappfooter'			=>	True
 	);
 
 	$phpgw_info['flags'] = $phpgw_flags;
@@ -82,16 +82,16 @@
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	$templates = Array(
-		'pref'			=> 'pref.tpl',
-		'pref_colspan'	=> 'pref_colspan.tpl',
-		'pref_list'		=>	'pref_list.tpl',
+		'pref'		=>	'pref.tpl',
+		'pref_colspan'	=>	'pref_colspan.tpl',
+		'pref_list'	=>	'pref_list.tpl',
 	);
 	$p->set_file($templates);
 
 	$var = Array(
-		'title'			=>	lang('Calendar preferences'),
+		'title'		=>	lang('Calendar preferences'),
 		'action_url'	=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/preferences.php'),
-		'bg_color'		=>	$phpgw_info['theme']['th_bg'],
+		'bg_color'	=>	$phpgw_info['theme']['th_bg'],
 		'submit_lang'	=>	lang('submit')
 	);
 	
