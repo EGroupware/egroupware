@@ -25,7 +25,7 @@
 			'readProj'       => True,
 			'readAddr'       => True,
 			'anzSubs'        => True,
-			'readIdArray'    => True,
+			'search'         => True,
 			'get_rows'       => True,
 			'accountInfo'    => True,	// in class boinfolog (this class)
 			'addr2name'      => True,
@@ -288,11 +288,11 @@
 			return $this->so->anzSubs( $info_id );
 		}
 
-		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$action_id,
-									$ordermethod,&$start,&$total)
+		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,
+							 $ordermethod,&$start,&$total)
 		{
-			return $this->so->readIdArray($order,$sort,$filter,$cat_id,$query,
-								  					$action,$action_id,$ordermethod,$start,$total);
+			return $this->so->search($order,$sort,$filter,$cat_id,$query,
+											 $action,$action_id,$ordermethod,$start,$total);
 		}
 
 
@@ -478,9 +478,9 @@
 		function link_query( $pattern )
 		{
 			$start = $total = 0;
-			$ids = $this->readIdArray('','','','',$pattern,'','','',&$start,&$total);
+			$ids = $this->search('','','','',$pattern,'','','',&$start,&$total);
 			$content = array();
-			while (is_array($ids) && list( $id,$parent ) = each( $ids ))
+			while (is_array($ids) && list( $id,$info ) = each( $ids ))
 			{
 				$content[$id] = $this->link_title($id);
 			}

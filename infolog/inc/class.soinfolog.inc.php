@@ -158,7 +158,29 @@
 			$this->data = array( 'info_owner' => $this->user,
 										'info_pri'    => 'normal' );
 		}      
-				
+		
+		function db2data(&$data)
+		{
+			$data = $this->db->Record;
+			reset($this->maybe_slashes);
+			while (list($key) = each($this->maybe_slashes))
+			{
+				$data[$key] = stripslashes($data[$key]);
+			}
+/*
+			$links = $this->links->get_links('infolog',$this->data['info_id']);
+			while (list($nul,$link) = each($links))
+			{
+				if ($link['app'] == 'addressbook')
+					$data['info_addr_id'] = $link['id'];
+				if ($link['app'] == 'projects')
+					$data['info_proj_id'] = $link['id'];
+				if ($link['app'] == 'calendar')
+					$data['info_event_id'] = $link['id'];
+			}
+*/
+		}
+
 		function read($info_id)		// did _not_ ensure ACL
 		{
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
@@ -169,24 +191,9 @@
 			}
 			if ($info_id != $this->data['info_id'])      // data yet read in
 			{
-				$this->data = $this->db->Record;
-				reset($this->maybe_slashes);
-				while (list($key) = each($this->maybe_slashes))
-				{
-					$this->data[$key] = stripslashes($this->data[$key]);
-				}
-				$links = $this->links->get_links('infolog',$this->data['info_id']);
-				while (list($nul,$link) = each($links))
-				{
-					if ($link['app'] == 'addressbook')
-						$this->data['info_addr_id'] = $link['id'];
-					if ($link['app'] == 'projects')
-						$this->data['info_proj_id'] = $link['id'];
-					if ($link['app'] == 'calendar')
-						$this->data['info_event_id'] = $link['id'];
-				}
+				$this->db2data($this->data);
 			}
-			return $this->data;         
+			return $this->data;
 		}
 		
 		function delete($info_id)  // did _not_ ensure ACL
@@ -252,6 +259,10 @@
 
 		function anzSubs( $info_id )
 		{
+			if ($info_id <= 0)
+			{
+				return 0;
+			}
 			$this->db->query('select count(*) FROM phpgw_infolog where '.
 								  "info_id_parent=$info_id",__LINE__,__FILE__);
 
@@ -260,37 +271,27 @@
 			return $this->db->f(0);
 		}
 
-		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$action_id,
-									$ordermethod,&$start,&$total)
+		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,
+							 $ordermethod,&$start,&$total)
 		{
-			//echo "<p>soinfolog.readIdArray(action='$action',action_id='$action_id')</p>\n";
+			//echo "<p>soinfolog.search(action='$action/$action_id')</p>\n";
 			$action2app = array(
 				'addr'        => 'addressbook',
-				'addressbook' => 'addressbook',
 				'proj'        => 'projects',
-				'projects'    => 'projects',
-				'event'       => 'calendar',
-				'calendar'    => 'calendar'
+				'event'       => 'calendar'
 			);
-			if ($action != '' && isset($action2app[$action]))
+			if (isset($action2app[$action]))
 			{
-				$links = $this->links->get_links($action2app[$action],$action_id);
-				$total = count($links);
-				if ($start > $total)
+				$action = $action2app[$action];
+			}
+			if ($action != '')
+			{
+				$links = $this->links->get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
+			
+				if (count($links))
 				{
-					$start = 0;
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' info_id IN ('.implode(',',$links).')';
 				}
-				$ids = array();
-				while (list($n,$link) = each($links) && 
-					$n < $start+$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'])
-				{
-					if ($n >= $start)
-					{
-						$ids[''.$link['id']] = 0;
-					}
-				}
-				//echo "<p>soinfolog.readIdArray($action,$action_id) ids ="; _debug_array($ids);
-				return $ids;
 			}
 			if ($order)
 			{
@@ -309,17 +310,6 @@
 			{
 			  $filtermethod .= " AND info_cat='$cat_id' ";
 			}
-			/* not longer used
-			switch ($action)
-			{
-				case 'addr':	$filtermethod .= " AND info_addr_id=$action_id ";
-									break;
-				case 'proj':	$filtermethod .= " AND info_proj_id=$action_id ";
-									break;
-				case 'event':	$filtermethod .= " AND info_event_id=$action_id ";
-									break;
-			}
-			*/
 			if ($query)			  // we search in _from, _subject and _des for $query
 			{
 				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
@@ -332,21 +322,29 @@
 			{
 				$pid = '';
 			}
-			$this->db->query("SELECT COUNT(*) FROM phpgw_infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
-
-			$this->db->next_record();
-			$total = $this->db->f(0);
-
-			if (!$start || $start > $total)
-			{
-				$start = 0;
-			}
-			$this->db->limit_query($sql="SELECT info_id,info_id_parent FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
-			
 			$ids = array( );
-			while ($this->db->next_record())
+			if ($action == '' || $action == 'sp' || count($links))
+         {
+				$this->db->query($sql="SELECT COUNT(*) FROM phpgw_infolog i WHERE ($filtermethod $pid $sql_query) $link_extra",__LINE__,__FILE__);
+				
+				$this->db->next_record();
+				$total = $this->db->f(0);
+
+				if (!$start || $start > $total)
+				{
+					$start = 0;
+				}
+				$this->db->limit_query($sql="SELECT * FROM phpgw_infolog WHERE ($filtermethod $pid $sql_query) $link_extra $ordermethod",$start,__LINE__,__FILE__);
+
+				while ($this->db->next_record())
+				{
+					$this->db2data(&$info);
+					$ids[$info['info_id']] = $info;
+				}
+			}
+			else
 			{
-				$ids[$this->db->f('info_id')] = $this->db->f('info_id_parent');
+				$start = $total = 0;
 			}
 			return $ids;
 		}
