@@ -147,8 +147,9 @@
 			$reg = "/<!--\\s+BEGIN $qhandle\\s+-->(.*)\n\\s*<!--\\s+END $qhandle\\s+-->/s";
 			if (!preg_match($reg,$str,$match))
 			{
-				$this->halt("set_block: unable to find block '$handle' in '$parent'.");
-				return False;
+				// unfortunaly some apps set non-existing blocks, therefor I have to disable this diagnostics again for now
+				// $this->halt("set_block: unable to find block '$handle' in '$parent'.");
+				// return False;
 			}
 			$this->set_var($handle,$match[1]);
 			$this->set_var($parent,preg_replace($reg, '{' . "$name}",$str));
