@@ -82,6 +82,9 @@
 			case 5:
 				return '<font color="FF0000">' . lang('Bad login or password') . '</font>';
 				break;
+			case 98:
+				return '<font color="FF0000">' . lang('Account is expired') . '</font>';
+				break;
 			case 99:
 				return '<font color="FF0000">' . lang('Blocked, too many attempts') . '</font>';
 				break;

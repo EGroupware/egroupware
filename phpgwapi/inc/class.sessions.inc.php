@@ -508,7 +508,7 @@
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
 				$this->cd_reason = $blocked ? 99 : 5;
-				
+
 				$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
 				return False;
 			}
@@ -557,6 +557,8 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
+				$this->reason = 'account is expired';
+				$this->cd_reason = 98;
 
 				return False;
 			}
