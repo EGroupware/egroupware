@@ -244,6 +244,7 @@
 	// end groups list
 
 	$i = 0;
+	$phpgw->applications->read_installed_apps();
 	$sorted_apps = $phpgw_info['apps'];
 	@asort($sorted_apps);
 	@reset($sorted_apps);
