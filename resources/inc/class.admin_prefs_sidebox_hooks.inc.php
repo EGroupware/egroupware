@@ -77,12 +77,11 @@ class admin_prefs_sidebox_hooks
 	function search_link($args)
 	{
 		$appname = 'resources';
-		return array('resources' => array(
-				'query' => 'resources.ui_resources.link_query',
-				'title' => 'resources_title',
+		return array(	'query' => 'resources.bo_resources.link_query',
+				'title' => 'resources.bo_resources.link_title',
 				'view' => array('menuaction' => 'resources.ui_resources.view'),
 				'view_id' => 'id'
-		));
+		);
 	}
 }
 

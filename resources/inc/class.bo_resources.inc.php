@@ -56,7 +56,7 @@ class bo_resources
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		
-		$nr = $this->so->search($criteria,$cats,&$rows,$order_by,$offset=$query['start'],$num_rows=0);
+		$nr = $this->so->search($criteria,$cats,&$rows,$accessory_of=-1,$order_by,$offset=$query['start'],$num_rows=0);
 		foreach($rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
@@ -187,7 +187,7 @@ class bo_resources
 		if($id < 1){return;}
 		$cat_id = $this->so->get_value('cat_id',$id);
 		$data[0] = array('id' => '', 'name' => '');
-		$this->so->search(array('accessory_only' => 1),array($cat_id => ''),&$data,$order_by='',$offset=false,$num_rows=-1);
+		$this->so->search(array('accessory_only' => 1),array($cat_id => ''),&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
 		foreach($data as $num => $resource)
 		{
 			if($num != 0)
@@ -198,31 +198,45 @@ class bo_resources
 		return $acc_list;
 	}
 
-		/*!
+	/*!
 		@function link_query
 		@syntax link_query(  $pattern  )
-		@author ralfbecker
+		@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@abstract query infolog for entries matching $pattern
-		*/
-		function link_query( $pattern )
-		{print_r($pattern);
-			$query = array(
-				'search' => $pattern,
-				'start'  => 0,
-				'subs'   => true,
-			);
-			$ids = $this->search($query);
-			$content = array();
-			if (is_array($ids))
+	*/
+	function link_query( $pattern )
+	{
+		$criteria = array('name' => $pattern,'short_description'  => $pattern);
+		$cats = $this->acl->get_cats(PHPGW_ACL_READ);
+		$data[0] = array('id' => '','name' => '', 'short_description' => '');
+		$this->so->search($criteria,$cats,&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
+		
+		foreach($data as $num => $resource)
+		{
+			if($num != 0)
 			{
-				foreach($ids as $id => $info )
-				{
-					$content[$id] = $this->link_title($id);
-				}
+				$list[$resource['id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 			}
-			return $content;
 		}
-
+		return $list;
+	}
+		
+	/*!
+		@function link_title
+		@syntax link_title(  $id  )
+		@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+		@abstract get title for an infolog entry identified by $id
+	*/
+	function link_title( $resource )
+	{
+		if (!is_array($resource))
+		{
+			$resource  = $this->so->read($resource);
+			$title = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+		}
+		return $title ? $title : false;
+	}
+	
 	/*!
 		@function save_picture
 		@abstract resizes and saves an pictures in vfs

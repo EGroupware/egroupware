@@ -126,6 +126,9 @@ class ui_resources
 		{
 			$resource_id = $content;
 			$content = array('resource_id' => $resource_id);
+			// some presetes
+			$content['quantity'] = $content['useable'] = 1;
+			$content['accessory_of'] = -1;
 			
 			if ($resource_id > 0)
 			{
@@ -140,11 +143,11 @@ class ui_resources
 			}
 			
 			$content['resource_picture'] = $this->bo->get_picture($resource_id,$content['picture_src'],$size=true);
-		}	
-		$sel_options = array(
-				'cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD),
-				'gen_src_list' => $this->bo->get_genpicturelist()
-		);
+		}
+		$sel_options['cat_id'] = $this->bo->acl->get_cats(PHPGW_ACL_ADD);
+		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
+		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
+		
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');

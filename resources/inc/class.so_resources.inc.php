@@ -29,13 +29,14 @@ class so_resources
 	@param array $criteria array of key => value for search. (or'ed together)
 	@param array $cats array of cat_id => cat_name to be searched
 	@param &array $data reference of data array with cols to return in first row ( key => '')
+	@param int $accessory_of find accessories of id, default -1 = show all exept accessories
 	@param string $order_by fieldnames + {ASC|DESC} separated by colons ','
 	@param int $offset row to start from, default 0
 	@param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
 	
 	@return int number of matching rows
 	*/
-	function search($criteria,$cats,&$data,$order_by='',$offset=false,$num_rows=-1)
+	function search($criteria,$cats,&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1)
 	{
 		$select = implode(',',array_keys($data[0]));
 		foreach($criteria as $col => $value)
@@ -50,8 +51,9 @@ class so_resources
 			$wherecats .= ($wherecats ? " OR " : " AND ( " ) .'cat_id' . "='".$cat_id."'";
 		}
 		$wherecats .= $wherecats ? " ) " : "";
+		$whereacc = " AND (accessory_of ='".$accessory_of."')";
 
-		$this->db->query( 'SELECT '.$select." FROM ".$this->rs_table." WHERE ".$where.$wherecats.
+		$this->db->query( 'SELECT '.$select." FROM ".$this->rs_table." WHERE ".$where.$wherecats.$whereacc.
 				($order_by != '' ? " ORDER BY $order_by" : ''),__LINE__,__FILE__);
 	
 		$nr = $this->db->nf();
