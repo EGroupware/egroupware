@@ -107,8 +107,8 @@
 
 	$t->set_var('lang_viewpref',lang("Address book - view") . $noprefs);
 
-	reset($columns_to_display);
-	while (list($column,$null) = each($qfields)) { // each entry column
+	@reset($qfields);
+	while (list($column,$null) = @each($qfields)) { // each entry column
 		if(display_name($colname[$column]))
 		{
 			$t->set_var('display_col',display_name($colname[$column]));
@@ -133,7 +133,7 @@
 				{
 					if ($key)
 					{
-						$data .= "</td></tr><tr><td>&nbsp;</td><td>" .$info;
+						$data .= "</td></tr><tr><td width=\"30%\">&nbsp;</td><td width=\"70%\">" .$info;
 					}
 					else
 					{	// First row, don't close td/tr

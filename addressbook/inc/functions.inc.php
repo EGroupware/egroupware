@@ -165,7 +165,7 @@
 			"tel_car"             => "car phone",
 			"tel_video"           => "video phone",
 
-			"tel_prefer"          => "prefer",
+			"tel_prefer"          => "preferred phone",
 			"email"               => "business email",
 			"email_type"          => "business email type",
 			"email_home"          => "home email",
