@@ -21,7 +21,7 @@ class phpgw_schema_proc_array
 	}
 	
 	// Return a type suitable for DDL abstracted array
-	function TranslateType($sType, $iPrecision = 0, $iScale = 0, $sTranslated)
+	function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 	{
 		$sTranslated = $sType;
 		return (strlen($sTranslated) > 0);
@@ -42,10 +42,10 @@ class phpgw_schema_proc_array
 		return "";
 	}
 	
-	function _GetColumns($oProc, $sTableName, $sColumns, $sDropColumn = "")
+	function _GetColumns($oProc, &$aTables, $sTableName, &$sColumns, $sDropColumn = "")
 	{
 		$sColumns = "";
-		while (list($sName, $aJunk) = each($oProc->m_aTables[$sTableName]["fd"]))
+		while (list($sName, $aJunk) = each($aTables[$sTableName]["fd"]))
 		{
 			if ($sColumns != "")
 				$sColumns .= ",";
@@ -55,29 +55,29 @@ class phpgw_schema_proc_array
 		return true;
 	}
 	
-	function DropTable($oProc, $sTableName)
+	function DropTable($oProc, &$aTables, $sTableName)
 	{
-		if (IsSet($oProc->m_aTables[$sTableName]))
-			UnSet($oProc->m_aTables[$sTableName]);
+		if (IsSet($aTables[$sTableName]))
+			UnSet($aTables[$sTableName]);
 		
 		return true;
 	}
 	
-	function DropColumn($oProc, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
+	function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
 	{
-		if (IsSet($oProc->m_aTables[$sTableName]))
+		if (IsSet($aTables[$sTableName]))
 		{
-			if (IsSet($oProc->m_aTables[$sTableName]["fd"][$sColumnName]))
-				UnSet($oProc->m_aTables[$sTableName]["fd"][$sColumnName]);
+			if (IsSet($aTables[$sTableName]["fd"][$sColumnName]))
+				UnSet($aTables[$sTableName]["fd"][$sColumnName]);
 		}
 		
 		return true;
 	}
 	
-	function RenameTable($oProc, $sOldTableName, $sNewTableName)
+	function RenameTable($oProc, &$aTables, $sOldTableName, $sNewTableName)
 	{
 		$aNewTables = array();
-		while (list($sTableName, $aTableDef) = each($oProc->m_aTables))
+		while (list($sTableName, $aTableDef) = each($aTables))
 		{
 			if ($sTableName == $sOldTableName)
 				$aNewTables[$sNewTableName] = $aTableDef;
@@ -85,18 +85,18 @@ class phpgw_schema_proc_array
 				$aNewTables[$sTableName] = $aTableDef;
 		}
 		
-		$oProc->m_aTables = $aNewTables;
+		$aTables = $aNewTables;
 		
 		return true;
 	}
 	
-	function RenameColumn($oProc, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
+	function RenameColumn($oProc, &$aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 	{
-		if (IsSet($oProc->m_aTables[$sTableName]))
+		if (IsSet($aTables[$sTableName]))
 		{
 			$aNewTableDef = array();
-			reset($oProc->m_aTables[$sTableName]["fd"]);
-			while (list($sColumnName, $aColumnDef) = each($oProc->m_aTables[$sTableName]["fd"]))
+			reset($aTables[$sTableName]["fd"]);
+			while (list($sColumnName, $aColumnDef) = each($aTables[$sTableName]["fd"]))
 			{
 				if ($sColumnName == $sOldColumnName)
 					$aNewTableDef[$sNewColumnName] = $aColumnDef;
@@ -104,52 +104,52 @@ class phpgw_schema_proc_array
 					$aNewTableDef[$sColumnName] = $aColumnDef;
 			}
 			
-			$oProc->m_aTables[$sTableName]["fd"] = $aNewTableDef;
+			$aTables[$sTableName]["fd"] = $aNewTableDef;
 			
-			reset($oProc->m_aTables[$sTableName]["pk"]);
-			while (list($key, $sColumnName) = each($oProc->m_aTables[$sTableName]["pk"]))
+			reset($aTables[$sTableName]["pk"]);
+			while (list($key, $sColumnName) = each($aTables[$sTableName]["pk"]))
 			{
 				if ($sColumnName == $sOldColumnName)
-					$oProc->m_aTables[$sTableName]["pk"][$key] = $sNewColumnName;
+					$aTables[$sTableName]["pk"][$key] = $sNewColumnName;
 			}
 			
-			reset($oProc->m_aTables[$sTableName]["uc"]);
-			while (list($key, $sColumnName) = each($oProc->m_aTables[$sTableName]["uc"]))
+			reset($aTables[$sTableName]["uc"]);
+			while (list($key, $sColumnName) = each($aTables[$sTableName]["uc"]))
 			{
 				if ($sColumnName == $sOldColumnName)
-					$oProc->m_aTables[$sTableName]["uc"][$key] = $sNewColumnName;
+					$aTables[$sTableName]["uc"][$key] = $sNewColumnName;
 			}
 		}
 		
 		return true;
 	}
 	
-	function AlterColumn($oProc, $sTableName, $sColumnName, $aColumnDef, $bCopyData = true)
+	function AlterColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
 	{
-		if (IsSet($oProc->m_aTables[$sTableName]))
+		if (IsSet($aTables[$sTableName]))
 		{
-			if (IsSet($oProc->m_aTables[$sTableName]["fd"][$sColumnName]))
-				$oProc->m_aTables[$sTableName]["fd"][$sColumnName] = $aColumnDef;
+			if (IsSet($aTables[$sTableName]["fd"][$sColumnName]))
+				$aTables[$sTableName]["fd"][$sColumnName] = $aColumnDef;
 		}
 		
 		return true;
 	}
 	
-	function AddColumn($oProc, $sTableName, $sColumnName, $aColumnDef)
+	function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 	{
-		if (IsSet($oProc->m_aTables[$sTableName]))
+		if (IsSet($aTables[$sTableName]))
 		{
-			if (!IsSet($oProc->m_aTables[$sTableName]["fd"][$sColumnName]))
-				$oProc->m_aTables[$sTableName]["fd"][$sColumnName] = $aColumnDef;
+			if (!IsSet($aTables[$sTableName]["fd"][$sColumnName]))
+				$aTables[$sTableName]["fd"][$sColumnName] = $aColumnDef;
 		}
 		
 		return true;
 	}
 	
-	function CreateTable($oProc, $sTableName, $aTableDef)
+	function CreateTable($oProc, &$aTables, $sTableName, $aTableDef)
 	{
-		if (!IsSet($oProc->m_aTables[$sTableName]))
-			$oProc->m_aTables[$sTableName] = $aTableDef;
+		if (!IsSet($aTables[$sTableName]))
+			$aTables[$sTableName] = $aTableDef;
 		
 		return true;
 	}	

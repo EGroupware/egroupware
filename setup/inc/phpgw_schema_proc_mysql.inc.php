@@ -9,7 +9,7 @@ class phpgw_schema_proc_mysql
 	}
 	
 	// Return a type suitable for DDL
-	function TranslateType($sType, $iPrecision = 0, $iScale = 0, $sTranslated)
+	function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 	{
 		$sTranslated = "";
 		switch($sType)
@@ -101,7 +101,7 @@ class phpgw_schema_proc_mysql
 	}
 	
 	
-	function _GetColumns($oProc, $sTableName, $sColumns, $sDropColumn = "")
+	function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = "")
 	{
 		$sColumns = "";
 		
@@ -116,40 +116,40 @@ class phpgw_schema_proc_mysql
 		return false;
 	}
 	
-	function DropTable($oProc, $sTableName)
+	function DropTable($oProc, &$aTables, $sTableName)
 	{
 		return !!($oProc->m_odb->query("DROP TABLE " . $sTableName));
 	}
 	
-	function DropColumn($oProc, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
+	function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
 	{
 		return !!($oProc->m_odb->query("ALTER TABLE $sTableName DROP COLUMN $sColumnName"));
 	}
 	
-	function RenameTable($oProc, $sOldTableName, $sNewTableName)
+	function RenameTable($oProc, &$aTables, $sOldTableName, $sNewTableName)
 	{
 		return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
 	}
 	
-	function RenameColumn($oProc, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
+	function RenameColumn($oProc, &$aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 	{
 		// This really needs testing - it can affect primary keys, and other table-related objects
 		// like sequences and such
-		if ($oProc->_GetFieldSQL($oProc->m_aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
+		if ($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
 			return !!($oProc->m_odb->query("ALTER TABLE $sTableName CHANGE $sOldColumnName $sNewColumnName " . $sNewColumnSQL));
 		
 		return false;
 	}
 	
-	function AlterColumn($oProc, $sTableName, $sColumnName, $aColumnDef, $bCopyData = true)
+	function AlterColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
 	{
-		if ($oProc->_GetFieldSQL($oProc->m_aTables[$sTableName]["fd"][$sColumnName], $sNewColumnSQL))
+		if ($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sColumnName], $sNewColumnSQL))
 			return !!($oProc->m_odb->query("ALTER TABLE $sTableName MODIFY $sColumnName " . $sNewColumnSQL));
 		
 		return false;
 	}
 	
-	function AddColumn($oProc, $sTableName, $sColumnName, $aColumnDef)
+	function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 	{
 		$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
 		$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
@@ -157,13 +157,13 @@ class phpgw_schema_proc_mysql
 		return !!($oProc->m_odb->query($query));
 	}
 	
-	function GetSequenceSQL($sTableName, $sFieldName, $sSequenceSQL)
+	function GetSequenceSQL($sTableName, $sFieldName, &$sSequenceSQL)
 	{
 		$sSequenceSQL = "";
 		return true;
 	}
 	
-	function CreateTable($oProc, $sTableName, $aTableDef)
+	function CreateTable($oProc, &$aTables, $sTableName, $aTableDef)
 	{
 		if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 		{

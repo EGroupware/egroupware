@@ -21,7 +21,7 @@ class phpgw_schema_proc_pgsql
 	}
 	
 	// Return a type suitable for DDL
-	function TranslateType($sType, $iPrecision = 0, $iScale = 0, $sTranslated)
+	function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 	{
 		switch($sType)
 		{
@@ -96,11 +96,11 @@ class phpgw_schema_proc_pgsql
 		return "UNIQUE($sFields)";
 	}
 	
-	function _GetColumns($oProc, $sTableName, $sColumns, $sDropColumn = "")
+	function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = "")
 	{
 		$sColumns = "";
 		$query = "SELECT a.attname FROM pg_attribute a,pg_class b WHERE ";
-		$query .= "a.oid=b.attrelid AND a.attnum>0 and b.relname='$sTableName'";
+		$query .= "b.oid=a.attrelid AND a.attnum>0 and b.relname='$sTableName'";
 		if ($sDropColumn != "")
 			$query .= " AND a.attname != '$sDropColumn'";
 		$query .= " ORDER BY a.attnum";
@@ -116,12 +116,12 @@ class phpgw_schema_proc_pgsql
 		return false;
 	}
 	
-	function DropTable($oProc, $sTableName)
+	function DropTable($oProc, &$aTables, $sTableName)
 	{
 		return !!($oProc->m_odb->query("DROP TABLE " . $sTableName));
 	}
 	
-	function DropColumn($oProc, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
+	function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
 	{
 		if ($bCopyData)
 			$oProc->m_odb->query("ALTER TABLE $sTableName RENAME TO $sTableName" . "_tmp");
@@ -136,15 +136,16 @@ class phpgw_schema_proc_pgsql
 		$oProc->m_odb->query($query);
 		$this->_GetColumns($oProc, $sTableName . "_tmp", $sColumns, $sColumnName);
 		$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
-		return !!($oProc->m_odb->query($query));
+		$bRet = !!($oProc->m_odb->query($query));
+		return ($bRet && $this->DropTable($oProc, $sTableName . "_tmp"));
 	}
 	
-	function RenameTable($oProc, $sOldTableName, $sNewTableName)
+	function RenameTable($oProc, &$aTables, $sOldTableName, $sNewTableName)
 	{
 		return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
 	}
 	
-	function RenameColumn($oProc, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
+	function RenameColumn($oProc, &$aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 	{
 		// This really needs testing - it can affect primary keys, and other table-related objects
 		// like sequences and such
@@ -154,16 +155,17 @@ class phpgw_schema_proc_pgsql
 			$this->DropTable($oProc, $sTableName);
 		
 		if (!$bCopyData)
-			return $this->CreateTable($oProc, $sTableName, $oProc->m_aTables[$sTableName]);
+			return $this->CreateTable($oProc, $aTables, $sTableName, $oProc->m_aTables[$sTableName], false);
 		
-		$this->CreateTable($oProc, $sTableName, $oProc->m_aTables[$sTableName]);
+		$this->CreateTable($oProc, $aTables, $sTableName, $aTables[$sTableName], false);
 		$this->_GetColumns($oProc, $sTableName . "_tmp", $sColumns);
 		$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
 		
-		return !!($oProc->m_odb->query($query));
+		$bRet = !!($oProc->m_odb->query($query));
+		return ($bRet && $this->DropTable($oProc, $sTableName . "_tmp"));
 	}
 	
-	function AlterColumn($oProc, $sTableName, $sColumnName, $aColumnDef, $bCopyData = true)
+	function AlterColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
 	{
 		if ($bCopyData)
 			$oProc->m_odb->query("ALTER TABLE $sTableName RENAME TO $sTableName" . "_tmp");
@@ -171,16 +173,18 @@ class phpgw_schema_proc_pgsql
 			$this->DropTable($oProc, $sTableName);
 		
 		if (!$bCopyData)
-			return $this->CreateTable($oProc, $sTableName, $oProc->m_aTables[$sTableName]);
+			return $this->CreateTable($oProc, $aTables, $sTableName, $aTables[$sTableName], false);
 		
-		$this->CreateTable($oProc, $sTableName, $oProc->m_aTables[$sTableName]);
+		echo $aTables[$sTableName];
+		$this->CreateTable($oProc, $aTables, $sTableName, $aTables[$sTableName], false);
 		$this->_GetColumns($oProc, $sTableName . "_tmp", $sColumns);
 		$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
 		
-		return !!($oProc->m_odb->query($query));
+		$bRet = !!($oProc->m_odb->query($query));
+		return ($bRet && $this->DropTable($oProc, $sTableName . "_tmp"));
 	}
 	
-	function AddColumn($oProc, $sTableName, $sColumnName, $aColumnDef)
+	function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 	{
 		$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
 		$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
@@ -188,21 +192,22 @@ class phpgw_schema_proc_pgsql
 		return !!($oProc->m_odb->query($query));
 	}
 	
-	function GetSequenceSQL($sTableName, $sFieldName, $sSequenceSQL)
+	function GetSequenceSQL($sTableName, $sFieldName, &$sSequenceSQL)
 	{
 		$sSequenceSQL = sprintf("CREATE SEQUENCE %s_%s_seq", $sTableName, $sFieldName);
 		return true;
 	}
 	
-	function CreateTable($oProc, $sTableName, $aTableDef)
+	function CreateTable($oProc, $aTables, $sTableName, $aTableDef, $bCreateSequence = true)
 	{
 		if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 		{
 			// create sequence first since it will be needed for default
-			if ($sSequenceSQL != "")
+			if ($bCreateSequence && $sSequenceSQL != "")
 				$oProc->m_odb->query($sSequenceSQL);
 			
 			$query = "CREATE TABLE $sTableName ($sTableSQL)";
+			echo $query;
 			return !!($oProc->m_odb->query($query));
 		}
 		

@@ -14,17 +14,20 @@
 class phpgw_schema_proc
 {
 	var $m_oTranslator;
+	var $m_oDeltaProc;
 	var $m_odb;
 	var $m_aTables;
+	var $m_oDeltaOnly;
 	
 	function phpgw_schema_proc($dbms)
 	{
-		include("./inc/phpgw_schema_proc_" . $dbms . ".inc.php");
+		include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_proc_" . $dbms . ".inc.php");
 		eval("\$this->m_oTranslator = new phpgw_schema_proc_$dbms;");
-		global $phpgw_setup;
-		$this->m_odb = $phpgw_setup->db;
 		
+		include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_proc_array.inc.php");
+		$this->m_oDeltaProc = new phpgw_schema_proc_array;
 		$this->m_aTables = array();
+		$this->m_oDeltaOnly = True; // Either is an insane default!
 	}
 	
 	function GenerateScripts($aTables, $bOutputHTML = false)
@@ -66,18 +69,23 @@ class phpgw_schema_proc
 		if (!is_array($aTables) || !IsSet($this->m_odb))
 			return false;
 		
+		reset($aTables);
 		$this->m_aTables = $aTables;
 		
-		reset($this->m_aTables);
-		while (list($sTableName, $aTableDef) = each($this->m_aTables))
+		while (list($sTableName, $aTableDef) = each($aTables))
 		{
 			if ($this->CreateTable($sTableName, $aTableDef))
 			{
 				if ($bOutputHTML)
-					echo "<br>Create Table <b>$sTableSQL</b>";
+					echo "<br>Create Table <b>$sTableName</b>";
 			}
 			else
+			{
+				if ($bOutputHTML)
+					echo "<br>Create Table Failed For <b>$sTableName</b>";
+				
 				return false;
+			}
 		}
 		
 		return true;
@@ -107,44 +115,71 @@ class phpgw_schema_proc
 	
 	function DropTable($sTableName)
 	{
-		return $this->m_oTranslator->DropTable($this, $sTableName);
+		$retVal = $this->m_oDeltaProc->DropTable($this, $this->m_aTables, $sTableName);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->DropTable($this, $this->m_aTables, $sTableName);
 	}
 	
 	function DropColumn($sTableName, $aTableDef, $sColumnName, $bCopyData = true)
 	{
-		return $this->m_oTranslator->DropColumn($this, $sTableName, $aTableDef, $sColumnName, $bCopyData);
+		$retVal = $this->m_oDeltaProc->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
 	}
 	
 	function RenameTable($sOldTableName, $sNewTableName)
 	{
-		return $this->m_oTranslator->RenameTable($this, $sOldTableName, $sNewTableName);
+		$retVal = $this->m_oDeltaProc->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
 	}
 	
 	function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 	{
-		return $this->m_oTranslator->RenameColumn($this, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
+		$retVal = $this->m_oDeltaProc->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
 	}
 	
 	function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData = true)
 	{
-		return $this->m_oTranslator->AlterColumn($this, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
+		$retVal = $this->m_oDeltaProc->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
 	}
 	
 	function AddColumn($sTableName, $sColumnName, $aColumnDef)
 	{
-		return $this->m_oTranslator->AddColumn($this, $sTableName, $sColumnName, $aColumnDef);
+		$retVal = $this->m_oDeltaProc->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
 	}
 	
 	function CreateTable($sTableName, $aTableDef)
 	{
-		return $this->m_oTranslator->CreateTable($this, $sTableName, $aTableDef);
+		$retVal = $this->m_oDeltaProc->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
+		if ($this->m_oDeltaOnly)
+			return $retVal;
+		return $retVal && $this->m_oTranslator->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
 	}
 	
-	function _GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL)
+	function query($sQuery, $line = "", $file = "")
 	{
+		return $this->m_odb->query($sQuery, $line, $file);
+	}
+	
+	function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL)
+	{
+		echo "is_array";
 		if (!is_array($aTableDef))
 			return false;
-		
+		echo "it is";
 		$sTableSQL = "";
 		reset($aTableDef["fd"]);
 		while (list($sFieldName, $aFieldAttr) = each($aTableDef["fd"]))
@@ -167,7 +202,10 @@ class phpgw_schema_proc
 				}
 			}
 			else
+			{
+				echo "GetFieldSQL failed for $sFieldName";
 				return false;
+			}
 		}
 		
 		$sUCSQL = "";
@@ -203,7 +241,7 @@ class phpgw_schema_proc
 	}
 	
 	// Get field DDL
-	function _GetFieldSQL($aField, $sFieldSQL)
+	function _GetFieldSQL($aField, &$sFieldSQL)
 	{
 		if (!is_array($aField))
 			return false;
@@ -258,7 +296,7 @@ class phpgw_schema_proc
 		return false;
 	}
 	
-	function _GetPK($aFields, $sPKSQL)
+	function _GetPK($aFields, &$sPKSQL)
 	{
 		$sPKSQL = "";
 		if (count($aFields) < 1)
@@ -278,7 +316,7 @@ class phpgw_schema_proc
 		return true;
 	}
 	
-	function _GetUC($aFields, $sUCSQL)
+	function _GetUC($aFields, &$sUCSQL)
 	{
 		$sUCSQL = "";
 		if (count($aFields) < 1)

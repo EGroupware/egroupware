@@ -18,6 +18,10 @@
 	$dh = opendir(PHPGW_SERVER_ROOT);
 	while ($dir = readdir($dh)) {
 		if (! $reserved_directorys[$dir] && is_dir(PHPGW_SERVER_ROOT . SEP . $dir)) {
+				if (is_file(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'tables_new.inc.php')) {
+						$new_schema[] = $dir;
+				}
+
 				if (is_file(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup_info.inc.php')) {
 						include(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup_info.inc.php');
 				} else {
@@ -31,5 +35,17 @@
 													. " app_tables, app_version) values ('" . $app[0] . "', '" . $app[1]["name"]
 													. "',1," . $app[1]['app_order'] . ", '" . $app[1]['app_tables'] . "', '"
 													. $app[1]['version'] . "')");
+	}
+
+	include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_current.inc.php");
+	include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_proc.inc.php");
+
+	$o = new phpgw_schema_proc($phpgw_domain[$ConfigDomain]["db_type"]);
+	$o->m_odb = $phpgw_setup->db;
+
+	while (list(,$app) = each($new_schema)) {
+		include(PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'tables_new.inc.php');
+		echo '<br><b>Creating tables for ' . $app . '</b>';
+		$o->ExecuteScripts($app_tables, True);
 	}
 ?>
