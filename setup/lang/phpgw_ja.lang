@@ -1,3 +1,4 @@
+(account deletion in SQL only)	setup	ja	(SQL のみのアカウント削除)
 actions	setup	ja	動作
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ja	自動作成時のグループ &nbsp; (指定なしの場合 'default')
 admins	setup	ja	管理者
@@ -23,6 +24,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br>正しいタイプを使う
 authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
+auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
 available version	setup	ja	最新の<BR>バージョン
 backupwarn	setup	ja	<br>しかし、この処理が、あなたのデータを破壊してしまった場合に備えて、<u>データバックアップをお勧めします。<br></u><em>先に進む前に、データのバックアップを行って下さい。</em>
 because it depends upon	setup	ja	理由は次のとおりです
@@ -31,6 +33,7 @@ because it requires manual table installation, <br>or the table definition was i
 because of a failed upgrade or install	setup	ja	追加もしくは更新に失敗しました。
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	ja	データベースのバージョンがこのアプリケーションの動作可能バージョンよりも新しいため、更新に失敗しました。
 because the enable flag for this app is set to 0, or is undefined	setup	ja	このアプリケーションが利用可能となっていません。
+bottom	setup	ja	下部
 cancel	setup	ja	キャンセル
 charset	setup	ja	EUC-JP
 check ip address of all sessions	setup	ja	全てのセッションで IP アドレスのチェックを行う
@@ -51,12 +54,14 @@ delete all my tables and data	setup	ja	すべてのテーブルとデータを削除します
 delete all old languages and install new ones	setup	ja	現在の言語をすべて削除して、選択した言語をインストールする
 deleting tables	setup	ja	テーブルを削除しました
 demo server setup	setup	ja	デモサーバセットアップ
+deny access	setup	ja	アクセス不可
 deny all users access to grant other users access to their entries ?	setup	ja	他のユーザ情報へのアクセスを全てのユーザに許可しない
 deregistered	setup	ja	登録解除しました
 details for admin account	setup	ja	管理者アカウントの詳細情報
 domain	setup	ja	ドメイン
 edit current configuration	setup	ja	環境設定
 enter some random text for app session <br>encryption (requires mcrypt)	setup	ja	アプリケーションセッション暗号化のための<br>任意テキスト入力(mcrypt 時必要)
+enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
 enter the full path for temporary files.<br>Examples: /tmp, c:\temp	setup	ja	テンポラリファイル（フルパス）<br>例：/tmp や C:\TEMP など
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br>例：/files や E:\FILES など
 enter the hostname of the machine on which this server is running	setup	ja	phpGroupWare が動作するホスト名
@@ -71,6 +76,7 @@ enter your http proxy server port	setup	ja	HTTP &nbsp; プロキシサーバポート
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ja	新規インストールの場合は、インポートを選択して下さい。既存の SQL アカウントを LDAP に変換する場合は、エクスポートを選択して下さい。
 force selectbox	setup	ja	セレクトボックス
 go back	setup	ja	戻る
+grant access	setup	ja	アクセス許可
 has a version mismatch	setup	ja	バージョンが異なります
 hooks deregistered	setup	ja	フックを登録解除しました。
 hooks registered	setup	ja	フックを登録しました。
@@ -106,14 +112,21 @@ makesure	setup	ja	データベースの作成とアカウントに権限を与えます
 manage applications	setup	ja	アプリケーション設定
 manage languages	setup	ja	言語環境設定
 maximum account id (e.g. 65535 or 1000000)	setup	ja	最大ユーザID &nbsp; (例：65536 や 1000000 など)
+mcrypt algorithm (default tripledes)	setup	ja	Mcryptアルゴリズム(デフォルト:TRIPLEDES)
+mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
+mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
 minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID &nbsp; (例： 500 や 100 など)
 multi-language support setup	setup	ja	言語環境設定
 mysqlinstr	setup	ja	 MySQLでデータベースを作成するには:<br>mysql にログイン -<br><i>[user@server user]# mysql -u root -p</i><br>空のデータベースを作成し、アカウントに権限を付与する -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+never	setup	ja	無期限
+no	setup	ja	いいえ
 not complete	setup	ja	完了していません。
 note: you will be able to customize this later	setup	ja	備考: 後でカスタマイズすることが可能です
 not ready for this stage yet	setup	ja	実行できません。
 ok	setup	ja	OK
 once the database is setup correctly	setup	ja	Once the database is setup correctly
+one month	setup	ja	１ヶ月
+one week	setup	ja	１週間
 only add languages that are not in the database already	setup	ja	新しい言語すべてを追加（初めて追加する場合）
 only add new phrases	setup	ja	新しいフレーズの追加
 or we can attempt to create the database for you:	setup	ja	または、この処理でデータベースを作成することが可能です
@@ -125,7 +138,6 @@ please configure phpGroupWare for your environment	setup	ja	Please configure php
 please install	setup	ja	Please install
 please login	setup	ja	ログイン
 please login to phpgroupware and run the admin application for additional site configuration	setup	ja	phpGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
-please wait...	setup	ja	Please Wait...
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
 preferences	setup	ja	ユーザ設定情報
@@ -173,6 +185,8 @@ this section will help you import users and groups from your ldap tree into phpG
 this stage is completed<br>	setup	ja	この段階は完了しました。<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	ja	１つの管理者アカウントと３つのデモアカウントをセットアップします。<br>デモアカウントのユーザ名とパスワードは demo/guest, demo2/guest, demo3/guest です。<br><b>現在のアカウントをすべて削除しますので注意してください。</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	ja	と、１つの管理者アカウントと３つのデモアカウントをセットアップします。<br><b>現在のアカウントをすべて削除しますので注意してください。</b>
+top	setup	ja	上部
+two weeks	setup	ja	２週間
 uninstall all applications	setup	ja	アプリケーションのアンインストール
 uninstalled	setup	ja	アンインストール
 upgraded	setup	ja	アップグレード
@@ -186,6 +200,7 @@ we will automatically update your tables/records to x	setup	ja	セットアップは、%
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	ja	管理者でログイン時、phpGroupWareのバージョンチェックを行う
 would you like phpgroupware to cache the phpgw info array ?	setup	ja	phpGroupWare のキャッシュにphpgw info 配列を利用する
 would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
+yes	setup	ja	はい
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	ja	PHPのバージョンが古いようです。<br>バージョンアップをお勧めします。<br>古いバージョンの PHP では、phpGroupWare のすべての機能が正確に動作しません。<br><br>Ver 3.0.16 以降にバージョンアップしてください。
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running version x of phpGroupWare	setup	ja	現在、phpGroupWare Ver. %1 が動作していると思われます。
