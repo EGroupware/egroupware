@@ -398,6 +398,10 @@ href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBAL
 			}
 
 			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['activate_tooltips'] = '<script src="'.$GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
+
+
+
 			$GLOBALS['jerryr_tpl']->set_var($var);
 			$GLOBALS['jerryr_tpl']->pfp('out','footer');
 		}
