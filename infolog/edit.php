@@ -44,7 +44,8 @@
 				$startdate = mktime(12,0,0,$smonth, $sday, $syear);
 			}
 		} else {
-			$startdate = 0;
+			if (isset($sday))
+				$startdate = 0;
 		}         
 	}
 
@@ -61,7 +62,8 @@
 				$enddate = mktime(12,0,0,$emonth,$eday,$eyear);
 			}
 		} else {
-			$enddate = 0;
+			if (isset($eday))
+				$enddate = 0;
 		}
 
 	if ($save || $add) {
@@ -139,9 +141,6 @@
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$pri_selected[$phpgw->infolog->data['info_pri']] = ' selected';
-	$status_selected[$phpgw->infolog->data['info_status']] = ' selected';
-
 	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
 	$t->set_file(array('info_edit' => 'form.tpl'));
 	  
@@ -210,11 +209,11 @@
 	$t->set_var('descval', $des);
 
 	$t->set_var('lang_start_date',lang('Start Date'));
-	if (!isset($startdate) || !$startdate) $startdate = $phpgw->infolog->data['info_startdate'];
+	if (!isset($startdate)) $startdate = $phpgw->infolog->data['info_startdate'];
 	$t->set_var('start_select_date',$sb->getDate('syear','smonth','sday',$startdate));
 
 	$t->set_var('lang_end_date',lang('End Date'));
-	if (!isset($enddate) || !$enddate) $enddate = $phpgw->infolog->data['info_enddate'];
+	if (!isset($enddate)) $enddate = $phpgw->infolog->data['info_enddate'];
 	$t->set_var('end_select_date',$sb->getDate('eyear','emonth','eday',$enddate));
 
 	$t->set_var('lang_selfortoday',lang('Today'));
