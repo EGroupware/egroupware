@@ -53,31 +53,55 @@
 		 * @param $name string name of the form-element
 		 * @param $element_id string id of the form-element, this need to be unique for the whole window !!!
 		 * @param $selected array/int user-id or array of user-id's which are already selected
-		 * @param $use string/array 'accounts', 'groups', 'both' or app-name for all accounts with run-rights or an
-		 *	array with id's as keys or values. If the id is in the key and the value is a string, it gets appended to the user-name
+		 * @param $use string 'accounts', 'groups', 'owngroups', 'both' or app-name for all accounts with run-rights.
+		 *	If an '+' is appended to the app-name, one can also select groups with run-rights for that app.
 		 * @param $lines int number of lines for multiselection or 0 for a single selection
 		 *	(in that case accounts should be an int or contain only 1 user-id)
 		 * @param $not int/array user-id or array of user-id's not to display in selection, default False = display all
 		 * @param $options	additional options (e.g. style)
 		 * @param $onchange javascript to execute if the selection changes, eg. to reload the page
+		 * @param $select array/bool array with id's as keys or values. If the id is in the key and the value is a string,
+		 *	it gets appended to the user-name. Or false if the selectable values for the selectbox are determined by use.
 		 * @return the necessary html
 		 */
-		function selection($name,$element_id,$selected,$use='accounts',$lines=1,$not=False,$options='',$onchange='')
+		function selection($name,$element_id,$selected,$use='accounts',$lines=1,$not=False,$options='',$onchange='',$select=False)
 		{
 			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options')</p>\n";
 			if (!is_array($selected))
 			{
 				$selected = $selected ? array($selected) : array();
 			}
-			$enumerate_groups = False;
-
+			$account_sel = $this->account_selection;
+			$app = False;
+			switch($use)
+			{
+				default:
+					if (substr($use,-1) == '+')
+					{
+						$app = substr($use,0,-1);
+						$use = 'both';
+					}
+					else
+					{
+						$app = $use;
+						$use = 'accounts';
+					}
+					break;
+				case 'accounts':
+				case 'both':
+					break;
+				case 'groups':
+				case 'owngroups':
+					$account_sel = 'selectbox';	// groups always use only the selectbox
+					break;
+			}
 			switch($this->account_selection)
 			{
 				case 'popup':
-					$use = $selected;
+					$select = $selected;
 					break;
 				case 'primary_group':
-					$use = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
+					$select = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
 					$members = $this->member($GLOBALS['phpgw']->accounts->data['account_primary_group']);
 					if (is_array($members))
 					{
@@ -85,26 +109,25 @@
 						{
 							if (!in_array($member['account_id'],$use))
 							{
-								$use[] = $member['account_id'];
+								$select[] = $member['account_id'];
 							}
 						}
 					}
 					break;
 				case 'selectbox':
 				default:
-					if ($use == 'accounts' || $use == 'groups' || $use == 'both')
+					if (!is_array($select))
 					{
-						$use = $GLOBALS['phpgw']->accounts->get_list($use);
+						$select = $GLOBALS['phpgw']->accounts->search(array(
+							'type' => $use,
+							'app' => $app,
+						));
 					}
-					elseif (!is_array($use))	// app-name
-					{
-						$use = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,$use);
-						$enumerate_groups = True;
-					}
+					break;
 			}
 			$users = $groups = array();
-			$use_keys = count($use) && !isset($use[0]);	// id's are the keys
-			foreach($use as $key => $val)
+			$use_keys = count($select) && !isset($select[0]);	// id's are the keys
+			foreach($select as $key => $val)
 			{
 				$id = $use_keys ? $key : (is_array($val) ? $val['account_id'] : $val);
 
@@ -116,19 +139,10 @@
 				{
 					$users[$id] = !is_array($val) ? $GLOBALS['phpgw']->common->grab_owner_name($id) :
 						$GLOBALS['phpgw']->common->display_fullname(
-								$val['account_lid'],$val['account_firstname'],$val['account_lastname']);
+							$val['account_lid'],$val['account_firstname'],$val['account_lastname']);
 				}
 				else
 				{
-					if ($enumerate_groups && ($members = $this->member($id)))
-					{
-						foreach($members as $member)
-						{
-							if ($not && $member['account_id'] == $not) continue;	// dont display that one
-
-							$users[$member['account_id']] = $GLOBALS['phpgw']->common->grab_owner_name($member['account_id']);
-						}
-					}
 					$groups[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
 				}
 			}
@@ -151,7 +165,8 @@
 			// add necessary popup trigers
 			$link = $GLOBALS['phpgw']->link('/index.php',array(
 				'menuaction' => 'phpgwapi.uiaccountsel.popup',
-				'app' => $GLOBALS['phpgw_info']['flags']['currentapp'],
+				'app' => $app,
+				'use' => $use,
 				'element_id'  => $element_id,
 				'single'      => !$lines,	// single selection, closes after the first selection
 			));
@@ -161,7 +176,7 @@
 			if (!$lines)
 			{
 				$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');".
-					($onchange ? " else { $onchange }" : '' ).'"';
+					($onchange ? " else { $onchange }" : '' ).'" onclick="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');\"";
 				$select['popup'] = lang('Search').' ...';
 				$need_js_popup = True;
 			}
@@ -203,12 +218,12 @@
 			return $html;
 		}
 
-		function popup($app='')
+		function popup()
 		{
 			global $query;	// nextmatch requires that !!!
 
-			if (!$app) $app = get_var('app',array('POST','GET'));
-
+			$app = get_var('app',array('POST','GET'));
+			$use = get_var('use',array('POST','GET'));
 			$group_id = get_var('group_id',array('POST','GET'),$GLOBALS['phpgw']->accounts->data['account_primary_group']);
 			$element_id = get_var('element_id',array('POST','GET'));
 			$single = get_var('single',array('POST','GET'));
@@ -220,7 +235,7 @@
 			$order = get_var('order',array('POST','GET'),'account_lid');
 			$sort = get_var('sort',array('POST','GET'),'ASC');
 
-			//echo "<p>uiaccountsel::popup(): app='$app', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
+			//echo "<p>uiaccountsel::popup(): app='$app', use='$use', single='$single', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
 
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
@@ -246,23 +261,23 @@
 			$GLOBALS['phpgw']->template->set_var('img',$GLOBALS['phpgw']->common->image('phpgwapi','select'));
 			$GLOBALS['phpgw']->template->set_var('lang_select_user',lang('Select user'));
 			$GLOBALS['phpgw']->template->set_var('lang_select_group',lang('Select group'));
-			$GLOBALS['phpgw']->template->set_var('css_file',$GLOBALS['phpgw_info']['server']['webserver_url'] .
-				'/phpgwapi/templates/idots/css/idots.css');
 
-			switch($app)
+			if ($app)	// split the groups in the ones with run-rights and without
 			{
-				case 'calendar':
+				if ($use == 'both')		// groups with run-rights too, eg. calendar
+				{
 					$GLOBALS['phpgw']->template->fp('ibla','bla_intro',True);
-					$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
-					break;
-				case 'admin':
-					$GLOBALS['phpgw']->template->set_var('lang_perm',lang('group name'));
+				}
+				else
+				{
 					$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
-					break;
-				default:
-					$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
-					$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
-					break;
+				}
+				$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
+			}
+			else	// use all groups and account, eg. admin
+			{
+				$GLOBALS['phpgw']->template->set_var('lang_perm',lang('group name'));
+				$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
 			}
 
 			if (!$single)
@@ -283,194 +298,12 @@
 			(
 				'menuaction' => 'phpgwapi.uiaccountsel.popup',
 				'app'        => $app,
+				'use'        => $use,
 				'group_id'   => $group_id,
 				'element_id' => $element_id,
 				'single'     => $single,
 				'query_type' => $query_type,
 			);
-
-			$app_groups = array();
-
-			if ($app != 'admin')
-			{
-				$user_groups = $this->membership($this->account);
-
-				$app_user = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,$app);
-				for ($i = 0;$i<count($app_user);$i++)
-				{
-					$type = $this->get_type($app_user[$i]);
-					if($type == 'g')
-					{
-						$app_groups[] = $app_user[$i];
-						$members[] = $GLOBALS['phpgw']->acl->get_ids_for_location($app_user[$i],1,'phpgw_group');
-					}
-				}
-
-				$i = count($app_user);
-				while(is_array($members) && list(,$mem) = each($members))
-				{
-					for($j=0;$j<count($mem);$j++)
-					{
-						$app_user[$i] = $mem[$j];
-						$i++;
-					}
-				}
-				//_debug_array($app_user);
-			}
-			else
-			{
-				$all_groups	= $this->get_list('groups');
-				$all_user	= $this->get_list('accounts');
-
-				while(is_array($all_groups) && list(,$agroup) = each($all_groups))
-				{
-					$user_groups[] = array
-					(
-						'account_id'	=> $agroup['account_id'],
-						'account_name'	=> $agroup['account_firstname']
-					);
-				}
-
-				for($j=0;$j<count($user_groups);$j++)
-				{
-					$app_groups[$i] = $user_groups[$j]['account_id'];
-					$i++;
-				}
-
-				for($j=0;$j<count($all_user);$j++)
-				{
-					$app_user[$i] = $all_user[$j]['account_id'];
-					$i++;
-				}
-			}
-
-			$GLOBALS['phpgw']->template->set_var('lang_list_members',lang('List members'));
-
-			if (is_array($user_groups))
-			{
-				foreach($user_groups as $group)
-				{
-					$link_data['group_id'] = $group['account_id'];
-
-					$GLOBALS['phpgw']->template->set_var('onclick',"addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]')".
-						($single ? '; window.close()' : ''));
-
-					if (in_array($group['account_id'],$app_groups))
-					{
-						$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color));
-						$GLOBALS['phpgw']->template->set_var('link_user_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
-						$GLOBALS['phpgw']->template->set_var('name_user_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
-
-						switch($app)
-						{
-							case 'calendar':	$GLOBALS['phpgw']->template->fp('cal','group_cal',True); break;
-							default:			$GLOBALS['phpgw']->template->fp('other','group_other',True); break;
-						}
-					}
-					else
-					{
-						if ($app != 'admin')
-						{
-							$GLOBALS['phpgw']->template->set_var('link_all_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
-							$GLOBALS['phpgw']->template->set_var('name_all_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
-							$GLOBALS['phpgw']->template->set_var('accountid',$group['account_id']);
-							$GLOBALS['phpgw']->template->fp('all','group_all',True);
-						}
-					}
-				}
-				$link_data['group_id'] = $group_id;		// reset it
-			}
-
-			if (!$query)
-			{
-				if (isset($group_id) && !empty($group_id))
-				{
-					//echo 'GROUP_ID: ' . $group_id;
-					$users = $GLOBALS['phpgw']->acl->get_ids_for_location($group_id,1,'phpgw_group');
-
-					for ($i=0;$i<count($users);$i++)
-					{
-						if (in_array($users[$i],$app_user))
-						{
-							$GLOBALS['phpgw']->accounts->account_id = $users[$i];
-							$GLOBALS['phpgw']->accounts->read_repository();
-
-							switch ($order)
-							{
-								case 'account_firstname':
-									$id = $GLOBALS['phpgw']->accounts->data['firstname'];
-									break;
-								case 'account_lastname':
-									$id = $GLOBALS['phpgw']->accounts->data['lastname'];
-									break;
-								case 'account_lid':
-								default:
-									$id = $GLOBALS['phpgw']->accounts->data['account_lid'];
-									break;
-							}
-							$id .= $GLOBALS['phpgw']->accounts->data['lastname'];	// default sort-order
-							$id .= $GLOBALS['phpgw']->accounts->data['firstname'];
-							$id .= $GLOBALS['phpgw']->accounts->data['account_id'];	// make our index unique
-
-							$val_users[$id] = array
-							(
-								'account_id'		=> $GLOBALS['phpgw']->accounts->data['account_id'],
-								'account_lid'		=> $GLOBALS['phpgw']->accounts->data['account_lid'],
-								'account_firstname'	=> $GLOBALS['phpgw']->accounts->data['firstname'],
-								'account_lastname'	=> $GLOBALS['phpgw']->accounts->data['lastname']
-							);
-						}
-					}
-
-					if (is_array($val_users))
-					{
-						if ($sort != 'DESC')
-						{
-							ksort($val_users);
-						}
-						else
-						{
-							krsort($val_users);
-						}
-					}
-					$val_users = array_values($val_users);	// get a numeric index
-				}
-				$total = count($val_users);
-			}
-			else
-			{
-				switch($app)
-				{
-					case 'calendar':	$users = 'both'; break;
-					default:			$users = 'accounts'; break;
-				}
-				$entries	= $this->get_list($users,$start,$sort,$order,$query,'',$query_type);
-				$total		= $this->total;
-				for ($i=0;$i<count($entries);$i++)
-				{
-					if (in_array($entries[$i]['account_id'],$app_user))
-					{
-						$val_users[] = $entries[$i];
-					}
-				}
-			}
-
-// --------------------------------- nextmatch ---------------------------
-
-			$GLOBALS['phpgw']->template->set_var(array(
-				'left'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data+array('query'=>$query)),
-				'right' => $this->nextmatchs->right('/index.php',$start,$total,$link_data+array('query'=>$query)),
-				'lang_showing' => ($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query) :
-					$GLOBALS['phpgw']->common->grab_owner_name($group_id)).': '.$this->nextmatchs->show_hits($total,$start),
-			));
-
-// -------------------------- end nextmatch ------------------------------------
-
-			$GLOBALS['phpgw']->template->set_var('search_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
-			$GLOBALS['phpgw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
-
-// ---------------- list header variable template-declarations --------------------------
 
 // -------------- list header variable template-declaration ------------------------
 			$GLOBALS['phpgw']->template->set_var('sort_lid',$this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data));
@@ -478,15 +311,83 @@
 			$GLOBALS['phpgw']->template->set_var('sort_lastname',$this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('Lastname'),$link_data));
 
 // ------------------------- end header declaration --------------------------------
-			if ($query) $start = 0;		// already handled by accounts::get_list
-			$stop = min($start + $this->nextmatchs->maxmatches,count($val_users));
-			for($i = $start; $i < $stop; ++$i)
+
+			$link_data['sort'] = $sort;
+			$link_data['order'] = $order;
+
+			$GLOBALS['phpgw']->template->set_var('lang_list_members',lang('List members'));
+
+			if ($app)
 			{
-				$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color));
+				$app_groups = $this->split_accounts($app,'groups');
+			}
+			$all_groups = $this->search(array(
+				'type' => 'groups',
+				'app' => $app,
+			));
+			foreach($all_groups as $group)
+			{
+				$link_data['group_id'] = $group['account_id'];
+
+				$GLOBALS['phpgw']->template->set_var('onclick',"addOption('$element_id','".
+					$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]')".
+					($single ? '; window.close()' : ''));
+
+				if (!$app || in_array($group['account_id'],$app_groups))
+				{
+					$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+					$GLOBALS['phpgw']->template->set_var('link_user_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
+					$GLOBALS['phpgw']->template->set_var('name_user_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
+
+					if($use == 'both')	// allow selection of groups
+					{
+						$GLOBALS['phpgw']->template->fp('cal','group_cal',True);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->template->fp('other','group_other',True);
+					}
+				}
+				else
+				{
+					$GLOBALS['phpgw']->template->set_var('link_all_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
+					$GLOBALS['phpgw']->template->set_var('name_all_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
+					$GLOBALS['phpgw']->template->set_var('accountid',$group['account_id']);
+					$GLOBALS['phpgw']->template->fp('all','group_all',True);
+				}
+			}
+			$link_data['group_id'] = $group_id;		// reset it
+
+// --------------------------------- nextmatch ---------------------------
+			$users = $this->search(array(
+				'type' => $group_id ? $group_id : $use,
+				'app' => $app,
+				'start' => $start,
+				'order' => $order,
+				'sort' => $sort,
+				'query' => $query,
+				'query_type' => $query_type,
+			));
+
+			$GLOBALS['phpgw']->template->set_var(array(
+				'left'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data+array('query'=>$query)),
+				'right' => $this->nextmatchs->right('/index.php',$start,$total,$link_data+array('query'=>$query)),
+				'lang_showing' => ($group_id ? $GLOBALS['phpgw']->common->grab_owner_name($group_id).': ' : '').
+					($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query).': ' : '')
+					.$this->nextmatchs->show_hits($this->total,$start),
+			));
+
+// -------------------------- end nextmatch ------------------------------------
+
+			$GLOBALS['phpgw']->template->set_var('search_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['phpgw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
+
+			foreach($users as $user)
+			{
+				$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
 
 // ---------------- template declaration for list records --------------------------
 
-				$user = $val_users[$i];
 				$GLOBALS['phpgw']->template->set_var(array(
 					'lid'		=> $user['account_lid'],
 					'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
@@ -497,12 +398,6 @@
 				));
 				$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
 			}
-
-			$GLOBALS['phpgw']->template->set_var('start',$start);
-			$GLOBALS['phpgw']->template->set_var('sort',$sort);
-			$GLOBALS['phpgw']->template->set_var('order',$order);
-			$GLOBALS['phpgw']->template->set_var('query',$query);
-			$GLOBALS['phpgw']->template->set_var('group_id',$group_id);
 
 			$GLOBALS['phpgw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
 			$GLOBALS['phpgw']->template->set_var('query_type',is_array($this->query_types) ? $this->html->select('query_type',$query_type,$this->query_types) : '');

@@ -8,20 +8,23 @@
 		opener.addOption(id,label,value);
 
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
-		for (i=0; i < selectBox.length; i++) {
-			if (selectBox.options[i].value == value) {
-				selectBox.options[i].selected = true;
-				break;
+		if (selectBox) {
+			for (i=0; i < selectBox.length; i++) {
+				if (selectBox.options[i].value == value) {
+					selectBox.options[i].selected = true;
+					break;
+				}
 			}
-		}
-		if (i >= selectBox.length) {
-			selectBox.options[selectBox.length] = new Option(label,value,false,true);
+			if (i >= selectBox.length) {
+				selectBox.options[selectBox.length] = new Option(label,value,false,true);
+			}
 		}
 	}
 
 	function removeSelectedOptions(id)
 	{
 		openerSelectBox = opener.document.getElementById(id);
+		if (openerSelectBox == null) window.close();
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		for (i=0; i < selectBox.length; i++) {
 			if (selectBox.options[i].selected) {
@@ -38,7 +41,6 @@
 	function copyOptions(id)
 	{
 		openerSelectBox = opener.document.getElementById(id);
-		if (openerSelectBox == null) window.close();
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		for (i=0; i < openerSelectBox.length; i++) {
 			with (openerSelectBox.options[i]) {
@@ -118,7 +120,7 @@
 <!-- END other_intro -->
 
 <!-- BEGIN group_cal -->
-				<tr bgcolor="{tr_color}">
+				<tr class="{tr_color}">
 					<td><a href="{link_user_group}" title="{lang_list_members}">{name_user_group}</a></td>
 					<td align="center">
 						<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_group}">
@@ -128,7 +130,7 @@
 
 <!-- BEGIN group_other -->
 
-				<tr bgcolor="{tr_color}">
+				<tr class="{tr_color}">
 					<td><a href="{link_user_group}" title="{lang_list_members}">{name_user_group}</a></td>
 				</tr>
 
@@ -146,7 +148,7 @@
 
 <!-- BEGIN group_all -->
 
-				<tr bgcolor="{tr_color}">
+				<tr class="{tr_color}">
 					<td colspan="2"><a href="{link_all_group}" title="{lang_list_members}">{name_all_group}</a></td>
 				</tr>
 
@@ -169,7 +171,7 @@
 
 <!-- BEGIN accounts_list -->
 
-	<tr bgcolor="{tr_color}">
+	<tr class="{tr_color}">
 		<td>{lid}</td>
 		<td>{firstname}</td>
 		<td>{lastname}</td>

@@ -179,6 +179,122 @@
 			}
 		}
 
+		/**
+		 * Searches / lists accounts: users and/or groups
+		 *
+		 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
+		 *	or integer group-id for a list of members of that group
+		 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
+		 * @param $param['sort'] string column to sort after, default account_lid if unset
+		 * @param $param['order'] string 'ASC' or 'DESC', default 'DESC' if not set
+		 * @param $param['query'] string to search for, no search if unset or empty
+		 * @param $param['query_type'] string:
+		 *	'all'   - query all fields for containing $param[query]
+		 *	'start' - query all fields starting with $param[query]
+		 *	'exact' - query all fields for exact $param[query]
+		 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
+		 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
+		 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
+		 * @return array with uid / data pairs, data is an array with account_id, account_lid, account_firstname,
+		 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
+		 */
+		function search($param)
+		{
+			//echo "<p>accounts::search(".print_r($param,True).")</p>\n";
+			$this->setup_cache();
+			$account_search = &$this->cache['account_search'];
+
+			$serial = serialize($param);
+
+			if (isset($account_search[$serial]))
+			{
+				$this->total = $account_search[$serial]['total'];
+			}
+			elseif (function_exists('accounts_::search'))	// implements its on search function ==> use it
+			{
+				$account_search[$serial]['data'] = accounts_::search($param);
+				$account_search[$serial]['total'] = $this->total;
+			}
+			else
+			{
+				$serial2 = $serial;
+				if (is_numeric($param['type']) || $param[$app] || $param['type'] == 'owngroups')	// do we need to limit the search on a group or app?
+				{
+					$app = $param[$app];
+					unset($param['app']);
+					if (is_numeric($param['type']))
+					{
+						$group = (int) $param['type'];
+						$param['type'] = 'accounts';
+					}
+					elseif ($param['type'] == 'owngroups')
+					{
+						$group = -1;
+						$param['type'] = 'groups';
+					}
+					$start = $param['start'];
+					unset($param['start']);
+					$serial2 = serialize($param);
+				}
+				if (!isset($account_search[$serial2]))	// check if we already did this general search
+				{
+					$account_search[$serial2]['data'] = array();
+					$accounts = accounts_::get_list($param['type'],'',$param['sort'],$param['order'],$param['query'],'',$param['query_type']);
+					if (!$accounts) $accounts = array();
+					foreach($accounts as $data)
+					{
+						$account_search[$serial2]['data'][$data['account_id']] = $data;
+					}
+					$account_search[$serial2]['total'] = $this->total;
+				}
+				if ($app || $group)	// limit the search on accounts with run-rights for app or a group
+				{
+					$valid = array();
+					if ($app)
+					{
+						$app_accounts = $this->split_accounts($app);
+						if ($param['type'] == 'groups' || $param['type'] == 'both')
+						{
+							$valid += $app_accounts['groups'];
+						}
+						if ($param['type'] == 'accounts' || $param['type'] == 'both')
+						{
+							$valid += $app_accounts['accounts'];
+						}
+					}
+					if ($group)
+					{
+						$members = $group > 0 ? $GLOBALS['phpgw']->acl->get_ids_for_location($group, 1, 'phpgw_group') :
+							$GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1,$GLOBALS['phpgw_info']['user']['account_id']);
+						if (!$members) $members = array();
+						$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
+					}
+					$offset = $param['offset'] ? $param['offset'] : $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+					$stop = $start + $offset;
+					$n = 0;
+					$account_search[$serial]['data'] = array();
+					foreach ($account_search[$serial2]['data'] as $id => $data)
+					{
+						if (!in_array($id,$valid))
+						{
+							$this->total--;
+							continue;
+						}
+						// now we have a valid entry
+						if (!is_int($start) || $start <= $n && $n < $stop)
+						{
+							$account_search[$serial]['data'][$id] = $data;
+						}
+						$n++;
+					}
+					$account_search[$serial]['total'] = $this->total;
+				}
+			}
+			//echo "<p>accounts::search(...)=<pre>".print_r($account_search[$serial]['data'],True).")</pre>\n";
+			return $account_search[$serial]['data'];
+		}
+
+
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
 			//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
@@ -188,7 +304,7 @@
 			// For XML-RPC
 			if (is_array($_type))
 			{
-				$p      = $_type[0];
+				$p      = $_type;
 				$_type  = $p['type'];
 				$start  = $p['start'];
 				$order  = $p['order'];
@@ -356,6 +472,7 @@
 		@abstract Using the common functions next_id and last_id, find the next available account_id
 		@param $account_type (optional, default to 'u')
 		*/
+		// NOTE: to my knowledge this is not used any more RalfBecker 2004/06/15
 		function get_nextid($account_type='u')
 		{
 			$min = $GLOBALS['phpgw_info']['server']['account_min_id'] ? $GLOBALS['phpgw_info']['server']['account_min_id'] : 0;
@@ -404,50 +521,81 @@
 			return $nextid;
 		}
 
+
 		/**
-		* returns a array of users and groups seperated, including all members of groups, which i.e. 
-		* have acl access for an application
-		* needed to stay compatible with phpgw
+		* splits users and groups from a array of id's or the accounts with run-rights for a given app-name
 		*
-		* @param $app_users (array, default to 0)
+		* @param $app_users array of user-id's or app-name (if you use app-name the result gets cached!)
+		* @param $use string what should be returned only an array with id's of either 'accounts' or 'groups'.
+		*	Or an array with arrays for 'both' under the keys 'groups' and 'accounts'
+		* @return see $use
 		*/
-		function return_members($app_users = 0)
+		function split_accounts($app_users,$use='both')
 		{
-			for ($i = 0;$i<count($app_users);$i++)
+			if (!is_array($app_users))
 			{
-				$type = $GLOBALS['phpgw']->accounts->get_type($app_users[$i]);
+				$this->setup_cache();
+				$cache = &$this->cache['account_split'][$app_user];
+
+				if (is_array($cache))
+				{
+					return $cache;
+				}
+				$app_users = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,$app_users);
+			}
+			$accounts = array(
+				'accounts' => array(),
+				'groups' => array(),
+			);
+			foreach($app_users as $id)
+			{
+				$type = $GLOBALS['phpgw']->accounts->get_type($id);
 				if($type == 'g')
 				{
-					$add_users['groups'][] = $app_users[$i];
-					$members[] = $GLOBALS['phpgw']->acl->get_ids_for_location($app_users[$i],1,'phpgw_group');
+					$accounts['groups'][$id] = $id;
+					foreach($GLOBALS['phpgw']->acl->get_ids_for_location($id,1,'phpgw_group') as $id)
+					{
+						$accounts['accounts'][$id] = $id;
+					}
 				}
 				else
 				{
-					$add_users['users'][] = $app_users[$i];
+					$accounts['accounts'][$id] = $id;
 				}
 			}
 
-			if(is_array($add_users['groups']))
-			{
-				$add_users['groups'] = array_unique($add_users['groups']);
-				sort($add_users['groups']);
-			}
+			// not sure why they need to be sorted, but we need to remove the keys anyway
+			sort($accounts['groups']);
+			sort($accounts['accounts']);
 
-			#$i = count($add_users['users']);
+			if (isset($cache))
+			{
+				$cache = $accounts;
+			}
+			//echo "<p>accounts::split_accounts(".print_r($app_users,True).",'$use') = <pre>".print_r($accounts,True)."</pre>\n";
 
-			while(is_array($members) && list(,$mem) = each($members))
+			switch($use)
 			{
-				for($j=0;$j<count($mem);$j++)
-				{
-					$add_users['users'][] = $mem[$j];
-				}
+				case 'both':
+					return $accounts;
+				case 'groups':
+					return $accounts['groups'];
+				case 'accounts':
+					return $accounts['accounts'];
 			}
-			if(is_array($add_users['users']))
-			{
-				$add_users['users'] = array_unique($add_users['users']);
-				sort($add_users['users']);
-			}
-			return $add_users;
+		}
+
+		/**
+		 * phpgw compatibility function, better use split_accounts
+		 */
+		function return_members($accounts)
+		{
+			$arr = $this->split_accounts($accounts);
+
+			return array(
+				'users'  => $arr['accounts'],
+				'groups' => $arr['groups'],
+			);
 		}
 
 		function name2id($account_lid)
