@@ -1562,7 +1562,7 @@
 		/*!
 		@function writeLangFile
 		@abstract writes langfile with all templates and messages registered here
-		@discussion call as http://domain/phpgroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
+		@discussion called via [write Langfile] in the etemplate-editor or as http://domain/phpgroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
 		*/
 		function writeLangFile()
 		{
@@ -1574,7 +1574,6 @@
 			{
 				$extra += $msg_arr;
 			}
-			_debug_array($extra);
-			echo $this->tmpl->writeLangFile('infolog','en',$extra);
+			return $this->tmpl->writeLangFile('infolog','en',$extra);
 		}
 	}
