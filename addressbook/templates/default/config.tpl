@@ -9,9 +9,6 @@
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
-   <tr bgcolor="{row_on}">
-    <td colspan="2">&nbsp;</td>
-   </tr>
    <tr bgcolor="{row_off}">
     <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></font></td>
    </tr>
