@@ -752,7 +752,7 @@
 
 			if (!method_exists($GLOBALS[$classname],$functionname))
 			{
-				echo "<p><b>".functin_backtrace()."</b>: no methode '$functionname' in class '$classname'</p>\n";
+				echo "<p><b>".function_backtrace()."</b>: no methode '$functionname' in class '$classname'</p>\n";
 				return False;
 			}
 			if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
@@ -1136,18 +1136,20 @@
 	 @author ralfbecker
 	 @return function-names separated by slashes (beginning with the calling function not this one)
 	*/
-	function function_backtrace($default='')
+	function function_backtrace($remove=0)
 	{
 		if (function_exists('debug_backtrace'))
 		{
 			$backtrace = debug_backtrace();
 			//echo "<pre>".print_r($backtrace,True)."</pre>\n";
-			array_shift($backtrace);	// remove ourself
 			foreach($backtrace as $level)
 			{
-				$ret[] = $level['function'];
+				if ($remove-- < 0)
+				{
+					$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'];
+				}
 			}
-			return implode('/',$ret);
+			return implode(' / ',$ret);
 		}
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
