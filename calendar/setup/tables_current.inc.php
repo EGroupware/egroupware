@@ -15,6 +15,7 @@
 		'phpgw_cal' => array(
 			'fd' => array(
 				'cal_id' => array('type' => 'auto','nullable' => False),
+				'uid' => array('type' => 'varchar', 'precision' => 255,'nullable' => False),
 				'owner' => array('type' => 'int', 'precision' => 8,'nullable' => False),
 				'category' => array('type' => 'int', 'precision' => 8,'nullable' => True),
 				'groups' => array('type' => 'varchar', 'precision' => 255,'nullable' => True),
@@ -26,6 +27,7 @@
 				'is_public' => array('type' => 'int', 'precision' => 8,'nullable' => False,'default' => 1),
 				'title' => array('type' => 'varchar', 'precision' => 80,'nullable' => False,'default' => '1'),
 				'description' => array('type' => 'text','nullable' => True),
+				'location' => array('type' => 'varchar', 'precision' => 255,'nullable' => True),
 				'reference' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => 0)
 			),
 			'pk' => array('cal_id'),
@@ -78,6 +80,7 @@
 			'fd' => array(
 				'alarm_id' => array('type' => 'auto','nullable' => False),		
 				'cal_id' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+				'cal_owner'	=> array('type' => 'int', 'precision' => 8, 'nullable' => False),
 				'cal_time' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
 				'cal_text' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False)
 			),

@@ -41,6 +41,11 @@
 			$this->cal->open('INBOX',intval($this->owner));
 		}
 
+		function maketime($time)
+		{
+			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
+		}
+
 		function makeobj()
 		{
 			if (!is_object($this->cal))
@@ -131,6 +136,19 @@
 			return $this->cal->get_event_ids($include_repeats,$sql);
 		}
 
+		function find_uid($uid)
+		{
+			$sql = " AND (phpgw_cal.uid = '".$uid."') ";
+
+			$found = $this->cal->get_event_ids(False,$sql);
+			if(!$found)
+			{
+				$found = $this->cal->get_event_ids(True,$sql);
+			}
+
+			return $found;			
+		}
+
 		function add_entry(&$event)
 		{
 			$this->cal->store_event($event);
@@ -190,6 +208,11 @@
 		function event_init()
 		{
 			$this->cal->event_init();
+		}
+
+		function set_date($element,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+		{
+			$this->cal->set_date($element,$year,$month,$day,$hour,$min,$sec);
 		}
 
 		function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)

@@ -425,8 +425,14 @@
 					$l_cal['private'] = 'public';
 				}
 
+				if(!isset($l_cal['category']))
+				{
+					$l_cal['category'] = 0;
+				}
+
 				$is_public = ($l_cal['private'] == 'public'?1:0);
 				$this->so->event_init();
+				$this->add_attribute('uid',$l_cal['uid']);
 				$this->so->set_category($l_cal['category']);
 				$this->so->set_title($l_cal['title']);
 				$this->so->set_description($l_cal['description']);
@@ -434,6 +440,7 @@
 				$this->so->set_end($l_end['year'],$l_end['month'],$l_end['mday'],$l_end['hour'],$l_end['min'],0);
 				$this->so->set_class($is_public);
 				$this->so->add_attribute('reference',($l_cal['reference']?$l_cal['reference']:0));
+				$this->so->add_attribute('location',($l_cal['location']?$l_cal['location']:''));
 				if($l_cal['id'])
 				{
 					$this->so->add_attribute('id',$l_cal['id']);
@@ -1672,7 +1679,7 @@
 			}
 		}
 
-		function export_event($l_event_id=0)
+		function export_ical($l_event_id=0)
 		{
 			$event_id = ($l_event_id?$l_event_id:$GLOBALS['HTTP_GET_VARS']['cal_id']);
 			
@@ -1703,12 +1710,18 @@
 				$ical_event['class'] = intval($event['public']);
 				$icalendar->set_var($ical_event['description'],'value',$event['title']);
 				$icalendar->set_var($ical_event['summary'],'value',$event['description']);
+				$icalendar->set_var($ical_event['location'],'value',$event['location']);
+				$icalendar->set_var($ical_event['uid'],'value',$event['uid']);
 				$dtstart_mktime = $this->maketime($event['start']) - $this->datetime->tz_offset;
 				$icalendar->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
 				$dtend_mktime = $this->maketime($event['end']) - $this->datetime->tz_offset;
 				$icalendar->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
 				$mod_mktime = $this->maketime($event['modtime']) - $this->datetime->tz_offset;
 				$icalendar->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
+				if($event['location'])
+				{
+					$icalendar->set_var($ical_event['location'],'value',$event['location']);
+				}
 				if(count($event['participants']) > 1)
 				{
 					$db = $GLOBALS['phpgw']->db;

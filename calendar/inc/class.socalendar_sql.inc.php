@@ -37,7 +37,7 @@ class socalendar_ extends socalendar__
 	{
 		if($user=='')
 		{
-			settype($user,'integer');
+//			settype($user,'integer');
 			$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
 		elseif(is_int($user)) 
@@ -103,7 +103,7 @@ class socalendar_ extends socalendar__
 			return False;
 		}
 
-		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats'));
+		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats','phpgw_cal_alarm'));
 
 		$this->stream->query('SELECT * FROM phpgw_cal WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		
@@ -120,6 +120,8 @@ class socalendar_ extends socalendar__
 			$this->set_category(intval($this->stream->f('category')));
 			$this->set_title($GLOBALS['phpgw']->strip_html($this->stream->f('title')));
 			$this->set_description($GLOBALS['phpgw']->strip_html($this->stream->f('description')));
+			$this->add_attribute('uid',$GLOBALS['phpgw']->strip_html($this->stream->f('uid')));
+			$this->add_attribute('location',$GLOBALS['phpgw']->strip_html($this->stream->f('location')));
 			$this->add_attribute('reference',intval($this->stream->f('reference')));
 			
 			// This is the preferred method once everything is normalized...
@@ -198,6 +200,15 @@ class socalendar_ extends socalendar__
 					$this->add_attribute('participants',$this->stream->f('cal_status'),intval($this->stream->f('cal_login')));
 				}
 			}
+
+			$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id='.$event_id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
+			if($this->stream->num_rows())
+			{
+				while($this->stream->next_record())
+				{
+					$this->add_attribute('alarm',$this->stream->f('cal_text'),intval($this->stream->f('cal_time')));
+				}
+			}
 		}
 		else
 		{
@@ -253,7 +264,7 @@ class socalendar_ extends socalendar__
 
 	function store_event()
 	{
-		return $this->save_event($this->event);
+		return $this->save_event(&$this->event);
 	}
 
 	function delete_event($event_id)
@@ -367,9 +378,27 @@ class socalendar_ extends socalendar__
 		$this->stream->lock($locks);
 		if($event['id'] == 0)
 		{
+			if ($GLOBALS['phpgw_info']['server']['hostname'] != '')
+			{
+				$id_suffix = $GLOBALS['phpgw_info']['server']['hostname'];
+			}
+			else
+			{
+				$id_suffix = $GLOBALS['phpgw']->common->randomstring(3).'local';
+			}
+			$parts = Array(
+				'title',
+				'description'
+			);
+			@reset($parts);
+			while(list($key,$field) = each($parts))
+			{
+				$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
+			}
+			$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
-			$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public) '
-				. "values('".$temp_name."',".$event['owner'].",".$event['priority'].",".$event['public'].")");
+			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public) '
+				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].",".$event['priority'].",".$event['public'].")");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
 			$event['id'] = $this->stream->f('cal_id');
@@ -399,6 +428,7 @@ class socalendar_ extends socalendar__
 				. 'is_public='.$event['public'].', '
 				. "title='".addslashes($event['title'])."', "
 				. "description='".addslashes($event['description'])."', "
+				. "location='".$event['location']."', "
 				. 'reference='.$event['reference'].' '
 				. 'WHERE cal_id='.$event['id'];
 				
@@ -406,8 +436,8 @@ class socalendar_ extends socalendar__
 		
 		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 
-		reset($event['participants']);
-		while (list($key,$value) = each($event['participants']))
+		@reset($event['participants']);
+		while (list($key,$value) = @each($event['participants']))
 		{
 			if(intval($key) == intval($this->user))
 			{
@@ -456,7 +486,7 @@ class socalendar_ extends socalendar__
 
 	function get_alarm($id)
 	{
-		$this->stream->query('SELECT cal_time, cal_text FROM phpgw_cal_alarm WHERE cal_id='.$id,__LINE__,__FILE__);
+		$this->stream->query('SELECT cal_time, cal_text FROM phpgw_cal_alarm WHERE cal_id='.$id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
 			while($this->stream->next_record())
@@ -486,11 +516,6 @@ class socalendar_ extends socalendar__
 	}
 	
 // End of ICal style support.......
-
-	function maketime($time)
-	{
-		return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
-	}
 
 	function group_search($owner=0)
 	{
@@ -526,4 +551,3 @@ class socalendar_ extends socalendar__
 		return $this->localdates(mktime(0,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
 	}
 }
-?>

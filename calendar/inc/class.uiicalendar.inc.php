@@ -18,9 +18,11 @@
 	{
 		var $bo;
 		var $datetime;
+		var $template;
 
 		var $public_functions = array(
-			'test'		=> True
+			'test'		=> True,
+			'import'		=> True
 		);
 
 
@@ -29,6 +31,7 @@
 		{
 			$this->bo = CreateObject('calendar.boicalendar');
 			$this->datetime = CreateObject('phpgwapi.datetime');
+			$this->template = $GLOBALS['phpgw']->template;
 		}
 
 
@@ -160,6 +163,40 @@
 			echo "<br><br><br>\n";
 			echo nl2br($this->bo->build_ical($vcalendar));
 			echo "End Time : ".$GLOBALS['phpgw']->common->show_date()."<br>\n";
+		}
+
+		function import()
+		{
+			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw_info']['flags']['nonappheader'] = True;
+			$GLOBALS['phpgw_info']['flags']['nonappfooter'] = True;
+			$GLOBALS['phpgw']->common->phpgw_header();
+
+			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
+
+			if ($GLOBALS['HTTP_GET_VARS']['action'] == 'GetFile')
+			{
+				echo '<b><center>' . lang('You must select a [iv]Cal. (*.[iv]cs)') . '</b></center><br><br>';
+			}
+
+ 			$this->template->set_file(
+ 				Array(
+ 					'vcalimport' => 'vcal_import.tpl'
+ 				)
+ 			);
+
+			$var = Array(
+				'vcal_header'	=> '<p>&nbsp;<b>' . lang('Calendar - [iv]Cal Importer') . '</b><hr><p>',
+				'action_url'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.boicalendar.import'),
+				'lang_access'	=> lang('Access'),
+				'lang_groups'	=> lang('Which groups'),
+				'access_option'=> $access_option,
+				'group_option'	=> $group_option,
+				'load_vcal'	=> lang('Load [iv]Cal')
+			);
+			$this->template->set_var($var);
+			$this->template->pparse('out','vcalimport');
 		}
 	}
 ?>

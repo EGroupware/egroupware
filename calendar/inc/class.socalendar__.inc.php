@@ -71,6 +71,16 @@ class socalendar__
 		$this->datetime = CreateObject('phpgwapi.datetime');
 	}
 
+	function maketime($time)
+	{
+		return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
+	}
+
+	function get_cached_event()
+	{
+		return $this->event;
+	}
+
 	function event_init()
 	{
 		$this->event = Array();

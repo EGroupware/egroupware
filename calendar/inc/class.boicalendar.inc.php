@@ -79,6 +79,12 @@ define('OTHER',99);
 
 class boicalendar
 {
+
+		var $public_functions = array(
+			'import'		=> True
+		);
+
+
 	var $ical;
 	var $line = 0;
 	var $event = Array();
@@ -1606,12 +1612,10 @@ class boicalendar
 						$str .= ';'.str_replace('_','-',strtoupper($key)).'='.$quote.$this->to_dir($value).$quote;
 						break;
 					case 'function':
-//		$this->debug_str = True;
 						$str .= ';'.str_replace('_','-',strtoupper($key)).'=';
 						$function = $this->parameter[$key]['function'];
 						$this->debug($key.' Function Param : '.$value);
 						$str .= $quote.$this->$function($value).$quote;
-//		$this->debug_str = False;
 						break;
 					case 'text':
 					case 'string':
@@ -1619,6 +1623,7 @@ class boicalendar
 						break;
 					case 'date-time':
 						$str .= ($key=='until'?':':';UNTIL=').date('Ymd\THis',mktime($event['hour'],$event['min'],$event['sec'],$event['month'],$event['mday'],$event['year'])).(!@isset($event['tzid'])?'Z':'');
+						break;
 						
 				}
 				unset($value);
@@ -2029,6 +2034,16 @@ class boicalendar
 				if($this->api)
 				{
 					$dtime['hour'] -= $GLOBALS['phpgw_info']['users']['common']['tz_offset'];
+					if($dtime['hour'] < 0)
+					{
+						$dtime['mday'] -= 1;
+						$dtime['hour'] = 24 - $dtime['hour'];
+					}
+					elseif($dtime['hour'] >= 24)
+					{
+						$dtime['mday'] += 1;
+						$dtime['hour'] = $dtime['hour'] - 24;
+					}
 				}
 			}
 			$this->debug('DATETIME : '._debug_array($dtime));
@@ -2766,6 +2781,171 @@ class boicalendar
 		$str .= 'END:VCALENDAR'."\r\n";
 
 		return $str;
+	}
+
+	function import()
+	{
+			if($GLOBALS['uploadedfile'] == 'none' || $GLOBALS['uploadedfile'] == '')
+			{
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+						Array(
+							'menuaction'	=> 'calendar.uiicalendar.import',
+							'action'	=> 'GetFile'
+						)
+					)
+				);
+				$GLOBALS['phpwg']->common->phpgw_exit();
+			}
+			$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
+
+			srand((double)microtime()*1000000);
+			$random_number = rand(100000000,999999999);
+			$newfilename = md5($GLOBALS['uploadedfile'].", ".$uploadedfile_name.", "
+				. time() . getenv("REMOTE_ADDR") . $random_number );
+
+			copy($GLOBALS['uploadedfile'], $uploaddir . $newfilename);
+//			$ftp = fopen($uploaddir . $newfilename . '.info','wb');
+//			fputs($ftp,$uploadedfile_type."\n".$uploadedfile_name."\n");
+//			fclose($ftp);
+
+			$filename = $uploaddir . $newfilename;
+			$fp=fopen($filename,'rt');
+			$mime_msg = explode("\n",fread($fp, filesize($filename)));
+			fclose($fp);
+
+		$so_event = createobject('calendar.socalendar',
+			Array(
+				'owner'	=> 0,
+				'filter'	=> '',
+				'category'	=> ''
+			)
+		);
+		
+			unlink($filename);
+	
+			$datetime_vars = Array(
+				'start'	=> 'dtstart',
+				'end'	=> 'dtend',
+				'modtime'	=> 'dtstamp',
+				'modtime'	=> 'last_modified'
+			);
+			
+			$date_array = Array(
+				'Y'	=> 'year',
+				'm'	=> 'month',
+				'd'	=> 'mday',
+				'H'	=> 'hour',
+				'i'	=> 'min',
+				's'	=> 'sec'
+			);
+
+			$ical = $this->parse($mime_msg);
+			$c_events = count($ical['event']);
+			for($i=0;$i<$c_events;$i++)
+			{
+				if($ical['event'][$i]['uid']['value'])
+				{
+					$uid_exists = $so_event->find_uid($ical['event'][$i]['uid']['value']);
+				}
+
+				if($uid_exists)
+				{
+					$event = $so_event->read_entry($uid_exists[0]);
+					if(!isset($event['participant'][$GLOBALS['phpgw_info']['user']['account_id']]))
+					{
+						
+						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
+						$event = $so_event->get_cached_event();
+						$so_event->add_entry($event);
+						$event = $so_event->get_cached_event();
+					}
+				}
+				else
+				{
+					$so_event->event_init();
+					$so_event->add_attribute('id',0);
+					$so_event->add_attribute('reference',0);
+					if($ical['event'][$i]['uid']['value'])
+					{
+						$so_event->add_attribute('uid',$ical['event'][$i]['uid']['value']);
+					}
+					if($ical['event'][$i]['summary']['value'])
+					{
+						$so_event->set_title($ical['event'][$i]['summary']['value']);
+					}
+					if($ical['event'][$i]['description']['value'])
+					{
+						$so_event->set_description($ical['event'][$i]['description']['value']);
+					}
+					if($ical['event'][$i]['location']['value'])
+					{
+						$so_event->add_attribute('location',$ical['event'][$i]['location']['value']);
+					}
+					if(isset($ical['event'][$i]['priority']))
+					{
+						$so_event->add_attribute('priority',$ical['event'][$i]['priority']);
+					}
+					else
+					{
+						$so_event->add_attribute('priority',2);
+					}
+					if(!isset($ical['event'][$i]['class']))
+					{
+						$ical['event'][$i]['class'] = 1;
+					}
+					$so_event->set_class($ical['event'][$i]['class']);
+
+					@reset($datetime_vars);
+					while(list($e_datevar,$i_datevar) = each($datetime_vars))
+					{
+						if(isset($ical['event'][$i][$i_datevar]))
+						{
+							$temp_time = $so_event->maketime($ical['event'][$i][$i_datevar]) + $so_event->datetime->tz_offset;
+							@reset($date_array);
+							while(list($key,$var) = each($date_array))
+							{
+								$event[$e_datevar][$var] = intval(date($key,$temp_time));
+							}
+							$so_event->set_date($e_datevar,$event[$e_datevar]['year'],$event[$e_datevar]['month'],$event[$e_datevar]['mday'],$event[$e_datevar]['hour'],$event[$e_datevar]['min'],$event[$e_datevar]['sec']);
+						}
+					}
+					if(!isset($ical['event'][$i]['category']['value']) || !$ical['event'][$i]['category']['value'])
+					{
+						$so_event->add_attribute('category',0);
+					}
+					else
+					{
+						//categories -- with value
+					}
+
+					if(isset($ical['event'][$i]['rrule']))
+					{
+//rrule
+					}
+				
+					if(!isset($ical['event'][$i]['organizer']))
+					{
+						$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
+						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
+					}
+					else
+					{
+//owner
+					}
+				
+					$event = $so_event->get_cached_event();
+					$so_event->add_entry($event);
+					$event = $so_event->get_cached_event();
+				}
+			}
+			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> 'calendar.uicalendar.view',
+						'cal_id'	=> $event['id']
+					)
+				)
+			);
+			$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
 	function debug($str='')

@@ -2,6 +2,8 @@
 a	calendar	en	a
 accept	calendar	en	Accept
 accepted	calendar	en	Accepted
+add alarm	calendar	en	Add Alarm
+alarm management	calendar	en	Alarm Management
 all day	calendar	en	All Day
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
@@ -39,6 +41,7 @@ grant calendar access	common	en	Grant Calendar Access
 group public only	calendar	en	Group Public Only
 ignore conflict	calendar	en	Ignore Conflict
 i participate	calendar	en	I Participate
+location	calendar	en	Location
 minutes	calendar	en	minutes
 mo	calendar	en	M
 mon	calendar	en	Mon

@@ -851,6 +851,7 @@
 				'fd' => array(
 					'alarm_id' => array('type' => 'auto','nullable' => False),		
 					'cal_id'   => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+					'cal_owner'	=> array('type' => 'int', 'precision' => 8, 'nullable' => False),
 					'cal_time' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
 					'cal_text' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False)
 				),
@@ -860,6 +861,9 @@
 				'uc' => array()
 			)
 		);
+
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal','uid',array('type' => 'varchar', 'precision' => 255,'nullable' => False));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal','location',array('type' => 'varchar', 'precision' => 255,'nullable' => True));
 
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.004';
 		return $GLOBALS['setup_info']['calendar']['currentver'];

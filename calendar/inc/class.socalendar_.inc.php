@@ -19,12 +19,11 @@
 	{
 		$GLOBALS['phpgw_info']['server']['calendar_type'] = 'sql';
 	}
-// This will be elminated when ical is fully implemented
+/* This will be elminated when ical is fully implemented */
 	else
 	{
 		$GLOBALS['phpgw_info']['server']['calendar_type'] = 'sql';
 	}
 	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar__.inc.php');
 	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar_'.$GLOBALS['phpgw_info']['server']['calendar_type'].'.inc.php');
-	return new socalendar_;
 ?>

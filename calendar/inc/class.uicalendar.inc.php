@@ -551,6 +551,15 @@
 						$p->set_var($var);
 						echo $p->fp('out','form_button');
 					}
+					
+					$var = Array(
+						'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
+						'action_text_button'	=> lang('Alarm Management'),
+						'action_confirm_button'	=> '',
+						'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
+					);
+					$p->set_var($var);
+					echo $p->fp('out','form_button');
 				}
 
 				if ($this->bo->check_perms(PHPGW_ACL_DELETE))
@@ -637,7 +646,7 @@
   			unset($GLOBALS['phpgw_info']['flags']['noheader']);
    		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 	   	$GLOBALS['phpgw']->common->phpgw_header();
-	   	echo nl2br($this->bo->export_event($cal_id));
+	   	echo nl2br($this->bo->export_ical($cal_id));
 	   }
 
 		function add($cd=0,$readsess=0)
@@ -671,6 +680,8 @@
 				$this->bo->set_end($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
 				$this->bo->set_title('');
 				$this->bo->set_description('');
+				$this->bo->add_attribute('location','');
+				$this->bo->add_attribute('uid','');
 				$this->bo->add_attribute('priority',2);
 				if(@$this->bo->prefs['calendar']['default_private'])
 				{
@@ -845,12 +856,17 @@
 
 		function planner()
 		{
-			unset($GLOBALS['phpgw_info']['flags']['noheader']);
-			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			$GLOBALS['phpgw']->common->phpgw_header();
+
+		if(floor(phpversion()) == 4)
+		{ 
+			eval('
+
+			unset($GLOBALS[\'phpgw_info\'][\'flags\'][\'noheader\']);
+			unset($GLOBALS[\'phpgw_info\'][\'flags\'][\'nonavbar\']);
+			$GLOBALS[\'phpgw\']->common->phpgw_header();
 			
-			$html = CreateObject('infolog.html');
-			$sbox = CreateObject('phpgwapi.sbox');
+			$html = CreateObject(\'infolog.html\');
+			$sbox = CreateObject(\'phpgwapi.sbox\');
 
 			$intervals_per_day = 3;					// this should be configurable
 			$interval = Array(
@@ -870,33 +886,33 @@
 			$days = $this->bo->datetime->days_in_month($this->bo->month,$this->bo->year);
 			$enddate   = mktime(23,59,59,$this->bo->month,$this->bo->days,$this->bo->year) - $this->tz_offset;
 
-			$header[] = lang('Category');
+			$header[] = lang(\'Category\');
 			for ($d = 1; $d <= $days; $d++)
 			{
-				$dayname = substr(lang(date('D',mktime(0,0,0,$this->bo->month,$d,$this->bo->year))),0,2);
+				$dayname = substr(lang(date(\'D\',mktime(0,0,0,$this->bo->month,$d,$this->bo->year))),0,2);
 
-				$header['.'.$d] = 'colspan="'.$intervals_per_day.'" align="center"';
-				$header[$d] = '<a href="'.$html->link('/index.php',
+				$header[\'.\'.$d] = \'colspan="\'.$intervals_per_day.\'" align="center"\';
+				$header[$d] = \'<a href="\'.$html->link(\'/index.php\',
 										array(
-											'menuaction' => 'calendar.uicalendar.add',
-											'date' => sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$d)
+											\'menuaction\' => \'calendar.uicalendar.add\',
+											\'date\' => sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$d)
 										)
-									).'">'.$dayname.'<br>'.$d.'</a>';
+									).\'">\'.$dayname.\'<br>\'.$d.\'</a>\';
 			}
 			$last_cell = $intervals_per_day * $days - 1;
 
 			$this->bo->store_to_cache(
 				Array(
-					'syear'	=> $this->bo->year,
-					'smonth'	=> $this->bo->month,
-					'sday'	=> 1,
-					'eyear'	=> $this->bo->year,
-					'emonth'	=> $this->bo->month,
-					'eday'	=> $days
+					\'syear\'	=> $this->bo->year,
+					\'smonth\'	=> $this->bo->month,
+					\'sday\'	=> 1,
+					\'eyear\'	=> $this->bo->year,
+					\'emonth\'	=> $this->bo->month,
+					\'eday\'	=> $days
 				)
 			);
-			$firstday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
-			$lastday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,$days,$this->bo->year)));
+			$firstday = intval(date(\'Ymd\',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
+			$lastday = intval(date(\'Ymd\',mktime(0,0,0,$this->bo->month,$days,$this->bo->year)));
 			
 			$this->bo->remove_doubles_in_cache($firstday,$lastday);
 
@@ -913,28 +929,28 @@
 				{
 					$event = $daily[$g];
 
-					$view = $html->link('/index.php',
+					$view = $html->link(\'/index.php\',
 						array(
-							'menuaction' => 'calendar.uicalendar.view',
-							'cal_id' => $event['id']
+							\'menuaction\' => \'calendar.uicalendar.view\',
+							\'cal_id\' => $event[\'id\']
 						)
 					);
 
-					$start_cell = $intervals_per_day * ($event['start']['mday'] - 1);
-					$start_cell += $interval[$event['start']['hour']];
+					$start_cell = $intervals_per_day * ($event[\'start\'][\'mday\'] - 1);
+					$start_cell += $interval[$event[\'start\'][\'hour\']];
 
-					$end_cell = $intervals_per_day * ($event['end']['mday'] - 1);
-					$end_cell += $interval[$event['end']['hour']];
+					$end_cell = $intervals_per_day * ($event[\'end\'][\'mday\'] - 1);
+					$end_cell += $interval[$event[\'end\'][\'hour\']];
 
 					$i = 0;					// search for row of parent category
 					do {
 						++$i;
-						if ($c = $event['category'])
+						if ($c = $event[\'category\'])
 						{
-							$cat   = $this->planner_category($event['category']);
-							if ($cat['parent'])
+							$cat   = $this->planner_category($event[\'category\']);
+							if ($cat[\'parent\'])
 							{
-								$pcat = $this->planner_category($c = $cat['parent']);
+								$pcat = $this->planner_category($c = $cat[\'parent\']);
 							}
 							else
 							{
@@ -943,20 +959,20 @@
 						}
 						else
 						{
-							$cat = $pcat = array( 'name' => lang('none'));
+							$cat = $pcat = array( \'name\' => lang(\'none\'));
 						}
-						$k = $c.'_'.$i;
-						$ka = '.nr_'.$k;
+						$k = $c.\'_\'.$i;
+						$ka = \'.nr_\'.$k;
 						if (!isset($rows[$k]))
 						{
 							if ($i > 1)				// further line - no name
 							{
 								$rows[$k] = array();
-								$rows[$c.'_1']['._name'] = 'rowspan="'.$i.'"';
+								$rows[$c.\'_1\'][\'._name\'] = \'rowspan="\'.$i.\'"\';
 							}
 							else
 							{
-								$rows[$k]['_name'] = $pcat['name'];
+								$rows[$k][\'_name\'] = $pcat[\'name\'];
 							}
 							$rows[$ka] = 0;
 						}
@@ -966,34 +982,34 @@
 
 					if ($akt_cell < $start_cell)
 					{
-						$row[$event->id.'_1'] = '&nbsp;';
-						$row['.'.$event['id'].'_1'] = 'colspan="'.($start_cell-$akt_cell).'"';
+						$row[$event->id.\'_1\'] = \'&nbsp;\';
+						$row[\'.\'.$event[\'id\'].\'_1\'] = \'colspan="\'.($start_cell-$akt_cell).\'"\';
 					}
 
-					$opt = &$row['.'.$event['id'].'_2'];
-					$cel = &$row[$event['id'].'_2'];
+					$opt = &$row[\'.\'.$event[\'id\'].\'_2\'];
+					$cel = &$row[$event[\'id\'].\'_2\'];
 					if ($start_cell < $end_cell)
 					{
 						$opt .= "colspan=".(1 + $end_cell - $start_cell);
 					}
 
-					if ($bgcolor=$cat['color'])
+					if ($bgcolor=$cat[\'color\'])
 					{
-						$opt .= ' bgcolor="'.$bgcolor.'"';
+						$opt .= \' bgcolor="\'.$bgcolor.\'"\';
 					}
-					$opt .= ' title="'.$event['title'];
-					if ($event['description'])
+					$opt .= \' title="\'.$event[\'title\'];
+					if ($event[\'description\'])
 					{
-						$opt .= " \n".$event['description'];
+						$opt .= " \n".$event[\'description\'];
 					}
-					$opt .= '" onClick="location=\''.$view.'\'"';
-					$cel = '<a href="'.$view.'">';
-					if ($event['priority'] == 3)
+					$opt .= \'" onClick="location=\\\'\'.$view.\'\\\'"\';
+					$cel = \'<a href="\'.$view.\'">\';
+					if ($event[\'priority\'] == 3)
 					{
-						$cel .= $html->image('calendar','mini-calendar-bar.gif','','border="0"');
+						$cel .= $html->image(\'calendar\',\'mini-calendar-bar.gif\',\'\',\'border="0"\');
 					}
-					$cel .= $html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
-					$cel .= '</a>';
+					$cel .= $html->image(\'calendar\',count($event[\'participants\'])>1?\'multi_3.gif\':\'single.gif\',$this->planner_participants($event[\'participants\']),\'border="0"\');
+					$cel .= \'</a>\';
 
 					$akt_cell = $end_cell + 1;
 				}
@@ -1002,25 +1018,28 @@
 				{
 					if (is_array($r))
 					{
-						$rows['.'.$k] = 'bgcolor="'.$GLOBALS['phpgw']->nextmatchs->alternate_row_color().'"';
+						$rows[\'.\'.$k] = \'bgcolor="\'.$GLOBALS[\'phpgw\']->nextmatchs->alternate_row_color().\'"\';
 						$row = &$rows[$k];
-						$akt_cell = &$rows['.nr_'.$k];
+						$akt_cell = &$rows[\'.nr_\'.$k];
 						if ($akt_cell <= $last_cell)
 						{
-							$row['3'] = '&nbsp';
-							$row['.3'] = 'colspan="'.(1+$last_cell-$akt_cell).'"';
+							$row[\'3\'] = \'&nbsp\';
+							$row[\'.3\'] = \'colspan="\'.(1+$last_cell-$akt_cell).\'"\';
 						}
 					}
 				}
 			}
-			$bgcolor = 'bgcolor="'.$this->theme['th_bg'].'"';
+			$bgcolor = \'bgcolor="\'.$this->theme[\'th_bg\'].\'"\';
 			echo $html->table(
 				array(
-					'_h' => $header,
-					'._h' => $bgcolor
+					\'_h\' => $header,
+					\'._h\' => $bgcolor
 				)+$rows,
-				'width="100%" cols="'.(1+$days*$intervals_per_day).'"'
+				\'width="100%" cols="\'.(1+$days*$intervals_per_day).\'"\'
 			);
+			'); 
+		} 
+
 		}
 
 		function matrixselect()
@@ -1418,11 +1437,13 @@
 	
 			$p->set_file(
 				Array(
-					'footer'	=>	'footer.tpl'
+					'footer'	=>	'footer.tpl',
+					'form_button'		=>	'form_button_script.tpl'
 				)
 			);
 			$p->set_block('footer','footer_table','footer_table');
 			$p->set_block('footer','footer_row','footer_row');
+			$p->set_block('footer','blank_row','blank_row');
 
 			$m = $this->bo->month;
 			$y = $this->bo->year;
@@ -1500,6 +1521,16 @@
 				'go'					=>	lang('Go!')
 			);
 			$this->output_template_array($p,'table_row','footer_row',$var);
+
+			$var = Array(
+				'submit_button'		=> lang('Submit'),
+				'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiicalendar.import'),
+				'action_text_button'	=> lang('Import'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$this->output_template_array($p,'b_row','form_button',$var);
+			$p->parse('table_row','blank_row',True);
 
 			$p->pparse('out','footer_table');
 			unset($p);
@@ -1887,7 +1918,6 @@
 
 					if($day_params['appts'])
 					{
-						$lr_events = CreateObject('calendar.calendar_item');
 						$var = Array(
 							'week_day_font_size'	=>	'2',
 							'events'		=>	''
@@ -2100,6 +2130,13 @@
 				);
 			}
 
+			if ($event['location'])
+			{
+				$var[] = Array(
+					'field'	=>	lang('Location'),
+					'data'	=>	$event['location']
+				);
+			}
 			$var[] = Array(
 				'field'	=>	lang('Start Date/Time'),
 				'data'	=>	$GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['start']) - $this->tz_offset)
@@ -2784,6 +2821,7 @@
 				'action_url'		=>	$GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
 				'common_hidden'	=>	'<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
          							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
+         							. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
          							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
          							  ($event['reference']?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
 				'errormsg'			=>	($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
@@ -2805,7 +2843,13 @@
 // Display Categories
 			$var[] = Array(
 				'field'	=> lang('Category'),
-				'data'	=> '<select name="cal[category]"><option value="">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$event['category'],True).'</select>'
+				'data'	=> '<select name="cal[category]"><option value="0">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$event['category'],True).'</select>'
+			);
+
+// Location
+			$var[] = Array(
+				'field'	=> lang('Location'),
+				'data'	=> '<input name="cal[location]" size="25" maxlength="80" value="'.$event['location'].'">'
 			);
 
 // Date
@@ -2867,7 +2911,7 @@
 // Participants
 			$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
 			$users = Array();
-			$this->build_part_list($users,$accounts,$event['owner']);
+			$this->build_part_list($users,$accounts,$this->bo->owner);
     
 			$str = '';
 			@asort($users);
@@ -3004,13 +3048,14 @@
 			{
 				return;
 			}
+			@reset($accounts);
 			while(list($index,$id) = each($accounts))
 			{
 				if(intval($id) == $owner)
 				{
 					continue;
 				}
-				if(!isset($users[intval($id)]))
+				elseif(!isset($users[intval($id)]))
 				{
 					if($GLOBALS['phpgw']->accounts->exists(intval($id)) == True)
 					{
