@@ -87,6 +87,10 @@
 		/**************************************************************************\
 		* Core functions                                                           *
 		\**************************************************************************/
+    function strip_html($s)
+    {
+       return htmlspecialchars(stripslashes($s));
+    }
 
 		/* Wrapper to the session->link() */
 		function link($url = "", $extravars = "")
