@@ -1,0 +1,69 @@
+add profile	emailadmin	nl	Profiel toevoegen
+admin dn	emailadmin	nl	admin dn
+admin password	emailadmin	nl	admin wachtwoord
+admin passwort	emailadmin	nl	admin wachtwoord
+admin username	emailadmin	nl	admin gebruikersnaam
+advanced options	emailadmin	nl	Geavanceerde opties
+alternate email address	emailadmin	nl	Alternatief emailadres
+cyrus imap server	emailadmin	nl	Cyrus IMAP-server
+cyrus imap server administration	emailadmin	nl	Cyrus IMAP-serverbeheer
+default	emailadmin	nl	standaard
+deliver extern	emailadmin	nl	bezorg extern
+do you really want to delete this profile	emailadmin	nl	Weet u zeker dat u dit profiel wilt verwijderen
+domainname	emailadmin	nl	domeinnaam
+edit email settings	emailadmin	nl	wijzig emailinstellingen
+email account active	emailadmin	nl	emailaccount actief
+email address	emailadmin	nl	emailadres
+enable cyrus imap server administration	emailadmin	nl	activier Cyrus IMAP serverbeheer
+enable sieve	emailadmin	nl	activeer Sieve
+enter your default mail domain (from: user@domain)	emailadmin	nl	Voer uw standaard emaildomein in (uit: gebruiker@domein)
+forward also to	emailadmin	nl	ook doorsturen naar
+forward email's to	emailadmin	nl	emails doorsturen naar
+forward only	emailadmin	nl	alleen doorsturen
+imap admin password	admin	nl	IMAP beheerders wachtwoord
+imap admin user	admin	nl	IMAP beheerdersgebruiker
+imap c-client version < 2001	emailadmin	nl	IMAP C-Client Versie < 2001
+imap server hostname or ip address	emailadmin	nl	IMAP-server hostnaam of IP-adres
+imap server logintyp	emailadmin	nl	IMAP-server logintype
+imap server port	emailadmin	nl	IMAP-serverpoort
+imap/pop3 server name	emailadmin	nl	IMAP/POP3-servernaam
+in mbyte	emailadmin	nl	in MBytes
+ldap basedn	emailadmin	nl	LDAP basedn
+ldap server	emailadmin	nl	LDAP-server
+ldap server accounts dn	emailadmin	nl	LDAP server accounts DN
+ldap server admin dn	emailadmin	nl	LDAP server admin DN
+ldap server admin password	emailadmin	nl	LDAP-server admin wachtwoord
+ldap server hostname or ip address	emailadmin	nl	LDAP-serverhostnaam of IP-adres
+ldap settings	emailadmin	nl	LDAP-instellingen
+leave empty for no quota	emailadmin	nl	Laat leeg voor geen quota
+mail settings	admin	nl	Mailinstellingen
+name of organisation	emailadmin	nl	Naam van de Organisatie
+no alternate email address	emailadmin	nl	geen altenatief emailadres
+no forwarding email address	emailadmin	nl	geen emailadres om naar door te sturen
+pop3 server hostname or ip address	emailadmin	nl	POP3-server hostnaam of IP-adres
+pop3 server port	emailadmin	nl	POP3-serverpoort
+postfix with ldap	emailadmin	nl	Postfix met LDAP
+profile list	emailadmin	nl	Profiellijst
+profile name	emailadmin	nl	Profielnaam
+qmaildotmode	emailadmin	nl	qmaildotmode
+qouta size in mbyte	emailadmin	nl	quota grootte in MBytes
+quota settings	emailadmin	nl	quota-installingen
+remove	emailadmin	nl	verwijderen
+select type of imap/pop3 server	emailadmin	nl	Selecteer IMAP/POP3-servertype
+select type of smtp server	emailadmin	nl	Selecteer IMAP-servertype
+sieve server hostname or ip address	emailadmin	nl	Sieve-serverhostnaam of IP-adres
+sieve server port	emailadmin	nl	Sieve-serverpoort
+sieve settings	emailadmin	nl	Sieve instellingen
+smtp server name	emailadmin	nl	SMTP-servernaam
+smtp-server hostname or ip address	emailadmin	nl	SMTP-serverhostnaam of IP-adres
+smtp-server port	emailadmin	nl	SMTP-serverpoort
+standard	emailadmin	nl	Standaard
+standard imap server	emailadmin	nl	Standaard IMAP-server
+standard pop3 server	emailadmin	nl	Standaard POP3-server
+standard smtp-server	emailadmin	nl	Standaard SMTP-server
+use ldap defaults	emailadmin	nl	gebruiker LDAP standaard instellingen
+use smtp auth	emailadmin	nl	Gebruike SMTP authenticatie
+use tls authentication	emailadmin	nl	Gebruike TLS authenticatie
+use tls encryption	emailadmin	nl	Gebruike TLS-encryptie
+users can define their own emailaccounts	emailadmin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
+virtual mail manager	emailadmin	nl	Virtual MAIL ManaGeR
