@@ -1,138 +1,233 @@
-access	common	da	Adgang
-access type	common	da	Adgangstype
-account has been created	common	da	Konto er oprettet
-account has been deleted	common	da	Konto er slettet
-account has been updated	common	da	Konto er opdateret
-account preferences	common	da	Konto preferencer
-add	common	da	Tilføj
-admin	common	da	Admin
-administration	common	da	Administration
-april	common	da	April
-are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
-august	common	da	August
-cancel	common	da	Annullér
-change	common	da	Ændre
-charset	common	da	ISO-8859-1
-clear	common	da	Slet
-clear form	common	da	Slet formular
-comments	common	da	Bemærkninger
-copy	common	da	Kopiér
-create	common	da	Opret
-created by	common	da	Lavet af
-current users	common	da	Nuværende antal brugere
-date	common	da	Dato
-date hired	common	da	Dato hyret
-december	common	da	December
-delete	common	da	Slet
-done	common	da	Udført
-e-mail	common	da	E-mail
-edit	common	da	Redigér
-email	common	da	E-mail
-entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
-entry updated sucessfully	common	da	Emnet er succesrigt opdateret
-error	common	da	Fejl
-exit	common	da	Afslut
-february	common	da	Februar
-files	common	da	Filer
-filter	common	da	Filter
-first name	common	da	Fornavn
-friday	common	da	Fredag
-ftp	common	da	FTP
-global public	common	da	Global adgang
-group access	common	da	Gruppeadgang
-group has been added	common	da	Gruppe er tilføjet
-group has been deleted	common	da	Gruppe er slettet
-group has been updated	common	da	Gruppe er opdateret
-group public	common	da	Adgang til gruppe
-groups	common	da	Grupper
-help	common	da	Hjælp
-high	common	da	Høj
-home	common	da	Hjem
-it has been more then x days since you changed your password	common	da	Det er mere end %1 dage siden Du sidst ændrede Dit password
-january	common	da	Januar
-july	common	da	Juli
-june	common	da	Juni
-last name	common	da	Efternavn
-last page	common	da	Sidste side
-location	common	da	Lokation
-login	common	da	Tilmeld
-logout	common	da	Log ud
-low	common	da	Lav
-march	common	da	Marts
-may	common	da	Maj
-medium	common	da	Medium
-mobile	common	da	Mobil
-monday	common	da	Mandag
-name	common	da	Navn
-new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
-new phrase has been added	common	da	Ny sætning er tilføjet
-next page	common	da	Næste side
-no	common	da	Nej
-none	common	da	Ingen
-normal	common	da	Normal
-notes	common	da	Noter
-november	common	da	November
-october	common	da	Oktober
-ok	common	da	OK
-on *nix systems please type: x	common	da	På *nix systemer skriver Du: %1
-only yours	common	da	Kun Din
-original	common	da	Original
-pager	common	da	Pager
-password	common	da	Password
-password has been updated	common	da	Password er opdateret
-permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
-phone	common	da	Telefon
-please x by hand	common	da	Udfør venligst %1 manuelt
-powered by phpgroupware version x	common	da	Denne site kører på <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
-preferences	common	da	Preferencer
-previous page	common	da	Forrige side
-print	common	da	Udskriv
-priority	common	da	Prioritet
-private	common	da	Privat
-rename	common	da	Omdøb
-saturday	common	da	Lørdag
-save	common	da	Gem
-search	common	da	Søg
-september	common	da	September
-session has been killed	common	da	Sessionen er afsluttet
-show all	common	da	Vis alt
-showing x	common	da	Viser: %1
-showing x - x of x	common	da	Viser: %1 - %2 ud af %3
-sorry, there was a problem processing your request.	common	da	Desværre opstod der et problem med at behandle Dit ønske.
-status	common	da	Status
-submit	common	da	Send
-sunday	common	da	Søndag
-thursday	common	da	Torsdag
-time	common	da	Tid
-time tracking	common	da	Tidsregistrering
-to correct this error for the future you will need to properly set the	common	da	For at rette denne fejl for fremtiden skal Du korrekt opsætte
-total	common	da	Total
-translation management	common	da	Håndtering af oversættelser
-tuesday	common	da	Tirsdag
-url	common	da	URL
-updated	common	da	Opdatéret
-users	common	da	Brugere
-vacation hours per year	common	da	Antal ferie timer om året
-vacation hours used	common	da	Anvendte ferie timer
-view	common	da	Se
-wednesday	common	da	Onsdag
-which groups	common	da	Hvilke grupper
-yes	common	da	Ja
-you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
-you have 1 new message!	common	da	Du har 1 ny besked!
-you have x new messages!	common	da	Du har %1 nye beskeder!
-your message has been sent	common	da	Din besked er afsendt
-your search returned 1 match	common	da	Søgningen leverede 1 resultat
-your search returned x matchs	common	da	Søgningen leverede %1 resultater
-your settings have been updated	common	da	Dine indstillinger er opdateret
-powered by phpgroupware version x	all	da	Denne site kører på <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-bad login or password	login	da	Forkert brugernavn eller password
-login	login	da	Tilmeld
-password	login	da	Password
-phpgroupware login	login	da	phpGroupWare log ind
-sorry, your login has expired	login	da	Desværre, Din session er udløbet
-use cookies	login	da	Brug cookies
-username	login	da	Brugernavn
-you have been successfully logged out	login	da	Du er nu succesrigt logget ud
-your session could not be verified.	login	da	Din session kunne ikke verificeres
-mainscreen_message	mainscreen	da	Forside
+access common  da      Adgang
+access not permitted   common  da      Ingen adgang
+access type    common  da      Adgangstype
+account has been created       common  da      Konto er oprettet
+account has been deleted       common  da      Konto er slettet
+account has been updated       common  da      Konto er opdateret
+account preferences    common  da      Konto preferencer
+acl    common  da      ACL
+active common  da      Aktiv
+add category   common  da      Tilføj kategori
+add    common  da      Tilføj
+add sub        common  da      Tilføj underkategori
+add x category for     common  da      Tilføj kategorien %1 for
+admin  common  da      Admin
+administration common  da      Administration
+all    common  da      Alle
+april  common  da      April
+are you sure you want to delete this entry ?   common  da      Vil Du virkelig slette dette felt?
+august common  da      August
+author common  da      Forfatter
+autosave default category      common  da      Autogem Standard Kategori
+back   common  da      Tilbage
+bad login or password  login   da      Forkert brugernavn eller password
+cancel common  da      Annullér
+categories     common  da      Kategorier
+categories for common  da      kategorier for
+category       common  da      Kategori
+category x has been added !    common  da      Kategorien %1 er blevet tilføjet!
+category x has been updated !  common  da      Kategorien %1 er blevet opdateret!
+change common  da      Ændre
+charset        common  da      ISO-8859-1
+choose the category    common  da      Vælg kategorien
+choose the parent category     common  da      Vælg ovenstående kategori
+clear  common  da      Slet
+clear form     common  da      Slet formular
+comments       common  da      Bemærkninger
+copy   common  da      Kopiér
+create common  da      Opret
+created by     common  da      Lavet af
+currency       common  da      Valutaenhed
+current        common  da      Nuværende
+current users  common  da      Nuværende antal brugere
+date   common  da      Dato
+date due       common  da      Skal være færdig
+date hired     common  da      Dato hyret
+december       common  da      December
+default category       common  da      Standard Kategori
+delete common  da      Slet
+description    common  da      Beskrivelse
+detail common  da      Detalje
+details        common  da      Detaljer
+disabled       common  da      Slået fra
+done   common  da      Udført
+do you also want to delete all subcategories ? common  da      Ønsker du at slette alle underkategorierne?
+edit categories        commonen        Ret Kategorierne
+edit category  common  da      Ret kategori
+edit   common  da      Redigér
+edit x category for    common  da      Ret kategorien %1 for
+e-mail common  da      E-mail
+email  common  da      E-mail
+enabled        common  da      Slået til
+end date       common  da      Slut dato
+end time       common  da      Slut tid
+entry has been deleted sucessfully     common  da      Emnet er succesrigt slettet
+entry updated sucessfully      common  da      Emnet er succesrigt opdateret
+error  common  da      Fejl
+error creating x x directory   common  da      Fejl ved oprettelsen af biblioteket %1%2
+error deleting x x directory   common  da      Fejl ved sletningen af biblioteket %1%2
+error renaming x x directory   common  da      Fejl ved omdøbningen af biblioteket %1%2
+exit   common  da      Afslut
+february       common  da      Februar
+fields common  da      Felter
+files  common  da      Filer
+filter common  da      Filter
+first name     common  da      Fornavn
+firstname      common  da      Fornavn
+force selectbox        common  da      Påtving Valgbox
+friday common  da      Fredag
+ftp    common  da      FTP
+global common  da      Global
+global public  common  da      Global adgang
+grant access   common  da      Giv adgang
+group access   common  da      Gruppeadgang
+group  common  da      Gruppe
+group has been added   common  da      Gruppe er tilføjet
+group has been deleted common  da      Gruppe er slettet
+group has been updated common  da      Gruppe er opdateret
+group public   common  da      Adgang til gruppe
+groups common  da      Grupper
+help   common  da      Hjælp
+high   common  da      Høj
+highest        common  da      Højeste
+home   common  da      Hjem
+it has been more then x days since you changed your password   common  da      Det er mere end %1 dage siden du sidst ændrede dit password
+it is recommended that you run setup to upgrade your tables to the current version     common  da      Det anbefales at du kører setup for at opgradere dine tabeller til den nuværende version.
+january        common  da      Januar
+july   common  da      Juli
+june   common  da      Juni
+language       common  da      Sprog
+last name      common  da      Efternavn
+lastname       common  da      Efternavn
+last page      common  da      Sidste side
+list   common  da      Liste
+location       common  da      Lokation
+login  common  da      Login
+login  login   da      Login
+logout common  da      Log ud
+low    common  da      Lav
+lowest common  da      Laveste
+main category  common  da      Hovedkategori
+main screen    common  da      Hovedside
+mainscreen_message     mainscreen      da      Forside
+manual common  da      Manual
+march  common  da      Marts
+may    common  da      Maj
+medium common  da      Medium
+message        common  da      Besked
+mobile common  da      Mobil
+monday common  da      Mandag
+name   common  da      Navn
+new entry added sucessfully    common  da      Nyt punkt succesrigt tilføjet
+new main category      common  da      Ny hovedkategori
+new phrase has been added      common  da      Ny sætning er tilføjet
+new value      common  da      Ny Værdi
+next   common  da      Næste
+next page      common  da      Næste side
+no     common  da      Nej
+no history for this record     common  da      Ingen historie fundet for denne post
+none   common  da      Ingen
+normal common  da      Normal
+no subject     common  da      Intet Emne
+note   common  da      Note
+notes  common  da      Noter
+notify window  common  da      Notificer vindue
+november       common  da      November
+october        common  da      Oktober
+ok     common  da      OK
+old value      common  da      Gammel Værdi
+only yours     common  da      Kun Din
+on *nix systems please type: x common  da      På *nix systemer skriver Du: %1
+open notify window     common  da      Åben Notificer Vindue
+original       common  da      Original
+other  common  da      Anden
+overview       common  da      Oversigt
+owner  common  da      Ejer
+pager  common  da      Pager
+parent category        common  da      Ovenstående Kategori
+password       common  da      Password
+password has been updated      common  da      Password er opdateret
+password       login   da      Password
+permissions to the files/users directory       common  da      Rettigheder for fil/bruger mappen
+personal       common  da      Personlig
+phone  common  da      Telefon
+phpgroupware login     login   da      phpGroupWare log ind
+please enter a name    common  da      Indtast venligst et navn!
+please run setup to become current     common  da      Kør venligst setup for at blive opdateret
+please set your preferences for this application       common  da      Indtast venligst dine preferencer for denne applikation
+please x by hand       common  da      Udfør venligst %1 manuelt
+powered by phpgroupware version x      all     da      Denne site kører på <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x      common  da      Denne site kører på <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+preferences    common  da      Preferencer
+previous page  common  da      Forrige side
+print  common  da      Udskriv
+priority       common  da      Prioritet
+private        common  da      Privat
+public common  da      offentlig
+read   common  da      Læs
+rename common  da      Omdøb
+saturday       common  da      Lørdag
+save   common  da      Gem
+search common  da      Søg
+section        common  da      Sektion
+select category        common  da      Vælg Kategori
+september      common  da      September
+session has been killed        common  da      Sessionen er afsluttet
+show all       common  da      Vis alt
+showing x      common  da      Viser: %1
+showing x - x of x     common  da      Viser: %1 - %2 ud af %3
+sorry, there was a problem processing your request.    common  da      Desværre opstod der et problem med at behandle Dit ønske.
+sorry, your login has expired  login   da      Desværre, Din session er udløbet
+start date     common  da      Startdato
+start time     common  da      Starttid
+status common  da      Status
+subject        common  da      Emne
+submit common  da      Send
+sunday common  da      Søndag
+the api is current     common  da      APIen er den up-to-date
+the api requires an upgrade    common  da      APIen skal opdateres
+the following applications require upgrades    common  da      Følgende applikationer skal opdateres
+this application is current    common  da      Denne applikation er up-to-date
+this application requires an upgrade   common  da      Denne applikation skal opdateres
+this name has been used already        common  da      Dette navn er allerede i brug!
+thursday       common  da      Torsdag
+time   common  da      Tid
+time tracking  common  da      Tidsregistrering
+time zone      common  da      Tidszone
+time zone offset       common  da      Tidszone forskel
+title  common  da      Titel
+to correct this error for the future you will need to properly set the common  da      For at rette denne fejl for fremtiden skal Du korrekt opsætte
+total  common  da      Total
+translation management common  da      Håndtering af oversættelser
+tuesday        common  da      Tirsdag
+unknown        common  da      Ukendt
+update common  da      Opdatering
+updated        common  da      Opdatéret
+url    common  da      URL
+use cookies    login   da      Brug cookies
+user   common  da      Bruger
+username       common  da      Brugernavn
+username       login   da      Brugernavn
+users choice   common  da      Brugerens Valg
+users  common  da      Brugere
+vacation hours per year        common  da      Antal ferie timer om året
+vacation hours used    common  da      Anvendte ferie timer
+view   common  da      Se
+wednesday      common  da      Onsdag
+welcome        common  da      Velkommen
+which groups   common  da      Hvilke grupper
+written by:    common  da      Skrevet af:
+yes    common  da      Ja
+you are required to change your password during your first login       common  da      Du skal ændre Dit password ved Din første log ind
+you are running a newer version of phpGroupWare than your database is setup for        common  da      Du kører en nyere version af phpGroupWare end din database er beregnet til.
+you have 1 new message!        common  da      Du har 1 ny besked!
+you have been successfully logged out  login   da      Du er nu succesrigt logget ud
+you have selected an invalid date      common  da      Du har valgt en ugyldig dato!
+you have selected an invalid main category     common  da      Du har valgt en ugyldig hovedkategori!
+you have x new messages!       common  da      Du har %1 nye beskeder!
+your message has been sent     common  da      Din besked er afsendt
+your search returned 1 match   common  da      Søgningen leverede 1 resultat
+your search returned x matchs  common  da      Søgningen leverede %1 resultater
+your session could not be verified.    login   da      Din session kunne ikke verificeres
+your settings have been updated        common  da      Dine indstillinger er opdateret
+
