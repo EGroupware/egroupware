@@ -1415,15 +1415,15 @@
 			$p->parse($row,$list,True);
 		}
 
-		function page($page='',$params='')
+		function page($_page='',$params='')
 		{
-			if($page == '')
+			if($_page == '')
 			{
 				$page_ = explode('.',$this->bo->prefs['calendar']['defaultcalendar']);
-				$page = $page_[0];
-				if ($page=='index' || ($page != 'day' && $page != 'week' && $page != 'month' && $page != 'year'))
+				$_page = $page_[0];
+				if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year'))
 				{
-					$page = 'month';
+					$_page = 'month';
 					$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar','month');
 					$GLOBALS['phpgw']->preferences->save_repository();
 				}
@@ -1436,7 +1436,7 @@
 			{
 				$page_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$page_app.'.ui'.$page_app.'.'.$page.$params);
+			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$page_app.'.ui'.$page_app.'.'.$_page.$params);
 		}
 
 		function header()

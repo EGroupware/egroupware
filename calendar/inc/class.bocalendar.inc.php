@@ -131,9 +131,12 @@
 				echo "Owner : ".$this->owner."<br>\n";
 			}
 			
-			if(isset($GLOBALS['owner']))
+			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:'');
+			$owner = ($owner=='' && isset($GLOBALS['HTTP_POST_VARS']['owner'])?$GLOBALS['HTTP_POST_VARS']['owner']:$owner);
+
+			if(isset($owner))
 			{
-				$this->owner = intval($GLOBALS['owner']);
+				$this->owner = intval($owner);
 			}
 			elseif(!@isset($this->owner) || !@$this->owner)
 			{
@@ -154,7 +157,10 @@
 
 			$this->holiday_color = (substr($GLOBALS['phpgw_info']['theme']['bg07'],0,1)=='#'?'':'#').$GLOBALS['phpgw_info']['theme']['bg07'];
 
-			$this->printer_friendly = ($GLOBALS['friendly'] == 1?True:False);
+			$friendly = (isset($GLOBALS['HTTP_GET_VARS']['friendly'])?$GLOBALS['HTTP_GET_VARS']['friendly']:'');
+			$friendly = ($friendly=='' && isset($GLOBALS['HTTP_POST_VARS']['friendly'])?$GLOBALS['HTTP_POST_VARS']['friendly']:$friendly);
+
+			$this->printer_friendly = (intval($friendly) == 1?True:False);
 
 			if(isset($GLOBALS['HTTP_POST_VARS']['filter']))   { $this->filter = $GLOBALS['HTTP_POST_VARS']['filter']; }
 			if(isset($GLOBALS['HTTP_POST_VARS']['cat_id']))  { $this->cat_id = $GLOBALS['HTTP_POST_VARS']['cat_id']; }
