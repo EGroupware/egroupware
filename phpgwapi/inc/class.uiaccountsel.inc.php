@@ -60,8 +60,9 @@
 		 * @param $not int/array user-id or array of user-id's not to display in selection, default False = display all
 		 * @param $options	additional options (e.g. style)
 		 * @param $onchange javascript to execute if the selection changes, eg. to reload the page
-		 * @param $select array/bool array with id's as keys or values. If the id is in the key and the value is a string,
+		 * @param $select array/bool/string array with id's as keys or values. If the id is in the key and the value is a string,
 		 *	it gets appended to the user-name. Or false if the selectable values for the selectbox are determined by use.
+		 *  Or a string whith get added as first Option with value=0, eg. lang('all')
 		 * @return the necessary html
 		 */
 		function selection($name,$element_id,$selected,$use='accounts',$lines=1,$not=False,$options='',$onchange='',$select=False)
@@ -95,7 +96,8 @@
 					$account_sel = 'selectbox';	// groups always use only the selectbox
 					break;
 			}
-			switch($this->account_selection)
+			$extra_label = is_string($select) && !empty($select) ? $select : False;
+			switch($account_sel)
 			{
 				case 'popup':
 					$select = $selected;
@@ -178,7 +180,7 @@
 			$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
 			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			$single = (int) !$lines;
-			if (!$lines)
+			if (!$lines && $use != 'groups' && $use != 'owngroups')
 			{
 				$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');".
 					($onchange ? " else { $onchange }" : '' ).'" onclick="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');\"";
@@ -188,6 +190,10 @@
 			elseif ($onchange)
 			{
 				$options .= ' onchange="'.$onchange.'"';
+			}
+			if ($extra_label)
+			{
+				$select = array($extra_label) + $select;
 			}
 			//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
 			$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines);
