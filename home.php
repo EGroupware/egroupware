@@ -20,7 +20,7 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = @$_GET['sessionid'] ? $_GET['sessionid'] : $_COOKIE['sessionid'];
+	$GLOBALS['sessionid'] = @$_GET['sessionid'] ? $_GET['sessionid'] : @$_COOKIE['sessionid'];
 	if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
@@ -48,6 +48,20 @@
 			}
 		}
 		$GLOBALS['phpgw']->redirect_link($_GET['phpgw_forward'],$extra_vars);
+		exit;
+	}
+
+	// anonymous user should never get a home-page
+	if ($GLOBALS['phpgw']->session->session_flags == 'A')
+	{
+		if ($_SERVER['HTTP_REFERER'] && strstr($_SERVER['HTTP_REFERER'],'home.php') === False)
+		{
+			$GLOBALS['phpgw']->redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			header('HTTP/1.0 404 Not found');
+		}
 		exit;
 	}
 
