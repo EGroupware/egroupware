@@ -517,9 +517,13 @@
 			{
 				$indexes[] = $val['index_name'];
 			}
-			if(!in_array($sOldTableName . '_pkey',$indexes))
+			if(!in_array($sOldTableName . '_pkey',$indexes))	// no idea how this can happen
 			{
 				$oProc->m_odb->query("DROP INDEX " . $sOldTableName . "_pkey",__LINE__,__FILE__);
+			}
+			else	// rename the index
+			{
+				$oProc->m_odb->query('ALTER TABLE '.$sOldTableName.'_pkey RENAME TO '.$sNewTableName.'_pkey');
 			}
 
 			return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
