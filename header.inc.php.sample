@@ -29,7 +29,6 @@
   $phpgw_info["server"]["db_name"] = "phpgroupware";
   $phpgw_info["server"]["db_user"] = "phpgroupware";
   $phpgw_info["server"]["db_pass"] = "your_password";
-  /* Look at the README file */
   $phpgw_info["server"]["db_type"] = "mysql"; //mysql, postgresql, or oracle
 
   /* This will limit who is allowed to make configuration modifcations */
