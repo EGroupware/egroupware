@@ -17,7 +17,7 @@
 
     <tr>
      <td>{lang_permissions}</td>
-     <td><table width="100%" border="0" cols="4">
+     <td><table width="100%" border="0" cols="6">
       {permissions_list}
      </table></td>
     </tr>
