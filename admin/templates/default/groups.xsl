@@ -120,9 +120,13 @@
 
 	<xsl:template match="group_edit">
 		<table border="0" cellpadding="2" cellspacing="2" align="center" width="79%">
-			<tr>
-				<td><xsl:value-of select="error"/></td>
-			</tr>
+			<xsl:choose>
+				<xsl:when test="msgbox_data != ''">
+					<tr>
+						<td align="center"><xsl:call-template name="msgbox"/></td>
+					</tr>
+				</xsl:when>
+			</xsl:choose>
 			<tr>
 				<td valign="top">
 <!-- {rows} -->

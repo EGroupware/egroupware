@@ -132,9 +132,13 @@
 
 	<xsl:template match="account_edit">
 		<table border="0" cellpadding="2" cellspacing="2" align="center" width="95%">
-			<tr>
-				<td><xsl:value-of select="error"/></td>
-			</tr>
+			<xsl:choose>
+				<xsl:when test="msgbox_data != ''">
+					<tr>
+						<td align="center" colspan="2"><xsl:call-template name="msgbox"/></td>
+					</tr>
+				</xsl:when>
+			</xsl:choose>
 			<tr>
 				<td valign="top">
 <!-- {rows} -->
@@ -149,7 +153,6 @@
 						<xsl:variable name="account_lastname" select="account_lastname"/>
 						<xsl:variable name="account_passwd" select="account_passwd"/>
 						<xsl:variable name="account_passwd_2" select="account_passwd_2"/>
-						<input type="hidden" name="values[account_id]" value="{$account_id}"/>
 						<tr class="row_on">
 							<td width="25%"><xsl:value-of select="lang_lid"/></td>
 							<td width="25%"><input type="text" name="values[account_lid]" value="{$account_lid}"/></td>
@@ -198,11 +201,11 @@
 							<td><xsl:value-of select="lang_never"/></td>
 							<td>
 								<xsl:choose>
-									<xsl:when test="never_expires = 'yes'">
-										<input type="checkbox" name="values[never_expires]" value="True" checked="checked"/>
+									<xsl:when test="expires_never = 'yes'">
+										<input type="checkbox" name="values[expires_never]" value="True" checked="checked"/>
 									</xsl:when>
 									<xsl:otherwise>
-										<input type="checkbox" name="values[never_expires]" value="True"/>
+										<input type="checkbox" name="values[expires_never]" value="True"/>
 									</xsl:otherwise>
 								</xsl:choose>
 							</td>
@@ -244,10 +247,10 @@
 		<xsl:variable name="account_id" select="account_id"/>
 		<xsl:choose>
 			<xsl:when test="selected != ''">
-				<option value="{$account_id}" selected="selected"><xsl:value-of select="account_name"/></option>
+				<option value="{$account_id}" selected="selected"><xsl:value-of select="account_lid"/></option>
 			</xsl:when>
 			<xsl:otherwise>
-				<option value="{$account_id}"><xsl:value-of select="account_name"/></option>
+				<option value="{$account_id}"><xsl:value-of select="account_lid"/></option>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

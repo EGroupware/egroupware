@@ -92,6 +92,17 @@
 				'global_cats' => $global_cats
 			);
 
+			if ($_POST['add'])
+			{
+				$link_data['menuaction'] = 'admin.uicategories.edit';
+				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
+			}
+
+			if ($_POST['done'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.iumainscreen.mainscreen');
+			}
+
 			if ($GLOBALS['appname'])
 			{
 				$GLOBALS['phpgw_info']['flags']['app_header'] = lang($GLOBALS['appname']) . '&nbsp;' . lang('global categories') . ': ' . lang('category list');
@@ -211,17 +222,16 @@
 				);
 			}
 
-			$link_data['menuaction'] = 'admin.uicategories.edit';
+			$link_data['menuaction'] = 'admin.uicategories.index';
 			$link_data['parent'] = '';
 
 			$cat_add[] = array
 			(
 				'lang_add'				=> lang('add'),
 				'lang_add_statustext'	=> lang('add a category'),
-				'add_url'				=> $GLOBALS['phpgw']->link('/index.php',$link_data),
+				'action_url'			=> $GLOBALS['phpgw']->link('/index.php',$link_data),
 				'lang_done'				=> lang('done'),
-				'lang_done_statustext'	=> lang('return to admin mainscreen'),
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen')
+				'lang_done_statustext'	=> lang('return to admin mainscreen')
 			);
 
 			$link_data['menuaction'] = 'admin.uicategories.index';
@@ -254,13 +264,22 @@
 			$parent			= get_var('parent',array('GET'));
 			$values			= get_var('values',array('POST'));
 
-			if ($values['save'])
+			$link_data = array
+			(
+				'menuaction'  => 'admin.uicategories.index',
+				'appname'     => $GLOBALS['appname'],
+				'global_cats' => $global_cats
+			);
+
+			if ($values['cancel'])
 			{
-				if (is_array($values))
-				{
-					$values['cat_id'] = $this->cat_id;
-					$values['access'] = 'public';
-				}
+				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
+			}
+
+			if ($values['save'] || $values['apply'])
+			{
+				$values['cat_id'] = $this->cat_id;
+				$values['access'] = 'public';
 
 				$error = $this->bo->check_values($values);
 				if (is_array($error))
@@ -270,27 +289,26 @@
 				else
 				{
 					$this->cat_id = $this->bo->save_cat($values);
-					$message = lang('Category %1 has been saved !',$values['name']);
+					if ($values['apply'])
+					{
+						$message = lang('Category %1 has been saved !',$values['name']);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
+					}
 				}
 			}
 
-			if (!$this->cat_id)
+			if ($this->cat_id)
 			{
-				$function = lang('add category');
-				$action = 'add';
-			}
-			else
-			{
-				$action = 'edit';
-				$function = lang('edit category');
 				$cats = $this->bo->cats->return_single($this->cat_id);
-
 				$parent = $cats['parent'];
 			}
 
 			if ($GLOBALS['appname'])
 			{
-				$GLOBALS['phpgw_info']['flags']['app_header'] = lang($GLOBALS['appname']) . '&nbsp;' . lang('global categories') . ': ' . $function;
+				$GLOBALS['phpgw_info']['flags']['app_header'] = lang($GLOBALS['appname']) . '&nbsp;' . lang('global categories') . ': ' . ($this->cat_id?lang('edit category'):lang('add category'));
 			}
 			else
 			{
@@ -308,31 +326,22 @@
 				$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit global category'));
 			}
 
-			$link_data = array
-			(
-				'menuaction'  => 'admin.uicategories.index',
-				'appname'     => $GLOBALS['appname'],
-				'global_cats' => $global_cats
-			);
-
 			$data = array
 			(
-				'action'					=> $action,
-				'done_url'					=> $GLOBALS['phpgw']->link('/index.php',$link_data),
 				'lang_name'					=> lang('name'),
 				'lang_descr'				=> lang('description'),
 				'lang_parent'				=> lang('parent category'),
 				'old_parent'				=> $cats['parent'],
 				'lang_save'					=> lang('save'),
-				'lang_done'					=> lang('done'),
-				'lang_delete'				=> lang('delete'),
-				'lang_reset'				=> lang('reset'),
+				'lang_apply'				=> lang('apply'),
+				'lang_cancel'				=> lang('cancel'),
 				'value_name'				=> $GLOBALS['phpgw']->strip_html($cats['name']),
 				'value_descr'				=> $GLOBALS['phpgw']->strip_html($cats['descr']),
 				'message'					=> $message,
-				'lang_content_statustext'	=> lang('Enter a description for the category'),
-				'lang_done_statustext'		=> lang('Back to the list'),
-				'lang_save_statustext'		=> lang('Save the category'),
+				'lang_content_statustext'	=> lang('enter a description for the category'),
+				'lang_cancel_statustext'	=> lang('leave the category untouched and return back to the list'),
+				'lang_save_statustext'		=> lang('save the category and return back to the list'),
+				'lang_apply_statustext'		=> lang('save the category'),
 				'lang_no_cat'				=> lang('no category'),
 				'lang_cat_statustext'		=> lang('Select the parent category. If this is a main category select NO CATEGORY'),
 				'select_name'				=> 'values[parent]',
@@ -345,7 +354,6 @@
 				$link_data['cat_id']	= $this->cat_id;
 			}
 			$data['edit_url'] = $GLOBALS['phpgw']->link('/index.php',$link_data);
-			$data['delete_url'] = $GLOBALS['phpgw']->link('/index.php',$link_data);
 
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('cat_edit' => $data));
 		}
@@ -354,15 +362,6 @@
 		{
 			$global_cats  = get_var('global_cats',array('POST','GET'));
 
-			if ($GLOBALS['appname'])
-			{
-				$GLOBALS['phpgw_info']['flags']['app_header'] = lang($GLOBALS['appname']) . '&nbsp;' . lang('global categories') . ': ' . lang('delete category');
-			}
-			else
-			{
-				$GLOBALS['phpgw_info']['flags']['app_header'] = lang('global categories') . ': ' . lang('delete category');
-			}
-
 			$link_data = array
 			(
 				'menuaction'  => 'admin.uicategories.index',
@@ -370,24 +369,24 @@
 				'global_cats' => $global_cats
 			);
 
-			if (!$this->cat_id)
+			if ($_POST['cancel'] || !$this->cat_id)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
-			if (get_var('confirm',array('POST')))
+			if ($_POST['delete'])
 			{
-				if (get_var('subs',array('POST')))
+				if ($_POST['subs'])
 				{
-					switch (get_var('subs',array('POST')))
+					switch ($_POST['subs'])
 					{
 						case 'move':
 							$this->bo->delete(array('cat_id' => $this->cat_id, 'modify_subs' => True));
-							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+							$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 							break;
 						case 'drop':
 							$this->bo->delete(array('cat_id' => $this->cat_id, 'drop_subs' => True));
-							Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+							$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 							break;
 						default:
 							$error_msg = lang('Please choose one of the methods to handle the subcategories');
@@ -397,26 +396,19 @@
 				else
 				{
 					$this->bo->delete(array('cat_id' => $this->cat_id));
-					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+					$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 				}
 			}
 
 			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_delete'));
 
-			if ($GLOBALS['appname'])
-			{
-				$type = 'noglobalapp';
-			}
-			else
-			{
-				$type = 'noglobal';
-			}
+			$GLOBALS['phpgw_info']['flags']['app_header'] = ($GLOBALS['appname']?lang($GLOBALS['appname']) . '&nbsp;':'') . lang('global categories') . ': ' . lang('delete category');
+
+			$type = ($GLOBALS['appname']?'noglobalapp':'noglobal');
 
 			$apps_cats = $this->bo->exists(array('type'		=> $type,
 												'cat_name'	=> '',
 												'cat_id'	=> $this->cat_id));
-
-
 			if ($apps_cats)
 			{
 				$lang_confirm_msg = lang('This category is currently being used by applications as a parent category. ')
@@ -443,16 +435,15 @@
 
 			$data = array
 			(
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php',$link_data),
-				'lang_confirm_msg'		=> $lang_confirm_msg,
-				'lang_yes'				=> lang('yes'),
-				'subs'					=> $subs,
-				'lang_sub_select_move'	=> $lang_sub_select_move,
-				'lang_sub_select_drop'	=> $lang_sub_select_drop,
-				'lang_yes_statustext'	=> lang('Delete the entry'),
-				'lang_no_statustext'	=> lang('Back to the list'),
-				'lang_no'				=> lang('no'),
-				'lang_error_msg'		=> $error_msg
+				'lang_delete_msg'			=> $lang_confirm_msg,
+				'lang_delete'				=> lang('delete'),
+				'subs'						=> $subs,
+				'lang_sub_select_move'		=> $lang_sub_select_move,
+				'lang_sub_select_drop'		=> $lang_sub_select_drop,
+				'lang_delete_statustext'	=> lang('delete the category'),
+				'lang_cancel_statustext'	=> lang('do NOT delete the category and return back to the list'),
+				'lang_cancel'				=> lang('cancel'),
+				'lang_error_msg'			=> $error_msg
 			);
 
 			$link_data['menuaction']	= 'admin.uicategories.delete';

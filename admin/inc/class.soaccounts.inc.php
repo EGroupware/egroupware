@@ -19,9 +19,10 @@
 
 		function add_user($userData)
 		{
-			$userData['account_expires'] = $userData['expires'];
-			$GLOBALS['phpgw']->db->lock(
-				Array(
+			$GLOBALS['phpgw']->db->lock
+			(
+				array
+				(
 					'phpgw_accounts',
 					'phpgw_nextid',
 					'phpgw_preferences',

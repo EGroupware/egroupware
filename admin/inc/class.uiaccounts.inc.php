@@ -293,7 +293,7 @@
 
 				if (is_array($error))
 				{
-
+					$error_list = $GLOBALS['phpgw']->common->error_list($error);
 				}
 				else
 				{
@@ -364,7 +364,6 @@
 			$account_list = $accounts->get_list('accounts');
 			$account_num = count($account_list);
 
-			$user_list = '';
 			while (list($key,$entry) = each($account_list))
 			{
 				$user_list[] = array
@@ -446,12 +445,12 @@
 
 			$data = array
 			(
+				'msgbox_data'			=> $error_list,
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$link_data),
 				'account_id'			=> $group_info['account_id'],
 				'lang_account_name'		=> lang('group name'),
 				'value_account_name'	=> $group_info['account_name'],
 				'lang_include_user'		=> lang('select users for inclusion'),
-				'error'					=> (!$_errors?'':$GLOBALS['phpgw']->common->error_list($_errors)),
 				'select_size'			=> ($account_num < 5?$account_num:5),
 				'user_list'				=> $user_list,
 				'lang_permissions'		=> lang('permissions this group has'),
@@ -471,13 +470,11 @@
 
 		function edit_user()
 		{
-			$cd				= get_var('cd',array('GET'));
-			$account_id		= get_var('account_id',array('GET','POST'));
-			$values			= get_var('values',array('POST'));
-			$account_groups	= get_var('account_groups',array('POST'));
-			$account_apps	= get_var('account_apps',array('POST'));
-
-			_debug_array($values);
+			$cd						= get_var('cd',array('GET'));
+			$account_id				= get_var('account_id',array('GET','POST'));
+			$values					= get_var('values',array('POST'));
+			$account_groups			= get_var('account_groups',array('POST'));
+			$account_permissions	= get_var('account_permissions',array('POST'));
 
 			if ($values['cancel'] || (!$account_id && $GLOBALS['phpgw']->acl->check('account_access',4,'admin')) || ($account_id && $GLOBALS['phpgw']->acl->check('account_access',16,'admin')))
 			{
@@ -494,34 +491,30 @@
 			
 			if ($values['save'])
 			{
+				if (is_array($account_groups))
+				{
+					$values['account_groups'] = $account_groups;
+				}
+
+				if (is_array($account_permissions))
+				{
+					$values['account_permissions'] = $account_permissions;
+				}
+
 				$error = $this->bo->validate_user($values);
 
 				if (is_array($error))
 				{
-
+					$error_list = $GLOBALS['phpgw']->common->error_list($error);
 				}
 				else
 				{
-					if (is_array($account_groups))
+					if ($account_id)
 					{
-						$values['account_groups'] = $account_groups;
+						$values['account_id'] = $account_id;
 					}
-
-					if (is_array($account_permissions))
-					{
-						$values['account_permissions'] = $account_permissions;
-					}
-
-					if ($values['account_id'])
-					{
-						$this->bo->edit_user($values);
-						$account_id = $values['account_id'];
-					}
-					else
-					{
-						$this->bo->add_user($values);
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_user'));
-					}
+					$this->bo->save_user($values);
+					$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_users');
 				}
 			}
 
@@ -546,50 +539,34 @@
 				);
 			}
 
-			if (is_array($_userData))
+			if($account_id)
 			{
-				$userData = Array();
-				$userData=$_userData;
-				@reset($userData['account_groups']);
-				while (list($key, $value) = @each($userData['account_groups']))
-				{
-					$userGroups[$key]['account_id'] = $value;
-				}
-
-				$account = CreateObject('phpgwapi.accounts');
-				$allGroups = $account->get_list('groups');
+				$account = CreateObject('phpgwapi.accounts',intval($account_id),'u');
+				$userData = $account->read_repository();
+				$userGroups = $account->membership($account_id);
 			}
-			elseif(is_string($_userData) && $_userData=='')
+			else
 			{
-				if($_account_id)
-				{
-					$account = CreateObject('phpgwapi.accounts',intval($_account_id),'u');
-					$userData = $account->read_repository();
-					$userGroups = $account->membership($_account_id);
-				}
-				else
-				{
-					$account = CreateObject('phpgwapi.accounts');
-					$userData = Array();
-					$userData['status'] = 'A';
-					$userGroups = Array();
-				}
-				$allGroups = $account->get_list('groups');
+				$account = CreateObject('phpgwapi.accounts');
+				$userData = Array();
+				$userData['status'] = 'A';
+				$userGroups = Array();
+			}
+			$allGroups = $account->get_list('groups');
 
-				if ($userData['expires'] == -1)
-				{
-					$userData['account_expires_month'] = 0;
-					$userData['account_expires_day']   = 0;
-					$userData['account_expires_year']  = 0;
-				}
-				else
-				{
-					/* Change this to be an admin/setup setting.  For now, default to expire one week from today. */
-					$time_var = time() + (60*60*24*7);
-					$userData['account_expires_month'] = date('m',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
-					$userData['account_expires_day']   = date('d',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
-					$userData['account_expires_year']  = date('Y',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
-				}
+			if ($userData['expires'] == -1)
+			{
+				$userData['account_expires_month'] = 0;
+				$userData['account_expires_day']   = 0;
+				$userData['account_expires_year']  = 0;
+			}
+			else
+			{
+				/* Change this to be an admin/setup setting.  For now, default to expire one week from today. */
+				$time_var = time() + (60*60*24*7);
+				$userData['account_expires_month'] = date('m',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
+				$userData['account_expires_day']   = date('d',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
+				$userData['account_expires_year']  = date('Y',$userData['expires'] > 0 ? $userData['expires'] : $time_var);
 			}
 
 			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
@@ -597,10 +574,10 @@
 				$lang_homedir	= lang('home directory');
 				$lang_shell		= lang('login shell');
 				$homedirectory = '<input name="homedirectory" value="'
-					. ($_account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_lid)
+					. ($account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_lid)
 					. '">';
 				$loginshell = '<input name="loginshell" value="'
-					. ($_account_id?$userData['loginshell']:$GLOBALS['phpgw_info']['server']['ldap_account_shell'])
+					. ($account_id?$userData['loginshell']:$GLOBALS['phpgw_info']['server']['ldap_account_shell'])
 					. '">';
 			}
 
@@ -635,7 +612,6 @@
 			$t->set_var($var);
 		*/
 
-			$groups_select = '';
 			reset($allGroups);
 			while (list($key,$value) = each($allGroups)) 
 			{
@@ -644,20 +620,22 @@
 					'account_id'		=> $value['account_id'],
 					'account_lid'		=> $value['account_lid']
 				);
+			}
 
-				for ($i=0; $i<count($userGroups); $i++) 
+			for ($i=0;$i<count($userGroups);$i++)
+			{
+				for($j=0;$j<count($group_list);$j++)
 				{
-					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
-					if (@$userGroups[$i]['account_id'] == $value['account_id']) 
+					if ($userGroups[$i]['account_id'] == $group_list[$j]['account_id'])
 					{
-						$group_list[]['selected']   = 'yes';
+						$group_list[$j]['selected'] = 'yes';
 					}
 				}
 			}
 
 			/* create list of available apps */
 			$i = 0;
-			$apps = CreateObject('phpgwapi.applications',$_account_id);
+			$apps = CreateObject('phpgwapi.applications',$account_id);
 			$db_perms = $apps->read_account_specific();
 
 			@reset($GLOBALS['phpgw_info']['apps']);
@@ -696,6 +674,7 @@
 
 			$data = array
 			(
+				'msgbox_data'			=> $error_list,
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$page_params),
 				'lang_lid'				=> lang('loginid'),
 				'lang_account_active'	=> lang('account active'),
@@ -720,7 +699,7 @@
 				'account_lastname'		=> $userData['lastname'],
 				'account_passwd'		=> $account_passwd,
 				'account_passwd_2'		=> $account_passwd_2,
-				'expires'				=> (($userData['expires'] == -1)?'yes':''),
+				'expires_never'			=> (($userData['expires'] == -1)?'yes':''),
 				'group_list'			=> $group_list,
 				'app_list'				=> $app_list
 			);

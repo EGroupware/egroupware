@@ -17,11 +17,10 @@
 		var $public_functions = array
 		(
 			'add_group'				=> True,
-			'add_user'				=> True,
 			'delete_group'			=> True,
 			'delete_user'			=> True,
 			'edit_group'			=> True,
-			'edit_user'				=> True,
+			'save_user'				=> True,
 			'set_group_managers'	=> True
 		);
 
@@ -96,93 +95,6 @@
 			return False;
 		}
 
-		function delete_group($account_id)
-		{
-			if ($GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
-			{
-				return False;
-			}
-
-			$GLOBALS['phpgw']->db->lock(array
-				(
-					'phpgw_accounts',
-					'phpgw_acl'
-				)
-			);
-
-			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
-
-			@reset($old_group_list);
-			while($old_group_list && $id = each($old_group_list))
-			{
-				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
-				$GLOBALS['phpgw']->session->delete_cache(intval($id[1]));
-			}
-
-			$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
-
-			if (! @rmdir($GLOBALS['phpgw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['phpgw']->accounts->id2name($account_id)))
-			{
-				$cd = 38;
-			}
-			else
-			{
-				$cd = 32;
-			}
-
-			$GLOBALS['phpgw']->accounts->delete($account_id);
-			$GLOBALS['phpgw']->db->unlock();
-		}
-
-		function delete_user()
-		{
-			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
-			{
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
-			}
-			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])
-			{
-				$accountid = $GLOBALS['HTTP_POST_VARS']['account_id'];
-				settype($account_id,'integer');
-				$account_id = get_account_id($accountid);
-				$lid = $GLOBALS['phpgw']->accounts->id2name($account_id);
-				$db = $GLOBALS['phpgw']->db;
-				$db->query('SELECT app_name,app_order FROM phpgw_applications WHERE app_enabled!=0 ORDER BY app_order',__LINE__,__FILE__);
-				if($db->num_rows())
-				{
-					while($db->next_record())
-					{
-						$appname = $db->f('app_name');
-
-						if($appname <> 'admin')
-						{
-							$GLOBALS['phpgw']->hooks->single('deleteaccount', $appname);
-						}
-					}
-				}
-
-				$GLOBALS['phpgw']->hooks->single('deleteaccount','preferences');
-				$GLOBALS['phpgw']->hooks->single('deleteaccount','admin');
-
-				$GLOBALS['hook_values']['account_id'] = $account_id;
-				$GLOBALS['phpgw']->hooks->process('deleteaccount');
-
-				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
-
-				if (! @rmdir($basedir . $lid))
-				{
-					$cd = 34;
-				}
-				else
-				{
-					$cd = 29;
-				}
-
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
-			}
-		}
 
 		function add_group($values)
 		{
@@ -293,60 +205,6 @@
 				$cd = 37;
 			}
 			$GLOBALS['phpgw']->db->unlock();
-		}
-
-		function add_user($values)
-		{
-			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
-			{
-				return False;
-			}
-
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
-			{
-				$userData = array(
-					'account_type'          => 'u',
-					'account_lid'           => $GLOBALS['HTTP_POST_VARS']['account_lid'],
-					'account_firstname'     => $GLOBALS['HTTP_POST_VARS']['account_firstname'],
-					'account_lastname'      => $GLOBALS['HTTP_POST_VARS']['account_lastname'],
-					'account_passwd'        => $GLOBALS['HTTP_POST_VARS']['account_passwd'],
-					'status'                => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
-					'account_status'        => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($GLOBALS['HTTP_GET_VARS']['old_loginid']?rawurldecode($GLOBALS['HTTP_GET_VARS']['old_loginid']):''),
-					'account_id'            => ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:0),
-					'account_passwd_2'      => $GLOBALS['HTTP_POST_VARS']['account_passwd_2'],
-					'account_groups'        => $GLOBALS['HTTP_POST_VARS']['account_groups'],
-					'account_permissions'   => $GLOBALS['HTTP_POST_VARS']['account_permissions'],
-					'homedirectory'         => $GLOBALS['HTTP_POST_VARS']['homedirectory'],
-					'loginshell'            => $GLOBALS['HTTP_POST_VARS']['loginshell'],
-					'account_expires_month' => $GLOBALS['HTTP_POST_VARS']['account_expires_month'],
-					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
-					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
-					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
-					/* 'file_space' => $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
-				);
-
-				if (!$errors = $this->validate_user($userData))
-				{
-					$this->so->add_user($userData);
-					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
-					$GLOBALS['hook_values']['account_id'] = $userData['account_id'];
-					$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
-					$GLOBALS['phpgw']->hooks->process('addaccount');
-					ExecMethod('admin.uiaccounts.list_users');
-					return False;
-				}
-				else
-				{
-					$ui = createobject('admin.uiaccounts');
-					$ui->create_edit_user($userData['account_id'],$userData,$errors);
-				}
-			}
-			else
-			{
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
-			}
 		}
 
 		function edit_group($values)
@@ -514,59 +372,127 @@
 			$GLOBALS['phpgw']->db->unlock();
 		}
 
-		function edit_user()
+		function save_user($values)
 		{
-			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
+			if (is_array($values))
 			{
-				return False;
-			}
+				if($values['expires_never'])
+				{
+					$values['expires'] = $values['account_expires'] = -1;
+				}
+				else
+				{
+					$values['expires'] = $values['account_expires'] = mktime(2,0,0,$values['account_expires_month'],$values['account_expires_day'],$values['account_expires_year']);
+				}
 
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
-			{
-				$userData = array(
-					'account_lid'           => $GLOBALS['HTTP_POST_VARS']['account_lid'],
-					'firstname'             => $GLOBALS['HTTP_POST_VARS']['account_firstname'],
-					'lastname'              => $GLOBALS['HTTP_POST_VARS']['account_lastname'],
-					'account_passwd'        => $GLOBALS['HTTP_POST_VARS']['account_passwd'],
-					'status'                => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
-					'account_status'        => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($GLOBALS['HTTP_GET_VARS']['old_loginid']?rawurldecode($GLOBALS['HTTP_GET_VARS']['old_loginid']):''),
-					'account_id'            => ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:0),
-					'account_passwd_2'      => $GLOBALS['HTTP_POST_VARS']['account_passwd_2'],
-					'account_groups'        => $GLOBALS['HTTP_POST_VARS']['account_groups'],
-					'account_permissions'   => $GLOBALS['HTTP_POST_VARS']['account_permissions'],
-					'homedirectory'         => $GLOBALS['HTTP_POST_VARS']['homedirectory'],
-					'loginshell'            => $GLOBALS['HTTP_POST_VARS']['loginshell'],
-					'account_expires_month' => $GLOBALS['HTTP_POST_VARS']['account_expires_month'],
-					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
-					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
-					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
+				$userData = array
+				(
+					'account_type'          => 'u',
+					'account_lid'           => $values['account_lid'],
+					'account_firstname'     => $values['account_firstname'],
+					'account_lastname'      => $values['account_lastname'],
+					'account_passwd'        => $values['account_passwd'],
+					'status'                => ($values['account_status'] ? 'A' : ''),
+					'account_status'        => ($values['account_status'] ? 'A' : ''),
+					'old_loginid'           => ($values['old_loginid']?rawurldecode($GLOBALS['HTTP_GET_VARS']['old_loginid']):''),
+					'account_id'            => ($values['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:0),
+					'account_passwd_2'      => $values['account_passwd_2'],
+					'account_groups'        => $values['account_groups'],
+					'account_permissions'   => $values['account_permissions'],
+					'homedirectory'         => $values['homedirectory'],
+					'loginshell'            => $values['loginshell'],
+					'account_expires_month' => $values['account_expires_month'],
+					'account_expires_day'   => $values['account_expires_day'],
+					'account_expires_year'  => $values['account_expires_year'],
+					'account_expires_never'	=> $values['expires'],
+								'expires'	=> $values['expires'],
+						'account_expires'	=> $values['expires']
 					/* 'file_space' => $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
 				);
 
-				if (!$errors = $this->validate_user($userData))
+				if ($values['account_id'])
 				{
-					$this->save_user($userData);
-					// check if would create a menu
+					$userData['account_id'] = $values['account_id'];
+					$this->update_user($userData);
+					/* check if would create a menu
 					// if we do, we can't return to the users list, because
 					// there are also some other plugins
 					if (!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
 					{
-						ExecMethod('admin.uiaccounts.list_users');
-						return False;
-					}
-					else
-					{
-						ExecMethod('admin.uiaccounts.edit_user',$GLOBALS['HTTP_GET_VARS']['account_id']);
-						return False;
-					}
+					}*/
 				}
 				else
 				{
-					$ui = createobject('admin.uiaccounts');
-					$ui->create_edit_user($userData['account_id'],$userData,$errors);
+					$account_id = $this->so->add_user($userData);
+					$GLOBALS['hook_values']['account_lid']	= $userData['account_lid'];
+					$GLOBALS['hook_values']['account_id']	= $account_id; //$userData['account_id'];
+					$GLOBALS['hook_values']['new_passwd']	= $userData['account_passwd'];
+					$GLOBALS['phpgw']->hooks->process('addaccount');
 				}
 			}
+		}
+
+		/* stores the userdata */
+		function update_user($userData)
+		{
+			$account = CreateObject('phpgwapi.accounts',$userData['account_id'],'u');
+			$account->update_data($userData);
+			$account->save_repository();
+			if ($userData['account_passwd'])
+			{
+				$auth = CreateObject('phpgwapi.auth');
+				$auth->change_password($old_passwd,$userData['account_passwd'],$userData['account_id']);
+				$GLOBALS['hook_values']['account_id'] = $userData['account_id'];
+				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
+				$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
+				$GLOBALS['phpgw']->hooks->process('changepassword');
+			}
+
+			$apps = CreateObject('phpgwapi.applications',array(intval($userData['account_id']),'u'));
+
+			$apps->account_id = $userData['account_id'];
+			if ($_userData['account_permissions'])
+			{
+				while($app = each($userData['account_permissions'])) 
+				{
+					if($app[1]) 
+					{
+						$apps->add($app[0]);
+					}
+				}
+			}
+			$apps->save_repository();
+
+			$account = CreateObject('phpgwapi.accounts',$userData['account_id'],'u');
+			$allGroups = $account->get_list('groups');
+
+			if ($userData['account_groups'])
+			{
+				reset($userData['account_groups']);
+				while (list($key,$value) = each($userData['account_groups']))
+				{
+					$newGroups[$value] = $value;
+				}
+			}
+
+			$acl = CreateObject('phpgwapi.acl',$userData['account_id']);
+
+			reset($allGroups);
+			while (list($key,$groupData) = each($allGroups)) 
+			{
+				/* print "$key,". $groupData['account_id'] ."<br>";*/
+				/* print "$key,". $userData['account_groups'][1] ."<br>"; */
+
+				if ($newGroups[$groupData['account_id']]) 
+				{
+					$acl->add_repository('phpgw_group',$groupData['account_id'],$userData['account_id'],1);
+				}
+				else
+				{
+					$acl->delete_repository('phpgw_group',$groupData['account_id'],$userData['account_id']);
+				}
+			}
+			$GLOBALS['phpgw']->session->delete_cache(intval($userData['account_id']));
 		}
 
 		function set_group_managers()
@@ -604,9 +530,9 @@
 			$group = CreateObject('phpgwapi.accounts',$values['account_id'],'g');
 			$group->read_repository();
 
-			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
+			if (!$values['account_id'] && $GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
 			{
-				$error[] = lang('no permission to create groups');
+				$error[] = lang('no permission to add groups');
 			}
 
 			if(!$values['account_name'])
@@ -638,45 +564,44 @@
 		 returns FALSE if the data are correct
 		 otherwise the error array
 		*/
-		function validate_user(&$_userData)
+		function validate_user($values)
 		{
-			$totalerrors = 0;
+			if (!$values['account_id'] && $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
+			{
+				$error[] = lang('no permission to add users');
+			}
 
 			/*
-			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
+			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && ! $values['allow_long_loginids'])
 			{
-				if (strlen($_userData['account_lid']) > 8) 
+				if (strlen($values['account_lid']) > 8) 
 				{
-					$error[$totalerrors] = lang('The loginid can not be more then 8 characters');
-					$totalerrors++;
+					$error[] = lang('The loginid can not be more then 8 characters');
 				}
 			}
 			*/
 
-			if (!$_userData['account_lid'])
+			if (!$values['account_lid'])
 			{
-				$error[$totalerrors] = lang('You must enter a loginid');
-				$totalerrors++;
+				$error[] = lang('You must enter a loginid');
 			}
 
-			if ($_userData['old_loginid'] != $_userData['account_lid']) 
+			if ($values['old_loginid'] != $values['account_lid']) 
 			{
-				if ($GLOBALS['phpgw']->accounts->exists($_userData['account_lid']))
+				if ($GLOBALS['phpgw']->accounts->exists($values['account_lid']))
 				{
-					$error[$totalerrors] = lang('That loginid has already been taken');
-					$totalerrors++;
+					$error[] = lang('That loginid has already been taken');
 				}
 			}
 
-			if ($_userData['account_passwd'] || $_userData['account_passwd_2']) 
+			if ($values['account_passwd'] || $values['account_passwd_2']) 
 			{
-				if ($_userData['account_passwd'] != $_userData['account_passwd_2']) 
+				if ($values['account_passwd'] != $values['account_passwd_2']) 
 				{
-					$error[$totalerrors] = lang('The two passwords are not the same');
-					$totalerrors++;
+					$error[] = lang('The two passwords are not the same');
 				}
 
-				$temp_msgbox_data = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
+			/*	$temp_msgbox_data = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
 				unset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
 				if(!sanitize($_userData['account_passwd'],'password'))
 				{
@@ -688,40 +613,20 @@
 					}
 				}
 				$GLOBALS['phpgw_info']['flags']['msgbox_data'] = $temp_msgbox_data;
-				unset($temp_msgbox_data);
+				unset($temp_msgbox_data); */
 			}
 
-			if (!count($_userData['account_permissions']) && !count($_userData['account_groups'])) 
+			if (!count($values['account_permissions']) && !count($values['account_groups'])) 
 			{
-				$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
-				$totalerrors++;
+				$error[] = lang('You must add at least 1 permission or group to this account');
 			}
 
-			if ($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'] || $_userData['account_expires_never'])
+			if ($values['account_expires_month'] || $values['account_expires_day'] || $values['account_expires_year'] || $values['account_expires_never'])
 			{
-				if($_userData['account_expires_never'])
+				if (! checkdate($values['account_expires_month'],$values['account_expires_day'],$values['account_expires_year']))
 				{
-					$_userData['expires'] = -1;
-					$_userData['account_expires'] = $_userData['expires'];
+					$error[] = lang('You have entered an invalid expiration date');
 				}
-				else
-				{
-					if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
-					{
-						$error[$totalerrors] = lang('You have entered an invalid expiration date');
-						$totalerrors++;
-					}
-					else
-					{
-						$_userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
-						$_userData['account_expires'] = $_userData['expires'];
-					}
-				}
-			}
-			else
-			{
-				$_userData['expires'] = -1;
-				$_userData['account_expires'] = $_userData['expires'];
 			}
 
 		/*
@@ -733,77 +638,99 @@
 			}
 		*/
 
-			if ($totalerrors == 0)
-			{
-				return FALSE;
-			}
-			else
+			if (is_array($error))
 			{
 				return $error;
 			}
 		}
 
-		/* stores the userdata */
-		function save_user($_userData)
+
+		function delete_group($account_id)
 		{
-			$account = CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
-			$account->update_data($_userData);
-			$account->save_repository();
-			if ($_userData['account_passwd'])
+			if ($GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				$auth = CreateObject('phpgwapi.auth');
-				$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
-				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
-				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
-				$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
-				$GLOBALS['phpgw']->hooks->process('changepassword');
+				return False;
 			}
 
-			$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
+			$GLOBALS['phpgw']->db->lock(array
+				(
+					'phpgw_accounts',
+					'phpgw_acl'
+				)
+			);
 
-			$apps->account_id = $_userData['account_id'];
-			if ($_userData['account_permissions'])
+			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+
+			@reset($old_group_list);
+			while($old_group_list && $id = each($old_group_list))
 			{
-				while($app = each($_userData['account_permissions'])) 
+				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
+				$GLOBALS['phpgw']->session->delete_cache(intval($id[1]));
+			}
+
+			$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
+
+			if (! @rmdir($GLOBALS['phpgw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['phpgw']->accounts->id2name($account_id)))
+			{
+				$cd = 38;
+			}
+			else
+			{
+				$cd = 32;
+			}
+
+			$GLOBALS['phpgw']->accounts->delete($account_id);
+			$GLOBALS['phpgw']->db->unlock();
+		}
+
+		function delete_user()
+		{
+			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
+			{
+				ExecMethod('admin.uiaccounts.list_users');
+				return False;
+			}
+			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])
+			{
+				$accountid = $GLOBALS['HTTP_POST_VARS']['account_id'];
+				settype($account_id,'integer');
+				$account_id = get_account_id($accountid);
+				$lid = $GLOBALS['phpgw']->accounts->id2name($account_id);
+				$db = $GLOBALS['phpgw']->db;
+				$db->query('SELECT app_name,app_order FROM phpgw_applications WHERE app_enabled!=0 ORDER BY app_order',__LINE__,__FILE__);
+				if($db->num_rows())
 				{
-					if($app[1]) 
+					while($db->next_record())
 					{
-						$apps->add($app[0]);
+						$appname = $db->f('app_name');
+
+						if($appname <> 'admin')
+						{
+							$GLOBALS['phpgw']->hooks->single('deleteaccount', $appname);
+						}
 					}
 				}
-			}
-			$apps->save_repository();
 
-			$account = CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
-			$allGroups = $account->get_list('groups');
+				$GLOBALS['phpgw']->hooks->single('deleteaccount','preferences');
+				$GLOBALS['phpgw']->hooks->single('deleteaccount','admin');
 
-			if ($_userData['account_groups'])
-			{
-				reset($_userData['account_groups']);
-				while (list($key,$value) = each($_userData['account_groups']))
+				$GLOBALS['hook_values']['account_id'] = $account_id;
+				$GLOBALS['phpgw']->hooks->process('deleteaccount');
+
+				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
+
+				if (! @rmdir($basedir . $lid))
 				{
-					$newGroups[$value] = $value;
-				}
-			}
-
-			$acl = CreateObject('phpgwapi.acl',$_userData['account_id']);
-
-			reset($allGroups);
-			while (list($key,$groupData) = each($allGroups)) 
-			{
-				/* print "$key,". $groupData['account_id'] ."<br>";*/
-				/* print "$key,". $_userData['account_groups'][1] ."<br>"; */
-
-				if ($newGroups[$groupData['account_id']]) 
-				{
-					$acl->add_repository('phpgw_group',$groupData['account_id'],$_userData['account_id'],1);
+					$cd = 34;
 				}
 				else
 				{
-					$acl->delete_repository('phpgw_group',$groupData['account_id'],$_userData['account_id']);
+					$cd = 29;
 				}
+
+				ExecMethod('admin.uiaccounts.list_users');
+				return False;
 			}
-			$GLOBALS['phpgw']->session->delete_cache(intval($_userData['account_id']));
 		}
 
 		function load_group_users($account_id)
