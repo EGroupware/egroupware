@@ -46,7 +46,7 @@ auto create account records for authenticated users	setup	de	Benutzerkonten für 
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
-back to user login	setup	de	Zurück zur Benutzer Anmeldung
+back to user login	setup	de	Zurück zur Benutzeranmeldung
 backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong><br
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
@@ -97,7 +97,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br>	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
-database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von '%1' nach '%2' konvertiert
+database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
 db host	setup	de	Datenbank-Host
 db name	setup	de	Datenbank-Name
@@ -334,10 +334,10 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
 setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
-setup main menu	setup	de	Setup Hauptmenü
+setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
-show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
+show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 start the postmaster	setup	de	Starten Sie den postmaster
