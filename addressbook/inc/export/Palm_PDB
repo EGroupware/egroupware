@@ -118,7 +118,7 @@
 		{
 			reset($this->ids);
 
-			for ($i=0;$i<count($this->ids);$i++)
+			for($i=0;$i<count($this->ids);$i++)
 			{
 				$j = $i + 1;
 				reset($this->export);
@@ -130,10 +130,7 @@
 				$entries .= "\r\n";
 			}
 
-			$buffer = $entries;
-			$pdb =  CreateObject('addressbook.pdb');
-			$pdb->fetch($buffer, 'phpgw Contacts', 'phpgw.pdb');
-			return $buffer;
+			return $entries;
 		}
 	}
 ?>

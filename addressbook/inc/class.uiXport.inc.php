@@ -238,7 +238,12 @@
 
 				$buffer = $this->bo->export($conv_type,$fcat_id);
 
-				if(($download == 'on') || ($conv_type == 'Palm_PDB'))
+				if($conv_type == 'Palm_PDB')
+				{
+					$pdb =  CreateObject('addressbook.pdb');
+					$pdb->fetch($buffer, 'phpgw Contacts', $tsvfilename);
+				}
+				elseif($download == 'on')
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
 					$this->browser->content_header($tsvfilename,'application/x-octet-stream',strlen($buffer));
