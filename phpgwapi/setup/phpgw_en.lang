@@ -1,4 +1,4 @@
-about	common	en	about
+about x	common	en	about %1
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 acl	common	en	ACL

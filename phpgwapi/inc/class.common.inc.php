@@ -1162,17 +1162,19 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 					$var['logo_img']	= $this->image('phpgwapi','logo');
 					$var['home_img']	= $this->image('phpgwapi','welcome-'.($app=='home' ? 'red' : 'grey'));
-					$var['prefs_img']	= $this->image('phpgwapi','preferences-'.($app=='preferences' ? 'red' : 'grey'));
+					$var['prefs_img']	= $this->image('preferences','preferences-'.($app=='preferences' ? 'red' : 'grey'));
 					$var['logout_img']	= $this->image('phpgwapi','logout-grey');
 					$var['about_img']	= $this->image('phpgwapi','help');
+					$var['manual_img']	= $this->image('manual','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar');
 					break;
 				case 'justweb':
 					$var['logo_img']	= $this->image('phpgwapi','logo');
 					$var['home_img']	= $this->image('phpgwapi','tab_home');
-					$var['prefs_img']	= $this->image('phpgwapi','tab_prefs');
+					$var['prefs_img']	= $this->image('preferences','tab_prefs');
 					$var['logout_img']	= $this->image('phpgwapi','tab_logout');
 					$var['about_img']	= $this->image('phpgwapi','tab_help');
+					$var['manual_img']	= $this->image('manual','tab_manual');
 					break;
 				case 'funkwerk':
 					$var['about_img']	= '!';
@@ -1430,7 +1432,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			/* We handle this here becuase its special */
-			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about x',$app);
+			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about x',lang($app));
 			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');
