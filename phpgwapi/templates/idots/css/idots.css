@@ -28,6 +28,8 @@ img
 {
 	border-width:0px;
 	border-style:none;
+	/*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader;
+*/
 }
 
 a:link,a:visited
