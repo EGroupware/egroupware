@@ -15,50 +15,54 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  if ($order)
-      $ordermethod = "order by $order $sort";
-   else
-      $ordermethod = "order by app_title asc";
+  $phpgw->template->set_file(array("list" => "applications.tpl",
+              			         "row"  => "applications_row.tpl"));
 
-  if (! $sort)
-     $sort = "desc";
-
-  echo '<p><b>' . lang("Installed applications") . '</b><hr><p>';
-  echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'. $phpgw_info["theme"][bg_color] . '">';
-
-  echo "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
-     . $phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang("title")) . "</td><td>"
-     . lang("Edit") . "</td> <td> " . lang("Delete") . " </td> <td> "
-     . lang("Enabled") . " </td> <td></tr>";
-
-  $phpgw->db->query("select * from applications $ordermethod",__LINE__,__FILE__);
-
-  while ($phpgw->db->next_record()) {
-    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $name = $phpgw->db->f("app_title");
-
-    if (! $phpgw->db->f("app_title")) $name = $phpgw->db->f("app_name");
-    if (! $name)                      $name = "&nbsp;";
-
-    echo "<tr bgcolor=$tr_color><td>$name</td><td width=5%><a href=\""
-       . $phpgw->link("editapplication.php","app_name=" . urlencode($phpgw->db->f("app_name")))
-       . "\"> " . lang("Edit") . " </a></td>";
-
-    echo "<td width=5%><a href=\"" . $phpgw->link("deleteapplication.php",
-         "app_name=" . urlencode($phpgw->db->f("app_name"))) . "\"> " . lang("Delete")
-       . " </a></td>";
-
-    echo  "<td width=5%>";
-    if ($phpgw->db->f("app_enabled") != 0) {
-       echo lang("Yes");
-    } else {
-       echo "<b>" . lang("No") . "</b>";
-    }
-    echo "</td></tr>\n";
+  if ($order) {
+     $ordermethod = "order by $order $sort";
+  } else {
+     $ordermethod = "order by app_title asc";
   }
 
-  echo "</form></table><form method=POST action=\"".$phpgw->link("newapplication.php")."\">"
-     . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
-     . "value=\"" . lang("Add") . "\"></td></tr></table></form>";
+  if (! $sort) {
+     $sort = "desc";
+  }
 
+  $phpgw->template->set_var("lang_installed",lang("Installed applications"));
+  $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+
+  $phpgw->template->set_var("sort_title",$phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang("title")));
+  $phpgw->template->set_var("lang_edit",lang("Edit"));
+  $phpgw->template->set_var("lang_delete",lang("Delete"));
+  $phpgw->template->set_var("lang_enabled",lang("Enabled"));
+
+  $phpgw->db->query("select * from applications $ordermethod",__LINE__,__FILE__);
+  while ($phpgw->db->next_record()) {
+     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+     $name = $phpgw->db->f("app_title");
+ 
+     if (! $phpgw->db->f("app_title")) $name = $phpgw->db->f("app_name");
+     if (! $name)                      $name = "&nbsp;";
+
+     $phpgw->template->set_var("tr_color",$tr_color);
+     $phpgw->template->set_var("name",$name);
+     $phpgw->template->set_var("edit",'<a href="' . $phpgw->link("editapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Edit") . ' </a>');
+     $phpgw->template->set_var("delete",'<a href="' . $phpgw->link("deleteapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Delete")  . ' </a>');
+
+     if ($phpgw->db->f("app_enabled") != 0) {
+        $status = lang("Yes");
+     } else {
+        $status = "<b>" . lang("No") . "</b>";
+     }
+     $phpgw->template->set_var("status",$status);
+
+     $phpgw->template->parse("rows","row",True);
+  }
+
+  $phpgw->template->set_var("new_action",$phpgw->link("newapplication.php"));
+  $phpgw->template->set_var("lang_add",lang("add"));
+  
+  $phpgw->template->pparse("out","list");
   $phpgw->common->phpgw_footer();
+?>

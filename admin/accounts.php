@@ -17,8 +17,8 @@
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
-  $phpgw->template->set_file(array("list"   => "accounts.tpl",
-              			         "row"    => "accounts_row.tpl"));
+  $phpgw->template->set_file(array("list" => "accounts.tpl",
+              			         "row"  => "accounts_row.tpl"));
 
   $total = account_total();
 
