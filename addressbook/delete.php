@@ -32,9 +32,7 @@
 
 
   if ($confirm != "true") {
-    $fields = $this->read($ab_id, array("owner" => $owner));
-    #$phpgw->db->query("select owner from addressbook where id='$ab_id'");
-    #$phpgw->db->next_record();
+    $fields = $this->read($ab_id, array("owner" => $owner), array("owner" => $owner));
 
     if ($fielfs["owner"] != $phpgw_info["user"]["account_id"]) {
        @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
