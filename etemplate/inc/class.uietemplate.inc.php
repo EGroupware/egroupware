@@ -55,7 +55,7 @@
 
 			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			//echo "Version: $a.$b.$c.$d\n";
-			$this->stable = $a <= 0 && $b <= 9 && $c <= 14 && !is_object($GLOBALS['phpgw']->xslttpl);
+			$this->stable = $a <= 0 && $b <= 9 && ($c <= 14 || $c == 99) || !is_object($GLOBALS['phpgw']->xslttpl);
 		}
 
 		/*!
