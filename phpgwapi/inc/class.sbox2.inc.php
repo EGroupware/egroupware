@@ -519,13 +519,11 @@
 		 * Function:		Allows to select one accountname
 		 *	Parameters:		$name		string with name of the submitted var, which holds the account_id or 0 after submit
 		 *						$id		account_id of already selected account
-		 *						$longnames 0=account_lid 1=firstname lastname
+		 *						$longnames -1=as user prefs, 0=account_lid 1=firstname lastname
 		 */
-		function getAccount($name,$id,$longnames=0,$type='accounts',$multiple=0,$options='')
+		function getAccount($name,$id,$longnames=-1,$type='accounts',$multiple=0,$options='')
 		{
-			$accounts = createobject('phpgwapi.accounts');
-			$accounts->db = $GLOBALS['phpgw']->db;
-			$accs = $accounts->get_list($type);
+			$accs = $GLOBALS['phpgw']->accounts->get_list($type);
 
 			if ($multiple < 0)
 			{
@@ -533,7 +531,10 @@
 			}
 			while ($a = current($accs))
 			{
-				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
+				$aarr[$a['account_id']] = $longnames == -1 ?
+					$GLOBALS['phpgw']->common->display_fullname($a['account_lid'],$a['account_firstname'],$a['account_lastname']) :
+					$this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
+
 				next($accs);
 			}
 			return $this->getArrayItem($name,$id,$aarr,1,$options,$multiple);
