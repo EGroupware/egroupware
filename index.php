@@ -51,9 +51,11 @@
 	}
 
 	$GLOBALS['obj'] = CreateObject(sprintf('%s.%s',$app,$class));
-	if ((is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions[$method]) && ! $invalid_data)
+	$GLOBALS[$class] = $GLOBALS['obj'];
+	if ((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && ! $invalid_data)
 	{
-		eval("\$GLOBALS['obj']->$method();");
+//		eval("\$GLOBALS['obj']->$method();");
+		execmethod($GLOBALS['HTTP_GET_VARS']['menuaction']);
 	}
 	else
 	{

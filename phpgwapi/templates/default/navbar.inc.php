@@ -112,9 +112,10 @@
 		// If the application has a header include, we now include it
 		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && $GLOBALS['HTTP_GET_VARS']['menuaction'])
 		{
-			if (is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['header'])
+			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
 			{
-				eval("\$GLOBALS['obj']->header();");
+				$GLOBALS[$class]->header();
 			}
 		}
 		$GLOBALS['phpgw']->common->hook('after_navbar');

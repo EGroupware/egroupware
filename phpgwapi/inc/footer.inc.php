@@ -34,7 +34,7 @@
 	/**************************************************************************\
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
-	if (file_exists (PHPGW_APP_INC . '/footer.inc.php') &&
+	if ((file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS'])) &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
@@ -42,23 +42,16 @@
 	{
 		if ($GLOBALS['HTTP_GET_VARS']['menuaction'])
 		{
-//			list($app,$class,$method) = explode('.',$menuaction);
-//			if ($app && $class && $method)
-//			{
-//				$GLOBALS['obj'] = CreateObject(sprintf('%s.%s',$GLOBALS['app'],$GLOBALS['class']));
-				if (is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['footer'])
-				{
-					eval("\$GLOBALS['obj']->footer();");
-				}
-				elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
-				{
-					include(PHPGW_APP_INC . '/footer.inc.php');
-				}
-//			}
-//			elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
-//			{
-//				include(PHPGW_APP_INC . '/footer.inc.php');
-//			}
+			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+			{
+//				eval("\$GLOBALS[$class]->footer();");
+				$GLOBALS[$class]->footer();
+			}
+			elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/footer.inc.php');
+			}
 		}
 		elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
 		{

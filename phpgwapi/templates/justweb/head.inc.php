@@ -11,13 +11,14 @@
 
   /* $Id$ */
 
-	if($GLOBALS['menuaction'] && is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['css'])
+	$app_css = '';
+	if($GLOBALS['menuaction'])
 	{
-		eval("\$app_css = \$GLOBALS['obj']->css();");
-	}
-	else
-	{
-		$app_css = '';
+		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
+		{
+			$app_css = $GLOBALS[$class]->css();
+		}
 	}
 
 	$bodyheader = 'BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'"';
