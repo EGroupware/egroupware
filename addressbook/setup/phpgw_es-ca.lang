@@ -25,17 +25,17 @@ blank	addressbook	es-ca	Blanc
 business	common	es-ca	Treball
 business address type	addressbook	es-ca	Tipus d'adreça del treball
 business city	addressbook	es-ca	Ciutat del treball
-business country	addressbook	es-ca	Pais del treball
+business country	addressbook	es-ca	País del treball
 business email	addressbook	es-ca	Correu electrònic del treball
-business email type	addressbook	es-ca	Tipu de correu electrònic del treball
+business email type	addressbook	es-ca	Tipus de correu electrònic del treball
 business fax	addressbook	es-ca	Fax del treball
 business phone	addressbook	es-ca	Telèfon del treball
-business state	addressbook	es-ca	Provincia del treball
+business state	addressbook	es-ca	Província del treball
 business street	addressbook	es-ca	Adreça del treball
 business zip code	addressbook	es-ca	Codi postal del treball
 car phone	addressbook	es-ca	Telèfon del cotxe
 cell phone	addressbook	es-ca	Telèfon móvil
-charset of file	addressbook	es-ca	Joc de caracteres de l'arxiu
+charset of file	addressbook	es-ca	Joc de caràcters de l'arxiu
 city	common	es-ca	Ciutat
 company	common	es-ca	Empresa
 company name	common	es-ca	Nom de l'empresa
@@ -44,7 +44,7 @@ contact	common	es-ca	Contacte
 contact application	admin	es-ca	Aplicació del contacte
 contact settings	admin	es-ca	Configuració dels contactes
 copied by %1, from record #%2.	addressbook	es-ca	Copiat per %1, del registre %2
-country	common	es-ca	Pais
+country	common	es-ca	País
 csv-fieldname	addressbook	es-ca	Camp CSV
 csv-filename	addressbook	es-ca	Arxiu CSV
 custom	addressbook	es-ca	Personalitzat
@@ -60,7 +60,7 @@ e-mail	addressbook	es-ca	E-Mail
 edit custom field	addressbook	es-ca	Editar camp personalitzat
 edit custom fields	admin	es-ca	Editar camps personalitzats
 empty for all	addressbook	es-ca	buit per a tot
-enter the path to the exported file here	addressbook	es-ca	Introduïu el camí als arxius exportats aqui
+enter the path to the exported file here	addressbook	es-ca	Introduïu el camí als arxius exportats aquí
 export contacts	addressbook	es-ca	Exportar contactes
 export file name	addressbook	es-ca	Nom de l'arxiu a exportar
 export from addressbook	addressbook	es-ca	Exportar des de la llibreta d'adreces
@@ -77,6 +77,7 @@ full name	addressbook	es-ca	Nom complet
 geo	addressbook	es-ca	GEO
 global categories	addressbook	es-ca	Categories globals
 grant addressbook access	common	es-ca	Atorgar accés a la llibreta
+home	addressbook	es-ca	Particular
 home address type	addressbook	es-ca	Tipus d'adreça particular
 home city	addressbook	es-ca	Ciutat de residència
 home country	addressbook	es-ca	Pais de residència
@@ -105,6 +106,8 @@ ldap root dn for contacts	admin	es-ca	Arrel LDAP dn per contactes
 ldap root pw for contacts	admin	es-ca	Arrel LDAP pw per contactes
 ldif	addressbook	es-ca	LDIF
 line 2	addressbook	es-ca	Linia 2
+list all categories	addressbook	es-ca	Llista totes les categories
+list all customfields	addressbook	es-ca	Llista tots els camps personalitzats
 mark records as private	addressbook	es-ca	Marcar registres com a privats
 message phone	addressbook	es-ca	Telèfon de missatges
 middle name	addressbook	es-ca	Segon nom
@@ -115,7 +118,7 @@ no vcard	addressbook	es-ca	Sense VCard
 number of records to read (%1)	addressbook	es-ca	Número de registres a llegir (%1)
 number of records to read (<=200)	addressbook	es-ca	Registros a leer (menos de 200)
 other number	addressbook	es-ca	Un altre número
-other phone	addressbook	es-ca	Un altre telèfono
+other phone	addressbook	es-ca	Un altre telèfon
 owner	addressbook	es-ca	Due&ntilde;o
 pager	common	es-ca	Buscapersones
 parcel	addressbook	es-ca	Paquet
@@ -127,19 +130,21 @@ postal	common	es-ca	Postal
 pref	addressbook	es-ca	pref
 prefix	addressbook	es-ca	Prefix
 public key	addressbook	es-ca	Clau pública
+read a list / search for entries.	addressbook	es-ca	Llegiu una llista / cercau entrades
 read a list of entries.	addressbook	es-ca	Llegir una llista d'entrades
 read a single entry by passing the id and fieldlist.	addressbook	es-ca	Llegir una sola entrada passant l'identificador i la llista de camps
 record access	addressbook	es-ca	Accés al registre
-record owner	addressbook	es-ca	Amo del registre
+record owner	addressbook	es-ca	Propietari del registre
 records read (not yet imported, you may go back and uncheck test import)	addressbook	es-ca	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
 retrieve contacts	admin	es-ca	Recuperar contactes
 select all	addressbook	es-ca	Seleccionar tot
 select the type of conversion	addressbook	es-ca	Seleccioneu el tipus de conversió
 select the type of conversion:	addressbook	es-ca	Seleccioneu el tipus de conversió:
 select where you want to store	admin	es-ca	Seleccioneu ón voleu desar
+show	addressbook	es-ca	Mostra
 show birthday reminders on main screen	addressbook	es-ca	Mostrar recordatoris d'aniversaris a la pantalla principal
 startrecord	addressbook	es-ca	Registre inicial
-state	common	es-ca	Provincia
+state	common	es-ca	Província
 street	common	es-ca	Carrer
 successfully imported %1 records into your addressbook.	addressbook	es-ca	Importats correctament %1 registres a la llibreta d'adreces.
 suffix	addressbook	es-ca	Sufix
@@ -161,6 +166,7 @@ video phone	addressbook	es-ca	Telèfon de videoconferència
 voice phone	addressbook	es-ca	Telèfon de veu
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-ca	ATENCIÓ!! LDAP es vàlid només si NO feu servir contactes per enmagatzemar comptes!
 work phone	addressbook	es-ca	Telèfon del treball
+write (update or add) a single entry by passing the fields.	addressbook	es-ca	Escriu (actualitza o afegeix) una entrada simple donant els camps.
 you must select a vcard. (*.vcf)	addressbook	es-ca	Heu de seleccionar una targeta vcard (*.vcf)
 you must select at least 1 column to display	addressbook	es-ca	Heu de seleccionar al menys una columna per mostrar
 zip code	common	es-ca	Codi postal
