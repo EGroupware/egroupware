@@ -40,20 +40,24 @@
 	@param $classname name of class
 	@param $constructor_param constructor parameter
 	*/
-	function CreateObject($classname, $constructor_param = "")
+	function CreateObject($classname, $constructor_param = '')
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
 		$classpart = explode (".", $classname);
 		$appname = $classpart[0];
 		$classname = $classpart[1];
 		if (!isset($phpgw_info['flags']['included_classes'][$classname])
-		|| !$phpgw_info["flags"]["included_classes"][$classname]){
-			$phpgw_info["flags"]["included_classes"][$classname] = True;   
-			include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
+		|| !$phpgw_info['flags']['included_classes'][$classname])
+		{
+			$phpgw_info['flags']['included_classes'][$classname] = True;   
+			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
-		if ($constructor_param == ""){
+		if ($constructor_param == '')
+		{
 			$obj = new $classname;
-		} else {
+		}
+		else
+		{
 			$obj = new $classname($constructor_param);
 		}
 		return $obj;
@@ -131,9 +135,12 @@
 	*/
 	function filesystem_separator()
 	{
-		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2') {
+		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2')
+		{
 			return '\\';
-		} else {
+		}
+		else
+		{
 			return '/';
 		}
 	}
@@ -141,7 +148,7 @@
 	function print_debug($text='')
 	{
 		global $debugme;
-		if (isset($debugme) && $debugme == "on") { echo 'debug: '.$text.'<br>'; }
+		if (isset($debugme) && $debugme == 'on') { echo 'debug: '.$text.'<br>'; }
 	}
 	print_debug('core functions are done');
 	/****************************************************************************\
@@ -149,13 +156,15 @@
 	\****************************************************************************/
 //	error_reporting(7);
 	/* Make sure the header.inc.php is current. */
-	if ($phpgw_info['server']['versions']['header'] < $phpgw_info['server']['versions']['current_header']){
-		echo "<center><b>You need to port your settings to the new header.inc.php version.</b></center>";
+	if ($phpgw_info['server']['versions']['header'] < $phpgw_info['server']['versions']['current_header'])
+	{
+		echo '<center><b>You need to port your settings to the new header.inc.php version.</b></center>';
 		exit;
 	}
 
 	/* Make sure the developer is following the rules. */
-	if (!isset($phpgw_info["flags"]["currentapp"])) {
+	if (!isset($phpgw_info['flags']['currentapp']))
+	{
 		echo "<b>!!! YOU DO NOT HAVE YOUR \$phpgw_info[\"flags\"][\"currentapp\"] SET !!!";
 		echo "<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>";
 	}
@@ -168,70 +177,85 @@
 	\****************************************************************************/
 
 	/* make them fix their header */
-	if (!isset($phpgw_domain)) {
-		 echo "<center><b>The administration is required to upgrade the header.inc.php file before you can continue.</b></center>";
+	if (!isset($phpgw_domain))
+	{
+		 echo '<center><b>The administrator must upgrade the header.inc.php file before you can continue.</b></center>';
 		 exit;
 	}
 	reset($phpgw_domain);
 	$default_domain = each($phpgw_domain);
-	$phpgw_info["server"]["default_domain"] = $default_domain[0];
+	$phpgw_info['server']['default_domain'] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
-	if (isset($domain)){
-		$phpgw_info["user"]["domain"] = $domain;
-	} elseif (isset($login) && isset($logindomain)) {
-		if (!ereg ("\@", $login)){
+	if (isset($domain))
+	{
+		$phpgw_info['user']['domain'] = $domain;
+	}
+	elseif (isset($login) && isset($logindomain))
+	{
+		if (!ereg ("\@", $login))
+		{
 			$login = $login."@".$logindomain;
 		}
-		$phpgw_info["user"]["domain"] = $logindomain;
+		$phpgw_info['user']['domain'] = $logindomain;
 		unset ($logindomain);
-	} elseif (isset($login) && !isset($logindomain)) {
-		if (ereg ("\@", $login)) {
+	}
+	elseif (isset($login) && !isset($logindomain))
+	{
+		if (ereg ("\@", $login))
+		{
 			$login_array = explode("@", $login);
-			$phpgw_info["user"]["domain"] = $login_array[1];
-		} else {
-			$phpgw_info["user"]["domain"] = $phpgw_info["server"]["default_domain"];
-			$login = $login."@".$phpgw_info["user"]["domain"];
+			$phpgw_info['user']['domain'] = $login_array[1];
+		}
+		else
+		{
+			$phpgw_info['user']['domain'] = $phpgw_info['server']['default_domain'];
+			$login = $login . '@' . $phpgw_info['user']['domain'];
 		}
 	}
 
-	if (isset($phpgw_domain[$phpgw_info["user"]["domain"]])){
-		$phpgw_info["server"]["db_host"] = $phpgw_domain[$phpgw_info["user"]["domain"]]["db_host"];
-		$phpgw_info["server"]["db_name"] = $phpgw_domain[$phpgw_info["user"]["domain"]]["db_name"];
-		$phpgw_info["server"]["db_user"] = $phpgw_domain[$phpgw_info["user"]["domain"]]["db_user"];
-		$phpgw_info["server"]["db_pass"] = $phpgw_domain[$phpgw_info["user"]["domain"]]["db_pass"];
-		$phpgw_info["server"]["db_type"] = $phpgw_domain[$phpgw_info["user"]["domain"]]["db_type"];
-	} else {
-		$phpgw_info["server"]["db_host"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_host"];
-		$phpgw_info["server"]["db_name"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_name"];
-		$phpgw_info["server"]["db_user"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_user"];
-		$phpgw_info["server"]["db_pass"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_pass"];
-		$phpgw_info["server"]["db_type"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_type"];
+	if (isset($phpgw_domain[$phpgw_info['user']['domain']]))
+	{
+		$phpgw_info['server']['db_host'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_host'];
+		$phpgw_info['server']['db_name'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_name'];
+		$phpgw_info['server']['db_user'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_user'];
+		$phpgw_info['server']['db_pass'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_pass'];
+		$phpgw_info['server']['db_type'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_type'];
+	}
+	else
+	{
+		$phpgw_info['server']['db_host'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_host'];
+		$phpgw_info['server']['db_name'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_name'];
+		$phpgw_info['server']['db_user'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_user'];
+		$phpgw_info['server']['db_pass'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_pass'];
+		$phpgw_info['server']['db_type'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_type'];
 	}
 
-	if ($phpgw_info["flags"]["currentapp"] != "login" && ! $phpgw_info["server"]["show_domain_selectbox"]) {
+	if ($phpgw_info['flags']['currentapp'] != 'login' && ! $phpgw_info['server']['show_domain_selectbox'])
+	{
 		unset ($phpgw_domain); // we kill this for security reasons  
 	}
 	unset ($domain); // we kill this to save memory
 
-	print_debug('domain: '.$phpgw_info["user"]["domain"]);
+	print_debug('domain: '.$phpgw_info['user']['domain']);
 
 	/****************************************************************************\
 	* These lines load up the API, fill up the $phpgw_info array, etc            *
 	\****************************************************************************/
 	/* Load main class */
-	$phpgw = CreateObject("phpgwapi.phpgw");
+	$phpgw = CreateObject('phpgwapi.phpgw');
 	/************************************************************************\
 	* Load up the main instance of the db class.                             *
 	\************************************************************************/
-	$phpgw->db           = CreateObject("phpgwapi.db");
-	$phpgw->db->Host     = $phpgw_info["server"]["db_host"];
-	$phpgw->db->Type     = $phpgw_info["server"]["db_type"];
-	$phpgw->db->Database = $phpgw_info["server"]["db_name"];
-	$phpgw->db->User     = $phpgw_info["server"]["db_user"];
-	$phpgw->db->Password = $phpgw_info["server"]["db_pass"];
-	if ($phpgw->debug) {
+	$phpgw->db           = CreateObject('phpgwapi.db');
+	$phpgw->db->Host     = $phpgw_info['server']['db_host'];
+	$phpgw->db->Type     = $phpgw_info['server']['db_type'];
+	$phpgw->db->Database = $phpgw_info['server']['db_name'];
+	$phpgw->db->User     = $phpgw_info['server']['db_user'];
+	$phpgw->db->Password = $phpgw_info['server']['db_pass'];
+	if ($phpgw->debug)
+	{
 		 $phpgw->db->Debug = 1;
 	}
 
@@ -241,7 +265,7 @@
 	{
 		$setup_dir = ereg_replace($PHP_SELF,'index.php','setup/');
 		echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-			.'phpGroupWare. Click <a href="' . $setup_dir . '">here</a> run for setup.</center>';
+			.'phpGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
 		exit;
 	}
 	$phpgw->db->Halt_On_Error = 'yes';
@@ -275,28 +299,34 @@
 	define("SEP",filesystem_separator());
 	/* Legacy vars that can be delete after 0.9.11 is release (Seek3r) */
 	$sep = SEP;
-	$phpgw_info["server"]["dir_separator"] = SEP;
+	$phpgw_info['server']['dir_separator'] = SEP;
 
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
 	\****************************************************************************/
-	if ($phpgw_info["flags"]["currentapp"] == "login" || $phpgw_info["flags"]["currentapp"] == "logout") {
-			if ($phpgw_info["flags"]["currentapp"] == "login") {
-					if ($login != ""){
-							$login_array = explode("@",$login);
-							$login_id = $phpgw->accounts->name2id($login_array[0]);
-							$phpgw->accounts->accounts($login_id);
-							$phpgw->preferences->preferences($login_id);
-					}
+	if ($phpgw_info['flags']['currentapp'] == 'login' || $phpgw_info['flags']['currentapp'] == 'logout')
+	{
+		if ($phpgw_info['flags']['currentapp'] == 'login')
+		{
+			if ($login != '')
+			{
+				$login_array = explode("@",$login);
+				$login_id = $phpgw->accounts->name2id($login_array[0]);
+				$phpgw->accounts->accounts($login_id);
+				$phpgw->preferences->preferences($login_id);
 			}
-			/****************************************************************************\
-			* Everything from this point on will ONLY happen if                          *
-			* the currentapp is not login or logout                                      *
-			\****************************************************************************/
-	} else {
-		if (! $phpgw->session->verify()) {
-				Header("Location: " . $phpgw->redirect($phpgw->session->link('/login.php','cd=10')));
-				exit;
+		}
+		/****************************************************************************\
+		* Everything from this point on will ONLY happen if                          *
+		* the currentapp is not login or logout                                      *
+		\****************************************************************************/
+	}
+	else
+	{
+		if (! $phpgw->session->verify())
+		{
+			Header('Location: ' . $phpgw->redirect($phpgw->session->link('/login.php','cd=10')));
+			exit;
 		}
 
 		/* A few hacker resistant constants that will be used throught the program */
@@ -316,19 +346,19 @@
 
 		/********* Load up additional phpgw_info["server"] values *********/
 		/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
-		$phpgw_info["server"]["template_dir"]     = PHPGW_TEMPLATE_DIR;
-		$phpgw_info["server"]["images_dir"]       = PHPGW_IMAGES_DIR;
-		$phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
-		$phpgw_info["server"]["app_root"]         = PHPGW_APP_ROOT;
-		$phpgw_info["server"]["app_inc"]          = PHPGW_APP_INC;
-		$phpgw_info["server"]["app_tpl"]          = PHPGW_APP_TPL;
-		$phpgw_info["server"]["app_images"]       = PHPGW_IMAGES;
-		$phpgw_info["server"]["app_images_dir"]   = PHPGW_IMAGES_DIR;
+		$phpgw_info['server']['template_dir']     = PHPGW_TEMPLATE_DIR;
+		$phpgw_info['server']['images_dir']       = PHPGW_IMAGES_DIR;
+		$phpgw_info['server']['images_filedir']   = PHPGW_IMAGES_FILEDIR;
+		$phpgw_info['server']['app_root']         = PHPGW_APP_ROOT;
+		$phpgw_info['server']['app_inc']          = PHPGW_APP_INC;
+		$phpgw_info['server']['app_tpl']          = PHPGW_APP_TPL;
+		$phpgw_info['server']['app_images']       = PHPGW_IMAGES;
+		$phpgw_info['server']['app_images_dir']   = PHPGW_IMAGES_DIR;
 		/* END LEGACY SUPPORT!!!*/
 
 		/********* This sets the user variables *********/
-		$phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"]
-																			. "/users/".$phpgw_info["user"]["userid"];
+		$phpgw_info['user']['private_dir'] = $phpgw_info['server']['files_dir']
+											. '/users/'.$phpgw_info['user']['userid'];
 
 		/* This will make sure that a user has the basic default prefs. If not it will add them */
 		$phpgw->preferences->verify_basic_settings();
@@ -406,22 +436,24 @@
 		* If they are using frames, we need to set some variables                 *
 		\*************************************************************************/
 		if (((isset($phpgw_info['user']['preferences']['common']['useframes']) &&
-		      $phpgw_info["user"]["preferences"]["common"]["useframes"]) && 
-		     $phpgw_info["server"]["useframes"] == "allowed")
-		|| ($phpgw_info["server"]["useframes"] == "always")) {
-			$phpgw_info["flags"]["navbar_target"] = "phpgw_body";
+			$phpgw_info['user']['preferences']['common']['useframes']) && 
+			$phpgw_info['server']['useframes'] == 'allowed') ||
+			($phpgw_info['server']['useframes'] == 'always'))
+		{
+			$phpgw_info['flags']['navbar_target'] = 'phpgw_body';
 		}
 
 		/*************************************************************************\
 		* Verify that the users session is still active otherwise kick them out   *
 		\*************************************************************************/
-		if ($phpgw_info["flags"]["currentapp"] != "home" &&
-		$phpgw_info["flags"]["currentapp"] != "preferences" &&
-		$phpgw_info["flags"]["currentapp"] != "about") {
-
-			if (! $phpgw_info["user"]["apps"][$phpgw_info["flags"]["currentapp"]]) {
+		if ($phpgw_info['flags']['currentapp'] != 'home' &&
+			$phpgw_info['flags']['currentapp'] != 'preferences' &&
+			$phpgw_info['flags']['currentapp'] != 'about')
+		{
+			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']])
+			{
 				$phpgw->common->phpgw_header();
-				echo "<p><center><b>".lang("Access not permitted")."</b></center>";
+				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
 				$phpgw->common->phpgw_exit(True);
 			}
 		}
@@ -430,7 +462,8 @@
 		* Load the header unless the developer turns it off                       *
 		\*************************************************************************/
 		if (!isset($phpgw_info['flags']['noheader']) ||
-		    !$phpgw_info['flags']['noheader']) {
+			!$phpgw_info['flags']['noheader'])
+		{
 			$phpgw->common->phpgw_header();
 		}
 
@@ -438,15 +471,17 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC."/functions.inc.php")){
-			include(PHPGW_APP_INC . "/functions.inc.php");
+		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php'))
+		{
+			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
 		if ((!isset($phpgw_info['flags']['noheader']) || 
-		     !$phpgw_info["flags"]["noheader"]) && 
+		     !$phpgw_info['flags']['noheader']) && 
 		    (!isset($phpgw_info['flags']['noappheader']) ||
-		     !$phpgw_info["flags"]["noappheader"]) &&
-		    file_exists(PHPGW_APP_INC . "/header.inc.php")) {
-			include(PHPGW_APP_INC . "/header.inc.php");
+		     !$phpgw_info['flags']['noappheader']) &&
+		    file_exists(PHPGW_APP_INC . '/header.inc.php'))
+		{
+			include(PHPGW_APP_INC . '/header.inc.php');
 		}
 	}
 
