@@ -114,6 +114,7 @@
               <option value="9052000">9052000</option>
               <option value="9072000">9072000</option>
               <option value="9262000">9262000</option>
+              <option value="0_9_1">0.9.1</option>
             </select>
           </td>
         </tr>

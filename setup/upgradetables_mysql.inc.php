@@ -185,7 +185,7 @@
     }
   }
 
-  function v0_9_1to0_9_2pre1(){
+  function v0_9_1to0_9_2(){
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
     if ($currentver == "0.9.1"){
@@ -235,7 +235,7 @@
   v8212000to9052000();
   v9052000to9072000();
   v9072000to0_9_1();
-  v0_9_1to0_9_2pre1();
+  v0_9_1to0_9_2();
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   if (!$didupgrade == True){
