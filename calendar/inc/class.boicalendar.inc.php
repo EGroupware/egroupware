@@ -3417,13 +3417,10 @@
 				// use system's date info for caluculating local timezone's offset in minutes
 				//
 				$gmt_offset = date('O',$GLOBALS['phpgw']->datetime->users_localtime);  // offset to GMT
-				$offset = (int)(substr($gmt_offset, 1, 2)) * 60 + (int)(substr($gmt_offset, 3, 2));
-				if ($offset > 0)
-				{
-					$event['start']['min']   -= $offset;
-					$event['end']['min']     -= $offset;
-					$event['modtime']['min'] -= $offset;
-				}
+				$offset = (int)(substr($gmt_offset, 0, 3)) * 60 + (int)(substr($gmt_offset, 3, 2));
+				$event['start']['min']   -= $offset;
+				$event['end']['min']     -= $offset;
+				$event['modtime']['min'] -= $offset;
 
 				$ical_event['priority'] = $event['priority'];
 				$ical_event['class'] = (int)$event['public'];
