@@ -588,9 +588,9 @@
 			}
 			else
 			{
-				$url .= '?sessionid=' . @$phpgw_info['user']['sessionid'];
-				$url .= '&kp3=' . $kp3;
-				$url .= '&domain=' . @$phpgw_info['user']['domain'];
+				$sessionID  = 'sessionid=' . @$phpgw_info['user']['sessionid'];
+				$sessionID .= '&kp3=' . $kp3;
+				$sessionID .= '&domain=' . @$phpgw_info['user']['domain'];
 				// This doesn't belong in the API.
 				// Its up to the app to pass this value. (jengo)
 				// Putting it into the app requires a massive number of updates in email app. 
@@ -603,7 +603,11 @@
 
 				if ($extravars)
 				{
-					$url .= '&' . $extravars;
+					$url .= '?' . $extravars . '&' . $sessionID;
+				}
+				else
+				{
+					$url .= '?' . $sessionID;
 				}
 			}
 
