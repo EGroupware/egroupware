@@ -53,7 +53,7 @@
 					'session_logintime' => $GLOBALS['phpgw']->common->show_date($value['session_logintime']),
 					'session_action'    => $value['session_action'],
 					'session_dla'       => $value['session_dla'],
-					'session_idle'      => gmdate('G:i:s',(time() - $value['session_dla']))
+					'session_idle'      => gmdate('G:i:s',($GLOBALS['phpgw']->datetime->gmtnow - $value['session_dla']))
 				);
 			}
 			return $_values;
