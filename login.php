@@ -23,7 +23,7 @@
 	if(file_exists('./header.inc.php'))
 	{
 		include('./header.inc.php');
-		$GLOBALS['phpgw']->sessions = createObject('phpgwapi.sessions');
+		$GLOBALS['phpgw']->sessions = CreateObject('phpgwapi.sessions');
 	}
 	else
 	{
@@ -164,7 +164,7 @@
 		{
 			$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$_POST['passwd'],$_POST['passwd_type']);
+		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$_POST['passwd'],$_POST['passwd_type'],'u');
 
 		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
