@@ -14,15 +14,18 @@
 
 class html
 {
-	var $user_agent,$ua_version;
+	var $user_agent,$ua_version;	// 'mozilla','msie','konqueror'
 	var $prefered_img_title;
 
 	function html()
 	{																// should be Ok for all HTML 4 compatible browsers
 		if (!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts))
+		{
 			eregi('^([a-z_]+)/([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts);
+		}
 		list(,$this->user_agent,$this->ua_version) = $parts;
 		$this->user_agent = strtolower($this->user_agent);
+		
 		$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'ALT' : 'TITLE';
 		//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
 	}
@@ -112,11 +115,32 @@ class html
 		{
 			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
 				$path = $image;		// name may already contain absolut path
-			$options .= ' src="'.$path.'"';
+			$image = ' SRC="'.$path.'"';
 		}
-		if (!$no_lang) $lang = lang($lang);
+		if (!$no_lang)
+		{
+			$lang = lang($lang);
+		}
+		if (($accesskey = strstr($lang,'&')) && $accesskey[1] != ' ')
+		{
+			$lang_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$lang);
+			$lang = str_replace('&','',$lang);
+			$options = 'ACCESSKEY="'.$accesskey[1].'" '.$options;
+		}
+		else
+		{
+			$accesskey = '';
+			$lang_u = $lang;
+		}
 		if ($onClick) $options .= " onClick=\"$onClick\"";
-		return $this->input($name,$lang,$image != '' ? 'IMAGE' : 'SUBMIT',$options);
+
+		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
+		{
+			return $this->input($name,$lang,$image != '' ? 'IMAGE' : 'SUBMIT',$options.$image);
+		}
+		return '<button TYPE="submit" NAME="'.$name.'" VALUE="'.$lang.'" '.$options.'>'.
+			($image != '' ? "<img$image $this->prefered_img_title=\"$lang\"> " : '').
+			($image == '' || $accesskey ? $lang_u : '').'</button>';
 	}
 
 	/*!
@@ -282,7 +306,7 @@ class html
 	{
 		return $this->style(
 			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
-			".row_on { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
+			".row_on,.th_bright { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
 			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n"
 		);
 	}
@@ -292,8 +316,16 @@ class html
 		return $styles ? "<STYLE type=\"text/css\">\n<!--\n$styles\n-->\n</STYLE>" : '';
 	}
 
-	function label($content,$options='')
+	function label($content,$id='',$accesskey='',$options='')
 	{
-		return "<LABEL $options>$content</LABEL>";
+		if ($id != '')
+		{
+			$id = " FOR=\"$id\"";
+		}
+		if ($accesskey != '')
+		{
+			$accesskey = " ACCESSKEY=\"$accesskey\"";
+		}
+		return "<LABEL$id$accesskey $options>$content</LABEL>";
 	}
 }

@@ -30,18 +30,18 @@
 			'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
 			'int'		=> 'Integer',		// like text, but only numbers (size = [min][,max])
 			'float'	=> 'Floating Point', // --------------- " --------------------------
-			'textarea' => 'Textarea',	// Multiline Text Input (size = [rows][,cols])
+			'textarea'=> 'Textarea',	// Multiline Text Input (size = [rows][,cols])
 			'checkbox'=> 'Checkbox',
 			'radio'	=> 'Radiobutton',	// Radiobutton (size = value if checked)
 			'button'	=> 'Submitbutton',
 			'hrule'	=> 'Horizontal Rule',
-			'template' => 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
-			'image' => 'Image',			// label = url, name=link or method, help=alt or title
-			'date'	=> '', 			// Datefield, size='' timestamp or size=format like 'm/d/Y'
+			'template'=> 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
+			'image'	=> 'Image',			// label = url, name=link or method, help=alt or title
+			'date'	=> '', 				// Datefield, size='' timestamp or size=format like 'm/d/Y'
 			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
 												// if size > 1 then multiple selections, size lines showed
-			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
-			'file' => 'FileUpload'	// show an input type='file', set the local name as ${name}_path
+			'html'	=> 'Html',			// Raw html in $content[$cell['name']]
+			'file'	=> 'FileUpload'	// show an input type='file', set the local name as ${name}_path
 		);
 		/*!
 		@function boetemplate

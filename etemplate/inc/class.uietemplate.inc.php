@@ -405,6 +405,10 @@
 					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
 				}
 			}
+			if ($form_name != '')
+			{
+				$options = "ID=\"$form_name\" $options";
+			}
 			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
 			{
@@ -414,7 +418,7 @@
 					if ($value != '' && strstr($cell['size'],'i')) $value = $this->html->italic($value);
 					$html .= $value;
 					break;
-				case 'raw':
+				case 'html':
 					$html .= $value;
 					break;
 				case 'int':		// size: [min][,[max][,len]]
@@ -641,9 +645,9 @@
 					}
 					break;
 			}
-			if ($ext_type && !$readonly && // extension-processing need to be after all other and only with diff. name
-				 !isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
-			{
+			if ($ext_type && !$readonly)	// extension-processing need to be after all other and only with diff. name
+			{	// unset it first, if it is already set, to be after the other widgets of the ext.
+				unset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
 			}
 			if ($extra_label && ($label != '' || $html == ''))
@@ -652,8 +656,11 @@
 				{
 					$label = lang($label);
 				}
-				$html_label = $html != '' && $label != '';
-
+				if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '')
+				{
+					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
+					$label = $this->html->label($label,$form_name,$accesskey[1]);
+				}
 				if (strstr($label,'%s'))
 				{
 					$html = str_replace('%s',$html,$label);
@@ -661,10 +668,6 @@
 				elseif (($html = $label . ' ' . $html) == ' ')
 				{
 					$html = '&nbsp;';
-				}
-				if ($html_label)
-				{
-					$html = $this->html->label($html);
 				}
 			}
 			return $html;
@@ -683,7 +686,7 @@
 		*/
 		function process_show(&$content,$to_process,$cname='')
 		{
-			if (!isset($content) || !is_array($content))
+			if (!isset($content) || !is_array($content) || !is_array($to_process))
 			{
 				return;
 			}
