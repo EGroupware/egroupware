@@ -180,6 +180,7 @@ enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
 enlarge editor	htmlarea	en	Enlarge Editor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
 equatorial guinea	common	en	EQUATORIAL GUINEA
