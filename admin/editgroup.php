@@ -22,8 +22,6 @@
      Header("Location: " . $phpgw->link("groups.php"));
   }
 
-  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
-
   if ($submit) {
      $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
@@ -41,58 +39,58 @@
 //        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions"));
 
         $phpgw->accounts->add_app($n_group_permissions);
-	$apps = $phpgw->accounts->add_app("",True);
-	$apps_after = explode(":",$apps);
+        $apps = $phpgw->accounts->add_app("",True);
+        $apps_after = explode(":",$apps);
 
         $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps
 			 . "' where group_id=$group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
-           $phpgw->db->query("SELECT account_groups, account_lid FROM accounts WHERE account_id=".$n_users[$i]);
-	   $phpgw->db->next_record();
-	   $account_lid = $phpgw->db->f("account_lid");
-	   if(strpos($phpgw->db->f("account_groups"),$group_id.":0,") == 0) {
-             $user_groups = $phpgw->db->f("account_groups") . ",$group_id:0,";
-             $user_groups = ereg_replace(",,",",",$user_groups);
-             $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
-	   }
+          $phpgw->db->query("SELECT account_groups, account_lid FROM accounts WHERE account_id=".$n_users[$i]);
+          $phpgw->db->next_record();
+          $account_lid = $phpgw->db->f("account_lid");
+          if(strpos($phpgw->db->f("account_groups"),$group_id.":0,") == 0) {
+            $user_groups = $phpgw->db->f("account_groups") . ",$group_id:0,";
+            $user_groups = ereg_replace(",,",",",$user_groups);
+            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
+          }
 
-	   // If the user is logged in, it will force a refresh of the session_info
-           $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$account_lid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
+          // If the user is logged in, it will force a refresh of the session_info
+          $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$account_lid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
-	   $pref = new preferences(intval($n_users[$i]));
-	   $t = $pref->get_preferences();
+          $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
+          $t = $pref->get_preferences();
 
-	   $docommit = False;
-	   for ($j=1;$j<count($apps_after) - 1;$j++) {
-	     if($apps_after[$j]=="admin")
-	       $check = "common";
-	     else
-	       $check = $apps_after[$j];
-	     if (!$t["$check"]) {
-	       $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
-	       $docommit = True;
-	     }
-	   }
-	   if ($docommit) {
-	     $pref->commit();
-	   }
+          $docommit = False;
+          for ($j=1;$j<count($apps_after) - 1;$j++) {
+            if($apps_after[$j]=="admin") {
+              $check = "common";
+            } else {
+              $check = $apps_after[$j];
+            }
+            if (!$t["$check"]) {
+              $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
+              $docommit = True;
+            }
+          }
+          if ($docommit) {
+            $pref->commit();
+          }
         }
 
         $sep = $phpgw->common->filesystem_separator();
 
-
         if ($old_group_name <> $n_group) {
-	   $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
-           if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
-	      $cd = 39;
-           } else {
-              $cd = 33;
-           }
+          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
+          if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
+            $cd = 39;
+          } else {
+            $cd = 33;
+          }
         } else {
-           $cd = 33;
+          $cd = 33;
         }
 
 //        $phpgw->db->unlock();
@@ -102,6 +100,8 @@
      }
   }
 
+  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
+  
   if ($error) {
      $phpgw->common->phpgw_header();
      echo parse_navbar();

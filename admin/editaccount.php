@@ -89,7 +89,7 @@
        // The following sets any default preferences needed for new applications..
        // This is smart enough to know if previous preferences were selected, use them.
        
-       $pref = new preferences(intval($account_id));
+       $pref = CreateObject('phpgwapi.preferences',intval($account_id));
        $t = $pref->get_preferences();
          
        $docommit = False;
@@ -122,11 +122,11 @@
 
   }                    // if $submit
 
-  $phpgw->template->set_file(array("form" => "account_form.tpl"));
-
   $phpgw->common->phpgw_header();
   echo parse_navbar();
 
+  $phpgw->template->set_file(array("form" => "account_form.tpl"));
+  
   if ($totalerrors) {
      $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
   } else {

@@ -55,7 +55,7 @@
            $user_groups = ereg_replace(",,",",",$user_groups);
            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
 
-	   $pref = new preferences(intval($n_users[$i]));
+	   $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
 	   $t = $pref->get_preferences();
 
 	   $docommit = False;

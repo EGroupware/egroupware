@@ -66,7 +66,7 @@
         $phpgw->db->query("SELECT account_permissions, account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
         $phpgw->db->next_record();
         $apps = explode(":",$phpgw->db->f("account_permissions"));
-        $pref = new preferences(intval($phpgw->db->f("account_id")));
+        $pref = CreateObject('phpgwapi.preferences',intval($phpgw->db->f("account_id")));
         $phpgw->common->hook_single("add_def_pref", "admin");
         for ($i=1;$i<sizeof($apps) - 1;$i++) {
           if($apps[$i]<>"admin")
