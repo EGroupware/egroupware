@@ -91,7 +91,13 @@
   $phpgw->template->parse("output","list",True);
 
   $phpgw->template->set_var("field",lang("Created by"));
-  if($is_my_event)
+  $participate = False;
+  for($i=0;$i<count($cal_info->participants);$i++) {
+    if($cal_info->participants[$i] == $phpgw_info["user"]["account_id"]) {
+      $participate = True;
+    }
+  }
+  if($is_my_event && $participate)
     $phpgw->template->set_var("data","<a href=\""
 	.$phpgw->link("timematrix.php","participants=".$cal_info->owner."&date=".$cal_info->year.$cal_info->month.$cal_info->day)
 	."\">".$phpgw->common->grab_owner_name($cal_info->owner)."</a>");

@@ -23,6 +23,14 @@
       $data = $HTTP_POST_VARS[$key];
       $cal_info->set($key,$data);
     }
+
+    $participating = False;
+    if($phpgw_info["user"]["account_id"] == $cal_info->participants[count($cal_info->participants) - 1]) {
+      $participating = True;
+    }
+    if(!$participating && count($cal_info->participants) == 1) {
+      $cal_info->owner = $cal_info->participants[0];
+    }
     $phpgw->common->appsession($cal_info);
     $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->duration,$cal_info->participants,$cal_info->id);
   } else {

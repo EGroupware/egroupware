@@ -208,6 +208,7 @@
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
+// Participants
     $phpgw->template->set_var("field",lang("Participants"));
     $db2 = $phpgw->db;
     $db2->query("select account_id,account_lastname,account_firstname,account_lid "
@@ -232,10 +233,29 @@
       $str .= ">".$phpgw->common->grab_owner_name($db2->f("account_id"))."</option>";
     }
     $str .= "</select>";
-    $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
+//    $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
+// I Participate
+    $phpgw->template->set_var("field",lang("I Participate"));
+    $participate = False;
+    if($id) {
+      for($i=0;$i<count($cal_info->participants);$i++) {
+	if($cal_info->participants[$i] == $phpgw_info["user"]["account_id"]) {
+	  $participate = True;
+	}
+      }
+    }
+    $str = "<input type=\"checkbox\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\"";
+    if($id && $participate) {
+      $str .= " checked";
+    }
+    $str .= ">";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
+
+// Repeat Type
     $phpgw->template->set_var("field",lang("Repeat Type"));
     $str = "<select name=\"rpt_type\">";
     $rpt_type_str = Array("none","daily","weekly","monthlybyday","monthlybydate","yearly");

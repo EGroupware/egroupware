@@ -40,7 +40,7 @@
 
   switch($view) {
     case "free/busy" :
-      echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),0,0,$participants);
+      echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),$phpgw->calendar->splittime("000000"),0,$participants);
       break;
     case "weekly" :
       echo $phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$participants);
