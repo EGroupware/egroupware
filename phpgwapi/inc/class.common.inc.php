@@ -1168,17 +1168,23 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon']; 
 					break;
 			}
-			$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
-			$var['prefs_link']		= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-			$var['logout_link']		= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
-			$var['about_link']		= $GLOBALS['phpgw_info']['navbar']['about']['url'];
 
-			$var['home_title']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
-			$var['prefs_title']		= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
-			$var['logout_title']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
-			$var['about_title']		= $GLOBALS['phpgw_info']['navbar']['about']['title'];
+			$var['home_link']			= $GLOBALS['phpgw_info']['navbar']['home']['url'];
+			$var['prefs_link']			= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
+			$var['logout_link']			= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
+			$var['about_link']			= $GLOBALS['phpgw_info']['navbar']['about']['url'];
 
-			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
+			$var['home_title']			= $GLOBALS['phpgw_info']['navbar']['home']['title'];
+			$var['prefs_title']			= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
+			$var['logout_title']		= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
+			$var['about_title']			= $GLOBALS['phpgw_info']['navbar']['about']['title'];
+
+			$var['home_statustext']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
+			$var['prefs_statustext']	= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
+			$var['logout_statustext']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
+			$var['about_statustext']	= $GLOBALS['phpgw_info']['navbar']['about']['title'];
+
+			if (isset($GLOBALS['phpgw_ifo']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
 				$GLOBALS['phpgw']->db->query('select count(session_id) from phpgw_sessions');
 				$GLOBALS['phpgw']->db->next_record();
@@ -1202,7 +1208,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						'title'			=> $data['title'],
 						'img_src_over'	=> $data['icon_hover'],
 						'url'			=> $data['url'],
-						'name'			=> str_replace('-','_',$app)
+						'name'			=> str_replace('-','_',$app),
+						'statustext'	=> $data['title']
 					);
 
 					if($data['icon_hover'] != '')
@@ -1276,7 +1283,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['phpgw_version']			= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 			$var['lang_phpgw_statustext']	= lang('phpGroupWare --> homepage');
 			$var['top_spacer_middle_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
-			$var['navbar_format'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'];
+			$var['navbar_format']			= $GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'];
 
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
 		}
@@ -1364,7 +1371,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			/* We handle this here becuase its special */
 
-			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about x',lang($app));
+			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about');
 			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');
@@ -1414,9 +1421,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
 						. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.css';
 			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP . 'css' . SEP . 'submarine.css'))
+			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP 
+					. 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '.css'))
 			{
-				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP . 'css' . SEP . 'submarine.css';
+				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
+							. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '.css';
 			}
 			else
 			{

@@ -1,27 +1,26 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Hooks                                                 *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * Allows applications to "hook" into each other                            *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Hooks                                                 *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* Allows applications to "hook" into each other                            *
+	* Copyright (C) 2000 - 2002 Dan Kuykendall                                 *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 
 	/*!
 	@class hooks
@@ -56,7 +55,6 @@
 		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		function process($location, $order = '', $no_permission_check = False)
 		{
-			$SEP = filesystem_separator();
 			if ($order == '')
 			{
 				settype($order,'array');
@@ -69,7 +67,7 @@
 			{
 				if (isset($this->found_hooks[$appname][$location]))
 				{
-					$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+					$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $this->found_hooks[$appname][$location];
 					if (file_exists($f) &&
 						( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
 					{
@@ -91,7 +89,7 @@
 					{
 						if (isset($this->found_hooks[$appname][$location]))
 						{
-							$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+							$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $this->found_hooks[$appname][$location];
 							if (file_exists($f))
 							{
 								include($f);
@@ -110,7 +108,7 @@
 					{
 						if (isset($this->found_hooks[$appname][$location]))
 						{
-							$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+							$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $this->found_hooks[$appname][$location];
 							if (file_exists($f))
 							{
 								include($f);
@@ -134,12 +132,11 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			$SEP = filesystem_separator();
 
 			/* First include the ordered apps hook file */
 			if (isset($this->found_hooks[$appname][$location]))
 			{
-				$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+				$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $this->found_hooks[$appname][$location];
 				if (file_exists($f) &&
 					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
 				{
@@ -170,11 +167,10 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			$SEP = filesystem_separator();
 
 			if(@isset($this->found_hooks[$appname][$location]))
 			{
-				$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+				$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . $this->found_hooks[$appname][$location];
 				if(@file_exists($f) &&
 					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
 				{
@@ -200,7 +196,6 @@
 		{
 			$count = 0;
 			reset($GLOBALS['phpgw_info']['user']['apps']);
-			$SEP = filesystem_separator();
 			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				if (isset($this->found_hooks[$permission[0]][$location]))

@@ -1,0 +1,129 @@
+body,p,td,th,table,input,form,option
+{
+	color: #0000A0;
+}
+
+body
+{
+	background-color: #CCCCCC;
+}
+
+.top_top
+{
+	background-color: #FF3300
+}
+
+.top_bottom
+{
+	background-color: #FFE000;
+}
+
+td.left
+{
+	background-color: #FF3300;
+}
+
+.left_app
+{
+	background-color: #660000;
+}
+
+.top_link
+{
+	background-color: #0000A0;
+}
+
+.user_info
+{
+	background-color: #FF3300;
+	color: #FFFFFF;
+}
+
+.admin_info
+{
+	background-color: #0000A0;
+	color: #FFFFFF;
+}
+
+.bottom
+{
+	background-color: #FF3300;
+}
+
+a:link,a:active,a:visited,a:hover
+{
+	color: #0000A0;
+}
+
+a:link.top_link,a:active.top_link,a:visited.top_link
+{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+a:hover.top_link
+{
+	font-weight: bold;
+	color: #660000;
+	background-color: #FFE000;
+}
+
+a:link.left,a:active.left,a:visited.left
+{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+a:hover.left
+{
+	font-weight: bold;
+	color: #660000;
+	background-color: #FFE000;
+}
+
+.login,.portal,.about
+{
+	background-color: #ADADAD;
+	border-color: #000000;
+}
+
+.portal_text
+{
+	color: #FFFFFF;
+}
+
+.row_on,.th_bright,.app_header
+{
+	background-color: #999999;
+}
+
+.msgbox
+{
+	background-color: #FFFFFF;
+}
+
+.row_off
+{
+	background-color: #FFFFFF;
+}
+
+.th
+{
+	background-color: #FFE000;
+}
+
+.cal_today
+{
+	background-color: #ffffcc;
+}
+
+.cal_dayview
+{
+	background-color: #C0C0C0;
+}
+
+.email_folder
+{
+	background-color: #adadad;
+	color: #ffffff;
+}
