@@ -196,12 +196,12 @@
     var $account_id;
     var $preferences;
 
-    function preferences($account_id)
+    function preferences($account_id=0)
     {
       global $phpgw;
       $db2 = $phpgw->db;
       $load_pref = True;
-      if (is_long($account_id)) {
+      if (is_long($account_id) && $account_id) {
 	$this->account_id = $account_id;
       } elseif(is_string($account_id)) {
 	$db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'");
