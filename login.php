@@ -288,7 +288,9 @@
 		}
 	}
 
+	$tmpl->set_block('login_form','domain_selection');
 	$domain_select = '&nbsp;';
+	$lang_domain_select = '&nbsp;';
 	$last_loginid = $_COOKIE['last_loginid'];
 	if($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
@@ -304,6 +306,7 @@
 			$domain_select .= '>' . $domain_name . "</option>\n";
 		}
 		$domain_select .= "</select>\n";
+		$lang_domain_select = lang('Domain');
 	}
 	elseif($last_loginid !== '')
 	{
@@ -315,8 +318,14 @@
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
 	}
-	$tmpl->set_var('lang_select_domain',lang('Domain'));
+	$tmpl->set_var('lang_select_domain',$lang_domain_select);
 	$tmpl->set_var('select_domain',$domain_select);
+	
+	if(!$GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
+	{
+	   /* trick to make domain selection disappear */
+		$tmpl->set_var('domain_selection','');
+	}
 
 	foreach($_GET as $name => $value)
 	{

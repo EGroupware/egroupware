@@ -94,11 +94,13 @@
 			<td align="left" colspan="2">{select_language}</td>
 		</tr>
 <!-- END language_select -->
+<!-- BEGIN domain_selection -->
 			<tr>
 			<td align="right" tablindex="1">{lang_select_domain}&nbsp;</td>
 			<td align="left">{select_domain}</td>
 			<td align="left"></td>
 			</tr>
+<!-- END domain_selection -->
 			<tr>
 			<td align="right" tablindex="1">{lang_username}&nbsp;</td>
 			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
@@ -109,7 +111,8 @@
 			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" style="margin-top:5px;">
+			<td align="right">&nbsp;</td>
+			<td align="left" style="margin-top:5px;">
 				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;width:100px;">
 			</td>
 		</tr>
