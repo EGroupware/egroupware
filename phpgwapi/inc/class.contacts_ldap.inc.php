@@ -484,7 +484,7 @@
 						reset($stock_fieldnames);
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
-						. $ldap_fields[$i]['id'] . "'",__LINE__,__FILE__);
+						. intval($ldap_fields[$i]['uidnumber']) . "'",__LINE__,__FILE__);
 					while ($this->db->next_record())
 					{
 						if ($extra_fields[$this->db->f('contact_name')])
