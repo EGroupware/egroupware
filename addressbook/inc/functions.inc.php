@@ -525,10 +525,11 @@
 		$t->set_var('cats_link',$cats_link);
 		if ($customfields) {
 			$t->set_var('lang_custom',lang('Custom Fields').':');
+			$t->set_var("custom",$custom);
 		} else {
 			$t->set_var("lang_custom",'');
+			$t->set_var("custom",'');
 		}
-		$t->set_var("custom",$custom);
 
 		$t->parse("out","form");
 		$t->pparse("out","form");
