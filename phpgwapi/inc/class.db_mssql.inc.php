@@ -154,7 +154,7 @@ class db
 			if ($rec)
 			{
 				$this->Record = array();
-				for (var $i = 0; $i < count($rec); $i++)
+				for ($i = 0; $i < count($rec); $i++)
 				{
 					$this->Record[$i] = $rec[$i];
 					$o = mssql_fetch_field($this->Query_ID, $i);
