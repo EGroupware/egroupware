@@ -310,7 +310,7 @@
 		}
 
 		/* error_reporting(0); */
-		list($appname,$classname) = explode(".", $class);
+		list($appname,$classname) = explode('.', $class);
 
 		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
@@ -357,7 +357,7 @@
 	}
 
 	/*!
-	 @function ExecObject
+	 @function ExecMethod
 	 @abstract Execute a function, and load a class and include the class file if not done so already.
 	 @author seek3r
 	 @discussion This function is used to create an instance of a class, and if the class file has not been included it will do so.
