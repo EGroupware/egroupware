@@ -132,9 +132,7 @@
 
 			$GLOBALS['phpgw']->template->set_file(array(
 				'cat_list_t'  => 'listcats.tpl',
-				'data_column' => 'listcats.tpl'
 			));
-			$GLOBALS['phpgw']->template->set_block('cat_list_t','data_column','column');
 			$GLOBALS['phpgw']->template->set_block('cat_list_t','cat_list','list');
 
 			$this->set_langs();
@@ -178,7 +176,6 @@
 				for($i=0;$i<count($edata);$i++)
 				{
 					$GLOBALS['phpgw']->template->set_var('sort_data','<td class="th">' . lang($edata[$i]) . '</td>');
-					$GLOBALS['phpgw']->template->fp('column','data_column',True);
 				}
 			}
 			else
