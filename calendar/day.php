@@ -14,8 +14,9 @@
 
   /* $Id$ */
 
-  if ($friendly)
+  if ($friendly) {
      $phpgw_flags["noheader"] = True;
+  }
 
   $phpgw_flags["currentapp"] = "calendar";
   include("../header.inc.php");
@@ -62,6 +63,10 @@
 
   /* Pre-Load the repeated events for quckier access */
   $repeated_events = read_repeated_events();
+
+  if ($friendly) {
+     echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
+  }
 
 ?>
 <TABLE BORDER=0 WIDTH=100%>

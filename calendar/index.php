@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-  if (! $friendly) {
+  if ($friendly) {
      $phpgw_flags["noheader"] = True;
   }
 
@@ -49,11 +49,10 @@
   $prevmonth = date("m",$prev);
   $prevdate = date("Ymd");
 
-  if (! $friendly) {
-     $phpgw->common->header();
-  } else
+  if ($friendly) {
      echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
-    $view = "month";
+     $view = "month";
+  }
 ?>
 
 <HEAD>
@@ -170,6 +169,5 @@
 	. "status = '" . lang_calendar("Generate printer-friendly version"). "'";
      echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
      echo "[". lang_calendar("Printer Friendly") . "]</A>";
+     include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-?>

@@ -352,13 +352,13 @@
 	  . "\">"
 	  . "<IMG SRC=\"".$phpgw_info["server"]["app_images"]."/new.gif\" WIDTH=10 HEIGHT=10 ALT=\""
 	  . lang_calendar("New Entry") . "\" BORDER=0 ALIGN=right></A>";
+       echo "[ " . "<a href=\"".$phpgw->link("day.php","month=".date("m",$date)
+									."&day=".date("d",$date)."&year=".date("Y",$date))
+       									. "\">" . date("d", $date) . "</a> ]<BR>\n";
+    } else {
+       echo "[ " . date("d", $date) . " ]<BR>\n";
+
     }
-    echo "[ " . "<a href=\"".$phpgw->link("day.php",
-	 			      "month=".date("m",$date)
-				     ."&day=".date("d",$date)
-				     ."&year=".date("Y",$date))
-       . "\">" . date("d", $date)
-	 . "</a> ]<BR>\n";
     echo "<FONT SIZE=\"2\">";
 
     // This is only a temporey fix
