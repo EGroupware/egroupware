@@ -18,7 +18,8 @@
 </table>
 <input type="submit" value="{submit_button}">
 </form>
-
+</br>
+</br>
 {delete_button}
 </font>
 </center>
