@@ -457,21 +457,8 @@
 		{
 			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
 			$query = strtolower($query);
-			if($offset)
-			{
-				$limitclause = '';//$phpgw->db->limit($start,$offset);
-			}
-			elseif($start && !$offset)
-			{
-				$limitclause = '';//$phpgw->db->limit($start);
-			}
 
-			if(!$sort)
-			{
-				$sort = '';//"desc";
-			}
-
-			if($_type == 'accounts')
+			if($_type == 'accounts' || $_type == 'both')
 			{
 				$filter = "(&(uidnumber=*)(phpgwaccounttype=u)";
 				if (!empty($query) && $query != '*')
@@ -524,7 +511,7 @@
 					}
 				}
 			}
-			elseif ($_type == 'groups')
+			if ($_type == 'groups' || $_type == 'both')
 			{
 				if(empty($query) || $query == '*')
 				{
@@ -554,46 +541,6 @@
 					}
 				}
 			}
-			else
-			{
-				if(empty($query) || $query == "*")
-				{
-					$filter = "(&(gidnumber=*)(phpgwaccounttype=*))";
-				}
-				else
-				{
-					$filter = "(&(gidnumber=*)(phpgwaccounttype=*)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)(mail=*$query*)))";
-				}
-				$sri = ldap_search($this->ds, $this->group_context, $filter);
-				$allValues = ldap_get_entries($this->ds, $sri);
-				while (list($null,$allVals) = @each($allValues))
-				{
-					settype($allVals,'array');
-
-					if($allVals['phpgwaccounttype'][0] == 'u')
-					{
-						$_uid = @$allVals['uid'][0];
-					}
-					else
-					{
-						$_uid = $allVals['cn'][0];
-					}
-
-					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$_uid] && $_uid)
-					{
-						$accounts[] = Array(
-							'account_id'		=> $allVals['gidnumber'][0],
-							'account_lid'		=> $_uid,
-							'account_type'		=> $allVals['phpgwaccounttype'][0],
-							'account_firstname'	=> $allVals['givenname'][0],
-							'account_lastname'	=> $allVals['sn'][0],
-							'account_status'	=> $allVals['phpgwaccountstatus'][0],
-							'account_email'     => $allVals['mail'][0],
-						);
-					}
-				}
-			}
-
 			// sort the array
 			$arrayFunctions = CreateObject('phpgwapi.arrayfunctions');
 			if(empty($order))
