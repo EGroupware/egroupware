@@ -11,14 +11,8 @@
   \**************************************************************************/
 	/* $Id$ */
 	
-	// Delete all records for a user
-	if (floor(phpversion()) == 4)
+	if($GLOBALS['account_id'])
 	{
-		global $phpgw, $account_id;
-	}
-
-	if($account_id)
-	{
-		$phpgw->accounts->delete($account_id);
+		$GLOBALS['phpgw']->accounts->delete($GLOBALS['account_id']);
 	}
 ?>

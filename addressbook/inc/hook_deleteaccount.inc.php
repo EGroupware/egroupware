@@ -12,20 +12,14 @@
 
 	/* $Id$ */
 
-	// Delete all records for a user
-	if (floor(phpversion()) == 4)
-	{
-		global $account_id, $new_owner;
-	}
-
 	$contacts = CreateObject('phpgwapi.contacts');
 
-	if(intval($new_owner)==0)
+	if(intval($GLOBALS['new_owner'])==0)
 	{
-		$contacts->delete_all(intval($account_id));
+		$contacts->delete_all(intval($GLOBALS['account_id']));
 	}
 	else
 	{
-		$contacts->change_owner(intval($account_id),intval($new_owner));
+		$contacts->change_owner(intval($GLOBALS['account_id']),intval($GLOBALS['new_owner']));
 	}
 ?>
