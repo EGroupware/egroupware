@@ -1,0 +1,67 @@
+
+.son {
+	position: relative;
+	left: 10px;
+/*	width: 0px;*/
+}
+
+
+.plus {
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
+	cursor: hand;
+	color: #000000;
+	font-family: monospace;
+}
+
+.plus:hover {
+	color: #FF0000;
+}
+
+.opened {
+	display: inline;
+/*	width: 0px;*/
+}
+
+.closed {
+	display: none;
+/*	width: 0px;*/
+}
+
+/* link */
+.l {
+	padding: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	white-space: nowrap;
+	font-family: sans-serif;
+}
+
+.l:hover {
+	text-decoration: underline;
+}
+
+
+/* selected link */
+.sl {
+	padding: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #0000FF;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	white-space: nowrap;
+	font-family: sans-serif;
+}
+
+.sl:hover {
+	text-decoration: underline;
+}
+
+
