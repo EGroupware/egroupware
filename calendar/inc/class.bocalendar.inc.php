@@ -1636,7 +1636,7 @@
 			$second = (int)(strrev(substr($time,0,2)));
 			$minute = (int)(strrev(substr($time,2,2)));
 			$hour   = (int)(strrev(substr($time,4)));
-			$hour += $this->normalizeminutes(&$minute);
+			$hour += $this->normalizeminutes($minute);
 			$temp['second'] = $second;
 			$temp['minute'] = $minute;
 			$temp['hour']   = $hour;
@@ -2185,7 +2185,7 @@
 			{
 				if ($cat)
 				{
-					$event['category'][$cat] = $GLOBALS['phpgw']->categories->id2name($cat);
+					$event['category'][$cat] = stripslashes($GLOBALS['phpgw']->categories->id2name($cat));
 				}
 			}
 			return $event;
