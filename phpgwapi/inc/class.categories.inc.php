@@ -179,14 +179,14 @@
 	    
 			if ($this->db->next_record()) 
 			{
-				$cats[0]['id']		= $this->db->f('cat_id');
+				$cats[0]['id']			= $this->db->f('cat_id');
 				$cats[0]['owner']		= $this->db->f('cat_owner');
 				$cats[0]['access']		= $this->db->f('cat_access');
 				$cats[0]['main']		= $this->db->f('cat_main');
 				$cats[0]['level']		= $this->db->f('cat_level');
 				$cats[0]['parent']		= $this->db->f('cat_parent');
 				$cats[0]['name']		= $this->db->f('cat_name');
-				$cats[0]['description']	= $this->db->f('cat_description');
+				$cats[0]['description']		= $this->db->f('cat_description');
 				$cats[0]['data']		= $this->db->f('cat_data');
 			}
 		    return $cats;
@@ -268,6 +268,11 @@
 		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '',$cat_access = '',$cat_main)
 		{
 
+		    if ($cat_parent && (!$cat_main))
+		    {
+			$cat_main = $cat_parent;
+		    }
+
 		    if ($cat_main && ($cat_main > 0))
 		    {
 			if (!$cat_parent)
@@ -324,6 +329,11 @@
 		*/
 		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '',$cat_main)
 		{
+	
+		    if ($cat_parent && (!$cat_main))	
+		    {
+			$cat_main = $cat_parent;
+		    }
 
                     if ($cat_main && ($cat_main > 0))
                     {
@@ -427,5 +437,16 @@
 		    }
 		}
 
+		function return_main($cat_id = '')
+		{
+
+                    $this->db->query("select cat_main from phpgw_categories where cat_id='$cat_id'",__LINE__,__FILE__);
+
+                    $this->db->next_record();
+
+                    $cat_main = $this->db->f('cat_main');
+
+                    return $cat_main;
+		}
 	}
 ?>

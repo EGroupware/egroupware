@@ -41,11 +41,18 @@
 		$errorcount = 0;
 
 		if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+
 		if (!$error)
 		{
 			if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
 			else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
 			if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
+		}
+
+		if ($cat_main && $cat_parent) 
+		{
+		    $main = $c->return_main($cat_parent);
+		    if ($main != $cat_main) { $error[$errorcount++] = lang('You selected an invalid main category !'); }		    
 		}
 
 		if (!$error)

@@ -31,6 +31,12 @@
 	    else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
 	    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 	}
+
+        if ($cat_main && $cat_parent) {
+            $main = $c->return_main($cat_parent);
+            if ($main != $cat_main) { $error[$errorcount++] = lang('You selected an invalid main category !'); }
+        }
+
 	if (! $error) {
 	    $cat_name = addslashes($cat_name);
 	    $cat_description = addslashes($cat_description);
