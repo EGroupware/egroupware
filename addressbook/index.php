@@ -88,7 +88,7 @@
 	// now that the query is done, reset filter, since nextmatchs grabs it globally
 	$filter=$savefilter;
 
-	$search_filter = $phpgw->nextmatchs->show_tpl("index.php",$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query","75%", $phpgw_info["theme"]["th_bg"]);
+	$search_filter = $phpgw->nextmatchs->show_tpl("/addressbook/index.php",$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query","75%", $phpgw_info["theme"]["th_bg"]);
 
 	if ($this->total_records > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
 		if ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > $this->total_records) {
