@@ -177,7 +177,7 @@
 	       <?php
 	         for ($i=0; $i<24; $i++)
 	             echo "<option value=\"$i\"" . $t_workdaystarts[$i] . ">"
-		        . $phpgw->preferences->formattime($i+1,"00") . "</option>";
+		        . $phpgw->common->formattime($i+1,"00") . "</option>";
 	       ?>
                </select>
               </td>
@@ -190,7 +190,7 @@
 	        <?php
 		  for ($i=0; $i<24; $i++)
 		      echo "<option value=\"$i\"" . $t_workdayends[$i] . ">"
-		         . $phpgw->preferences->formattime($i+1,"00") . "</option>";
+		         . $phpgw->common->formattime($i+1,"00") . "</option>";
 	        ?>
                </select>
               </td>
@@ -275,43 +275,43 @@
         $phpgw->db->lock("preferences");
      }
 
-     $phpgw->preferences->add($phpgw->session->loginid,"maxmatchs");
-     $phpgw->preferences->add($phpgw->session->loginid,"tz_offset");
-     $phpgw->preferences->add($phpgw->session->loginid,"dateformat");
-     $phpgw->preferences->add($phpgw->session->loginid,"timeformat");
-     $phpgw->preferences->add($phpgw->session->loginid,"lang");
-     $phpgw->preferences->add($phpgw->session->loginid,"default_sorting");
-     $phpgw->preferences->add($phpgw->session->loginid,"default_app");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"maxmatchs");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"tz_offset");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"dateformat");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"timeformat");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"lang");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"default_sorting");
+     $phpgw->common->preferences_add($phpgw->session->loginid,"default_app");
 
      if ($navbar_text) {
-        $phpgw->preferences->add($phpgw->session->loginid,"navbar_text");
+        $phpgw->common->preferences_add($phpgw->session->loginid,"navbar_text");
      }
 
      if ($phpgw_info["user"]["permissions"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->preferences->add($phpgw->session->loginid,"show_currentusers");
+           $phpgw->common->preferences_add($phpgw->session->loginid,"show_currentusers");
         }
      }
 
      if ($phpgw_info["user"]["permissions"]["email"]) {
         if ($mainscreen_showmail) {
-           $phpgw->preferences->add($phpgw->session->loginid,"mainscreen_showmail");
+           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showmail");
         }
-        $phpgw->preferences->add($phpgw->session->loginid,"email_sig");
+        $phpgw->common->preferences_add($phpgw->session->loginid,"email_sig");
      }
 
      if ($phpgw_info["user"]["permissions"]["addressbook"]) {
         if ($mainscreen_showbirthdays) {
-           $phpgw->preferences->add($phpgw->session->loginid,"mainscreen_showbirthdays");
+           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showbirthdays");
         }
      }
 
      if ($phpgw_info["user"]["permissions"]["calendar"]) {
-        $phpgw->preferences->add($phpgw->session->loginid,"weekdaystarts");
-        $phpgw->preferences->add($phpgw->session->loginid,"workdaystarts");
-        $phpgw->preferences->add($phpgw->session->loginid,"workdayends");
+        $phpgw->common->preferences_add($phpgw->session->loginid,"weekdaystarts");
+        $phpgw->common->preferences_add($phpgw->session->loginid,"workdaystarts");
+        $phpgw->common->preferences_add($phpgw->session->loginid,"workdayends");
         if ($mainscreen_showevents) {
-           $phpgw->preferences->add($phpgw->session->loginid,"mainscreen_showevents");
+           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showevents");
         }
      }
 

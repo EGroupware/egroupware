@@ -24,7 +24,7 @@
 
   if ($ntheme) {
      $theme = $ntheme;
-     $phpgw->preferences->update($phpgw->session->loginid,"theme");
+     $phpgw->common->preferences_update($phpgw->session->loginid,"theme");
      Header("location: " . $phpgw->link("changetheme.php"));
      exit;
   }
