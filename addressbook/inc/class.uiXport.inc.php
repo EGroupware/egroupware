@@ -166,10 +166,19 @@
 				sort($myfilearray);
 				for($i=0;$i<count($myfilearray);$i++)
 				{
-					$fname = str_replace('_',' ',$myfilearray[$i]);
+					if ($myfilearray[$i] == 'Import_Multiple_VCard')
+					{
+						$fname = lang('import multiple vcard');
+					}
+					else
+					{
+						$fname = str_replace('Import_from_', lang('import from') . ' ' ,$myfilearray[$i]);
+						$fname = str_replace('_', ' ', $fname);
+					}
 					$conv .= '<OPTION VALUE="' . $myfilearray[$i].'">' . $fname . '</OPTION>';
 				}
 
+				$this->template->set_var('lang_none', lang('none'));
 				$this->template->set_var('lang_cancel',lang('Cancel'));
 				$this->template->set_var('lang_cat',lang('Select Category'));
 				$this->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
@@ -269,10 +278,18 @@
 				sort($myfilearray);
 				for($i=0;$i<count($myfilearray);$i++)
 				{
-					$fname = str_replace('_',' ',$myfilearray[$i]);
-					$conv .= '        <option value="'.$myfilearray[$i].'">'.$fname.'</option>'."\n";
+					if ($myfilearray[$i] == 'Multiple_VCard')
+					{
+						$fname = lang('multiple vcard');
+					}
+					else
+					{
+						$fname = str_replace('_',' ',$myfilearray[$i]);
+					}
+						$conv .= '        <option value="'.$myfilearray[$i].'">'.$fname.'</option>'."\n";
 				}
 
+				$this->template->set_var('lang_none', lang('none'));
 				$this->template->set_var('lang_cancel',lang('Cancel'));
 				$this->template->set_var('lang_cat',lang('Select Category'));
 				$this->template->set_var('lang_export_instructions',lang('Download export file (Uncheck to debug output in browser)'));
