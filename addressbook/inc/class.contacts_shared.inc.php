@@ -275,6 +275,8 @@
 
 			$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
 
+			$s = CreateObject('phpgwapi.sbox');
+
 			$address = $this->read_single_entry($id,$fields);
 
 			if ($address[0]['title'])
@@ -325,7 +327,9 @@
 			$a .= $t->set_var('city',$city);
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
-			$a .= $t->set_var('country',lang($country));
+
+			$countryname = $s->get_full_name($country);
+			$a .= $t->set_var('country',lang($countryname));
 
 			$a .= $t->fp('out','address_format');
 			return $a;
