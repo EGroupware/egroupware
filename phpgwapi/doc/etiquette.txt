@@ -7,24 +7,24 @@ of this writing.  In its current location, it is impossible to restrict access
 for each developer to a particular module or application.  As such, it is
 important that some basic rules be followed when developing in CVS:
 
-1. Many of the developers, and all of the core developers, frequent the IRC
+1.  Many of the developers, and all of the core developers, frequent the IRC
 	channel #phpgroupware on irc.openprojects.net.  Please take the time to
 	drop by and introduce yourself.
 
-2. If you want to begin some work on an existing app, please consult the
+2.  If you want to begin some work on an existing app, please consult the
 	primary developer for the application first.  Most of the files will
 	contain some type of identification and/or contact information in the
 	head of each file.
 
-3. If you are unable to contact the author, please contact at least one of the
+3.  If you are unable to contact the author, please contact at least one of the
 	project leads (Seek3r, jengo, skeeter) or a core developer.
 
-4. Please see the coding_standard.txt document in this folder for some basic
+4.  Please see the coding_standard.txt document in this folder for some basic
 	guidelines for code formatting.  PHP can be interpreted in many forms,
 	and this document outlines our preference to ensure readability and
 	compatibility.
 
-5. If you have just joined the project, or have always kept to your own
+5.  If you have just joined the project, or have always kept to your own
 	application, etc., then please exercise caution when committing changes
 	in the phpgwapi (the API), admin, and preferences modules.  These can
 	affect the operation of all applications.  In particular, work done in
@@ -33,7 +33,7 @@ important that some basic rules be followed when developing in CVS:
 	and authorization is very risky to your continued involvement with this
 	project ;)
 
-6. If you are working in the API, or on some other application which could
+6.  If you are working in the API, or on some other application which could
 	affect the useability for users and developers, please be sure to fully
 	test your changes.  It is recommended that you visit a large sampling of
 	applications to ensure that they still work as expected after your
@@ -42,3 +42,17 @@ important that some basic rules be followed when developing in CVS:
 	of an application that uses LDAP instead of SQL for storage and
 	retreival.
 
+7.  Do not write table update scripts that alter content or structure of the
+	API or of another application's tables.
+
+8.  When importing a new application, please verify that it does not conflict
+	with another application.
+
+9.  Please do not import a new application that does not have some basic
+	functionality in place or at least a description and basic documentation.
+
+9.  If you do not have an original icon for your app, please do not import a
+	copy from another application icon.  The API should insert a default
+	until a new one is created.  The size of icons should be 31x31 for all but
+	the idsociety template.  Do not put a 31x31 color icon in the idsociety
+	template.
