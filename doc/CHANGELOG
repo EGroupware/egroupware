@@ -7,8 +7,9 @@
 		- Fixed setup script not working properly with certain version of MySQL.
 		- Fixed the participants list in the calendar.
 		- Fixed permission bug that was not checking users access to an app.
-	        - Applied Patch #101453 - CJK character set display
-		- Applied Patch #101321 - CZECH lang translation
+	        - Applied Patch #101453 - CJK character set display.
+		- Applied Patch #101321 - CZECH lang translation.
+		- Now ISO 639 compliant with language translation id.
 
 [0.9.1] - Fixed a few missing variables with templates.
 	    - editing a product in the inventory program now forwards you back to the category
