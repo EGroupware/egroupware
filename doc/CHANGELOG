@@ -36,6 +36,8 @@
 	- Added ability to set users defaut calendar view of top icon.
 	- Changed calednar duration to a true date/time.
 	- Added ability to filter calendar events based on access.
+	- Merged in patch adding free() to the pgsql db.
+	  Thanks count
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
