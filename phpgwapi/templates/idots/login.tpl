@@ -76,8 +76,8 @@
 
 		<table  cellspacing=0 cellpadding=0 width="100%" border="0">
 		<tr>
-			<td colspan="3" align="center">
-								<br>
+			<td colspan="3" align="left">
+			{register_link}<br/>
 				<img width="200" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="spacer" />
 			</td>
 		</tr>
@@ -139,7 +139,8 @@ document.login_form.login.focus();
 <img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
 <img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">
 </div>
-<div style="bottom:10px;right:10px;position:absolute;">
+<div id="divPoweredBy" align="center">
+<br/>
 <a href="http://www.egroupware.org" target="_blank">eGroupWare</a> {version}</div>
 </body>
 </html>

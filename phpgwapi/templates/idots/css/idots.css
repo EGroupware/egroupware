@@ -69,6 +69,8 @@ input,button
 
 input[type=submit],input[type=button],button
 {
+	margin:1px;
+	padding:1px;
 	cursor: pointer; 
 	cursor: hand;
 }
