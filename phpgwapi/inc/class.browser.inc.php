@@ -221,7 +221,7 @@
 		}
 
 		// Echo content headers for file downloads
-		function content_header($fn="",$mime="application/octetstream",$nocache=True)
+		function content_header($fn="",$mime="application/octetstream",$length="",$nocache=True)
 		{
 			if ($fn)
 			{
@@ -237,6 +237,11 @@
 				// Show this for all
 				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
 				header('Content-type: '.$mime);
+
+				if ($length)
+				{
+					header("Content-length: ".$length);
+				}
 
 				if ($nocache)
 				{
