@@ -1152,8 +1152,8 @@
 			while (list($name,$value) = each($extra)) {
 				$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')";
+				$db2->query($sql,__LINE__,__FILE__);
 			}
-    		$db2->query($sql,__LINE__,__FILE__);
 		}
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
 	}
