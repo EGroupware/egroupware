@@ -16,10 +16,11 @@
 	);
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../header.inc.php');
+	$appname = 'preferences';
+	include(PHPGW_SERVER_ROOT.'/'.$appname.'/version.inc.php');
 ?>
-<img src="<?php echo $phpgw->common->image('preferences','navbar.gif'); ?>" border="0">
-<font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2"><p/>
-<?php include(PHPGW_SERVER_ROOT.'/preferences/version.inc.php'); ?>
-Version: <b><?php echo $phpgw_info['server']['versions']['preferences']; ?></b>
+<img src="<?php echo $phpgw->common->image($appname,'navbar.gif'); ?>" border="0"><p/>
+<font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2">
+Version: <b><?php echo $phpgw_info['server']['versions'][$appname]; ?></b>
 </font>
 <?php $phpgw->common->phpgw_footer(); ?>
