@@ -1,3 +1,6 @@
+[0.9.8] - Merged in patch for UW-Maildir IMAP server support
+          Thanks milosch
+
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
         - Added capability to schedule others and not yourself to calendar.
@@ -22,22 +25,22 @@
         - session class will now use the HTTP_X_FORWARDED_FOR if a user is behind a proxy server.
         - Merged in patch to fix the addressbook not displaying all of the fields.
           Thanks ydario
-	- New Calendar table structures and code.
-	- Applied patch to fix set_time_limit() warnings in safe_mode
-	  Thanks count
-	- Fixed warning messages in EMail with/without CC header info.
-	- Fixed errors for TTS mailings. 
-	  (This was actually a problem with email, users not having a 
-	   Sent folder.  Sent Folders automatically created if not exist.)
-	- Fixed matrixview warnings when viewing manual.
-	- Fixed problem with moving to prev/next msg in NNTP.
-	- Fix possible problem connecting to LDAP server.
-	- Fix home page display of calendar events.
-	- Added ability to set users defaut calendar view of top icon.
-	- Changed calednar duration to a true date/time.
-	- Added ability to filter calendar events based on access.
-	- Merged in patch adding free() to the pgsql db.
-	  Thanks count
+        - New Calendar table structures and code.
+        - Applied patch to fix set_time_limit() warnings in safe_mode
+          Thanks count
+        - Fixed warning messages in EMail with/without CC header info.
+        - Fixed errors for TTS mailings. 
+          (This was actually a problem with email, users not having a 
+           Sent folder.  Sent Folders automatically created if not exist.)
+        - Fixed matrixview warnings when viewing manual.
+        - Fixed problem with moving to prev/next msg in NNTP.
+        - Fix possible problem connecting to LDAP server.
+        - Fix home page display of calendar events.
+        - Added ability to set users defaut calendar view of top icon.
+        - Changed calednar duration to a true date/time.
+        - Added ability to filter calendar events based on access.
+        - Merged in patch adding free() to the pgsql db.
+          Thanks count
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
