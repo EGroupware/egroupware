@@ -172,12 +172,17 @@
 			return False;
 		}
 
+		function subject_from_des($des)
+		{
+			return substr($des,0,60).' ...';
+		}
+
 		function read($info_id)
 		{
 			$err = $this->so->read($info_id) === False;
 			$data = &$this->so->data;
 
-			if ($data['info_subject'] == (substr($data['info_des'],0,60).' ...'))
+			if ($data['info_subject'] == $this->subject_from_des($data['info_des']))
 			{
 				$data['info_subject'] = '';
 			}
@@ -218,9 +223,9 @@
 				{
 					$values['info_owner'] = $this->so->user;
 				}
-				if (!$values['info_subject'])
+				if (empty($values['info_subject']))
 				{
-					$values['info_subject'] = substr($values['info_des'],0,60).' ...';
+					$values['info_subject'] = $this->subject_from_des($values['info_des']);
 				}
 			}
 			if ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))
@@ -260,7 +265,12 @@
 			{
 				$info = $this->read( $info );
 			}
-			return $info ? $info['info_subject'] : False;
+			if (!$info)
+			{
+				return False;
+			}
+			return !empty($info['info_subject']) ? $info['info_subject'] :
+				$this->subject_from_des($info['info_descr']);
 		}
 
 		/*!
