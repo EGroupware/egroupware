@@ -203,9 +203,9 @@
 				$newGroupID = $newData['cn'];
 				$oldGroupID = $newData['cn'];
 			}
-			if($this->data['type'])
+			if($this->data['account_type'])
 			{
-				$newData['phpgwaccounttype'] = $this->data['type'];
+				$newData['phpgwaccounttype'] = $this->data['account_type'];
 			}
 
 			/*
