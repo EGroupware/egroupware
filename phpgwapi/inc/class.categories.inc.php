@@ -532,15 +532,15 @@
 					(
 						'id'		=> $cat['id'],
 						'name'		=> $name,
-						'selected_cat' => $sel_cat
+						'selected'	=> $sel_cat
 					);
 				}
 
 				for ($i=0;$i<count($cat_list);$i++)
 				{
-					if ($cat_list[$i]['selected_cat'] != 'selected')
+					if ($cat_list[$i]['selected'] != 'selected')
 					{
-						unset($cat_list[$i]['selected_cat']);
+						unset($cat_list[$i]['selected']);
 					}
 				}
 				return $cat_list;

@@ -597,6 +597,55 @@
 			return $this->template->fp('out','filter');
 		} /* filter() */
 
+
+		function xslt_filter($data=0)
+		{
+			if(is_array($data))
+			{
+				$filter = (isset($data['filter'])?$data['filter']:'');
+				$yours  = (isset($data['yours'])?$data['yours']:'');
+			}
+			else
+			{
+				$filter = get_var('filter',Array('GET','POST'));
+			}
+
+			$filter_obj = array
+			(
+				array
+				(
+					'key' => 'none',
+					'lang' => lang('show all')
+				),
+				array
+				(
+					'key'	=> 'yours',
+					'lang'	=> lang('only yours')
+				),
+				array
+				(
+					'key'	=> 'private',
+					'lang'	=> lang('private')
+				)
+			);
+
+			if(is_array($filter_obj))
+			{
+				for($i=0;$i<count($filter_obj);$i++)
+				{
+					if($filter_obj[$i]['key'] == $filter)
+					{
+						$filter_obj[$i]['selected'] = 'yes';
+					}
+					if (!$yours && $filter_obj[$i]['key'] == 'yours')
+					{
+						unset($filter_obj[$i]);
+					}
+				}
+			}
+			return $filter_obj;
+		}
+
 		/*!
 		@function alternate_row_color
 		@abstract alternate row colour
