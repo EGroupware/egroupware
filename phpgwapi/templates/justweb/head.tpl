@@ -44,6 +44,7 @@ dhtmlMenu.addItem(new NavBarMenuItem("Preferences", ""));
 dhtmlMenu.addItem(new NavBarMenuItem("General", "{webserver_url}/preferences"));
 dhtmlMenu.addItem(new NavBarMenuItem("Email", "{webserver_url}/email/preferences.php"));
 dhtmlMenu.addItem(new NavBarMenuItem("Calendar", "{webserver_url}/calendar/preferences.php"));
+dhtmlMenu.addItem(new NavBarMenuItem("Addressbook", "{webserver_url}/addressbook/preferences.php"));
 myNavBar1.addMenu(dhtmlMenu);
 
 dhtmlMenu = new NavBarMenu(62, 120);
