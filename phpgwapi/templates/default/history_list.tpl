@@ -1,8 +1,8 @@
-<!-- BEGIN row_history -->
+<!-- BEGIN row_no_history -->
 	<tr bgcolor="{tr_color}">
-		<td colspan="3">{lang_no_history}</td>
+		<td align="center" colspan="4"><b>{lang_no_history}</b></td>
 	</tr>
-<!-- END row_history -->
+<!-- END row_no_history -->
 
 <!-- BEGIN row -->
 	<tr bgcolor="{tr_color}">
