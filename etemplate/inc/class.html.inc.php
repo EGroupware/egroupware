@@ -271,15 +271,12 @@ class html
 
 	function image( $app,$name,$title='',$options='' )
 	{
-		if (strstr($name,'.') === False)
-		{
-			$name .= '.gif';
-		}
 		if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
 		{
 			$path = $name;		// name may already contain absolut path
 		}
-		if (!@is_readable($_SERVER['DOCUMENT_ROOT'] . $path))
+		// as some webservers does not report there DOCUMENT_ROOT starting with a '/', we just add one
+		if (!@is_readable('/'.$_SERVER['DOCUMENT_ROOT'] . $path))
 		{
 			return $title;
 		}
