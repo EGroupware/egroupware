@@ -269,7 +269,7 @@
 
 			if (!$Ok)
 			{
-				$this->m_odb->transaction_fail();
+				$this->m_odb->transaction_abort();
 				return False;
 			}
 			$this->DropTable($tmp_name);
