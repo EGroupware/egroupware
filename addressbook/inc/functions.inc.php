@@ -110,12 +110,12 @@
 
 <table width="75%" border="0" align="center">
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_common("Last Name"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Last Name"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $lastname; ?>
     </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_common("First Name"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("First Name"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $firstname; ?>
@@ -123,14 +123,14 @@
   </tr>
   <tr>
     <td>
-     <font color="#000000" face="" size="-1"><?php echo lang_common("E-mail"); ?>:</font>
+     <font color="#000000" face="" size="-1"><?php echo lang("E-mail"); ?>:</font>
     </td>
     <td>
       <font size="-1">
       <?php echo $email; ?>
     </font></td>
 
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Company Name"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Company Name"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $company; ?>
@@ -138,55 +138,55 @@
     <td><font size="-1"></font></td>
   </tr>
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Home Phone"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Home Phone"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $hphone; ?>
     </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Fax"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Fax"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $fax; ?>
     </font></td>
   </tr>
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Work Phone"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Work Phone"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $wphone; ?>
     </font></td>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Pager"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Pager"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $pager; ?>
     </font></td>
   </tr>
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("Mobile"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("Mobile"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $mphone; ?>
     </font></td>
-    <td><font face="" size="-1" color="#000000"><?php echo lang_addressbook("Other number"); ?>:</font></td>
+    <td><font face="" size="-1" color="#000000"><?php echo lang("Other number"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $ophone; ?>
     </font></td>
   </tr>
   <tr>
-    <td><font face="" size="-1"><?php echo lang_addressbook("Street"); ?>:</font></td>
+    <td><font face="" size="-1"><?php echo lang("Street"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $street; ?>
     </font></td>
-    <td><font face="" size="-1"><?php echo lang_addressbook("Birthday"); ?>:</font></td>
+    <td><font face="" size="-1"><?php echo lang("Birthday"); ?>:</font></td>
     <td>
       <font size="-1">
         <?php echo $bday; ?>
       </font> </td>
   </tr>
   <tr>
-    <td><font face="" size="-1"><?php echo lang_addressbook("City"); ?>:</font></td>
+    <td><font face="" size="-1"><?php echo lang("City"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $city; ?>
@@ -195,7 +195,7 @@
     <td><font size="-1"></font></td>
   </tr>
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang_addressbook("State"); ?>:</font></td>
+    <td><font color="#000000" face="" size="-1"><?php echo lang("State"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $state; ?>
@@ -204,7 +204,7 @@
     <td><font size="-1"></font></td>
   </tr>
   <tr> 
-    <td><font face="" size="-1"><?php echo lang_addressbook("ZIP Code"); ?>:</font></td>
+    <td><font face="" size="-1"><?php echo lang("ZIP Code"); ?>:</font></td>
     <td>
       <font size="-1">
       <?php echo $zip; ?>
@@ -220,35 +220,35 @@
   <?php
     if ($format == "view") {
        if ($access != "private" && $access != "public") {
-	  echo "<td><font size=\"-1\">" . lang_common("Group access") . ":</font></td>"
+	  echo "<td><font size=\"-1\">" . lang("Group access") . ":</font></td>"
 	     . "<td colspan=\"3\"><font size=\"-1\">"
 	     . $phpgw->accounts->convert_string_to_names($access);
        } else {
-	  echo "<td><font size=\"-1\">" . lang_common("access") . ":</font></td>"
+	  echo "<td><font size=\"-1\">" . lang("access") . ":</font></td>"
 	     . "<td colspan=\"3\"><font size=\"-1\">"
 	     . $access;
        }
     } else {
        ?>
-    <td><font size="-1"><?php echo lang_common("Access"); ?>:</font></td>
+    <td><font size="-1"><?php echo lang("Access"); ?>:</font></td>
     <td colspan="3">
       <font size="-1">
 
       <select name="access">
        <option value="private"<?php
-        if ($access == "private") echo " selected"; ?>><?php echo lang_common("private"); ?></option>
+        if ($access == "private") echo " selected"; ?>><?php echo lang("private"); ?></option>
        <option value="public"<?php
-        if ($access == "public") echo " selected"; ?>><?php echo lang_common("Global Public"); ?></option>
+        if ($access == "public") echo " selected"; ?>><?php echo lang("Global Public"); ?></option>
        <option value="group"<?php
         if ($access != "public" && $access != "private" && $access != "")
            echo " selected";
-        echo ">" . lang_common("Group Public") . "</option></select>";
+        echo ">" . lang("Group Public") . "</option></select>";
     }
     ?>
     </tr>
     <?php
       if ($format != "view") {
-         echo "<tr><td><font size=\"-1\">" . lang_common("Which groups")
+         echo "<tr><td><font size=\"-1\">" . lang("Which groups")
 	    . ":</font></td><td colspan=\"3\"><select name=\"n_groups[]\" "
 	    . "multiple size=\"5\">";
 
@@ -264,7 +264,7 @@
       }
 
     if ($format == "view")
-       echo "<tr><td><font size=\"-1\">" . lang_common("Created by") . ":</font></td>"
+       echo "<tr><td><font size=\"-1\">" . lang("Created by") . ":</font></td>"
 	  . "<td colspan=\"3\"><font size=\"-1\">"
 	  . grab_owner_name($fields[owner]);
    
@@ -272,7 +272,7 @@
     </td>
   </tr>
   <tr>
-    <td><font size="-1"><?php echo lang_addressbook("Notes"); ?>:
+    <td><font size="-1"><?php echo lang("Notes"); ?>:
       
     </font></td>
     <td colspan="3">
