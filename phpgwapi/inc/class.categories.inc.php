@@ -398,17 +398,18 @@
 		@result $s array - populated with categories
 		*/
 
-		function formatted_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
+		function formatted_list($format,$type = 'all',$selected = '',$globals = True,$site_link = 'site',$self = '')
 		{
 			if(is_array($format))
 			{
 				$temp_format	= $format['format'];
 				$type			= (isset($format['type'])?$format['type']:'all');
 				$selected		= (isset($format['selected'])?$format['selected']:'');
-				$globals		= (isset($format['globals'])?$format['globals']:False);
+				$self			= (isset($format['self'])?$format['self']:'');
+				$globals		= (isset($format['globals'])?$format['globals']:True);
 				$site_link		= (isset($format['site_link'])?$format['site_link']:'site');
 				settype($format,'string');
-				$format			= $temp_format;
+				$format			= ($temp_format?$temp_format:'select');
 				unset($temp_format);
 			}
 
@@ -424,6 +425,17 @@
 			else
 			{
 				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$globals);
+			}
+
+			if($self)
+			{
+				for ($i=0;$i<count($cats);$i++)
+				{
+					if ($cats[$i]['cat_id'] == $self)
+					{
+						unset($cats[$i]);
+					}
+				}
 			}
 
 			if ($format == 'select')
@@ -499,7 +511,8 @@
 				$format			= (isset($data['format'])?$data['format']:'filter');
 				$type			= (isset($data['type'])?$data['type']:'all');
 				$selected		= (isset($data['selected'])?$data['selected']:'');
-				$globals		= (isset($data['globals'])?$data['globals']:False);
+				$self			= (isset($data['self'])?$data['self']:'');
+				$globals		= (isset($data['globals'])?$data['globals']:True);
 			}
 
 			if (!is_array($selected))
@@ -524,6 +537,17 @@
 				case 'filter':
 					$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'cat_filter');
 					break;
+			}
+
+			if($self)
+			{
+				for ($i=0;$i<count($cats);$i++)
+				{
+					if ($cats[$i]['cat_id'] == $self)
+					{
+						unset($cats[$i]);
+					}
+				}
 			}
 
 			while (is_array($cats) && list(,$cat) = each($cats))

@@ -345,7 +345,7 @@
 				'lang_no_cat'				=> lang('no category'),
 				'lang_cat_statustext'		=> lang('Select the parent category. If this is a main category select NO CATEGORY'),
 				'select_name'				=> 'values[parent]',
-				'cat_list'					=> $this->bo->cats->formatted_xslt_list(array('format' => 'select','selected' => $parent,'globals' => $global_cats))
+				'cat_list'					=> $this->bo->cats->formatted_xslt_list(array('format' => 'select', 'selected' => $parent,'self' => $this->cat_id,'globals' => $global_cats))
 			);
 
 			$link_data['menuaction'] = 'admin.uicategories.edit';
