@@ -63,7 +63,7 @@
     $t->set_var('hidden_vars',$hidden_vars);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
-    $t->set_var('title_categories',lang("Add $cats_app category for"));
+    $t->set_var('title_categories',lang("Add x category for",$cats_app));
     $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
     $t->set_var('lang_parent',lang('Parent category'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
