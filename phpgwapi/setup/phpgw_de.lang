@@ -138,8 +138,8 @@ july	common	de	Juli
 june	common	de	Juni
 last name	common	de	Name
 lastname	common	de	Name
-login	common	de	Login
-logout	common	de	Logout
+login	common	de	Anmelden
+logout	common	de	Abmelden
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 manual	common	de	Handbuch
@@ -171,7 +171,7 @@ password has been updated	common	de	Passwort wurde aktualisiert
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen f&uuml;r diese Applikation !
-powered by phpgroupware version x	common	de	Powered by <a href="http://www.phpgw.de">phpGroupWare</a> version %1
+powered by	common	de	Powered by	
 preferences	common	de	Einstellungen
 print	common	de	Drucken
 priority	common	de	Priorität
@@ -186,11 +186,11 @@ september 	common	de	September
 session has been killed	common	de	Session wurde gelöscht
 show all	common	de	alle anzeigen
 showing x	common	de	%1 Einträge
-showing x - x of x	common	de	%1 Einträge - %2 von %3
+showing x - x of x	common	de	%1 - %2 von %3 Einträgen
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
-sorry, your login has expired	login	de	Sorry - Login abgelaufen
+sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
 subject	common	de	Betreff
 submit	common	de	Absenden
 sunday	common	de	Sonntag

@@ -18,10 +18,32 @@
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
 
-	$setup_info['phpgwapi']['author']      = 'phpGW Core';
+	$setup_info['phpgwapi']['author']      = 'phpGroupWare coreteam';
 	$setup_info['phpgwapi']['description'] = 'The core of phpGroupWare, the API itself...';
-	$setup_info['phpgwapi']['maintainer']  = 'phpGW Core';
-	$setup_info['phpgwapi']['maintainer_email'] = 'ceb@phpgroupware.org<br>jengo@phpgroupware.org<br>milosch@phpgroupware.org<br>seek3r@phpgroupware.org<br>skeeter@phpgroupware.org';
+
+	$setup_info['phpgwapi']['maintainer'][]  = array
+	(
+		'name'	=> 'Joseph Engo',
+		'email'	=> 'jengo@phpgroupware.org'
+	);
+
+	$setup_info['phpgwapi']['maintainer'][]  = array
+	(
+		'name'	=> 'Marc A. Peters',
+		'email'	=> 'skeeter@phpgroupware.org'
+	);
+
+	$setup_info['phpgwapi']['maintainer'][]	= array
+	(
+		'name'	=> 'Bettina Gille',
+		'email'	=> 'ceb@phpgroupware.org'
+	);
+
+	$setup_info['phpgwapi']['maintainer'][]  = array
+	(
+		'name'	=> 'Dan Kuykendall',
+		'email'	=> 'seek3r@phpgroupware.org'
+	);
 
 	/* The tables this app creates */
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_sessions';
@@ -47,7 +69,6 @@
 
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
-	$setup_info['notifywindow']['title']     = 'Notify Window';
 	$setup_info['notifywindow']['version']   = '0.9.13.002';
 	$setup_info['notifywindow']['enable']    = 2;
 	$setup_info['notifywindow']['app_order'] = 1;
