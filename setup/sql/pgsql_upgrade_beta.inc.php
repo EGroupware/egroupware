@@ -1019,24 +1019,24 @@
   {
 		global $phpgw_info, $phpgw_setup;
 
-    $phpgw_setup->db->query("alter table config rename phpgw_config",__LINE__,__FILE__);
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
-  }
+		$phpgw_setup->db->query("alter table config rename to phpgw_config",__LINE__,__FILE__);
 
-  $test[] = "0.9.10pre7";
-  function upgrade0_9_10pre7()
-  {
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
+    }
+
+    $test[] = "0.9.10pre7";
+    function upgrade0_9_10pre7()
+    {
 		global $phpgw_info, $phpgw_setup;
 
-    $phpgw_setup->db->query("alter table applications rename phpgw_applications",__LINE__,__FILE__);
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
-  }
+		$phpgw_setup->db->query("alter table applications rename to phpgw_applications",__LINE__,__FILE__);
 
-  $test[] = "0.9.10pre8";
-  function upgrade0_9_10pre8()
-  {
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
+    }
+
+    $test[] = "0.9.10pre8";
+    function upgrade0_9_10pre8()
+    {
 		global $phpgw_info, $phpgw_setup;
 
 		// Just temp data anyway
@@ -1053,7 +1053,7 @@
  	 $phpgw_setup->db->query($sql);
      
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
-  }
+    }
 
   $test[] = '0.9.10pre9';
   function upgrade0_9_10pre9()
@@ -1182,7 +1182,7 @@
                     c_tel_msg 		boolean DEFAULT 'n' NOT NULL,
                     c_tel_fax 		boolean DEFAULT 'n' NOT NULL,
                     c_tel_prefer 	boolean DEFAULT 'n' NOT NULL,
-                    d_emailtype 	text check(d_emailtype in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
+                    d_emailtype 	text check(status in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
                     d_email 		varchar(64),
                     d_email_work 	boolean DEFAULT 'n' NOT NULL,
                     d_email_home 	boolean DEFAULT 'n' NOT NULL,
