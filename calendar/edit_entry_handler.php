@@ -92,6 +92,11 @@
 			}
 		}
 
+		if(!isset($private))
+		{
+			$private = 'public';
+		}
+
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init($cal_stream);
 		$phpgw->calendar->event_set_category($cal_stream,'');
@@ -99,7 +104,7 @@
 		$phpgw->calendar->event_set_description($cal_stream,$description);
 		$phpgw->calendar->event_set_start($cal_stream,$start[year],$start[month],$start[mday],$start[hour],$start[min],0);
 		$phpgw->calendar->event_set_end($cal_stream,$end[year],$end[month],$end[mday],$end[hour],$end[min],0);
-		$phpgw->calendar->event_set_class($cal_stream,(private != 'private'));
+		$phpgw->calendar->event_set_class($cal_stream,($private == 'public'));
 
 		if($id != 0)
 		{
