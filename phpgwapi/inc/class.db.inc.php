@@ -13,7 +13,7 @@
 	/*
 	 * Database abstraction library
 	 *
-	 * This allows eGroupWare to use multiple database backends via ADOdb
+	 * This allows eGroupWare to use multiple database backends via ADOdb 4.20
 	 *
 	 * @package phpgwapi
 	 * @subpackage db
@@ -25,7 +25,7 @@
 	{
 		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
 	}
-	if (@$GLOBALS['phpgw_info']['server']['use_adodb'])
+	if (!isset($GLOBALS['phpgw_info']['server']['use_adodb']) || $GLOBALS['phpgw_info']['server']['use_adodb'])
 	{
 		include_once('adodb/adodb.inc.php');
 	}
@@ -864,7 +864,7 @@
 	}
 
 	// REMOVE-IF-ONLY-ADODB
-	if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
+	if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) && !$GLOBALS['phpgw_info']['server']['use_adodb'])
 	{
 		include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
 	}
