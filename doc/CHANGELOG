@@ -1,4 +1,4 @@
-[08--2000] - Added print icon that allows you to print out a page without having
+[09072000] - Added print icon that allows you to print out a page without having
 	     the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
 	   - on group creation the files directory tried to be created in
 	     "filemanager/groups/" instead of in "files/groups/" - fixed.
@@ -27,6 +27,8 @@
 	   - Converted session->loginid, session->firstname, session->lastname, session->con to store
 	     this data in the phpgw_info array.
 	   - Moved check_owner() from session class to common.
+	   - Converted all working apps to use the new lang() function which uses a database instead of
+	     the lang files. (Passing extra variables is not working perfect, yet)
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
