@@ -389,7 +389,7 @@
 					$s .= '>';
 					for ($j=0;$j<$cats[$i]['level'];$j++)
 					{
-						$s .= '-';
+						$s .= '&nbsp;.&nbsp;';
 					}
 					$s .= $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
@@ -481,7 +481,7 @@
 					$name = '';
 					for ($i=0;$i<$cat['level'];$i++)
 					{
-						$name .= '-';
+						$name .= '&nbsp;.&nbsp;';
 					}
 					$name .= $GLOBALS['phpgw']->strip_html($cat['name']);
 
