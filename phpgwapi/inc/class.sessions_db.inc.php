@@ -141,6 +141,12 @@
 			$db->query("SELECT * FROM phpgw_sessions WHERE session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
 
+			if ($db->f('session_dla') <= (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout']))
+			{
+				$this->clean_sessions();
+				return False;
+			}
+
 			$this->session_flags = $db->f('session_flags');
 
 			$login_array = explode('@', $db->f('session_lid'));
@@ -287,14 +293,11 @@
 		// This will remove stale sessions out of the database
 		function clean_sessions()
 		{
-			// If you plan on using the cron apps, please remove the following lines.
-			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
-
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - 7200)
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout'])
 				. "' AND session_flags !='A'",__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - 86400)
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_app_timeout'])
 				. "'",__LINE__,__FILE__);
 		}
 
