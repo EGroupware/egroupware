@@ -50,7 +50,7 @@
 				'out' => array()
 			),
 			'categories' => array(
-				'in'  => array('int'),
+				'in'  => array('bool'),
 				'out' => array('struct')
 			),
 			'customfields' => array(
