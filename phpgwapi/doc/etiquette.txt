@@ -16,7 +16,7 @@ important that some basic rules be followed when developing in CVS:
 	head of each file.
 
 3.  If you are unable to contact the author, please contact at least one of the
-	project leads (Seek3r, jengo, skeeter) or a core developer.
+	project leads (Seek3r, jengo, skeeter, Milosch, ceb) or a core developer.
 
 4.  Please see the coding_standard.txt document in this folder for some basic
 	guidelines for code formatting.  PHP can be interpreted in many forms,
@@ -50,8 +50,20 @@ important that some basic rules be followed when developing in CVS:
 9.  Please do not import a new application that does not have some basic
 	functionality in place or at least a description and basic documentation.
 
-9.  If you do not have an original icon for your app, please do not import a
+10. If you do not have an original icon for your app, please do not import a
 	copy from another application icon.  The API should insert a default
 	until a new one is created.  The size of icons should be 31x31 for all but
 	the idsociety template.  Do not put a 31x31 color icon in the idsociety
 	template.
+
+11. Basicly all template files are located in the app_name/templates/default/
+	directory. Please do only commit template files to other app_name/templates/
+	_layout_/directories if they _differ_ from the default version. The same is
+	valid for images. All application images are located in the app_name/templates/
+	default/images directory. Please do only commit images to other than the default
+	directory if they _differ_ from the default version. Most of the applications
+	do not need other templates directories than default and idsociety. The idsociety
+	templates directory should only contain the images dir with the navbar and
+	navbar_over icon for the idsociety layout.
+	Please avoid to have files twice in your application directory.
+
