@@ -11,17 +11,6 @@
 
   /* $Id$ */
 
-	// needed until hovlink is specified in all theme files
-	if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
-	 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
-	{
-		$csshover = 'A:hover{ text-decoration:none; color: ' .$GLOBALS['phpgw_info']['theme']['hovlink'] .'; }';
-	}
-	else
-	{
-		$csshover = '';
-	}
-
 	$app_css = '';
 	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 	{
@@ -48,10 +37,6 @@
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
 		'body_tags'		=> $bodyheader,
-		'css_link'		=> $GLOBALS['phpgw_info']['theme']['link'],
-		'css_alink'		=> $GLOBALS['phpgw_info']['theme']['alink'],
-		'css_vlink'		=> $GLOBALS['phpgw_info']['theme']['vlink'],
-		'css_hovlink'	=> $csshover,
 		'app_css'		=> $app_css
 	);
 	$tpl->set_var($var);

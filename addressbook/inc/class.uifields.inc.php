@@ -34,7 +34,6 @@
 			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 				echo lang('access not permitted');
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
@@ -80,7 +79,6 @@
 			$total_records = count($fields);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_var('left',$GLOBALS['phpgw']->nextmatchs->left('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
 			$GLOBALS['phpgw']->template->set_var('right',$GLOBALS['phpgw']->nextmatchs->right('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
@@ -119,7 +117,6 @@
 			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 				echo lang('access not permitted');
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
@@ -158,7 +155,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			if($errorcount)
 			{
@@ -197,7 +193,6 @@
 			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 				echo lang('access not permitted');
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
@@ -240,7 +235,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			if($errorcount)
 			{
@@ -292,7 +286,6 @@
 			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 				echo lang('access not permitted');
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
@@ -316,7 +309,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
 					. '<input type="hidden" name="order" value="' . $order .'">' . "\n"

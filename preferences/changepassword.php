@@ -59,7 +59,6 @@
 		if(is_array($errors))
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
 			$GLOBALS['phpgw']->template->pfp('out','form');
 			$GLOBALS['phpgw']->common->phpgw_exit(True);
@@ -85,7 +84,6 @@
 	else
 	{
 		$GLOBALS['phpgw']->common->phpgw_header();
-		echo parse_navbar();
 
 		$GLOBALS['phpgw']->template->pfp('out','form');
 		$GLOBALS['phpgw']->common->phpgw_footer();

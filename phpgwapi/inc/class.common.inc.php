@@ -1053,33 +1053,75 @@
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
-		}
 
-		/*!
-		@function app_header
-		@abstract load header.inc.php for an application
-		*/
-		function app_header()
-		{
-			if (file_exists(PHPGW_APP_INC . '/header.inc.php'))
+			/*************************************************************************\
+			* If they are using frames, we need to set some variables                 *
+			\*************************************************************************/
+			if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) && 
+				$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
+				($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 			{
-				include(PHPGW_APP_INC . '/header.inc.php');
+				$GLOBALS['phpgw_info']['flags']['navbar_target'] = 'phpgw_body';
 			}
 		}
+
 		/*!
 		@function phpgw_header
 		@abstract load the phpgw header
 		*/
-		function phpgw_header()
+		function phpgw_header($forceheader = True, $forcenavbar = True)
 		{
-			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']
-				. '/head.inc.php');
-			$this->navbar(False);
-			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']
-				. '/navbar.inc.php');
+			if($forceheader)
+			{
+				$GLOBALS['phpgw_info']['flags']['noheader'] = False;
+			}
+			if($forcenavbar)
+			{
+				$GLOBALS['phpgw_info']['flags']['nonavbar'] = False;
+			}
+
+			if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
+			{
+				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/head.inc.php');
+			}
+			if(!function_exists('parse_navbar'))
+			{
+				$this->navbar(False);
+				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']	. '/navbar.inc.php');
+			}
 			if (!@$GLOBALS['phpgw_info']['flags']['nonavbar'] && !@$GLOBALS['phpgw_info']['flags']['navbar_target'])
 			{
-				echo parse_navbar();
+				parse_navbar();
+			}
+			//elseif (!@$GLOBALS['phpgw_info']['flags']['noheader'] && function_exists('parse_nonavbar'))
+			//{
+			//	parse_nonavbar();
+			//}
+			if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && !@$GLOBALS['phpgw_info']['flags']['nonavbar'])
+			{
+				$GLOBALS['phpgw']->hooks->process('after_navbar');
+				//echo '<table><tr><td>msgbox goes here</td></tr></table>';
+			}
+		}
+
+		/*!
+		@function phpgw_appheader
+		@abstract load header.inc.php for an application
+		*/
+		function phpgw_appheader()
+		{
+			if (!is_array(MENUACTION))
+			{
+				list($app,$class,$method) = explode('.',MENUACTION);
+				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
+				{
+					$GLOBALS[$class]->header();
+				}
+			}
+			elseif (file_exists(PHPGW_APP_INC . '/header.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/header.inc.php');
 			}
 		}
 
@@ -1089,9 +1131,34 @@
 
 			if (!isset($GLOBALS['phpgw_info']['flags']['nofooter']) || !$GLOBALS['phpgw_info']['flags']['nofooter'])
 			{
-				include(PHPGW_API_INC . '/footer.inc.php');
+				if((file_exists(PHPGW_APP_INC . '/footer.inc.php') || MENUACTION) &&
+					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+				{
+					if(MENUACTION)
+					{
+						list($app,$class,$method) = explode('.',MENUACTION);
+						if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+						{
+//					eval("\$GLOBALS[$class]->footer();");
+							$GLOBALS[$class]->footer();
+						}
+						elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+						{
+							include(PHPGW_APP_INC . '/footer.inc.php');
+						}
+					}
+					elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+					{
+						include(PHPGW_APP_INC . '/footer.inc.php');
+					}
+				}
+				$GLOBALS['phpgw']->db->disconnect();
+				parse_navbar_end();
 			}
- 
+		 	
 			/* Clean up mcrypt */
 			if (@is_object($GLOBALS['phpgw']->crypto))
 			{

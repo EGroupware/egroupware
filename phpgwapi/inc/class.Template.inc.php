@@ -61,7 +61,19 @@
 				$this->set_root(PHPGW_TEMPLATE_DIR);
 				$this->set_file('common', 'common.tpl');
 			}
-			$this->set_var('phpgw_css',$GLOBALS['phpgw_info']['theme']['css']);
+
+			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
+			{
+				reset($GLOBALS['phpgw_info']['theme']['css']);
+				//$css_string = '<STYLE type="text/css">'."\n";
+				while(list($key,$value) = each($GLOBALS['phpgw_info']['theme']['css']))
+				{
+					$css_string .= "\n\t$key { $value } ";
+				}
+				$css_string .= "\n";
+				//$css_string .= '</STYLE>'."\n";
+				$this->set_var('phpgw_css',$css_string);
+			}
 
 			/* Now move on to loading up the requested template set */
 			$this->set_root($root);

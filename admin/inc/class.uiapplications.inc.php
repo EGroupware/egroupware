@@ -32,7 +32,6 @@
 		function get_list()
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_file(array('applications' => 'applications.tpl'));
 			$GLOBALS['phpgw']->template->set_block('applications','list','list');
@@ -210,7 +209,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_var('lang_header',lang('Add new application'));
 			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
@@ -295,7 +293,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			if ($totalerrors)
 			{
@@ -349,7 +346,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this application ?'));
 			$GLOBALS['phpgw']->template->set_var('no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list') . '">' . lang('No') . '</a>');

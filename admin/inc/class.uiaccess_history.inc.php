@@ -41,7 +41,6 @@
 			$order = ($GLOBALS['HTTP_POST_VARS']['order']?$GLOBALS['HTTP_POST_VARS']['order']:0);
 			
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$total_records = $this->bo->total($account_id);
 

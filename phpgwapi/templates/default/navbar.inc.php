@@ -111,16 +111,6 @@
 		}
 		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');
-		// If the application has a header include, we now include it
-		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-		{
-			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
-			{
-				$GLOBALS[$class]->header();
-			}
-		}
-		$GLOBALS['phpgw']->hooks->process('after_navbar');
 		return;
 	}
 

@@ -155,7 +155,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$t->set_var('title',lang('Site Configuration'));
 			$t->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));

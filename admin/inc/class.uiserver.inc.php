@@ -95,7 +95,6 @@
 		function list_servers()
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_file(array('server_list_t' => 'listservers.tpl'));
 			$GLOBALS['phpgw']->template->set_block('server_list_t','server_list','list');
@@ -243,7 +242,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$GLOBALS['phpgw']->template->set_var('title_servers',$GLOBALS['HTTP_GET_VARS']['server_id'] ? lang('Edit Peer Server') : lang('Add Peer Server'));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiserver.edit&server_id=' . $GLOBALS['HTTP_GET_VARS']['server_id']));
@@ -297,7 +295,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$GLOBALS['phpgw']->template->set_file(array('server_delete' => 'delete_common.tpl'));
 

@@ -103,7 +103,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$this->t->set_file(array('cat_list_t'	=> 'listcats.tpl',
 									'data_column'	=> 'listcats.tpl'));
@@ -274,7 +273,6 @@
 			);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$new_parent      = get_var('new_parent',Array('POST'));
 			$submit          = get_var('submit',Array('POST'));
@@ -387,7 +385,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$new_parent      = get_var('new_parent',Array('POST'));
 			$submit          = get_var('submit',Array('POST'));
@@ -536,7 +533,6 @@
 				$nolink = $GLOBALS['phpgw']->link('/index.php',$link_data);
 
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$this->t->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
 

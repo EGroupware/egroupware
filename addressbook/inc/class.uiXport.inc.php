@@ -90,7 +90,6 @@
 					else
 					{
 						$GLOBALS['phpgw']->common->phpgw_header();
-						echo parse_navbar();
 						echo "<pre>$buffer</pre>";
 						echo '<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index') . '">'.lang('OK').'</a>';
 						$GLOBALS['phpgw']->common->phpgw_footer();
@@ -99,7 +98,6 @@
 				else
 				{
 					$GLOBALS['phpgw']->common->phpgw_header();
-					echo parse_navbar();
 					echo "<pre>$buffer</pre>";
 					echo '<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'). '">'.lang('OK').'</a>';
 					$GLOBALS['phpgw']->common->phpgw_footer();
@@ -109,7 +107,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$this->template->set_file(array('import' => 'import.tpl'));
 
@@ -173,7 +170,6 @@
 					$GLOBALS['phpgw_info']['flags']['noheader'] = False;
 					$GLOBALS['phpgw_info']['flags']['noheader'] = True;
 					$GLOBALS['phpgw']->common->phpgw_header();
-					echo parse_navbar();
 					echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
 					echo '&nbsp<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export') . '">' . lang('OK') . '</a>';
 					$GLOBALS['phpgw']->common->phpgw_footer();
@@ -192,7 +188,6 @@
 				else
 				{
 					$GLOBALS['phpgw']->common->phpgw_header();
-					echo parse_navbar();
 					echo "<pre>\n";
 					echo $buffer;
 					echo "\n</pre>\n";
@@ -203,7 +198,6 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$this->template->set_file(array('export' => 'export.tpl'));
 

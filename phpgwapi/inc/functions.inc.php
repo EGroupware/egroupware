@@ -398,35 +398,24 @@
 			exit;
 		}
 
-		if (!isset($GLOBALS['phpgw_info']['theme']['css']))
-		{
-			$GLOBALS['phpgw_info']['theme']['css'] = '';
-		}
-
 		if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
 			 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
 		{
-			$csshover = "\t".'A:hover{ text-decoration:none; color: ' .$GLOBALS['phpgw_info']['theme']['hovlink'] .'; }'."\n";
+			$phpgw_info['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
 		}
-		else
+
+		$phpgw_info['theme']['css']['A'] = 'text-decoration:none;';
+		$phpgw_info['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
+		$phpgw_info['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
+		$phpgw_info['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
+
+		if(@file_exists(PHPGW_TEMPLATE_DIR . '/css.inc.php'))
 		{
-			$csshover = '';
+			include(PHPGW_TEMPLATE_DIR . '/css.inc.php');
 		}
-		$GLOBALS['phpgw_info']['theme']['css'] = "\t".'a { text-decoration:none; }'."\n"
-		  ."\t".'A:link{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].'; }'."\n"
-		  ."\t".'A:visted{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].'; }'."\n"
-		  ."\t".'A:active{ text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].'; }'."\n"
-			.$csshover
-			.$GLOBALS['phpgw_info']['theme']['css'];
-
-		unset($csshover);
-
-		if(@file_exists(PHPGW_APP_TPL . '/app.css'))
+		if(@file_exists(PHPGW_APP_TPL . '/css.inc.php'))
 		{
-			$app_css_file = fopen (PHPGW_APP_TPL . '/app.css', "r");
-			$contents = fread ($app_css_file, filesize ($app_css_file));
-			fclose ($app_css_file);
-			$GLOBALS['phpgw_info']['theme']['css'] .= "\n".$contents;
+			include(PHPGW_APP_TPL . '/css.inc.php');
 		}
 		
 		unset($theme_to_load);
@@ -437,26 +426,6 @@
 		if(!@$GLOBALS['phpgw_info']['flags']['disable_Template_class'])
 		{
 			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-		}
-
-		/*************************************************************************\
-		* These lines remove the css data from memory since the template set will *
-		* already have loaded it into its own memory space                        *
-		\*************************************************************************/
-		if(!@$GLOBALS['phpgw_info']['flags']['keep_phpgw_css'])
-		{
-//			unset($GLOBALS['phpgw_info']['theme']['css']);
-		}
-
-		/*************************************************************************\
-		* If they are using frames, we need to set some variables                 *
-		\*************************************************************************/
-		if (((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) && 
-			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
-			($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
-		{
-			$GLOBALS['phpgw_info']['flags']['navbar_target'] = 'phpgw_body';
 		}
 
 		/*************************************************************************\
@@ -471,11 +440,7 @@
 				(@$GLOBALS['phpgw_info']['flags']['admin_only'] &&
 				! $GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
-				if ($GLOBALS['phpgw_info']['flags']['noheader'])
-				{
-					echo parse_navbar();
-				}
+				$GLOBALS['phpgw']->common->phpgw_header(False, False);
 
 				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
@@ -487,10 +452,7 @@
 		/*************************************************************************\
 		* Load the header unless the developer turns it off                       *
 		\*************************************************************************/
-		if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
-		{
-			$GLOBALS['phpgw']->common->phpgw_header();
-		}
+		$GLOBALS['phpgw']->common->phpgw_header(False, False);
 
 		/*************************************************************************\
 		* Load the app include files if the exists                                *
@@ -500,12 +462,10 @@
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
-		if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && 
-			!@$GLOBALS['phpgw_info']['flags']['noappheader'] &&
-			file_exists(PHPGW_APP_INC . '/header.inc.php') && !MENUACTION)
+
+		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'])
 		{
-			include(PHPGW_APP_INC . '/header.inc.php');
+			$GLOBALS['phpgw']->common->phpgw_appheader();
 		}
 	}
-
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);

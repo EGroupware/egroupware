@@ -13,4 +13,6 @@
 		</td>
 	</tr>
 </table>
+</BODY>
 <!-- END footer -->
+</HTML>

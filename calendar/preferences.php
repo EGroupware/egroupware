@@ -106,7 +106,6 @@
 	}
 
 	$phpgw->common->phpgw_header();
-	echo parse_navbar();
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	$templates = Array(

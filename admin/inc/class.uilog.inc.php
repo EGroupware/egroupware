@@ -256,7 +256,6 @@
 			$this->t->set_var('event_list',$table);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 			$this->t->pfp('out','log_list_t');
 //			$this->set_app_langs();
 		}

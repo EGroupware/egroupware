@@ -98,7 +98,6 @@
 			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$this->template->set_file(array('cat_list_t' => 'listcats.tpl'));
 			$this->template->set_block('cat_list_t','cat_list','list');
@@ -247,7 +246,6 @@
 			);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$this->set_langs();
 
@@ -331,7 +329,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$this->set_langs();
 
@@ -449,7 +446,6 @@
 				));
 
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
 				$this->template->set_var('hidden_vars',$hidden_vars);

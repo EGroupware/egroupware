@@ -29,7 +29,6 @@
 		function common_header()
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 		}
 
 		function list_apps()

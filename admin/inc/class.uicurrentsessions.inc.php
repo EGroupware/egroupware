@@ -31,7 +31,6 @@
 		function header()
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 		}
 
 		function store_location($info)

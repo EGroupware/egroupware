@@ -95,7 +95,6 @@
 				if ($navbarframe)
 				{
 					$GLOBALS['phpgw']->common->phpgw_header();
-					echo parse_navbar();
 				}
 			}
 		}
@@ -107,7 +106,6 @@
 		else
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 		}
 
 		$GLOBALS['phpgw']->translation->add_app('mainscreen');

@@ -37,7 +37,6 @@
 			$message     = $GLOBALS['HTTP_POST_VARS']['message'];
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{

@@ -48,3 +48,14 @@
 	// These are for the email only
 	$phpgw_info['theme']['em_folder']      = '#adadad';
 	$phpgw_info['theme']['em_folder_text'] = '#ffffff';
+
+	// This is the CSS definition
+	$phpgw_info['theme']['css']['.navbar'] = 'font-family: Verdana;font-size: 8pt; color:#000000;}';
+	$phpgw_info['theme']['css']['.bodytext'] = 'font-family: Verdana;	font-size: 8pt; color:#000000;';
+	$phpgw_info['theme']['css']['.whitetext'] = 'font-family: Verdana; font-size: 8pt; color:#ffffff;';
+	$phpgw_info['theme']['css']['.headertext'] = 'font-family: Verdana;	font-size: 11pt; font-weight: bold;	color:#ffffff;';
+	$phpgw_info['theme']['css']['.inputtext'] = '	font-family: Verdana;	font-size: 8pt; color="#000000"; background-color="#ffffff";';
+	$phpgw_info['theme']['css']['.buttontext'] = 'font-family: Verdana;	font-size: 8pt;	color="#000000"; background-color="#c0c0c0";';
+	$phpgw_info['theme']['css']['.linktext'] = 'font-family: Verdana; font-size: 8pt; color="#000000"; background-color="#c0c0c0";';
+	$phpgw_info['theme']['css']['.row_on'] = 'font-family: Verdana; font-size: 8pt; color="#000000"; background-color="#c0c0c0";';
+	$phpgw_info['theme']['css']['.row_off'] = 'font-family: Verdana; font-size: 8pt; color="#000000"; background-color="#c0c0c0";';

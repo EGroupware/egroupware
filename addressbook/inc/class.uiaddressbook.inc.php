@@ -262,7 +262,6 @@
 		function index($entries='')
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$this->template->set_file(array('addressbook_list_t' => 'index.tpl'));
 			$this->template->set_block('addressbook_list_t','addressbook_header','addressbook_header');
@@ -713,7 +712,6 @@
 			$this->template->set_file(array('add' => 'add.tpl'));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -773,7 +771,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			/* Read in user custom fields, if any */
 			$custom = $this->fields->read_custom_fields();
@@ -838,7 +835,6 @@
 			if($confirm != 'true')
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 
 				$this->template->set_var('lang_sure',lang('Are you sure you want to delete this entry ?'));
 				$this->template->set_var('no_link',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
@@ -881,7 +877,6 @@
 			elseif(!$submit && $ab_id)
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 			}
 
 			$this->template->set_file(array('view_t' => 'view.tpl'));
@@ -1148,7 +1143,6 @@
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			if($totalerrors)
 			{

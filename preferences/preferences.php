@@ -279,7 +279,6 @@
 	}
 
 	$GLOBALS['phpgw']->common->phpgw_header();
-	echo parse_navbar();
 
 	if ($GLOBALS['appname'] == 'preferences')
 	{

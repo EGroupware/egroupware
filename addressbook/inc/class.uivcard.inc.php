@@ -46,7 +46,6 @@
 			$action = $GLOBALS['HTTP_POST_VARS']['action'];
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
   
@@ -76,7 +75,6 @@
 			if($nolname || $nofname)
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
-				echo parse_navbar();
 			}
 
 			if(!$ab_id)
