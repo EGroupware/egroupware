@@ -881,6 +881,7 @@
 	$test[] = '0.9.13.005';
 	function calendar_upgrade0_9_13_005()
 	{
+		$calendar_data = Array();
 		$GLOBALS['phpgw_setup']->oProc->query('SELECT cal_id, category FROM phpgw_cal',__LINE__,__FILE__);
 		while($GLOBALS['phpgw_setup']->oProc->next_record())
 		{
@@ -890,7 +891,7 @@
 		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_cal','category',array('type' => 'varchar', 'precision' => 30,'nullable' => True));
 
 		@reset($calendar_data);
-		while(list($cal_id,$category) = each($calendar_data))
+		while($calendar_data && list($cal_id,$category) = each($calendar_data))
 		{
 			$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_cal SET category='".$category."' WHERE cal_id=".$cal_id,__LINE__,__FILE__);		
 		}
