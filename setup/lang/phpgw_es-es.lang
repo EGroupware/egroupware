@@ -159,7 +159,6 @@ error in admin-creation !!!	setup	es-es	Error al crear administrador
 error in group-creation !!!	setup	es-es	Error al crear grupo
 export egroupware accounts from sql to ldap	setup	es-es	Exportar cuentas de eGroupWare de SQL a LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	es-es	Se ha completado la exportación. Necesitará poner la contraseña del usuario manualmente.
-export phpgroupware accounts from sql to ldap	setup	es-es	Exportar las cuentas de eGroupWare de SQL a LDAP
 export sql users to ldap	setup	es-es	Exportar usuarios SQL a LDAP
 false	setup	es-es	Falso
 file	setup	es-es	FICHERO

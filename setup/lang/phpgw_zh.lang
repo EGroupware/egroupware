@@ -132,7 +132,7 @@ enter your http proxy server password	setup	zh	TTP代理服务器的密码
 enter your http proxy server port	setup	zh	HTTP代理服务器的端口号
 enter your http proxy server username	setup	zh	HTTP代理服务器的用户名
 export has been completed!  you will need to set the user passwords manually.	setup	zh	导出完成!  您必须手动设置用户的密码.
-export phpgroupware accounts from sql to ldap	setup	zh	将现存于 SQL 中的 phpGroupWare 帐户资料导出至 LDAP
+export egroupware accounts from sql to ldap	setup	zh	将现存于 SQL 中的 eGroupWare 帐户资料导出至 LDAP
 export sql users to ldap	setup	zh	将 SQL 的用户资料导出至 LDAP
 file	setup	zh	文件
 file type, size, version, etc.	setup	zh	文件类型、大小、版本, 等等.

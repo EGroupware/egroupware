@@ -145,7 +145,6 @@ enter your http proxy server port	setup	es-ca	Introduïu el port del vostre servi
 enter your http proxy server username	setup	es-ca	Introduïu el nom d'usuari del vostre servidor proxy HTTP
 export egroupware accounts from sql to ldap	setup	es-ca	Exportar comptes d'eGroupWare de SQL a LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	es-ca	Exportació acabada. Necessitareu establir les contrasenyes dels usuaris manualment.
-export phpgroupware accounts from sql to ldap	setup	es-ca	Exportar las cuentas de eGroupWare de SQL a LDAP
 export sql users to ldap	setup	es-ca	Exportar usuaris SQL a LDAP
 file	setup	es-ca	ARXIU
 file type, size, version, etc.	setup	es-ca	tipus d'arxiu, tamany, versió, etc
