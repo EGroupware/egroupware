@@ -67,7 +67,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
 	{
-		$file['phpInfo'] = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
+		$file['phpInfo'] = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "','700','600')";
 	}
  
 	/* Do not modify below this line */
