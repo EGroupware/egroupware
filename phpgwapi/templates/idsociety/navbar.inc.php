@@ -56,9 +56,8 @@
 			{
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
 					. lang($app[1]['title']) . '" border="0" name="' . $app[0] . '">';
-
-				$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
-				$img_src_out = $GLOBALS['phpgw']->common->image($app[0],'navbar.gif');
+				$img_src_over = $app[1]['icon_hover'];
+				$img_src_out = $app[1]['icon'];
 
 				// onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
 				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';

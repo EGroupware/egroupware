@@ -816,15 +816,15 @@
 
 			if(isset($this->found_files[$appname]['images'][$image.'.png']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.png'].'/'.$image;
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.png'].'/'.$image.'.png';
 			}
 			elseif(isset($this->found_files[$appname]['images'][$image.'.jpg']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.jpg'].'/'.$image;
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.jpg'].'/'.$image.'.jpg';
 			}
 			elseif(isset($this->found_files[$appname]['images'][$image.'.gif']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.gif'].'/'.$image;
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.gif'].'/'.$image.'.gif';
 			}
 			elseif(isset($this->found_files[$appname]['images'][$image]))
 			{
@@ -846,28 +846,14 @@
 				$c_image = count($image);
 				while($image_found == '' && $i<$c_image)
 				{
-					if($this->found_files[$appname]['images'][$image[$i]])
-					{
-						$image_found = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image[$i]].'/'.$image[$i];
-					}
-					else
-					{
-						$image_found = $this->find_image($appname,$image[$i]);
-					}
+					$image_found = $this->find_image($appname,$image[$i]);
 					$i++;
 				}
 				return $image_found;
 			}
 			elseif($image != '')
 			{
-				if($this->found_files[$appname]['images'][$image])
-				{
-					return $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image].'/'.$image;
-				}
-				else
-				{
-					return $this->find_image($appname,$image);
-				}
+				return $this->find_image($appname,$image);
 			}
 			else
 			{
@@ -917,17 +903,17 @@
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['title'] = $GLOBALS['phpgw_info']['apps'][$permission[0]]['title'];
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['url']   = $GLOBALS['phpgw']->link('/' . $permission[0] . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['name']  = $permission[0];
-/*
+
 					if ($permission[0] != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
 						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image($permission[0],'navbar');
+						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon_hover']  = $this->image_on($permission[0],'navbar','-over');
 					}
 					else
 					{
 						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image_on($permission[0],'navbar','-over');
+						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon_hover']  = $this->image($permission[0],'navbar');
 					}
-*/
-					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image($permission[0],'navbar.gif');
 
 					if($GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon'] == '')
 					{
@@ -1785,3 +1771,4 @@
 			}
 		}
 	}//end common class
+
