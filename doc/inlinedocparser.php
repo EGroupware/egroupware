@@ -21,7 +21,7 @@
 	{
 		include (PHPGW_API_INC.'/php3_support_functions.inc.php');
 	}
-	
+
 	/*!
 	 @function array_print
 	 @abstract output an array for HTML.
