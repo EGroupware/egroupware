@@ -11,10 +11,10 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
+	$GLOBALS['phpgw_info'] = array();
 	if (!@$GLOBALS['included'])
 	{
-		$GLOBALS['phpgw_info']['flags'] = array(
+		$GLOBALS['phpgw_info']['flags'] = Array(
 			'noheader' => True,
 			'nonavbar' => True,
 			'currentapp' => 'home',
@@ -29,7 +29,6 @@
 			exit;
 		}
 		$GLOBALS['phpgw_setup']->loaddb();
-
 		include(PHPGW_API_INC.'/class.common.inc.php');
 		$common = new common;
 
@@ -59,7 +58,7 @@
 		$langstbl = 'phpgw_languages';
 	}
 
-	if (@$HTTP_POST_VARS['submit'])
+	if (@$GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		$lang_selected = $HTTP_POST_VARS['lang_selected'];
 		$upgrademethod = $HTTP_POST_VARS['upgrademethod'];
@@ -154,7 +153,7 @@
 	}
 	else
 	{
-		if (@$HTTP_POST_VARS['cancel'])
+		if (@$GLOBALS['HTTP_POST_VARS']['cancel'])
 		{
 			Header('Location: index.php');
 			exit;
@@ -227,7 +226,7 @@
 			$setup_tpl->set_var('lang_install',lang('install'));
 			$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
-			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+			$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 			$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 			$setup_tpl->pparse('out','T_lang_main');
 			$GLOBALS['phpgw_setup']->html->show_footer();
