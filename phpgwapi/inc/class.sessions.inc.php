@@ -95,6 +95,7 @@
        $phpgw_info["user"]["kp3"] = $this->kp3;
        $phpgw_info_flags    = $phpgw_info["flags"];
        $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
+       $this->data          = $phpgw_info["user"];
        $phpgw_info["flags"] = $phpgw_info_flags;
        $userid_array = explode("@",$db->f("session_lid"));
        $this->account_lid = $userid_array[0];
@@ -102,6 +103,7 @@
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
           return False;
        }
+
        if (PHP_OS != "Windows" && (! $phpgw_info["user"]["session_ip"] || $phpgw_info["user"]["session_ip"] != $this->getuser_ip())){
           return False;
        }
@@ -130,6 +132,23 @@
                           . "'",__LINE__,__FILE__);
        }
     }
+    
+    function update_session_info()
+    {
+       global $phpgw, $phpgw_info;
+       $phpgw_info_temp = $phpgw_info;
+       $phpgw_info_temp["user"]["kp3"] = "";
+       $phpgw_info_temp["flags"] = array();
+
+       //$this->read_repositories();
+       if ($PHP_VERSION < "4.0.0") {
+          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
+       } else {
+          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);
+       }
+       $phpgw->db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
+                       . $this->sessionid . "'",__LINE__,__FILE__);
+    }
 
     function read_repositories()
     {
@@ -138,10 +157,10 @@
       $phpgw->accounts->accounts($this->account_id);
       $phpgw->preferences->preferences($this->account_id);
       $phpgw->applications->applications($this->account_id);
-      $phpgw_info["user"] = $phpgw->accounts->read_repository();
-      $phpgw_info["user"]["acl"] = $phpgw->acl->read_repository();
+      $phpgw_info["user"]                = $phpgw->accounts->read_repository();
+      $phpgw_info["user"]["acl"]         = $phpgw->acl->read_repository();
       $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
-      $phpgw_info["user"]["apps"] = $phpgw->applications->read_repository();
+      $phpgw_info["user"]["apps"]        = $phpgw->applications->read_repository();
       @reset($phpgw_info["user"]["apps"]);
 
       $phpgw_info["user"]["domain"]      = $this->account_domain;
@@ -193,8 +212,8 @@
       $phpgw->accounts->account_id = $this->account_id;
 
       $phpgw_info["user"] = $phpgw->accounts->read_repository();
-      $this->sessionid = md5($phpgw->common->randomstring(10));
-      $this->kp3 = md5($phpgw->common->randomstring(15));
+      $this->sessionid    = md5($phpgw->common->randomstring(10));
+      $this->kp3          = md5($phpgw->common->randomstring(15));
 
       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
       $phpgw->common->key .= $this->sessionid;
@@ -213,13 +232,15 @@
          if ($this->account_domain == $phpgw_info["server"]["default_domain"]) {
             Setcookie("last_loginid", $this->account_lid ,time()+1209600);  // For 2 weeks
          } else {
-            Setcookie("last_loginid", $login ,time()+1209600);  // For 2 weeks
+            Setcookie("last_loginid", $login ,time()+1209600);              // For 2 weeks
          }
-         unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
+         unset ($phpgw_info["server"]["default_domain"]);                   // we kill this for security reasons
       }
 
+      // Why are we double encrypting it ?
+      // If mcrypt is already installed, the entire session_info field is all ready encrypted. (jengo)
       $this->passwd = $phpgw->common->encrypt($passwd);
-      $this->read_repositories($this->account_id);
+      $this->read_repositories();
 
       if ($PHP_VERSION < "4.0.0") {
          $info_string = addslashes($phpgw->crypto->encrypt($this->data));

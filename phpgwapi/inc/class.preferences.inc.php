@@ -92,22 +92,29 @@
       return $this->data;
     }
 
-    function save_repository()
+    function save_repository($update_session_info = False)
     {
       global $phpgw, $phpgw_info;
-      $this->db->lock("preferences");
-      $this->db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
-      if ($PHP_VERSION < "4.0.0") {
-        $pref_info = addslashes(serialize($this->data));
-      } else {
-        $pref_info = serialize($this->data);
+      if (! $phpgw->acl->check("session_only_preferences",1,"preferences")) {
+         $this->db->lock("preferences");
+         $this->db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
+   
+         if ($PHP_VERSION < "4.0.0") {
+           $pref_info = addslashes(serialize($this->data));
+         } else {
+           $pref_info = serialize($this->data);
+         }
+   
+         $this->db->query("insert into preferences (preference_owner,preference_value) values ('"
+                        . $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
+   
+         $this->db->unlock();
       }
-
-      $this->db->query("insert into preferences (preference_owner,preference_value) values ('"
-                     . $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
-
-      $this->db->unlock();
+      if ($update_session_info) {
+         $phpgw_info["user"]["preferences"] = $this->data;
+         $phpgw->session->update_session_info();
+      }
       return $this->data;
     }
 
@@ -124,9 +131,9 @@
     {
       return $this->add($app_name,$var,$value);
     }
-    function commit()
+    function commit($update_session_info = False)
     {
-      return $this->save_repository();
+      return $this->save_repository($update_session_info);
     }
 
   } //end of preferences class

@@ -42,7 +42,7 @@
            $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
         }
 
-        $phpgw->preferences->save_repository();
+        $phpgw->preferences->save_repository(True);
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      }
   }

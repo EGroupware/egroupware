@@ -26,7 +26,7 @@
      } else {
         $phpgw->preferences->delete("calendar","mainscreen_showevents");
      }
-     $phpgw->preferences->save_repository();
+     $phpgw->preferences->save_repository(True);
      
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      $phpgw->common->phpgw_exit();
