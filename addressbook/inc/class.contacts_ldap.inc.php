@@ -183,6 +183,7 @@
 			$return_fields[0]["tid"]    = $ldap_fields[0]["phpgwcontacttype"][0];
 			$return_fields[0]["owner"]  = $ldap_fields[0]["phpgwowner"][0];
 			$return_fields[0]["access"] = $ldap_fields[0]["phpgwaccess"][0];
+			$return_fields[0]["cat_id"] = $ldap_fields[0]["phpgwcatid"][0];
 
 			if (gettype($stock_fieldnames) == "array") {
 				while(list($name,$value)=each($stock_fieldnames)) {
@@ -243,6 +244,7 @@
 			$return_fields[0]["tid"]    = $ldap_fields[0]["phpgwcontacttype"][0];
 			$return_fields[0]["owner"]  = $ldap_fields[0]["phpgwowner"][0];
 			$return_fields[0]["access"] = $ldap_fields[0]["phpgwaccess"][0];
+			$return_fields[0]["cat_id"] = $ldap_fields[0]["phpgwcatid"][0];
 
 			if (gettype($stock_fieldnames) == "array") {
 				while(list($name,$value)=each($stock_fieldnames)) {
@@ -379,7 +381,7 @@
 					$total = $total + ldap_count_entries($this->ldap, $sri);
 				}
 
-				echo '<br>first total="'.$total.'"';
+				//echo '<br>first total="'.$total.'"';
 
 				// Now, remove duplicate rows
 				//$tmp = array_unique($ldap_fields); PHP 4.X only
@@ -404,7 +406,7 @@
 				}
 
 				$this->total_records = count($ldap_fields);
-				echo '<br>total="'.$this->total_records.'"';
+				//echo '<br>total="'.$this->total_records.'"';
 			}  else  {
 				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=*");
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -446,6 +448,7 @@
 					$return_fields[$j]["tid"]    = $ldap_fields[$i]["phpgwcontacttype"][0];
 					$return_fields[$j]["owner"]  = $ldap_fields[$i]["phpgwowner"][0];
 					$return_fields[$j]["access"] = $ldap_fields[$i]["phpgwaccess"][0];
+					$return_fields[$j]["cat_id"] = $ldap_fields[$i]["phpgwcatid"][0];
 
 					if (gettype($stock_fieldnames) == "array") {
 						reset($stock_fieldnames);
@@ -469,7 +472,7 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields,$access='')
+		function add($owner,$fields,$access='',$cat_id='')
 		{
 			global $phpgw,$phpgw_info;
 
@@ -504,9 +507,10 @@
 			$ldap_fields['uid'] = time().$time["usec"].":".$ldap_fields['givenname'];
 			
 			$dn = 'uid=' . $ldap_fields['uid'].',' . $phpgw_info["server"]["ldap_contact_context"];
-			$ldap_fields['phpgwowner']  = $owner;
-			$ldap_fields['phpgwaccess'] = $access;
-			$ldap_fields['uidnumber'] = $this->nextid;
+			$ldap_fields['phpgwowner']     = $owner;
+			$ldap_fields['phpgwaccess']    = $access;
+			$ldap_fields["cat_id"]         = $cat_id;
+			$ldap_fields['uidnumber']      = $this->nextid;
 			$ldap_fields['objectclass'][0] = 'person';
 			$ldap_fields['objectclass'][1] = 'organizationalPerson';
 			$ldap_fields['objectclass'][2] = 'inetOrgPerson';
@@ -549,7 +553,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='')
+		function update($id,$owner,$fields,$access='',$cat_id='')
 		{
 			global $phpgw_info;
 
@@ -573,7 +577,7 @@
 					// Verify uidnumber
 					if (empty($ldap_fields[0]['uidnumber'])) {
 						$stock_fields['uidnumber']      = $id;
-						$err = ldap_modify($this->ldap,$dn,array('uidnumber' => $stock_fields['uidnumber']));
+						$err = ldap_modify($this->ldap,$dn,array('uidnumber'  => $stock_fields['uidnumber']));
 					} elseif (!$ldap_fields[0]['uidnumber']) {
 						$stock_fields['uidnumber']      = $id;
 						$err = ldap_mod_add($this->ldap,$dn,array('uidnumber' => $stock_fields['uidnumber']));
@@ -583,7 +587,7 @@
 					if (empty($ldap_fields[0]['uid'])) {
 						$uids = split(',',$dn);
 						$stock_fields['uid'] = $uids[0];
-						$err = ldap_modify($this->ldap,$dn,array('uid' => $stock_fields['uid']));
+						$err = ldap_modify($this->ldap,$dn,array('uid'  => $stock_fields['uid']));
 					} elseif (!$ldap_fields[0]['uid']) {
 						$uids = split(',',$dn);
 						$stock_fields['uid'] = $uids[0];
@@ -593,7 +597,7 @@
 					// Verify owner
 					if (empty($ldap_fields[0]['phpgwowner'])) {
 						$stock_fields['phpgwowner']          = $owner;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwowner'  => $stock_fields['phpgwowner']));
 					} elseif (!$ldap_fields[0]['phpgwowner']) {
 						$stock_fields['phpgwowner']          = $owner;
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
@@ -602,10 +606,19 @@
 					// Verify access
 					if (empty($ldap_fields[0]['phpgwaccess'])) {
 						$stock_fields['phpgwaccess']         = $access;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
+						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess'  => $stock_fields['phpgwaccess']));
 					} elseif (!$ldap_fields[0]['phpgwaccess']) {
 						$stock_fields['phpgwaccess']         = $access;
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
+					}
+
+					// Verify cat_id
+					if (empty($ldap_fields[0]['phpgwcatid'])) {
+						$stock_fields['phpgwcatid']         = $cat_id;
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcatid'  => $stock_fields['phpgwcatid']));
+					} elseif (!$ldap_fields[0]['phpgwcatid']) {
+						$stock_fields['phpgwcatid']         = $cat_id;
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcatid' => $stock_fields['phpgwcatid']));
 					}
 
 					// Verify objectclasses are there
