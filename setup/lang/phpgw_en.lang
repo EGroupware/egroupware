@@ -203,7 +203,7 @@ process	setup	en	Process
 re-check my database	setup	en	Re-Check my database
 re-check my installation	setup	en	Re-Check My Installation
 re-enter password	setup	en	Re-enter password
-read_translations_from	setup	en	Read_translations_from
+read translations from	setup	en	Read translations from
 really uninstall all applications	setup	en	REALLY Uninstall all applications
 registered	setup	en	registered
 remove	setup	en	Remove
