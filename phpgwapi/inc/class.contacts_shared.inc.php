@@ -37,7 +37,7 @@
 			while (list($field,$value) = @each($fields))
 			{
 				/* Depending on how the array was built, this is needed. */
-				if (gettype($value) == "integer")
+				if (gettype($value) == 'integer')
 				{
 					$value = $field;
 				}
@@ -68,7 +68,7 @@
 		/* This will take an array or integer */
 		function delete($id)
 		{
-			if (gettype($id) == "array")
+			if (gettype($id) == 'array')
 			{
 				while (list($null,$t_id) = each($id))
 				{
@@ -189,11 +189,12 @@
 		function filter_ldap ($ldap_fields,$filterfields,$DEBUG=0)
 		{
 			$match = 0;
-			if($DEBUG) { echo "<br>"; }
-			for($i=0;$i<count($ldap_fields);$i++) {
+			if($DEBUG) { echo '<br>'; }
+			for($i=0;$i<count($ldap_fields);$i++)
+			{
 				$yes = True;
 
-				if ($ldap_fields[$i]["uidnumber"][0])
+				if ($ldap_fields[$i]['uidnumber'][0])
 				{
 					reset($filterfields);
 					while (list($col,$filt) = each($filterfields))
@@ -208,7 +209,7 @@
 									if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$val.'"'; }
 									if ($val == $filt)
 									{
-										if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+										if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 										$yes &= True;
 										$match++;
 										break;
@@ -220,13 +221,13 @@
 								if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
 								if ($ldap_fields[$i][$col][0] == $filt)
 								{
-									if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+									if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 									$yes &= True;
 									$match++;
 								}
 								else
 								{
-									if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+									if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
 									$yes &= False;
 									$match--;
 								}							
@@ -237,13 +238,13 @@
 							if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
 							if ($ldap_fields[$i][$col][0] == $filt)
 							{
-								if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+								if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 								$yes &= True;
 								$match++;
 							}
 							else
 							{
-								if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+								if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
 								$yes &= False;
 								$match--;
 							}
@@ -252,12 +253,12 @@
 
 					if ($yes)
 					{
-						if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
+						if($DEBUG) { echo $ldap_fields[$i]['uidnumber'][0].' matched all!'.'<br>'; }
 						$new_ldap[] = $ldap_fields[$i];
 					}
 					else
 					{
-						if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' did not match all.'."<br>"; }
+						if($DEBUG) { echo $ldap_fields[$i]['uidnumber'][0].' did not match all.'.'<br>'; }
 					}
 				}
 			}
@@ -279,12 +280,9 @@
 
 		function formatted_address($id = '',$fields = '',$business = True)
 		{
-			global $phpgw,$phpgw_info;
+			$font = $GLOBALS['phpgw_info']['theme']['font'];
 
-			$font = $phpgw_info['theme']['font'];
-
-			$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
-
+			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
 
 			$address = $this->read_single_entry($id,$fields);
@@ -296,24 +294,24 @@
 
 			if ($business)
 			{
-				$street = $address[0]['adr_one_street'];
-				$city = $address[0]['adr_one_locality'];
-				$zip = $address[0]['adr_one_postalcode'];
-				$state = $address[0]['adr_one_region'];
+				$street  = $address[0]['adr_one_street'];
+				$city    = $address[0]['adr_one_locality'];
+				$zip     = $address[0]['adr_one_postalcode'];
+				$state   = $address[0]['adr_one_region'];
 				$country = $address[0]['adr_one_countryname'];
 			}
 			else
 			{
-				$street = $address[0]['adr_two_street'];
-				$city = $address[0]['adr_two_locality'];
-				$zip = $address[0]['adr_two_postalcode'];
-				$state = $address[0]['adr_two_region'];
+				$street  = $address[0]['adr_two_street'];
+				$city    = $address[0]['adr_two_locality'];
+				$zip     = $address[0]['adr_two_postalcode'];
+				$state   = $address[0]['adr_two_region'];
 				$country = $address[0]['adr_two_countryname'];
 			}
 
 			if (! $country)
 			{
-				$country = $phpgw_info['user']['preferences']['common']['country'];
+				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
 			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'format_' . strtolower($country) . '.tpl'))
