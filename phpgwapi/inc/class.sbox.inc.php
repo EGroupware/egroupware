@@ -42,7 +42,6 @@
 		);
 
 		var $country_array = array(
-			'  '=>'Select One',
 			'AF'=>'AFGHANISTAN',
 			'AL'=>'ALBANIA',
 			'DZ'=>'ALGERIA', 
@@ -582,7 +581,8 @@
 			{
 				$name = 'country';
 			}
-			$str = '<select name="'.$name.'">'."\n";
+			$str = '<select name="'.$name.'">'."\n"
+				. ' <option value="  ".($selected == '  '?' selected':'').'>Select One</option>'."\n";
 			reset($this->country_array);
 			while(list($key,$value) = each($this->country_array))
 			{
