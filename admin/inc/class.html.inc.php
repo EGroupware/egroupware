@@ -29,7 +29,7 @@ class html
 			else
 			{
 				$html .= "<form method=\"post\" action=\""
-				    	 . $phpgw->link()  
+				    	 . $phpgw->link('/admin/log.php')  
 						 . "&editable=true\">\n";
 				$html .= "<input type=\"submit\" name=\"submit\" value=\"Edit Table Format\">";
 			}
@@ -100,7 +100,7 @@ class html
 		global $phpgw, $nocols;
 		$html = '';
 		$html .= "<form method=\"post\" action=\""
-				 . $phpgw->link()
+				 . $phpgw->link('/admin/log.php')
 				 . "&editable=true"  
 				 . "\">\n";
 			
