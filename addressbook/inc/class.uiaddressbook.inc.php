@@ -1002,7 +1002,11 @@
 
 		function preferences()
 		{
-			global $submit,$prefs,$other,$fcat_id;
+			$submit  = $GLOBALS['HTTP_POST_VARS']['submit'];
+			$prefs   = $GLOBALS['HTTP_POST_VARS']['prefs'];
+			$other   = $GLOBALS['HTTP_POST_VARS']['other'];
+			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'];
+
 			/* _debug_array($this->prefs); */
 			$customfields = $this->read_custom_fields();
 
@@ -1032,7 +1036,7 @@
 
 			$this->template->set_file(array('preferences' => 'preferences.tpl'));
 
-			$this->template->set_var(action_url,$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'));
+			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'));
 
 			$i = 0; $j = 0;
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
@@ -1058,7 +1062,7 @@
 					}
 				}
 			}
-		
+
 			if ($customfields)
 			{
 				$custom_var = '
@@ -1088,7 +1092,7 @@
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 			$this->template->set_var(tr_color,$tr_color);
 			$this->template->set_var('lang_showbirthday',lang('show birthday reminders on main screen'));
-		
+
 			if ($this->prefs['mainscreen_showbirthdays'])
 			{
 				$this->template->set_var('show_birthday',' checked');
@@ -1105,7 +1109,7 @@
 			);
 			$this->template->set_var('lang_default_filter',lang('Default Filter'));
 			$this->template->set_var('filter_select',$this->formatted_list('other[default_filter]',$list,$this->prefs['default_filter']));
-		
+
 			$this->template->set_var('lang_autosave',lang('Autosave default category'));
 			if ($this->prefs['autosave_category'])
 			{
