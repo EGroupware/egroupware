@@ -82,26 +82,25 @@ class soap_server
 		$request_uri = $HTTP_SERVER_VARS["REQUEST_URI"];
 		$this->debug("request uri: $request_uri");
 		// get headers
-		// get headers
 		if(function_exists("getallheaders"))
 		{
 			$this->headers = getallheaders();
-			foreach($headers_array as $k=>$v)
+			foreach($this->headers as $k=>$v)
 			{
 				$dump .= "$k: $v\r\n";
 			}
 			// get SOAPAction header
-			if($headers_array["SOAPAction"])
+			if($this->headers["SOAPAction"])
 			{
-				$this->SOAPAction = str_replace('"','',$headers_array["SOAPAction"]);
+				$this->SOAPAction = str_replace('"','',$this->headers["SOAPAction"]);
 				$this->service = $this->SOAPAction;
 			}
 			// get character encoding
-			if(ereg("=",$headers_array["Content-Type"]))
+			if(ereg("=",$this->headers["Content-Type"]))
 			{
-				$this->xml_encoding = str_replace("\"","",substr(strstr($headers_array["Content-Type"],"="),1));
+				$this->xml_encoding = str_replace("\"","",substr(strstr($this->headers["Content-Type"],"="),1));
 			}
-			elseif(ereg("^text/xml",$headers_array["Content-Type"]))
+			elseif(ereg("^text/xml",$this->headers["Content-Type"]))
 			{
 				$this->xml_encoding = "us-ascii";
 			}
@@ -113,7 +112,7 @@ class soap_server
 		// get/set methodname
 		$this->methodname = $parser->root_struct_name;
 		$this->debug("method name: $this->methodname");
-		
+
 		// does method exist?
 		if(function_exists($this->methodname))
 		{
