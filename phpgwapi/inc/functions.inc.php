@@ -208,7 +208,7 @@
 	}
 	unset($cache_query);
 	unset($server_info_cache);
-	if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
+	if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$_SERVER['HTTPS'])
 	{
 		Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $_SERVER['REQUEST_URI']);
 		exit;
