@@ -1,39 +1,39 @@
-%1 email addresses inserted	common	zt	¤w¶×¤J %1 µ§¹q¤l¶l¥ó¦ì§}
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 ¬O¦h¨Ï¥ÎªÌ¡Bºô­¶¬°°òÂ¦ªº¸s²Õ³nÅé¡A¥H %3PHP%4 ³]­p¡C
-(shift-)click or drag to change value	jscalendar	zt	(ShiftÁä¥[)ÂI¿ï©Î©ì©Ô·Æ¹«´å¼Ğ¨Ó§ïÅÜ¼Æ­È
-- click on any of the time parts to increase it	jscalendar	zt	- ÂI¿ï¥ô·N®É¶¡°Ï¨Ó¼W¥[¥¦
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	zt	- «ö¦í·Æ¹«¨Ó§Ö³t¿ï¨ú¤W­±ªº«ö¶s
-- or click and drag for faster selection.	jscalendar	zt	- ©Î¬O¥Î·Æ¹«©ì©Ô¨Ó§Ö³tÂI¿ï
-- or shift-click to decrease it	jscalendar	zt	- ©Î¬O¥ÎShift¥[·Æ¹«Áä¨Ó¼W¥[
-- use the %1, %2 buttons to select month	jscalendar	zt	- ¨Ï¥Î«ö¶s %1,%2¨Ó¿ï¾Ü¤ë¥÷
-- use the %1, %2 buttons to select year	jscalendar	zt	- ¨Ï¥Î®×¤û %1,%2¨Ó¿ï¾Ü¦~
-00 (disable)	admin	zt	00 (Ãö³¬)
+ï»¿%1 email addresses inserted	common	zt	å·²åŒ¯å…¥ %1 ç­†é›»å­éƒµä»¶ä½å€
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 æ˜¯å¤šä½¿ç”¨è€…ã€ç¶²é ç‚ºåŸºç¤çš„ç¾¤çµ„è»Ÿé«”ï¼Œä»¥ %3PHP%4 è¨­è¨ˆã€‚
+(shift-)click or drag to change value	jscalendar	zt	(ShiftéµåŠ )é»é¸æˆ–æ‹–æ‹‰æ»‘é¼ æ¸¸æ¨™ä¾†æ”¹è®Šæ•¸å€¼
+- click on any of the time parts to increase it	jscalendar	zt	- é»é¸ä»»æ„æ™‚é–“å€ä¾†å¢åŠ å®ƒ
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zt	- æŒ‰ä½æ»‘é¼ ä¾†å¿«é€Ÿé¸å–ä¸Šé¢çš„æŒ‰éˆ•
+- or click and drag for faster selection.	jscalendar	zt	- æˆ–æ˜¯ç”¨æ»‘é¼ æ‹–æ‹‰ä¾†å¿«é€Ÿé»é¸
+- or shift-click to decrease it	jscalendar	zt	- æˆ–æ˜¯ç”¨ShiftåŠ æ»‘é¼ éµä¾†å¢åŠ 
+- use the %1, %2 buttons to select month	jscalendar	zt	- ä½¿ç”¨æŒ‰éˆ• %1,%2ä¾†é¸æ“‡æœˆä»½
+- use the %1, %2 buttons to select year	jscalendar	zt	- ä½¿ç”¨æ¡ˆç‰› %1,%2ä¾†é¸æ“‡å¹´
+00 (disable)	admin	zt	00 (é—œé–‰)
 13 (ntp)	admin	zt	13 (ntp)
 80 (http)	admin	zt	80 (http)
-about	common	zt	Ãö©ó
-about %1	common	zt	Ãö©ó %1
-about the calendar	jscalendar	zt	Ãö©ó³o­Ó¦æ¨Æ¾ä
-about this editor	htmlarea	zt	Ãö©ó½s¿è¾¹
-access	common	zt	¦s¨úÅv­­
-access not permitted	common	zt	¦s¨ú¾D©Ú
-account has been created	common	zt	±b¸¹¤w¸g«Ø¥ß
-account has been deleted	common	zt	±b¸¹¤w¸g§R°£
-account has been updated	common	zt	±b¸¹¤w¸g§ó·s
-account is expired	common	zt	±b¸¹¤w¸g¨ì´Á
-acl	common	zt	±±ºŞÅv­­
-action	common	zt	°Ê§@
-active	common	zt	±Ò¥Î
-add	common	zt	·s¼W
-add %1 category for	common	zt	·s¼W %1 ¤l¤ÀÃşµ¹
-add category	common	zt	·s¼W¤ÀÃş
-add sub	common	zt	·s¼W¤l¤ÀÃş
-addressbook	common	zt	³q°T¿ı
-admin	common	zt	¨t²ÎºŞ²z
-administration	common	zt	¨t²ÎºŞ²z
+about	common	zt	é—œæ–¼
+about %1	common	zt	é—œæ–¼ %1
+about the calendar	jscalendar	zt	é—œæ–¼é€™å€‹è¡Œäº‹æ›†
+about this editor	htmlarea	zt	é—œæ–¼ç·¨è¼¯å™¨
+access	common	zt	å­˜å–æ¬Šé™
+access not permitted	common	zt	å­˜å–é­æ‹’
+account has been created	common	zt	å¸³è™Ÿå·²ç¶“å»ºç«‹
+account has been deleted	common	zt	å¸³è™Ÿå·²ç¶“åˆªé™¤
+account has been updated	common	zt	å¸³è™Ÿå·²ç¶“æ›´æ–°
+account is expired	common	zt	å¸³è™Ÿå·²ç¶“åˆ°æœŸ
+acl	common	zt	æ§ç®¡æ¬Šé™
+action	common	zt	å‹•ä½œ
+active	common	zt	å•Ÿç”¨
+add	common	zt	æ–°å¢
+add %1 category for	common	zt	æ–°å¢ %1 å­åˆ†é¡çµ¦
+add category	common	zt	æ–°å¢åˆ†é¡
+add sub	common	zt	æ–°å¢å­åˆ†é¡
+addressbook	common	zt	é€šè¨ŠéŒ„
+admin	common	zt	ç³»çµ±ç®¡ç†
+administration	common	zt	ç³»çµ±ç®¡ç†
 afghanistan	common	zt	AFGHANISTAN
 albania	common	zt	ALBANIA
 algeria	common	zt	ALGERIA
-all	common	zt	©Ò¦³
+all	common	zt	æ‰€æœ‰
 alphabet	common	zt	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	zt	AMERICAN SAMOA
 andorra	common	zt	ANDORRA
@@ -41,38 +41,38 @@ angola	common	zt	ANGOLA
 anguilla	common	zt	ANGUILLA
 antarctica	common	zt	ANTARCTICA
 antigua and barbuda	common	zt	ANTIGUA AND BARBUDA
-apply	common	zt	¦P·N
-april	common	zt	¥|¤ë
-are you sure you want to delete these entries ?	common	zt	±z½T©w­n§R°£³o¨Ç¸ê®Æ¡H
-are you sure you want to delete this entry ?	common	zt	±z½T©w­n§R°£¦¹µ§¸ê®Æ¡H
+apply	common	zt	åŒæ„
+april	common	zt	å››æœˆ
+are you sure you want to delete these entries ?	common	zt	æ‚¨ç¢ºå®šè¦åˆªé™¤é€™äº›è³‡æ–™ï¼Ÿ
+are you sure you want to delete this entry ?	common	zt	æ‚¨ç¢ºå®šè¦åˆªé™¤æ­¤ç­†è³‡æ–™ï¼Ÿ
 argentina	common	zt	ARGENTINA
 armenia	common	zt	ARMENIA
 aruba	common	zt	ARUBA
-august	common	zt	¤K¤ë
+august	common	zt	å…«æœˆ
 australia	common	zt	AUSTRALIA
 austria	common	zt	AUSTRIA
-author	common	zt	§@ªÌ
-autohide sidebox menus	common	zt	¦Û°ÊÁôÂÃ¨ä¥L¿ï³æ
-automatically hide the sidebox menus?	common	zt	¦Û°ÊÁôÂÃ¨ä¥L¿ï³æ¡H
-autosave default category	common	zt	¦Û°ÊÀx¦s¹w³]¤ÀÃş¥Ø¿ı
+author	common	zt	ä½œè€…
+autohide sidebox menus	common	zt	è‡ªå‹•éš±è—å…¶ä»–é¸å–®
+automatically hide the sidebox menus?	common	zt	è‡ªå‹•éš±è—å…¶ä»–é¸å–®ï¼Ÿ
+autosave default category	common	zt	è‡ªå‹•å„²å­˜é è¨­åˆ†é¡ç›®éŒ„
 azerbaijan	common	zt	AZERBAIJAN
-back	common	zt	¤W¤@­¶
-back to user login	common	zt	¦^¨ì­º­¶
-background color	htmlarea	zt	­I´ºÃC¦â
-bad login or password	common	zt	¿ù»~ªº¨Ï¥ÎªÌ¥N½X©Î±K½X
+back	common	zt	ä¸Šä¸€é 
+back to user login	common	zt	å›åˆ°é¦–é 
+background color	htmlarea	zt	èƒŒæ™¯é¡è‰²
+bad login or password	common	zt	éŒ¯èª¤çš„ä½¿ç”¨è€…ä»£ç¢¼æˆ–å¯†ç¢¼
 bahamas	common	zt	BAHAMAS
 bahrain	common	zt	BAHRAIN
 bangladesh	common	zt	BANGLADESH
 barbados	common	zt	BARBADOS
-bcc	common	zt	±K¥ó°Æ¥»
+bcc	common	zt	å¯†ä»¶å‰¯æœ¬
 belarus	common	zt	BELARUS
 belgium	common	zt	BELGIUM
 belize	common	zt	BELIZE
 benin	common	zt	BENIN
 bermuda	common	zt	BERMUDA
 bhutan	common	zt	BHUTAN
-blocked, too many attempts	common	zt	³QÂê©w¤F¡A¹Á¸Õ¤Ó¦h¦¸
-bold	htmlarea	zt	²ÊÅé
+blocked, too many attempts	common	zt	è¢«é–å®šäº†ï¼Œå˜—è©¦å¤ªå¤šæ¬¡
+bold	htmlarea	zt	ç²—é«”
 bolivia	common	zt	BOLIVIA
 bosnia and herzegovina	common	zt	BOSNIA AND HERZEGOVINA
 botswana	common	zt	BOTSWANA
@@ -81,165 +81,165 @@ brazil	common	zt	BRAZIL
 british indian ocean territory	common	zt	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	zt	BRUNEI DARUSSALAM
 bulgaria	common	zt	BULGARIA
-bulleted list	htmlarea	zt	®Ö¿ï²M³æ
+bulleted list	htmlarea	zt	æ ¸é¸æ¸…å–®
 burkina faso	common	zt	BURKINA FASO
 burundi	common	zt	BURUNDI
-calendar	common	zt	¦æ¨Æ¾ä
+calendar	common	zt	è¡Œäº‹æ›†
 cambodia	common	zt	CAMBODIA
 cameroon	common	zt	CAMEROON
 canada	common	zt	CANADA
-cancel	common	zt	¨ú®ø
+cancel	common	zt	å–æ¶ˆ
 cape verde	common	zt	CAPE VERDE
-categories	common	zt	¤ÀÃş
-categories for	common	zt	Ãş§O
-category	common	zt	Ãş§O
-category %1 has been added !	common	zt	¤w·s¼W¤ÀÃş %1 ¡I
-category %1 has been updated !	common	zt	¤w§ó·s¤ÀÃş %1 ¡I
+categories	common	zt	åˆ†é¡
+categories for	common	zt	é¡åˆ¥
+category	common	zt	é¡åˆ¥
+category %1 has been added !	common	zt	å·²æ–°å¢åˆ†é¡ %1 ï¼
+category %1 has been updated !	common	zt	å·²æ›´æ–°åˆ†é¡ %1 ï¼
 cayman islands	common	zt	CAYMAN ISLANDS
-cc	common	zt	°Æ¥»
+cc	common	zt	å‰¯æœ¬
 central african republic	common	zt	CENTRAL AFRICAN REPUBLIC
 chad	common	zt	CHAD
-change	common	zt	§ó´«
-charset	common	zt	big5
-check installation	common	zt	ÀË¬d¨t²Î¦w¸Ëª¬ºA
+change	common	zt	æ›´æ›
+charset	common	zt	utf-8
+check installation	common	zt	æª¢æŸ¥ç³»çµ±å®‰è£ç‹€æ…‹
 chile	common	zt	CHILE
 china	common	zt	CHINA
-choose the category	common	zt	¿ï¾Ü¤ÀÃş
-choose the parent category	common	zt	¿ï¾Ü¤W¤@¼h¤ÀÃş
+choose the category	common	zt	é¸æ“‡åˆ†é¡
+choose the parent category	common	zt	é¸æ“‡ä¸Šä¸€å±¤åˆ†é¡
 christmas island	common	zt	CHRISTMAS ISLAND
-clear	common	zt	²M°£
-clear form	common	zt	²M°£ªí³æ
-click	common	zt	ÂI¿ï
-click or mouse over to show menus	common	zt	ÂI¿ï©Î¬O²¾°Ê·Æ¹«¨ÓÅã¥Ü¿ï³æ
-click or mouse over to show menus?	common	zt	ÂI¿ï©Î¬O²¾°Ê·Æ¹«¨ÓÅã¥Ü¿ï³æ¡H
-close	common	zt	Ãö³¬
+clear	common	zt	æ¸…é™¤
+clear form	common	zt	æ¸…é™¤è¡¨å–®
+click	common	zt	é»é¸
+click or mouse over to show menus	common	zt	é»é¸æˆ–æ˜¯ç§»å‹•æ»‘é¼ ä¾†é¡¯ç¤ºé¸å–®
+click or mouse over to show menus?	common	zt	é»é¸æˆ–æ˜¯ç§»å‹•æ»‘é¼ ä¾†é¡¯ç¤ºé¸å–®ï¼Ÿ
+close	common	zt	é—œé–‰
 cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
 colombia	common	zt	COLOMBIA
 comoros	common	zt	COMOROS
-company	common	zt	¤½¥q
-config password	common	zt	³]©wºŞ²z­û±K½X
-config username	common	zt	³]©wºŞ²z­û±b¸¹
+company	common	zt	å…¬å¸
+config password	common	zt	è¨­å®šç®¡ç†å“¡å¯†ç¢¼
+config username	common	zt	è¨­å®šç®¡ç†å“¡å¸³è™Ÿ
 congo	common	zt	CONGO
 congo, the democratic republic of the	common	zt	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	zt	COOK ISLANDS
-copy	common	zt	½Æ»s
-copy selection	htmlarea	zt	½Æ»s¿ï¨úªº
+copy	common	zt	è¤‡è£½
+copy selection	htmlarea	zt	è¤‡è£½é¸å–çš„
 costa rica	common	zt	COSTA RICA
 cote d ivoire	common	zt	COTE D IVOIRE
-create	common	zt	«Ø¥ß
-created by	common	zt	«Ø¥ßªÌ
+create	common	zt	å»ºç«‹
+created by	common	zt	å»ºç«‹è€…
 croatia	common	zt	CROATIA
 cuba	common	zt	CUBA
-currency	common	zt	³f¹ô
-current	common	zt	²{¦b
-current style	htmlarea	zt	¥Ø«e¼Ë¦¡
-current users	common	zt	½u¤W¨Ï¥ÎªÌ
-cut selection	htmlarea	zt	°Å¤U¿ï¨úªº
+currency	common	zt	è²¨å¹£
+current	common	zt	ç¾åœ¨
+current style	htmlarea	zt	ç›®å‰æ¨£å¼
+current users	common	zt	ç·šä¸Šä½¿ç”¨è€…
+cut selection	htmlarea	zt	å‰ªä¸‹é¸å–çš„
 cyprus	common	zt	CYPRUS
 czech republic	common	zt	CZECH REPUBLIC
-date	common	zt	¤é´Á
-date due	common	zt	¨ì´Á¤é´Á
-date selection:	jscalendar	zt	¿ï¾Ü¤é´Á¡G
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zt	®É¶¡ªA°È°ğ¡C<br>¦pªG¨Ï¥Î13°ğ¡A¦b°e¥X¤§«e°O±oÀË¬d±zªº¨¾¤õÀğ³]©w¡C<br>(Port: 13 / Host: 129.6.15.28)
-december	common	zt	¤Q¤G¤ë
-decrease indent	htmlarea	zt	´î¤ÖÃä½t
-default category	common	zt	¹w³]¤ÀÃş
-delete	common	zt	²¾°£
+date	common	zt	æ—¥æœŸ
+date due	common	zt	åˆ°æœŸæ—¥æœŸ
+date selection:	jscalendar	zt	é¸æ“‡æ—¥æœŸï¼š
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zt	æ™‚é–“æœå‹™åŸ ã€‚<br>å¦‚æœä½¿ç”¨13åŸ ï¼Œåœ¨é€å‡ºä¹‹å‰è¨˜å¾—æª¢æŸ¥æ‚¨çš„é˜²ç«ç‰†è¨­å®šã€‚<br>(Port: 13 / Host: 129.6.15.28)
+december	common	zt	åäºŒæœˆ
+decrease indent	htmlarea	zt	æ¸›å°‘é‚Šç·£
+default category	common	zt	é è¨­åˆ†é¡
+delete	common	zt	ç§»é™¤
 denmark	common	zt	DENMARK
-description	common	zt	»¡©ú
-detail	common	zt	¸Ô²Ó
-details	common	zt	¸Ô²Ó
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	¦bPNG¹ÏÀÉ¤¤°±¥ÎIE 5.5©Î§ó·sª©¥»ªº­×¥¿¨ÓÅã¥Ü³z©ú®ÄªG
-disable internet explorer png-image-bugfix	common	zt	°±¥Î IE png-image-bugfix
-disable slider effects	common	zt	°±¥Î¤Á´«®ÄªG
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	¦bÅã¥Ü©Î¬OÁôÂÃ¿ï³æªº®É­Ô°±¥Î°ÊºA¤Á´«®ÄªG¡HOpera »P Konqueror ªº¨Ï¥ÎªÌ¥i¯à¥²¶·³o»ò°µ¡C
-disabled	common	zt	°±¥Î
-display monday first	jscalendar	zt	¬P´Á¤@¦b­º
-display sunday first	jscalendar	zt	¬P´Á¤é¦b­º
+description	common	zt	èªªæ˜
+detail	common	zt	è©³ç´°
+details	common	zt	è©³ç´°
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	åœ¨PNGåœ–æª”ä¸­åœç”¨IE 5.5æˆ–æ›´æ–°ç‰ˆæœ¬çš„ä¿®æ­£ä¾†é¡¯ç¤ºé€æ˜æ•ˆæœ
+disable internet explorer png-image-bugfix	common	zt	åœç”¨ IE png-image-bugfix
+disable slider effects	common	zt	åœç”¨åˆ‡æ›æ•ˆæœ
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	åœ¨é¡¯ç¤ºæˆ–æ˜¯éš±è—é¸å–®çš„æ™‚å€™åœç”¨å‹•æ…‹åˆ‡æ›æ•ˆæœï¼ŸOpera èˆ‡ Konqueror çš„ä½¿ç”¨è€…å¯èƒ½å¿…é ˆé€™éº¼åšã€‚
+disabled	common	zt	åœç”¨
+display monday first	jscalendar	zt	æ˜ŸæœŸä¸€åœ¨é¦–
+display sunday first	jscalendar	zt	æ˜ŸæœŸæ—¥åœ¨é¦–
 djibouti	common	zt	DJIBOUTI
-do you also want to delete all subcategories ?	common	zt	±z½T©w­n§R°£©Ò¦³ªº¤l¤ÀÃş¡H
-domain	common	zt	ºô§}
-domain name for mail-address, eg. "%1"	common	zt	¹q¤l¶l¥ó«H½cªººô§}, ¨Ò¦p¡G "%1"
-domestic	common	zt	°ê¤ºªº
+do you also want to delete all subcategories ?	common	zt	æ‚¨ç¢ºå®šè¦åˆªé™¤æ‰€æœ‰çš„å­åˆ†é¡ï¼Ÿ
+domain	common	zt	ç¶²å€
+domain name for mail-address, eg. "%1"	common	zt	é›»å­éƒµä»¶ä¿¡ç®±çš„ç¶²å€, ä¾‹å¦‚ï¼š "%1"
+domestic	common	zt	åœ‹å…§çš„
 dominica	common	zt	DOMINICA
 dominican republic	common	zt	DOMINICAN REPUBLIC
-done	common	zt	§¹¦¨
-drag to move	jscalendar	zt	©ì¦²²¾°Ê
+done	common	zt	å®Œæˆ
+drag to move	jscalendar	zt	æ‹–æ›³ç§»å‹•
 e-mail	common	zt	E-Mail
 east timor	common	zt	EAST TIMOR
 ecuador	common	zt	ECUADOR
-edit	common	zt	½s¿è
-edit %1 category for	common	zt	½s¿è¤ÀÃş %1 µ¹
-edit categories	common	zt	½s¿è¤ÀÃş
-edit category	common	zt	½s¿è¤ÀÃş
-egroupware api version %1	common	zt	eGroupWare API ª©¥» %1
-egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare: ¨Ï¥ÎªÌÂê©w '%1', IP %2
+edit	common	zt	ç·¨è¼¯
+edit %1 category for	common	zt	ç·¨è¼¯åˆ†é¡ %1 çµ¦
+edit categories	common	zt	ç·¨è¼¯åˆ†é¡
+edit category	common	zt	ç·¨è¼¯åˆ†é¡
+egroupware api version %1	common	zt	eGroupWare API ç‰ˆæœ¬ %1
+egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare: ä½¿ç”¨è€…é–å®š '%1', IP %2
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
 email	common	zt	E-Mail
-email-address of the user, eg. "%1"	common	zt	¨Ï¥ÎªÌªº¹q¤l¶l¥ó, ¨Ò¡G "%1"
-enabled	common	zt	±Ò¥Î
-end date	common	zt	µ²§ô¤é´Á
-end time	common	zt	µ²§ô®É¶¡
-enlarge editor	htmlarea	zt	©ñ¤j½s¿è¾¹
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	¿é¤JeGroupWareªººô§}<br>¨Ò¦p¡Ghttp://www.domain.com/egroupware &nbsp; ©Î &nbsp; /egroupware<br><b>³Ì«á­±¤£­n¦³±×½u</b>
-entry has been deleted sucessfully	common	zt	¸ê®Æ¤w¦¨¥\²¾°£
-entry updated sucessfully	common	zt	¸ê®Æ¤w¦¨¥\§ó·s
+email-address of the user, eg. "%1"	common	zt	ä½¿ç”¨è€…çš„é›»å­éƒµä»¶, ä¾‹ï¼š "%1"
+enabled	common	zt	å•Ÿç”¨
+end date	common	zt	çµæŸæ—¥æœŸ
+end time	common	zt	çµæŸæ™‚é–“
+enlarge editor	htmlarea	zt	æ”¾å¤§ç·¨è¼¯å™¨
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	è¼¸å…¥eGroupWareçš„ç¶²å€<br>ä¾‹å¦‚ï¼šhttp://www.domain.com/egroupware &nbsp; æˆ– &nbsp; /egroupware<br><b>æœ€å¾Œé¢ä¸è¦æœ‰æ–œç·š</b>
+entry has been deleted sucessfully	common	zt	è³‡æ–™å·²æˆåŠŸç§»é™¤
+entry updated sucessfully	common	zt	è³‡æ–™å·²æˆåŠŸæ›´æ–°
 equatorial guinea	common	zt	EQUATORIAL GUINEA
 eritrea	common	zt	ERITREA
-error	common	zt	¿ù»~
-error creating %1 %2 directory	common	zt	µLªk«Ø¥ß¥Ø¿ı %1 %2
-error deleting %1 %2 directory	common	zt	µLªk²¾°£¥Ø¿ı %1 %2
-error renaming %1 %2 directory	common	zt	µLªk§ó¦W¥Ø¿ı %1 %2
+error	common	zt	éŒ¯èª¤
+error creating %1 %2 directory	common	zt	ç„¡æ³•å»ºç«‹ç›®éŒ„ %1 %2
+error deleting %1 %2 directory	common	zt	ç„¡æ³•ç§»é™¤ç›®éŒ„ %1 %2
+error renaming %1 %2 directory	common	zt	ç„¡æ³•æ›´åç›®éŒ„ %1 %2
 estonia	common	zt	ESTONIA
 ethiopia	common	zt	ETHIOPIA
 falkland islands (malvinas)	common	zt	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zt	FAROE ISLANDS
-fax number	common	zt	¶Ç¯u¸¹½X
-february	common	zt	¤G¤ë
-fields	common	zt	Äæ¦ì
+fax number	common	zt	å‚³çœŸè™Ÿç¢¼
+february	common	zt	äºŒæœˆ
+fields	common	zt	æ¬„ä½
 fiji	common	zt	FIJI
-files	common	zt	ÀÉ®×
-filter	common	zt	¿z¿ï
+files	common	zt	æª”æ¡ˆ
+filter	common	zt	ç¯©é¸
 finland	common	zt	FINLAND
-first name	common	zt	¦W
-first name of the user, eg. "%1"	common	zt	¨Ï¥ÎªÌªº¦W, ¨Ò¦p¡G "%1"
-first page	common	zt	²Ä¤@­¶
-firstname	common	zt	¦W
-fixme!	common	zt	­×¥¿¡I
-font color	htmlarea	zt	¦r«¬ÃC¦â
-force selectbox	common	zt	±j¨î¨Ï¥Î¿ï¨ú¤è¶ô
+first name	common	zt	å
+first name of the user, eg. "%1"	common	zt	ä½¿ç”¨è€…çš„å, ä¾‹å¦‚ï¼š "%1"
+first page	common	zt	ç¬¬ä¸€é 
+firstname	common	zt	å
+fixme!	common	zt	ä¿®æ­£ï¼
+font color	htmlarea	zt	å­—å‹é¡è‰²
+force selectbox	common	zt	å¼·åˆ¶ä½¿ç”¨é¸å–æ–¹å¡Š
 france	common	zt	FRANCE
 french guiana	common	zt	FRENCH GUIANA
 french polynesia	common	zt	FRENCH POLYNESIA
 french southern territories	common	zt	FRENCH SOUTHERN TERRITORIES
-friday	common	zt	¬P´Á¤­
+friday	common	zt	æ˜ŸæœŸäº”
 ftp	common	zt	FTP
-fullname	common	zt	¥ş¦W
+fullname	common	zt	å…¨å
 gabon	common	zt	GABON
 gambia	common	zt	GAMBIA
-general menu	common	zt	¤@¯ë¿ï³æ
+general menu	common	zt	ä¸€èˆ¬é¸å–®
 georgia	common	zt	GEORGIA
 germany	common	zt	GERMANY
 ghana	common	zt	GHANA
 gibraltar	common	zt	GIBRALTAR
-global	common	zt	¥ş°Ï
-global public	common	zt	¥ş°Ï¦@¥Î
-go today	jscalendar	zt	«e©¹¤µ¤Ñ
-grant access	common	zt	¦s¨úÅv­­¶}©ñ
+global	common	zt	å…¨å€
+global public	common	zt	å…¨å€å…±ç”¨
+go today	jscalendar	zt	å‰å¾€ä»Šå¤©
+grant access	common	zt	å­˜å–æ¬Šé™é–‹æ”¾
 greece	common	zt	GREECE
 greenland	common	zt	GREENLAND
 grenada	common	zt	GRENADA
-group	common	zt	¸s²Õ
-group access	common	zt	¸s²Õ¦s¨ú
-group has been added	common	zt	¸s²Õ¤w¸g·s¼W
-group has been deleted	common	zt	¸s²Õ¤w¸g§R°£
-group has been updated	common	zt	¸s²Õ¤w¸g§ó·s
-group name	common	zt	¸s²Õ¦WºÙ
-group public	common	zt	¸s²Õ¦@¥Î
-groups	common	zt	¸s²Õ
-groups with permission for %1	common	zt	¸s²Õ¨ã¦³ %1 ªºÅv­­
-groups without permission for %1	common	zt	¸s²Õ¤£¨ã¦³ %1 ªºÅv­­
+group	common	zt	ç¾¤çµ„
+group access	common	zt	ç¾¤çµ„å­˜å–
+group has been added	common	zt	ç¾¤çµ„å·²ç¶“æ–°å¢
+group has been deleted	common	zt	ç¾¤çµ„å·²ç¶“åˆªé™¤
+group has been updated	common	zt	ç¾¤çµ„å·²ç¶“æ›´æ–°
+group name	common	zt	ç¾¤çµ„åç¨±
+group public	common	zt	ç¾¤çµ„å…±ç”¨
+groups	common	zt	ç¾¤çµ„
+groups with permission for %1	common	zt	ç¾¤çµ„å…·æœ‰ %1 çš„æ¬Šé™
+groups without permission for %1	common	zt	ç¾¤çµ„ä¸å…·æœ‰ %1 çš„æ¬Šé™
 guadeloupe	common	zt	GUADELOUPE
 guam	common	zt	GUAM
 guatemala	common	zt	GUATEMALA
@@ -247,221 +247,221 @@ guinea	common	zt	GUINEA
 guinea-bissau	common	zt	GUINEA-BISSAU
 guyana	common	zt	GUYANA
 haiti	common	zt	HAITI
-header admin login	common	zt	­¶­ººŞ²z­ûµn¤J
-header password	common	zt	±K½X
-header username	common	zt	±b¸¹
+header admin login	common	zt	é é¦–ç®¡ç†å“¡ç™»å…¥
+header password	common	zt	å¯†ç¢¼
+header username	common	zt	å¸³è™Ÿ
 heard island and mcdonald islands	common	zt	HEARD ISLAND AND MCDONALD ISLANDS
-help	common	zt	¨ó§U
-help using editor	htmlarea	zt	¨ó§U¨Ï¥Î½s¿è¾¹
-high	common	zt	°ª
-highest	common	zt	³Ì°ª
+help	common	zt	å”åŠ©
+help using editor	htmlarea	zt	å”åŠ©ä½¿ç”¨ç·¨è¼¯å™¨
+high	common	zt	é«˜
+highest	common	zt	æœ€é«˜
 holy see (vatican city state)	common	zt	HOLY SEE (VATICAN CITY STATE)
-home	common	zt	­º­¶
-home email	common	zt	¥D­n«H½c
+home	common	zt	é¦–é 
+home email	common	zt	ä¸»è¦ä¿¡ç®±
 honduras	common	zt	HONDURAS
-hong kong	common	zt	­»´ä
-horizontal rule	htmlarea	zt	¦X¨Ö³W«h
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	¦b¾ÉÄı¦C­nÅã¥Ü¦h¤Ö¹Ï¥Ü(¨C­¶ªº³Ì¤W¤è)¡A¦h¥Xªº¹Ï¥Ü·|Åã¥Ü¦b¥t¥~¤@­Ó¾ÉÄı¦C³Ì¥k¤èªº¤U©Ô¦¡¿ï³æ
+hong kong	common	zt	é¦™æ¸¯
+horizontal rule	htmlarea	zt	åˆä½µè¦å‰‡
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	åœ¨å°è¦½åˆ—è¦é¡¯ç¤ºå¤šå°‘åœ–ç¤º(æ¯é çš„æœ€ä¸Šæ–¹)ï¼Œå¤šå‡ºçš„åœ–ç¤ºæœƒé¡¯ç¤ºåœ¨å¦å¤–ä¸€å€‹å°è¦½åˆ—æœ€å³æ–¹çš„ä¸‹æ‹‰å¼é¸å–®
 hungary	common	zt	HUNGARY
 iceland	common	zt	ICELAND
-increase indent	htmlarea	zt	¼W¥[Ãä½t
+increase indent	htmlarea	zt	å¢åŠ é‚Šç·£
 india	common	zt	INDIA
 indonesia	common	zt	INDONESIA
-insert all %1 addresses of the %2 contacts in %3	common	zt	¦b %3 ´¡¤J %1 ªº %2 µ§Ápµ¸¤H¦ì§}
-insert image	htmlarea	zt	´¡¤J¹Ï¤ù
-insert table	htmlarea	zt	´¡¤Jªí®æ
-insert web link	htmlarea	zt	´¡¤J³sµ²
-international	common	zt	°ê»Ú
-invalid ip address	common	zt	¿ù»~ªºIP¦ì§}
-invalid password	common	zt	¿ù»~ªº±K½X
+insert all %1 addresses of the %2 contacts in %3	common	zt	åœ¨ %3 æ’å…¥ %1 çš„ %2 ç­†è¯çµ¡äººä½å€
+insert image	htmlarea	zt	æ’å…¥åœ–ç‰‡
+insert table	htmlarea	zt	æ’å…¥è¡¨æ ¼
+insert web link	htmlarea	zt	æ’å…¥é€£çµ
+international	common	zt	åœ‹éš›
+invalid ip address	common	zt	éŒ¯èª¤çš„IPä½å€
+invalid password	common	zt	éŒ¯èª¤çš„å¯†ç¢¼
 iran, islamic republic of	common	zt	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	zt	IRAQ
 ireland	common	zt	IRELAND
 israel	common	zt	ISRAEL
-it has been more then %1 days since you changed your password	common	zt	¶ZÂ÷±z¤W¦¸§ó§ï±K½X¤w¸g %1 ¤Ñ¤F
-it is recommended that you run setup to upgrade your tables to the current version	common	zt	«ØÄ³±z°õ¦æ³]©wµ{¦¡±N¸ê®Æªí¤É¯Å¦Ü¥Ø«eªºª©¥»¡C
-italic	common	zt	±×Åé
-italy	common	zt	¸q¤j§Q
+it has been more then %1 days since you changed your password	common	zt	è·é›¢æ‚¨ä¸Šæ¬¡æ›´æ”¹å¯†ç¢¼å·²ç¶“ %1 å¤©äº†
+it is recommended that you run setup to upgrade your tables to the current version	common	zt	å»ºè­°æ‚¨åŸ·è¡Œè¨­å®šç¨‹å¼å°‡è³‡æ–™è¡¨å‡ç´šè‡³ç›®å‰çš„ç‰ˆæœ¬ã€‚
+italic	common	zt	æ–œé«”
+italy	common	zt	ç¾©å¤§åˆ©
 jamaica	common	zt	JAMAICA
-january	common	zt	¤@¤ë
+january	common	zt	ä¸€æœˆ
 japan	common	zt	JAPAN
 jordan	common	zt	JORDAN
-july	common	zt	¤C¤ë
-june	common	zt	¤»¤ë
-justify center	htmlarea	zt	¸m¤¤
-justify full	htmlarea	zt	¥ş¿Ã¹õ
-justify left	htmlarea	zt	¾a¥ª
-justify right	htmlarea	zt	¾a¥k
+july	common	zt	ä¸ƒæœˆ
+june	common	zt	å…­æœˆ
+justify center	htmlarea	zt	ç½®ä¸­
+justify full	htmlarea	zt	å…¨è¢å¹•
+justify left	htmlarea	zt	é å·¦
+justify right	htmlarea	zt	é å³
 kazakstan	common	zt	KAZAKSTAN
 kenya	common	zt	KENYA
-keywords	common	zt	ÃöÁä¦r
+keywords	common	zt	é—œéµå­—
 kiribati	common	zt	KIRIBATI
 korea, democratic peoples republic of	common	zt	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
 korea, republic of	common	zt	KOREA, REPUBLIC OF
 kuwait	common	zt	KUWAIT
 kyrgyzstan	common	zt	KYRGYZSTAN
-language	common	zt	»y¨¥
+language	common	zt	èªè¨€
 lao peoples democratic republic	common	zt	LAO PEOPLES DEMOCRATIC REPUBLIC
-last name	common	zt	©m
-last name of the user, eg. "%1"	common	zt	¨Ï¥ÎªÌªº©m¡A¨Ò¡G "%1"
-last page	common	zt	³Ì«á¤@­¶
-lastname	common	zt	©m
+last name	common	zt	å§“
+last name of the user, eg. "%1"	common	zt	ä½¿ç”¨è€…çš„å§“ï¼Œä¾‹ï¼š "%1"
+last page	common	zt	æœ€å¾Œä¸€é 
+lastname	common	zt	å§“
 latvia	common	zt	LATVIA
 lebanon	common	zt	LEBANON
 lesotho	common	zt	LESOTHO
 liberia	common	zt	LIBERIA
 libyan arab jamahiriya	common	zt	LIBYAN ARAB JAMAHIRIYA
-license	common	zt	ª©Åv
+license	common	zt	ç‰ˆæ¬Š
 liechtenstein	common	zt	LIECHTENSTEIN
-list	common	zt	¦Cªí
+list	common	zt	åˆ—è¡¨
 lithuania	common	zt	LITHUANIA
-local	common	zt	¥»¦a
-login	common	zt	µn¤J
-loginid	common	zt	µn¤J±b¸¹
-logout	common	zt	µn¥X
-low	common	zt	§C
-lowest	common	zt	³Ì§C
+local	common	zt	æœ¬åœ°
+login	common	zt	ç™»å…¥
+loginid	common	zt	ç™»å…¥å¸³è™Ÿ
+logout	common	zt	ç™»å‡º
+low	common	zt	ä½
+lowest	common	zt	æœ€ä½
 luxembourg	common	zt	LUXEMBOURG
 macau	common	zt	MACAU
 macedonia, the former yugoslav republic of	common	zt	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	zt	MADAGASCAR
-mail domain, eg. "%1"	common	zt	¶l¥óºô§}, ¨Ò¡G "%1"
-main category	common	zt	¥D­n¤ÀÃş
-main screen	common	zt	¥Dµe­±
-maintainer	common	zt	ºûÅ@ªÌ
+mail domain, eg. "%1"	common	zt	éƒµä»¶ç¶²å€, ä¾‹ï¼š "%1"
+main category	common	zt	ä¸»è¦åˆ†é¡
+main screen	common	zt	ä¸»ç•«é¢
+maintainer	common	zt	ç¶­è­·è€…
 malawi	common	zt	MALAWI
 malaysia	common	zt	MALAYSIA
 maldives	common	zt	MALDIVES
 mali	common	zt	MALI
 malta	common	zt	MALTA
-manual	common	zt	¤â°Ê
-march	common	zt	¤T¤ë
+manual	common	zt	æ‰‹å‹•
+march	common	zt	ä¸‰æœˆ
 marshall islands	common	zt	MARSHALL ISLANDS
 martinique	common	zt	MARTINIQUE
 mauritania	common	zt	MAURITANIA
 mauritius	common	zt	MAURITIUS
-max number of icons in navbar	common	zt	¾ÉÄı¦C³Ì¦hÅã¥Ü¹Ï¥Ü¼Æ¶q
-may	common	zt	¤­¤ë
+max number of icons in navbar	common	zt	å°è¦½åˆ—æœ€å¤šé¡¯ç¤ºåœ–ç¤ºæ•¸é‡
+may	common	zt	äº”æœˆ
 mayotte	common	zt	MAYOTTE
-medium	common	zt	¤¤µ¥
-menu	common	zt	¿ï³æ
-message	common	zt	°T®§
+medium	common	zt	ä¸­ç­‰
+menu	common	zt	é¸å–®
+message	common	zt	è¨Šæ¯
 mexico	common	zt	MEXICO
 micronesia, federated states of	common	zt	MICRONESIA, FEDERATED STATES OF
 moldova, republic of	common	zt	MOLDOVA, REPUBLIC OF
 monaco	common	zt	MONACO
-monday	common	zt	¬P´Á¤@
+monday	common	zt	æ˜ŸæœŸä¸€
 mongolia	common	zt	MONGOLIA
 montserrat	common	zt	MONTSERRAT
 morocco	common	zt	MOROCCO
 mozambique	common	zt	MOZAMBIQUE
 myanmar	common	zt	MYANMAR
-name	common	zt	¦WºÙ
-name of the user, eg. "%1"	common	zt	¨Ï¥ÎªÌ¦WºÙ¡A¨Ò¡G "%1"
+name	common	zt	åç¨±
+name of the user, eg. "%1"	common	zt	ä½¿ç”¨è€…åç¨±ï¼Œä¾‹ï¼š "%1"
 namibia	common	zt	NAMIBIA
 nauru	common	zt	NAURU
 nepal	common	zt	NEPAL
 netherlands	common	zt	NETHERLANDS
 netherlands antilles	common	zt	NETHERLANDS ANTILLES
-never	common	zt	±q¥¼
+never	common	zt	å¾æœª
 new caledonia	common	zt	NEW CALEDONIA
-new entry added sucessfully	common	zt	¦¨¥\·s¼W¸ê®Æ
-new main category	common	zt	·sªº¥D­n¤ÀÃş
-new value	common	zt	·s¼Æ­È
+new entry added sucessfully	common	zt	æˆåŠŸæ–°å¢è³‡æ–™
+new main category	common	zt	æ–°çš„ä¸»è¦åˆ†é¡
+new value	common	zt	æ–°æ•¸å€¼
 new zealand	common	zt	NEW ZEALAND
-next	common	zt	¤U¤@­Ó
-next month (hold for menu)	jscalendar	zt	¤U¤@­Ó¤ë(¦b¿ï³æ¤¤)
-next page	common	zt	¤U¤@­¶
-next year (hold for menu)	jscalendar	zt	¤U¤@¦~(¦b¿ï³æ¤¤)
+next	common	zt	ä¸‹ä¸€å€‹
+next month (hold for menu)	jscalendar	zt	ä¸‹ä¸€å€‹æœˆ(åœ¨é¸å–®ä¸­)
+next page	common	zt	ä¸‹ä¸€é 
+next year (hold for menu)	jscalendar	zt	ä¸‹ä¸€å¹´(åœ¨é¸å–®ä¸­)
 nicaragua	common	zt	NICARAGUA
 niger	common	zt	NIGER
 nigeria	common	zt	NIGERIA
 niue	common	zt	NIUE
-no	common	zt	§_
-no entries found, try again ...	common	zt	§ä¤£¨ì¥ô¦ó¸ê®Æ¡A½Ğ­«¸Õ
-no history for this record	common	zt	³oµ§¬ö¿ı¨S¦³¾ú¥v¸ê®Æ
-no subject	common	zt	µL¥DÃD
-none	common	zt	µL
+no	common	zt	å¦
+no entries found, try again ...	common	zt	æ‰¾ä¸åˆ°ä»»ä½•è³‡æ–™ï¼Œè«‹é‡è©¦
+no history for this record	common	zt	é€™ç­†ç´€éŒ„æ²’æœ‰æ­·å²è³‡æ–™
+no subject	common	zt	ç„¡ä¸»é¡Œ
+none	common	zt	ç„¡
 norfolk island	common	zt	NORFOLK ISLAND
-normal	common	zt	¥¿±`
+normal	common	zt	æ­£å¸¸
 northern mariana islands	common	zt	NORTHERN MARIANA ISLANDS
 norway	common	zt	NORWAY
-not assigned	common	zt	¥¼¤À°t
-note	common	zt	³Æµù
-notes	common	zt	³Æ§Ñ
-notify window	common	zt	´£¥Üµøµ¡
-november	common	zt	¤Q¤@¤ë
-october	common	zt	¤Q¤ë
-ok	common	zt	½T©w
-old value	common	zt	­ì©l­È
+not assigned	common	zt	æœªåˆ†é…
+note	common	zt	å‚™è¨»
+notes	common	zt	å‚™å¿˜
+notify window	common	zt	æç¤ºè¦–çª—
+november	common	zt	åä¸€æœˆ
+october	common	zt	åæœˆ
+ok	common	zt	ç¢ºå®š
+old value	common	zt	åŸå§‹å€¼
 oman	common	zt	OMAN
-on *nix systems please type: %1	common	zt	¦b*nix¨t²Î½Ğ¿é¤J¡G%1
-on mouse over	common	zt	·í·Æ¹«²¾¹L
-only private	common	zt	¥u¦³¨p¤Hªº
-only yours	common	zt	Äİ©ó±zªº¸ê®Æ
-open notify window	common	zt	¶}±ÒÄµ¥Üµøµ¡
-open popup window	common	zt	¶}±Ò¼u¥X¦¡µøµ¡
-ordered list	htmlarea	zt	¤w±Æ§Ç²M³æ
-original	common	zt	­ì¥»ªº
-other	common	zt	¨ä¥¦
-overview	common	zt	Á`Äı
-owner	common	zt	¾Ö¦³ªÌ
-page was generated in %1 seconds	common	zt	ºô­¶ªá¶O %1 ¬í²£¥Í
+on *nix systems please type: %1	common	zt	åœ¨*nixç³»çµ±è«‹è¼¸å…¥ï¼š%1
+on mouse over	common	zt	ç•¶æ»‘é¼ ç§»é
+only private	common	zt	åªæœ‰ç§äººçš„
+only yours	common	zt	å±¬æ–¼æ‚¨çš„è³‡æ–™
+open notify window	common	zt	é–‹å•Ÿè­¦ç¤ºè¦–çª—
+open popup window	common	zt	é–‹å•Ÿå½ˆå‡ºå¼è¦–çª—
+ordered list	htmlarea	zt	å·²æ’åºæ¸…å–®
+original	common	zt	åŸæœ¬çš„
+other	common	zt	å…¶å®ƒ
+overview	common	zt	ç¸½è¦½
+owner	common	zt	æ“æœ‰è€…
+page was generated in %1 seconds	common	zt	ç¶²é èŠ±è²» %1 ç§’ç”¢ç”Ÿ
 pakistan	common	zt	PAKISTAN
 palau	common	zt	PALAU
 palestinian territory, occupied	common	zt	PALESTINIAN TERRITORY, OCCUPIED
 panama	common	zt	PANAMA
 papua new guinea	common	zt	PAPUA NEW GUINEA
 paraguay	common	zt	PARAGUAY
-parcel	common	zt	¶ô
-parent category	common	zt	¤W¤@¼h¤ÀÃş
-password	common	zt	±K½X
-password could not be changed	common	zt	µLªk­×§ï±K½X
-password has been updated	common	zt	¤w¦¨¥\§ó·s±K½X
-paste from clipboard	htmlarea	zt	±q°Å¶KÃ¯¶K¤W
-path	htmlarea	zt	¸ô®|
-path to user and group files has to be outside of the webservers document-root!!!	common	zt	¨Ï¥ÎªÌ»P¸s²ÕªºÀÉ®×¸ô®|¥²¶·­n¦bºô¯¸¦øªA¾¹ªººô­¶¸ò¥Ø¿ı¤§¥~¡I
-pattern for search in addressbook	common	zt	¦b³q°T¿ıªº·j´M¼Ò¦¡
-pattern for search in calendar	common	zt	¦b¦æ¨Æ¾äªº·j´M¼Ò¦¡
-pattern for search in projects	common	zt	¦b±M®×ºŞ²zªº·j´M¼Ò¦¡
-permissions to the files/users directory	common	zt	ÀÉ®×/¨Ï¥ÎªÌ¸ê®Æ§¨ªºÅv­­
-personal	common	zt	­Ó¤H
+parcel	common	zt	å¡Š
+parent category	common	zt	ä¸Šä¸€å±¤åˆ†é¡
+password	common	zt	å¯†ç¢¼
+password could not be changed	common	zt	ç„¡æ³•ä¿®æ”¹å¯†ç¢¼
+password has been updated	common	zt	å·²æˆåŠŸæ›´æ–°å¯†ç¢¼
+paste from clipboard	htmlarea	zt	å¾å‰ªè²¼ç°¿è²¼ä¸Š
+path	htmlarea	zt	è·¯å¾‘
+path to user and group files has to be outside of the webservers document-root!!!	common	zt	ä½¿ç”¨è€…èˆ‡ç¾¤çµ„çš„æª”æ¡ˆè·¯å¾‘å¿…é ˆè¦åœ¨ç¶²ç«™ä¼ºæœå™¨çš„ç¶²é è·Ÿç›®éŒ„ä¹‹å¤–ï¼
+pattern for search in addressbook	common	zt	åœ¨é€šè¨ŠéŒ„çš„æœå°‹æ¨¡å¼
+pattern for search in calendar	common	zt	åœ¨è¡Œäº‹æ›†çš„æœå°‹æ¨¡å¼
+pattern for search in projects	common	zt	åœ¨å°ˆæ¡ˆç®¡ç†çš„æœå°‹æ¨¡å¼
+permissions to the files/users directory	common	zt	æª”æ¡ˆ/ä½¿ç”¨è€…è³‡æ–™å¤¾çš„æ¬Šé™
+personal	common	zt	å€‹äºº
 peru	common	zt	PERU
 philippines	common	zt	PHILIPPINES
-phone number	common	zt	¹q¸Ü
-phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWare¡G'%1'±b¸¹Âê©w¤F, IP %2
+phone number	common	zt	é›»è©±
+phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWareï¼š'%1'å¸³è™Ÿé–å®šäº†, IP %2
 pitcairn	common	zt	PITCAIRN
-please %1 by hand	common	zt	½Ğ¤â°Ê %1
-please enter a name	common	zt	½Ğ¿é¤J¦WºÙ¡I
-please run setup to become current	common	zt	½Ğ°õ¦æ³]©wµ{¦¡¥H¨ì¥Ø«eªº
-please select	common	zt	½Ğ¿ï¾Ü
-please set your global preferences	common	zt	½Ğ³]©w±zªº¥ş°ì³]©w
-please set your preferences for this application	common	zt	½Ğ³]©w³o­ÓÀ³¥Îµ{¦¡ªº­Ó¤H³ß¦n³]©w
-please wait...	common	zt	½Ğµ¥«İ...
+please %1 by hand	common	zt	è«‹æ‰‹å‹• %1
+please enter a name	common	zt	è«‹è¼¸å…¥åç¨±ï¼
+please run setup to become current	common	zt	è«‹åŸ·è¡Œè¨­å®šç¨‹å¼ä»¥åˆ°ç›®å‰çš„
+please select	common	zt	è«‹é¸æ“‡
+please set your global preferences	common	zt	è«‹è¨­å®šæ‚¨çš„å…¨åŸŸè¨­å®š
+please set your preferences for this application	common	zt	è«‹è¨­å®šé€™å€‹æ‡‰ç”¨ç¨‹å¼çš„å€‹äººå–œå¥½è¨­å®š
+please wait...	common	zt	è«‹ç­‰å¾…...
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
-postal	common	zt	¶l»¼°Ï¸¹
-powered by phpgroupware version %1	common	zt	¦¹³nÅé¬° <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 ª©¡C
-preferences	common	zt	³ß¦n³]©w
-preferences for the idots template set	common	zt	idots¼ËªOªº³]©w
-prev. month (hold for menu)	jscalendar	zt	¤W¤@­Ó¤ë(¦b¿ï³æ¤¤)
-prev. year (hold for menu)	jscalendar	zt	¤W¤@¦~(¦b¿ï³æ¤¤)
-previous page	common	zt	¤W¤@­¶
-print	common	zt	¦C¦L
-priority	common	zt	Àu¥ıÅv
-private	common	zt	¨p¤H
-project	common	zt	±M®×
-public	common	zt	¦@¥Î
+postal	common	zt	éƒµéå€è™Ÿ
+powered by phpgroupware version %1	common	zt	æ­¤è»Ÿé«”ç‚º <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 ç‰ˆã€‚
+preferences	common	zt	å–œå¥½è¨­å®š
+preferences for the idots template set	common	zt	idotsæ¨£æ¿çš„è¨­å®š
+prev. month (hold for menu)	jscalendar	zt	ä¸Šä¸€å€‹æœˆ(åœ¨é¸å–®ä¸­)
+prev. year (hold for menu)	jscalendar	zt	ä¸Šä¸€å¹´(åœ¨é¸å–®ä¸­)
+previous page	common	zt	ä¸Šä¸€é 
+print	common	zt	åˆ—å°
+priority	common	zt	å„ªå…ˆæ¬Š
+private	common	zt	ç§äºº
+project	common	zt	å°ˆæ¡ˆ
+public	common	zt	å…±ç”¨
 puerto rico	common	zt	PUERTO RICO
 qatar	common	zt	QATAR
-read	common	zt	Åª¨ú
-read this list of methods.	common	zt	Åª¨ú³o­Ó¤èªkªº¦Cªí
-redoes your last action	htmlarea	zt	­«·s°õ¦æ³Ì«á¤@­Ó°Ê§@
-reject	common	zt	©Úµ´
-rename	common	zt	§ó¦W
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	zt	¶Ç¦^¨t²Îªº§¹¾ã±b¸¹²M³æ¡Cª`·N¡G¶Ç¦^ªº¸ê®Æ¶q¥i¯à«D±`¦h
-returns an array of todo items	common	zt	¶Ç¦^«İ¿ì¨Æ¶µ©Ò¦³¶µ¥Ø¦¨¬°°}¦C
-returns struct of users application access	common	zt	¶Ç¦^¨Ï¥ÎªÌÀ³¥Îµ{¦¡¦s¨ú¬[ºc
+read	common	zt	è®€å–
+read this list of methods.	common	zt	è®€å–é€™å€‹æ–¹æ³•çš„åˆ—è¡¨
+redoes your last action	htmlarea	zt	é‡æ–°åŸ·è¡Œæœ€å¾Œä¸€å€‹å‹•ä½œ
+reject	common	zt	æ‹’çµ•
+rename	common	zt	æ›´å
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	zt	å‚³å›ç³»çµ±çš„å®Œæ•´å¸³è™Ÿæ¸…å–®ã€‚æ³¨æ„ï¼šå‚³å›çš„è³‡æ–™é‡å¯èƒ½éå¸¸å¤š
+returns an array of todo items	common	zt	å‚³å›å¾…è¾¦äº‹é …æ‰€æœ‰é …ç›®æˆç‚ºé™£åˆ—
+returns struct of users application access	common	zt	å‚³å›ä½¿ç”¨è€…æ‡‰ç”¨ç¨‹å¼å­˜å–æ¶æ§‹
 reunion	common	zt	REUNION
 romania	common	zt	ROMANIA
 russian federation	common	zt	RUSSIAN FEDERATION
@@ -474,60 +474,60 @@ saint vincent and the grenadines	common	zt	SAINT VINCENT AND THE GRENADINES
 samoa	common	zt	SAMOA
 san marino	common	zt	SAN MARINO
 sao tome and principe	common	zt	SAO TOME AND PRINCIPE
-saturday	common	zt	¬P´Á¤»
+saturday	common	zt	æ˜ŸæœŸå…­
 saudi arabia	common	zt	SAUDI ARABIA
-save	common	zt	Àx¦s
-search	common	zt	·j´M
-section	common	zt	¿ï¾Ü
-select	common	zt	¿ï¾Ü
-select all %1 %2 for %3	common	zt	¿ï¾Ü %3 ªº©Ò¦³ %1 %2
-select category	common	zt	¿ï¾Ü¤ÀÃş
-select date	common	zt	¿ï¾Ü¤é´Á
-select group	common	zt	¿ï¾Ü¸s²Õ
-select home email address	common	zt	¿ï¾Ü®a¥Î«H½c
-select one	common	zt	¿ï¾Ü¤@­Ó
-select user	common	zt	¿ï¾Ü¨Ï¥ÎªÌ
-select work email address	common	zt	¿ï¾Ü¤u§@¥Î«H½c
-send	common	zt	°e¥X
+save	common	zt	å„²å­˜
+search	common	zt	æœå°‹
+section	common	zt	é¸æ“‡
+select	common	zt	é¸æ“‡
+select all %1 %2 for %3	common	zt	é¸æ“‡ %3 çš„æ‰€æœ‰ %1 %2
+select category	common	zt	é¸æ“‡åˆ†é¡
+select date	common	zt	é¸æ“‡æ—¥æœŸ
+select group	common	zt	é¸æ“‡ç¾¤çµ„
+select home email address	common	zt	é¸æ“‡å®¶ç”¨ä¿¡ç®±
+select one	common	zt	é¸æ“‡ä¸€å€‹
+select user	common	zt	é¸æ“‡ä½¿ç”¨è€…
+select work email address	common	zt	é¸æ“‡å·¥ä½œç”¨ä¿¡ç®±
+send	common	zt	é€å‡º
 senegal	common	zt	SENEGAL
-september	common	zt	¤E¤ë
-server %1 has been added	common	zt	¦øªA¾¹ %1 ¤w¸g§¹¦¨·s¼W
-server name	common	zt	¦øªA¾¹¦WºÙ
-session has been killed	common	zt	³s½u¤w³Q¤¤Â_
-setup	common	zt	¦w¸Ë
-setup main menu	common	zt	¦w¸Ë¥D­n¿ï³æ
-setup/config admin login	common	zt	¦w¸Ë/³]©wºŞ²z­ûµn¤J
+september	common	zt	ä¹æœˆ
+server %1 has been added	common	zt	ä¼ºæœå™¨ %1 å·²ç¶“å®Œæˆæ–°å¢
+server name	common	zt	ä¼ºæœå™¨åç¨±
+session has been killed	common	zt	é€£ç·šå·²è¢«ä¸­æ–·
+setup	common	zt	å®‰è£
+setup main menu	common	zt	å®‰è£ä¸»è¦é¸å–®
+setup/config admin login	common	zt	å®‰è£/è¨­å®šç®¡ç†å“¡ç™»å…¥
 seychelles	common	zt	SEYCHELLES
-show all	common	zt	Åã¥Ü¥ş³¡
-show all categorys	common	zt	Åã¥Ü¥ş³¡Ãş§O
-show menu	common	zt	Åã¥Ü¿ï³æ
-show page generation time	common	zt	Åã¥Üºô­¶²£¥Í®É¶¡
-show page generation time on the bottom of the page?	common	zt	±Nºô­¶²£¥Í®É¶¡Åã¥Ü¦b­¶§À¡H
+show all	common	zt	é¡¯ç¤ºå…¨éƒ¨
+show all categorys	common	zt	é¡¯ç¤ºå…¨éƒ¨é¡åˆ¥
+show menu	common	zt	é¡¯ç¤ºé¸å–®
+show page generation time	common	zt	é¡¯ç¤ºç¶²é ç”¢ç”Ÿæ™‚é–“
+show page generation time on the bottom of the page?	common	zt	å°‡ç¶²é ç”¢ç”Ÿæ™‚é–“é¡¯ç¤ºåœ¨é å°¾ï¼Ÿ
 show_more_apps	common	zt	show_more_apps
-showing %1	common	zt	Åã¥Ü %1
-showing %1 - %2 of %3	common	zt	Åã¥Ü %1 - %2 ¤§ %3
+showing %1	common	zt	é¡¯ç¤º %1
+showing %1 - %2 of %3	common	zt	é¡¯ç¤º %1 - %2 ä¹‹ %3
 sierra leone	common	zt	SIERRA LEONE
 singapore	common	zt	SINGAPORE
 slovakia	common	zt	SLOVAKIA
 slovenia	common	zt	SLOVENIA
 solomon islands	common	zt	SOLOMON ISLANDS
 somalia	common	zt	SOMALIA
-sorry, your login has expired	login	zt	©êºp¡A±zªº±b¸¹¤w¸g¹L´Á
+sorry, your login has expired	login	zt	æŠ±æ­‰ï¼Œæ‚¨çš„å¸³è™Ÿå·²ç¶“éæœŸ
 south africa	common	zt	SOUTH AFRICA
 south georgia and the south sandwich islands	common	zt	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	zt	SPAIN
 sri lanka	common	zt	SRI LANKA
-start date	common	zt	¶}©l¤é´Á
-start time	common	zt	¶}©l®É¶¡
-status	common	zt	ª¬ºA
-strikethrough	htmlarea	zt	¬ğ¯}
-subject	common	zt	¥DÃD
-submit	common	zt	°e¥X
-subscript	htmlarea	zt	¤U¼Ğ
-substitutions and their meanings:	common	zt	´À¥N¶µ¥Ø»P¥L­Ìªº·N¸q¡G
+start date	common	zt	é–‹å§‹æ—¥æœŸ
+start time	common	zt	é–‹å§‹æ™‚é–“
+status	common	zt	ç‹€æ…‹
+strikethrough	htmlarea	zt	çªç ´
+subject	common	zt	ä¸»é¡Œ
+submit	common	zt	é€å‡º
+subscript	htmlarea	zt	ä¸‹æ¨™
+substitutions and their meanings:	common	zt	æ›¿ä»£é …ç›®èˆ‡ä»–å€‘çš„æ„ç¾©ï¼š
 sudan	common	zt	SUDAN
-sunday	common	zt	¬P´Á¤é
-superscript	htmlarea	zt	¤W¼Ğ
+sunday	common	zt	æ˜ŸæœŸæ—¥
+superscript	htmlarea	zt	ä¸Šæ¨™
 suriname	common	zt	SURINAME
 svalbard and jan mayen	common	zt	SVALBARD AND JAN MAYEN
 swaziland	common	zt	SWAZILAND
@@ -538,33 +538,33 @@ taiwan	common	zt	TAIWAN/TAIPEI
 tajikistan	common	zt	TAJIKISTAN
 tanzania, united republic of	common	zt	TANZANIA, UNITED REPUBLIC OF
 thailand	common	zt	THAILAND
-the api is current	common	zt	À³¥Îµ{¦¡¤¶­±¬O³Ì·sªº
-the api requires an upgrade	common	zt	À³¥Îµ{¦¡¤¶­±»İ­n¤É¯Å
-the following applications require upgrades	common	zt	¤U¦CÀ³¥Îµ{¦¡»İ­n¤É¯Å
-the mail server returned	common	zt	¶l¥ó¦øªA¾¹¶Ç¦^
-this application is current	common	zt	³o­ÓÀ³¥Îµ{¦¡¬O³Ì·sªº
-this application requires an upgrade	common	zt	³o­ÓÀ³¥Îµ{¦¡»İ­n¤É¯Å
-this name has been used already	common	zt	³o­Ó¦W¦r¤w³Q¨Ï¥Î¡I
-thursday	common	zt	¬P´Á¥|
-time	common	zt	®É¶¡
-time selection:	jscalendar	zt	¿ï¨úªº®É¶¡¡G
-time zone	common	zt	®É°Ï
-time zone offset	common	zt	®É°Ï®É®t
-title	common	zt	¼ĞÃD
-to	common	zt	¨ì
-to correct this error for the future you will need to properly set the	common	zt	¬°¤F¦b¥¼¨Ó­×¥¿³o­Ó¿ù»~¡A±z¥²¶·¥¿½Tªº³]©w
-to go back to the msg list, click <a href= %1 >here</a>	common	zt	ÂI¿ï<a href="%1">³o¸Ì</a>¦^¨ì°T®§²M³æ
-today	common	zt	¤µ¤Ñ
-todays date, eg. "%1"	common	zt	¤µ¤Ñ¤é´Á, ¨Ò¡G "%1"
-toggle first day of week	jscalendar	zt	¨C¬P´Áªº²Ä¤@¤Ñ
-toggle html source	htmlarea	zt	HTML­ì©l½X
+the api is current	common	zt	æ‡‰ç”¨ç¨‹å¼ä»‹é¢æ˜¯æœ€æ–°çš„
+the api requires an upgrade	common	zt	æ‡‰ç”¨ç¨‹å¼ä»‹é¢éœ€è¦å‡ç´š
+the following applications require upgrades	common	zt	ä¸‹åˆ—æ‡‰ç”¨ç¨‹å¼éœ€è¦å‡ç´š
+the mail server returned	common	zt	éƒµä»¶ä¼ºæœå™¨å‚³å›
+this application is current	common	zt	é€™å€‹æ‡‰ç”¨ç¨‹å¼æ˜¯æœ€æ–°çš„
+this application requires an upgrade	common	zt	é€™å€‹æ‡‰ç”¨ç¨‹å¼éœ€è¦å‡ç´š
+this name has been used already	common	zt	é€™å€‹åå­—å·²è¢«ä½¿ç”¨ï¼
+thursday	common	zt	æ˜ŸæœŸå››
+time	common	zt	æ™‚é–“
+time selection:	jscalendar	zt	é¸å–çš„æ™‚é–“ï¼š
+time zone	common	zt	æ™‚å€
+time zone offset	common	zt	æ™‚å€æ™‚å·®
+title	common	zt	æ¨™é¡Œ
+to	common	zt	åˆ°
+to correct this error for the future you will need to properly set the	common	zt	ç‚ºäº†åœ¨æœªä¾†ä¿®æ­£é€™å€‹éŒ¯èª¤ï¼Œæ‚¨å¿…é ˆæ­£ç¢ºçš„è¨­å®š
+to go back to the msg list, click <a href= %1 >here</a>	common	zt	é»é¸<a href="%1">é€™è£¡</a>å›åˆ°è¨Šæ¯æ¸…å–®
+today	common	zt	ä»Šå¤©
+todays date, eg. "%1"	common	zt	ä»Šå¤©æ—¥æœŸ, ä¾‹ï¼š "%1"
+toggle first day of week	jscalendar	zt	æ¯æ˜ŸæœŸçš„ç¬¬ä¸€å¤©
+toggle html source	htmlarea	zt	HTMLåŸå§‹ç¢¼
 togo	common	zt	TOGO
 tokelau	common	zt	TOKELAU
 tonga	common	zt	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zt	¤Ó¦h¿ù»~ªºµn¤J¡G%1 ¨Ï¥ÎªÌ '%2', %3 IP %4
-total	common	zt	Á`­p
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zt	å¤ªå¤šéŒ¯èª¤çš„ç™»å…¥ï¼š%1 ä½¿ç”¨è€… '%2', %3 IP %4
+total	common	zt	ç¸½è¨ˆ
 trinidad and tobago	common	zt	TRINIDAD AND TOBAGO
-tuesday	common	zt	¬P´Á¤G
+tuesday	common	zt	æ˜ŸæœŸäºŒ
 tunisia	common	zt	TUNISIA
 turkey	common	zt	TURKEY
 turkmenistan	common	zt	TURKMENISTAN
@@ -572,62 +572,62 @@ turks and caicos islands	common	zt	TURKS AND CAICOS ISLANDS
 tuvalu	common	zt	TUVALU
 uganda	common	zt	UGANDA
 ukraine	common	zt	UKRAINE
-underline	htmlarea	zt	©³½u
-undoes your last action	htmlarea	zt	ÁÙ­ì¤W¤@­Ó°Ê§@
+underline	htmlarea	zt	åº•ç·š
+undoes your last action	htmlarea	zt	é‚„åŸä¸Šä¸€å€‹å‹•ä½œ
 united arab emirates	common	zt	UNITED ARAB EMIRATES
 united kingdom	common	zt	UNITED KINGDOM
 united states	common	zt	UNITED STATES
 united states minor outlying islands	common	zt	UNITED STATES MINOR OUTLYING ISLANDS
-unknown	common	zt	¥¼ª¾
-update	common	zt	§ó·s
-url	common	zt	ºô§}
+unknown	common	zt	æœªçŸ¥
+update	common	zt	æ›´æ–°
+url	common	zt	ç¶²å€
 uruguay	common	zt	URUGUAY
-use button to search for	common	zt	¨Ï¥Î«ö¶s·j´M
-use button to search for address	common	zt	¨Ï¥Î«ö¶s·j´M³q°T¿ı
-use button to search for calendarevent	common	zt	¨Ï¥Î«ö¶s·j´M¦æ¨Æ¾ä¨Æ¥ó
-use button to search for project	common	zt	¨Ï¥Î«ö¶s·j´M±M®×
-user	common	zt	¨Ï¥ÎªÌ
-user accounts	common	zt	¨Ï¥ÎªÌ±b¸¹
-user groups	common	zt	¨Ï¥ÎªÌ¸s²Õ
-username	common	zt	¨Ï¥ÎªÌ¦WºÙ
-users	common	zt	¨Ï¥ÎªÌ
-users choice	common	zt	¨Ï¥ÎªÌ¿ï¾Ü
+use button to search for	common	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹
+use button to search for address	common	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹é€šè¨ŠéŒ„
+use button to search for calendarevent	common	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹è¡Œäº‹æ›†äº‹ä»¶
+use button to search for project	common	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹å°ˆæ¡ˆ
+user	common	zt	ä½¿ç”¨è€…
+user accounts	common	zt	ä½¿ç”¨è€…å¸³è™Ÿ
+user groups	common	zt	ä½¿ç”¨è€…ç¾¤çµ„
+username	common	zt	ä½¿ç”¨è€…åç¨±
+users	common	zt	ä½¿ç”¨è€…
+users choice	common	zt	ä½¿ç”¨è€…é¸æ“‡
 uzbekistan	common	zt	UZBEKISTAN
 vanuatu	common	zt	VANUATU
 venezuela	common	zt	VENEZUELA
-version	common	zt	ª©¥»
+version	common	zt	ç‰ˆæœ¬
 viet nam	common	zt	VIET NAM
-view	common	zt	ÀËµø
+view	common	zt	æª¢è¦–
 virgin islands, british	common	zt	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	zt	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	zt	WALLIS AND FUTUNA
-wednesday	common	zt	¬P´Á¤T
-welcome	common	zt	Åwªï¥úÁ{
+wednesday	common	zt	æ˜ŸæœŸä¸‰
+welcome	common	zt	æ­¡è¿å…‰è‡¨
 western sahara	common	zt	WESTERN SAHARA
-which groups	common	zt	­ş­Ó¸s²Õ
-wk	jscalendar	zt	¬P´Á
-work email	common	zt	¤u§@«H½c
-written by:	common	zt	§@ªÌ¡G
-year	common	zt	¦~
+which groups	common	zt	å“ªå€‹ç¾¤çµ„
+wk	jscalendar	zt	æ˜ŸæœŸ
+work email	common	zt	å·¥ä½œä¿¡ç®±
+written by:	common	zt	ä½œè€…ï¼š
+year	common	zt	å¹´
 yemen	common	zt	YEMEN
-yes	common	zt	¬O
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	±z¥Ø«e¦b¤å¦r¼Ò¦¡¡A¨Ï¥Î[<>]«ö¶s¨Ó¤Á´«©Ò¨£§Y©Ò±o½s¿è¾¹¡C
-you are required to change your password during your first login	common	zt	±z¥²¶·¦b²Ä¤@¦¸µn¤J®É­×§ï±zªº±K½X
-you are running a newer version of phpgroupware than your database is setup for	common	zt	±z²{¦b©Ò¨Ï¥Îªº phpGroupWare ª©¥»¤ñ±zªº¸ê®Æ®w³]©wªºª©¥»ÁÙ·s¡C
-you have been successfully logged out	login	zt	±z¤w¸g¦¨¥\µn¥X¡C
-you have not entered a title	common	zt	±z©|¥¼¿é¤J¼ĞÃD
-you have not entered a valid date	common	zt	±z©|¥¼¿é¤J¥¿½Tªº¤é´Á
-you have not entered a valid time of day	common	zt	±z©|¥¼¿é¤J¥¿½Tªº®É¶¡
-you have not entered participants	common	zt	±z©|¥¼¿é¤JÃö«YªÌ
-you have selected an invalid date	common	zt	±z¿ï¾Ü¤F¤£¦Xªkªº¤é´Á¡I
-you have selected an invalid main category	common	zt	±z¿ï¾Ü¤F¿ù»~ªº¤ÀÃş¡I
-you have successfully logged out	common	zt	±z¤w¸g¦¨¥\µn¥X¤F
-your message could <b>not</b> be sent!<br>	common	zt	±zªº°T®§<b>µLªk</b>°e¥X¡I<br>
-your message has been sent	common	zt	±zªº°T®§¤w¸g°e¥X
-your search returned %1 matchs	common	zt	·j´M¨ì %1 µ§¸ê®Æ
-your search returned 1 match	common	zt	·j´M¨ì 1 µ§¸ê®Æ
-your session could not be verified.	login	zt	±zªº³s½u¤£¦Xªk¡C
-your settings have been updated	common	zt	±zªº³]©w¤w¸g§ó·s¡C
+yes	common	zt	æ˜¯
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	æ‚¨ç›®å‰åœ¨æ–‡å­—æ¨¡å¼ï¼Œä½¿ç”¨[<>]æŒ‰éˆ•ä¾†åˆ‡æ›æ‰€è¦‹å³æ‰€å¾—ç·¨è¼¯å™¨ã€‚
+you are required to change your password during your first login	common	zt	æ‚¨å¿…é ˆåœ¨ç¬¬ä¸€æ¬¡ç™»å…¥æ™‚ä¿®æ”¹æ‚¨çš„å¯†ç¢¼
+you are running a newer version of phpgroupware than your database is setup for	common	zt	æ‚¨ç¾åœ¨æ‰€ä½¿ç”¨çš„ phpGroupWare ç‰ˆæœ¬æ¯”æ‚¨çš„è³‡æ–™åº«è¨­å®šçš„ç‰ˆæœ¬é‚„æ–°ã€‚
+you have been successfully logged out	login	zt	æ‚¨å·²ç¶“æˆåŠŸç™»å‡ºã€‚
+you have not entered a title	common	zt	æ‚¨å°šæœªè¼¸å…¥æ¨™é¡Œ
+you have not entered a valid date	common	zt	æ‚¨å°šæœªè¼¸å…¥æ­£ç¢ºçš„æ—¥æœŸ
+you have not entered a valid time of day	common	zt	æ‚¨å°šæœªè¼¸å…¥æ­£ç¢ºçš„æ™‚é–“
+you have not entered participants	common	zt	æ‚¨å°šæœªè¼¸å…¥é—œä¿‚è€…
+you have selected an invalid date	common	zt	æ‚¨é¸æ“‡äº†ä¸åˆæ³•çš„æ—¥æœŸï¼
+you have selected an invalid main category	common	zt	æ‚¨é¸æ“‡äº†éŒ¯èª¤çš„åˆ†é¡ï¼
+you have successfully logged out	common	zt	æ‚¨å·²ç¶“æˆåŠŸç™»å‡ºäº†
+your message could <b>not</b> be sent!<br>	common	zt	æ‚¨çš„è¨Šæ¯<b>ç„¡æ³•</b>é€å‡ºï¼<br>
+your message has been sent	common	zt	æ‚¨çš„è¨Šæ¯å·²ç¶“é€å‡º
+your search returned %1 matchs	common	zt	æœå°‹åˆ° %1 ç­†è³‡æ–™
+your search returned 1 match	common	zt	æœå°‹åˆ° 1 ç­†è³‡æ–™
+your session could not be verified.	login	zt	æ‚¨çš„é€£ç·šä¸åˆæ³•ã€‚
+your settings have been updated	common	zt	æ‚¨çš„è¨­å®šå·²ç¶“æ›´æ–°ã€‚
 yugoslavia	common	zt	YUGOSLAVIA
 zambia	common	zt	ZAMBIA
 zimbabwe	common	zt	ZIMBABWE

@@ -1,335 +1,335 @@
-%1 %2 in %3	calendar	zt	¦b%3ªº%1 %2
-%1 matches found	calendar	zt	¦@¦³ %1 µ§¸ê®Æ²Å¦X
-%1 records imported	calendar	zt	%1 µ§¸ê®Æ¶×¤J
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	zt	Åª¨ú¤F%1µ§¸ê®Æ(ÁÙ¨S¶×¤J¡A±z¥²¶·¦^¨ì¤W¤@­¶¨Ã¥B¨ú®ø°é¿ï¶×¤J´ú¸Õ)
-(for weekly)	calendar	zt	¡]¨C¶g¡^
+%1 %2 in %3	calendar	zt	åœ¨%3çš„%1 %2
+%1 matches found	calendar	zt	å…±æœ‰ %1 ç­†è³‡æ–™ç¬¦åˆ
+%1 records imported	calendar	zt	%1 ç­†è³‡æ–™åŒ¯å…¥
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	zt	è®€å–äº†%1ç­†è³‡æ–™(é‚„æ²’åŒ¯å…¥ï¼Œæ‚¨å¿…é ˆå›åˆ°ä¸Šä¸€é ä¸¦ä¸”å–æ¶ˆåœˆé¸åŒ¯å…¥æ¸¬è©¦)
+(for weekly)	calendar	zt	ï¼ˆæ¯é€±ï¼‰
 (i/v)cal	calendar	zt	(i/v)Cal
-1 match found	calendar	zt	¦@¦³ 1 µ§¸ê®Æ²Å¦X
-a	calendar	zt	¤@
-accept	calendar	zt	±µ¨ü
-accepted	calendar	zt	¤w±µ¨ü
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zt	»İ­n´£¿ôªº¾Ş§@¡G·s¼W¡B¨ú®ø¡B±µ¨ü¡B©Úµ´¡B...
-add a single entry by passing the fields.	calendar	zt	¨Ì¾Ú³o­Ó¶µ¥Ø«Ø¥ß¤@­Ó½Æ¥»
-add alarm	calendar	zt	·s¼WÄµ¥Ü
-add contact	calendar	zt	·s¼WÁpÃ´
-add or update a single entry by passing the fields.	calendar	zt	³z¹L¶Ç»¼Äæ¦ì¨Ó·s¼W©Î§ó·s¤@µ§°O¿ı
-added	calendar	zt	·s¼W¤é´Á
-address book	calendar	zt	³q°T¿ı
-alarm	calendar	zt	Äµ§i
-alarm for %1 at %2 in %3	calendar	zt	¦b%3ªº%1 ¤¤ %2Äµ§i
-alarm management	calendar	zt	Äµ¥ÜºŞ²z
-alarm-management	calendar	zt	Äµ§iºŞ²z­û
-alarms	calendar	zt	Äµ§i
-all day	calendar	zt	©Ò¦³¤é´Á
-are you sure you want to delete this country ?	calendar	zt	±z½T©w­n²¾°£³o­Ó°ê®a¶Ü¡H
-are you sure you want to delete this holiday ?	calendar	zt	±z½T©w­n²¾°£³o­Ó°²¤é¶Ü¡H
-are you sure\nyou want to\ndelete these alarms?	calendar	zt	±z½T©w\n­n§R°£\n³o¨Ç´£¿ô¡H
-are you sure\nyou want to\ndelete this entry ?	calendar	zt	±z½T©w­n²¾°£\n³oµ§¸ê®Æ¶Ü¡H
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	±z½T©w­n²¾°£³oµ§¸ê®Æ¶Ü¡H\n©Ò¦³¨Ï¥ÎªÌªº¸ê®Æ±N¤@¨Ö²¾°£¡C
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zt	±z½T©w\n±z­n§R°£³o­Ó´Á¶¡¡H\n\n³o±N·|\n§R°£©Ò¦³¨Ï¥ÎªÌªº¬Û¦P¨Æ¥ó¡C
+1 match found	calendar	zt	å…±æœ‰ 1 ç­†è³‡æ–™ç¬¦åˆ
+a	calendar	zt	ä¸€
+accept	calendar	zt	æ¥å—
+accepted	calendar	zt	å·²æ¥å—
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zt	éœ€è¦æé†’çš„æ“ä½œï¼šæ–°å¢ã€å–æ¶ˆã€æ¥å—ã€æ‹’çµ•ã€...
+add a single entry by passing the fields.	calendar	zt	ä¾æ“šé€™å€‹é …ç›®å»ºç«‹ä¸€å€‹è¤‡æœ¬
+add alarm	calendar	zt	æ–°å¢è­¦ç¤º
+add contact	calendar	zt	æ–°å¢è¯ç¹«
+add or update a single entry by passing the fields.	calendar	zt	é€éå‚³éæ¬„ä½ä¾†æ–°å¢æˆ–æ›´æ–°ä¸€ç­†è¨˜éŒ„
+added	calendar	zt	æ–°å¢æ—¥æœŸ
+address book	calendar	zt	é€šè¨ŠéŒ„
+alarm	calendar	zt	è­¦å‘Š
+alarm for %1 at %2 in %3	calendar	zt	åœ¨%3çš„%1 ä¸­ %2è­¦å‘Š
+alarm management	calendar	zt	è­¦ç¤ºç®¡ç†
+alarm-management	calendar	zt	è­¦å‘Šç®¡ç†å“¡
+alarms	calendar	zt	è­¦å‘Š
+all day	calendar	zt	æ‰€æœ‰æ—¥æœŸ
+are you sure you want to delete this country ?	calendar	zt	æ‚¨ç¢ºå®šè¦ç§»é™¤é€™å€‹åœ‹å®¶å—ï¼Ÿ
+are you sure you want to delete this holiday ?	calendar	zt	æ‚¨ç¢ºå®šè¦ç§»é™¤é€™å€‹å‡æ—¥å—ï¼Ÿ
+are you sure\nyou want to\ndelete these alarms?	calendar	zt	æ‚¨ç¢ºå®š\nè¦åˆªé™¤\né€™äº›æé†’ï¼Ÿ
+are you sure\nyou want to\ndelete this entry ?	calendar	zt	æ‚¨ç¢ºå®šè¦ç§»é™¤\né€™ç­†è³‡æ–™å—ï¼Ÿ
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	æ‚¨ç¢ºå®šè¦ç§»é™¤é€™ç­†è³‡æ–™å—ï¼Ÿ\næ‰€æœ‰ä½¿ç”¨è€…çš„è³‡æ–™å°‡ä¸€ä½µç§»é™¤ã€‚
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zt	æ‚¨ç¢ºå®š\næ‚¨è¦åˆªé™¤é€™å€‹æœŸé–“ï¼Ÿ\n\né€™å°‡æœƒ\nåˆªé™¤æ‰€æœ‰ä½¿ç”¨è€…çš„ç›¸åŒäº‹ä»¶ã€‚
 are you surenyou want tondelete these alarms?	calendar	zt	
 are you surenyou want tondelete this entry ?	calendar	zt	
 are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	zt	
 are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	zt	
-before the event	calendar	zt	¨Æ¥ó¤§«e
-brief description	calendar	zt	Â²µu±Ô­z
-business	calendar	zt	°Ó°È
-calendar	common	zt	¦æ¨Æ¾ä
+before the event	calendar	zt	äº‹ä»¶ä¹‹å‰
+brief description	calendar	zt	ç°¡çŸ­æ•˜è¿°
+business	calendar	zt	å•†å‹™
+calendar	common	zt	è¡Œäº‹æ›†
 calendar - [iv]cal importer	calendar	zt	Calendar - [iv]Cal Importer
-calendar - add	calendar	zt	¦æ¨Æ¾ä - ·s¼W
-calendar - edit	calendar	zt	¦æ¨Æ¾ä - ½s¿è
-calendar event	calendar	zt	¤é¾ä¨Æ¥ó
-calendar holiday management	admin	zt	¦æ¨Æ¾ä°²¤éºŞ²z
-calendar preferences	calendar	zt	¦æ¨Æ¾ä³ß¦n³]©w
-calendar settings	admin	zt	³]©w¦æ¨Æ¾ä
-calendar-fieldname	calendar	zt	¦æ¨Æ¾äÄæ¦ì¦WºÙ
-canceled	calendar	zt	¨ú®ø
-change all events for $params['old_owner'] to $params['new_owner'].	calendar	zt	§ïÅÜ©Ò¦³$params['old_owner']ªº¨Æ¥óµ¹$params['new_owner']¡C
-change status	calendar	zt	­×§ïª¬ºA
-charset of file	calendar	zt	ÀÉ®×¦r¤¸½s½X
-click %1here%2 to return to the calendar.	calendar	zt	ÂI¿ï %1³o¸Ì%2 ¦^¨ì¦æ¨Æ¾ä
-configuration	calendar	zt	³]©w
-countries	calendar	zt	°ê®a
-country	calendar	zt	°ê®a
-created by	calendar	zt	«Ø¥ßªÌ
-csv-fieldname	calendar	zt	CSV-Äæ¦ì¦WºÙ
-csv-filename	calendar	zt	CSV-ÀÉ®×¦WºÙ
-custom fields	calendar	zt	¦Û­qÄæ¦ì
-custom fields and sorting	common	zt	¦Û­qÄæ¦ì»P±Æ§Ç
-daily	calendar	zt	¨C¤é
-daily matrix view	calendar	zt	¨C¤é°}¦CÀËµø¼Ò¦¡
-days	calendar	zt	¤é
-days repeated	calendar	zt	¤é­«ÂĞ
-dayview	calendar	zt	¤é¦æ¨Æ¾ä
-default appointment length (in minutes)	calendar	zt	¹w³]·|Ä³®É¶¡ªø«×(¤ÀÄÁ)
-default calendar filter	calendar	zt	¹w³]¦æ¨Æ¾ä¹LÂo¾¹
-default calendar view	calendar	zt	¹w³]¦æ¨Æ¾äÀËµø¼Ò¦¡
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zt	¹w³]«Ø¥ß¨Æ¥óªºªø«×(¤ÀÄÁ)¡A¹w³]¬°60=1¤p®É¡C
-defines the size in minutes of the lines in the day view.	calendar	zt	©w¸q¦æ¨Æ¾äÂsÄı®É¨C­Ó®É¬qªº¤ÀÄÁ¼Æ
-delete a single entry by passing the id.	calendar	zt	§R°£³o­Ó¨Æ¥ó¨Ã¥B²¤¹L³o­ÓID
-delete an entire users calendar.	calendar	zt	§R°£¾ã­Ó¨Ï¥ÎªÌªº¦æ¨Æ¾ä
-delete selected contacts	calendar	zt	§R°£ÁpÃ´
-delete series	calendar	zt	§R°£³sÂê¶µ¥Ø
-delete single	calendar	zt	§R°£³æ¤@¶µ¥Ø
-deleted	calendar	zt	§R°£¤é´Á
-description	calendar	zt	´y­z
-disable	calendar	zt	°±¥Î
-disabled	calendar	zt	°±¥Î
-display interval in day view	calendar	zt	¨C¤éÅã¥Üªº¶¡¹j
-display mini calendars when printing	calendar	zt	¦C¦L®ÉÅã¥Ü¤p¦æ¨Æ¾ä
-display status of events	calendar	zt	Åã¥Ü¨Æ¥óªºª¬ºA
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	¦bÅwªïµe­±Åã¥Ü±zªº¹w³]¦æ¨Æ¾äÂsÄı¼Ò¦¡¡H
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	Åã¥Ü±z¹w³]ªº¦æ¨Æ¾äÂsÄı¼Ò¦¡¦b±Ò©l­¶(±zµn¤JphpGroupWare²Ä¤@­Ó¬İ¨ì©Î¬O«ö¤U±zªº­º­¶«ö¶sªº­¶­±)
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	±z§Æ±æ¨t²Î¦b¬ù·|·s¼W©Î¬O­×§ï®É¥D°Ê´£¿ô±z¶Ü¡H±z¤]·|¦¬¨ì¥]¬A±z¦Û¤v§ó·sªº³qª¾¡C<br>±z¥i¥H­­¨î¨t²Î¥u´£¿ô½T©wªº­×§ï¡C¨C­Ó¶µ¥Ø¥]§t¥¦¥H¤Wªº²M³æ¡C©Ò¦³ªº­×§ï¥]¬A¼ĞÃD¡B´y­z¡B°Ñ»PªÌªº§ïÅÜ¡A¦ı¬O¤£¥]¬A°Ñ»PªÌªº¦^À³¡C¦pªG¨Æ¥óªº¾Ö¦³ªÌ­n¨D¥ô¦ó´£¿ô¡A¥L·|¦¬¨ì°Ñ»PªÌ±µ¨ü©Î¬O©Úµ´ªº¦^À³¡C
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	±z§Æ±æ©w´Á³z¹L¹q¤l¶l¥ó¦¬¨ì¨t²Î¦Û°Ê±H¥Xªº¬ù·|³qª¾·§­n¶Ü¡H<br>³o­Ó·§­n·|¦b¨C¤Ñ¦­¤W±H¥X¨C¤é·§­n©Î¬O¨C­Ó¬P´Á¤@±H¥X¨C¶g·§­n¡C<br>¥¦¥u·|¦b¨º¤@¤Ñ©Î¬O¨º¤@¶g¦³¬ù·|®É±H¥X¡C
-do you wish to autoload calendar holidays files dynamically?	admin	zt	±z§Æ±æ°ÊºA·s¼W¦æ¨Æ¾äªº°²¤é¶Ü¡H
-download	calendar	zt	¤U¸ü
-duration	calendar	zt	´Á¶¡
-edit series	calendar	zt	½s¿è¥ş¨t¦C¬ù·|
-edit single	calendar	zt	½s¿è³æ¤@¬ù·|
-email notification	calendar	zt	¹q¤l¶l¥ó´£¿ô
-email notification for %1	calendar	zt	%1ªº¹q¤l¶l¥ó´£¿ô
-empty for all	calendar	zt	¥ş³¡ªÅ¥Õ
-enable	calendar	zt	±Ò¥Î
-enabled	calendar	zt	±Ò¥Î
-end date/time	calendar	zt	µ²§ô¤é´Á®É¶¡
-enddate	calendar	zt	µ²§ô¤é´Á
-ends	calendar	zt	µ²§ô¤é´Á
-enter output filename: ( .vcs appended )	calendar	zt	¿é¤J¿é¥XÀÉ¦W¡G(°O±o¥[¤W°ÆÀÉ¦W.vcs)
-event details follow	calendar	zt	¨Æ¥ó²Ó¸`
-exceptions	calendar	zt	¨Ò¥~
-export	calendar	zt	¶×¥X
-export a list of entries in ical format.	calendar	zt	¶×¥X¨Æ¥ó²M³æ¦¨¬°iCal®æ¦¡
-extended	calendar	zt	©µ¦ùªº
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zt	©µ¦ùªº§ó·s¥]§t§¹¾ãªº¨Æ¥ó²Ó¸`¡AiCal®æ¦¡¥i¥H³Q¨ä¥L¦æ¨Æ¾ä³nÅéÅª¨ú¡C
-external participants	calendar	zt	¥~³¡°Ñ»PªÌ
-failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zt	µLªk¶Ç°e´Mµ¹'%1'#%2 ¼ĞÃD='%3'¡A¶Ç°eªÌ='%4'¡I
-fieldseparator	calendar	zt	Äæ¦ì¤À¹j¦r¤¸
-firstname of person to notify	calendar	zt	»İ­n³qª¾ªº¤H¦W
-format of event updates	calendar	zt	¨Æ¥ó§ó·sªº®æ¦¡
-fr	calendar	zt	¤­
-free/busy	calendar	zt	¦³ªÅ/¦£¿ı
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	zt	ª¬ºA¡G¤£ª¾¦Wªº¨Ï¥ÎªÌ'%1'¡A¿ù»~ªº±K½X©Î¬O¥Ø«eµLªkµn¤J¡I
-frequency	calendar	zt	ÀW²v
-fri	calendar	zt	¤­
-full description	calendar	zt	§¹¾ã±Ô­z
-fullname of person to notify	calendar	zt	»İ­n³qª¾ªº¥ş¦W
-generate printer-friendly version	calendar	zt	²£¥Í¤Íµ½¦C¦Lª©¥»
-global categories	calendar	zt	¥ş°ìÃş§O
-global public and group public	calendar	zt	¥ş°Ï¤½¥Î¤Î¸s²Õ¤½¥Î
-global public only	calendar	zt	¥ş°Ï¤½¥Î
-go!	calendar	zt	¥Xµo¡I
-grant calendar access	common	zt	ºŞ²z¦æ¨Æ¾äÅv­­
-group planner	calendar	zt	¸s²Õ­pµe
-group public only	calendar	zt	¸s²Õ¤½¥Î
-here is your requested alarm.	calendar	zt	³o¬O±z­n¨Dªº´£¿ô¡C
-high priority	calendar	zt	°ªÀu¥ıÅv
-holiday	calendar	zt	°²¤é
-holiday management	calendar	zt	°²¤éºŞ²z
-holiday-management	calendar	zt	°²¤éºŞ²z
-holidays	calendar	zt	°²¤é
-hours	calendar	zt	¤p®É
-i participate	calendar	zt	§Ú­n°Ñ»P
+calendar - add	calendar	zt	è¡Œäº‹æ›† - æ–°å¢
+calendar - edit	calendar	zt	è¡Œäº‹æ›† - ç·¨è¼¯
+calendar event	calendar	zt	æ—¥æ›†äº‹ä»¶
+calendar holiday management	admin	zt	è¡Œäº‹æ›†å‡æ—¥ç®¡ç†
+calendar preferences	calendar	zt	è¡Œäº‹æ›†å–œå¥½è¨­å®š
+calendar settings	admin	zt	è¨­å®šè¡Œäº‹æ›†
+calendar-fieldname	calendar	zt	è¡Œäº‹æ›†æ¬„ä½åç¨±
+canceled	calendar	zt	å–æ¶ˆ
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	zt	æ”¹è®Šæ‰€æœ‰$params['old_owner']çš„äº‹ä»¶çµ¦$params['new_owner']ã€‚
+change status	calendar	zt	ä¿®æ”¹ç‹€æ…‹
+charset of file	calendar	zt	æª”æ¡ˆå­—å…ƒç·¨ç¢¼
+click %1here%2 to return to the calendar.	calendar	zt	é»é¸ %1é€™è£¡%2 å›åˆ°è¡Œäº‹æ›†
+configuration	calendar	zt	è¨­å®š
+countries	calendar	zt	åœ‹å®¶
+country	calendar	zt	åœ‹å®¶
+created by	calendar	zt	å»ºç«‹è€…
+csv-fieldname	calendar	zt	CSV-æ¬„ä½åç¨±
+csv-filename	calendar	zt	CSV-æª”æ¡ˆåç¨±
+custom fields	calendar	zt	è‡ªè¨‚æ¬„ä½
+custom fields and sorting	common	zt	è‡ªè¨‚æ¬„ä½èˆ‡æ’åº
+daily	calendar	zt	æ¯æ—¥
+daily matrix view	calendar	zt	æ¯æ—¥é™£åˆ—æª¢è¦–æ¨¡å¼
+days	calendar	zt	æ—¥
+days repeated	calendar	zt	æ—¥é‡è¦†
+dayview	calendar	zt	æ—¥è¡Œäº‹æ›†
+default appointment length (in minutes)	calendar	zt	é è¨­æœƒè­°æ™‚é–“é•·åº¦(åˆ†é˜)
+default calendar filter	calendar	zt	é è¨­è¡Œäº‹æ›†éæ¿¾å™¨
+default calendar view	calendar	zt	é è¨­è¡Œäº‹æ›†æª¢è¦–æ¨¡å¼
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zt	é è¨­å»ºç«‹äº‹ä»¶çš„é•·åº¦(åˆ†é˜)ï¼Œé è¨­ç‚º60=1å°æ™‚ã€‚
+defines the size in minutes of the lines in the day view.	calendar	zt	å®šç¾©è¡Œäº‹æ›†ç€è¦½æ™‚æ¯å€‹æ™‚æ®µçš„åˆ†é˜æ•¸
+delete a single entry by passing the id.	calendar	zt	åˆªé™¤é€™å€‹äº‹ä»¶ä¸¦ä¸”ç•¥éé€™å€‹ID
+delete an entire users calendar.	calendar	zt	åˆªé™¤æ•´å€‹ä½¿ç”¨è€…çš„è¡Œäº‹æ›†
+delete selected contacts	calendar	zt	åˆªé™¤è¯ç¹«
+delete series	calendar	zt	åˆªé™¤é€£é–é …ç›®
+delete single	calendar	zt	åˆªé™¤å–®ä¸€é …ç›®
+deleted	calendar	zt	åˆªé™¤æ—¥æœŸ
+description	calendar	zt	æè¿°
+disable	calendar	zt	åœç”¨
+disabled	calendar	zt	åœç”¨
+display interval in day view	calendar	zt	æ¯æ—¥é¡¯ç¤ºçš„é–“éš”
+display mini calendars when printing	calendar	zt	åˆ—å°æ™‚é¡¯ç¤ºå°è¡Œäº‹æ›†
+display status of events	calendar	zt	é¡¯ç¤ºäº‹ä»¶çš„ç‹€æ…‹
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	åœ¨æ­¡è¿ç•«é¢é¡¯ç¤ºæ‚¨çš„é è¨­è¡Œäº‹æ›†ç€è¦½æ¨¡å¼ï¼Ÿ
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	é¡¯ç¤ºæ‚¨é è¨­çš„è¡Œäº‹æ›†ç€è¦½æ¨¡å¼åœ¨å•Ÿå§‹é (æ‚¨ç™»å…¥phpGroupWareç¬¬ä¸€å€‹çœ‹åˆ°æˆ–æ˜¯æŒ‰ä¸‹æ‚¨çš„é¦–é æŒ‰éˆ•çš„é é¢)
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	æ‚¨å¸Œæœ›ç³»çµ±åœ¨ç´„æœƒæ–°å¢æˆ–æ˜¯ä¿®æ”¹æ™‚ä¸»å‹•æé†’æ‚¨å—ï¼Ÿæ‚¨ä¹Ÿæœƒæ”¶åˆ°åŒ…æ‹¬æ‚¨è‡ªå·±æ›´æ–°çš„é€šçŸ¥ã€‚<br>æ‚¨å¯ä»¥é™åˆ¶ç³»çµ±åªæé†’ç¢ºå®šçš„ä¿®æ”¹ã€‚æ¯å€‹é …ç›®åŒ…å«å®ƒä»¥ä¸Šçš„æ¸…å–®ã€‚æ‰€æœ‰çš„ä¿®æ”¹åŒ…æ‹¬æ¨™é¡Œã€æè¿°ã€åƒèˆ‡è€…çš„æ”¹è®Šï¼Œä½†æ˜¯ä¸åŒ…æ‹¬åƒèˆ‡è€…çš„å›æ‡‰ã€‚å¦‚æœäº‹ä»¶çš„æ“æœ‰è€…è¦æ±‚ä»»ä½•æé†’ï¼Œä»–æœƒæ”¶åˆ°åƒèˆ‡è€…æ¥å—æˆ–æ˜¯æ‹’çµ•çš„å›æ‡‰ã€‚
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	æ‚¨å¸Œæœ›å®šæœŸé€éé›»å­éƒµä»¶æ”¶åˆ°ç³»çµ±è‡ªå‹•å¯„å‡ºçš„ç´„æœƒé€šçŸ¥æ¦‚è¦å—ï¼Ÿ<br>é€™å€‹æ¦‚è¦æœƒåœ¨æ¯å¤©æ—©ä¸Šå¯„å‡ºæ¯æ—¥æ¦‚è¦æˆ–æ˜¯æ¯å€‹æ˜ŸæœŸä¸€å¯„å‡ºæ¯é€±æ¦‚è¦ã€‚<br>å®ƒåªæœƒåœ¨é‚£ä¸€å¤©æˆ–æ˜¯é‚£ä¸€é€±æœ‰ç´„æœƒæ™‚å¯„å‡ºã€‚
+do you wish to autoload calendar holidays files dynamically?	admin	zt	æ‚¨å¸Œæœ›å‹•æ…‹æ–°å¢è¡Œäº‹æ›†çš„å‡æ—¥å—ï¼Ÿ
+download	calendar	zt	ä¸‹è¼‰
+duration	calendar	zt	æœŸé–“
+edit series	calendar	zt	ç·¨è¼¯å…¨ç³»åˆ—ç´„æœƒ
+edit single	calendar	zt	ç·¨è¼¯å–®ä¸€ç´„æœƒ
+email notification	calendar	zt	é›»å­éƒµä»¶æé†’
+email notification for %1	calendar	zt	%1çš„é›»å­éƒµä»¶æé†’
+empty for all	calendar	zt	å…¨éƒ¨ç©ºç™½
+enable	calendar	zt	å•Ÿç”¨
+enabled	calendar	zt	å•Ÿç”¨
+end date/time	calendar	zt	çµæŸæ—¥æœŸæ™‚é–“
+enddate	calendar	zt	çµæŸæ—¥æœŸ
+ends	calendar	zt	çµæŸæ—¥æœŸ
+enter output filename: ( .vcs appended )	calendar	zt	è¼¸å…¥è¼¸å‡ºæª”åï¼š(è¨˜å¾—åŠ ä¸Šå‰¯æª”å.vcs)
+event details follow	calendar	zt	äº‹ä»¶ç´°ç¯€
+exceptions	calendar	zt	ä¾‹å¤–
+export	calendar	zt	åŒ¯å‡º
+export a list of entries in ical format.	calendar	zt	åŒ¯å‡ºäº‹ä»¶æ¸…å–®æˆç‚ºiCalæ ¼å¼
+extended	calendar	zt	å»¶ä¼¸çš„
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zt	å»¶ä¼¸çš„æ›´æ–°åŒ…å«å®Œæ•´çš„äº‹ä»¶ç´°ç¯€ï¼ŒiCalæ ¼å¼å¯ä»¥è¢«å…¶ä»–è¡Œäº‹æ›†è»Ÿé«”è®€å–ã€‚
+external participants	calendar	zt	å¤–éƒ¨åƒèˆ‡è€…
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zt	ç„¡æ³•å‚³é€å°‹çµ¦'%1'#%2 æ¨™é¡Œ='%3'ï¼Œå‚³é€è€…='%4'ï¼
+fieldseparator	calendar	zt	æ¬„ä½åˆ†éš”å­—å…ƒ
+firstname of person to notify	calendar	zt	éœ€è¦é€šçŸ¥çš„äººå
+format of event updates	calendar	zt	äº‹ä»¶æ›´æ–°çš„æ ¼å¼
+fr	calendar	zt	äº”
+free/busy	calendar	zt	æœ‰ç©º/å¿™éŒ„
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	zt	ç‹€æ…‹ï¼šä¸çŸ¥åçš„ä½¿ç”¨è€…'%1'ï¼ŒéŒ¯èª¤çš„å¯†ç¢¼æˆ–æ˜¯ç›®å‰ç„¡æ³•ç™»å…¥ï¼
+frequency	calendar	zt	é »ç‡
+fri	calendar	zt	äº”
+full description	calendar	zt	å®Œæ•´æ•˜è¿°
+fullname of person to notify	calendar	zt	éœ€è¦é€šçŸ¥çš„å…¨å
+generate printer-friendly version	calendar	zt	ç”¢ç”Ÿå‹å–„åˆ—å°ç‰ˆæœ¬
+global categories	calendar	zt	å…¨åŸŸé¡åˆ¥
+global public and group public	calendar	zt	å…¨å€å…¬ç”¨åŠç¾¤çµ„å…¬ç”¨
+global public only	calendar	zt	å…¨å€å…¬ç”¨
+go!	calendar	zt	å‡ºç™¼ï¼
+grant calendar access	common	zt	ç®¡ç†è¡Œäº‹æ›†æ¬Šé™
+group planner	calendar	zt	ç¾¤çµ„è¨ˆç•«
+group public only	calendar	zt	ç¾¤çµ„å…¬ç”¨
+here is your requested alarm.	calendar	zt	é€™æ˜¯æ‚¨è¦æ±‚çš„æé†’ã€‚
+high priority	calendar	zt	é«˜å„ªå…ˆæ¬Š
+holiday	calendar	zt	å‡æ—¥
+holiday management	calendar	zt	å‡æ—¥ç®¡ç†
+holiday-management	calendar	zt	å‡æ—¥ç®¡ç†
+holidays	calendar	zt	å‡æ—¥
+hours	calendar	zt	å°æ™‚
+i participate	calendar	zt	æˆ‘è¦åƒèˆ‡
 ical / rfc2445	calendar	zt	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	zt	¦pªG¿ï¾Üªº°²¤é­è¦n¬O¶g¥½¡A¨t²Î·|¦Û°Ê²¾¨ì¬P´Á¤@¡C
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	zt	¦pªG±z¨S¦³¦b³o¸Ì³]©w±K½X¡A©Ò¦³ªº¤H³£¥i¥H¬İ¨ì±zªº¸ê°T¡I
-ignore conflict	calendar	zt	©¿²¤­«Å|ªº¬ù·|
-import	calendar	zt	¶×¤J
-import csv-file	common	zt	¶×¤JCSV³rÂI¤À¹jÀÉ®×
-import csv-file into calendar	calendar	zt	¶×¤JCSVÀÉ®×¨ì¦æ¨Æ¾ä
-interval	calendar	zt	¶¡¹j
-intervals in day view	calendar	zt	¨C¤éÂsÄıªº¶¡¹j
-intervals per day in planner view	calendar	zt	¦b­pµeÂsÄı¼Ò¦¡ªº¶¡¹j¤é¼Æ
-invalid entry id.	calendar	zt	¿ù»~ªº¨Æ¥óID¡C
-last	calendar	zt	³Ì«á
-lastname of person to notify	calendar	zt	­n´£¿ôªº¤H¦W(©m)
-length shown<br>(emtpy for full length)	calendar	zt	Åã¥Üªø«×<br>(ªÅ¥Õ¥Nªí§¹¾ãªø«×)
-length<br>(<= 255)	calendar	zt	ªø«×<br>(<=255)
-link	calendar	zt	³sµ²
-link to view the event	calendar	zt	¨Æ¥ó³sµ²
-list all categories.	calendar	zt	Åã¥Ü©Ò¦³¤ÀÃş
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	zt	å¦‚æœé¸æ“‡çš„å‡æ—¥å‰›å¥½æ˜¯é€±æœ«ï¼Œç³»çµ±æœƒè‡ªå‹•ç§»åˆ°æ˜ŸæœŸä¸€ã€‚
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	zt	å¦‚æœæ‚¨æ²’æœ‰åœ¨é€™è£¡è¨­å®šå¯†ç¢¼ï¼Œæ‰€æœ‰çš„äººéƒ½å¯ä»¥çœ‹åˆ°æ‚¨çš„è³‡è¨Šï¼
+ignore conflict	calendar	zt	å¿½ç•¥é‡ç–Šçš„ç´„æœƒ
+import	calendar	zt	åŒ¯å…¥
+import csv-file	common	zt	åŒ¯å…¥CSVé€—é»åˆ†éš”æª”æ¡ˆ
+import csv-file into calendar	calendar	zt	åŒ¯å…¥CSVæª”æ¡ˆåˆ°è¡Œäº‹æ›†
+interval	calendar	zt	é–“éš”
+intervals in day view	calendar	zt	æ¯æ—¥ç€è¦½çš„é–“éš”
+intervals per day in planner view	calendar	zt	åœ¨è¨ˆç•«ç€è¦½æ¨¡å¼çš„é–“éš”æ—¥æ•¸
+invalid entry id.	calendar	zt	éŒ¯èª¤çš„äº‹ä»¶IDã€‚
+last	calendar	zt	æœ€å¾Œ
+lastname of person to notify	calendar	zt	è¦æé†’çš„äººå(å§“)
+length shown<br>(emtpy for full length)	calendar	zt	é¡¯ç¤ºé•·åº¦<br>(ç©ºç™½ä»£è¡¨å®Œæ•´é•·åº¦)
+length<br>(<= 255)	calendar	zt	é•·åº¦<br>(<=255)
+link	calendar	zt	é€£çµ
+link to view the event	calendar	zt	äº‹ä»¶é€£çµ
+list all categories.	calendar	zt	é¡¯ç¤ºæ‰€æœ‰åˆ†é¡
 load [iv]cal	calendar	zt	Load [iv]Cal
-location	calendar	zt	¬ù·|¦ì¸m
-location to autoload from	admin	zt	¦Û°ÊÅª¨úªº¦ì¸m
-make freebusy information availible to not loged in persons?	calendar	zt	Åı¥¼µn¤Jªº¨Ï¥ÎªÌÂsÄı±z¥Ø«e¬O¦³ªÅ©Î¬O¦£¸L¤¤¡H
-matrixview	calendar	zt	°òÂ¦ÂsÄı
-minutes	calendar	zt	¤ÀÄÁ
-mo	calendar	zt	¤@
-modified	calendar	zt	­×§ï¤é´Á
-modify list of external participants	calendar	zt	¥~³¡°Ñ»PªÌªº­×§ï²M³æ
-mon	calendar	zt	¤@
-month	calendar	zt	¤ë
-monthly	calendar	zt	¨C¤ë
-monthly (by date)	calendar	zt	¨C¤ë¡]¥H¤é´Á­p¡^
-monthly (by day)	calendar	zt	¨C¤ë¡]¥H¤Ñ¼Æ­p¡^
-monthview	calendar	zt	¤ë¦æ¨Æ¾ä
-new entry	calendar	zt	·s¼W¸ê®Æ
-new name must not exist and not be empty!!!	calendar	zt	·sªº¦WºÙ¥²¶·¥¼¦s¦b©Î¬O¤£¯à°÷ªÅ¥Õ¡I
-no matches found	calendar	zt	¨S¦³§ä¨ì²Å¦Xªºµ²ªG
-no matches found.	calendar	zt	¨S¦³§ä¨ì²Å¦Xªº¸ê®Æ
-no repsonse	calendar	zt	¨S¦³¦^À³
-no response	calendar	zt	¨S¦³¦^À³
-notification messages for added events	calendar	zt	·s¼W¨Æ¥ó´£¿ô
-notification messages for canceled events	calendar	zt	¨ú®ø¨Æ¥ó´£¿ô
-notification messages for modified events	calendar	zt	­×§ï¨Æ¥ó´£¿ô
-notification messages for your alarms	calendar	zt	±zªº³qª¾¨Æ¥ó´£¿ô
-notification messages for your responses	calendar	zt	±zªº¦^ÂĞ¨Æ¥ó´£¿ô
-number of intervals per day in planner view	calendar	zt	¦b­pµeÂsÄı¼Ò¦¡¤Uªº¶¡¹j¤é¼Æ
-number of months	calendar	zt	¤ë¼Æ
-number of records to read (%1)	calendar	zt	Åª¨úªº¸ê®Æµ§¼Æ(%1)
-number of records to read (<=200)	calendar	zt	Åª¨úªº¸ê®Æµ§¼Æ(<=200)
-observance rule	calendar	zt	¿í´`³W«h
-occurence	calendar	zt	´Á¶¡
-old startdate	calendar	zt	ÂÂªº¶}©l¤é´Á
-olddate	calendar	zt	ÂÂªº¤é´Á
-on %1 %2 %3 your meeting request for %4	calendar	zt	¦b %1 %2 %3 ¦³ %4 ªº¬ù·|
-on all changes	calendar	zt	©Ò¦³§ïÅÜ
-on all modification, but responses	calendar	zt	©Ò¦³­×§ï¡A°£¤F¦^À³
-on any time change too	calendar	zt	¥ô¦ó®É¶¡§ïÅÜ
-on invitation / cancelation only	calendar	zt	¥u¦³ÁÜ½Ğ»P¨ú®ø
-on participant responses too	calendar	zt	°Ñ»PªÌ¦^À³®É
-on time change of more than 4 hours too	calendar	zt	¦b§ïÅÜ¶W¹L¥|¤p®É«á
-open todo's:	calendar	zt	¥¼§¹¦¨ªº«İ¿ì¨Æ¶µ
-order	calendar	zt	¶¶§Ç
-overlap holiday	calendar	zt	­«Å|ªº°²¤é
-participant	calendar	zt	»P·|ªÌ
-participants	calendar	zt	»P·|ªÌ
-participates	calendar	zt	°Ñ»P
-password for not loged in users to your freebusy information?	calendar	zt	Åı¥¼µn¤J¨Ï¥ÎªÌÀËµø±z¦³ªÅ©Î¬O¦£¸Lªº±K½X¡H
-people holiday	calendar	zt	°²¤é
-permission denied	calendar	zt	©Úµ´¦s¨ú
-planner	calendar	zt	­pµeªÌ
-planner by category	calendar	zt	Ãş§O­pµeªÌ
-planner by user	calendar	zt	¨Ï¥ÎªÌ­pµeªÌ
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zt	½Ğ½T»{¡B¦P·N¡B©Úµ´©Î¬OÀË¬d±zªº¦æ¨Æ¾ä¤¤¬Û¦Pªº¨Æ¥ó²§°Ê
-preselected group for entering the planner	calendar	zt	¶i¤J­pµeºŞ²zªº¹w³]¸s²Õ
-print calendars in black & white	calendar	zt	¨Ï¥Î³æ¦â¦C¦L
-print the mini calendars	calendar	zt	¦C¦L°g§A¦æ¨Æ¾ä
-printer friendly	calendar	zt	¤Íµ½¦C¦L
-privat	calendar	zt	¨p¤Hªº
-private and global public	calendar	zt	¨p¤H¤Î¥ş°Ï¤½¥Î
-private and group public	calendar	zt	¨p¤H¤Î¸s²Õ¤½¥Î
-private only	calendar	zt	¨p¤H
-re-edit event	calendar	zt	­«·s½s¿è¬ù·|
-read a list of entries.	calendar	zt	Åª¨ú¨Æ¥ó¦Cªí
-read a single entry by passing the id and fieldlist.	calendar	zt	±q¶Ç»¼ªºID»PÄæ¦ì²M³æÅª¨ú³æ¤@¨Æ¥ó
-read this list of methods.	calendar	zt	Åª¨ú³o­Ó¤èªkªº¦Cªí
-receive email updates	calendar	zt	±µ¦¬§ó·s¶l¥ó´£¿ô
-receive extra information in event mails	calendar	zt	¦b¨Æ¥ó´£¿ô¶l¥ó¤¤±µ¦¬ÃB¥~ªº¸ê°T
-receive summary of appointments	calendar	zt	±µ¦¬¬ù·|·§­n
-recurring event	calendar	zt	´`Àô¨Æ¥ó
-refresh	calendar	zt	­«·s¾ã²z
-reinstate	calendar	zt	´_­ì
-reject	calendar	zt	©Úµ´
-rejected	calendar	zt	©Úµ´
-repeat day	calendar	zt	­«ÂĞ¤Ñ¼Æ
-repeat end date	calendar	zt	­«ÂĞµ²§ô¤é´Á
-repeat type	calendar	zt	­«ÂĞÃş«¬
-repeating event information	calendar	zt	¬ù·|­«ÂĞ¸ê°T
-repetition	calendar	zt	­«ÂĞ¬ù·|
-repetitiondetails (or empty)	calendar	zt	­«½Æ²Ó¸`(©ÎªÅ¥Õ)
-reset	calendar	zt	­«³]
-rule	calendar	zt	³W«h
-sa	calendar	zt	¤»
-sat	calendar	zt	¤»
-scheduling conflict	calendar	zt	¬ù·|­«Å|
-search results	calendar	zt	·j´Mµ²ªG
-selected contacts (%1)	calendar	zt	¿ï¾ÜªºÁpµ¸¤H(%1)
-send updates via email	common	zt	³z¹L¹q¤l¶l¥ó¶Ç°e³Ì·s®ø®§
-send/receive updates via email	calendar	zt	³z¹L¹q¤l¶l¥ó¶Ç°e/±µ¦¬³Ì·s®ø®§
-set a year only for one-time / non-regular holidays.	calendar	zt	³]©w¥u¦³¯S©w¦~·|µo¥Íªº°²¤é
-set new events to private	calendar	zt	³]©w·s¨Æ¥ó¬°¨p¤Hªº
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zt	±z¤w¸g©Úµ´ªºÁÜ½ĞÁÙ­nÅã¥Ü¦b±zªº¦æ¨Æ¾ä¤¤¶Ü¡H<br>¦pªG¥¦¤´µMÅã¥Ü¦b±zªº¦æ¨Æ¾ä¤¤¡A±z¥i¥H¦b¨Æ«á±µ¨ü(¨Ò¦p­ì¥»¦³¬»Ä²ªº¦æµ{¤w¸g¨ú®ø)¥¦¡C
-should new events created as private by default ?	calendar	zt	¹w³]·s¼Wªº¨Æ¥ó¬O¨p¤Hªº¡H
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	zt	¨S¦³µn¤Jªº¨Ï¥ÎªÌ¯à§_ª¾¹D±z²{¦b¬O¦³ªÅ©Î¬O¦£¸L¡H±z¥i¥H³]©wÃB¥~ªº±K½X(¤£¬O¦Û¤vµn¤Jªº±K½X)¨ÓÁ×§K¨ä¥L¥¼¸g±ÂÅvªº¤HÂsÄı¡C¦³ªÅ©Î¬O¦£¸Lªº¸ê°T¬O iCal ®æ¦¡¡A¦Ó¥B¥u·|ÅıÂsÄıªº¤H¬İ¨ì¦³µL¦æµ{¡A¥L­ÌµLªk¶i¤@¨B¨ú±o¦æµ{ªº¸Ô²Ó¸ê®Æ¡A¹³¬O¨Æ¥ó¦WºÙ¡B´y­z©Î¬O¦aÂIµ¥¡C³sµ²¨ì³o­Ó¥\¯àªººô§}¬O  %1 ¡C
-should the mini calendars by printed / displayed in the printer friendly views ?	calendar	zt	­nÅã¥Ü/¦C¦Lªº°g§A¦æ¨Æ¾ä»İ­n©ñ¦b¤Íµ½¦C¦Lªº­¶­±¤¤ÂsÄı¶Ü¡H
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	zt	¤Íµ½¦C¦L­n¨Ï¥Î³æ¦âÅã¥Ü¶Ü¡H
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zt	¦b¨C­Ó°Ñ»PªÌ¦WºÙªº«á­±»İ­nÅã¥Ü¸Ó°Ñ»PªÌªºª¬ºA(±µ¨ü¡B©Úµ´¡B...)¶Ü¡H
-show day view on main screen	calendar	zt	¦b­º­¶Åã¥Ü·í¤é¦æµ{
-show default view on main screen	calendar	zt	¦b¥D­nµe­±Åã¥Ü¹w³]ÂsÄı
-show high priority events on main screen	calendar	zt	¦b­º­¶Åã¥Ü°ªÀu¥ıÅvªº¬ù·|
-show invitations you rejected	calendar	zt	Åã¥Ü±z¤w¸g©Úµ´ªºÁÜ½Ğ
-show list of upcoming events	calendar	zt	Åã¥Ü§Y±N¨ì¨Óªº¦æµ{
-single event	calendar	zt	³æ¤@¨Æ¥ó
-sorry, the owner has just deleted this event	calendar	zt	«Ü©êºp¡A¸Ó¬ù·|ªº¾Ö¦³ªÌ­è²¾°£¤F¸Ó¬ù·|
-sorry, this event does not exist	calendar	zt	©êºp¡A³o­Ó¨Æ¥ó¤£¦s¦b
-sorry, this event does not have exceptions defined	calendar	zt	³ø«Ø¡A³o­Ó¨Æ¥ó¨Ã¨S¦³¨Ò¥~
-sort by	calendar	zt	±Æ§Ç
-specifies the the number of intervals shown in the planner view.	calendar	zt	«ü©w­pµeºŞ²zÂsÄı¼Ò¦¡ªº¶¡¹j¼Æ
-start date/time	calendar	zt	¶}©l¤é´Á/®É¶¡
-start- and enddates	calendar	zt	¶}©l»Pµ²§ô¤é´Á
-startdate	calendar	zt	¶}©l¤é´Á
-startrecord	calendar	zt	¶}©l¬ö¿ı
-su	calendar	zt	¤é
-submit to repository	calendar	zt	°e¥X¨ìÀxÂÃ®w¤¤
-sun	calendar	zt	¤é
-tentative	calendar	zt	¼È©w
-test import (show importable records <u>only</u> in browser)	calendar	zt	´ú¸Õ¶×¤J(<u>¥u¦³</u>¦bÂsÄı¾¹¤¤Åã¥Ü¥i¥H¶×¤Jªº¬ö¿ı)
-text	calendar	zt	¤å¦r
-th	calendar	zt	¥|
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	zt	¤U¦Cªº¬ù·|©M±z±ı¥[¤Jªº¬ù·|­«Å|¡G<ul>%1</ul>
-the user %1 is not participating in this event!	calendar	zt	%1¤£¬O³o­Ó¨Æ¥óªº°Ñ»PªÌ
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zt	µLªk³sµ²¨ì±zªº·s»D¥D¾÷¡A<br>½Ğ©Mºô¸ôºŞ²zªÌÁpµ¸¡A¨ó§UÀË¬d·s»D¥D¾÷ªº¦WºÙ¡B¨Ï¥ÎªÌ¥N¸¹¤Î±K½X¡C
-this day is shown as first day in the week or month view.	calendar	zt	³o¤@¤Ñ·|¦b¶g©Î¬O¤ë¦æ¨Æ¾ä¤¤²Ä¤@­ÓÅã¥Ü
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zt	³o©w¸q¤F¨C¤é¦æ¨Æ¾äªºµ²§ô¡A¦b³o­Ó®É¶¡¤§«áªº¨Æ¥ó·|Åã¥Ü¦b¤é¦æ¨Æ¾ä¤U­±¡C
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zt	³o©w¸q¤F¨C¤é¦æ¨Æ¾äªº¶}©l¡A¦b³o­Ó®É¶¡¤§«eªº¨Æ¥ó·|Åã¥Ü¦b¤é¦æ¨Æ¾ä¤W­±¡C<br>³o­Ó®É¶¡¤]·|¬O·s¼W¨Æ¥óªº¹w³]¶}©l®É¶¡¡C
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zt	³o­Ó¸s²Õ¬O·í±z¶i¤J­pµeºŞ²z®É¹w³]ªº¸s²Õ¡A±z¥i¥H¦b¨Æ«á­×§ï¡C
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	zt	³o³q±`¬OSMTP¦øªA¾¹³]©w¿ù»~©Ò³y¦¨¡A½Ğ´£¿ô±zªººŞ²z­û¡C
-this message is sent for canceled or deleted events.	calendar	zt	³o­Ó°T®§¬O¦]¬°¨Æ¥óªº¨ú®ø©Î§R°£
-this message is sent for modified or moved events.	calendar	zt	³o­Ó°T®§¬O¦]¬°¨Æ¥óªº­×§ï©Î²¾°Ê
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zt	³o­Ó°T®§·|°eµ¹±z©Ò¾Ö¦³ªº©Ò¦³¨Æ¥ó¤¤¦³³]©w´£¿ô¥\¯àªº°Ñ»P¤H¡C<br>±z¥i¥H¨Ï¥Î¨Æ¥ó¸ê®Æªº´À¥N­È¡C²Ä¤@¦æ¬O¶l¥óªº¼ĞÃD¡C
-this message is sent when you accept, tentative accept or reject an event.	calendar	zt	³o­Ó°T®§·|¦b±z¦P·N¡B¼È®É¦P·N©Î¬O©Úµ´¤@­Ó¨Æ¥ó«á±H¥X¡A
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zt	³o­Ó°T®§·|¦b±z³]©w¨Æ¥óÄµ¥Ü®É±H¥X¡A¥]§t¤@¨Ç±z©Î»İ»İ­nªº°T®§¡C
-this month	calendar	zt	¥»¤ë
-this week	calendar	zt	¥»¶g
-this year	calendar	zt	¤µ¦~
-thu	calendar	zt	¥|
-title	calendar	zt	¼ĞÃD
-title of the event	calendar	zt	¨Æ¥ó¼ĞÃD
-title-row	calendar	zt	¨Æ¥ó-¦C
-to many might exceed your execution-time-limit	calendar	zt	³B²z¤Ó¦h¸ê®Æ¥i¯à·|¶W¹L¨t²Î¤¹³\ªº³B²z®É¶¡
-to-firstname	calendar	zt	-¦W
-to-fullname	calendar	zt	-¥ş¦W
-to-lastname	calendar	zt	-©m
-today	calendar	zt	¤µ¤Ñ
-translation	calendar	zt	Â½Ä¶
-tu	calendar	zt	¤G
-tue	calendar	zt	¤G
-update a single entry by passing the fields.	calendar	zt	³z¹L²Ä°eªºÄæ¦ì§ó·s¤@­Ó³æ¤@¨Æ¥ó
-updated	calendar	zt	§ó·s¤é´Á
-use end date	calendar	zt	¦³µ²§ô¤é´Á
-view this entry	calendar	zt	ÀËµø¦¹µ§¸ê®Æ
-we	calendar	zt	¤T
-wed	calendar	zt	¤T
-week	calendar	zt	¬P´Á
-weekday starts on	calendar	zt	¬P´Á¶}©l¤é
-weekly	calendar	zt	¨C¶g
-weekview	calendar	zt	¶g¦æ¨Æ¾ä
-when creating new events default set to private	calendar	zt	·s¼W¬ù·|®É¹w³]¬°¨p¤H©Ê¬ù·|
-which events do you want to see when you enter the calendar.	calendar	zt	·í±z¶i¤J¦æ¨Æ¾ä®É±z§Æ±æ¬İ¨ì¤°»ò¼Ëªº¦æ¨Æ¾ä¡C
-which of calendar view do you want to see, when you start calendar ?	calendar	zt	·í±z¶}©l¤F¤@­Ó¦æ¨Æ¾ä±z§Æ±æ¬İ¨ì­ş­Ó¦æ¨Æ¾ä¡H
-work day ends on	calendar	zt	¨C¤éµ²§ô®É¶¡
-work day starts on	calendar	zt	¨C¤é¶}©l®É¶¡
-workdayends	calendar	zt	¤u§@¤éµ²§ô©ó
-year	calendar	zt	¦~
-yearly	calendar	zt	¨C¦~
-yearview	calendar	zt	¦~¦æ¨Æ¾ä
-you can either set a year or a occurence, not both !!!	calendar	zt	±z¥i¥H³]©w¤@­Ó´Á¶¡©Î¬O¬P´Á´X¡A¤£¯à¨âªÌ³£¿ï¡I
-you can only set a year or a occurence !!!	calendar	zt	±z¥u¥i¥H³]©w¤@¦~©Î¬O¤@­Ó¨Æ¥ó¡I
-you do not have permission to add alarms to this event !!!	calendar	zt	±z¨S¦³Åv­­·s¼W³o­Ó¨Æ¥óªº
-you do not have permission to delete this alarm !!!	calendar	zt	±z¨S¦³§R°£³o­ÓÄµ³øªºÅv­­¡I
-you do not have permission to enable/disable this alarm !!!	calendar	zt	±z¨S¦³±Ò¥Î/Ãö³¬³o­ÓÄµ³øªºÅv­­¡I
-you do not have permission to read this record!	calendar	zt	±z¨S¦³Åª¨ú³o­Ó¬ö¿ıªºÅv­­¡I
-you have %1 high priority events on your calendar today.	common	zt	±z¤µ¤Ñ¦³ %1 ­Ó°ª­«­n©Êªº¬ù·|¡C
-you have 1 high priority event on your calendar today.	common	zt	±z¤µ¤Ñ¦³ 1 ­Ó°ª­«­n©Êªº¬ù·|¡C
-you have a meeting scheduled for %1	calendar	zt	±z¸ò%1¦³­Ó¦æµ{
-you have not entered a title	calendar	zt	±z¨S¦³¿é¤J¬ù·|¥DÃD
-you have not entered a valid date	calendar	zt	±z¨S¦³¿é¤J¥¿½Tªº¤é´Á
-you have not entered a valid time of day	calendar	zt	±z¨S¦³¿é¤J¥¿½Tªº®É¶¡
-you have not entered participants	calendar	zt	±z¨S¦³¿ï¾Ü»P·|ªÌ
-you must enter one or more search keywords	calendar	zt	±z¥²»İ¿é¤J¤@­Ó©Î¤@­Ó¥H¤WªºÃöÁä¦r
-you must select a [iv]cal. (*.[iv]cs)	calendar	zt	±z¥²¶·¿ï¾Ü¤@­Ó [iv]Cal. (*.[iv]cs)
-you need to set either a day or a occurence !!!	calendar	zt	±z¥²¶·³]©w¤@­Ó¤é´Á©Î¬O¤@­Ó´Á¶¡¡I
-your meeting scheduled for %1 has been canceled	calendar	zt	±z»P%1ªº¦æµ{¤w¸g¨ú®ø¤F
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zt	±z»P%1ªº¦æµ{¤w¸g­«·s¦w±Æ¨ì%2
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zt	±z©Ò¨Ï¥Îªº¬ù·|®É¶¡ <B> %1 - %2 </B> ©M¤U¦Cªº¬ù·|­«Å|¡G
+location	calendar	zt	ç´„æœƒä½ç½®
+location to autoload from	admin	zt	è‡ªå‹•è®€å–çš„ä½ç½®
+make freebusy information availible to not loged in persons?	calendar	zt	è®“æœªç™»å…¥çš„ä½¿ç”¨è€…ç€è¦½æ‚¨ç›®å‰æ˜¯æœ‰ç©ºæˆ–æ˜¯å¿™ç¢Œä¸­ï¼Ÿ
+matrixview	calendar	zt	åŸºç¤ç€è¦½
+minutes	calendar	zt	åˆ†é˜
+mo	calendar	zt	ä¸€
+modified	calendar	zt	ä¿®æ”¹æ—¥æœŸ
+modify list of external participants	calendar	zt	å¤–éƒ¨åƒèˆ‡è€…çš„ä¿®æ”¹æ¸…å–®
+mon	calendar	zt	ä¸€
+month	calendar	zt	æœˆ
+monthly	calendar	zt	æ¯æœˆ
+monthly (by date)	calendar	zt	æ¯æœˆï¼ˆä»¥æ—¥æœŸè¨ˆï¼‰
+monthly (by day)	calendar	zt	æ¯æœˆï¼ˆä»¥å¤©æ•¸è¨ˆï¼‰
+monthview	calendar	zt	æœˆè¡Œäº‹æ›†
+new entry	calendar	zt	æ–°å¢è³‡æ–™
+new name must not exist and not be empty!!!	calendar	zt	æ–°çš„åç¨±å¿…é ˆæœªå­˜åœ¨æˆ–æ˜¯ä¸èƒ½å¤ ç©ºç™½ï¼
+no matches found	calendar	zt	æ²’æœ‰æ‰¾åˆ°ç¬¦åˆçš„çµæœ
+no matches found.	calendar	zt	æ²’æœ‰æ‰¾åˆ°ç¬¦åˆçš„è³‡æ–™
+no repsonse	calendar	zt	æ²’æœ‰å›æ‡‰
+no response	calendar	zt	æ²’æœ‰å›æ‡‰
+notification messages for added events	calendar	zt	æ–°å¢äº‹ä»¶æé†’
+notification messages for canceled events	calendar	zt	å–æ¶ˆäº‹ä»¶æé†’
+notification messages for modified events	calendar	zt	ä¿®æ”¹äº‹ä»¶æé†’
+notification messages for your alarms	calendar	zt	æ‚¨çš„é€šçŸ¥äº‹ä»¶æé†’
+notification messages for your responses	calendar	zt	æ‚¨çš„å›è¦†äº‹ä»¶æé†’
+number of intervals per day in planner view	calendar	zt	åœ¨è¨ˆç•«ç€è¦½æ¨¡å¼ä¸‹çš„é–“éš”æ—¥æ•¸
+number of months	calendar	zt	æœˆæ•¸
+number of records to read (%1)	calendar	zt	è®€å–çš„è³‡æ–™ç­†æ•¸(%1)
+number of records to read (<=200)	calendar	zt	è®€å–çš„è³‡æ–™ç­†æ•¸(<=200)
+observance rule	calendar	zt	éµå¾ªè¦å‰‡
+occurence	calendar	zt	æœŸé–“
+old startdate	calendar	zt	èˆŠçš„é–‹å§‹æ—¥æœŸ
+olddate	calendar	zt	èˆŠçš„æ—¥æœŸ
+on %1 %2 %3 your meeting request for %4	calendar	zt	åœ¨ %1 %2 %3 æœ‰ %4 çš„ç´„æœƒ
+on all changes	calendar	zt	æ‰€æœ‰æ”¹è®Š
+on all modification, but responses	calendar	zt	æ‰€æœ‰ä¿®æ”¹ï¼Œé™¤äº†å›æ‡‰
+on any time change too	calendar	zt	ä»»ä½•æ™‚é–“æ”¹è®Š
+on invitation / cancelation only	calendar	zt	åªæœ‰é‚€è«‹èˆ‡å–æ¶ˆ
+on participant responses too	calendar	zt	åƒèˆ‡è€…å›æ‡‰æ™‚
+on time change of more than 4 hours too	calendar	zt	åœ¨æ”¹è®Šè¶…éå››å°æ™‚å¾Œ
+open todo's:	calendar	zt	æœªå®Œæˆçš„å¾…è¾¦äº‹é …
+order	calendar	zt	é †åº
+overlap holiday	calendar	zt	é‡ç–Šçš„å‡æ—¥
+participant	calendar	zt	èˆ‡æœƒè€…
+participants	calendar	zt	èˆ‡æœƒè€…
+participates	calendar	zt	åƒèˆ‡
+password for not loged in users to your freebusy information?	calendar	zt	è®“æœªç™»å…¥ä½¿ç”¨è€…æª¢è¦–æ‚¨æœ‰ç©ºæˆ–æ˜¯å¿™ç¢Œçš„å¯†ç¢¼ï¼Ÿ
+people holiday	calendar	zt	å‡æ—¥
+permission denied	calendar	zt	æ‹’çµ•å­˜å–
+planner	calendar	zt	è¨ˆç•«è€…
+planner by category	calendar	zt	é¡åˆ¥è¨ˆç•«è€…
+planner by user	calendar	zt	ä½¿ç”¨è€…è¨ˆç•«è€…
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zt	è«‹ç¢ºèªã€åŒæ„ã€æ‹’çµ•æˆ–æ˜¯æª¢æŸ¥æ‚¨çš„è¡Œäº‹æ›†ä¸­ç›¸åŒçš„äº‹ä»¶ç•°å‹•
+preselected group for entering the planner	calendar	zt	é€²å…¥è¨ˆç•«ç®¡ç†çš„é è¨­ç¾¤çµ„
+print calendars in black & white	calendar	zt	ä½¿ç”¨å–®è‰²åˆ—å°
+print the mini calendars	calendar	zt	åˆ—å°è¿·ä½ è¡Œäº‹æ›†
+printer friendly	calendar	zt	å‹å–„åˆ—å°
+privat	calendar	zt	ç§äººçš„
+private and global public	calendar	zt	ç§äººåŠå…¨å€å…¬ç”¨
+private and group public	calendar	zt	ç§äººåŠç¾¤çµ„å…¬ç”¨
+private only	calendar	zt	ç§äºº
+re-edit event	calendar	zt	é‡æ–°ç·¨è¼¯ç´„æœƒ
+read a list of entries.	calendar	zt	è®€å–äº‹ä»¶åˆ—è¡¨
+read a single entry by passing the id and fieldlist.	calendar	zt	å¾å‚³éçš„IDèˆ‡æ¬„ä½æ¸…å–®è®€å–å–®ä¸€äº‹ä»¶
+read this list of methods.	calendar	zt	è®€å–é€™å€‹æ–¹æ³•çš„åˆ—è¡¨
+receive email updates	calendar	zt	æ¥æ”¶æ›´æ–°éƒµä»¶æé†’
+receive extra information in event mails	calendar	zt	åœ¨äº‹ä»¶æé†’éƒµä»¶ä¸­æ¥æ”¶é¡å¤–çš„è³‡è¨Š
+receive summary of appointments	calendar	zt	æ¥æ”¶ç´„æœƒæ¦‚è¦
+recurring event	calendar	zt	å¾ªç’°äº‹ä»¶
+refresh	calendar	zt	é‡æ–°æ•´ç†
+reinstate	calendar	zt	å¾©åŸ
+reject	calendar	zt	æ‹’çµ•
+rejected	calendar	zt	æ‹’çµ•
+repeat day	calendar	zt	é‡è¦†å¤©æ•¸
+repeat end date	calendar	zt	é‡è¦†çµæŸæ—¥æœŸ
+repeat type	calendar	zt	é‡è¦†é¡å‹
+repeating event information	calendar	zt	ç´„æœƒé‡è¦†è³‡è¨Š
+repetition	calendar	zt	é‡è¦†ç´„æœƒ
+repetitiondetails (or empty)	calendar	zt	é‡è¤‡ç´°ç¯€(æˆ–ç©ºç™½)
+reset	calendar	zt	é‡è¨­
+rule	calendar	zt	è¦å‰‡
+sa	calendar	zt	å…­
+sat	calendar	zt	å…­
+scheduling conflict	calendar	zt	ç´„æœƒé‡ç–Š
+search results	calendar	zt	æœå°‹çµæœ
+selected contacts (%1)	calendar	zt	é¸æ“‡çš„è¯çµ¡äºº(%1)
+send updates via email	common	zt	é€éé›»å­éƒµä»¶å‚³é€æœ€æ–°æ¶ˆæ¯
+send/receive updates via email	calendar	zt	é€éé›»å­éƒµä»¶å‚³é€/æ¥æ”¶æœ€æ–°æ¶ˆæ¯
+set a year only for one-time / non-regular holidays.	calendar	zt	è¨­å®šåªæœ‰ç‰¹å®šå¹´æœƒç™¼ç”Ÿçš„å‡æ—¥
+set new events to private	calendar	zt	è¨­å®šæ–°äº‹ä»¶ç‚ºç§äººçš„
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zt	æ‚¨å·²ç¶“æ‹’çµ•çš„é‚€è«‹é‚„è¦é¡¯ç¤ºåœ¨æ‚¨çš„è¡Œäº‹æ›†ä¸­å—ï¼Ÿ<br>å¦‚æœå®ƒä»ç„¶é¡¯ç¤ºåœ¨æ‚¨çš„è¡Œäº‹æ›†ä¸­ï¼Œæ‚¨å¯ä»¥åœ¨äº‹å¾Œæ¥å—(ä¾‹å¦‚åŸæœ¬æœ‰ç‰´è§¸çš„è¡Œç¨‹å·²ç¶“å–æ¶ˆ)å®ƒã€‚
+should new events created as private by default ?	calendar	zt	é è¨­æ–°å¢çš„äº‹ä»¶æ˜¯ç§äººçš„ï¼Ÿ
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	zt	æ²’æœ‰ç™»å…¥çš„ä½¿ç”¨è€…èƒ½å¦çŸ¥é“æ‚¨ç¾åœ¨æ˜¯æœ‰ç©ºæˆ–æ˜¯å¿™ç¢Œï¼Ÿæ‚¨å¯ä»¥è¨­å®šé¡å¤–çš„å¯†ç¢¼(ä¸æ˜¯è‡ªå·±ç™»å…¥çš„å¯†ç¢¼)ä¾†é¿å…å…¶ä»–æœªç¶“æˆæ¬Šçš„äººç€è¦½ã€‚æœ‰ç©ºæˆ–æ˜¯å¿™ç¢Œçš„è³‡è¨Šæ˜¯ iCal æ ¼å¼ï¼Œè€Œä¸”åªæœƒè®“ç€è¦½çš„äººçœ‹åˆ°æœ‰ç„¡è¡Œç¨‹ï¼Œä»–å€‘ç„¡æ³•é€²ä¸€æ­¥å–å¾—è¡Œç¨‹çš„è©³ç´°è³‡æ–™ï¼Œåƒæ˜¯äº‹ä»¶åç¨±ã€æè¿°æˆ–æ˜¯åœ°é»ç­‰ã€‚é€£çµåˆ°é€™å€‹åŠŸèƒ½çš„ç¶²å€æ˜¯  %1 ã€‚
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	zt	è¦é¡¯ç¤º/åˆ—å°çš„è¿·ä½ è¡Œäº‹æ›†éœ€è¦æ”¾åœ¨å‹å–„åˆ—å°çš„é é¢ä¸­ç€è¦½å—ï¼Ÿ
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	zt	å‹å–„åˆ—å°è¦ä½¿ç”¨å–®è‰²é¡¯ç¤ºå—ï¼Ÿ
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zt	åœ¨æ¯å€‹åƒèˆ‡è€…åç¨±çš„å¾Œé¢éœ€è¦é¡¯ç¤ºè©²åƒèˆ‡è€…çš„ç‹€æ…‹(æ¥å—ã€æ‹’çµ•ã€...)å—ï¼Ÿ
+show day view on main screen	calendar	zt	åœ¨é¦–é é¡¯ç¤ºç•¶æ—¥è¡Œç¨‹
+show default view on main screen	calendar	zt	åœ¨ä¸»è¦ç•«é¢é¡¯ç¤ºé è¨­ç€è¦½
+show high priority events on main screen	calendar	zt	åœ¨é¦–é é¡¯ç¤ºé«˜å„ªå…ˆæ¬Šçš„ç´„æœƒ
+show invitations you rejected	calendar	zt	é¡¯ç¤ºæ‚¨å·²ç¶“æ‹’çµ•çš„é‚€è«‹
+show list of upcoming events	calendar	zt	é¡¯ç¤ºå³å°‡åˆ°ä¾†çš„è¡Œç¨‹
+single event	calendar	zt	å–®ä¸€äº‹ä»¶
+sorry, the owner has just deleted this event	calendar	zt	å¾ˆæŠ±æ­‰ï¼Œè©²ç´„æœƒçš„æ“æœ‰è€…å‰›ç§»é™¤äº†è©²ç´„æœƒ
+sorry, this event does not exist	calendar	zt	æŠ±æ­‰ï¼Œé€™å€‹äº‹ä»¶ä¸å­˜åœ¨
+sorry, this event does not have exceptions defined	calendar	zt	å ±å»ºï¼Œé€™å€‹äº‹ä»¶ä¸¦æ²’æœ‰ä¾‹å¤–
+sort by	calendar	zt	æ’åº
+specifies the the number of intervals shown in the planner view.	calendar	zt	æŒ‡å®šè¨ˆç•«ç®¡ç†ç€è¦½æ¨¡å¼çš„é–“éš”æ•¸
+start date/time	calendar	zt	é–‹å§‹æ—¥æœŸ/æ™‚é–“
+start- and enddates	calendar	zt	é–‹å§‹èˆ‡çµæŸæ—¥æœŸ
+startdate	calendar	zt	é–‹å§‹æ—¥æœŸ
+startrecord	calendar	zt	é–‹å§‹ç´€éŒ„
+su	calendar	zt	æ—¥
+submit to repository	calendar	zt	é€å‡ºåˆ°å„²è—åº«ä¸­
+sun	calendar	zt	æ—¥
+tentative	calendar	zt	æš«å®š
+test import (show importable records <u>only</u> in browser)	calendar	zt	æ¸¬è©¦åŒ¯å…¥(<u>åªæœ‰</u>åœ¨ç€è¦½å™¨ä¸­é¡¯ç¤ºå¯ä»¥åŒ¯å…¥çš„ç´€éŒ„)
+text	calendar	zt	æ–‡å­—
+th	calendar	zt	å››
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	zt	ä¸‹åˆ—çš„ç´„æœƒå’Œæ‚¨æ¬²åŠ å…¥çš„ç´„æœƒé‡ç–Šï¼š<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	zt	%1ä¸æ˜¯é€™å€‹äº‹ä»¶çš„åƒèˆ‡è€…
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zt	ç„¡æ³•é€£çµåˆ°æ‚¨çš„æ–°èä¸»æ©Ÿï¼Œ<br>è«‹å’Œç¶²è·¯ç®¡ç†è€…è¯çµ¡ï¼Œå”åŠ©æª¢æŸ¥æ–°èä¸»æ©Ÿçš„åç¨±ã€ä½¿ç”¨è€…ä»£è™ŸåŠå¯†ç¢¼ã€‚
+this day is shown as first day in the week or month view.	calendar	zt	é€™ä¸€å¤©æœƒåœ¨é€±æˆ–æ˜¯æœˆè¡Œäº‹æ›†ä¸­ç¬¬ä¸€å€‹é¡¯ç¤º
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zt	é€™å®šç¾©äº†æ¯æ—¥è¡Œäº‹æ›†çš„çµæŸï¼Œåœ¨é€™å€‹æ™‚é–“ä¹‹å¾Œçš„äº‹ä»¶æœƒé¡¯ç¤ºåœ¨æ—¥è¡Œäº‹æ›†ä¸‹é¢ã€‚
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zt	é€™å®šç¾©äº†æ¯æ—¥è¡Œäº‹æ›†çš„é–‹å§‹ï¼Œåœ¨é€™å€‹æ™‚é–“ä¹‹å‰çš„äº‹ä»¶æœƒé¡¯ç¤ºåœ¨æ—¥è¡Œäº‹æ›†ä¸Šé¢ã€‚<br>é€™å€‹æ™‚é–“ä¹Ÿæœƒæ˜¯æ–°å¢äº‹ä»¶çš„é è¨­é–‹å§‹æ™‚é–“ã€‚
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zt	é€™å€‹ç¾¤çµ„æ˜¯ç•¶æ‚¨é€²å…¥è¨ˆç•«ç®¡ç†æ™‚é è¨­çš„ç¾¤çµ„ï¼Œæ‚¨å¯ä»¥åœ¨äº‹å¾Œä¿®æ”¹ã€‚
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	zt	é€™é€šå¸¸æ˜¯SMTPä¼ºæœå™¨è¨­å®šéŒ¯èª¤æ‰€é€ æˆï¼Œè«‹æé†’æ‚¨çš„ç®¡ç†å“¡ã€‚
+this message is sent for canceled or deleted events.	calendar	zt	é€™å€‹è¨Šæ¯æ˜¯å› ç‚ºäº‹ä»¶çš„å–æ¶ˆæˆ–åˆªé™¤
+this message is sent for modified or moved events.	calendar	zt	é€™å€‹è¨Šæ¯æ˜¯å› ç‚ºäº‹ä»¶çš„ä¿®æ”¹æˆ–ç§»å‹•
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zt	é€™å€‹è¨Šæ¯æœƒé€çµ¦æ‚¨æ‰€æ“æœ‰çš„æ‰€æœ‰äº‹ä»¶ä¸­æœ‰è¨­å®šæé†’åŠŸèƒ½çš„åƒèˆ‡äººã€‚<br>æ‚¨å¯ä»¥ä½¿ç”¨äº‹ä»¶è³‡æ–™çš„æ›¿ä»£å€¼ã€‚ç¬¬ä¸€è¡Œæ˜¯éƒµä»¶çš„æ¨™é¡Œã€‚
+this message is sent when you accept, tentative accept or reject an event.	calendar	zt	é€™å€‹è¨Šæ¯æœƒåœ¨æ‚¨åŒæ„ã€æš«æ™‚åŒæ„æˆ–æ˜¯æ‹’çµ•ä¸€å€‹äº‹ä»¶å¾Œå¯„å‡ºï¼Œ
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zt	é€™å€‹è¨Šæ¯æœƒåœ¨æ‚¨è¨­å®šäº‹ä»¶è­¦ç¤ºæ™‚å¯„å‡ºï¼ŒåŒ…å«ä¸€äº›æ‚¨æˆ–éœ€éœ€è¦çš„è¨Šæ¯ã€‚
+this month	calendar	zt	æœ¬æœˆ
+this week	calendar	zt	æœ¬é€±
+this year	calendar	zt	ä»Šå¹´
+thu	calendar	zt	å››
+title	calendar	zt	æ¨™é¡Œ
+title of the event	calendar	zt	äº‹ä»¶æ¨™é¡Œ
+title-row	calendar	zt	äº‹ä»¶-åˆ—
+to many might exceed your execution-time-limit	calendar	zt	è™•ç†å¤ªå¤šè³‡æ–™å¯èƒ½æœƒè¶…éç³»çµ±å…è¨±çš„è™•ç†æ™‚é–“
+to-firstname	calendar	zt	-å
+to-fullname	calendar	zt	-å…¨å
+to-lastname	calendar	zt	-å§“
+today	calendar	zt	ä»Šå¤©
+translation	calendar	zt	ç¿»è­¯
+tu	calendar	zt	äºŒ
+tue	calendar	zt	äºŒ
+update a single entry by passing the fields.	calendar	zt	é€éç¬¬é€çš„æ¬„ä½æ›´æ–°ä¸€å€‹å–®ä¸€äº‹ä»¶
+updated	calendar	zt	æ›´æ–°æ—¥æœŸ
+use end date	calendar	zt	æœ‰çµæŸæ—¥æœŸ
+view this entry	calendar	zt	æª¢è¦–æ­¤ç­†è³‡æ–™
+we	calendar	zt	ä¸‰
+wed	calendar	zt	ä¸‰
+week	calendar	zt	æ˜ŸæœŸ
+weekday starts on	calendar	zt	æ˜ŸæœŸé–‹å§‹æ—¥
+weekly	calendar	zt	æ¯é€±
+weekview	calendar	zt	é€±è¡Œäº‹æ›†
+when creating new events default set to private	calendar	zt	æ–°å¢ç´„æœƒæ™‚é è¨­ç‚ºç§äººæ€§ç´„æœƒ
+which events do you want to see when you enter the calendar.	calendar	zt	ç•¶æ‚¨é€²å…¥è¡Œäº‹æ›†æ™‚æ‚¨å¸Œæœ›çœ‹åˆ°ä»€éº¼æ¨£çš„è¡Œäº‹æ›†ã€‚
+which of calendar view do you want to see, when you start calendar ?	calendar	zt	ç•¶æ‚¨é–‹å§‹äº†ä¸€å€‹è¡Œäº‹æ›†æ‚¨å¸Œæœ›çœ‹åˆ°å“ªå€‹è¡Œäº‹æ›†ï¼Ÿ
+work day ends on	calendar	zt	æ¯æ—¥çµæŸæ™‚é–“
+work day starts on	calendar	zt	æ¯æ—¥é–‹å§‹æ™‚é–“
+workdayends	calendar	zt	å·¥ä½œæ—¥çµæŸæ–¼
+year	calendar	zt	å¹´
+yearly	calendar	zt	æ¯å¹´
+yearview	calendar	zt	å¹´è¡Œäº‹æ›†
+you can either set a year or a occurence, not both !!!	calendar	zt	æ‚¨å¯ä»¥è¨­å®šä¸€å€‹æœŸé–“æˆ–æ˜¯æ˜ŸæœŸå¹¾ï¼Œä¸èƒ½å…©è€…éƒ½é¸ï¼
+you can only set a year or a occurence !!!	calendar	zt	æ‚¨åªå¯ä»¥è¨­å®šä¸€å¹´æˆ–æ˜¯ä¸€å€‹äº‹ä»¶ï¼
+you do not have permission to add alarms to this event !!!	calendar	zt	æ‚¨æ²’æœ‰æ¬Šé™æ–°å¢é€™å€‹äº‹ä»¶çš„
+you do not have permission to delete this alarm !!!	calendar	zt	æ‚¨æ²’æœ‰åˆªé™¤é€™å€‹è­¦å ±çš„æ¬Šé™ï¼
+you do not have permission to enable/disable this alarm !!!	calendar	zt	æ‚¨æ²’æœ‰å•Ÿç”¨/é—œé–‰é€™å€‹è­¦å ±çš„æ¬Šé™ï¼
+you do not have permission to read this record!	calendar	zt	æ‚¨æ²’æœ‰è®€å–é€™å€‹ç´€éŒ„çš„æ¬Šé™ï¼
+you have %1 high priority events on your calendar today.	common	zt	æ‚¨ä»Šå¤©æœ‰ %1 å€‹é«˜é‡è¦æ€§çš„ç´„æœƒã€‚
+you have 1 high priority event on your calendar today.	common	zt	æ‚¨ä»Šå¤©æœ‰ 1 å€‹é«˜é‡è¦æ€§çš„ç´„æœƒã€‚
+you have a meeting scheduled for %1	calendar	zt	æ‚¨è·Ÿ%1æœ‰å€‹è¡Œç¨‹
+you have not entered a title	calendar	zt	æ‚¨æ²’æœ‰è¼¸å…¥ç´„æœƒä¸»é¡Œ
+you have not entered a valid date	calendar	zt	æ‚¨æ²’æœ‰è¼¸å…¥æ­£ç¢ºçš„æ—¥æœŸ
+you have not entered a valid time of day	calendar	zt	æ‚¨æ²’æœ‰è¼¸å…¥æ­£ç¢ºçš„æ™‚é–“
+you have not entered participants	calendar	zt	æ‚¨æ²’æœ‰é¸æ“‡èˆ‡æœƒè€…
+you must enter one or more search keywords	calendar	zt	æ‚¨å¿…éœ€è¼¸å…¥ä¸€å€‹æˆ–ä¸€å€‹ä»¥ä¸Šçš„é—œéµå­—
+you must select a [iv]cal. (*.[iv]cs)	calendar	zt	æ‚¨å¿…é ˆé¸æ“‡ä¸€å€‹ [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	zt	æ‚¨å¿…é ˆè¨­å®šä¸€å€‹æ—¥æœŸæˆ–æ˜¯ä¸€å€‹æœŸé–“ï¼
+your meeting scheduled for %1 has been canceled	calendar	zt	æ‚¨èˆ‡%1çš„è¡Œç¨‹å·²ç¶“å–æ¶ˆäº†
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zt	æ‚¨èˆ‡%1çš„è¡Œç¨‹å·²ç¶“é‡æ–°å®‰æ’åˆ°%2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zt	æ‚¨æ‰€ä½¿ç”¨çš„ç´„æœƒæ™‚é–“ <B> %1 - %2 </B> å’Œä¸‹åˆ—çš„ç´„æœƒé‡ç–Šï¼š

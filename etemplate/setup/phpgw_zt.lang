@@ -1,291 +1,291 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	zt	¥H»y¨¥ '%4' ¼g¤J%1µ§(%2 ·sªº)À³¥Îµ{¦¡ '%3' ªº°T®§
-%1 etemplates deleted	etemplate	zt	§R°£¤F %1 ­Ó¼ËªO
-%1 etemplates for application '%2' dumped to '%3'	etemplate	zt	À³¥Îµ{¦¡ '%2' ªº %1 ­Ó¼ËªOÂà´«¨ì¥t¤@­ÓÀ³¥Îµ{¦¡ '%3'
-%1 etemplates found	etemplate	zt	§ä¨ì %1 ­Ó¼ËªO
-%1 matches on search criteria	etemplate	zt	¦³ %1 µ§²Å¦X·j´M±ø¥óªº¸ê®Æ
-%1 new etemplates imported for application '%2'	etemplate	zt	¶×¤J %1 µ§À³¥Îµ{¦¡ '%2' ªº¼ËªO
-%s disabled	etemplate	zt	%s °±¥Î
-%s needed	etemplate	zt	»İ­n %s
-%s notranslation	etemplate	zt	%s ¥¼Â½Ä¶
-%s onchange	etemplate	zt	%s ½Õ¾ã¤¤
-%s readonly	etemplate	zt	%s °ßÅª
-'%1' has an invalid format !!!	etemplate	zt	'%1' ®æ¦¡¿ù»~¡I
-'%1' is not a valid floatingpoint number !!!	etemplate	zt	'%1' ¤£¬O¥¿½Tªº¯BÂI¼Æ¡I
-'%1' is not a valid integer !!!	etemplate	zt	'%1' ¤£¬O¥¿½Tªº¾ã¼Æ¡I
-a pattern to be searched for	etemplate	zt	·j´M±ø¥ó
-add a new column (after the existing ones)	etemplate	zt	·s¼WÄæ¦ì(¦b¤w¦s¦bªº¤§«á)
-add a new multi-column index	etemplate	zt	·s¼W¦hÄæ¯Á¤Ş
-add column	etemplate	zt	·s¼WÄæ¦ì
-add index	etemplate	zt	·s¼W¯Á¤Ş
-add table	etemplate	zt	·s¼Wªí®æ
-align	etemplate	zt	¹ï»ô
-alignment of label and input-field in table-cell	etemplate	zt	¼ĞÃD»Pªí®æ¿é¤J¤å¦r¹ï»ô¤è¦¡
-alignment of the v/hbox containing table-cell	etemplate	zt	V/HBoxªº¹ï»ô¤è¦¡
-am	etemplate	zt	¤W¤È
-an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zt	¯Á¤ŞÄæ¦ì¥i¥H´£°ª·j´M¸ê®Æªº³t«×(¦ı¬O·|¦û¥ÎµwºĞªºªÅ¶¡¡I)
-application	etemplate	zt	À³¥Îµ{¦¡
-application name needed to write a langfile or dump the etemplates !!!	etemplate	zt	À³¥Îµ{¦¡»İ­n¦³»y¨¥ÀÉ©Î¬O±N¼ËªO¶×¥X¡I
-attach	etemplate	zt	ªş¥[
-attach file	etemplate	zt	ªş¥[ÀÉ®×
-blurtext	etemplate	zt	¼Ò½k¤å¦r
-border	etemplate	zt	®Ø½u
-border-line-thickness for the table-tag	etemplate	zt	ªí®æ¼ĞÅÒ¨Ï¥Îªº®Ø½u«p«×
-can not have special sql-value null	etemplate	zt	µLªk¨Ï¥Î¯S¥XªºSQL­È NULL
-cancel	etemplate	zt	¨ú®ø
-category	etemplate	zt	Ãş§O
-cellpadding for the table-tag	etemplate	zt	ªí®æ¤å¦r»P®æ½uªº¶ZÂ÷
-cells	etemplate	zt	Àx¦s®æ
-cellspacing for the table-tag	etemplate	zt	ªí®æÄæ¦ì»PÄæ¦ì¤å¦rªº¶ZÂ÷
-center	etemplate	zt	¸m¤¤
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zt	¦pªG¤º®e¥u¯à³QÅã¥Ü¦Ó¤£¯à³Q§ïÅÜ½Ğ¤Ä¿ï
-check if field has to be filled by user	etemplate	zt	¦pªGÄæ¦ì§}¯à°÷Åı¨Ï¥ÎªÌ¶ñ¤J½Ğ¤Ä¿ï
-checkbox	etemplate	zt	®Ö¿ï¤è¶ô
-class	etemplate	zt	Ãş§O
-class, valign	etemplate	zt	Ãş§O¡A««ª½¹ï»ô
-click here to attach the file	etemplate	zt	ÂI¿ï³o¸Ì¨Óªş¥[ÀÉ®×
-click here to create the link	etemplate	zt	ÂI¿ï³o¸Ì¨Ó«Ø¥ß³sµ²
-click here to start the search	etemplate	zt	ÂI¿ï³o¸Ì¶}©l·j´M
-click here to upload the file	etemplate	zt	ÂI¿ï³o¸Ì¨Ó¤W¶ÇÀÉ®×
-click to order after that criteria	etemplate	zt	ÂI¿ï³o¸Ì¨Ó±Æ§Ç·j´Mµ²ªG
-columnname	etemplate	zt	Äæ¦ì¦WºÙ
-comment	etemplate	zt	³Æµù
-create a new table for the application	etemplate	zt	¬°³o­ÓÀ³¥Îµ{¦¡«Ø¥ß¤@­Ó·sªºªí®æ
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zt	±q¼ĞÅÒ»P¨D§U¤å¦r«Ø¥ß¤@­Ó­^¤å('en')ªº»y¨¥ÀÉ
-css class for the table-tag	etemplate	zt	ªí®æ¼Ğ¶¡ªºCSSÃş§O
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	zt	³o¤@¦CªºCSSÃş§O¡A¤º©w­È¡G'nmh' = ¤U¤@µ§²Å¦X±ø¥óªº­¶­º¡A'nmr' = §ïÅÜ¤U¤@¦C²Å¦X±ø¥óªº¸ê®Æ¡A'nmr0'+'nmr1'¤U¤@¦C²Å¦X±ø¥óªº¸ê®Æ
-css-styles	etemplate	zt	CSS­·®æ
-date+time	etemplate	zt	¤é´Á+®É¶¡
-datum	etemplate	zt	¸ê®Æ
-day	etemplate	zt	¤é
-db ensures that every row has a unique value in that column	etemplate	zt	¦b¨º­ÓÄæ¦ì¤¤¸ê®Æ®w¯à°÷½T«O¨C¤@¦C¥i¥H¦³¤@­Ó¤£­«½Æªº¼Æ­È
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	zt	¯S©w¸ê®Æ®w¯Á¤Ş¿ï¶µ(³rÂI¤À¹j)¡A¨Ò¦p mysql(FULLTEXT)©Îmysql(100)¨Ó³]©wÄæ¦ì¯Á¤Şªø«×
-db-tools	etemplate	zt	¸ê®Æ®w¤u¨ã
-deck	etemplate	zt	¸Ë¹¢(¤º³¡)
-default	etemplate	zt	¹w³]
-delete	etemplate	zt	§R°£
-delete a single entry by passing the id.	etemplate	zt	¨Ì·Ó°e¥Xªº¥N½X¨Ó§R°£¤@µ§¸ê®Æ
-delete all selected etemplates, without further inquiry	etemplate	zt	§R°£©Ò¦³¿ï¨úªº¼ËªO¡A¤£¦A½T»{
-delete column	etemplate	zt	§R°£Äæ¦ì
-delete index	etemplate	zt	§R°£¯Á¤Ş
-delete this etemplate	etemplate	zt	§R°£³o­Ó¼ËªO
-delete whole column (can not be undone!!!)	etemplate	zt	§R°£¾ã­ÓÄæ¦ì(µLªk´_­ì¡I)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	zt	±q¸ê®Æ®w§R°£¤W­±«ü©wªº¼ËªO¡AµLªkÁÙ­ì
-deletes the etemplate spez. above	etemplate	zt	§R°£¤W­±«ü©wªº¼ËªO
-deletes this column	etemplate	zt	§R°£³o­ÓÄæ¦ì
-deletes this index	etemplate	zt	§R°£³o­Ó¯Á¤Ş
-discard changes	etemplate	zt	©ñ±ó²§°Ê
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	zt	¦b¿é¤J¤§«eÅã¥Ü©Î¬O°ò©ó¼ĞÅÒ(°e¥X«ö¶sªº¼ĞÅÒ©Î¬O¹Ï¤ùªºÀÉ®×¦WºÙ)¤¤ªº'%s'¨Ó´¡¤J¿é¤J­È
-displayed in statusline of browser if input-field gets focus	etemplate	zt	¦pªG´å¼Ğ°±¦b¿é¤JÄæ¦ì®É¦bÂsÄı¾¹ªºª¬ºA¦CÅã¥Ü
-do you want to save the changes you made in table %s?	etemplate	zt	±z¬O§_­nÀx¦s¦bªí®æ %s ªº²§°Ê¡H
-documentation	etemplate	zt	¤å¥ó
-drop a table - this can not be undone	etemplate	zt	²¾¥X¤@­Ó¸ê®Æªí - ±NµLªkÁÙ­ì
-drop table	etemplate	zt	²¾°£¸ê®Æªí
-dump4setup	etemplate	zt	¶×¥X¦w¸Ë©Ò»İ¸ê®Æ
-edit	etemplate	zt	½s¿è
-edit the etemplate spez. above	etemplate	zt	½s¿è¤W­±«ü©wªº¼ËªO
-editable templates - db-tools	etemplate	zt	¥i½s¿è¼ËªO - ¸ê®Æ®w¤u¨ã
-editable templates - delete template	etemplate	zt	¥i½s¿è¼ËªO - §R°£¼ËªO
-editable templates - editor	etemplate	zt	¥i½s¿è¼ËªO - ½s¿è¾¹
-editable templates - search	etemplate	zt	¥i½s¿è¼ËªO - ·j´M
-editable templates - show template	etemplate	zt	¥i½s¿è¼ËªO - Åã¥Ü¼ËªO
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	zt	´O¤J¦¡CSS­·®æ¡A¨Ò¦p'.red { background: red; }' (ª`·N '.' ¦bÃş§O¦WºÙ¤§«e) ©Î¬O '@import url(...)' (Ãş§O¦WºÙ¥i¥H¦b¾ã­Óºô­¶¨Ï¥Î¡I)
-enable javascript onchange submit	etemplate	zt	±Ò¥Î JavaScript ²§°Ê®É°e¥X¥\¯à
-enter '' for an empty default, nothing mean no default	etemplate	zt	¨S¦³·N¨ıµÛ¨S¦³¹w³]­È¡A¿é¤J '' ¥Nªí
-enter a search pattern	etemplate	zt	¿é¤J·j´M±ø¥ó
-enter filename to upload and attach, use [browse...] to search for it	etemplate	zt	¿é¤J¤W¶Ç»Pªş¥[ÀÉ®×ªº¦WºÙ¡A¨Ï¥Î[ÂsÄı...]¨Ó¿ï¨ú
-enter the new version number here (> old_version), empty for no update-file	etemplate	zt	¿é¤J·sªºª©¥»½s¸¹(¤j©óÂÂª©)¡AªÅ¥Õªí¥Ü¨S¦³§ó·s
-enter the new version number here (has to be > old_version)	etemplate	zt	¿é¤J·sªºª©¥»½s¸¹(¥²¶·¤j©óÂÂª©)
-entry saved	etemplate	zt	¸ê®ÆÀx¦s¤F
-error: template not found !!!	etemplate	zt	¿ù»~¡G§ä¤£¨ì¼ËªO¡I
-error: webserver is not allowed to write into '%1' !!!	etemplate	zt	¿ù»~¡Gºô­¶¦øªA¾¹µLªk¼g¤JÀÉ®× '%1'¡I
-error: while saveing !!!	etemplate	zt	¿ù»~¡GÀx¦sÀÉ®×®É¡I
-error: writeing !!!	etemplate	zt	¿ù»~¡G¼g¤JÀÉ®×®É
-error: writing file (no write-permission for the webserver) !!!	etemplate	zt	¿ù»~¡G¼g¤JÀÉ®×®É(ºô­¶¦øªA¾¹¨S¦³¼g¤JªºÅv­­)¡I
-etemplate	common	zt	¼ËªOºŞ²z
-etemplate '%1' imported, use save to put it in the database	etemplate	zt	¶×¤J¤F¼ËªO '%1' ¡AÂI¿ïÀx¦s¨Ó±N¥¦©ñ¤J¸ê®Æ®w¤¤
-etemplate '%1' written to '%2'	etemplate	zt	¼ËªO '%1' ¥t¦s¦¨ '%2'
-etemplate editor	etemplate	zt	¼ËªO½s¿è¾¹
-etemplate referenz	etemplate	zt	¼ËªO°Ñ¦Ò
-etemplate tutorial	etemplate	zt	¼ËªO±Ğ¾Ç
-exchange this row with the one above	etemplate	zt	¥Î¤W­±ªº¸ê®Æ»P³o¤@¦C¥æ´«
-exchange this two columns	etemplate	zt	¥æ´«³o¨â­ÓÄæ¦ì
-export the loaded etemplate into a xml-file	etemplate	zt	±NÅª¨úªº¼ËªO¶×¥X¦¨XMLÀÉ®×
-export xml	etemplate	zt	¶×¥XXML
-extensions loaded:	etemplate	zt	¤wÅª¨ú¥~±¾¡G
-field must not be empty !!!	etemplate	zt	Äæ¦ì¤£¯àªÅ¥Õ¡I
-file	etemplate	zt	ÀÉ®×
-file contains more than one etemplate, last one is shown !!!	etemplate	zt	ÀÉ®×¥]§t¦h­Ó¼ËªO¡A¥uÅã¥Ü³Ì«á¤@µ§¡I
-file writen	etemplate	zt	ÀÉ®×¼g¤J
-fileupload	etemplate	zt	ÀÉ®×¤W¶Ç
-first	etemplate	zt	²Ä¤@µ§
-floating point	etemplate	zt	¯BÂI¼Æ
-foreign key	etemplate	zt	¥~³¡ª÷Æ_
-formatted text (html)	etemplate	zt	®æ¦¡¤Æ¤å¦r(HTML)
-go to the first entry	etemplate	zt	¨ì²Ä¤@µ§¸ê®Æ
-go to the last entry	etemplate	zt	¨ì³Ì«á¤@µ§¸ê®Æ
-go to the next page of entries	etemplate	zt	¤U¤@­¶¸ê®Æ
-go to the previous page of entries	etemplate	zt	¤W¤@­¶¸ê®Æ
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	zt	ä»¥èªè¨€ '%4' å¯«å…¥%1ç­†(%2 æ–°çš„)æ‡‰ç”¨ç¨‹å¼ '%3' çš„è¨Šæ¯
+%1 etemplates deleted	etemplate	zt	åˆªé™¤äº† %1 å€‹æ¨£æ¿
+%1 etemplates for application '%2' dumped to '%3'	etemplate	zt	æ‡‰ç”¨ç¨‹å¼ '%2' çš„ %1 å€‹æ¨£æ¿è½‰æ›åˆ°å¦ä¸€å€‹æ‡‰ç”¨ç¨‹å¼ '%3'
+%1 etemplates found	etemplate	zt	æ‰¾åˆ° %1 å€‹æ¨£æ¿
+%1 matches on search criteria	etemplate	zt	æœ‰ %1 ç­†ç¬¦åˆæœå°‹æ¢ä»¶çš„è³‡æ–™
+%1 new etemplates imported for application '%2'	etemplate	zt	åŒ¯å…¥ %1 ç­†æ‡‰ç”¨ç¨‹å¼ '%2' çš„æ¨£æ¿
+%s disabled	etemplate	zt	%s åœç”¨
+%s needed	etemplate	zt	éœ€è¦ %s
+%s notranslation	etemplate	zt	%s æœªç¿»è­¯
+%s onchange	etemplate	zt	%s èª¿æ•´ä¸­
+%s readonly	etemplate	zt	%s å”¯è®€
+'%1' has an invalid format !!!	etemplate	zt	'%1' æ ¼å¼éŒ¯èª¤ï¼
+'%1' is not a valid floatingpoint number !!!	etemplate	zt	'%1' ä¸æ˜¯æ­£ç¢ºçš„æµ®é»æ•¸ï¼
+'%1' is not a valid integer !!!	etemplate	zt	'%1' ä¸æ˜¯æ­£ç¢ºçš„æ•´æ•¸ï¼
+a pattern to be searched for	etemplate	zt	æœå°‹æ¢ä»¶
+add a new column (after the existing ones)	etemplate	zt	æ–°å¢æ¬„ä½(åœ¨å·²å­˜åœ¨çš„ä¹‹å¾Œ)
+add a new multi-column index	etemplate	zt	æ–°å¢å¤šæ¬„ç´¢å¼•
+add column	etemplate	zt	æ–°å¢æ¬„ä½
+add index	etemplate	zt	æ–°å¢ç´¢å¼•
+add table	etemplate	zt	æ–°å¢è¡¨æ ¼
+align	etemplate	zt	å°é½Š
+alignment of label and input-field in table-cell	etemplate	zt	æ¨™é¡Œèˆ‡è¡¨æ ¼è¼¸å…¥æ–‡å­—å°é½Šæ–¹å¼
+alignment of the v/hbox containing table-cell	etemplate	zt	V/HBoxçš„å°é½Šæ–¹å¼
+am	etemplate	zt	ä¸Šåˆ
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zt	ç´¢å¼•æ¬„ä½å¯ä»¥æé«˜æœå°‹è³‡æ–™çš„é€Ÿåº¦(ä½†æ˜¯æœƒä½”ç”¨ç¡¬ç¢Ÿçš„ç©ºé–“ï¼)
+application	etemplate	zt	æ‡‰ç”¨ç¨‹å¼
+application name needed to write a langfile or dump the etemplates !!!	etemplate	zt	æ‡‰ç”¨ç¨‹å¼éœ€è¦æœ‰èªè¨€æª”æˆ–æ˜¯å°‡æ¨£æ¿åŒ¯å‡ºï¼
+attach	etemplate	zt	é™„åŠ 
+attach file	etemplate	zt	é™„åŠ æª”æ¡ˆ
+blurtext	etemplate	zt	æ¨¡ç³Šæ–‡å­—
+border	etemplate	zt	æ¡†ç·š
+border-line-thickness for the table-tag	etemplate	zt	è¡¨æ ¼æ¨™ç±¤ä½¿ç”¨çš„æ¡†ç·šåšåº¦
+can not have special sql-value null	etemplate	zt	ç„¡æ³•ä½¿ç”¨ç‰¹å‡ºçš„SQLå€¼ NULL
+cancel	etemplate	zt	å–æ¶ˆ
+category	etemplate	zt	é¡åˆ¥
+cellpadding for the table-tag	etemplate	zt	è¡¨æ ¼æ–‡å­—èˆ‡æ ¼ç·šçš„è·é›¢
+cells	etemplate	zt	å„²å­˜æ ¼
+cellspacing for the table-tag	etemplate	zt	è¡¨æ ¼æ¬„ä½èˆ‡æ¬„ä½æ–‡å­—çš„è·é›¢
+center	etemplate	zt	ç½®ä¸­
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zt	å¦‚æœå…§å®¹åªèƒ½è¢«é¡¯ç¤ºè€Œä¸èƒ½è¢«æ”¹è®Šè«‹å‹¾é¸
+check if field has to be filled by user	etemplate	zt	å¦‚æœæ¬„ä½å€èƒ½å¤ è®“ä½¿ç”¨è€…å¡«å…¥è«‹å‹¾é¸
+checkbox	etemplate	zt	æ ¸é¸æ–¹å¡Š
+class	etemplate	zt	é¡åˆ¥
+class, valign	etemplate	zt	é¡åˆ¥ï¼Œå‚ç›´å°é½Š
+click here to attach the file	etemplate	zt	é»é¸é€™è£¡ä¾†é™„åŠ æª”æ¡ˆ
+click here to create the link	etemplate	zt	é»é¸é€™è£¡ä¾†å»ºç«‹é€£çµ
+click here to start the search	etemplate	zt	é»é¸é€™è£¡é–‹å§‹æœå°‹
+click here to upload the file	etemplate	zt	é»é¸é€™è£¡ä¾†ä¸Šå‚³æª”æ¡ˆ
+click to order after that criteria	etemplate	zt	é»é¸é€™è£¡ä¾†æ’åºæœå°‹çµæœ
+columnname	etemplate	zt	æ¬„ä½åç¨±
+comment	etemplate	zt	å‚™è¨»
+create a new table for the application	etemplate	zt	ç‚ºé€™å€‹æ‡‰ç”¨ç¨‹å¼å»ºç«‹ä¸€å€‹æ–°çš„è¡¨æ ¼
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zt	å¾æ¨™ç±¤èˆ‡æ±‚åŠ©æ–‡å­—å»ºç«‹ä¸€å€‹è‹±æ–‡('en')çš„èªè¨€æª”
+css class for the table-tag	etemplate	zt	è¡¨æ ¼æ¨™é–“çš„CSSé¡åˆ¥
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	zt	é€™ä¸€åˆ—çš„CSSé¡åˆ¥ï¼Œå…§å®šå€¼ï¼š'nmh' = ä¸‹ä¸€ç­†ç¬¦åˆæ¢ä»¶çš„é é¦–ï¼Œ'nmr' = æ”¹è®Šä¸‹ä¸€åˆ—ç¬¦åˆæ¢ä»¶çš„è³‡æ–™ï¼Œ'nmr0'+'nmr1'ä¸‹ä¸€åˆ—ç¬¦åˆæ¢ä»¶çš„è³‡æ–™
+css-styles	etemplate	zt	CSSé¢¨æ ¼
+date+time	etemplate	zt	æ—¥æœŸ+æ™‚é–“
+datum	etemplate	zt	è³‡æ–™
+day	etemplate	zt	æ—¥
+db ensures that every row has a unique value in that column	etemplate	zt	åœ¨é‚£å€‹æ¬„ä½ä¸­è³‡æ–™åº«èƒ½å¤ ç¢ºä¿æ¯ä¸€åˆ—å¯ä»¥æœ‰ä¸€å€‹ä¸é‡è¤‡çš„æ•¸å€¼
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	zt	ç‰¹å®šè³‡æ–™åº«ç´¢å¼•é¸é …(é€—é»åˆ†éš”)ï¼Œä¾‹å¦‚ mysql(FULLTEXT)æˆ–mysql(100)ä¾†è¨­å®šæ¬„ä½ç´¢å¼•é•·åº¦
+db-tools	etemplate	zt	è³‡æ–™åº«å·¥å…·
+deck	etemplate	zt	è£é£¾(å…§éƒ¨)
+default	etemplate	zt	é è¨­
+delete	etemplate	zt	åˆªé™¤
+delete a single entry by passing the id.	etemplate	zt	ä¾ç…§é€å‡ºçš„ä»£ç¢¼ä¾†åˆªé™¤ä¸€ç­†è³‡æ–™
+delete all selected etemplates, without further inquiry	etemplate	zt	åˆªé™¤æ‰€æœ‰é¸å–çš„æ¨£æ¿ï¼Œä¸å†ç¢ºèª
+delete column	etemplate	zt	åˆªé™¤æ¬„ä½
+delete index	etemplate	zt	åˆªé™¤ç´¢å¼•
+delete this etemplate	etemplate	zt	åˆªé™¤é€™å€‹æ¨£æ¿
+delete whole column (can not be undone!!!)	etemplate	zt	åˆªé™¤æ•´å€‹æ¬„ä½(ç„¡æ³•å¾©åŸï¼)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	zt	å¾è³‡æ–™åº«åˆªé™¤ä¸Šé¢æŒ‡å®šçš„æ¨£æ¿ï¼Œç„¡æ³•é‚„åŸ
+deletes the etemplate spez. above	etemplate	zt	åˆªé™¤ä¸Šé¢æŒ‡å®šçš„æ¨£æ¿
+deletes this column	etemplate	zt	åˆªé™¤é€™å€‹æ¬„ä½
+deletes this index	etemplate	zt	åˆªé™¤é€™å€‹ç´¢å¼•
+discard changes	etemplate	zt	æ”¾æ£„ç•°å‹•
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	zt	åœ¨è¼¸å…¥ä¹‹å‰é¡¯ç¤ºæˆ–æ˜¯åŸºæ–¼æ¨™ç±¤(é€å‡ºæŒ‰éˆ•çš„æ¨™ç±¤æˆ–æ˜¯åœ–ç‰‡çš„æª”æ¡ˆåç¨±)ä¸­çš„'%s'ä¾†æ’å…¥è¼¸å…¥å€¼
+displayed in statusline of browser if input-field gets focus	etemplate	zt	å¦‚æœæ¸¸æ¨™åœåœ¨è¼¸å…¥æ¬„ä½æ™‚åœ¨ç€è¦½å™¨çš„ç‹€æ…‹åˆ—é¡¯ç¤º
+do you want to save the changes you made in table %s?	etemplate	zt	æ‚¨æ˜¯å¦è¦å„²å­˜åœ¨è¡¨æ ¼ %s çš„ç•°å‹•ï¼Ÿ
+documentation	etemplate	zt	æ–‡ä»¶
+drop a table - this can not be undone	etemplate	zt	ç§»å‡ºä¸€å€‹è³‡æ–™è¡¨ - å°‡ç„¡æ³•é‚„åŸ
+drop table	etemplate	zt	ç§»é™¤è³‡æ–™è¡¨
+dump4setup	etemplate	zt	åŒ¯å‡ºå®‰è£æ‰€éœ€è³‡æ–™
+edit	etemplate	zt	ç·¨è¼¯
+edit the etemplate spez. above	etemplate	zt	ç·¨è¼¯ä¸Šé¢æŒ‡å®šçš„æ¨£æ¿
+editable templates - db-tools	etemplate	zt	å¯ç·¨è¼¯æ¨£æ¿ - è³‡æ–™åº«å·¥å…·
+editable templates - delete template	etemplate	zt	å¯ç·¨è¼¯æ¨£æ¿ - åˆªé™¤æ¨£æ¿
+editable templates - editor	etemplate	zt	å¯ç·¨è¼¯æ¨£æ¿ - ç·¨è¼¯å™¨
+editable templates - search	etemplate	zt	å¯ç·¨è¼¯æ¨£æ¿ - æœå°‹
+editable templates - show template	etemplate	zt	å¯ç·¨è¼¯æ¨£æ¿ - é¡¯ç¤ºæ¨£æ¿
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	zt	åµŒå…¥å¼CSSé¢¨æ ¼ï¼Œä¾‹å¦‚'.red { background: red; }' (æ³¨æ„ '.' åœ¨é¡åˆ¥åç¨±ä¹‹å‰) æˆ–æ˜¯ '@import url(...)' (é¡åˆ¥åç¨±å¯ä»¥åœ¨æ•´å€‹ç¶²é ä½¿ç”¨ï¼)
+enable javascript onchange submit	etemplate	zt	å•Ÿç”¨ JavaScript ç•°å‹•æ™‚é€å‡ºåŠŸèƒ½
+enter '' for an empty default, nothing mean no default	etemplate	zt	æ²’æœ‰æ„å‘³è‘—æ²’æœ‰é è¨­å€¼ï¼Œè¼¸å…¥ '' ä»£è¡¨
+enter a search pattern	etemplate	zt	è¼¸å…¥æœå°‹æ¢ä»¶
+enter filename to upload and attach, use [browse...] to search for it	etemplate	zt	è¼¸å…¥ä¸Šå‚³èˆ‡é™„åŠ æª”æ¡ˆçš„åç¨±ï¼Œä½¿ç”¨[ç€è¦½...]ä¾†é¸å–
+enter the new version number here (> old_version), empty for no update-file	etemplate	zt	è¼¸å…¥æ–°çš„ç‰ˆæœ¬ç·¨è™Ÿ(å¤§æ–¼èˆŠç‰ˆ)ï¼Œç©ºç™½è¡¨ç¤ºæ²’æœ‰æ›´æ–°
+enter the new version number here (has to be > old_version)	etemplate	zt	è¼¸å…¥æ–°çš„ç‰ˆæœ¬ç·¨è™Ÿ(å¿…é ˆå¤§æ–¼èˆŠç‰ˆ)
+entry saved	etemplate	zt	è³‡æ–™å„²å­˜äº†
+error: template not found !!!	etemplate	zt	éŒ¯èª¤ï¼šæ‰¾ä¸åˆ°æ¨£æ¿ï¼
+error: webserver is not allowed to write into '%1' !!!	etemplate	zt	éŒ¯èª¤ï¼šç¶²é ä¼ºæœå™¨ç„¡æ³•å¯«å…¥æª”æ¡ˆ '%1'ï¼
+error: while saveing !!!	etemplate	zt	éŒ¯èª¤ï¼šå„²å­˜æª”æ¡ˆæ™‚ï¼
+error: writeing !!!	etemplate	zt	éŒ¯èª¤ï¼šå¯«å…¥æª”æ¡ˆæ™‚
+error: writing file (no write-permission for the webserver) !!!	etemplate	zt	éŒ¯èª¤ï¼šå¯«å…¥æª”æ¡ˆæ™‚(ç¶²é ä¼ºæœå™¨æ²’æœ‰å¯«å…¥çš„æ¬Šé™)ï¼
+etemplate	common	zt	æ¨£æ¿ç®¡ç†
+etemplate '%1' imported, use save to put it in the database	etemplate	zt	åŒ¯å…¥äº†æ¨£æ¿ '%1' ï¼Œé»é¸å„²å­˜ä¾†å°‡å®ƒæ”¾å…¥è³‡æ–™åº«ä¸­
+etemplate '%1' written to '%2'	etemplate	zt	æ¨£æ¿ '%1' å¦å­˜æˆ '%2'
+etemplate editor	etemplate	zt	æ¨£æ¿ç·¨è¼¯å™¨
+etemplate referenz	etemplate	zt	æ¨£æ¿åƒè€ƒ
+etemplate tutorial	etemplate	zt	æ¨£æ¿æ•™å­¸
+exchange this row with the one above	etemplate	zt	ç”¨ä¸Šé¢çš„è³‡æ–™èˆ‡é€™ä¸€åˆ—äº¤æ›
+exchange this two columns	etemplate	zt	äº¤æ›é€™å…©å€‹æ¬„ä½
+export the loaded etemplate into a xml-file	etemplate	zt	å°‡è®€å–çš„æ¨£æ¿åŒ¯å‡ºæˆXMLæª”æ¡ˆ
+export xml	etemplate	zt	åŒ¯å‡ºXML
+extensions loaded:	etemplate	zt	å·²è®€å–å¤–æ›ï¼š
+field must not be empty !!!	etemplate	zt	æ¬„ä½ä¸èƒ½ç©ºç™½ï¼
+file	etemplate	zt	æª”æ¡ˆ
+file contains more than one etemplate, last one is shown !!!	etemplate	zt	æª”æ¡ˆåŒ…å«å¤šå€‹æ¨£æ¿ï¼Œåªé¡¯ç¤ºæœ€å¾Œä¸€ç­†ï¼
+file writen	etemplate	zt	æª”æ¡ˆå¯«å…¥
+fileupload	etemplate	zt	æª”æ¡ˆä¸Šå‚³
+first	etemplate	zt	ç¬¬ä¸€ç­†
+floating point	etemplate	zt	æµ®é»æ•¸
+foreign key	etemplate	zt	å¤–éƒ¨é‡‘é‘°
+formatted text (html)	etemplate	zt	æ ¼å¼åŒ–æ–‡å­—(HTML)
+go to the first entry	etemplate	zt	åˆ°ç¬¬ä¸€ç­†è³‡æ–™
+go to the last entry	etemplate	zt	åˆ°æœ€å¾Œä¸€ç­†è³‡æ–™
+go to the next page of entries	etemplate	zt	ä¸‹ä¸€é è³‡æ–™
+go to the previous page of entries	etemplate	zt	ä¸Šä¸€é è³‡æ–™
 hbox	etemplate	zt	HBox
-height	etemplate	zt	°ª«×
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	zt	¦C°ª(%©Î¬Oµe¯À)¡A°±¥Î¦C¡G [! = not]<value>[=<check>] ¡A¨Ò¦p'!@data' ·|¦b¸Ó¦C¨S¦³¥ô¦ó¸ê®Æªº®É­Ô°±¥Î
-height of the table in % or pixels for the table-tag and (optional) div	etemplate	zt	ªí®æ¼ĞÅÒªº°ª«×(%©Î¬Oµe¯À)¡A©Î¬O¨ä¥Ldiv°Ï¶ô
-height, disabled	etemplate	zt	°ª«×¡A°±¥Î
-help	etemplate	zt	¨D§U
-horizontal rule	etemplate	zt	¦X¨Ö³W«h
-hour	etemplate	zt	¤p®É
+height	etemplate	zt	é«˜åº¦
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	zt	åˆ—é«˜(%æˆ–æ˜¯ç•«ç´ )ï¼Œåœç”¨åˆ—ï¼š [! = not]<value>[=<check>] ï¼Œä¾‹å¦‚'!@data' æœƒåœ¨è©²åˆ—æ²’æœ‰ä»»ä½•è³‡æ–™çš„æ™‚å€™åœç”¨
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	zt	è¡¨æ ¼æ¨™ç±¤çš„é«˜åº¦(%æˆ–æ˜¯ç•«ç´ )ï¼Œæˆ–æ˜¯å…¶ä»–divå€å¡Š
+height, disabled	etemplate	zt	é«˜åº¦ï¼Œåœç”¨
+help	etemplate	zt	æ±‚åŠ©
+horizontal rule	etemplate	zt	åˆä½µè¦å‰‡
+hour	etemplate	zt	å°æ™‚
 html	etemplate	zt	HTML
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zt	¦pªGÀx¦s®æ³Q°±¥Î«h·|Åã¥Ü¤@­ÓªÅ¥Õªºªí®æ°Ï¡AÂÇ¦¹(¼È®É)²¾°£¤@­ÓÀx¦s®æ
-image	etemplate	zt	¹Ï¤ù
-import	etemplate	zt	¶×¤J
-import an etemplate from a xml-file	etemplate	zt	±qXMLÀÉ®×¶×¤J¤@­Ó¼ËªO
-import table-definitions from existing db-table	etemplate	zt	±q¬J¦³ªº¸ê®Æ®wªí³æ¶×¤Jªí®æ³]©w
-import xml	etemplate	zt	¶×¤JXML
-index/name of returned content (name of the template, link / method for image)	etemplate	zt	¶Ç¦^¤º®eªº¯Á¤Ş/¦WºÙ(¼ËªO¦WºÙ¡A¹Ï¤ùªº³sµ²©Î¤èªk)
-indexed	etemplate	zt	¤w¯Á¤Ş
-indexoptions	etemplate	zt	¯Á¤Ş¿ï¶µ
-insert new column behind this one	etemplate	zt	¦b³o¤@­Ó¤§«e´¡¤J·sªºÄæ¦ì
-insert new column in front of all	etemplate	zt	¦b³Ì«e­±´¡¤J·sªºÄæ¦ì
-insert new row after this one	etemplate	zt	¦b³o¤@­Ó¤§«á´¡¤J·sªºÄæ¦ì
-insert new row in front of first line	etemplate	zt	¦b³o¤@¦æ¤§«e´¡¤J·sªºÄæ¦ì
-integer	etemplate	zt	¾ã¼Æ
-key	etemplate	zt	Áä­È
-label	etemplate	zt	¼ĞÅÒ
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	zt	¼ĞÅÒ:[bold][italic] ¤å¦r:[len][,max] ¼Æ¦r:[min][,[max][,len]] ¤å¦r¤è¶ô:[rows][,cols] ®Ö¿ï¤è¶ô:[width] ½d¨Òl.:[IndexInContent] ¤U©Ô¦¡¿ï³æ:[multiselect] ¤é´Á:[values: eg. 'Y-m-d']
-lang	etemplate	zt	»y¨¥
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	zt	¿W¥ß»y¨¥¼ËªO(''·|Åª¨ú¨Ï¥ÎªÌªº°¾¦n»y¨¥©Î¬O¹w³]­È¡A¤@¯ë¼ËªO¹w³]¬OÅª¨ú­^¤å)ªº»y¨¥ÁY¼g(¨Ò¦p'en'¥Nªíenglish)
-last	etemplate	zt	³Ì«á
-left	etemplate	zt	¥ª
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	zt	¦r¤¸ªø«×¡Aºë½T¼Æ¦r¡G2,4,8 ©M¯BÂI¼Æ¡G4,8
-link	etemplate	zt	³sµ²
-linklist	etemplate	zt	³sµ²²M³æ
-linkstring	etemplate	zt	³sµ²¤å¦r
-linkto	etemplate	zt	³sµ²ºô§}
-load this template into the editor	etemplate	zt	±N³o­Ó¼ËªO¸ü¤J½s¿è¾¹¤¤
-minute	etemplate	zt	¤À
-month	etemplate	zt	¤ë
-multicolumn indices	etemplate	zt	¦hÄæ¯Á¤Ş
-name	etemplate	zt	¦WºÙ
-name of other table where column is a key from	etemplate	zt	Äæ¦ì¬OÁä­Èªº¨ä¥Lªí®æ¦WºÙ
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	zt	¼ËªO¦WºÙ(¨Ò¦p verdilak)¡G '' = ¹w³](±N·|Åª¨ú°¾¦n³]©w¡A¹w³]Åª¨ú­^¤å»y¨t)
-name of table to add	etemplate	zt	·s¼Wªí®æªº¦WºÙ
-name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zt	¼ËªO¦WºÙ¡A¥²¶·¦bªí³æ application.function[.subTemplate] ¤¤
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zt	¦bªí®æ¤¤¥²¶·¬O°ß¤@ªº¥B¤£¬OSQLªº«O¯d¦r¡A³Ì¦n¥[¤W¨â­Ó­^¤å»P¤@­Ó©³½u·í§@«e¸m¦r¤¸¨Óªí¥ÜÀ³¥Îµ{¦¡
-new search	etemplate	zt	·sªº·j´M
-new table created	etemplate	zt	«Ø¥ß¤F·sªºªí®æ
-newer version '%1' exists !!!	etemplate	zt	§ó·sªºª©¥» '%1'¡I
-nextmatch	etemplate	zt	¤U¤@­Ó
-nextmatch filterheader	etemplate	zt	¤U¤@­Ó±ø¥ó­¶­º
-nextmatch sortheader	etemplate	zt	¤U¤@­Ó¤ÀÃş­¶­º
-no file	etemplate	zt	¨S¦³ÀÉ®×
-no filename given or selected via browse...	etemplate	zt	¨S¦³ÀÉ®×¦WºÙ©Î¬O±qÂsÄı¾¹¿ï¨ú...
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zt	å¦‚æœå„²å­˜æ ¼è¢«åœç”¨å‰‡æœƒé¡¯ç¤ºä¸€å€‹ç©ºç™½çš„è¡¨æ ¼å€ï¼Œè—‰æ­¤(æš«æ™‚)ç§»é™¤ä¸€å€‹å„²å­˜æ ¼
+image	etemplate	zt	åœ–ç‰‡
+import	etemplate	zt	åŒ¯å…¥
+import an etemplate from a xml-file	etemplate	zt	å¾XMLæª”æ¡ˆåŒ¯å…¥ä¸€å€‹æ¨£æ¿
+import table-definitions from existing db-table	etemplate	zt	å¾æ—¢æœ‰çš„è³‡æ–™åº«è¡¨å–®åŒ¯å…¥è¡¨æ ¼è¨­å®š
+import xml	etemplate	zt	åŒ¯å…¥XML
+index/name of returned content (name of the template, link / method for image)	etemplate	zt	å‚³å›å…§å®¹çš„ç´¢å¼•/åç¨±(æ¨£æ¿åç¨±ï¼Œåœ–ç‰‡çš„é€£çµæˆ–æ–¹æ³•)
+indexed	etemplate	zt	å·²ç´¢å¼•
+indexoptions	etemplate	zt	ç´¢å¼•é¸é …
+insert new column behind this one	etemplate	zt	åœ¨é€™ä¸€å€‹ä¹‹å‰æ’å…¥æ–°çš„æ¬„ä½
+insert new column in front of all	etemplate	zt	åœ¨æœ€å‰é¢æ’å…¥æ–°çš„æ¬„ä½
+insert new row after this one	etemplate	zt	åœ¨é€™ä¸€å€‹ä¹‹å¾Œæ’å…¥æ–°çš„æ¬„ä½
+insert new row in front of first line	etemplate	zt	åœ¨é€™ä¸€è¡Œä¹‹å‰æ’å…¥æ–°çš„æ¬„ä½
+integer	etemplate	zt	æ•´æ•¸
+key	etemplate	zt	éµå€¼
+label	etemplate	zt	æ¨™ç±¤
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	zt	æ¨™ç±¤:[bold][italic] æ–‡å­—:[len][,max] æ•¸å­—:[min][,[max][,len]] æ–‡å­—æ–¹å¡Š:[rows][,cols] æ ¸é¸æ–¹å¡Š:[width] ç¯„ä¾‹l.:[IndexInContent] ä¸‹æ‹‰å¼é¸å–®:[multiselect] æ—¥æœŸ:[values: eg. 'Y-m-d']
+lang	etemplate	zt	èªè¨€
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	zt	ç¨ç«‹èªè¨€æ¨£æ¿(''æœƒè®€å–ä½¿ç”¨è€…çš„åå¥½èªè¨€æˆ–æ˜¯é è¨­å€¼ï¼Œä¸€èˆ¬æ¨£æ¿é è¨­æ˜¯è®€å–è‹±æ–‡)çš„èªè¨€ç¸®å¯«(ä¾‹å¦‚'en'ä»£è¡¨english)
+last	etemplate	zt	æœ€å¾Œ
+left	etemplate	zt	å·¦
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	zt	å­—å…ƒé•·åº¦ï¼Œç²¾ç¢ºæ•¸å­—ï¼š2,4,8 å’Œæµ®é»æ•¸ï¼š4,8
+link	etemplate	zt	é€£çµ
+linklist	etemplate	zt	é€£çµæ¸…å–®
+linkstring	etemplate	zt	é€£çµæ–‡å­—
+linkto	etemplate	zt	é€£çµç¶²å€
+load this template into the editor	etemplate	zt	å°‡é€™å€‹æ¨£æ¿è¼‰å…¥ç·¨è¼¯å™¨ä¸­
+minute	etemplate	zt	åˆ†
+month	etemplate	zt	æœˆ
+multicolumn indices	etemplate	zt	å¤šæ¬„ç´¢å¼•
+name	etemplate	zt	åç¨±
+name of other table where column is a key from	etemplate	zt	æ¬„ä½æ˜¯éµå€¼çš„å…¶ä»–è¡¨æ ¼åç¨±
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	zt	æ¨£æ¿åç¨±(ä¾‹å¦‚ verdilak)ï¼š '' = é è¨­(å°‡æœƒè®€å–åå¥½è¨­å®šï¼Œé è¨­è®€å–è‹±æ–‡èªç³»)
+name of table to add	etemplate	zt	æ–°å¢è¡¨æ ¼çš„åç¨±
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zt	æ¨£æ¿åç¨±ï¼Œå¿…é ˆåœ¨è¡¨å–® application.function[.subTemplate] ä¸­
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zt	åœ¨è¡¨æ ¼ä¸­å¿…é ˆæ˜¯å”¯ä¸€çš„ä¸”ä¸æ˜¯SQLçš„ä¿ç•™å­—ï¼Œæœ€å¥½åŠ ä¸Šå…©å€‹è‹±æ–‡èˆ‡ä¸€å€‹åº•ç·šç•¶ä½œå‰ç½®å­—å…ƒä¾†è¡¨ç¤ºæ‡‰ç”¨ç¨‹å¼
+new search	etemplate	zt	æ–°çš„æœå°‹
+new table created	etemplate	zt	å»ºç«‹äº†æ–°çš„è¡¨æ ¼
+newer version '%1' exists !!!	etemplate	zt	æ›´æ–°çš„ç‰ˆæœ¬ '%1'ï¼
+nextmatch	etemplate	zt	ä¸‹ä¸€å€‹
+nextmatch filterheader	etemplate	zt	ä¸‹ä¸€å€‹æ¢ä»¶é é¦–
+nextmatch sortheader	etemplate	zt	ä¸‹ä¸€å€‹åˆ†é¡é é¦–
+no file	etemplate	zt	æ²’æœ‰æª”æ¡ˆ
+no filename given or selected via browse...	etemplate	zt	æ²’æœ‰æª”æ¡ˆåç¨±æˆ–æ˜¯å¾ç€è¦½å™¨é¸å–...
 not null	etemplate	zt	NOT NULL
-nothing found - try again !!!	etemplate	zt	§ä¤£¨ì¥ô¦ó¸ê®Æ - ­«¸Õ¤@¦¸¡I
-nothing matched search criteria !!!	etemplate	zt	·j´M±ø¥ó§ä¤£¨ì¥ô¦ó¸ê®Æ
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zt	¦X¨ÖÀx¦s®æªº¼Æ¦r©Î¬O¿é¤J'all'¨Ó¦X¨Ö³Ñ¤UªºÀx¦s®æ¡BCSSÃş§O¦WºÙ(TD¼ĞÅÒ)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zt	V/HBox¤¤¦C©Î¬O¦æªºÄæ¦ì¶¡¹j¡B¤å¦r»P®Ø½uªº¶ZÂ÷
-of	etemplate	zt	ªº
-only an other version found !!!	etemplate	zt	¥u¦³§ä¨ì¤@­Ó¨ä¥Lª©¥»¡I
-optional note about the link	etemplate	zt	³sµ²ªºªşµù
-options	etemplate	zt	¿ï¶µ
-overflow	etemplate	zt	¶W¹L
-padding	etemplate	zt	¤å®Ø¶ZÂ÷
-please enter table-name first !!!	etemplate	zt	½Ğ¥ı¿é¤Jªí®æ¦WºÙ¡I
-pm	etemplate	zt	¤U¤È
-precision	etemplate	zt	ºë±K«×
-primary key	etemplate	zt	¥DÁä
-primary key for the table, gets automaticaly indexed	etemplate	zt	ªí³æªº¥DÁä¡A¥Î¨Ó¦Û°Ê²£¥Í¯Á¤Ş
-radiobutton	etemplate	zt	®Ö¿ï«ö¶s
-read	etemplate	zt	Åª¨ú
-read a list of entries.	etemplate	zt	Åª¨ú¨Æ¥ó¦Cªí
-read a single entry by passing the id and fieldlist.	etemplate	zt	³z¹LID»PÀx¦s®æ²M³æ¨ÓÅª¨ú¤@µ§¸ê®Æ
-read etemplate from database (for the keys above)	etemplate	zt	±q¸ê®Æ®wÅª¨ú¼ËªO(³z¹L¤W­±ªºÁä­È)
-remove row (can not be undone!!!)	etemplate	zt	²¾°£¦C(µLªkÁÙ­ì¡I)
-remove this link (not the entry itself)	etemplate	zt	²¾°£³o­Ó³sµ²(¤£¬O¥¦ªº¸ê®Æ)
-returns savely, without deleting	etemplate	zt	¦^¤W­¶¡A¤£Àx¦s
-right	etemplate	zt	¥¿½T
-save	etemplate	zt	Àx¦s
-save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zt	¥H¤W­±ªºÁä­È(name,...)Àx¦s¼ËªO¡A¥t¦s¨ì¨ä¥L¦ì¸m
-saves changes to tables_current.inc.php	etemplate	zt	Àx¦s¨ìtables_current.inc.php
-scale	etemplate	zt	¤Ø«×
-scale for float	etemplate	zt	¤p¼ÆÂI¦ì¼Æ
-search	etemplate	zt	·j´M
-select a category	etemplate	zt	Ãş§O
-select a primary contact, to show in the list	etemplate	zt	¿ï¾Ü¥D­nÁpµ¸¤H¨ÓÅã¥Ü¦b²M³æ
-select access	etemplate	zt	¦s¨ú
-select account	etemplate	zt	±b¸¹
-select an app first !!!	etemplate	zt	½Ğ¥ı¿ï¾Ü¤@­ÓÀ³¥Îµ{¦¡¡I
-select an app to search in	etemplate	zt	¿ï¾Ü­n·j´MªºÀ³¥Îµ{¦¡
-select an application	etemplate	zt	À³¥Îµ{¦¡
-select an application, (*) = uninstalled	etemplate	zt	À³¥Îµ{¦¡¡A(*)ªí¥Ü¥¼¦w¸Ë
-select an entry to link with	etemplate	zt	¿ï¾Ü­n³sµ²ªº¨Æ¥ó
-select an table of the application	etemplate	zt	¿ï¾Ü¤@­ÓÀ³¥Îµ{¦¡ªº¸ê®Æªí
-select application	etemplate	zt	À³¥Îµ{¦¡
-select category	etemplate	zt	Ãş§O
-select country	etemplate	zt	°ê®a
-select day	etemplate	zt	¤é´Á
-select if content of field should not be translated (label gets always translated)	etemplate	zt	¦pªG¤º®e©ÎÀx¦s®æ¤£§Æ±æ³QÂ½Ä¶(¼ĞÅÒ³£¬O·|³QÂ½Ä¶ªº)
-select month	etemplate	zt	¤ë¥÷
-select number	etemplate	zt	¼Æ¦r
-select one ...	etemplate	zt	¿ï¾Ü¤@­Ó...
-select percentage	etemplate	zt	¿ï¾Ü¤ñ²v
-select priority	etemplate	zt	¿ï¾ÜÀu¥ı¦¸§Ç
-select state	etemplate	zt	¿ï¾Üª¬ºA
-select the indexed columns in their desired order	etemplate	zt	¦b¥L­Ì¹w´Áªº¶¶§Ç¤¤¿ï¾Ü¯Á¤ŞÄæ¦ì
-select this etemplate to delete it	etemplate	zt	¿ï¾Ü§R°£³o­Ó¼ËªO
-select which values to show	etemplate	zt	¿ï¾Ü­nÅã¥Üªº¼Æ­È
-select year	etemplate	zt	¿ï¾Ü¦~
-selectbox	etemplate	zt	¤U©Ô¿ï³æ
-sets today as date	etemplate	zt	³]©w¬°¤µ¤Ñ
-show	etemplate	zt	Åã¥Ü
-show (no save)	etemplate	zt	Åã¥Ü(¤£Àx¦s)
-show values	etemplate	zt	Åã¥Ü¼Æ­È
-showing	etemplate	zt	Åã¥Ü¤¤
-shows / allows you to enter values into the etemplate for testing	etemplate	zt	Åã¥Ü/¤¹³\±z°ò©ó´ú¸Õ¨Ó¿é¤J¼Æ­È¨ì¼Ëª©¤¤
-shows/displays etemplate for testing, does not save it before	etemplate	zt	¦bÀx¦s¤§«e¹wÄı/´ú¸Õ¼ËªO
-spacing	etemplate	zt	ªÅ¶¡
-span, class	etemplate	zt	¤À³Î¡AÃş§O
-stack	etemplate	zt	°ïÅ|
-start a new search, cancel this link	etemplate	zt	¨ú®ø³o­Ó³sµ²¡A¶}±Ò·sªº·j´M
-start new search for the above pattern	etemplate	zt	¥Î¤W­±ªº³W«h¶}±Ò¤@­Ó·sªº·j´M
-submitbutton	etemplate	zt	°e¥X«ö¶s
-table unchanged, no write necessary !!!	etemplate	zt	ªí³æ¨S¦³²§°Ê¡A¤£»İ­nÀx¦s¡I
-tablename	etemplate	zt	¸ê®Æªí¦WºÙ
-tabs	etemplate	zt	¸õ¦ì
-template	etemplate	zt	¼Ëª©
-template deleted	etemplate	zt	¼Ëª©§R°£¤F
-template saved	etemplate	zt	¼Ëª©Àx¦s¤F
-text	etemplate	zt	¤å¦r
-textarea	etemplate	zt	¤å¦r°Ï
-this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	zt	¦pªG¤å¦r¤è¶ô¤¤¨S¦³¿é¤J¥ô¦ó¤å¦r¥B¤å¦r´å¼Ğ¨S¦³¦bÄæ¦ì¤¤·|Åã¥Ü³o¨Ç¤å¦r
-time	etemplate	zt	®É¶¡
-to start the db-tools	etemplate	zt	¸ê®Æ®w¤u¨ã
-to start the etemplate editor	etemplate	zt	¼ËªO½s¿è¾¹
-to start the search	etemplate	zt	·j´M
-today	etemplate	zt	¤µ¤Ñ
-type	etemplate	zt	ºØÃş
-type of the column	etemplate	zt	Äæ¦ìºØÃş
-type of the field (select label if field should be empty)	etemplate	zt	Àx¦s®æºØÃş(¦pªGÀx¦s®æ¥²¶·¬°ªÅ­È½Ğ¿ï¾Ü¼ĞÅÒ)
-unique	etemplate	zt	°ß¤@
-unlink	etemplate	zt	§R°£
-update a single entry by passing the fields.	etemplate	zt	³z¹L²Ä°eªºÄæ¦ì§ó·s¤@­Ó³æ¤@¨Æ¥ó
-update from version '%s' to	etemplate	zt	±qª©¥» '%s'§ó·s¨ì
-upload	etemplate	zt	¤W¶Ç
-value	etemplate	zt	¼Æ­È
-value has to be at least '%1' !!!	etemplate	zt	¼Æ­È³Ì¤Ö¥²¶·¬O '%1'¡I
-value has to be at maximum '%1' !!!	etemplate	zt	¼Æ­È³Ì¤j¬O '%1' ¡I
+nothing found - try again !!!	etemplate	zt	æ‰¾ä¸åˆ°ä»»ä½•è³‡æ–™ - é‡è©¦ä¸€æ¬¡ï¼
+nothing matched search criteria !!!	etemplate	zt	æœå°‹æ¢ä»¶æ‰¾ä¸åˆ°ä»»ä½•è³‡æ–™
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zt	åˆä½µå„²å­˜æ ¼çš„æ•¸å­—æˆ–æ˜¯è¼¸å…¥'all'ä¾†åˆä½µå‰©ä¸‹çš„å„²å­˜æ ¼ã€CSSé¡åˆ¥åç¨±(TDæ¨™ç±¤)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zt	V/HBoxä¸­åˆ—æˆ–æ˜¯è¡Œçš„æ¬„ä½é–“éš”ã€æ–‡å­—èˆ‡æ¡†ç·šçš„è·é›¢
+of	etemplate	zt	çš„
+only an other version found !!!	etemplate	zt	åªæœ‰æ‰¾åˆ°ä¸€å€‹å…¶ä»–ç‰ˆæœ¬ï¼
+optional note about the link	etemplate	zt	é€£çµçš„é™„è¨»
+options	etemplate	zt	é¸é …
+overflow	etemplate	zt	è¶…é
+padding	etemplate	zt	æ–‡æ¡†è·é›¢
+please enter table-name first !!!	etemplate	zt	è«‹å…ˆè¼¸å…¥è¡¨æ ¼åç¨±ï¼
+pm	etemplate	zt	ä¸‹åˆ
+precision	etemplate	zt	ç²¾å¯†åº¦
+primary key	etemplate	zt	ä¸»éµ
+primary key for the table, gets automaticaly indexed	etemplate	zt	è¡¨å–®çš„ä¸»éµï¼Œç”¨ä¾†è‡ªå‹•ç”¢ç”Ÿç´¢å¼•
+radiobutton	etemplate	zt	æ ¸é¸æŒ‰éˆ•
+read	etemplate	zt	è®€å–
+read a list of entries.	etemplate	zt	è®€å–äº‹ä»¶åˆ—è¡¨
+read a single entry by passing the id and fieldlist.	etemplate	zt	é€éIDèˆ‡å„²å­˜æ ¼æ¸…å–®ä¾†è®€å–ä¸€ç­†è³‡æ–™
+read etemplate from database (for the keys above)	etemplate	zt	å¾è³‡æ–™åº«è®€å–æ¨£æ¿(é€éä¸Šé¢çš„éµå€¼)
+remove row (can not be undone!!!)	etemplate	zt	ç§»é™¤åˆ—(ç„¡æ³•é‚„åŸï¼)
+remove this link (not the entry itself)	etemplate	zt	ç§»é™¤é€™å€‹é€£çµ(ä¸æ˜¯å®ƒçš„è³‡æ–™)
+returns savely, without deleting	etemplate	zt	å›ä¸Šé ï¼Œä¸å„²å­˜
+right	etemplate	zt	æ­£ç¢º
+save	etemplate	zt	å„²å­˜
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zt	ä»¥ä¸Šé¢çš„éµå€¼(name,...)å„²å­˜æ¨£æ¿ï¼Œå¦å­˜åˆ°å…¶ä»–ä½ç½®
+saves changes to tables_current.inc.php	etemplate	zt	å„²å­˜åˆ°tables_current.inc.php
+scale	etemplate	zt	å°ºåº¦
+scale for float	etemplate	zt	å°æ•¸é»ä½æ•¸
+search	etemplate	zt	æœå°‹
+select a category	etemplate	zt	é¡åˆ¥
+select a primary contact, to show in the list	etemplate	zt	é¸æ“‡ä¸»è¦è¯çµ¡äººä¾†é¡¯ç¤ºåœ¨æ¸…å–®
+select access	etemplate	zt	å­˜å–
+select account	etemplate	zt	å¸³è™Ÿ
+select an app first !!!	etemplate	zt	è«‹å…ˆé¸æ“‡ä¸€å€‹æ‡‰ç”¨ç¨‹å¼ï¼
+select an app to search in	etemplate	zt	é¸æ“‡è¦æœå°‹çš„æ‡‰ç”¨ç¨‹å¼
+select an application	etemplate	zt	æ‡‰ç”¨ç¨‹å¼
+select an application, (*) = uninstalled	etemplate	zt	æ‡‰ç”¨ç¨‹å¼ï¼Œ(*)è¡¨ç¤ºæœªå®‰è£
+select an entry to link with	etemplate	zt	é¸æ“‡è¦é€£çµçš„äº‹ä»¶
+select an table of the application	etemplate	zt	é¸æ“‡ä¸€å€‹æ‡‰ç”¨ç¨‹å¼çš„è³‡æ–™è¡¨
+select application	etemplate	zt	æ‡‰ç”¨ç¨‹å¼
+select category	etemplate	zt	é¡åˆ¥
+select country	etemplate	zt	åœ‹å®¶
+select day	etemplate	zt	æ—¥æœŸ
+select if content of field should not be translated (label gets always translated)	etemplate	zt	å¦‚æœå…§å®¹æˆ–å„²å­˜æ ¼ä¸å¸Œæœ›è¢«ç¿»è­¯(æ¨™ç±¤éƒ½æ˜¯æœƒè¢«ç¿»è­¯çš„)
+select month	etemplate	zt	æœˆä»½
+select number	etemplate	zt	æ•¸å­—
+select one ...	etemplate	zt	é¸æ“‡ä¸€å€‹...
+select percentage	etemplate	zt	é¸æ“‡æ¯”ç‡
+select priority	etemplate	zt	é¸æ“‡å„ªå…ˆæ¬¡åº
+select state	etemplate	zt	é¸æ“‡ç‹€æ…‹
+select the indexed columns in their desired order	etemplate	zt	åœ¨ä»–å€‘é æœŸçš„é †åºä¸­é¸æ“‡ç´¢å¼•æ¬„ä½
+select this etemplate to delete it	etemplate	zt	é¸æ“‡åˆªé™¤é€™å€‹æ¨£æ¿
+select which values to show	etemplate	zt	é¸æ“‡è¦é¡¯ç¤ºçš„æ•¸å€¼
+select year	etemplate	zt	é¸æ“‡å¹´
+selectbox	etemplate	zt	ä¸‹æ‹‰é¸å–®
+sets today as date	etemplate	zt	è¨­å®šç‚ºä»Šå¤©
+show	etemplate	zt	é¡¯ç¤º
+show (no save)	etemplate	zt	é¡¯ç¤º(ä¸å„²å­˜)
+show values	etemplate	zt	é¡¯ç¤ºæ•¸å€¼
+showing	etemplate	zt	é¡¯ç¤ºä¸­
+shows / allows you to enter values into the etemplate for testing	etemplate	zt	é¡¯ç¤º/å…è¨±æ‚¨åŸºæ–¼æ¸¬è©¦ä¾†è¼¸å…¥æ•¸å€¼åˆ°æ¨£ç‰ˆä¸­
+shows/displays etemplate for testing, does not save it before	etemplate	zt	åœ¨å„²å­˜ä¹‹å‰é è¦½/æ¸¬è©¦æ¨£æ¿
+spacing	etemplate	zt	ç©ºé–“
+span, class	etemplate	zt	åˆ†å‰²ï¼Œé¡åˆ¥
+stack	etemplate	zt	å †ç–Š
+start a new search, cancel this link	etemplate	zt	å–æ¶ˆé€™å€‹é€£çµï¼Œé–‹å•Ÿæ–°çš„æœå°‹
+start new search for the above pattern	etemplate	zt	ç”¨ä¸Šé¢çš„è¦å‰‡é–‹å•Ÿä¸€å€‹æ–°çš„æœå°‹
+submitbutton	etemplate	zt	é€å‡ºæŒ‰éˆ•
+table unchanged, no write necessary !!!	etemplate	zt	è¡¨å–®æ²’æœ‰ç•°å‹•ï¼Œä¸éœ€è¦å„²å­˜ï¼
+tablename	etemplate	zt	è³‡æ–™è¡¨åç¨±
+tabs	etemplate	zt	è·³ä½
+template	etemplate	zt	æ¨£ç‰ˆ
+template deleted	etemplate	zt	æ¨£ç‰ˆåˆªé™¤äº†
+template saved	etemplate	zt	æ¨£ç‰ˆå„²å­˜äº†
+text	etemplate	zt	æ–‡å­—
+textarea	etemplate	zt	æ–‡å­—å€
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	zt	å¦‚æœæ–‡å­—æ–¹å¡Šä¸­æ²’æœ‰è¼¸å…¥ä»»ä½•æ–‡å­—ä¸”æ–‡å­—æ¸¸æ¨™æ²’æœ‰åœ¨æ¬„ä½ä¸­æœƒé¡¯ç¤ºé€™äº›æ–‡å­—
+time	etemplate	zt	æ™‚é–“
+to start the db-tools	etemplate	zt	è³‡æ–™åº«å·¥å…·
+to start the etemplate editor	etemplate	zt	æ¨£æ¿ç·¨è¼¯å™¨
+to start the search	etemplate	zt	æœå°‹
+today	etemplate	zt	ä»Šå¤©
+type	etemplate	zt	ç¨®é¡
+type of the column	etemplate	zt	æ¬„ä½ç¨®é¡
+type of the field (select label if field should be empty)	etemplate	zt	å„²å­˜æ ¼ç¨®é¡(å¦‚æœå„²å­˜æ ¼å¿…é ˆç‚ºç©ºå€¼è«‹é¸æ“‡æ¨™ç±¤)
+unique	etemplate	zt	å”¯ä¸€
+unlink	etemplate	zt	åˆªé™¤
+update a single entry by passing the fields.	etemplate	zt	é€éç¬¬é€çš„æ¬„ä½æ›´æ–°ä¸€å€‹å–®ä¸€äº‹ä»¶
+update from version '%s' to	etemplate	zt	å¾ç‰ˆæœ¬ '%s'æ›´æ–°åˆ°
+upload	etemplate	zt	ä¸Šå‚³
+value	etemplate	zt	æ•¸å€¼
+value has to be at least '%1' !!!	etemplate	zt	æ•¸å€¼æœ€å°‘å¿…é ˆæ˜¯ '%1'ï¼
+value has to be at maximum '%1' !!!	etemplate	zt	æ•¸å€¼æœ€å¤§æ˜¯ '%1' ï¼
 vbox	etemplate	zt	VBox
-version	etemplate	zt	ª©¥»
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	zt	ª©¥»½s¸¹¡A®æ¦¡¡Gmajor.minor.revision.number (¨Ò¦p 0.9.13.001 ©Ò¦³¼Æ¦r¥Î0¨Ó¶ñº¡)
-view this linked entry in its application	etemplate	zt	¦bÀ³¥Îµ{¦¡¤¤Åã¥Ü³o­Ó³Q³sµ²ªº¨Æ¥ó
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	zt	¶W¥Xªº¤º®e­n¦p¦ó³B²z¡G Åã¥Ü(¹w³])¡AÁôÂÃ¡A±²°Ê¡A¦Û°Ê(¥ÑÂsÄı¾¹¨M©w)
-width	etemplate	zt	¼e«×
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	zt	Äæ¦ì¼e«×(%©Î¬Oµe¯À)¡A°±¥ÎÄæ¦ì¡G[! = not]<value>[=<check>] ¨Ò¦p¡G '!@data' ¦pªG¨S¦³¤º®e´N°±¥Î
-width of the table in % or pixels for the table-tag and (optional) div	etemplate	zt	ªí®æ©ÎDIV¼ĞÅÒ¼ĞÅÒªº¼e«×(%©Î¬Oµe¯À)
-width, disabled	etemplate	zt	¼e«×¡A°±¥Î
-write <app>/setup/tables_current.inc.php	etemplate	zt	¼g¤J<app>/setup/tables_current.inc.php
-write langfile	etemplate	zt	¼g¤J»y¨¥ÀÉ
-write tables	etemplate	zt	¼g¤Jªí®æ
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	zt	¦bÀ³¥Îµ{¦¡ªº¦w¸Ë¸ê®Æ§¨¼g¤J¤@­ÓÀÉ®× 'etemplates.inc.php'
-xml-file to import	etemplate	zt	­n¶×¤JªºXMLÀÉ®×
-xslt template	etemplate	zt	XSLT¼Ëª©
-year	etemplate	zt	¦~
+version	etemplate	zt	ç‰ˆæœ¬
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	zt	ç‰ˆæœ¬ç·¨è™Ÿï¼Œæ ¼å¼ï¼šmajor.minor.revision.number (ä¾‹å¦‚ 0.9.13.001 æ‰€æœ‰æ•¸å­—ç”¨0ä¾†å¡«æ»¿)
+view this linked entry in its application	etemplate	zt	åœ¨æ‡‰ç”¨ç¨‹å¼ä¸­é¡¯ç¤ºé€™å€‹è¢«é€£çµçš„äº‹ä»¶
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	zt	è¶…å‡ºçš„å…§å®¹è¦å¦‚ä½•è™•ç†ï¼š é¡¯ç¤º(é è¨­)ï¼Œéš±è—ï¼Œæ²å‹•ï¼Œè‡ªå‹•(ç”±ç€è¦½å™¨æ±ºå®š)
+width	etemplate	zt	å¯¬åº¦
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	zt	æ¬„ä½å¯¬åº¦(%æˆ–æ˜¯ç•«ç´ )ï¼Œåœç”¨æ¬„ä½ï¼š[! = not]<value>[=<check>] ä¾‹å¦‚ï¼š '!@data' å¦‚æœæ²’æœ‰å…§å®¹å°±åœç”¨
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	zt	è¡¨æ ¼æˆ–DIVæ¨™ç±¤æ¨™ç±¤çš„å¯¬åº¦(%æˆ–æ˜¯ç•«ç´ )
+width, disabled	etemplate	zt	å¯¬åº¦ï¼Œåœç”¨
+write <app>/setup/tables_current.inc.php	etemplate	zt	å¯«å…¥<app>/setup/tables_current.inc.php
+write langfile	etemplate	zt	å¯«å…¥èªè¨€æª”
+write tables	etemplate	zt	å¯«å…¥è¡¨æ ¼
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	zt	åœ¨æ‡‰ç”¨ç¨‹å¼çš„å®‰è£è³‡æ–™å¤¾å¯«å…¥ä¸€å€‹æª”æ¡ˆ 'etemplates.inc.php'
+xml-file to import	etemplate	zt	è¦åŒ¯å…¥çš„XMLæª”æ¡ˆ
+xslt template	etemplate	zt	XSLTæ¨£ç‰ˆ
+year	etemplate	zt	å¹´

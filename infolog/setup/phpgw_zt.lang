@@ -1,7 +1,7 @@
-%1 records imported	infolog	zt	%1 µ§¸ê®Æ¶×¤J
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	zt	Åª¨ú %1 µ§¸ê®Æ(©|¥¼¶×¤J¡A±z¥i¥H¦^¨ì %2¤W¤@­¶%3 ¨Ã¥B¨ú®ø¶×¤J´ú¸Õ)
-%1 records read (not yet imported, you may go back and uncheck test import)	infolog	zt	%1 µ§¸ê®Æ·Ç³Æ¦n¤F(ÁÙ¨S¶×¤J¡A±z¥²¶·¦^¨ì%2¤W¤@­¶%3¨Ã¥B¨ú®ø"¶×¤J´ú¸Õ"¶µ¥Øªº¤Ä¿ï)
-- subprojects from	infolog	zt	- ªş¥[±M®×
+%1 records imported	infolog	zt	%1 ç­†è³‡æ–™åŒ¯å…¥
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	zt	è®€å– %1 ç­†è³‡æ–™(å°šæœªåŒ¯å…¥ï¼Œæ‚¨å¯ä»¥å›åˆ° %2ä¸Šä¸€é %3 ä¸¦ä¸”å–æ¶ˆåŒ¯å…¥æ¸¬è©¦)
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	zt	%1 ç­†è³‡æ–™æº–å‚™å¥½äº†(é‚„æ²’åŒ¯å…¥ï¼Œæ‚¨å¿…é ˆå›åˆ°%2ä¸Šä¸€é %3ä¸¦ä¸”å–æ¶ˆ"åŒ¯å…¥æ¸¬è©¦"é …ç›®çš„å‹¾é¸)
+- subprojects from	infolog	zt	- é™„åŠ å°ˆæ¡ˆ
 0%	infolog	zt	0%
 10%	infolog	zt	10%
 20%	infolog	zt	20%
@@ -12,247 +12,247 @@
 70%	infolog	zt	70%
 80%	infolog	zt	80%
 90%	infolog	zt	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	zt	<b>³z¹L²Å¸¹³sµ²¨Óªş¥[ÀÉ®×</b>¨ú¥N­ì¥»¤W¶ÇÀÉ®×ªº¤è¦¡
-a short subject for the entry	infolog	zt	¤@­ÓÂ²µuªº¥DÃD
-abort without deleting	infolog	zt	¨ú®ø§R°£
-accept	infolog	zt	½T©w
-action	infolog	zt	°Ê§@
-add	infolog	zt	·s¼W
-add a file	infolog	zt	·s¼WÀÉ®×
-add a new entry	infolog	zt	·s¼W­Ó¨Æ¥ó
-add a new note	infolog	zt	·s¼W°O¨Æ
-add a new phonecall	infolog	zt	·s¼W¹q¸ÜÁpµ¸²M³æ
-add a new sub-task, -note, -call to this entry	infolog	zt	·s¼W¤@­ÓªşÄİ¤u§@¡B°O¨Æ»P³sµ¸²M³æ¨ì³o­Ó¨Æ¥ó
-add a new todo	infolog	zt	·s¼W«İ¿ì¨Æ¶µ
-add file	infolog	zt	·s¼WÀÉ®×
-add sub	infolog	zt	·s¼W¤l¤ÀÃş
-add:	infolog	zt	·s¼W¡G
-all	infolog	zt	¥ş³¡
-all links and attachments	infolog	zt	©Ò¦³ªº³sµ²»Pªş¥[ÀÉ®×
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	zt	¤¹³\³]©w¨Æ¥óªºª¬ºA¡A¨Ò¦p³o­Ó¨Æ¥ó¦pªGµ²§ô´N±N«ü©wªº«İ¿ì¨Æ¶µ³]©w¬°§¹¦¨(ªşÄİ¦b¨Æ¥ó¤Uªº)
-applies the changes	infolog	zt	½T©w­×§ï
-are you shure you want to delete this entry ?	infolog	zt	±z½T©w­n§R°£³o­Ó¨Æ¥ó¡H
-are you sure you want to delete this entry	infolog	zt	±z½T©w­n§R°£³o­Ó¨Æ¥ó
-attach a file	infolog	zt	ªş¥[¤@­ÓÀÉ®×
-attach file	infolog	zt	ªş¥[ÀÉ®×
-back to main list	infolog	zt	¦^¨ì¥D­n²M³æ
-back to projectlist	infolog	zt	¦^¨ì±M®×²M³æ
-billed	infolog	zt	¤w¥I´Ú
-both	infolog	zt	¬Ò
-call	infolog	zt	©I¥s
-cancel	infolog	zt	¨ú®ø
-categories	infolog	zt	¤ÀÃş
-category	infolog	zt	Ãş§O
-change the status of an entry, eg. close it	infolog	zt	­×§ï¸ê®Æª¬ºA¡A¨Ò¦p¡GÃö³¬
-charset of file	infolog	zt	ÀÉ®×¦r¤¸½s½X
-check to set startday	infolog	zt	³]©w¶}©l¤é´Á
-click here to create the link	infolog	zt	ÂI¿ï³o¸Ì¨Ó«Ø¥ß³sµ²
-click here to start the search	infolog	zt	ÂI¿ï³o¸Ì¨Ó¶}©l·j´M
-close	infolog	zt	Ãö³¬
-comment	infolog	zt	³Æµù
-configuration	infolog	zt	³]©w
-confirm	infolog	zt	½T»{
-contact	infolog	zt	Ápµ¸
-create new links	infolog	zt	«Ø¥ß·sªº³sµ²
-creates a new field	infolog	zt	«Ø¥ß·sªº°Ï°ì
-creates a new status with the given values	infolog	zt	¨Ï¥Î¿é¤Jªº­È¨Ó«Ø¥ß·sªºª¬ºA
-creates a new typ with the given name	infolog	zt	¨Ï¥Î¿é¤Jªº¦WºÙ¨Ó«Ø¥ß·sªº®æ¦¡
-csv-fieldname	infolog	zt	CSV-Äæ¦ì¦WºÙ
-csv-filename	infolog	zt	CSV-ÀÉ®×¦WºÙ
-csv-import	common	zt	CSV-¶×¤J
-custom	infolog	zt	¦Û­q
-custom contact-address, leave empty to use information from most recent link	infolog	zt	¦Û­qÁpµ¸¦í§}¡A¦pªGªÅ¥Õ´N·|¨Ï¥Î³Ìªñ³sµ²¸ê°T
-custom contact-information, leave emtpy to use information from most recent link	infolog	zt	¦Û­qÁpµ¸¸ê°T¡A¦pªGªÅ¥Õ´N·|¨Ï¥Î³Ìªñ³sµ²¸ê°T
-custom fields	infolog	zt	¦Û­qÄæ¦ì
-custom fields, typ and status	common	zt	¦Û­qÄæ¦ì¡B®æ¦¡»Pª¬ºA
-custom regarding	infolog	zt	¦Û­qÃö©ó
-custom status for typ	infolog	zt	¦Û­q®æ¦¡ªºª¬ºA
-customfields	infolog	zt	¦Û©wÄæ¦ì
-datecreated	infolog	zt	«Ø¥ß¤é´Á
-dates, status, access	infolog	zt	¤é´Á¡Bª¬ºA¡B¦s¨ú
-days	infolog	zt	¤é
-default filter for infolog	infolog	zt	¨Æ¥ó¬ö¿ıªº¹w³]¹LÂo¤è¦¡
-default status for a new log entry	infolog	zt	¨Æ¥ó¬ö¿ıªº¹w³]ª¬ºA
-delegation	infolog	zt	±ÂÅv
-delete	infolog	zt	§R°£
-delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	zt	§R°£©Ò¦³ªşÄİªº
-delete the entry	infolog	zt	§R°£³o­Ó¨Æ¥ó
-delete this entry	infolog	zt	§R°£³o­Ó¨Æ¥ó
-deletes the selected typ	infolog	zt	§R°£³o­Ó®æ¦¡
-deletes this field	infolog	zt	§R°£³o­ÓÄæ¦ì
-deletes this status	infolog	zt	§R°£³o­Óª¬ºA
-description	infolog	zt	´y­z
-description can not exceed 8000 characters in length	infolog	zt	´y­z¤¤¨Ï¥Îªº¦r¤¸¤£¯à¶W¹L8000
-determines the order the fields are displayed	infolog	zt	¨M©wÅã¥Üªº¶¶§Ç»PÄæ¦ì
-disables a status without deleting it	infolog	zt	°±¥Î¤@­Óª¬ºA¦Ó¤£¬O§R°£
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	zt	±z§Æ±æ°µ¦A¦¸ªº½T»{¦b¡G¦P·N¡A¤u§@§¹¦¨©Î¬O¨âªÌ³£­n
-done	infolog	zt	§¹¦¨
-download	infolog	zt	¤U¸ü
-duration	infolog	zt	¶i¦æ´Á¶¡
-each value is a line like <id>[=<label>]	infolog	zt	¨C­Ó­È³£¬O³o¼Ëªº½u <id>[=<label>]
-edit	infolog	zt	½s¿è
-edit or create categories for ingolog	infolog	zt	½s¿è©Î«Ø¥ß°T®§¬ö¿ıªºÃş§O
-edit status	infolog	zt	½s¿èª¬ºA
-edit the entry	infolog	zt	½s¿è³o­Ó¨Æ¥ó
-edit this entry	infolog	zt	½s¿è³o­Ó¨Æ¥ó
-empty for all	infolog	zt	¥ş³¡ªÅ¥Õ
-enddate	infolog	zt	µ²§ô¤é´Á
-enddate can not be before startdate	infolog	zt	µ²§ô¤é´Á¤£À³¸Ó¦b¶}©l¤é´Á¤§«e
-enter a custom contact, leave empty if linked entry should be used	infolog	zt	¿é¤J¤@­Ó¦Û­qªºÁpµ¸¤H¡A¦pªG³sµ²ªº¨Æ¥ó¥²¶·¨Ï¥Î´N½Ğ«O«ùªÅ¥Õ
-enter a custom phone/email, leave empty if linked entry should be used	infolog	zt	¿é¤J¤@­Ó¦Û­qªº¹q¸Ü/email¡A¦pªG³sµ²ªº¨Æ¥ó¥²¶·¨Ï¥Î´N½Ğ«O«ùªÅ¥Õ
-enter a textual description of the log-entry	infolog	zt	¿é¤J¨Æ¥ó¬ö¿ıªº­ì©l´y­z
-enter the query pattern	infolog	zt	¿é¤J¬d¸ßªº¤è¦¡
-entry and all files	infolog	zt	¨Æ¥ó»P©Ò¦³ÀÉ®×
-existing links	infolog	zt	¤w¸g¦s¦bªº³sµ²
-fax	infolog	zt	¶Ç¯u
-fieldseparator	infolog	zt	Äæ¦ì¤À¹j¦r¤¸
-finish	infolog	zt	§¹¦¨
-for which types should this field be used	infolog	zt	³o­ÓÄæ¦ì¨Ï¥Î¤°»ò®æ¦¡
-from	infolog	zt	±q
-high	infolog	zt	°ª
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	zt	<b>é€éç¬¦è™Ÿé€£çµä¾†é™„åŠ æª”æ¡ˆ</b>å–ä»£åŸæœ¬ä¸Šå‚³æª”æ¡ˆçš„æ–¹å¼
+a short subject for the entry	infolog	zt	ä¸€å€‹ç°¡çŸ­çš„ä¸»é¡Œ
+abort without deleting	infolog	zt	å–æ¶ˆåˆªé™¤
+accept	infolog	zt	ç¢ºå®š
+action	infolog	zt	å‹•ä½œ
+add	infolog	zt	æ–°å¢
+add a file	infolog	zt	æ–°å¢æª”æ¡ˆ
+add a new entry	infolog	zt	æ–°å¢å€‹äº‹ä»¶
+add a new note	infolog	zt	æ–°å¢è¨˜äº‹
+add a new phonecall	infolog	zt	æ–°å¢é›»è©±è¯çµ¡æ¸…å–®
+add a new sub-task, -note, -call to this entry	infolog	zt	æ–°å¢ä¸€å€‹é™„å±¬å·¥ä½œã€è¨˜äº‹èˆ‡é€£çµ¡æ¸…å–®åˆ°é€™å€‹äº‹ä»¶
+add a new todo	infolog	zt	æ–°å¢å¾…è¾¦äº‹é …
+add file	infolog	zt	æ–°å¢æª”æ¡ˆ
+add sub	infolog	zt	æ–°å¢å­åˆ†é¡
+add:	infolog	zt	æ–°å¢ï¼š
+all	infolog	zt	å…¨éƒ¨
+all links and attachments	infolog	zt	æ‰€æœ‰çš„é€£çµèˆ‡é™„åŠ æª”æ¡ˆ
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	zt	å…è¨±è¨­å®šäº‹ä»¶çš„ç‹€æ…‹ï¼Œä¾‹å¦‚é€™å€‹äº‹ä»¶å¦‚æœçµæŸå°±å°‡æŒ‡å®šçš„å¾…è¾¦äº‹é …è¨­å®šç‚ºå®Œæˆ(é™„å±¬åœ¨äº‹ä»¶ä¸‹çš„)
+applies the changes	infolog	zt	ç¢ºå®šä¿®æ”¹
+are you shure you want to delete this entry ?	infolog	zt	æ‚¨ç¢ºå®šè¦åˆªé™¤é€™å€‹äº‹ä»¶ï¼Ÿ
+are you sure you want to delete this entry	infolog	zt	æ‚¨ç¢ºå®šè¦åˆªé™¤é€™å€‹äº‹ä»¶
+attach a file	infolog	zt	é™„åŠ ä¸€å€‹æª”æ¡ˆ
+attach file	infolog	zt	é™„åŠ æª”æ¡ˆ
+back to main list	infolog	zt	å›åˆ°ä¸»è¦æ¸…å–®
+back to projectlist	infolog	zt	å›åˆ°å°ˆæ¡ˆæ¸…å–®
+billed	infolog	zt	å·²ä»˜æ¬¾
+both	infolog	zt	çš†
+call	infolog	zt	å‘¼å«
+cancel	infolog	zt	å–æ¶ˆ
+categories	infolog	zt	åˆ†é¡
+category	infolog	zt	é¡åˆ¥
+change the status of an entry, eg. close it	infolog	zt	ä¿®æ”¹è³‡æ–™ç‹€æ…‹ï¼Œä¾‹å¦‚ï¼šé—œé–‰
+charset of file	infolog	zt	æª”æ¡ˆå­—å…ƒç·¨ç¢¼
+check to set startday	infolog	zt	è¨­å®šé–‹å§‹æ—¥æœŸ
+click here to create the link	infolog	zt	é»é¸é€™è£¡ä¾†å»ºç«‹é€£çµ
+click here to start the search	infolog	zt	é»é¸é€™è£¡ä¾†é–‹å§‹æœå°‹
+close	infolog	zt	é—œé–‰
+comment	infolog	zt	å‚™è¨»
+configuration	infolog	zt	è¨­å®š
+confirm	infolog	zt	ç¢ºèª
+contact	infolog	zt	è¯çµ¡
+create new links	infolog	zt	å»ºç«‹æ–°çš„é€£çµ
+creates a new field	infolog	zt	å»ºç«‹æ–°çš„å€åŸŸ
+creates a new status with the given values	infolog	zt	ä½¿ç”¨è¼¸å…¥çš„å€¼ä¾†å»ºç«‹æ–°çš„ç‹€æ…‹
+creates a new typ with the given name	infolog	zt	ä½¿ç”¨è¼¸å…¥çš„åç¨±ä¾†å»ºç«‹æ–°çš„æ ¼å¼
+csv-fieldname	infolog	zt	CSV-æ¬„ä½åç¨±
+csv-filename	infolog	zt	CSV-æª”æ¡ˆåç¨±
+csv-import	common	zt	CSV-åŒ¯å…¥
+custom	infolog	zt	è‡ªè¨‚
+custom contact-address, leave empty to use information from most recent link	infolog	zt	è‡ªè¨‚è¯çµ¡ä½å€ï¼Œå¦‚æœç©ºç™½å°±æœƒä½¿ç”¨æœ€è¿‘é€£çµè³‡è¨Š
+custom contact-information, leave emtpy to use information from most recent link	infolog	zt	è‡ªè¨‚è¯çµ¡è³‡è¨Šï¼Œå¦‚æœç©ºç™½å°±æœƒä½¿ç”¨æœ€è¿‘é€£çµè³‡è¨Š
+custom fields	infolog	zt	è‡ªè¨‚æ¬„ä½
+custom fields, typ and status	common	zt	è‡ªè¨‚æ¬„ä½ã€æ ¼å¼èˆ‡ç‹€æ…‹
+custom regarding	infolog	zt	è‡ªè¨‚é—œæ–¼
+custom status for typ	infolog	zt	è‡ªè¨‚æ ¼å¼çš„ç‹€æ…‹
+customfields	infolog	zt	è‡ªå®šæ¬„ä½
+datecreated	infolog	zt	å»ºç«‹æ—¥æœŸ
+dates, status, access	infolog	zt	æ—¥æœŸã€ç‹€æ…‹ã€å­˜å–
+days	infolog	zt	æ—¥
+default filter for infolog	infolog	zt	äº‹ä»¶ç´€éŒ„çš„é è¨­éæ¿¾æ–¹å¼
+default status for a new log entry	infolog	zt	äº‹ä»¶ç´€éŒ„çš„é è¨­ç‹€æ…‹
+delegation	infolog	zt	æˆæ¬Š
+delete	infolog	zt	åˆªé™¤
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	zt	åˆªé™¤æ‰€æœ‰é™„å±¬çš„
+delete the entry	infolog	zt	åˆªé™¤é€™å€‹äº‹ä»¶
+delete this entry	infolog	zt	åˆªé™¤é€™å€‹äº‹ä»¶
+deletes the selected typ	infolog	zt	åˆªé™¤é€™å€‹æ ¼å¼
+deletes this field	infolog	zt	åˆªé™¤é€™å€‹æ¬„ä½
+deletes this status	infolog	zt	åˆªé™¤é€™å€‹ç‹€æ…‹
+description	infolog	zt	æè¿°
+description can not exceed 8000 characters in length	infolog	zt	æè¿°ä¸­ä½¿ç”¨çš„å­—å…ƒä¸èƒ½è¶…é8000
+determines the order the fields are displayed	infolog	zt	æ±ºå®šé¡¯ç¤ºçš„é †åºèˆ‡æ¬„ä½
+disables a status without deleting it	infolog	zt	åœç”¨ä¸€å€‹ç‹€æ…‹è€Œä¸æ˜¯åˆªé™¤
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	zt	æ‚¨å¸Œæœ›åšå†æ¬¡çš„ç¢ºèªåœ¨ï¼šåŒæ„ï¼Œå·¥ä½œå®Œæˆæˆ–æ˜¯å…©è€…éƒ½è¦
+done	infolog	zt	å®Œæˆ
+download	infolog	zt	ä¸‹è¼‰
+duration	infolog	zt	é€²è¡ŒæœŸé–“
+each value is a line like <id>[=<label>]	infolog	zt	æ¯å€‹å€¼éƒ½æ˜¯é€™æ¨£çš„ç·š <id>[=<label>]
+edit	infolog	zt	ç·¨è¼¯
+edit or create categories for ingolog	infolog	zt	ç·¨è¼¯æˆ–å»ºç«‹è¨Šæ¯ç´€éŒ„çš„é¡åˆ¥
+edit status	infolog	zt	ç·¨è¼¯ç‹€æ…‹
+edit the entry	infolog	zt	ç·¨è¼¯é€™å€‹äº‹ä»¶
+edit this entry	infolog	zt	ç·¨è¼¯é€™å€‹äº‹ä»¶
+empty for all	infolog	zt	å…¨éƒ¨ç©ºç™½
+enddate	infolog	zt	çµæŸæ—¥æœŸ
+enddate can not be before startdate	infolog	zt	çµæŸæ—¥æœŸä¸æ‡‰è©²åœ¨é–‹å§‹æ—¥æœŸä¹‹å‰
+enter a custom contact, leave empty if linked entry should be used	infolog	zt	è¼¸å…¥ä¸€å€‹è‡ªè¨‚çš„è¯çµ¡äººï¼Œå¦‚æœé€£çµçš„äº‹ä»¶å¿…é ˆä½¿ç”¨å°±è«‹ä¿æŒç©ºç™½
+enter a custom phone/email, leave empty if linked entry should be used	infolog	zt	è¼¸å…¥ä¸€å€‹è‡ªè¨‚çš„é›»è©±/emailï¼Œå¦‚æœé€£çµçš„äº‹ä»¶å¿…é ˆä½¿ç”¨å°±è«‹ä¿æŒç©ºç™½
+enter a textual description of the log-entry	infolog	zt	è¼¸å…¥äº‹ä»¶ç´€éŒ„çš„åŸå§‹æè¿°
+enter the query pattern	infolog	zt	è¼¸å…¥æŸ¥è©¢çš„æ–¹å¼
+entry and all files	infolog	zt	äº‹ä»¶èˆ‡æ‰€æœ‰æª”æ¡ˆ
+existing links	infolog	zt	å·²ç¶“å­˜åœ¨çš„é€£çµ
+fax	infolog	zt	å‚³çœŸ
+fieldseparator	infolog	zt	æ¬„ä½åˆ†éš”å­—å…ƒ
+finish	infolog	zt	å®Œæˆ
+for which types should this field be used	infolog	zt	é€™å€‹æ¬„ä½ä½¿ç”¨ä»€éº¼æ ¼å¼
+from	infolog	zt	å¾
+high	infolog	zt	é«˜
 id	infolog	zt	ID
-import	infolog	zt	¶×¤J
-import next set	infolog	zt	¶×¤J¤U¤@²Õ
-info log	common	zt	¨Æ¥ó¬ö¿ıÃ¯
-infolog	common	zt	¨Æ¥ó¬ö¿ıÃ¯
-infolog - delete	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - §R°£
-infolog - edit	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - ½s¿è
-infolog - import csv-file	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - ¶×¤JCSVÀÉ®×
-infolog - new	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - ·s¼W
-infolog - new subproject	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - ·s¼WªşÄİ±M®×
-infolog - subprojects from	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - ªşÄİ±M®×¦Û
-infolog list	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯²M³æ
-infolog preferences	common	zt	¨Æ¥ó¬ö¿ıÃ¯³]©w
-infolog-fieldname	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯ - Äæ¦ì¦WºÙ
-invalid filename	infolog	zt	¿ù»~ªºÀÉ®×¦WºÙ
-label<br>helptext	infolog	zt	¼ĞÅÒ<br>»¡©ú¤å¦r
-last changed	infolog	zt	³Ì«á­×§ï
-last modified	infolog	zt	³Ì«á­×§ï
-leave without saveing the entry	infolog	zt	Â÷¶}¨Ã¥B¤£­nÀx¦s³o­Ó¨Æ¥ó
-leaves without saveing	infolog	zt	Â÷¶}¨Ã¥B¤£­nÀx¦s
-length<br>rows	infolog	zt	ªø«×<br>¦C
-link	infolog	zt	³sµ²
-links	infolog	zt	³sµ²
-links of this entry	infolog	zt	³o­Ó¨Æ¥óªº³sµ²
-list no subs/childs	infolog	zt	¤£­n¦C¥XªşÄİ¸ê°T
-longer textual description	infolog	zt	¸ûªøªº­ì¤å´y­z
-low	infolog	zt	§C
-max length of the input [, length of the inputfield (optional)]	infolog	zt	³Ì¤j¿é¤Jªø«×[, ¿é¤JÄæ¦ìªø«× (¿ï¶ñ)]
-max number of entries to display on the main screen	infolog	zt	¥D­nµe­±Åã¥Ü¸ê®Æµ§¼Æ¤W­­
-name must not be empty !!!	infolog	zt	¦WºÙ¤£¯àªÅ¥Õ¡I
-name of new type to create	infolog	zt	«Ø¥ß·sªº®æ¦¡¦WºÙ
-new name	infolog	zt	·sªº¦WºÙ
-new search	infolog	zt	·sªº·j´M
-no - cancel	infolog	zt	§_ - ¨ú®ø
-no entries found, try again ...	infolog	zt	¨S¦³§ä¨ì¥ô¦ó¨Æ¥ó¡A½Ğ­«·s¹Á¸Õ...
-no filter	infolog	zt	¨S¦³¹LÂo³W«h
-no links or attachments	infolog	zt	¨S¦³³sµ²©Îªş¥[ÀÉ®×
-none	infolog	zt	µL
-normal	infolog	zt	¤@¯ë
-not	infolog	zt	§_
-not assigned	infolog	zt	¤£«ü©w
-note	infolog	zt	°O¨Æ
-number of records to read (%1)	infolog	zt	Åª¨úªº¸ê®Æµ§¼Æ(%1)
-number of records to read (<=200)	infolog	zt	Åª¨úªº¸ê®Æµ§¼Æ(<=200)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	zt	¿é¤JÄæ¦ì©Î¬O¤U©Ô¦¡¿ï³æªº¼Æ¶q
-offer	infolog	zt	´£¨Ñ
-ongoing	infolog	zt	¤£¶¡Â_ªº
-only the attachments	infolog	zt	¥u¦³ªş¥[ÀÉ®×
-only the links	infolog	zt	¥u¦³³sµ²
-only up to this number of entries are displayed on the main screen.	infolog	zt	¥D­nµøµ¡³Ì¦h¥u·|Åã¥Ü³o­Ó¼Æ¶qªº¸ê®Æ
-open	infolog	zt	¶}±Ò
-optional note to the link	infolog	zt	³sµ²ªºªş¥[»¡©ú
-order	infolog	zt	¶¶§Ç
-overdue	infolog	zt	¹L´Áªº
-own	infolog	zt	¦Û¤vªº
-own open	infolog	zt	¶}±Ò¦Û¤vªº
-own overdue	infolog	zt	¦Û¤vªº¹L´Á
-own upcoming	infolog	zt	¦Û¤vªº§Y±N¨ÓÁ{
-owner	infolog	zt	¾Ö¦³ªÌ
-owner responsible	infolog	zt	­t³d¤H
-path on (web-)serverside<br>eg. /var/samba/share	infolog	zt	¦øªA¾¹(ºô¯¸-)¸ô®|<br>¨Ò¦p/var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	zt	¨Ï¥ÎªÌ»P¸s²ÕÀÉ®×¸ô®|¥²¶·¦bºô¯¸¦øªA¾¹ªººô­¶®Ú¥Ø¿ı¤§¥~¡I
-pattern for search in addressbook	infolog	zt	·j´M³q°T¿ıªº±ø¥ó
-pattern for search in projects	infolog	zt	·j´M±M®×ªº±ø¥ó
-phone	infolog	zt	Ápµ¸²M³æ
-phone/email	infolog	zt	¹q¸Ü/Email
-phonecall	infolog	zt	Ápµ¸²M³æ
-priority	infolog	zt	Àu¥ıÅv
-private	infolog	zt	¨p¤Hªº
-project	infolog	zt	±M®×
-re:	infolog	zt	¦^ÂĞ¡G
+import	infolog	zt	åŒ¯å…¥
+import next set	infolog	zt	åŒ¯å…¥ä¸‹ä¸€çµ„
+info log	common	zt	äº‹ä»¶ç´€éŒ„ç°¿
+infolog	common	zt	äº‹ä»¶ç´€éŒ„ç°¿
+infolog - delete	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - åˆªé™¤
+infolog - edit	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - ç·¨è¼¯
+infolog - import csv-file	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - åŒ¯å…¥CSVæª”æ¡ˆ
+infolog - new	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - æ–°å¢
+infolog - new subproject	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - æ–°å¢é™„å±¬å°ˆæ¡ˆ
+infolog - subprojects from	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - é™„å±¬å°ˆæ¡ˆè‡ª
+infolog list	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿æ¸…å–®
+infolog preferences	common	zt	äº‹ä»¶ç´€éŒ„ç°¿è¨­å®š
+infolog-fieldname	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ - æ¬„ä½åç¨±
+invalid filename	infolog	zt	éŒ¯èª¤çš„æª”æ¡ˆåç¨±
+label<br>helptext	infolog	zt	æ¨™ç±¤<br>èªªæ˜æ–‡å­—
+last changed	infolog	zt	æœ€å¾Œä¿®æ”¹
+last modified	infolog	zt	æœ€å¾Œä¿®æ”¹
+leave without saveing the entry	infolog	zt	é›¢é–‹ä¸¦ä¸”ä¸è¦å„²å­˜é€™å€‹äº‹ä»¶
+leaves without saveing	infolog	zt	é›¢é–‹ä¸¦ä¸”ä¸è¦å„²å­˜
+length<br>rows	infolog	zt	é•·åº¦<br>åˆ—
+link	infolog	zt	é€£çµ
+links	infolog	zt	é€£çµ
+links of this entry	infolog	zt	é€™å€‹äº‹ä»¶çš„é€£çµ
+list no subs/childs	infolog	zt	ä¸è¦åˆ—å‡ºé™„å±¬è³‡è¨Š
+longer textual description	infolog	zt	è¼ƒé•·çš„åŸæ–‡æè¿°
+low	infolog	zt	ä½
+max length of the input [, length of the inputfield (optional)]	infolog	zt	æœ€å¤§è¼¸å…¥é•·åº¦[, è¼¸å…¥æ¬„ä½é•·åº¦ (é¸å¡«)]
+max number of entries to display on the main screen	infolog	zt	ä¸»è¦ç•«é¢é¡¯ç¤ºè³‡æ–™ç­†æ•¸ä¸Šé™
+name must not be empty !!!	infolog	zt	åç¨±ä¸èƒ½ç©ºç™½ï¼
+name of new type to create	infolog	zt	å»ºç«‹æ–°çš„æ ¼å¼åç¨±
+new name	infolog	zt	æ–°çš„åç¨±
+new search	infolog	zt	æ–°çš„æœå°‹
+no - cancel	infolog	zt	å¦ - å–æ¶ˆ
+no entries found, try again ...	infolog	zt	æ²’æœ‰æ‰¾åˆ°ä»»ä½•äº‹ä»¶ï¼Œè«‹é‡æ–°å˜—è©¦...
+no filter	infolog	zt	æ²’æœ‰éæ¿¾è¦å‰‡
+no links or attachments	infolog	zt	æ²’æœ‰é€£çµæˆ–é™„åŠ æª”æ¡ˆ
+none	infolog	zt	ç„¡
+normal	infolog	zt	ä¸€èˆ¬
+not	infolog	zt	å¦
+not assigned	infolog	zt	ä¸æŒ‡å®š
+note	infolog	zt	è¨˜äº‹
+number of records to read (%1)	infolog	zt	è®€å–çš„è³‡æ–™ç­†æ•¸(%1)
+number of records to read (<=200)	infolog	zt	è®€å–çš„è³‡æ–™ç­†æ•¸(<=200)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	zt	è¼¸å…¥æ¬„ä½æˆ–æ˜¯ä¸‹æ‹‰å¼é¸å–®çš„æ•¸é‡
+offer	infolog	zt	æä¾›
+ongoing	infolog	zt	ä¸é–“æ–·çš„
+only the attachments	infolog	zt	åªæœ‰é™„åŠ æª”æ¡ˆ
+only the links	infolog	zt	åªæœ‰é€£çµ
+only up to this number of entries are displayed on the main screen.	infolog	zt	ä¸»è¦è¦–çª—æœ€å¤šåªæœƒé¡¯ç¤ºé€™å€‹æ•¸é‡çš„è³‡æ–™
+open	infolog	zt	é–‹å•Ÿ
+optional note to the link	infolog	zt	é€£çµçš„é™„åŠ èªªæ˜
+order	infolog	zt	é †åº
+overdue	infolog	zt	éæœŸçš„
+own	infolog	zt	è‡ªå·±çš„
+own open	infolog	zt	é–‹å•Ÿè‡ªå·±çš„
+own overdue	infolog	zt	è‡ªå·±çš„éæœŸ
+own upcoming	infolog	zt	è‡ªå·±çš„å³å°‡ä¾†è‡¨
+owner	infolog	zt	æ“æœ‰è€…
+owner responsible	infolog	zt	è² è²¬äºº
+path on (web-)serverside<br>eg. /var/samba/share	infolog	zt	ä¼ºæœå™¨(ç¶²ç«™-)è·¯å¾‘<br>ä¾‹å¦‚/var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	zt	ä½¿ç”¨è€…èˆ‡ç¾¤çµ„æª”æ¡ˆè·¯å¾‘å¿…é ˆåœ¨ç¶²ç«™ä¼ºæœå™¨çš„ç¶²é æ ¹ç›®éŒ„ä¹‹å¤–ï¼
+pattern for search in addressbook	infolog	zt	æœå°‹é€šè¨ŠéŒ„çš„æ¢ä»¶
+pattern for search in projects	infolog	zt	æœå°‹å°ˆæ¡ˆçš„æ¢ä»¶
+phone	infolog	zt	è¯çµ¡æ¸…å–®
+phone/email	infolog	zt	é›»è©±/Email
+phonecall	infolog	zt	è¯çµ¡æ¸…å–®
+priority	infolog	zt	å„ªå…ˆæ¬Š
+private	infolog	zt	ç§äººçš„
+project	infolog	zt	å°ˆæ¡ˆ
+re:	infolog	zt	å›è¦†ï¼š
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zt	
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zt	¥»¦aºİIPªº¹LÂo³W«h<br>¨Ò¦p^192\.168\.1\.
-remark	infolog	zt	¼Ğµù
-remove this link (not the entry itself)	infolog	zt	²¾°£³o­Ó³sµ²(¤£¬O¥¦ªº¸ê®Æ)
-responsible	infolog	zt	­t³d¤H
-responsible user, priority, ...	infolog	zt	­t³d¤H¡BÅv­­¡B...
-save	infolog	zt	Àx¦s
-saves the changes made and leaves	infolog	zt	Àx¦s«áÂ÷¶}
-saves this entry	infolog	zt	Àx¦s³o­Ó¨Æ¥ó
-search	infolog	zt	·j´M
-search for:	infolog	zt	·j´M¡G
-select	infolog	zt	¿ï¾Ü
-select a category for this entry	infolog	zt	¿ï¾Ü³o­Ó¨Æ¥óªºÃş§O
-select a priority for this task	infolog	zt	¿ï¾Ü³o­Ó¥ô°ÈªºÀu¥ıÅv
-select a responsible user: a person you want to delegate this task	infolog	zt	¿ï¾Ü­t³d¤H¡G³o­Ó¥ô°Èªº¥Nªí¤H
-select a typ to edit it's status-values or delete it	infolog	zt	¿ï¾Ü¤@­Ó®æ¦¡¨Ó½s¿è¥¦ªºª¬ºA©Î¬O±N¥¦§R°£
-select an app to search in	infolog	zt	¿ï¾Ü­n·j´MªºÀ³¥Îµ{¦¡
-select an entry to link with	infolog	zt	¿ï¾Ü­n³sµ²ªº¨Æ¥ó
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯»İ­n¦b¥D­nµe­±Åã¥Ü±zªº¶}±Ò¨Æ¥ó(¥¼§¹¦¨¤u§@¡AÁpµ¸²M³æ©Î¬O°O¨Æ)¶Ü¡H³o­Ó¥\¯à¥u¦³¦b±zÁÙ¨S³]©w¥D­nµe­±ªºÀ³¥Îµ{¦¡«e¤~¦³®Ä¡C
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯»İ­n¦b¤@¯ëÂsÄı¤¤Åã¥ÜªşÄİ¥ô°È¡AÁpµ¸²M³æ©Î¬O°O¨Æ¶Ü¡H±z¥i¥H¦b­ì©l¨Æ¥ó¤¤¬İ¨ìªşÄİªº¸ê°T¡C
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯»İ­nÅã¥Ü¨ä¥LÀ³¥Îµ{¦¡ªº³sµ²¥H¤Î/©Î¨Æ¥ó¬ö¿ı²M³æªºªş¥[ÀÉ®×(·í±z¶i¤J¨Æ¥ó¬ö¿ıÃ¯®Éªº¤@¯ëÀËµø)¡H
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	zt	¨Æ¥ó¬ö¿ıÃ¯¨Ï¥Î¥ş¦W©Î¬Oµn¤J¦WºÙ¡H
-should this entry only be visible to you and people you grant privat access via the acl	infolog	zt	³o­Ó¨Æ¥ó¥u¤¹³\±z¥H¤Î±z±qACL¨ú±o¦s¨úÅv­­ªº¤H¡H
-show full usernames	infolog	zt	Åã¥Ü§¹¾ãªº¨Ï¥ÎªÌ©m¦W
-show in the infolog list	infolog	zt	¦b¨Æ¥ó¬ö¿ı²M³æ¤¤Åã¥Ü
-show list of upcoming entries	infolog	zt	Åã¥Ü©Ò¦³§Y±N¨ì¨Óªº°O¿ı
-show open entries: tasks/calls/notes on main screen	infolog	zt	¦b¥D­nµe­±¤¤Åã¥Ü¶}±Òªº¨Æ¥ó¡G¤u§@/Ápµ¸²M³æ/°O¨Æ
-small view	infolog	zt	ÁY¤p
-start a new search, cancel this link	infolog	zt	¶}±Ò¤@­Ó·sªº·j´M¨Ã¥B¨ú®ø³o­Ó³sµ²
-startdate	infolog	zt	¶}©l¤é´Á
-startdate enddate	infolog	zt	¶}©l¤é´Á µ²§ô¤é´Á
-startrecord	infolog	zt	¶}©l¬ö¿ı
-status	infolog	zt	ª¬ºA
-status ...	infolog	zt	ª¬ºA...
-sub	infolog	zt	ªşÄİ
-subject	infolog	zt	¥DÃD
-task	infolog	zt	«İ¿ì¨Æ¶µ
-test import (show importable records <u>only</u> in browser)	infolog	zt	´ú¸Õ¶×¤J(<u>¥u¦b</u>ÂsÄı¾¹¤¤Åã¥Ü¥i¥H¶×¤Jªº¸ê®Æ)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	zt	¤º³¡¨Ï¥Î¦WºÙ(<=32¦r¤¸)¡A§ïÅÜ¥¦±N³y¦¨¤w¸g¦s¦bªº¸ê®ÆµLªk¨Ï¥Î
-the text displayed to the user	infolog	zt	µ¹¨Ï¥ÎªÌªº°T®§
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zt	³o¬O¨Æ¥ó¬ö¿ıÃ¯¦b±z¶i¤J³o­ÓÀ³¥Îµ{¦¡®É¨Ï¥Îªº¹LÂo¤è¦¡¡A¹LÂo¤è¦¡±N·|­­¨î¹ê»ÚÂsÄıªº¨Æ¥ó¡C¹LÂo¤è¦¡¥i¥H¨M©w±z¦Û¤v©Î¬O©Ò¦³¨Ï¥ÎªÌ"¤w¸g§¹¦¨ªº"¡A"¶i¦æ¤¤"©Î¬O"¥¼¨Óªº¨Æ¥ó"
-til when should the todo or phonecall be finished	infolog	zt	«İ¿ì¨Æ¶µ©Î¬OÁpµ¸²M³æÀ³¸Ó§¹¦¨ªº®É¶¡
-to many might exceed your execution-time-limit	infolog	zt	¶W¹L¤Fµ{¦¡°õ¦æ®É¶¡
-today	infolog	zt	¤µ¤Ñ
-todo	infolog	zt	«İ¿ì¨Æ¶µ
-translation	infolog	zt	Â½Ä¶
-typ	infolog	zt	®æ¦¡
-typ '%1' already exists !!!	infolog	zt	'%1' ®æ¦¡¤w¸g¦s¦b¡I
-type	infolog	zt	®æ¦¡
-type ...	infolog	zt	®æ¦¡ ...
-type of the log-entry: note, phonecall or todo	infolog	zt	¬ö¿ıÃ¯ªº®æ¦¡¡G°O¨Æ¡BÁpµ¸²M³æ©Î¬O«İ¿ì¨Æ¶µ
-unlink	infolog	zt	§R°£
-upcoming	infolog	zt	§Y±N¨ì¨Ó
-urgency	infolog	zt	ºò«æ
-urgent	infolog	zt	ºò«æªº
-use button to search for address	infolog	zt	¨Ï¥Î«ö¶s·j´M³q°T¿ı
-use button to search for project	infolog	zt	¨Ï¥Î«ö¶s·j´M±M®×
-valid path on clientside<br>eg. \\server\share or e:\	infolog	zt	¥Î¤áºİ¥i¥Îªº¸ô®|<br>¨Ò¦p\\Server\Share ©Î¬O e:\
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zt	æœ¬åœ°ç«¯IPçš„éæ¿¾è¦å‰‡<br>ä¾‹å¦‚^192\.168\.1\.
+remark	infolog	zt	æ¨™è¨»
+remove this link (not the entry itself)	infolog	zt	ç§»é™¤é€™å€‹é€£çµ(ä¸æ˜¯å®ƒçš„è³‡æ–™)
+responsible	infolog	zt	è² è²¬äºº
+responsible user, priority, ...	infolog	zt	è² è²¬äººã€æ¬Šé™ã€...
+save	infolog	zt	å„²å­˜
+saves the changes made and leaves	infolog	zt	å„²å­˜å¾Œé›¢é–‹
+saves this entry	infolog	zt	å„²å­˜é€™å€‹äº‹ä»¶
+search	infolog	zt	æœå°‹
+search for:	infolog	zt	æœå°‹ï¼š
+select	infolog	zt	é¸æ“‡
+select a category for this entry	infolog	zt	é¸æ“‡é€™å€‹äº‹ä»¶çš„é¡åˆ¥
+select a priority for this task	infolog	zt	é¸æ“‡é€™å€‹ä»»å‹™çš„å„ªå…ˆæ¬Š
+select a responsible user: a person you want to delegate this task	infolog	zt	é¸æ“‡è² è²¬äººï¼šé€™å€‹ä»»å‹™çš„ä»£è¡¨äºº
+select a typ to edit it's status-values or delete it	infolog	zt	é¸æ“‡ä¸€å€‹æ ¼å¼ä¾†ç·¨è¼¯å®ƒçš„ç‹€æ…‹æˆ–æ˜¯å°‡å®ƒåˆªé™¤
+select an app to search in	infolog	zt	é¸æ“‡è¦æœå°‹çš„æ‡‰ç”¨ç¨‹å¼
+select an entry to link with	infolog	zt	é¸æ“‡è¦é€£çµçš„äº‹ä»¶
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿éœ€è¦åœ¨ä¸»è¦ç•«é¢é¡¯ç¤ºæ‚¨çš„é–‹å•Ÿäº‹ä»¶(æœªå®Œæˆå·¥ä½œï¼Œè¯çµ¡æ¸…å–®æˆ–æ˜¯è¨˜äº‹)å—ï¼Ÿé€™å€‹åŠŸèƒ½åªæœ‰åœ¨æ‚¨é‚„æ²’è¨­å®šä¸»è¦ç•«é¢çš„æ‡‰ç”¨ç¨‹å¼å‰æ‰æœ‰æ•ˆã€‚
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿éœ€è¦åœ¨ä¸€èˆ¬ç€è¦½ä¸­é¡¯ç¤ºé™„å±¬ä»»å‹™ï¼Œè¯çµ¡æ¸…å–®æˆ–æ˜¯è¨˜äº‹å—ï¼Ÿæ‚¨å¯ä»¥åœ¨åŸå§‹äº‹ä»¶ä¸­çœ‹åˆ°é™„å±¬çš„è³‡è¨Šã€‚
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿éœ€è¦é¡¯ç¤ºå…¶ä»–æ‡‰ç”¨ç¨‹å¼çš„é€£çµä»¥åŠ/æˆ–äº‹ä»¶ç´€éŒ„æ¸…å–®çš„é™„åŠ æª”æ¡ˆ(ç•¶æ‚¨é€²å…¥äº‹ä»¶ç´€éŒ„ç°¿æ™‚çš„ä¸€èˆ¬æª¢è¦–)ï¼Ÿ
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	zt	äº‹ä»¶ç´€éŒ„ç°¿ä½¿ç”¨å…¨åæˆ–æ˜¯ç™»å…¥åç¨±ï¼Ÿ
+should this entry only be visible to you and people you grant privat access via the acl	infolog	zt	é€™å€‹äº‹ä»¶åªå…è¨±æ‚¨ä»¥åŠæ‚¨å¾ACLå–å¾—å­˜å–æ¬Šé™çš„äººï¼Ÿ
+show full usernames	infolog	zt	é¡¯ç¤ºå®Œæ•´çš„ä½¿ç”¨è€…å§“å
+show in the infolog list	infolog	zt	åœ¨äº‹ä»¶ç´€éŒ„æ¸…å–®ä¸­é¡¯ç¤º
+show list of upcoming entries	infolog	zt	é¡¯ç¤ºæ‰€æœ‰å³å°‡åˆ°ä¾†çš„è¨˜éŒ„
+show open entries: tasks/calls/notes on main screen	infolog	zt	åœ¨ä¸»è¦ç•«é¢ä¸­é¡¯ç¤ºé–‹å•Ÿçš„äº‹ä»¶ï¼šå·¥ä½œ/è¯çµ¡æ¸…å–®/è¨˜äº‹
+small view	infolog	zt	ç¸®å°
+start a new search, cancel this link	infolog	zt	é–‹å•Ÿä¸€å€‹æ–°çš„æœå°‹ä¸¦ä¸”å–æ¶ˆé€™å€‹é€£çµ
+startdate	infolog	zt	é–‹å§‹æ—¥æœŸ
+startdate enddate	infolog	zt	é–‹å§‹æ—¥æœŸ çµæŸæ—¥æœŸ
+startrecord	infolog	zt	é–‹å§‹ç´€éŒ„
+status	infolog	zt	ç‹€æ…‹
+status ...	infolog	zt	ç‹€æ…‹...
+sub	infolog	zt	é™„å±¬
+subject	infolog	zt	ä¸»é¡Œ
+task	infolog	zt	å¾…è¾¦äº‹é …
+test import (show importable records <u>only</u> in browser)	infolog	zt	æ¸¬è©¦åŒ¯å…¥(<u>åªåœ¨</u>ç€è¦½å™¨ä¸­é¡¯ç¤ºå¯ä»¥åŒ¯å…¥çš„è³‡æ–™)
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	zt	å…§éƒ¨ä½¿ç”¨åç¨±(<=32å­—å…ƒ)ï¼Œæ”¹è®Šå®ƒå°‡é€ æˆå·²ç¶“å­˜åœ¨çš„è³‡æ–™ç„¡æ³•ä½¿ç”¨
+the text displayed to the user	infolog	zt	çµ¦ä½¿ç”¨è€…çš„è¨Šæ¯
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zt	é€™æ˜¯äº‹ä»¶ç´€éŒ„ç°¿åœ¨æ‚¨é€²å…¥é€™å€‹æ‡‰ç”¨ç¨‹å¼æ™‚ä½¿ç”¨çš„éæ¿¾æ–¹å¼ï¼Œéæ¿¾æ–¹å¼å°‡æœƒé™åˆ¶å¯¦éš›ç€è¦½çš„äº‹ä»¶ã€‚éæ¿¾æ–¹å¼å¯ä»¥æ±ºå®šæ‚¨è‡ªå·±æˆ–æ˜¯æ‰€æœ‰ä½¿ç”¨è€…"å·²ç¶“å®Œæˆçš„"ï¼Œ"é€²è¡Œä¸­"æˆ–æ˜¯"æœªä¾†çš„äº‹ä»¶"
+til when should the todo or phonecall be finished	infolog	zt	å¾…è¾¦äº‹é …æˆ–æ˜¯è¯çµ¡æ¸…å–®æ‡‰è©²å®Œæˆçš„æ™‚é–“
+to many might exceed your execution-time-limit	infolog	zt	è¶…éäº†ç¨‹å¼åŸ·è¡Œæ™‚é–“
+today	infolog	zt	ä»Šå¤©
+todo	infolog	zt	å¾…è¾¦äº‹é …
+translation	infolog	zt	ç¿»è­¯
+typ	infolog	zt	æ ¼å¼
+typ '%1' already exists !!!	infolog	zt	'%1' æ ¼å¼å·²ç¶“å­˜åœ¨ï¼
+type	infolog	zt	æ ¼å¼
+type ...	infolog	zt	æ ¼å¼ ...
+type of the log-entry: note, phonecall or todo	infolog	zt	ç´€éŒ„ç°¿çš„æ ¼å¼ï¼šè¨˜äº‹ã€è¯çµ¡æ¸…å–®æˆ–æ˜¯å¾…è¾¦äº‹é …
+unlink	infolog	zt	åˆªé™¤
+upcoming	infolog	zt	å³å°‡åˆ°ä¾†
+urgency	infolog	zt	ç·Šæ€¥
+urgent	infolog	zt	ç·Šæ€¥çš„
+use button to search for address	infolog	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹é€šè¨ŠéŒ„
+use button to search for project	infolog	zt	ä½¿ç”¨æŒ‰éˆ•æœå°‹å°ˆæ¡ˆ
+valid path on clientside<br>eg. \\server\share or e:\	infolog	zt	ç”¨æˆ¶ç«¯å¯ç”¨çš„è·¯å¾‘<br>ä¾‹å¦‚\\Server\Share æˆ–æ˜¯ e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	zt	
 valid path on clientside<br>eg. servershare or e:	infolog	zt	
-values for selectbox	infolog	zt	¿ï³æªº­È
-view all subs of this entry	infolog	zt	Åã¥Ü³o­Ó¨Æ¥óªº©Ò¦³ªşÄİ¸ê°T
-view other subs	infolog	zt	Åã¥Ü¨ä¥LªşÄİ¸ê°T
-view parent	infolog	zt	Åã¥Ü¥D­nªº
-view subs	infolog	zt	Åã¥ÜªşÄİªº
-view the parent of this entry and all his subs	infolog	zt	Åã¥Ü³o­Ó¨Æ¥óªº¥D­n»P©Ò¦³ªşÄİ¨Æ¥ó
-view this linked entry in its application	infolog	zt	¦bÀ³¥Îµ{¦¡¤¤Åã¥Ü³o­Ó³Q³sµ²ªº¨Æ¥ó
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zt	«İ¿ì¨Æ¶µ©Î¬OÁpµ¸²M³æÀ³¸Ó¶}©lªº®É¶¡¡H·í¹LÂo±ø¥ó¬°"©Ò¦³¥¼§¹¦¨"©Î¬O"¦Û¤v¥¼§¹¦¨"®ÉÅã¥Ü¦b¶}©l­¶­±¡C
-will-call	infolog	zt	±N³sµ¸
-yes - delete	infolog	zt	½T©w - §R°£
-you can't delete one of the stock types !!!	infolog	zt	±z¤£¯à§R°£ªÑ²¼ªººØÃş¡I
-you have entered an invalid ending date	infolog	zt	±z¿é¤J¤F¿ù»~ªºµ²§ô¤é´Á
-you have entered an invalid starting date	infolog	zt	±z¿é¤J¤F¿ù»~ªº¶}©l¤é´Á
-you have to enter a name, to create a new typ!!!	infolog	zt	±z¥²¶·¿é¤J¤@­Ó¦WºÙ¨Ó«Ø¥ß¤@­Ó·sªº®æ¦¡¡I
-you must enter a subject or a description	infolog	zt	±z¥²¶·¿é¤J¥DÃD©Î¬O´y­z
+values for selectbox	infolog	zt	é¸å–®çš„å€¼
+view all subs of this entry	infolog	zt	é¡¯ç¤ºé€™å€‹äº‹ä»¶çš„æ‰€æœ‰é™„å±¬è³‡è¨Š
+view other subs	infolog	zt	é¡¯ç¤ºå…¶ä»–é™„å±¬è³‡è¨Š
+view parent	infolog	zt	é¡¯ç¤ºä¸»è¦çš„
+view subs	infolog	zt	é¡¯ç¤ºé™„å±¬çš„
+view the parent of this entry and all his subs	infolog	zt	é¡¯ç¤ºé€™å€‹äº‹ä»¶çš„ä¸»è¦èˆ‡æ‰€æœ‰é™„å±¬äº‹ä»¶
+view this linked entry in its application	infolog	zt	åœ¨æ‡‰ç”¨ç¨‹å¼ä¸­é¡¯ç¤ºé€™å€‹è¢«é€£çµçš„äº‹ä»¶
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zt	å¾…è¾¦äº‹é …æˆ–æ˜¯è¯çµ¡æ¸…å–®æ‡‰è©²é–‹å§‹çš„æ™‚é–“ï¼Ÿç•¶éæ¿¾æ¢ä»¶ç‚º"æ‰€æœ‰æœªå®Œæˆ"æˆ–æ˜¯"è‡ªå·±æœªå®Œæˆ"æ™‚é¡¯ç¤ºåœ¨é–‹å§‹é é¢ã€‚
+will-call	infolog	zt	å°‡é€£çµ¡
+yes - delete	infolog	zt	ç¢ºå®š - åˆªé™¤
+you can't delete one of the stock types !!!	infolog	zt	æ‚¨ä¸èƒ½åˆªé™¤è‚¡ç¥¨çš„ç¨®é¡ï¼
+you have entered an invalid ending date	infolog	zt	æ‚¨è¼¸å…¥äº†éŒ¯èª¤çš„çµæŸæ—¥æœŸ
+you have entered an invalid starting date	infolog	zt	æ‚¨è¼¸å…¥äº†éŒ¯èª¤çš„é–‹å§‹æ—¥æœŸ
+you have to enter a name, to create a new typ!!!	infolog	zt	æ‚¨å¿…é ˆè¼¸å…¥ä¸€å€‹åç¨±ä¾†å»ºç«‹ä¸€å€‹æ–°çš„æ ¼å¼ï¼
+you must enter a subject or a description	infolog	zt	æ‚¨å¿…é ˆè¼¸å…¥ä¸»é¡Œæˆ–æ˜¯æè¿°

@@ -1,101 +1,101 @@
-%1 already exists as a file	filemanager	zt	%1 ÀÉ®×¤w¸g¦s¦b
-application	filemanager	zt	À³¥Îµ{¦¡
-back to file manager	filemanager	zt	¦^¨ìÀÉ®×ºŞ²z­û
-cannot create directory because it begins or ends in a space	filemanager	zt	¸ê®Æ§¨¦WºÙ¥]§tªÅ¥Õ¦r¤¸¡AµLªk«Ø¥ß¸ê®Æ§¨
-cannot replace %1 because it is a directory	filemanager	zt	µLªk¸m´«%1¡A¦]¬°¥¦¬O¤@­Ó¸ê®Æ§¨
-command sucessfully run	filemanager	zt	«ü¥O°õ¦æ§¹¦¨
-comment	filemanager	zt	³Æµù
-comments cannot contain "%1"	filemanager	zt	³Æµù¤£¯à¥]§t "%1"
-copied %1 to %2	filemanager	zt	½Æ»s %1 ¨ì %2
-copy to	filemanager	zt	½Æ»s¨ì
-copy to:	filemanager	zt	½Æ»s¨ì¡G
-could not copy %1 to %2	filemanager	zt	µLªk½Æ»s %1 ¨ì %2
-could not create %1	filemanager	zt	µLªk«Ø¥ß%1
-could not create directory %1	filemanager	zt	µLªk«Ø¥ß¸ê®Æ§¨%1
-could not delete %1	filemanager	zt	µLªk§R°£%1
-could not move %1 to %2	filemanager	zt	µLªk·h²¾%1¨ì%2
-could not rename %1 to %2	filemanager	zt	µLªk±N%1§ï¦W¬°%2
-could not save %1	filemanager	zt	µLªkÀx¦s%1
-create file	filemanager	zt	«Ø¥ßÀÉ®×
-create folder	filemanager	zt	«Ø¥ß¸ê®Æ§¨
-created	filemanager	zt	«Ø¥ß¤é´Á
-created %1	filemanager	zt	«Ø¥ß%1
-created by	filemanager	zt	«Ø¥ßªÌ
-created directory %1	filemanager	zt	«Ø¥ß¸ê®Æ§¨%1
-date	filemanager	zt	¤é´Á
-default number of upload fields to show	filemanager	zt	¹w³]¤W¶ÇÀÉ®×Äæ¦ì¼Æ¶q
-delete	filemanager	zt	§R°£
-deleted %1	filemanager	zt	§R°£%1
-directory	filemanager	zt	¸ê®Æ§¨
-directory %1 already exists	filemanager	zt	¸ê®Æ§¨ %1 ¤w¸g¦s¦b
-directory %1 does not exist	filemanager	zt	¸ê®Æ§¨ %1 ¤£¦s¦b
-directory names cannot contain "%1"	filemanager	zt	¸ê®Æ§¨¦WºÙ¤£À³¸Ó¥]§t "%1"
-display attributes	filemanager	zt	Åã¥ÜÄİ©Ê
-download	filemanager	zt	¤U¸ü
-edit	filemanager	zt	½s¿è
-edit comments	filemanager	zt	½s¿è³Æµù
-error running command	filemanager	zt	«ü¥O°õ¦æ¿ù»~
-execute	filemanager	zt	°õ¦æ
-failed to create directory	filemanager	zt	«Ø¥ß¸ê®Æ§¨¥¢±Ñ
-file	filemanager	zt	ÀÉ®×
-file %1 already exists. please edit it or delete it first.	filemanager	zt	ÀÉ®× %1¤w¸g¦s¦b¡A½Ğ¥ı½s¿è©Î§R°£¥¦¡C
-file %1 could not be created.	filemanager	zt	ÀÉ®× %1 µLªk«Ø¥ß¡C
-file name	filemanager	zt	ÀÉ¦W
-file names cannot contain "%1"	filemanager	zt	ÀÉ®×¦W¤£¯à¥]§t "%1"
-file names cannot contain \ or /	filemanager	zt	ÀÉ®×¦W¤£¯à¥]§t \ ©Î /
-filemanager	common	zt	ÀÉ®×ºŞ²z­û
-filemanager preferences	filemanager	zt	ÀÉ®×ºŞ²z­û³]©w
-files	filemanager	zt	ÀÉ®×
-files in this directory	filemanager	zt	¸ê®Æ§¨¤¤ªºÀÉ®×
-folder	filemanager	zt	¸ê®Æ§¨
-go to	filemanager	zt	«e©¹
-go to %1	filemanager	zt	¨ì %1
-go to your home directory	filemanager	zt	¨ì¥D­n¥Ø¿ı
-go to:	filemanager	zt	¨ì¡G
-go up	filemanager	zt	¤W¤@¼h
-home	filemanager	zt	­º­¶
-locked	filemanager	zt	³QÂê©w
-mime type	filemanager	zt	MIME Ãş«¬
-modified	filemanager	zt	­×§ï¤é´Á
-modified by	filemanager	zt	­×§ïªÌ
-move to	filemanager	zt	·h¨ì
-move to:	filemanager	zt	·h¨ì¡G
-moved %1 to %2	filemanager	zt	§â %1·h¨ì%2
-no files in this directory.	filemanager	zt	¸ê®Æ§¨¤¤¨S¦³¥ô¦óÀÉ®×
-no version history for this file/directory	filemanager	zt	³o­ÓÀÉ®×/¸ê®Æ§¨¨S¦³ª©¥»¾ú¥v
-operation	filemanager	zt	¾Ş§@
-other settings	filemanager	zt	¨ä¥L³]©w
-owner	filemanager	zt	¾Ö¦³ªÌ
-preview %1	filemanager	zt	¹wÄı %1
-preview of %1	filemanager	zt	%1 ªº¹wÄı
-quick jump to	filemanager	zt	§Ö³t¤Á´«
-reload	filemanager	zt	­«·sÅª¨ú
-rename	filemanager	zt	§ï¦W
-renamed %1 to %2	filemanager	zt	§â%1 ÀÉ¦W§ï¦¨ %2
-replaced %1	filemanager	zt	%1 §¹¦¨­×§ï
-save %1	filemanager	zt	Àx¦s %1
-save all	filemanager	zt	Àx¦s¥ş³¡
-saved %1	filemanager	zt	%1 Àx¦s§¹¦¨
-show	filemanager	zt	Åã¥Ü
-show ..	filemanager	zt	Åã¥Ü ..
-show .files	filemanager	zt	Åã¥Ü .ÀÉ®×
-show command line (experimental. dangerous.)	filemanager	zt	Åã¥Ü©R¥O¦C(¦MÀI¹êÅç)
-show help	filemanager	zt	Åã¥Ü»¡©ú
-size	filemanager	zt	¤j¤p
-sort by:	filemanager	zt	±Æ§Ç¡G
-total files	filemanager	zt	ÀÉ®×¼Æ
-unknown mime-type defaults to text/plain when viewing	filemanager	zt	¤£©úªºMIME®æ¦¡¡A¹w³]ÂsÄı®æ¦¡¬°¯Â¤å¦r
-unused space	filemanager	zt	³Ñ¾lªÅ¶¡
-up	filemanager	zt	¤W¤@¼h
-update	filemanager	zt	§ó·s
-updated comment for %1	filemanager	zt	§ó·s%1ªº³Æµù
-upload	filemanager	zt	¤W¶Ç
-upload fields	filemanager	zt	¤W¶Ç°Ï°ì
-upload files	filemanager	zt	¤W¶ÇÀÉ®×
-used space	filemanager	zt	¨Ï¥ÎªÅ¶¡
-users	filemanager	zt	¨Ï¥ÎªÌ
-version	filemanager	zt	ª©¥»
-view documents in new window	filemanager	zt	¶}±Ò·sµøµ¡ÂsÄı¤å¥ó
-view documents on server (if available)	filemanager	zt	¦b¦øªA¾¹¤WÂsÄı¤å¥ó(¦pªG¯à°÷)
-who	filemanager	zt	½Ö
-you do not have access to %1	filemanager	zt	%1¨S¦³¥ô¦ó²§°Ê
+%1 already exists as a file	filemanager	zt	%1 æª”æ¡ˆå·²ç¶“å­˜åœ¨
+application	filemanager	zt	æ‡‰ç”¨ç¨‹å¼
+back to file manager	filemanager	zt	å›åˆ°æª”æ¡ˆç®¡ç†å“¡
+cannot create directory because it begins or ends in a space	filemanager	zt	è³‡æ–™å¤¾åç¨±åŒ…å«ç©ºç™½å­—å…ƒï¼Œç„¡æ³•å»ºç«‹è³‡æ–™å¤¾
+cannot replace %1 because it is a directory	filemanager	zt	ç„¡æ³•ç½®æ›%1ï¼Œå› ç‚ºå®ƒæ˜¯ä¸€å€‹è³‡æ–™å¤¾
+command sucessfully run	filemanager	zt	æŒ‡ä»¤åŸ·è¡Œå®Œæˆ
+comment	filemanager	zt	å‚™è¨»
+comments cannot contain "%1"	filemanager	zt	å‚™è¨»ä¸èƒ½åŒ…å« "%1"
+copied %1 to %2	filemanager	zt	è¤‡è£½ %1 åˆ° %2
+copy to	filemanager	zt	è¤‡è£½åˆ°
+copy to:	filemanager	zt	è¤‡è£½åˆ°ï¼š
+could not copy %1 to %2	filemanager	zt	ç„¡æ³•è¤‡è£½ %1 åˆ° %2
+could not create %1	filemanager	zt	ç„¡æ³•å»ºç«‹%1
+could not create directory %1	filemanager	zt	ç„¡æ³•å»ºç«‹è³‡æ–™å¤¾%1
+could not delete %1	filemanager	zt	ç„¡æ³•åˆªé™¤%1
+could not move %1 to %2	filemanager	zt	ç„¡æ³•æ¬ç§»%1åˆ°%2
+could not rename %1 to %2	filemanager	zt	ç„¡æ³•å°‡%1æ”¹åç‚º%2
+could not save %1	filemanager	zt	ç„¡æ³•å„²å­˜%1
+create file	filemanager	zt	å»ºç«‹æª”æ¡ˆ
+create folder	filemanager	zt	å»ºç«‹è³‡æ–™å¤¾
+created	filemanager	zt	å»ºç«‹æ—¥æœŸ
+created %1	filemanager	zt	å»ºç«‹%1
+created by	filemanager	zt	å»ºç«‹è€…
+created directory %1	filemanager	zt	å»ºç«‹è³‡æ–™å¤¾%1
+date	filemanager	zt	æ—¥æœŸ
+default number of upload fields to show	filemanager	zt	é è¨­ä¸Šå‚³æª”æ¡ˆæ¬„ä½æ•¸é‡
+delete	filemanager	zt	åˆªé™¤
+deleted %1	filemanager	zt	åˆªé™¤%1
+directory	filemanager	zt	è³‡æ–™å¤¾
+directory %1 already exists	filemanager	zt	è³‡æ–™å¤¾ %1 å·²ç¶“å­˜åœ¨
+directory %1 does not exist	filemanager	zt	è³‡æ–™å¤¾ %1 ä¸å­˜åœ¨
+directory names cannot contain "%1"	filemanager	zt	è³‡æ–™å¤¾åç¨±ä¸æ‡‰è©²åŒ…å« "%1"
+display attributes	filemanager	zt	é¡¯ç¤ºå±¬æ€§
+download	filemanager	zt	ä¸‹è¼‰
+edit	filemanager	zt	ç·¨è¼¯
+edit comments	filemanager	zt	ç·¨è¼¯å‚™è¨»
+error running command	filemanager	zt	æŒ‡ä»¤åŸ·è¡ŒéŒ¯èª¤
+execute	filemanager	zt	åŸ·è¡Œ
+failed to create directory	filemanager	zt	å»ºç«‹è³‡æ–™å¤¾å¤±æ•—
+file	filemanager	zt	æª”æ¡ˆ
+file %1 already exists. please edit it or delete it first.	filemanager	zt	æª”æ¡ˆ %1å·²ç¶“å­˜åœ¨ï¼Œè«‹å…ˆç·¨è¼¯æˆ–åˆªé™¤å®ƒã€‚
+file %1 could not be created.	filemanager	zt	æª”æ¡ˆ %1 ç„¡æ³•å»ºç«‹ã€‚
+file name	filemanager	zt	æª”å
+file names cannot contain "%1"	filemanager	zt	æª”æ¡ˆåä¸èƒ½åŒ…å« "%1"
+file names cannot contain \ or /	filemanager	zt	æª”æ¡ˆåä¸èƒ½åŒ…å« \ æˆ– /
+filemanager	common	zt	æª”æ¡ˆç®¡ç†å“¡
+filemanager preferences	filemanager	zt	æª”æ¡ˆç®¡ç†å“¡è¨­å®š
+files	filemanager	zt	æª”æ¡ˆ
+files in this directory	filemanager	zt	è³‡æ–™å¤¾ä¸­çš„æª”æ¡ˆ
+folder	filemanager	zt	è³‡æ–™å¤¾
+go to	filemanager	zt	å‰å¾€
+go to %1	filemanager	zt	åˆ° %1
+go to your home directory	filemanager	zt	åˆ°ä¸»è¦ç›®éŒ„
+go to:	filemanager	zt	åˆ°ï¼š
+go up	filemanager	zt	ä¸Šä¸€å±¤
+home	filemanager	zt	é¦–é 
+locked	filemanager	zt	è¢«é–å®š
+mime type	filemanager	zt	MIME é¡å‹
+modified	filemanager	zt	ä¿®æ”¹æ—¥æœŸ
+modified by	filemanager	zt	ä¿®æ”¹è€…
+move to	filemanager	zt	æ¬åˆ°
+move to:	filemanager	zt	æ¬åˆ°ï¼š
+moved %1 to %2	filemanager	zt	æŠŠ %1æ¬åˆ°%2
+no files in this directory.	filemanager	zt	è³‡æ–™å¤¾ä¸­æ²’æœ‰ä»»ä½•æª”æ¡ˆ
+no version history for this file/directory	filemanager	zt	é€™å€‹æª”æ¡ˆ/è³‡æ–™å¤¾æ²’æœ‰ç‰ˆæœ¬æ­·å²
+operation	filemanager	zt	æ“ä½œ
+other settings	filemanager	zt	å…¶ä»–è¨­å®š
+owner	filemanager	zt	æ“æœ‰è€…
+preview %1	filemanager	zt	é è¦½ %1
+preview of %1	filemanager	zt	%1 çš„é è¦½
+quick jump to	filemanager	zt	å¿«é€Ÿåˆ‡æ›
+reload	filemanager	zt	é‡æ–°è®€å–
+rename	filemanager	zt	æ”¹å
+renamed %1 to %2	filemanager	zt	æŠŠ%1 æª”åæ”¹æˆ %2
+replaced %1	filemanager	zt	%1 å®Œæˆä¿®æ”¹
+save %1	filemanager	zt	å„²å­˜ %1
+save all	filemanager	zt	å„²å­˜å…¨éƒ¨
+saved %1	filemanager	zt	%1 å„²å­˜å®Œæˆ
+show	filemanager	zt	é¡¯ç¤º
+show ..	filemanager	zt	é¡¯ç¤º ..
+show .files	filemanager	zt	é¡¯ç¤º .æª”æ¡ˆ
+show command line (experimental. dangerous.)	filemanager	zt	é¡¯ç¤ºå‘½ä»¤åˆ—(å±éšªå¯¦é©—)
+show help	filemanager	zt	é¡¯ç¤ºèªªæ˜
+size	filemanager	zt	å¤§å°
+sort by:	filemanager	zt	æ’åºï¼š
+total files	filemanager	zt	æª”æ¡ˆæ•¸
+unknown mime-type defaults to text/plain when viewing	filemanager	zt	ä¸æ˜çš„MIMEæ ¼å¼ï¼Œé è¨­ç€è¦½æ ¼å¼ç‚ºç´”æ–‡å­—
+unused space	filemanager	zt	å‰©é¤˜ç©ºé–“
+up	filemanager	zt	ä¸Šä¸€å±¤
+update	filemanager	zt	æ›´æ–°
+updated comment for %1	filemanager	zt	æ›´æ–°%1çš„å‚™è¨»
+upload	filemanager	zt	ä¸Šå‚³
+upload fields	filemanager	zt	ä¸Šå‚³å€åŸŸ
+upload files	filemanager	zt	ä¸Šå‚³æª”æ¡ˆ
+used space	filemanager	zt	ä½¿ç”¨ç©ºé–“
+users	filemanager	zt	ä½¿ç”¨è€…
+version	filemanager	zt	ç‰ˆæœ¬
+view documents in new window	filemanager	zt	é–‹å•Ÿæ–°è¦–çª—ç€è¦½æ–‡ä»¶
+view documents on server (if available)	filemanager	zt	åœ¨ä¼ºæœå™¨ä¸Šç€è¦½æ–‡ä»¶(å¦‚æœèƒ½å¤ )
+who	filemanager	zt	èª°
+you do not have access to %1	filemanager	zt	%1æ²’æœ‰ä»»ä½•ç•°å‹•
