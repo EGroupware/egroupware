@@ -12,18 +12,17 @@
 
 	/* $Id$ */
 
-	include ('../phpgwapi/inc/class.Template.inc.php');
+	/**************************************************************************\
+	* These are the few functions needed for parsing the inline comments       *
+	\**************************************************************************/
 
-	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
-	{
-		$GLOBALS['object_type'] = 'function';
-	}
-	else
-	{
-		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
-	}
-
-	function _debug_array($array)
+	/*!
+	 @function array_print
+	 @abstract output an array for HTML.
+	 @syntax array_print($array);
+	 @example array_print($my_array);
+	*/
+	function array_print($array)
 	{
 		if(floor(phpversion()) == 4)
 		{
@@ -32,7 +31,6 @@
 			$contents = ob_get_contents(); 
 			ob_end_clean();
 			echo $contents;
-//			return $contents;
 		}
 		else
 		{
@@ -40,6 +38,13 @@
 		}
 	}
 
+	/*!
+	 @function parseobject
+	 @abstract Parses inline comments for a single function
+	 @author seek3r
+	 @syntax parseobject($input);
+	 @example $return_data = parseobject($doc_data);
+	*/
 	function parseobject($input)
 	{
 		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
@@ -80,6 +85,13 @@
 		return Array('name' => $t, 'value' => $output[$t]);
 	}
 
+	/*!
+	 @function parsesimpleobject
+	 @abstract Parses inline comments for a single function, in a more limited fashion
+	 @author seek3r
+	 @syntax parsesimpleobject($input);
+	 @example $return_data = parsesimpleobject($simple_doc_data);
+	*/
 	function parsesimpleobject($input)
 	{
 		
@@ -125,7 +137,21 @@
 		return Array('name' => $t, 'value' => $output[$t]);
 	}
 
-	
+	/**************************************************************************\
+	* This section handles processing most of the input params for             *
+	* limiting and selecting what to print                                     *
+	\**************************************************************************/
+
+	include ('../phpgwapi/inc/class.Template.inc.php');
+
+	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
+	{
+		$GLOBALS['object_type'] = 'function';
+	}
+	else
+	{
+		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
+	}
 	
 	$app = $GLOBALS['HTTP_GET_VARS']['app'];
 	$fn  = $GLOBALS['HTTP_GET_VARS']['fn'];
@@ -168,18 +194,19 @@
 		$d->close;
 
 		sort($files);
-		//reset($files);
 	}
+
+	/**************************************************************************\
+	* Now that I have the list of files, I loop thru all of them and get the   *
+	* inline comments from them and load each of them into an array            *
+	\**************************************************************************/ 
 
 	while (list($p,$fn) = each($files))
 	{
 		$matches = $elements = $data = $startstop = array();
 		$string = $t = $out = $xkey = $new = '';
-		//$matches = $elements = $data = $class = $startstop = array();
-		//$string = $t = $out = $class = $xkey = $new = '';
 		$file = '../'.$app.'/inc/' . $fn;
-		echo '<br>Looking at: ' . $file . "\n";
-
+//		echo 'Looking at: ' . $file . "<br>\n";
 		$f = fopen($file,'r');
 		while (!feof($f))
 		{
@@ -189,7 +216,10 @@
 
 		preg_match_all("#\*\!(.*)\*/#sUi",$string,$matches,PREG_SET_ORDER);
 
-		/* Now that I have the list of found inline docs, I need to figure out which group they belong to. */
+		/**************************************************************************\
+		* Now that I have the list of found inline docs, I need to figure out      *
+		* which group they belong to.                                              *
+		\**************************************************************************/ 
 		$idx = 0;
 		$ssmatches = $matches;
 		reset($ssmatches);
@@ -240,6 +270,13 @@
 		}
 		unset($ssmatches, $sskey, $ssval, $ssresult, $sstype, $idx);
 		reset($startstop);
+		
+		/**************************************************************************\
+		* Now that I have the list groups and which records belong in which groups *
+		* its time to parse each function and stick it under the appropriate group *
+		* if there is no defined group for a function, then it gets tossed under   *
+		* a special group named by the file it was found in                        *
+		\**************************************************************************/ 
 		while (list($key,$val) = each($matches))
 		{
 			preg_match_all("#@(.*)$#sUi",$val[1],$data);
@@ -247,30 +284,35 @@
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				$class['file '.$fn][0]['file'][] = $fn;
-				$class['file '.$fn][0]['file'] = array_unique($class['file '.$fn][0]['file']);
-				$class['file '.$fn][$returndata['name']] = $returndata['value'];
+				$doc_array['file '.$fn][0]['files'][] = $fn;
+				$doc_array['file '.$fn][0]['files'] = array_unique($doc_array['file '.$fn][0]['files']);
+				$doc_array['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
 			else
 			{
-				if (!isset($class[$startstop[$key]][0]) && isset($matches_starts[$startstop[$key]]))
+				if (!isset($doc_array[$startstop[$key]][0]) && isset($matches_starts[$startstop[$key]]))
 				{
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
 					if ($returndoc != False)
 					{
-						$returndoc['value']['file'][] = $fn;
-						$returndoc['value']['file'] = array_unique($returndoc['value']['file']);
+						$returndoc['value']['files'][] = $fn;
+						$returndoc['value']['files'] = array_unique($returndoc['value']['files']);
 					}
-					$class[$startstop[$key]][0] = $returndoc['value'];
+					$doc_array[$startstop[$key]][0] = $returndoc['value'];
 				}
-				$class[$startstop[$key]][$returndata['name']] = $returndata['value'];
+				else
+				{
+					$doc_array[$startstop[$key]][0]['files'][] = $fn;
+					$doc_array[$startstop[$key]][0]['files'] = array_unique($doc_array[$startstop[$key]][0]['files']);
+				}
+				$doc_array[$startstop[$key]][$returndata['name']] = $returndata['value'];
 			}
 		}
 
 	}
 	if(isset($GLOBALS['HTTP_GET_VARS']['object']))
 	{
-		$class = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
+		$doc_array = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
 	}
-	_debug_array($class);
+	array_print($doc_array);
 ?>
