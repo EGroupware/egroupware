@@ -106,7 +106,7 @@ function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 		list($appname,$classname,$functionname) = explode(".", $object);
 		if (!is_object($GLOBALS[$classname]))
 		{
-			if ($classparams != '_UNDEF_')
+			if ($classparams != '_UNDEF_' && $classparams != True)
 			{
 				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
 			}
@@ -116,7 +116,7 @@ function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 			}
 		}
 
-		if ($functionparams != '_UNDEF_')
+		if ($functionparams != '_UNDEF_' && $functionparams != True)
 		{
 			return $GLOBALS[$classname]->$functionname($functionparams);
 		}
