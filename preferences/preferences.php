@@ -23,6 +23,7 @@
 	$user    = get_var('user',Array('POST'));
 	$global  = get_var('global',Array('POST'));
 	$default = get_var('default',Array('POST'));
+
 	$GLOBALS['appname'] = get_var('appname',Array('GET'));
 
 	if(get_var('cancel',Array('POST')))
@@ -208,7 +209,7 @@
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		$type = get_var('type',Array('GET'));
+		$type = get_var('type',Array('GET','POST'));
 		if (!isset($type))
 		{
 			$GLOBALS['type'] = $session_data['type'];
@@ -258,7 +259,7 @@
 	if (get_var('submit',Array('POST')))
 	{
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
-		if ($GLOBALS['type'] == 'user')
+		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
 			process_array($p, $user);
 		}

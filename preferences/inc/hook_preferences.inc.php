@@ -16,7 +16,7 @@
 	{
 		$file['Change your Password'] = $GLOBALS['phpgw']->link('/preferences/changepassword.php');
 	}
-	$file['change your settings'] = $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=preferences');
+	$file['change your settings'] = $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=preferences&type=user');
 
 	display_section('Preferences','Preferences',$file);
 
