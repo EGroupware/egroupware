@@ -231,7 +231,7 @@
 	 * Searches haystack for needle and returns TRUE if it is found in the array, FALSE
 	 * otherwise.
 	 */
-	function in_array($needle, $haystack, $strict = False)
+	function in_array($needle, $haystack='', $strict = False)
 	{
 		if(is_array($haystack) && count($haystack))
 		{
@@ -243,6 +243,10 @@
 				}
 			}
 			return False; 
+		}
+		elseif($haystack=='')
+		{
+			return False;
 		}
 	}
 
