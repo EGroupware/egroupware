@@ -37,6 +37,8 @@
 			}
 
 			$this->db      = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			$this->db->set_app('phpgwapi');
+			$this->table = 'phpgw_config';
 			$this->appname = $appname;
 		}
 
@@ -49,7 +51,7 @@
 		{
 			$this->config_data = array();
 
-			$this->db->query("select * from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->select($this->table,'*',array('config_app'=>$this->appname),__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				$test = @unserialize($this->db->f('config_value'));
@@ -86,7 +88,7 @@
 				{
 					if (!isset($this->config_data[$name]))	// has been deleted
 					{
-						$this->db->query("DELETE FROM phpgw_config WHERE config_app='$this->appname' AND config_name='$name'",__LINE__,__FILE__);
+						$this->db->delete($this->table,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 					}
 				}
 				$this->db->unlock();
@@ -109,25 +111,9 @@
 				$app = $this->appname;
 				$this->config_data[$name] = $value;
 			}
-			$name = $this->db->db_addslashes($name);
-
 			if ($app == $this->appname && $this->read_data[$name] == $value)
 			{
 				return True;	// no change ==> exit
-			}
-			$this->db->query($sql="select * from phpgw_config where config_app='$app' AND config_name='$name'",__LINE__,__FILE__);
-			if ($this->db->next_record())
-			{
-				$value_read = @unserialize($this->db->f('config_value'));
-				if (!$value_read)
-				{
-					$value_read = $this->db->f('config_value');
-				}
-				if ($value_read == $value)
-				{
-					return True;	// no change ==> exit
-				}
-				$update = True;
 			}
 			//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
 
@@ -135,12 +121,7 @@
 			{
 				$value = serialize($value);
 			}
-			$value = $this->db->db_addslashes($value);
-
-			$query = $update ? "UPDATE phpgw_config SET config_value='$value' WHERE config_app='$app' AND config_name='$name'" :
-				"INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('$app','$name','$value')";
-
-			return $this->db->query($query,__LINE__,__FILE__);
+			return $this->db->insert($this->table,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 
 		/*!
@@ -149,7 +130,7 @@
 		*/
 		function delete_repository()
 		{
-			$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->delete("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
 		/*!
