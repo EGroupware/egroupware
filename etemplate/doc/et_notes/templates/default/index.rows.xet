@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="notes.index.rows" template="" lang="" group="0" version="0.9.15.003">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="th">
+				<description value="Date"/>
+				<description value="Note"/>
+				<description value="Owner"/>
+				<description value="Access"/>
+				<description value="View"/>
+				<description value="Edit"/>
+				<description value="Delete"/>
+			</row>
+			<row class="row" valign="top">
+				<description no_lang="1" id="${row}[date]"/>
+				<description no_lang="1" id="${row}[content]"/>
+				<description no_lang="1" id="${row}[owner]"/>
+				<description id="${row}[access]"/>
+				<button label="View" id="view[$row_cont[id]]" onchange="1" statustext="view this note"/>
+				<button label="Edit" id="edit[$row_cont[id]]" onchange="1" statustext="edit this note"/>
+				<button label="Delete" id="delete[$row_cont[id]]" onchange="1" statustext="delete this note"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="et_notes.view" template="" lang="" group="" version="0.9.15.003" width="100%">
+		<columns>
+			<column width="10%"/>
+			<column width="80%"/>
+			<column width="10%"/>
+		</columns>
+		<rows>
+			<row>
+				<description span="2" value="Notes - View Note"/>
+				<button label="Categories" id="cats" statustext="add, edit, delete categories"/>
+			</row>
+			<row>
+				<hrule span="all"/>
+			</row>
+			<row>
+				<description span="all" align="center" id="msg"/>
+			</row>
+			<row class="row">
+				<description value="Category"/>
+				<menulist span="all">
+					<menupopup type="select-cat" options="None" no_lang="1" id="cat_id" readonly="true"/>
+				</menulist>
+				<description/>
+			</row>
+			<row class="row" valign="top">
+				<description value="Content"/>
+				<textbox multiline="true" rows="10" cols="60" span="all" id="content" readonly="true"/>
+			</row>
+			<row class="row">
+				<description value="Private"/>
+				<checkbox options="private,public,x" span="all" id="access" readonly="true"/>
+			</row>
+			<row class="row">
+				<description value="Owner"/>
+				<menulist span="all">
+					<menupopup type="select-account" options=",account,2" id="owner" readonly="true"/>
+				</menulist>
+				<description/>
+			</row>
+			<row>
+				<description span="all"/>
+			</row>
+			<row>
+				<button label="Done" id="done" statustext="back to the notes list"/>
+				<button label="Edit" id="edit" statustext="edit the note"/>
+				<button span="all" label="Delete" align="right" id="delete" statustext="deletes the note"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>

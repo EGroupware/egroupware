@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="et_notes.delete" template="" lang="" group="" version="0.9.15.003" width="100%">
+		<columns>
+			<column width="10%"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<description span="all" value="Notes - Delete note"/>
+			</row>
+			<row>
+				<hrule span="all"/>
+			</row>
+			<row>
+				<description span="all" align="center" id="msg"/>
+			</row>
+			<row class="row">
+				<description value="Category"/>
+				<menulist span="all">
+					<menupopup type="select-cat" options="None" id="cat_id" readonly="true"/>
+				</menulist>
+			</row>
+			<row class="row" valign="top">
+				<description value="Content"/>
+				<textbox multiline="true" rows="10" cols="60" span="all" id="content" readonly="true"/>
+			</row>
+			<row class="row">
+				<description value="Access"/>
+				<description span="all" id="access"/>
+			</row>
+			<row class="row">
+				<description value="Owner"/>
+				<menulist span="all">
+					<menupopup type="select-account" options=",account,2" id="owner" readonly="true"/>
+				</menulist>
+			</row>
+			<row height="50">
+				<description options="b" span="all" class="bigbold" value="Delete this note?"/>
+			</row>
+			<row>
+				<button label="Yes" id="confirm" statustext="deletes the note"/>
+				<button span="all" label="No" id="done" statustext="back to the list"/>
+			</row>
+		</rows>
+		<styles>
+			.bigbold { font-size:+1; font-weight: bold; }
+		</styles>
+	</grid>
+</overlay>
