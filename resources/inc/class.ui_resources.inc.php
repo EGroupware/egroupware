@@ -51,38 +51,51 @@ class ui_resources
 	{
 		if (is_array($content))
 		{
+			$sessiondata = $content['nm'];
+			
 			if (isset($content['nm']['rows']))
 			{
+				unset($sessiondata['rows']);
+				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				
 				unset($content['nm']['rows']['checkbox']);
 				switch (key($content['nm']['rows']))
 				{
-					case 'edit':
+					case 'edit': // note: this is a popup dialog now
 						list($id) = each($content['nm']['rows']['edit']);
 						return $this->edit($id);
 					case 'delete':
 						list($id) = each($content['nm']['rows']['delete']);
 						return $this->delete($id);
-					case 'new_acc':
+					case 'new_acc': // note: this is a popup dialog now
 						list($id) = each($content['nm']['rows']['new_acc']);
-						return $this->edit(array('id' => 0, 'accessory_of' => $id));
+						return $this->edit($id = 0, $accessory_of = $id);
 					case 'view_acc':
 						list($id) = each($content['nm']['rows']['view_acc']);
-						$content['view_accs_of'] = $id;
-						break;
+ 						$sessiondata['view_accs_of'] = $id;
+						$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+						return $this->index();
 					case 'view':
 					case 'bookable':
 					case 'buyable':
 				}
 			}
-			if (isset($content['add']))
+			if (isset($content['add'])) // note: this isn't used as add is a popup now!
 			{
-				return $content['view_accs_of'] ? $this->edit(array('id' => 0, 'accessory_of' => $id)) : $this->edit(0);
+				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				return $content['nm']['view_accs_of'] ? $this->edit(array('id' => 0, 'accessory_of' => $content['nm']['view_accs_of'])) : $this->edit(0);
 			}
 			if (isset($content['back']))
 			{
+				unset($sessiondata['view_accs_of']);
+				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				return $this->index();
 			}
-			
+		}
+		else
+		{
+			$content = array();
+			$content['nm'] = $GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm');
 		}
 		
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
@@ -100,16 +113,24 @@ class ui_resources
 			$no_button['add'] = true;
 		}
 		$no_button['back'] = true;
+		$no_button['add_sub'] = true;
+		$GLOBALS['phpgw_info']['flags']['app_header'] = lang('resources');
 		
-		if($content['view_accs_of'])
+		if($content['nm']['view_accs_of'])
 		{
+			$master = $this->bo->so->read($content['nm']['view_accs_of']);
+			$content['view_accs_of'] = $content['nm']['view_accs_of'];
 			$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 			$content['nm']['no_filter'] 	= true;
 			$content['nm']['no_filter2'] 	= true;
-			$content['nm']['view_accs_of']	= $content['view_accs_of'];
 			$no_button['back'] = false;
+			$no_button['add'] = true;
+			$no_button['add_sub'] = false;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of ') . $master['name'] .
+				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
+		$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
@@ -121,7 +142,7 @@ class ui_resources
 		@abstract invokes add or edit dialog for resources
 		@param $content   Content from the eTemplate Exec call or id on inital call
 	*/
-	function edit($content=0)
+	function edit($content=0,$accessory_of = -1)
 	{
 		if (is_array($content))
 		{
@@ -142,16 +163,29 @@ class ui_resources
 					unset($content['delete']);
 					$content['msg'] = $this->delete($content['id']);
 				}
-				return $content['msg'] ? $this->edit($content) : $content['accessory_of'] ? $this->index(array('view_accs_of' => $content['accessory_of'])) : $this->index();
+				
+				if($content['msg'])
+				{
+					return $this->edit($content);
+				}
+				$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',
+					array('menuaction' => 'resources.ui_resources.index'))."';";
+				$js .= 'window.close();';
+				echo "<html><body><script>$js</script></body></html>\n";
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			elseif($content['cancel'])
 			{
-				return $this->index();
+				$js .= 'window.close();';
+				echo "<html><body><script>$js</script></body></html>\n";
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 		}
 		else
 		{
 			$id = $content;
+			if (isset($_GET['id'])) $id = $_GET['id'];
+			if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
 			$content = array('id' => $id);
 			
 			if ($id > 0)
@@ -168,24 +202,24 @@ class ui_resources
 		}
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
-		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : -1;
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		
+		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(PHPGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
-		if($content['accessory_of'] != -1)
+		
+		if($accessory_of > 0 || $content['accessory_of'] > 0)
 		{
+			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		
-		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-		
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
-		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv);
+		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv,2);
 		
 	}
 	
