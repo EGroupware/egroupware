@@ -254,11 +254,11 @@
 			{
 				$vars=array('sort','order','query','start','filter','cat_id');
 			}
-			global $HTTP_REFERER,$referer;
+			global $referer;
 
 			if (!$referer)
 			{
-				$referer = $HTTP_REFERER;
+				$referer = get_var('HTTP_REFERER',Array('GLOBAL'));
 			}
 
 			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$referer));
@@ -550,8 +550,8 @@
 		*/
 		function get_file( )
 		{
-			$info_id=$GLOBALS['HTTP_GET_VARS']['info_id'];
-			$filename=$GLOBALS['HTTP_GET_VARS']['filename'];
+			$info_id  = get_var('info_id',Array('GET'));
+			$filename = get_var('filename',Array('GET'));
 			//echo "<p>get_file: info_id='$info_id', filename='$filename'</p>\n";
 
 			$browser = CreateObject('phpgwapi.browser');
@@ -563,7 +563,7 @@
 				Header('Location: ' .  $this->html->link($referer));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
-			$local = $this->bo->attached_local($info_id,$filename,$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'],$browser->is_windows());
+			$local = $this->bo->attached_local($info_id,$filename,get_var('REMOTE_ADDR',Array('SERVER')),$browser->is_windows());
 
 			if ($local)
 			{
@@ -604,7 +604,7 @@
 			if ($upload && $attachfile && $attachfile != "none")
 			{
 				$fileerror = $this->bo->attach_file($info_id,$attachfile,$attachfile_name,$attachfile_size,
-					$attachfile_type,$filecomment,$full_fname,$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
+					$attachfile_type,$filecomment,$full_fname,get_var('REMOTE_ADDR',Array('SERVER')));
 				if ($fileerror) $error[]=$fileerror;
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -652,11 +652,11 @@
 
 			$referer = $this->get_referer();
 
-			if ((!isset($info_id) || !$info_id) && !$action || $GLOBALS['HTTP_POST_VARS']['cancel'])
+			if((!isset($info_id) || !$info_id) && !$action || get_var('cancel',Array('POST')))
 			{
 				Header('Location: ' . $html->link($referer) );
 			}
-			if ($GLOBALS['HTTP_POST_VARS']['delete'])
+			if(get_var('delete',Array('POST')))
 			{
 				Header('Location: ' . $html->link('/index.php',$this->menuaction('delete')+
 				       array('info_id' => $info_id, 'referer' => $referer)) );
@@ -772,7 +772,7 @@
 						{
 							$fileerror = $this->bo->attach_file($this->bo->so->data['info_id'],$attachfile,
 								$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname,
-								$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
+								get_var('REMOTE_ADDR',Array('SERVER')));
 							if ($fileerror) $error[]=$fileerror;
 						}
 					}
@@ -1033,22 +1033,25 @@
 
 		function admin( )
 		{
-			if ($GLOBALS['HTTP_POST_VARS']['done'])
+			if(get_var('done',Array('POST')))
 			{
 				Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			if ($GLOBALS['HTTP_POST_VARS']['save'])
+			if(get_var('save',Array('POST')))
 			{
 				$this->bo->link_pathes = array(); $this->bo->send_file_ips = array();
 
-				while (list($key,$val) = each($GLOBALS['HTTP_POST_VARS']['valid']))
+				$valid = get_var('valid',Array('POST'));
+				$trans = get_var('trans',Array('POST'));
+				$ip = get_var('ip',Array('POST'));
+				while(list($key,$val) = each($valid))
 				{
-					if ($val = stripslashes($val))
+					if($val = stripslashes($val))
 					{
-						$this->bo->link_pathes[$val]   = stripslashes($GLOBALS['HTTP_POST_VARS']['trans'][$key]);
-						$this->bo->send_file_ips[$val] = stripslashes($GLOBALS['HTTP_POST_VARS']['ip'][$key]);
+						$this->bo->link_pathes[$val]   = stripslashes($trans[$key]);
+						$this->bo->send_file_ips[$val] = stripslashes($ip[$key]);
 					}
 				}
 				$this->bo->config->config_data = array(
