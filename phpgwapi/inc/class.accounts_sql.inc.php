@@ -312,7 +312,7 @@
 				'account_type'			=> $account_info['account_type'],
 				'person_id'				=> $account_info['person_id'],
 				'account_primary_group'	=> $account_info['account_primary_group'],
-				'account_email'			=> $account_info['email'],
+				'account_email'			=> $account_info['account_email'],
 			);
 			if (isset($account_info['account_id']) && (int)$account_info['account_id'] && !$this->id2name($account_info['account_id']))
 			{
