@@ -89,6 +89,10 @@
         <input type="hidden" name="action" value="Dont touch my data">
 		<input type="submit" name="label" value="{configuration}">
         </form>
+		<form method="POST" action="setup_demo.php">
+        <input type="hidden" name="action" value="Dont touch my data">
+		<input type="submit" name="label" value="{admin_account}">
+        </form>
 		<form method="POST" action="lang.php">
         <input type="hidden" name="action" value="Dont touch my data">
 		<input type="submit" name="label" value="{language_management}">

@@ -68,6 +68,7 @@ check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2: %3	setup	de	Überprüfe die Datei-Zugriffsrechte von %1 auf %2: %3
+checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zum Setup zurück zu kommen.
@@ -96,6 +97,7 @@ create the empty database -	setup	de	Legen Sie eine leere Datenbank an -
 create the empty database and grant user permissions -	setup	de	Leere Datenbank anlegen und Benutzerrechte daran gewähren -
 create your header.inc.php	setup	de	Datei header.inc.php anlegen
 created	setup	de	erzeugt
+created header.inc.php!	setup	de	header.inc.php erzeugt!
 creating tables	setup	de	Erstelle Tabellen
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
@@ -367,6 +369,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Er
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
+the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	de	Die imap Erweiterung (php extension) wird von den beiden Email Applikationen benötigt (auch wenn Sie das POP3-Protokoll verwenden).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
@@ -457,6 +460,7 @@ your database is working, but you dont have any applications installed	setup	de	
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	de	Ihre PHP Installation hat nicht die benötigte GD Unterstützung. Die Anwendung Projekte benötigen die GD Bibliothek in der Version 1.8 um Gantcharts anzeigen zu können.
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables may be altered and you may lose data	setup	de	Ihre Tabellen könnten verändert werden, und Sie könnten Daten verlieren!
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden Daten verlieren!

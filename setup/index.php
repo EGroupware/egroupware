@@ -215,6 +215,7 @@
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
 			$setup_tpl->set_var('goto',lang('Go to'));
 			$setup_tpl->set_var('configuration',lang('configuration'));
+			$setup_tpl->set_var('admin_account',lang('Create admin account'));
 			$setup_tpl->set_var('applications',lang('Manage Applications'));
 			$setup_tpl->set_var('language_management',lang('Manage Languages'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
@@ -462,7 +463,17 @@
 		case 10:
 			$setup_tpl->set_var('apps_status_img',$completed);
 			$setup_tpl->set_var('apps_status_alt',lang('completed'));
+			// check if we have apps to upgrade
+			$to_upgrade = array();
+			foreach($setup_info as $app => $data)
+			{
+				if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
+				{
+					$to_upgrade[] = $app;
+				}
+			}
 			$btn_manage_apps = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+				count($to_upgrade) ? '<b>'.lang('The following applications need to be upgraded:').'</b> '.implode(', ',$to_upgrade) :
 				lang('This stage is completed<br>'),
 				'','applications.php',
 				'submit',lang('Manage Applications'),

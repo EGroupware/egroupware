@@ -66,6 +66,7 @@ check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	check ip address of all sessions
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2: %3	setup	en	Checking file-permissions of %1 for %2: %3
+checking for gd support...	setup	en	Checking for GD support...
 checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
@@ -94,6 +95,7 @@ create the empty database -	setup	en	Create the empty database -
 create the empty database and grant user permissions -	setup	en	Create the empty database and grant user permissions -
 create your header.inc.php	setup	en	Create your header.inc.php
 created	setup	en	created
+created header.inc.php!	setup	en	Created header.inc.php!
 creating tables	setup	en	Creating Tables
 current system-charset	setup	en	Current system-charset
 current system-charset is %1, click %2here%3 to change it.	setup	en	Current system-charset is %1, click %2here%3 to change it.
@@ -363,6 +365,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	en	The %1 ex
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	en	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
+the following applications need to be upgraded:	setup	en	The following applications need to be upgraded:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	en	The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
@@ -452,6 +455,7 @@ your database is working, but you dont have any applications installed	setup	en	
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	en	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
