@@ -27,9 +27,19 @@
 		{
 			if (!is_array($date))
 			{
+				if(strstr($_SERVER['HTTP_USER_AGENT'],"vbXMLRPC"))
+				{
+					return date('Ymd\TH:i:s',$date);
+				}
 				return date('Y-m-d\TH:i:s',$date);
 			}
-			return sprintf('%04d-%02d-%02dT%02d:%02d:%02d',
+
+			$formatstring = "%04d-%02d-%02dT%02d:%02d:%02d";
+			if(strstr($_SERVER['HTTP_USER_AGENT'],"vbXMLRPC"))
+			{
+				$formatstring = "%04d%02d%02dT%02d:%02d:%02d";
+			}
+			return sprintf($formatstring,
 				$date['year'],$date['month'],$date['mday'],
 				$date['hour'],$date['min'],$date['sec']);
 		}
