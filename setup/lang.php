@@ -90,7 +90,7 @@
 					@reset($raw);
 					while (list($a,$raw_file) = @each($raw))
 					{
-						while (list($null,$line) = @each($raw_file))
+						while (list($_null,$line) = @each($raw_file))
 						{
 							$addit = False;
 							list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
@@ -127,7 +127,7 @@
 			$phpgw_setup->db->transaction_commit();
 		}
 
-		if (! $included)
+		if(!$included)
 		{
 			Header('Location: index.php');
 			exit;
