@@ -16,6 +16,6 @@
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_app_sessions';
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_accounts';
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_access_log';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_lang';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_languages';
+	$setup_info['phpgwapi']['tables'][] = 'lang';
+	$setup_info['phpgwapi']['tables'][] = 'languages';
 ?>
