@@ -52,9 +52,10 @@
       $encrypted_passwd = $phpgw->common->encrypt_password($new_passwd);
       $entry["userpassword"] = $encrypted_passwd;
       #$entry["phpgw_lastpasswd_change"] = time();
-
       $dn = $phpgw_info["user"]["account_dn"];
-      @ldap_modify($ldap, $dn, $entry);
+
+      if (!@ldap_modify($ldap, $dn, $entry)) return false;
+
       return $encrypted_passwd;
     }
   }
