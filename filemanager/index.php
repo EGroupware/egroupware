@@ -585,27 +585,30 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_table_end ();
 		html_break (2);
 
-		if (!$rename && !$edit_comments)
+		if ($path != "/" && $path != $fakebase)
 		{
-			html_form_input ("submit", "edit", "Edit");
-			html_nbsp (3);
-		}
+			if (!$rename && !$edit_comments)
+			{
+				html_form_input ("submit", "edit", "Edit");
+				html_nbsp (3);
+			}
 
-		if (!$edit_comments)
-		{
-			html_form_input ("submit", "rename", "Rename");
-			html_nbsp (3);
-		}
+			if (!$edit_comments)
+			{
+				html_form_input ("submit", "rename", "Rename");
+				html_nbsp (3);
+			}
 
-		if (!$rename && !$edit_comments)
-		{
-			html_form_input ("submit", "delete", "Delete");
-			html_nbsp (3);
-		}
+			if (!$rename && !$edit_comments)
+			{
+				html_form_input ("submit", "delete", "Delete");
+				html_nbsp (3);
+			}
 
-		if (!$rename)
-		{
-			html_form_input ("submit", "edit_comments", "Edit comments");
+			if (!$rename)
+			{
+				html_form_input ("submit", "edit_comments", "Edit comments");
+			}
 		}
 	}
 
@@ -622,9 +625,13 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_break (1);
 		html_form_input ("submit", "go", "Go to:");
 
-		html_form_input ("submit", "copy", "Copy to:");
+		if ($path != "/" && $path != $fakebase)
+		{
+			html_form_input ("submit", "copy", "Copy to:");
 
-		html_form_input ("submit", "move", "Move to:");
+			html_form_input ("submit", "move", "Move to:");
+		}
+
 		html_form_select_begin ("todir");
 
 		html_break (1);
@@ -681,12 +688,15 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 		html_form_select_end ();
 
-		html_break (1);
-		html_form_input ("submit", "download", "Download");
-		html_nbsp (3);
+		if ($path != "/" && $path != $fakebase)
+		{
+			html_break (1);
+			html_form_input ("submit", "download", "Download");
+			html_nbsp (3);
 
-		html_form_input ("text", "createdir", NULL, 255, 15);
-		html_form_input ("submit", "newdir", "Create Folder");
+			html_form_input ("text", "createdir", NULL, 255, 15);
+			html_form_input ("submit", "newdir", "Create Folder");
+		}
 
 		html_form_end ();
 
@@ -699,7 +709,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_text (borkb ($usedspace, NULL, 1));
 		html_nbsp (3);
 		
-		if ($path == $homedir)
+		if ($path == $homedir || $path == $fakebase)
 		{
 			html_text_bold ("Unused space: ");
 			html_text (borkb ($userinfo["hdspace"] - $usedspace, NULL, 1));
@@ -716,29 +726,32 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		# Show file upload boxes. Note the last argument to html ().  Repeats 5 times
 		###
 
-		html_break (2);
-		html_form_begin ("$appname/index.php?op=upload&path=$path", "post", "multipart/form-data");
-		html_table_begin ();
-		html_table_row_begin ("center");
-		html_table_col_begin ();
-		html_text_bold ("File");
-		html_table_col_end ();
-		html_table_col_begin ();
-		html_text_bold ("Comment");
-		html_table_col_end ();
-		html_table_row_end ();
+		if ($path != "/" && $path != $fakebase)
+		{
+			html_break (2);
+			html_form_begin ("$appname/index.php?op=upload&path=$path", "post", "multipart/form-data");
+			html_table_begin ();
+			html_table_row_begin ("center");
+			html_table_col_begin ();
+			html_text_bold ("File");
+			html_table_col_end ();
+			html_table_col_begin ();
+			html_text_bold ("Comment");
+			html_table_col_end ();
+			html_table_row_end ();
 
-		html_table_row_begin ();
-		html_table_col_begin ();
-		html (html_form_input ("file", "file[]", NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
-		html_table_col_end ();
-		html_table_col_begin ();
-		html (html_form_input ("text", "comment[]", NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
-		html_table_col_end ();
-		html_table_row_end ();
-		html_table_end ();
-		html_form_input ("submit", "upload_files", "Upload files");
-		html_form_end ();
+			html_table_row_begin ();
+			html_table_col_begin ();
+			html (html_form_input ("file", "file[]", NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
+			html_table_col_end ();
+			html_table_col_begin ();
+			html (html_form_input ("text", "comment[]", NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
+			html_table_col_end ();
+			html_table_row_end ();
+			html_table_end ();
+			html_form_input ("submit", "upload_files", "Upload files");
+			html_form_end ();
+		}
 	}
 
 	html_table_col_end ();
@@ -888,7 +901,7 @@ if ($edit)
 # Handle File Uploads
 ###
 
-elseif ($op == "upload")
+elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 {
 	for ($i = 0; $i != 5; $i++)
 	{
