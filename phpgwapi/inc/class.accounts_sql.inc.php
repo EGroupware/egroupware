@@ -182,7 +182,7 @@
 			if(gettype($account_lid) == 'integer')
 			{
 				$account_id = $account_lid;
-				settype($acount_lid,'string');
+				settype($account_lid,'string');
 				$account_lid = $this->id2name($account_id);
 			}
 
