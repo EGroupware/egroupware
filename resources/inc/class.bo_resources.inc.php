@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - resources - Resource Management System                      *
 	* http://www.egroupware.org                                                *
-	* Written by Lukas Weiss [ichLukas@gmx.de] and                             *
+	* Written by Lukas Weiss [wnz_gh05t@users.sourceforge.net] and             *
 	*            Cornelius Weiss [nelius@gmx.net]                              *
 	* -----------------------------------------------                          *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -195,8 +195,16 @@ class bo_resources
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
 	}
 
+	/*!
+		@function delete
+		@abstract deletes resource including pictures and links
+		@autor Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+		@param int $id id of resource
+	*/
 	function delete($id)
 	{
+		$this->remove_picture($id);
+ 		$this->link->unlink(0,'resources',$id);
 		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by saving resource');
 	}
 	

@@ -4,9 +4,8 @@ TODO:
 	picture size
 	thumbnail size (problem with general thumbs / icons)
 - advanced search dialog, accessable via sideboxmenu
-- delete dialog --> also delete pictures from vfs
 - show dialog
-- make delete, show and edit dialoges popup
+- make delete, show and edit dialoges popup (??)
 - some artwork : general resource pictures like (room, car, beamer ...) (Benkom)
 - sitemgr module
 
