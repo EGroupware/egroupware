@@ -39,7 +39,7 @@
 	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
 		lang('Grant Calendar Access'));
 
-	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname),
+	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname.'&global_cats=True'),
 		lang('Edit Categories'));
 
 	section_end(); 
