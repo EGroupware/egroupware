@@ -84,8 +84,8 @@
 			@$phpgw_setup->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
 			if($value)
 			{
-				$phpgw_setup->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) VALUES ('phpgwapi','" . addslashes($setting)
-					. "','" . addslashes($value) . "')");
+				$phpgw_setup->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) VALUES ('phpgwapi','" . $phpgw_setup->db->db_addslashes($setting)
+					. "','" . $phpgw_setup->db->db_addslashes($value) . "')");
 			}
 		}
 		$phpgw_setup->db->transaction_commit();
