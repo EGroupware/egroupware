@@ -17,12 +17,14 @@ calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
 calendar event	calendar	en	Calendar Event
 calendar holiday management	admin	en	Calendar Holiday Management
+calendar settings	admin	en	Calendar Settings
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 days repeated	calendar	en	days repeated
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 deleted	calendar	en	Deleted
+do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
 Display interval in Day View	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
@@ -52,6 +54,7 @@ import	calendar	en	Import
 interval	calendar	en	Interval
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
+location to autoload from	admin	en	Location to autoload from
 minutes	calendar	en	minutes
 mo	calendar	en	M
 modified	calendar	en	Modified

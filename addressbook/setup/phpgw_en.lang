@@ -95,5 +95,6 @@ vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 work phone	addressbook	en	Work Phone
 zip code	common	en	ZIP Code
