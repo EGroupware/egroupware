@@ -314,14 +314,14 @@
 					else
 					{
 						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
-						$exprires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+						$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
 					}
 				}
 				else
 				{
 					/* expire in 30 days by default */
 					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
-					$exprires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+					$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
 				}
 			}
 
