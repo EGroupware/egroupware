@@ -198,25 +198,24 @@
 											$types = explode(";",$buffer[$i][$value]);
 											if ($types[1]) {
 												while ($type = strtoupper(each($types))) {
-													$typei[$i][$type] .= ";".$type;
+													$typei[$i][$mult[2]] .= ";".$type;
 												}
-												//echo "PREF1";
 											} elseif ($types[0]) {
-												$typei[$i][strtoupper($types[0])] = ";".$types[0];
-												//echo "PREF=".strtoupper($prefer[0]);
-											} elseif ($buffer[$i][$value]) {
-												$typei[$i][$buffer[$i][$value]] = ";".$value;
-												//echo "PREF3";
+												$typei[$i][$mult[2]] .= ";".strtoupper($types[0]);
+											} else {
+												$typei[$i][$mult[2]] .= ";".strtoupper($buffer[$i][$value]);
 											}
+											//$typei[$i][strtoupper($types[0])] = ";".$types[0];
+											//echo "TYPE;".$mult[2]."=".$buffer[$i][$value];
 											break;
 										case "WORK":
 											$workaddr .= $buffer[$i][$value].";";
-											$workattr = $mult[0].";".$mult[1].$prefi[$i][$mult[1]];
+											$workattr = $mult[0].";".$mult[1].$typei[$i][$mult[1]];
 											//$entries .= "A.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
 											$homeaddr .= $buffer[$i][$value].";";
-											$homeattr = $mult[0].";".$mult[1].$prefi[$i][$mult[1]];
+											$homeattr = $mult[0].";".$mult[1].$typei[$i][$mult[1]];
 											//$entries .= "B.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
@@ -282,11 +281,13 @@
 						$entries .= "FN".$buffer[$i]['N.GIVEN']." ".$buffer[$i]['N.FAMILY']."\r\n";
 					}
 				}
+
 				$workattr = ereg_replace("ADR;","",$workattr);
 				$homeattr = ereg_replace("ADR;","",$homeattr);
 				if (!$buffer[$i]['EXT']) { $buffer[$i]['EXT'] = ";"; }
 				if ($workaddr) {$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n"; }
 				if ($homeaddr) {$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n"; }
+
 				$entries .= $work.$home."END:VCARD\r\n";
 				$entries .= "\r\n";
 			}
