@@ -113,11 +113,9 @@ class html
 	{
 		if ($image != '')
 		{
-			if (strstr($image,'.') === False)
-			{
-				$image .= '.gif';
-			}
-			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
+			if (strpos($image,'.')) $image = substr($image,0,strpos($image,'.'));
+			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)) &&
+			    !($path = $GLOBALS['phpgw']->common->image('phpgwapi',$image)))
 			{
 				$path = $image;		// name may already contain absolut path 
 			}
