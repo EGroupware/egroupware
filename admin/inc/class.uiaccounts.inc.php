@@ -54,9 +54,44 @@
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
 			}
 
-			$query = (isset($_POST['query'])?$_POST['query']:'');
-
 			$GLOBALS['cd'] = ($_GET['cd']?$_GET['cd']:0);
+
+			if(isset($_POST['query']))
+			{
+				// limit query to limit characters
+				if(eregi('^[a-z_0-9]+$',$_POST['query'])) 
+					$query = $_POST['query'];
+			}
+			
+			if(isset($_POST['start']))
+			{
+				$start = (int)$_POST['start'];
+			}
+			else
+			{
+				$start = 0;
+			}
+
+			switch($_GET['order'])
+			{
+				case 'account_lid':
+					$order = $_GET['order'];
+					break;
+				default:
+					$order = 'account_lid';
+					break;
+			}
+
+			switch($_GET['sort'])
+			{
+				case 'ASC':
+				case 'DESC':
+					$sort = $_GET['sort'];
+					break;
+				default:
+					$sort = 'ASC';
+					break;
+			}
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -188,7 +223,9 @@
 			
 			if(isset($_POST['query']))
 			{
-				$GLOBALS['query'] = $_POST['query'];
+				// limit query to limit characters
+				if(eregi('^[a-z_0-9]+$',$_POST['query'])) 
+					$GLOBALS['query'] = $_POST['query'];
 			}
 			
 			if(isset($_POST['start']))
@@ -200,24 +237,29 @@
 				$start = 0;
 			}
 
-			if(isset($_GET['order']))
+			switch($_GET['order'])
 			{
-				$order = $_GET['order'];
+				case 'account_lastname':
+				case 'account_firstname':
+				case 'account_lid':
+					$order = $_GET['order'];
+					break;
+				default:
+					$order = 'account_lid';
+					break;
 			}
-			else
+
+			switch($_GET['sort'])
 			{
-				$order = 'account_lid';
+				case 'ASC':
+				case 'DESC':
+					$sort = $_GET['sort'];
+					break;
+				default:
+					$sort = 'ASC';
+					break;
 			}
-			
-			if(isset($_GET['sort']))
-			{
-				$sort = $_GET['sort'];
-			}
-			else
-			{
-				$sort = 'ASC';
-			}
-			
+
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			if(!@is_object($GLOBALS['phpgw']->js))
