@@ -99,6 +99,7 @@
 					$data['emailAddress']		= array(
 										array(
 											'address'	=> $felamimailUserPrefs['emailAddress'],
+											'name'		=> $GLOBALS['phpgw_info']['user']['fullname'],
 											'type'		=> 'default'
 										)
 									);
