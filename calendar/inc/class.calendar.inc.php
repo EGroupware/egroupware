@@ -303,7 +303,7 @@ class calendar extends calendar_
 					'height'	=> 14
 				);
 			}
-			if($event->is_public == 0)
+			if($event->public == 0)
 			{
 				$picture[] = Array(
 					'pict'	=> $phpgw->common->image('calendar','private.gif'),
