@@ -20,7 +20,7 @@
 	/*
 		This is the preliminary menuaction driver for the new multi-layered design
 	*/
-	if ($menuaction)
+	if (@isset($menuaction))
 	{
 		list($app,$class,$method) = explode('.',$menuaction);
 		if (! $app || ! $class || ! $method)
