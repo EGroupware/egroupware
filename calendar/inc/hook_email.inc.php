@@ -36,12 +36,17 @@
 	echo 'Event ID: '.$id."<br>\n";
 
 	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
-	$event = $phpgw->calendar->fetch_event($cal_stream,$id);
+	$event = $phpgw->calendar->fetch_event($id);
 
 	reset($event->participants);
+	while(list($particpants,$status) = each($event->participants))
+	{
+		$parts[] = $participants;
+	}
+	@reset($parts);
 
 	$freetime = $phpgw->calendar->localdates(mktime(0,0,0,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->tz_offset);
-	echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$event->participants);
+	echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$parts);
 
 	echo '</td></tr><tr><td>';
 
@@ -49,6 +54,7 @@
 
 	echo '</td></tr><td align="center"><tr>';
 
+	$phpgw->calendar->fetch_event($id);
 	echo $phpgw->calendar->get_response();
 	
 	$phpgw_info['server']['app_inc'] = $tmp_app_inc;
