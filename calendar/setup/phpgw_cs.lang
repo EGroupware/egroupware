@@ -1,57 +1,152 @@
-(for weekly)	calendar	cs	(pro týdenní)
+%1 matches found	calendar	cs	 %1 záznamù nalezeno
 1 match found	calendar	cs	Nalezen 1 záznam
-are you sure\nyou want to\ndelete this entry ?	calendar	cs	Jste si jist,\n¾e chcete\nvymazat tento záznam ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì\nchcete\ndsmazat tento záznam ?\n\nBude vymazán\npro v¹echny u¾ivatele.
+a	calendar	cs	
+accept	calendar	cs	Potvrï
+accepted	calendar	cs	Potvrzeno
+add alarm	calendar	cs	Pøidej alarm
+added	calendar	cs	Pøidáno
+alarm management	calendar	cs	Správa alarmù
+all day	calendar	cs	Celý den
+are you sure\nyou want to\ndelete this entry ?	calendar	cs	Opravdu mám\nsmazat tento záznam?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì\nchcete\nsmazat tento záznam ?\n\nBude vymazán\npro v¹echny u¾ivatele.
+are you sure you want to delete this holiday ?	calendar	cs	Opravdu mám smazat tento záznam?
 brief description	calendar	cs	Krátký popis
-calendar	common	cs	Kalendáø
 calendar - add	calendar	cs	Kalendáø - Pøidej
+calendar	common	cs	Kalendáø
 calendar - edit	calendar	cs	Kalendáø - Uprav
+calendar event	calendar	cs	Událost kalendáøe
+calendar holiday management	admin	cs	Správa svátkù kalendáøe
+calendar - [iv]cal	calendar	cs	Kalendáø - import z (iv)Cal
+calendar preferences	calendar	cs	Volby kalendáøe
+calendar settings	admin	cs	Nastavení kalendáøe
 daily	calendar	cs	Dennì
+daily matrix view	calendar	cs	Pohled na denní tabulku
 days repeated	calendar	cs	dnù se opakuje
+default calendar filter	calendar	cs	Standartní filtr kalendáøe
+default calendar view	calendar	cs	Standartní pohled kalendáøe
+deleted	calendar	cs	Smazáno
 description	calendar	cs	Popis
+display interval in day view	calendar	cs	Zobrazuj interval v denním pohledu
+display mini calendars when printing	calendar	cs	Pøi tisku zobrazuj mini kalendáø
+display status of events	calendar	cs	Zobrazuj stav události
+do you wish to autoload calendar holidays files dynamically?	admin	cs	Mám automaticky nahrávat sobory svátkù?
 duration	calendar	cs	Trvání
+edit series	calendar	cs	Uprav sérii
+edit single	calendar	cs	Uprav jednu
+end date/time	calendar	cs	Koncové datum a èas
+ends	calendar	cs	konèí
+event details follow	calendar	cs	Podrobnosti o události
+export	calendar	cs	Export
 f	calendar	cs	Pá
+(for weekly)	calendar	cs	(pro týdenní)
+fr	calendar	cs	Pá
+free/busy	calendar	cs	Volno/Obsazeno
 frequency	calendar	cs	Frekvence opakování
 fri	calendar	cs	Pá
 full description	calendar	cs	Celkový popis
 generate printer-friendly version	calendar	cs	Generuj verzi pro tisk
+global public and group public	calendar	cs	Globálnì pøístupná i pøístupná pro skupinu
+global public only	calendar	cs	Pouze globálnì pøístupná
 go!	calendar	cs	Jdi!
+grant calendar access	common	cs	Vyhraï pøístup ke kalendáøi
+group public only	calendar	cs	Pøístupná pouze pro skupinu
+has been canceled	calendar	cs	Byla odvolána
+has been rescheduled to	calendar	cs	Byla pøesunuta na
+ignore conflict	calendar	cs	Ignoruj konflikt
+import	calendar	cs	Import
+interval	calendar	cs	Interval
+i participate	calendar	cs	Podílím se
+(i/v)cal	calendar	cs	(i/v)Cal
+load [iv	calendar	cs	Nahrej (iv)Cal
+location	calendar	cs	Umístìní
+location to autoload from	admin	cs	Umístìní zdroje pro automatické naètení
 m	calendar	cs	P
 minutes	calendar	cs	Minut
+mo	calendar	cs	Po
+modified	calendar	cs	Zmìnìno
 mon	calendar	cs	Po
 month	calendar	cs	Mìsíc
 monthly (by date)	calendar	cs	Mìsíènì (podle data)
 monthly (by day)	calendar	cs	Mìsíènì (podle dne)
+monthly	calendar	cs	Mìsíènì
 new entry	calendar	cs	Nový záznam
 no matches found.	calendar	cs	®ádný záznam nenalezen.
+no response	calendar	cs	®ádná odezva
+number of intervals per day in planner view	calendar	cs	Poèet intervalù za den v plánovacím pohledu
+number of months	calendar	cs	Poèet mìsícù
+on %1 %2 %3 your meeting request for %4	calendar	cs	%1 %2 %3 vá¹ po¾adavek na schùzku pro %4
+participant	calendar	cs	Spoluzodpovìdný
 participants	calendar	cs	Spoluzodpovìdní
+participates	calendar	cs	Spoluzodpovídá
+planner	calendar	cs	Plánovaè
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	cs	Prosím potvrïte, pøijmìte, odvolejte nebo zkontrolujte zmìny v pøíslu¹ném záznamu kalendáøe
+preselected group for entering the planner	calendar	cs	Pøedvybraná skupina pro vstup do plánovaèe
+print calendars in black & white	calendar	cs	Tiskni èernobílé kalendáøe 
 printer friendly	calendar	cs	Pro tisk
+private and global public	calendar	cs	Soukromì i veøejnì pøístupné
+private and group public	calendar	cs	Pøístupné soukromì i pro skupinu
+private only	calendar	cs	Pouze soukromé
+receive extra information in event mails	calendar	cs	Pøijmi roz¹íøené informace v e-mailech o událostech
+re-edit event	calendar	cs	Oprav znova
+refresh	calendar	cs	Obnov
+rejected	calendar	cs	Odmítnuto
 repeat day	calendar	cs	Den pro opakování
 repeat end date	calendar	cs	Datum konce opakování
+repeating event information	calendar	cs	Informace o opakování
 repeat type	calendar	cs	Druh opakování
 repetition	calendar	cs	Opakování
 sa	calendar	cs	So
 sat	calendar	cs	So
+scheduling conflict	calendar	cs	Konflikt naplánování
 search results	calendar	cs	Výsledky hledání
+send/receive updates via email	calendar	cs	Odeslat / pøijmout zmìny e-mailem
+send updates via email	common	cs	Po¹li zmìny e-mailem
+show default view on main screen	calendar	cs	Zobrazuj standartní pohled na hlavní stranì
+show high priority events on main screen	calendar	cs	Zobrazuj události s vysokou prioritou na hlavní stranì
+sorry, the owner has just deleted this event	calendar	cs	Omlouvám se, vlastník právì smazal tuto událost
+sort by	calendar	cs	Setøídìno podle
+start- and enddates	calendar	cs	Poèáteèní a koncové datum
+start date/time	calendar	cs	Poèáteèní datum a èas
+su	calendar	cs	Ne
 sun	calendar	cs	Ne
-the following conflicts with the suggested time:<ul>x</ul>	calendar	cs	Následují kolize se zadaným èasem:<ul></ul>
+tentative	calendar	cs	
+th	calendar	cs	Èt
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	cs	Následují kolize se zadaným èasem:<ul>%1</ul>
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	cs	Vyskytl se problém se spojením na news-server. <BR>Prosím kontaktujte administrátora.
 this month	calendar	cs	Tento mìsíc
 this week	calendar	cs	Tento týden
+this year	calendar	cs	Letos
 thu	calendar	cs	Èt
+title	calendar	cs	Název
 today	calendar	cs	Dnes
+tu	calendar	cs	Út
 tue	calendar	cs	Út
 use end date	calendar	cs	Datum konce pou¾ití
 view this entry	calendar	cs	Uka¾ tento záznam
 w	calendar	cs	S
+we	calendar	cs	St
 wed	calendar	cs	St
 week	calendar	cs	Týden
+weekday starts on	calendar	cs	Týden zaèíná dnem
 weekly	calendar	cs	Týdnì
-%1 matches found	calendar	cs	%1 záznamù nalezeno
+when creating new events default set to private	calendar	cs	Novì vytvoøené události standartnì nastavit na soukromé
+work day ends on	calendar	cs	Pracovní den zaèíná
+work day starts on	calendar	cs	Pracovní den konèí
+%1 matches found	calendar	cs	 záznamù nalezeno %1
+year	calendar	cs	Rok
 year	calendar	cs	Rok
 yearly	calendar	cs	Roènì
 you have 1 high priority event on your calendar today.	common	cs	Máte dnes 1 událost s vysokou prioritou.
 you have %1 high priority events on your calendar today.	common	cs	Máte dnes %1 událostí s vysokou priritou.
+you have a meeting scheduled for	calendar	cs	Máte schùzku naplánovanou na
 you have not entered a\nbrief description	calendar	cs	Nebyl zadán \nkrátký popis
 you have not entered a\nvalid time of day.	calendar	cs	Nebyl zadán \nplatný èas.
+you have not entered a title	calendar	cs	Nebyl zadán název
+you have not entered a valid date	calendar	cs	Nebylo zadáno správné datum
+you have not entered a valid time of day	calendar	cs	Nebyl zadán správný èas
+you have not entered participants	calendar	cs	Nebyli zadání spoluzodpovìdní 
+you have %1 high priority events on your calendar today.	common	cs	Máte dnes %1 událostí s vysokou priritou.
 you must enter one or more search keywords	calendar	cs	Musíte zadat aspoò jedno klíèové slovo
+your meeting scheduled for	calendar	cs	Va¹e schùzka naplánovaná na 
+your meeting that had been scheduled for	calendar	cs	Va¹e schùzka naplánovaná na 
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	cs	Vá¹ navrhovaný èas <B> %1 - %2 </B> se pøekrývá s následujícími záznamy v kalendáøi:

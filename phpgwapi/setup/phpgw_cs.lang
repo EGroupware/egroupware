@@ -1,114 +1,491 @@
+about %1	phpgwapi	cs	O %1
 access	common	cs	Pøístup
+access not permitted	common	cs	Pøístup zakázán
 access type	common	cs	Druh pøístupu
 account has been created	common	cs	U¾ivatelský úèet byl vytvoøen
 account has been deleted	common	cs	U¾ivatelský úèet byl smazán
 account has been updated	common	cs	U¾ivatelský úèet byl zmìnìn
+acl	common	cs	Práva
+active	common	cs	Aktivní
+add category	common	cs	Pøidat kategorii
 add	common	cs	Pøidat
+addressbook	phpgwapi	cs	Adresáø
+add sub	common	cs	Pøidat podkategorii
+add %1 category for	common	cs	Pøidat %1 kategorii pro
 admin	common	cs	Administrátor
 administration	common	cs	Správa
+afghanistan	common	cs	
+albania	common	cs	
+algeria	common	cs	
+all	common	cs	V¹e
+american samoa	common	cs	
+andorra	common	cs	
+angola	common	cs	
+anguilla	common	cs	
+antarctica	common	cs	
+antigua and barbuda	common	cs	
 april	common	cs	Duben
 are you sure you want to delete this entry ?	common	cs	Jste si jist, ¾e chcete vymazat tento záznam?
+argentina	common	cs	
+armenia	common	cs	
+aruba	common	cs	
 august	common	cs	Srpen
+australia	common	cs	
+austria	common	cs	
+author	common	cs	Autor
+autosave default category	common	cs	Automaticky ukládat standartní kategorii
+azerbaijan	common	cs	
+back	common	cs	Zpìt
+bad login or password	login	cs	©patné jméno nebo heslo
+bahamas	common	cs	
+bahrain	common	cs	
+bangladesh	common	cs	
+barbados	common	cs	
+belarus	common	cs	
+belgium	common	cs	
+belize	common	cs	
+benin	common	cs	
+bermuda	common	cs	
+bhutan	common	cs	
+bolivia	common	cs	
+bosnia and herzegovina	common	cs	
+botswana	common	cs	
+bouvet island	common	cs	
+brazil	common	cs	
+british indian ocean territory	common	cs	
+brunei darussalam	common	cs	
+bulgaria	common	cs	
+burkina faso	common	cs	
+burundi	common	cs	
+cambodia	common	cs	
+cameroon	common	cs	
+canada	common	cs	
 cancel	common	cs	Storno
+cape verde	common	cs	
+categories	common	cs	Kategorie
+categories for	common	cs	kategorie pro
+category	common	cs	Kategorie
+category %1 has been added !	common	cs	Kategorie %1 byla pøidána 
+category %1 has been updated !	common	cs	Kategorie %1 byla zmìnìna
+cayman islands	common	cs	
+central african republic	common	cs	
+chad	common	cs	
 change	common	cs	Zmìnit
 charset	common	cs	iso-8859-2
+chile	common	cs	
+china	common	cs	
+choose the category	common	cs	Vyberte kategorii
+choose the parent category	common	cs	Vyberte rodièovskou kategorii
+christmas island	common	cs	
 clear	common	cs	Smazat
 clear form	common	cs	Vyèistit formuláø
+cocos (keeling) islands	common	cs	
+colombia	common	cs	
+comoros	common	cs	
+congo	common	cs	
+congo, the democratic republic of the	common	cs	
+cook islands	common	cs	
 copy	common	cs	Kopírovat
+costa rica	common	cs	
+cote d ivoire	common	cs	
 create	common	cs	Vytvoøit
 created by	common	cs	Vytvoøil 
+croatia	common	cs	
+cuba	common	cs	
+currency	common	cs	Mìna
+current	common	cs	Aktuální
 current users	common	cs	Souèasní u¾ivatelé
+cyprus	common	cs	
+czech republic	common	cs	
 date	common	cs	Datum
+date due	common	cs	Datum do
 december	common	cs	Prosinec
+default category	common	cs	Standartní kategorie
 delete	common	cs	Vymazat
+denmark	common	cs	
+description	common	cs	Popis
+detail	common	cs	Podrobnosti
+details	common	cs	Podrobnosti
+disabled	common	cs	Zakázáno
+djibouti	common	cs	
+domestic	phpgwapi	cs	Domácí
+dominica	common	cs	
+dominican republic	common	cs	
 done	common	cs	Hotovo
-e-mail	common	cs	E-Mail
+do you also want to delete all subcategories ?	common	cs	Chcete smazat také podkategorie?
+east timor	common	cs	
+ecuador	common	cs	
+edit categories	common	cs	Uprav kategorie
+edit category	common	cs	Uprav kategorii
 edit	common	cs	Upravit
+edit %1 category for	common	cs	Uprav %1 kategorii pro
+egypt	common	cs	
+el salvador	common	cs	
+e-mail	common	cs	E-Mail
 email	common	cs	E-Mail
+enabled	common	cs	Povoleno
+end date	common	cs	Koncové datum
+end time	common	cs	Koncový èas
 entry has been deleted sucessfully	common	cs	Záznam úspì¹nì vymazán
 entry updated sucessfully	common	cs	Záznam úspì¹nì upraven
+equatorial guinea	common	cs	
+eritrea	common	cs	
 error	common	cs	Chyba
+error creating %1 %2 directory	common	cs	Chyba pøi vytváøení adresáøe %1 %2
+error deleting %1 %2 directory	common	cs	Chyba pøi ru¹ení adresáøe %1 %2
+error renaming %1 %2 directory	common	cs	Chyba pøi pøejmenování adresáøe %1 %2
+estonia	common	cs	
+ethiopia	common	cs	
 exit	common	cs	Ukonèit
+falkland islands (malvinas)	common	cs	
+faroe islands	common	cs	
 february	common	cs	Únor
+fields	common	cs	Polo¾ky
+fiji	common	cs	
+files	common	cs	Soobory
 filter	common	cs	Filtr
+finland	common	cs	
 first name	common	cs	Jméno
+firstname	common	cs	Pøíjmení
+first page	phpgwapi	cs	První strana
+force selectbox	common	cs	Otevøi nabídku pro výbìr
+france	common	cs	
+french guiana	common	cs	
+french polynesia	common	cs	
+french southern territories	common	cs	
 friday	common	cs	Pátek
 ftp	common	cs	FTP
+gabon	common	cs	
+gambia	common	cs	
+georgia	common	cs	
+germany	common	cs	
+ghana	common	cs	
+gibraltar	common	cs	
+global	common	cs	Globální
 global public	common	cs	Veøejný pro v¹echny
+grant access	common	cs	Povol pøístup
+greece	common	cs	
+greenland	common	cs	
+grenada	common	cs	
 group access	common	cs	Skupinový pøístup
+group	common	cs	Skupina
 group has been added	common	cs	Skupina byla pøidána
 group has been deleted	common	cs	Skupina byla smazána
 group has been updated	common	cs	Skupina byla upravena
 group public	common	cs	Veøejný pro skupiny
 groups	common	cs	Skupiny
+guadeloupe	common	cs	
+guam	common	cs	
+guatemala	common	cs	
+guinea-bissau	common	cs	
+guinea	common	cs	
+guyana	common	cs	
+haiti	common	cs	
+heard island and mcdonald islands	common	cs	
 help	common	cs	Nápovìda
 high	common	cs	Vysoká
+highest	common	cs	Nejvy¹¹í
+holy see (vatican city state)	common	cs	
 home	common	cs	Domù
-it has been more then x days since you changed your password	common	cs	Va¹e heslo bylo zmìnìno pøed více ne¾  dny
+honduras	common	cs	
+hong kong	common	cs	
+hungary	common	cs	
+iceland	common	cs	
+india	common	cs	
+indonesia	common	cs	
+international	phpgwapi	cs	Mezinárodní
+iran, islamic republic of	common	cs	
+iraq	common	cs	
+ireland	common	cs	
+israel	common	cs	
+italy	common	cs	
+it has been more then %1 days since you changed your password	common	cs	Va¹e heslo bylo zmìnìno pøed více ne¾ %1 dny
+it is recommended that you run setup to upgrade your tables to the current version	common	cs	Doporuèuji spustit setup pro upgrade databázových tabulek na souèasnou verzi.
+jamaica	common	cs	
 january	common	cs	Leden
+japan	common	cs	
+jordan	common	cs	
 july	common	cs	Èervenec
 june	common	cs	Èerven
+kazakstan	common	cs	
+kenya	common	cs	
+keywords	common	cs	Klíèová slova
+kiribati	common	cs	
+korea, democratic peoples republic of	common	cs	
+korea, republic of	common	cs	
+kuwait	common	cs	
+kyrgyzstan	common	cs	
+language	common	cs	Jazyk
+lao peoples democratic republic	common	cs	
 last name	common	cs	Pøíjmení
+lastname	common	cs	Pøíjmení
 last page	common	cs	posldní stránka
+latvia	common	cs	
+lebanon	common	cs	
+lesotho	common	cs	
+liberia	common	cs	
+libyan arab jamahiriya	common	cs	
+liechtenstein	common	cs	
+list	common	cs	Seznam
+lithuania	common	cs	
 login	common	cs	Pøihlá¹ení
 logout	common	cs	Odhlá¹ení
 low	common	cs	Nízká
+lowest	common	cs	Nejni¾¹í
+luxembourg	common	cs	
+macau	common	cs	
+macedonia, the former yugoslav republic of	common	cs	
+madagascar	common	cs	
+main category	common	cs	Hlavní kategorie
+main screen	common	cs	Hlavní strana
+malawi	common	cs	
+malaysia	common	cs	
+maldives	common	cs	
+mali	common	cs	
+malta	common	cs	
+manual	common	cs	Pøíruèka
 march	common	cs	Bøezen
+marshall islands	common	cs	
+martinique	common	cs	
+mauritania	common	cs	
+mauritius	common	cs	
 may	common	cs	Kvìten
+mayotte	common	cs	
 medium	common	cs	Støední
+message	common	cs	Zpráva
+mexico	common	cs	
+micronesia, federated states of	common	cs	
+moldova, republic of	common	cs	
+monaco	common	cs	
 monday	common	cs	Pondìlí
+mongolia	common	cs	
+montserrat	common	cs	
+morocco	common	cs	
+mozambique	common	cs	
+myanmar	common	cs	
 name	common	cs	Jméno
+namibia	common	cs	
+nauru	common	cs	
+nepal	common	cs	
+netherlands antilles	common	cs	
+netherlands	common	cs	
+never	common	cs	Nikdy
+new caledonia	common	cs	
 new entry added sucessfully	common	cs	Nový záznam úspì¹nì pøidán
+new main category	common	cs	Nová hlavní kategorie
+new value	common	cs	Nová hodnota
+new zealand	common	cs	
+next	common	cs	Dal¹í
 next page	common	cs	dal¹í stránka
+nicaragua	common	cs	
+niger	common	cs	
+nigeria	common	cs	
+niue	common	cs	
 no	common	cs	Ne
+no entries found, try again ...	phpgwapi	cs	Nebylo nic nalezeno, zkuste to znova ...
+no history for this record	common	cs	®ádná historie pro tento záznam
 none	common	cs	®ádné
+norfolk island	common	cs	
 normal	common	cs	Normální
+northern mariana islands	common	cs	
+norway	common	cs	
+no subject	common	cs	Pøedmìt neuveden
+not assigned	phpgwapi	cs	nepøiøazeno
+note	common	cs	Poznámka
+notes	common	cs	Poznámky
+notify window	common	cs	Upozoròující okno
 november	common	cs	Listopad
 october	common	cs	Øíjen
 ok	common	cs	OK
-on *nix systems please type: x	common	cs	Na *NIX systémech prosím napi¹te: %1
+old value	common	cs	Stará hodnota
+oman	common	cs	
 only yours	common	cs	jenom va¹e
+on *nix systems please type: %1	common	cs	Na *NIX systémech prosím napi¹te: %1
+open notify window	common	cs	Otevøi pøipomínací okno
+original	common	cs	Originál
+other	common	cs	Jiný
+overview	common	cs	Pøehled
+owner	common	cs	Vlastník
+pakistan	common	cs	
+palau	common	cs	
+palestinian territory, occupied	common	cs	
+panama	common	cs	
+papua new guinea	common	cs	
+paraguay	common	cs	
+parcel	phpgwapi	cs	Parcela
+parent category	common	cs	Rodièovská kategorie
 password	common	cs	Heslo
+password could not be changed	phpgwapi	cs	Heslo nemohlo být zmìnìno
 password has been updated	common	cs	Heslo bylo zmìnìno
+pattern for search in addressbook	phpgwapi	cs	Vzorek pro hledání v adresáøi
+pattern for search in projects	phpgwapi	cs	Vzorek pro hledání v projektech
 permissions to the files/users directory	common	cs	práva k adresáøi pro soubory / u¾ivatele
-please x by hand	common	cs	Prosím %1 ruènì
-powered by phpgroupware version x	common	cs	Aplikace <a href="http://www.phpgroupware.org">phpGroupWare</a> verze 
+personal	common	cs	Osobní
+peru	common	cs	
+philippines	common	cs	
+pitcairn	common	cs	
+please %1 by hand	common	cs	Prosím %1 ruènì
+please enter a name	common	cs	Prosím zadejte jméno !
+please run setup to become current	common	cs	Prosím spus»te setup pro aktualizaci
+please set your global preferences	common	cs	Prosím upravte va¹e globální nastavení !
+please set your preferences for this application	common	cs	Prosím upravte va¹e nastavení pro tuto aplikaci !
+poland	common	cs	
+portugal	common	cs	
+postal	phpgwapi	cs	Po¹tovní
+powered by phpgroupware version %1	common	cs	Aplikace <a href="http://www.phpgroupware.org">phpGroupWare</a> verze %1
 preferences	common	cs	Nastavení
 previous page	common	cs	Pøedchozí stránka
+print	common	cs	Tisk
 priority	common	cs	Priorita
 private	common	cs	Soukromý
+project	phpgwapi	cs	Projekt
+public	common	cs	Veøejný
+puerto rico	common	cs	
+qatar	common	cs	
+read	common	cs	Èíst
+read this list of methods.	phpgwapi	cs	Èti tento seznam metod
+reject	common	cs	Odvolej
 rename	common	cs	Pøejmenovat
+returns an array of todo items	phpgwapi	cs	Vrací pole úkolù
+returns struct of users application access	phpgwapi	cs	Vrací strukturu u¾ivatelského pøístupu k aplikacím
+reunion	common	cs	
+romania	common	cs	
+russian federation	common	cs	
+rwanda	common	cs	
+saint helena	common	cs	
+saint kitts and nevis	common	cs	
+saint lucia	common	cs	
+saint pierre and miquelon	common	cs	
+saint vincent and the grenadines	common	cs	
+samoa	common	cs	
+san marino	common	cs	
+sao tome and principe	common	cs	
 saturday	common	cs	Sobota
+saudi arabia	common	cs	
 save	common	cs	Ulo¾it
 search	common	cs	Hledat
+section	common	cs	Sekce
+select category	common	cs	Vyber kategorii
+select one	phpgwapi	cs	Vyber
+select	phpgwapi	cs	Výbìr
+send	common	cs	Po¹li
+senegal	common	cs	
 september	common	cs	Záøí
+server name	common	cs	Jméno serveru
+server %1 has been added	common	cs	Server %1 byl pøidán
 session has been killed	common	cs	Relace byla zru¹ena
+seychelles	common	cs	
 show all	common	cs	Ukázat v¹e
-showing x	common	cs	zobrazeno 
-showing x - x of x	common	cs	zobrazeno %1 - %2 z %3
+showing %1 - %2 of %3	common	cs	zobrazeno %1 - %2 z %3
+showing %1	common	cs	zobrazeno %1
+sierra leone	common	cs	
+singapore	common	cs	
+slovakia	common	cs	
+slovenia	common	cs	
+solomon islands	common	cs	
+somalia	common	cs	
 sorry, there was a problem processing your request.	common	cs	Promiòte, nastala chyba pøi zpracování va¹eho po¾adavku.
+sorry, your login has expired	login	cs	Promiòte, platnost va¹eho pøihlá¹ení ji¾ vypr¹ela
+south africa	common	cs	
+south georgia and the south sandwich islands	common	cs	
+spain	common	cs	
+sri lanka	common	cs	
+start date	common	cs	Poèáteèní datum
+start time	common	cs	Poèáteèní èas
+status	common	cs	Stav
+subject	common	cs	Pøedmìt
 submit	common	cs	Potvrdit
-sunday	common	cs	Nedìla
+sudan	common	cs	
+sunday	common	cs	Nedìle
+suriname	common	cs	
+svalbard and jan mayen	common	cs	
+swaziland	common	cs	
+sweden	common	cs	
+switzerland	common	cs	
+syrian arab republic	common	cs	
+taiwan, province of china	common	cs	
+tajikistan	common	cs	
+tanzania, united republic of	common	cs	
+thailand	common	cs	
+the api is current	common	cs	API je aktuální
+the api requires an upgrade	common	cs	API potøebuje upgrade
+the following applications require upgrades	common	cs	Následující aplikace vy¾adují upgrade
+the mail server returned	common	cs	Po¹tovní server vrátil
+this application is current	common	cs	Tato aplikace je aktuální
+this application requires an upgrade	common	cs	Tato aplikace vy¾aduje upgrade
+this name has been used already	common	cs	Toto jméno u¾ je pou¾ito !
 thursday	common	cs	Ètvrtek
 time	common	cs	Èas
+time zone	common	cs	Èasová zóna
+time zone offset	common	cs	Rozdíl èasové zóny
+title	common	cs	Titul
 to correct this error for the future you will need to properly set the	common	cs	 = Aby se chyba neobjevovala v budoucnosti musíte právnì nastavit
+to go back to the msg list, click <a href= %1 >here</a>	common	cs	<a href="%1">Zpìt na seznam zpráv</a>
+togo	common	cs	
+tokelau	common	cs	
+tonga	common	cs	
 total	common	cs	Celkem
+trinidad and tobago	common	cs	
 tuesday	common	cs	Úterý
+tunisia	common	cs	
+turkey	common	cs	
+turkmenistan	common	cs	
+turks and caicos islands	common	cs	
+tuvalu	common	cs	
+uganda	common	cs	
+ukraine	common	cs	
+united arab emirates	common	cs	
+united kingdom	common	cs	
+united states	common	cs	
+united states minor outlying islands	common	cs	
+unknown	common	cs	Neznámý
+update	common	cs	Aktualizace
 updated	common	cs	Upraven
+url	common	cs	Adresa
+uruguay	common	cs	
+use button to search for address	phpgwapi	cs	stiskni tlaèítko pro hledání v adresáøi
+use button to search for	phpgwapi	cs	stiskni tlaèítko pro hledání 
+use button to search for project	phpgwapi	cs	stiskni tlaèítko pro hledání projektu
+use cookies	login	cs	pou¾ívat su¹enky (cookies)
+user	common	cs	U¾ivatel
+username	common	cs	U¾ivatelské jméno
+users choice	common	cs	U¾ivatelská nabídka
 users	common	cs	u¾ivatelé
+uzbekistan	common	cs	
+vanuatu	common	cs	
+venezuela	common	cs	
+version	phpgwapi	cs	verze
+viet nam	common	cs	
 view	common	cs	Prohlédnout
+virgin islands, british	common	cs	
+virgin islands, u.s.	common	cs	
+wallis and futuna	common	cs	
 wednesday	common	cs	Støeda
+welcome	common	cs	Vítejte
+western sahara	common	cs	
 which groups	common	cs	které skupiny
+which groups	common	cs	Které skupiny
+written by:	common	cs	Zapsal:
+year	common	cs	Rok
+yemen	common	cs	
 yes	common	cs	Ano
+you are required to change your password during your first login	phpgwapi	cs	Budete muset zmìnit heslo bìhem svého prvního pøihlá¹ení
+you are running a newer version of phpgroupware than your database is setup for	common	cs	Máte spu¹tìnu novìj¹í verzi phpGroupWare, ne¾ va¹e databáze.
 you have 1 new message!	common	cs	Máte 1 novou zprávu!
-you have x new messages!	common	cs	Máte  nových zpráv!
+you have been successfully logged out	login	cs	Va¹e odhlá¹ení porbìhlo úspì¹nì
+you have not entered a title	phpgwapi	cs	Nezadal jste titul
+you have not entered a valid date	phpgwapi	cs	Nezadal jste správné datum
+you have not entered a valid time of day	phpgwapi	cs	Nezadal jste správný èas
+you have not entered participants	phpgwapi	cs	Nezadal jste spolupracovníky
+you have selected an invalid date	common	cs	Bylo vybráno chybné datum !
+you have selected an invalid main category	common	cs	Byla vybrána chybná hlavní kategorie !
+you have %1 new messages!	common	cs	Máte %1 nových zpráv!
+your message could <b>not</b> be sent!<br>	common	cs	Va¹e zpráva nemù¾e být odeslána ! 
 your message has been sent	common	cs	Va¹e zpráva byla odeslána
 your search returned 1 match	common	cs	byl nalezen 1 záznam
-your search returned x matchs	common	cs	bylo nalezeno %1 záznamù
+your search returned %1 matchs	common	cs	bylo nalezeno %1 záznamù
+your session could not be verified.	login	cs	Va¹e sezení není platné.
 your settings have been updated	common	cs	Va¹e nastavení bylo upraveno
-bad login or password	login	cs	©patné jméno nebo heslo
-password	login	cs	Heslo
-sorry, your login has expired	login	cs	Promiòte, platnost va¹eho pøihlá¹ení ji¾ vypr¹ela
-use cookies	login	cs	pou¾ívat su¹enky (cookies)
-username	login	cs	U¾ivatelské jméno
-you have been successfully logged out	login	cs	Va¹e odhlá¹ení porbìhlo úspì¹nì
+yugoslavia	common	cs	
+zambia	common	cs	
+zimbabwe	common	cs	

@@ -1,20 +1,168 @@
-addressbook	common	cs	Telefonní seznam
+%1 records imported	addressbook	cs	%1 záznamù importováno
+%1 records read (not yet imported, you may go back and uncheck test import)	addressbook	cs	%1 záznamù naèteno (prozatím neimportováno)
+access not permitted	addressbook	cs	pøístup nepovolen
+add a single entry by passing the fields.	addressbook	cs	Pøidej záznam pøeskoèením polo¾ek.
+add custom field	addressbook	cs	Pøidej u¾ivatelskou polo¾ku
 address book	common	cs	Adresáø
-birthday	addressbook	cs	Narozeniny
-city	addressbook	cs	Mìsto
-company name	addressbook	cs	Firma
+addressbook	common	cs	Telefonní seznam
+addressbook preferences	addressbook	cs	Nastavení adresáøe
+address book - vcard in	addressbook	cs	Adresáø - VCard v
+address book - view	addressbook	cs	Adresáø - pohled
+address line 2	addressbook	cs	Adresa øádek 2
+address line 3	addressbook	cs	Adresa øádek 3
+address type	addressbook	cs	Typ adresy
+addvcard	addressbook	cs	Pøidej vizitku VCard
+all	addressbook	cs	V¹e
+alt. csv import	addressbook	cs	Alternativní import z CSV
+april	addressbook	cs	duben
+are you sure you want to delete this field?	addressbook	cs	Opravdu mám smazat tuto polo¾ku?
+august	addressbook	cs	srpen
+bbs phone	addressbook	cs	Èíslo na BBS
+birthday	common	cs	Narozeniny
+birthdays	addressbook	cs	Narozeniny
+blank	addressbook	cs	Prázdná
+<b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	cs	
+business address type	addressbook	cs	Typ obchodní adresy
+business city	addressbook	cs	Mìsto obchodu
+business	common	cs	Obchod
+business country	addressbook	cs	Zemì obchodu
+business email	addressbook	cs	E-mail obchodu
+business email type	addressbook	cs	Typ e-mailu obchodu
+business fax	addressbook	cs	Fax obchodu
+business phone	addressbook	cs	Telefon obchodu
+business state	addressbook	cs	Stát obchodu
+business street	addressbook	cs	Ulice obchodu
+business zip code	addressbook	cs	PSÈ obchodu
+car phone	addressbook	cs	Telefon do auta
+category	addressbook	cs	Kategorie
+cell phone	addressbook	cs	Mobil
+city	common	cs	Mìsto
+company	common	cs	Spoleènost
+company name	common	cs	Firma
+contact application	admin	cs	Kontakty
+contact	common	cs	Kontakt
+contact settings	admin	cs	Nastavení kontaktù
+country	common	cs	Zemì
+created by	addressbook	cs	Vytvoøil
+custom	addressbook	cs	Vlastní
+custom fields	addressbook	cs	Vlastní polo¾ky
+debug output in browser	addressbook	cs	Ladící výstup v prohlí¾eèi
+december	addressbook	cs	prosinec
+default filter	addressbook	cs	Standartní filtr
+delete	addressbook	cs	Sma¾
+delete a single entry by passing the id.	addressbook	cs	Sma¾ záznam pøedáním id.
+department	common	cs	Oddìlení
+domestic	addressbook	cs	Domácí
+download	addressbook	cs	Sta¾ení
+edit	addressbook	cs	Oprav
+edit custom field	addressbook	cs	Oprav vlastní polo¾ku
+edit custom fields	admin	cs	Oprav vlastní polo¾ky
 e-mail	addressbook	cs	E-Mail
+export contacts	addressbook	cs	Export kontaktù
+export file name	addressbook	cs	Název souboru exportu
+export from addressbook	addressbook	cs	Export z adresáøe
+extra	addressbook	cs	Extra
 fax	addressbook	cs	Fax
+fax number	common	cs	Faxové èíslo
+february	addressbook	cs	únor
+field name	addressbook	cs	Jméno polo¾ky
+fields	addressbook	cs	Polo¾ky
+fields to show in address list	addressbook	cs	Viditelné polo¾ky v seznamu
+field %1 has been added !	addressbook	cs	Polo¾ka %1 byla pøidána
+field %1 has been updated !	addressbook	cs	Polo¾ka %1 byla aktualizována
 first name	addressbook	cs	Jméno
+full name	addressbook	cs	Celé jméno
+geo	addressbook	cs	GEO
+grant addressbook access	common	cs	Deleguj práva pro pøístup k adresáøi
+home address type	addressbook	cs	Typ adresy domù
+home city	addressbook	cs	Mìsto - domù
+home country	addressbook	cs	Zemì - domù
+home email	addressbook	cs	E-mail - domù
+home email type	addressbook	cs	Typ e-mailu domù
 home phone	addressbook	cs	Telefon - domù
+home state	addressbook	cs	Stát - domù
+home street	addressbook	cs	Ulice -domù
+home zip code	addressbook	cs	PSÈ - domù
+import	addressbook	cs	Import
+import contacts	addressbook	cs	Importuj kontakty
+import file	addressbook	cs	Importuj soubor
+import from ldif, csv, or vcard	addressbook	cs	Import z LDIF, CSV nebo VCard
+import from outlook	addressbook	cs	Importuj z Outlooku
+international	addressbook	cs	Mezinárodní
+isdn phone	addressbook	cs	ISDN èíslo
+january	addressbook	cs	leden
+july	addressbook	cs	èervenec
+june	addressbook	cs	èerven
+label	addressbook	cs	Nálepka
 last name	addressbook	cs	Pøíjmení
+ldap context for contacts	admin	cs	LDAP kontext pro kontakty
+ldap host for contacts	admin	cs	LDAP hostitel pro kontakty
+ldap root dn for contacts	admin	cs	LDAP koøenové dn pro kontakty
+ldap root pw for contacts	admin	cs	LDAP koøenové pw pro kontakty
+ldif	addressbook	cs	LDIF
+line 2	addressbook	cs	Øádek 2
+march	addressbook	cs	bøezen
+may	addressbook	cs	kvìten
+message phone	addressbook	cs	Telefon pro zprávy
+middle name	addressbook	cs	Prostøední jméno
 mobile	addressbook	cs	Mobil
+mobile phone	addressbook	cs	Mobil
+modem phone	addressbook	cs	Èíslo na modem
+name	addressbook	cs	Jméno
+no	addressbook	cs	Ne
+none	addressbook	cs	¾ádné
 notes	addressbook	cs	Poznámky
+no vcard	addressbook	cs	®ádná vizitka
+november	addressbook	cs	listopad
+october	addressbook	cs	øíjen
+ok	addressbook	cs	OK
+on	addressbook	cs	 
 other number	addressbook	cs	Telefon - ostatní
+other phone	addressbook	cs	Jiný telefon
 pager	addressbook	cs	Pager
-state	addressbook	cs	Stát
-street	addressbook	cs	Ulice
-today is x's birthday!	common	cs	Dnes má narozeniny %1!
-tomorrow is x's birthday.	common	cs	Zítra má narozeniny %1.
+pager	common	cs	Pager
+parcel	addressbook	cs	Parcela
+phone number	common	cs	Telefonní èíslo
+phone numbers	common	cs	Telefonní èísla
+please enter a name for that field !	addressbook	cs	Prosím zadejte jméno pro tuto polo¾ku !
+please select	addressbook	cs	Vyberte prosím 
+please set your preferences for this app	addressbook	cs	Upravte si prosím volby pro tuto aplikaci
+please set your preferences for this application	addressbook	cs	Upravte si prosím volby pro tuto aplikaci
+postal	common	cs	Po¹tovní
+pref	addressbook	cs	Titul
+prefix	addressbook	cs	Titul
+private	addressbook	cs	Soukromé
+public	addressbook	cs	veøejné
+public key	addressbook	cs	Veøejný klíè
+read a list of entries.	addressbook	cs	Naèti seznam záznamù.
+read a single entry by passing the id and fieldlist.	addressbook	cs	Naèti záznam pøedáním id a seznamu polo¾ek.
+read this list of methods.	addressbook	cs	Naèti tento seznam metod.
+record access	addressbook	cs	Pøístup k záznamu
+record owner	addressbook	cs	Vlastník záznamu
+retrieve contacts	admin	cs	naèti kontakty
+select where you want to store	admin	cs	Vyberte místo pro ulo¾ení
+september	addressbook	cs	záøí
+show birthday reminders on main screen	addressbook	cs	Pøipomínat narozeniny na hlavní stranì
+state	common	cs	Stát
+street	common	cs	Ulice
+submit	addressbook	cs	Ode¹li
+successfully imported %1 records into your addressbook.	addressbook	cs	Ùspì¹nì importováno %1 záznamù do adresáøe.
+suffix	addressbook	cs	Pøípona
+that field name has been used already !	addressbook	cs	Takový název polo¾ky u¾ existuje !
+this person's first name was not in the address book.	addressbook	cs	Toto jméno nebylo nalezeno v adresáøi.
+this person's last name was not in the address book.	addressbook	cs	Toto pøíjmení nebylo nalezeno v adresáøi.
+today is %1's birthday!	common	cs	Dnes má narozeniny %1!
+tomorrow is %1's birthday.	common	cs	Zítra má narozeniny %1.
+update a single entry by passing the fields.	addressbook	cs	Zmìnit záznam pøedáním polo¾ek.
+vcard	common	cs	Vizitka VCard
+vcards require a first name entry.	addressbook	cs	Vizitky potøebují zadané køestní jméno.
+vcards require a last name entry.	addressbook	cs	Vizitky potøebují zadané pøíjmení.
+video phone	addressbook	cs	Video telefon
+voice phone	addressbook	cs	Voice telefon
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP nejde pou¾ít, pokud pou¾íváte kontakty pro uchování u¾ivatelských úètù
 work phone	addressbook	cs	Telefon - práce
-zip code	addressbook	cs	PSÈ
+yes	addressbook	cs	Ano
+you appear to be running	addressbook	cs	Pou¾íváte 
+you must select at least 1 column to display	addressbook	cs	Musíte vybrat alespoò 1 sloupec k zobrazení.
+you must select a vcard. (*.vcf)	addressbook	cs	Musíte vybrat VCard (*.vcf)
+zip code	common	cs	PSÈ
