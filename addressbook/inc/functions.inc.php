@@ -33,15 +33,23 @@
 		}
 	}
 
-	function cat_option($cat_id) {
+	function cat_option($cat_id='') {
 		global $phpgw_info;
-		// Get global and app-specific category listings
+		// Setup all and none first
 		$cats_link  = "<select name=\"cat_id\">";
+		$cats_link .= "<option value =\"all\"";
+		if ($cat_id=="all") {
+			$cats_link .= " selected";
+		}
+		$cats_link .= ">".lang("all");
+
 		$cats_link .= "<option value =\"0\"";
 		if (!$cat_id) {
 			$cats_link .= " selected";
 		}
 		$cats_link .= ">".lang("none");
+
+		// Get global and app-specific category listings
 		$cats       = CreateObject('phpgwapi.categories');
 
 		$cats->categories($phpgw_info['user']['account_id'],'phpgw');

@@ -325,7 +325,7 @@
 					$isstd=0;
 					if ($name && empty($value)) {
 						if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is empty (NULL)"; }
-						$check_stock = $this->stock_contact_fields + array('id' => 'id', 'tid' => 'tid', 'lid' => 'lid', 'owner' => 'owner');
+						$check_stock = $this->stock_contact_fields + array('id' => 'id', 'tid' => 'tid', 'lid' => 'lid', 'owner' => 'owner', 'cat_id' => 'cat_id');
 						while (list($fname,$fvalue)=each($check_stock)) {
 							if ($fvalue==$name) {
 								$filterlist .= $name.' is NULL,';

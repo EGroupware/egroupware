@@ -96,12 +96,25 @@
 	// Set filter to display entries where tid is blank,
 	//   else they may be accounts, etc.
 	$savefilter = $filter;
+
 	if ($filter == "none") {
-		$filter  = 'tid=,cat_id='.$cat_id;
+		if ($cat_id == "all") {
+			$filter  = 'tid=';
+		} else {
+			$filter  = 'tid=,cat_id='.$cat_id;
+		}
 	} elseif($filter == "private") {
-		$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=,cat_id='.$cat_id;
+		if ($cat_id == "all") {
+			$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=';
+		} else {
+			$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=,cat_id='.$cat_id;
+		}
 	} else {
-		$filter .= ',tid=,cat_id='.$cat_id;
+		if ($cat_id == "all") {
+			$filter .= ',tid=';
+		} else {
+			$filter .= ',tid=,cat_id='.$cat_id;
+		}
 	}
 
 	// Check if prefs were set, if not, create some defaults
