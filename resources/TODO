@@ -8,7 +8,7 @@ TODO:
 - delete dialog --> also delete pictures from vfs
 - show dialog
 - make delete, show and edit dialoges popup
-- some artwork : general resource pictures like (room, car, beamer ...)
+- some artwork : general resource pictures like (room, car, beamer ...) (Benkom)
 - sitemgr module
 
 - list 
@@ -20,7 +20,7 @@ TODO:
 	add location functionality
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	use eTemplates input validation
-	if only one cat is present --> chose it
+	if only one cat is present --> chose it (eTemplate patch sent!)
 	make some returnmessages js dialogs
 	
 
