@@ -10,12 +10,12 @@
 </HEAD>
 <BODY bgcolor="#FFFFFF">
 <br>
-<a href="http://www.lingewoud.nl"><img src="phpgwapi/templates/{template_set}/images/logo_egroupware.png" border="0" alt="eGroupWare"></a>
+<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 <TABLE class=sidebox cellSpacing=1 cellPadding=0  border=0  align=center>
 <TR> 
-<TD class="sideboxtitle" align="center"  height=28>{lang_title}</TD>
+<TD class="sideboxtitle" align="center"  height=28>{website_title}</TD>
 </TR>
 <TR> 
 <TD class="sideboxcontent" bgColor="#efefef">
