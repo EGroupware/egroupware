@@ -73,17 +73,17 @@
          } else {
             $d = date ("d");
          }
-         $d_time = mktime(0,0,0,$m,$d,$y);
-         $thisdate = date("Ymd", $d_time);
-         $sun = $phpgw->calendar->get_weekday_start($y,$m,$d);
+         $thisdate = $phpgw->calendar->makegmttime(0,0,0,$m,$d,$y);
+         $sun = $phpgw->calendar->get_weekday_start($y,$m,$d) -
+         		 ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
          for ($i = -7; $i <= 7; $i++) {
-             $tsun = $sun + (3600 * 24 * 7 * $i);
-             $tsat = $tsun + (3600 * 24 * 6);
-             echo "<OPTION VALUE=\"" . $phpgw->common->show_date($tsun,"Ymd") . "\"";
-             if ($phpgw->common->show_date($tsun,"Ymd") <= $thisdate && $phpgw->common->show_date($tsat,"Ymd") >= $thisdate)
+             $begin = $sun + (3600 * 24 * 7 * $i);
+             $end = $begin + (3600 * 24 * 6);
+             echo "<OPTION VALUE=\"" . $phpgw->common->show_date($begin,"Ymd") . "\"";
+             if ($begin <= $thisdate['raw'] && $end >= $thisdate['raw'])
                 echo " SELECTED";
-             echo ">" . lang($phpgw->common->show_date($tsun,"F")) . " " . $phpgw->common->show_date($tsun,"d") . "-"
-	            . lang($phpgw->common->show_date($tsat,"F")) . " " . $phpgw->common->show_date($tsat,"d");
+             echo ">" . lang($phpgw->common->show_date($begin,"F")) . " " . $phpgw->common->show_date($begin,"d") . "-"
+	            . lang($phpgw->common->show_date($end,"F")) . " " . $phpgw->common->show_date($end,"d");
             echo "</option>\n";
         }
       ?>

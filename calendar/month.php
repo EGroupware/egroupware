@@ -28,10 +28,6 @@
 
   include('../header.inc.php');
 
-  $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
-
-  $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
-
   $view = "month";
 
   $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
@@ -48,13 +44,12 @@
 
   $p->set_var('bg_text',$phpgw_info['theme']['bg_text']);
 
-  $p->set_var('small_calendar_prev',$phpgw->calendar->mini_calendar(1,$prev['month'],$prev['year'],'day.php'));
+  $p->set_var('small_calendar_prev',$phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php'));
 
-  $m = mktime(2,0,0,$thismonth,1,$thisyear);
+  $m = mktime(0,0,0,$thismonth,1,$thisyear);
   $p->set_var('month_identifier',lang(strftime("%B",$m)) . ' ' . $thisyear);
   $p->set_var('username',$phpgw->common->grab_owner_name($owner));
-  $p->set_var('small_calendar_next',$phpgw->calendar->mini_calendar(1,$next['month'],$next['year'],'day.php'));
-  flush();
+  $p->set_var('small_calendar_next',$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'));
   $p->set_var('large_month',$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
     $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;

@@ -37,7 +37,7 @@
   include('../header.inc.php');
   $view = 'day';
 
-  $now	= $phpgw->calendar->splitdate(mktime (0, 0, 0, $thismonth, $thisday, $thisyear) - ((60 * 60) * $phpgw_info['user']['preferences']['common']['tz_offset']));
+  $now	= $phpgw->calendar->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
 
   $template = Array(
 					'day_t' => 'day.tpl'
@@ -62,7 +62,7 @@
   $phpgw->template->set_var('date',lang(date('F',$m)).' '.$thisday.', '.$thisyear);
   $phpgw->template->set_var('username',$phpgw->common->grab_owner_name($owner));
   $phpgw->template->set_var('daily_events',$phpgw->calendar->print_day_at_a_glance($now,$owner));
-  $phpgw->template->set_var('small_calendar',$phpgw->calendar->mini_calendar($now['day'],$now['month'],$now['year'],'day.php'));
+  $phpgw->template->set_var('small_calendar',$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php'));
 
   if (!$friendly)
   {
