@@ -256,11 +256,9 @@ passwords did not match, please re-enter	setup	es-ca	Les contrasenyes no coincid
 path information	setup	es-ca	Informació del camí
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-ca	El camí als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
 persistent connections	setup	es-ca	Connexions persistents
-phpgroupware administration manual	setup	es-ca	Manual de administración de eGroupWare
 please check for sql scripts within the application's directory	setup	es-ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicació
 please check read/write permissions on directories, or back up and use another option.	setup	es-ca	Si us plau, comproveu els permissos de lectura i escritura als directoris, o torneu i feu sefvir un altre opció
 please configure egroupware for your environment	setup	es-ca	Configureu eGroupWare per al vostre entorn
-please configure phpgroupware for your environment	setup	es-ca	Por favor, configure eGroupware para su entorno
 please consult the %1.	setup	es-ca	Consulteu el %1
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	es-ca	Si us plau, corregiu els errors (%1) i avisos (%2) anteriors i %3 continueu amb l'Administració de capçaleres %4
 please install	setup	es-ca	Instal.leu

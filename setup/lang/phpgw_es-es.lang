@@ -282,11 +282,9 @@ passwords did not match, please re-enter	setup	es-es	Las contreñas no coinciden,
 path information	setup	es-es	Información de la ruta
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 persistent connections	setup	es-es	Conexiones persistentes
-phpgroupware administration manual	setup	es-es	Manual de administración de eGroupWare
 please check for sql scripts within the application's directory	setup	es-es	Por favor, compruebe los scripts sql en el directorio de la aplicación
 please check read/write permissions on directories, or back up and use another option.	setup	es-es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
 please configure egroupware for your environment	setup	es-es	Por favor, configure eGroupWare para su entorno
-please configure phpgroupware for your environment	setup	es-es	Por favor, configure eGroupware para su entorno
 please consult the %1.	setup	es-es	Por favor, consulte el %1
 please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
 please fix the above errors (%1) and warnings(%2) and	setup	es-es	Por favor, corrija los errores (%1) y advertencias (%2) de arriba y
