@@ -10,6 +10,7 @@ account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted
 account has been updated	common	en	Account has been updated
 account preferences	common	en	Account Preferences
+acl	common	en	ACL
 active	admin	en	Active
 add	common	en	Add
 add a single phrase	transy	en	Add a single phrase
@@ -164,6 +165,7 @@ global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
+grant calendar access	calendar	en	Grant Calendar Access
 group access	common	en	Group Access
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
@@ -306,6 +308,7 @@ project description	todo	en	Project Description
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
+read	common	en	Read
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 remove all users from this group	admin	en	Remove all users from this group

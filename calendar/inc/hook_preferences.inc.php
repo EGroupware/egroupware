@@ -28,7 +28,10 @@
   section_start(ucfirst($appname),$imgpath);
 
   $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
-  echo "<a href=".$pg.">" . lang("Calendar preferences") . "</a>";
+  echo "<a href=".$pg.">" . lang("Calendar preferences") . "</a><br>";
+
+  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
+  echo "<a href=".$pg.">" . lang("Grant Calendar Access") . "</a>";
 
   section_end(); 
 }
