@@ -61,7 +61,7 @@
 				),
 				'select-multi' => array(	// multiselection, if size > 0
 					'.name' => 'listbox',
-					'size'  => 'rows'
+					'size'  => 'rows,options'
 				),
 				'template' => array(
 					'.name' => 'grid',
@@ -94,7 +94,7 @@
 
 				if (count($attrs))
 				{
-					$vals = count($attrs) > 1 ? explode(',',$val) : array($val);
+					$vals = count($attrs) > 1 ? split(',',$val,count($attrs)) : array($val);
 					while (list($n,$attr) = each($attrs))
 					{
 						if (($val = $vals[$n]) != '')
@@ -219,7 +219,6 @@
 							$child->set_attribute('type',$cell['type']);
 						}
 						break;
-					case 'menulist':
 					case 'listbox':
 						if ($cell['type'] != 'select')	// one of the sub-types
 						{
@@ -474,7 +473,7 @@
 								unset($attr['src']);
 								break;
 							case 'listbox':
-								$attr['size'] = $attr['rows'];
+								$attr['size'] = ereg_replace(',*$','',$attr['rows'].','.$attr['size']);
 								unset($attr['rows']);
 								break;
 							case 'menupopup':
