@@ -7,41 +7,106 @@ add category	common	en	Add category
 add x category for	common	en	Add %1 category for
 admin	common	en	Admin
 administration	common	en	Administration
+afghanistan	common	en	AFGHANISTAN
+albania	common	en	ALBANIA
+algeria	common	en	ALGERIA
 all	common	en	All
+american samoa	common	en	AMERICAN SAMOA
+andorra	common	en	ANDORRA
+angola	common	en	ANGOLA
+anguilla	common	en	ANGUILLA
+antarctica	common	en	ANTARCTICA
+antigua and barbuda	common	en	ANTIGUA AND BARBUDA
 april	common	en	April
+argentina	common	en	ARGENTINA
+armenia	common	en	ARMENIA
+aruba	common	en	ARUBA
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 august	common	en	August
+australia	common	en	AUSTRALIA
+austria	common	en	AUSTRIA
 autosave default category	common	en	Autosave Default Category
+azerbaijan	common	en	AZERBAIJAN
+bahamas	common	en	BAHAMAS
+bahrain	common	en	BAHRAIN
+bangladesh	common	en	BANGLADESH
+barbados	common	en	BARBADOS
+belarus	common	en	BELARUS
+belgium	common	en	BELGIUM
+belize	common	en	BELIZE
+benin	common	en	BENIN
+bermuda	common	en	BERMUDA
+bhutan	common	en	BHUTAN
+bolivia	common	en	BOLIVIA
+bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
+botswana	common	en	BOTSWANA
+bouvet island	common	en	BOUVET ISLAND
+brazil	common	en	BRAZIL
+british indian ocean territory	common	en	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	en	BRUNEI DARUSSALAM
+bulgaria	common	en	BULGARIA
+burkina faso	common	en	BURKINA FASO
+burundi	common	en	BURUNDI
+cambodia	common	en	CAMBODIA
+cameroon	common	en	CAMEROON
+canada	common	en	CANADA
 cancel	common	en	Cancel
+cape verde	common	en	CAPE VERDE
 categories	common	en	Categories
 categories for	common	en	categories for
 category	common	en	Category
 category x has been added !	common	en	Category %1 has been added !
 category x has been updated !	common	en	Category %1 has been updated !
+cayman islands	common	en	CAYMAN ISLANDS
+central african republic	common	en	CENTRAL AFRICAN REPUBLIC
+chad	common	en	CHAD
 change	common	en	Change
 charset	common	en	iso-8859-1
+chile	common	en	CHILE
+china	common	en	CHINA
 choose the parent category	common	en	Choose the parent category
+christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear Form
+cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
+colombia	common	en	COLOMBIA
+comoros	common	en	COMOROS
+congo	common	en	CONGO
+congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
+costa rica	common	en	COSTA RICA
+cote d ivoire	common	en	COTE D IVOIRE
 create	common	en	Create
 created by	common	en	Created By
+croatia	common	en	CROATIA
+cuba	common	en	CUBA
 currency	common	en	Currency
 current users	common	en	Current users
 custom	common	en	Custom
+cyprus	common	en	CYPRUS
+czech republic	common	en	CZECH REPUBLIC
 date	common	en	Date
 date due	common	en	Date Due
 december	common	en	December
 default category	common	en	Default Category
 delete	common	en	Delete
+denmark	common	en	DENMARK
 description	common	en	Description
 disabled	common	en	Disabled
+djibouti	common	en	DJIBOUTI
+dominica	common	en	DOMINICA
+dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+east timor	common	en	EAST TIMOR
+ecuador	common	en	ECUADOR
 edit	common	en	Edit
 edit category	common	en	Edit category
 edit categories	common	en	Edit Categories
 edit x category for	common	en	Edit %1 category for
+egypt	common	en	EGYPT
+el salvador	common	en	EL SALVADOR
 e-mail	common	en	E-Mail
 email	common	en	E-Mail
 enabled	common	en	Enabled
@@ -49,25 +114,52 @@ end date	common	en	End date
 end time	common	en	End time
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
+equatorial guinea	common	en	EQUATORIAL GUINEA
+eritrea	common	en	ERITREA
 error	common	en	Error
 error creating x x directory	common	en	Error creating %1%2 directory
 error deleting x x directory	common	en	Error deleting %1%2 directory
 error renaming x x directory	common	en	Error renaming %1%2 directory
+estonia	common	en	ESTONIA
+ethiopia	common	en	ETHIOPIA
+falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
+faroe islands	common	en	FAROE ISLANDS
 february	common	en	February
 fields	common	en	Fields
+fiji	common	en	FIJI
 files	common	en	Files
 filter	common	en	Filter
+finland	common	en	FINLAND
 first name	common	en	First name
 firstname	common	en	Firstname
+france	common	en	FRANCE
+french guinea	common	en	FRENCH GUIANA
+french polynesia	common	en	FRENCH POLYNESIA
+french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
+gabon	common	en	GABON
+gambia	common	en	GAMBIA
+georgia	common	en	GEORGIA
+germany	common	en	GERMANY
+ghana	common	en	GHANA
+gibraltar	common	en	GIBRALTAR
 global	common	en	Global
 global public	common	en	Global Public
 grant access	common	en	Grant access
+greece	common	en	GREECE
+greenland	common	en	GREENLAND
+grenada	common	en	GRENADA
 group access	common	en	Group Access
 group	common	en	Group
 group public	common	en	Group Public
 groups	common	en	Groups
+guadeloupe	common	en	GUADELOUPE
+guam	common	en	GUAM
+guatemala	common	en	GUATEMALA
+
+
+
 help	common	en	Help
 high	common	en	High
 home	common	en	Home
