@@ -1,0 +1,77 @@
+Version xxx
+
+- improved folder management. You can create now subfolders in the top
+level. This should also improve support for UW IMAP
+- fixed charset bug in folder management pages
+- added support for javascript based folder tree
+
+Version 0.9.5
+
+- ported Smartsieve to FeLaMiMail
+- added highlighting for quotes (copied from horde)
+- fixed sorting
+	- added all needed options to preferences
+	- can now be sorted by size too
+- forwarding messages now as message/rfc822
+- improved mainview
+	- javascript selectbutton to select all messages
+	- fixed layout
+	- support colors from selected layout
+- added support for emailadmin
+- updated PHPMailer to version 0.7.1
+- added support for localized smtp error messages
+- improved mime type handling
+- also forward attachments
+- support for üצה... in folder names
+- support html emails(most evil tags get removed)
+- code cleanup
+- added Sidebox for Idots
+- added user defined EMail accounts again, can be deactivated by admin
+
+Version 0.9.3/0.9.4
+
+- added usefull error messsages, if login to imap server fails
+- imaps support(encryption only and encryption with authentication)
+- added smtp auth support
+- print function; displays the page without the phpgw navbar, so will
+  print only the email
+- removed old Squirrelmail code again
+- the code to display emails is rewriten too, it's all based 
+  on phpGW now
+- rewrote folder management
+- removed images, they where not always helpfull                  
+
+- filter dialog improved again
+	- you can store multiple filters now
+	- added quicksearch
+	
+- integration of sieve-php
+	- you can manage sieve scripts on a sieve enables imap server
+	
+- internal code cleanup
+- modified linux-at-work.de template
+- updated preferences dialog to do it the phpgroupware way
+- you can define a refresh time for the mailbox message list
+- fixed a nasty bug, when replying to emails which contain " or , in the
+  to,cc or bcc fields
+- fixed quoted printable en/decoding in the 
+  headers/subject(it was time to read the rfc's :) )
+- highlithing of web and email urls
+- enabled vmailmgr login again
+- don't halt smtp error messages anymore, but display the error
+  and go back to the compose window
+- display the organization when showing the mail
+- fixed download/save of attachment under IE and SSL
+
+Version 0.9.2
+
+- improved filter dialog
+	- added a easy way to enable/disable the filter
+	- you can search for from, to, subject
+	
+- updated the linux-at-work temmplate
+
+- fixed some bugs, where the mainview where broken, because of missing templates
+
+- the user preferences where not working correctly
+
