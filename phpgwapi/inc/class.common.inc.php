@@ -1064,8 +1064,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
-
 			$GLOBALS['phpgw']->xslttpl->set_var('msgbox',$data);
+
 			return $GLOBALS['phpgw']->xslttpl->parse();
 		}
 
