@@ -40,7 +40,7 @@
 		'alias'    => True, 'web'      => True, 'sweep'    => True,
 		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
 		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
-		'qmailr'   => True, 'qmails'   => True
+		'qmailr'   => True, 'qmails'   => True, 'nscd'     => True
 	);
 
 	$phpgw_info["server"]["global_denied_groups"] = array(
