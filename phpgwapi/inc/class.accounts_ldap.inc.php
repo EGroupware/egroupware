@@ -208,7 +208,7 @@
     }
 
 
-    function username2userid($user_name)
+    function name2id($user_name)
     {
       global $phpgw, $phpgw_info;
       $db2 = $phpgw->db;
@@ -221,7 +221,7 @@
       }
     }
 
-    function userid2username($user_id)
+    function id2name($user_id)
     {
       global $phpgw, $phpgw_info;
       $db2 = $phpgw->db;
