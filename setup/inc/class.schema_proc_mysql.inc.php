@@ -14,7 +14,7 @@
 	class schema_proc_mysql
 	{
 		var $m_sStatementTerminator;
-		// Following added to convert sql to array
+		/* Following added to convert sql to array */
 		var $sCol = array();
 		var $pk = array();
 		var $fk = array();
@@ -26,7 +26,7 @@
 			$this->m_sStatementTerminator = ';';
 		}
 
-		// Return a type suitable for DDL
+		/* Return a type suitable for DDL */
 		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
 			$sTranslated = '';
@@ -115,7 +115,7 @@
 			return $sDefault;
 		}
 
-		// Inverse of above, convert sql column types to array info
+		/* Inverse of above, convert sql column types to array info */
 		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
 			$sTranslated = '';
@@ -166,7 +166,7 @@
 					$sTranslated = "'type' => 'timestamp'";
 					break;
 				case 'enum':
-					// Here comes a nasty assumption
+					/* Here comes a nasty assumption */
 					$sTranslated =  "'type' => 'varchar', 'precision' => 255";
 					break;
 				case 'varchar':
@@ -208,7 +208,7 @@
 			$this->ix = array();
 			$this->uc = array();
 			
-			// Field, Type, Null, Key, Default, Extra
+			/* Field, Type, Null, Key, Default, Extra */
 			$oProc->m_odb->query("describe $sTableName");
 			while ($oProc->m_odb->next_record())
 			{
@@ -219,7 +219,7 @@
 				}
 				$sColumns .= $oProc->m_odb->f(0);
 
-				// The rest of this is used only for SQL->array
+				/* The rest of this is used only for SQL->array */
 				$colinfo = explode('(',$oProc->m_odb->f(1));
 				$prec = ereg_replace(')','',$colinfo[1]);
 				$scales = explode(',',$prec);
@@ -261,13 +261,13 @@
 				{
 					$this->uc[] = $oProc->m_odb->f(0);
 				}
-				// Hmmm, MUL could also mean unique, or not...
+				/* Hmmm, MUL could also mean unique, or not... */
 				if ($oProc->m_odb->f(3) == 'MUL')
 				{
 					$this->ix[] = $oProc->m_odb->f(0);
 				}
 			}
-			// ugly as heck, but is here to chop the trailing comma on the last element (for php3)
+			/* ugly as heck, but is here to chop the trailing comma on the last element (for php3) */
 			$this->sCol[count($this->sCol) - 1] = substr($this->sCol[count($this->sCol) - 1],0,-2) . "\n";
 
 			return false;
@@ -290,8 +290,10 @@
 
 		function RenameColumn($oProc, &$aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 		{
-			// This really needs testing - it can affect primary keys, and other table-related objects
-			// like sequences and such
+			/*
+			 TODO: This really needs testing - it can affect primary keys, and other table-related objects
+			 like sequences and such
+			*/
 			global $DEBUG;
 			if ($DEBUG) { echo '<br>RenameColumn: calling _GetFieldSQL for ' . $sNewColumnName; }
 			if ($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
@@ -332,7 +334,7 @@
 		{
 			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
-				// create sequence first since it will be needed for default
+				/* create sequence first since it will be needed for default */
 				if ($sSequenceSQL != '')
 				{
 					$oProc->m_odb->query($sSequenceSQL);

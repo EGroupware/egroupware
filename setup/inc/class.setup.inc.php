@@ -40,7 +40,7 @@
 				$GLOBALS['phpgw_info']['server']['api_inc'] = PHPGW_SERVER_ROOT . '/phpgwapi/inc';
 			}
 			include($GLOBALS['phpgw_info']['server']['api_inc'] . '/class.db_'.$GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'].'.inc.php');
-			$this->db	        = new db;
+			$this->db           = new db;
 			$this->db->Host     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_host'];
 			$this->db->Type     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'];
 			$this->db->Database = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_name'];
@@ -75,15 +75,15 @@
 					$FormLogout == 'ldapimport' ||
 					$FormLogout == 'sqltoarray')
 				{
-					setcookie('ConfigPW');  // scrub the old one
-					setcookie('ConfigDomain');  // scrub the old one
+					setcookie('ConfigPW');  /* scrub the old one */
+					setcookie('ConfigDomain');  /* scrub the old one */
 					setcookie('ConfigLang');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'You have successfully logged out';
 					return False;
 				}
 				elseif($FormLogout == 'header')
 				{
-					setcookie('HeaderPW');  // scrub the old one
+					setcookie('HeaderPW');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'You have successfully logged out';
 					return False;
 				}
@@ -92,8 +92,8 @@
 			{
 				if ($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'] && $auth_type == 'Config')
 				{
-					setcookie('ConfigPW');  // scrub the old one
-					setcookie('ConfigDomain');  // scrub the old one
+					setcookie('ConfigPW');  /* scrub the old one */
+					setcookie('ConfigDomain');  /* scrub the old one */
 					setcookie('ConfigLang');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
 					return False;
@@ -109,7 +109,7 @@
 				{
 					if ($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'] && $auth_type == 'Config')
 					{
-						setcookie('HeaderPW');  // scrub the old one
+						setcookie('HeaderPW');  /* scrub the old one */
 						setcookie('ConfigPW',$FormPW);
 						setcookie('ConfigDomain',$FormDomain);
 						setcookie('ConfigLang',$ConfigLang);
@@ -140,7 +140,7 @@
 			{
 				if ($HeaderPW != $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 				{
-					setcookie('HeaderPW');  // scrub the old one
+					setcookie('HeaderPW');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
 					return False;
 				}
@@ -232,7 +232,7 @@
 			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', table: ' . $appstbl . '<br>';
-				//var_dump($setup_info[$appname]);
+				// _debug_array($setup_info[$appname]);
 			}
 
 			if ($setup_info[$appname]['version'])
@@ -298,7 +298,7 @@
 			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $appstbl;
-				//var_dump($setup_info[$appname]);
+				// _debug_array($setup_info[$appname]);
 			}
 
 			$this->db->query("SELECT COUNT(app_name) FROM $appstbl WHERE app_name='".$appname."'");
@@ -345,7 +345,7 @@
 			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>update_app(): ' . $appname . ', version: ' . $setup_info[$appname]['currentver'] . ', table: ' . $appstbl . '<br>';
-				//var_dump($setup_info[$appname]);
+				// _debug_array($setup_info[$appname]);
 			}
 
 			$this->db->query("SELECT COUNT(app_name) FROM $appstbl WHERE app_name='".$appname."'");
@@ -453,7 +453,7 @@
 
 			if ($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				// No phpgw_hooks table yet.
+				/* No phpgw_hooks table yet. */
 				return False;
 			}
 
@@ -496,7 +496,7 @@
 
 			if ($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5'))
 			{
-				// No phpgw_hooks table yet.
+				/* No phpgw_hooks table yet. */
 				return False;
 			}
 
@@ -598,7 +598,7 @@
 					$less++;
 					if ($i<3)
 					{
-						// Ensure that this is definitely smaller
+						/* Ensure that this is definitely smaller */
 						if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely less than B."; }
 						$less = 5;
 						break;
@@ -610,7 +610,7 @@
 					$less--;
 					if ($i<2)
 					{
-						// Ensure that this is definitely greater
+						/* Ensure that this is definitely greater */
 						if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely greater than B."; }
 						$less = -5;
 						break;
@@ -679,7 +679,7 @@
 					$less++;
 					if ($i<3)
 					{
-						// Ensure that this is definitely greater
+						/* Ensure that this is definitely greater */
 						if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely greater than B."; }
 						$less = 5;
 						break;
@@ -691,7 +691,7 @@
 					$less--;
 					if ($i<2)
 					{
-						// Ensure that this is definitely smaller
+						/* Ensure that this is definitely smaller */
 						if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely less than B."; }
 						$less = -5;
 						break;

@@ -18,7 +18,7 @@
 	class schema_proc_pgsql
 	{
 		var $m_sStatementTerminator;
-		// Following added to convert sql to array
+		/* Following added to convert sql to array */
 		var $sCol = array();
 		var $pk = array();
 		var $fk = array();
@@ -30,7 +30,7 @@
 			$this->m_sStatementTerminator = ';';
 		}
 
-		// Return a type suitable for DDL
+		/* Return a type suitable for DDL */
 		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
 			switch($sType)
@@ -105,7 +105,7 @@
 			return $sDefault;
 		}
 
-		// Inverse of above, convert sql column types to array info
+		/* Inverse of above, convert sql column types to array info */
 		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
 			$sTranslated = '';
@@ -234,7 +234,7 @@
 					and a.attrelid = c.oid
 					and a.atttypid = t.oid
 					ORDER BY a.attnum";
-			// attnum field type length lengthvar notnull(Yes/No)
+			/* attnum field type length lengthvar notnull(Yes/No) */
 			$sdb->query($sql_get_fields);
 			while ($sdb->next_record())
 			{
@@ -341,7 +341,7 @@
 					$this->uc[] = $sdc->f(2);
 				}
 			}
-			// ugly as heck, but is here to chop the trailing comma on the last element (for php3)
+			/* ugly as heck, but is here to chop the trailing comma on the last element (for php3) */
 			$this->sCol[count($this->sCol) - 1] = substr($this->sCol[count($this->sCol) - 1],0,-2) . "\n";
 
 			return false;
@@ -526,8 +526,10 @@
 
 		function RenameColumn($oProc, &$aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 		{
-			// This really needs testing - it can affect primary keys, and other table-related objects
-			// like sequences and such
+			/*
+			 This really needs testing - it can affect primary keys, and other table-related objects
+			 like sequences and such
+			*/
 			if ($bCopyData)
 			{
 				$oProc->m_odb->query("SELECT * INTO $sTableName" . "_tmp FROM $sTableName");
@@ -565,10 +567,12 @@
 			$this->CreateTable($oProc, $aTables, $sTableName, $aTables[$sTableName], True);
 			$this->_GetColumns($oProc, $sTableName . "_tmp", $sColumns, '', $sColumnName, $aColumnDef['type'] == 'auto' ? 'int4' : $aColumnDef['type']);
 
-			// TODO: analyze the type of change and determine if this is used or _CopyAlteredTable
-			// this is a performance consideration only, _CopyAlteredTable should be safe
-			//$query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
-			//$bRet = !!($oProc->m_odb->query($query));
+			/*
+			 TODO: analyze the type of change and determine if this is used or _CopyAlteredTable
+			 this is a performance consideration only, _CopyAlteredTable should be safe
+			 $query = "INSERT INTO $sTableName SELECT $sColumns FROM $sTableName" . "_tmp";
+			 $bRet = !!($oProc->m_odb->query($query));
+			*/
 
 			$bRet = $this->_CopyAlteredTable($oProc, $aTables, $sTableName . '_tmp', $sTableName);
 
@@ -594,7 +598,7 @@
 			global $DEBUG;
 			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
-				// create sequence first since it will be needed for default
+				/* create sequence first since it will be needed for default */
 				if ($bCreateSequence && $sSequenceSQL != '')
 				{
 					if ($DEBUG) { echo '<br>Making sequence using: ' . $sSequenceSQL; }

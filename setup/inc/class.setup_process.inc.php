@@ -152,7 +152,7 @@
 				}
 
 				$i++;
-				if ($i == 20) // Then oops it broke
+				if ($i == 20) /* Then oops it broke */
 				{
 					echo '<br>Setup failure: excess looping in process_pass():'."\n";
 					echo '<br>Pass:<br>'."\n";
@@ -165,7 +165,7 @@
 				$passing_string = implode (':', $passing);
 			}
 
-			// now return the list
+			/* now return the list */
 			@reset($passed);
 			while(list($key,$value) = @each($passed))
 			{
@@ -188,7 +188,7 @@
 			}
 			$this->oProc->m_bDeltaOnly = False;
 
-			// The following is built so below we won't try to drop a table that isn't there
+			/* The following is built so below we won't try to drop a table that isn't there. */
 			$tablenames = $this->db->table_names();
 			while(list($key,$val) = @each($tablenames))
 			{
@@ -214,15 +214,15 @@
 				}
 			}
 
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
-		// NOTE: This duplicates the old newtables behavior, using schema_proc
 		/*!
 		@function process_current
 		@abstract process current table setup in each application/setup dir
 		@param $appinfo	array of application info from setup.inc.php files, etc.
+		@discussion This duplicates the old newtables behavior, using schema_proc
 		*/
 		function process_current($setup_info,$DEBUG=False)
 		{
@@ -265,7 +265,7 @@
 					}
 					else
 					{
-						// script processing failed
+						/* script processing failed */
 						if($DEBUG) { echo '<br>process_current(): Failed for ' . $appname . ',status: '. $setup_info[$key]['status']; }
 						$setup_info[$key]['status'] = 'F';
 					}
@@ -273,8 +273,10 @@
 				else
 				{
 					if($DEBUG) { echo '<br>process_current(): No current tables for ' . $apptitle . "\n"; }
-					// add the app, but disable it if it has tables defined
-					// a manual sql script install is needed, but we do add the hooks
+					/*
+					 Add the app, but disable it if it has tables defined.
+					 A manual sql script install is needed, but we do add the hooks
+					*/
 					$enabled = 99;
 					if ($setup_info[$key]['tables'][0] != '')
 					{
@@ -295,7 +297,7 @@
 				if($DEBUG) { echo '<br>process_current(): Outgoing status: ' . $appname . ',status: '. $setup_info[$key]['status']; }
 			}
 
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -329,10 +331,10 @@
 					include ($appdir.'default_records.inc.php');
 					$this->oProc->m_odb->transaction_commit();
 				}
-				//$setup_info[$key]['status'] = 'C';
+				/* $setup_info[$key]['status'] = 'C'; */
 			}
 
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -354,7 +356,7 @@
 					echo '<br>process_add_langs(): Translations added for ' . $appname . "\n";
 				}
 			}
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -376,7 +378,7 @@
 					echo '<br>process_drop_langs():  Translations removed for ' . $appname . "\n";
 				}
 			}
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -404,7 +406,7 @@
 					echo '<br>process_upgrade_langs(): Translations reinstalled for ' . $appname . "\n";
 				}
 			}
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 		/*!
@@ -440,7 +442,7 @@
 				}
 			}
 
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -472,8 +474,8 @@
 					$this->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
 					$this->post_process($phpgw_baseline,$DEBUG);
 
-					// Update the array values for return below
-					//$setup_info[$key]['status'] = 'R';
+					/* Update the array values for return below */
+					/* $setup_info[$key]['status'] = 'R'; */
 				}
 				else
 				{
@@ -485,7 +487,7 @@
 				}
 			}
 
-			// Done, return current status
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -551,7 +553,7 @@
 						}
 						include ($appdir.'tables_baseline.inc.php');
 						$this->oProc->m_aTables = $phpgw_baseline;
-						//$this->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
+						/* $this->oProc->GenerateScripts($phpgw_baseline, $DEBUG); */
 					}
 					else
 					{
@@ -568,7 +570,7 @@
 						include ($appdir . 'tables_update.inc.php');
 						$this->updateincluded[$appname] = True;
 
-						// $test array comes from update file, it is a list of available upgrade functions
+						/* $test array comes from update file.  It is a list of available upgrade functions */
 						@reset($test);
 						while (list($x,$value) = @each($test))
 						{
@@ -590,7 +592,7 @@
 							if ($value == $targetver)
 							{
 								$this->oProc->m_bDeltaOnly = False;
-								// Done upgrading
+								/* Done upgrading */
 								if($DEBUG)
 								{
 									echo '<br>process_upgrade(): Upgrade of ' . $appname . ' to ' . $targetver . ' is completed.' . "\n";
@@ -611,13 +613,11 @@
 								//break;
 							}
 							elseif (($value == $currentver) || !$currentver)
-							//elseif ($this->alessthanb($value,$targetver,True) &&
-							//		$this->alessthanb($currentver,$value,True))
 							{
-								// start upgrading db in addition to baseline
+								/* start upgrading db in addition to baseline */
 								$this->oProc->m_bDeltaOnly = False;
 								if ($DEBUG) { echo '<br>process_upgrade(): running ' . $function; }
-								// run upgrade function
+								/* run upgrade function */
 								$success = $function();
 								if ($success != False)
 								{
@@ -717,7 +717,7 @@
 					}
 				}
 
-				// Done with this app, update status
+				/* Done with this app, update status */
 				$setup_info[$key]['status'] = $appstatus;
 				if ($DEBUG)
 				{
@@ -725,8 +725,7 @@
 				}
 			}
 
-			// Done, return current status
-
+			/* Done, return current status */
 			return ($setup_info);
 		}
 
@@ -762,8 +761,7 @@
 
 		/*!
 		@function sql_to_array
-		@abstract send this a table name, returns printable column spec and keys for the table from
-			schema_proc
+		@abstract send this a table name, returns printable column spec and keys for the table from schema_proc
 		@param	$tablename	table whose array you want to see
 		*/
 		function sql_to_array($tablename = '')

@@ -20,7 +20,7 @@
 			$this->m_sStatementTerminator = ";";
 		}
 
-		// Return a type suitable for DDL abstracted array
+		/* Return a type suitable for DDL abstracted array */
 		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
 		{
 			$sTranslated = $sType;

@@ -61,7 +61,7 @@
 						$setup_info[$this->db->f('app_name')]['currentver'] = $this->db->f('app_version');
 						$setup_info[$this->db->f('app_name')]['enabled'] = $this->db->f('app_enabled');
 					}
-					// This is to catch old setup installs that did not have phpgwapi listed as an app
+					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
 					if (!$setup_info['phpgwapi']['currentver'])
 					{
 						$tmp = $setup_info['phpgwapi']['version']; /* save the file version */
@@ -106,7 +106,7 @@
 			while (list ($key, $value) = each ($setup_info))
 			{
 				//echo '<br>'.$setup_info[$key]['name'].'STATUS: '.$setup_info[$key]['status'];
-				// Only set this if it has not already failed to upgrade - Milosch
+				/* Only set this if it has not already failed to upgrade - Milosch */
 				if (!( ($setup_info[$key]['status'] == 'F') || ($setup_info[$key]['status'] == 'C') ))
 				{
 					//if ($setup_info[$key]['currentver'] > $setup_info[$key]['version'])
@@ -118,7 +118,6 @@
 					{
 						$setup_info[$key]['status'] = 'C';
 					}
-					//elseif ($setup_info[$key]['currentver'] < $setup_info[$key]['version'])
 					elseif ($this->alessthanb($setup_info[$key]['currentver'],$setup_info[$key]['version']))
 					{
 						$setup_info[$key]['status'] = 'U';
@@ -151,9 +150,7 @@
 						while (list ($depskey, $depsvalue) = each ($value['depends'][$depkey]['versions']))
 						{
 							$major = $this->get_major($setup_info[$value['depends'][$depkey]['appname']]['currentver']);
-							//echo $major;
 							if ($major == $depsvalue)
-							//if ($setup_info[$value['depends'][$depkey]['appname']]['currentver'] == $depsvalue )
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
 							}
@@ -162,14 +159,16 @@
 							}
 						}
 					}
-					/* Finally I will loop thru the dependencies again look for apps that still have a failure status */
-					/* If we find one we set the apps overall status as a dependency failure */
+					/*
+					 Finally, we loop through the dependencies again to look for apps that still have a failure status
+					 If we find one, we set the apps overall status as a dependency failure.
+					*/
 					reset ($value['depends']);
 					while (list ($depkey, $depvalue) = each ($value['depends']))
 					{
 						if ($setup_info['depends'][$depkey]['status'] == False)
 						{
-							// Only set this if it has not already failed to upgrade - Milosch
+							/* Only set this if it has not already failed to upgrade - Milosch */
 							if (!( ($setup_info[$key]['status'] == 'F') || ($setup_info[$key]['status'] == 'C') ))
 							{
 								$setup_info[$key]['status'] = 'D';
@@ -242,7 +241,6 @@
 				$this->db->query('CREATE TABLE phpgw_testrights ( testfield varchar(5) NOT NULL )');
 				if (! $this->db->Errno)
 				{
-					//if (isset($isdb)){
 					$this->db->query('DROP TABLE phpgw_testrights');
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (Install Applications)';
 					return 3;
@@ -258,9 +256,12 @@
 		function check_config()
 		{
 			$this->db->Halt_On_Error = 'no';
-			if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10){return '';}
+			if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			{
+				return '';
+			}
 
-			// Since 0.9.10pre6 config table is named as phpgw_config
+			/* Since 0.9.10pre6 config table is named as phpgw_config */
 			$config_table = 'config';
 			$ver = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 
@@ -332,7 +333,7 @@
 
 			if($setup_info[$appname]['tables'])
 			{
-				// Make a copy, else we send some callers into an infinite loop
+				/* Make a copy, else we send some callers into an infinite loop */
 				$copy = $setup_info;
 				$this->db->Halt_On_Error = 'no';
 				$tablenames = $this->db->table_names();

@@ -233,7 +233,7 @@
 
 	if(file_exists(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
 	{
-		include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); // To set the current core version
+		include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); /* To set the current core version */
 		/* This will change to just use setup_info */
 		$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	}
