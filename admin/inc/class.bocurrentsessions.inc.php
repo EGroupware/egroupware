@@ -34,7 +34,7 @@
 		{
 			$values = $this->so->list_sessions($start,$sort,$order);
 
-			while (list(,$value) = each($values))
+			while (list(,$value) = @each($values))
 			{
 				if (ereg('@',$value['session_lid']))
 				{

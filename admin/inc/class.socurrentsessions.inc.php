@@ -18,7 +18,7 @@
 
 		function socurrentsessions()
 		{
-			$this->db       = $GLOBALS['phpgw']->db;
+			$this->db = $GLOBALS['phpgw']->db;
 		}
 
 		function total()
@@ -31,21 +31,29 @@
 
 		function list_sessions($start,$order,$sort)
 		{
-			$ordermethod = 'order by session_dla asc';
-
-			$this->db->limit_query("select * from phpgw_sessions where session_flags != 'A' order by $sort $order",$start,__LINE__,__FILE__);
-
-			while ($this->db->next_record())
+			switch ($GLOBALS['phpgw_info']['server']['sessions_type'])
 			{
-				$values[] = array(
-					'session_id'        => $this->db->f('session_id'),
-					'session_lid'       => $this->db->f('session_lid'),
-					'session_ip'        => $this->db->f('session_ip'),
-					'session_logintime' => $this->db->f('session_logintime'),
-					'session_action'    => $this->db->f('session_action'),
-					'session_dla'       => $this->db->f('session_dla')
-				);
+				case 'php4':
+					/* TODO */
+					break;
+				case 'db':
+				default:
+					$ordermethod = 'order by session_dla asc';
+					$this->db->limit_query("select * from phpgw_sessions where session_flags != 'A' order by $sort $order",$start,__LINE__,__FILE__);
+
+					while ($this->db->next_record())
+					{
+						$values[] = array(
+							'session_id'        => $this->db->f('session_id'),
+							'session_lid'       => $this->db->f('session_lid'),
+							'session_ip'        => $this->db->f('session_ip'),
+							'session_logintime' => $this->db->f('session_logintime'),
+							'session_action'    => $this->db->f('session_action'),
+							'session_dla'       => $this->db->f('session_dla')
+						);
+					}
+					return $values;
+					break;
 			}
-			return $values;
 		}
 	}

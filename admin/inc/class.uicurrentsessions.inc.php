@@ -110,7 +110,7 @@
 
 			$values = $this->bo->list_sessions($info['start'],$info['order'],$info['sort']);
 
-			while (list(,$value) = each($values))
+			while (list(,$value) = @each($values))
 			{
 				$this->nextmatchs->template_alternate_row_color(&$this->template);
 
@@ -154,7 +154,7 @@
 				$this->template->parse('rows','row',True);
 			}
 
-			$this->template->pparse('out','list');
+			$this->template->pfp('out','list');
 		}
 
 		function kill()
