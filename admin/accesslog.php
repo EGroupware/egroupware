@@ -29,7 +29,7 @@
   $phpgw->template->set_var("lang_logout",lang("Logout"));
   $phpgw->template->set_var("lang_total",lang("Total"));
 
-  $phpgw->db->query("select loginid,ip,li,lo from access_log order by li desc "
+  $phpgw->db->query("select loginid,ip,li,lo from phpgw_access_log order by li desc "
                   . "limit $show_maxlog");
   while ($phpgw->db->next_record()) {
 
@@ -80,11 +80,11 @@
     $phpgw->template->parse("rows","row",True);
   }
 
-  $phpgw->db->query("select count(*) from access_log");
+  $phpgw->db->query("select count(*) from phpgw_access_log");
   $phpgw->db->next_record();
   $total = $phpgw->db->f(0);
 
-  $phpgw->db->query("select count(*) from access_log where lo!=''");
+  $phpgw->db->query("select count(*) from phpgw_access_log where lo!=''");
   $phpgw->db->next_record();
   $loggedout = $phpgw->db->f(0);
 
