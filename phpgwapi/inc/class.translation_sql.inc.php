@@ -252,6 +252,10 @@
 			{
 				$from = mb_detect_encoding($data);
 			}
+			if(strtolower($from) == 'us-ascii')
+			{
+				$from = 'iso-8859-1';
+			}
 			if (!$to)
 			{
 				$to = $this->charset();
