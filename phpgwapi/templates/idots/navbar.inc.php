@@ -234,6 +234,7 @@
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
 			{
 				$GLOBALS['idots_tpl']->set_var('show_menu_event',$show_menu_event);
+				$GLOBALS['idots_tpl']->set_var('lang_show_menu',lang('show menu'));
 				$GLOBALS['idots_tpl']->pparse('out','sidebox_hide_header');
 
 				display_sidebox('',$menu_title,$file);

@@ -476,7 +476,7 @@ section	common	en	Section
 select	common	en	Select
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select Category
-select date	jscalendar	en	Select date
+select date	common	en	Select date
 select group	common	en	Select group
 select home email address	common	en	Select home email address
 select one	common	en	Select one
@@ -493,6 +493,7 @@ setup main menu	common	en	Setup Main Menu
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
 show all categorys	common	en	Show all categorys
+show menu	common	en	show menu
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
 show_more_apps	common	en	show_more_apps

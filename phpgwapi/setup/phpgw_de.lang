@@ -34,7 +34,7 @@ afghanistan	common	de	AFGHANISTAN
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
 all	common	de	alle
-alphabet	common	de	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,ä,ö,ü
+alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 american samoa	common	de	AMERICANISCH SAMOA
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
@@ -135,7 +135,7 @@ croatia	common	de	KROATIEN
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
-current style	htmlarea	de	
+current style	htmlarea	de	Aktueller Stil
 current users	common	de	Derzeit angemeldete Benutzer
 cut selection	htmlarea	de	Den markierten Text einfügen
 cyprus	common	de	ZYPERN
@@ -421,7 +421,7 @@ parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
 password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
-paste from clipboard	htmlarea	de	
+paste from clipboard	htmlarea	de	Aus dem clipboard übernehmen
 path	htmlarea	de	Pfad
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 pattern for search in addressbook	common	de	Muster für suche im Adressbuch
@@ -484,7 +484,7 @@ section	common	de	Sektion
 select	common	de	Auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
-select date	jscalendar	de	Datum auswählen
+select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private Email-Adresse auswählen
 select one	common	de	Einen auswählen
@@ -501,6 +501,7 @@ setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
 show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
+show menu	common	de	Menü anzeigen
 show page generation time	common	de	Zeit zum erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum erstellen der Seite in der Fusszeile anzeigen
 show_more_apps	common	de	Mehr Applikationen anzeigen
