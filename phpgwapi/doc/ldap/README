@@ -31,7 +31,8 @@ The following are for use with openldap 2.X:
 	phpgwcontact.schema		defines the phpgwContact objectclass and our attributes
 
 These should be copied to /etc/openldap/schema and added to
-/etc/openldap/slapd.conf AFTER other similar include lines:
+/etc/openldap/slapd.conf AFTER other similar include lines.  These files
+rely on core.schema and cosine.schema at least:
 
 include		/etc/openldap/schema/phpgwaccount.schema
 include		/etc/openldap/schema/phpgwcontact.schema
