@@ -208,7 +208,7 @@
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		$type = get_vars('type',Array('GET'));
+		$type = get_var('type',Array('GET'));
 		if (!isset($type))
 		{
 			$GLOBALS['type'] = $session_data['type'];
