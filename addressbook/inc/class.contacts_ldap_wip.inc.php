@@ -80,11 +80,11 @@
 				'org_unit'            => 'ou',  // division
 				'title'               => 'title',
 
-				'adr_one_street'      => 'streetaddress',
+				'adr_one_street'      => 'street',
 				'adr_one_locality'    => 'l', 
 				'adr_one_region'      => 'st', 
 				'adr_one_postalcode'  => 'postalcode',
-				'adr_one_countryname' => 'countryname',
+				'adr_one_countryname' => 'co',
 				'adr_one_type'        => 'phpgwadronetype', // address is domestic/intl/postal/parcel/work/home
 				'label'               => 'phpgwaddresslabel', // address label
 
@@ -350,18 +350,18 @@
 			}
 			else
 			{
-				$filterfields += array('phpgwContactTypeId' => 'n');
+				$filterfields += array('phpgwcontacttypeid' => 'n');
 				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwtypeid=n#"; }
 			}	
 
 			if (is_array($this->grants))
 			{
-				$filterfields += array('phpgwContactAccess' => 'public');
+				$filterfields += array('phpgwcontactaccess' => 'public');
 				$grants = $this->grants;
 				while (list($user) = each($grants))
 				{
 					if ($DEBUG) { echo "<br>DEBUG - Grant from owner: ".$user; }
-					$filterfields += array('phpgwContactOwner' => $user);
+					$filterfields += array('phpgwcontactowner' => $user);
 				}
 			}
 			//if ($DEBUG) {
@@ -440,24 +440,24 @@
 			}
 			else
 			{
-				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwContactOwner=*');
+				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner=*');
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				$this->total_records = ldap_count_entries($this->ldap, $sri);
 
 				if ($filterfields)
 				{
-				//	$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
+					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
 				}
 			}
 
 			// Use shared sorting routines, based on sort and order
 			if ($sort == 'ASC')
 			{
-		//		$ldap_fields = $this->asortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
+				$ldap_fields = $this->asortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
 			}
 			else
 			{
-		//		$ldap_fields = $this->arsortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
+				$ldap_fields = $this->arsortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
 			}
 
 			// This logic allows you to limit rows, or not.
@@ -558,7 +558,10 @@
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
-					$ldap_fields[$value] = $stock_fields[$name];
+					if ($stock_fields[$name] != '')
+					{
+						$ldap_fields[$value] = $stock_fields[$name];
+					}
 				}
 			}
 
@@ -575,20 +578,17 @@
 			$ldap_fields['objectclass'][0] = 'organizationalPerson';
 			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
-
+/*
 			@reset($ldap_fields);
 			while (list($name,$value) = each($ldap_fields) ) {
 				if ($value)
 				{
-					$clean[$name] = $value;
-					//echo '<br>fieldname ="'.$name.'", value ="'.$value.'"';
+					echo '<br>fieldname ="'.$name.'", value ="'.$value.'"';
 				}
 			}
-			$ldap_fields = $clean;
-			//echo $dn;
-			//exit;
-
-			$err = ldap_add($this->ldap, $dn, $clean);
+			exit;
+*/
+			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
 			//$this->db->unlock();
 			if (count($extra_fields))
@@ -733,15 +733,17 @@
 					$allfields = $stock_fieldnames + $nonfields;
 					while ( list($fname,$fvalue) = each($allfields) )
 					{
-						if ($ldap_fields[0][$fvalue])
+						//if ($ldap_fields[0][$fvalue])
+						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue] != $stock_fields[$fname])
 						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
-						elseif (!$ldap_fields[0][$fvalue])
+						//elseif (!$ldap_fields[0][$fvalue])
+						elseif (!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
-							//echo "<br>".$fname." not there";
-							//$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
+							//echo "<br>".$fname." not there - '".$fvalue."'";
+							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
 					}
 				}
@@ -781,13 +783,13 @@
 				return False;
 			}
 
-			$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwowner='.$old_owner);
+			$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner='.$old_owner);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = "";
-			while (list($null,$entry) =  each($ldap_fields))
+			while (list($null,$entry) = each($ldap_fields))
 			{
-				$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $new_owner));
+				$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner' => $new_owner));
 			}
 
 			$this->db->query("update $this->ext_table set contact_owner='$new_owner' WHERE contact_owner=$owner",__LINE__,__FILE__);
@@ -831,7 +833,7 @@
 
 			if ($owner)
 			{
-				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwowner='.$owner);
+				$sri = ldap_search($this->ldap, $phpgw_info['server']['ldap_contact_context'], 'phpgwcontactowner='.$owner);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = '';
