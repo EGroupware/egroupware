@@ -42,7 +42,7 @@
 		var $valid_pathes = array();
 		var $send_file_ips = array();
 
-  function boinfolog( $info_id = 0)
+		function boinfolog( $info_id = 0)
 		{
 			$this->enums = array(
 				'priority' => array (
@@ -136,15 +136,15 @@
 			{
 				if (!is_object($this->projects))
 				{
-					$this->projects = createobject('projects.projects');
+					$this->projects = createobject('projects.boprojects');
 				}
-				if (list( $proj ) = $this->projects->read_single_project( $proj_id))
+				if (is_object($this->projects) && (list( $proj ) = $this->projects->read_single_project( $proj_id)))
 				{
 					return $proj;
 				}
 			}
-			return False;         
-		}               
+			return False;
+		}
 
 		function readAddr($addr_id)
 		{
@@ -153,15 +153,15 @@
 				if (!is_object($this->contacts))
 				{
 					$this->contacts = createobject('phpgwapi.contacts');
-				}            
+				}
 				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
 				{
 					return $addr;
 				}
 			}
-			return False;                  
-		}      
-					
+			return False;
+		}
+
 		/*
 		 * check's if user has the requiered rights on entry $info_id
 		 */
@@ -169,7 +169,7 @@
 		{
 			return $this->so->check_access( $info_id,$required_rights );
 		}
-		
+
 		function init()
 		{
 			$this->so->init();
