@@ -11,6 +11,8 @@
 		  was using lowercase.
 		- Added admin section to be able to add legal notices or other messages on the main screen.
 		  Thanks snerd for this idea.
+		- Added matrix view of individuals and calendar events.
+		- Fixed parent_page link on footer line.
 
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
