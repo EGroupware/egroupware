@@ -26,9 +26,7 @@ if (! $submit) {
    $phpgw->common->navbar();
 
     ?>
-   <form method="POST" acion="changepassword.php">
-    <?php echo $phpgw->form_sessionid(); ?>
-
+   <form method="POST" acion="<?php echo $phpgw->link("changepassword.php"); ?>">
     <table border="0">
      <tr>
        <td>
@@ -74,12 +72,12 @@ if (! $submit) {
 
    $phpgw->db->query("update accounts set passwd='" . md5($n_passwd) . "', "
 	          . "lastpasswd_change='" . time() . "' where loginid='"
-	          . $phpgw->session->loginid . "'");
+	          . $phpgw_info["user"]["userid"] . "'");
 
    // Since they are logged in, we need to change the password in sessions
    // in case they decied to check there mail.
    $phpgw->db->query("update sessions set passwd='" . addslashes($n_passwd)
-	          . "' where loginid='" . $phpgw->session->loginid . "'");
+	          . "' where loginid='" . $phpgw_info["user"]["userid"] . "'");
 
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
 	. "/preferences/","cd=18"));

@@ -54,8 +54,7 @@
 
   if (! $submit) {
      ?>
-      <form method="POST" action="settings.php">
-       <?php echo $phpgw->form_sessionid(); ?>
+      <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>">
        <table border=0>
        <tr>
         <td><?php echo lang_pref("max matchs per page"); ?>: </td>
@@ -236,7 +235,7 @@
 	     echo "<td><select name=\"headlines[]\" multiple size=5>\n";
 
                $phpgw->db->query("select * from users_headlines where owner='"
-				   . $phpgw->session->loginid . "'");
+				           . $phpgw_info["user"]["userid"] . "'");
 	       while ($phpgw->db->next_record())
 		 $users_headlines[$phpgw->db->f("site")] = " selected";
 
@@ -264,8 +263,8 @@
 
  <?php
   } else {
-     $phpgw->db->query("delete from preferences where owner='" . $phpgw->session->loginid
-			. "' AND name != 'theme'");
+     $phpgw->db->query("delete from preferences where owner='" . $phpgw_info["user"]["userid"]
+		           . "' AND name != 'theme'");
 
      // If they don't have permissions to the headlines,
      // we don't need to lock the table.
@@ -275,49 +274,49 @@
         $phpgw->db->lock("preferences");
      }
 
-     $phpgw->common->preferences_add($phpgw->session->loginid,"maxmatchs");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"tz_offset");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"dateformat");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"timeformat");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"lang");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"default_sorting");
-     $phpgw->common->preferences_add($phpgw->session->loginid,"default_app");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"maxmatchs");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"tz_offset");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"dateformat");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"timeformat");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"lang");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_app");
 
      if ($navbar_text) {
-        $phpgw->common->preferences_add($phpgw->session->loginid,"navbar_text");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"navbar_text");
      }
 
      if ($phpgw_info["user"]["permissions"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->common->preferences_add($phpgw->session->loginid,"show_currentusers");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"show_currentusers");
         }
      }
 
      if ($phpgw_info["user"]["permissions"]["email"]) {
         if ($mainscreen_showmail) {
-           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showmail");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail");
         }
-        $phpgw->common->preferences_add($phpgw->session->loginid,"email_sig");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig");
      }
 
      if ($phpgw_info["user"]["permissions"]["addressbook"]) {
         if ($mainscreen_showbirthdays) {
-           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showbirthdays");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays");
         }
      }
 
      if ($phpgw_info["user"]["permissions"]["calendar"]) {
-        $phpgw->common->preferences_add($phpgw->session->loginid,"weekdaystarts");
-        $phpgw->common->preferences_add($phpgw->session->loginid,"workdaystarts");
-        $phpgw->common->preferences_add($phpgw->session->loginid,"workdayends");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"weekdaystarts");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdaystarts");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdayends");
         if ($mainscreen_showevents) {
-           $phpgw->common->preferences_add($phpgw->session->loginid,"mainscreen_showevents");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showevents");
         }
      }
 
      if ($phpgw_info["user"]["permissions"]["headlines"]) {
         include($phpgw_info["server"]["server_root"] . "/headlines/inc/functions.inc.php");
-	headlines_update($phpgw->session->loginid,$headlines);
+	headlines_update($phpgw_info["user"]["userid"],$headlines);
      }
 
      $phpgw->db->unlock();

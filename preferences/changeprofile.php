@@ -39,10 +39,10 @@
            $picture_raw = base64_encode($picture_raw);
         }
 
-        $phpgw->db->query("delete from profiles where owner='" .$phpgw->session->loginid . "'");
+        $phpgw->db->query("delete from profiles where owner='" . $phpgw_info["user"]["userid"] . "'");
 
         $phpgw->db->query("insert into profiles (owner,title,phone_number,comments,"
-			         . "picture_format,picture) values ('" . $phpgw->session->loginid . "','"
+			         . "picture_format,picture) values ('" . $phpgw_info["user"]["userid"] . "','"
 			         . "$title','$phone_number','$comments','$picture_type','$picture_raw')");
      } else {
         $phone_number = addslashes($phone_number);
@@ -51,21 +51,19 @@
         $title        = addslashes($title);
 
         $phpgw->db->query("update profiles set title='$title',phone_number='$phone_number',"
-			         . "comments='$comments' where owner='" . $phpgw->session->loginid. "'");
+			         . "comments='$comments' where owner='" . $phpgw_info["user"]["userid"] . "'");
      }
      echo "<center>Your profile has been updated</center>";
   }
 
-  $phpgw->db->query("select * from profiles where owner='" . $phpgw->session->loginid . "'");
+  $phpgw->db->query("select * from profiles where owner='" . $phpgw_info["user"]["userid"] . "'");
   $phpgw->db->next_record();
 ?>
 
-  <form method="POST" ENCTYPE="multipart/form-data" action="changeprofile.php">
-   <?php echo $phpgw->form_sessionid(); ?>
-
+  <form method="POST" ENCTYPE="multipart/form-data" action="<?php echo $phpgw->link("changeprofile.php"); ?>">
    <table border="0">
     <tr>
-     <td colspan="2"><?php echo $phpgw->common->display_fullname($phpgw->session->loginid,$phpgw->session->firstname,$phpgw->session->lastname); ?></td>
+     <td colspan="2"><?php echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]); ?></td>
      <td>&nbsp;</td>
     </tr>
     <tr>
