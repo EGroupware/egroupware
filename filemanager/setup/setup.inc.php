@@ -21,6 +21,11 @@
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['phpwebhosting']['hooks'][] = 'preferences';
 
+	/* The tables this app creates */
+	$setup_info['addressbook']['tables']    = array(
+		'phpgw_vfs'
+	);
+
 	/* Dependencies for this app to work */
 	$setup_info['phpwebhosting']['depends'][] = array(
 		 'appname' => 'phpgwapi',
