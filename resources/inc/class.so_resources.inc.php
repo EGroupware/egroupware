@@ -115,26 +115,19 @@ class so_resources
 		@function save
 		@abstract saves a resource including binary datas
 		@param array $resource key => value 
-		@return array with key => value or false if not found
+		@return bool succsess or not!
 	*/
 	function save($resource)
 	{
 		$where = array('id' => $resource['id']);
-		$data = array(	'name' 			=> $resource['name'],
-				'cat_id'		=> $resource['cat_id'],
-				'short_description'	=> $resource['short_description'],
-				'long_description'	=> $resource['long_description'],
-				'location'		=> $resource['location'],
-				'quantity'		=> $resource['quantity'],
-				'useable'		=> $resource['useable'],
-				'bookable'		=> $resource['bookable'],
-				'buyable'		=> $resource['buyable'],
-				'prize'			=> $resource['prize'],
-				'accessories'		=> $resource['accessories'],
-				'picture_src'		=> $resource['picture_src'],
-				'picture_thumb'		=> $resource['picture_thumb'],
-				'picture'		=> $resource['picture']
-		);
+		
+		// get rid of the non storeable datas
+		$tabledef = $this->db->metadata($table=$this->rs_table,$full=false);
+		foreach($tabledef as $n => $fielddef)
+		{
+			$data[$fielddef['name']] = $resource[$fielddef['name']];
+		}
+		
 		return $this->db->insert($this->rs_table,$data,$where,__LINE__,__FILE__) ? true : false;
 	}
 	

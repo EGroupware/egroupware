@@ -174,7 +174,7 @@ class bo_resources
 	}
 	
 	function get_images($params)
-	{ 
+	{
 		$id = implode($params);
 		$picture = $this->so->get_value('picture_thumb',$id);
 		if($picture)
