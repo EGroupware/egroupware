@@ -292,8 +292,10 @@
 				$style = $this->html->style($this->style);
 				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
 			}
+			list(,,$border) = explode(',',$this->size);
+
 			return "\n\n<!-- BEGIN $this->name -->\n$style\n".
-				$this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS')).
+				$this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING')).
 				"<!-- END $this->name -->\n\n";
 		}
 
@@ -349,15 +351,36 @@
 			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
 			{
 				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,$this);
-				$content[$name] = $value;	// set result for template
+				if (strstr($name,'|'))
+				{
+					$content = $this->complete_array_merge($content,$value);
+				}
+				elseif (!$regs)
+				{
+					$content[$name] = $value;	// set result for template
+				}
+				else
+				{
+					eval(str_replace(']',"']",str_replace('[',"['",'$content['.$regs[1].']'.$regs[2].' = $value;')));
+				}
 			}
-			if ($cell['help'])
+			$label = $cell['label'];
+			if ($label[0] == '@')
 			{
-				$options .= " onFocus=\"self.status='".addslashes(lang($cell['help']))."'; return true;\"";
+				$label = $this->get_array($content,substr($label,1));
+			}
+			$help = $cell['help'];
+			if ($help[0] == '@')
+			{
+				$help = $this->get_array($content,substr($help,1));
+			}
+			if ($help)
+			{
+				$options .= " onFocus=\"self.status='".addslashes(lang($help))."'; return true;\"";
 				$options .= " onBlur=\"self.status=''; return true;\"";
 				if ($cell['type'] == 'button')	// for button additionally when mouse over button
 				{
-					$options .= " onMouseOver=\"self.status='".addslashes(lang($cell['help']))."'; return true;\"";
+					$options .= " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
 					$options .= " onMouseOut=\"self.status=''; return true;\"";
 				}
 			}
@@ -414,8 +437,8 @@
 					$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
 					break;
 				case 'button':
-					$html .= $this->html->submit_button($form_name,$cell['label'],'',
-						strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
+					$html .= $this->html->submit_button($form_name,$label,'',
+						strlen($label) <= 1 || $cell['no_lang'],$options);
 					$extra_label = False;
 					break;
 				case 'hrule':
@@ -432,13 +455,13 @@
 								$span = 1 + $content['cols'] - $show_c;
 							}
 						}
-						$readonlys = $readonlys[$idx];
-						$content = $content[$idx];
+						$readonlys = $this->get_array($readonlys,$idx); //$readonlys[$idx];
+						$content = $this->get_array($content,$idx); // $content[$idx];
 						if ($idx_cname != '')
 						{
-							$cname .= $cname == '' ? $idx_cname : "[$idx_cname]";
+							$cname .= $cname == '' ? $idx_cname : '['.str_replace('[','][',str_replace(']','',$idx_cname)).']';
 						}
-						//echo "<p>show_cell-autorepeat($name,$show_c,$show_row,cname='$cname',idx='$idx',idx_cname='$idx_cname',span='$span'): readonlys[$idx] ="; _debug_array($readonlys);
+						//echo "<p>show_cell-autorepeat($name,$show_c,$show_row,cname='$cname',idx='$idx',idx_cname='$idx_cname',span='$span'): content ="; _debug_array($content);
 					}
 					if ($readonly)
 					{
@@ -491,7 +514,7 @@
 					break;
 				case 'image':
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-						$cell['label'],lang($cell['help']),'BORDER=0');
+						$label,lang($help),'BORDER=0');
 					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
 					$extra_label = False;
 					break;
@@ -506,9 +529,9 @@
 					}
 					break;
 			}
-			if ($extra_label && (($label = $cell['label']) != '' || $html == ''))
+			if ($extra_label && ($label != '' || $html == ''))
 			{
-				if (strlen($label) > 1)
+				if (strlen($label) > 1 && !$cell['no_lang'])
 				{
 					$label = lang($label);
 				}
@@ -737,7 +760,7 @@
 					if ($templ->loop)
 					{
 						$this->loop = True;
-						echo "<p>".$this->name.": loop set in process_show(".$templ->name.")</p>\n";
+						//echo "<p>".$this->name.": loop set in process_show(".$templ->name.")</p>\n";
 					}
 					break;
 				case 'select':
