@@ -123,8 +123,8 @@
   $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
 	$accountid = mt_rand (100, 600000);
   $sql = "insert into phpgw_accounts";
-  $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-  $sql .= "values (".$accountid.", 'demo', 'u', '81dc9bdb52d04dc20036dbd8313ed055', 'Demo', 'Account', ".time().", 'A')";
+  $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_expires)";
+  $sql .= "values (".$accountid.", 'demo', 'u', '81dc9bdb52d04dc20036dbd8313ed055', 'Demo', 'Account', ".time().", 'A','-1')";
   $phpgw_setup->db->query($sql);
   $phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('4', '$defaultprefs')");
   $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid,  1)");
