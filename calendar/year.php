@@ -68,9 +68,9 @@
   for($i=1;$i<13;$i++) {
     echo '<td valign="top">';
     if(!$friendly)
-      echo $phpgw->calendar->mini_calendar($i,$i,$year,'day.php');
+      echo $phpgw->calendar->mini_calendar($i,$i,$year,'day.php','none',False);
     else
-      echo $phpgw->calendar->mini_calendar($i,$i,$year);
+      echo $phpgw->calendar->mini_calendar($i,$i,$year,'','none',False);
     echo '</td>';
     if($i==6) echo '</tr><tr valign="top">';
   }

@@ -618,7 +618,7 @@ class calendar extends calendar_
 		}
 	}
 
-	function mini_calendar($day,$month,$year,$link='',$buttons="none")
+	function mini_calendar($day,$month,$year,$link='',$buttons="none",$outside_month=True)
 	{
 		global $phpgw, $phpgw_info, $view;
 
@@ -734,14 +734,18 @@ class calendar extends calendar_
 				}
 				else
 				{
-//					$p->set_var('day_image','');
-//					$p->set_var('bgcolor2','#FEFEFE');
-//					$p->set_var('dayname','');
- 
-					$p->set_var('bgcolor2','#FEFEFE');   
-					$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="minicalendargrey">'.$cal['day'].'</a>');
+					if($outside_month == True)
+					{
+						$p->set_var('bgcolor2','#FEFEFE');   
+						$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="minicalendargrey">'.$cal['day'].'</a>');
+					}
+					else
+					{
+						$p->set_var('day_image','');
+						$p->set_var('bgcolor2','#FEFEFE');
+						$p->set_var('dayname','');
+					} 
 				}
-				
 				$p->parse('monthweek_day','mini_day',True);
 			}
 			$p->parse('display_monthweek','mini_week',True);
