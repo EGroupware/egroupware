@@ -85,14 +85,6 @@
 
 <?php
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
-
-  if(isset($code) && $code){
-    switch($code){
-      case "5":
-	echo lang("You do not have permissions to that application");
-	break;
-    }
-  }
   
   if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {
      include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
