@@ -24,8 +24,7 @@
 	}
 
 	create_input_box('Max matches per page','maxmatchs',
-		'Any listing in phpGW will show you this number or entries or lines per page.<br>
-		To many slow down the page display, to less will cost you the overview.',15,3);
+		'Any listing in phpGW will show you this number or entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.',15,3);
 	create_select_box('Interface/Template Selection','template_set',$_templates,
 		'A template defines the layout of phpGroupWare and it contains icons vor each application.');
 	create_select_box('Theme (colors/fonts) Selection','theme',$_themes,
@@ -55,9 +54,7 @@
 		$tz_offset[$i] = $i . ' ' . lang('hours').': ' . date($format,$t);
 	}
 	create_select_box('Time zone offset','tz_offset',$tz_offset,
-		'How many hours are you in front or after the timezone of the server.<br>
-		If you are in the same time zone as the server select 0 hours, 
-		else select your locale date and time.',0);
+		'How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.',0);
 
 	$date_formats = array(
 		'm/d/Y' => 'm/d/Y',
@@ -86,24 +83,8 @@
 	$sbox = createobject('phpgwapi.sbox');
 	create_select_box('Country','country',$sbox->country_array,
 		'In which country are you. This is used to set certain defaults for you.');
-
-	$db2 = $GLOBALS['phpgw']->db;
-	$GLOBALS['phpgw']->db->query("select distinct lang from phpgw_lang",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw']->db->next_record())
-	{
-//		$phpgw_info['installed_langs'][$phpgw->db->f('lang')] = $phpgw->db->f('lang');
-
-		$db2->query("select lang_name from phpgw_languages where lang_id = '"
-			. $GLOBALS['phpgw']->db->f('lang') . "'",__LINE__,__FILE__);
-		$db2->next_record();
-
-		// When its not in the phpgw_languages table, it will show ??? in the field
-		// otherwise
-		if ($db2->f('lang_name'))
-		{
-			$langs[$GLOBALS['phpgw']->db->f('lang')] = $db2->f('lang_name');
-		}
-	}
+	
+	$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
 	foreach ($langs as $key => $name)	// if we have a translation use it
 	{
 		$trans = lang($name);
@@ -111,10 +92,9 @@
 		{
 			$langs[$key] = $trans;
 		}
-	}
+	} 
 	create_select_box('Language','lang',$langs,
-		'Select the language of texts and messages within phpGroupWare.<br>
-		Some languages may not contain all messages, in that case you will see an english message.');
+		'Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.');
 	
 	// preference.php handles this function
 	if (is_admin())
@@ -132,10 +112,7 @@
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps,
-		"This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>
-		You can also have more than one applications showing up on the homepage, if you don't 
-		choose a specific application here (has to be configured in the preferences of 
-		each applicaton).");
+		"This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).");
 
 	create_input_box('Currency','currency',
 		'Which currency symbole or name should be used in phpGroupWare.');
