@@ -812,7 +812,7 @@
 			{
 				if (!$only || in_array($key,$only))
 				{
-					$column_type = is_array($column_definitions) ? @$colum_definitions[$key]['type'] : False;
+					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 					$values[] = ($use_key ? $key.'=' : '') . $this->quote($data,$column_type);
 				}
 			}
