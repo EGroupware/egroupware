@@ -106,6 +106,8 @@
 					$this->customfields = $this->config->config_data['customfields'];
 				}
 			}
+			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+			$this->tz_offset_sec = 60*60*$this->tz_offset;
 
 			$this->read( $info_id);
 		}
@@ -296,12 +298,13 @@
 			$start = 0;
 			$to_include = array();
 			$date_wanted = sprintf('%04d/%02d/%02d',$args['year'],$args['month'],$args['day']);
-			while ($infos = $this->search('info_startdate','',"user$user".($do_events?'date':'opentoday').$date_wanted,'','','','','',$start,$total))
+			while ($infos = $this->search('info_startdate'.($do_events?'':' DESC'),'',
+				"user$user".($do_events?'date':'opentoday').$date_wanted,'','','','','',$start,$total))
 			{
 				foreach($infos as $info)
 				{
-					$time = intval(date('Hi',$info['info_startdate']));
-					$date = date('Y/m/d',$info['info_startdate']);
+					$time = intval(date('Hi',$info['info_startdate']+$this->tz_offset_sec));
+					$date = date('Y/m/d',$info['info_startdate']+$this->tz_offset_sec);
 					if ($do_events && !$time ||
 					    !$do_events && $time && $date == $date_wanted)
 					{
@@ -312,7 +315,7 @@
 						$GLOBALS['phpgw']->html = CreateObject('etemplate.html');
 						$GLOBALS['phpgw']->translation->add_app('infolog');
 					}
-					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']),date('i',$info['info_startdate'])).' ':'').
+					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']+$this->tz_offset_sec),date('i',$info['info_startdate']+$this->tz_offset_sec)).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
 					$content = '';
@@ -326,8 +329,8 @@
 					$content = $GLOBALS['phpgw']->html->a_href($content.'&nbsp;'.$title,$view).'<br>';
 
 					$to_include[] = array(
-						'starttime' => $info['info_startdate'],
-						'endtime'   => $info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate'],
+						'starttime' => $info['info_startdate']+$this->tz_offset_sec,
+						'endtime'   => ($info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate'])+$this->tz_offset_sec,
 						'title'     => $title,
 						'view'      => $view,
 						'icons'     => $icons,

@@ -41,6 +41,8 @@
 
 			$this->links = CreateObject('infolog.solink');
 
+			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+
 			$this->read( $info_id );
 		}
 
@@ -183,13 +185,13 @@
 
 			if (isset($vars[2]) && !empty($vars[2]) && ($date = split('[-/.]',$vars[2])))
 			{
-				$today = mktime(0,0,0,intval($date[1]),intval($date[2]),intval($date[0]));
-				$tomorrow = mktime(0,0,0,intval($date[1]),intval($date[2])+1,intval($date[0]));
+				$today = mktime(-$this->tz_offset,0,0,intval($date[1]),intval($date[2]),intval($date[0]));
+				$tomorrow = mktime(-$this->tz_offset,0,0,intval($date[1]),intval($date[2])+1,intval($date[0]));
 			}
 			else
 			{
-				$now = getdate(time());
-				$tomorrow = mktime(0,0,0,$now['mon'],$now['mday']+1,$now['year']);
+				$now = getdate(time()-60*60*$this->tz_offset);
+				$tomorrow = mktime(-$this->tz_offset,0,0,$now['mon'],$now['mday']+1,$now['year']);
 			}
 			switch ($filter)
 			{
@@ -305,7 +307,7 @@
 				}
 			}
 			// set parent_id to 0 for all not deleted children
-			$this->db->query("UPDATA phpgw_infolog SET info_parent_id=0 WHERE info_parent_id=$info_id",__LINE__,__FILE__);
+			$this->db->query("UPDATE phpgw_infolog SET info_parent_id=0 WHERE info_parent_id=$info_id",__LINE__,__FILE__);
 		}
 
 		/*!
