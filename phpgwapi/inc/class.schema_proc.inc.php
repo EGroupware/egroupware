@@ -27,9 +27,7 @@
 	class schema_proc
 	{
 		var $m_oTranslator;
-		var $m_oDeltaProc;
 		var $m_odb;
-		var $m_aTables;		// stores the table-definitions of an application, set by ExecuteScripts
 		var $m_bDeltaOnly;
 		var $debug = 0;	// 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
 		var $max_index_length=array(	// if known
@@ -43,11 +41,8 @@
 		 *
 		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
 		 */
-		function schema_proc($dbms=False,$aTables=False)
+		function schema_proc($dbms=False)
 		{
-			$this->m_aTables = array();
-			$this->m_bDeltaOnly = False; // Default to false here in case it's just a CreateTable script
-			
 			$this->m_odb = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->m_odb->connect();
 			
@@ -84,9 +79,6 @@
 			{
 				$this->debug_message('schema_proc::CreateTable(%1,%2)',False,$sTableName, $aTableDef);
 			}
-			$this->m_aTables[$sTableName] = $aTableDef;
-			if($this->m_bDeltaOnly) return true;
-
 			// creating the table
 			$aSql = $this->dict->CreateTableSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef($aTableDef));
 			if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateTableSQL(%1,%2) sql=%3',False,$sTableName,$ado_cols,$aSql)))
@@ -170,9 +162,6 @@
 			if ($this->debug) $bOutputHTML = True;
 			if ($bOutputHTML && !$this->debug) $this->debug = 2;
 
-			$this->m_aTables = array();
-			if($this->m_bDeltaOnly) return true;
-
 			foreach($aTables as $sTableName => $aTableDef)
 			{
 				if($this->DropTable($sTableName))
@@ -198,9 +187,6 @@
 		 */
 		function DropTable($sTableName)
 		{
-			unset($this->m_aTables[$sTableName]);
-			if($this->m_bDeltaOnly) return True;
-
 			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
 
 			$aSql = $this->dict->DropTableSql($sTableName);
@@ -219,10 +205,10 @@
 		 */
 		function DropColumn($sTableName, $aTableDef, $sColumnName, $bCopyData = true)
 		{
-			unset($this->m_aTables[$sTableName]['fd'][$sColumnName]);
-			if($this->m_bDeltaOnly) return True;
-
-			$aSql = $this->dict->DropColumnSql($sTableName,$sColumnName,$ado_table=$this->_egw2adodb_columndef($this->m_aTables[$sTableName]));
+			$table_def = $this->GetTableDefinition($sTableName);
+			unset($table_def['fd'][$sColumnName]);
+			
+			$aSql = $this->dict->DropColumnSql($sTableName,$sColumnName,$ado_table=$this->_egw2adodb_columndef($table_def));
 
 			return $this->ExecuteSQLArray($aSql,2,'DropColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sColumnName,$ado_table,$aSql);
 		}
@@ -236,10 +222,6 @@
 		 */
 		function RenameTable($sOldTableName, $sNewTableName)
 		{
-			$this->m_aTables[$sNewTableName] = $this->m_aTables[$sOldTableName];
-			unset($this->m_aTables[$sOldTableName]);
-			if($this->m_bDeltaOnly) return True;
-			
 			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
 
 			$aSql = $this->dict->RenameTableSQL($sOldTableName, $sNewTableName);
@@ -255,13 +237,14 @@
 		 */
 		function _PostgresTestDropOldSequence($sTableName)
 		{
-			if (!$this->sType == 'pgsql') return;
+			if ($this->sType != 'pgsql') return;
 
-			$seq = $this->adodb->GetOne("SELECT a.attname FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+			$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 			
-			if ($seq)
+			if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 			{
-				$this->query("DROP SEQUENCE $seq",__LINE__,__FILE__);
+				
+				$this->query('DROP SEQUENCE '.$matches[1],__LINE__,__FILE__);
 			}
 		}
 
@@ -276,13 +259,13 @@
 		 */
 		function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData=True)
 		{
-			$this->m_aTables[$sTableName]['fd'][$sColumnName] = $aColumnDef;
-			if($this->m_bDeltaOnly) return True;
+			$table_def = $this->GetTableDefinition($sTableName);
+			$table_def['fd'][$sColumnName] = $aColumnDef;
 
 			$aSql = $this->dict->AlterColumnSQL($sTableName,$ado_col = $this->_egw2adodb_columndef(array(
 					'fd' => array($sColumnName => $aColumnDef),
 					'pk' => array(),
-				)),$ado_table=$this->_egw2adodb_columndef($this->m_aTables[$sTableName]));
+				)),$ado_table=$this->_egw2adodb_columndef($table_def));
 
 			return $this->ExecuteSQLArray($aSql,2,'AlterColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$ado_col,$ado_table,$aSql);
 		}
@@ -298,36 +281,12 @@
 		 */
 		function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
 		{
-			$this->m_aTables[$sTableName]['fd'][$sNewColumnName] = $this->m_aTables[$sTableName]['fd'][$sOldColumnName];
-			unset($this->m_aTables[$sTableName]['fd'][$sOldColumnName]);
-
-			// check if column is used in an index and evtl. rename the column in the index-definition
-			if (($key = array_search($sOldColumnName,$this->m_aTables[$sTableName]['pk'])) !== false)
-			{
-				$this->m_aTables[$sTableName]['pk'][$key] = $sNewColumnName;
-			}
-			foreach(array('ix','uc') as $kind)
-			{
-				foreach($this->m_aTables[$sTableName][$kind] as $key => $index)
-				{
-					if (!is_array($index))
-					{
-						if ($index == $sOldColumnName) $this->m_aTables[$sTableName][$kind][$key] = $sNewColumnName;
-					}
-					elseif (($sub_key = array_search($sOldColumnName,$index)) !== false)
-					{
-						$this->m_aTables[$sTableName][$kind][$key][$sub_key] = $sNewColumnName;
-					}
-				}
-			}
-			if($this->m_bDeltaOnly) return True;
-
-			// we have to use the new column-name, as m_oDeltaProc has already changed m_aTables
+			$table_def = $this->GetTableDefinition($sTableName);
 			$col_def = $this->_egw2adodb_columndef(array(
-					'fd' => array($sNewColumnName => $this->m_aTables[$sTableName]['fd'][$sNewColumnName]),
+					'fd' => array($sNewColumnName => $table_def['fd'][strtolower($sOldColumnName)]),
 					'pk' => array(),
 				));
-
+			
 			$aSql = $this->dict->RenameColumnSQL($sTableName,$sOldColumnName,$sNewColumnName,$col_def);
 
 			return $this->ExecuteSQLArray($aSql,2,'RenameColumnSQL(%1,%2,%3) sql=%4',False,$sTableName,$sOldColumnName, $sNewColumnName,$aSql);
@@ -343,9 +302,6 @@
 		 */
 		function AddColumn($sTableName, $sColumnName, $aColumnDef)
 		{
-			$this->m_aTables[$sTableName]['fd'][$sColumnName] = $aColumnDef;
-			if($this->m_bDeltaOnly) return True;
-
 			$aSql = $this->dict->AddColumnSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef(array(
 					'fd' => array($sColumnName => $aColumnDef),
 					'pk' => array(),
@@ -364,20 +320,18 @@
 		 * @param string $sIdxName='' name of the index, if not given (default) its created automaticaly
 		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 		 */
-		function CreateIndex($sTableName,$aColumnNames,$type=False,$options='',$sIdxName='')
+		function CreateIndex($sTableName,$aColumnNames,$bUnique=false,$options='',$sIdxName='')
 		{
-			$kind = $bUnique ? 'uc' : 'ix';
-			$key = !$sIdxName || is_numeric($sIdxName) ? count($this->m_aTables[$sTableName][$kind]) : $sIdxName;
-			$this->m_aTables[$sTableName][$kind][$key] = $aColumnNames;
-			if($this->m_bDeltaOnly) return true;
-
 			if (!$sIdxName || is_numeric($sIdxName))
 			{
 				$sIdxName = $this->_index_name($sTableName,$aColumnNames);
 			}
-			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$aColumnNames,is_array($options) ? $options : array($options));
+			if (!is_array($options)) $options = $options ? array($options) : array();
+			if ($bUnique) $options[] = 'UNIQUE';
 
-			return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3) sql=%4',False,$name,$sTableName,$sColumnName, $aColumnDef,$aSql);
+			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$aColumnNames,$options);
+
+			return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$aColumnNames,$options,$aSql);
 		}
 
 		/**
@@ -391,20 +345,6 @@
 		{
 			if (is_array($aColumnNames)) 
 			{
-				foreach(array('ix','uc') as $kind)
-				{
-					foreach($this->m_aTables[$sTableName][$kind] as $idx => $columns)
-					{
-						if (!is_array($columns)) $columns = array($columns);
-						unset($columns['options']);
-						
-						if (implode(':',$columns) == implode(':',$aColumnNames))
-						{
-							unset($this->m_aTables[$sTableName][$kind][$idx]);
-							break;
-						}
-					}
-				}
 				$indexes = $this->dict->MetaIndexes($sTableName);
 				if ($indexes === False)
 				{
@@ -428,7 +368,7 @@
 			{
 				$sIdxName = $aColumnNames;
 			}
-			if($this->m_bDeltaOnly || !$sIdxName)
+			if(!$sIdxName)
 			{
 				return True;
 			}
@@ -455,7 +395,7 @@
 						$seq_name = $matches[1];
 					}
 					$sql = "SELECT setval('$seq_name',MAX($sColumnName)) FROM $sTableName";
-					if($GLOBALS['DEBUG']) { echo "<br>Updating sequence '$seq_name using: $sql"; }
+					if($this->debug) { echo "<br>Updating sequence '$seq_name using: $sql"; }
 					return $this->query($sql,__LINE__,__FILE__);
 			}
 			return True;
@@ -475,11 +415,9 @@
 		 */
 		function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 		{
-			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>m_aTables[$sTableName]="._debug_array($this->m_aTables[$sTableName],False)."\n"; }
-			$old_fd = $this->m_aTables[$sTableName]['fd'];
-
-			$this->m_aTables[$sTableName] = $aTableDef;
-			if($this->m_bDeltaOnly) return true;
+			if($this->debug) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>$sTableName="._debug_array($old_table_def,False)."\n"; }
+			
+			$old_table_def = $this->GetTableDefinition($sTableName);
 
 			$tmp_name = 'tmp_'.$sTableName;
 			$this->m_odb->transaction_begin();
@@ -492,9 +430,16 @@
 				{
 					$value = $aDefaults[$name];
 				}
-				elseif (isset($old_fd[$name]))	// existing column, use its value => column-name in query
+				elseif (isset($old_table_def['fd'][$name]))	// existing column, use its value => column-name in query
 				{
 					$value = $name;
+					// this is eg. necessary to change a varchar into an int column under postgres
+					if ($this->sType == 'pgsql' &&
+						in_array($old_table_def['fd'][$name]['type'],array('char','varchar','text','blob')) &&
+						in_array($data['type'],array('int','decimal')))
+					{
+						$value = "to_number($name,'S99D99')";
+					}
 				}
 				else	// new column => use default value or NULL
 				{
@@ -505,11 +450,13 @@
 					else
 					{
 						$value = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
-						// fix for postgres error "no '<' operator for type 'unknown'"
 						if ($this->sType == 'pgsql')
 						{
-							$type_translated = $this->m_oTranslator->TranslateType($data['type']);
-							$value = "CAST($value AS $type_translated)";
+							// fix for postgres error "no '<' operator for type 'unknown'"
+							if(($type_translated = $this->TranslateType($data['type'])))
+							{
+								$value = "CAST($value AS $type_translated)";
+							}
 						}
 					}
 				}
@@ -529,10 +476,10 @@
 					break;					
 			}
 			// because of all the trouble with sequences and indexes in the global namespace, 
-			// we use an additional temp. table for postgres and not rename the existing on, but drop it.
+			// we use an additional temp. table for postgres and not rename the existing one, but drop it.
 			if ($this->sType == 'pgsql')	
 			{
-				$Ok = $this->m_odb->query("SELECT * INTO TEMPORARY TABLE $tmp_name FROM $sTableName",__LINE__,__FILE__) &&
+				$Ok = $this->m_odb->query("SELEcT * INTO TEMPORARY TABLE $tmp_name FROM $sTableName",__LINE__,__FILE__) &&
 					$this->DropTable($sTableName);
 			}
 			else
@@ -542,7 +489,7 @@
 			$Ok = $Ok && $this->CreateTable($sTableName,$aTableDef) &&
 				$this->m_odb->query("$extra INSERT INTO $sTableName (".
 					implode(',',array_keys($aTableDef['fd'])).
-					") SELECT $distinct $select FROM $tmp_name",__LINE__,__FILE__) &&
+					") SELEcT $distinct $select FROM $tmp_name",__LINE__,__FILE__) &&
 				$this->DropTable($tmp_name);
 
 			if (!$Ok)
@@ -555,7 +502,6 @@
 			{
 				$this->UpdateSequence($sTableName,$aTableDef['pk'][0]);
 			}
-			$this->DropTable($tmp_name);
 			$this->m_odb->transaction_commit();
 
 			return True;
@@ -586,8 +532,6 @@
 			// set our debug-mode or $bOutputHTML is the other one is set
 			if ($this->debug) $bOutputHTML = True;
 			if ($bOutputHTML && !$this->debug) $this->debug = 2;
-
-			$this->m_aTables = array();
 
 			foreach($aTables as $sTableName => $aTableDef)
 			{
@@ -620,11 +564,6 @@
 		*/
 		function f($value,$strip_slashes=False)
 		{
-			if($this->m_bDeltaOnly)
-			{
-				// Don't care, since we are processing deltas only
-				return False;
-			}
 			return $this->m_odb->f($value,$strip_slashes);
 		}
 
@@ -635,11 +574,6 @@
 		*/
 		function num_rows()
 		{
-			if($this->m_bDeltaOnly)
-			{
-				// If not False, we will cause while loops calling us to hang
-				return False;
-			}
 			return $this->m_odb->num_rows();
 		}
 
@@ -650,11 +584,6 @@
 		*/
 		function next_record()
 		{
-			if($this->m_bDeltaOnly)
-			{
-				// If not False, we will cause while loops calling us to hang
-				return False;
-			}
 			return $this->m_odb->next_record();
 		}
 
@@ -670,11 +599,6 @@
 		*/
 		function query($sQuery, $line='', $file='')
 		{
-			if($this->m_bDeltaOnly)
-			{
-				// Don't run this query, since we are processing deltas only
-				return True;
-			}
 			return $this->m_odb->query($sQuery, $line, $file);
 		}
 		
@@ -692,11 +616,6 @@
 		*/
 		function insert($table,$data,$where,$line,$file,$app)
 		{
-			if($this->m_bDeltaOnly)
-			{
-				// Don't run this query, since we are processing deltas only
-				return True;
-			}
 			return $this->m_odb->insert($table,$data,$where,$line,$file,$app);
 		}		
 			
@@ -934,7 +853,7 @@
 				}
 				if (!$ado_col)
 				{
-					$this->error("Ignoring unknown column-type '$col_data[type]($col_data[precision])' !!!");
+					$this->error("Ignoring unknown column-type '$col_data[type]($col_data[precision])' !!!<br>".function_backtrace());
 					continue;
 				}
 				if (isset($col_data['nullable']) && !$col_data['nullable'])
@@ -955,6 +874,21 @@
 			return implode(",\n",$ado_defs);
 		}
 		
+		/**
+		 * Translates an eGW type into the DB's native type
+		 * 
+		 * @param string $egw_type eGW name of type
+		 * @param string/boolean DB's name of the type or false if the type could not be identified (should not happen)
+		 */
+		function TranslateType($egw_type)
+		{
+			$ado_col = $this->_egw2adodb_columndef(array(
+				'fd' => array('test' => array('type' => $egw_type)),
+				'pk' => array(),
+			));
+			return preg_match('/test ([A-Z0-9]+)/i',$ado_col,$matches) ? $this->dict->ActualType($matches[1]) : false;
+		}	
+
 		/**
 		 * Read the table-definition direct from the database
 		 *
@@ -1140,7 +1074,7 @@
 		}
 
 		/**
-		 * Get actual columnnames as a comma-separated string in$sColumns and set table-definition in class-vars
+		 * Get actual columnnames as a comma-separated string in $sColumns and set indices as class-vars pk,fk,ix,uc
 		 *
 		 * old translator function, use GetTableDefition() instead
 		 * @depricated

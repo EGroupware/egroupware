@@ -131,12 +131,19 @@ class ADODB2_postgres extends ADODB_DataDict {
 		list($lines,$pkey) = $this->_GenFields($flds);
 		$alter = 'ALTER TABLE ' . $tabname . $this->addCol . ' ';
 		foreach($lines as $v) {
+			if (($not_null = preg_match('/NOT NULL/i',$v))) {
+				$v = preg_replace('/NOT NULL/i','',$v);
+			}
 			if (preg_match('/^([^ ]+) .*(DEFAULT [^ ]+)/',$v,$matches)) {
 				list(,$colname,$default) = $matches;
 				$sql[] = $alter . str_replace($default,'',$v);
 				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET ' . $default;
 			} else {				
 				$sql[] = $alter . $v;
+			}
+			if ($not_null) {
+				list($colname) = explode(' ',$v);
+				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET NOT NULL';
 			}
 		}
 		return $sql;
@@ -194,8 +201,8 @@ class ADODB2_postgres extends ADODB_DataDict {
 	 * @internal
 	 * @param string $tabname table-name
 	 * @param string $dropflds column-names to drop
-	 * @param string $tableflds complete defintion of the new table, eg. for postgres, default ''
-	 * @param array/ $tableoptions options for the new table see CreateTableSQL, default ''
+	 * @param string $tableflds complete defintion of the new table, eg. for postgres
+	 * @param array/string $tableoptions options for the new table see CreateTableSQL, default ''
 	 * @return array with SQL strings
 	 */
 	function _recreate_copy_table($tabname,$dropflds,$tableflds,$tableoptions='')
@@ -204,7 +211,13 @@ class ADODB2_postgres extends ADODB_DataDict {
 		$copyflds = array();
 		foreach($this->MetaColumns($tabname) as $fld) {
 			if (!$dropflds || !in_array($fld->name,$dropflds)) {
-				$copyflds[] = $fld->name;
+				// we need to explicit convert varchar to a number to be able to do an AlterColumn of a char column to a nummeric one
+				if (preg_match('/'.$fld->name.' (I|I2|I4|I8|N|F)/i',$tableflds,$matches) && 
+					in_array($fld->type,array('varchar','char','text','bytea'))) {
+					$copyflds[] = "to_number($fld->name,'S99D99')";
+				} else {
+					$copyflds[] = $fld->name;
+				}
 				// identify the sequence name and the fld its on
 				if ($fld->primary_key && $fld->has_default && 
 					preg_match("/nextval\('([^']+)'::text\)/",$fld->default_value,$matches)) {
@@ -222,6 +235,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		$aSql = array_merge($aSql,$this->CreateTableSQL($tabname,$tableflds,$tableoptions));
 		$aSql[] = "INSERT INTO $tabname SELECT $copyflds FROM $tempname";
 		if ($seq_name && $seq_fld) {	// if we have a sequence we need to set it again
+			$seq_name = $tabname.'_'.$seq_fld.'_seq';	// has to be the name of the new implicit sequence
 			$aSql[] = "SELECT setval('$seq_name',MAX($seq_fld)) FROM $tabname";
 		}
 		$aSql[] = "DROP TABLE $tempname";

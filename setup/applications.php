@@ -123,6 +123,8 @@
 		$remove  = get_var('remove',Array('POST'));
 		$install = get_var('install',Array('POST'));
 		$upgrade = get_var('upgrade',Array('POST'));
+		
+		$do_langs = false;
 
 		if(!empty($remove) && is_array($remove))
 		{
@@ -148,9 +150,7 @@
 					$GLOBALS['phpgw_setup']->deregister_hooks($setup_info[$appname]['name']);
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 				}
-
-				$terror = $GLOBALS['phpgw_setup']->process->drop_langs($terror,$DEBUG);
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
+				$do_langs = true;
 
 				if ($historylog->delete($appname))
 				{
@@ -195,13 +195,7 @@
 						echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
 					}
 				}
-				$force_en = False;
-				if($appname == 'phpgwapi')
-				{
-					$force_en = True;
-				}
-				$terror = $GLOBALS['phpgw_setup']->process->add_langs($terror,$DEBUG,$force_en);
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
+				$do_langs = true;
 			}
 		}
 
@@ -222,12 +216,13 @@
 				{
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
 				}
-
-				$terror = $GLOBALS['phpgw_setup']->process->upgrade_langs($terror,$DEBUG);
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
+				$do_langs = true;
 			}
 		}
-
+		if ($do_langs)
+		{
+			$GLOBALS['phpgw_setup']->process->translation->drop_add_all_langs();
+		}
 		//$setup_tpl->set_var('goback',
 		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		//$setup_tpl->pparse('out','submit');

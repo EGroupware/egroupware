@@ -120,5 +120,16 @@
 			$this->setup_translation_sql();
 			return $this->sql->add_langs($appname,$DEBUG,$force_langs);
 		}
+		
+		function drop_add_all_langs($langs=False)
+		{
+			$this->setup_translation_sql();
+
+			if (!$langs && !count($langs = $this->sql->get_langs()))
+			{
+				$langs[] = 'en';
+			}
+			return $this->sql->install_langs($langs,'dumpold');
+		}
 	}
 ?>

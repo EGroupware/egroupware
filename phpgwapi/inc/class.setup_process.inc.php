@@ -6,6 +6,8 @@
 	* This file written by Miles Lott <milos@groupwhere.org>                   *
 	*  Originally written for phpGroupWare.                                    *
 	* (C) 2001-2004 Miles Lott                                                 *
+	* Upgrade process rewritten by <RalfBecker@outdoor-training.de> to no      *
+	* longer require tables_baseline files and delta-upgrades                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -43,17 +45,7 @@
 		*/
 		function init_process()
 		{
-			$ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'));
-			$phpgw_domain = $GLOBALS['phpgw_domain'];
-
-			$GLOBALS['phpgw_setup']->oProc = CreateObject('phpgwapi.schema_proc',$phpgw_domain[$ConfigDomain]['db_type']);
-			$GLOBALS['phpgw_setup']->oProc->m_odb           = $GLOBALS['phpgw_setup']->db;
-			$GLOBALS['phpgw_setup']->oProc->m_odb->Host     = $phpgw_domain[$ConfigDomain]['db_host'];
-			$GLOBALS['phpgw_setup']->oProc->m_odb->Database = $phpgw_domain[$ConfigDomain]['db_name'];
-			$GLOBALS['phpgw_setup']->oProc->m_odb->User     = $phpgw_domain[$ConfigDomain]['db_user'];
-			$GLOBALS['phpgw_setup']->oProc->m_odb->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
-			$GLOBALS['phpgw_setup']->oProc->m_odb->Halt_On_Error = 'report';
-			$GLOBALS['phpgw_setup']->oProc->m_odb->connect();
+			$GLOBALS['phpgw_setup']->oProc = CreateObject('phpgwapi.schema_proc');
 		}
 
 		/*!
@@ -64,7 +56,7 @@
 		@param $DEBUG		optional, print debugging info
 		@param $force_en	optional, install english language files
 		*/
-		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
+		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$system_charset=false)
 		{
 			if(!$method)
 			{
@@ -83,6 +75,7 @@
 			$passing = array();
 			$pass_string = implode (':', $pass);
 			$passing_string = implode (':', $passing);
+			$do_langs = false;
 			while($pass_string != $passing_string)
 			{
 				$passing = array();
@@ -124,14 +117,14 @@
 					case 'new':
 						/* Create tables and insert new records for each app in this list */
 						$passing = $this->current($pass,$DEBUG);
+						$this->save_minimal_config($system_charset);
 						$passing = $this->default_records($passing,$DEBUG);
-						$passing = $this->add_langs($passing,$DEBUG,array(get_var('ConfigLang',Array('POST','COOKIE')),'en'));
-						$this->save_minimal_config();
+						$do_langs = true;	// just do it once at the end of all passes
 						break;
 					case 'upgrade':
 						/* Run upgrade scripts on each app in the list */
 						$passing = $this->upgrade($pass,$DEBUG);
-						$passing = $this->upgrade_langs($passing,$DEBUG);
+						$do_langs = true;	// just do it once at the end of all passes
 						//_debug_array($pass);exit;
 						break;
 					default:
@@ -179,22 +172,25 @@
 				$pass_string = implode (':', $pass);
 				$passing_string = implode (':', $passing);
 			}
-
-			/* now return the list */
-			@reset($passed);
-			while(list($key,$value) = @each($passed))
+			if ($do_langs)	// just do it once at the end of all passes
 			{
-				$setup_info[$value['name']] = $passed[$value['name']];
+				$langs = false;
+				if ($method == 'new')
+				{
+					$langs[] = ($own_lang = get_var('ConfigLang',Array('POST','COOKIE')));
+					if ($own_lang != 'en') $langs[] = 'en';
+				}
+				$this->translation->drop_add_all_langs($langs);
 			}
-
-			return ($setup_info);
+			/* now return the list */
+			return $setup_info = array_merge($setup_info,$passed);
 		}
 
 		/*!
 		@function save_minimal_config
 		@abstract saves a minimal default config, so you get a running install without entering and saveing Step #2 config
 		*/
-		function save_minimal_config()
+		function save_minimal_config($system_charset)
 		{
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
 			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
@@ -225,6 +221,15 @@
 
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
 			$GLOBALS['current_config']['usecookies'] = 'True';
+			
+			if ($system_charset)
+			{
+				$GLOBALS['current_config']['system_charset'] = $system_charset;
+				if (is_object($GLOBALS['phpgw_setup']->translation->sql))
+				{
+					$GLOBALS['phpgw_setup']->translation->sql->system_charset = $system_charset;
+				}
+			}
 
 			foreach($GLOBALS['current_config'] as $setting => $value)
 			{
@@ -246,8 +251,6 @@
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-
 			/* The following is built so below we won't try to drop a table that isn't there. */
 			$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
 			if (!is_array($setup_info) || !is_array($tablenames))
@@ -298,8 +301,6 @@
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-
 			@reset($setup_info);
 			while(list($key,$null) = @each($setup_info))
 			{
@@ -380,9 +381,6 @@
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-//			$oProc = $GLOBALS['phpgw_setup']->oProc;
-
 			@reset($setup_info);
 			while(list($key,$null) = @each($setup_info))
 			{
@@ -408,75 +406,6 @@
 		}
 
 		/*!
-		@function add_langs
-		@abstract process application lang files and uninstall
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
-		function add_langs($setup_info,$DEBUG=False,$force_langs=False)
-		{
-			@reset($setup_info);
-			while(list($key,$null) = @each($setup_info))
-			{
-				$appname = $setup_info[$key]['name'];
-				$this->translation->add_langs($appname,$DEBUG,$force_langs);
-				if($DEBUG)
-				{
-					echo '<br>process->add_langs(): Translations added for ' . $appname . "\n";
-				}
-			}
-			/* Done, return current status */
-			return ($setup_info);
-		}
-
-		/*!
-		@function drop_langs
-		@abstract process application lang files and install
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
-		function drop_langs($setup_info,$DEBUG=False)
-		{
-			@reset($setup_info);
-			while(list($key,$null) = @each($setup_info))
-			{
-				$appname = $setup_info[$key]['name'];
-				$this->translation->drop_langs($appname,$DEBUG);
-				if($DEBUG)
-				{
-					echo '<br>process->drop_langs():  Translations removed for ' . $appname . "\n";
-				}
-			}
-			/* Done, return current status */
-			return ($setup_info);
-		}
-
-		/*!
-		@function upgrade_langs
-		@abstract process application lang files and reinstall
-		@param $setup_info	array of application info from setup.inc.php files, etc.
-		*/
-		function upgrade_langs($setup_info,$DEBUG=False)
-		{
-			@reset($setup_info);
-			while(list($key,$null) = @each($setup_info))
-			{
-				/* Don't upgrade lang files in the middle of an upgrade */
-				if($setup_info[$key]['status'] == 'R')
-				{
-					continue;
-				}
-				$appname = $setup_info[$key]['name'];
-				$this->translation->drop_langs($appname,$DEBUG);
-				$this->translation->add_langs($appname,$DEBUG);
-				if($DEBUG)
-				{
-					echo '<br>process->upgrade_langs(): Translations reinstalled for ' . $appname . "\n";
-				}
-			}
-			/* Done, return current status */
-			return ($setup_info);
-		}
-
-		/*!
 		@function test_data
 		@abstract process test_data.inc.php in each application/setup dir for developer tests
 		This data should work with the baseline tables
@@ -488,9 +417,6 @@
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-//			$oProc = $GLOBALS['phpgw_setup']->oProc;
-
 			@reset($setup_info);
 			while(list($key,$null) = @each($setup_info))
 			{
@@ -569,250 +495,118 @@
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_odb->HaltOnError = 'no';
-			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
+			$GLOBALS['phpgw_setup']->oProc->m_odb->HaltOnError = 'yes';
 
-			@reset($setup_info);
-			while(list($key,$null) = @each($setup_info))
+			foreach($setup_info as $key => $appdata)
 			{
+				$appname = $appdata['name'];
 				/* Don't try to upgrade an app that is not installed */
-				if(!$GLOBALS['phpgw_setup']->app_registered($setup_info[$key]['name']))
+				if(!$GLOBALS['phpgw_setup']->app_registered($appname))
 				{
 					if($DEBUG)
 					{
-						echo '<br>process->upgrade(): Application not installed: ' . $appname . "\n";
+						echo "<p>process->upgrade(): Application not installed: $appname</p>\n";
 					}
-					unset($setup_info[$key]);
+					unset($setup_info[$appname]);
 					continue;
 				}
 
 				/* if upgrade required, or if we are running again after an upgrade or dependency failure */
-				if($DEBUG) { echo '<br>process->upgrade(): Incoming : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status']; }
-				if($setup_info[$key]['status'] == 'U' ||
-					$setup_info[$key]['status'] == 'D' ||
-					$setup_info[$key]['status'] == 'V' ||
-					$setup_info[$key]['status'] == '') // TODO this is not getting set for api upgrade, sometimes ???
+				if($DEBUG) 
+				{ 
+					echo '<div style="text-align: left; border: thin dashed black; margin-top: 5px;">'."process->upgrade(): Incoming : appname: $appname, version: $appdata[currentver], status: $appdata[status]\n"; 
+				}
+				if($appdata['status'] == 'U' || $appdata['status'] == 'D' ||$appdata['status'] == 'V' || $appdata['status'] == '') // TODO this is not getting set for api upgrade, sometimes ???
 				{
-					$appname    = $setup_info[$key]['name'];
-					$apptitle   = $setup_info[$key]['title'];
-					$currentver = $setup_info[$key]['currentver'];
-					$targetver  = $setup_info[$key]['version'];	// The version we need to match when done
+					$currentver = $appdata['currentver'];
+					$targetver  = $appdata['version'];	// The version we need to match when done
 					$appdir     = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-					$test   = array();
-					$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline = array();
-/*
-					$phpgw_baseline = array();
-
-					$tmpapp = array();
-					$tmpapp[] = $setup_info[$key];
-					$this->baseline($tmpapp,$DEBUG);
-					$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline;
-					// So far, including the baseline file is not helping.
-					// Only AlterColumn/RenameColumn seem to be failing silently.
-					// This is because we are not keeping up with table changes, so a table in baseline
-					// either does not exist anymore, or the baseline is being lost.
-					// 10-18-2003 milosch - The baseline file is definitely needed for any app with and update file.
-*/
-					if($setup_info[$key]['tables'] && file_exists($appdir.'tables_baseline.inc.php'))
-					{
-						if($DEBUG)
-						{
-							echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
-						}
-						include ($appdir.'tables_baseline.inc.php');
-						$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline;
-						/* $GLOBALS['phpgw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG); */
-					}
-					else
-					{
-						if($DEBUG)
-						{
-							echo '<br>process->baseline(): No baseline tables for ' . $appname . "\n";
-						}
-						/* This should be a break with a status setting, or not at all
-						break;
-						*/
-					}
 					if(file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
 					{
 						include ($appdir . 'tables_update.inc.php');
 						$this->updateincluded[$appname] = True;
 
-						/* $test array comes from update file.  It is a list of available upgrade functions */
-						@reset($test);
-						while(list($x,$value) = @each($test))
+						while ($currentver && $currentver != $targetver && 
+							function_exists($function = $appname . '_upgrade' . str_replace('.','_',$currentver)))
 						{
-							$this->currentversion = $currentver = $setup_info[$key]['currentver'];
-
-							/* build upgrade function name */
-							$function = $appname . '_upgrade' . str_replace(".", '_', $value);
-
 							if($DEBUG)
 							{
-								echo '<br>process->upgrade(): appname:    ' . $appname;
-								echo '<br>process->upgrade(): currentver: ' . $currentver;
-								echo '<br>process->upgrade(): targetver:  ' . $targetver;
-								echo '<br>process->upgrade(): status:     ' . $setup_info[$key]['status'];
-								echo '<br>process->upgrade(): checking:   ' . $value;
-								echo '<br>process->upgrade(): function:   ' . $function;
+								echo "<br>process->upgrade(): $appname($currentver --> $targetver): running $function()\n";
 							}
-
-							if($value == $targetver)
+							if (!($currentver = $function()))
 							{
-								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-								/* Done upgrading */
 								if($DEBUG)
 								{
-									echo '<br>process->upgrade(): Upgrade of ' . $appname . ' to ' . $targetver . ' is completed.' . "\n";
+									echo "<b>failed!!!</b>\n";
 								}
-								$appstatus = 'C';
-								$setup_info[$key]['status']     = $appstatus;
-								$setup_info[$key]['currentver'] = $targetver;
-								if($GLOBALS['phpgw_setup']->app_registered($appname))
-								{
-									$GLOBALS['phpgw_setup']->update_app($appname);
-									$GLOBALS['phpgw_setup']->update_hooks($appname);
-								}
-								else
-								{
-									$GLOBALS['phpgw_setup']->register_app($appname);
-									$GLOBALS['phpgw_setup']->register_hooks($appname);
-								}
-								//break;
-							}
-							elseif(($value == $currentver) || !$currentver)
-							{
-								/* start upgrading db in addition to baseline */
-								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-								if($DEBUG) { echo '<br>process->upgrade(): running ' . $function; }
-								/* run upgrade function */
-								$success = $function();
-								if($success != False)
-								{
-									$setup_info[$key]['currentver'] = $success;
-									if($DEBUG)
-									{
-										echo '<br>process->upgrade(): Upgrade of ' . $appname
-											. ' from ' . $value
-											. ' to ' . $setup_info[$key]['currentver']
-											. ' is completed.' . "\n";
-									}
-									$appstatus = 'R';
-									$setup_info[$key]['status'] = $appstatus;
-									if($GLOBALS['phpgw_setup']->app_registered($appname))
-									{
-										if($DEBUG)
-										{
-											echo '<br>process->upgrade(): Updating registration of ' . $appname . ', new version: ' . $setup_info[$key]['currentver'];
-										}
-										$GLOBALS['phpgw_setup']->update_app($appname);
-										$GLOBALS['phpgw_setup']->update_hooks($appname);
-									}
-									else
-									{
-										if($DEBUG)
-										{
-											echo '<br>process->upgrade(): Registering ' . $appname . ', version: ' . $setup_info[$key]['currentver'];
-										}
-										$GLOBALS['phpgw_setup']->register_app($appname);
-										$GLOBALS['phpgw_setup']->register_hooks($appname);
-									}
-									// is the next update the one we need?
-									if ($success && $test[$x+1] != $success &&
-										($num = array_search($success,$test)) !== False)
-									{
-										// do we have the needed update somewhere else in the row?
-										// if yes, position the array-pointer just before that update and continue
-										reset($test);
-										while((list($x,$value) = each($test)) && $x < $num-1);
-										continue;
-									}
-								}
-								else
-								{
-									if($DEBUG)
-									{
-										echo '<br>process->upgrade(): Upgrade of ' . $appname
-											. ' from ' . $currentver
-											. ' to ' . $value
-											. ' failed!!!' . "\n";
-									}
-									$appstatus  = 'F';
-									break;
-								}
-							}
-							elseif ($GLOBALS['phpgw_setup']->alessthanb($value,$currentver))
-							{
-								if($DEBUG) { echo '<br>process->upgrade(): running baseline delta only: ' . $function . '...'; }
-								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
-								$success = $function();
-								
-								// is the next update the one we need?
-								if ($success && $test[$x+1] != $success &&
-									($num = array_search($success,$test)) !== False)
-								{
-									// do we have the needed update somewhere else in the row?
-									// if yes, position the array-pointer just before that update and continue
-									reset($test);
-									while((list($x,$value) = each($test)) && $x < $num-1);
-									continue;
-								}
+								$appstatus  = 'F';
 							}
 							else
 							{
-								break;
+								if($DEBUG)
+								{
+									echo "--> $currentver\n";
+								}
 							}
+						}
+						if ($currentver == $targetver)	// upgrades succesful
+						{	
+							if($DEBUG)
+							{
+								echo "<br>process->upgrade(): Upgrade of $appname to $targetver is completed.\n";
+							}
+							$appstatus = 'C';
+						}
+						elseif ($currentver)
+						{
+							if($DEBUG)
+							{
+								echo "<br><b>process->upgrade(): No table upgrade available for appname: $appname, version: $currentver</b>\n";
+							}
+							$setup_info[$key]['currentver'] = $targetver;
+							$appstatus  = 'F';
 						}
 					}
 					else
 					{
-						if($setup_info[$appname]['tables'])
+						if($DEBUG)
 						{
-							$appstatus  = 'F';
+							echo "<br>process->upgrade(): No table upgrade required/availible for $appname\n";
+						}
+						$appstatus  = 'C';
+					}
+					if ($appstatus == 'C')	// update successful completed
+					{
+						$setup_info[$key]['currentver'] = $targetver;
 
-							if($DEBUG)
-							{
-								echo '<br>process->upgrade(): No table upgrade available for ' . $appname . "\n";
-							}
+						if($GLOBALS['phpgw_setup']->app_registered($appname))
+						{
+							$GLOBALS['phpgw_setup']->update_app($appname);
+							$GLOBALS['phpgw_setup']->update_hooks($appname);
 						}
 						else
 						{
-							$setup_info[$key]['currentver'] == $targetver;
-							$appstatus  = 'C';
-							if($GLOBALS['phpgw_setup']->app_registered($appname))
-							{
-								$GLOBALS['phpgw_setup']->update_app($appname);
-								$GLOBALS['phpgw_setup']->update_hooks($appname);
-							}
-							else
-							{
-								$GLOBALS['phpgw_setup']->register_app($appname);
-								$GLOBALS['phpgw_setup']->register_hooks($appname);
-							}
-
-							if($DEBUG)
-							{
-								echo '<br>process->upgrade(): No table upgrade required for ' . $appname . "\n";
-							}
+							$GLOBALS['phpgw_setup']->register_app($appname);
+							$GLOBALS['phpgw_setup']->register_hooks($appname);
 						}
 					}
+					
 				}
 				else
 				{
-					$appstatus  = 'C';
 					if($DEBUG)
 					{
-						echo '<br>process->upgrade(): No upgrade required for ' . $appname . "\n";
+						echo "<br>process->upgrade(): No upgrade required for $appname\n";
 					}
+					$appstatus  = 'C';
 				}
-
 				/* Done with this app, update status */
-				$setup_info[$key]['status'] = $appstatus;
 				if($DEBUG)
 				{
-					echo '<br>process->upgrade(): Outgoing : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status'];
+					echo "<br>process->upgrade(): Outgoing : appname: $appname, status: $appstatus</div>\n";
 				}
+				$setup_info[$key]['status'] = $appstatus;
 			}
 
 			/* Done, return current status */
