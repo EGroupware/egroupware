@@ -371,7 +371,7 @@
        	}
        	$output_text .= "\"$target>";
           if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] != "text") {
-             if ($appname != "home" && $appname != "logout" && $appname != "print") {
+             if ($appname != "home" && $appname != "logout" && $appname != "print" && $appname != "about") {
                 $output_text .= "<img src=\"" . $this->get_image_path($appname) . "/navbar.gif\" border=0 alt=\"" . lang($description) . "\">";
           	} else {
        	      $output_text .= "<img src=\"" . $phpgw_info["server"]["images_dir"]."/$appname.gif\" border=0 alt=\"" . lang($description) . "\">";
