@@ -20,9 +20,9 @@
 	global $ab_id;
 	//echo "<p>hook_addressbook_view(ab_id=$ab_id)</p>";
 
-	global $addr_id,$action,$for_include;
-	$addr_id = $ab_id; $action='addr'; $for_include = True;
+	global $addr_id,$action;
+	$addr_id = $ab_id; $action='addr';
 	$infolog = CreateObject('infolog.uiinfolog');
-	$infolog->get_list();
+	$infolog->get_list(True);
 
 	$phpgw_info['flags']['currentapp'] = $save_app; 

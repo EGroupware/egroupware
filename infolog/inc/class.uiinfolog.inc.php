@@ -209,10 +209,10 @@
 			return $referer;
 		}
 
-	 	function get_list( ) {
+	 	function get_list($for_include=0) {
 			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
-			global $action,$addr_id,$proj_id,$info_id,$for_include;
+			global $action,$addr_id,$proj_id,$info_id;
 
 			if (!$for_include) {
 				$phpgw->common->phpgw_header();
@@ -231,30 +231,23 @@
 				'sort' => $sort,'order' => $order,'query' => $query,
 				'start' => $start,'filter' => $filter,'cat_id' => $cat_id
 			);
-			$common_hidden_vars = $html->input_hidden($hidden_vars);
 
 			global $PHP_SELF,$QUERY_STRING;	// set referer for form
 			$referer = $PHP_SELF.($QUERY_STRING ? '?'.$QUERY_STRING : '');
-			$common_hidden_vars .= $html->input_hidden('referer',$referer);
 
-			if ($action)
-				$common_hidden_vars    .= $html->input_hidden('action',$action);
-
+			$action_vars = array( 'action' => 'new' );
 			switch ($action) {
 				case 'sp':        // Sub-List
-					$common_hidden_vars .= $html->input_hidden('info_id',$info_id);
-				  $t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
+					$action_vars = array('action'=>'sp','info_id'=>$info_id);
+				  	$t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
 					break;
 			  case 'proj':
-					$common_hidden_vars .=$html->input_hidden(array(
-						'id_project' => $proj_id, 'proj_id' => $proj_id));
+					$action_vars += array('id_project' => $proj_id,'proj_id' => $proj_id);
 					$proj = $this->bo->readProj($proj_id);
-					$t->set_var(lang_info_action,lang('Info Log').' - '.
-									$proj['title']);
+					$t->set_var(lang_info_action,lang('Info Log').' - '. $proj['title']);
 					break;
 			  case 'addr':
-					$common_hidden_vars .= $html->input_hidden(array(
-						'id_addr' => $addr_id, 'addr_id' => $addr_id ));
+					$action_vars += array( 'id_addr' => $addr_id, 'addr_id' => $addr_id );
 					$addr = $this->bo->readAddr($addr_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$this->bo->addr2name($addr));
@@ -264,15 +257,27 @@
 					break;
 			}    
 			$t->set_var($this->setStyleSheet( ));
-			global $REQUEST_URI;
-			$t->set_var(actionurl,$html->link('/index.php',
-							$this->menuaction('edit')+array( 'action' => 'new')));
+
+			if (!$for_include)
+				$t->set_var('add_button',$html->form_1button('add_button','Add',
+							$hidden_vars+$action_vars+array('referer'=>$referer),
+							'/index.php',$this->menuaction('edit')));
+
 			$t->set_var('cat_form',$html->link('/index.php',$this->menuaction()));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_all',lang('All'));
 			$t->set_var('lang_select',lang('Select'));
-			$t->set_var('categories',$this->categories->formated_list('select','all',$cat_id,'True'));
-			$t->set_var(common_hidden_vars,$common_hidden_vars);
+			$t->set_var('categories',$this->categories->formated_list('select',
+																				'all',$cat_id,'True'));
+			$icons = array( 'task'	=> lang('add Task'),
+								 'phone'	=> lang('add Phonecall'),
+								 'note'	=>	lang('add Note') );
+			$add_icons = lang('Add').':';
+			while (list($type,$lang) = each($icons)) {
+				$add_icons .= $html->a_href($this->icon('type',$type),'/index.php',
+							 $this->menuaction('edit')+$action_vars+array('type'=>$type));
+			}
+			$t->set_var('add_icons',$add_icons);
 
 			// ===========================================
 			// list header variable template-declarations
@@ -355,9 +360,9 @@
 			// nextmatch variable template-declarations
 			// ===========================================
 			if (!$for_include) {
-				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
-									$total,"menuaction=infolog.uiinfolog.get_list&order=$order&filter=$filter&sort=$sort&query=$query&action=$action$nm_extra&info_id=$info_id&cat_id=$cat_id",
-									'95%',$phpgw_info['theme']['th_bg']);
+				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,$total,
+					"&menuaction=infolog.uiinfolog.get_list&action=$action$nm_extra&".
+				  "info_id=$info_id&cat_id=$cat_id",'95%',$phpgw_info['theme']['th_bg']);
 				$t->set_var('next_matchs',$next_matchs);
 				if ($total > $maxmatchs)
 					$t->set_var('next_matchs_end',$next_matchs);
@@ -440,19 +445,12 @@
 			// =========================================================
 
 			if ($action && !$for_include) {
-				$t->set_var('lang_back2projects', '<br>'.
-			  		$html->a_href(lang('Back to Projectlist'),'/index.php',
-									  $this->menuaction()+array('filter' => $filter)));
+				$t->set_var('back2projects',
+								$html->form_1button('back','Back to Projectlist','',
+								'/index.php',$this->menuaction()+array('filter'=>$filter)));
 			}
 
-			// ============================================
-			// template declaration for Add Form
-			// ============================================
-
-			$t->set_var(lang_add,lang('Add'));
 			$t->pfp('out','info_list_t',true);
-
-			// -------------- end Add form declaration ------------------------
 
 			if (!$for_include)
 				$phpgw->common->phpgw_footer();

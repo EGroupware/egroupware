@@ -1,5 +1,9 @@
 {info_css}
-<span class=action>{lang_info_action}</span><br>
+<table width=98%><tr><td>
+	<span class=action>{lang_info_action}</span>
+</td><td align=right>
+	<span class=action>{add_icons}</span>
+</td></tr></table>
 <hr noshade width="98%" align="center" size="1">
 <center>
 <!-- BEGIN projdetails -->
@@ -25,7 +29,8 @@
 <!-- END projdetails -->
 
 <!-- BEGIN cat_selection -->
-<TABLE><tr valign="middle"><td>
+<table><tr valign="middle">
+<td>
    <form method="POST" name="cat" action="{cat_form}">
       {lang_category}
        <select name="cat_filter" onChange="this.form.submit();">
@@ -36,7 +41,8 @@
    </form>
 </td><td>
    {total_matchs}
-</td></tr></table>
+</td>
+</tr></table>
 <!-- END cat_selection -->
 
 {next_matchs}
@@ -69,21 +75,13 @@
 <!-- END info_list -->
 
   </table>
+
  {next_matchs_end}
 
-  <form method="POST" action="{actionurl}">
-  {common_hidden_vars}
-  <table width="95%" border="0" cellspacing="0" cellpadding="0">
-    <tr> 
-      <td width="4%" align="right">
-          <input type="submit" name="Add" value="{lang_add}">
-      </td>
-      <td width="72%">&nbsp;</td>
-      <td width="24%">&nbsp;</td>
-    </tr>
-    <tr>
-     <td colspan="3">{lang_back2projects}<!-- {lang_matrixviewhref} --></td>
-    </tr>
-  </table>
-  </form>
 </center>
+
+ <table><tr><td>
+ 	{add_button}
+ </td><td>
+ 	{back2projects}
+ </td></tr></table>
