@@ -147,6 +147,7 @@
 		/* Create records for administrator account, with Admins as primary and Default as additional group */
 		$accountid = $GLOBALS['phpgw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True);
 		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
+		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$defaultgroupid,$accountid);
 
 		/* Clear the access log, since these are all new users anyway */
 		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_access_log');
