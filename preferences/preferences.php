@@ -71,7 +71,7 @@
 		global $t;
 
 		$_appname = check_app();
-		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 		$t->set_var('row_name',lang($label_name));
 
 		if (is_forced_value($_appname,$preference_name))
@@ -120,7 +120,7 @@
 			return True;
 		}
 
-		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
 		$t->set_var('row_name',lang($label_name));
 
