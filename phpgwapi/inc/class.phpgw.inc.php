@@ -115,6 +115,7 @@
       $this->preferences = CreateObject("phpgwapi.preferences");
       $this->applications = CreateObject("phpgwapi.applications");
       $this->session = CreateObject("phpgwapi.sessions");
+      $this->acl = CreateObject("phpgwapi.acl");
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
         $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
@@ -131,7 +132,6 @@
      }
 
       $this->translation = CreateObject("phpgwapi.translation");
-      $this->acl = CreateObject("phpgwapi.acl");
 
       $sep = filesystem_separator();
       $template_root = $this->common->get_tpl_dir();

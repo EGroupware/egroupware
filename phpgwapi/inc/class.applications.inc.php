@@ -139,10 +139,11 @@
         return False;
       }
 
-      $db2->query("SELECT * FROM phpgw_acl WHERE (acl_location='run' AND acl_account_type='u' AND acl_account=".$account_id.") OR (acl_location='everywhere')",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        while($db2->next_record()) {
-          $apps[] = $db2->f("acl_appname");
+      $acl_apps = $phpgw->acl->view_app_list('run', 1, 'u');
+      if ($acl_apps != False){
+        reset ($acl_apps);
+        while (list(,$value) = each($acl_apps)){
+          $apps[] = $value;
         }
       } else {
         $db2->query("select account_permissions from accounts where account_id=$account_id",__LINE__,__FILE__);
@@ -200,10 +201,11 @@
 
       $db2 = $phpgw->db;
 
-      $db2->query("SELECT * FROM phpgw_acl WHERE (acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id.") OR (acl_location='everywhere')",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        while($db2->next_record()) {
-          $apps[] = $db2->f("acl_appname");
+      $acl_apps = $phpgw->acl->view_app_list('run', 1, 'g', $group_id);
+      if ($acl_apps != False){
+        reset ($acl_apps);
+        while (list(,$value) = each($acl_apps)){
+          $apps[] = $value;
         }
       } else {
         $db2->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
@@ -330,7 +332,7 @@
       if($group_id) {
         $db2 = $phpgw->db;
         $db2->query("UPDATE groups SET group_apps='".$this->group_app_string($group_id)."' WHERE group_id=".$group_id,__LINE__,__FILE__);
-        $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id,__LINE__,__FILE__);
+        $phpgw->acl->remove_locations("run", "g", $group_id);
         reset($this->group_apps[$group_id]);
         while($app = each($this->group_apps[$group_id])) {
           $phpgw->acl->add($app[1],'run',$group_id,'g',1);
@@ -345,7 +347,7 @@
       if($this->account_id) {
         $db2 = $phpgw->db;
         $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
-        $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='u' AND acl_account=".$this->account_id,__LINE__,__FILE__);
+        $phpgw->acl->remove_locations("run");
         reset($this->user_apps);
         while($app = each($this->user_apps)) {
           $phpgw->acl->add($app[1],'run',$this->account_id,'u',1);
