@@ -147,7 +147,7 @@ $phpgw->log->commit();  // commit error stack to log...
 			$header = $this->bolog->get_error_cols_e();
 
 			// Set Table formating parameters
-			$header['_table_parms']='width="98%", bgcolor="D3DCFF"';
+			$header['_table_parms']='width="98%", bgcolor="D3DCFF" border="0"';
 
 			// Set User Configured List of columns to show
 			$header['_cols']= $this->fields_inc;
