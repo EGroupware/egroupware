@@ -1,13 +1,11 @@
 <!-- BEGIN addressbook_footer -->
  </table>
  <form method="POST" action="{actionurl}">
- <input type="hidden" name="start" value="{start}">
- <input type="hidden" name="filter" value="{filter}">
  <table width="75%" border="0" cellspacing="0" cellpadding="4">
    <tr> 
      <td width="16%"> 
        <div align="left"> 
-         <input type="submit" name="Add" value="{lang_add}">
+        <input type="submit" name="Add" value="{lang_add}">
        </div>
      </td>
      <td width="16%">

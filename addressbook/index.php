@@ -105,27 +105,27 @@
 		$offset = 30;
 	}
 
-	// Set filter to display entries where tid is blank,
+	// Set qfilter to display entries where tid is blank,
 	//   else they may be accounts, etc.
-	$savefilter = $filter;
+	if (!$filter) { $filter = "none"; }
 
 	if ($filter == "none") {
 		if ($cat_id == "all") {
-			$filter  = 'tid=';
+			$qfilter  = 'tid=';
 		} else {
-			$filter  = 'tid=,cat_id='.$cat_id;
+			$qfilter  = 'tid=,cat_id='.$cat_id;
 		}
 	} elseif($filter == "private") {
 		if ($cat_id == "all") {
-			$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=';
+			$qfilter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=';
 		} else {
-			$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=,cat_id='.$cat_id;
+			$qfilter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=,cat_id='.$cat_id;
 		}
 	} else {
 		if ($cat_id == "all") {
-			$filter = 'tid=,owner='.$filter;
+			$qfilter = 'tid=,owner='.$filter;
 		} else {
-			$filter = 'tid=,owner='.$filter.'cat_id='.$cat_id;
+			$qfilter = 'tid=,owner='.$filter.'cat_id='.$cat_id;
 		}
 	}
 
@@ -153,11 +153,10 @@
 	}
 	$qcols = $columns_to_display;
  
-	// read the entry list
 	if (!$userid) { $userid = $phpgw_info["user"]["account_id"]; }
-	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$filter,$sort,$order,$userid);
-	// now that the query is done, reset filter, since nextmatchs grabs it globally
-	$filter=$savefilter;
+
+	// read the entry list
+	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
 
 	$search_filter = $phpgw->nextmatchs->show_tpl("/addressbook/index.php",
 		$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
@@ -203,10 +202,12 @@
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
 	$t->set_var("filter",$filter);
+	$t->set_var("query",$query);
+	$t->set_var("cat_id",$cat_id);
 	$t->set_var("qfield",$qfield);
 	$t->set_var("query",$query);
 	$t->set_var("actionurl",$phpgw->link("/addressbook/add.php",
-		"sort=$sort&order=$order&filter=$filter&start=$start&cat_id=$cat_id"));
+		"sort=$sort&order=$order&query=$query&filter=$filter&start=$start&cat_id=$cat_id"));
 	$t->set_var("start",$start);
 	$t->set_var("filter",$filter);
 	$t->set_var("cols",$cols);
@@ -253,13 +254,13 @@
 		}
 		
 		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php",
-			"ab_id=$myid&start=$start&order=$order&filter="
+			"ab_id=$myid&start=$start&sort=$sort&order=$order&filter="
 			. "$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 //			echo '<br>: ' . $this->grants[$myowner] . ' - ' . $myowner;
 		if ($this->check_perms($this->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $phpgw_info['user']['account_id']) {
 			$t->set_var(row_edit,'<a href="' . $phpgw->link("/addressbook/edit.php",
-				"ab_id=$myid&start=$start&sort=$sort&order=$order"
-				. "&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('Edit') . '</a>');
+				"ab_id=$myid&start=$start&sort=$sort&order=$order&filter="
+				. "$filter&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('Edit') . '</a>');
 		} else {
 			$t->set_var(row_edit,'&nbsp;');
 		}
