@@ -12,7 +12,7 @@
   \**************************************************************************/
 
   if ($friendly) {
-     include($phpgw_info["server"]["core_include_root"]."/footer.inc.php");
+     include($phpgw_info["server"]["api_dir"]."/footer.inc.php");
      exit;
   }
 
