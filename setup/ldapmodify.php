@@ -283,7 +283,7 @@
 					}
 					if(!@isset($entry[0]['phpgwaccounttype']))
 					{
-						$add['phpgwaccounttype'][]	= 'g';
+						$add['phpgwaccounttype'][]	= 'u';
 					}
 					if(!@isset($entry[0]['phpgwaccountexpires']))
 					{
