@@ -29,104 +29,51 @@
      $phpgw->common->phpgw_exit();
   }
 
+  $this = CreateObject("addressbook.addressbook");
+
   if (! $submit) {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE ab_owner='"
-                     . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id");
-     $phpgw->db->next_record();
-
-     $fields = array('ab_id' => $phpgw->db->f("ab_id"),
-		'owner'      => $phpgw->db->f("ab_owner"),
-		'access'     => $phpgw->db->f("ab_access"),
-		'firstname'  => $phpgw->db->f("ab_firstname"),
-		'lastname'   => $phpgw->db->f("ab_lastname"),
-		'title'      => $phpgw->db->f("ab_title"),
-		'email'      => $phpgw->db->f("ab_email"),
-		'hphone'     => $phpgw->db->f("ab_hphone"),
-		'wphone'     => $phpgw->db->f("ab_wphone"),
-		'fax'        => $phpgw->db->f("ab_fax"),
-		'pager'      => $phpgw->db->f("ab_pager"),
-		'mphone'     => $phpgw->db->f("ab_mphone"),
-		'ophone'     => $phpgw->db->f("ab_ophone"),
-		'street'     => $phpgw->db->f("ab_street"),
-		'address2'   => $phpgw->db->f("ab_address2"),
-		'city'       => $phpgw->db->f("ab_city"),
-		'state'      => $phpgw->db->f("ab_state"),
-		'zip'        => $phpgw->db->f("ab_zip"),
-		'bday'       => $phpgw->db->f("ab_bday"),
-		'company'    => $phpgw->db->f("ab_company"),
-		'company_id' => $phpgw->db->f("ab_company_id"),
-		'notes'      => $phpgw->db->f("ab_notes"),
-		'url'        => $phpgw->db->f("ab_url")
-          );
-
+    $fields = $this->get_entry($ab_id);
      form("","edit.php","Edit",$fields);
-
   } else {
-     if ($url == "http://") {
-        $url = "";
-     }
-  
-     if (! $bday_month && ! $bday_day && ! $bday_year) {
-        $bday = "";
-     } else {
-        $bday = "$bday_month/$bday_day/$bday_year";
-     }
-     
+    if ($url == "http://") {
+      $url = "";
+    }
+    if (! $bday_month && ! $bday_day && ! $bday_year) {
+      $bday = "";
+    } else {
+      $bday = "$bday_month/$bday_day/$bday_year";
+    }
     if ($access != "private" && $access != "public") {
-       $access = $phpgw->accounts->array_to_string($access,$n_groups);
+      $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
-    if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-      $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
-           . "', ab_firstname='"  . addslashes($firstname)
-	       . "', ab_lastname='"   . addslashes($lastname)
-           . "', ab_title='"      . addslashes($title)
-   	    . "', ab_hphone='" 	. addslashes($hphone)
-	       . "', ab_wphone='" 	. addslashes($wphone)
-   	    . "', ab_fax='"        . addslashes($fax)
-	       . "', ab_pager='"      . addslashes($pager)
-   	    . "', ab_mphone='" 	. addslashes($mphone)
-	       . "', ab_ophone='" 	. addslashes($ophone)
-   	    . "', ab_street='" 	. addslashes($street)
-           . "', ab_address2='"   . addslashes($address2)
-	       . "', ab_city='" 	  . addslashes($city)
-   	    . "', ab_state='" 	 . addslashes($state)
-	       . "', ab_zip='" 	   . addslashes($zip)
-   	    . "', ab_bday='"       . addslashes($bday)
-	       . "', ab_notes='"      . addslashes($notes)
-   	    . "', ab_company_id='" . addslashes($company)
-	       . "', ab_access='" 	. addslashes($access)
-	       . "', ab_url='"    	. addslashes($url)
-   	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
-     } else {
-      $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
-            . "', ab_firstname='". addslashes($firstname)
-            . "', ab_lastname='" . addslashes($lastname)
-            . "', ab_title='"    . addslashes($title)
-            . "', ab_hphone='"   . addslashes($hphone)
-            . "', ab_wphone='"   . addslashes($wphone)
-            . "', ab_fax='"      . addslashes($fax)
-            . "', ab_pager='"    . addslashes($pager)
-            . "', ab_mphone='"   . addslashes($mphone)
-            . "', ab_ophone='"   . addslashes($ophone)
-            . "', ab_street='"   . addslashes($street)
-            . "', ab_address2='" . addslashes($address2)
-            . "', ab_city='"     . addslashes($city)
-            . "', ab_state='"    . addslashes($state)
-            . "', ab_zip='"      . addslashes($zip)
-            . "', ab_bday='"     . addslashes($bday)
-            . "', ab_notes='"    . addslashes($notes)
-            . "', ab_company='"  . addslashes($company)
-            . "', ab_access='"   . addslashes($access)
-            . "', ab_url='"      . addslashes($url)
-            . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
-     }
+    $this->id        = $ab_id;
+    $this->company   = $company;
+    $this->firstname = $firstname;
+    $this->lastname  = $lastname;
+    $this->email     = $email;
+    $this->title     = $title;
+    $this->wphone    = $wphone;
+    $this->hphone    = $hphone;
+    $this->fax       = $fax;
+    $this->pager     = $pager;
+    $this->mphone    = $mphone;
+    $this->ophone    = $ophone;
+    $this->street    = $street;
+    $this->address2  = $address2;
+    $this->city      = $city;
+    $this->state     = $state;
+    $this->zip       = $zip;
+    $this->bday      = $bday;
+    $this->url       = $url;
+    $this->notes     = $notes;
+    $this->access    = $access;
 
-     $phpgw->db->query($sql);
-
-     Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
- 	     . "$filter&start=$start"));
-     $phpgw->common->phpgw_exit();
+    $this->update_entry($this);
+    
+    Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
+      . "$filter&start=$start"));
+    $phpgw->common->phpgw_exit();
   }
 
   $t->set_var("ab_id",$ab_id);
@@ -144,7 +91,6 @@
 
   $t->parse("out","edit");
   $t->pparse("out","edit");
-
 
   $phpgw->common->phpgw_footer();
 ?>

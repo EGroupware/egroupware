@@ -24,6 +24,8 @@
      @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
   }
 
+  $this = CreateObject("addressbook.addressbook");
+
   if ($confirm != "true") {
      $phpgw->db->query("select ab_owner from addressbook where ab_id='$ab_id'");
      $phpgw->db->next_record();
@@ -43,11 +45,10 @@
    $phpgw->common->phpgw_footer(); 
 
   } else {
+     $this->id = $ab_id;
+     $this->delete_entry();
 
-     $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["account_id"]
-		             . "' and ab_id='$ab_id'");
      @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	    "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
   }
 ?>
-
