@@ -37,7 +37,7 @@
    </tr>
 <!--
    <tr class="row_on">
-    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array_?}:</td>
+    <td>{lang_Would_you_like_eGroupWare_to_cache_the_phpgw_info_array_?}:</td>
     <td>
      <select name="newsettings[cache_phpgw_info]">
       <option value="">{lang_No}</option>
