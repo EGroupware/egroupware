@@ -59,12 +59,12 @@
 		}
 
 		/*!
-		@function header
-		@abstract Abstracts a html-header call
+		@function location
+		@abstract Abstracts a html-location-header call
 		@discussion In other UI's than html this needs to call the methode, defined by menuaction or
 		@discussion open a browser-window for any other links.
 		*/
-		function header($vars='')
+		function location($vars='')
 		{
 			Header('Location: ' . $this->html->link(is_array($vars) ? '/index.php' : $vars,
 				is_array($vars) ? $vars : ''));      
@@ -110,6 +110,8 @@
 			{
 				$changes = array();
 			}
+			$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
+
 			$GLOBALS['phpgw']->common->phpgw_header();
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
@@ -140,7 +142,8 @@
 				'extension_data' => $GLOBALS['phpgw_info']['etemplate']['extension_data'],
 				'to_process' => $GLOBALS['phpgw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
-				'method' => $method
+				'method' => $method,
+				'hooked' => $hooked
 			),$id);
 
 			if ($this->stable)
@@ -150,8 +153,8 @@
 			}
 			else
 			{
-				echo $html;
-				// this removes {} eg.'${test}' -> '$' $GLOBALS['phpgw']->template->set_var('phpgw_body',$html);
+				$html = str_replace('${','$&#x7b;',$html);	// else {} eg.'${test}' -> '$' got removed by template-class
+				$GLOBALS['phpgw']->template->set_var('phpgw_body',$html,True);
 			}
 		}
 
@@ -189,6 +192,10 @@
 
 			if ($GLOBALS['phpgw_info']['etemplate']['loop'])
 			{
+				if ($session_data['hooked'] != '')	// set previous phpgw_body if we are called as hook
+				{
+					$GLOBALS['phpgw']->template->set_var('phpgw_body',$session_data['hooked']);
+				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
 					$session_data['readonlys'],$session_data['preserv'],$content);
