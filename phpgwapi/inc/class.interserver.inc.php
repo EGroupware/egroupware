@@ -53,9 +53,11 @@
 		);
 
 		var $trust_relationships = array(
-			'we request'     => 0,
-			'they request'   => 1,
-			'bi-directional' => 2
+			'outbound'       => 0,	/* No trust, but they may trust us */
+			'inbound'        => 1,	/* Trust to make requests of us */
+			'passthrough'    => 2,	/* Trust remote server's trusts also */
+			'bi-directional' => 3,	/* We both trust each other */
+			'bi-dir passthrough' => 4	/* We both trust each other, and we trust the remote server's trusts also */
 		);
 
 		var $security_types = array(
@@ -349,7 +351,7 @@
 				$sql = "UPDATE $this->table SET "
 					. "server_name='" . $this->server['server_name'] . "',"
 					. "server_url='"  . $this->server['server_url']  . "',"
-					. "server_mode='"  . $this->server['server_mode']  . "',"
+					. "server_mode='" . $this->server['server_mode']  . "',"
 					. "server_security='" . $this->server['server_security']  . "',"
 					. "trust_level="  . intval($this->server['trust_level']) . ","
 					. "trust_rel="    . intval($this->server['trust_rel']) . ","
