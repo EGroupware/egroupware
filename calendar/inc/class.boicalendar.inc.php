@@ -2825,15 +2825,30 @@ class boicalendar
 			}
 		}
 
+		function is_owner($part_record)
+		{
+			if(($part_record['user'].'@'.$part_record['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address']) ||
+				($part_record['cn'] == $GLOBALS['phpgw_info']['user']['account_lid']))
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		function check_owner(&$event,$ical,$so_event)
 		{
 			if(!isset($event['participant'][$GLOBALS['phpgw_info']['user']['account_id']]))
 			{
-				if(isset($ical['organizer']) &&
-					$ical['organizer']['user'].'@'.$ical['organizer']['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address'])
+				if(isset($ical['organizer']))
 				{
-					$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
-					$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+					if($this->is_owner($ical['organizer']))
+					{
+						$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
+						$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+					}
 				}
 				elseif(isset($ical['attendee']))
 				{
@@ -2841,16 +2856,16 @@ class boicalendar
 
 					for($j=0;$j<$attendee_count;$j++)
 					{
-						if($ical['attendee'][$j]['user'].'@'.$ical['attendee'][$j]['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address'])
+						if($this->is_owner($ical['attendee'][$j]))
 						{
-							$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['attendee'][$j]['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+							$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['attendee'][$j]['partstat']),intval($GLOBALS['phpgw_info']['user']['account_id']));
 						}
 					}
 				}
 				else
 				{
 					$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
-					$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
+					$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
 				}
 			}
 		}
@@ -3072,7 +3087,7 @@ class boicalendar
 //rrule
 					}
 				
-					if(!isset($ical['event'][$i]['organizer']) || (isset($ical['event'][$i]['organizer']) && $ical['event'][$i]['organizer']['cn'] == $GLOBALS['phpgw_info']['user']['account_lid']))
+					if(!isset($ical['event'][$i]['organizer']) || (isset($ical['event'][$i]['organizer']) && $this->is_owner($ical['event'][$i]['organizer'])))
 					{
 						$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
 						$so_event->add_attribute('participants','A',intval($GLOBALS['phpgw_info']['user']['account_id']));
