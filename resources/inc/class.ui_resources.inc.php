@@ -84,7 +84,6 @@ class ui_resources
 			}
 			
 		}
-		$this->tmpl->read('resources.show');
 		
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
@@ -111,6 +110,7 @@ class ui_resources
 			$no_button['back'] = false;
 		}
 		$preserv = $content;
+		$this->tmpl->read('resources.show');
 		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
 
@@ -189,6 +189,30 @@ class ui_resources
 		
 	}
 	
+	/*!
+		@function admin
+		@abstract adminsection of resources
+		@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+	*/
+	function admin($content='')
+	{
+		if(is_array($content))
+		{
+			if(isset($content['save']))
+			{
+				$this->bo->conf->read_repository();
+				$this->bo->conf->save_value('dont_use_vfs',$content['dont_use_vfs']);
+			}
+			else
+			{
+				return $GLOBALS['phpgw']->redirect_link('/admin/index.php');
+			}
+		}
+		$content = $this->bo->conf->read_repository();
+		$this->tmpl->read('resources.admin');
+		$this->tmpl->exec('resources.ui_resources.admin',$content,$sel_options,$no_button,$preserv);
+	}
+
 	/*!
 		@function show
 		@abstract showes a single resource

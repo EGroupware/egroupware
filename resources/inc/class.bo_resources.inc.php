@@ -27,6 +27,9 @@ class bo_resources
 		$this->cats = $this->acl->egw_cats;
 		$this->vfs = CreateObject('phpgwapi.vfs');
 		$this->link = CreateObject('infolog.bolink');
+		$this->conf = CreateObject('phpgwapi.config');
+		$this->conf->read_repository();
+		
 	}
 
 	/*!
@@ -390,7 +393,7 @@ class bo_resources
 		switch($src)
 		{
 			case 'own_src':
-				$picture = false /*$this->config->use_vfs*/ ? 'vfs:' : $GLOBALS['phpgw_info']['server']['webserver_url'];
+				$picture = $this->conf->config_data['dont_use_vfs'] ? $GLOBALS['phpgw_info']['server']['webserver_url'] : 'vfs:';
 				$picture .= $size ? $this->pictures_dir.$id.'.jpg' : $this->thumbs_dir.$id.'.jpg';
 				break;
 			case 'cat_src':

@@ -1,8 +1,6 @@
 TODO:
 - configuration dialog for admin section
-	don't use vfs
 	picture size
-	thumbnail size (problem with general thumbs / icons)
 - advanced search dialog, accessable via sideboxmenu
 - show dialog
 - make delete, show and edit dialoges popup (??)
@@ -13,7 +11,6 @@ TODO:
 	handle select all button --> add actions for selected: move to other cat,...
 	
 -edit / add
-	add accessories functionality
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	inputvalidation on selectbox --> eTemplate --> Ralf
 	make some returnmessages js dialogs
