@@ -15,7 +15,13 @@
 	/**************************************************************************\
 	* These are the few functions needed for parsing the inline comments       *
 	\**************************************************************************/
-
+	$phpgw_info['flags']['noapi'] = True;
+	include ('../header.inc.php');
+	if (floor(phpversion()) == 3)
+	{
+		include (PHPGW_API_INC.'/php3_support_functions.inc.php');
+	}
+	
 	/*!
 	 @function array_print
 	 @abstract output an array for HTML.
@@ -102,7 +108,8 @@
 		{
 			return False;
 		}
-		unset ($new[0], $new[1]);
+		unset ($new[0]);
+		unset ($new[1]);
 		while (list($x,$y) = each($new))
 		{
 			if (!isset($object) || trim($new[0]) == $object)
@@ -229,7 +236,8 @@
 				$ssval[1] = explode("@",$ssval[1]);
 				$ssresult = trim(ereg_replace ("#class_start", "", $ssval[1][1]));
 				$sstype = 'class';
-				unset($matches[$idx][1][0], $matches[$idx][1][1]);
+				unset($matches[$idx][1][0]);
+				unset($matches[$idx][1][1]);
 				$matches_starts[$sstype.' '.$ssresult] = $matches[$idx][1];
 				unset($matches[$idx]);
 			}
@@ -244,7 +252,8 @@
 				$ssval[1] = explode("@",$ssval[1]);
 				$ssresult = trim(ereg_replace ("#collection_start", "", $ssval[1][1]));
 				$sstype = 'collection';
-				unset($matches[$idx][1][0], $matches[$idx][1][1]);
+				unset($matches[$idx][1][0]);
+				unset($matches[$idx][1][1]);
 				$matches_starts[$sstype.' '.$ssresult] = $matches[$idx][1];
 				unset($matches[$idx]);
 			}
@@ -266,7 +275,12 @@
 			}
 			$idx = $idx + 1;
 		}
-		unset($ssmatches, $sskey, $ssval, $ssresult, $sstype, $idx);
+		unset($ssmatches);
+		unset($sskey);
+		unset($ssval);
+		unset($ssresult);
+		unset($sstype);
+		unset($idx);
 		reset($startstop);
 		
 		/**************************************************************************\
@@ -309,7 +323,14 @@
 							$returndoc['value']['file'][] = $fn;
 						}
 					}
-					$doc_array[$startstop[$key]][0] = $returndoc['value'];
+					if (isset($returndoc['value']) && is_array($returndoc['value']))
+					{
+						$doc_array[$startstop[$key]][0] = $returndoc['value'];
+					}
+					else
+					{
+						$doc_array[$startstop[$key]][0] = '';
+					}
 				}
 				else
 				{
@@ -332,12 +353,12 @@
 		$doc_array = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
 	}
 
-	include ('../phpgwapi/inc/class.Template.inc.php');
-	$curdir = getcwd();
-	$GLOBALS['template'] = new template($curdir);
+	include (PHPGW_API_INC.'/class.Template.inc.php');
+	$curdir = PHPGW_SERVER_ROOT.'/doc';
+	$GLOBALS['template'] = new Template($curdir);
 
 	$output_format = 'html';
-	$GLOBALS['template']->set_file(array('tpl_file' => 'inlinedocparser_'.$output_format.'.tpl',));
+	$GLOBALS['template']->set_file(array('tpl_file' => 'inlinedocparser_'.$output_format.'.tpl'));
 	$GLOBALS['template']->set_block('tpl_file','border_top');
 	$GLOBALS['template']->set_block('tpl_file', 'group');
 	$GLOBALS['template']->set_block('tpl_file', 'object');
