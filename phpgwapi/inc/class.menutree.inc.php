@@ -217,17 +217,17 @@ class menutree {
         /* Always display the extreme top level */
         /****************************************/
         if($cnt==0) {
-          $str = "<table cellspacing=0 cellpadding=0 border=0 cols=".($maxlevel+3)." width=".($maxlevel*16+100).">\n";
-          $str .= '<a href="' . $phpgw->link("index.php",$params) . '" target="_parent">' . $this->root_level_value . '</a>';
-          $str .= "\n<tr>";
-          for ($i=0; $i<$maxlevel; $i++) $str .= "<td width=16></td>";
-          $str .= "<td width=100></td></tr>\n";
+          $str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+100).'">'."\n";
+          $str .= '<a href="' . $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php',$params) . '" target="_parent">' . $this->root_level_value . '</a>';
+          $str .= "\n".'<tr>';
+          for ($i=0; $i<$maxlevel; $i++) $str .= '<td width=16></td>';
+          $str .= '<td width=100></td></tr>'."\n";
         }
 
         /****************************************/
         /* start new row                        */
         /****************************************/      
-        $str .= "<tr>";
+        $str .= '<tr>';
         
         /****************************************/
         /* vertical lines from higher levels    */
@@ -258,9 +258,9 @@ class menutree {
         if ($tree[$cnt+1][0]>$tree[$cnt][0]) {
           
           if ($expand[$cnt]==0)
-              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_expand."\" border=no alt=\"+\"></a></td>";
+              $str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.$script,$params).'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
           else
-              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_collapse."\" border=no alt=\"-\"></a></td>";         
+              $str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.$script,$params).'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
         } else {
           /*************************/
           /* Tree Leaf             */
@@ -273,19 +273,19 @@ class menutree {
         /* output item text                     */
         /****************************************/
         if ($tree[$cnt][2]=="")
-            $str .= "<td colspan=".($maxlevel-$tree[$cnt][0]).">".$tree[$cnt][1]."<font face\=\"Arial, Helvetica, san-serif\" size=\"2\"></td>";
+            $str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'">'.$tree[$cnt][1].'<font face="Arial, Helvetica, san-serif" size="2"></td>';
         else
-            $str .= "<td colspan=".($maxlevel-$tree[$cnt][0])."><font face\=\"Arial, Helvetica, san-serif\" size=\"2\"><a href=\"".$phpgw->link($tree[$cnt][2],$params)."\" target=\"".$tree[$cnt][3]."\">".$tree[$cnt][1]."</a></td>";
+            $str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="Arial, Helvetica, san-serif" size="2"><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.$tree[$cnt][2],$params).'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a></td>';
             
         /****************************************/
         /* end row                              */
         /****************************************/
                 
-        $str .= "</tr>\n";      
+        $str .= '</tr>'."\n";
       }
       $cnt++;    
     }
-    $str .= "</table>\n";
+    $str .= '</table>'."\n";
 
     return $str;
   
