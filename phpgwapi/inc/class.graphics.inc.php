@@ -28,7 +28,7 @@ class graphics
 	// put a valid font here
 	var $font="/opt/future-project/src/management-server/ttf/arial.ttf";
 	
-	function createButton($_text, $_fontsize=11)
+	function createImage($_text, $_fontsize=11)
 	{
 		// create filename
 		$filename="button_".md5($_text).".png";
@@ -55,4 +55,17 @@ class graphics
 		
 		return $filename;
 	}
+
+	function createInputButton($_text, $_name, $_mode='graphic')
+	{
+		if ($_mode == 'graphic' && extension_loaded("gd"))
+		{
+			return '<input type="image" src="/phpgroupware/phpgwapi/templates/default/images/'.$this->createImage($_text).'" border="0" name="'.$_name.'">';
+		}
+		else
+		{
+			return '<input type="submit" value="'.$_text.'" name="'.$_name.'">';
+		}
+	}
+	
 }

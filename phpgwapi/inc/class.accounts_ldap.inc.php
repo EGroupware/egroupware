@@ -95,37 +95,57 @@
     {
     }
     
-    function get_list()
-    {
-    	global $phpgw;
-      
-       	// get a ldap connection handle
-       	$ds = $phpgw->common->ldapConnect();
+	function get_list($_type='both')
+	{
+		global $phpgw;
 
-       	// search the dn for the given uid
-       	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=*");
-       	$allValues = ldap_get_entries($ds, $sri);
-       
-       	for ($i=0; $i<$allValues["count"]; $i++) 
-       	{
+		$ds = $phpgw->common->ldapConnect();
 
-       		$this->db->query("select * from phpgw_accounts where account_id='" . $allValues[$i]["uidnumber"][0] . "'",__LINE__,__FILE__);
-       		$this->db->next_record();
-      
-      		$accounts[] = Array(
-				"account_id" => $allValues[$i]["uidnumber"][0],
-				"account_lid" => $allValues[$i]["uid"][0],
-				"account_type" => $this->db->f("account_type"),
-				"account_firstname" => $allValues[$i]["givenname"][0],
-				"account_lastname" => $allValues[$i]["sn"][0],
-				"account_status" => $this->db->f("account_status")
-			);
-      		
-		#print "data".$allValues[$i]["uid"][0]."<br>";
+		switch($_type)
+		{
+			case 'accounts':
+				$whereclause = "where account_type = 'u'";
+				break;
+			case 'groups':
+				$whereclause = "where account_type = 'g'";
+				break;
+			default:
+				$whereclause = "";
 		}
-	
-	return $accounts;
-    }
+
+		$sql = "select * from phpgw_accounts $whereclause";
+		$this->db->query($sql,__LINE__,__FILE__);
+		while ($this->db->next_record()) {
+			// get user information from ldap only, if it's a user, not a group
+			if ($this->db->f("account_type") == 'u')
+			{
+				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->db->f("account_id"));
+				$allValues = ldap_get_entries($ds, $sri);
+				$accounts[] = Array(
+					"account_id" => $allValues[$i]["uidnumber"][0],
+					"account_lid" => $allValues[$i]["uid"][0],
+					"account_type" => $this->db->f("account_type"),
+					"account_firstname" => $allValues[$i]["givenname"][0],
+					"account_lastname" => $allValues[$i]["sn"][0],
+					"account_status" => $this->db->f("account_status")
+				);
+			}
+			else
+			{
+				$accounts[] = Array(
+					"account_id" => $this->db->f("account_id"),
+					"account_lid" => $this->db->f("account_lid"),
+					"account_type" => $this->db->f("account_type"),
+					"account_firstname" => $this->db->f("account_firstname"),
+					"account_lastname" => $this->db->f("account_lastname"),
+					"account_status" => $this->db->f("account_status")
+				);
+			}
+		}
+		
+		
+		return $accounts;
+	}
     
     function name2id($account_name)
     {
@@ -198,7 +218,7 @@
        $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type)";
        $sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u')";
        $this->db->query($sql);
-       $this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
+       $this->db->query("insert into preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
        $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)",__LINE__,__FILE__);
        $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
        $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);

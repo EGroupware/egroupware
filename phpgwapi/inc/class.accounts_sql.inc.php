@@ -59,22 +59,36 @@
       return $this->data;
     }
 
-    function get_list()
-    {
-      global $phpgw, $phpgw_info;
-      $sql = "select * from phpgw_accounts";
-      $this->db->query($sql,__LINE__,__FILE__);
-      while ($this->db->next_record()) {
-         $accounts[] = Array("account_id" => $this->db->f("account_id"),
-                             "account_lid" => $this->db->f("account_lid"),
-                             "account_type" => $this->db->f("account_type"),
-                             "account_firstname" => $this->db->f("account_firstname"),
-                             "account_lastname" => $this->db->f("account_lastname"),
-                             "account_status" => $this->db->f("account_status")
-                       );
-      }
-      return $accounts;
-    }
+	function get_list($_type='both')
+	{
+		global $phpgw, $phpgw_info;
+		
+		switch($_type)
+		{
+			case 'accounts':
+				$whereclause = "where account_type = 'u'";
+				break;
+			case 'groups':
+				$whereclause = "where account_type = 'g'";
+				break;
+			default:
+				$whereclause = "";
+		}
+
+		$sql = "select * from phpgw_accounts $whereclause";
+		$this->db->query($sql,__LINE__,__FILE__);
+		while ($this->db->next_record()) {
+			$accounts[] = Array(
+				"account_id" => $this->db->f("account_id"),
+				"account_lid" => $this->db->f("account_lid"),
+				"account_type" => $this->db->f("account_type"),
+				"account_firstname" => $this->db->f("account_firstname"),
+				"account_lastname" => $this->db->f("account_lastname"),
+				"account_status" => $this->db->f("account_status")
+			);
+		}
+		return $accounts;
+	}
 
     function name2id($account_name)
     {
@@ -141,7 +155,7 @@
       $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
       $sql .= "values (".$accountid.", '".$accountname."','u', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A')";
       $this->db->query($sql);
-      $this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
+      $this->db->query("insert into preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)",__LINE__,__FILE__);
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
