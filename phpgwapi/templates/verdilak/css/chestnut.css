@@ -3,9 +3,14 @@ body,p,td,th,table,input,form,option
 	color: #000000;
 }
 
+body
+{
+	background-color: #F5F5F5;
+}
+
 a:link,a:active,a:visited
 {
-	color: #336699;
+	color: darkgreen;
 }
 
 a:hover
@@ -13,20 +18,21 @@ a:hover
 	color: #cc0000;
 }
 
-.info
-{
-	color: #000000;
-}
-
 .login,.portal,.about
 {
-	background-color: #FFE4C4;
+	background-color: #AABBCC;
 	border-color: #000000;
+}
+
+.info
+{
+	color: #FFFFFF;
 }
 
 .portal_text
 {
 	color: #FFFFFF;
+	background-color: #bd524a;
 }
 
 .th_bright,.app_header
@@ -36,17 +42,22 @@ a:hover
 
 .row_on
 {
-	background-color: #EEEEFF;
+	background-color: #D3DCE3;
 }
 
 .row_off
 {
-	background-color: #FFFFEE;
+	background-color: #EEEEEE;
 }
 
-.th,.navbar
+.th
 {
-	background-color: #FFE4C4;
+	background-color: #bd524a;
+}
+
+.navbar
+{
+	background-color: maroon;
 }
 
 .cal_today
