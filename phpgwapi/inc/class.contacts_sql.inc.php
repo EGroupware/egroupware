@@ -49,14 +49,12 @@
 
 		function contacts_($useacl=True)
 		{
-			global $phpgw, $phpgw_info;
-
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 			if($useacl)
 			{
-				$this->grants = $phpgw->acl->get_grants('addressbook');
+				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
 			}
-			$this->account_id = $phpgw_info['user']['account_id'];
+			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 
 			/* The left side are the array elements used throughout phpgw, right side are the db field names. */
 			$this->stock_contact_fields = array(
@@ -306,9 +304,11 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields="",$query="",$filter="",$sort="",$order="")
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='')
 		{
-			global $phpgw,$phpgw_info;
+			if(!$start)  { $start  = 0; }
+			if(!$limit)  { $limit  = 0; }
+			if(!$filter) { $filter = 'tid=n'; }
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
@@ -419,18 +419,18 @@
 
 			if (!$filtermethod)
 			{
-				if($phpgw_info['user']['account_id'])
+				if($GLOBALS['phpgw_info']['user']['account_id'])
 				{
-					$fwhere .= " (owner=" . $phpgw_info['user']['account_id'];
-					$fand   .= " (owner=" . $phpgw_info['user']['account_id'];
+					$fwhere .= " (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
+					$fand   .= " (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
 				}
 			}
 			else
 			{
-				if($phpgw_info['user']['account_id'])
+				if($GLOBALS['phpgw_info']['user']['account_id'])
 				{
-					$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
-					$fand   .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+					$fwhere .= $filtermethod . " AND (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
+					$fand   .= $filtermethod . " AND (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
 				}
 				else
 				{
@@ -461,15 +461,15 @@
 				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
 			}
 
-			if (!$sort) { $sort = "ASC"; }
+			if (!$sort) { $sort = 'ASC'; }
 
 			if ($order)
 			{
-				$ordermethod = "order by $order $sort ";
+				$ordermethod = "ORDER BY $order $sort ";
 			}
 			else
 			{
-				$ordermethod = "order by n_family,n_given,email $sort";
+				$ordermethod = "ORDER BY n_family,n_given,email $sort";
 			}
 
 			if ($DEBUG && $ordermethod)
