@@ -1953,10 +1953,10 @@
 	      );
 			$this->output_template_array($p,'row','event',$var);
 
-			$original_owner = $this->bo->owner;
+			$original_owner = $this->bo->so->owner;
 			for($i=0;$i<$counter;$i++)
 			{
-				$this->so->owner = $owners_array[$i];
+				$this->bo->so->owner = $owners_array[$i];
 				$this->bo->store_to_cache(
 					Array(
 						'syear'	=> $year,
@@ -1967,7 +1967,7 @@
 				$p->set_var('day_events',$this->display_week($start,True,$cellcolor,$display_name,$owners_array[$i]));
 				$p->parse('row','event',True);
 			}
-			$this->bo->owner = $original_owner;
+			$this->bo->so->owner = $original_owner;
 			$this->bo->printer_friendly = $true_printer_friendly;
 			return $p->fp('out','m_w_table');
 		}
@@ -2640,7 +2640,7 @@
 			while(list($param,$text) = each($response_choices))
 			{
 				$var = Array(	
-					'action_url_button'	=> $this->page('set_action',Array('cal_id'=>$cal_id,'action'=>$param)),
+					'action_url_button'	=> $this->page('set_action','&cal_id='.$cal_id.'&action='.$param),
 					'action_text_button'	=> '  '.$text.'  ',
 					'action_confirm_button'	=> '',
 					'action_extra_field'	=> ''
