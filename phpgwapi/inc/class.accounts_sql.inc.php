@@ -282,7 +282,7 @@
 			return $ret_val;
 		}
 
-		function create($account_info)
+		function create($account_info,$default_prefs=True)
 		{
 			$this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
 				. "account_firstname, account_lastname, account_status, account_expires) values ('"
@@ -292,11 +292,11 @@
 				. "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
-			if($accountid && is_object($GLOBALS['phpgw']->preferences))
+			if($accountid && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
-				return $accountid;
 			}
+			return $accountid;
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -338,13 +338,8 @@
 			);
 
 			$this->db->transaction_begin();
-			$this->create($acct_info);
+			$this->create($acct_info,$default_prefs);
 			$accountid = $this->name2id($accountname);
-
-			if($default_prefs)
-			{
-				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
-			}
 
 			if ($default_acls == False)
 			{

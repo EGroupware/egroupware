@@ -556,7 +556,7 @@
 			return $in;
 		}
 
-		function create($account_info)
+		function create($account_info,$default_prefs=True)
 		{
 			/* echo '<br>in create for account_lid: "'.$account_lid.'"'; */
 			if(empty($account_info['account_id']) || !$account_info['account_id'])
@@ -688,11 +688,11 @@
 			}
 			/* print ldap_error($this->ds); */
 
-			if($account_id && is_object($GLOBALS['phpgw']->preferences))
+			if($account_id && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($account_id);
-				return $account_id;
 			}
+			return $account_id;
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -734,15 +734,10 @@
 				'account_status'    => $account_status,
 				'account_expires'   => $expires
 			);
-			$this->create($acct_info);
+			$this->create($acct_info,$default_prefs);
 			$accountid = $this->name2id($accountname);
 
 			$this->db->transaction_begin();
-			if($default_prefs)
-			{
-				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
-			}
-
 			if($default_acls == False)
 			{
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
