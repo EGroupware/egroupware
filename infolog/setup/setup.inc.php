@@ -11,11 +11,12 @@
 
 	/* $Id$ */
 
-	$setup_info['infolog']['name'] = 'infolog';
-	$setup_info['infolog']['title'] = 'Info Log';
-	$setup_info['infolog']['version'] = '0.9.11';
+	$setup_info['infolog']['name']      = 'infolog';
+	$setup_info['infolog']['title']     = 'Info Log';
+	$setup_info['infolog']['version']   = '0.9.11';
 	$setup_info['infolog']['app_order'] = 20;
-	$setup_info['infolog']['tables'] = array('phpgw_infolog');
+	$setup_info['infolog']['tables']    = array('phpgw_infolog');
+	$setup_info['infolog']['enable']    = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';

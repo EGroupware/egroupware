@@ -1,10 +1,11 @@
 <?php
 	/* Basic information about this app */
-	$setup_info['phpgwapi']['name']    = 'phpgwapi';
-	$setup_info['phpgwapi']['title']   = 'phpgwapi';
-	$setup_info['phpgwapi']['version'] = '0.9.13.002';
+	$setup_info['phpgwapi']['name']      = 'phpgwapi';
+	$setup_info['phpgwapi']['title']     = 'phpgwapi';
+	$setup_info['phpgwapi']['version']   = '0.9.13.002';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.16';
-//	$setup_info['phpgwapi']['app_order'] = '6';
+	$setup_info['phpgwapi']['enable']    = 2;
+	$setup_info['phpgwapi']['app_order'] = 1;
 
 	/* The tables this app creates */
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_sessions';
