@@ -20,6 +20,6 @@
 	);
 	include('../header.inc.php');
 
-	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=infolog.uiinfolog.get_list'));
+	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=infolog.uiinfolog.index'));
 	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
