@@ -12,19 +12,24 @@ account permissions	admin	de	Zugriffsrechte
 account preferences 	common	de	Einstellungen der Benutzerkonten
 acl	common	de	ACL
 action	admin	de	Aktion
-active	admin	de	Aktiv
-add	common	de 	Hinzufügen
+active	common	de	Aktiv
+activities list	projects	de	Liste der Aktivitäten
+activity	projects	de	Aktivität
+activity id	projects	de	Aktivitäts-ID
+add	common	de	Hinzufügen
 add a note for	notes	de	Notiz hinzufügen für
 add a single phrase	transy	de	Einzelne Phrase hinzufügen
+add activity	projects	de	Aktivität hinzufügen
 add new account	admin	de	Neues Konto hinzufügen
 add new application	admin	de	Neue Anwendung hinzufügen
 add new phrase	transy	de	Neue Übersetzung hinzufügen
 add new ticket	tts	de	Neues Ticket hinzufügen
 add note	notes	de	Notiz hinzufügen
+add project	projects	de	Projekt hinzufügen
 add sub	todo	de	Teilprojekt hinzufügen
 add ticket 	tts	de	Ticket hinzufügen
 add to addressbook	email	de	Zum Addressbuch hinzufügen
-additional notes    tts    de    Zusätzliche Anmerkungen
+additional notes	tts	de	Zusätzliche Anmerkungen
 address book	common	de	Adressbuch
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adreßzeile 2
@@ -37,6 +42,7 @@ addvcard	addressbook	de	VCard hinzufügen
 admin	common	de	Admin
 administration	common	de	Administration
 all	common	de	alle
+all delivery notes	projects	de	Alle Liefernotizen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 anonymous user 	admin	de	Anonymer Benutzer
@@ -46,11 +52,13 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 april	common	de	April
+archive	projects	de	Archiv
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, daß Sie dieses Konto löschen wollen ?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, daß Sie diese Anwendung löschen wollen ?
 are you sure you want to delete this entry	todo	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, daß Sie diese Gruppe löschen wollen ?
+are you sure you want to delete this project ?	projects	de	Soll dieses Projekt wirklich gelöscht werden?
 are you sure you want to delete this news site ?	admin	de	Sind Sie sicher, diese News Site löschen zu wollen ?
 are you sure you want to delete this note ?	notes	de	Sind Sie sicher, daß Sie diese Notiz löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie diese Session killen wollen ?
@@ -58,18 +66,24 @@ are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 arial	notes	de	Arial
 assign to	tts	de	zuweisen an
-assigned from    tts    de    Zugewiesen von
+assigned from	tts	de	Zugewiesen von
 assigned to	tts	de	Zugewiesen an
 august	common	de	August
 author	nntp	de	Autor
+auto generate Activity ID ?	projects	de	Aktivitäts-ID automatisch generieren?
 available groups	nntp	de	verfügbare Gruppen
 bad login or password	login	de	Bad login or password
 base url	admin	de	Basis URL
 bbs phone	addressbook	de	BBS
+bill per workunit	projects	de	Betrag pro Arbeitseinheit
+billable activities	projects	de	Zu berechnende Aktivitäten
+billed only	projects	de	Nur berechnete
 birthday	addressbook	de	Geburtstag
 book marks 	common	de	Bookmarks
+bookable activities	projects	de	Buchbare Aktivitäten
 bookmarks	common	de	Lesezeichen
 brief description	calendar	de	Kurzbeschreibung
+budget	projects	de	Budget
 business	addressbook	de	Geschäftlich
 business city	addressbook	de	geschäftl. Stadt
 business country	addressbook	de	geschäftl. Staat
@@ -80,10 +94,13 @@ business phone	addressbook	de	Tel. geschäftl.
 business state	addressbook	de	geschäftl. Land
 business street	addressbook	de	geschäftl. Straße
 business zip code	addressbook	de	geschäftl. PLZ
+calculate	projects	de	Berechnen
 calendar	common	de	Kalender
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
 calendar preferences 	common	de	Kalender Einstellungen
+call for	phonelog	de	Anruf für
+call from	phonelog	de	Anruf von
 cancel	common	de	Abbruch
 cancel	filemanager	de	Abbrechen
 cannot display the requested article from the requested newsgroup	nntp	de	Der gewünschte Artikel kann leider nicht angezeigt werden
@@ -106,13 +123,14 @@ city	addressbook	de	Stadt
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 clipboard_contents	filemanager	de	Clipboard Inhalt
-close    tts    de    Schließen
-close date    tts    de    Geschlossen am
+close	tts	de	Schließen
+close date	tts	de	Geschlossen am
 company	common	de	Firma
 company name	addressbook	de	Firma
 completed	todo	de	fertig
 compose	email	de	Verfassen
 contact	common	de	Kontakt
+coordinator	projects	de	Koordinator
 copy	common	de	Kopieren
 copy_as	filemanager	de	Kopieren nach
 country	addressbook	de	Land
@@ -126,12 +144,14 @@ currency	common	de	Währung
 current users	common	de	Derzeit angemeldete Benutzer
 current_file	filemanager	de	Aktuelle Datei
 custom fields	addressbook	de	Benutzerdefinierte Felder
+customer	projects	de	Kunde
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
 date	common	de	Datum
-date due	todo	de	fällig am
+date called	phonelog	de	Datum des Anrufs
+date due	common	de	fällig am
 date format	preferences	de	Datumsformat
-date opened    tts    de    Angelegt am
+date opened	tts	de	Angelegt am
 days datedue	todo	de	Tage bis zur Fälligkeit
 days repeated	calendar	de	wiederholte Tage
 december	common	de	Dezember
@@ -140,6 +160,10 @@ default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
+delivery	projects	de	Lieferung
+delivery list	projects	de	Lieferliste
+delivery note	projects	de	Anmerkungen zur Lieferung
+delivery notes	projects	de	Anmerkungen zur Lieferung
 department	addressbook	de	Abteilung
 description	common	de	Beschreibung
 detail	tts	de	Detail
@@ -165,7 +189,7 @@ email	common	de	E-Mail
 email account name	email	de	Name des E-Mail Kontos
 email address	email	de	E-Mail Adresse
 email password	email	de	E-Mail Passwort
-edit project administrator list    projects    de    Liste der Projektadministratoren editieren
+edit project administrator list	projects	de	Liste der Projektadministratoren editieren
 email signature	common	de	E-Mail Signatur
 email type	common	de	E-Mail Typ
 enabled	admin	de	Verfügbar
@@ -206,6 +230,7 @@ full description	calendar	de	vollständige Beschreibung
 full name	addressbook	de	vollständiger Name
 generate new lang.sql file	transy	de	Erzeuge neue lang.sql Datei
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
+generate project id ?	projects	de	Projekt ID generieren?
 georgia	notes	de	Georgia
 global	common	de	Globale
 global categories	common	de	Globale Kategorien
@@ -213,7 +238,7 @@ global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
 global public only	common	de	nur öffentliche
 go!	calendar	de	Go!
-grab new news sites    common    de    Neue Sites für Schlagzeilen suchen
+grab new news sites	common	de	Neue Sites für Schlagzeilen suchen
 grant addressbook access	common	de	Berechtigungen für Adressbuchzugriffe
 grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
 grant todo access	common	de	Berechtigungen für Aufgabenlisten-Zugriffe
@@ -229,7 +254,7 @@ group_files	filemanager	de	Gruppen Dateien
 groups	common	de	Gruppen
 groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, müssen die korrekten Zugriffsrechte für die Verzeichnisse files/groups erstellt werden.<BR> Auf *nix Systemen dient dazu folgender Befehl: chmod 770
 headline preferences	common	de	Schlagzeilen Einstellungen
-headline site management    admin    de    Schlagzeilen Management
+headline site management	admin	de	Schlagzeilen Management
 headline sites	admin	de	Sites für Schlagzeilen
 headlines	common	de	Schlagzeilen
 help	common	de	Hilfe
@@ -246,6 +271,7 @@ home state	addressbook	de	Land (priv)
 home street	addressbook	de	Straße (priv)
 home zip code	addressbook	de	PLZ (priv)
 human resources	common	de	Personenverzeichnis
+hours	projects	de	Stunden
 i participate	calendar	de	Ich nehme teil
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
@@ -258,7 +284,7 @@ import contacts	addressbook	de	Kontakte importieren
 import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
-in progress    tts    de    in Bearbeitung
+in progress	tts	de	in Bearbeitung
 installed applications	admin	de	Installierte Anwendungen
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 international	addressbook	de	international
@@ -268,6 +294,9 @@ ip	admin	de	IP
 isdn phone	addressbook	de	ISDN Tel.
 it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 january	common	de	Januar
+job	projects	de	Aufgabe
+job list	projects	de	Aufgabenliste
+jobs	projects	de	Aufgaben
 july	common	de	Juli
 june	common	de	Juni
 kill	admin	de	Kill
@@ -309,6 +338,7 @@ messages	email	de	Nachrichten
 middle name	addressbook	de	Zweiter Vorname
 minutes	calendar	de	Minuten
 minutes between reloads	admin	de	Minuten zwischen Reloads
+minutes per workunit	projects	de	Minuten pro Arbeitseinheit
 mo	calendar	de	Mo
 mobile	addressbook	de	Mobil
 mobile phone	common	de	Tel Funk
@@ -348,6 +378,7 @@ no subject	common	de	Kein Betreff
 no tickets found	tts	de	Keine Tickets gefunden
 no_file_name	filemanager	de	Es wurde kein Dateiname angegeben
 non-standard	email	de	nicht Standard
+nonactive	projects	de	Inaktiv
 none	common	de	Keiner
 normal	common	de	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
@@ -360,13 +391,14 @@ october	common	de	Oktober
 ok	common	de	OK
 on *nix systems please type: x 	common	de	Auf *nix Systemen  bitte eingeben: %1
 only yours	common	de	nur eigene
-open date    tts    de    Angelegt am
-opened by    tts    de    Angelegt von
+open date	tts	de	Angelegt am
+opened by	tts	de	Angelegt von
 or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
 or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
 other number	addressbook	de	andere Nr.
 other phone	common	de	Tel sonst.
+overall	projects	de	Insgesamt
 owner	common	de	Besitzer
 pager 	addressbook	de	Pager
 parcel	addressbook	de	Lieferadresse
@@ -374,6 +406,7 @@ parent projekt:	todo	de	Gesamtprojekt
 participants	calendar	de	Teilnehmer
 password	common	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
+per workunit	projects	de	pro Arbeitseinheit
 percent of users that logged out	admin	de	Prozent der User, die sich korrekt abgemeldet haben
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
@@ -384,7 +417,9 @@ php information	admin	de	PHP Informationen
 phpgroupware login	login	de	phpGroupWare Login
 phrase in english	transy	de	Phrase in English
 phrase in new language	transy	de	Phrase in der neuen Sprache
+please choose activityies for that project first !	projects	de	Bitte zuerst Aktivitäten für dieses Projekt auswählen!
 please select a message first	email	de	Bitte zuerst eine Nachricht wählen
+please select your currency in preferences!	projects	de	Bitte die Währung in den Einstellungen (Preferences) anpassen!
 please set your preferences for this app	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
 please x by hand	common	de	Bitte manuell %1
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
@@ -397,16 +432,23 @@ previous	email	de	Vorige
 previous page	common	de	vorige Seite
 print	common	de	Drucken
 printer friendly	calendar	de	Drucker-freundlich
-prio    tts    de    Prio
+prio	tts	de	Prio
 priority	common	de	Priorität
 private	common	de	Privat
 private and global public	common	de	private und öffentliche
 private and group public	common	de	private und Gruppen
 private only	common	de	nur private
 private_files	filemanager	de	private Dateien
-project administration    common    de    Projektadministration
+project	projects	de	Projekt
+project administration	common	de	Projektadministration
 project description	todo	de	Beschreibung
-projects    common    de    Projekte
+project id	projects	de	Projekt ID
+project list	projects	de	Projektliste
+project statistics	projects	de	Projekt-Statistiken
+project x x has been added !	projects	de	Projekt %1 (%2) wurde hinzugefügt!
+project x x has been updated !	projects	de	Projekt %1 (%2) wurde aktualisiert.
+projects	common	de	Projekte
+projects list	projects	de	Projektliste
 public	common	de	öffentlich
 public key	addressbook	de	öffentlicher Schlüssel
 re-edit event	calendar	de	Event erneut bearbeiten
@@ -415,6 +457,7 @@ re-enter your password	preferences	de	Neues Passwort wiederholen
 read	common	de	Lesen
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
+remark required	projects	de	Anmerkung erforderlich
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 rename	filemanager	de	Umbenennen
 rename_to	filemanager	de	Umbenennen in
@@ -433,15 +476,18 @@ search	common	de	Suchen
 search results	calendar	de	Suchergebnisse
 section	admin	de	Abschnitt
 section	email	de	Sektion
+select	projects	de	Auswählen
 select application	transy	de	Anwendung auswählen
 select category	common	de	Kategorie auswählen
 select different theme	preferences	de	anderes Schema wählen
-select groups    projects    de    Gruppen auswählen
+select groups	projects	de	Gruppen auswählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
+select per button !	projects	de	Auswahl per Button!
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
+select project	projects	de	Projekt auswählen
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
-select users    projects    de    Benutzer auswählen
+select users	projects	de	Benutzer auswählen
 select which application for this phrase	transy	de	Wählen sie die Applikation für diese Phrase
 select which language for this phrase	transy	de	Wählen sie die Sprache für diese Phrase
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
@@ -475,6 +521,7 @@ start date	common	de	Startdatum
 start date/time	calendar	de	Startdatum/-zeit
 start time	common	de	Startzeit
 state	addressbook	de	Land
+statistic	projects	de	Statistik
 status	common	de	Status
 street	addressbook	de	Straße
 su	calendar	de	So
@@ -484,6 +531,7 @@ submit	common	de	Absenden
 submit changes	admin	de	Änderungen Speichern
 subproject description	todo	de	Beschreibung des Teilprojekts
 suffix	addressbook	de	Zusatz
+sum	projects	de	Summe
 sun	calendar	de	So
 sunday	common	de	Sonntag
 switch current folder to	email	de	Wechseln zum Ordner
@@ -508,9 +556,9 @@ this week 	calendar	de	Diese Woche
 threads	nntp	de	Threads
 thu	calendar	de	Do
 thursday	common	de	Donnerstag
-ticket    tts    de    Ticket
-tickets open x    tts    de    offene tickets: %1
-tickets total x    tts    de    Tickets insgesamt: %1
+ticket	tts	de	Ticket
+tickets open x	tts	de	offene tickets: %1
+tickets total x	tts	de	Tickets insgesamt: %1
 time	common	de	Zeit
 time created	notes	de	wann erstellt
 time format	preferences	de	Zeitformat
@@ -549,8 +597,10 @@ use end date	calendar	de	Enddatum benutzen
 user	common	de	Benutzer
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
-username	login	de	Benutzername
-username / group    projects    de    Benutzername / Gruppe
+user statistic	projects	de	Benutzer-Statistik
+user statistics	projects	de	Benutzer-Statistiken
+username	common	de	Benutzername
+username / group	projects	de	Benutzername / Gruppe
 users	common	de	Benutzer
 vcard	addressbook	de	VCard
 vcard	common	de	Visitenkarte
@@ -562,7 +612,7 @@ video phone	addressbook	de	Bildtelefon
 view	common	de	Anzeigen
 view access log	admin	de	Access Log anzeigen
 view all tickets	tts	de	Alle Tickets anzeigen
-view job detail    tts    de    Detailansicht
+view job detail	tts	de	Detailansicht
 view matrix of actual month	todo	de 	Matrix des aktuellen Monats anzeigen
 view only open tickets	tts	de	Nur offene Tickets anzeigen
 view sessions	admin	de	Sitzungen anzeigen
@@ -576,6 +626,7 @@ week	calendar	de	Woche
 weekday starts on	common	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
 which groups	common	de	Welche Gruppen
+work date	projects	de	Arbeitstag
 work day ends on	common	de	Arbeitstag endet um
 work day starts on	common	de	Arbeitstag beginnt um
 work phone	addressbook	de	Tel dienstl.
