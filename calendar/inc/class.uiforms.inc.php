@@ -26,7 +26,7 @@ class uiforms extends uical
 	var $public_functions = array(
 		'freetimesearch'  => True,
 	);
-
+	
 	/**
 	 * Constructor
 	 */
@@ -50,6 +50,13 @@ class uiforms extends uical
 	 */
 	function freetimesearch($content = false)
 	{
+		$sel_options['search_window'] = array(
+			7*DAY_s		=> lang('one week'),
+			14*DAY_s	=> lang('two weeks'),
+			31*DAY_s	=> lang('one month'),
+			92*DAY_s	=> lang('three month'),
+			365*DAY_s	=> lang('one year'),
+		);
 		if (!is_array($content))
 		{
 			if ($this->debug) echo "<pre>".print_r($_GET,true)."</pre>";
@@ -60,18 +67,8 @@ class uiforms extends uical
 				$arr += $_GET[$name];
 				$content[$name] = $this->bo->date2ts($arr);
 			}
-			$duration = $content['end'] - $content['start'];
+			$content['duration'] = $content['end'] - $content['start'];
 			
-			if ($duration <= 12*HOUR_s)
-			{
-				$content['duration_h'] = (int) ($duration / HOUR_s);
-				$content['duration_min'] = ($duration/60) % 60;
-				$content['end'] = 0;
-			}
-			else
-			{
-				$content['duration_h'] = $content['duration_min'] = 0;
-			}
 			foreach(explode(':',$_GET['participants']) as $uid)
 			{
 				if ((int) $uid) $content['participants'][] = (int) $uid;
@@ -82,23 +79,33 @@ class uiforms extends uical
 			// default search parameters
 			$content['start_time'] = $this->cal_prefs['workdaystarts'];
 			$content['end_time'] = $this->cal_prefs['workdayends'];
-			if ($this->cal_prefs['workdayends']*HOUR_s < $this->cal_prefs['workdaystarts']*HOUR_s+$duration)
+			if ($this->cal_prefs['workdayends']*HOUR_s < $this->cal_prefs['workdaystarts']*HOUR_s+$content['duration'])
 			{
 				$content['end_time'] = 0;	// no end-time limit, as duration would never fit
 			}
 			$content['weekdays'] = MCAL_M_WEEKDAYS;
+			
 			$content['search_window'] = 7 * DAY_s;
+			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
+			foreach($sel_options['search_window'] as $window => $label)
+			{
+				if ($window > $content['duration']) 
+				{
+					$content['search_window'] = $window;
+					break;
+				}
+			}
 		}
 		else
 		{
-			$duration = $content['end'] ? $content['end']-$content['start'] : 60*(60*$content['duration_h']+$content['duration_min']); 
+			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start']; 
 			
 			if (is_array($content['freetime']['select']))
 			{
 				list($selected) = each($content['freetime']['select']);
 				//echo "$selected = ".date('D d.m.Y H:i',$content['freetime'][$selected]['start']);
 				$start = (int) $content['freetime'][$selected]['start'];
-				$end = $start + $duration;
+				$end = $start + $content['duration'];
 				$fields_to_set = array(
 					'start[str]'	=> date($this->common_prefs['dateformat'],$start),
 					'start[min]'	=> date('i',$start),
@@ -146,16 +153,13 @@ class uiforms extends uical
 		{
 			$content['msg'] .= lang('Only the initial date of that recuring event is checked!');
 		}
-		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$duration,$content['cal_id']);
-		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$duration,$content['weekdays'],$content['start_time'],$content['end_time'],$sel_options);
-		$sel_options['search_window'] = array(
-			7*DAY_s		=> lang('one week'),
-			14*DAY_s	=> lang('two weeks'),
-			31*DAY_s	=> lang('one month'),
-			92*DAY_s	=> lang('three month'),
-			365*DAY_s	=> lang('one year'),
-		);
-
+		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$content['duration'],$content['cal_id']);
+		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],$content['weekdays'],$content['start_time'],$content['end_time'],$sel_options);
+		$sel_options['duration'][] = lang('use end date');
+		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
+		{
+			$sel_options['duration'][$n*60] = sprintf('%d:%02d',$n/60,$n%60);
+		}
 		$etpl = CreateObject('etemplate.etemplate','calendar.freetimesearch');
 
 		//echo "<pre>".print_r($content,true)."</pre>\n";
@@ -173,15 +177,17 @@ class uiforms extends uical
 	/**
 	 * calculate the freetime of given $participants in a certain time-span
 	 *
+	 * @param $participants array of user-id's
 	 * @param $start int start-time timestamp in user-time
 	 * @param $end int end-time timestamp in user-time
-	 * @param $participants array of user-id's
 	 * @param $duration int min. duration in sec, default 1
 	 * @param $cal_id int own id for existing events, to exclude them from being busy-time, default 0
 	 * @return array of free time-slots: array with start and end values
 	 */
 	function freetime($participants,$start,$end,$duration=1,$cal_id=0)
 	{
+		if ($this->debug > 2) $this->bo->debug_message('uiforms::freetime(participants=%1, start=%2, end=%3, duration=%4, cal_id=%5)',true,$participants,$start,$end,$duration,$cal_id);
+
 		$busy = $this->bo->search(array(
 			'start' => $start,
 			'end'	=> $end,
@@ -227,15 +233,19 @@ class uiforms extends uical
 					'start'	=> $ft_start,
 					'end'	=> $ft_end,
 				);
-				if ($this->debug) echo "<p>freetime: ".date('D d.m.Y H:i',$ft_start)." - ".date('D d.m.Y H:i',$ft_end)."</p>\n";
+				if ($this->debug > 1) echo "<p>freetime: ".date('D d.m.Y H:i',$ft_start)." - ".date('D d.m.Y H:i',$ft_end)."</p>\n";
 			}	
 			$ft_start = $event['end']['raw'];
 		}
+		if ($this->debug > 0) $this->bo->debug_message('uiforms::freetime(participants=%1, start=%2, end=%3, duration=%4, cal_id=%5) freetime=%6',true,$participants,$start,$end,$duration,$cal_id,$freetime);
+		
 		return $freetime;
 	}
 	
 	/**
 	 * split the freetime in daywise slot, taking into account weekdays, start- and stop-times
+	 *
+	 * If the duration is bigger then the difference of start- and end_time, the end_time is ignored
 	 *
 	 * @param $freetime array of free time-slots: array with start and end values
 	 * @param $duration int min. duration in sec
@@ -247,9 +257,21 @@ class uiforms extends uical
 	 */
 	function split_freetime_daywise($freetime,$duration,$weekdays,$start_time,$end_time,&$sel_options)
 	{
-		$freetime_daywise = $sel_options = array();
+		if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(freetime=%1, duration=%2, start_time=%3, end_time=%4)',true,$freetime,$duration,$start_time,$end_time);
+		
+		$freetime_daywise = array();
+		if (!is_array($sel_options)) $sel_options = array();
 		$time_format = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
+		
+		$start_time = (int) $start_time;	// ignore leading zeros
+		$end_time   = (int) $end_time;
 
+		// ignore the end_time, if duration would never fit
+		if (($end_time - $start_time)*HOUR_s < $duration) 
+		{
+			$end_time = 0; 
+			if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(, duration=%2, start_time=%3,..) end_time set to 0, it never fits durationn otherwise',true,$duration,$start_time);
+		}
 		$n = 0;
 		foreach($freetime as $ft)
 		{
@@ -264,6 +286,7 @@ class uiforms extends uical
 				$mcal_dow = pow(2,$dow);
 				if (!($weekdays & $mcal_dow))
 				{
+					//echo "wrong day of week $dow<br>\n";
 					continue;	// wrong day of week
 				}
 				$start = $t < $ft['start'] ? $ft['start'] : $t;
@@ -279,6 +302,7 @@ class uiforms extends uical
 				// slot to small for duration
 				if ($end - $start < $duration)
 				{
+					//echo "slot to small for duration=$duration<br>\n";
 					continue;
 				}
 				$freetime_daywise[++$n] = array(
@@ -286,7 +310,7 @@ class uiforms extends uical
 					'end'	=> $end,
 				);
 				$times = array();
-				for ($s = $start; $s+$duration <= $end; $s += 60*$this->cal_prefs['interval'])
+				for ($s = $start; $s+$duration <= $end && $s < $daybegin+DAY_s; $s += 60*$this->cal_prefs['interval'])
 				{
 					$e = $s + $duration;
 					$end_date = $e-$daybegin > DAY_s ? lang(date('l',$e)).' '.date($this->common_prefs['dateformat'],$e).' ' : '';
