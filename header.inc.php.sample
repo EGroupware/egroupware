@@ -49,7 +49,6 @@
 
   /* Use this for supporting different domains using this single install */
   /* (ignore if you are only supporting a single domain)*/
-  $phpgw_info["multiable_domains"] = False; //Set to True and create an array for each domain.
   $phpgw_domain["domain2.com"] = array (
     "db_host" => "localhost", 
     "db_name" => "phpgw_domain1", 

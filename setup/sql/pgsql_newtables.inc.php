@@ -56,7 +56,7 @@
   
   $sql = "create table sessions (
     session_id         varchar(255),
-    session_lid        varchar(20),
+    session_lid        varchar(255),
     session_pwd        varchar(255),
     session_ip         varchar(255),
     session_logintime	 int,

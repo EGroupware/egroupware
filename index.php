@@ -118,6 +118,9 @@
     }
     echo "<!-- Mailox info -->\n";
   }
+echo "phpgw_info[user][test_login]: ".$phpgw_info["user"]["test_login"]."<br>\n";
+echo "phpgw_info[user][userid]: ".$phpgw_info["user"]["userid"]."<br>\n";
+echo "phpgw_info[user][domain]: ".$phpgw_info["user"]["domain"]."<br>\n";
 
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
