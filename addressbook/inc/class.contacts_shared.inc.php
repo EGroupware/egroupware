@@ -95,6 +95,14 @@
 			**/ 
 			$order = 1;
 
+			if ( (strlen($s1) == 0) ) {
+				return 0;
+			}
+			
+			if ( (strlen($s2) == 0) ) {
+				return 1;
+			}
+
 			if (strlen ($s1) > strlen ($s2)) {
 				$temp = $s1;
 				$s1 = $s2;
@@ -123,7 +131,7 @@
 		* asortby
 		*/
 		function asortbyindex ($sortarray, $index) {
-			$lastindex = count ($sortarray) - 1;
+			$lastindex = count($sortarray) - 2;
 			for ($subindex = 0; $subindex < $lastindex; $subindex++) {
 				$lastiteration = $lastindex - $subindex;
 				for ($iteration = 0; $iteration < $lastiteration; $iteration++) {
@@ -139,7 +147,7 @@
 		}
 
 		function arsortbyindex ($sortarray, $index) {
-			$lastindex = count ($sortarray) - 1;
+			$lastindex = count($sortarray) - 1;
 			for ($subindex = $lastindex; $subindex > 0; $subindex--) {
 				$lastiteration = $lastindex - $subindex;
 				for ($iteration = $lastiteration; $iteration > 0; $iteration--) {
