@@ -13,7 +13,7 @@
 	/* $Id$ */
 
 	$setup_info['etemplate']['name']      = 'etemplate';
-	$setup_info['etemplate']['title']     = 'eTemplates';
+	$setup_info['etemplate']['title']     = 'eTemplate';
 	$setup_info['etemplate']['version']   = '0.9.15.002';
 	$setup_info['etemplate']['app_order'] = 8;	// just behind the developers-tools
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
