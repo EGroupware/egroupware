@@ -59,20 +59,9 @@
 
 		function phpgw_()
 		{
-			global $phpgw_info, $sessionid, $login;
 			/************************************************************************\
 			* Required classes                                                       *
 			\************************************************************************/
-			$this->db           = CreateObject("phpgwapi.db");
-			$this->db->Host     = $phpgw_info["server"]["db_host"];
-			$this->db->Type     = $phpgw_info["server"]["db_type"];
-			$this->db->Database = $phpgw_info["server"]["db_name"];
-			$this->db->User     = $phpgw_info["server"]["db_user"];
-			$this->db->Password = $phpgw_info["server"]["db_pass"];
-			if ($this->debug) {
-				 $this->db->Debug = 1;
-			}
-
 			$this->common       = CreateObject("phpgwapi.common");
 			$this->hooks        = CreateObject("phpgwapi.hooks");
 			$this->auth         = createobject("phpgwapi.auth");
@@ -87,6 +76,19 @@
 		/**************************************************************************\
 		* Core functions                                                           *
 		\**************************************************************************/
+
+	function load_db() {
+			global $phpgw_info;
+			$this->db           = CreateObject("phpgwapi.db");
+			$this->db->Host     = $phpgw_info["server"]["db_host"];
+			$this->db->Type     = $phpgw_info["server"]["db_type"];
+			$this->db->Database = $phpgw_info["server"]["db_name"];
+			$this->db->User     = $phpgw_info["server"]["db_user"];
+			$this->db->Password = $phpgw_info["server"]["db_pass"];
+			if ($this->debug) {
+				 $this->db->Debug = 1;
+			}
+	}
     function strip_html($s)
     {
        return htmlspecialchars(stripslashes($s));
