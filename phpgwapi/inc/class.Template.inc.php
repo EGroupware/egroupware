@@ -192,7 +192,13 @@ class Template {
     print $this->parse($target, $handle, $append);
     return false;
   }
-  
+
+	// This is a short cut for print finish parse
+	function pfp($target, $handle, $append = false)
+	{
+		echo $this->finish($this->parse($target, $handle, $append));
+	}
+
   /* public: get_vars()
    */
   function get_vars() {
