@@ -445,7 +445,7 @@
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod,__LINE__,__FILE__); 
 				$this->total_records = $this->db3->num_rows();
 
-				$this->db->query("SELECT * FROM $this->std_table WHERE (n_family LIKE '"
+				$this->db->query("SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
 					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
 					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
 					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
