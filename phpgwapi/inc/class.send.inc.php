@@ -164,6 +164,9 @@
 		*/
 		function encode_subject($subject)
 		{
+			// remove unnecessary CR's as some mail-scanners complain about them
+			$subject = str_replace("\r",'',$subject);
+
 			$enc_start = $enc_end = 0;
 
 			$words = explode(' ',$subject);
