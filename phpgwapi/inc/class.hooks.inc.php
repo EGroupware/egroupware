@@ -25,11 +25,11 @@
 
 	/*!
 	@class hooks
-	@abstract class which gives ability for applications to set and use hooks to communicate with each other
-  	@author	Dan Kuykendall
+	@abstract  class which gives ability for applications to set and use hooks to communicate with each other
+	@author    Dan Kuykendall
 	@copyright LGPL
-	@package phpgwapi
-  	@access	public
+	@package   phpgwapi
+	@access    public
 	*/
 	class hooks
 	{
