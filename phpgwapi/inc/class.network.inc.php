@@ -20,218 +20,219 @@
   * along with this library; if not, write to the Free Software Foundation,  *
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
+	
+  /* $Id$ */
 
-	/* $Id$ */
-
-class network
-{
-	var $socket;
-	var $addcrlf = TRUE;
-	var $error;
-	var $errorset = 0;
-
-	function network($addcrlf=true)
+	class network
 	{
-		$this->errorset = 0;
-		$this->set_addcrlf($addcrlf);
-	}
+		var $socket;
+		var $addcrlf = TRUE;
+		var $error;
+		var $errorset = 0;
 
-	function set_addcrlf($value)
-	{
-		$this->addcrlf = $value;
-	}
+		function network($addcrlf=true)
+		{
+			$this->errorset = 0;
+			$this->set_addcrlf($addcrlf);
+		}
 
-	function add_crlf($str)
-	{
-		if($this->addcrlf)
+		function set_addcrlf($value)
 		{
-			$str .= "\r\n";
+			$this->addcrlf = $value;
 		}
-		return $str;
-	}
 
-	function set_error($code,$msg,$desc)
-	{
-		$this->error = array('code','msg','desc');
-		$this->error['code'] = $code;
-		$this->error['msg'] = $msg;
-		$this->error['desc'] = $desc;
-//		$this->close_port();
-		$this->errorset = 1;
-		return 0;
-	}
-
-	function open_port($server,$port,$timeout=15)
-	{
-		global $phpgw_info;
-
-		switch($port)
+		function add_crlf($str)
 		{
-			case 80:
-			case 443:
-				if((isset($phpgw_info['server']['httpproxy_server']) && $phpgw_info['server']['httpproxy_server']) &&
-					(isset($phpgw_info['server']['httpproxy_port']) && $phpgw_info['server']['httpproxy_port']))
-				{
-					$server = $phpgw_info['server']['httpproxy_server'];
-					$port   = (int)$phpgw_info['server']['httpproxy_port'];
-				}
-				break;
-		}
-		if(floor(phpversion()) == 4)
-		{
-			$this->socket = fsockopen($server,$port,&$errcode,&$errmsg,$timeout);
-		}
-		else
-		{
-			$this->socket = fsockopen($server,$port,&$errcode,&$errmsg);
-		}
-		if (!$this->socket)
-		{
-			return $this->set_error('Error',$errcode.':'.$errmsg,'Connection to '.$server.':'.$port.' failed - could not open socket.');
-		}
-		else
-		{
-			return 1;
-		}
-	}
-
-	function close_port()
-	{
-		return fclose($this->socket);
-	}
-
-	function read_port()
-	{
-		return fgets($this->socket, 1024);
-	}
-
-	function bs_read_port($bytes)
-	{
-		return fread($this->socket, $bytes);
-	}
-
-	function write_port($str)
-	{
-		$ok = fputs($this->socket,$this->add_crlf($str));
-		if (!$ok)
-		{
-			return $this->set_error('Error','Connection Lost','lost connection to server');
-		}
-		else
-		{
-			return 1;
-		}    
-	}
-
-	function bs_write_port($str,$bytes=0)
-	{
-		if ($bytes)
-		{
-			$ok = fwrite($this->socket,$this->add_crlf($str),$bytes);
-		}
-		else
-		{
-			$ok = fwrite($this->socket,$this->add_crlf($str));
-		}
-		if (!$ok)
-		{
-			return $this->set_error('Error','Connection Lost','lost connection to server');
-		}
-		else
-		{
-			return 1;
-		}    
-	}
-
-	function msg2socket($str,$expected_response,&$response)
-	{
-		if(!$this->socket && substr($expected_response,1,1) == '+')
-		{
-			return $this->set_error('521','socket does not exist',
-				'The required socked does not exist.  The settings for your mail server may be wrong.');
-		}
-		if (!$this->write_port($str))
-		{
-			if(substr($expected_response,1,1) == '+')
+			if($this->addcrlf)
 			{
-				return $this->set_error('420','lost connection','Lost connection to pop server.');
+				$str .= "\r\n";
+			}
+			return $str;
+		}
+
+		function set_error($code,$msg,$desc)
+		{
+			$this->error = array('code','msg','desc');
+			$this->error['code'] = $code;
+			$this->error['msg'] = $msg;
+			$this->error['desc'] = $desc;
+	//		$this->close_port();
+			$this->errorset = 1;
+			return 0;
+		}
+
+		function open_port($server,$port,$timeout=15)
+		{
+			global $phpgw_info;
+	
+			switch($port)
+			{
+				case 80:
+				case 443:
+					if((isset($phpgw_info['server']['httpproxy_server']) && $phpgw_info['server']['httpproxy_server']) &&
+						(isset($phpgw_info['server']['httpproxy_port']) && $phpgw_info['server']['httpproxy_port']))
+					{
+						$server = $phpgw_info['server']['httpproxy_server'];
+						$port   = (int)$phpgw_info['server']['httpproxy_port'];
+					}
+					break;
+			}
+			if(floor(phpversion()) == 4)
+			{
+				$this->socket = fsockopen($server,$port,&$errcode,&$errmsg,$timeout);
 			}
 			else
 			{
-				return 0;
+				$this->socket = fsockopen($server,$port,&$errcode,&$errmsg);
+			}
+			if (!$this->socket)
+			{
+				return $this->set_error('Error',$errcode.':'.$errmsg,'Connection to '.$server.':'.$port.' failed - could not open socket.');
+			}
+			else
+			{
+				return 1;
 			}
 		}
-		$response = $this->read_port();
-		if (!ereg(strtoupper($expected_response),strtoupper($response)))
-		{
-			if(substr($expected_response,1,1) == '+')
-			{
-				return $this->set_error('550','','');
-			}	
-			$pos = strpos(' ',$response);
-			return $this->set_error(substr($response,0,$pos),
-				'invalid response('.$expected_response.')',
-				substr($response,($pos + 1),(strlen($response)-$pos)));
-		}
-		else
-		{
-			return 1;
-		}
-	}
 
-	// return contents of a web url as an array or false if timeout
-	function gethttpsocketfile($file)
-	{
-		global $phpgw_info;
-
-		$server = str_replace('http://','',$file);
-		$file = strstr($server,'/');
-		$server = str_replace($file,'',$server);
-		if ($phpgw_info['server']['httpproxy_server'])
+		function close_port()
 		{
-			if ($this->open_port($server,80, 15))
+			return fclose($this->socket);
+		}
+
+		function read_port()
+		{
+			return fgets($this->socket, 1024);
+		}
+
+		function bs_read_port($bytes)
+		{
+			return fread($this->socket, $bytes);
+		}
+
+		function write_port($str)
+		{
+			$ok = fputs($this->socket,$this->add_crlf($str));
+			if (!$ok)
 			{
-				if (! $this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n\n"))
+				return $this->set_error('Error','Connection Lost','lost connection to server');
+			}
+			else
+			{
+				return 1;
+			}
+		}
+
+		function bs_write_port($str,$bytes=0)
+		{
+			if ($bytes)
+			{
+				$ok = fwrite($this->socket,$this->add_crlf($str),$bytes);
+			}
+			else
+			{
+				$ok = fwrite($this->socket,$this->add_crlf($str));
+			}
+			if (!$ok)
+			{
+				return $this->set_error('Error','Connection Lost','lost connection to server');
+			}
+			else
+			{
+				return 1;
+			}
+		}
+
+		function msg2socket($str,$expected_response,&$response)
+		{
+			if(!$this->socket && substr($expected_response,1,1) == '+')
+			{
+				return $this->set_error('521','socket does not exist',
+					'The required socked does not exist.  The settings for your mail server may be wrong.');
+			}
+			if (!$this->write_port($str))
+			{
+				if(substr($expected_response,1,1) == '+')
+				{
+					return $this->set_error('420','lost connection','Lost connection to pop server.');
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			$response = $this->read_port();
+			if (!ereg(strtoupper($expected_response),strtoupper($response)))
+			{
+				if(substr($expected_response,1,1) == '+')
+				{
+					return $this->set_error('550','','');
+				}	
+				$pos = strpos(' ',$response);
+				return $this->set_error(substr($response,0,$pos),
+					'invalid response('.$expected_response.')',
+					substr($response,($pos + 1),(strlen($response)-$pos)));
+			}
+			else
+			{
+				return 1;
+			}
+		}
+
+		// return contents of a web url as an array or false if timeout
+		function gethttpsocketfile($file)
+		{
+			global $phpgw_info;
+	
+			$server = str_replace('http://','',$file);
+			$file = strstr($server,'/');
+			$server = str_replace($file,'',$server);
+			if ($phpgw_info['server']['httpproxy_server'])
+			{
+				if ($this->open_port($server,80, 15))
+				{
+					if (! $this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n\n"))
+					{
+						return False;
+					}
+					$i = 0;
+					while ($line = $this->read_port())
+					{
+						if (feof($this->socket))
+						{
+							break;
+						}
+						$lines[] = $line;
+						$i++;
+					}
+					$this->close_port();
+					return $lines;
+				}
+				else
 				{
 					return False;
 				}
-				$i = 0;
-				while ($line = $this->read_port())
+			}
+			else
+			{
+				if ($this->open_port($server, 80, 15))
 				{
-					if (feof($this->socket))
+					if (!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n\n"))
 					{
-						break;
+						return 0;
 					}
-					$lines[] = $line;
-					$i++;
+					while ($line = $this->read_port())
+					{
+						$lines[] = $line;
+					}
+					$this->close_port();
+					return $lines;
 				}
-				$this->close_port();
-				return $lines;
-			}
-			else
-			{
-				return False;
-			}
-		}
-		else
-		{
-			if ($this->open_port($server, 80, 15))
-			{
-				if (!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n\n"))
+				else
 				{
-        				return 0;
+					return 0;
 				}
-				while ($line = $this->read_port())
-				{
-					$lines[] = $line;
-				}
-				$this->close_port();
-				return $lines;
-			}
-			else
-			{
-				return 0;
 			}
 		}
 	}
-}
+?>
