@@ -36,7 +36,8 @@
 			'request_packaged_app'  => True,
 			'get_appbyid'           => True,
 			'get_appbyname'         => True,
-			'find_new_app'          => True
+			'find_new_app'          => True,
+			'package_app'           => True
 		);
 
 		var $soap_functions = array();
@@ -129,8 +130,8 @@
 							),
 							'docstring' => lang('compare an array of apps/versions against the repository and return new/updated list of apps.')
 						),
-						'package_app_byid' => Array(
-							'function'  => 'package_app_byid',
+						'package_app' => Array(
+							'function'  => 'package_app',
 							'signature' => Array(
 								Array(
 									xmlrpcStruct,
@@ -219,7 +220,6 @@
 			if(is_object($this->is))
 			{
 				$application = $this->is->send('system.package_app_byid',$app_id,$this->is->server['server_url']);
-
 // comment from here down to stop the actual install
 				// This is where I need to install the application
 				$sep = filesystem_separator();
@@ -374,7 +374,6 @@
 				{
 					if($entry != '.' && $entry != '..' && $entry != 'CVS')
 					{
-//						$this->dir_file[$dir_prefix.$entry] = CreateObject('phpgwapi.xmlrpcval',$new_filename,'string');
 						$dir_path[$dir_prefix.$entry] = $new_filename;
 					}
 				}
@@ -387,32 +386,38 @@
 			}
 		}
 
-		function package_app_byid($appid)
+		function package_app($appid)
 		{
 			// Need to find a way to validate that the value in this string is an
 			// app_id, if not, then it is an app_name
-			if(is_int($appid) && $appid)
+			if(is_int(intval($appid)) && intval($appid))
 			{
+				$where_clause = 'WHERE app_id='.$appid;
 			}
-			$this->db->query('SELECT * FROM phpgw_applications WHERE app_id='.$appid,__LINE__,__FILE__);
+			else
+			{
+				$where_clause = "WHERE app_name='".$appid."'"
+			}
+			$this->db->query('SELECT * FROM phpgw_applications '.$where_clause,__LINE__,__FILE__);
 			if(!$this->db->num_rows())
 			{
 				return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',False,'boolean'),'boolean');
 			}
 			$this->dir_file = Array();
 			$this->db->next_record();
-			$this->dir_file[$appid] = CreateObject('phpgwapi.xmlrpcval',
+			$app_name = $this->db->f('app_name')
+			$this->dir_file[$this->db->f('app_id')] = CreateObject('phpgwapi.xmlrpcval',
 				Array(
-					'id'      => CreateObject('phpgwapi.xmlrpcval',$appid,'int'),
-					'name'    => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_name'),'string'),
+					'id'      => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_id'),'int'),
+					'name'    => CreateObject('phpgwapi.xmlrpcval',$app_name,'string'),
 					'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
 					'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
 					'tables'  => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_tables'),'string')
 				),
 				'struct'
 			);
-			$path_prefix = PHPGW_SERVER_ROOT.filesystem_separator().$this->db->f('app_name');
-			$this->pack_dir($path_prefix,$this->db->f('app_name'));
+			$path_prefix = PHPGW_SERVER_ROOT.filesystem_separator().$app_name;
+			$this->pack_dir($path_prefix,$app_name);
 			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->dir_file,'struct'));
 		}
 
