@@ -107,7 +107,7 @@
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'only yours','common','en','only yours')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'print','common','en','Print')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'trouble ticket system','common','en','Trouble Ticket System')");
-  $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'you are required to change your password durring your first login','common','en','You are required to change your password durring your first login')");
+  $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'you are required to change your password during your first login','common','en','You are required to change your password durring your first login')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'powered by phpgroupware version x','common','en','Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'sorry, there was a problem processing your request.','common','en','Sorry, there was a problem processing your request.')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'your message has been sent','common','en','Your message has been sent')");
