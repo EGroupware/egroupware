@@ -11,6 +11,10 @@
 		- NNTP now uses preferences to store monitored newsgroups.
 		- Added better error checking in applications admin section.
 		- Applied Patch #102116 - qmail/vmail spaces in TO:,CC: fields sending email.  Thanks jaggdedge <jaggdedge@users.sourceforge.net>
+		- Email Trash folder is now created if it doesn't exsist
+		- Added user preferences for sending messages to the trash or just deleteing them.
+		- Started working on LDAP support.  Its some what functional right now, but please be carefull
+		  it has not been fully tested or debugged.
 
 [0.9.2] - Fixed sorting bug in currentusers.php
 		- Cleaned up error reporting and form in newaccount.php
