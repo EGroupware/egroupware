@@ -297,6 +297,7 @@
 					$from = 'EUC-CN';
 					break;
 				case 'us-ascii':
+				case 'macroman':
 					$from = 'iso-8859-1';
 					break;
 			}
