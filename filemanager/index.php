@@ -102,6 +102,25 @@ if ($phpwh_debug)
 }
 
 ###
+# If their home directory doesn't exist, we create it
+###
+
+if (($path == $homedir) && !$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+{
+	$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
+}
+elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
+{
+	if (!$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+	{
+		$phpgw->vfs->mkdir ($path, array (RELATIVE_NONE));
+
+		$group_id = $phpgw->accounts->name2id ($matches[1]);
+		$phpgw->vfs->set_attributes ($path, array ("owner_id" => $group_id, "createdby_id" => $group_id), array (RELATIVE_NONE));
+	}
+}
+
+###
 # Verify path is real
 ###
 
@@ -120,12 +139,17 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 
 ###
 # Read in file info from database to use in the rest of the script
-# $files in the loop below uses $query
+# $fakebase is a special directory.  In that directory, we list the user's
+# home directory and the directories for the groups they're in
 ###
 
 if ($path == $fakebase)
 {
-	$files_array = array ();
+	if (!$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+	{
+		$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
+	}
+
 	$files_array[] = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
 	$numoffiles++;
 
@@ -133,7 +157,14 @@ if ($path == $fakebase)
 
 	while (list ($num, $group_array) = each ($groups))
 	{
+		if (!$phpgw->vfs->file_exists ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE)))
+		{
+			$phpgw->vfs->mkdir ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE));
+			$phpgw->vfs->set_attributes ("$fakebase/$group_array[account_name]", array ("owner_id" => $group_array["account_id"], "createdby_id" => $group_array["account_id"]), array (RELATIVE_NONE));
+		}
+
 		$files_array[] = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+
 		$numoffiles++;
 	}
 }
@@ -304,11 +335,17 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_table_col_begin ("right");
 
 			if (!$rename && !$edit_comments)
+			{
 				html_form_input ("checkbox", "fileman[$i]", "$files[name]");
+			}
 			elseif ($renamethis)
+			{
 				html_form_input ("hidden", "fileman[" . string_encode ($files[name], 1) . "]", "$files[name]", NULL, NULL, "checked");
+			}
 			else
+			{
 				html_nbsp;
+			}
 
 			html_table_col_end ();
 
@@ -333,9 +370,13 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 						html_image ("images/folder.gif", "Folder");		
 						html_link ("$appname/index.php?path=$path$dispsep$files[name]", $files["name"]);
 	                                }
-        	                        else
+        	                        elseif (isset ($filesdir))
 					{
 						html_link ("$filesdir$pwd/$files[name]", $files["name"]);
+					}
+					else
+					{
+						html_text ($files["name"]);
 					}
 	                        }
 
@@ -637,10 +678,11 @@ if ($edit)
 
 	if ($edit_preview)
 	{
+		$edit_file_decoded = string_decode ($edit_file, 1);
 		$content = $$edit_file;
 
 		html_break (1);
-		html_text_bold ("Preview of $path/$edit_file");
+		html_text_bold ("Preview of $path/$edit_file_decoded");
 		html_break (2);
 
 		html_table_begin ("90%");
@@ -653,17 +695,20 @@ if ($edit)
 	}
 	elseif ($edit_save)
 	{
+		$edit_file_decoded = string_decode ($edit_file, 1);
 		$content = $$edit_file;
 
-		if ($phpgw->vfs->write ($edit_file, $content))
+		if ($phpgw->vfs->write ($edit_file_decoded, $content))
 		{
-			html_text_bold ("Saved $path/$edit_file");
+			html_text_bold ("Saved $path/$edit_file_decoded");
 			html_break (2);
+			html_link_back ();
 		}
 		else
 		{
-			html_text_error ("Could not save $path/$edit_file");
+			html_text_error ("Could not save $path/$edit_file_decoded");
 			html_break (2);
+			html_link_back ();
 		}
 	}
 
@@ -672,18 +717,20 @@ if ($edit)
 	{
 		for ($j = 0; $j != $numoffiles; $j++)
 		{
+			$fileman_decoded = string_decode ($fileman[$j], 1);
+
 			$content = $$fileman[$j];
 			echo "fileman[$j]: $fileman[$j]<br><b>$content</b><br>";
 			continue;
 
-			if ($phpgw->vfs->write ($fileman[$j], $content))
+			if ($phpgw->vfs->write ($fileman_decoded, $content))
 			{
-				html_text_bold ("Saved $path/$fileman[$j]");
+				html_text_bold ("Saved $path/$fileman_decoded");
 				html_break (1);
 			}
 			else
 			{
-				html_text_error ("Could not save $path/$fileman[$j]");
+				html_text_error ("Could not save $path/$fileman_decoded");
 				html_break (1);
 			}
 		}
@@ -698,8 +745,12 @@ if ($edit)
 
 	for ($j = 0; $j != $numoffiles; $j++)
 	{
-		if ($content = $phpgw->vfs->read ($fileman[$j]))
+		$fileman_decoded = string_decode ($fileman[$j], 1);
+		if ($content = $phpgw->vfs->read ($fileman_decoded))
 		{
+			if ($edit_file)
+				$content = $$edit_file;
+
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
 			html_form_input ("hidden", "edit", True);
@@ -720,9 +771,9 @@ if ($edit)
 			html_form_textarea ($fileman[$j], 35, 75, $content);
 			html_table_col_end ();
 			html_table_col_begin ("center");
-			html_form_input ("submit", "edit_preview", "Preview $fileman[$j]");
+			html_form_input ("submit", "edit_preview", "Preview $fileman_decoded");
 			html_break (1);
-			html_form_input ("submit", "edit_save", "Save $fileman[$j]");
+			html_form_input ("submit", "edit_save", "Save $fileman_decoded");
 //			html_break (1);
 //			html_form_input ("submit", "edit_save_all", "Save all");
 			html_table_col_end ();
