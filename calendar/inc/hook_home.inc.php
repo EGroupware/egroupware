@@ -36,12 +36,16 @@
 					'year'	=> $cal->bo->year,
 					'link'	=> 'day'
 				)
-			).'</td><td align="center">'
-			. '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
-			. lang($phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'F')).' '.$cal->bo->day.', '.$cal->bo->year.'</tr></td>'
-			. '<tr><td bgcolor="'.$phpgw_info['theme']['bg_text'].'" valign="top">'
-			. $cal->print_day(Array('year'=>$cal->bo->year,'month'=>$cal->bo->month,'day'=>$cal->bo->day)).'</td></tr></table>'."\n"
-			. "\n".'<!-- END Calendar info --></table></td></tr>'."\n";
+			).'</td><td align="center">'.'<table border="0" width="100%" cellspacing="0" cellpadding="0">'
+			. '<tr><td align="center">.lang($phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'F'))
+			.' '.$cal->bo->day.', '.$cal->bo->year.'</tr></td>'.'<tr><td bgcolor="'.$phpgw_info['theme']['bg_text']
+			.'" valign="top">'.$cal->print_day(
+				Array(
+					'year'=>$cal->bo->year,
+					'month'=>$cal->bo->month,
+					'day'=>$cal->bo->day
+				)
+			).'</td></tr></table>'."\n"."\n".'<!-- END Calendar info --></table></td></tr>'."\n";
 		unset($cal);
 	} 
 ?>
