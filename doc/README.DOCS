@@ -1,0 +1,18 @@
+These installation docs are created using lyx on
+a linux system.
+
+The makefile in this directory will generate the various other
+forms of the installation docs i.e. html, pdf, ps etc.
+In order to use the Makefile you need to have the following installed
+and in your path:
+
+lyx (1.1.6fix1)
+latex2html
+dvips
+pdflatex
+
+
+--Darryl VanDorp
+aka ||Maniac
+
+
