@@ -289,6 +289,15 @@
 			return True;
 		}
 
+		function get_last_insert_id()
+		{
+			/* This will get the last insert ID created on the current connection.  Should only be called
+			 * after an insert query is run on a table that has an auto incrementing field.
+			 */
+
+			return @mysql_insert_id($this->Link_ID);
+		}
+
 		/* public: table locking */
 		function lock($table, $mode='write')
 		{
