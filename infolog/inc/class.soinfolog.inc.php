@@ -517,9 +517,6 @@
 				$columns = array('info_from','info_subject','info_extra_value');
 				switch($this->db->Type)
 				{
-					case 'mssql':
-						$columns[] = 'CAST(info_des AS varchar)';
-						break;
 					case 'sapdb':
 					case 'maxdb':
 						// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
