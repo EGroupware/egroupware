@@ -438,12 +438,10 @@
 			global $phpgw;
 			
 			$sessionData = $this->appsession("sessiondata");
-			print "Tyoe: ".$sessionData;
 #			$sessionData = unserialize($serializedData);
 			
 			if (is_array($sessionData))
 			{
-				print "is Array<br>";
 				reset($sessionData);
 				while(list($key,$value) = each($sessionData))
 				{
