@@ -193,6 +193,7 @@ must be unique	felamimail	en	Must be unique
 name	felamimail	en	Name
 never display html emails	felamimail	en	Never display HTML emails
 new	felamimail	en	New
+new	common	en	New
 new filter	felamimail	en	New filter
 next	felamimail	en	Next
 next message	felamimail	en	next message
@@ -327,6 +328,7 @@ unknown error	felamimail	en	Unknown error
 unknown sender	felamimail	en	Unknown Sender
 unknown user or password incorrect.	felamimail	en	Unknown user or password incorrect.
 unread	felamimail	en	unread
+unread	common	en	Unread
 unseen	felamimail	en	Unseen
 unseen and total	felamimail	en	Unseen and Total
 unseen message notification	felamimail	en	Unseen message notification
