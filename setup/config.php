@@ -37,7 +37,7 @@
 	//
 	function in_docroot($path)
 	{
-		$docroots = array(PHPGW_SERVER_ROOT,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']);
+		$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
 		
 		foreach ($docroots as $docroot)
 		{
@@ -162,11 +162,11 @@
 	}
 	
 	// are we here because of an error: files-dir in docroot
-	if (is_array($GLOBALS['HTTP_POST_VARS']['newsettings']) && $files_in_docroot)
+	if (is_array($_POST['newsettings']) && $files_in_docroot)
 	{
 		echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
 
-		foreach($GLOBALS['HTTP_POST_VARS']['newsettings'] as $key => $val)
+		foreach($_POST['newsettings'] as $key => $val)
 		{
 			$GLOBALS['current_config'][$key] = $val;
 		}
