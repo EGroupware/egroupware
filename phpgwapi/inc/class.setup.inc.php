@@ -946,11 +946,11 @@
 		{
 			$this->setup_account_object();
 
-			$groupid =  $group ? $GLOBALS['phpgw']->accounts->name2id($group) : False;
+			$groupid = $group ? $GLOBALS['phpgw']->accounts->name2id($group) : False;
 
-			if (!($accountid = $GLOBALS['phpgw']->accounts->name2id($username)))
+			if(!($accountid = $GLOBALS['phpgw']->accounts->name2id($username)))
 			{
-				$accountid = $accountid ? $acountid : $GLOBALS['phpgw']->accounts->create(array(
+				$accountid = $accountid ? $accountid : $GLOBALS['phpgw']->accounts->create(array(
 					'account_type'      => $group ? 'u' : 'g',
 					'account_lid'       => $username,
 					'account_passwd'    => $passwd,
@@ -961,11 +961,11 @@
 					'account_expires'   => -1
 				));
 			}
-			if ($groupid)
+			if($groupid)
 			{
-				$this->add_acl('phpgw_group',$groupid,$accountid);
+				$this->add_acl('phpgw_group',(int)$groupid,(int)$accountid);
 			}
-			$this->add_acl('preferences','changepassword',$accountid,(int) $changepw);
+			$this->add_acl('preferences','changepassword',(int)$accountid, (boolean)$changepw);
 
 			return $accountid;
 		}
