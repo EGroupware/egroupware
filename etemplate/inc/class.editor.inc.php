@@ -535,6 +535,10 @@
 			$file .= '.xet';
 			if (file_exists($file))
 			{
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
 				rename($file,$old_file);
 			}
 

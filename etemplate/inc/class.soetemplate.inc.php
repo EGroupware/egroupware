@@ -609,7 +609,12 @@
 			$file = "$dir/etemplates.inc.php";
 			if (file_exists($file))
 			{
-				rename($file,"$dir/etemplates.old.inc.php");
+				$old_file = "$dir/etemplates.old.inc.php";
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
+				rename($file,$old_file);
 			}
 
 			if (!($f = fopen($file,'w')))
@@ -777,7 +782,12 @@
 			$file = "$dir/phpgw_$lang.lang";
 			if (file_exists($file))
 			{
-				rename($file,"$dir/phpgw_$lang.old.lang");
+				$old_file = "$dir/phpgw_$lang.old.lang";
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
+				rename($file,$old_file);
 			}
 			$solangfile->write_file($app,$langarr,$lang);
 			$solangfile->loaddb($app,$lang);

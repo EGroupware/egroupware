@@ -563,7 +563,12 @@
 
 				if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
 				{
-					rename($file,PHPGW_SERVER_ROOT."/$app/setup/tables_current.old.inc.php");
+					$old_file = PHPGW_SERVER_ROOT . "/$app/setup/tables_current.old.inc.php";
+					if (file_exists($old_file))
+					{
+						unlink($old_file);
+					}
+					rename($file,$old_file);
 				}
 				while ($header[strlen($header)-1] == "\t")
 				{
@@ -629,7 +634,12 @@
 
 			if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
 			{
-				rename($file,PHPGW_SERVER_ROOT."/$app/setup/setup.old.inc.php");
+				$old_file = PHPGW_SERVER_ROOT . "/$app/setup/setup.old.inc.php";
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
+				rename($file,$old_file);
 			}
 			$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*')[^']*('.*)","\\1$new"."\\2",$fcontent);
 			
@@ -728,7 +738,12 @@
 				$update = fread($f,filesize($file_update));
 				$update = str_replace('?>','',$update);
 				fclose($f);
-				rename($file_update,PHPGW_SERVER_ROOT."/$app/setup/tables_update.old.inc.php");
+				$old_file = PHPGW_SERVER_ROOT . "/$app/setup/tables_update.old.inc.php";
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
+				rename($file_update,$old_file);
 			}
 			else
 			{
