@@ -31,6 +31,7 @@
   $db->query("DROP TABLE todo");
   $db->query("DROP TABLE calendar_entry");
   $db->query("DROP TABLE calendar_entry_user");
+  $db->query("DROP TABLE calendar_entry_repeats");
   $db->query("drop sequence newsgroups_con_seq");
   $db->query("DROP TABLE newsgroups");
   $db->query("DROP TABLE lang");
