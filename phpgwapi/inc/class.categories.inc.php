@@ -440,24 +440,24 @@
 
 			if ($format == 'select')
 			{
-				for ($i=0;$i<count($cats);$i++)
+				while (is_array($cats) && list(,$cat)=each($cats))
 				{
-					$s .= '<option value="' . $cats[$i]['cat_id'] . '"';
-					if (in_array($cats[$i]['cat_id'],$selected))
+					$s .= '<option value="' . $cat['cat_id'] . '"';
+					if (in_array($cat['cat_id'],$selected))
 					{
 						$s .= ' selected';
 					}
 					$s .= '>';
-					for ($j=0;$j<$cats[$i]['level'];$j++)
+					for ($j=0;$j<$cat['level'];$j++)
 					{
 						$s .= '&nbsp;.&nbsp;';
 					}
-					$s .= $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
-					if ($cats[$i]['app_name'] == 'phpgw')
+					$s .= $GLOBALS['phpgw']->strip_html($cat['name']);
+					if ($cat['app_name'] == 'phpgw')
 					{
 						$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
 					}
-					if ($cats[$i]['owner'] == '-1')
+					if ($cat['owner'] == '-1')
 					{
 						$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
 					}

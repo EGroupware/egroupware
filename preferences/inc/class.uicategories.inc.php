@@ -31,7 +31,7 @@
 
 		function uicategories()
 		{
-			$cats_app			= get_var('cats_app',array('POST','GET'));	
+			$cats_app			= get_var('cats_app',array('GET','POST'));	
 
 			$this->bo			= CreateObject('preferences.bocategories',$cats_app);
 			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
@@ -70,6 +70,7 @@
 			$GLOBALS['phpgw']->template->set_var('user_name',$this->user);
 			$GLOBALS['phpgw']->template->set_var('lang_search',lang('Search'));
 			$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
+			$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('cancel'));
 			$GLOBALS['phpgw']->template->set_var('lang_sub',lang('Add sub'));
 			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
 			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
@@ -92,10 +93,10 @@
 
 		function index()
 		{
-			$cats_app		= get_var('cats_app',array('POST','GET'));
-			$extra			= get_var('extra',array('POST','GET'));
-			$global_cats	= get_var('global_cats',array('POST','GET'));
-			$cats_level		= get_var('cats_level',array('POST','GET'));
+			$cats_app		= get_var('cats_app',array('GET','POST'));
+			$extra			= get_var('extra',array('GET','POST'));
+			$global_cats	= get_var('global_cats',array('GET','POST'));
+			$cats_level		= get_var('cats_level',array('GET','POST'));
 
 			$link_data = array
 			(
@@ -130,7 +131,6 @@
 				$global_cats = False;
 			}
 
-			$this->bo->cats->app_name = $cats_app;
 			$cats = $this->bo->get_list($global_cats);
 
 //--------------------------------- nextmatch --------------------------------------------
@@ -290,7 +290,7 @@
 			$parent		= get_var('parent',array('GET'));
 			$cat_data	= get_var('cat_data',array('POST'));
 
-			if (get_var('submit',Array('POST')))
+			if ($_POST['save'])
 			{
 				if (is_array($cat_data))
 				{
@@ -315,7 +315,7 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Add %1 category for',
-				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
+															$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
@@ -375,7 +375,7 @@
 			}
 
 			$link_data['menuaction'] = 'preferences.uicategories.index';
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$GLOBALS['phpgw']->template->parse('buttons','add');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','form');
@@ -409,7 +409,7 @@
 				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			if (get_var('submit',Array('POST')))
+			if ($_POST['save'])
 			{
 				if (is_array($cat_data))
 				{
@@ -447,7 +447,7 @@
 			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit %1 category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('message',$message);
 			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$link_data['menuaction'] = 'preferences.uicategories.edit';
 			$link_data['cat_id'] = $this->cat_id;
@@ -474,7 +474,8 @@
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
 																										'type'	=> $type,
 																									'selected'	=> $cats['parent'],
-																									'globals'	=> $global_cats)));
+																									'globals'	=> $global_cats,
+																										'self'	=> $this->cat_id)));
 
 			$GLOBALS['phpgw']->template->set_var('access',$cats['access'] == 'private'?' checked':'');
 
@@ -495,7 +496,7 @@
 				$GLOBALS['phpgw']->template->set_var('rows','');
 			}
 
-			if ($cats[0]['owner'] == $this->account)
+			if ($cats['owner'] == $this->account)
 			{
 				$link_data['menuaction'] = 'preferences.uicategories.delete';
 				$GLOBALS['phpgw']->template->set_var('delete','<form method="POST" action="' . $GLOBALS['phpgw']->link('/index.php',$link_data)
@@ -531,13 +532,11 @@
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
-			$this->bo->cats->app_name = $cats_app;
-
-			if (get_var('confirm',array('POST')))
+			if ($_POST['confirm'])
 			{
-				if (get_var('subs',array('POST')))
+				if ($_POST['subs'])
 				{
-					switch (get_var('subs',array('POST')))
+					switch ($_POST['subs'])
 					{
 						case 'move':
 							$this->bo->delete(array('cat_id' => $this->cat_id,'modify_subs' => True));

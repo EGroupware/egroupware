@@ -39,18 +39,18 @@
 	{rows}
 </table>
 
-<table border="0" cellspacing="5" width="80%">
-	<tr valign="bottom">
+<table border="0" cellpadding="2" cellspacing="2" width="80%">
+	<tr valign="bottom" height="50">
 		<td>
 			<form method="POST" action="{add_action}">
-			<input type="submit" value="{lang_add}">
-			</form></td>
-		<td>
-			<form method="POST" action="{doneurl}">
-			<input type="submit" name="done" value="{lang_done}">
+				<input type="submit" value="{lang_add}">
 			</form>
 		</td>
-		<td width="80%">&nbsp;</td>
+		<td align="right">
+			<form method="POST" action="{doneurl}">
+				<input type="submit" name="done" value="{lang_done}">
+			</form>
+		</td>
 	</tr>
 </table>
 
