@@ -169,7 +169,7 @@
 		{
 			$sort = ($sort?$sort:$this->sort);
 			$order = ($order?$order:$this->order);
-			$query = ($query?$query:$$this->query);
+			$query = ($query?$query:$this->query);
 			return $this->so->get_locale_list($sort,$order,$query);
 		}
 
