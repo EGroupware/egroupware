@@ -73,6 +73,13 @@
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
 			{
+				if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+				{
+					if($allValues[0]['uid'][0] != $username)
+					{
+						return false;
+					}
+				}
 				/* we only care about the first dn */
 				$userDN = $allValues[0]['dn'];
 				/*

@@ -55,6 +55,13 @@
 				$db->next_record();
 			}
 
+			if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+			{
+				if($db->f('account_lid') != $username)
+				{
+					return false;
+				}
+			}
 			if($db->f('account_lid'))
 			{
 				return True;
