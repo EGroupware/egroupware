@@ -62,3 +62,13 @@
      <td colspan="4" align="right"><input type="submit" name="submit" value="{lang_button}"></td>
     </tr>
 <!-- END form_buttons_ -->
+
+<!-- BEGIN form_logininfo -->
+    <tr bgcolor="{tr_color1}">
+     <td>{lang_lastlogin}</td>
+     <td>{account_lastlogin}</td>
+
+     <td>{lang_lastloginfrom}</td>
+     <td>{account_lastloginfrom}</td>
+    </tr>
+<!-- END form_logininfo -->
