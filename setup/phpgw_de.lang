@@ -83,6 +83,7 @@ days repeated	calendar	de	wiederholte Tage
 december	common	de	Dezember
 default application	preferences	de	Standard-Anwendung
 default sorting order	preferences	de	Standard-Sortierung
+default sorting order	email	de	Standard Sortierreihenfolge
 delete	filemanager	de	L&ouml;schen
 delete	email	de	L&ouml;schen
 delete	common	de	L&ouml;schen
@@ -101,6 +102,7 @@ edit application	admin	de	Anwendung editieren
 edit group	admin	de	Gruppe editieren
 email	common	de	E-Mail
 email signature	preferences	de	E-Mail Signatur
+email signature	email	de	EMail Unterschrift
 enabled	admin	de	Verf&uuml;gbar
 enter your new password	preferences	de	Neues Passwort eingeben
 entry has been deleted sucessfully	common	de	Eintrag erfolgreich gel&ouml;scht
@@ -283,6 +285,7 @@ show current users on navigation bar	preferences	de	Anzahl gegenw&auml;rtiger Us
 show groups containing	nntp	de	Zeige Gruppen folgenden Inhalts
 show high priority events on main screen	preferences	de	Nach dem Login Ereignisse mit hoher Priorit&auml;t anzeigen
 show new messages on main screen	preferences	de	Nach dem Login neue Nachrichten anzeigen
+show new messages on main screen	email	de	neue Nachrichten auf der Home-Seite anzeigen
 show text on navigation icons	preferences	de	Text zu Icons in der Navigations-Leiste anzeigen
 showing x	common	de	%1 Eintr&auml;ge
 showing x - x of x	common	de	%1 Eintr&auml;ge - %2 von %3
