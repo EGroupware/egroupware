@@ -14,28 +14,28 @@
 
 	/* $Id$ */
 
-include(PHPGW_SERVER_ROOT.'/calendar/version.inc.php');
+include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');
 
 if(extension_loaded('mcal') == False)
 {
-	define('RECUR_NONE',0);
-	define('RECUR_DAILY',1);
-	define('RECUR_WEEKLY',2);
-	define('RECUR_MONTHLY_MDAY',3);
-	define('RECUR_MONTHLY_WDAY',4);
-	define('RECUR_YEARLY',5);
+	define('MCAL_RECUR_NONE',0);
+	define('MCAL_RECUR_DAILY',1);
+	define('MCAL_RECUR_WEEKLY',2);
+	define('MCAL_RECUR_MONTHLY_MDAY',3);
+	define('MCAL_RECUR_MONTHLY_WDAY',4);
+	define('MCAL_RECUR_YEARLY',5);
 	
-	define('M_SUNDAY',1);
-	define('M_MONDAY',2);
-	define('M_TUESDAY',4);
-	define('M_WEDNESDAY',8);
-	define('M_THURSDAY',16);
-	define('M_FRIDAY',32);
-	define('M_SATURDAY',64);
+	define('MCAL_SUNDAY',1);
+	define('MCAL_MONDAY',2);
+	define('MCAL_TUESDAY',4);
+	define('MCAL_WEDNESDAY',8);
+	define('MCAL_THURSDAY',16);
+	define('MCAL_FRIDAY',32);
+	define('MCAL_SATURDAY',64);
 	
-	define('M_WEEKDAYS',63);
-	define('M_WEEKEND',65);
-	define('M_ALLDAYS',127);
+	define('MCAL_WEEKDAYS',63);
+	define('MCAL_WEEKEND',65);
+	define('MCAL_ALLDAYS',127);
 }
 
 define('MSG_DELETED',0);
@@ -353,38 +353,38 @@ class calendar__
 	function set_recur_none()
 	{
 		$this->set_common_recur(0,0,0,0);
-		$this->event->recur_type = RECUR_NONE;
+		$this->event->recur_type = MCAL_RECUR_NONE;
 	}
 
 	function set_recur_daily($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_DAILY;
+		$this->event->recur_type = MCAL_RECUR_DAILY;
 	}
 
 	function set_recur_weekly($year,$month,$day,$interval,$weekdays)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_WEEKLY;
+		$this->event->recur_type = MCAL_RECUR_WEEKLY;
 		$this->event->recur_data = intval($weekdays);
 	}
 
 	function set_recur_monthly_mday($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_MONTHLY_MDAY;
+		$this->event->recur_type = MCAL_RECUR_MONTHLY_MDAY;
 	}
 	
 	function set_recur_monthly_wday($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_MONTHLY_WDAY;
+		$this->event->recur_type = MCAL_RECUR_MONTHLY_WDAY;
 	}
 	
 	function set_recur_yearly($year,$month,$day,$interval)
 	{
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_YEARLY;
+		$this->event->recur_type = MCAL_RECUR_YEARLY;
 	}
 
 	function fetch_current_stream_event()

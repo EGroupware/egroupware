@@ -187,6 +187,7 @@ class calendar_ extends calendar__
 					$this->event->recur_enddate->sec	= 0;
 					$this->event->recur_enddate->alarm	= 0;
 				}
+//	echo 'Event ID#'.$this->event->id.' : Enddate = '.$enddate."<br>\n";
 				$this->event->recur_data = $this->stream->f('recur_data');
 			}
 			
@@ -383,7 +384,7 @@ class calendar_ extends calendar__
 		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
 		$today = time() - $this->datetime->tz_offset;
 
-		if($event->recur_type != RECUR_NONE)
+		if($event->recur_type != MCAL_RECUR_NONE)
 		{
 			$type = 'M';
 		}
@@ -426,7 +427,7 @@ class calendar_ extends calendar__
 				. 'VALUES('.$event->id.','.intval($key).",'".$value."')",__LINE__,__FILE__);
 		}
 
-		if($event->recur_type != RECUR_NONE)
+		if($event->recur_type != MCAL_RECUR_NONE)
 		{
 			if($event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0 && $event->recur_enddate->year != 0)
 			{
