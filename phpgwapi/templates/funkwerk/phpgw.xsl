@@ -3,7 +3,6 @@
 	<xsl:template match="phpgw">
 	<xsl:variable name="phpgw_css_file"><xsl:value-of select="phpgw_css_file"/></xsl:variable>
 	<xsl:variable name="theme_css_file"><xsl:value-of select="theme_css_file"/></xsl:variable>
-	<xsl:variable name="charset"><xsl:value-of select="charset"/></xsl:variable>
 	<xsl:variable name="webserver_url"><xsl:value-of select="webserver_url"/></xsl:variable>
 	<xsl:variable name="logo_img"><xsl:value-of select="logo_img"/></xsl:variable>
 	<xsl:variable name="home_link"><xsl:value-of select="home_link"/></xsl:variable>
@@ -27,7 +26,6 @@
 	<xsl:variable name="current_app" select="current_app"/>
 		<html>
 			<head>
-				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
 				<meta name="author" content="phpGroupWare http://www.phpgroupware.org"/>
 				<meta name="description" content="phpGroupWare"/>
 				<meta name="keywords" content="phpGroupWare"/>

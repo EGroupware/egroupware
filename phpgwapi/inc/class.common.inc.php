@@ -1072,7 +1072,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$css = $this->get_css_url();
 			$var = array
 			(
-				'charset'			=> lang('charset'),
 				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'] . $app_title,
 				'webserver_url'		=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 				'phpgw_css_file'	=> $css[0],
@@ -1657,29 +1656,32 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				define('PHPGW_FINAL',True);
 
-				if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+				if (!$GLOBALS['phpgw_info']['flags']['noframework'])
 				{
-					if($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 					{
-						$this->start_xslt_capture();	// if index already turned it off
+						if($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+						{
+							$this->start_xslt_capture();	// if index already turned it off
+						}
+						$this->phpgw_appfooter();
 					}
-					$this->phpgw_appfooter();
-				}
 
-				if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
-				{
-					$this->stop_xslt_capture();
-				}
+					if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+					{
+						$this->stop_xslt_capture();
+					}
 
-				if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login'&&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout')
-				{
-					$this->framework();
+					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login'&&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout')
+					{
+						$this->framework();
+					}
+					$GLOBALS['phpgw']->xslttpl->pp();
 				}
-				$GLOBALS['phpgw']->xslttpl->pp();
 				$GLOBALS['phpgw']->db->disconnect();
 
 				/* Clean up mcrypt */

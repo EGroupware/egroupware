@@ -3,11 +3,9 @@
 	<xsl:template match="phpgw">
 	<xsl:variable name="phpgw_css_file" select="phpgw_css_file"/>
 	<xsl:variable name="theme_css_file" select="theme_css_file"/>
-	<xsl:variable name="charset" select="charset"/>
 	<xsl:variable name="current_app" select="current_app"/>
 		<html>
 			<head>
-				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
 				<meta name="author" content="phpGroupWare http://www.phpgroupware.org"/>
 				<meta name="description" content="phpGroupWare"/>
 				<meta name="keywords" content="phpGroupWare"/>

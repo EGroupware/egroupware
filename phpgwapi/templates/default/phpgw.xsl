@@ -3,7 +3,6 @@
 	<xsl:template match="phpgw">
 	<xsl:variable name="phpgw_css_file" select="phpgw_css_file"/>
 	<xsl:variable name="theme_css_file" select="theme_css_file"/>
-	<xsl:variable name="charset" select="charset"/>
 	<xsl:variable name="onload" select="onload"/>
 	<xsl:variable name="home_link" select="home_link"/>
 	<xsl:variable name="prefs_link" select="prefs_link"/>
@@ -26,7 +25,6 @@
 	<xsl:variable name="webserver_url"><xsl:value-of select="webserver_url"/></xsl:variable>
 		<html>
 			<head>
-				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
 				<meta name="author" content="phpGroupWare http://www.phpgroupware.org"/>
 				<meta name="description" content="phpGroupWare"/>
 				<meta name="keywords" content="phpGroupWare"/>
