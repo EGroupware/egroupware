@@ -1054,19 +1054,24 @@
 		$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
       }
 	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
+	  $p->set_unknowns("remove");
       $p->set_file(array('mini_cal' => 'mini_cal.tpl',
       					 'mini_day' => 'mini_day.tpl',
       					 'mini_week' => 'mini_week.tpl'));
       $p->set_block('mini_cal','mini_week','mini_day');
-      $p->set_var('bgcolor',$phpgw_info["theme"]["bg_text"]);
+      $p->set_var('img_root',$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
+                           . $phpgw_info["server"]["template_set"]);
+      $p->set_var("cal_img_root",$phpgw_info["server"]["webserver_url"] . "/calendar/templates/"
+                               . $phpgw_info["server"]["template_set"] . "/images/");
+      $p->set_var('bgcolor',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('bgcolor1',$phpgw_info["theme"]["bg_color"]);
-      $p->set_var('month',lang($phpgw->common->show_date($date["raw"],"F")).' '.$year);
+      $p->set_var('month','<a href="' . $phpgw->link("index.php","month=" . date("m",$date["raw"])) . '" class="minicalendar">' . lang($phpgw->common->show_date($date["raw"],"F")).' '.$year) . '</a>';;
       $p->set_var('prevmonth',$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','date='.$month_ago));
       $p->set_var('nextmonth',$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','date='.$month_ahead));
 
       $p->set_var('bgcolor2',$phpgw_info["theme"]["cal_dayview"]);
       for($i=0;$i<7;$i++) {
-		$p->set_var('dayname',substr(lang($days[$i]),0,2));
+		$p->set_var('dayname',"<b>" . substr(lang($days[$i]),0,2) . "</b>");
 		$p->parse('daynames','mini_day',True);
       }
       for($i=$weekstarttime;date("Ymd",$i)<=$monthend;$i += (24 * 3600 * 7)) {
@@ -1074,20 +1079,30 @@
 		  $str = '';
 		  $cal = $this->gmtdate($i + ($j * 24 * 3600));
 		  if($cal["full"] >= $monthstart && $cal["full"] <= $monthend) {
-			if($cal["full"] == $this->today["full"]) {
-			  $p->set_var('bgcolor2','#'.$phpgw_info["theme"]["cal_today"]);
+			if ($cal["full"] == $this->today["full"]) {
+			   $p->set_var("day_image",' background="' . $phpgw_info["server"]["webserver_url"]
+			                         . "/calendar/templates/" . $phpgw_info["server"]["template_set"]
+			                         . "/images/mini_day_block.gif" . '"');
+			   //$p->set_var('bgcolor2','#'.$phpgw_info["theme"]["cal_today"]);
 			} else {
+  			$p->set_var("day_image","");
 	          $p->set_var('bgcolor2','#FFFFFF');
 	        }
 	        if(!$this->printer_friendly) {
-	      	  $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/".$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='.$cal["day"]).'">';
+	      	  $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/".$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='.$cal["day"]).'" class="minicalendar">';
 	    	}
-	    	$str .= $cal["day"];
-	    	if(!$this->printer_friendly) $str .= '</a>';
-	    	$p->set_var('dayname',$str);
+	        $str .= $cal["day"];
+	    	if (!$this->printer_friendly) $str .= '</a>';
+	    	if ($cal["full"] == $this->today["full"]) {
+               $p->set_var('dayname',"<b>$str</b>");
+            } else {
+               $p->set_var('dayname',$str);
+            }
 	  	  } else {
-	    	$p->set_var('bgcolor2','#FEFEFE');
-	    	$p->set_var('dayname',$cal["day"]);
+               $p->set_var('bgcolor2','#FEFEFE');
+               $p->set_var('dayname','<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+	    	          . "/calendar/".$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='
+	    	          . $cal["day"]).'" class="minicalendargrey">' . $cal["day"] . "</a>");
 	  	  }
 	  	  $p->parse('monthweek_day','mini_day',True);
 		}
@@ -1095,7 +1110,7 @@
 		$p->set_var('dayname','');
 		$p->set_var('monthweek_day','');
       }
-      return $p->parse('out','mini_cal');
+      return $p->finish($p->parse('out','mini_cal'));
     }
 
     function html_for_event_day_at_a_glance ($event) {
