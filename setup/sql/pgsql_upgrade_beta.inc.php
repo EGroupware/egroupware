@@ -901,8 +901,8 @@
   function upgrade0_9_10pre3()
   {
      global $phpgw_info, $phpgw_setup; 
-     $phpgw_setup->db->query("create table phpgw_temp as select account_id,account_lid, account_pwd,"
-                           . "account_firstname,account_lastname,account_lastlogin,account_lastloginfrom"
+     $phpgw_setup->db->query("create table phpgw_temp as select account_id,account_lid,account_pwd,"
+                           . "account_firstname,account_lastname,account_lastlogin,account_lastloginfrom,"
                            . "account_lastpwd_change,account_status from accounts",__LINE__,__FILE__);
      $sql = "create table phpgw_accounts (
        account_id             serial,
@@ -914,15 +914,15 @@
        account_lastloginfrom  varchar(255),
        account_lastpwd_change int,
        account_status         char(1),
-       account_type           char(1)
+       account_type           char(1),
        unique(account_lid)
      )";
      $phpgw_setup->db->query($sql);
 
      $phpgw_setup->db->query("insert into phpgw_accounts select * from phpgw_temp",__LINE__,__FILE__);
      $phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
-     $phpgw_setup->db->query("drop sequence acccount_account_id_seq");
-     $phpgw_setup->db->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
+     $phpgw_setup->db->query("drop sequence accounts_account_id_seq");
+     $phpgw_setup->db->query("drop table accounts");
 
      $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
   }

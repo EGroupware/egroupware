@@ -31,7 +31,7 @@
   $phpgw_setup->db->query($sql);
 
 
-  $sql = "create table phpgw_accounts (
+  $sql = "create table accounts (
     account_id             serial,
     account_lid            varchar(25) NOT NULL,
     account_pwd            char(32) NOT NULL,
@@ -41,7 +41,7 @@
     account_lastloginfrom  varchar(255),
     account_lastpwd_change int,
     account_status         char(1),
-    account_type           char(1)
+    account_type           char(1),
     unique(account_lid)
   )";
   $phpgw_setup->db->query($sql);
