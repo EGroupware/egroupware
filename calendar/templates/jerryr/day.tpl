@@ -20,13 +20,13 @@
 						<td width=8 class="calRightShadow"></td>
 					</tr>
 					<tr class="calRowBottomShadow">
-						<td class="calLtLtFoot"></td>
-						<td class="calLtMidFoot"></td>
-						<td></td>
-						<td class="calRtMidFoot"></td>
-						<td class="calRtRtFoot"></td>
+						<td width=8 class="calLtLtFoot"></td>
+						<td width=8 class="calLtMidFoot"></td>
+						<td>&nbsp;</td>
+						<td width=8 class="calRtMidFoot"></td>
+						<td width=8 class="calRtRtFoot"></td>
 					</tr>	
-				</table><p align="center">{print}</p>
+				</table><p>{print}</p>
 			</td>
 			<td width=5></td>
 			<td align="center" valign="top" >
@@ -53,11 +53,11 @@
 									<td width=8 class="calRightShadow"></td>
 								</tr>
 								<tr class="calRowBottomShadow">
-									<td class="calLtLtFoot"></td>
-									<td class="calLtMidFoot"></td>
+									<td width=8 class="calLtLtFoot"></td>
+									<td width=8 class="calLtMidFoot"></td>
 									<td></td>
-									<td class="calRtMidFoot"></td>
-									<td class="calRtRtFoot"></td>
+									<td width=8 class="calRtMidFoot"></td>
+									<td width=8 class="calRtRtFoot"></td>
 								</tr>	
 							</table>
 						</td>

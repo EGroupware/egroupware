@@ -2,6 +2,11 @@
 {printer_friendly}
 <table border=0 align="center" class="calDayViewShadowBox" width="100%" cols="5" >
 <tr>
+<td>
+
+
+<table border=0 align="center" width="100%" cols="5" >
+<tr>
 
   <td align="left" valign="top">
    {small_calendar_prev}
@@ -25,7 +30,7 @@
 
 
 <table><tr><td height="5"></td></tr></table>
-<table border=0  align="center" class="calDayViewShadowBox" width=100%>
+<table border=0  align="center" width=100%>
 	<tr>
 		<td>
 			<table  border="0" width="100%" cellpadding=0 cellspacing=0>
@@ -44,7 +49,7 @@
 				<tr class="calRowBottomShadow">
 						<td class="calLtLtFoot"></td>
 						<td class="calLtMidFoot"></td>
-						<td></td>
+						<td>&nbsp;</td>
 						<td class="calRtMidFoot"></td>
 						<td class="calRtRtFoot"></td>
 					</tr>	
@@ -52,4 +57,6 @@
 </td>
 	</tr>
 </table>
-
+</td>
+</tr>
+</table>

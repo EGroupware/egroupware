@@ -47,10 +47,10 @@
 <!-- BEGIN sidebox_hide_header -->
 	<!--<script language="javascript" src="SlideOut.js"></script>-->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 60, 160, 200)
+		new ypSlideOutMenu("menu2", "right", 0, 45, 160, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="position:absolute;left:0px;top:70px">
+	<div id="sideboxdragarea" style="position:absolute;left:0px;top:55px">
 	<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" onmouseover="//ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
@@ -84,40 +84,45 @@
 
 		<!-- Applicationbox Column -->
 		<td id="tdAppbox" valign="top" {remove_padding}>
-		<div id="divAppboxHeader">{current_app_title}</div>
-		<div id="divAppbox">
-		<table width="98%" cellpadding="0" cellspacing="0">
-		<tr><td>
-<!-- END navbar_footer -->
-
-
-<!-- BEGIN extra_blocks_header -->
-<div class="divSidebox">
-	<div class="divSideboxHeader"><span>{lang_title}</span></div>
-	<div>
-		<table width="100%" cellspacing="0" cellpadding="0">
-<!-- END extra_blocks_header -->
-
-
-<!-- BEGIN extra_blocks_footer -->
-	</table>	
-		</div>
-		</div>
-
-		<div class="sideboxSpace"></div>
-<!-- END extra_blocks_footer -->
-
-
-
-<!-- BEGIN extra_block_row -->
-		<tr class="divSideboxEntry">
-<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
-</tr>
-<!-- END extra_block_row -->
-
-
-<!-- BEGIN extra_block_spacer -->
-<tr class="divSideboxEntry"> 
-	<td colspan="2" height="8" class="textSidebox"></td>
-</tr>
+			<table width=100% cellpadding=0 cellspacing=0>
+				<tr>
+					<td width=8 class="calLtLtTitleBeige"></td>
+					<td width=8 class="calLtMidTitleBeige"></td>
+					<td class="calDayTitleBeige">{current_app_title}</td>
+					<td width=8 class="calRtMidTitleBeige" ></td>
+					<td width=8 class="calRtRtTitleBeige" ></td>
+				</tr>
+			</table>
+			<table border=0 width=100% cellpadding=0 cellspacing=0>
+				<tr>
+					<td width=8 class="calLeftShadow"></td>
+					<td>
+						<div id="divAppbox">
+						<table border=0 width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>
+									<!-- END navbar_footer -->
+									<!-- BEGIN extra_blocks_header -->
+									<div class="divSidebox">
+									<div class="divSideboxHeader"><span>{lang_title}</span></div>
+									<div>
+									<table width="100%" cellspacing="0" cellpadding="0">
+									<!-- END extra_blocks_header -->
+									<!-- BEGIN extra_blocks_footer -->
+									</table>	
+									</div>
+									</div>
+									<div class="sideboxSpace"></div>
+									<!-- END extra_blocks_footer -->
+									<!-- BEGIN extra_block_row -->
+							<tr class="divSideboxEntry">
+								<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td>
+								<td class="textSidebox"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
+							</tr>
+							<!-- END extra_block_row -->
+							<!-- BEGIN extra_block_spacer -->
+							<tr class="divSideboxEntry"> 
+								<td colspan="2" height="8" class="textSidebox"></td>
+							</tr>
+							
 <!-- END extra_block_spacer -->

@@ -310,17 +310,9 @@ a.textSidebox
 #divAppbox
 {
 /*	width:100%;*/
-	background-color:#f4f2ed;
+	background-color:#faf8f3;
 	padding:5px;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
+	
 }
 
 #fmStatusBar
@@ -401,7 +393,7 @@ a.textSidebox
 
 .calRowBottomShadow
 {
-	background-image: url(../images/mid-foot.png); 
+	background: url(../images/mid-foot.png); 
 	background-repeat: repeat-x;
 }
 
@@ -426,9 +418,21 @@ a.textSidebox
 	border-bottom-style:solid;
 }
 
+.calDayTitleBeige
+{
+	background: url(../images/mid-title-beige.png); 
+	background-repeat: repeat-x;
+	height:28px;
+	text-align:center;
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#666666;
+}
+
 .calDayTitleBlue
 {
-	background-image: url(../images/mid-title.png); 
+	background: url(../images/mid-title.png); 
 	background-repeat: repeat-x;
 	height:28px;
 	text-align:center;
@@ -452,96 +456,124 @@ a.textSidebox
 
 .calLeftShadow
 {
-	background-image: url(../images/lt-body.png); 
+	background: url(../images/lt-body.png); 
 	padding-bottom:0px;
 }
 
 .calRightShadow
 {
-	background-image: url(../images/rt-body.png); 
+	background: url(../images/rt-body.png); 
 	padding-bottom:0px;
 }
 
 .calLtLtTitleBlue
 {
-	background-image: url(../images/lt-lt-title.png); 
+	background: url(../images/lt-lt-title.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calLtMidTitleBlue
 {
-	background-image: url(../images/lt-mid-title.png); 
+	background: url(../images/lt-mid-title.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calRtMidTitleBlue
 {
-	background-image: url(../images/rt-mid-title.png); 
+	background: url(../images/rt-mid-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtMidTitleBeige
+{
+	background: url(../images/rt-mid-title-beige.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtRtTitleBeige
+{
+	background: url(../images/rt-rt-title-beige.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calRtRtTitleBlue
 {
-	background-image: url(../images/rt-rt-title.png); 
+	background: url(../images/rt-rt-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtLtTitleBeige
+{
+	background: url(../images/lt-lt-title-beige.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calLtLtTitleRed
 {
-	background-image: url(../images/lt-lt-title-red.png); 
+	background: url(../images/lt-lt-title-red.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtMidTitleBeige
+{
+	background: url(../images/lt-mid-title-beige.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calLtMidTitleRed
 {
-	background-image: url(../images/lt-mid-title-red.png); 
+	background: url(../images/lt-mid-title-red.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calRtMidTitleRed
 {
-	background-image: url(../images/rt-mid-title-red.png); 
+	background: url(../images/rt-mid-title-red.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calRtRtTitleRed
 {
-	background-image: url(../images/rt-rt-title-red.png); 
+	background: url(../images/rt-rt-title-red.png); 
 	padding-bottom:0px;
 	height:28px;
 }
 
 .calLtLtFoot
 {
-	background-image: url(../images/lt-lt-foot.png); 
+	background: url(../images/lt-lt-foot.png); 
 	padding-bottom:0px;
 	height:17px;
 }
 
 .calLtMidFoot
 {
-	background-image: url(../images/lt-mid-foot.png); 
+	background: url(../images/lt-mid-foot.png); 
 	padding-bottom:0px;
 	height:17px;
 }
 
 .calRtMidFoot
 {
-	background-image: url(../images/rt-mid-foot.png); 
+	background: url(../images/rt-mid-foot.png); 
 	padding-bottom:0px;
 	height:17px;
 }
 
 .calRtRtFoot
 {
-	background-image: url(../images/rt-rt-foot.png); 
+	background: url(../images/rt-rt-foot.png); 
 	padding-bottom:0px;
 	height:17px;
 }
@@ -590,13 +622,13 @@ a.textSidebox
 .calDayViewShadowBox
 {
 	border-top-color:#9c9c9c;
-	border-top-width:1px;
+	border-top-width:2px;
 	border-top-style:solid;
 	border-left-color:#9c9c9c;
-	border-left-width:1px;
+	border-left-width:2px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:1px;
+	border-right-width:2px;
 	border-right-style:solid;
 	border-bottom-color:#9c9c9c;
 	border-bottom-width:1px;
