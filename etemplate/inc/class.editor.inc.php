@@ -627,7 +627,6 @@
 
 		function show($post_vars='')
 		{
-			echo "this->etemplate->data = "; _debug_array($this->etemplate->data);
 			if ($this->debug)
 			{
 				echo "<p>etemplate.editor.show: content="; _debug_array($post_vars);
