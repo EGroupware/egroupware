@@ -398,6 +398,7 @@ next	common	en	Next
 next page	common	en	next page
 nntp	common	en	NNTP
 no	common	en	No
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 no_file_name	filemanager	en	No filename was specified
 no matches found.	calendar	en	No matches found.
 no matchs found	admin	en	No matchs found
