@@ -4,23 +4,23 @@
   <!--
     .event
     {
-      width: 91%
+      width: {event_width}%
       color: #{font_color};
       font-family: {font};
       font-weight: 100;
       font-size: 80%;
-      line-height: 220%;
+      line-height: 110%;
       vertical-align: middle;
     }
 
     .time
     {
-      width: 9%;
+      width: {time_width}%;
       background-image: url('{bg_time_image}');
       color: #{font_color};
       font-family: {font};
       font-size: 65%;
-      line-height: 220%;
+      line-height: 110%;
       vertical-align: middle;
     }
 
