@@ -152,6 +152,6 @@
 	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start"));
 	$t->parse("out","add");
 	$t->pparse("out","add");
-	
+
 	$phpgw->common->phpgw_footer();
 ?>
