@@ -11,5 +11,5 @@
 
   /* $Id$ */
 
-  $phpgw_info["server"]["version"] = "0.9.6";  
+  $phpgw_info["server"]["version"] = "0.9.7pre1";  
 ?>
