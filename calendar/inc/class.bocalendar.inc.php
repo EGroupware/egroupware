@@ -92,7 +92,7 @@
 		);
 
 		var $debug = False;
-//		var $debug = True;
+		var $debug = True;
 
 		var $so;
 		var $cached_events;
@@ -212,8 +212,8 @@
 
 			$this->filter = get_var('filter',Array('POST','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
 
-			$this->sortby = get_var('sortby',Array('POST'));
-			if(!isset($this->sortby))
+			$this->sortby = get_var('sortby',Array('POST'),$this->sortby);
+			if(empty($this->sortby))
 			{
 			   $this->sortby = $this->prefs['calendar']['defaultcalendar'] == 'planner_user' ? 'user' : 'category';
 			}
@@ -394,6 +394,22 @@
 		{
 			if ($this->use_session)
 			{
+				if (!is_array($data))
+				{
+					$data = array(
+						'filter'     => $this->filter,
+						'cat_id'     => $this->cat_id,
+						'owner'      => $this->owner,
+						'save_owner' => $this->save_owner,
+						'year'       => $this->year,
+						'month'      => $this->month,
+						'day'        => $this->day,
+						'date'       => $this->date,
+						'sortby'     => $this->sortby,
+						'num_months' => $this->num_months,
+						'return_to'  => $this->return_to
+					);
+				}
 				print_debug('Save',_debug_array($data,False));
 				$GLOBALS['phpgw']->session->appsession('session_data','calendar',$data);
 			}
@@ -437,8 +453,7 @@
 			{
 				$temp_event = $this->get_cached_event();
 				$event = $this->read_entry(intval($param['id']));
-//				if($this->owner == $event['owner'])
-//				{
+
 				$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $GLOBALS['phpgw']->datetime->tz_offset;
 				$event['recur_exception'][] = intval($exception_time);
 				$this->so->cal->event = $event;
@@ -451,7 +466,6 @@
 			{
 				$cd = 60;
 			}
-//			}
 			$this->so->cal->event = $temp_event;
 			unset($temp_event);
 			return $cd;
@@ -461,9 +475,6 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
-//				$temp_event = $this->read_entry($id);
-//				if($this->owner == $temp_event['owner'])
-//				{
 				$this->so->delete_entry($id);
 				$cd = 16;
 			}
@@ -471,7 +482,6 @@
 			{
 				$cd = 60;
 			}
-//			}
 			return $cd;
 		}
 
@@ -1091,7 +1101,6 @@
 			{
 				$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
 			}
-			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$private, grants=$grants ==> access=$access</p>\n";
 
 			return $access;
 		}
@@ -1551,7 +1560,6 @@
 			{
 				return False;
 			}
-
 			$syear = $params['syear'];
 			$smonth = $params['smonth'];
 			$sday = $params['sday'];
@@ -1563,7 +1571,7 @@
 			{
 				unset($owner_id);
 				$owner_id = $this->g_owner;
-				print_debug('owner_id in','('.implode($owner_id).')');
+				print_debug('owner_id in','('.implode(',',$owner_id).')');
 			}
 			
 			if(!$eyear && !$emonth && !$eday)
@@ -1597,7 +1605,7 @@
 
 			print_debug('Start Date',sprintf("%04d%02d%02d",$syear,$smonth,$sday));
 			print_debug('End Date',sprintf("%04d%02d%02d",$eyear,$emonth,$eday));
-			
+
 			if($owner_id)
 			{
 				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
@@ -1608,16 +1616,14 @@
 				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
 				$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
 			}
-
 			$c_cached_ids = count($cached_event_ids);
 			$c_cached_ids_repeating = count($cached_event_ids_repeating);
-
 			print_debug('Date',sprintf("%04d%02d%02d",$syear,$smonth,$sday));
 			print_debug('Events Cached',$c_cached_ids);
 			print_debug('Repeating Events Cached',$c_cached_ids_repeating);
 
 			$this->cached_events = Array();
-			
+
 			if($c_cached_ids == 0 && $c_cached_ids_repeating == 0)
 			{
 				return;

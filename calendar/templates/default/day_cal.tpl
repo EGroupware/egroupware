@@ -9,15 +9,15 @@
     </tr>
 <!-- END day_row -->
 <!-- BEGIN day_event_on -->
-     <td class="event-on"{extras}>{event}</td>
+     <td class="row_on"{extras}>{event}</td>
 <!-- END day_event_on -->
 <!-- BEGIN day_event_off -->
-     <td class="event-off"{extras}>{event}</td>
+     <td class="row_off"{extras}>{event}</td>
 <!-- END day_event_off -->
 <!-- BEGIN day_event_holiday -->
-     <td class="event-holiday"{extras}>{event}</td>
+     <td class="cal_holiday"{extras}>{event}</td>
 <!-- END day_event_holiday -->
 <!-- BEGIN day_time -->
-     <td class="time"><nobr>{open_link}{time}{close_link}</nobr></td>
+     <td class="th"><nobr>{open_link}{time}{close_link}</nobr></td>
 <!-- END day_time -->
 

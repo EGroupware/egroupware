@@ -30,6 +30,7 @@
 		'form_button_dropdown'	=> 'form_button_dropdown.tpl',
 		'form_button_script'	=> 'form_button_script.tpl'
 	);
+	$tpl = &$GLOBALS['phpgw']->template;
 	$tpl->set_file($templates);
 	$tpl->set_block('head_tpl','head','head');
 	$tpl->set_block('head_tpl','head_table','head_table');
@@ -69,7 +70,7 @@
 
 	add_col($tpl,'  <td width="'.(100 - $col_width).'%" align="left"'.(floor(phpversion()) < 4?' colspan="2"':'').'>&nbsp;</td>');
 
-	$tpl->parse('row','head_table',True);
+	$tpl->parse('phpgw_body','head_table',True);
 
 	$tpl->set_var('header_column','');
 	$tpl->set_var('cols',$cols);
@@ -83,7 +84,7 @@
 		$participants = get_var('participants',Array('POST'));
 		$date         = get_var('date',Array('GET','POST'));
 		$year         = $this->bo->year;
-		$month        = $this->bo-month;
+		$month        = $this->bo->month;
 		$day          = $this->bo->day;
 		$var_list = Array(
 			'cal_id',
@@ -98,9 +99,9 @@
 		$base_hidden_vars = '<input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
 		for($i=0;$i<count($var_list);$i++)
 		{
-			if($($var_list[$i]))
+			if($$var_list[$i])
 			{
-				$base_hidden_vars .= '    <input type="hidden" name="'.$var_list[$i].'" value="'.$($var_list[$i]).'">'."\n";
+				$base_hidden_vars .= '    <input type="hidden" name="'.$var_list[$i].'" value="'.$$var_list[$i].'">'."\n";
 			}
 		}
 		$hidden_vars = '';
@@ -118,7 +119,7 @@
 			'form_name'	=> 'cat_id',
 			'title'	=> lang('Category'),
 			'hidden_vars'	=> $base_hidden_vars.$hidden_vars,
-			'form_options'	=> '<option value="0">All</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
+			'form_options'	=> '<option value="0">All</option>'.$this->cat->formatted_list('select','all',$this->bo->cat_id,'True'),
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
@@ -266,5 +267,5 @@
 	$button = $tpl->fp('out','form_button');
 	$tpl->set_var('str','<td align="right" valign="bottom">'.$button.'</td>');
 	$tpl->parse('header_column','head_col',True);
-	$tpl->parse('row','head_table',True);
+	$tpl->parse('phpgw_body','head_table',True);
 ?>

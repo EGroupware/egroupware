@@ -57,10 +57,10 @@
 					'send_extra'
 				);
 
-				if($prefs[$pref_list[1] == True)
+				if($prefs[$pref_list[1]] == True)
 				{
 					$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[1],$prefs[$pref_list[1]]);
-					if($prefs[$pref_list[2] == True)
+					if($prefs[$pref_list[2]] == True)
 					{
 						$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[2],$prefs[$pref_list[2]]);
 					}
