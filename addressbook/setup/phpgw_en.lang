@@ -6,6 +6,7 @@ address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
 addvcard	addressbook	en	Add VCard
+alt. csv import	addressbook	en	Alt. CSV Import
 bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
 business address type	addressbook	en	Business Address Type
