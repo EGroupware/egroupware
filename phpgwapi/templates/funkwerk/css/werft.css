@@ -1,0 +1,120 @@
+body,p,td,th,table,input,form,option
+{
+	color: #000066;
+}
+
+body
+{
+	background-color: #CCCCCC;
+}
+
+.top_top
+{
+	background-color: #0000A0;
+}
+
+.top_bottom
+{
+	background-color: #660000;
+}
+
+td.left
+{
+	background-color: #000066;
+}
+
+.left_app
+{
+	background-color: #0000A0;
+}
+
+.top_menu
+{
+	background-color: #0000A0;
+}
+
+.user_info
+{
+	background-color: #0000A0;
+	color: #FFFFFF;
+}
+
+.admin_info
+{
+	background-color: #000066;
+	color: #FFFFFF;
+}
+
+.bottom
+{
+	color: #FFFFFF;
+	background-color: #0000A0;
+}
+
+a:link,a:active,a:visited,a:hover
+{
+	color: #0000A0;
+}
+
+a:link.bottom,a:active.bottom,a:visited.bottom,a:hover.bottom,a:link.top_menu,a:active.top_menu,a:visited.top_menu,a:link.left,a:active.left,a:visited.left
+{
+	color: #FFFFFF;
+}
+
+a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected,a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
+{
+	color: #660000;
+	background-color: orange;
+}
+
+.login,.portal,.about
+{
+	background-color: #ADADAD;
+	border-color: #000000;
+}
+
+.portal_text
+{
+	color: #FFFFFF;
+}
+
+.row_on,.th_bright,.app_header
+{
+	background-color: #ADADAD;
+}
+
+.msgbox
+{
+	background-color: #FFFFFF;
+}
+
+.row_off
+{
+	background-color: #999999;
+}
+
+.th
+{
+	background-color: orange;
+}
+
+.th_text
+{
+	color: #660000;
+}
+
+.cal_today
+{
+	background-color: #ffffcc;
+}
+
+.cal_dayview
+{
+	background-color: #C0C0C0;
+}
+
+.email_folder
+{
+	background-color: #adadad;
+	color: #ffffff;
+}
