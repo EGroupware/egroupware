@@ -59,12 +59,12 @@
           $phpgw_info["user"]["account_lid"] = $db->f("session_lid");
           $phpgw_info["user"]["sessionid"]   = $sessionid;
           $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
-          
+
           $t = explode("@",$db->f("session_lid"));
           $phpgw_info["user"]["userid"]      = $t[0];
-          
-          $phpgw->accounts->sync(__LINE__,__FILE__);
-          
+
+          //$phpgw->accounts->sync(__LINE__,__FILE__);
+
           // Now we need to re-read eveything
           $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
           $db->next_record();    
@@ -123,16 +123,22 @@
           return False;
        }
  
-       if (!$phpgw->auth->authenticate($phpgw_info["user"]["userid"], $passwd)) {
+       if (! $phpgw->auth->authenticate($phpgw_info["user"]["userid"], $passwd)) {
           return False;
           exit;
        }
        $accts = CreateObject("phpgwapi.accounts");
        
        if (!$accts->exists($phpgw_info["user"]["userid"])) {
-         $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
+          $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
        }
 
+       $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["userid"]);
+       $phpgw->accounts->read();
+
+       $t_domain = $phpgw_info["user"]["domain"];        // We loose this info on the next line
+       $phpgw_info["user"] = $phpgw->accounts->read_repository();
+       $phpgw_info["user"]["domain"] = $t_domain;
 
        $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
        $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
@@ -160,23 +166,20 @@
           unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
        }
 
-       $phpgw->accounts->accounts_const();
-
        $phpgw_info["user"]["session_ip"] = $this->getuser_ip();
 
        $phpgw->db->query("insert into phpgw_sessions values ('" . $phpgw_info["user"]["sessionid"]
                        . "','".$login."','" . $this->getuser_ip() . "','"
                        . time() . "','" . time() . "','')",__LINE__,__FILE__);
-       $phpgw->accounts->sync(__LINE__,__FILE__);
- 
+
+       $phpgw->accounts->save_repository();
+
        $phpgw->db->query("insert into phpgw_access_log values ('" . $phpgw_info["user"]["sessionid"] . "','"
                        . "$login','" . $this->getuser_ip() . "','" . time()
                        . "','') ",__LINE__,__FILE__);
- 
-       $phpgw->db->query("update accounts set account_lastloginfrom='"
-    	                . $this->getuser_ip() . "', account_lastlogin='" . time()
-                       . "' where account_lid='".$login."'",__LINE__,__FILE__);
- 
+
+       $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
+
        return $phpgw_info["user"]["sessionid"];
     }
 

@@ -126,8 +126,11 @@
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
+        $phpgw_info["user"]["account_id"] = $this->accounts->name2id($phpgw_info["user"]["userid"]);
+
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
         $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
+
         $this->acl = CreateObject("phpgwapi.acl", intval($phpgw_info["user"]["account_id"]));
         $phpgw_info["user"]["acl"] = $this->acl->read_repository();
         $phpgw_info["user"]["preferences"] = $this->preferences->read_repository();

@@ -24,72 +24,79 @@
 
   /* $Id$ */
 
-  class accounts_
+  class accounts
   {
-    var $groups;
-    var $group_names;
-    var $apps;
     var $db;
-    
-    function accounts_()
+    var $account_id;
+    var $data;
+
+    function accounts($account_id = "")
     {
-       global $phpgw;
+       global $phpgw_info, $phpgw;
+
+       if (! $account_id) {
+          $this->account_id = $phpgw_info["user"]["account_id"];
+       }
        $this->db = $phpgw->db;
+       //$this->read();
     }
 
-    function fill_user_array()
+    function read()
     {
-      global $phpgw_info, $phpgw;
+       $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+       $this->db->next_record();
 
-      $this->db->query("select * from accounts where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
-      $this->db->next_record();
-    
-      /* Now dump it into the array */
-      $phpgw_info["user"]["account_id"]        = $this->db->f("account_id");
-      $phpgw_info["user"]["firstname"]         = $this->db->f("account_firstname");
-      $phpgw_info["user"]["lastname"]          = $this->db->f("account_lastname");
-      $phpgw_info["user"]["fullname"]          = $this->db->f("account_firstname") . " "
-                                               . $this->db->f("account_lastname");
-      $phpgw_info["user"]["groups"]            = explode (",", $this->db->f("account_groups"));
-
-//      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-//      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
-//      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
-//      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
-
-      $phpgw_info["user"]["lastlogin"]         = $this->db->f("account_lastlogin");
-      $phpgw_info["user"]["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-      $phpgw_info["user"]["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-      $phpgw_info["user"]["status"]            = $this->db->f("account_status");
+       $this->data["userid"]            = $this->db->f("account_id");
+       $this->data["account_id"]        = $this->db->f("account_id");
+       $this->data["account_lid"]       = $this->db->f("account_lid");
+       $this->data["firstname"]         = $this->db->f("account_firstname");
+       $this->data["lastname"]          = $this->db->f("account_lastname");
+       $this->data["fullname"]          = $this->db->f("account_firstname") . " "
+                                        . $this->db->f("account_lastname");
+ 
+ //      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
+ //      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
+ //      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
+ //      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
+ 
+       $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
+       $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+       $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+       $this->data["status"]            = $this->db->f("account_status");
     }
 
-    function read_userData($id)
+    function read_repository()
     {
-      global $phpgw_info, $phpgw;
-      
-      $this->db->query("select * from accounts where account_id='$id'",__LINE__,__FILE__);
-      $this->db->next_record();
-    
-      /* Now dump it into the array */
-      $userData["account_id"]        = $this->db->f("account_id");
-      $userData["account_lid"]       = $this->db->f("account_lid");
-      $userData["firstname"]         = $this->db->f("account_firstname");
-      $userData["lastname"]          = $this->db->f("account_lastname");
-      $userData["fullname"]          = $this->db->f("account_firstname") . " "
-                                               . $this->db->f("account_lastname");
-      $userData["groups"]            = explode(",", $this->db->f("account_groups"));
-//      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-//      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
-//      $userData["preferences"] = $prefs->get_saved_preferences();
-//      $userData["apps"] = $apps->enabled_apps();
-
-      $userData["lastlogin"]         = $this->db->f("account_lastlogin");
-      $userData["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-      $userData["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-      $userData["status"]            = $this->db->f("account_status");
-      
-      return $userData;
+       return $this->data;
     }
+
+    function save_repository()
+    {
+       global $phpgw_info, $phpgw;
+       $db = $phpgw->db;
+
+       /* ********This sets the server variables from the database******** */
+       $db->query("select * from config",__LINE__,__FILE__);
+       while ($db->next_record()) {
+          $phpgw_info["server"][$db->f("config_name")] = $db->f("config_value");
+       }
+
+       $phpgw_info_temp["user"]        = $phpgw_info["user"];
+       $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
+       $phpgw_info_temp["server"]      = $phpgw_info["server"];
+       $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
+       $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+       $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
+                                                                 // database for security.
+       if ($PHP_VERSION < "4.0.0") {
+          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
+       } else {
+          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);       
+       }
+       $db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
+                . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
+    }
+
 
     function read_groups($id)
     {
@@ -141,7 +148,7 @@
        if ($group) {
           $users = $phpgw->acl->get_ids_for_location($group, 1, "phpgw_group", "u");
           reset ($users);
-          $sql = "select account_lid,account_firstname,account_lastname from accounts where account_id in (";
+          $sql = "select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id in (";
           for ($idx=0; $idx<count($num); ++$idx){
             if ($idx == 1){
               $sql .= $users[$idx];
@@ -152,7 +159,7 @@
           $sql .= ")";
           $this->db->query($sql,__LINE__,__FILE__);
        } else {
-          $this->db->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
+          $this->db->query("select account_lid,account_firstname,account_lastname from phpgw_accounts",__LINE__,__FILE__);
        }
        $i = 0;
        while ($this->db->next_record()) {
@@ -168,7 +175,7 @@
     {
       global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$account_name."'",__LINE__,__FILE__);
+      $this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_name."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
 
@@ -182,7 +189,7 @@
     {
       global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT account_lid FROM accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+      $this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
         return $this->db->f("account_lid");
@@ -193,47 +200,48 @@
 
     function get_type($account_id)
     {
-      global $phpgw, $phpgw_info;
-
-/*
-      $this->db->query("SELECT account_type FROM accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-      if($this->db->num_rows()) {
-        $this->db->next_record();
-        return $this->db->f("account_type");
-      }else{
-        return False;
-      }
-*/
-return "u";      
+       global $phpgw, $phpgw_info;
+ 
+       $this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+       if ($this->db->num_rows()) {
+          $this->db->next_record();
+          return $this->db->f("account_type");
+       } else {
+          return False;
+       }
     }
 
-    function exists($accountname){
-      $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$accountname."'",__LINE__,__FILE__);
-      if($this->db->num_rows()) {
-        return True;
-      }else{
-        return False;
-      }
+    function exists($accountname)
+    {
+       $this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$accountname."'",__LINE__,__FILE__);
+       if ($this->db->num_rows()) {
+          return True;
+       } else {
+          return False;
+       }
     }
 
-    function auto_generate($accountname, $passwd, $defaultprefs =""){
-      global $phpgw, $phpgw_info;
-      $accountid = mt_rand (100, 600000);
-      if ($defaultprefs ==""){ $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';  }
-      $sql = "insert into accounts";
-      $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-      $sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A')";
-      $this->db->query($sql);
-      $this->db->query("insert into preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('notes', 'run', ".$accountid.", 'u', 1)");
-      $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', ".$accountid.", 'u', 1)");
-      return $accountid;
+    function auto_generate($accountname, $passwd, $defaultprefs ="")
+    {
+       global $phpgw, $phpgw_info;
+       $accountid = mt_rand (100, 600000);
+       if ($defaultprefs =="") {
+          $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+       }
+       $sql = "insert into phpgw_accounts";
+       $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type)";
+       $sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u')";
+       $this->db->query($sql);
+       $this->db->query("insert into preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('notes', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+       return $accountid;
     }
-  }//end of class
+  }        //end of class
 ?>

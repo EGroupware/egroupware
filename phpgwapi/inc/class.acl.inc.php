@@ -34,16 +34,17 @@
     * Standard constructor for setting $this->account_id                       *
     \**************************************************************************/
 
-    function acl($account_id = False)
+    function acl($account_id = "")
     {
       global $phpgw, $phpgw_info;
+
       $this->db = $phpgw->db;
-      if ($account_id == False){ 
-        $this->account_id = $phpgw_info["user"]["account_id"]; 
+      if (! $account_id) { 
+         $this->account_id = $phpgw_info["user"]["account_id"]; 
       } elseif (is_long($account_id)) {
-        $this->account_id = $account_id;
+         $this->account_id = $account_id;
       } elseif(is_string($account_id)) {
-        $this->account_id = $phpgw->accounts->name2id($account_id);
+         $this->account_id = $phpgw->accounts->name2id($account_id);
       }
     }
 
