@@ -106,21 +106,23 @@
 		*/
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
-			if (strstr($name,'$') === False)
+			if (strstr($name,'$') !== False)
 			{
-				return $name;
+				if (!$cont)
+				{
+					$cont = array();
+				}
+				$col = $this->num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+				$col_ = $this->num2chrs($c_-1);
+				$row_cont = $cont[$row];
+				$col_row_cont = $cont[$col.$row];
+
+				eval('$name = "'.$name.'";');
 			}
-			if (!$cont)
+			if ($name[0] == '@')
 			{
-				$cont = array();
+				$name = $this->get_array($cont,substr($name,1));
 			}
-			$col = $this->num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-			$col_ = $this->num2chrs($c_-1);
-			$row_cont = $cont[$row];
-			$col_row_cont = $cont[$col.$row];
-
-			eval('$name = "'.$name.'";');
-
 			return $name;
 		}
 

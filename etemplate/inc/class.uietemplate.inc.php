@@ -149,7 +149,6 @@
 			if ($this->stable)
 			{
 				echo parse_navbar() . $html;
-				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 			else
 			{
@@ -359,11 +358,8 @@
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
 					list(,$cl) = explode(',',$cell['span']);
-					$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
-					if (strstr($cl,'$') !== False)
-					{
-						$cl = $this->expand_name($cl,$c,$r,'','',$content);
-					}
+					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+						$c,$r,$show_c,$show_row,$content);
 					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
 				}
 				$rows[$row] = $row_data;
@@ -418,7 +414,7 @@
 			}
 			$value = $this->get_array($content,$name);
 
-			if ($readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'])
+			if ($readonly = $cell['readonly'] || @$readonlys[$name] || $readonlys['__ALL__'])
 			{
 				$options .= ' READONLY';
 			}
@@ -441,10 +437,6 @@
 				$this->set_array($content,$name,$value);
 			}
 			$label = $this->expand_name($cell['label'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-			if ($label[0] == '@')
-			{
-				$label = $this->get_array($content,substr($label,1));
-			}
 			$help = $cell['help'];
 			if ($help[0] == '@')
 			{
@@ -542,17 +534,19 @@
 					}
 					break;
 				case 'radio':		// size: value if checked
-					if ($value == $cell['size'])
+					$set_val = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+
+					if ($value == $set_val)
 					{
 						$options .= ' CHECKED';
 					}
 					if ($readonly)
 					{
-						$html .= $value == $cell['size'] ? $this->html->bold('x') : '';
+						$html .= $value == $set_val ? $this->html->bold('x') : '';
 					}
 					else
 					{
-						$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
+						$html .= $this->html->input($form_name,$set_val,'RADIO',$options);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					}
 					break;
@@ -727,6 +721,10 @@
 							{
 								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
 							}
+							list(,$cl) = explode(',',$cell[$n]['span']);
+							$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+								$show_c,$show_row,$content['.c'],$content['.row'],$content);
+							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($cl,'CLASS');
 						}
 					}
 					if ($box_anz > 1)	// a single cell is NOT placed into a table
@@ -775,11 +773,17 @@
 			}
 			if ($extra_link)
 			{
+				$extra_link = $this->expand_name($extra_link,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 				if ($extra_link[0] == '@')
 				{
 					$extra_link = $this->get_array($content,substr($extra_link,1));
 				}
-				return $this->html->a_href($html,$extra_link,'',$help != '' ? 'TITLE="'.lang($help).'"' : '');
+				if ($extra_link)
+				{
+					$options = " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
+					$options .= " onMouseOut=\"self.status=''; return true;\"";
+					return $this->html->a_href($html,$extra_link,'',$help != '' ? $options : '');
+				}
 			}
 			return $html;
 		}

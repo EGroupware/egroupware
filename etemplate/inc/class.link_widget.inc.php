@@ -82,9 +82,10 @@
 				{
 					$value['title'] = $this->link->title($app,$id);
 				}
+				$links = $this->link->get_links($app,$id);
+				$value['anz_links'] = count($links);
 				$extension_data = $value;
 
-				$links = $this->link->get_links($app,$id);
 				if (!count($links))
 				{
 					$cell = $tmpl->empty_cell();
@@ -97,6 +98,7 @@
 				{
 					$value[$row] = $link;
 					$value[$row]['title'] = $this->link->title($link['app'],$link['id']);
+					$value[$row]['view']  = $this->link->view($link['app'],$link['id']);
 				}
 				break;
 			}
@@ -140,6 +142,10 @@
 					{
 						$this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
 						//echo "<p>link($value[to_app],$value[to_id],$value[app],$value[id],'$value[remark]')</p>\n";
+						if (isset($value['primary']) && !$value['anz_links'] )
+						{
+							$value['primary'] = $value['app'].'/'.$value['id'];
+						}
 					}
 					// fall-trough
 				case 'search':
