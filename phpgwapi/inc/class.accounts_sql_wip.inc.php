@@ -225,14 +225,14 @@
 			if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
 			if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
 
-			$nextid = $phpgw->common->last_id("accounts_sql",$min,$max);
+			$nextid = $phpgw->common->last_id("accounts",$min,$max);
 
 			// Loop until we find a free id
 			$free = 0;
 			while (!$free) {
 				if ($this->exists($nextid))
 				{
-					$nextid = $phpgw->common->next_id("accounts_sql",$min,$max);
+					$nextid = $phpgw->common->next_id("accounts",$min,$max);
 				}
 				else
 				{
