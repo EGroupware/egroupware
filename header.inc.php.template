@@ -73,27 +73,25 @@
 
 	/* If you do not want phpGroupWare to be cached by proxy servers, uncomment the following */
 	/* This is recommended, but not required. */
-	//header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
-	//header('Pragma: no-cache');                          // HTTP/1.0
+	/* header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1 */
+	/* header('Pragma: no-cache');                          // HTTP/1.0 */
 
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
 	\**************************************************************************/
-	// This is required becuase some applications (outside of phpGW) set a cookie named lang
-	// Which messes up phpGWs $lang array, people will pull there hair out tring to find it.
-	// This should make there life a little simpler.
-	unset($lang);
 	define('PHPGW_API_INC',PHPGW_INCLUDE_ROOT.'/phpgwapi/inc');
 	include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
 	$phpgw_info["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
 	$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
 	$phpgw_info['server']['versions']['header'] = '1.16';
-	// This is a fix for NT
+	/* This is a fix for NT */
 	if (!isset($phpgw_info['flags']['noapi']) || !$phpgw_info['flags']['noapi'] == True)
 	{
 		include(PHPGW_API_INC . '/functions.inc.php');
 	}
 
-	// Leave off the final php closing tag, some editors will add
-	// a \n or space after which will mess up cookies later on
+	/* 
+	  Leave off the final php closing tag, some editors will add
+	  a \n or space after which will mess up cookies later on
+	*/

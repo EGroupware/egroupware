@@ -90,7 +90,7 @@ class db {
     return $this->Link_ID;
   }
 
-	// This only affects systems not using persistant connections
+	/* This only affects systems not using persistant connections */
 	function disconnect()
 	{
 		if($this->Link_ID <> 0)
@@ -124,7 +124,7 @@ class db {
   }
 
   /* public: perform a query */
-  // I added the line and file section so we can have better error reporting. (jengo)
+  /* I added the line and file section so we can have better error reporting. (jengo) */
   function query($Query_String, $line = "", $file = "") {
     /* No empty queries, please, since PHP4 chokes on them. */
     if ($Query_String == "")
@@ -354,8 +354,8 @@ class db {
      *   Test:  if (isset($result['meta']['myfield'])) { ...
      */
 
-    // if no $table specified, assume that we are working with a query
-    // result
+    /* if no $table specified, assume that we are working with a query */
+    /* result */
     if ($table) {
       $this->connect();
       $id = @mysql_list_fields($this->Database, $table);
@@ -369,7 +369,7 @@ class db {
  
     $count = @mysql_num_fields($id);
 
-    // made this IF due to performance (one if is faster than $count if's)
+    /* made this IF due to performance (one if is faster than $count if's) */
     if (!$full) {
       for ($i=0; $i<$count; $i++) {
         $res[$i]["table"] = @mysql_field_table ($id, $i);
@@ -378,7 +378,7 @@ class db {
         $res[$i]["len"]   = @mysql_field_len   ($id, $i);
         $res[$i]["flags"] = @mysql_field_flags ($id, $i);
       }
-    } else { // full
+    } else { /* full */
       $res["num_fields"]= $count;
     
       for ($i=0; $i<$count; $i++) {
@@ -391,7 +391,7 @@ class db {
       }
     }
     
-    // free the result only if we were called on a table
+    /* free the result only if we were called on a table */
     if ($table) @mysql_free_result($id);
     return $res;
   }
@@ -400,7 +400,7 @@ class db {
   function halt($msg, $line = "", $file = "")
   {
      global $phpgw;
-     $this->unlock();				// Just in case there is a table currently locked
+     $this->unlock();				/* Just in case there is a table currently locked */
  
      $this->Error = @mysql_error($this->Link_ID);
      $this->Errno = @mysql_errno($this->Link_ID);
@@ -463,6 +463,7 @@ class db {
 		$this->Password = $currentPassword;
 		$this->Database = $currentDatabase;
 		$this->connect();
-		//return $return;
+		/*return $return; */
   }
 }
+?>
