@@ -547,7 +547,7 @@
 			{
 				$order = 'account_lid';
 			}
-			$sortedAccounts = $arrayFunctions->arfsort($accounts,array($order),$sort);
+			$sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$order),$sort);
 			$this->total = count($accounts);
 
 			// return only the wanted accounts
