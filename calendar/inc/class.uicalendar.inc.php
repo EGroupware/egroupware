@@ -4352,7 +4352,7 @@
 				$var = Array(
 					'action_url_button'	=> $this->page('delete','&cal_id='.$event['id']),
 					'action_text_button'	=> lang('Delete'),
-					'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to \\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+					'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 					'action_extra_field'	=> ''
 				);
 				$p->set_var($var);
