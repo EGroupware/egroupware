@@ -27,11 +27,12 @@
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 	
 	$templates = Array(
-		'footer'	=>	'footer.tpl',
-		'footer_column'	=>	'footer_column.tpl'
+		'footer'	=>	'footer.tpl'
 	);
 
 	$p->set_file($templates);
+	$p->set_block('footer','footer_table','footer_table');
+	$p->set_block('footer','footer_row','footer_row');
 
 	if ($phpgw->calendar->tempyear && $phpgw->calendar->tempmonth)
 	{
@@ -79,7 +80,7 @@
 
 	$p->set_var($var);
 	
-	$p->parse('output','footer_column',True);
+	$p->parse('table_row','footer_row',True);
 
 	$str = '';
 
@@ -159,7 +160,7 @@
 
 	$p->set_var($var);
 	
-	$p->parse('output','footer_column',True);
+	$p->parse('table_row','footer_row',True);
 
 	if ($phpgw->calendar->tempyear)
 	{
@@ -192,8 +193,8 @@
 
 	$p->set_var($var);
 	
-	$p->parse('output','footer_column',True);
+	$p->parse('table_row','footer_row',True);
 
-	$p->pparse('out','footer');
+	$p->pparse('out','footer_table');
 ?>
 
