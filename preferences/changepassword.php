@@ -61,23 +61,27 @@
      $phpgw->common->phpgw_footer();
      
 } else {
-   if ($n_passwd != $n_passwd_2)
-      $error = lang("the two passwords are not the same");
+  if ($n_passwd != $n_passwd_2)
+    $error = lang("the two passwords are not the same");
 
-   if (! $n_passwd)
-      $error = lang("you must enter a password");
+  if (! $n_passwd)
+    $error = lang("you must enter a password");
 
-   if ($error) {
-      $phpgw->common->navbar();
-      echo "<p><br>$error</p>";
-      $phpgw->common->phpgw_exit();
-   }
+  if ($error) {
+    $phpgw->common->navbar();
+    echo "<p><br>$error</p>";
+    $phpgw->common->phpgw_exit();
+  }
 
-   $o_passwd = $phpgw_info["user"]["passwd"];
-   $phpgw_info["user"]["passwd"] = $phpgw->auth->change_password($o_passwd, $n_passwd);
-   
-   $phpgw->accounts->sync();
-
-   Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=18"));
+  $o_passwd = $phpgw_info["user"]["passwd"];
+  $passwd_changed = $phpgw->auth->change_password($o_passwd, $n_passwd);
+  if (!$passwd_changed){
+    // This need to be changed to show a different message based on the result
+    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/"));
+  }else{
+    $phpgw_info["user"]["passwd"] = $phpgw->auth->change_password($o_passwd, $n_passwd);
+    $phpgw->accounts->sync();
+    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=18"));
+  }
 }
 ?>
