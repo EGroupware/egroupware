@@ -28,12 +28,11 @@ GRANT dba TO phpgw;
 connect phpgw/phpgw;
 
 CREATE TABLE applications (
-  app_name varchar2(25) NOT NULL,
-  app_title varchar2(50),
-  app_enabled number
-  app_order    int,
-  app_tables   varchar2(255),
-
+  app_name    varchar2(25) NOT NULL,
+  app_title   varchar2(50),
+  app_enabled number,
+  app_order   number,
+  app_tables  varchar2(255)
 );
 
 create unique index applications_app_name 
@@ -43,13 +42,13 @@ insert into applications (app_name, app_title, app_enabled, app_order, app_table
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('tts', 'Trouble Ticket System', 0, 2, NULL);
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('inv', 'Inventory', 0, 3, NULL);
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('chat', 'Chat', 0, 4, NULL);
-insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('headlines', 'Headlines', 0, 5, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('headlines', 'Headlines', 0, 5, 'news_sites,news_headlines,users_headlines');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('filemanager', 'File manager', 1, 6, NULL);
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('addressbook', 'Address Book', 1, 7, 'addressbook');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('todo', 'ToDo List', 1, 8, 'todo');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('calendar', 'Calendar', 1, 9, 'webcal_entry,webcal_entry_users,webcal_entry_groups,webcal_repeats');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('email', 'Email', 1, 10,NULL);
-insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('nntp', 'NNTP', 1, 11, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('nntp', 'NNTP', 1, 11, 'newsgroups,users_newsgroups');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('cron_apps', 'cron_apps', 0, 0, NULL);
 
 --------------
@@ -64,7 +63,7 @@ CREATE TABLE accounts (
   account_lastname       varchar2(50),
   account_permissions    varchar2(255),
   account_groups         varchar2(30),
-  account_lastlogin	     number(11),
+  account_lastlogin	 number(11),
   account_lastloginfrom  varchar2(255),
   account_lastpwd_change number(11),
   account_status         varchar2(40) DEFAULT 'A' check (status in ('A','L')) NOT NULL,  
@@ -163,7 +162,7 @@ on sessions (session_id);
 CREATE TABLE app_sessions (
   sessionid	varchar2(255) NOT NULL,
   loginid	varchar2(20),
-  app	varchar2(20),
+  app	        varchar2(20),
   content	varchar2(2000)
 );
 
@@ -184,13 +183,13 @@ create table access_log (
 --------------
 
 CREATE TABLE profiles (
-  con number NOT NULL,
-  owner varchar2(20),
-  title varchar2(255),
-  phone_number varchar2(255),
-  comments varchar2(4000),
+  con            number NOT NULL,
+  owner          varchar2(20),
+  title          varchar2(255),
+  phone_number   varchar2(255),
+  comments       varchar2(4000),
   picture_format varchar2(255),
-  picture blob,
+  picture        blob,
   PRIMARY KEY (con)
 );
 
@@ -215,25 +214,25 @@ end;
 -----------------
 
 CREATE TABLE addressbook (
-  ab_id		number NOT NULL,
-  ab_owner	varchar2(25),
+  ab_id		 number NOT NULL,
+  ab_owner	 varchar2(25),
   ab_addr_access varchar2(10),
-  ab_firstname	varchar2(255),
-  ab_lastname	varchar2(255),
-  ab_email	varchar2(255),
-  ab_hphone	varchar2(255),
-  ab_wphone	varchar2(255),
-  ab_fax	varchar2(255),
-  ab_pager	varchar2(255),
-  ab_mphone	varchar2(255),
-  ab_ophone	varchar2(255),
-  ab_street	varchar2(255),
-  ab_city	varchar2(255),
-  ab_state	varchar2(255),
-  ab_zip	varchar2(255),
-  ab_bday	varchar2(255),
-  ab_notes	varchar2(4000),
-  ab_company	varchar2(255),
+  ab_firstname 	 varchar2(255),
+  ab_lastname	 varchar2(255),
+  ab_email	 varchar2(255),
+  ab_hphone	 varchar2(255),
+  ab_wphone	 varchar2(255),
+  ab_fax	 varchar2(255),
+  ab_pager	 varchar2(255),
+  ab_mphone	 varchar2(255),
+  ab_ophone	 varchar2(255),
+  ab_street	 varchar2(255),
+  ab_city	 varchar2(255),
+  ab_state	 varchar2(255),
+  ab_zip	 varchar2(255),
+  ab_bday	 varchar2(255),
+  ab_notes	 varchar2(4000),
+  ab_company	 varchar2(255),
   PRIMARY KEY (ab_id)
 );
 
@@ -258,14 +257,14 @@ end;
 ----------
 
 CREATE TABLE todo (
-  todo_id	number NOT NULL,
-  todo_owner	varchar2(25),
-  todo_access	varchar2(10),
-  todo_des	varchar2(4000),        
-  todo_pri	number(11),
-  todo_status	number(11),
-  todo_datecreated	number(11),
-  todo_datedue	number(11),
+  todo_id	   number NOT NULL,
+  todo_owner	   varchar2(25),
+  todo_access	   varchar2(10),
+  todo_des	   varchar2(4000),        
+  todo_pri	   number(11),
+  todo_status	   number(11),
+  todo_datecreated number(11),
+  todo_datedue	   number(11),
   PRIMARY KEY (todo_id)
 );
 
@@ -290,20 +289,20 @@ end;
 ------------------
 
 CREATE TABLE webcal_entry (
-  cal_id	number NOT NULL,
-  cal_group_id	number(11),
-  cal_create_by varchar2(25) NOT NULL,
-  cal_date	number(11) DEFAULT '0' NOT NULL,
-  cal_time	number(11),
-  cal_mod_date number(11),
-  cal_mod_time number(11),
-  cal_duration number(11) DEFAULT '0' NOT NULL,
-  cal_priority number(11) DEFAULT '2',
-  cal_type	varchar2(10),
-  cal_access	char(10),
-  cal_name	varchar2(80) NOT NULL,
+  cal_id	  number NOT NULL,
+  cal_group_id	  number(11),
+  cal_create_by   varchar2(25) NOT NULL,
+  cal_date	  number(11) DEFAULT '0' NOT NULL,
+  cal_time	  number(11),
+  cal_mod_date    number(11),
+  cal_mod_time    number(11),
+  cal_duration    number(11) DEFAULT '0' NOT NULL,
+  cal_priority    number(11) DEFAULT '2',
+  cal_type	  varchar2(10),
+  cal_access	  char(10),
+  cal_name	  varchar2(80) NOT NULL,
   cal_description varchar2(4000),
-PRIMARY KEY (cal_id)
+  PRIMARY KEY (cal_id)
 );
 
 create sequence webcal_entry_seq
@@ -328,7 +327,7 @@ end;
 
 CREATE TABLE webcal_entry_repeats (
   cal_id	number NOT NULL,
-  cal_type varchar2(40) DEFAULT 'daily' check (cal_type in ('daily','weekly','monthlyByDay','monthlyByDate','yearly')) NOT NULL,  
+  cal_type      varchar2(40) DEFAULT 'daily' check (cal_type in ('daily','weekly','monthlyByDay','monthlyByDate','yearly')) NOT NULL,  
   cal_end	number(11),
   cal_frequency number(11) DEFAULT '1',
   cal_days	char(7)
@@ -401,10 +400,10 @@ CREATE TABLE users_newsgroups (
 ----------
 
 CREATE TABLE lang (
-  message_id varchar2(150)  NOT NULL,
-  app_name varchar2(100) DEFAULT 'common' NOT NULL,
-  lang varchar2(5)  NOT NULL,
-  content varchar2(4000) NOT NULL,
+  message_id    varchar2(150)  NOT NULL,
+  app_name      varchar2(100)  DEFAULT 'common' NOT NULL,
+  lang          varchar2(5)    NOT NULL,
+  content       varchar2(4000) NOT NULL,
   PRIMARY KEY (message_id,app_name,lang)
 );
 
