@@ -339,7 +339,7 @@ class calendar extends calendar_
 				$picture[] = Array(
 					'pict'	=> $phpgw->common->image('calendar','high.gif'),
 					'width'	=> 8,
-					'height'	=> 17,
+					'height'	=> 17
 				);
 			}
 			if($event->recur_type == RECUR_NONE)
@@ -347,7 +347,7 @@ class calendar extends calendar_
 				$picture[] = Array(
 					'pict'	=> $phpgw->common->image('calendar','circle.gif'),
 					'width'	=> 5,
-					'height'	=> 7,
+					'height'	=> 7
 				);
 			}
 			else
@@ -355,7 +355,7 @@ class calendar extends calendar_
 				$picture[] = Array(
 					'pict'	=> $phpgw->common->image('calendar','recur.gif'),
 					'width'	=> 12,
-					'height'	=> 12,
+					'height'	=> 12
 				);
 			}
 			if(count($event->participants) > 1)
@@ -363,7 +363,15 @@ class calendar extends calendar_
 				$picture[] = Array(
 					'pict'	=> $phpgw->common->image('calendar','multi_3.gif'),
 					'width'	=> 14,
-					'height'	=> 14,
+					'height'	=> 14
+				);
+			}
+			if($event->is_public == 0)
+			{
+				$picture[] = Array(
+					'pict'	=> $phpgw->common->image('calendar','private.gif'),
+					'width'	=> 13,
+					'height'	=> 13
 				);
 			}
 			
