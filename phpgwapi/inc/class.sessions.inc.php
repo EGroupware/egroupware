@@ -276,7 +276,7 @@
 								. "')",__LINE__,__FILE__);
 
 			$phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
-								. "$login','" . $user_ip . "','$now','') ",__LINE__,__FILE__);
+								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$phpgw->auth->previous_login);
 			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);

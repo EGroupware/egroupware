@@ -6,53 +6,56 @@
 	<table border="0" width="95%">
 		<tr>
 			<td valign="top">
+
 				<table border="0" width="100%">
 					<tr bgcolor="{th_bg}">
-						<td colspan="4">&nbsp;</td>
+						<td>&nbsp;</td>
 					</tr>
-				{rows}
+  					{rows}
 				</table>
+
 			</td>
 			<td>
-   <table border=0 width=100%>
-    <tr bgcolor="{th_bg}">
-      <td colspan="4"><b>{lang_action}</b></td>
-    </tr>
 
-    <tr bgcolor="{tr_color1}">
-     <td width="25%">{lang_loginid}</td>
-     <td width="25%">{account_lid}&nbsp;</td>
-
-     <td width="25%">{lang_account_active}:</td>
-     <td width="25%">{account_status}</td>
-    </tr>
-
-    <tr bgcolor="{tr_color2}">
-     <td>{lang_firstname}</td>
-     <td>{account_firstname}&nbsp;</td>
-     <td>{lang_lastname}</td>
-     <td>{account_lastname}&nbsp;</td>
-    </tr>
-
-    {password_fields}
- 
-    <tr bgcolor="{tr_color2}">
-     <td>{lang_groups}</td>
-     <td>{groups_select}&nbsp;</td>
-     <td>{lang_file_space}</td>
-     <td>{account_file_space}{account_file_space_select}</td>
-    </tr>
-
-    <tr bgcolor="{tr_color1}">
-     <td>{lang_expires}</td>
-     <td colspan=3>{input_expires}&nbsp;</td>
-    </tr>
-
-    {permissions_list}
-    
-	 {form_buttons}
-
-   </table>
+			   <table border=0 width=100%>
+			    <tr bgcolor="{th_bg}">
+			      <td colspan="4"><b>{lang_action}</b></td>
+			    </tr>
+				
+			    <tr bgcolor="{tr_color1}">
+			     <td width="25%">{lang_loginid}</td>
+			     <td width="25%">{account_lid}&nbsp;</td>
+				
+			     <td width="25%">{lang_account_active}:</td>
+			     <td width="25%">{account_status}</td>
+			    </tr>
+				
+			    <tr bgcolor="{tr_color2}">
+			     <td>{lang_firstname}</td>
+			     <td>{account_firstname}&nbsp;</td>
+			     <td>{lang_lastname}</td>
+			     <td>{account_lastname}&nbsp;</td>
+			    </tr>
+			
+			    {password_fields}
+			 
+			    <tr bgcolor="{tr_color2}">
+			     <td>{lang_groups}</td>
+			     <td>{groups_select}&nbsp;</td>
+			     <td>{lang_file_space}</td>
+			     <td>{account_file_space}{account_file_space_select}</td>
+			    </tr>
+			
+			    <tr bgcolor="{tr_color1}">
+			     <td>{lang_expires}</td>
+			     <td colspan=3>{input_expires}&nbsp;</td>
+			    </tr>
+			
+			    {permissions_list}
+			    
+				 {form_buttons}
+			
+			   </table>
    			</td>
    		</tr>
    	</table>
@@ -87,6 +90,6 @@
 
 <!-- BEGIN link_row -->
 	<tr bgcolor="{tr_color}">
-		<td colspan="2">&nbsp;&nbsp;<a href="{pref_link}">{pref_text}</a></td>
+		<td>&nbsp;<a href="{row_link}">{row_text}</a></td>
 	</tr>
 <!-- END link_row -->

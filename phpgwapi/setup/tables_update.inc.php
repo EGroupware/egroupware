@@ -1898,4 +1898,34 @@
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.13.004';
+	function phpgwapi_upgrade0_9_13_004()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AddColumn('phpgw_access_log','account_id',array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False));
+
+		// !! NOTE !!
+		// This does NOT work with LDAP, if they have fully moved there accounts over
+		// they will not be able to use the new features for old records.
+		// This is why I decied to do this now, instead of later.
+		// If you have a better soultion, let me know.  (jengo)
+		$db2 = $phpgw_setup->db;
+		$phpgw_setup->oProc->query("select * from phpgw_access_log");
+		while ($phpgw_setup->oProc->next_record())
+		{
+			$lid         = explode('@',$phpgw_setup->oProc->f('loginid'));
+			$account_lid = $lid[0];
+
+			$db2->query("select account_id from phpgw_accounts where account_lid='$account_lid'");
+			$db2->next_record();
+
+			$db2->query("update phpgw_access_log set account_id='" . $db2->f('account_id')
+					. "' where sessionid='" . $phpgw_setup->oProc->f('sessionid') . "'");
+		}
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.005';
+		return $setup_info['phpgwapi']['currentver'];
+	}
+
 ?>

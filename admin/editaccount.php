@@ -403,29 +403,43 @@
 		}
 	}
 
-        function display_section($appname,$title,$file)
-        {
-                global $phpgw, $phpgw_info, $account_id;
-                $i = 0;
-                $color[1] = $phpgw_info['theme']['row_off'];
-                $color[0] = $phpgw_info['theme']['row_on'];
-                while(list($text,$url) = each($file))
-                {
-                        $url = $phpgw->link($url,"account_id=$account_id");
-                        section_item($url,lang($text),$color[$i%2]);
-                        $i++;
-                }
-        }
- 
-        function section_item($pref_link='',$pref_text='', $bgcolor)
-        {
-                global $phpgw, $phpgw_info, $t;
- 
-                $t->set_var('pref_link',$pref_link);
-                $t->set_var('pref_text',$pref_text);
-                $t->set_var('tr_color',$bgcolor);
-                $t->parse('rows','link_row',True);
-        }
+ 	function section_item($pref_link='',$pref_text='', $bgcolor)
+	{
+		global $phpgw, $phpgw_info, $t;
+
+		$t->set_var('row_link',$pref_link);
+		$t->set_var('row_text',$pref_text);
+		$t->set_var('tr_color',$bgcolor);
+		$t->parse('rows','link_row',True);
+	}
+
+	// $file must be in the follow format:
+	// $file = Array(
+	//		'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
+	// );
+	// This allows extra data to be sent along
+	function display_section($appname,$title,$file)
+	{
+		global $phpgw, $phpgw_info, $account_id;
+
+		$i = 0;
+		$color[1] = $phpgw_info['theme']['row_off'];
+		$color[0] = $phpgw_info['theme']['row_on'];
+		while(list($text,$_url) = each($file))
+		{
+			list($url,$extra_data) = $_url;
+			if ($extra_data)
+			{
+				$link = $phpgw->link($url,'account_id=' . $account_id . '&' . $extra_data);
+			}
+			else
+			{
+				$link = $phpgw->link($url,'account_id=' . $account_id);
+			}
+			section_item($link,lang($text),$color[$i%2]);
+			$i++;
+		}
+	}
 
 	// todo
 	// not needed if i use the same file for new users too

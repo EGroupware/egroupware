@@ -116,7 +116,8 @@
 				'loginid' => array('type' => 'varchar', 'precision' => 30),
 				'ip' => array('type' => 'varchar', 'precision' => 30),
 				'li' => array('type' => 'int', 'precision' => 4),
-				'lo' => array('type' => 'varchar', 'precision' => 255)
+				'lo' => array('type' => 'varchar', 'precision' => 255),
+				'account_id' => array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False)
 			),
 			'pk' => array(),
 			'fk' => array(),
