@@ -13,6 +13,8 @@
 
   /* $Id$ */
 
+  $matrix = $matrixtype;
+
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "parent_page" => "matrixselect.php");
 
   include("../header.inc.php");
@@ -53,6 +55,8 @@
     }
   }
 
+  reset($participants);
+
   switch($matrixtype) {
     case "free/busy" :
       echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),$phpgw->calendar->splittime("000000"),0,$participants);
@@ -64,9 +68,12 @@
   echo "<center>";
   echo "<form action=\"".$phpgw->link("viewmatrix.php")."\" method=\"post\" name=\"matrixform\" target=\"viewmatrix\">";
   echo "<input type=\"hidden\" name=\"date\" value=\"".$date."\">";
-  echo "<input type=\"hidden\" name=\"matrixtype\" value=\"".$matrixtype."\">";
+  echo "<input type=\"hidden\" name=\"matrixtype\" value=\"".$matrix."\">";
   for ($i=0;$i<count($participants);$i++)
     echo "<input type=\"hidden\" name=\"participants[]\" value=\"".$participants[$i]."\">";
+  if(isset($filter) && $filter) {
+    echo "<input type=\"hidden\" name=\"filter\" value=\"".$filter."\">";
+  }
   echo "<input type=\"submit\" value=\"Refresh\">";
   echo "</form>";
   echo "</center>";

@@ -229,7 +229,7 @@
 
 // Groups
     $phpgw->template->set_var("field",lang("Groups"));
-    $str = "<select name=\"cal[groups[]]\" multiple size=\"5\">";
+    $str = "<select name=\"cal[groups][]\" multiple size=\"5\">";
     $db2 = $phpgw->db;
     $db2->query("SELECT account_lid FROM accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
     $db2->next_record();

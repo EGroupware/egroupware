@@ -1,7 +1,8 @@
 <?php
 
   global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-//  global $filter_method;
+  global $matrixtype, $participants;
+
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
      $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
 
@@ -67,28 +68,38 @@
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/view.gif" alt="<?php echo lang("Daily Matrix View"); ?>" border="0">
    </a>
   </td>
-  <form action="<?php echo $phpgw->link(""); ?>" name="filtermethod" method="POST">
+  <form action="<?php echo $phpgw->link(""); ?>" method="POST" name="filtermethod">
    <td width="55%" align="center" valign="center">
     <b><?php echo lang("Filter"); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
-    <?php if(isset($date) && $date) { ?>
+<?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
-    <?php } ?>
+<?php } ?>
     <input type="hidden" name="month" value="<?php echo $thismonth; ?>">
     <input type="hidden" name="day" value="<?php echo $thisday; ?>">
     <input type="hidden" name="year" value="<?php echo $thisyear; ?>">
-    <?php if(isset($keywords) && $keywords) { ?>
+<?php if(isset($keywords) && $keywords) { ?>
     <input type="hidden" name="keywords" value="<?php echo $keywords; ?>">
-    <?php } ?>
+<?php } ?>
+<?php if(isset($matrixtype) && $matrixtype) { ?>
+    <input type="hidden" name="matrixtype" value="<?php echo $matrixtype; ?>">
+<?php } ?>
+<?php
+    if(isset($participants) && $participants) {
+      for ($i=0;$i<count($participants);$i++) {
+	echo "<input type=\"hidden\" name=\"participants[]\" value=\"".$participants[$i]."\">";
+      }
+    } ?>
     <select name="filter" onchange="document.filtermethod.submit()">
-     <option value="all"<?php if((!isset($filter) || !$filter) || $filter=="all") echo " selected"; ?>>All</option>
-     <option value="private"<?php if($filter=="private") echo " selected"; ?>>Private Only</option>
+     <option value="all"<?php if($filter=="all") echo " selected"; ?>>All</option>
+     <option value="private"<?php if((!isset($filter) || !$filter) || $filter=="private") echo " selected"; ?>>Private Only</option>
      <option value="public"<?php if($filter=="public") echo " selected"; ?>>Global Public Only</option>
      <option value="group"<?php if($filter=="group") echo " selected"; ?>>Group Public Only</option>
      <option value="private+public"<?php if($filter=="private+public") echo " selected"; ?>>Private and Global Public</option>
      <option value="private+group"<?php if($filter=="private+group") echo " selected"; ?>>Private and Group Public</option>
      <option value="public+group"<?php if($filter=="public+group") echo " selected"; ?>>Global Public and Group Public</option>
     </select>
+    <NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT></FONT>
    </td>
   </form>
   <form action="<?php echo $phpgw->link("search.php"); ?>" method="POST">
