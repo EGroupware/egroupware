@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags = array("noheader" => True, "nonavbar" => True, "currentapp" => "notifywindow");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "notifywindow");
   include("header.inc.php");
 ?>
 <body bgcolor="<?php echo $phpgw_info["theme"]["bg_color"]; ?>" alink="blue" vlink="blue" link="blue">
