@@ -63,6 +63,7 @@ available groups	nntp	en	Available Groups
 bad login or password	login	en	Bad login or password
 bbs phone	addressbook	en	BBS Phone
 base url	admin	en	Base URL
+bbs phone    addressbook    en    bbs phone
 birthday	addressbook	en	Birthday
 book marks	common	en	Book marks
 bookmarks	common	en	Bookmarks
@@ -149,6 +150,7 @@ e-mail	common	en	E-Mail
 e-mail preferences	common	en	E-Mail preferences
 edit	common	en	Edit
 edit application	admin	en	Edit application
+edit custom fields	preferences	en	edit custom fields
 edit group	admin	en	Edit Group
 edit note for	notes	en	Edit note for
 edit user account	admin	en	Edit user account
@@ -172,6 +174,7 @@ error creating x x directory	common	en	Error creating %1%2 directory
 error deleting x x directory	common	en	Error deleting %1%2 directory
 error renaming x x directory	common	en	Error renaming %1%2 directory
 exit	common	en	Exit
+export contacts	addressbook	en    export contacts
 fax	addressbook	en	Fax
 february	common	en	February
 file manager	common	en	File manager
@@ -201,7 +204,9 @@ global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
+grant addressbook access	common	en    grant addressbook access
 grant calendar access	calendar	en	Grant Calendar Access
+grant todo access	common	en    grant todo access
 group	common	en	Group
 group access	common	en	Group Access
 group has been added	common	en	Group has been added
@@ -218,6 +223,7 @@ headline sites	admin	en	Headline Sites
 headlines	common	en	Headlines
 help	common	en	Help
 helvetica	notes	en	Helvetica
+hide php information	admin	en    hide php information
 high	common	en	High
 home	common	en	Home
 home city	addressbook	en	Home City
@@ -237,10 +243,11 @@ if applicable	email	en	If Applicable
 ignore conflict	calendar	en	Ignore Conflict
 image	email	en	Image
 imap server type	email	en	IMAP Server Type
+import contacts	addressbook	en    import contacts
 import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
-installed applications	admin	en	Installed applications
+installed applications	admin	en    Installed applications
 intl	common	en	International
 international	common	en	International
 inventory	common	en	Inventory
@@ -254,6 +261,8 @@ kill	admin	en	Kill
 label	addressbook	en	Label
 language	preferences	en	Language
 large	notes	en	Large
+last login	admin	en    last login
+last login from	admin	en    last login from
 last name	common	en	Last name
 last page	common	en	last page
 last time read	admin	en	Last Time Read
@@ -319,6 +328,7 @@ next page	common	en	next page
 nntp	common	en	NNTP
 no	common	en	No
 no matches found.	calendar	en	No matches found.
+no matchs found	common	de	No matches found
 no subject	email	en	No Subject
 no tickets found	tts	en	No tickets found.
 no_file_name	filemanager	en	No filename was specified
@@ -342,6 +352,7 @@ other phone	common	en	Other phone
 owner	addressbook	en	Owner
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
+parent projekt:	todo	en    parent projekt:
 participants	calendar	en	Participants
 password	common	en	Password
 password has been updated	common	en	Password has been updated
@@ -401,6 +412,7 @@ search	common	en	Search
 search results	calendar	en	Search Results
 section	email	en	Section
 select application	transy	en	Select application
+select category	notes	en    select category
 select different theme	preferences	en	Select different Theme
 select headline news sites	common	en	Select Headline News sites
 select language to generate for	transy	en	Select language to generate for
@@ -442,9 +454,11 @@ state	addressbook	en	State
 status	common	en	Status
 street	addressbook	en	Street
 su	calendar	en	Su
+sub	todo	en    sub
 subject	common	en	Subject
 submit	common	en	Submit
 submit changes	admin	en	Submit Changes
+subproject description	todo	en    subproject description
 suffix	addressbook	en	Suffix
 sun	calendar	en	Sun
 sunday	common	en	Sunday
@@ -463,6 +477,7 @@ there was an error trying to connect to your mail server.<br>please, check your 
 they must be removed before you can continue	admin	en	They must be removed before you can continue
 this folder is empty	email	en	This folder is empty
 this month	calendar	en	This month
+this person's first name was not in the address book.	addressbook	en    This person's first name was not in the address book.
 this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
 this week	calendar	en	This week
 threads	nntp	en	Threads
@@ -479,9 +494,10 @@ to	email	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 today	calendar	en	Today
 today is x's birthday!	common	en	Today is %1's birthday!
-todo	todo	en	todo
+todo	common	en	todo
 todo list	common	en	Todo List
 todo list - add	todo	en	todo list - add
+todo list - add sub-project	todo	en    todo list - add sub-project
 todo list - edit	todo	en	Todo list - edit
 tommorow is x's birthday.	common	en	Tommorow is %1's birthday.
 total	common	en	Total
@@ -531,6 +547,7 @@ weekly	calendar	en	Weekly
 which groups	common	en	Which groups
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
+work phone	addressbook	en    work phone
 x matches found	calendar	en	%1 matches found
 x messages have been deleted	email	en	%1 messages have been deleted
 year	calendar	en	Year

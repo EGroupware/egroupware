@@ -62,6 +62,7 @@ author	nntp	de	Autor
 available groups	nntp	de	verfügbare Gruppen
 bad login or password	login	de	Bad login or password
 base url	admin	de	Basis URL
+bbs phone	addressbook	de	BBS
 birthday	addressbook	de	Geburtstag
 book marks 	common	de	Bookmarks
 bookmarks	common	de	Lesezeichen
@@ -105,6 +106,7 @@ company	common	de	Firma
 company name	addressbook	de	Firma
 completed	todo	de	fertig
 compose	email	de	Verfassen
+contact	common	de	Kontakt
 copy	common	de	Kopieren
 copy_as	filemanager	de	Kopieren nach
 country	addressbook	de	Land
@@ -117,6 +119,7 @@ created by	common	de	Erstellt von
 currency	common	de	Währung
 current users	common	de	Derzeit angemeldete Benutzer
 current_file	filemanager	de	Aktuelle Datei
+custom fields	addressbook	en	Benutzerdefinierte Felder
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
 date	common	de	Datum
@@ -244,6 +247,7 @@ import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
 installed applications	admin	de	Installierte Anwendungen
 international	addressbook	de	international
+intl	common	de	International
 inventory	common	de	Inventar
 ip	admin	de	IP
 isdn phone	addressbook	de	ISDN Tel.
@@ -381,6 +385,7 @@ private and group public	common	de	private und Gruppen
 private only	common	de	nur private
 private_files	filemanager	de	private Dateien
 project description	todo	de	Beschreibung
+public	common	de	öffentlich
 public key	addressbook	de	öffentlicher Schlüssel
 re-edit event	calendar	de	Event erneut bearbeiten
 re-enter password	admin	de	Passwort wiederholen
@@ -418,6 +423,7 @@ select which language for this phrase	transy	de	Wählen sie die Sprache für diese
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 send	email	de	Senden
 send deleted messages to the trash	email	de	gelöschte Nachrichten in die Mülltonne befördern
+send updates via email	common	de	Updates via EMail senden
 september 	common	de	September
 session has been killed	common	de	Session wurde gelöscht
 show all	common	de	alle anzeigen
@@ -489,8 +495,8 @@ to correct this error for the future you will need to properly set the	common	de
 today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 todo	todo	de	Beschreibung
-todo list	common	de	Aufgabenliste
 todo	preferences	de	Aufgabenliste
+todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
 todo list - add sub-project	todo	de	ToDo-List: Teilprojekt hinzufügen
 todo list - edit	todo	de	Aufgabenliste - editieren
