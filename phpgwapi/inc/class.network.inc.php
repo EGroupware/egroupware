@@ -75,12 +75,12 @@
 					}
 					break;
 			}
-			if(floor(phpversion()) == 4)
+			if(version_compare(phpversion(),'4.3.0') >= 0)
 			{
 				$this->socket = fsockopen($server,$port,$errcode,$errmsg,$timeout);
 				if($this->socket)
 				{
-					socket_set_timeout($this->socket,$timeout,0);
+					stream_set_timeout($this->socket,$timeout,0);
 				}
 			}
 			else
