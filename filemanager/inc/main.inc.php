@@ -4,12 +4,20 @@
 ### These are automatically set in phpGW - do not edit ###
 
 $sep = $phpgw_info["server"]["dir_separator"];
-$filesdir = $phpgw_info["server"]["files_dir"];
 $rootdir = $phpgw->vfs->basedir;
 $fakebase = $phpgw->vfs->fakebase;
 $hostname = $phpgw_info["server"]["webserver_url"] . $filesdir;
 $appname = $phpgw_info["flags"]["currentapp"];
 $settings = $phpgw_info["user"]["preferences"][$appname];
+
+if (stristr ($rootdir, PHPGW_SERVER_ROOT))
+{
+	$filesdir = substr ($rootdir, strlen (PHPGW_SERVER_ROOT));
+}
+else
+{
+	unset ($filesdir);
+}
 
 ### End Configuration Options ###
 
@@ -124,7 +132,9 @@ function string_encode ($string, $return)
 	global $hostname;
 
 	if (preg_match ("/=(.*)(&|$)/U", $string))
+	{
 		$rstring = preg_replace ("/=(.*)(&|$)/Ue", "'=' . rawurlencode ('\\1') . '\\2'", $string);
+	}
 	elseif (ereg ("^$hostname", $string))
 	{
 		$rstring = ereg_replace ("^$hostname/", "", $string);
