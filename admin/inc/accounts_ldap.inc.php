@@ -181,22 +181,6 @@
         $cd = 99;		// Come out with a code for this
      }
      
-     // create a subtree for the phpgw settings
-     
-     $preferences["objectclass"] = "organizationalunit";
-     $preferences["description"] = "subtree for phpgw preferences";
-     $preferences["ou"]          = "phpgwpreferences";
-     
-     $dn = "ou=phpgwpreferences, $dn";
-     
-     // add the entries
-     if (ldap_add($ldap, $dn, $preferences)) {
-        $cd = 28;
-     } else {
-        $cd = 99;		// Come out with a code for this
-     }
-
-
      @ldap_close($ldap);
      
      add_default_preferences($account_info["account_id"]);
@@ -289,6 +273,8 @@
   {
     global $phpgw_info, $phpgw, $ldap;
 
+    #ldap_delete($ldap,"appl=email, ou=phpgwpreferences,".$account_id);
+    #ldap_delete($ldap,"ou=phpgwpreferences,".$account_id);
     ldap_delete($ldap,$account_id);
   }
 
