@@ -1259,7 +1259,6 @@
 		global $phpgw_info, $phpgw_setup;
 		$db1 = $phpgw_setup->db;
 
-		$phpgw_setup->db->query("alter table phpgw_addressbook add pubkey text");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel tel_work varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel tel_home varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel tel_fax  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
@@ -1300,6 +1299,27 @@
 			}
 		}
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre17';
+	}
+
+    $test[] = '0.9.10pre17';
+    function upgrade0_9_10pre17() {
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add pubkey text");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_street adr_one_street varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_locality adr_one_locality varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_region adr_one_region varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_postalcode adr_one_postalcode varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_countryname adr_one_countryname varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_work adr_one_type varchar(32)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_home adr_two_type varchar(32)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_poaddr adr_two_street varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_extaddr adr_two_locality varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_parcel adr_two_region varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_postal adr_two_postalcode varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook add adr_two_countryname varchar(64)");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre18';
 	}
 
   reset ($test);
