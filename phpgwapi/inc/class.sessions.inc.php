@@ -127,7 +127,13 @@
           return False;
           exit;
        }
+
+      $accts = CreateObject("phpgwapi.accounts");
        
+       if (!$accts->exists($phpgw_info["user"]["userid"])) {
+         $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
+       }
+
        $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
        $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
 
