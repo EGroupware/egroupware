@@ -71,7 +71,7 @@
 		function export_start_file($buffer) {
 			$this->id=-1;
 			$this->contacts = CreateObject('phpgwapi.contacts');
-			$tmp = $this->contacts->read(0,'');
+			$tmp = $this->contacts->read();
 			for ($i=0;$i<count($tmp);$i++) {
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
