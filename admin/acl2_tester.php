@@ -23,10 +23,10 @@
 
 	echo 'This test is going to delete all your phpgw_acl2 records to ensure that the tests run as expected.<br>';
 	$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_acl2',__LINE__,__FILE__);
-	echo 'All records deleted...<br>';
+	echo 'Action: DELETE FROM phpgw_acl2<br><br>';
 	echo 'Running checks on .one.two.three after changing directly granted rights as well as ones it will inherit from<br>';
 	
-	echo '1: check rights for .one.two which will get inherited by .one.two.three<br>';
+	echo '<br>1: check rights for .one.two which will get inherited by .one.two.three<br>';
 	ttt('.one.two', 1);
 	ttt('.one.two', 2);
 	ttt('.one.two', 4);
@@ -40,54 +40,61 @@
 	ttt('.one.two.three', 8);
 	echo 'You can see that no rights are set directly as well<br>';
 
-	$sec->add('.one.two.three',4,0);
 	echo '<br>3: add rights 4 to .one.two.three<br>';
+	echo 'Action: $acl2->add(\'.one.two.three\',4,0);<br>';
+	$sec->add('.one.two.three',4,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 	
-	$sec->add('.one.two.three',8,0);
 	echo '<br>4: add rights 8 to .one.two.three<br>';
+	echo 'Action: $acl2->add(\'.one.two.three\',8,0);<br>';
+	$sec->add('.one.two.three',8,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 
-	$sec->remove('.one.two.three',4,0);
 	echo '<br>5: remove rights 4 from .one.two.three<br>';
+	echo 'Action: $acl2->remove(\'.one.two.three\',4,0);<br>';
+	$sec->remove('.one.two.three',4,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 
-	$sec->set('.one.two.three', 2,0);
 	echo '<br>5: set rights to 2 on .one.two.three<br>';
+	echo 'Action: $acl2->set(\'.one.two.three\', 2,0);<br>';
+	$sec->set('.one.two.three', 2,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 
-	$sec->add('.one.two',8,0);
 	echo '<br>Now to see inheritance in action...<br>';
 	echo '6: add rights 8 to .one.two<br>';
+	echo 'Action: $acl2->add(\'.one.two\',8,0);<br>';
+	$sec->add('.one.two',8,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 	echo 'You can see here that it has inherited rights 8 from .one.two<br>';
 
-	$sec->add('.one.two',4,0);
 	echo '<br>7: add rights 4 to .one.two<br>';
+	echo 'Action: $acl2->add(\'.one.two\',4,0);<br>';
+	$sec->add('.one.two',4,0);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
 	ttt('.one.two.three', 8);
 	echo 'You can see here that it has also inherited rights 4 from .one.two<br>';
 
-	$sec->add('.one.two',8,1);
 	echo '<br>Now to see inherited rights masks in action...<br>';
 	echo '8: add rights mask for 8 to .one.two<br>';
+	echo 'Action: $acl2->add(\'.one.two\',8,1);<br>';
+	$sec->add('.one.two',8,1);
 	ttt('.one.two.three', 1);
 	ttt('.one.two.three', 2);
 	ttt('.one.two.three', 4);
