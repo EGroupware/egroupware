@@ -916,6 +916,9 @@
 			$this->t->set_var("lang_next_message",lang('next message'));
 			$this->t->set_var("lang_organisation",lang('organisation'));
 			$this->t->set_var("lang_on_behalf_of",lang('on behalf of'));
+			$this->t->set_var("lang_Message", lang('Message'));
+			$this->t->set_var("lang_Attachment", lang('attachments'));
+			$this->t->set_var("lang_Header_Lines", lang('Header Lines'));
 			
 			$this->t->set_var("th_bg",$GLOBALS['phpgw_info']["theme"]["th_bg"]);
 			$this->t->set_var("bg01",$GLOBALS['phpgw_info']["theme"]["bg01"]);
