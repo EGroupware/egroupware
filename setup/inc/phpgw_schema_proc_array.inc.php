@@ -130,6 +130,7 @@ class phpgw_schema_proc_array
 		{
 			if (IsSet($aTables[$sTableName]["fd"][$sColumnName]))
 				$aTables[$sTableName]["fd"][$sColumnName] = $aColumnDef;
+			
 		}
 		
 		return true;

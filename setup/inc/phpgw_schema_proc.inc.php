@@ -17,17 +17,17 @@ class phpgw_schema_proc
 	var $m_oDeltaProc;
 	var $m_odb;
 	var $m_aTables;
-	var $m_oDeltaOnly;
+	var $m_bDeltaOnly;
 	
 	function phpgw_schema_proc($dbms)
 	{
-		include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_proc_" . $dbms . ".inc.php");
+		include("phpgw_schema_proc_" . $dbms . ".inc.php");
 		eval("\$this->m_oTranslator = new phpgw_schema_proc_$dbms;");
 		
-		include(PHPGW_SERVER_ROOT . "/setup/inc/phpgw_schema_proc_array.inc.php");
+		include("phpgw_schema_proc_array.inc.php");
 		$this->m_oDeltaProc = new phpgw_schema_proc_array;
 		$this->m_aTables = array();
-		$this->m_oDeltaOnly = True; // Either is an insane default!
+		$this->m_bDeltaOnly = false; // Default to false here in case it's just a CreateTable script
 	}
 	
 	function GenerateScripts($aTables, $bOutputHTML = false)
@@ -54,6 +54,7 @@ class phpgw_schema_proc
 			{
 				if ($bOutputHTML)
 					print("<br>Failed generating script for <b>$sTableName</b><br>");
+				
 				return false;
 			}
 		}
@@ -116,56 +117,63 @@ class phpgw_schema_proc
 	function DropTable($sTableName)
 	{
 		$retVal = $this->m_oDeltaProc->DropTable($this, $this->m_aTables, $sTableName);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->DropTable($this, $this->m_aTables, $sTableName);
 	}
 	
 	function DropColumn($sTableName, $aTableDef, $sColumnName, $bCopyData = true)
 	{
 		$retVal = $this->m_oDeltaProc->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->DropColumn($this, $this->m_aTables, $sTableName, $aTableDef, $sColumnName, $bCopyData);
 	}
 	
 	function RenameTable($sOldTableName, $sNewTableName)
 	{
 		$retVal = $this->m_oDeltaProc->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->RenameTable($this, $this->m_aTables, $sOldTableName, $sNewTableName);
 	}
 	
 	function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
 	{
 		$retVal = $this->m_oDeltaProc->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->RenameColumn($this, $this->m_aTables, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData);
 	}
 	
 	function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData = true)
 	{
 		$retVal = $this->m_oDeltaProc->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->AlterColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef, $bCopyData);
 	}
 	
 	function AddColumn($sTableName, $sColumnName, $aColumnDef)
 	{
 		$retVal = $this->m_oDeltaProc->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->AddColumn($this, $this->m_aTables, $sTableName, $sColumnName, $aColumnDef);
 	}
 	
 	function CreateTable($sTableName, $aTableDef)
 	{
 		$retVal = $this->m_oDeltaProc->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
-		if ($this->m_oDeltaOnly)
+		if ($this->m_bDeltaOnly)
 			return $retVal;
+		
 		return $retVal && $this->m_oTranslator->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
 	}
 	
@@ -176,10 +184,9 @@ class phpgw_schema_proc
 	
 	function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL)
 	{
-		echo "is_array";
 		if (!is_array($aTableDef))
 			return false;
-		echo "it is";
+		
 		$sTableSQL = "";
 		reset($aTableDef["fd"]);
 		while (list($sFieldName, $aFieldAttr) = each($aTableDef["fd"]))
@@ -217,6 +224,7 @@ class phpgw_schema_proc
 			{
 				if ($bOutputHTML)
 					print("<br>Failed getting primary key<br>");
+				
 				return false;
 			}
 		}
@@ -227,6 +235,7 @@ class phpgw_schema_proc
 			{
 				if ($bOutputHTML)
 					print("<br>Failed getting unique constraint<br>");
+				
 				return false;
 			}
 		}
