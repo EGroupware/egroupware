@@ -772,7 +772,7 @@
 				if($send_to_ui)
 				{
 					Execmethod('calendar.uicalendar.index');
-					$GLOBALS['phpgw']->common->phpgw_exit();
+//					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 			}
 		}
