@@ -31,12 +31,10 @@
 	$setup_info['etemplate']['note'] =
 		'For <b>more information</b> check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>, 
 		the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a> 
-		or the <a href="http://www.phpgroupware.org/wiki/etemplate" target="_blank">eTemplate page in our Wiki</a>.';
+		or the <a href="http://www.egroupware.org/wiki/etemplate" target="_blank">eTemplate page in our Wiki</a>.';
 
 	/* The hooks this app includes, needed for hooks registration */
-	//$setup_info['etemplate']['hooks'][] = 'preferences';
-	//$setup_info['etemplate']['hooks'][] = 'admin';
-	//$setup_info['etemplate']['hooks'][] = 'about';
+	$setup_info['etemplate']['hooks'][] = 'sidebox_menu';
 
 	/* Dependencies for this app to work */
 	$setup_info['etemplate']['depends'][] = array(
