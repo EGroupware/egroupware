@@ -49,6 +49,36 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		}
 	}
 	
+	function MetaType($t,$len=-1,$fieldobj=false)
+	{
+		if (is_object($t)) {
+			$fieldobj = $t;
+			$t = $fieldobj->type;
+			$len = $fieldobj->max_length;
+		}
+		static $maxdb_type2adodb = array(
+			'VARCHAR'	=> 'C',
+			'CHARACTER'	=> 'C',
+			'LONG'		=> 'X',		// no way to differ between 'X' and 'B' :-(
+			'DATE'		=> 'D',
+			'TIMESTAMP'	=> 'T',
+			'BOOLEAN'	=> 'L',
+			'INTEGER'	=> 'I4',
+			'SMALLINT'	=> 'I2',
+			'FLOAT'		=> 'F',
+			'FIXED'		=> 'N',
+		);
+		$type = isset($maxdb_type2adodb[$t]) ? $maxdb_type2adodb[$t] : 'C';
+
+		// convert integer-types simulated with fixed back to integer
+		if ($t == 'FIXED' && !$fieldobj->scale && ($len == 20 || $len == 3)) {
+			$type = $len == 20 ? 'I8' : 'I1';
+		}
+		if ($fieldobj->auto_increment) $type = 'R';
+
+		return $type;
+	}
+	
 	// return string must begin with space
 	function _CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
 	{	

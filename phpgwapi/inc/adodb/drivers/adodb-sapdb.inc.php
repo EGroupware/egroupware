@@ -60,15 +60,16 @@ class ADODB_SAPDB extends ADODB_odbc {
 			" WHERE TABLENAME=$table".
 			" ORDER BY INDEXNAME,COLUMNNO";
 
+		global $ADODB_FETCH_MODE;
 		$save = $ADODB_FETCH_MODE;
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         if ($this->fetchMode !== FALSE) {
-                $savem = $this->SetFetchMode(FALSE);
+        	$savem = $this->SetFetchMode(FALSE);
         }
         
         $rs = $this->Execute($sql);
         if (isset($savem)) {
-                $this->SetFetchMode($savem);
+        	$this->SetFetchMode($savem);
         }
         $ADODB_FETCH_MODE = $save;
 
@@ -89,7 +90,52 @@ class ADODB_SAPDB extends ADODB_odbc {
 		}
         return $indexes;
 	}
+	
+ 	function &MetaColumns ($table)
+	{
+		global $ADODB_FETCH_MODE;
+		$save = $ADODB_FETCH_MODE;
+        $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+        if ($this->fetchMode !== FALSE) {
+        	$savem = $this->SetFetchMode(FALSE);
+        }
+		$table = $this->Quote(strtoupper($table));
+		
+		$retarr = array();
+		foreach($this->GetAll("SELECT COLUMNNAME,DATATYPE,LEN,DEC,NULLABLE,MODE,\"DEFAULT\",CASE WHEN \"DEFAULT\" IS NULL THEN 0 ELSE 1 END AS HAS_DEFAULT FROM COLUMNS WHERE tablename=$table ORDER BY pos") as $column)
+		{
+			$fld = new ADOFieldObject();
+			$fld->name = $column[0];
+			$fld->type = $column[1];
+			$fld->max_length = $fld->type == 'LONG' ? 2147483647 : $column[2];
+			$fld->scale = $column[3];
+			$fld->not_null = $column[4] == 'NO';
+			$fld->primary_key = $column[5] == 'KEY';
+			if ($fld->has_default = $column[7]) {
+				if ($fld->primary_key && $column[6] == 'DEFAULT SERIAL (1)') {
+					$fld->auto_increment = true;
+					$fld->has_default = false;
+				} else {
+					$fld->default_value = $column[6];
+				}
+			}
+			$retarr[$fld->name] = $fld;	
+		}
+        if (isset($savem)) {
+        	$this->SetFetchMode($savem);
+        }
+        $ADODB_FETCH_MODE = $save;
 
+		return $retarr;
+	}
+	
+	function MetaColumnNames($table)
+	{
+		$table = $this->Quote(strtoupper($table));
+
+		return $this->GetCol("SELECT columnname FROM COLUMNS WHERE tablename=$table ORDER BY pos");
+	}
+	
 	// unlike it seems, this depends on the db-session and works in a multiuser environment
 	function _insertid($table,$column)
 	{
