@@ -783,6 +783,11 @@
 			{
 				$this->connect();
 			}
+			switch($type)
+			{
+				case 'blob':
+					return "'" . $this->Link_ID->BlobEncode($value) . "'";
+			}
 			return $this->Link_ID->quote($value);
 		}
 
