@@ -515,7 +515,7 @@
 					{
 						echo '<br>process_upgrade(): Application not installed: ' . $appname . "\n";
 					}
-					@unset($setup_info[$key]);
+					unset($setup_info[$key]);
 					continue;
 				}
 
