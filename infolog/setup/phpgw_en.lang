@@ -27,6 +27,7 @@ add file	infolog	en	Add file
 add sub	infolog	en	add Sub
 add:	infolog	en	Add:
 all	infolog	en	All
+all links and attachments	infolog	en	all links and attachments
 are you shure you want to delete this entry ?	infolog	en	Are you shure you want to delete this entry ?
 are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
 attach a file	infolog	en	Attach a file
@@ -111,6 +112,7 @@ new search	infolog	en	New search
 no - cancel	infolog	en	No - Cancel
 no entries found, try again ...	infolog	en	no entries found, try again ...
 no filter	infolog	en	no Filter
+no links or attachments	infolog	en	no links or attachments
 none	infolog	en	None
 normal	infolog	en	normal
 not	infolog	en	not
@@ -119,6 +121,8 @@ note	infolog	en	Note
 number of records to read (<=200)	infolog	en	Number of records to read (<=200)
 offer	infolog	en	offer
 ongoing	infolog	en	ongoing
+only the attachments	infolog	en	only the attachments
+only the links	infolog	en	only the links
 open	infolog	en	open
 optional note to the link	infolog	en	optional note to the Link
 overdue	infolog	en	overdue
@@ -153,9 +157,14 @@ select a priority for this task	infolog	en	select a priority for this task
 select a responsible user: a person you want to delegate this task	infolog	en	select a responsible user: a person you want to delegate this task
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
 show full usernames	infolog	en	Show full usernames
-show open events: tasks/calls/notes on main screen	infolog	en	Show open Events: Tasks/Calls/Notes on main screen
+show in the infolog list	infolog	en	Show in the InfoLog list
+show open entries: tasks/calls/notes on main screen	infolog	en	Show open entries: Tasks/Calls/Notes on main screen
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Startdate
 startdate enddate	infolog	en	Startdate Enddate
@@ -165,6 +174,7 @@ sub	infolog	en	Sub
 subject	infolog	en	Subject
 task	infolog	en	ToDo
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phonecall be finished
 today	infolog	en	Today
 todo	infolog	en	ToDo

@@ -21,6 +21,15 @@
 	
 	create_check_box('List no Subs/Childs','listNoSubs',
 		'Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.');
-
+/*
 	create_check_box('Show full usernames','longNames',
 		'Should InfoLog use full names (surname and familyname) or just the loginnames.');
+*/
+	$show_links = array(
+		'all'    => lang('all links and attachments'),
+		'links'  => lang('only the links'),
+		'attach' => lang('only the attachments'),
+		'none'   => lang('no links or attachments')
+	);
+	create_select_box('Show in the InfoLog list','show_links',$show_links,
+		'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).');

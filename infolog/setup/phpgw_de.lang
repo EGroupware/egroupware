@@ -27,6 +27,7 @@ add file	infolog	de	Datei zufügen
 add sub	infolog	de	neuen Untereintrag anlegen
 add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
+all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
 are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
 are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
 attach a file	infolog	de	Datei anhängen
@@ -111,6 +112,7 @@ new search	infolog	de	Neue Suche
 no - cancel	infolog	de	Nein - Abbruch
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
 no filter	infolog	de	kein Filter
+no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
 none	infolog	de	keine
 normal	infolog	de	normal
 not	infolog	de	nicht
@@ -119,6 +121,8 @@ note	infolog	de	Notiz
 number of records to read (<=200)	infolog	de	Anzahl Datensätze lesen (<=200)
 offer	infolog	de	Angebot
 ongoing	infolog	de	in Arbeit
+only the attachments	infolog	de	nur die Anhänge
+only the links	infolog	de	nur die Verknüpfungen
 open	infolog	de	offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 overdue	infolog	de	überfällig
@@ -141,7 +145,7 @@ re:	infolog	de	Re:
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
-remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst) 
+remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	Auftrag an
 responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
 save	infolog	de	Speichern
@@ -154,9 +158,14 @@ select a priority for this task	infolog	de	eine Priorität für diesen Eintrag aus
 select a responsible user: a person you want to delegate this task	infolog	de	einen Verantwortlichen auswählen: eine Person der Sie diese Aufgabe delegieren wollen
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in ihren Einstellungen).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
-show open events: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
+show open entries: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Endedatum
@@ -166,6 +175,7 @@ sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
 task	infolog	de	Auftrag
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
 today	infolog	de	Heute
 todo	infolog	de	Auftrag

@@ -25,10 +25,6 @@
 			'anzSubs'        => True,
 			'search'         => True,
 			'get_rows'       => True,
-			'accountInfo'    => True,	// in class boinfolog (this class)
-/*			'readProj'       => True,
-			'readAddr'       => True,
-			'addr2name'      => True,*/
 			'attach_file'    => True,
 			'delete_attached'=> True,
 			'info_attached'  => True,
@@ -95,27 +91,6 @@
 			$this->read( $info_id);
 		}
 
-		function accountInfo($id,$account_data=0)
-		{
-			if (!$id) return '&nbsp;';
-
-			if (!is_array($account_data))
-			{
-				if (!isset($this->account_data[$id]))		// do some cacheing
-				{
-					$GLOBALS['phpgw']->accounts->accounts($id);
-					$GLOBALS['phpgw']->accounts->read_repository();
-					$this->account_data[$id] = $GLOBALS['phpgw']->accounts->data;
-				}
-				$account_data = $this->account_data[$id];
-			}
-			if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['longNames'])
-			{
-				return $account_data['firstname'].' '.$account_data['lastname'];
-			}
-			return $account_data['account_lid'];
-		}
-		
 		/*
 		 * check's if user has the requiered rights on entry $info_id
 		 */
@@ -137,6 +112,11 @@
 			{
 				$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
 				$title = $this->link->title($link['link_app'.$nr],$link['link_id'.$nr]);
+				
+				if (htmlentities($title) == $info['info_from'])
+				{
+					$info['info_from'] = $title;	// correct old entries
+				}
 				if ($link['link_app'.$nr] == $not_app && $link['link_id'.$nr] == $not_id)
 				{
 					if ($title == $info['info_from'])
@@ -145,11 +125,9 @@
 					}
 					return False;
 				}
-				if ($info['info_from'] == '' || $info['info_from'] == $title)
-				{
-					$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
-					$info['info_from'] = $info['info_link_title'] = $title;
-				}
+				$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
+				$info['info_link_title'] = $title;
+				
 				//echo " title='$title'</p>\n";
 				return $title;
 			}
@@ -166,6 +144,7 @@
 				$data['info_subject'] = '';
 			}
 			$this->link_id2from($data);
+;
 			if ($data['info_link_title'] == $data['info_from'])
 			{
 				$data['info_from'] = '';
@@ -193,6 +172,11 @@
 			}
 			if ($check_defaults)
 			{
+				if (!$values['info_enddate'] && 
+					($values['info_status'] == 'done' || $values['info_status'] == 'billed'))
+				{
+					$values['info_enddate'] = time();	// set enddate to today if status == done
+				}
 				if ($values['info_responsible'] && $values['info_status'] == 'offer')
 				{
 					$values['info_status'] = 'ongoing';   // have to match if not finished
@@ -228,166 +212,6 @@
 											 $action,$action_id,$ordermethod,$start,$total);
 		}
 
-
-		function vfs_path($info_id,$file='')
-		{
-			return $this->vfs_basedir . '/' . $info_id . ($file ? '/' . $file : '');
-		}
-
-		/*
-		**	Put a file to the corrosponding place in the VFS and set the attributes
-		**	ACL check is done by the VFS
-		*/
-		function attach_file($info_id,$filepos,$name,$size,$type,$comment='',$full_fname='',$ip='')
-		{
-			//echo "<p>attach_file: info_id='$info_id', filepos='$filepos', name='$name', size='$size', type='$type', comment='$comment', full_fname='$full_fname', ip='$ip'</p>\n";
-
-			// create the root for attached files in infolog, if it does not exists
-			if (!($this->vfs->file_exists($this->vfs_basedir,array(RELATIVE_ROOT))))
-			{
-				$this->vfs->override_acl = 1;
-				$this->vfs->mkdir($this->vfs_basedir,array(RELATIVE_ROOT));
-				$this->vfs->override_acl = 0;
-			}
-
-			$dir=$this->vfs_path($info_id);
-			if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
-			{
-				$this->vfs->override_acl = 1;
-				$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
-				$this->vfs->override_acl = 0;
-			}
-			$fname = $this->vfs_path($info_id,$name);
-			$tfname = '';
-			if ($full_fname)
-			{
-				$full_fname = str_replace('\\\\','/',$full_fname);	// vfs uses only '/'
-				@reset($this->link_pathes);
-				while ((list($valid,$trans) = @each($this->link_pathes)) && !$tfname)
-				{  // check case-insensitive for WIN etc.
-					$check = $valid[0] == '\\' || strstr(':',$valid) ? 'eregi' : 'ereg';
-					$valid2 = str_replace('\\','/',$valid);
-					//echo "<p>attach_file: ereg('".$this->send_file_ips[$valid]."', '$ip')=".ereg($this->send_file_ips[$valid],$ip)."</p>\n";
-					if ($check('^('.$valid2.')(.*)$',$full_fname,$parts) &&
-					    ereg($this->send_file_ips[$valid],$ip) &&     // right IP
-					    $this->vfs->file_exists($trans.$parts[2],array(RELATIVE_NONE|VFS_REAL)))
-					{
-						$tfname = $trans.$parts[2];
-					}
-					//echo "<p>attach_file: full_fname='$full_fname', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
-				}
-				if ($tfname && !$this->vfs->securitycheck($tfname))
-				{
-					return lang('Invalid filename').': '.$tfname;
-				}
-			}
-			$this->vfs->override_acl = 1;
-			if ($tfname)	// file is local
-			{
-				$this->vfs->symlink($tfname,$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
-			}
-			else
-			{
-				$this->vfs->cp($filepos,$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
-			}
-			$this->vfs->set_attributes ($fname, array (RELATIVE_ROOT),
-				array ('mime_type' => $type,
-						 'comment' => stripslashes ($comment),
-						 'app' => 'infolog'));
-			$this->vfs->override_acl = 0;
-		}
-
-		function delete_attached($info_id,$fname = '')
-		{
-			$file = $this->vfs_path($info_id,$fname);
-
-			if ($this->vfs->file_exists($file,array(RELATIVE_ROOT)))
-			{
-				$this->vfs->override_acl = 1;
-				$this->vfs->delete($file,array(RELATIVE_ROOT));
-				$this->vfs->override_acl = 0;
-			}
-		}
-
-		function info_attached($info_id,$filename)
-		{
-			$this->vfs->override_acl = 1;
-			$attachments = $this->vfs->ls($this->vfs_path($info_id,$filename),array(REALTIVE_NONE));
-			$this->vfs->override_acl = 0;
-
-			if (!count($attachments) || !$attachments[0]['name'])
-			{
-				return False;
-			}
-			return $attachments[0];
-		}
-
-		function list_attached($info_id)
-		{
-			$this->vfs->override_acl = 1;
-			$attachments = $this->vfs->ls($this->vfs_path($info_id),array(REALTIVE_NONE));
-			$this->vfs->override_acl = 0;
-
-			if (!count($attachments) || !$attachments[0]['name'])
-			{
-				return False;
-			}
-			while (list($keys,$fileinfo) = each($attachments))
-			{
-				$attached[$fileinfo['name']] = $fileinfo['comment'];
-			}
-			return $attached;
-		}
-
-		function is_win_path($path)
-		{
-			return $path[0] == '\\' || strstr($path,':');
-		}
-
-		function read_attached($info_id,$filename)
-		{
-			if (!$info_id || !$filename || !$this->check_access($info_id,PHPGW_ACL_READ))
-			{
-				return False;
-			}
-			$this->vfs->override_acl = 1;
-			return $this->vfs->read($this->vfs_path($info_id,$filename),array(RELATIVE_ROOT));
-		}
-
-		/*
-		 * Checks if filename should be local availible and if so returns 'file:/path' for HTTP-redirect
-		 * else return False
-		 */
-		function attached_local($info_id,$filename,$ip,$win_user)
-		{
-			//echo "<p>attached_local(info_id='$info_id', filename='$filename', ip='$ip', win_user='$win_user', count(send_file_ips)=".count($this->send_file_ips).")</p>\n";
-
-			if (!$info_id || !$filename || !$this->check_access($info_id,PHPGW_ACL_READ) ||
-			    !count($this->send_file_ips))
-			{
-				return False;
-			}
-			$link = $this->vfs->readlink ($this->vfs_path($info_id,$filename), array (RELATIVE_ROOT));
-
-			if ($link)
-			{
-				reset($this->link_pathes); $fname = '';
-				while ((list($valid,$trans) = each($this->link_pathes)) && !$fname)
-				{
-					if (!$this->is_win_path($valid) == !$win_user && // valid for this OS
-					    eregi('^'.$trans.'(.*)$',$link,$parts)  &&    // right path
-					    ereg($this->send_file_ips[$valid],$ip))      // right IP
-					{
-						$fname = $valid . $parts[1];
-						$fname = !$win_user ? str_replace('\\','/',$fname) : str_replace('/','\\',$fname);
-						return 'file:'.($win_user ? '//' : '' ).$fname;
-					}
-					// echo "<p>attached_local: link=$link, valid=$valid, trans='$trans', fname='$fname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
-				}
-			}
-			return False;
-		}
-		
 		/*!
 		@function link_title
 		@syntax link_title(  $id  )

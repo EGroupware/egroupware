@@ -873,9 +873,9 @@
 			}
 			if ($addr['org_name'])
 			{
-				$name = $addr['org_name'].': '.$name;
+				$name = $addr['org_name'].($name !== '' ? ': '.$name : '');
 			}
-			return $name;
+			return stripslashes($name);		// addressbook returns quotes with slashes
 		}
 
 		/*!

@@ -101,6 +101,20 @@
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 			$readonlys['view[0]'] = True;	// no parent
 
+			$show_links = $GLOBALS['phpgw_info']['user']['preferences']['infolog']['show_links'];
+
+			if ($show_links != 'none' && ($links = $this->link->get_links('infolog',$info['info_id'])))
+			{
+				foreach ($links as $link)
+				{
+					if ($link['link_id'] != $info['info_link_id'] &&
+					    ($link['app'] != $action || $link['id'] != $action_id) &&
+						($show_links == 'all' || ($show_links == 'links') === ($link['app'] != $this->link->vfs_appname)))
+					{
+						$info['filelinks'][] = $link;
+					}
+				}
+			}
 			return $info;
 		}
 
@@ -133,7 +147,7 @@
 			return $total;
 		}
 
-		function index($values = 0,$action='',$action_id='',$referer=0)
+		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False)
 		{
 			$referer = is_array($values) ? $values['referer'] : $referer;
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]')</p>\n";
@@ -199,7 +213,6 @@
 						break;
 					}
 					$values['main'][1] = $this->get_info($action_id,&$readonlys['main']);
-					$values['appheader'] = $this->messages['sp'];
 					break;
 			}
 			$readonlys['cancel'] = $action != 'sp'; 
@@ -209,6 +222,12 @@
 			$values['nm']['options-filter'] = $this->filters;
 			$values['nm']['get_rows'] = 'infolog.uiinfolog.get_rows';
 			$values['nm']['no_filter2'] = True;
+			$values['nm']['header_right'] = 'infolog.index.header_right';
+			if ($extra_app_header)
+			{
+				$values['nm']['header_left'] = 'infolog.index.header_left';
+			}
+			$values['nm']['bottom_too'] = True;
 			$persist['action'] = $values['nm']['action'] = $action;
 			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['referer'] = $referer;
@@ -265,10 +284,6 @@
 				if (isset($content['link_to']['primary']))
 				{
 					$content['info_link_id'] = $content['link_to']['primary'];
-				}
-				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
-				{
-					$content['info_link_id'] = 0;	// link has been deleted
 				}
 				if ($content['set_today'])
 				{
@@ -331,6 +346,11 @@
 				$this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 				$content = $this->bo->so->data;
 
+				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
+				{
+					$content['info_link_id'] = 0;	// link has been deleted
+				}
+
 				if (!$info_id && $action_id && $action == 'sp')    // new SubProject
 				{
 					if (!$this->bo->check_access($action_id,PHPGW_ACL_ADD))
@@ -353,6 +373,10 @@
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
 					$content['info_lastmodified'] = '';
+					if ($content['info_startdate'] < time())	// parent-startdate is in the past => today
+					{
+						$content['info_startdate'] = time();
+					}
 				}
 				else
 				{
@@ -379,20 +403,24 @@
 							}
 						}
 						break;
+
 					case 'addressbook':
 					case 'projects':
 					case 'calendar':
 					default:	// to allow other apps to participate
 						$content['info_link_id'] = $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
-					case 'new': 
+					case '':
+						if ($info_id)
+						{
+							break;	// normal edit
+						}
+					case 'new':		// new entry
+						$content['info_startdate'] = time();
 						if ($type != '')
 						{
 							$content['info_type'] = $type;
 						}
 						break;
-/*					default:
-						$action = '';
-						break;*/
 				}
 				$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : True;
 				
@@ -402,7 +430,7 @@
 				}
 			}
 			$readonlys['delete'] = $action != '';
-			$content['appheader'] = $this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')];
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
 
 			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
 			$this->tmpl->read('infolog.edit');
@@ -600,7 +628,7 @@
 			$this->index(0,$app,$args[$view_id],array(
 				'menuaction' => $view,
 				$view_id     => $args[$view_id]
-			));
+			),True);
 			$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
 			unset($GLOBALS['phpgw_info']['etemplate']['hooked']);
 		} 
