@@ -30,28 +30,34 @@ if ($action == "Load Vcard"){
   $uploaddir = $phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"] . $sep;
 
   if ($action == "Load Vcard") {
-     if($uploadedfile == "none" || $uploadedfile == "")
-     {
-       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
+    if($uploadedfile == "none" || $uploadedfile == "") {
+      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
             "/addressbook/vcardin.php","action=GetFile"));
-     }
-     else
-     {
-       srand((double)microtime()*1000000);
-       $random_number = rand(100000000,999999999);
-       $newfilename = md5("$uploadedfile, $uploadedfile_name, " . $phpgw_info["user"]["sessionid"]
-   		          . time() . getenv("REMOTE_ADDR") . $random_number );
+    } else {
+      srand((double)microtime()*1000000);
+      $random_number = rand(100000000,999999999);
+      $newfilename = md5("$uploadedfile, $uploadedfile_name, " . $phpgw_info["user"]["sessionid"]
+                     . time() . getenv("REMOTE_ADDR") . $random_number );
 
-       copy($uploadedfile, $uploaddir . $newfilename);
-       $ftp = fopen($uploaddir . $newfilename . ".info","w");
-        fputs($ftp,"$uploadedfile_type\n$uploadedfile_name\n");
-       fclose($ftp);
-       // This has to be non-interactive in case of a multi-entry vcard.
-       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
-              "/addressbook/parsecard.php","filename=" . $uploaddir . $newfilename .
-              "&access=" . $access . "&n_groups=" . $phpgw->accounts->array_to_string($access,$n_groups)
-             ));
-      }
+      copy($uploadedfile, $uploaddir . $newfilename);
+      $ftp = fopen($uploaddir . $newfilename . ".info","w");
+      fputs($ftp,"$uploadedfile_type\n$uploadedfile_name\n");
+      fclose($ftp);
+
+      // This has to be non-interactive in case of a multi-entry vcard.
+      $filename = $uploaddir . $newfilename;
+      $n_groups = $phpgw->accounts->array_to_string($access,$n_groups);
+      
+      if($access == "group")
+        $access = $n_groups;
+      //echo $access . "<BR>";
+
+      parsevcard($filename,$access);
+      // Delete the temp file.
+      unlink($filename);
+      unlink($filename . ".info");
+      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/", "cd=14"));
+    }
   }
 
   if (! file_exists($phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"]))

@@ -370,4 +370,240 @@
     $t->pparse("out","form");
   } //end form function
 
+  function parsevcard($filename,$access)
+  {
+    global $phpgw;
+    global $phpgw_info;
+
+    $vcard = fopen($filename, "r");
+    if (!$vcard) // Make sure we have a file to read.
+    {
+      fclose($vcard);
+      return FALSE;
+    }
+
+    // Keep running through this to support vcards
+    // with multiple entries.
+    while (!feof($vcard))
+    {
+      if(!empty($varray))
+      unset($varray);
+
+      // Make sure our file is a vcard.
+      // I should deal with empty line at the
+      // begining of the file. Those will fail here.
+      $vline = fgets($vcard,20);
+      $vline = strtolower($vline);
+      if(strcmp("begin:vcard", substr($vline, 0, strlen("begin:vcard")) ) != 0)
+      {	
+        fclose($vcard);
+        return FALSE;
+      }
+
+      // Write the vcard into an array.
+      // You can have multiple vcards in one file.
+      // I only deal with halve of that. :)
+      // It will only return values from the 1st vcard.
+      $varray[0] = "begin";
+      $varray[1] = "vcard";
+      $i=2;
+      while(!feof($vcard) && strcmp("end:vcard", strtolower(substr($vline, 0, strlen("end:vcard"))) ) !=0 )
+      {
+        $vline = fgets($vcard,4096);
+        // Check for folded lines and escaped colons '\:'
+        $la = explode(":", $vline);
+
+        if (count($la) > 1)
+        {
+          $varray[$i] = strtolower($la[0]);
+          $i++;
+
+          for($j=1;$j<=count($la);$j++)
+          {
+            $varray[$i] .= $la[$j];
+          }
+          $i++;
+        } else { // This is the continuation of a folded line.
+          $varray[$i-1] .= $la[0];
+        }
+      }
+
+      fillab($varray,$access); // Add this entry to the addressbook before
+                               // moving on to the next one.
+
+    } // while(!feof($vcard))
+
+    fclose($vcard);
+    return TRUE;
+  }
+
+
+  function fillab($varray,$access)
+  {
+    global $phpgw;
+    global $phpgw_info;
+
+    $i=0;
+    while($i < count($varray)) // incremented by 2
+    {
+      $k = explode(";",$varray[$i]); // Key
+      $v = explode(";",$varray[$i+1]); // Values
+      for($h=0;$h<count($k);$h++)
+      {
+        switch($k[$h])
+        {
+          case "fn":
+            $formattedname = $v[0];
+            break;
+          case "n":
+            $lastname  = $v[0];
+            $firstname = $v[1];
+            break;
+          case "bday":
+            $bday = $v[0];
+            break;
+          case "adr": // This one is real ugly. :(
+            $street   = $v[2];
+            $address2 = $v[1] . " " . $v[0];
+            $city     = $v[3];
+            $state    = $v[4];
+            $zip      = $v[5];
+            $country  = $v[6];
+            break;
+          case "tel": // Check to see if there another phone entry.
+            if(!ereg("home",$varray[$i])  && !ereg("work",$varray[$i]) &&
+               !ereg("fax",$varray[$i])   && !ereg("cell",$varray[$i]) &&
+               !ereg("pager",$varray[$i]) && !ereg("bbs",$varray[$i])  &&
+               !ereg("modem",$varray[$i]) && !ereg("car",$varray[$i])  &&
+               !ereg("isdn",$varray[$i])  && !ereg("video",$varray[$i]) )
+            { // There isn't a seperate home entry.
+              // Use this number.
+              $hphone = $v[0];
+            }
+            break;
+          case "home":
+            $hphone = $v[0];
+            break;
+          case "work":
+            $wphone = $v[0];
+            break;
+          case "fax":
+            $fax = $v[0];
+            break;
+          case "pager":
+            $pager = $v[0];
+            break;
+          case "cell":
+            $mphone = $v[0];
+            break;
+          case "pref":
+            $notes .= "Preferred phone number is ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "msg":
+            $notes .= "Messaging service on number "; 
+            $notes .= $v[0] . "\n";
+            break;
+          case "bbs":
+            $notes .= "BBS phone number ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "modem":
+            $notes .= "Modem phone number ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "car":
+            $notes .= "Car phone number ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "isdn":
+            $notes .= "ISDN number ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "video":
+            $notes .= "Video phone number ";
+            $notes .= $v[0] . "\n";
+            break;
+          case "email":
+            if(!ereg("internet",$varray[$i]))
+            {
+              $email = $v[0];
+            }
+            break;
+          case "internet":
+            $email = $v[0];
+            break;
+          case "title":
+            $title = $v[0];
+            break;
+          case "org":
+            $company = $v[0];
+            if(count($v) > 1)
+            {
+              $notes .= $v[0] . "\n";
+              for($j=1;$j<count($v);$j++)
+              {
+                $notes .= $v[$j] . "\n";
+              }
+            }
+            break;
+          default: // Throw most other things into notes.
+            break;
+        } // switch
+      } // for
+        $i++;
+    } // All of the values that are getting filled are.
+
+/*    if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+       $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
+        . "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
+        . "ab_state,ab_zip,ab_bday,"
+        . "ab_notes,ab_company_id) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
+        . addslashes($firstname). "','"
+        . addslashes($lastname) . "','"
+        . addslashes($title)  . "','"
+        . addslashes($email)  . "','"
+        . addslashes($hphone) . "','"
+        . addslashes($wphone) . "','"
+        . addslashes($fax)    . "','"
+        . addslashes($pager)  . "','"
+        . addslashes($mphone) . "','"
+        . addslashes($ophone) . "','"
+        . addslashes($street) . "','"
+        . addslashes($address2) . "','"
+        . addslashes($city)   . "','"
+        . addslashes($state)  . "','"
+        . addslashes($zip)    . "','"
+        . addslashes($bday)   . "','"
+        . addslashes($notes)  . "','"
+        . addslashes($company). "')";
+     } else {
+*/
+
+     $fields["owner"]          = $phpgw_info["user"]["account_id"];
+     $fields["access"]         = $access;
+     $fields["n_given"]        = addslashes($firstname);
+     $fields["n_family"]       = addslashes($lastname);
+     $fields["fn"]             = addslashes($firstname . " " . $lastname);
+     $fields["title"]          = addslashes($title);
+     $fields["d_email"]        = addslashes($email);
+     $fields["a_tel"]          = addslashes($hphone);
+     $fields["b_tel"]          = addslashes($wphone);
+     $fields["c_tel"]          = addslashes($fax);
+     $fields["pager"]          = addslashes($pager);
+     $fields["mphone"]         = addslashes($mphone);
+     $fields["ophone"]         = addslashes($ophone);
+     $fields["adr_street"]     = addslashes($street);
+     $fields["address2"]       = addslashes($address2);
+     $fields["adr_locality"]   = addslashes($city);
+     $fields["adr_region"]     = addslashes($state);
+     $fields["adr_postalcode"] = addslashes($zip);
+     $fields["bday"]           = addslashes($bday);
+     $fields["notes"]          = addslashes($notes);
+     $fields["org_name"]       = addslashes($company);
+
+     $this = CreateObject("phpgwapi.contacts");
+     $this->add($phpgw_info["user"]["account_id"],$fields);
+  }
+
 ?>
