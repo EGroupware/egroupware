@@ -34,7 +34,6 @@
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
 		var $loop = 0;	// set by process_show if an other Exec-ProcessExec loop is needed
-
 		/*!
 		@function etemplate
 		@abstract constructor of etemplate class, reads an eTemplate if $name is given
@@ -102,10 +101,13 @@
 
 			$id = $this->appsession_id();
 
+			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$html .= $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
 				$this->html->form($this->include_java_script() .
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec','','eTemplate');
+					array('etemplate_exec_id' => $id),
+					'/index.php?menuaction=etemplate.etemplate.process_exec','','eTemplate',
+					$GLOBALS['phpgw_info']['etemplate']['form_options']);
 
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
@@ -542,6 +544,12 @@
 					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
 					$extra_label = False;
 					break;
+				case 'file':
+					$html .= $this->html->input_hidden($path = str_replace($name,$name.'_path',$form_name),'.');
+					$html .= $this->html->input($form_name,'','file');
+					$GLOBALS['phpgw_info']['etemplate']['form_options'] =
+						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
+					break;
 				default:
 					if (!isset($this->extension[$cell['type']]))
 					{
@@ -853,6 +861,27 @@ document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','
 				$js .= '<script language="JavaScript">
 function set_element(form,name,value)
 {
+'. /* '	alert("set_element: "+name+"="+value);'. */ '
+	for (i = 0; i < form.length; i++)
+	{
+		if (form.elements[i].name == name)
+		{
+			form.elements[i].value = value;
+		}
+	}
+}
+
+function set_element2(form,name,vname)
+{
+'. /* '	alert("set_element2: "+name+"="+vname);'. */ '
+	for (i = 0; i < form.length; i++)
+	{
+		if (form.elements[i].name == vname)
+		{
+			value = form.elements[i].value;
+		}
+	}
+'. /* '	alert("set_element2: "+name+"="+value);'. */ '
 	for (i = 0; i < form.length; i++)
 	{
 		if (form.elements[i].name == name)

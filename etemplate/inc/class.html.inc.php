@@ -95,9 +95,9 @@ class html
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
 	}
 
-	function form($content,$hidden_vars,$url,$url_vars='',$name='',$method='POST')
+	function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
 	{
-		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\">\n";
+		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\" $options>\n";
 		$html .= $this->input_hidden($hidden_vars);
 
 		if ($content) {
@@ -111,7 +111,7 @@ class html
 								 $form_name='',$method='POST')
 	{
 		return $this->form($this->submit_button($name,$lang),
-								 $hidden_vars,$url,$url_vars,$form_name,$method);
+								 $hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
 	/*!

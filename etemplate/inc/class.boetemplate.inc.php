@@ -49,6 +49,7 @@
 			'select-account' => 'Select Account',	// label=accounts(default),groups,both
 																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
+			'file' => 'FileUpload'	// show an input type='file', set the local name as ${name}_path
 		);
 		/*!
 		@function boetemplate
