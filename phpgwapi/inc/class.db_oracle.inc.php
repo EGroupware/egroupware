@@ -546,8 +546,8 @@
 			$i = 0;
 			while($this->next_record())
 			{
-				$info[$i]['table_name']      = $this->Record['table_name'];
-				$info[$R]['tablespace_name'] = $this->Record['tablespace_name'];
+				$info[$i]['table_name']      = strtolower($this->Record['table_name']);
+				$info[$i]['tablespace_name'] = $this->Record['tablespace_name'];
 				$i++;
 			} 
 			return $info;
