@@ -99,7 +99,7 @@
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ 
-        echo "rows: ".$this->db->num_rows()."<br>";
+//        echo "rows: ".$this->db->num_rows()."<br>";
         return True; 
       }
       while ($this->db->next_record()) {
