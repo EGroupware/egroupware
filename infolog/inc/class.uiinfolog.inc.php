@@ -79,6 +79,8 @@
 			$this->html = &$this->tmpl->html;
 
 			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+
+			$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
 
 		function get_info($info,&$readonlys,$action='',$action_id='')
@@ -98,6 +100,7 @@
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
+			$readonlys["edit_status[$id]"] = !($this->bo->check_access($id,PHPGW_ACL_EDIT) || $info['info_responsible'] == $this->user);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
 			$readonlys["sp[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -207,6 +210,7 @@
 					switch($do)
 					{
 						case 'edit':
+						case 'edit_status':
 							return $this->edit($do_id,$action,$action_id,'',$referer);
 						case 'delete':
 							return $this->delete($do_id,$referer);
@@ -321,12 +325,27 @@
 				}
 				if ($content['save'] || $content['delete'] || $content['cancel'])
 				{
-					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
+					if ($content['save'] && $info_id)
+					{
+						if (!($edit_acl = $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
+						{
+							$old = $this->bo->read($info_id);
+							$status_only = $old['info_responsible'] == $this->user;
+						}
+					}
+					if ($content['save'] && (!$info_id || $edit_acl || $status_only))
 					{
 						if (strstr($content['info_link_id'],':') !== False)
 						{
 							$info_link_id = $content['info_link_id'];
 							$content['info_link_id'] = 0;	// as field has to be int
+						}
+						if ($status_only)
+						{
+							$content = array(
+								'info_id' => $content['info_id'],
+								'info_status' => $content['info_status']
+							);
 						}
 						$this->bo->write($content);
 
@@ -389,7 +408,7 @@
 					}
 					$parent = $this->bo->so->data;
 					$content['info_id'] = $info_id = 0;
-					$content['info_owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+					$content['info_owner'] = $this->user;
 					$content['info_id_parent'] = $parent['info_id'];
 					/*
 					if ($parent['info_type']=='task' && $parent['info_status']=='offer')
@@ -416,7 +435,18 @@
 				{
 					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
 					{
-						return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
+						if ($content['info_responsible'] == $this->user)
+						{
+							$content['status_only'] = True;
+							foreach($content as $name => $value)
+							{
+								$readonlys[$name] = $name != 'info_status';
+							}
+						}
+						else
+						{
+							return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
+						}
 					}
 				}
 				$content['links'] = $content['link_to'] = array(
@@ -479,6 +509,9 @@
 			{
 				$this->tmpl->set_cell_attribute('description|links|delegation|customfields','name','description|links|delegation');
 			}
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.
+				($content['status_only'] ? lang('Edit Status') : lang('Edit'));
+
 			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],

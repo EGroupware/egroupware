@@ -223,7 +223,7 @@
 				{
 					$values['info_owner'] = $this->so->user;
 				}
-				if (empty($values['info_subject']))
+				if (isset($values['info_subject']) && empty($values['info_subject']))
 				{
 					$values['info_subject'] = $this->subject_from_des($values['info_des']);
 				}

@@ -92,7 +92,7 @@
 			private|own - list only his personal entrys (incl. those he is responsible for !!!) 
 		@returns the necesary sql
 		*/
-		function aclFilter($filter = 'none')
+		function aclFilter($filter = False)
 		{
 			ereg('.*(own|privat|all|none|user)([0-9]*).*',$filter_was=$filter,$vars);
 			$filter = $vars[1];
@@ -149,7 +149,7 @@
 			{
 				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR info_responsible=$f_user) AND $filtermethod)";
 			}
-			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod'</p>\n";
+			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 			return $this->acl_filter[$filter.$user] = $filtermethod;  // cache the filter
 		}
 	
@@ -444,10 +444,10 @@
 			{
 				return 0;
 			}
-			$this->db->query("select count(*) FROM phpgw_infolog WHERE info_id_parent=$info_id",__LINE__,__FILE__);
+			$this->db->query($sql="select count(*) FROM phpgw_infolog WHERE info_id_parent=$info_id AND ".$this->aclFilter(),__LINE__,__FILE__);
 
 			$this->db->next_record();
-
+			//echo "<p>anzSubs($info_id) = ".$this->db->f(0)." ($sql)</p>\n";
 			return $this->db->f(0);
 		}
 
