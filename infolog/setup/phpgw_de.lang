@@ -68,7 +68,7 @@ fieldseparator	infolog	de	Feldbegrenzer
 download	infolog	de	Datei laden
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
-csv-import	infolog	de	CSV-Import
+csv-import	common	de	CSV-Import
 use Button to search for Address	infolog	de	Button zum Suchen der Adresse verwenden
 use Button to search for Project	infolog	de	Button zum Suchen des Projekts verwenden
 Description can not exceed 8000 characters in length	infolog	de	Beschreibung darf nicht länger als 8000 Zeichen sein
