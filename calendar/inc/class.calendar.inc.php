@@ -355,7 +355,8 @@ class calendar extends calendar_
 		else
 		{
 			$this->repeated_events = $events;
-			for($i=0;$i<count($events);$i++)
+			$c_events = count($events);
+			for($i=0;$i<$c_events;$i++)
 			{
 				$this->repeating_events[] = $this->fetch_event($this->stream,$events[$i]);
 			}
@@ -380,7 +381,8 @@ class calendar extends calendar_
 		$search_date_day = date('d',$datetime);
 		$search_date_dow = date('w',$datetime);
 		$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
-		for ($i=0;$i<count($this->repeated_events);$i++)
+		$r_events = count($this->repeated_events);
+		for ($i=0;$i<$r_events;$i++)
 		{
 			$rep_events = $this->repeating_events[$i];
 			$id = $rep_events->id;
@@ -512,7 +514,7 @@ class calendar extends calendar_
 		$this->sorted_events_matching = 0;
 		$this->set_filter();
 		$owner = !$owner?$phpgw_info['user']['account_id']:$owner;
-		$repeating_events_matched = $this->check_repeating_entries($datetime);
+		$repeating_events_matched = $this->check_repeating_entries($datetime - $this->tz_offset);
 		$sql = "AND (calendar_entry.cal_type != 'M') "
 				. 'AND ((calendar_entry.cal_datetime >= '.$datetime.' AND calendar_entry.cal_datetime <= '.($datetime + 86399).') '
 				.   'OR (calendar_entry.cal_datetime <= '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
@@ -1169,7 +1171,8 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
-		$ind = intval($phpgw->common->show_date($event->datetime,'H'));
+//		$ind = intval($phpgw->common->show_date($event->datetime,'H'));
+		$ind = intval($event->start->hour);
 
 		if($ind<$first_hour || $ind>$last_hour)
 		{
@@ -1213,8 +1216,10 @@ class calendar extends calendar_
 			{
 				$time[$ind] .= ' - ' . $phpgw->common->show_date($endtime,$this->users_timeformat);
 			}
-			$end_t_h = intval($phpgw->common->show_date($endtime,'H'));
-			$end_t_m = intval($phpgw->common->show_date($endtime,'i'));
+//			$end_t_h = intval($phpgw->common->show_date($endtime,'H'));
+//			$end_t_m = intval($phpgw->common->show_date($endtime,'i'));
+			$end_t_h = intval($event->end->hour);
+			$end_t_m = intval($event->end->min);
 			$this->rowspan = $end_t_h - $ind;
 			
 			if ($end_t_m > 0)
@@ -1222,14 +1227,7 @@ class calendar extends calendar_
 				$this->rowspan += 1;
 			}
 			
-			if(isset($this->rowspan_arr[$ind]))
-			{
-				$r = $this->rowspan_arr[$ind];
-			}
-			else
-			{
-				$r = 0;
-			}
+			$r = (isset($this->rowspan_arr[$ind])?$this->rowspan_arr[$ind]:0);
 			
 			if ($this->rowspan > $r && $this->rowspan > 1)
 			{
@@ -1267,7 +1265,8 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
-		$this->end_repeat_day = $date['raw'];
+
+		$this->end_repeat_day = intval(date('Ymd',$date['raw']));
 		$this->read_repeated_events($this->owner);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1343,7 +1342,8 @@ class calendar extends calendar_
       else
       {
 			$event = CreateObject('calendar.calendar_item');
-			for($i=0;$i<count($events);$i++)
+			$c_events = count($events);
+			for($i=0;$i<$c_events;$i++)
 			{
 				$this->html_for_event_day_at_a_glance($events[$i],$first_hour,$last_hour,$time,$date['month'],$date['day'],$date['year']);
 			}
@@ -1356,28 +1356,22 @@ class calendar extends calendar_
 		$this->last_row = -1;
 		for ($i=0;$i<24;$i++)
 		{
-			if(isset($this->rowspan_arr[$i]))
-			{
-				$r = $this->rowspan_arr[$i];
-			}
-			else
-			{
-				$r = 0;
-			}
+			$r = (isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0);
 			
-			if(isset($time[$i]))
-			{
-				$h = $time[$i];
-			}
-			else
-			{
-				$h = '';
-			}
+			$h = (isset($time[$i])?$time[$i]:'');
 			
 			if ($this->rowspan > 1)
 			{
 				if (strlen($h))
 				{
+					if ($r == 0 )
+					{
+						$this->rowspan_arr[$this->last_row] += $this->rowspan_arr[$i];
+					}
+					else
+					{
+						$this->rowspan_arr[$this->last_row] += ($this->rowspan_arr[$i] - 1);
+					}
 					$time[$this->last_row] .= $time[$i];
 					$time[$i] = '';
 					$this->rowspan_arr[$i] = 0;
