@@ -73,10 +73,10 @@
 	);
 */
 
-	/* If you do not want phpGroupWare to be cached by proxy servers, uncomment the following */
-	/* This is recommended, but not required. */
-	/* header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1 */
-	/* header('Pragma: no-cache');                          // HTTP/1.0 */
+	/* If you want phpGroupWare to be cached by proxy servers, uncomment the following */
+	/* This is NOT recommended, but phpGroupWare should still work fine. */
+	header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
+	header('Pragma: no-cache');                          // HTTP/1.0
 
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
