@@ -58,7 +58,10 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      $this->account_id = get_account_id($account_id,$phpgw_info['user']['account_id']);
+		if($account_id != '')
+		{
+			$this->account_id = get_account_id($account_id,$phpgw_info['user']['account_id']);
+		}
     }
 
     /**************************************************************************\
