@@ -103,17 +103,7 @@
 			'owner'  => 'owner'
 		);
 
-		/* Used to flag an address as being:
-		   domestic AND/OR international(default)
-		   parcel(default)
-		   postal(default)
-		*/
-		var $adr_types = array(
-			'dom'    => lang('Domestic'),
-			'intl'   => lang('International'),
-			'parcel' => lang('Parcel'),
-			'postal' => lang('Postal')
-		);
+		var $adr_types = array();
 
 		/* Used to set preferred number field */
 		var $tel_types = array(
@@ -156,6 +146,18 @@
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
 			}
 			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+
+			/* Used to flag an address as being:
+			   domestic AND/OR international(default)
+			   parcel(default)
+			   postal(default)
+			*/
+			$this->adr_types = array(
+				'dom'    => lang('Domestic'),
+				'intl'   => lang('International'),
+				'parcel' => lang('Parcel'),
+				'postal' => lang('Postal')
+			);
 		}
 
 		/* send this the id and whatever fields you want to see */
