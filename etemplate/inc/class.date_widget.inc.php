@@ -101,12 +101,17 @@
 			{
 				$format += $timeformat;
 			}
-			$sep = $sep[1];
 			if ($cell['readonly'] || $readonlys)	// is readonly
 			{
+				$sep = array(
+					1 => $sep[1],
+					2 => $sep[1],
+					3 => ' ',
+					4 => ':'
+				);
 				for ($str='',$n = $type == 'date-timeonly' ? 3 : 0; $n < count($format); ++$n)
 				{
-					$str .= ($str != '' ? $sep : '');
+					$str .= ($str != '' ? $sep[$n] : '');
 					$str .= $value[$format[$n]];
 				}
 				$value = $str;
