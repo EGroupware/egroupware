@@ -135,6 +135,9 @@
 		}
 //		else {echo 'function was found<br>';}
 
+//$temp_browser = CreateObject('phpgwapi.browser');
+//echo 'agent: '.$temp_browser->get_agent().'<br>';
+
 		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
