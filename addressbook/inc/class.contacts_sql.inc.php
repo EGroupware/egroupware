@@ -127,11 +127,12 @@
 
         $this->db2 = $this->db;
  
-        $this->db->query("select id,lid,owner $t_fields from addressbook WHERE id='$id'");
+        $this->db->query("select id,lid,tid,owner $t_fields from addressbook WHERE id='$id'");
         $this->db->next_record();
        
         $return_fields[0]["id"]     = $this->db->f("id");
 	$return_fields[0]["lid"]    = $this->db->f("lid");
+	$return_fields[0]["tid"]    = $this->db->f("tid");
         $return_fields[0]["owner"]  = $this->db->f("owner");
         if (gettype($ab_fieldnames) == "array") {
           while (list($f_name) = each($ab_fieldnames)) {
@@ -192,7 +193,7 @@
                        . $filtermethod,__LINE__,__FILE__);
            $this->total_records = $this->db3->num_rows();
 	
-           $this->db->query("select id,lid,owner $t_fields from addressbook "
+           $this->db->query("select id,lid,tid,owner $t_fields from addressbook "
                        . $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }
 
@@ -200,6 +201,7 @@
         while ($this->db->next_record()) {
            $return_fields[$i]["id"]     = $this->db->f("id");
 	   $return_fields[$i]["lid"]    = $this->db->f("lid");
+	   $return_fields[$i]["tid"]    = $this->db->f("tid");
            $return_fields[$i]["owner"]  = $this->db->f("owner");
            if (gettype($ab_fieldnames) == "array") {
               while (list($f_name) = each($ab_fieldnames)) {
