@@ -165,6 +165,7 @@
 						{
 							case 'vbox':
 							case 'hbox':
+							case 'stack':
 								$cell['cell_tpl'] = '.vbox';
 								break;
 						}
@@ -242,6 +243,7 @@
 				{
 					case 'vbox':
 					case 'hbox':
+					case 'stack':
 						if ($cell['size'] < 2)
 						{
 							$cell['size'] = 2;
@@ -462,7 +464,8 @@
 					if ($name == 'etemplate')
 					{
 						$m = new editor(False);
-						$additional = $m->messages + $this->etemplate->types + $this->extensions + $this->aligns;
+						$db_tools = CreateObject('etemplate.db_tools',False);
+						$additional = $m->messages + $db_tools->messages + $this->etemplate->types + $this->extensions + $this->aligns;
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
