@@ -1,0 +1,33 @@
+<!DOCTYPE chapter SYSTEM "introduction.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<chapter id="Introduction">
+<title>Introduction</title>
+<sect1>
+<title>What is phpGroupWare</title>
+<para>
+phpGroupWare is a multi-user web-based suite written in PHP.  It contains many applications, including a Calendar, email package, contact database and project manager.  It also includes an extensive API for writing new applications.
+</para>
+</sect1>
+
+<sect1>
+<title>About the author</title>
+
+<para>
+Brandon Neill just wanted to figure out how to use the program and decided to write a manual as an excuse to bug the developers.
+</para>
+</sect1>
+<sect1>
+<title>Acknowledgements</title>
+<para>
+I would like to thank the many authors of phpGroupWare and it's applications for creating such a useful and extensible product.  I would also like to thank the authors of previous version of the documentation and the authors of the LDP Author guide for teaching me how to use DocBook.
+</para>
+</sect1>
+<sect1>
+<title>Notes</title>
+<para>
+This document is based upon the current CVS release, where possible I included notes relating to the current stable release (0.9.12).  This is a work in progress, please email any corrections to <email>bneill@yahoo.com</email>.
+</para>
+</sect1>
+</chapter>
+
+
+

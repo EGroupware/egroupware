@@ -1,0 +1,74 @@
+<!DOCTYPE chapter SYSTEM "calendar.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<chapter id="Calendar">
+<title>Calendar</title>
+
+<para>
+A searchable daily,weekly, monthly calendar/scheduling applicaiton with alerts for high priority events.
+</para>
+<sect1>
+<title>Viewing</title>
+<para>
+To view your calendar, click on the calendar icon in the menu.  This will bring you to the default view selected in your preferences.  You can click one of the six icons to change your calendar view.
+</para>
+<variablelist>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/today.gif"></inlinegraphic></guiicon>Day</term>
+<listitem>
+<para>
+Current day is displayed, broken down into time increments.  Increment and working hours can be set in preferences.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/week.gif"></inlinegraphic></guiicon>Week</term>
+<listitem>
+<para>
+Current week is displayed.  Start day of week can be set in preferences.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/month.gif"></inlinegraphic></guiicon>Month</term>
+<listitem>
+<para>
+Current month is displayed. 
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/year.gif"></inlinegraphic></guiicon>Year</term>
+<listitem>
+<para>
+Current year is displayed.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/planner.gif"></inlinegraphic></guiicon>Planner</term>
+<listitem>
+<para>
+I don't know yet
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guiicon><inlinegraphic fileref="images/view.gif"></inlinegraphic></guiicon>&nbsp;Daily Matrix View</term>
+<listitem>
+<para>
+Displays a selection of users and their available times for a given date range
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+<sect1>
+<title>Adding an entry</title>
+</sect1>
+<sect1>
+<title>Editing an entry</title>
+</sect1>
+<sect1>
+<title>Preferences</title>
+</sect1>
+</chapter>
+
