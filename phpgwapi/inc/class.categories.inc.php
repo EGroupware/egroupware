@@ -46,10 +46,10 @@
 		{
 			switch ($type)
 			{
-				case 'subs':         $s = " and cat_parent != '0'"; break;
-				case 'mains':        $s = " and cat_parent = '0'"; break;
-				case 'appandmains':  $s = " and cat_appname='" . $this->app_name . "' and cat_parent ='0'"; break;
-				case 'appandsubs':   $s = " and cat_appname='" . $this->app_name . "' and cat_parent !='0'"; break;
+				case 'subs':		 $s = " and cat_parent != '0'"; break;
+				case 'mains':		 $s = " and cat_parent = '0'"; break;
+				case 'appandmains':	 $s = " and cat_appname='" . $this->app_name . "' and cat_parent ='0'"; break;
+				case 'appandsubs':	 $s = " and cat_appname='" . $this->app_name . "' and cat_parent !='0'"; break;
 				default: return False;
 			}
 			return $s;
@@ -64,17 +64,17 @@
 		{
 			switch($for)
 			{
-				case 'app':          $w = " where cat_appname='" . $this->app_name . "'"; break;
-				case 'appandmains':  $w = " where cat_appname='" . $this->app_name . "' and cat_parent ='0'";
-				case 'appandsubs':   $w = " where cat_appname='" . $this->app_name . "' and cat_parent !='0'";
-				case 'subs':         $w = " where cat_parent != '0'"; break;
-				case 'mains':        $w = " where cat_parent = '0'"; break;
-				default:	return False;
+				case 'app':		$w = " where cat_appname='" . $this->app_name . "'"; break;
+				case 'appandmains':	$w = " where cat_appname='" . $this->app_name . "' and cat_parent ='0'";
+				case 'appandsubs':	$w = " where cat_appname='" . $this->app_name . "' and cat_parent !='0'";
+				case 'subs':		$w = " where cat_parent != '0'"; break;
+				case 'mains':		$w = " where cat_parent = '0'"; break;
+				default:		return False;
 			
 			}
 			$this->db->query("select count(*) from phpgw_categories $w",__LINE__,__FILE__);
 			$this->db->next_record();
-			
+
 			return $this->db->f(0);
 		}
 
@@ -122,9 +122,9 @@
                         	$public_user_list[] = $user;
 			    }
 			    reset($public_user_list);
-                                $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' OR cat_owner in(" . implode(',',$public_user_list) . ")) ";			    
+                                $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' OR cat_owner in(" . implode(',',$public_user_list) . ")) ";
 			}
-			else 
+			else
 			{
 			    $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public') ";
 			}
@@ -138,8 +138,8 @@
 			{
 				$querymethod = " AND (cat_name like '%$query%' OR cat_description like '%$query%') ";
 			}
-	
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND " 
+
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
 					. " $grant_cats $querymethod $filter $ordermethod";
 
 			if ($limit)
@@ -173,16 +173,16 @@
 		/*!
 		@function return_single
 		@abstract return single
-		@param $id integer id of category 
-		@result $cats  array populated with 
+		@param $id integer id of category
+		@result $cats  array populated with
 		*/
 		function return_single($id = '')
 		{
 
 			$this->db->query("select * from phpgw_categories where cat_id='$id' and "
 				. "cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
-	    
-			if ($this->db->next_record()) 
+
+			if ($this->db->next_record())
 			{
 				$cats[0]['id']			= $this->db->f('cat_id');
 				$cats[0]['owner']		= $this->db->f('cat_owner');
@@ -263,14 +263,28 @@
 
                                 $cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
 
-                                $s  = '<table border="0" cellpadding="0" cellspacing="0">' . "\n";
+                                $s  = '<table border="0" cellpadding="2" cellspacing="2">' . "\n";
 
                                 for ($i=0;$i<count($cats);$i++)
                                 {
-                                    $spaceset = str_repeat($space,$cats[$i]['level']);
 
-                                    $s .= "<tr>\n";
-                                    $s .= '<td height="25">' . $spaceset . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name']) . '</a></td>' . "\n";
+                                    $image_set = '&nbsp;';
+
+                                    if ($cats[$i]['id'] == $selected)
+				    {
+                                        $image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
+				    }
+
+                                    if (($cats[$i]['level'] == 0) && ($cats[$i]['id'] != $selected))
+                                    {
+                                        $image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
+                                    }
+
+                            	    $space_set = str_repeat($space,$cats[$i]['level']);
+
+                                    $s .= '<tr>' . "\n";
+				    $s .= '<td width="8">' . $image_set . '</td>' . "\n";
+                                    $s .= '<td>' . $space_set . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name']) . '</a></td>' . "\n";
 				    $s .= '</tr>' . "\n";
                                 }
 
@@ -352,7 +366,7 @@
 		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '',$cat_main)
 		{
 	
-		    if ($cat_parent && (!$cat_main))	
+		    if ($cat_parent && (!$cat_main))
 		    {
 			$cat_main = $cat_parent;
 		    }
