@@ -201,14 +201,14 @@
         }
         if (isset($phpgw_info["setup"]["oldver"]["phpgwapi"])){
           if ($phpgw_info["setup"]["oldver"]["phpgwapi"] == $phpgw_info["server"]["versions"]["phpgwapi"]){
-            $phpgw_info["setup"]["header_msg"] = "Stage 2 (Tables Complete)";
+            $phpgw_info["setup"]["header_msg"] = "Stage 1 (Tables Complete)";
             return 10;
           }else{
-            $phpgw_info["setup"]["header_msg"] = "Stage 2 (Tables need upgrading)";
+            $phpgw_info["setup"]["header_msg"] = "Stage 1 (Tables need upgrading)";
             return 4;
           }
         }else{
-          $phpgw_info["setup"]["header_msg"] = "Stage 2 (Tables appear to be pre-beta)";
+          $phpgw_info["setup"]["header_msg"] = "Stage 1 (Tables appear to be pre-beta)";
           return 2;
         }
       }else{
@@ -223,10 +223,10 @@
   
         if (isset($db_rights)){
         //if (isset($isdb)){
-          $phpgw_info["setup"]["header_msg"] = "Stage 2 (Create tables)";
+          $phpgw_info["setup"]["header_msg"] = "Stage 1 (Create tables)";
           return 3;
         }else{
-          $phpgw_info["setup"]["header_msg"] = "Stage 2 (Create Database)";
+          $phpgw_info["setup"]["header_msg"] = "Stage 1 (Create Database)";
           return 1;
         }
       }
@@ -236,17 +236,44 @@
     {
       global $phpgw_info;
       $this->db->Halt_On_Error = "no";
-      if ($phpgw_info["setup"]["stage"]["db"] == 10){
-        $this->db->query("select config_value from config where config_name='freshinstall'");
-        $this->db->next_record();
-        $configed = $this->db->f("config_value");
-        if ($configed){
-          $phpgw_info["setup"]["header_msg"] = "Stage 3 (Needs Configuration)";
-          return 1;
-        }else{
-          $phpgw_info["setup"]["header_msg"] = "Stage 3 (Configuration OK)";
-          return 10;
+      if ($phpgw_info["setup"]["stage"]["db"] != 10){return "";}
+
+      $this->db->query("select config_value from config where config_name='freshinstall'");
+      $this->db->next_record();
+      $configed = $this->db->f("config_value");
+      if ($configed){
+        $phpgw_info["setup"]["header_msg"] = "Stage 2 (Needs Configuration)";
+        return 1;
+      }else{
+        $phpgw_info["setup"]["header_msg"] = "Stage 2 (Configuration OK)";
+        return 10;
+      }
+      
+    }
+
+    function check_lang()
+    {
+      global $phpgw_info;
+      $this->db->Halt_On_Error = "no";
+      if ($phpgw_info["setup"]["stage"]["db"] != 10){return "";}
+            
+      $this->db->query("select distinct lang from lang;");
+      if ($this->db->num_rows() == 0){
+        $phpgw_info["setup"]["header_msg"] = "Stage 3 (No languages installed)";
+        return 1;
+      }else{
+        while (@$this->db->next_record()) {
+          $phpgw_info["setup"]["installed_langs"][$this->db->f("lang")] = $this->db->f("lang");
         }
+        reset ($phpgw_info["setup"]["installed_langs"]);
+        while (list ($key, $value) = each ($phpgw_info["setup"]["installed_langs"])) {
+          $sql = "select lang_name from languages where lang_id = '".$value."';";
+          $this->db->query($sql);
+          $this->db->next_record();
+          $phpgw_info["setup"]["installed_langs"][$value] = $this->db->f("lang_name");
+        }
+        $phpgw_info["setup"]["header_msg"] = "Stage 3 (Completed)";
+        return 10;
       }
     }
   

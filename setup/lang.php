@@ -24,9 +24,6 @@
   }
   $phpgw_setup->loaddb();
 
-     echo "<html><head><title>phpGroupWare Setup</title></head>\n";
-     echo "<body bgcolor='#ffffff'>\n";
-
      include($phpgw_info["server"]["api_inc"]."/phpgw_common.inc.php");
      $common = new common;
      $sep = $common->filesystem_separator();
@@ -85,8 +82,8 @@
     } 
 
     if (! $included) {
-       echo "<center>Language files have been installed</center>";
-       exit;
+      Header("Location: index.php");
+      exit;
     }
 
   } else {

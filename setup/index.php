@@ -192,12 +192,22 @@
   }
 
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+  $phpgw_info["setup"]["stage"]["lang"] = $phpgw_setup->check_lang();
   switch($phpgw_info["setup"]["stage"]["lang"]){
     case 1:
-      echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>You are ready for this stage, but this stage is not yet written.<br></td></tr>';
+      echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>You do not have any languages installed. Please install one now<br>';
+      echo "<form method=\"POST\" action=\"lang.php\"><input type=\"submit\" value=\"Install Language\"></form></td></tr>";
       break;
     case 10:
-      echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="O" border="0"></td><td>This stage is completed<br></td></tr>';
+      echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="O" border="0"></td><td>This stage is completed<br>';
+      echo "Currently installed languages: ";
+      reset ($phpgw_info["setup"]["installed_langs"]);
+      while (list ($key, $value) = each ($phpgw_info["setup"]["installed_langs"])) {
+        if (!$notfirst){ echo $value; }else{ echo ", ".$value; }
+        $notfirst = True;
+      }
+      echo "<br>";
+      echo "<form method=\"POST\" action=\"lang.php\"><input type=\"submit\" value=\"Manage Languages\"></form></td></tr>";
       break;
     default:
       echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
