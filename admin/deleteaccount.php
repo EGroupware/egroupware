@@ -78,8 +78,8 @@
      $phpgw->db->query("delete from webcal_entry_user where cal_login='$lid'");
 
      $phpgw->db->query("delete from preferences where owner='$lid'");
-     $phpgw->db->query("delete from todo where owner='$lid'");
-     $phpgw->db->query("delete from addressbook where owner='$lid'");
+     $phpgw->db->query("delete from todo where todo_owner='$lid'");
+     $phpgw->db->query("delete from addressbook where ab_owner='$lid'");
      $phpgw->db->query("delete from accounts where loginid='$lid'");
      //$phpgw->db->query("delete from users_headlines where owner='$lid'");
      //$phpgw->db->query("delete from profiles where owner='$lid'");
@@ -88,9 +88,11 @@
 
      $sep = $phpgw->common->filesystem_separator();
 
-     $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "users"
-              . $sep;
+     //$basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "users"
+     //         . $sep;
+          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
+//echo "<h1> rmdir:".$basedir . $lid."</h1>\n";
      if (! @rmdir($basedir . $lid)) {
         $cd = 34;
      } else {
