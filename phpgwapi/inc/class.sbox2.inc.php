@@ -124,6 +124,83 @@
 			return $ret;
 		}
 
+		function event2name( $event )
+		{
+			if (!is_object($this->bocal))
+			{
+				$this->bocal = createobject('calendar.bocalendar');
+			}
+			if (!is_array($event) && (int) $event > 0)
+			{
+				$event = $this->bocal->read_entry($event);
+			}
+			if (!is_array($event))
+			{
+				return 'not an event !!!';
+			}
+			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
+			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
+			$name .= ': ' . $event['title'];
+
+			return $GLOBALS['phpgw']->strip_html($name);
+		}
+
+		/*
+		 * Function		Allows you to show and select an event from the calendar (works with and without javascript !!!)
+		 * Parameters	$name 		string with basename of all variables (not to conflict with the name other template or submitted vars !!!)
+		 *					$id_name		id of the address for edit or 0 if none selected so far
+		 *					$query_name have to be called $query_XXX, the search pattern after the submit, has to be passed back to the function
+		 *					$multipe	present a multiple selectable box instead of one selector-button
+		 * On Submit	$id_XXX		contains the selected event (if != 0)
+		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
+		 * Returns		array with vars to set for the template, set with: $template->set_var( getEvent( ... )); (see getId( ))
+		 *
+		 * Note			As query's for an event are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
+		 */
+		function getEvent( $name,$id_name,$query_name,$title='',$multiple=False)
+		{
+			// echo "<p>getEvent('$name',$id_name,'$query_name','$title')</p>";
+
+			// fallback if calendar is not installed or not enabled for user
+			if (!file_exists(PHPGW_SERVER_ROOT.'/calendar') || !$GLOBALS['phpgw_info']['user']['apps']['calendar']['enabled'])
+			{
+				return array(
+					$name => "<input type=\"hidden\" name=\"id_$name\" value=\"$id_name\">\n",
+					$name.'_no_js' => '',
+					$name.'_title' => ''
+				);
+			}
+			if ($id_name || $query_name)
+			{
+				if (!is_object($this->bocal))
+				{
+					$this->bocal = createobject('calendar.bocalendar');
+				}
+				if ($query_name)
+				{
+					$event_ids = $this->bocal->search_keywords($query_name);
+					$content = array( );
+					while ($event_ids && list( $key,$id ) = each( $event_ids ))
+					{
+						$content[$id] = $this->event2name( $id );
+					}
+				}
+				else
+				{
+					$event = $this->bocal->read_entry( $id_name );
+					if ($event && is_array($event))
+					{
+						$content = $this->event2name( $event );
+					}
+				}
+			}
+			if (!$title)
+			{
+				$title = lang('Calendar');
+			}
+			return $this->getId($name,$title,lang('Pattern for Search in Calendar'),$id_name,$content,lang('use Button to search for Calendarevent'),$multiple);
+		}
+
 		function addr2name( $addr )
 		{
 			$name = $addr['n_family'];
