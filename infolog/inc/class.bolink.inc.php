@@ -795,6 +795,17 @@
 		}
 
 		/*!
+		@function decode_htmlspecialchars
+		@syntax decode_htmlspecialchars( $str )
+		@author ralfbecker
+		@abstract reverse function of htmlspecialchars()
+		*/
+		function decode_htmlspecialchars($str)
+		{
+			return str_replace(array('&amp;','&quot;','&lt;','&gt;'),array('&','"','<','>'),$str);
+		}
+
+		/*!
 		@function calendar_title
 		@syntax calendar_title(  $id  )
 		@author ralfbecker
@@ -818,7 +829,7 @@
 				($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12' ? 'h:i a' : 'H:i');
 			
 			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset,$format);
-			$name .= ': ' . $event['title'];
+			$name .= ': ' . $this->decode_htmlspecialchars($event['title']);	// cal returns entities
 
 			return $name;
 		}
