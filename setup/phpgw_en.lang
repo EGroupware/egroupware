@@ -206,6 +206,7 @@ failed to find your station	weather	en	Failed to find your station
 fax	addressbook	en	Fax
 february	common	en	February
 fields	common	en	Fields
+fields to show in address list	addressbook	en	Fields to show in address list
 file manager	common	en	File manager
 files	common	en	Files
 file_upload	filemanager	en	File Upload
@@ -412,6 +413,7 @@ permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
+phone numbers	addressbook	en	Phone Numbers
 phpgroupware login	login	en	phpGroupWare login
 php information	admin	en	PHP Information
 phrase in english	transy	en	Phrase in English
