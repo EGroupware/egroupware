@@ -50,8 +50,10 @@ class jscalendar
 	@param $name name and id of the input-field (it also names the id of the img $name.'-toggle')
 	@param $date date as string or unix timestamp (in users localtime)
 	@param $year,$month,$day if $date is not used
+	@param $helpmsg a helpmessage for the statusline of the browser
+	@param $options any other options to the inputfield
 	*/
-	function input($name,$date,$year=0,$month=0,$day=0)
+	function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='')
 	{
 		//echo "<p>jscalendar::input(name='$name', date='$date'='".date('Y-m-d',$date)."', year='$year', month='$month', day='$day')</p>\n";
 
@@ -65,8 +67,13 @@ class jscalendar
 		{
 			$date = date($this->dateformat,mktime(12,0,0,$month,$day,$year));
 		}
+		if ($helpmsg !== '')
+		{
+			$options .= " onFocus=\"self.status='".addslashes($helpmsg)."'; return true;\"" .
+				" onBlur=\"self.status=''; return true;\"";
+		}
 		return
-'<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"/>
+'<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
 	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->phpgwapi_inc_url.'/jscalendar/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 	Calendar.setup(
