@@ -55,8 +55,7 @@
 
 			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			//echo "Version: $a.$b.$c.$d\n";
-			if ($this->stable = $a <= 0 && $b <= 9 && $c <= 14)
-				$this->class_conf = array();
+			$this->stable = $a <= 0 && $b <= 9 && $c <= 14;
 		}
 
 		/*!
@@ -103,7 +102,7 @@
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
-			$html .= ($this->stable ? $this->html->nextMatchStyles()."\n\n" : ''). // so they get included once
+			$html .= ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script() .
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id,
@@ -295,9 +294,9 @@
 
 				$rows[".$row"] .= $this->html->formatOptions($height,'HEIGHT');
 				list($cl) = explode(',',$class);
-				if ($cl == 'nmr')
+				if ($cl == 'nmr' || $cl == 'row')
 				{
-					$cl .= $nmr_alternate++ & 1; // alternate color
+					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
 				}
 				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
 				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
@@ -566,44 +565,48 @@
 					$html .= $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
+					$sels = array();
+					list($multiple) = explode(',',$cell['size']);
+					if (!empty($multiple) && 0+$multiple <= 0)
+					{
+						$sels[''] = $multiple < 0 ? lang('all') : lang($multiple);
+						$multiple = 0;
+					}
 					if (!empty($cell['sel_options']))
 					{
-						if (!is_array($cell))
+						if (!is_array($cell['sel_options']))
 						{
-							$sel_options = array();
 							$opts = explode(',',$cell['sel_options']);
 							while (list(,$opt) = each($opts))
 							{
 								list($k,$v) = explode('=',$opt);
-								$sel_options[$k] = $v;
+								$sels[$k] = $v;
 							}
 						}
 						else
 						{
-							$sel_options = $cell['sel_options'];
+							$sels += $cell['sel_options'];
 						}
 					}
-					elseif (isset($sel_options[$name]))
+					if (isset($sel_options[$name]))
 					{
-						$sel_options = $sel_options[$name];
+						$sels += $sel_options[$name];
 					}
 					elseif (isset($sel_options[$org_name]))
 					{
-						$sel_options = $sel_options[$org_name];
+						$sels += $sel_options[$org_name];
 					}
-					elseif (isset($content["options-$name"]))
+					if (isset($content["options-$name"]))
 					{
-						$sel_options = $content["options-$name"];
+						$sels += $content["options-$name"];
 					}
-					list($multiple) = explode(',',$cell['size']);
-
 					if ($readonly)
 					{
-						$html .= $cell['no_lang'] ? $sel_options[$value] : lang($sel_options[$value]);
+						$html .= $cell['no_lang'] ? $sels[$value] : lang($sels[$value]);
 					}
 					else
 					{
-						$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sel_options,
+						$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
 							$cell['no_lang'],$options,$multiple);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					}

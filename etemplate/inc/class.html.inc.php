@@ -274,16 +274,16 @@ class html
 	}
 
 	/*!
-	@function nextMatchStyles
+	@function themeStyles
 	@abstract returns simple stylesheet for nextmatch row-colors
-	@result the classes 'nmh' = nextmatch header, 'nmr0'+'nmr1' = alternating rows
+	@result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
 	*/
-	function nextMatchStyles()
+	function themeStyles()
 	{
 		return $this->style(
-			".nmh { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
-			".nmr1 { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
-			".nmr0 { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n"
+			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
+			".row_on { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
+			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n"
 		);
 	}
 
