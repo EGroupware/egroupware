@@ -18,12 +18,6 @@
 	$setup_info['addressbook']['app_order'] = 4;
 	$setup_info['addressbook']['enable']    = 1;
 
-	/* The tables this app creates */
-	$setup_info['addressbook']['tables']    = array(
-		'phpgw_addressbook',
-		'phpgw_addressbook_extra'
-	);
-
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'preferences';
 	$setup_info['addressbook']['hooks'][] = 'admin';
