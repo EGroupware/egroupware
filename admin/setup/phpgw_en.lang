@@ -139,9 +139,10 @@ enter a description for the category	admin	en	enter a description for the catego
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption (requires mcrypt)
 enter the background color for the login page	admin	en	Enter the background color for the login page
 enter the background color for the site title	admin	en	Enter the background color for the site title
-enter the file name of your logo	admin	en	Enter the file name of your logo
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	en	
 enter the hostname of the machine on which this server is running	admin	en	Enter the hostname of the machine on which this server is running
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	en	Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
@@ -149,6 +150,7 @@ enter the site password for peer servers	admin	en	Enter the site password for pe
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
 enter the title for your site	admin	en	Enter the title for your site
 enter the title of your logo	admin	en	Enter the title of your logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	en	Enter the URL or filename (in phpgwapi/templates/default/images) of your logo
 enter the url where your logo should link to	admin	en	Enter the url where your logo should link to
 enter your default ftp server	admin	en	Enter your default FTP server
 enter your http proxy server	admin	en	Enter your HTTP proxy server
@@ -342,9 +344,9 @@ view sessions	admin	en	View sessions
 view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
-would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
+would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 xml-rpc	admin	en	XML-RPC

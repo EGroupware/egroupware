@@ -139,10 +139,11 @@ enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsle
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
-enter the background color for the site title	admin	de	Hintergrundfarbe für den Title der phpGroupWare installation
-enter the file name of your logo	admin	de	Dateiname ihres Logos
+enter the background color for the site title	admin	de	Hintergrundfarbe für den Title der Installation
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	de	URL zur phpGroupWare Installation.<br>Beispiel: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen Knopf nochmals
@@ -150,6 +151,7 @@ enter the site password for peer servers	admin	de	Site Passwort für Peer Server
 enter the site username for peer servers	admin	de	Site Benutzername für Peer Server
 enter the title for your site	admin	de	Titel der phpGroupWare Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter your default ftp server	admin	de	Default FTP Server
 enter your http proxy server	admin	de	HTTP Proxy Server
@@ -347,9 +349,9 @@ view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
+would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll eGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
+would you like egroupware to check for new application versions when admins login ?	admin	de	Soll eGroupWare auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich der Administrator einlogt ?
-would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC

@@ -7,7 +7,7 @@
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="row_on">
-    <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
+    <td>{lang_Would_you_like_eGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
     <td>
      <select name="newsettings[checkfornewversion]">
       <option value="">{lang_No}</option>
@@ -69,7 +69,7 @@
     <td>{lang_Enter_the_title_for_your_site}:</td>
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
    </tr>
-
+<!-- This is not used / working at the moment, RalfBecker 21.03.2004
    <tr class="row_off">
     <td>{lang_Enter_the_background_color_for_the_site_title}:</td>
     <td>#<input name="newsettings[login_bg_color_title]" value="{value_login_bg_color_title}"></td>
@@ -79,15 +79,15 @@
     <td>{lang_Enter_the_background_color_for_the_login_page}:</td>
     <td>#<input name="newsettings[login_bg_color]" value="{value_login_bg_color}"></td>
    </tr>
-
+-->
    <tr class="row_off">
-    <td>{lang_Enter_the_file_name_of_your_logo}:</td>
+    <td>{lang_Enter_the_URL_or_filename_(in_phpgwapi/templates/default/images)_of_your_logo}:</td>
     <td><input name="newsettings[login_logo_file]" value="{value_login_logo_file}"></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Enter_the_url_where_your_logo_should_link_to}:</td>
-    <td>http://<input name="newsettings[login_logo_url]" value="{value_login_logo_url}"></td>
+    <td><input name="newsettings[login_logo_url]" value="{value_login_logo_url}"></td>
    </tr>
 
    <tr class="row_off">
@@ -101,16 +101,6 @@
      <select name="newsettings[showpoweredbyon]">
       <option value="bottom" {selected_showpoweredbyon_bottom}>{lang_bottom}</option>
       <option value="top" {selected_showpoweredbyon_top}>{lang_top}</option>
-     </select>
-    </td>
-   </tr>
-
-   <tr class="row_off">
-    <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
-    <td>
-     <select name="newsettings[htmlcompliant]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_htmlcompliant_True}>{lang_Yes}</option>
      </select>
     </td>
    </tr>
