@@ -34,9 +34,7 @@
 
 		function boXport ($session=False)
 		{
-			global $phpgw;
-
-			$this->contacts = $phpgw->contacts;
+			$this->contacts = $GLOBALS['phpgw']->contacts;
 			$this->so = CreateObject('addressbook.soaddressbook');
 			if($session)
 			{
@@ -56,7 +54,7 @@
 
 		function save_sessiondata()
 		{
-			global $phpgw,$start,$limit,$query,$sort,$order,$filter,$cat_id;
+			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
 
 			if ($this->use_session)
 			{
@@ -70,15 +68,13 @@
 					'cat_id' => $cat_id
 				);
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$phpgw->session->appsession('session_data','addressbook',$data);
+				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			global $phpgw;
-
-			$data = $phpgw->session->appsession('session_data','addressbook');
+			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
@@ -92,8 +88,6 @@
 
 		function import($tsvfile,$conv_type,$private,$fcat_id)
 		{
-			global $phpgw;
-
 			include (PHPGW_APP_INC . '/import/' . $conv_type);
 
 			if ($private == '') { $private = 'public'; }
@@ -159,7 +153,7 @@
 						$value = $newval;
 						//echo $name.':'.$value;
 					}
-				
+
 					if ($name && $value)
 					{
 						$test = split(',mail=',$value);
@@ -189,15 +183,20 @@
 			{
 				while ($data = fgets($fp,8000))
 				{
-					$data = trim($data);											// RB 2001/05/07 added for Lotus Organizer
-					while (substr($data,-1) == '=') {						// '=' at end-of-line --> line to be continued with next line
+					$data = trim($data);
+					// RB 2001/05/07 added for Lotus Organizer
+					while (substr($data,-1) == '=')
+					{
+						// '=' at end-of-line --> line to be continued with next line
 						$data = substr($data,0,-1) . trim(fgets($fp,8000));
 					}
-					if (strstr($data,';ENCODING=QUOTED-PRINTABLE')) {	// RB 2001/05/07 added for Lotus Organizer
+					if (strstr($data,';ENCODING=QUOTED-PRINTABLE'))
+					{
+						// RB 2001/05/07 added for Lotus Organizer
 						$data = quoted_printable_decode(str_replace(';ENCODING=QUOTED-PRINTABLE','',$data));
-					}								
-					list($name,$value) = explode(':', $data,2); 			// RB 2001/05/09 to allow ':' in Values (not only in URL's)
-	
+					}
+					list($name,$value) = explode(':', $data,2); // RB 2001/05/09 to allow ':' in Values (not only in URL's)
+
 					if (strtolower(substr($name,0,5)) == 'begin')
 					{
 						$buffer = $contacts->import_start_record($buffer);
@@ -227,15 +226,13 @@
 
 		function export($conv_type,$cat_id='')
 		{
-			global $phpgw_info;
-
 			include (PHPGW_APP_INC . '/export/' . $conv_type);
 			$buffer=array();
 			$contacts = new export_conv;
 
 			// Read in user custom fields, if any
 			$customfields = array();
-			while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
+			while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 			{
 			if ( substr($col,0,6) == 'extra_' )
 				{
@@ -244,7 +241,7 @@
 					$customfields[$field] = ucfirst($field);
 				}
 			}
- 			$extrafields = array(
+			$extrafields = array(
 				'ophone'   => 'ophone',
 				'address2' => 'address2',
 				'address3' => 'address3'
@@ -276,7 +273,7 @@
 			// Here, buffer becomes a string suitable for printing
 			$buffer = $contacts->export_end_file($buffer);
 
-			$tsvfilename = $phpgw_info['server']['temp_dir'] . SEP . $tsvfilename;
+			$tsvfilename = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $tsvfilename;
 
 			return $buffer;
 		}
