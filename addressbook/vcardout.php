@@ -14,17 +14,22 @@
 
 	if ($nolname || $nofname) {
 		$phpgw_info["flags"] = array(
-			"noheader" => False,
-			"nonavbar" => False
+			"noheader"    => False,
+			"nonavbar"    => False,
+			"noappheader" => False,
+			"noappfooter" => False
 		);
 	} else {
 		$phpgw_info["flags"] = array(
-			"noheader" => True,
-			"nonavbar" => True
+			"noheader"    => True,
+			"nonavbar"    => True,
+			"noappheader" => True,
+			"noappfooter" => True
 		);
 	}
 
 	$phpgw_info["flags"]["enable_contacts_class"] = True;
+	$phpgw_info["flags"]["enable_browser_class"] = True;
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	include("../header.inc.php");
 
@@ -88,11 +93,19 @@
 				$buffer[$myexport[$name]] = $value;
 			}
 		}
+		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
+		{
+			$attachment = "";
+		}
+		else
+		{
+			$attachment = " attachment;";
+		}
 		// create a vcard from this translated array
 	    $entry = $vcard->out($buffer);
 		// print it
 		header("Content-type: text/x-vcard");
-		header("Content-Disposition: attachment; filename=$filename");
+		header("Content-Disposition:$attachment filename=$filename");
 		echo $entry;
 		$phpgw->common->exit;
 	} /* !nolname && !nofname */

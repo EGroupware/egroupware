@@ -26,6 +26,7 @@
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	$phpgw_info["flags"]["enable_contacts_class"] = True;
+	$phpgw_info["flags"]["enable_browser_class"] = True;
 	include("../header.inc.php");
 
 	$sep = SEP;
@@ -117,8 +118,17 @@
 
 		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
+		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
+		{
+			$attachment = "";
+		}
+		else
+		{
+			$attachment = " attachment;";
+		}
+
 		if ( ($download == "on") || ($o->type == 'pdb') ) {
-			header("Content-disposition: attachment; filename=\"".$tsvfilename."\"");
+			header("Content-disposition:".$attachment." filename=\"".$tsvfilename."\"");
 			header("Content-type: application/octetstream");
 			header("Content-length: ".strlen($buffer));
 			header("Pragma: no-cache");
