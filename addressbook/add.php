@@ -13,7 +13,10 @@
 /* $Id$ */
 
 	if ($submit || $AddVcard) {
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
 	}
 	
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
@@ -78,8 +81,11 @@
 		$fields["notes"]			= $notes;
 	
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
+		$ab_id = addressbook_get_lastid();
 
-		Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/","cd=14"));
+		//Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/","cd=14"));
+		Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		$phpgw->common->phpgw_exit();
 	}
 
 	$t->set_var("lang_ok",lang("ok"));
