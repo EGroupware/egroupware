@@ -257,9 +257,9 @@ this message is sent for modified or moved events.	calendar	en	This message is s
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	en	This message is sent to every participant of events you own, who has requested notifcations about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.
 this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentatively accept, or reject an event.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event.  Include all information you might need.
-this month	calendar	en	This month
-this week	calendar	en	This week
-this year	calendar	en	This year
+this month	calendar	en	This Month
+this week	calendar	en	This Week
+this year	calendar	en	This Year
 thu	calendar	en	Thu
 title	calendar	en	Title
 title of the event	calendar	en	Title of the event
