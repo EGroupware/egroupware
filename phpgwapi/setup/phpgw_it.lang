@@ -631,7 +631,6 @@ yemen	common	it	YEMEN
 yes	common	it	Sì
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
-you are running a newer version of phpgroupware than your database is setup for	common	it	Stai utilizzando una versione più recente di eGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
 you have not entered a title	common	it	Non hai inserito un titolo
 you have not entered a valid date	common	it	Non hai inserito una data valida

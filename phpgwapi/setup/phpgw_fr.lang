@@ -615,7 +615,6 @@ yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fr	Vous êtes en MODE TEXTE. Utilisez le bouton [<>] pour revenir au mode WYSIWIG.
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
-you are running a newer version of phpgroupware than your database is setup for	common	fr	Vous utilisez une version de eGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide

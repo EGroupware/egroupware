@@ -629,7 +629,6 @@ yemen	common	es-ca	IEMEN
 yes	common	es-ca	Sí
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	es-ca	Esteu en MODUS TEXT. Useu el botó [<>] per tornar a la vista WYSIWIG.
 you are required to change your password during your first login	common	es-ca	Heu de canviar la vostra contrasenya a la vostra primera connexió.
-you are running a newer version of phpgroupware than your database is setup for	common	es-ca	Esteu fent servir una versió d'eGroupWare del que la vostra base de dades està configurada.
 you have %1 new messages!	common	es-ca	Ud. tiene %1 nuevos mensajes!
 you have 1 new message!	common	es-ca	Ud. tiene 1 nuevo mensaje!
 you have been successfully logged out	login	es-ca	Desconnexió correcta

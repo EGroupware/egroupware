@@ -647,7 +647,6 @@ yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	es-es	Está en MODO TEXTO. Use el botón [<>] para volver a la vista WYSIWIG.
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
-you are running a newer version of phpgroupware than your database is setup for	common	es-es	Usted está ejecutando una versión más reciente de lo que su base de datos está configurada.
 you have %1 new messages!	common	es-es	Ud. tiene %1 nuevos mensajes!
 you have 1 new message!	common	es-es	Ud. tiene 1 nuevo mensaje!
 you have been successfully logged out	login	es-es	Usted ha salido correctamente

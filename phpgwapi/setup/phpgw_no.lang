@@ -620,7 +620,6 @@ yemen	common	no	JEMEN
 yes	common	no	Ja
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	no	Du er nå i TEKST MODUS. Bruk [<>] knappen for å gå tilbake til visuell editor.
 you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
-you are running a newer version of phpgroupware than your database is setup for	common	no	Du kjører en nyere verjon av eGroupWare enn databasen er konfigurert for
 you have %1 new messages!	common	no	Du har %1 nye meldinger!
 you have 1 new message!	common	no	Du har 1 ny melding!
 you have been successfully logged out	login	no	Du har nå logget ut

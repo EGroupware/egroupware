@@ -619,7 +619,6 @@ yemen	common	pt-br	YEMEN
 yes	common	pt-br	Sim
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	pt-br	Você está utilizando o Modo Texto.  Utilize o botão [<>] para retornar ao Módo Gráfico ou WYSIWIG.
 you are required to change your password during your first login	common	pt-br	Você foi solicitado a alterar a sua senha na primeira sessão.
-you are running a newer version of phpgroupware than your database is setup for	common	pt-br	A sua base de dados está configurada para uma versão mais antiga do aplicativo.
 you have been successfully logged out	login	pt-br	Você foi desconectado com sucesso
 you have not entered a title	common	pt-br	Você não informou um título
 you have not entered a valid date	common	pt-br	Você não informou uma data válida

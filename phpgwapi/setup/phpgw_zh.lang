@@ -617,7 +617,6 @@ yemen	common	zh	也门
 yes	common	zh	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zh	You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
-you are running a newer version of phpgroupware than your database is setup for	common	zh	您所使用的eGroupWare软件版本比数据库新.
 you have been successfully logged out	login	zh	注销成功
 you have not entered a title	common	zh	必须输入标题
 you have not entered a valid date	common	zh	输入的日期无效

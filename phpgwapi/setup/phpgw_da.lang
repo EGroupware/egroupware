@@ -619,7 +619,6 @@ yemen	common	da	Yemen
 yes	common	da	Ja
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	da	Når du er i TEKST MODE. Brug [<>] tasterne for at skifte til WYSIWIG
 you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
-you are running a newer version of phpgroupware than your database is setup for	common	da	Du kører en nyere version af eGroupWare end din database er beregnet til.
 you have %1 new messages!	common	da	Du har %1 nye beskeder!
 you have 1 new message!	common	da	Du har 1 ny besked!
 you have been successfully logged out	login	da	Du er nu succesrigt logget ud

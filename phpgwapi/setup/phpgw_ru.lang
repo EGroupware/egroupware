@@ -605,7 +605,6 @@ yemen	common	ru	YEMEN
 yes	common	ru	Да
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	ru	You are in TEXT MODE. Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	ru	You are required to change your password during your first login
-you are running a newer version of phpgroupware than your database is setup for	common	ru	You are running a newer version of eGroupWare than your database is setup for.
 you have been successfully logged out	login	ru	Ваш сеанс успешно завершен
 you have not entered a title	common	ru	Вы не ввели заголовок
 you have not entered a valid date	common	ru	Вы не ввели правильную дату

@@ -617,7 +617,6 @@ yemen	common	en	YEMEN
 yes	common	en	Yes
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	en	You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
-you are running a newer version of phpgroupware than your database is setup for	common	en	You are running a newer version of eGroupWare than your database is setup for.
 you have been successfully logged out	login	en	You have been successfully logged out
 you have not entered a title	common	en	You have not entered a title
 you have not entered a valid date	common	en	You have not entered a valid date

@@ -617,7 +617,6 @@ yemen	common	zt	YEMEN
 yes	common	zt	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	您目前在文字模式，使用[<>]按鈕來切換所見即所得編輯器。
 you are required to change your password during your first login	common	zt	您必須在第一次登入時修改您的密碼
-you are running a newer version of phpgroupware than your database is setup for	common	zt	您現在所使用的 eGroupWare 版本比您的資料庫設定的版本還新。
 you have been successfully logged out	login	zt	您已經成功登出。
 you have not entered a title	common	zt	您尚未輸入標題
 you have not entered a valid date	common	zt	您尚未輸入正確的日期
