@@ -312,19 +312,10 @@
 			$extravars = $this->split_extras($extravars,$extradata);
 			$ret_str = '';
 
-			if (($start != 0) &&
-				($start > $this->maxmatches))
+			if ($start != 0)
 			{
 				$extravars['start'] = 0;
 				$ret_str .= $this->set_link('left','first.png',$scriptname,lang('First page'),$extravars);
-			}
-			else
-			{
-				$ret_str .= $this->set_icon('left','first-grey.png',lang('First page'));
-			}
-
-			if ($start != 0)
-			{
 				// Changing the sorting order screaws up the starting number
 				if (($start - $this->maxmatches) < 0)
 				{
@@ -338,6 +329,7 @@
 			}
 			else
 			{
+				$ret_str .= $this->set_icon('left','first-grey.png',lang('First page'));
 				$ret_str .= $this->set_icon('left','left-grey.png',lang('Previous page'));
 			}
 			return $ret_str;
@@ -372,20 +364,12 @@
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
 				$ret_str .= $this->set_link('right','right.png',$scriptname,lang('Next page'),$extravars);
-			}
-			else
-			{
-				$ret_str .= $this->set_icon('right','right-grey.png',lang('Next page'));
-			}
-
-			if (($start != $total - $this->maxmatches) &&
-				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
-			{
 				$extravars['start'] = ($total - $this->maxmatches);
 				$ret_str .= $this->set_link('right','last.png',$scriptname,lang('Last page'),$extravars);
 			}
 			else
 			{
+				$ret_str .= $this->set_icon('right','right-grey.png',lang('Next page'));
 				$ret_str .= $this->set_icon('right','last-grey.png',lang('Last page'));
 			}
 			return $ret_str;
@@ -725,13 +709,11 @@
 		{
 			list($filter,$qfield,$start) = $this->get_var();
 
-			if (($order == $var) && ($sort == 'ASC'))
+			if ($order == $var)
 			{
-				$sort = 'DESC';
-			}
-			elseif (($order == $var) && ($sort == 'DESC'))
-			{
-				$sort = 'ASC';
+				$sort = $sort == 'ASC' ? 'DESC' : 'ASC';
+
+				$text = '<b>'.$text.'</b> <img border="0" src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$sort=='ASC'?'up':'down').'">';
 			}
 			else
 			{
