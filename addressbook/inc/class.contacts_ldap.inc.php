@@ -362,7 +362,7 @@
 			// This logic allows you to limit rows, or not.
 			// The export feature, for example, does not limit rows.
 			// This way, it can retrieve all rows at once.
-			if ($start && $offset) {
+/*			if ($start && $offset) {
 				$limit = $this->db->limit($start,$offset);
 			} elseif ($start && !$offset) {
 				$limit = "";
@@ -372,7 +372,7 @@
 				$start = 0;
 				$limit = $this->db->limit($start,$offset);
 			}
-
+*/
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 /*
 			if ($query) {
@@ -402,24 +402,34 @@
 				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
 			}
 */
-			$i=0;
-			while ($this->db->next_record()) {
+
+			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=*".$owner);
+			$ldap_fields = ldap_get_entries($this->ldap, $sri);
+			$this->total_records = ldap_count_entries($this->ldap, $sri);
+
+//			$end = $offset - $start;
+//			92 records minus 0 = 92. 
+//			92 records minus 15 = 77.
+			$end = $start + $offset;
+			echo $end;
+			reset($ldap_fields);
+			for ($i=$start;$i<$end;$i++) {
 				// unique id, lid for group/account records,
 				// type id (g/u) for groups/accounts, and
 				// id of owner/parent for the record
-				$return_fields[$i]["id"]     = $this->db->f("id");
-				$return_fields[$i]["lid"]    = $this->db->f("lid");
-				$return_fields[$i]["tid"]    = $this->db->f("tid");
-				$return_fields[$i]["owner"]  = $this->db->f("owner");
+				$return_fields[$i]["id"]     = $ldap_fields[$i]["uidnumber"][0];
+				$return_fields[$i]["lid"]    = $ldap_fields[$i]["uid"][0];
+				$return_fields[$i]["tid"]    = $ldap_fields[$i]["phpgwcontacttype"][0];
+				$return_fields[$i]["owner"]  = $ldap_fields[$i]["phpgwowner"][0];
 
 				if (gettype($stock_fieldnames) == "array") {
-					while (list($f_name) = each($stock_fieldnames)) {
-						$return_fields[$i][$f_name] = $this->db->f($f_name);
+					while (list($f_name,$f_value) = each($stock_fieldnames)) {
+						$return_fields[$i][$f_name] = $ldap_fields[$i][$f_value][0];
 					}
 					reset($stock_fieldnames);
 				}
 				$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
-					. $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
+					. $ldap_fields[$i]["id"] . "'",__LINE__,__FILE__);
 				while ($this->db2->next_record()) {
 					// If its not in the list to be returned, don't return it.
 					// This is still quicker then 5(+) separate queries
@@ -427,7 +437,6 @@
 						$return_fields[$i][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
 					}
 				}
-				$i++;
 			}
 			return $return_fields;
 		}
