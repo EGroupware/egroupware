@@ -316,7 +316,7 @@
 			}
 
   			$ui = CreateObject('calendar.uicalendar');
-  			
+
          if(isset($HTTP_GET_VARS['readsess']))
          {
 				$event = $this->restore_from_appsession();
@@ -566,7 +566,11 @@
 		{
 			$error = 0;
 			// do a little form verifying
-			if ($event['title'] == '')
+			if (!$event['participants'])
+			{
+				$error = 43;
+			}
+			elseif ($event['title'] == '')
 			{
 				$error = 40;
 			}
