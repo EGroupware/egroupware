@@ -612,7 +612,7 @@
 			{
 				$sort = 'DESC';
 			}
-			else if (($order == $var) && ($sort == 'DESC'))
+			elseif (($order == $var) && ($sort == 'DESC'))
 			{
 				$sort = 'ASC';
 			}

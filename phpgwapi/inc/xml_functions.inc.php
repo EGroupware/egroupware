@@ -291,7 +291,7 @@
 				{
 					$GLOBALS['_xh'][$parser]['st'].="base64_decode('". $GLOBALS['_xh'][$parser]['ac'] . "')"; 
 				}
-				else if ($name=='BOOLEAN')
+				elseif ($name=='BOOLEAN')
 				{
 					$GLOBALS['_xh'][$parser]['st'].=$GLOBALS['_xh'][$parser]['ac'];
 				}

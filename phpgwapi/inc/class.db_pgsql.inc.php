@@ -535,7 +535,7 @@
 			{
 				xmlrpcfault($s);
 			}
-			else if ($this->soap)
+			elseif ($this->soap)
 			{
 
 			}

@@ -485,11 +485,11 @@
 					{
 						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
 					}
-					else if ($i == $selected || $i != count($tabs))
+					elseif ($i == $selected || $i != count($tabs))
 					{
 						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
 					}
-					else if ($i == count($tabs))
+					elseif ($i == count($tabs))
 					{
 						if ($i == $selected)
 						{
