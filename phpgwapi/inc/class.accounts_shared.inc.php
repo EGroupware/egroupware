@@ -62,7 +62,7 @@
       $security_equals = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, intval($account_id));
       if (!$security_equals) { return False; }
       for ($idx=0; $idx<count($security_equals); $idx++){
-        $name = $this->name2id($security_equals[$idx]);
+        $name = $this->id2name(intval($security_equals[$idx]));
         $this->memberships[] = Array("account_id" => $security_equals[$idx], "account_name" => "$name");
       }
       return $this->memberships;

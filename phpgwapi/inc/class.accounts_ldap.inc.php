@@ -29,7 +29,7 @@
     var $db;
     var $account_id;
     var $data;
-    var $memberships;
+    var $memberships = Array();
     var $members;
 
     function accounts()
