@@ -248,6 +248,7 @@
 					$this->Link_ID = &$GLOBALS['phpgw']->ADOdb;
 				}
 			}
+			//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 			return $this->Link_ID;
 		}
 
@@ -418,12 +419,21 @@
 			++$this->Row;
 
 			$this->Record = $this->Query_ID->fields;
-
+			
 			if ($this->Query_ID->EOF || !$this->Query_ID->RecordCount() || !is_array($this->Record))
 			{
 				return False;
 			}
-
+			if ($this->Type == 'sapdb')
+			{
+				foreach($this->Record as $column => $value)
+				{
+					// add a lowercase version 
+					$this->Record[strtolower($column)] = $value;
+					// add a numeric version
+					$this->Record[] = $value;
+				}
+			}
 			return True;
 		}
 
@@ -503,21 +513,15 @@
 			{
 				return False;
 			}
-			$id = $this->Link_ID->Insert_ID();
+			//$id = $this->Link_ID->PO_Insert_ID($table,$field);
+			$id = $this->Link_ID->PO_Insert_ID($table,$field);	// simulates Insert_ID with "SELECT MAX($field) FROM $table" if not native availible
 
 			if ($id === False)	// function not supported
 			{
 				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type'</p>\n";
 				return -1;
 			}
-			if ($this->Type != 'pgsql' || $id == -1)
-			{
-				return $id;
-			}
-			// pgsql code to transform the OID into the real id
-			$id = $this->Link_ID->GetOne("SELECT $field FROM $table WHERE oid=$id");
-
-			return $id !== False ? $id : -1;
+			return $id;
 		}
 
 		/**
@@ -635,6 +639,8 @@
 			{
 				if (!is_numeric($column))
 				{
+					if ($this->Type == 'sapdb') $column = strtolower($column);
+
 					$result[$column] = $value;
 				}
 			}
@@ -689,7 +695,14 @@
 			if ($this->Halt_On_Error != "report")
 			{
 				echo "<p><b>Session halted.</b>";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				if (is_object($GLOBALS['phpgw']->common))
+				{
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
+				}
+				else	// happens eg. in setup
+				{
+					exit();
+				}
 			}
 		}
 
@@ -776,6 +789,10 @@
 			{
 				foreach($tables as $table)
 				{
+					if ($this->Type == 'sapdb')
+					{
+						$table = strtolower($table);
+					}
 					$result[] = array(
 						'table_name'      => $table,
 						'tablespace_name' => $this->Database,
@@ -1103,16 +1120,24 @@
 
 			$table_def = $this->get_table_definitions($app,$table);
 
+			$sql_append = '';
 			if (is_array($where) && count($where))
 			{
-				$this->select($table,'count(*)',$where,$line,$file);
-				if ($this->next_record() && $this->f(0))
+				if ($this->Type == 'sapdb')
 				{
-					return $this->update($table,$data,$where,$line,$file,$app);
+					$sql_append = ' UPDATE DUPLICATES';
+				}
+				else
+				{
+					$this->select($table,'count(*)',$where,$line,$file);
+					if ($this->next_record() && $this->f(0))
+					{
+						return $this->update($table,$data,$where,$line,$file,$app);
+					}
 				}
 				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
-			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']);
+			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
 
 			return $this->query($sql,$line,$file);
 		}
@@ -1132,6 +1157,10 @@
 		*/
 		function update($table,$data,$where,$line,$file,$app=False)
 		{
+			if ($this->Type == 'sapdb')
+			{
+				$this->insert($table,$data,$where,$line,$file,$app);
+			}
 			$table_def = $this->get_table_definitions($app,$table);
 			$sql = "UPDATE $table SET ".
 				$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.
