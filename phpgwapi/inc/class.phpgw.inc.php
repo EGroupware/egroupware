@@ -114,29 +114,23 @@
       $this->acl = CreateObject("phpgwapi.acl");
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->session = CreateObject("phpgwapi.sessions");
-//      $this->applications = CreateObject("phpgwapi.applications");
-//      $this->preferences = CreateObject("phpgwapi.preferences");
-//echo "check point 1<br>\n";
       if ($phpgw_info["flags"]["currentapp"] == "login") {
-//echo "check point 2<br>\n";
         if ($login != ""){
           $log = explode("@",$login);
           $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
-//          $this->applications = CreateObject("phpgwapi.applications", $log[0]);
         }
       }else{
-//echo "check point 3<br>\n";
         if (! $this->session->verify()) {
-//echo "check point 4<br>\n";
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
           $this->db->next_record();
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
-//echo "check point 5<br>\n";
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
         $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
-     }
+        $phpgw_info["user"]["preferences"] = $this->preferences->get_saved_preferences();
+        $phpgw_info["user"]["apps"] = $this->applications->enabled_apps();
+      }
       $this->translation = CreateObject("phpgwapi.translation");
 
       $sep = $phpgw_info["server"]["dir_separator"];

@@ -47,11 +47,10 @@
                                                . $db2->f("account_lastname");
       $phpgw_info["user"]["groups"]            = explode (",", $db2->f("account_groups"));
 
-      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
-      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
-      $phpgw_info["user"]["app_perms"] = $apps->app_perms();
-      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
+//      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
+//      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
+//      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
+//      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
 
       $phpgw_info["user"]["lastlogin"]         = $db2->f("account_lastlogin");
       $phpgw_info["user"]["lastloginfrom"]     = $db2->f("account_lastloginfrom");
@@ -76,11 +75,10 @@
       $userData["fullname"]          = $db2->f("account_firstname") . " "
                                                . $db2->f("account_lastname");
       $userData["groups"]            = explode(",", $db2->f("account_groups"));
-      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
-      $userData["preferences"] = $prefs->get_saved_preferences();
-      $userData["app_perms"] = $apps->app_perms();
-      $userData["apps"] = $apps->enabled_apps();
+//      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
+//      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
+//      $userData["preferences"] = $prefs->get_saved_preferences();
+//      $userData["apps"] = $apps->enabled_apps();
 
       $userData["lastlogin"]         = $db2->f("account_lastlogin");
       $userData["lastloginfrom"]     = $db2->f("account_lastloginfrom");

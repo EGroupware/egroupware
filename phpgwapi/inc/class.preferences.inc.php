@@ -32,7 +32,6 @@
 
     function preferences($account_id = "")
     {
-//echo "Account_id = ".$account_id."<br>\n";
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
       if ($account_id == ""){ 
@@ -55,8 +54,6 @@
       $this->preference = Array();
       $this->preference = unserialize($pref_info);
       $this->db->unlock();
-//echo "Account ID (get_saved_pref) = ".$this->account_id."<br>\n";
-//echo "Preferences = ".$this->preference."<br>\n";
       return $this->preference;
     }
 
@@ -64,8 +61,6 @@
     function get_preferences()
     {
       global $phpgw;
-//echo "Account ID (get_pref) = ".$this->account_id."<br>\n";
-//echo "Preferences = ".$this->preference."<br>\n";
       return $this->preference;
     }
 

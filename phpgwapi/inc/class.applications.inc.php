@@ -59,9 +59,8 @@
         if ($check) {
           $this->account_apps[$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
         } 
-        return $this->account_apps;
       }
-      return False;
+      return $this->account_apps;
     }
 
     function app_perms()
