@@ -1,5 +1,6 @@
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch
+        - Fixed setup not detecting installed databases with PHP 3
         - Fixed repeating entries being saved properly.
         - Added ability for admin to edit any calendar event.
         - Fixed entries showing improperly on wrong date.
