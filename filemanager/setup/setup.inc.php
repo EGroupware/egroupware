@@ -25,6 +25,7 @@
 		'deleteaccount',
 		'settings',
 		'sidebox_menu',
+		'personalizer',
 		'preferences',
 		'manual'
 	);
