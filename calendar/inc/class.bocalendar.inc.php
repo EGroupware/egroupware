@@ -1,10 +1,11 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar                                                  *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar                                                    *
+  * http://www.eGroupWare.org                                                *
+  * Maintained and further developed by RalfBecker@outdoor-training.de       *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -538,6 +539,7 @@
 				}
 				return $xmlrpc ? $this->xmlrpc_prepare($event) : $event;
 			}
+			return False;
 		}
 
 		function delete_single($param)
@@ -799,7 +801,7 @@
 					$l_categories = 0;
 				}
 
-				$is_public = ($l_cal['private'] == 'public'?1:0);
+				$is_public = intval(isset($l_cal['public']) ? $l_cal['public'] : $l_cal['private'] == 'public');
 				$this->so->event_init();
 				$this->add_attribute('uid',$l_cal['uid']);
 				if(count($l_categories) >= 2)
@@ -842,7 +844,10 @@
 						$this->so->set_recur_daily(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_WEEKLY:
-						$l_cal['recur_data'] = intval($l_cal['rpt_sun']) + intval($l_cal['rpt_mon']) + intval($l_cal['rpt_tue']) + intval($l_cal['rpt_wed']) + intval($l_cal['rpt_thu']) + intval($l_cal['rpt_fri']) + intval($l_cal['rpt_sat']);
+						foreach(array('rpt_sun','rpt_mon','rpt_tue','rpt_wed','rpt_thu','rpt_fri','rpt_sat') as $rpt_day)
+						{
+							$l_cal['recur_data'] += intval($l_cal[$rpt_day]);
+						}
 						if (is_array($l_cal['rpt_day']))
 						{
 							foreach ($l_cal['rpt_day'] as $mask)
@@ -1031,7 +1036,6 @@
 			{
 				if(!$event['id'])
 				{
-					$this->so->cal->event = $event;
 					$this->so->add_entry($event);
 					$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
 					print_debug('New Event ID',$event['id']);
@@ -1058,6 +1062,7 @@
 					$this->so->add_entry($event);
 					$this->prepare_recipients($new_event,$old_event);
 				}
+				
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 				if($send_to_ui)
 				{
@@ -1068,7 +1073,10 @@
 						$GLOBALS['phpgw']->common->phpgw_exit();
 					}
 					Execmethod('calendar.uicalendar.index');
-//					$GLOBALS['phpgw']->common->phpgw_exit();
+				}
+				else
+				{
+					return intval($event['id']);
 				}
 			}
 			return True;
@@ -2109,6 +2117,8 @@
 
 		function xmlrpc_prepare(&$event)
 		{
+			$event['rights'] = $this->grants[$event['owner']];
+
 			foreach(array('start','end','modtime','recur_enddate') as $name)
 			{
 				if (isset($event[$name]))

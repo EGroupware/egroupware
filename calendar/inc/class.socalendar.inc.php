@@ -1,10 +1,11 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar                                                  *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar                                                    *
+  * http://www.eGroupWare.org                                                *
+  * Maintained and further developed by RalfBecker@outdoor-training.de       *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -198,7 +199,7 @@
 
 		function add_entry(&$event)
 		{
-			$this->cal->store_event($event);
+			return $this->cal->save_event($event);
 		}
 
 		function save_alarm($cal_id,$alarm,$id=0)
