@@ -64,11 +64,11 @@
        . "\"> " . lang_common("Delete") . " </a></td>";
   }
 
-  echo "\n<form method=POST action=\"newgroup.php\">"
-     . $phpgw->session->hidden_var() . "</table></center>"
+  echo "\n<form method=POST action=\"".$phpgw->link("newgroup.php")."\">"
+     . "</table></center>"
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
-     . "value=\"" . lang_common("Add") . "\"></form><form action=\"groups.php\"></td>"
-     . $phpgw->session->hidden_var() . "<td align=right>" . lang_common("search") . "&nbsp;"
+     . "value=\"" . lang_common("Add") . "\"></form><form action=\"".$phpgw->link("groups.php")."\"></td>"
+     . "<td align=right>" . lang_common("search") . "&nbsp;"
      . "<input name=\"query\"></td></tr></form></table>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

@@ -58,8 +58,7 @@
     echo "</td></tr>\n";
   }
 
-  echo "</form></table><form method=POST action=\"newapplication.php\">"
-     . $phpgw->session->hidden_var()
+  echo "</form></table><form method=POST action=\"".$phpgw->link("newapplication.php")."\">"
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
      . "value=\"" . lang_common("Add") . "\"></td></tr></table></form>";
 

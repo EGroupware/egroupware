@@ -38,8 +38,7 @@
     echo  "<td width=5%><a href=\"".$phpgw->link("viewheadline.php",
          "con=".$phpgw->db->f("con"))."\"> ".lang_common("View")." </a> </td></tr>\n";
   }
-  echo "<form method=POST action=\"newheadline.php\">"
-     . $phpgw->session->hidden_var()
+  echo "<form method=POST action=\"".$phpgw->link("newheadline.php")."\">"
      . "<tr><td colspan=\"5\"><input type=\"submit\" value=\"".lang_common("Add")
      . "\"></td></tr></form></table></center>";
 

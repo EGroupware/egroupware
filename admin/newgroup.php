@@ -71,8 +71,8 @@
      $t->set_var("error","");
   }
 
-  $t->set_var("form_action","newgroup.php");
-  $t->set_var("hidden_vars",$phpgw->session->hidden_var());
+  $t->set_var("form_action",$phpgw->link("newgroup.php"));
+  $t->set_var("hidden_vars","");
   $t->set_var("lang_group_name",lang_admin("New group name"));
   $t->set_var("group_name_value","");
 

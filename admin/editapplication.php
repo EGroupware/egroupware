@@ -48,11 +48,11 @@
   } else {
      $t->set_var("error","");
   }
-  $t->set_var("session_hidden_var",$phpgw->session->hidden_var()
-						. '<input type="hidden" name="old_app_name" value="'
-						. $phpgw->db->f("app_name") . '">');
+  $t->set_var("session_hidden_var","<input type=\"hidden\" "
+				 . "name=\"old_app_name\" value=\""
+				 . $phpgw->db->f("app_name") . "\">");
 
-  $t->set_var("form_action","editapplication.php");
+  $t->set_var("form_action",$phpgw->link("editapplication.php"));
   $t->set_var("lang_app_name",lang_admin("application name"));
   $t->set_var("lang_app_title",lang_admin("application title"));
   $t->set_var("lang_enabled",lang_admin("enabled"));

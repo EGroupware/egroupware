@@ -119,9 +119,8 @@
   $phpgw->db->query("select * from groups where group_id='$group_id'");
   $phpgw->db->next_record();
 
-  $t->set_var("form_action","editgroup.php");
-  $t->set_var("hidden_vars",$phpgw->session->hidden_var()
-				  . '<input type="hidden" name="group_id" value="' . $group_id . '">');
+  $t->set_var("form_action",$phpgw->link("editgroup.php"));
+  $t->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
 
   $t->set_var("lang_group_name",lang_admin("group name"));
   $t->set_var("group_name_value",$phpgw->db->f("group_name"));

@@ -94,8 +94,7 @@
      
     $urlname = $phpgw_info["server"]["webserver_url"]."/admin/nntp.php";
 
-    $common_hidden_vars = $phpgw->session->hidden_var() . "\n"
-		        . "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
+    $common_hidden_vars = "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
 		        . "<input type=\"hidden\" name=\"stop\" value=\""
 			. ($start + $phpgw_info["user"]["preferences"]["maxmatchs"])."\">\n"
 		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n"

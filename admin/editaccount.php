@@ -122,8 +122,7 @@
   $account_status = $phpgw->db->f("status");
   ?>
 
-     <form method="POST" action="editaccount.php">
-      <?php echo $phpgw->session->hidden_var(); ?>
+     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
       <input type="hidden" name="con" value="<? echo $con; ?>">
        <?php
          if ($error) {

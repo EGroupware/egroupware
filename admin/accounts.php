@@ -96,7 +96,7 @@
 
   }
 
-  $t->set_var("hidden_vars",$phpgw->session->hidden_var());
+  $t->set_var("actionurl",$phpgw->link("newaccount.php"));
   $t->set_var("lang_add",lang_common("add"));
   $t->set_var("lang_search",lang_common("search"));
 

@@ -27,8 +27,7 @@
 
      ?>
 
-     <form method="POST" action="editheadline.php">
-      <?php echo $phpgw->session->hidden_var(); ?>
+     <form method="POST" action="<?php echo $phpgw->link("editheadline.php"); ?>">
       <input type="hidden" name="o_con" value="<? echo $con; ?>">
 
       <center>

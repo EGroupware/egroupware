@@ -90,8 +90,7 @@
      $phpgw->common->header();
      $phpgw->common->navbar();
      ?>
-       <form method="POST" action="newaccount.php">
-       <?php echo $phpgw->session->hidden_var(); ?>
+       <form method="POST" action="<?php echo $phpgw->link("newaccount.php"); ?>">
        <?php
          if ($error) {
             echo "<center>" . lang_common("Error") . ":$error</center>";

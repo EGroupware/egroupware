@@ -18,9 +18,7 @@
   include("../header.inc.php");
   if (! $submit) {
      ?>
-       <form method="POST" action="newheadline.php">
-       <?php echo $phpgw->session->hidden_var(); ?>
-
+       <form method="POST" action="<?php echo $phpgw->link("newheadline.php"); ?>">
         <center>
          <table border=0 width=65%>
            <tr>
