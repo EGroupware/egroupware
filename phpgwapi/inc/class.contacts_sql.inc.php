@@ -52,50 +52,50 @@
         $this->stock_contact_fields = array("FN"              => "FN",        //'firstname lastname'
                                             "SOUND"           => "SOUND",
                                             "ORG.Name"        => "ORG.Name",  //company
-                                            "ORG.Unit"        => "ORG.Unit",  //division
+                                            "ORG_Unit"        => "ORG.Unit",  //division
                                             "TITLE"           => "TITLE",
-                                            "N.Given"         => "N_Given",   //firstname
-                                            "N.Family"        => "N_Family",  //lastname
-                                            "N.Middle"        => "N_Middle",
-                                            "N.Prefix"        => "N_Prefix",
-                                            "N.Suffix"        => "N_Suffix",
+                                            "N_Given"         => "N.Given",   //firstname
+                                            "N_Family"        => "N.Family",  //lastname
+                                            "N_Middle"        => "N.Middle",
+                                            "N_Prefix"        => "N.Prefix",
+                                            "N_Suffix"        => "N.Suffix",
                                             "LABEL"           => "LABEL",
-                                            "ADR_Street"      => "ADR_Street",
-                                            "ADR.Locality"    => "ADR_Locality",   //city
-                                            "ADR.Region"      => "ADR_Region",     //state
-                                            "ADR.PostalCode"  => "ADR_PostalCode", //zip
-                                            "ADR.CountryName" => "ADR_CountryName",
-                                            "ADR_Work"        => "ADR_Work",
-                                            "ADR_Home"        => "ADR_Home",
-                                            "ADR_Parcel"      => "ADR_Parcel",
-                                            "ADR_Postal"      => "ADR_Postal",
+                                            "ADR_Street"      => "ADR.Street",
+                                            "ADR_Locality"    => "ADR.Locality",   //city
+                                            "ADR_Region"      => "ADR.Region",     //state
+                                            "ADR_PostalCode"  => "ADR.PostalCode", //zip
+                                            "ADR_CountryName" => "ADR.CountryName",
+                                            "ADR_Work"        => "ADR.Work",   //yn
+                                            "ADR_Home"        => "ADR.Home",   //yn
+                                            "ADR_Parcel"      => "ADR.Parcel", //yn
+                                            "ADR_Postal"      => "ADR.Postal", //yn
                                             "TZ"              => "TZ",
                                             "GEO"             => "GEO",
-                                            "A.TEL"           => "A_TEL",
-					    "A.TEL.Work"      => "A_TEL_Work",
-                                            "A.TEL.Home"      => "A_TEL_Home",
-                                            "A.TEL.Voice"     => "A_TEL_Voice",
-                                            "A.TEL.Msg"       => "A_TEL_Msg",
-                                            "A.TEL.Fax"       => "A_TEL_Fax",
-                                            "A.TEL.Prefer"    => "A_TEL_Prefer",
-                                            "B.TEL"           => "B_TEL",
-					    "B.TEL.Work"      => "B_TEL_Work",
-                                            "B.TEL.Home"      => "B_TEL_Home",
-                                            "B.TEL.Voice"     => "B_TEL_Voice",
-                                            "B.TEL.Msg"       => "B_TEL_Msg",
-                                            "B.TEL.Fax"       => "B_TEL_Fax",
-                                            "B.TEL.Prefer"    => "B_TEL_Prefer",
-                                            "C.TEL"           => "C_TEL",
-					    "C.TEL.Work"      => "C_TEL_Work",
-                                            "C.TEL.Home"      => "C_TEL_Home",
-                                            "C.TEL.Voice"     => "C_TEL_Voice",
-                                            "C.TEL.Msg"       => "C_TEL_Msg",
-                                            "C.TEL.Fax"       => "C_TEL_Fax",
-                                            "C.TEL.Prefer"    => "C_TEL_Prefer",
-                                            "D.EMAIL"         => "D_EMAIL",
-					    "D.EMAILTYPE"     => "D_EMAILTYPE",   //'INTERNET','CompuServe',etc...
-                                            "D.EMAIL.Work"    => "D_EMAIL_Work",  //yn
-                                            "D.EMAIL.Home"    => "D_EMAIL_Home",  //yn
+                                            "A_TEL"           => "A.TEL",
+					    "A_TEL_Work"      => "A.TEL.Work",   //yn
+                                            "A_TEL_Home"      => "A.TEL.Home",   //yn
+                                            "A_TEL_Voice"     => "A.TEL.Voice",  //yn
+                                            "A_TEL_Msg"       => "A.TEL.Msg",    //yn
+                                            "A_TEL_Fax"       => "A.TEL.Fax",    //yn
+                                            "A_TEL_Prefer"    => "A.TEL.Prefer", //yn
+                                            "B_TEL"           => "B.TEL",
+					    "B_TEL_Work"      => "B.TEL.Work",   //yn
+                                            "B_TEL_Home"      => "B.TEL.Home",   //yn
+                                            "B_TEL_Voice"     => "B.TEL.Voice",  //yn
+                                            "B_TEL_Msg"       => "B.TEL.Msg",    //yn
+                                            "B_TEL_Fax"       => "B.TEL.Fax",    //yn
+                                            "B_TEL_Prefer"    => "B.TEL.Prefer", //yn
+                                            "C_TEL"           => "C.TEL",
+					    "C_TEL_Work"      => "C.TEL.Work",   //yn
+                                            "C_TEL_Home"      => "C.TEL.Home",   //yn
+                                            "C_TEL_Voice"     => "C.TEL.Voice",  //yn
+                                            "C_TEL_Msg"       => "C.TEL.Msg",    //yn
+                                            "C_TEL_Fax"       => "C.TEL.Fax",    //yn
+                                            "C_TEL_Prefer"    => "C.TEL.Prefer", //yn
+                                            "D_EMAIL"         => "D.EMAIL",
+					    "D_EMAILTYPE"     => "D.EMAILTYPE",   //'INTERNET','CompuServe',etc...
+                                            "D_EMAIL_Work"    => "D.EMAIL.Work",  //yn
+                                            "D_EMAIL_Home"    => "D.EMAIL.Home",  //yn
                                             );
      }
 
@@ -111,7 +111,7 @@
 
         $this->db2 = $this->db;
  
-        $this->db->query("select id,lid,owner $t_fields from contacts WHERE id='$id'");
+        $this->db->query("select id,lid,owner $t_fields from addressbook WHERE id='$id'");
         $this->db->next_record();
        
         $return_fields[0]["id"]     = $this->db->f("id");
@@ -122,7 +122,7 @@
             $return_fields[0][$f_name] = $this->db->f($f_name);
           }
         }
-        $this->db2->query("select contact_name,contact_value from contacts_extra where contact_id='"
+        $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
                            . $this->db->f("id") . "'",__LINE__,__FILE__);
         while ($this->db2->next_record()) {
           // If its not in the list to be returned, don't return it.
@@ -158,25 +158,25 @@
         $this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
         if ($query) {
-            $this->db3->query("SELECT * from contacts WHERE (N_Family like '"
+            $this->db3->query("SELECT * from addressbook WHERE (N_Family like '"
                      . "%$query%' OR N_Given like '%$query%' OR D_EMAIL like '%$query%' OR "
                      . "ADR_Street like '%$query%' OR ADR_Locality like '%$query%' OR ADR_Region "
                      . "like '%$query%' OR ADR_PostalCode like '%$query%' OR ORG_Unit like "
                      . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod,__LINE__,__FILE__);
             $this->total_records = $this->db3->num_rows();
 
-            $this->db->query("SELECT * from contacts WHERE (N_Family like '"
+            $this->db->query("SELECT * from addressbook WHERE (N_Family like '"
                      . "%$query%' OR N_Given like '%$query%' OR D_EMAIL like '%$query%' OR "
                      . "ADR_Street like '%$query%' OR ADR_Locality like '%$query%' OR ADR_Region "
                      . "like '%$query%' OR ADR_PostalCode like '%$query%' OR ORG_Unit like "
                      . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod . " "
 		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }  else  {
-           $this->db3->query("select id,lid,owner $t_fields from contacts "
+           $this->db3->query("select id,lid,owner $t_fields from addressbook "
                        . $filtermethod,__LINE__,__FILE__);
            $this->total_records = $this->db3->num_rows();
 	
-           $this->db->query("select id,lid,owner $t_fields from contacts "
+           $this->db->query("select id,lid,owner $t_fields from addressbook "
                        . $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }
 
@@ -192,7 +192,7 @@
               reset($ab_fieldnames);
            }
 
-           $this->db2->query("select contact_name,contact_value from contacts_extra where contact_id='"
+           $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
                            . $this->db->f("id") . "'",__LINE__,__FILE__);
            while ($this->db2->next_record()) {
               // If its not in the list to be returned, don't return it.
@@ -217,7 +217,7 @@
                        . ") values ('$owner','"
                        . implode("','",$this->loop_addslashes($ab_fields)) . "')",__LINE__,__FILE__);
 
-        $this->db->query("select max(id) from contacts",__LINE__,__FILE__);
+        $this->db->query("select max(id) from addressbook",__LINE__,__FILE__);
         $this->db->next_record();
         $id = $this->db->f(0);
         //$this->db->unlock();
@@ -232,7 +232,7 @@
 
      function field_exists($id,$field_name)
      {
-        $this->db->query("select count(*) from contacts_extra where contact_id='$id' and contact_name='"
+        $this->db->query("select count(*) from addressbook_extra where contact_id='$id' and contact_name='"
                        . addslashes($field_name) . "'",__LINE__,__FILE__);
         $this->db->next_record();
         return $this->db->f(0);
@@ -246,14 +246,14 @@
 
      function delete_single_extra_field($id,$field_name)
      {
-        $this->db->query("delete from contacts_extra where contact_id='$id' and contact_name='"
+        $this->db->query("delete from addressbook_extra where contact_id='$id' and contact_name='"
                        . addslashes($field_name) . "'",__LINE__,__FILE__);
      }
 
      function update($id,$owner,$fields)
      {
         // First make sure that id number exists
-        $this->db->query("select count(*) from contacts where id='$id'",__LINE__,__FILE__);
+        $this->db->query("select count(*) from addressbook where id='$id'",__LINE__,__FILE__);
         $this->db->next_record();
         if (! $this->db->f(0)) {
            return False;
@@ -290,9 +290,9 @@
      // This is where the real work of delete() is done
      function delete_($id)
      {
-        $this->db->query("delete from contacts where owner='" . $this->account_id . "' and "
+        $this->db->query("delete from addressbook where owner='" . $this->account_id . "' and "
                        . "id='$id'",__LINE__,__FILE__);
-        $this->db->query("delete from contacts_extra where contact_id='$id' and contact_owner='"
+        $this->db->query("delete from addressbook_extra where contact_id='$id' and contact_owner='"
                        . $this->account_id . "'",__LINE__,__FILE__);
      }
 

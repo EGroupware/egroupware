@@ -37,7 +37,7 @@
   {
      var $db;
      var $account_id;
-     var $stock_addressbook_fields;     // This is an array of all the fields in the addressbook
+     var $stock_contact_fields;     // This is an array of all the fields in the addressbook
      var $total_records;
 
      function split_ab_and_extras($fields)
@@ -48,7 +48,7 @@
            if (gettype($field) == "integer") {
               $field = $value;
            }
-           if ($this->stock_addressbook_fields[$field]) {
+           if ($this->stock_contact_fields[$field]) {
               $ab_fields[$field]     = $value;
               $ab_fieldnames[$field] = $field;
            } else {
@@ -60,7 +60,7 @@
 
      function loop_addslashes($fields)
      {
-        $absf = $this->stock_addressbook_fields;
+        $absf = $this->stock_contact_fields;
         while ($t = each($absf)) {
            $ta[] = addslashes($fields[$t[0]]);
         }
