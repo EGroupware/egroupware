@@ -91,16 +91,17 @@ label	addressbook	zt	概述
 ldap context for contacts	admin	zt	聯絡人之LDAP context
 ldap host for contacts	admin	zt	聯絡人之LDAP host
 ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
-ldap root pw for contacts	admin	zt	聯絡人之LDAP root pw
+ldap root pw for contacts	admin	zt	聯絡人之LDAP root 密碼
 ldif	addressbook	zt	LDIF
-line 2	addressbook	zt	Line 2
+line 2	addressbook	zt	第2行
 message phone	addressbook	zt	留言電話
-middle name	addressbook	zt	Middle Name
-mobile	addressbook	zt	Mobile
+middle name	addressbook	zt	中間欄位
+mobile	addressbook	zt	行動電話
 mobile phone	addressbook	zt	行動電話
 modem phone	addressbook	zt	撥接電話
 no vcard	addressbook	zt	沒有VCard
 number of records to read (%1)	addressbook	zt	讀取記錄號碼(%1)
+number of records to read (<=200)	addressbook	zt	讀取的資料筆數(<=200)
 other number	addressbook	zt	其他號碼
 other phone	addressbook	zt	其他電話
 pager	common	zt	呼叫器
@@ -109,9 +110,9 @@ phone number	common	zt	電話號碼
 phone numbers	common	zt	電話號碼
 please enter a name for that field !	addressbook	zt	請輸入欄位名稱！
 postal	common	zt	郵政信箱
-pref	addressbook	zt	pref
+pref	addressbook	zt	主
 prefix	addressbook	zt	稱謂
-public key	addressbook	zt	Public Key
+public key	addressbook	zt	公鑰
 read a list of entries.	addressbook	zt	讀取項目清單。
 read a single entry by passing the id and fieldlist.	addressbook	zt	從id及欄位清單讀取一筆資料。
 record access	addressbook	zt	記錄存取
@@ -139,7 +140,7 @@ vcards require a last name entry.	addressbook	zt	Vcards需要姓氏資料。
 video phone	addressbook	zt	影像電話
 voice phone	addressbook	zt	語音電話
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zt	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
-work phone	addressbook	zt	Work Phone
+work phone	addressbook	zt	工作電話
 you must select a vcard. (*.vcf)	addressbook	zt	您必須選取一個vcard (*.vcf)
 you must select at least 1 column to display	addressbook	zt	您必須至少選取一個欄位才能顯示
 zip code	common	zt	郵遞區號
