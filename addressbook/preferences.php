@@ -26,17 +26,17 @@
         $errors[$totalerrors++] = lang("You must select at least 1 column to display");
      }
      if (! $totalerrors) {
+        $phpgw->preferences->read_repository();
         while (list($pref[0]) = each($this->stock_contact_fields)) {
            if ($ab_selected["$pref[0]"]) {
-	      $phpgw->preferences->delete("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
-              $phpgw->preferences->add("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
+              $phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
            } else {
               $phpgw->preferences->delete("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
           }
         }
 
         if ($mainscreen_showbirthdays) {
-	   $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
+           $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
            $phpgw->preferences->add("addressbook","mainscreen_showbirthdays");
         } else {
            $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
