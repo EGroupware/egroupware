@@ -82,16 +82,16 @@ which leaves your DB in an unrecoverable state (your data is lost) !!!'
 			'func' => 'php_ini_check',
 			'value' => '16M',
 			'check' => '>=',
-			'error' => 'memory_limit is set to less then 16M: some applications of eGroupWare need more then the recommend 8M,
-expect ocasional failures',
+			'error' => 'memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M,
+expect occasional failures',
 			'change' => 'memory_limit = 16M'
 		),
 		'max_execution_time' => array(
 			'func' => 'php_ini_check',
 			'value' => 30,
 			'check' => '>=',
-			'error' => 'max_execution_time is set to less then 30 (seconds): eGroupWare sometimes need a higher execution_time,
-expect ocasional failures',
+			'error' => 'max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time,
+expect occasional failures',
 			'save_mode' => 'max_execution_time = 30'
 		),
 		'mysql' => array(
@@ -113,7 +113,7 @@ expect ocasional failures',
 		),
 		'imap' => array(
 			'func' => 'extension_check',
-			'warning' => 'The imap extension is needed by the two email apps (even if you use email with pop3 as protokoll).'
+			'warning' => 'The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).'
 		),
 		'.' => array(
 			'func' => 'permission_check',
