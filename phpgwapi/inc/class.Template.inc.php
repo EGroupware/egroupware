@@ -43,6 +43,9 @@
 		/* last error message is retained here */
 		var $last_error = '';
 
+		// if true change all phpGroupWare into eGroupWare in set_var
+		var $egroupware_hack = True;
+
 		/***************************************************************************/
 		/* public: Constructor.
 		 * root:     template directory.
@@ -139,30 +142,24 @@
 		{
 			if (!is_array($varname))
 			{
-				if (!empty($varname))
+				if (empty($varname))
+				{
+					return;
+				}
+				$varname = array(
+					$varname => $value
+				);
+			}
+			foreach($varname as $k => $v)
+			{
+				if (!empty($k))
 				{
 					if ($this->debug)
 					{
-						print "scalar: set *$varname* to *$value*<br>\n";
+						print "array: set *$k* to *$v*<br>\n";
 					}
-					$this->varkeys[$varname] = $this->varname($varname);
-					$this->varvals[$varname] = str_replace('phpGroupWare','eGroupWare',$value);
-				}
-			}
-			else
-			{
-				reset($varname);
-				while(list($k, $v) = each($varname))
-				{
-					if (!empty($k))
-					{
-						if ($this->debug)
-						{
-							print "array: set *$k* to *$v*<br>\n";
-						}
-						$this->varkeys[$k] = $this->varname($k);
-						$this->varvals[$k] = str_replace('phpGroupWare','eGroupWare',$v);
-					}
+					$this->varkeys[$k] = $this->varname($k);
+					$this->varvals[$k] = $this->egroupware_hack ? str_replace('phpGroupWare','eGroupWare',$v) : $v;
 				}
 			}
 		}
