@@ -21,7 +21,6 @@
 	
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','5%');
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','30');
-	$GLOBALS['phpgw_info']['flags']['body_tags']['background']=$GLOBALS['phpgw']->common->image('phpgwapi','content_spacer_middle');
 	
 	function parse_toppart($output)
   {
@@ -193,8 +192,7 @@
 	}
 
 	function parse_bodypart()
-  {
-		$GLOBALS['phpgw_info']['flags']['body_tags']['background']=$GLOBALS['phpgw']->common->image('phpgwapi','content_spacer_middle');
+ 	{
 	}
 	
 	function parse_bottompart($output)

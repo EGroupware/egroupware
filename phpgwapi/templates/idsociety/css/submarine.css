@@ -1,17 +1,4 @@
-body
-{
-	margin-right: 0em;
-	margin-left: 0em;
-	margin-top: 0em;
-	margin-bottom: 0em;
-}
-
-table
-{
-	border-width: 0;
-}
-
-td
+body,p,td,th,table,input,form,option
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
@@ -24,56 +11,30 @@ td
 	word-spacing: 0em;
 }
 
-a:link
+body
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: mediumblue;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+	background: url(../images/content_spacer_middle.png);
 }
 
-a:visited
+table
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: mediumblue;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
+	border-width: 0;
 }
 
-a:active
+a:link,a:visited,a:active
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: mediumblue;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
 	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 a:hover
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: #cc0000;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
 	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 .portal
@@ -89,55 +50,37 @@ a:hover
 {
 	color: #FFFFFF;
 	font-weight: bold;
-}
-
-.bodytext
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: #000000;
+	background: url(../../default/images/bg_filler.png);
 }
 
 .whitetext
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: #ffffff;
+	color: #FFFFFF;
+}
+
+.small_text
+{
+	font-size: 80%;
 }
 
 .headertext
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 11pt;
+	font-size: 110%;
 	font-weight: bold;
-	color: #ffffff;
+	color: #FFFFFF;
 }
 
 .inputtext
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: #000000;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 }
 
-.buttontext
+.button_text,.linktext,.cal_dayview
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: #000000;
 	background-color: #c0c0c0;
 }
 
-.linktext
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 10pt;
-    color: #000000;
-    background-color: #c0c0c0;
-}
-
-.row_on
+.row_on,.th_bright
 {
 	background-color: #CCEEFF;
 }
@@ -152,49 +95,20 @@ a:hover
 	background-color: #80BBFF;
 }
 
-.th_bright
-{
-	background-color: #CCEEFF;
-}
-
-.th_text
+.th_text,.app_header_text
 {
 	font-weight: bold;
-	color: #000000;
 }
 
-.appheader
+.app_header
 {
 	font-weight: bold;
 	background-color: #CCEEFF;
-}
-
-.functionmsg
-{
-	font-weight: bold;
-}
-
-.forms
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	font-style: normal;
-	font-weight: normal;
-	color: #000000;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 .cal_today
 {
 	background-color: #FFFFCC;
-}
-
-.cal_dayview
-{
-	background-color: #C0C0C0;
 }
 
 .email_folder

@@ -6,10 +6,10 @@
 		<xsl:variable name="inner_width"><xsl:value-of select="inner_width"/></xsl:variable>
 			<table cellpadding="0" cellspacing="0" class="portal">
  				<tr>
-  					<td align="center" background="{$header_background_image}" class="portal_text">
+  					<td align="center" class="portal_text">
 						<xsl:value-of select="title"/> 
 					</td>
-					<td valign="middle" align="right" background="{$header_background_image}">
+					<td valign="middle" align="right" class="portal_text">
 						<xsl:apply-templates select="control_link"/>
 					</td>
 				</tr>
