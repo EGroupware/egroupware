@@ -1,6 +1,7 @@
 %1 already exists as a file	filemanager	de	Es gibt bereits eine Datei %1
 application	filemanager	de	Anwendung
 back to file manager	filemanager	de	Zurück zum File Manager
+cancel editing %1 without saving	filemanager	de	Bearbeiten abbrechen %1 ohne zu speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
 cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
 command sucessfully run	filemanager	de	Kommando erfolgreich ausgeführt
@@ -20,6 +21,7 @@ create file	filemanager	de	Neue Datei
 create folder	filemanager	de	Neues Verzeichnis
 created	filemanager	de	Erstellt
 created %1	filemanager	de	%1 erstellt
+created %1,%2	filemanager	de	%1,%2 erstellt
 created by	filemanager	de	Erstellt von
 created directory %1	filemanager	de	Verzeichnis %1 erstellt
 date	filemanager	de	Datum
@@ -46,12 +48,16 @@ file names cannot contain \ or /	filemanager	de	Dateinamen dürfen keine \ oder /
 filemanager	common	de	DateiManager
 filemanager preferences	filemanager	de	DateiManager Einstellungen
 files	filemanager	de	Dateien
+files is this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder	filemanager	de	Verzeichnisse
+go home	filemanager	de	
 go to	filemanager	de	Gehe zu
 go to %1	filemanager	de	Gehe zu %1
 go to your home directory	filemanager	de	Gehe zu ihrem Home-Verzeichnis
 go to:	filemanager	de	Gehe zu:
+go up	filemanager	de	einen Ordner nach oben
 home	filemanager	de	Home
+location	filemanager	de	Pfad
 locked	filemanager	de	Gesperrt
 mime type	filemanager	de	MIME Typ
 modified	filemanager	de	Verändert
@@ -59,16 +65,21 @@ modified by	filemanager	de	Verändert von
 move to	filemanager	de	Verschieben nach
 move to:	filemanager	de	Verschieben nach:
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
+no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis vorhanden
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für dies Datei / Verzeichnis
 operation	filemanager	de	Operation
 owner	filemanager	de	Eigentümer
+preferences old	preferences	de	Alte Einstellungen
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
+reload	filemanager	de	aktualisieren
 rename	filemanager	de	Umbenennen
 renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 replaced %1	filemanager	de	%1 ersetzt
 save %1	filemanager	de	%1 speichern
+save %1, and go back to file listing	filemanager	de	
 save all	filemanager	de	Alles speichern
+save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
 show	filemanager	de	Anzeigen
 show ..	filemanager	de	Anzeigen ...
@@ -77,14 +88,17 @@ show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (E
 show help	filemanager	de	Hilfe anzeigen
 size	filemanager	de	Größe
 sort by:	filemanager	de	Sortieren nach:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	de	
 total files	filemanager	de	Anzahl Dateien
 unknown mime-type defaults to text/plain when viewing	filemanager	de	Zum Anzeigen von unbekannte MIME-Typen text/plain verwenden
 unused space	filemanager	de	Unbenutzer Speicherplatz
 up	filemanager	de	Nach oben
 update	filemanager	de	Aktualisieren
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
+upload	filemanager	de	Hochladen
 upload fields	filemanager	de	Felder zum Hochladen
 upload files	filemanager	de	Dateien hochladen
+use new experimental filemanager?	filemanager	de	
 used space	filemanager	de	Benutzter Speicherplatz
 users	filemanager	de	Benutzer
 version	filemanager	de	Version
