@@ -125,6 +125,8 @@
 				{
 					$this->bo->return_to = $_GET['menuaction'].
 						sprintf('&date=%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day);
+					// reset the matrixview participants
+					$GLOBALS['phpgw']->session->appsession('participants', NULL,'');
 				}
 				$this->bo->save_sessiondata();
 			}
@@ -1277,7 +1279,7 @@
 				{
 					$this->bo->set_class(True);
 				}
-				// Add participants
+				// Add participants from matrixview
 				$participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants") );
 				for($_f_part=0; $_f_part<count($participants); $_f_part++)
 				{
