@@ -11,44 +11,19 @@
 <link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
 <title>{website_title} - Login</title>
 <style type="text/css">
-/*
-#containerDiv
+
+/*body 
 {
-	position:absolute;
-	width:100%;
-	left:0px;
-	top:40%;
-	vertical-align:	bottom;
+	height:100%;
 }
 */
-#centerBox
-{
-/*	position:relative;*/
-/*	width:100%;
-	top:-80px;
-	height:134px;
-	z-index:9;
-*/
-}
+
 
 #divMain
 {
-/*	background-color:white;
-	margin-top: 5px;
-	padding:0px;
-	border-color:#7e7e7e;
-	border-width:1px;
-	border-style:solid;
-*/
 	height:85%;
-
 }
 
-/*
-
-
-body { background: #ffffff; }
-*/
 </style>
 
 		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
@@ -85,58 +60,69 @@ body { background: #ffffff; }
 <!--</div>-->
 <div id="containerDiv">
 <div id="centerBox">
-<center>{lang_message}</center>
+<div align="center">{lang_message}</div>
+<div align="center">{cd}</div>
 <p>&nbsp;</p>
 <form name="login_form" method="post" action="{login_url}">
 <!-- <table class=sidebox cellspacing=1 cellpadding=0  border=1  align=center> -->
-<table class=sidebox cellspacing=1 cellpadding=0 border=0 align=center style="border: 1px silver solid">
-<tr style="border: 1px silver solid"> 
-<td class="sideboxtitle" align="center"  height=28 style="border: 1px silver solid">{website_title}</td>
-</tr>
-<tr> 
-<td class="sideboxcontent" bgcolor="#efefef">
 
-<table class="sideboxtext" cellspacing=0 cellpadding=0 width="100%" border="0" style="border: 1px silver solid">
-<tr bgcolor="#e6e6e6">
-<td colspan="3" align="center">
-{cd}
-<br>
-<img width="300" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="">
-</td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td colspan="3"> <input type="hidden" name="passwd_type" value="text"> <input type="hidden" name="account_type" value="u"> </td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td align="right"><font color="#000000">{lang_username}:&nbsp;</font></td>
-<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
-<td align="left">{select_domain}</td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td align="right"><font color="#000000">{lang_password}:&nbsp;</font></td>
-<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px; border: 1px solid silver;"></td>
-<td>&nbsp;</td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td colspan="3" align="center">
-&nbsp;
-</td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td colspan="3" align="center">
-<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
-</td>
-</tr>
-<tr bgcolor="#e6e6e6">
-<td colspan="3" align="center">
-&nbsp;
+
+	<table class="divLoginbox" cellspacing="0" cellpadding="0" border="0" align="center">
+	<tr> 
+		<td colspan="2" class="divLoginboxHeader" style="border-bottom: #9c9c9c 1px solid;" align="center">{website_title}</td>
+	</tr>
+	<tr > 
+		<td class="divSideboxEntry">
+
+		<table  cellspacing=0 cellpadding=0 width="100%" border="0">
+		<tr>
+			<td colspan="3" align="center">
+								<br>
+				<img width="200" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="spacer" />
+			</td>
+		</tr>
+		<tr>
+			<td  colspan="3">
+				<input type="hidden" name="passwd_type" value="text">
+				<input type="hidden" name="account_type" value="u">
+			</td>
+		</tr>
+		<tr>
+			<td align="right">{lang_username}:&nbsp;</td>
+			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+			<td align="left">{select_domain}</td>
+		</tr>
+		<tr>
+			<td align="right">{lang_password}:&nbsp;</td>
+			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+			&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+			&nbsp;
+			</td>
+		</tr>
+		</table>
+
+	</td>
+	<td class="divSideboxEntry">
+	<img src="phpgwapi/templates/{template_set}/images/password.png" alt="keys" />
 </td>
 </tr>
 </table>
-
-</td>
-</tr>
-</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 </form>
 <script language="javascript1.2" type="text/javascript">
 <!--

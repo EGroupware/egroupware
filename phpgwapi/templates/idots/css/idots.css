@@ -94,6 +94,24 @@ td
 	padding-bottom:1px;*/
 }
 
+.divLoginbox 
+{
+	position:relative;
+	width: 300px; 
+	border-right: #9c9c9c 1px solid; 
+	border-top: #9c9c9c 1px solid; 
+	border-left: #9c9c9c 1px solid; 
+	border-bottom: #9c9c9c 1px solid
+}
+
+.divLoginboxHeader 
+{
+	text-align:center;
+	background-color:#dddddd;
+	padding-top:2px;
+	font-size:10px;
+	color:#666666;
+}
 .divSidebox 
 {
 	position:relative;
