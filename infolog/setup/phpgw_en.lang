@@ -1,8 +1,8 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients
-Add a file	infolog	de	Add a file
-Invalid filename	infolog	de	Invalid filename
+Add a file	infolog	en	Add a file
+Invalid filename	infolog	en	Invalid filename
 accept	infolog	en	accept
 action	infolog	en	Action
 add	infolog	en	Add
@@ -15,9 +15,9 @@ billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
 category	infolog	en	Category
-close	infolog	de	Close
+close	infolog	en	Close
 comment	infolog	en	Comment
-configuration	infolog	de	Konfiguration
+configuration	infolog	en	Konfiguration
 confirm	infolog	en	confirm
 csv-fieldname	infolog	en	CSV-Fieldname
 csv-filename	infolog	en	CSV-Filename
