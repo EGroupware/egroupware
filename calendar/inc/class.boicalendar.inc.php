@@ -2985,9 +2985,12 @@
 			{
 				$filename = $this->import_file();
 				$fp=fopen($filename,'rt');
-				$mime_msg = explode("\n",fread($fp, filesize($filename)));
+				$mime_msg = fread($fp, filesize($filename));
 				fclose($fp);
 				unlink($filename);
+				$mime_msg = preg_replace("/(\r\n|\r)/", "\n", $mime_msg); /* dos2unix */
+				$mime_msg = preg_replace("/\n\n+/", "\n", $mime_msg); /* strip duplicate newlines */
+				$mime_msg = explode("\n",$mime_msg); /* explode the sanitized message itself */
 			}
 			elseif(!$mime_msg)
 			{
