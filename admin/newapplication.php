@@ -17,10 +17,29 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
-  if (! $submit) {
+  if ($submit) {
+     if (! $n_app_name || ! $n_app_title) {
+        $error = lang_admin("You must enter an application name and title.");
+     } else {
+        $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values('"
+			    . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
+			    . "$n_app_enabled')");
+
+        Header("Location: " . $phpgw->link("applications.php"));
+        exit;
+     }
+  }
+  if ($error) {
+     $phpgw->common->header();
+     $phpgw->common->navbar();
+  }
+
+  echo "<p>" . lang_admin("Add new application") . "<hr><p>";
+  if ($error) {
+     echo "<p><center>$error</center><br>";
+  }
      ?>
-       <p>
-       <?php echo lang_admin("Add new application"); ?><hr><p>
+
        <form action="newapplication.php">
         <?php echo $phpgw->session->hidden_var(); ?>
 
@@ -47,12 +66,3 @@
        </form>
      <?php
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-
-  } else {
-     $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values ('"
-			 . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
-			 . "$n_app_enabled')");
-
-     Header("Location: " . $phpgw->link("applications.php"));
-  }
-

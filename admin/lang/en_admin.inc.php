@@ -41,6 +41,7 @@
        case "title":			$s = "Title";				break;
        case "enabled":			$s = "Enabled";				break;
 
+       case "applications":		$s = "Applications";		break;
        case "installed applications":
 	$s = "Installed applications";						break;
 
@@ -55,8 +56,11 @@
        case "application title":
 	$s = "Application title";						break;
 
+       case "edit application":
+	$s = "Edit application";						break;
 
-
+       case "you must enter an application name and title.":
+	$s = "You must enter an application name and title.";	break;
 
 
        case "are you sure you want to delete this group ?":
