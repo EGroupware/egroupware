@@ -30,7 +30,7 @@
 			if (selectBox.options[i].selected) {
 				for (j=0; j < openerSelectBox.length; j++) {
 					if (openerSelectBox[j].value == selectBox.options[i].value) {
-						openerSelectBox[j].selected = false;
+						openerSelectBox.removeChild(openerSelectBox[j]);
 					}
 				}
 				selectBox.options[i--] = null;
