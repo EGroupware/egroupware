@@ -120,7 +120,7 @@
 									$result = $GLOBALS['phpgw_setup']->db->query("INSERT INTO lang(message_id,app_name,lang,content) VALUES('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')",__LINE__,__FILE__);
 									if (intval($result) <= 0)
 									{
-										echo '<br>Error inserting record: lang values ('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')";
+										echo "<br>Error inserting record: lang values ('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')";
 									}
 								}
 							}
