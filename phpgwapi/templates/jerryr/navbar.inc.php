@@ -57,13 +57,33 @@
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
 			//if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
-			if($app != 'preferences' && $app != 'about')
+			if($app != 'preferences' && $app != 'about' && $app != 'logout')
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
 
+// 300304 ndee
+				if($app == 'home') $title = lang('Home');
+
+				if($app=='home')
+				{
+					if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']=='no')
+					{
+						continue;
+					}
+				}
+
 				if($i<$max_icons)
 				{
+					if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']=='no')
+					{
+						$tdwidth = 100/($max_icons);
+					}
+					else
+					{
+						$tdwidth = 100/($max_icons+2);
+					}
+
 					$app_icons .= '<td height="40" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
@@ -129,6 +149,13 @@
 				}
 			}
 
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
+			{
+				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a 
+href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'"></a></td>';
+				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
+
+			}
 //			$var['app_icons'] = $app_icons;
 		if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='text')
 		{
@@ -145,8 +172,10 @@
 				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
 
 				<div id="extraIcons">
-				<table cellspacing="0" cellpadding="0">
-				<tr><td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd;padding:1px;"><a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'"><img style="" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
+				<table cellspacing="0" cellpadding="0" border="0" width="100%">
+				<tr><td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd;padding:1px;">
+				<a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'">
+				<img style="" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
 				'.$app_extra_icons.'					</table>
 				</div>
 
