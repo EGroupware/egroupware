@@ -1,67 +1,64 @@
+%1 records imported	infolog	en	%1 records imported
+%1 records read (not yet imported, you may go back and uncheck Test Import)	infolog	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+Action	infolog	en	Action
+Add	infolog	en	Add
+All	infolog	en	All
+Are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
+Back to Projectlist	infolog	en	Back to Projectlist
+CSV-Fieldname	infolog	en	CSV-Fieldname
+CSV-Filename	infolog	en	CSV-Filename
+Category	infolog	en	Category
+Confirm	infolog	en	Confirm
+Description	infolog	en	Description
+Description can not exceed 8000 characters in length	infolog	en	Description can not exceed 8000 characters in length
+Download	infolog	en	Download
+Duration	infolog	en	Duration
+End Date	infolog	en	End Date
+Ending date can not be before start date	infolog	en	Ending date can not be before start date
+Fieldseparator	infolog	en	Fieldseparator
+From	infolog	en	From
+Import	infolog	en	Import
+Import CSV-File into Info Log	infolog	en	Import CSV-File into Info Log
+Info Log	infolog	en	Info Log
+Info Log - Delete	infolog	en	Info Log - Delete
+Info Log - Subprojects from	infolog	en	Info Log - Subprojects from
+Info Log-Fieldname	infolog	en	Info Log-Fieldname
+List no Subs/Childs	infolog	de	List no Subs/Childs
+None	infolog	en	None
+Number of records to read (<=200)	infolog	en	Number of records to read (<=200)
+Owner	infolog	en	Owner
+Phone/Email	infolog	en	Phone/Email
+Priority	infolog	en	Priority
+Private	infolog	en	Private
+Re:	infolog	en	Re:
+Responsible	infolog	en	Responsible
+Search for:	infolog	en	Search for:
+Select	infolog	en	Select
+Show full usernames	infolog	de	Show full usernames
+Show open Events: Tasks/Calls/Notes on main screen	infolog	de	Show open Events: Tasks/Calls/Notes on main screen
+Start Date	infolog	en	Start Date
+Startrecord	infolog	en	Startrecord
+Status	infolog	en	Status
+Sub	infolog	en	Sub
+Subject	infolog	en	Subject
+Test Import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
+Today	infolog	en	Today
+Type	infolog	en	Type
+View Matrix of actual Month	infolog	en	View Matrix of actual Month
+You have entered an invalid ending date	infolog	en	You have entered an invalid ending date
+You have entered an invalid starting date	infolog	en	You have entered an invalid starting date
+You must enter a subject or a description	infolog	en	You must enter a subject or a description
+datecreated	infolog	en	date created
+days	infolog	en	days
+enddate	infolog	en	Enddate
+help	infolog	en	help
 infolog	common	en	InfoLog
 infolog preferences	common	en	InfoLog preferences
-%1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
-Import CSV-File into Info Log	infolog	en	Import CSV-File into Info Log
-CSV-Filename	infolog	en	CSV-Filename
-Fieldseparator	infolog	en	Fieldseparator
-Download	infolog	en	Download
-CSV-Fieldname	infolog	en	CSV-Fieldname
-Info Log-Fieldname	infolog	en	Info Log-Fieldname
-help	infolog	en	help
-Import	infolog	en	Import
-Test Import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
-Startrecord	infolog	en	Startrecord
-Number of records to read (<=200)	infolog	en	Number of records to read (<=200)
-%1 records read (not yet imported, you may go back and uncheck Test Import)	infolog	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
-%1 records imported	infolog	en	%1 records imported
-Info Log - Delete	infolog	en	Info Log - Delete
-Are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
-Description can not exceed 8000 characters in length	infolog	en	Description can not exceed 8000 characters in length
-You must enter a subject or a description	infolog	en	You must enter a subject or a description
-You have entered an invalid starting date	infolog	en	You have entered an invalid starting date
-You have entered an invalid ending date	infolog	en	You have entered an invalid ending date
-Ending date can not be before start date	infolog	en	Ending date can not be before start date
-Re:	infolog	en	Re:
-Search for:	infolog	en	Search for:
-Category	infolog	en	Category
-None	infolog	en	None
-Owner	infolog	en	Owner
-Type	infolog	en	Type
-From	infolog	en	From
-Phone/Email	infolog	en	Phone/Email
-Subject	infolog	en	Subject
-Description	infolog	en	Description
-Start Date	infolog	en	Start Date
-End Date	infolog	en	End Date
-Today	infolog	en	Today
-Duration	infolog	en	Duration
-days	infolog	en	days
-Status	infolog	en	Status
-Priority	infolog	en	Priority
-Confirm	infolog	en	Confirm
-Responsible	infolog	en	Responsible
-Private	infolog	en	Private
-Info Log - Subprojects from	infolog	en	Info Log - Subprojects from
-Info Log	infolog	en	Info Log
-Info Log	infolog	en	Info Log
-Info Log	infolog	en	Info Log
-Category	infolog	en	Category
-All	infolog	en	All
-Select	infolog	en	Select
-Sub	infolog	en	Sub
-Action	infolog	en	Action
-showing x - x of x	infolog	en	showing %1 - %2 of %3
-showing x	infolog	en	showing %1
-Back to Projectlist	infolog	en	Back to Projectlist
-View Matrix of actual Month	infolog	en	View Matrix of actual Month
-Add	infolog	en	Add
-datecreated	infolog	en	date created
 last changed	infolog	en	last changed
-startdate	infolog	en	Startdate
-enddate	infolog	en	Enddate
 no - cancel	infolog	de	No - Cancel
-yes - delete	infolog	de	Yes - Delete
 no entries found, try again ...	infolog	de	no entries found, try again ...
-Show open Events: Tasks/Calls/Notes on main screen	infolog	de	Show open Events: Tasks/Calls/Notes on main screen
-List no Subs/Childs	infolog	de	List no Subs/Childs
-Show full usernames	infolog	de	Show full usernames
+showing x	infolog	en	showing %1
+showing x - x of x	infolog	en	showing %1 - %2 of %3
+startdate	infolog	en	Startdate
+yes - delete	infolog	de	Yes - Delete
