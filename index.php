@@ -185,9 +185,9 @@
 <?php
 	echo '<p><table border="0" width="100%" align="center">';
 	//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
-	//echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
+	echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
 
-	$phpgw->common->hook('',array('email','calendar','news','addressbook'));
+	$phpgw->common->hook('home',array('email','calendar','news','addressbook'));
 
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();

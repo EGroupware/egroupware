@@ -76,7 +76,7 @@
 		section_end(); 
 	}
 
-	$phpgw->common->hook();
+	$phpgw->common->hook('preferences');
 	$pref_tpl->pparse('out','list');
 	$phpgw->common->phpgw_footer();
 ?>

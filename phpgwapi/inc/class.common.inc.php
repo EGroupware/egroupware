@@ -806,6 +806,7 @@
 			     !$phpgw_info['flags']['navbar_target']))
 			{
 				echo parse_navbar();
+				$this->hook('after_navbar');
 			}
 		}
 
@@ -913,7 +914,7 @@
 		@abstract hooking function which allows applications to "hook" into each other
 		@discussion Someone flesh this out please
 		*/
-		function hook($location = '', $order = '')
+		function hook($location, $order = '')
 		{
 			global $phpgw, $phpgw_info;
 			if ($order == '')
@@ -923,21 +924,10 @@
 
 			/* First include the ordered apps hook file */
 			reset ($order);
-			while (list (, $appname) = each ($order))
+			while (list(,$appname) = each($order))
 			{
-				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
-				if ($location != '')
-				{
-					$f .= '_'.$location.'.inc.php';
-				}
-				else
-				{
-					$f .= '.inc.php';
-				}
-
-				if (file_exists($f) &&
-					((isset($phpgw_info['user']['apps'][$appname]) && $phpgw_info['user']['apps'][$appname])
-					 || $appname == 'preferences'))
+				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
+				if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
 				{
 					include($f);
 				}
@@ -946,23 +936,13 @@
 
 			/* Then add the rest */
 			reset ($phpgw_info['user']['apps']);
-			while ($permission = each($phpgw_info['user']['apps']))
+			while (list(,$p) = each($phpgw_info['user']['apps']))
 			{
-				if (!isset($completed_hooks[$permission[0]]) ||
-				    $completed_hooks[$permission[0]] != True)
+				$appname = $p['name'];
+				if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
 				{
-					$appname = $permission[0];
-					$f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
-					if ($location != '')
-					{
-						$f .= '_'.$location.'.inc.php';
-					}
-					else
-					{
-						$f .= '.inc.php';
-					}
-
-					if (file_exists($f) && ($phpgw_info['user']['apps'][$appname] || $appname == 'preferences'))
+					$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
+					if (file_exists($f))
 					{
 						include($f);
 					}
@@ -973,52 +953,61 @@
 		/*!
 		@function hook_single
 		@abstract call the hooks for a single application
-		@param $location hook location - optional
+		@param $location hook location - required
 		@param $appname application name - optional
 		*/
-		  function hook_single($location = '', $appname = '')
-  {
-     global $phpgw, $phpgw_info, $PHP_VERSION;
-     if (! $appname) {
-        $appname = $phpgw_info['flags']['currentapp'];
-     }
-     $s = $phpgw->common->filesystem_separator();
-     /* First include the ordered apps hook file */
-     $f = PHPGW_SERVER_ROOT . $s . $appname . $s . 'inc' . $s . 'hook_'.$appname;
-     if ($location != '') {
-        $f .= '_'.$location.'.inc.php';
-     } else {
-        $f .= '.inc.php';
-     }
-     if (file_exists($f)) {
-        include($f);
-        return True;
-     } else {
-        return False;
-     }
-  }
+		function hook_single($location, $appname = '')
+		{
+			global $phpgw, $phpgw_info, $PHP_VERSION;
+			if (! $appname)
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
+
+			/* First include the ordered apps hook file */
+			$f = PHPGW_SERVER_ROOT . sep . $appname . sep . 'inc' . sep . 'hook_' . $location . '.inc.php';
+			if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+			{
+				include($f);
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
 
 		/*!
 		@function hook_count
 		@abstract loop through the applications and count the hooks
 		*/
-  function hook_count($location = ''){
-    global $phpgw, $phpgw_info;
-    $count = 0;
-    reset($phpgw_info['user']['apps']);
-    while ($permission = each($phpgw_info['user']['apps'])) {
-      $f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
-    	if ($location != ''){$f .= '_'.$location.'.inc.php';}else{$f .= '.inc.php'; }
-  	  if (file_exists($f)) {++$count;}
-    }
-    return $count;
-  }
+		function hook_count($location)
+		{
+			global $phpgw, $phpgw_info;
+			$count = 0;
+			reset($phpgw_info['user']['apps']);
+			while ($permission = each($phpgw_info['user']['apps']))
+			{
+				$f = PHPGW_SERVER_ROOT . sep . $permission[0] . sep . 'inc' . sep . 'hook_' . $location . '.inc.php';
+	
+				if (file_exists($f))
+				{
+					++$count;
+				}
+			}
+			return $count;
+		}
 
-  /* Wrapper to the session->appsession() */
-  function appsession($data = '##NOTHING##') {
-    global $phpgw_info, $phpgw;
-    return $phpgw->session->appsession('default','',$data);
-  }
+		/* Wrapper to the session->appsession() */
+		function appsession($data = '##NOTHING##')
+		{
+			global $phpgw_info, $phpgw;
+			$this->debug_info[] = '$phpgw->common->appsession() is a depreciated function'
+				. ' - use $phpgw->session->appsession() instead';
+
+			return $phpgw->session->appsession('default','',$data);
+		}
+
 		/*!
 		@function show_date
 		@abstract show current date

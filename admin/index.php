@@ -78,7 +78,7 @@
 		section_end(); 
 	}
 
-	$phpgw->common->hook();
+	$phpgw->common->hook('admin');
 	$admin_tpl->pparse('out','list');
 
 	$phpgw->common->phpgw_footer();
