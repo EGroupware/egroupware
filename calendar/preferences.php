@@ -110,12 +110,12 @@
      <?php
        $selected = array();
        $selected[$phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]] = " selected";
-       if (! isset($phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"] == "index.php") {
-          $selected["index.php"] = " selected";
+       if (! isset($phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"])) {
+          $selected["month.php"] = " selected";
        }
      ?>
      <option value="year.php"<?php echo $selected["year.php"] . ">" . lang("Yearly"); ?></option>
-     <option value="index.php"<?php echo $selected["index.php"] . ">" . lang("Monthly"); ?></option>
+     <option value="index.php"<?php echo $selected["month.php"] . ">" . lang("Monthly"); ?></option>
      <option value="week.php"<?php echo $selected["week.php"]  . ">" . lang("Weekly"); ?></option>
      <option value="day.php"<?php echo $selected["day.php"] . ">" . lang("Daily"); ?></option>
     </select>
