@@ -3,6 +3,5 @@ duration	infolog	no	Varighet
 today	infolog	no	I dag
 download	infolog	no	Download
 done	infolog	no	Ferdig
-showing x - x of x	infolog	no	showing %1 - %2 of %3
 are you sure you want to delete this entry	infolog	no	Er du sikker på at du vil slette denne entry?
 urgency	infolog	no	Prioritet

@@ -4,7 +4,6 @@ today	infolog	hu	Ma
 from	infolog	hu	Feladó
 download	infolog	hu	Letöltés
 done	infolog	hu	Kész
-showing x - x of x	infolog	hu	listázva %1 - %2, össz: %3
 are you sure you want to delete this entry	infolog	hu	Biztosan törölni akarja ezt a bejegyzést?
 urgency	infolog	hu	Sürgõsség
 translation	infolog	hu	Fordítás

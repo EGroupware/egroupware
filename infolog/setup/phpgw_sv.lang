@@ -4,7 +4,6 @@ today	infolog	sv	I dag
 from	infolog	sv	Från
 download	infolog	sv	Ladda ner
 done	infolog	sv	Färdig
-showing x - x of x	infolog	sv	visar %1 - %2 av %3
 are you sure you want to delete this entry	infolog	sv	Är du säker på att du vill ta bort denna entry?
 urgency	infolog	sv	Prioritet
 translation	infolog	sv	Översättning

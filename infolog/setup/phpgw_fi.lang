@@ -83,8 +83,6 @@ responsible	infolog	fi	Vastuuhenkilö
 search for:	infolog	fi	Etsi:
 select	infolog	fi	Valiste
 show full usernames	infolog	fi	Näytä koko nimet
-showing x	infolog	fi	näytän %1
-showing x - x of x	infolog	fi	näytän %1 - %2 / %3
 show open Events: Tasks/Calls/Notes on main screen	infolog	fi	Näytä avoimet tapahtumat: Tehtävät/Puhelut/Muistiinpanot päänäytöllä
 startdate	infolog	fi	Alkupäivä
 startrecord	infolog	fi	Startrecord

@@ -82,8 +82,6 @@ responsible	infolog	es	Responsable
 search for:	infolog	es	Buscar:
 select	infolog	es	Seleccionar
 show full usernames	infolog	es	Mostrar nombres de usuario completos
-showing x	infolog	es	mostrando %1
-showing x - x of x	infolog	es	mostrando %1 - %2 de %3
 show open Events: Tasks/Calls/Notes on main screen	infolog	es	Mostrar eventos abiertos: Tareas/Llamados/Notas en la Pantalla Principal
 startdate	infolog	es	Fecha de Inicio
 startrecord	infolog	es	Comenzar Registro
