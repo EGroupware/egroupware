@@ -1,7 +1,8 @@
 #LyX 1.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 2.17
+\lyxformat 218
 \textclass article
 \begin_preamble
+
 \usepackage{fullpage, graphicx, url}
 \setlength{\parskip}{1ex}
 \setlength{\parindent}{0ex}
@@ -329,19 +330,19 @@ You will need to create the following directories for your code
 \SpecialChar ~
  `--default
 \layout LyX-Code
-\noindent \bibitem {}
+\noindent \bibitem {dummy}
 
 \layout LyX-Code
-\bibitem {}
+\bibitem {dummy}
 
 \layout LyX-Code
-\bibitem {}
+\bibitem {dummy}
 
 \layout LyX-Code
-\bibitem {}
+\bibitem {dummy}
 
 \layout LyX-Code
-\bibitem {}
+\bibitem {dummy}
 
 \layout Subsection
 
@@ -954,7 +955,7 @@ Directory tree
 \SpecialChar ~
 `--default.theme
 \layout LyX-Code
-\bibitem {}
+\bibitem {dummy}
 
 \layout Subsection
 
@@ -1247,7 +1248,7 @@ Email/NNTP Functions
 $phpgw->send->msg
 \layout Standard
 
-$phpgw->msg->send($service, $to, $subject, $body, $msgtype, $cc, $bcc)
+$phpgw->send->msg($service, $to, $subject, $body, $msgtype, $cc, $bcc)
 \newline 
  Send a message via email or NNTP and returns any error codes.
 \newline 
@@ -1267,7 +1268,7 @@ $body = "Give me a call
 \backslash 
 n Been wondering what your up to.";
 \newline 
-$errors = $phpgw->msg->send("email", $to, $subject, $body);
+$errors = $phpgw->send->msg("email", $to, $subject, $body);
 \newline 
 
 \newline 
