@@ -47,8 +47,9 @@
 				while(list($key, $value) = each($files))
 				{
 						//echo '$key = '.$key.' and $value = '.$value.'<br>';
-						if (!preg_match("/^(class\.).(\.inc\.php)+$/i",$value)){
-								//unset($files[$key]);
+						if (!preg_match("/^class\.(.*)\.inc\.php+$/",$value))
+						{
+								unset($files[$key]);
 								//echo '#'.$key.' is bad, and should be unset<br>';
 						}
 				}
