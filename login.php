@@ -246,6 +246,7 @@
 	}
 
 	$tmpl->set_var('login_url', $phpgw_info['server']['webserver_url'] . '/login.php' . $extra_vars);
+	$tmpl->set_var('registration_url',$phpgw_info['server']['webserver_url'] . '/registration/');
 	$tmpl->set_var('website_title', $phpgw_info['server']['site_title']);
 	$tmpl->set_var('cd',check_logoutcode($cd));
 	$tmpl->set_var('cookie',show_cookie());
