@@ -23,10 +23,72 @@
 
   /* $Id$ */
 
+	// Prelminary vcard import/export class
+	// The method of calls to this should probably be cleaned up, but
+	//   following are some examples:
+	//
 	class vcard
 	{
+		// This array is used by vcard->in to aid in parsing the multiple
+		//   attributes that are possible with vcard.
+		// You MUST use this in conjunction with the vcard->in function:
+		//
+		// $this->contacts = CreateObject("phpgwapi.contacts");
+		// $this->vcard = CreateObject("phpgwapi.vcard");
+		// $myimport = $this->vcard->import;
+		//
+		// while ( list($fname,$fvalue) = each($myimport) ) {
+		//     if ( strstr(strtolower($name), $myimport[$fname]) ) {
+		//         $buffer = $this->import_new_attrib($buffer,$name,$value);
+		//         $value = trim($value);
+		//         $value = ereg_replace("=0D=0A","\n",$value);
+		//         $buffer += array($name => $value);
+		//     }
+		// }
+		//
+		// Then, to convert the vcard array to a contacts class array:
+		//
+		// for ($i=1;$i<=count($buffer);$i++) {
+		//     $entry = $this->vcard->in($buffer[$i]);
+		//     $this->contacts->add($phpgw_info["user"]["account_id"],$entry);
+		// }
+		//
+		var $import = array(
+			"n"        => "n",
+			"sound"    => "sound",
+			"bday"     => "bday",
+			"note"     => "note",
+			"tz"       => "tz",
+			"geo"      => "geo",
+			"url"      => "url",
+			"pubkey"   => "pubkey",
+			"org"      => "org",
+			"title"    => "title",
+			"adr"      => "adr",
+			"label"    => "label",
+			"tel"      => "tel",
+			"email"    => "email"
+		);
+
 		// This array is used by vcard->out to aid in parsing the multiple
-		// attributes that are possible with vcard.
+		//   attributes that are possible with vcard.
+		// You MUST use this in conjunction with the vcard->out function:
+		//
+		// $this->vcard = CreateObject("phpgwapi.vcard");
+		// $myexport = $this->vcard->export;
+		//
+		// while( list($name,$value) = each($currentrecord) ) {
+		//     if ($myexport[$name] && ($value != "") ) {
+		//         $buffer[$i][$myexport[$name]] = $value;
+		//     }
+		// }
+		//
+		// Then, to convert the data array to a vcard string:
+		//
+		// for ($i=0;$i<count($buffer);$i++) {
+		//     $vcards .= $this->vcard->out($buffer[$i]);
+		// }
+		//
 		var $export = array(
 			"fn"                  => "FN",
 			"n_given"             => "N;GIVEN",
@@ -421,7 +483,8 @@
 			$buffer["adr_one_type"] = substr($buffer["adr_one_type"],0,-1);
 			$buffer["adr_two_type"] = substr($buffer["adr_two_type"],0,-1);
 
-			// Lastly, filter out all but standard fields
+			// Lastly, filter out all but standard fields, since they cover the vcard standard
+			// and we don't want $buffer['BEGIN'] etc...
 			$contacts = CreateObject('phpgwapi.contacts');
 			while (list($fname,$fvalue) = each($contacts->stock_contact_fields)) {
 				if($buffer[$fvalue]) {
@@ -431,7 +494,12 @@
 			return $entry;
 		}
 
-		// Takes an array of contacts class fields/values, turns it into a vcard string
+		// Takes an array of contacts class fields/values, turns it into a vcard string:
+		//
+		// for ($i=0;$i<count($buffer);$i++) {
+		//     $vcards .= $this->vcard->out($buffer[$i]);
+		// }
+		//
 		function out($buffer)
 		{
 			$entry     = "";
