@@ -17,15 +17,16 @@
 <H2><A NAME="ss2.1">2.1 Requirements</A>
 </H2>
 
-<P>These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare proper.
+<P>These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare deluxe.
 <P>It must run on PHP3 and PHP4. <BR>
 SQL statements must be compatible with both MySQL and PostgreSQL.<BR>
 It must use our default header.inc.php include.<BR>
 It must use our <CODE>$phpgw_link($url)</CODE> for all links (this is for session support).<BR>
+It must use "post" for forms.<BR>
 It must respect phpGW group rights and phpGW user permissions.<BR>
 It must use our directory structure, template support and lang (multi-language) support.<BR>
 Where possible it should run on both Unix and NT platforms.
-<P>For applications that do not meet these requirements, we will store them in a seperate location, indicating their status.<BR>
+<P>For applications that do not meet these requirements, they can be avalible to users via the phpGroupWare Apps project, or whatever means the developers decide.<BR>
 If you need help converting your application to templates and our lang support, we will try to connect you with someone to help.
 <H2><A NAME="ss2.2">2.2 Writing/porting your application</A>
 </H2>
@@ -37,35 +38,23 @@ This is done by putting this at the top of each PHP page.
 <HR>
 <PRE>
   &lt;?php
-  $phpgw_flags["currentapp"] = "newapp";
+  $phpgw_info["flags"]["currentapp"] = "appname";
   include("../header.inc.php");
   ?>
 </PRE>
 <HR>
 
 Of course change application name to fit.<BR>
-This will include the standard functions, verify the sessionid,  rights to the application, and will toss in the navbar.
-<P>If you have other includes, or functions that need to be inserted/run before the navbar replace
-<HR>
-<PRE>
-  $phpgw_flags["currentapp"] = "newapp";
-</PRE>
-<HR>
-
-with
-<HR>
-<PRE>
-  $phpgw_flags["currentapp"] = "newapp";
-  $phpgw_flags["nonavbar"] = True;
-</PRE>
-<HR>
-
-Then when you are done you need to display the navbar by adding this line:
-<HR>
-<PRE>
-     $phpgw->common->navbar();
-</PRE>
-<HR>
+This include will provide the following things: 
+<UL>
+<LI> The phpgwAPI - The phpGroupWare API will be loaded.</LI>
+<LI> The phpGW navbar will be loaded (by default, but can be disabled until a later point.</LI>
+<LI> appname/inc/functions.inc.php - This file is loaded just after the phpgwAPI and before any html code is generated. This file should include all your application specific functions.. You are welcome to include any additional files you need from within this file.</LI>
+<LI> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
+<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
+<LI> The phpGW footer will be loaded, which closes several connections.</LI>
+</UL>
+<P>
 <HR>
 <A HREF="phpGW_Developers-HOWTO-3.html">Next</A>
 <A HREF="phpGW_Developers-HOWTO-1.html">Previous</A>

@@ -25,26 +25,53 @@ The directory layout may seem complex at first, but after some use, you will see
 <P>
 <PRE>
 .-- addressbook
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- admin
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- calendar
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- cron
 |-- doc
 |-- email
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- filemanager
 |-- files
 |   |-- groups
 |   `-- users
-|-- headlines
 |-- inc
-|   |-- addressbook
-|   |-- calendar
-|   |-- core
-|   |-- email
-|   |-- headlines
-|   |-- lang
-|   |   |-- en
-|   |   |-- gr
-|   |   `-- sp
+|   |-- phpgwapi
+    |   |-- phpgw.inc.php
+    |   |-- phpgw_info.inc.php
+    |   |-- phpgw_common.inc.php
+|   |   `-- etc...
 |   `-- templates
 |       |-- default
 |       |   |-- addressbook
@@ -62,58 +89,32 @@ The directory layout may seem complex at first, but after some use, you will see
 |           |-- calendar
 |           `-- tts
 |-- preferences
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- themes
-|-- todo
-`-- tts  
-    `-- newapp
-        `-- icons
-        |   `-- navbar.gif
-        `-- inc
-        |   |-- header.inc.php
-        |   `-- footer.inc.php
-        |-- lang
-        |   `-- en
-        |       `-- newapp.inc.php
-        `-- template       
-            `-- default
+`-- todo
+    `-- images
+    |   `-- navbar.gif
+    `-- inc
+    |   |-- functions.inc.php
+    |   |-- header.inc.php
+    |   `-- footer.inc.php
+    `-- templates
+        `-- default
   
 </PRE>
-<H2><A NAME="ss4.3">4.3 The lang Directory</A>
+<H2><A NAME="ss4.3">4.3 Translations</A>
 </H2>
 
-<P>The lang directory is pretty basic. The lang files are simply named appname.inc.php.
-<PRE>
-.-- inc
-    `-- lang
-        |-- en
-        |   |-- admin.inc.php
-        |   |-- common.inc.php
-        |   |-- login.inc.php
-        |   |-- todo.inc.php
-        |   |-- addressbook.inc.php
-        |   |-- calendar.inc.php
-        |   |-- filemanager.inc.php
-        |   `-- preferences.inc.php
-        |-- de
-        |   |-- admin.inc.php
-        |   |-- common.inc.php
-        |   |-- login.inc.php
-        |   |-- todo.inc.php
-        |   |-- addressbook.inc.php
-        |   |-- calendar.inc.php
-        |   |-- filemanager.inc.php
-        |   `-- preferences.inc.php
-        `-- sp
-            |-- admin.inc.php
-            |-- common.inc.php
-            |-- login.inc.php
-            |-- todo.inc.php
-            |-- addressbook.inc.php
-            |-- calendar.inc.php
-            |-- filemanager.inc.php
-            `-- preferences.inc.php
-  
-</PRE>
+<P>The translations are now being done thru the database, and will be configurable to use other mechanisms.<BR>
+We are completing a program called Transy, which will provide developers/translators a nice GUI for building and updating translations.<BR>
+In the mean time you will need to create a sql script yourself and name it lang.sql. You can copy the one in doc/lang.sql and use it as a template.  
 <HR>
 <A HREF="phpGW_Developers-HOWTO-5.html">Next</A>
 <A HREF="phpGW_Developers-HOWTO-3.html">Previous</A>

@@ -9,7 +9,7 @@
   Dan Kuykendall &lt;dan@kuykendall.org&gt;
 </author>
 <date>
-  v0.4, 30 August 2000
+  v0.5, 09 September 2000
 </date>
 <abstract>
   This document explains phpGroupWare's infastructure and API, along with what is required to integrate applications into it.
@@ -41,6 +41,7 @@
   SQL statements must be compatible with both MySQL and PostgreSQL.<newline>
   It must use our default header.inc.php include.<newline>
   It must use our <tt>$phpgw_link($url)</tt> for all links (this is for session support).<newline>
+  It must use "post" for forms.<newline>
   It must respect phpGW group rights and phpGW user permissions.<newline>
   It must use our directory structure, template support and lang (multi-language) support.<newline>
   Where possible it should run on both Unix and NT platforms.
@@ -207,8 +208,9 @@
 </p>
 <sect1>Translations
 <p>
-  The translations are now being done thru the database, and will be configurable to use other mechanism.<newline>
-  I will document all the new abilities during my next update of this document.
+  The translations are now being done thru the database, and will be configurable to use other mechanisms.<newline>
+  We are completing a program called Transy, which will provide developers/translators a nice GUI for building and updating translations.<newline>
+  In the mean time you will need to create a sql script yourself and name it lang.sql. You can copy the one in doc/lang.sql and use it as a template.  
 </p>
 <sect>The API
 <sect1>Introduction

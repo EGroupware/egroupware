@@ -23,36 +23,33 @@
 
 <P>To make things easy for developers we go ahead and load the following files.
 <UL>
-<LI> inc/appname/appname.inc.php - This file should include all your application specific functions.</LI>
-<LI> inc/appname/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
-<LI> inc/appname/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
+<LI> appname/inc/functions.inc.php - This file should include all your application specific functions.</LI>
+<LI> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
+<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
 </UL>
 <H2><A NAME="ss3.3">3.3 Adding files, directories and icons.</A>
 </H2>
 
 <P>You will need to create the following directories for your code <BR>
-(replace 'newapp' with your application name)<BR>
+(replace 'appname' with your application name)<BR>
 <PRE>
-  `-- newapp
-      `-- icons
+  `-- appname
+      `-- images
       |   `-- navbar.gif
       `-- inc
+      |   |-- functions.inc.php
       |   |-- header.inc.php
       |   `-- footer.inc.php
-      |-- lang
-      |   `-- en
-      |       `-- newapp.inc.php
-      `-- template       
+      `-- templates
           `-- default
   
 </PRE>
 <H2><A NAME="ss3.4">3.4 Making phpGroupWare aware of your application</A>
 </H2>
 
-<P>To make the application aware of your application, add your application setup in the inc/globalconfig.inc.php.<BR>
-Simply add the following line just after <CODE>'/* ADD NEW APPS HERE */'</CODE> (replace 'newapp' with your application name)
+<P>To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a sql script.
 <PRE>
-  $phpgw_info["apps"]["newapp"] = array ("title" => "Title of Application", "enabled" => True);
+  insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
 </PRE>
 <HR>
 <A HREF="phpGW_Developers-HOWTO-4.html">Next</A>

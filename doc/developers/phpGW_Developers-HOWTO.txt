@@ -1,6 +1,6 @@
   phpGroupWare Application Development
   Dan Kuykendall <dan@kuykendall.org>
-  v0.4, 30 August 2000
+  v0.5, 09 September 2000
 
   This document explains phpGroupWare's infastructure and API, along
   with what is required to integrate applications into it.
@@ -172,6 +172,7 @@
   It must use our default header.inc.php include.
   It must use our $phpgw_link($url) for all links (this is for session
   support).
+  It must use "post" for forms.
   It must respect phpGW group rights and phpGW user permissions.
   It must use our directory structure, template support and lang (multi-
   language) support.
@@ -195,10 +196,9 @@
 
 
 
-
   ______________________________________________________________________
     <?php
-    $phpgw_flags["currentapp"] = "appname";
+    $phpgw_info["flags"]["currentapp"] = "appname";
     include("../header.inc.php");
     ?>
   ______________________________________________________________________
@@ -418,9 +418,13 @@
   44..33..  TTrraannssllaattiioonnss
 
   The translations are now being done thru the database, and will be
-  configurable to use other mechanism.
-  I will document all the new abilities during my next update of this
-  document.
+  configurable to use other mechanisms.
+  We are completing a program called Transy, which will provide
+  developers/translators a nice GUI for building and updating
+  translations.
+  In the mean time you will need to create a sql script yourself and
+  name it lang.sql. You can copy the one in doc/lang.sql and use it as a
+  template.
 
   55..  TThhee AAPPII
 
@@ -454,10 +458,6 @@
   /* The the result would be */
   /* <form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"> */
   ______________________________________________________________________
-
-
-
-
 
 
   55..33..  AApppplliiccaattiioonn FFuunnccttiioonnss
