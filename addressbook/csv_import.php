@@ -90,7 +90,8 @@
 			return '';
 		}
 
-		foreach(split('[,;]',$cats) as $cat)
+		$ids = array();
+		foreach(split(' *[,;] *',$cats) as $cat)
 		{
 			if(isset($cat2id[$cat]))
 			{
