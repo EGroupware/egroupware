@@ -207,6 +207,20 @@
 	}
 
 	/************************************************************************\
+	* Required classes                                                       *
+	\************************************************************************/
+	$phpgw->common       = CreateObject("phpgwapi.common");
+	$phpgw->hooks        = CreateObject("phpgwapi.hooks");
+	$phpgw->auth         = createobject("phpgwapi.auth");
+	$phpgw->acl          = CreateObject("phpgwapi.acl");
+	$phpgw->accounts     = createobject("phpgwapi.accounts");
+	$phpgw->session      = CreateObject("phpgwapi.sessions");
+	$phpgw->preferences  = CreateObject("phpgwapi.preferences");
+	$phpgw->applications = CreateObject("phpgwapi.applications");
+	$phpgw->translation  = CreateObject("phpgwapi.translation");
+	print_debug('main class loaded');
+
+	/************************************************************************\
 	* This function will return a properly formatted account_id.             *
 	* This needs to be placed here, or some classes will have a problem      *
 	* on instantiation.                                                      *
@@ -243,20 +257,6 @@
 			}
 		}
 	}
-
-	/************************************************************************\
-	* Required classes                                                       *
-	\************************************************************************/
-	$phpgw->common       = CreateObject("phpgwapi.common");
-	$phpgw->hooks        = CreateObject("phpgwapi.hooks");
-	$phpgw->auth         = createobject("phpgwapi.auth");
-	$phpgw->acl          = CreateObject("phpgwapi.acl");
-	$phpgw->accounts     = createobject("phpgwapi.accounts");
-	$phpgw->session      = CreateObject("phpgwapi.sessions");
-	$phpgw->preferences  = CreateObject("phpgwapi.preferences");
-	$phpgw->applications = CreateObject("phpgwapi.applications");
-	$phpgw->translation  = CreateObject("phpgwapi.translation");
-	print_debug('main class loaded');
 
 	/****************************************************************************\
 	* This is a global constant that should be used                              *
