@@ -127,6 +127,7 @@
      <select name="newsettings[imap_server_type]">
       <option value="Cyrus"<?php echo $selected["Cyrus"]; ?>>Cyrus or Courier</option>
       <option value="UWash"<?php echo $selected["UWash"]; ?>>UWash</option>
+      <option value="UW-Maildir"<?php echo $selected["UW-Maildir"]; ?>>UW-Maildir</option>
      </select>
     </td>
    </tr>

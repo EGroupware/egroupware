@@ -24,7 +24,7 @@
   if ($submit) {
      $totalerrors = 0;
 
-     if ($phpgw_info["server"]["account_repository"] == "ldap") {
+     if ($phpgw_info["server"]["account_repository"] == "ldap" && ! $allow_long_loginids) {
         if (strlen($n_loginid) > 8) {
            $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
         }

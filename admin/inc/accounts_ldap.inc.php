@@ -14,6 +14,10 @@
   // Sections of code where taking from slapda http://www.jeremias.net/projects/sldapa  by
   // Jason Jeremias <jason@jeremias.net>
   
+  // This is a local config option, I didn't make it global.  Becuase most people will leave it on
+  // and its something that doesn't need to be in the config table.
+  $allow_long_loginids = False;
+
   
   $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
 
