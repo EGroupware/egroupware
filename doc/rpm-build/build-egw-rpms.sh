@@ -22,25 +22,39 @@
 # How to create GPG keys to sign your rpm's you will found in a seperate
 # Document
 #
-# Script changed 2004 Feb 07 Reiner Jung
+# Script changed 2004 May 21 Reiner Jung
 
 SPECFILE=egroupware.spec
 SPECFILE2=egroupware-allapp.spec
-                                                                                                                             
+SPECFILEFEDORA=egroupware-fedora.spec
+
+
+####
+#
+# Some changes for bitrock missing and delete from fedora package is not needed
+#
+###                                                                                                                             
 PACKAGENAME=`grep "%define packagename" $SPECFILE | cut -f3 -d' '`
+PACKAGENAMEFEDORA=`grep "Name:" $SPECFILEFEDORA | cut -f2 -d' '`
 VERSION=`grep "%define version" $SPECFILE | cut -f3 -d' '`
+VERSIONFEDORA=`grep "Version:" $SPECFILEFEDORA | cut -f2 -d' '`
 PACKAGING=`grep "%define packaging" $SPECFILE | cut -f3 -d' '`
+PACKAGINGFEDORA=`grep "Release:" $SPECFILEFEDORA | cut -f2 -d' '`
                                                                                                                              
 HOMEBUILDDIR=`whoami`
-#change the variable ANONCVSDIR to your needs
 ANONCVSDIR=/build_root/egroupware
+ANONCVSDIRFEDORA=/build_root/fedora
+ANONCVSDIRFEDORABUILD=/build_root/fedora/egroupware
 RHBASE=/home/$HOMEBUILDDIR/redhat
 SRCDIR=$RHBASE/SOURCES
 SPECDIR=$RHBASE/SPECS
 LOGFILE=$SPECDIR/build-$PACKAGENAME-$VERSION-$PACKAGING.log
+LOGFILEFEDORA=$SPECDIR/build-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.log
+LOGFILEFEBIT=$SPECDIR/build-egroupware-bitrock-$VERSIONFEDORA.$PACKAGINGFEDORA.log
 VIRUSSCAN=$SPECDIR/clamav_scan-$PACKAGENAME-$VERSION-$PACKAGING.log
+VIRUSSCANFEDORA=$SPECDIR/clamav_scan-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.log
 MD5SUM=$SRCDIR/md5sum-$PACKAGENAME-$VERSION-$PACKAGING.txt
-
+MD5SUMFEDORA=$SRCDIR/md5sum-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.txt
 
 echo "Start Build Process of - $PACKAGENAME $VERSION"                           	 > $LOGFILE
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
@@ -52,6 +66,10 @@ find . -type d -name CVS -exec cp /build_root/egroupware/Root.anonymous {}/Root 
 rm Root.anonymous
 echo "End from CVS update"						     		>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 644 {} \;
+echo "Change the direcory rights back"					     		>> $LOGFILE 2>&1
+echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
 clamscan -r $ANONCVSDIR --log=$VIRUSSCAN
 
@@ -62,7 +80,7 @@ cd $ANONCVSDIR/..
 tar czvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz egroupware  			>> $LOGFILE 2>&1
 tar cjvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2 egroupware 			>> $LOGFILE 2>&1
 zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware  	  		>> $LOGFILE 2>&1
-echo "End Build Process of tar.gz, tar.bz, zip"		    				>> $LOGFILE 2>&1	
+echo "End Build Process of tar.gz, tar.bz, zip"						>> $LOGFILE 2>&1	
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
 
@@ -106,11 +124,83 @@ echo "End Build Process of - $PACKAGENAME $VERSION all applications"     		>> $L
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
 
+echo "Change the CVS dir back from anonymous to CVS user"		     		>> $LOGFILE 2>&1
+echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 cd $ANONCVSDIR
 echo ":ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware" > Root.reinerj		
 find . -type d -name CVS -exec cp /build_root/egroupware/Root.reinerj {}/Root \;	>> $LOGFILE 2>&1
 rm Root.reinerj
-echo "Change the CVS dir back from anonymous to CVS user"		     		>> $LOGFILE 2>&1
+echo "Change the direcory rights back"					     		>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 644 {} \;
+
+
+##############################################################################################################
+#                                                                                                            # 
+# Here start the build process for the Fedora packages                                                       #
+#                                                                                                            #
+############################################################################################################## 
+
+
+echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"       > $LOGFILEFEDORA
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+date                                                                                    >> $LOGFILEFEDORA 2>&1
+cd $ANONCVSDIRFEDORA
+cvs -z3 -d:ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware co egroupware		>> $LOGFILEFEDORA 2>&1
+cd $ANONCVSDIRFEDORABUILD                                                               >> $LOGFILEFEDORA 2>&1
+cvs co  all                                                                             >> $LOGFILEFEDORA 2>&1
+cvs update -Pd
+find . -type d -name CVS | xargs rm -rf
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 644 {} \;
+
+echo "End from Fedora CVS update"                                                       >> $LOGFILEFEDORA 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+                                                                                                                             
+clamscan -r $ANONCVSDIRFEDORABUILD --log=$VIRUSSCANDEFORA
+                                                                                                                             
+echo "End from Fedora Anti Virus Scan"                                                  >> $LOGFILEFEDORA 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+                                                                                                                             
+cd $ANONCVSDIRFEDORA
+tar czvf $SRCDIR/$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.tar.gz egroupware   >> $LOGFILEFEDORA 2>&1
+                                                                                                                             
+                                                                                                                             
+echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA"                       >> $LOGFILEFEDORA 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+cd $SPECDIR
+rpmbuild -ba --sign $SPECFILEFEDORA                                                     >> $LOGFILEFEDORA 2>&1
+echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+                                                                                                                             
+#cd $ANONCVSDIRFEDORA
+#rm -rf egroupware
+#echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEDORA 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+
+
+##############################################################################################################
+#                                                                                                            #
+# Here start the build process for Bitrock packages                                                          #
+#                                                                                                            #
+##############################################################################################################
+
+
+echo "Start CVS checkout Bitrock files"                                                  > $LOGFILEBIT
+echo "---------------------------------------"                                          >> $LOGFILEBIT 2>&1
+date                                                                                    >> $LOGFILEBIT 2>&1
+
+cd $ANONCVSDIRFEDORA
+                                                                                                                             
+echo "Start build Bitrock package"                                                       > $LOGFILEBIT
+echo "---------------------------------------"                                          >> $LOGFILEBIT 2>&1
+
+/opt/installbuilder-1.0.2/bin/builder build /opt/installbuilder-1.0.2/projects/egroupware.xml
+
+rm -rf egroupware
+echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEDORA 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+
 
 
