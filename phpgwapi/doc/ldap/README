@@ -1,3 +1,5 @@
+Openldap 1.X:
+
 The following are for use with openldap 1.X:
 	phpgw.oc.conf	defines the phpgwAccount objectclass
 	phpgw.at.conf	defines our special attributes
@@ -8,5 +10,16 @@ They should be copied to /etc/openldap and added to
 include		/etc/openldap/phpgw.oc.conf
 include		/etc/openldap/phpgw.at.conf
 
-The following is for use with openldap 2.X, and DOES NOT WORK YET:
-	phpgwuser.schema
+
+Openldap 2.X, possibly others:
+
+The following is for use with openldap 2.X.  It should load, but the
+OID values are arbitrarily chosen for testing.  We have applied for
+an OID that we can use.  Once that has been issued, we will update
+this file:
+	phpgwaccount.schema	defines the phpgwAccount objectclass and our attributes
+
+This should be copied to /etc/openldap/schema and added to
+/etc/openldap/slapd.conf:
+
+include		/etc/openldap/schema/phpgwaccount.schema
