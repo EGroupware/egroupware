@@ -42,11 +42,15 @@
 			rmdir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
 		}
 		$GLOBALS['phpgw']->common->hook('logout');
-		$GLOBALS['phpgw']->session->destroy();
+		$GLOBALS['phpgw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 	}
 	else
 	{
-		$GLOBALS['phpgw']->log->write(array('text'=>'W-VerifySession, could not verify session during logout'));
+		$GLOBALS['phpgw']->log->write(array(
+			'text' => 'W-VerifySession, could not verify session during logout',
+			'line' => __LINE__,
+			'file' => __FILE__
+		));
 	}
 	Setcookie('sessionid');
 	Setcookie('kp3');
