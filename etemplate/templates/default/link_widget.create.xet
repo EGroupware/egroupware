@@ -18,7 +18,7 @@
 				<button label="New search" id="new" statustext="start a new search, cancel this link"/>
 			</row>
 			<row>
-				<description value="Remark"/>
+				<description value="Comment"/>
 				<textbox size="50" maxlength="50" span="all" id="remark" statustext="optional note about the Link"/>
 			</row>
 		</rows>
