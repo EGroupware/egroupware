@@ -10,7 +10,7 @@
 13 (ntp)	admin	nl	
 80 (http)	admin	nl	
 about %1	common	nl	Over %1
-about the calendar	common	nl	Over de kalender
+about the calendar	common	nl	Over de agenda
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
 access type	common	nl	Toegangstype
@@ -79,7 +79,7 @@ brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIË
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
-calendar	common	nl	Kalender
+calendar	common	nl	Agenda
 cambodia	common	nl	CAMBODJA
 cameroon	common	nl	KAMEROEN
 canada	common	nl	CANADA
@@ -399,7 +399,7 @@ password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 pattern for search in addressbook	common	nl	Patroon voor zoekopdracht in Adressenboek
-pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Kalender
+pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Agenda
 pattern for search in projects	common	nl	Patroon voor zoekopdracht in Projecten
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
 personal	common	nl	Persoonlijk
@@ -555,7 +555,7 @@ url	common	nl	URL
 uruguay	common	nl	URUGUAY
 use button to search for	common	nl	Gebruik knop om te zoeken naar
 use button to search for address	common	nl	gebruik Knop om te zoeken naar Adressen
-use button to search for calendarevent	common	nl	gebruik Knop om te zoeken naar Kalenderafspraken
+use button to search for calendarevent	common	nl	gebruik Knop om te zoeken naar Agenda-afspraken
 use button to search for project	common	nl	gebruik Knop om te zoeken naar Projecten
 use cookies	login	nl	gebruik koekjes
 user	common	nl	Gebruiker
