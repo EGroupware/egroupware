@@ -19,21 +19,25 @@
 // To be able to test eTemplates with phpGtk you need a standalone/cgi php interpreter with compiled-in phpGtk installed
 // (for instruction on how to do so look at the phpGtk website http://gtk.php.net/).
 
-// As phpGroupWare is not programmed as eTemplate (at least not know) you need to log in via Web and the session-id need to be
-// passed in the url, so you can read it and put it in the following lines (it NEED to be an active session).
+// Then start this script with the parameters <login> <passwd>
 
-$GLOBALS['HTTP_GET_VARS'] = array(
-	'sessionid' => '2567b6b82e8e8f1ceb6f399342834d92',
-	'kp3' => '5f9dc297f3c4739f92664359ffaf612e',
-	'domain' => 'default'
-);	
+global $argv;
 
+if ($argv[1] == '' || $argv[2] == '')
+{
+	echo "Usage: $argv[0] <login> <passwd>\n";
+	exit;
+}
 $GLOBALS['phpgw_info']['flags'] = array(
-	'currentapp'	=> 'etemplate',
-	'noheader'		=> True,
-	'nonavbar'		=> True
+	'currentapp'             => 'login',
+	'noheader'               => True,
+	'nonavbar'               => True
 );
 include('../header.inc.php');
+
+$GLOBALS['phpgw']->session->create($argv[1],$argv[2],'text') || die("Can't create session !!!\n");
+
+$GLOBALS['phpgw_info']['flags']['currentapp'] = 'etemplate';
 
 ExecMethod('etemplate.db_tools.edit');
 
