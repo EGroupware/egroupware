@@ -596,7 +596,7 @@
 						case 'BDAY': #1969-12-31
 							if(strlen($values[0]) == 8)
 							{
-								$entry['bday'] = substr($values[0],0,4) . '/' . substr($values[0],4,2) . '/' . substr($values[0],6,2);
+								$entry['bday'] = substr($values[0],4,2) . '/' . substr($values[0],6,2) . '/' . substr($values[0],0,4);
 							}
 							else
 							{
