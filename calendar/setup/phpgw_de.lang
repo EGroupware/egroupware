@@ -87,7 +87,7 @@ Reset	calendar	de	Zurücksetzen
 Occurence	calendar	de	Wiederholung
 Observance Rule	calendar	de	Observance Rule
 You have not entered a title	calendar	de	Sie haben keinen Titel angegeben
-Choose the category	calendar	de	Kathegorie auswählen
+Choose the category	calendar	de	Kategorie auswählen
 Participates	calendar	de	nimmt teil
 Scheduling Conflict	calendar	de	Terminüberschneidung
 Accepted	calendar	de	Zugesagt
@@ -108,3 +108,6 @@ Normal	calendar	de	normal
 normal	calendar	de	normal
 low	calendar	de	niedrig
 high	calendar	de	hoch
+Location	calendar	de	Ort
+Updated	calendar	de	Aktualisiert
+Interval	calendar	de	Interval
