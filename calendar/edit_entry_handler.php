@@ -166,6 +166,7 @@
 
 		$phpgw->calendar->event_set_participants($cal_stream,$participants);
 
+		$phpgw->calendar->event->priority = intval($priority);
 		$event = $phpgw->calendar->event;
 
 		$phpgw->session->appsession('entry','calendar',$event);
@@ -208,7 +209,7 @@
 		{
 			$over = $phpgw->calendar->fetch_event($cal_stream,$overlapping_events[$i]);
 			$overlap .= '<li>';
-			$private = $phpgw->calendar->is_private($over,$over->owner);
+			$private = $phpgw->calendar->is_private($over,$over->owner,'title');
 
 			if(strtoupper($private) == 'PRIVATE')
 			{
