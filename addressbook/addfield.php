@@ -11,7 +11,7 @@
   \**************************************************************************/
 /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = 'addressbook';
+	$phpgw_info['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 
 	if(!$phpgw->acl->check('run',1,'admin'))
@@ -27,7 +27,8 @@
 	$t->set_block('form','add','addhandle');
 	$t->set_block('form','edit','edithandle');
 
-	if ($submit) {
+	if ($submit)
+	{
 		$errorcount = 0;
 
 		if (!$field_name)

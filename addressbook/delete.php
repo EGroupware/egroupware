@@ -26,8 +26,8 @@
 	}
 
 	$this = CreateObject('phpgwapi.contacts');
-	$fields = $this->read_single_entry($ab_id,array("owner" => "owner"));
-	//$record_owner = $fields[0]["owner"];
+	$fields = $this->read_single_entry($ab_id,array('owner' => 'owner'));
+	//$record_owner = $fields[0]['owner'];
 
 	if (! $this->check_perms($this->grants[$fields[0]['owner']],PHPGW_ACL_DELETE) && $fields[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
@@ -37,26 +37,30 @@
 	}
 
 	$t = new Template(PHPGW_APP_TPL);
-	$t->set_file(array("delete" => "delete.tpl"));
+	$t->set_file(array('delete' => 'delete.tpl'));
 
-	if ($confirm != "true") {
+	if ($confirm != 'true')
+	{
 		$phpgw->common->phpgw_header();
 		echo parse_navbar();
 
-		$t->set_var(lang_sure,lang("Are you sure you want to delete this entry ?"));
-		$t->set_var(no_link,$phpgw->link("/addressbook/index.php",
+		$t->set_var('lang_sure',lang('Are you sure you want to delete this entry ?'));
+		$t->set_var('no_link',$phpgw->link('/addressbook/index.php',
 			"ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
-		$t->set_var(lang_no,lang("NO"));
-		$t->set_var(yes_link,$phpgw->link("/addressbook/delete.php",
+		$t->set_var('lang_no',lang('NO'));
+		$t->set_var('yes_link',$phpgw->link('/addressbook/delete.php',
 			"ab_id=$ab_id&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
-		$t->set_var(lang_yes,lang("YES"));
-		$t->pparse("out","delete");
+		$t->set_var('lang_yes',lang('YES'));
+		$t->pparse('out','delete');
 
 		$phpgw->common->phpgw_footer(); 
-	} else {
-		$this->account_id=$phpgw_info["user"]["account_id"];
+	}
+	else
+	{
+		$this->account_id = $phpgw_info['user']['account_id'];
 		$this->delete($ab_id);
-		@Header("Location: " . $phpgw->link("/addressbook/index.php",
+
+		@Header('Location: ' . $phpgw->link('/addressbook/index.php',
 			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	}
 ?>

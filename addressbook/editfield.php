@@ -11,7 +11,7 @@
   \**************************************************************************/
   /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = 'addressbook';
+	$phpgw_info['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 
 	if(!$phpgw->acl->check('run',1,'admin'))
@@ -22,7 +22,8 @@
 
 	}
 
-	if (!$field) {
+	if (!$field)
+	{
 		Header('Location: ' . $phpgw->link('/addressbook/fields.php',"sort=$sort&query=$query&start=$start"));
 	}
 
@@ -31,12 +32,13 @@
 	$t->set_block('form','add','addhandle');
 	$t->set_block('form','edit','edithandle');
 
-	$hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
-		. "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
-		. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
-		. "<input type=\"hidden\" name=\"field\" value=\"$field\">\n";
+	$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
+		. '<input type="hidden" name="query" value="' . $query . '">' . "\n"
+		. '<input type="hidden" name="start" value="' . $start . '">' . "\n"
+		. '<input type="hidden" name="field" value="' . $field . '">' . "\n";
 
-	if ($submit) {
+	if ($submit)
+	{
 		$errorcount = 0;
 		if (!$field_name) { $error[$errorcount++] = lang('Please enter a name for that field!'); }
 
@@ -48,9 +50,18 @@
 		}
 	}
 
-	if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-	if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Field x has been updated !", $field_name)); }
-	if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
+	if ($errorcount)
+	{
+		$t->set_var('message',$phpgw->common->error_list($error));
+	}
+	if (($submit) && (! $error) && (! $errorcount))
+	{
+		$t->set_var('message',lang('Field x has been updated !', $field_name));
+	}
+	if ((! $submit) && (! $error) && (! $errorcount))
+	{
+		$t->set_var('message','');
+	}
 
 	if ($submit)
 	{
