@@ -239,9 +239,7 @@
 			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' . "\n";
 
 			$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['phpgw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
-			$manual = '<a href="../doc/en_US/html/admin/" target="manual">'.lang('eGroupWare Administration Manual').'</a>';
-			$detected .= '<tr><td colspan="2"><p><b>'.lang('Please consult the %1.',$manual).'</b><br>&nbsp;</td></tr>'. "\n";
-
+			
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
