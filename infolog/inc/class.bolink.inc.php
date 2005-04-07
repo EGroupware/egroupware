@@ -33,13 +33,15 @@
 	 * @package infolog
 	 * @subpackage link
 	 * @author RalfBecker-At-outdoor-training.de
-	 * @copyright GPL - GNU General Public License
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class bolink extends solink
 	{
-		// other apps can participate in the linking by implementing a search_link hook, which
-		// has to return an array in the format of an app_register entry
-		//
+		/**
+		 * other apps can participate in the linking by implementing a 'search_link' hook, which
+		 * has to return an array in the format of an app_register entry below
+		 * @var array $app_register
+		 */
 		var $app_register = array(
 			'addressbook' => array(
 				'query' => 'addressbook_query',
@@ -90,9 +92,7 @@
 		var $send_file_ips = array();
 
 		/**
-		 * @author ralfbecker
 		 * constructor
-		 *
 		 */
 		function bolink( )
 		{
@@ -132,26 +132,27 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 		 *
-		 * @param $app1 app of $id1
-		 * @param $id1 id of item to linkto or 0 if item not yet created or array with links 
+		 * Does NOT check if link already exists.
+		 * File-attachments return a negative link-id !!!
+		 *
+		 * @param string $app1 app of $id1
+		 * @param string/array &$id1 id of item to linkto or 0 if item not yet created or array with links 
 		 * 	of not created item or $file-array if $app1 == $this->vfs_appname (see below).
 		 * 	If $id==0 it will be set on return to an array with the links for the new item.
-		 * @param $app2 app of 2.linkend or array with links ($id2 not used)
-		 * @param $id2 id of 2. item of $file-array if $app2 == $this->vfs_appname (see below)<br>
+		 * @param string/array $app2 app of 2.linkend or array with links ($id2 not used)
+		 * @param string $id2='' id of 2. item of $file-array if $app2 == $this->vfs_appname (see below)<br>
 		 * 	$file array with informations about the file in format of the etemplate file-type<br>
 		 * 	$file['name'] name of the file (no directory)<br>
 		 * 	$file['type'] mine-type of the file<br>
 		 * 	$file['tmp_name'] name of the uploaded file (incl. directory)<br>
 		 * 	$file['path'] path of the file on the client computer<br>
 		 * 	$file['ip'] of the client (path and ip in $file are only needed if u want a symlink (if possible))
-		 * @param $remark Remark to be saved with the link (defaults to '')
-		 * @param $owner Owner of the link (defaults to user)
-		 * Does NOT check if link already exists.<br> 
-		 * 	File-attachments return a negative link-id !!!
-		 * @return False (for db or param-error) or on success link_id (Please not the return-value of $id1)
+		 * @param string $remark='' Remark to be saved with the link (defaults to '')
+		 * @param int $owner=0 Owner of the link (defaults to user)
+		 * @param int $lastmod=0 timestamp of last modification (defaults to now=time())
+		 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 		 */
 		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 		{
@@ -219,12 +220,12 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * returns array of links to $app,$id (reimplemented to deal with not yet created items)
 		 *
-		 * @param $id id of entry in $app or array of links if entry not yet created
-		 * @param $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-		 * @param $order defaults to newest links first
+		 * @param string $app appname
+		 * @param string/array $id id of entry in $app or array of links if entry not yet created
+		 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+		 * @param string $order='link_lastmod DESC' defaults to newest links first
 		 * @return array of links or empty array if no matching links found
 		 */
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
@@ -270,13 +271,15 @@
 		}
 
 		/**
-		 * @author ralfbecker
-		 * returns data of a link
+		 * Read one link specified by it's link_id or by the two end-points
 		 *
-		 * @param $app_link_id > 0 link_id of link or app-name of link
-		 * @param $id,$app2,$id2 other param of the link if not link_id given
-		 * @return array with link-data or False
 		 * If $id is an array (links not yet created) only link_ids are allowed.
+		 *
+		 * @param int/string $app_link_id > 0 link_id of link or app-name of link
+		 * @param string/array $id='' id if $app_link_id is an appname or array with links, if 1. entry not yet created
+		 * @param string $app2='' second app
+		 * @param string $id2='' id in $app2
+		 * @return array with link-data or False
 		 */ 
 		function get_link($app_link_id,$id='',$app2='',$id2='')
 		{
@@ -304,13 +307,16 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Remove link with $link_id or all links matching given $app,$id
 		 *
-		 * @param $link_id link-id to remove if > 0
-		 * @param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
 		 * Note: if $link_id != '' and $id is an array: unlink removes links from that array only
 		 * 	unlink has to be called with &$id to see the result (depricated) or unlink2 has to be used !!!
+		 *
+		 * @param $link_id link-id to remove if > 0
+		 * @param string $app='' appname of first endpoint
+		 * @param string/array $id='' id in $app or array with links, if 1. entry not yet created
+		 * @param string $app2='' app of second endpoint
+		 * @param string $id2='' id in $app2
 		 * @return the number of links deleted
 		 */
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
@@ -318,6 +324,16 @@
 			return $this->unlink2($link_id,$app,$id,$owner,$app2,$id2);
 		}
 
+		/**
+		 * Remove link with $link_id or all links matching given $app,$id
+		 *
+		 * @param $link_id link-id to remove if > 0
+		 * @param string $app='' appname of first endpoint
+		 * @param string/array &$id='' id in $app or array with links, if 1. entry not yet created
+		 * @param string $app2='' app of second endpoint
+		 * @param string $id2='' id in $app2
+		 * @return the number of links deleted
+		 */
 		function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='')
 		{
 			if ($this->debug)
@@ -354,7 +370,6 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * get list/array of link-aware apps the user has rights to use
 		 *
 		 * @return array( $app => lang($app), ... )
@@ -374,10 +389,11 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Searches for a $pattern in the entries of $app
 		 *
-		 * @return an array of $id => $title pairs
+		 * @param string $app app to search
+		 * @param string $pattern pattern to search
+		 * @return array with $id => $title pairs of matching entries of app
 		 */
 		function query($app,$pattern)
 		{
@@ -395,12 +411,14 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * returns the title (short description) of entry $id and $app
 		 *
+		 * @param string $app appname
+		 * @param string $id id in $app 
+		 * @param array $link=null link-data for file-attachments
 		 * @return the title or false if $id does not exist in $app
 		 */
-		function title($app,$id,$link='')
+		function title($app,$id,$link=null)
 		{
 			if ($this->debug)
 			{
@@ -448,12 +466,14 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * view entry $id of $app
 		 *
+		 * @param string $app appname
+		 * @param string $id id in $app 
+		 * @param array $link=null link-data for file-attachments
 		 * @return array with name-value pairs for link to view-methode of $app to view $id
 		 */
-		function view($app,$id,$link='')
+		function view($app,$id,$link=null)
 		{
 			if ($app == $this->vfs_appname && !empty($id) && is_array($link))
 			{
@@ -519,10 +539,16 @@
 		}
 
 		/**
-		 * path to the attached files of $app/$ip
+		 * path to the attached files of $app/$ip or the directory for $app if no $id,$file given
 		 *
 		 * All link-files are based in the vfs-subdir 'infolog'. For other apps
 		 * separate subdirs with name app are created.
+		 *
+		 * @param string $app appname
+		 * @param string $id='' id in $app 
+		 * @param string $file='' filename
+		 * @param boolean/array $relatives=False return path as array with path in string incl. relatives
+		 * @return string/array path or array with path and relatives, depending on $relatives
 		 */
 		function vfs_path($app,$id='',$file='',$relatives=False)
 		{
@@ -542,14 +568,15 @@
 		/**
 		 * Put a file to the corrosponding place in the VFS and set the attributes
 		 *
-		 * @param $app/$id entry which should the file should be linked with
-		 * @param $file array with informations about the file in format of the etemplate file-type
+		 * @param string $app appname to linke the file to
+		 * @param string $id id in $app 
+		 * @param array $file informations about the file in format of the etemplate file-type
 		 * 	$file['name'] name of the file (no directory)
 		 * 	$file['type'] mine-type of the file
 		 * 	$file['tmp_name'] name of the uploaded file (incl. directory)
 		 * 	$file['path'] path of the file on the client computer
 		 * 	$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
-		 * @param $comment
+		 * @param string $comment='' comment to add to the link
 		 * @return int negative id of phpgw_vfs table as negative link-id's are for vfs attachments
 		 */
 		function attach_file($app,$id,$file,$comment='')
@@ -629,11 +656,11 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * deletes an attached file
 		 *
-		 * @param $app > 0: file_id of an attchemnt or $app/$id entry which linked to
-		 * @param $filename
+		 * @param int/string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
+		 * @param string $id='' id in app
+		 * @param string $fname filename
 		 */
 		function delete_attached($app,$id='',$fname = '')
 		{
@@ -672,12 +699,12 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * converts the infos vfs has about a file into a link
 		 *
-		 * @param $app/$id entry which linked to
-		 * @param $filename
-		 * a 'kind' of link-array
+		 * @param string $app appname
+		 * @param string $id id in app
+		 * @param string $filename filename
+		 * @return array 'kind' of link-array
 		 */
 		function info_attached($app,$id,$filename)
 		{
@@ -693,12 +720,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * converts a fileinfo (row in the vfs-db-table) in a link
 		 *
-		 * @param $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls function)
-		 * 	or a file_id of that table
-		 * a 'kind' of link-array
+		 * @param array/int $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls function) or a file_id of that table
+		 * @return array a 'kind' of link-array
 		 */
 		function fileinfo2link($fileinfo)
 		{
@@ -733,10 +758,11 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * lists all attachments to $app/$id
 		 *
-		 * a 'kind' of link-array
+		 * @param string $app appname
+		 * @param string $id id in app
+		 * @return array with link_id => 'kind' of link-array pairs
 		 */
 		function list_attached($app,$id)
 		{
@@ -757,9 +783,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * checks if path starts with a '\\' or has a ':' in it
 		 *
+		 * @param string $path path to check
+		 * @return boolean true if windows path, false otherwise
 		 */
 		function is_win_path($path)
 		{
@@ -767,9 +794,12 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * reads the attached file and returns the content
 		 *
+		 * @param string $app appname
+		 * @param string $id id in app
+		 * @param string $filename filename
+		 * @return string content of the attached file
 		 */
 		function read_attached($app,$id,$filename)
 		{
@@ -784,11 +814,14 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Checks if filename should be local availible and if so returns
 		 *
-		 * 'file:/path' for HTTP-redirect else return False
-		 *
+		 * @param string $app appname
+		 * @param string $id id in app
+		 * @param string $filename filename
+		 * @param string $id ip-address of user
+		 * @param boolean $win_user true if user is on windows, otherwise false
+		 * @return string 'file:/path' for HTTP-redirect else return False
 		 */
 		function attached_local($app,$id,$filename,$ip,$win_user)
 		{
@@ -823,9 +856,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * reverse function of htmlspecialchars()
 		 *
+		 * @param string $str string to decode
+		 * @return string decoded string
 		 */
 		function decode_htmlspecialchars($str)
 		{
@@ -833,9 +867,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * get title for an event, should be moved to bocalendar.link_title
 		 *
+		 * @param int/array $event event-id or already read event
+		 * @return string/boolean the title (startdate plus subject), of false if event is not found
 		 */
 		function calendar_title( $event )
 		{
@@ -861,9 +896,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * query calendar for an event $matching pattern, should be moved to bocalendar.link_query
 		 *
+		 * @param string $pattern pattern to search
+		 * @return array with id => title pairs of matching events
 		 */
 		function calendar_query($pattern)
 		{
@@ -888,9 +924,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * get title for an address, should be moved to boaddressbook.link_title
 		 *
+		 * @param int/array $event address-id or already read address
+		 * @return string/boolean the title ([org:] n_familiy[, n_given|n_prefix]), of false if address is not found
 		 */
 		function addressbook_title( $addr )
 		{
@@ -926,9 +963,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * query addressbook for $pattern, should be moved to boaddressbook.link_query
 		 *
+		 * @param string $pattern pattern to search
+		 * @return array with id => title pairs of matching addresses
 		 */
 		function addressbook_query( $pattern )
 		{
@@ -946,9 +984,10 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * get title for a project, should be moved to boprojects.link_title
 		 *
+		 * @param int/array $event project-id or already read project
+		 * @return string/boolean the title (number: title), of false if address is not found
 		 */
 		function projects_title( $proj )
 		{
@@ -962,13 +1001,14 @@
 			{
 				$proj = $this->boprojects->read_single_project( $proj );
 			}
-			return is_array($proj) ? $proj['title'] : False;
+			return is_array($proj) ? $proj['number'].': '.$proj['title'] : False;
 		}
 
 		/**
-		 * @author ralfbecker
 		 * query for projects matching $pattern, should be moved to boprojects.link_query
 		 *
+		 * @param string $pattern pattern to search
+		 * @return array with id => title pairs of matching projects
 		 */
 		function projects_query( $pattern )
 		{
