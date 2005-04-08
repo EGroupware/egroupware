@@ -12,38 +12,31 @@
 
 	/* $Id$ */
 
-	$GLOBALS['egw_info']['flags']['included_classes']['solink'] = True;
 	/**
-	 * @author ralfbecker
-	 * @copyright GPL - GNU General Public License
-	 * generalized linking between entries of eGroupware apps - DB layer
+	 * generalized linking between entries of eGroupware apps - BO layer
 	 *
-	 * This class is to access the links in the DB<br>
-	 * 	 * Links have to ends each pointing two an entry, each entry is a double:<br>
-	 * 	 * app   app-name or directory-name of an egw application, eg. 'infolog'<br>
-	 * 	 * id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
-	 * All vars passed to this class are run either through addslashes or intval 
-	 * 	 * to prevent query insertion and to get pgSql 7.3 compatibility.
+	 * This class is the SO-layer of the links
+	 *
+	 * Links have two ends each pointing to an entry, each entry is a double:
+	 * 	 - app   app-name or directory-name of an egw application, eg. 'infolog'
+	 * 	 - id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	 *
+	 * All vars passed to this class get correct escaped to prevent query insertion.
+	 *
+	 * @package infolog
+	 * @subpackage link
+	 * @author RalfBecker-At-outdoor-training.de
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
-	class solink 				// DB-Layer
+	class solink
 	{
-		var $public_functions = array
-		(
-			'link'      => True,
-			'get_links' => True,
-			'unlink'    => True,
-			'chown'     => True,
-			'get_link'  => True
-		);
 		var $db;
 		var $user;
 		var $link_table = 'phpgw_links';
 		var $debug;
 
 		/**
-		 * @author ralfbecker
 		 * constructor
-		 *
 		 */
 		function solink( )
 		{
@@ -53,13 +46,15 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * creats a link between $app1,$id1 and $app2,$id2
 		 *
-		 * @param $remark Remark to be saved with the link (defaults to '')
-		 * @param $owner Owner of the link (defaults to user)
-		 * Does NOT check if link already exists
-		 * @return False (for db or param-error) or link_id for success
+		 * @param string $app1 appname of 1. endpoint of the link
+		 * @param string $id1 id in $app1
+		 * @param string $app2 appname of 2. endpoint of the link
+		 * @param string $id2 id in $app2
+		 * @param string $remark='' Remark to be saved with the link (defaults to '')
+		 * @param int $owner=0 Owner of the link (defaults to user)
+		 * @return boolean/int False (for db or param-error) or link_id for success
 		 */
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 		{
@@ -92,11 +87,12 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * returns array of links to $app,$id
 		 *
-		 * @param $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-		 * @param $order defaults to newest links first
+		 * @param string $app appname 
+		 * @param string $id id in $app
+		 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+		 * @param string $order defaults to newest links first
 		 * @return array of links (only_app: ids) or empty array if no matching links found
 		 */
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
@@ -150,17 +146,18 @@
 				$link['lastmod'] = $row['link_lastmod'];
 				$link['link_id'] = $row['link_id'];
 
-				$links[] = $only_app && !$not_only ? $link['id'] : $link;
+				$links[$row['link_id']] = $only_app && !$not_only ? $link['id'] : $link;
 			}
 			return $links;
 		}
 		
 		/**
-		 * @author ralfbecker
 		 * returns data of a link
 		 *
-		 * @param $app_link_id > 0 link_id of link or app-name of link
-		 * @param $id,$app2,$id2 other param of the link if not link_id given
+		 * @param ing/string $app_link_id > 0 link_id of link or app-name of link
+		 * @param string $id='' id in $app, if no integer link_id given in $app_link_id
+		 * @param string $app2='' appname of 2. endpoint of the link, if no integer link_id given in $app_link_id
+		 * @param string $id2='' id in $app2, if no integer link_id given in $app_link_id
 		 * @return array with link-data or False
 		 */
 		function get_link($app_link_id,$id='',$app2='',$id2='')
@@ -210,20 +207,22 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Remove link with $link_id or all links matching given params
 		 *
 		 * @param $link_id link-id to remove if > 0
-		 * @param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
-		 * @return the number of links deleted
+		 * @param string $app='' app-name of links to remove
+		 * @param string $id='' id in $app or '' remove all links from $app
+		 * @param int $owner=0 account_id to delete all links of a given owner, or 0
+		 * @param string $app2='' appname of 2. endpoint of the link
+		 * @param string $id2='' id in $app2
+		 * @return array with deleted links
 		 */
-		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
+		function &unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='')
 		{
 			if ($this->debug)
 			{
 				echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2)</p>\n";
 			}
-			$sql = "DELETE FROM $this->link_table WHERE ";
 			if ((int)$link_id > 0)
 			{
 				$where = array('link_id' => $link_id);
@@ -259,28 +258,36 @@
 							'link_id2'	=> $id,
 						),')');
 				}
-				if ($owner != '')
+				if ($owner)
 				{
 					if ($app) $where = array($where);
 					$where['link_owner'] = $owner;
 				}
 			}
+			$this->db->select($this->link_table,'*',$where,__LINE__,__FILE__);
+			$deleted = array();
+			while (($row = $this->db->row(true)))
+			{
+				$deleted[] = $row;
+			}			
 			$this->db->delete($this->link_table,$where,__LINE__,__FILE__);
 
-			return $this->db->affected_rows();
+			return $deleted;
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Changes ownership of all links from $owner to $new_owner
 		 *
 		 * This is needed when a user/account gets deleted
 		 * Does NOT change the modification-time
-		 * @return the number of links changed
+		 *
+		 * @param int $owner acount_id of owner to change
+		 * @param int $new_owner account_id of new owner
+		 * @return int number of links changed
 		 */
 		function chown($owner,$new_owner)
 		{
-			if ((int)$owner <= 0 || (int) $new_owner)
+			if ((int)$owner <= 0 || (int) $new_owner <= 0)
 			{
 				return 0;
 			}
@@ -289,6 +296,3 @@
 			return $this->db->affected_rows();
 		}
 	}
-
-
-

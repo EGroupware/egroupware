@@ -85,6 +85,9 @@
 			),
  */
 		);
+		var $public_functions = array(	// functions callable via menuaction
+			'get_file' => True
+		);
 		var $vfs;
 		var $vfs_basedir='/infolog';	// might changes to links if class gets imported in the api
 		var $vfs_appname='file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
@@ -97,13 +100,7 @@
 		function bolink( )
 		{
 			$this->solink( );					// call constructor of derived class
-			$this->public_functions += array(	// extend the public_functions of solink
-				'query' => True,
-				'title' => True,
-				'view'  => True,
-				'get_file' => True
-			);
-			//$this->vfs =& CreateObject('infolog.vfs');
+
 			$this->vfs =& CreateObject('phpgwapi.vfs');
 
 			$config =& CreateObject('phpgwapi.config');
@@ -130,7 +127,7 @@
 				}
 			}
 		}
-
+		
 		/**
 		 * creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 		 *
@@ -204,6 +201,10 @@
 					{
 						$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
 							$link['remark'],$link['owner'],$link['lastmod']);
+						
+						// notify both sides
+						$this->notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
+						$this->notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
 					}
 				}
 				return $link_id;
@@ -216,7 +217,12 @@
 			{
 				return $this->attach_file($app1,$id1,$id2,$remark);
 			}
-			return solink::link($app1,$id1,$app2,$id2,$remark,$owner);
+			$link_id = solink::link($app1,$id1,$app2,$id2,$remark,$owner);
+
+			$this->notify('link',$app2,$id2,$app1,$id1,$link_id);
+			$this->notify('link',$app1,$id1,$app2,$id2,$link_id);
+			
+			return $link_id;
 		}
 
 		/**
@@ -358,7 +364,12 @@
 				{
 					$this->delete_attached($app,$id);	// deleting all attachments
 				}
-				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
+				$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
+				
+				// only notify on real links, not the one cached for writing or fileattachments
+				$this->notify_unlink($deleted);
+
+				return count($deleted);
 			}
 			if (isset($id[$link_id]))
 			{
@@ -1025,5 +1036,64 @@
 				$content[$proj['project_id']] = $this->projects_title($proj);
 			}
 			return $content;
+		}
+
+		/**
+		 * notify other apps about changed content in $app,$id
+		 *
+		 * @param string $app name of app in which the updated happend
+		 * @param string $id id in $app of the updated entry
+		 * @param array $data=null updated data of changed entry, as the read-method of the BO-layer would supply it
+		 */
+		function notify_update($app,$id,$data=null)
+		{
+			foreach($this->get_links($app,$id,'!'.$this->vfs_appname) as $link_id => $link)
+			{
+				$this->notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
+			}
+		}
+
+		/**
+		 * notify an application about a new or deleted links to own entries or updates in the content of the linked entry
+		 *
+		 * Please note: not all apps supply update notifications
+		 *
+		 * @internal 
+		 * @param string $type 'link' for new links, 'unlink' for unlinked entries, 'update' of content in linked entries
+		 * @param string $notify_app app to notify
+		 * @param string $notify_id id in $notify_app
+		 * @param string $target_app name of app whos entry changed, linked or deleted
+		 * @param string $target_id id in $target_app
+		 * @param array $data=null data of entry in app2 (optional)
+		 */
+		function notify($type,$notify_app,$notify_id,$target_app,$target_id,$link_id,$data=null)
+		{
+			if ($link_id && isset($this->app_register[$notify_app]) && isset($this->app_register[$notify_app]['notify']))
+			{
+				ExecMethod($this->app_register[$notify_app]['notify'],array(
+					'type'       => $type,
+					'id'         => $notify_id,
+					'target_app' => $target_app,
+					'target_id'  => $target_id,
+					'link_id'    => $link_id,
+					'data'       => $data,
+				));
+			}
+		}
+
+		/**
+		 * notifies about unlinked links
+		 *
+		 * @internal 
+		 * @param array &$links unlinked links from the database
+		 */
+		function notify_unlink(&$links)
+		{
+			foreach($links as $link)
+			{
+				// we notify both sides of the link, as the unlink command NOT clearly knows which side initiated the unlink
+				$this->notify('unlink',$link['link_app1'],$link['link_id1'],$link['link_app2'],$link['link_id2'],$link['link_id']);
+				$this->notify('unlink',$link['link_app2'],$link['link_id2'],$link['link_app1'],$link['link_id1'],$link['link_id']);
+			}	
 		}
 	}
