@@ -268,8 +268,14 @@
 						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 						return 0;	// in case error-reporting = 'no'
 					}
-					//echo "new ADOdb connection<pre>".print_r($GLOBALS['phpgw']->ADOdb,True)."</pre>\n";
-
+					if ($this->Debug)
+					{
+						echo function_backtrace();
+						echo "<p>new ADOdb connection to $this->Type://$this->Host/$this->Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>"; 
+						//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
+						_debug_array($this);
+						echo "\$GLOBALS[egw]->db="; _debug_array($GLOBALS[egw]->db);
+					}
 					if ($this->Type == 'mssql')
 					{
 						// this is the format ADOdb expects
@@ -1452,9 +1458,11 @@
 		* @param string $append string to append to the end of the query, eg. ORDER BY ...
 		* @param string/boolean $app string with name of app or False to use the current-app
 		* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
+		* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+		*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0)
+		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='')
 		{
 			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
 
@@ -1467,8 +1475,12 @@
 			{
 				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 			}
-			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1').
-				($append ? ' '.$append : '');
+			$sql = "SELECT $cols FROM $table $join";
+			
+			// if we have a where clause, we need to add it together with the WHERE statement, if thats not in the join
+			if ($where) $sql .= strstr($join,"WHERE") ? ' AND ('.$where.')' : ' WHERE '.$where;
+
+			if ($append) $sql .= ' '.$append;
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
