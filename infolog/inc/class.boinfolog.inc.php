@@ -27,6 +27,7 @@
 	{
 		var $enums;
 		var $so;
+		var $link;
 		var $vfs;
 		var $vfs_basedir='/infolog';
 		var $valid_pathes = array();
@@ -429,14 +430,18 @@
 			{
 				if ($values[$time]) $values[$time] -= $this->tz_offset_s;
 			}
-			if($infoID = $this->so->write($values))
+			if($info_id = $this->so->write($values))
 			{
+				if (!isset($values['info_type']) || $status_only)
+				{
+					$values = $this->read($info_id);
+				}
 				if($values['info_id'])
 				{
 					// update
 					$GLOBALS['egw']->contenthistory->updateTimeStamp(
 						'infolog_'.$values['info_type'], 
-						$infoID, 'modify', time()
+						$info_id, 'modify', time()
 					);
 				}
 				else
@@ -444,12 +449,14 @@
 					// add
 					$GLOBALS['egw']->contenthistory->updateTimeStamp(
 						'infolog_'.$values['info_type'], 
-						$infoID, 'add', time()
+						$info_id, 'add', time()
 					);
 				}
+				// notify the link-class about the update, as other apps may be subscribt to it
+				$this->link->notify_update('infolog',$info_id,$values);
 			}
 			
-			return $infoID;
+			return $info_id;
 		}
 
 		/**
