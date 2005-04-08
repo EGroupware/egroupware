@@ -1050,9 +1050,13 @@
 					break;
 				case 'image':
 					$image = $value != '' ? $value : $name;
-					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'border="0"');
-					$html .= $image;
+					list($app,$img) = explode('/',$image,2);
+					if (!$app || !$img || !is_dir(PHPGW_SERVER_ROOT.'/'.$app) || strstr($img,'/'))
+					{
+						$img = $image;
+						list($app) = explode('.',$this->name);
+					}
+					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'border="0"');
 					list($extra_link,$extra_link_target) = explode(',',$cell['size']);
 					$extra_label = False;
 					break;
