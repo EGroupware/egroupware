@@ -234,9 +234,11 @@ class so_sql
 	 * reads row matched by key and puts all cols in the data array
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
+	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 * @return array/boolean data if row could be retrived else False
 	*/
-	function read($keys)
+	function read($keys,$extra_cols='',$join='')
 	{
 		if (!is_array($keys))
 		{
@@ -271,9 +273,10 @@ class so_sql
 
 			return False;
 		}
-		$this->db->select($this->table_name,'*',$query,__LINE__,__FILE__);
+		$this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
+			$query,__LINE__,__FILE__,False,'',False,0,$join);
 
-		if (!$this->db->next_record())
+		if (!($row = $this->db->row(true)))
 		{
 			if ($this->autoinc_id)
 			{
@@ -285,9 +288,18 @@ class so_sql
 
 			return False;
 		}
-		foreach ($this->db_cols as $db_col => $col)
+		$cols = $this->db_cols;
+		if ($extra_cols)	// extra columns to report
 		{
-			$this->data[$col] = $this->db->f($db_col);
+			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
+			{
+				if (stristr($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
+				$cols[$col] = $col;
+			}
+		}
+		foreach ($cols as $db_col => $col)
+		{
+			$this->data[$col] = $row[$db_col];
 		}
 		$this->db2data();
 
