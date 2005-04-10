@@ -52,9 +52,9 @@
 			{
 				if (!is_object($GLOBALS['phpgw']->jscalendar))
 				{
-					$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+					$GLOBALS['phpgw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
 				}
-				$this->jscal = &$GLOBALS['phpgw']->jscalendar;
+				$this->jscal =& $GLOBALS['phpgw']->jscalendar;
 			}
 			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
 			$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
@@ -100,6 +100,9 @@
 			}
 			else
 			{
+				// for the timeformats we use only seconds, no timezone conversation between server-time and UTC
+				if (substr($type,-4) == 'only') $value -= adodb_date('Z',0);
+
 				$value = array(
 					'Y' => adodb_date('Y',$value),
 					'm' => adodb_date('m',$value),
@@ -272,6 +275,8 @@
 			{
 				return False;
 			}
+			$no_date = substr($extension_data['type'],-4) == 'only';
+
 			if ($value['today'])
 			{
 				$set = array('Y','m','d');
@@ -288,8 +293,8 @@
 				}
 				$value += $this->jscal->input2date($value_in['str'],False,'d','m','Y');
 			}
-			if ($value['d'] || isset($value['H']) && $value['H'] !== '' ||
-			                   isset($value['i']) && $value['i'] !== '')
+			if ($value['d'] || $no_date && 
+				(isset($value['H']) && $value['H'] !== '' || isset($value['i']) && $value['i'] !== ''))
 			{
 				if ($value['d'])
 				{
@@ -327,7 +332,9 @@
 				$data_format = $extension_data['data_format'];
 				if (empty($data_format))
 				{
-					$value = adodb_mktime((int) $value['H'],(int) $value['i'],0,$value['m'],$value['d'],$value['Y']);
+					// for time or hour format we use just seconds (and no timezone correction between server-time and UTC)
+					$value = $no_date ? 3600 * (int) $value['H'] + 60 * (int) $value['i'] :
+						adodb_mktime((int) $value['H'],(int) $value['i'],0,$value['m'],$value['d'],$value['Y']);
 				}
 				else
 				{
