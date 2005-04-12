@@ -83,7 +83,7 @@
 				}
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
-			$this->data['fullname']    = $allValues[0]['cn'][0];
+			$this->data['fullname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
 
 			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 			{
