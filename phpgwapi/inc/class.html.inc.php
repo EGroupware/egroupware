@@ -51,7 +51,7 @@ class html
 	 * do we need to set the wz_tooltip class, to be included at the end of the page
 	 * @var boolean
 	 */
-	var $wz_tooltips_included = False;
+	var $wz_tooltip_included = False;
 	
 	/**
 	 * Constructor: initialised the class-vars
@@ -224,9 +224,10 @@ class html
 		}
 		foreach($arr as $k => $data)
 		{
-			if (!is_array($data))
+			if (!is_array($data) || count($data) == 2 && isset($data['label']) && isset($data['title']))
 			{
-				$out .= $this->select_option($k,$data,$key,$no_lang);
+				$out .= $this->select_option($k,is_array($data)?$data['label']:$data,$key,$no_lang,
+					is_array($data)?$data['title']:'');
 			}
 			else
 			{
@@ -234,7 +235,8 @@ class html
 				
 				foreach($data as $k => $label)
 				{
-					$out .= $this->select_option($k,$label,$key,$no_lang);
+					$out .= $this->select_option($k,is_array($label)?$label['label']:$label,$key,$no_lang,
+						is_array($label)?$lable['title']:'');
 				}
 				$out .= "</optgroup>\n";
 			}
@@ -286,7 +288,7 @@ class html
 			$selected = $not_selected = array();
 			foreach($arr as $val => $label)
 			{
-				if (in_array($val,$key))
+				if (in_array($val,$key,!$val))
 				{
 					$selected[$val] = $label;
 				}
@@ -299,11 +301,22 @@ class html
 		}
 		foreach($arr as $val => $label)
 		{
+			if (is_array($label))
+			{
+				$title = $label['title'];
+				$label = $label['label'];
+			}
+			else
+			{
+				$title = '';
+			}
 			if ($label && !$no_lang) $label = lang($label);
+			if ($title && !$no_lang) $title = lang($title);
 			
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 			
-			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.' id="'.$base_name.'['.$val.']'.'" ').
+			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.
+				' id="'.$base_name.'['.$val.']'.'" '.($title ? 'title="'.$this->htmlspecialchars($title).'" ':'')).
 				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
 		}
 		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+0.65*$max_len).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
@@ -320,10 +333,12 @@ class html
 	 * @param boolean $no_lang NOT running the label through lang(), default false=use lang()
 	 * @return string html
 	 */
-	function select_option($value,$label,$selected,$no_lang=0)
+	function select_option($value,$label,$selected,$no_lang=0,$title='')
 	{
+		//echo "select_option('$value','$label','".print_r($selected,true)."',".(int)$no_lang."</br>\n";
 		return '<option value="'.$this->htmlspecialchars($value).'"'.
-			(in_array($value,$selected) ? ' selected="1"' : '') . ">".
+			(in_array($value,$selected,!$value) ? ' selected="1"' : '') .
+			($title ? ' title="'.$this->htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
 			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}
 	
@@ -817,7 +832,7 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			return $title;
 		}
 		return '<div title="'.$title.'" '.$options.
-			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px;'.
+			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px; text-align: left;'.
 			(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
