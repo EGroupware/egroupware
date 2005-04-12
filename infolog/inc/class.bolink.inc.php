@@ -75,6 +75,12 @@
 					'action' => 'sp'
 				),
 				'view_id' => 'action_id',
+				'add' => array(
+					'menuaction' => 'infolog.uiinfolog.edit',
+					'type' => 'task'
+				),
+				'add_app'    => 'action',
+				'add_id'     => 'action_id',			
 			),
 /*
 			'email' => array(
@@ -114,8 +120,12 @@
 			
 			// other apps can participate in the linking by implementing a search_link hook, which
 			// has to return an array in the format of an app_register entry
-			//
-			$search_link_hooks = $GLOBALS['egw']->hooks->process('search_link');
+			// for performance reasons, we do it only once / cache it in the session
+			if (!($search_link_hooks = $GLOBALS['egw']->session->appsession('search_link_hooks','infolog')))
+			{
+				$search_link_hooks = $GLOBALS['egw']->hooks->process('search_link');
+				$GLOBALS['egw']->session->appsession('search_link_hooks','infolog',$search_link_hooks);
+			}
 			if (is_array($search_link_hooks))
 			{
 				foreach($search_link_hooks as $app => $data)
@@ -383,14 +393,16 @@
 		/**
 		 * get list/array of link-aware apps the user has rights to use
 		 *
-		 * @return array( $app => lang($app), ... )
+		 * @param string $must_support capability the apps need to support, eg. 'add', default ''=list all apps
+		 * @return array with app => title pairs
 		 */
-		function app_list( )
+		function app_list($must_support='')
 		{
-			reset ($this->app_register);
 			$apps = array();
-			while (list($app,$reg) = each($this->app_register))
+			foreach($this->app_register as $app => $reg)
 			{
+				if ($must_support && !isset($reg[$must_support])) continue;
+
 				if ($GLOBALS['egw_info']['user']['apps'][$app])
 				{
 					$apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'];
@@ -474,6 +486,31 @@
 				return False;
 			}
 			return $title;
+		}
+
+		/**
+		 * Add new entry to $app, evtl. already linked to $to_app, $to_id
+		 *
+		 * @param string $app appname of entry to create
+		 * @param string $to_app appname to link the new entry to
+		 * @param string $to_id id in $to_app 
+		 * @return array/boolean with name-value pairs for link to add-methode of $app or false if add not supported
+		 */
+		function add($app,$to_app='',$to_id='')
+		{
+			echo "<p>bolink::add('$app','$to_app','$to_id') app_register[$app] ="; _debug_array($app_register[$app]);
+			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['add']))
+			{
+				return false;
+			}
+			$params = $reg['add'];
+			
+			if ($reg['add_app'] && $to_app && $reg['add_id'] && $to_id)
+			{
+				$params[$reg['add_app']] = $to_app;
+				$params[$reg['add_id']] = $to_id;
+			}
+			return $params;
 		}
 
 		/**
