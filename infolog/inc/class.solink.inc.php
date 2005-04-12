@@ -69,6 +69,10 @@
 			}
 			if ($link = $this->get_link($app1,$id1,$app2,$id2))
 			{
+				if ($link['link_remark'] != $remark)
+				{
+					$this->update_remark($link['link_id'],$remark);
+				}
 				return $link['link_id'];	// link alread exist
 			}
 			if (!$owner)
@@ -84,6 +88,23 @@
 					'link_lastmod'	=> $lastmod ? $lastmod : time(),
 					'link_owner'	=> $owner,
 				),False,__LINE__,__FILE__) ? $this->db->get_last_insert_id($this->link_table,'link_id') : false;
+		}
+		
+		/**
+		 * update the remark of a link
+		 *
+		 * @param int $link_id link to update
+		 * @param string $remark new text for the remark
+		 * @return boolean true on success, else false
+		 */
+		function update_remark($link_id,$remark)
+		{
+			return $this->db->update($this->link_table,array(
+					'link_remark'	=> $remark,
+					'link_lastmod'	=> time(),
+				),array(
+					'link_id'	=> $link_id,
+				),__LINE__,__FILE__);
 		}
 
 		/**
