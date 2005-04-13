@@ -37,9 +37,9 @@
 
 		function crypto($vars='')
 		{
-			if($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login' ||
-				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'logout' ||
-				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'home'
+			if($GLOBALS['egw_info']['flags']['currentapp'] == 'login' ||
+				$GLOBALS['egw_info']['flags']['currentapp'] == 'logout' ||
+				$GLOBALS['egw_info']['flags']['currentapp'] == 'home'
 			)
 			{
 				$this->debug = False;
@@ -56,15 +56,15 @@
 			$key = $vars[0];
 			$iv  = $vars[1];
 
-			if($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			if($GLOBALS['egw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
 			{
-				if($GLOBALS['phpgw_info']['server']['mcrypt_algo'])
+				if($GLOBALS['egw_info']['server']['mcrypt_algo'])
 				{
-					$this->algo = $GLOBALS['phpgw_info']['server']['mcrypt_algo'];
+					$this->algo = $GLOBALS['egw_info']['server']['mcrypt_algo'];
 				}
-				if($GLOBALS['phpgw_info']['server']['mcrypt_mode'])
+				if($GLOBALS['egw_info']['server']['mcrypt_mode'])
 				{
-					$this->mode = $GLOBALS['phpgw_info']['server']['mcrypt_mode'];
+					$this->mode = $GLOBALS['egw_info']['server']['mcrypt_mode'];
 				}
 
 				if($this->debug)
@@ -74,7 +74,7 @@
 				}
 
 				$this->enabled = True;
-				$this->mcrypt_version = $GLOBALS['phpgw_info']['server']['versions']['mcrypt'];
+				$this->mcrypt_version = $GLOBALS['egw_info']['server']['versions']['mcrypt'];
 				if($this->mcrypt_version == 'old')
 				{
 					$this->td = False;
@@ -155,7 +155,7 @@
 				echo '<br>' . time() . ' crypto->encrypt() unencrypted data: ---->>>>' . $data . "\n";
 			}
 
-			if(is_array($data) || is_object($data))
+			if(@is_array($data) || @is_object($data))
 			{
 				if($this->debug)
 				{
@@ -273,8 +273,10 @@
 			$data = chop($data);
 
 			$newdata = @unserialize($data);
-			if($newdata)
+			/* Check whether an array or object exists, even if empty. These should be the only ones originally serialized. */
+			if(@is_array($newdata) || @is_object($newdata))
 			{
+				/* array or object */
 				if($this->debug)
 				{
 					echo '<br>' . time() . ' crypto->decrypt() found serialized "' . gettype($newdata) . '".  Unserializing...' . "\n";
@@ -284,6 +286,7 @@
 			}
 			else
 			{
+				/* Other types */
 				if($this->debug)
 				{
 					echo '<br>' . time() . ' crypto->decrypt() found UNserialized "' . gettype($data) . '".  No unserialization...' . "\n";
