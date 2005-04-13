@@ -137,9 +137,9 @@
 			{
 				$this->acl();
 			}
-			$this->db->select($this->table_name,'*',array(
-				'acl_account' => array($this->account_id,0) + array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id))
-			),__LINE__,__FILE__);
+ 			$acl_acc_list = array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id)); 
+ 			array_unshift($acl_acc_list,$this->account_id,0); 
+			$this->db->select($this->table_name,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__); 
 			
 			$this->data = Array();
 			while($this->db->next_record())
