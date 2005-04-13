@@ -31,7 +31,8 @@
 		 * It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
 		 * It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
 		 * $acl =& CreateObject('phpgwapi.acl',5);  // 5 is the user id
-		 * @author Seek3r
+		 *
+		 * @author Seek3r and others
 		 * @copyright LGPL
 		 * @package api
 		 * @subpackage accounts
@@ -63,10 +64,10 @@
 		/**
 		 * ACL constructor for setting account id
 		 *
-		 * Author: Seek3r <br>
-		 * Sets the ID for $acl->account_id. Can be used to change a current instances id as well. <br>
-		 * Some functions are specific to this account, and others are generic. <br>
-		 * @example acl->acl(5); // 5 is the user id  <br>
+		 * Sets the ID for $acl->account_id. Can be used to change a current instances id as well.
+		 * Some functions are specific to this account, and others are generic. 
+		 *
+		 * @example acl->acl(5); // 5 is the user id
 		 * @param int $account_id int-the user id
 		 */
 		function acl($account_id = '')
@@ -130,13 +131,10 @@
 		\**************************************************************************/
 
 		/**
-		 * Read acl records from reposity
+		 * Read acl records for $acl->account_id from reposity
 		 *
-		 * Author: Seek3r <br>
-		 * Reads ACL records for $acl->account_id and returns array along with storing it in $acl->data.  <br>
-		 * Syntax: array read_repository() <br>
-		 * Example1: acl->read_repository(); <br>
-		 * Should only be called within this class
+		 * @internal 
+		 * @return array along with storing it in $acl->data.  <br>
 		 */
 		function read_repository()
 		{
@@ -146,18 +144,18 @@
 			{
 				$this->acl();
 			}
-			$this->db->select($this->table_name,'*',array(
-				'acl_account' => array($this->account_id,0) + array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id))
-			),__LINE__,__FILE__);
-			
+ 			$acl_acc_list = array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id)); 
+ 			array_unshift($acl_acc_list,$this->account_id,0); 
+			$this->db->select($this->table_name,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__); 
+ 
 			$this->data = Array();
-			while($this->db->next_record())
+			while(($row = $this->db->row(true)))
 			{
 				$this->data[] = array(
-					'appname'  => $this->db->f('acl_appname'),
-					'location' => $this->db->f('acl_location'), 
-					'account'  => $this->db->f('acl_account'), 
-					'rights'   => $this->db->f('acl_rights')
+					'appname'  => $row['acl_appname'],
+					'location' => $row['acl_location'], 
+					'account'  => $row['acl_account'], 
+					'rights'   => $row['acl_rights'],
 				);
 			}
 			return $this->data;
@@ -166,7 +164,6 @@
 		/**
 		 * Read acl records from $acl->data
 		 *
-		 * Author: Seek3r
 		 * @return array all ACL records from $this->data.
 		 */
 		function read()
