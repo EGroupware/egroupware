@@ -369,8 +369,8 @@ class so_sql
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
 	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
-	 * @return  affected rows, should be 1 if ok, 0 if an error
-	*/
+	 * @return int affected rows, should be 1 if ok, 0 if an error
+	 */
 	function delete($keys=null)
 	{
 		if (!is_array($keys) || !count($keys))	// use internal data
@@ -475,7 +475,7 @@ class so_sql
 		}
 		if ($start !== false)	// need to get the total too, saved in $this->total
 		{
-			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,0,'',false,0,$join);
+			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',false,0,$join);
 			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 		}
 		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
@@ -487,7 +487,7 @@ class so_sql
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
-		if ($only_keys == true)	// only primary key
+		if ($only_keys === true)	// only primary key
 		{
 			$cols = $this->db_key_cols;
 		}
