@@ -130,8 +130,7 @@
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
-			$html = (!$this->xslt ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
-				$this->html->form($this->include_java_script(1).
+			$html = $this->html->form($this->include_java_script(1).
 					$this->html->input_hidden('submit_button','',False).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
@@ -547,7 +546,8 @@
 				$rows[$row] = $row_data;
 			}
 
-			$html = $this->html->table($rows,$this->html->formatOptions($grid['size'],'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING')/*TEST-RB,$no_table_tr*/);
+			$html = $this->html->table($rows,$this->html->formatOptions($grid['size'],'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING').
+				$this->html->formatOptions($grid['span'],',CLASS')/*TEST-RB,$no_table_tr*/);
 
 			list($width,$height,,,,,$overflow) = explode(',',$grid['size']);
 			if (!empty($overflow)) {
@@ -1106,15 +1106,21 @@
 							{
 								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
 							}
-							$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+							$class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 								$show_c,$show_row,$content['.c'],$content['.row'],$content);
-							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($cl,'CLASS');
+							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($class,'CLASS');
 						}
 					}
 					if ($box_anz > 1 && $orient)	// a single cell is NOT placed into a table
 					{
 						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,CELLPADDING,CELLSPACING').
+							$this->html->formatOptions($cell['span'],',CLASS').
 							($cell['align'] && $orient != 'horizontal' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
+					}
+					// use a div to not loose the css class
+					elseif ($class && $orient)
+					{
+						$html = $this->html->div($html,'',$class);
 					}
 					if ($type == 'groupbox')
 					{
