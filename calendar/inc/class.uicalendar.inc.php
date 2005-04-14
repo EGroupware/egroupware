@@ -2194,6 +2194,7 @@
 		{
 			// generate duplicate free list of events within observed interval
 			//
+			/*
 			$this->bo->store_to_cache(
 				Array(
 					'syear'	=> $this->bo->year,
@@ -2205,7 +2206,24 @@
 				)
 			);
 			$this->bo->remove_doubles_in_cache($this->planner_firstday,$this->planner_lastday);
-			
+			*/
+			// hack to get the planner working again
+			$this->bo->cached_events = $GLOBALS['uical']->bo->search(array(
+				'start'   => array(
+					'year'  => $GLOBALS['uical']->year,
+					'month' => $GLOBALS['uical']->month,
+					'day'   => 1,
+				),
+				'end'   => array(
+					'year'  => $GLOBALS['uical']->year,
+					'month' => 1+$GLOBALS['uical']->month,
+					'day'   => 0,
+				),
+				'cat_id'  => $GLOBALS['uical']->cat_id,
+				'users'   => $GLOBALS['uical']->is_group ? $GLOBALS['uical']->g_owner : explode(',',$GLOBALS['uical']->owner),
+				'filter'  => $GLOBALS['uical']->filter,
+				'daywise' => True,
+			));
 			// process all events within observed interval
 			//
 			for($v=$this->planner_firstday;$v<=$this->planner_lastday;$v++)
