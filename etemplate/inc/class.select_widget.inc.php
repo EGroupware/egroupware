@@ -175,7 +175,10 @@
 						$cell['sel_options'][intval($i)] = intval($i).'%';
 					}
 					$cell['sel_options'][100] = '100%';
-					$value = intval(($value+($decr/2)) / $decr) * $decr;
+					if (!$rows || !empty($value))
+					{
+						$value = intval(($value+($decr/2)) / $decr) * $decr;
+					}
 					$cell['no_lang'] = True;
 					break;
 
