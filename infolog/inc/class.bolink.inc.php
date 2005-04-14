@@ -498,7 +498,7 @@
 		 */
 		function add($app,$to_app='',$to_id='')
 		{
-			echo "<p>bolink::add('$app','$to_app','$to_id') app_register[$app] ="; _debug_array($app_register[$app]);
+			//echo "<p>bolink::add('$app','$to_app','$to_id') app_register[$app] ="; _debug_array($app_register[$app]);
 			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['add']))
 			{
 				return false;
