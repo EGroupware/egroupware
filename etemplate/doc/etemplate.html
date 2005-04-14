@@ -16,7 +16,7 @@ body { background-color: white; color: black; }
 <h1>eTemplate - Templates and Dialog-Editor for eGroupWare</h1>
 <h3>by Ralf Becker <a href="#" onClick="document.location='mai'+'lto:RalfBecker'+unescape('%40')+'outdoor-training'+unescape('%2E')+'de'; return false;">RalfBecker AT outdoor-training DOT de</a></h3>
 <p>A developers tutorial how to write an application with the new eTemplates.<br>
-It is also an introduction how to write a phpgw- and setup(3)-compatible app.</p>
+It is also an introduction how to write a eGW- and setup(3)-compatible app.</p>
 <hr>
 <h1>Introduction - The concept of the eTemplates</h1>
 The eTemplates
@@ -52,7 +52,7 @@ to edit records and search for them.</p>
 <p>As a preaquistion you need to get / checkout the etemplate app, install the app via setup/manage applications and
 enable your account for using the app (Admin/User account: check eTemplates).</p>
 
-<h2>1. Creating a new phpgw app directory</h2>
+<h2>1. Creating a new eGW app directory</h2>
 <p>Each app need a name, eg. 'et_media'. We now need to create the following directory structur above the eGroupWare dir:
 <pre>
 et_media				<span>that has to be identical to our app-name</span>
@@ -157,7 +157,6 @@ Create the file <b>/et_media/index.php</b> with the following content:</p>
 <span>/* $ Id: class.et_media.inc.php,v 1.2 2002/10/19 11:11:03 ralfbecker Exp $ */</span>
 
 include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
-$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
 </pre>
 
 <p>This loads the class so_sql, in a way that more than one class may use it (would be nice if we had an api-function for that).</p>
