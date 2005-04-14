@@ -194,7 +194,7 @@
 			}
 			if ($total < 1)
 			{
-				$value['template']->data[0]['h2'] = ',1';	// disable the data row
+				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 			}
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			if ($total <= $max && $options && $value['search'] == '' &&
@@ -278,7 +278,6 @@
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
 			//echo "<p>nextmatch_widget.post_process(name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
-
 			switch($extension_data['type'])
 			{
 				case 'nextmatch-sortheader':
@@ -298,7 +297,6 @@
 			$old_value = $extension_data;
 
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-			$loop = False;
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 
 			if (is_array($value['bottom']))			// we have a second bottom-bar
