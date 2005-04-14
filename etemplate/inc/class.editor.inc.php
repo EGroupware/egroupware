@@ -973,6 +973,10 @@
 						window.open(url,"etemplate_editor_widget","dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
 					}
 				</script>';
+				if ($app != 'etemplate' && file_exists(PHPGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
+				{
+					$new_content['onclick'] .= $editor->html->style('@import url('.$GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
+				}
 				$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $content['vals'];
 				$olds = $content['olds'];
