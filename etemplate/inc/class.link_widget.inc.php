@@ -15,10 +15,22 @@
 	/**
 	 * eTemplate Extension: several widgets as user-interface for the link-class
 	 *
-	 * 1) link-to:   Widget to create links to an other entries of link-aware apps
-	 * 2) link-list: Widget to shows the links to an entry and a Unlink Button for each link
+	 * 1) link-to:     Widget to create links to an other entries of link-aware apps
+	 *	If an id was set, this widgets creats the links without further interaction with the calling code.
+	 *	If the entry does not yet exist, the widget returns an array with the new links in the id. After the
+	 *	entry was successful create, bolink::link($app,$new_id,$arr) has to be called to create the links!
+	 * 2) link-list:   Widget to shows the links to an entry and a Unlink Button for each link
 	 * 3) link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
 	 *
+	 * $content[$name] = array(
+	 *   'to_app'       => // I  string appname of the entry to link to
+	 *   'to_id'        => // IO int id of the entry to link to, for new entries 0, returns the array with new links
+	 *	// the following params apply only for the link-to widget!
+	 *   'no_files'     => // I  boolean suppress attach-files, default no
+	 *   'search_label' => // I  string label to use instead of search
+	 *   'link_label'   => // I  string label for the link button, default 'Link'
+	 *	 
+	 * );
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
 	 *
 	 * @package etemplate
@@ -54,7 +66,11 @@
 		 */
 		function link_widget($ui)
 		{
-			$this->link = CreateObject('infolog.bolink');
+			if (!is_object($GLOBALS['egw']->link))
+			{
+				$GLOBALS['egw']->link =& CreateObject('infolog.bolink');
+			}
+			$this->link =& $GLOBALS['egw']->link;
 		}
 
 		/**
@@ -111,6 +127,7 @@
 			switch ($type = $cell['type'])
 			{
 			case 'link-to':
+				$value['msg'] = '';
 				if ($value['button'] == 'upload' && !empty($value['file']) && $value['file']['tmp_name'] != 'none')
 				{
 					$value = $extension_data;
@@ -127,6 +144,10 @@
 					$value['remark'] = '';
 
 					$tpl =& new etemplate('etemplate.link_widget.create');
+					if ($value['link_label'])
+					{
+						$tpl->set_cell_attribute('create','label',$value['link_label']);
+					}
 				}
 				else
 				{
@@ -137,8 +158,13 @@
 					$value = array_merge($extension_data,$value);
 					$value['options-app'] = $this->link->app_list();
 
+					if ($value['button'] == 'search') $value['msg'] = lang('Nothing found - try again !!!');
+
 					$tpl =& new etemplate('etemplate.link_widget.search');
-					$tpl->set_cell_attribute('msg','disabled',$value['button'] != 'search');
+					if ($value['search_label'])
+					{
+						$tpl->set_cell_attribute('app','label',$value['search_label']);
+					}
 				}
 				break;
 
@@ -179,7 +205,7 @@
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
 			$cell['name'] = $tpl->name;
-			$cell['obj'] = &$tpl;
+			$cell['obj'] =& $tpl;
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;			
 
