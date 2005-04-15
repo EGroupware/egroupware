@@ -1,0 +1,199 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fi	%1(%2 uusi) Viestit kirjoitetaan sovelluksella %3 ja kielillä %4
+%1 etemplates deleted	etemplate	fi	%1 Asiakirjamallia poistettu
+%1 etemplates for application '%2' dumped to '%3'	etemplate	fi	%1 sovelluksen '%2' Asiakirjamallia viety '%3'
+%1 etemplates found	etemplate	fi	%1 Asiakirjamallia löydetty
+%1 matches on search criteria	etemplate	fi	hakuehdolla löytyi %1 kpl
+%1 new etemplates imported for application '%2'	etemplate	fi	%1 sovelluksen '%2' uutta Asiakirjamallia tuotu
+%s disabled	etemplate	fi	%s ei käytössä
+%s needed	etemplate	fi	%s tarvitaan
+%s notranslation	etemplate	fi	%s Ei_käännöstä
+%s onchange	etemplate	fi	%s onChange
+%s readonly	etemplate	fi	%s vain luku
+'%1' has an invalid format !!!	etemplate	fi	%1 on väärässä muodossa !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	fi	%1 ei ole desimaaliluku !!!
+'%1' is not a valid integer !!!	etemplate	fi	%1 ei ole kokonaisluku !!!
+a pattern to be searched for	etemplate	fi	kaavaa etsitään
+add a new column (after the existing ones)	etemplate	fi	Lisää uusi sarake (käytössä olevan jälkeen)
+add a new multi-column index	etemplate	fi	Lisää uusi monisarakkeen indeksi
+add column	etemplate	fi	Lisää sarake
+add index	etemplate	fi	Lisää indeksi
+add table	etemplate	fi	Lisää taulukko
+align	etemplate	fi	Tasaa
+alignment of label and input-field in table-cell	etemplate	fi	otsikon ja syöttökentän tasaus taulukon solussa
+am	etemplate	fi	am
+application	etemplate	fi	Sovellus
+attach	etemplate	fi	Liitä
+attach file	etemplate	fi	liitä tiedosto
+border	etemplate	fi	reunaviiva
+border-line-thickness for the table-tag	etemplate	fi	reunaviivan paksuus
+can not have special sql-value null	etemplate	fi	ei voi olla arvoltaan SQL erityinen tyhjämerkki
+cancel	etemplate	fi	Peruuta
+category	etemplate	fi	Ryhmä
+cells	etemplate	fi	Solut
+center	etemplate	fi	Asettaa keskelle
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fi	valitse jos sisällön tulisi olla vain nähtävillä mutta ei vaihdettavissa (sisältöä ei lähetetä takaisin silloin)
+check if field has to be filled by user	etemplate	fi	valitse jos kentän on täyttänyt käyttäjä
+checkbox	etemplate	fi	valintaruutu
+class	etemplate	fi	Luokka
+class, valign	etemplate	fi	luokka, Valign
+click here to attach the file	etemplate	fi	Paina tästä liittääksesi tiedoston
+click here to create the link	etemplate	fi	Paina tästä luodaksesi linkin
+click here to start the search	etemplate	fi	Paina tästä aloittaaksesi etsimisen
+click here to upload the file	etemplate	fi	Paina tästä ladataksesi tiedoston
+columnname	etemplate	fi	Sarakkeen nimi
+comment	etemplate	fi	Kommentti
+create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukselle
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
+css class for the table-tag	etemplate	fi	CSS luokka taulukko merkille
+css-styles	etemplate	fi	CSS tyylit
+date+time	etemplate	fi	Päivämäärä ja aika
+datum	etemplate	fi	Päiväys
+day	etemplate	fi	Päivä
+db ensures that every row has a unique value in that column	etemplate	fi	DB varmistaa että jokaisella rivillä on ainutlaatuinen arvo sarakkeensa
+db-tools	etemplate	fi	Tietokanta -työkalut
+default	etemplate	fi	Oletus
+delete	etemplate	fi	Poista
+delete all selected etemplates, without further inquiry	etemplate	fi	Poistaa kaikki valitut asiakirjamallit ilman muita kysymyksiä
+delete column	etemplate	fi	Poista sarake
+delete index	etemplate	fi	Poista indeksi
+delete this etemplate	etemplate	fi	poista tämä asiakirjamalli
+delete whole column (can not be undone!!!)	etemplate	fi	poista koko sarake
+deletes this column	etemplate	fi	Poistaa tämän sarakkeen
+deletes this index	etemplate	fi	Poistaa tämän indeksin
+discard changes	etemplate	fi	hävittää muutokset
+do you want to save the changes you made in table %s?	etemplate	fi	Haluatko tallentaa muutokset jotka teit taulukkoon %s?
+documentation	etemplate	fi	Dokumentointi
+drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - tätä EI voi peruuttaa
+drop table	etemplate	fi	Poista tietokannan taulu
+edit	etemplate	fi	Muokkaa
+editable templates - db-tools	etemplate	fi	Muokattavat sivupohjat - Tietokantatyökalut
+editable templates - delete template	etemplate	fi	Muokattavat sivupohjat - Poista sivupohja
+editable templates - editor	etemplate	fi	Muokattavat sivupohjat - Muokkaus
+editable templates - search	etemplate	fi	Muokattavat sivupohjat - Haku
+editable templates - show template	etemplate	fi	Muokattavat sivupohjat - Näytä sivupohja
+error: template not found !!!	etemplate	fi	Virhe: Asiakirjamallia ei löytynyt !!!
+error: writeing !!!	etemplate	fi	Virhe: kirjoitettaessa !!!
+etemplate	common	fi	Asiakirjamalli
+etemplate editor	etemplate	fi	Asiakirjan muokkain
+etemplate tutorial	etemplate	fi	Asiakirjamallin opetusohjelma
+exchange this row with the one above	etemplate	fi	vaihda tämä rivi yläpuolella olevan kanssa
+exchange this two columns	etemplate	fi	vaihda
+export the loaded etemplate into a xml-file	etemplate	fi	vie ladattu Asiakirjamalli xml-tiedostoksi
+export xml	etemplate	fi	Vie XML-tiedostoon
+extensions loaded:	etemplate	fi	Ladatut laajennukset:
+field must not be empty !!!	etemplate	fi	Kenttä ei saa olla tyhjä !!!
+file	etemplate	fi	Tiedosto
+file contains more than one etemplate, last one is shown !!!	etemplate	fi	Tiedosto sisältää enemmän kuin yhden asiakirjamallin , viimeisin näytetään !!!
+file writen	etemplate	fi	Tiedostoa kirjoitetaan
+fileupload	etemplate	fi	Tiedostoa ladataan
+first	etemplate	fi	Ensimmäinen
+floating point	etemplate	fi	Liukuva pilkku
+foreign key	etemplate	fi	Viiteavain
+formatted text (html)	etemplate	fi	Muotoiltu teksti (HTML)
+go to the first entry	etemplate	fi	mene ensimmäiseen merkintään
+go to the last entry	etemplate	fi	mene viimeiseen merkintään
+go to the next page of entries	etemplate	fi	mene seuraavan sivun merkintöihin
+go to the previous page of entries	etemplate	fi	mene edellisen sivun merkintöihin
+height	etemplate	fi	Korkeus
+help	etemplate	fi	Ohjeet
+horizontal rule	etemplate	fi	Vaakasuuntainen viiva
+hour	etemplate	fi	Tunti
+html	etemplate	fi	Html
+image	etemplate	fi	Kuva
+import	etemplate	fi	Tuo
+import an etemplate from a xml-file	etemplate	fi	Tuo asiakirjamalli xml-tiedostosta
+import table-definitions from existing db-table	etemplate	fi	Tuo taulumääritykset valmiista tietokannasta
+import xml	etemplate	fi	Tuo XML
+indexed	etemplate	fi	Indeksoitu
+indexoptions	etemplate	fi	Indeksointiasetukset
+insert new column behind this one	etemplate	fi	Lisää uusi sarake valitun taakse
+insert new column in front of all	etemplate	fi	lisää uusi sarake kaikkien eteen
+insert new row after this one	etemplate	fi	lisää uusi rivi valitun jälkeen
+insert new row in front of first line	etemplate	fi	lisää uusi rivi ensimmäisen rivin eteen
+integer	etemplate	fi	kokonaisluku
+label	etemplate	fi	Otsikko
+lang	etemplate	fi	Kieli
+last	etemplate	fi	Viimeinen
+left	etemplate	fi	Vasen
+link	etemplate	fi	Linkki
+linklist	etemplate	fi	Linkkiluettelo
+load this template into the editor	etemplate	fi	lataa asiakirjamalli muokattavaksi
+minute	etemplate	fi	Minuutit
+month	etemplate	fi	Kuukausi
+multicolumn indices	etemplate	fi	Usean sarakkeen indeksi
+name	etemplate	fi	Nimi
+name of table to add	etemplate	fi	Lisää taulukon nimi
+new search	etemplate	fi	Uusi etsintä
+new table created	etemplate	fi	Uusi taulukon nimi
+newer version '%1' exists !!!	etemplate	fi	uudempi versio %1 havaittu !!!
+no file	etemplate	fi	ei tiedostoa
+no filename given or selected via browse...	etemplate	fi	tiedostonimeä ei annettu tai valittu Selaa... -valinnan kautta
+not null	etemplate	fi	EI NULL
+nothing found - try again !!!	etemplate	fi	Mitään ei löydetty - yritä uudelleen !!!
+nothing matched search criteria !!!	etemplate	fi	Mikään ei ole yhteensopiva haun kriteerien kanssa !!!
+only an other version found !!!	etemplate	fi	vain toinen versio löydetty !!!
+options	etemplate	fi	Asetukset
+overflow	etemplate	fi	ylivuoto
+padding	etemplate	fi	kukkuu
+please enter table-name first !!!	etemplate	fi	Kirjoita ensin taulukon nimi !!!
+pm	etemplate	fi	pm
+precision	etemplate	fi	Esitystarkkuus
+read	etemplate	fi	Lukea
+right	etemplate	fi	Oikea
+save	etemplate	fi	Tallenna
+search	etemplate	fi	Etsi
+select a category	etemplate	fi	valitse kategoria
+select an app first !!!	etemplate	fi	Valitse sovellus ensin !!!
+select an application	etemplate	fi	Valitse sovellus
+select application	etemplate	fi	Valitse sovellus
+select category	etemplate	fi	Valitse ryhmä
+select country	etemplate	fi	Valitse maa
+select day	etemplate	fi	Valitse päivä
+select month	etemplate	fi	Valitse kuukausi
+select number	etemplate	fi	Valitse numero
+select one ...	etemplate	fi	Valitse yksi...
+select percentage	etemplate	fi	Valitse prosenssi
+select priority	etemplate	fi	Valitse ensisijaisuus
+select state	etemplate	fi	Valitse tila
+select this etemplate to delete it	etemplate	fi	valitse asiakirjamalli poistaaksesi sen
+select which values to show	etemplate	fi	valitse mitkä arvot näytetään
+select year	etemplate	fi	valitse vuosi
+selectbox	etemplate	fi	valintalaatikko
+sets today as date	etemplate	fi	aseta tämä päivä päivämääräksi
+show	etemplate	fi	Näytä
+show (no save)	etemplate	fi	Näytä (ei tallenna)
+show values	etemplate	fi	Näytä arvot
+showing	etemplate	fi	näkyvissä
+spacing	etemplate	fi	Riviväli
+stack	etemplate	fi	Pino
+start a new search, cancel this link	etemplate	fi	aloita uusi haku, peruuta tämä yhteys
+tablename	etemplate	fi	Taulukon nimi
+tabs	etemplate	fi	sarkaimet
+template	etemplate	fi	asiakirjamalli
+template deleted	etemplate	fi	asiakirjamalli poistetaan
+template saved	etemplate	fi	asiakirjamalli tallennetaan
+text	etemplate	fi	Teksti
+textarea	etemplate	fi	Tekstialue
+time	etemplate	fi	Aika
+to start the db-tools	etemplate	fi	käynnistääksesi Tietokantatyökalut
+to start the etemplate editor	etemplate	fi	käynnistääksesi Asiakirjapohjan muokkauksen
+to start the search	etemplate	fi	aloitetaan etsiminen
+today	etemplate	fi	Tänään
+type	etemplate	fi	Tyyppi
+type of the column	etemplate	fi	sarakkeen tyyppi
+unique	etemplate	fi	Yksilöivä
+unlink	etemplate	fi	Poistaa linkki
+update from version '%s' to	etemplate	fi	Päivitä versiosta %s versioon
+upload	etemplate	fi	Lataa
+value	etemplate	fi	Arvo
+value has to be at least '%1' !!!	etemplate	fi	Arvo pitää olla ainakin %1 !!!
+value has to be at maximum '%1' !!!	etemplate	fi	Arvo pitää olla maksimissaan %1 !!!
+vbox	etemplate	fi	VBox
+version	etemplate	fi	Versio
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fi	mitä tapahtuu ylimenevän osan kanssa:näkyvä(oletus), piilotettu,vierittää,auto(selaustoiminto toteutetaan)
+width	etemplate	fi	leveys
+write langfile	etemplate	fi	kirjoita kielitiedosto
+write tables	etemplate	fi	Kirjoita taulukko
+xml-file to import	etemplate	fi	tuotava xml-tiedosto
+xslt template	etemplate	fi	XSLT asiakirjamalli
+year	etemplate	fi	Vuosi

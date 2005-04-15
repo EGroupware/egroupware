@@ -1,7 +1,8 @@
 %1 does not exist !!!	setup	fi	%1 ei ole !!!
 %1 is %2%3 !!!	setup	fi	%1 on %2%3 !!!
+(searching accounts and changing passwords)	setup	fi	(etsitään tunnuksia ja vaihdetaan salasanoja)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fi	*** Älä päivitä tietokantaa asennuksen kautta, koska päivitysaika saattaa ylittää max_execution_time-määrityksen, jolloin tietokanta jää toimimattomaan tilaan (data menetetään) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa käsin (tiedosto on Linuxissa yleensä hakemistossa /etc) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa käsin (tiedosto on Linuxissa yleensä hakemistossa /etc) voidaksesi käyttää eGW:n kaikkia ominaisuuksia !!!
 00 (disable)	setup	fi	00 (ei käytössä / suositus)
 13 (ntp)	setup	fi	13 (ntp)
 80 (http)	setup	fi	80 (http)
@@ -19,11 +20,12 @@ admin user for header manager	setup	fi	Header-ylläpidon käyttäjätunnus
 admin username	setup	fi	Ylläpitäjän käyttäjätunnus
 admins	setup	fi	Ylläpitäjät
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fi	Kun olet hakenut tiedoston, tallenna se nimellä header.inc.php, ja napsauta "Jatka".
+all applications	setup	fi	kaikki sovellukset
 all core tables and the admin and preferences applications	setup	fi	kaikki runkotaulut ja ylläpito- sekä asetussovellus
 all users	setup	fi	Kaikki käyttäjät
 analysis	setup	fi	Analyysi
 and reload your webserver, so the above changes take effect !!!	setup	fi	ja käynnistä www-palvelin uudellen, jotta asetukset tulevat käyttöön !!!
-app details	setup	fi	Sovelluksen yksityiskohdat
+app details	setup	fi	Sovelluksen tiedot
 app install/remove/upgrade	setup	fi	Sovelluksen asennus/poistaminen/päivitys
 app process	setup	fi	Sovelluksen prosessi
 application data	setup	fi	Sovelluksen data
@@ -32,14 +34,15 @@ application management	setup	fi	Sovellusten ylläpito
 application name and status	setup	fi	Sovelluksen nimi ja tila
 application name and status information	setup	fi	Sovelluksen nimi ja tila
 application title	setup	fi	Sovelluksen otsikko
+application: %1, file: %2, line: "%3"	setup	fi	Sovellus: %1, Tiedosto: %2, Rivi: "%3"
 are you sure you want to delete your existing tables and data?	setup	fi	Haluatko varmasti poistaa olemassaolevat taulut ja datan?
 are you sure?	setup	fi	OLETKO VARMA?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fi	Luodaan tietokanta ja määritellään tietokannan käyttöoikeudet.
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	fi	Luodaan runkotaulut ja asennetaan ylläpito- sekä asetussovellus.
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fi	Päivitetään sovellukset ajan tasalle.
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fi	Päivitetään tietokannan taulut ajan tasalle.
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fi	Poistetaan tietokannan taulut, ja luodaan ne uudessa muodossa.
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fi	Poistetaan kaikki sovellukset, jolloin kaikki taulut ja data tuhoutuu.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fi	Yritetään päivittää vanhat sovellukset nykyisiin versioihin
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fi	Yritetään päivittää vanhat tietokannan taulut uuteen muotoon
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fi	POISTETAAN vanhat taulut ja LUODAAN UUDET uudessa muodossa
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fi	POISTETAAN KAIKKI sovellukset, jolloin KAIKKI TIEDOT POISTETAAN
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fi	Yritä käyttää oikeaa mime-tyyppiä  'application/octet-stream'-oletuksen sijaan
 authentication / accounts	setup	fi	Käyttäjätunnistus / käyttäjätunnukset
 auto create account records for authenticated users	setup	fi	Luo tunnistettujen käyttäjien tietueet automaattisesti
@@ -47,7 +50,7 @@ auto-created user accounts expire	setup	fi	Automaattisesti luotujen tilien vanhe
 available version	setup	fi	Käytettävissä oleva versio
 back to the previous screen	setup	fi	Takaisin edelliselle sivulle
 back to user login	setup	fi	Kirjaudu sisään
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	fi	Suosittelemme, että <u>varmuuskopioit</u> taulujen tiedot, jotta voit tarvittaessa palauttaa ne.<br><strong>Automaattiset skriptit voivat tuhota dataa.</strong>
+backupwarn	setup	fi	Suosittelemme, että <u>varmuuskopioit</u> taulujen tiedot, jotta voit tarvittaessa palauttaa ne.<br><strong>Automaattiset skriptit voivat tuhota dataa.</strong><br><em>Varmuuskopioi, ennen kuin jatkat!</em>
 because an application it depends upon was upgraded	setup	fi	koska sovellus, josta se riippuu, on päivitetty
 because it depends upon	setup	fi	koska se riippuu sovelluksesta
 because it is not a user application, or access is controlled via acl	setup	fi	koska se ei ole käyttäjien sovellus, tai sen käyttöä hallitaan acl:n avulla
@@ -62,10 +65,12 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	fi	Muuta järjestelmän merkistöä
 charset	setup	fi	ISO-8859-15
 charset to convert to	setup	fi	Merkistö, johon konvertoidaan
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	fi	Tarkistus voidaan suorittaa vain web-palvelimen kautta kutsuttaessa, koska palvelimen käyttäjätunnusta ei tiedetä.
 check installation	setup	fi	Tarkista asennus
 check ip address of all sessions	setup	fi	tarkista istuntojen ip-osoitteet
 checking extension %1 is loaded or loadable	setup	fi	Tarkistetaan, että laajennus %1 on ladattu tai ladattavissa
 checking file-permissions of %1 for %2: %3	setup	fi	Tarkistetaan tiedoston %1 käyttöoikeudet, %2: %3
+checking for gd support...	setup	fi	Tarkistetaan GD-tuki...
 checking php.ini	setup	fi	Tarkistetaan tiedostoa php.ini
 checking the egroupware installation	setup	fi	eGroupWaren asennuksen tarkistus
 click <a href="index.php">here</a> to return to setup.	setup	fi	Napsauta <a href="index.php">tästä</a> palataksesi asennukseen.
@@ -94,9 +99,10 @@ create the empty database -	setup	fi	Luo tyhjä tietokanta -
 create the empty database and grant user permissions -	setup	fi	Luo tyhjä tietokanta ja anna käyttöoikeudet -
 create your header.inc.php	setup	fi	Luo header.inc.php
 created	setup	fi	luotu
+created header.inc.php!	setup	fi	Luotiin header.inc.php!
 creating tables	setup	fi	Luodaan tauluja
 current system-charset	setup	fi	Nykyinen järjestelmän merkistö
-current system-charset is %1, click %2here%3 to change it.	setup	fi	Järjestelmän merkistö on %1, napsauta %2tähän%3, jos haluat muuttaa sitä.
+current system-charset is %1, click %2here%3 to change it.	setup	fi	Järjestelmän merkistö on %1, napsauta %2tästä%3, jos haluat muuttaa sitä.
 current version	setup	fi	Nykyinen versio
 currently installed languages: %1 <br>	setup	fi	Asennetut kielet: %1 <br>
 database successfully converted from '%1' to '%2'	setup	fi	Tietokanta on konvertoitu versiosta '%1' versioon '%2'
@@ -150,6 +156,8 @@ enter your http proxy server	setup	fi	Määrittele HTTP-välityspalvelin
 enter your http proxy server password	setup	fi	Määrittele HTTP-välityspalvelimen salasana
 enter your http proxy server port	setup	fi	Määrittele HTTP-välityspalvelimen portti
 enter your http proxy server username	setup	fi	Määrittele HTTP-välityspalvelimen käyttäjätunnus
+error in admin-creation !!!	setup	fi	Virhe pääkäyttäjän luonnissa !!!
+error in group-creation !!!	setup	fi	Virhe ryhmän luonnissa !!!
 export egroupware accounts from sql to ldap	setup	fi	Vie eGroupWaren käyttäjätunnukset LDAPiin
 export has been completed!  you will need to set the user passwords manually.	setup	fi	Vienti on valmis!  Määrittele käyttäjien salasanat käsin.
 export sql users to ldap	setup	fi	Vie SQL-käyttäjätunnukset LDAPiin
@@ -189,7 +197,7 @@ import ldap users/groups	setup	fi	Tuo LDAP käyttäjät/ryhmät
 importing old settings into the new format....	setup	fi	Tuodaan vanhat asetukset uuteen formaattiin....
 include root (this should be the same as server root unless you know what you are doing)	setup	fi	Include-juuri (Tämän pitäisi olla sama kuin Server Root)
 include_path need to contain "." - the current directory	setup	fi	include_path-määrityksessä on oltava "." - nykyinen hakemisto
-insanity	setup	fi	Sulaa hulluutta
+insanity	setup	fi	Vaarallista
 install	setup	fi	Asenna
 install all	setup	fi	Asenna kaikki
 install applications	setup	fi	Sovellusten asennus
@@ -216,7 +224,8 @@ ldap import users	setup	fi	Käyttäjien LDAP-tuonti
 ldap modify	setup	fi	LDAP-muokkaus
 ldap root password	setup	fi	LDAP-pääkäyttäjän salasana
 ldap rootdn	setup	fi	LDAP-rootdn
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fi	Rajoita asennukseen pääsy seuraaville verkkoalueille (esim. 127.0.0.1,10.1.1,oma.toimialue.com)
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fi	LDAP hakusuodin tunnuksille, oletus: "(uid=%user)", %domain=eGW-toimialue
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fi	Rajoita asennukseen pääsy seuraaville verkkoalueille (esim. 127.0.0.1, 10.1.1, oma.toimialue.com)
 login to mysql -	setup	fi	Kirjaudu mysql:ään -
 logout	setup	fi	Kirjaudu ulos
 makesure	setup	fi	Varmista, että tietokanta on luotu ja käyttöoikeudet ovat kunnossa
@@ -299,6 +308,7 @@ really uninstall all applications	setup	fi	Haluan VARMASTI poistaa kaikki sovell
 recommended: filesystem	setup	fi	Suositus: Filesystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fi	register_globals on päällä. eGroupWare ei vaadi tätä, ja on turvallisempaa ottaa se pois käytöstä (Off).
 registered	setup	fi	rekisteröity
+rejected lines	setup	fi	Hyläty rivit
 remove	setup	fi	Poista
 remove all	setup	fi	Poista kaikki
 requires reinstall or manual repair	setup	fi	Täytyy asentaa uudelleen, tai korjata käsin
@@ -346,10 +356,10 @@ show 'powered by' logo on	setup	fi	Näytä 'powered by' logo
 some or all of its tables are missing	setup	fi	Jotkin tai kaikki sen sovellukset puuttuvat
 sql encryption type	setup	fi	SQL-salasanojen salaustapa (oletus - md5)
 start the postmaster	setup	fi	Käynnistä postmaster
-status	setup	en	Tila
+status	setup	fi	Tila
 step %1 - admin account	setup	fi	Vaihe %1 - Ylläpitäjän käyttäjätunnus
 step %1 - advanced application management	setup	fi	Vaihe %1 - Tarkempi sovellusten hallinta
-step %1 - configuration	setup	fi	Vaihe %1 - Konfiguraatio
+step %1 - configuration	setup	fi	Vaihe %1 - Tee asetukset
 step %1 - language management	setup	fi	Vaihe %1 - Kielten hallinta
 step %1 - simple application management	setup	fi	Vaihe %1 - Yksinkertainen sovellusten hallinta
 table change messages	setup	fi	Table Change Messages
@@ -363,15 +373,17 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	fi	Laajennus
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fi	Oletuksena käytettävä tietokanta (%1) ei toimi tällä palvelimella. Käytetään ensimmäistä toimivaa tyyppiä.
 the file	setup	fi	tiedosto
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fi	eGroupWaren asennuksen ensimmäisessä vaiheess tarkistetaan, että järjestelmässäsi on tarpeeliset asetukset kunnossa.
+the following applications need to be upgraded:	setup	fi	Nämä sovellukset on päivitettävä:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	fi	Imap-laajennus tarvitaan molempien sähköpostisovellusten käytössä (vaikka käyttäisit pop3-sähköpostia).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	mbstring-laajennusta tarvitaan utf-8 tai muitten monibittisten merkistöjen täyteen tukeen.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	Asetus mbstring.func_overload = 7 vaaditaan unicode- (utf-8) tukea varten.
 the table definition was correct, and the tables were installed	setup	fi	Taulumääritykset ovat kunnossa, ja taulut on asennettu
 the tables	setup	fi	Taulut
 there was a problem trying to connect to your ldap server. <br>	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma. <br>
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma. <br>Tarkista LDAP-palvelimen asetukset
 this has to be outside the webservers document-root!!!	setup	fi	Hakemiston on oltava www-palvelimen asiakirjajuuren ulkopuolella!!!
 this might take a while, please wait ...	setup	fi	Voi kestää hetken, odota ...
-this program will convert your database to a new system-charset.	setup	fi	Tämä ohjelma konvertoi tietokantasi uuteen merkistöön.
+this program will convert your database to a new system-charset.	setup	fi	Tämä ohjelma muuntaa tietokantasi uuteen merkistöön.
 this program will help you upgrade or install different languages for egroupware	setup	fi	Päivitä tai asenna eGroupWaren kieliä
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fi	Tässä osassa voit viedä eGroupWaren käyttäjät ja ryhmät LDAP-hakemistopalveluun
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	fi	Tässä osassa voit tuoda LDAP-hakemistopalvelusta käyttäjät ja ryhmät eGroupWareen
@@ -401,7 +413,7 @@ usernames are casesensitive	setup	fi	Käyttäjätunnukset ovat merkkikokoherkkiä
 users choice	setup	fi	Käyttäjän valinta
 utf-8 (unicode)	setup	fi	utf-8 (Unicode)
 version	setup	fi	versio
-version mismatch	setup	fi	Versiovirhe
+version mismatch	setup	fi	Versioristiriita
 view	setup	fi	Näytä
 warning!	setup	fi	Varoitus!
 we can proceed	setup	fi	Voidaan jatkaa
@@ -412,24 +424,24 @@ what type of sessions management do you want to use (php4 session management may
 which database type do you want to use with egroupware?	setup	fi	Mitä tietokantatyyppiä käytät?
 world readable	setup	fi	kaikkien luettavissa
 world writable	setup	fi	kaikkien kirjoitettavissa
-would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, että eGroupWare tallentaa phpgw-infotaulukon välimuistiin?
+would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, että eGroupWare pitää phpgw -tietorakenteen muistissa?
 would you like egroupware to check for a new version<br>when admins login ?	setup	fi	Haluatko, että eGroupWare tarkistaa onko uusia versioita julkaistu, kun pääkäyttäjä sisäänkirjautuu?
 would you like to show each application's upgrade status ?	setup	fi	Haluatko näyttää kunkin sovelluksen päivitystilan?
 writable by the webserver	setup	fi	www-palvelimen kirjoitettavissa
-write config	setup	fi	Tallenna konfiguraatio
+write config	setup	fi	Tallenna asetukset
 yes	setup	fi	Kyllä
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fi	Käytät eGroupWaren esibetaversiota.<br>Näitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.<br>Päivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br>ja päivitä sitten nykyiseen versioon.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	fi	Käytät vanhaa PHP-versiota.<br>On suositeltavaa päivittää PHP uudempaan versioon.<br>Vanhat PHP-versiot eivät toimi oikein.<br>Päivitä vähintään versioon %1.
 you appear to be running version %1 of egroupware	setup	fi	Ajat eGroupWaren versiota %1
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fi	PHP:n versio on vanhempi kuin 4.1.0. eGroupWare tarvitsee version 4.1.0 tai uudemman.
-you appear to be using php3. disabling php4 sessions support	setup	fi	Käytät PHP3:ää. Otetaan PHP4-istuntojen tuki pois käytöstä
-you appear to be using php4. enabling php4 sessions support	setup	fi	Käytät PHP4:ää. Otetaan PHP4-istuntojen tuki käyttöön
+you appear to be using php3. disabling php4 sessions support	setup	fi	Käytät PHP3:ää. Ei käytetä PHP4-istuntoja
+you appear to be using php4. enabling php4 sessions support	setup	fi	Käytät PHP4:ää. Käytetään PHP4-istuntoja
 you appear to have microsoft sql server support enabled	setup	fi	Microsoft SQL Server -tuki on käytössä
-you appear to have mysql support enabled	setup	fi	MySQL-tuki on käytössä
-you appear to have oracle support enabled	setup	fi	Oracle-tuki on käytössä
-you appear to have oracle v8 (oci) support enabled	setup	fi	Oracle V8 (OCI) -tuki on käytössä
-you appear to have postgresql support enabled	setup	fi	PostgreSQL-tuki on käytössä
-you appear to have xml support enabled	setup	fi	XML-tuki on käytössä
+you appear to have mysql support enabled	setup	fi	MySQL on käytettävissä
+you appear to have oracle support enabled	setup	fi	Oracle on käytettävissä
+you appear to have oracle v8 (oci) support enabled	setup	fi	Oracle V8 (OCI) on käytettävissä
+you appear to have postgresql support enabled	setup	fi	PostgreSQL on käytettävissä
+you appear to have xml support enabled	setup	fi	XML on käytettävissä
 you are ready for this stage, but this stage is not yet written.<br>	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br>
 you didn't enter a config password for domain %1	setup	fi	Et määritellyt konfiguraatiosalasanaa toimialueelle %1
 you didn't enter a config username for domain %1	setup	fi	Et määritellyt konfiguraatiotunnusta toimialueelle %1
@@ -437,7 +449,7 @@ you didn't enter a header admin password	setup	fi	Et määritellyt header-ylläpido
 you didn't enter a header admin username	setup	fi	Et määritellyt header-ylläpidon käyttäjätunnusta
 you do not have any languages installed. please install one now <br>	setup	fi	Et ole asentanut yhtään kieltä.<br>Asenna yksi nyt.
 you have not created your header.inc.php yet!<br> you can create it now.	setup	fi	Et ole luonut tiedostoa header.inc.php!<br> Voit luoda sen nyt.
-you have successfully logged out	setup	fi	Olet kirjautunut ulos.
+you have successfully logged out	setup	fi	Olet poistunut järjestelmästä
 you must enter a username for the admin	setup	fi	Anna ylläpidon käyttäjätunnus
 you need to add some domains to your header.inc.php.	setup	fi	Määrittele toimialueita header.inc.php-tiedostoon.
 you need to select your current charset!	setup	fi	Määrittele nykyinen merkistö!
@@ -452,6 +464,8 @@ your database is working, but you dont have any applications installed	setup	fi	
 your header admin password is not set. please set it now!	setup	fi	Header-ylläpidon salasanaa ei ole määritelty. Määrittele se nyt!
 your header.inc.php needs upgrading.	setup	fi	header.inc.php-tiedosto on päivitettävä.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	fi	Tiedosto header.inc.php on päivitettävä.<br><blink><b class="msg">VAROITUS!</b></blink><br><b>TEE VARMUUSKOPIOT!</b>
-your tables are current	setup	fi	Taulut ovat ajan tasalla
-your tables may be altered and you may lose data	setup	fi	Taulujen rakennetta muutetaan. Voit menettää dataa.
-your tables will be dropped and you will lose data	setup	fi	Tauluja poistetaan, ja menetät dataa !!
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fi	Käyttämäsi PHP ei tue GD-kirjastoa. Gantt -karttojen näyttö Projektien hallinnassa tarvitsee GD-kirjaston versio 1.8 tai uudempi.
+your tables are current	setup	fi	Tietokantataulut ovat ajan tasalla
+your tables may be altered and you may lose data	setup	fi	Tietokantataulujen rakennetta muutetaan. Voit menettää tietoja.
+your tables will be dropped and you will lose data	setup	fi	Tietokantataulut poistetaan, ja menetät tietoja !!
+

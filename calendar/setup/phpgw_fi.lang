@@ -169,8 +169,8 @@ notification messages for your responses	calendar	fi	Vastaustesi huomautusviesti
 number of intervals per day in planner view	calendar	fi	Suunnittelunäkymän jaksojen määrä päivässä
 number of months	calendar	fi	Kuukausien määrä
 number of records to read (%1)	calendar	fi	Luettavien tietueiden määrä (%1)
-observance rule	calendar	fi	Observance Rule
-occurence	calendar	fi	Occurence
+observance rule	calendar	fi	Ohjeen noudattaminen
+occurence	calendar	fi	Tapahtuma
 old startdate	calendar	fi	Vanha alkupäivä
 olddate	calendar	fi	Vanha päiväys
 on %1 %2 %3 your meeting request for %4	calendar	fi	%1 %2 %3 tapaamispyyntö henkilölle %4
@@ -193,6 +193,7 @@ planner	calendar	fi	Suunnittelunäkymä
 planner by category	calendar	fi	Luokan suunnittelunäkymä
 planner by user	calendar	fi	Käyttäjän suunnittelunäkymä
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	fi	Vahvista, hyväksy, hylkää tai tutki muutokset kalenteritapahtumassa.
+please enter a filename !!!	calendar	fi	kirjoita tiedostonimi!
 preselected group for entering the planner	calendar	fi	Ryhmäsuunnittelun esivalittu ryhmä
 print calendars in black & white	calendar	fi	Tulosta kalenterit mustavalkoisina
 print the mini calendars	calendar	fi	Tulosta pienoiskalenterit
@@ -240,6 +241,8 @@ show default view on main screen	calendar	fi	Näytä oletusnäkymä päänäytöllä
 show high priority events on main screen	calendar	fi	Näytä tärkeät tapahtumat päänäytöllä
 show invitations you rejected	calendar	fi	Näytä hylkäämäsi kutsut
 show list of upcoming events	calendar	fi	Näytä tulevien tapahtumien luettelo
+show next seven days	calendar	fi	Näytä seuraavat 7 päivää
+show only one day	calendar	fi	Näytä vain yksi päivä
 single event	calendar	fi	yksittäinen tapahtuma
 sorry, the owner has just deleted this event	calendar	fi	Omistaja on poistanut tämän tapahtuman
 sorry, this event does not exist	calendar	fi	Tapahtumaa ei ole
