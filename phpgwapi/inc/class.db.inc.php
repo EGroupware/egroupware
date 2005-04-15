@@ -1074,14 +1074,18 @@
 			{
 				$app = $this->app ? $this->app : $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if (isset($GLOBALS['phpgw_info']['apps']))	// this happens during the eGW startup, dont set it then !!!
+			if (isset($GLOBALS['phpgw_info']['apps']))	// dont set it, if it does not exist!!!
 			{
 				$this->app_data = &$GLOBALS['phpgw_info']['apps'][$app];
+			}
+			// this happens during the eGW startup or in setup
+			else
+			{
+				$this->app_data =& $this->all_app_data[$app];
 			}
 			if (!isset($this->app_data['table_defs']))
 			{
 				$tables_current = PHPGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
-
 				if (!@file_exists($tables_current))
 				{
 					return $this->app_data['table_defs'] = False;
