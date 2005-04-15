@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	hr	%1 već postoji kao datoteka
+application	filemanager	hr	Aplikacija
+back to file manager	filemanager	hr	Povratak na file manager
+cancel editing %1 without saving	filemanager	hr	Otkaži uređivanje %1 bez spremana
+cannot create directory because it begins or ends in a space	filemanager	hr	Nisam u mogućnosti napraviti mapu jer počinje i završava sa razmakom
+cannot replace %1 because it is a directory	filemanager	hr	Nemogu zamijeniti %1 jer je mapa.
+command sucessfully run	filemanager	hr	naredba uspješno provedena
+comment	filemanager	hr	Komentari
+comments cannot contain "%1"	filemanager	hr	Komentari ne mogu sadržavati  "%1"
+copied %1 to %2	filemanager	hr	Kopirano %1 u %2
+copy to	filemanager	hr	Kopiraj u
+copy to:	filemanager	hr	Kopiraj u:
+could not copy %1 to %2	filemanager	hr	Nisam mogao kopirati %1u %2
+could not copy file because no destination directory is given	filemanager	hr	Nisam moigao kopirati datoteku jer odredišna mapa nije specificirana
+could not create %1	filemanager	hr	Nisam mogao napraviti %1
+could not create directory %1	filemanager	hr	Nisam mogao napraviti mapu %1
+could not delete %1	filemanager	hr	Nisam mogao obrisati %1
+could not move %1 to %2	filemanager	hr	Nisam mogao premjestiti %1 u %2
+could not move file because no destination directory is given	filemanager	hr	Nisam moigao premjestiti datoteku jer odredišna mapa nije specificirana
+could not rename %1 to %2	filemanager	hr	Nisam mogao preimenovati %1 u %2
+could not save %1	filemanager	hr	Nisam mogao spremiti %1
+create file	filemanager	hr	Napravi datoteku
+create folder	filemanager	hr	Napravi mapu
+created	filemanager	hr	Napravljeno
+created %1	filemanager	hr	Napravljeno %1
+created %1,%2	filemanager	hr	Napravljeno %1,%2
+created by	filemanager	hr	Napravio
+created directory %1	filemanager	hr	Napravio mapu %1
+date	filemanager	hr	Datum
+default number of upload fields to show	filemanager	hr	Početno postavljen broj datoteka za prikazati
+delete	filemanager	hr	Obriši
+deleted %1	filemanager	hr	Obrisano %1
+directory	filemanager	hr	Mapa
+directory %1 already exists	filemanager	hr	Mapa %1 već postoji
+directory %1 does not exist	filemanager	hr	Mapa %1 ne postoji
+directory names cannot contain "%1"	filemanager	hr	Imena mapa ne mogu sadržavati "%1"
+display attributes	filemanager	hr	Prikaži atribute
+download	filemanager	hr	Preuzmi sa poslužitelja
+edit	filemanager	hr	Uredi
+edit comments	filemanager	hr	Uredi komentar
+error running command	filemanager	hr	Greška prilikom provođenja naredbe
+execute	filemanager	hr	Izvrši
+failed to create directory	filemanager	hr	Neuspijelo stvaranje mape
+fake base dir did not exist, egroupware created a new one.	filemanager	hr	Fake Base Dir did not exist, eGroupWare created a new one.
+file	filemanager	hr	Datoteka
+file %1 already exists. please edit it or delete it first.	filemanager	hr	Datoteka %1 već postoji. Molimo vas uredite ili obrišite prvo već postojeću datoteku.
+file %1 could not be created.	filemanager	hr	Nisam mogao  napraviti %1 datoteku.
+file name	filemanager	hr	Ime datoteke
+file names cannot contain "%1"	filemanager	hr	Imena datoteka nemogu sadržavati "%1"
+file names cannot contain \ or /	filemanager	hr	Imena datoteka nemogu sadržavati \ ili /
+filemanager	common	hr	Filemanager
+filemanager preferences	filemanager	hr	FileManager postavke
+files	filemanager	hr	Datoteke
+files in this directory	filemanager	hr	Datoteke u ovoj mapi
+folder	filemanager	hr	Mapa
+folder up	filemanager	hr	Gornja mapa
+go home	filemanager	hr	go home
+go to	filemanager	hr	Idi u
+go to %1	filemanager	hr	Idi u %1
+go to your home directory	filemanager	hr	Idi u mapu Home
+go to:	filemanager	hr	Idi u:
+go up	filemanager	hr	Idi gore
+home	filemanager	hr	Home
+location	filemanager	hr	Lokacija
+locked	filemanager	hr	Zaključano
+mime type	filemanager	hr	MIME Tip
+modified	filemanager	hr	Promijenjeno
+modified by	filemanager	hr	Promijenio
+move to	filemanager	hr	Premjesti
+move to:	filemanager	hr	Premjesti u:
+moved %1 to %2	filemanager	hr	Premješteno %1 u %2
+no files in this directory.	filemanager	hr	Nema datoteka u ovoj mapi.
+no version history for this file/directory	filemanager	hr	Nema povijesti za ovu datoteku/mapu.
+operation	filemanager	hr	Operavija
+other settings	filemanager	hr	Druge postavke
+owner	filemanager	hr	Vlasnik
+please select a file to delete.	filemanager	hr	Molimo vas izaberite datoteku za obrisati
+preview %1	filemanager	hr	Pregled %1
+preview of %1	filemanager	hr	Pregled od %1
+quick jump to	filemanager	hr	Brzi prijelaz u
+reload	filemanager	hr	Ponovo otvori
+rename	filemanager	hr	Preimenuj
+renamed %1 to %2	filemanager	hr	Preimenovano %1 u %2
+replaced %1	filemanager	hr	Zamijenjeno %1
+save %1	filemanager	hr	Spremi %1
+save %1, and go back to file listing	filemanager	hr	Spremi %1, i vrati se na listu datoteka
+save all	filemanager	hr	Spremi sve
+save changes	filemanager	hr	Spremi promjene
+saved %1	filemanager	hr	Spremljeno %1
+show	filemanager	hr	Prikaži
+show ..	filemanager	hr	Prikaži...
+show .files	filemanager	hr	Prikaži .datoteke
+show command line (experimental. dangerous.)	filemanager	hr	Prikaži  liniju naredbi (EKSPERIMENTALNO. OPASNO.)
+show help	filemanager	hr	Prikaži pomoć
+size	filemanager	hr	Veličina
+sort by:	filemanager	hr	Poredaj po:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	hr	The future filemanager, now for TESTING PURPOSES ONLY, please send bugreports
+total files	filemanager	hr	Ukupno datoteka
+unknown mime-type defaults to text/plain when viewing	filemanager	hr	Nepoznati MIME-tip, prikazuat ću u običnom tekstu.
+unused space	filemanager	hr	Neupotrebljeni prostor
+up	filemanager	hr	Gore
+update	filemanager	hr	Obnovi
+updated comment for %1	filemanager	hr	Obnovi komentar za %1
+upload	filemanager	hr	Prenesi na poslužitelj
+upload fields	filemanager	hr	Prenesi polja na poslužitelj
+upload files	filemanager	hr	Prenesi datoteke na poslužitelj
+use new experimental filemanager?	filemanager	hr	Upotrijebi novi eksperimentalni filemanager?
+used space	filemanager	hr	Upotrijebljen prostor
+users	filemanager	hr	korisnici
+version	filemanager	hr	Verzija
+view documents in new window	filemanager	hr	Prikaži dokumente u novom prozoru
+view documents on server (if available)	filemanager	hr	Prikaži dokumente na poslužitelju (ukoliko ih ima)
+who	filemanager	hr	Tko
+you do not have access to %1	filemanager	hr	Nemate pristupa za %1
+your home dir did not exist, egroupware created a new one.	filemanager	hr	Vaša mapa Home nije postojalj, stvorena vam je nova.
