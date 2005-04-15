@@ -1,0 +1,31 @@
+12 hour	preferences	ru	12 часов
+24 hour	preferences	ru	24 часа
+are you sure you want to delete this category ?	preferences	ru	Вы уверены, что хотите удалить данную категорию?
+change your password	preferences	ru	Изменить Ваш Пароль
+change your profile	preferences	ru	Изменить ваш профайл
+change your settings	preferences	ru	Изменить Ваши Настройки
+click to select a color	preferences	ru	Щелкните для выбора цвета
+color	preferences	ru	Цвет
+country	preferences	ru	Страна
+date format	preferences	ru	Формат даты
+default	preferences	ru	по умолчанию
+default application	preferences	ru	Приложение по умолчанию
+default preferences	preferences	ru	Настройки по умолчанию
+description can not exceed 255 characters in length !	preferences	ru	Описание не должно быть более 255 символов !
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ru	Какой временной формат вы предпочитаете 24 часовой или 12 часовой.
+enter your new password	preferences	ru	Введите новый пароль
+help off	preferences	ru	Убрать подсказки
+how should phpgroupware display dates for you.	preferences	ru	Как eGroupware будет отображать дату
+icons and text	preferences	ru	Иконки и текст
+icons only	preferences	ru	только иконки
+language	preferences	ru	Язык
+re-enter your password	preferences	ru	Введите пароль еще раз
+show navigation bar as	preferences	ru	Отображать строку навигации как
+text only	preferences	ru	Только текст
+the two passwords are not the same	preferences	ru	Два пароля не одинаковы
+this server is located in the %1 timezone	preferences	ru	Данный сервер расположен во временной зоне %1
+time format	preferences	ru	Формат времени
+use default	preferences	ru	использовать по умолчанию
+which currency symbol or name should be used in phpgroupware.	preferences	ru	Какой символ или название валюты должно использоваться в eGroupWare.
+you must enter a password	preferences	ru	Вы должны ввести пароль
+your preferences	preferences	ru	Ваши Настройки

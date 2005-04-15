@@ -1,7 +1,6 @@
 %1 records imported	addressbook	ru	импортировано %1 записей
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ru	прочитано %1 записей
 (e.g. 1969)	addressbook	ru	(напр. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ru	
 @-eval() is only availible to admins!!!	addressbook	ru	@-eval() доступно только администраторам !
 actions	addressbook	ru	Действия
 add a single entry by passing the fields.	addressbook	ru	Добавить одну запись передачей полей
@@ -88,10 +87,10 @@ import	addressbook	ru	Импорт
 import contacts	addressbook	ru	Импорт контактов
 import csv-file into addressbook	addressbook	ru	Импорт файл CSV в Адресную книгу
 import file	addressbook	ru	Импорт файла
+import from	addressbook	ru	Импортировать из
 import from ldif, csv, or vcard	addressbook	ru	Импорт из  LDIF, CSV, или VCard
 import from outlook	addressbook	ru	Импорт из Outlook
 import next set	addressbook	ru	Bvgjhn cktl& yf,jhf
-import_instructions	addressbook	ru	
 international	addressbook	ru	Международный
 isdn phone	addressbook	ru	Телефон ISDN
 label	addressbook	ru	Метка
@@ -101,6 +100,7 @@ ldap root dn for contacts	admin	ru	LDAP root dn для контактов
 ldap root pw for contacts	admin	ru	LDAP root pw  для контактов
 ldif	addressbook	ru	LDIF
 line 2	addressbook	ru	Строка 2
+load vcard	addressbook	ru	Загрузить VCard
 mark records as private	addressbook	ru	Пометить записи как личные
 message phone	addressbook	ru	Телефон для сообщений
 middle name	addressbook	ru	Отчество
@@ -139,7 +139,6 @@ test import (show importable records <u>only</u> in browser)	addressbook	ru	Тест
 that field name has been used already !	addressbook	ru	Это имя поля уже используется !
 this person's first name was not in the address book.	addressbook	ru	Этого имени нет в адресной книге
 this person's last name was not in the address book.	addressbook	ru	Этой фамилии нет в адресной книге
-to many might exceed your execution-time-limit	addressbook	ru	
 today is %1's birthday!	common	ru	Сегодня день рождения %1 !
 tomorrow is %1's birthday.	common	ru	Сегодня день рождения %1.
 translation	addressbook	ru	Перевод
@@ -150,9 +149,7 @@ vcards require a first name entry.	addressbook	ru	VCard требует ввода имени
 vcards require a last name entry.	addressbook	ru	VCard требует ввода фамилии
 video phone	addressbook	ru	Видео телефон
 voice phone	addressbook	ru	Голосовой телефон
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ru	
 work phone	addressbook	ru	Рабочий телефон
 you must select a vcard. (*.vcf)	addressbook	ru	Вы должны выбрать vVCard (*.vcf)
 you must select at least 1 column to display	addressbook	ru	Вы должны выбрать хотя бы одну колонку
 zip code	common	ru	Почтовый индекс
-zip_note	addressbook	ru	
