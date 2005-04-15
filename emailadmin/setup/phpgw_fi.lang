@@ -1,0 +1,69 @@
+add profile	emailadmin	fi	Lisää Profiili
+admin dn	emailadmin	fi	admin dn
+admin password	emailadmin	fi	admin salasana
+admin passwort	emailadmin	fi	admin salasana
+admin username	emailadmin	fi	admin käyttäjätunnus
+advanced options	emailadmin	fi	lisäasetukset
+alternate email address	emailadmin	fi	vaihtoehtoinen sähköpostiosoite
+cyrus imap server	emailadmin	fi	Cyrus IMAP -palvelin
+cyrus imap server administration	emailadmin	fi	Cyrus IMAP -palvelimen hallinta
+default	emailadmin	fi	oletus
+deliver extern	emailadmin	fi	deliver extern
+do you really want to delete this profile	emailadmin	fi	Haluatko varmasti poistaa tämän Profiilin
+domainname	emailadmin	fi	verkkotunnus
+edit email settings	emailadmin	fi	muokkaa email -asetuksia
+email account active	emailadmin	fi	email -tunnus käytössä
+email address	emailadmin	fi	email -osoite
+enable cyrus imap server administration	emailadmin	fi	ota Cyrus IMAP -palvelimen hallinta käyttöön
+enable sieve	emailadmin	fi	ota Sieve käyttöön
+enter your default mail domain (from: user@domain)	emailadmin	fi	Anna oletusverkkotunnus (lähettäjä: käyttäjä@verkkotunnus)
+forward also to	emailadmin	fi	lähetä kopio myös osoitteeseen
+forward email's to	emailadmin	fi	lähetä edelleen osoitteeseen
+forward only	emailadmin	fi	lähetä edelleen vain
+imap admin password	admin	fi	IMAP admin salasana
+imap admin user	admin	fi	IMAP admin käyttäjätunnus
+imap c-client version < 2001	emailadmin	fi	IMAP C-Client versio < 2001
+imap server hostname or ip address	emailadmin	fi	IMAP -palvelimen nimi tai IP-osoite
+imap server logintyp	emailadmin	fi	IMAP -palvelimen käyttäjätunnistus
+imap server port	emailadmin	fi	IMAP -palvelimen portti
+imap/pop3 server name	emailadmin	fi	IMAP/POP3 -palvelimen nimi
+in mbyte	emailadmin	fi	megatavua
+ldap basedn	emailadmin	fi	LDAP basedn
+ldap server	emailadmin	fi	LDAP -palvelin
+ldap server accounts dn	emailadmin	fi	LDAP tunnusten DN
+ldap server admin dn	emailadmin	fi	LDAP ylläpidon DN
+ldap server admin password	emailadmin	fi	LDAP hallinnan salasana
+ldap server hostname or ip address	emailadmin	fi	LDAP -palvelimen nimi tai IP-osoite
+ldap settings	emailadmin	fi	LDAP -asetukset
+leave empty for no quota	emailadmin	fi	tyhjä, jos ei rajoiteta
+mail settings	admin	fi	Sähköpostin asetukset
+name of organisation	emailadmin	fi	Yrityksen nimi
+no alternate email address	emailadmin	fi	ei vahtoehtoista osoitetta
+no forwarding email address	emailadmin	fi	ei edelleenlähetyksen osoitetta
+pop3 server hostname or ip address	emailadmin	fi	POP3 -palvelimen nimi tai IP-osoite
+pop3 server port	emailadmin	fi	POP3 -palvelimen portti
+postfix with ldap	emailadmin	fi	Postfix ja LDAP
+profile list	emailadmin	fi	Profiilit
+profile name	emailadmin	fi	Profiilin nimi
+qmaildotmode	emailadmin	fi	qmaildotmode
+qouta size in mbyte	emailadmin	fi	tallennuskiintiö Mt
+quota settings	emailadmin	fi	tallennuskiintiö
+remove	emailadmin	fi	poista
+select type of imap/pop3 server	emailadmin	fi	Valitse IMAP/POP3 -palvelimen tyyppi
+select type of smtp server	emailadmin	fi	Valitse SMTP -palvelimen tyyppi
+sieve server hostname or ip address	emailadmin	fi	Sieve -palvelimen nimi tai IP-osoite
+sieve server port	emailadmin	fi	Sieve -palvelimen portti
+sieve settings	emailadmin	fi	Sieven asetukset
+smtp server name	emailadmin	fi	SMTP -palvelimen nimi
+smtp-server hostname or ip address	emailadmin	fi	SMTP -palvelimen nimi tai IP-osoite
+smtp-server port	emailadmin	fi	SMTP -palvelimen portti
+standard	emailadmin	fi	Vakio
+standard imap server	emailadmin	fi	Vakio IMAP -palvelin
+standard pop3 server	emailadmin	fi	Vakio POP3 -palvelin
+standard smtp-server	emailadmin	fi	Vakio SMTP -palvelin
+use ldap defaults	emailadmin	fi	käytä LDAP -oletuksia
+use smtp auth	emailadmin	fi	Käytä SMTP -käyttäjäntunnistusta
+use tls authentication	emailadmin	fi	Käytä TLS -käyttäjäntunnistusta
+use tls encryption	emailadmin	fi	Käytä TLS -salausta
+users can define their own emailaccounts	emailadmin	fi	Käyttäjät voivat määritellä omat postilaatikkonsa
+virtual mail manager	emailadmin	fi	Virtual MAIL ManaGeR
