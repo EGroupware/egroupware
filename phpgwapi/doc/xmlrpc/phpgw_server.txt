@@ -37,7 +37,7 @@ header is a base64 encoding of the assigned sessionid and
 kp3 variables, seperated by a ':'.
 
 Further security may be obtained by using SSL on the client
-and server. In the future, we may encrypt/descrypt the data
+and server. In the future, we may encrypt/decrypt the data
 on either end, or at least provide this as an option. The
 sessionid and key variables will make this possible, and
 relatively secure.
