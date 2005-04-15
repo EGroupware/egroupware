@@ -594,7 +594,7 @@
 					$fields = $this->xmlrpc2data($fields);
 				}
 				$ok = $this->so->update_entry($fields);
-				if(ok)
+				if($ok)
 				{
 					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $fields['ab_id'], 'modify', time());
 				}
