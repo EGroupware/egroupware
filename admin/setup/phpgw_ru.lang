@@ -83,6 +83,10 @@ group manager	admin	ru	Менеджер Группы
 group name	admin	ru	Имя Группы
 home directory	admin	ru	Домашняя директория
 icon	admin	ru	Иконка
+last %1 logins	admin	ru	Последние %1 подключений
+last %1 logins for %2	admin	ru	Последние %1 подключений для %2
+last login	admin	ru	последнее подключение
+last login from	admin	ru	последнее подключение с
 login history	common	ru	История Подключений
 mail settings	admin	ru	Установки почты
 new group name	admin	ru	Название новой группы
@@ -99,10 +103,10 @@ sorry, the above users are still a member of the group %1	admin	ru	Извините, но 
 submit changes	admin	ru	Отправить изменения
 the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
 they must be removed before you can continue	admin	ru	Они должны быть исключены прежде, чем вы сможете продолжить
+total records	admin	ru	Всего записей
 user data	admin	ru	Данные Пользователя
+view access log	admin	ru	Смотреть журнал подключений
+view error log	admin	ru	Смотреть журнал ошибок
+view user account	admin	ru	Просмотр учетной записи пользователя
 you must select a file type	admin	ru	Вы должны выбрать тип файла
 you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
-<br />
-<b>Warning</b>:  fsockopen(): unable to connect to 127.0.0.1:25 in <b>C:\Program Files\Apache Group\Apache2\htdocs\egroupware\phpgwapi\inc\class.smtp.php</b> on line <b>105</b><br />
-<p>bocalendar::send_update: sending message to 'ank@localhost' subject='Asynchronous timed services' failed !!!<br>
-SMTP Error: Could not connect to SMTP host.</p>

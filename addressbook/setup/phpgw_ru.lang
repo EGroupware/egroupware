@@ -1,0 +1,155 @@
+%1 records imported	addressbook	ru	импортировано %1 записей
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ru	прочитано %1 записей
+(e.g. 1969)	addressbook	ru	(напр. 1969)
+@-eval() is only availible to admins!!!	addressbook	ru	@-eval() доступно только администраторам !
+actions	addressbook	ru	Действия
+add a single entry by passing the fields.	addressbook	ru	Добавить одну запись передачей полей
+add custom field	addressbook	ru	Добавить дополн. поле
+address book	common	ru	Адресная Книга
+address book - vcard in	addressbook	ru	Адресная Книга - VCard
+address book - view	addressbook	ru	Адресная Книга - вид
+address line 2	addressbook	ru	Адрес строка 2
+address line 3	addressbook	ru	Адрес строка 3
+address type	addressbook	ru	Тип адреса
+addressbook	common	ru	Адресная книга
+addressbook preferences	addressbook	ru	Настройки адресной книги
+addressbook-fieldname	addressbook	ru	Адресная книга - имя поля
+addvcard	addressbook	ru	Добавить VCard
+alt. csv import	addressbook	ru	Импорт CSV
+are you sure you want to delete this field?	addressbook	ru	Вы уверены, что хотите удалить это поле
+bbs phone	addressbook	ru	Телефон BBS
+birthday	common	ru	Дата рождения
+birthdays	common	ru	Даты рождения
+blank	addressbook	ru	Пустое
+business	common	ru	Рабочий
+business address type	addressbook	ru	Тип рабочего адреса
+business city	addressbook	ru	Рабочий - Город
+business country	addressbook	ru	Рабочий - Страна
+business email	addressbook	ru	Рабочий адрес email
+business email type	addressbook	ru	Тип рабочего адреса email
+business fax	addressbook	ru	Рабочий Факс
+business phone	addressbook	ru	Рабочий телефон
+business state	addressbook	ru	Рабочий - Штат
+business street	addressbook	ru	Рабочий - Улица
+business zip code	addressbook	ru	Рабочий - Почтовый индекс
+car phone	addressbook	ru	Телефон в автомобиле
+cell phone	addressbook	ru	Сотовый телефон
+charset of file	addressbook	ru	Кодировка файла
+city	common	ru	Город
+company	common	ru	Компания
+company name	common	ru	Название Компании
+configuration	common	ru	Конфигурация
+contact	common	ru	Контакт
+contact application	admin	ru	Контактное приложение
+contact settings	admin	ru	Установки Контакта
+copied by %1, from record #%2.	addressbook	ru	Скопировано %1, из записи %2
+country	common	ru	Страна
+csv-fieldname	addressbook	ru	CSV - имя поля
+csv-filename	addressbook	ru	CSV - имя файла
+custom	addressbook	ru	Дополн.
+custom fields	addressbook	ru	Дополн. поля
+debug output in browser	addressbook	ru	Отладить вывод в браузере
+default filter	addressbook	ru	Фильтр по умолчанию
+delete a single entry by passing the id.	addressbook	ru	Удалить одну запись передачей id
+department	common	ru	Департамент
+domestic	addressbook	ru	Домашний
+download	addressbook	ru	Загрузить
+download export file (uncheck to debug output in browser)	addressbook	ru	Загрузить экспортный файл
+edit custom field	addressbook	ru	Редактировать дополн. поле
+edit custom fields	admin	ru	Редактировать дополн. поля
+empty for all	addressbook	ru	пусто для всех
+enter the path to the exported file here	addressbook	ru	Введите здесь путь к экспортному файлу
+export contacts	addressbook	ru	Экспорт контактов
+export file name	addressbook	ru	Имя файла экспорта
+export from addressbook	addressbook	ru	Экспортировать из Адресной книги
+extra	addressbook	ru	Дополнительно
+fax	addressbook	ru	Факс
+fax number	common	ru	Номер Факса
+field %1 has been added !	addressbook	ru	Добавлено поле %1 !
+field %1 has been updated !	addressbook	ru	Изменено поле %1 !
+field name	addressbook	ru	Имя поля
+fields to show in address list	addressbook	ru	Какие поля показывать в списке адресов
+fieldseparator	addressbook	ru	Разделитель полей
+full name	addressbook	ru	Полное имя
+geo	addressbook	ru	ГЕО
+global categories	addressbook	ru	Общие Категории
+grant addressbook access	common	ru	Предоставить доступ к Адресной книге
+home address type	addressbook	ru	Тип домашнего адреса
+home city	addressbook	ru	Домашний - Город
+home country	addressbook	ru	Домашний - Страна
+home email	addressbook	ru	Домашний - Адрес email
+home email type	addressbook	ru	Тип домашнего адреса email
+home phone	addressbook	ru	Домашний телефон
+home state	addressbook	ru	Домашний - Штат
+home street	addressbook	ru	Домашний - Улица
+home zip code	addressbook	ru	Домашний почтовый индекс
+import	addressbook	ru	Импорт
+import contacts	addressbook	ru	Импорт контактов
+import csv-file into addressbook	addressbook	ru	Импорт файл CSV в Адресную книгу
+import file	addressbook	ru	Импорт файла
+import from	addressbook	ru	Импортировать из
+import from ldif, csv, or vcard	addressbook	ru	Импорт из  LDIF, CSV, или VCard
+import from outlook	addressbook	ru	Импорт из Outlook
+import next set	addressbook	ru	Bvgjhn cktl& yf,jhf
+international	addressbook	ru	Международный
+isdn phone	addressbook	ru	Телефон ISDN
+label	addressbook	ru	Метка
+ldap context for contacts	admin	ru	Контекст LDAP для контактов
+ldap host for contacts	admin	ru	Хост LDAP для контактов
+ldap root dn for contacts	admin	ru	LDAP root dn для контактов
+ldap root pw for contacts	admin	ru	LDAP root pw  для контактов
+ldif	addressbook	ru	LDIF
+line 2	addressbook	ru	Строка 2
+load vcard	addressbook	ru	Загрузить VCard
+mark records as private	addressbook	ru	Пометить записи как личные
+message phone	addressbook	ru	Телефон для сообщений
+middle name	addressbook	ru	Отчество
+mobile	addressbook	ru	Мобильный
+mobile phone	addressbook	ru	Мобильный телефон
+modem phone	addressbook	ru	Модемный номер телефона
+no vcard	addressbook	ru	Нет VCard
+number of records to read (%1)	addressbook	ru	Прочитано записей (%1)
+other number	addressbook	ru	Другой Номер
+other phone	addressbook	ru	Другой телефон
+pager	common	ru	Пейджер
+parcel	addressbook	ru	Посылка
+phone number	common	ru	Телефон
+phone numbers	common	ru	Телефоны
+please enter a name for that field !	addressbook	ru	Пожалуйста введите имя поля !
+postal	common	ru	Почтовый
+pref	addressbook	ru	предпочт.
+prefix	addressbook	ru	Префикс
+public key	addressbook	ru	Публичный ключ
+read a list of entries.	addressbook	ru	Прочитать список записей
+read a single entry by passing the id and fieldlist.	addressbook	ru	Прочитать одну запись передачей id и списка полей
+record access	addressbook	ru	Доступ к записи
+record owner	addressbook	ru	Владелец записи
+retrieve contacts	admin	ru	извлечь контакты
+select all	addressbook	ru	Выбрать все
+select the type of conversion	addressbook	ru	Выбрать тип преобразования
+select the type of conversion:	addressbook	ru	Выбрать тип преобразования:
+select where you want to store	admin	ru	Выберите, где Вы хотите сохранить
+show birthday reminders on main screen	addressbook	ru	Показывать напоминания о д/р на главном экране
+startrecord	addressbook	ru	Начальная запись
+state	common	ru	Штат
+street	common	ru	Улица
+successfully imported %1 records into your addressbook.	addressbook	ru	%1 запись успешно импортирована
+suffix	addressbook	ru	Суффикс
+test import (show importable records <u>only</u> in browser)	addressbook	ru	Тестировать импорт
+that field name has been used already !	addressbook	ru	Это имя поля уже используется !
+this person's first name was not in the address book.	addressbook	ru	Этого имени нет в адресной книге
+this person's last name was not in the address book.	addressbook	ru	Этой фамилии нет в адресной книге
+today is %1's birthday!	common	ru	Сегодня день рождения %1 !
+tomorrow is %1's birthday.	common	ru	Сегодня день рождения %1.
+translation	addressbook	ru	Перевод
+update a single entry by passing the fields.	addressbook	ru	Изменить одну запись передачей id
+use country list	addressbook	ru	Используйте список стран
+vcard	common	ru	VCard
+vcards require a first name entry.	addressbook	ru	VCard требует ввода имени
+vcards require a last name entry.	addressbook	ru	VCard требует ввода фамилии
+video phone	addressbook	ru	Видео телефон
+voice phone	addressbook	ru	Голосовой телефон
+work phone	addressbook	ru	Рабочий телефон
+you must select a vcard. (*.vcf)	addressbook	ru	Вы должны выбрать vVCard (*.vcf)
+you must select at least 1 column to display	addressbook	ru	Вы должны выбрать хотя бы одну колонку
+zip code	common	ru	Почтовый индекс

@@ -32,9 +32,7 @@ invalid password	setup	ru	Неправильный пароль
 never	setup	ru	никогда
 no	setup	ru	Нет
 really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
+yes	setup	ru	Да
+your database is not working!	setup	ru	Ваша База Данных не работает!
 your header.inc.php needs upgrading.	setup	ru	Файл header.inc.php требует обновления.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ru	Файл header.inc.php требует обновления.<br><blink><b class="msg">ВНИМАНИЕ!</b></blink><br><b>СДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ!</b>
-<br />
-<b>Warning</b>:  fsockopen(): unable to connect to 127.0.0.1:25 in <b>C:\Program Files\Apache Group\Apache2\htdocs\egroupware\phpgwapi\inc\class.smtp.php</b> on line <b>105</b><br />
-<p>bocalendar::send_update: sending message to 'ank@localhost' subject='Asynchronous timed services' failed !!!<br>
-SMTP Error: Could not connect to SMTP host.</p>
