@@ -1,0 +1,49 @@
+application	filemanager	ru	Приложение
+comment	filemanager	ru	Комментарий
+copy to	filemanager	ru	Копировать В
+copy to:	filemanager	ru	Копировать в:
+create file	filemanager	ru	Создать файл
+create folder	filemanager	ru	Создать папку
+date	filemanager	ru	Дата
+delete	filemanager	ru	Удалить
+display attributes	filemanager	ru	Отображаемые атрибуты
+download	filemanager	ru	Скачать
+edit	filemanager	ru	Редактировать
+edit comments	filemanager	ru	Редактировать комментарии
+file	filemanager	ru	Файл
+file name	filemanager	ru	Имя Файла
+filemanager	common	ru	Менеджер Файлов
+filemanager preferences	filemanager	ru	Настройки Менеджера Файлов
+files	filemanager	ru	Файлы
+files in this directory	filemanager	ru	Файлы в данной директории
+folder	filemanager	ru	Папка
+folder up	filemanager	ru	На уровень вверх
+go home	filemanager	ru	в домашний каталог
+go up	filemanager	ru	вверх
+home	filemanager	ru	Домашний каталог
+location	filemanager	ru	Расположение
+mime type	filemanager	ru	MIME Тип
+move to	filemanager	ru	Переместить В
+move to:	filemanager	ru	Переместить в:
+no files in this directory.	filemanager	ru	В этой директории нет файлов.
+other settings	filemanager	ru	Другие Настройки
+owner	filemanager	ru	Владелец
+quick jump to	filemanager	ru	Быстрый переход
+reload	filemanager	ru	обновить
+rename	filemanager	ru	Переименовать
+save changes	filemanager	ru	Сохранить изменения
+show ..	filemanager	ru	Показывать ..
+size	filemanager	ru	Размер
+sort by:	filemanager	ru	Сортировать по:
+total files	filemanager	ru	Всего файлов
+update	filemanager	ru	Обновить
+upload	filemanager	ru	Загрузить
+upload fields	filemanager	ru	поля  загрузки
+upload files	filemanager	ru	Загрузить файлы
+used space	filemanager	ru	Место на диске
+users	filemanager	ru	Пользователи
+version	filemanager	ru	Версия
+view documents in new window	filemanager	ru	Отображать документ в новом окне
+view documents on server (if available)	filemanager	ru	Просматривать документ на сервере (если возможно)
+you do not have access to %1	filemanager	ru	У вас нет прав доступа к %1
+your home dir did not exist, egroupware created a new one.	filemanager	ru	Ваша домашняя директория не существует, eGroupWare создаст новую.
