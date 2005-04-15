@@ -1,6 +1,6 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 1.0.00.006
+%define version 1.0.0.007
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -16,23 +16,23 @@ License: GPL/LGPL
 URL: http://www.egroupware.org/
 Source0:  http://download.sourceforge.net/egroupware/eGroupWare-%{version}-%{packaging}.tar.bz2
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: php >= 4.0.6
+Requires: php >= 4.1.2
                                                                                                                              
 Prefix: %{httpdroot}
 Buildarch: noarch
 AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
-Packager: eGroupWare <r.jung@creativix.net>
+Packager: eGroupWare <RalfBecker@outdoor-training.de>
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. This package provides:
 
-egroupware core app, addressbook, backup, bookmarks, calendar, comic, developer tools, 
+egroupware core, addressbook, backup, bookmarks, calendar, comic, developer tools, 
 docs, email, emailadmin, etemplate, felamimail, filemanager, forum, ftp, fudforum, 
 headlines, infolog, jinn, messenger news admin, phpldapadmin, phpbrain (knowledgebase), 
 phpsysinfo, polls, projects (advanced project management), registration, sitemgr, 
-skel, stocks, tts (trouble ticket system), wiki
+stocks, tts (trouble ticket system), wiki
 
 It also provides an API for developing additional applications. See the egroupware
 apps project for add-on apps.
@@ -44,8 +44,9 @@ apps project for add-on apps.
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-mkdir -p $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
-cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+mkdir -p $RPM_BUILD_ROOT%{prefix}/egroupware
+cp -aRf * $RPM_BUILD_ROOT%{prefix}/egroupware
+rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 #cp .htaccess $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 
 %clean
@@ -127,12 +128,16 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/projects
 %{prefix}/%{egwdirname}/registration
 %{prefix}/%{egwdirname}/sitemgr
-%{prefix}/%{egwdirname}/skel
 %{prefix}/%{egwdirname}/stocks
 %{prefix}/%{egwdirname}/tts
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Sat Apr 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.007-1
+- Fixed security problems reported by James from GulfTech Security Research
+- new croation translations, significant enhancements in other languages
+- many Bugfixes, see http://egroupware.org/changelog-1.0/
+
 * Sat Nov 06 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.006-1
 - Fix a security problem in JiNN application
 - Bugfixes

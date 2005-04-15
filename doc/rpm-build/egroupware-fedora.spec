@@ -1,13 +1,13 @@
 Name: eGroupWare
-Version: 1.0.00
-Release: 6.fdr.2
+Version: 1.0.0
+Release: 7.fdr.2
 Epoch: 0
 Summary: eGroupWare is a web-based groupware suite written in php. 
 
 Group: Web/Database
 License: GPL/LGPL
 URL: http://www.egroupware.org/
-Source0: http://download.sourceforge.net/egroupware/eGroupWare-1.0.00.6.fdr.2.tar.gz
+Source0: http://download.sourceforge.net/egroupware/eGroupWare-1.0.0.007-1.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires: php php-mysql php-imap php-xmlrpc
 
@@ -30,6 +30,8 @@ apps project for add-on apps.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT/var/www/html/egroupware
 cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
+rm -f $RPM_BUILD_ROOT/var/www/html/egroupware/.htaccess
+
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -67,6 +69,9 @@ cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
 /var/www/html/egroupware/*
 
 %changelog
+* Sat Nov 06 2004 Reiner Jung <r.jung@creativix.net> 1.0.0.6.fdr.2
+- Test
+
 * Sat Nov 06 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.6.fdr.2
 - Fix a security problem in JiNN application
 - Bugfixes

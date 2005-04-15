@@ -1,0 +1,73 @@
+%packager               eGroupWare packager
+#%vendor                 Tao Linux
+#
+#%distribution           bonis.de RPMS
+#%vendor                 bonis.de
+#%_signature             gpg
+%_gpg_name               eGroupWare packager <packager@egroupware.org>
+#%_gpg_path              %(echo $HOME)/.gnupg
+
+# %_topdir defines the top directory to be used for RPM building purposes
+# By defaultROOT of the buildsystem
+%_topdir        %(echo $HOME)/rpm
+
+%_rpmtopdir     %{_topdir}/%{name}
+
+# %_sourcedir is where the source code tarballs, patches, etc. will be
+# placed after you do an "rpm -ivh somepackage.1.0-1.src.rpm"
+#%_sourcedir     %{_topdir}/%{name}-%{version}
+
+# %_specdir is where the specfile gets placed when installing a src.rpm. I
+# prefer the specfile to be in the same directory as the source tarballs, etc.
+%_specdir       %{_sourcedir}
+
+# %_tmppath is where temporary scripts are placed during the RPM build
+# process as well as the %_buildroot where %install normally dumps files
+# prior to packaging up the final binary RPM's.
+%_tmppath       %{_topdir}/tmp
+
+# %_builddir is where source code tarballs are decompressed, and patches then
+# applied when building an RPM package
+#%_builddir      %{_topdir}/tmp/BUILD
+
+# %_buildroot is where files get placed during the %install section of spec
+# file processing prior to final packaging into rpms.  This is oddly named
+# and probably should have been called "%_installroot" back when it was
+# initially added to RPM.  Alas, it was not.  ;o)
+#%_buildroot     %{_topdir}/%{_tmppath}/%{name}-%{version}-root
+
+# %_rpmdir is where binary RPM packages are put after being built.
+%_rpmdir        %{_topdir}/RPMS
+
+# %_srcrpmdir is where src.rpm packages are put after being built.
+%_srcrpmdir   %{_topdir}/SRPMS
+
+# %_rpmfilename defines the naming convention of the produced RPM packages,
+# and should not be modified.  It is listed here because I am overriding
+# RPM's default behaviour of dropping binary RPM's each in their own
+# separate subdirectories.  I hate that.  Grrr.
+%_rpmfilename   %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+
+# Customized tags for local builds
+# %packager is the info that will appear in the "Packager:" field in the
+# RPM header on built packages.  By default I have it read your username
+# and hostname.  This should be customized appropriately.
+# %packager   Joe Blow <joe@blow.com>
+# %packager   %(echo ${USER}@)%(hostname)
+# %distribution Personal Build
+
+# GNU GPG config below
+#%_signature     gpg
+#%_gpg_name      Joe Blow <joeblow@somewhere.com>
+#%_gpg_path      %(echo $HOME)/.gnupg
+
+
+# %_unpackaged_files_terminate_build       0
+# %_missing_doc_files_terminate_build      0
+
+# in the .spec file:
+# %define _unpackaged_files_terminate_build       0
+# %define _missing_doc_files_terminate_build      0
+#
+# %define __find_requires %{nil} 
+# AutoReq: 0

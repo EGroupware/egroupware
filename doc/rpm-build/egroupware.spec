@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.0.00.006
+%define version 1.0.0.007
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -33,7 +33,6 @@
 %define projects projects
 %define registration registration
 %define sitemgr sitemgr
-%define skel skel
 %define stocks stocks
 %define tts tts
 %define wiki wiki
@@ -49,14 +48,14 @@ License: GPL/LGPL
 URL: http://www.egroupware.org/
 Source0:  http://download.sourceforge.net/egroupware/%{packagename}-%{version}-%{packaging}.tar.bz2
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: php >= 4.0.6
+Requires: php >= 4.1.2
 
 Prefix: %{httpdroot}
 Buildarch: noarch
 AutoReqProv: no
 
 Vendor: eGroupWare
-Packager: eGroupWare <r.jung@creativix.net>
+Packager: eGroupWare <RalfBecker@outdoor-training.de>
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
@@ -148,7 +147,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-addressbook = %{version}-%{packaging}
 %description %{etemplate}
-eTemplates are a new widget-based template system for eGroupWare with an interactive editor and a database table-editor (creates tables_current.inc.php and updates automaticaly tables_update.inc.php)
+eTemplates is a new widget-based template system for eGroupWare with an interactive editor and a database schema-editor (creates tables_current.inc.php and updates automaticaly tables_update.inc.php)
 
 %package %{felamimail}
 Summary: The eGroupWare %{felamimail} application
@@ -156,7 +155,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-emailadmin = %{version}-%{packaging}
 %description %{felamimail}
-The %{felamimail} Email Reader is a other Email application for phpgw eGroupWare.
+The %{felamimail} Email Reader is a other Email application for eGroupWare.
 
 %package %{filemanager}
 Summary: The eGroupWare %{filemanager} application
@@ -204,7 +203,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-etemplate = %{version}-%{packaging}
 %description %{infolog}
-This is the %{infolog} app for eGroupWare.
+This is the %{infolog} app for eGroupWare (Notes, ToDo, Phonelogs, CRM).
 
 %package %{jinn}
 Summary: The eGroupWare %{jinn} application
@@ -220,7 +219,7 @@ Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}
 %description %{manual}
-This is the %{manual} app for eGroupWare.
+This is the %{manual} app for eGroupWare: online help system.
 
 %package %{messenger}
 Summary: The eGroupWare %{messenger} application
@@ -286,14 +285,6 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{registration}
 This is the %{registration} app for eGroupWare.
 
-%package %{skel}
-Summary: The eGroupWare Skeleton application
-Group: Web/Database
-AutoReqProv: no
-Requires: eGroupWare = %{version}-%{packaging}
-%description %{skel}
-This is the Skeleton app for eGroupWare.
-
 %package %{sitemgr}
 Summary: The eGroupWare Sitemanager CMS application
 Group: Web/Database
@@ -336,6 +327,8 @@ This is the %{wiki} app for eGroupWare.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+#cp -aRf * $RPM_BUILD_ROOT%{prefix}
+rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 #cp .htaccess $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 
 %clean
@@ -500,10 +493,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{sitemgr}
 
-%files %{skel}
-%defattr(0744,root,root)
-%{prefix}/%{egwdirname}/%{skel}
-
 %files %{stocks}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{stocks}
@@ -517,6 +506,11 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
+* Sat Apr 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.007-1
+- Fixed security problems reported by James from GulfTech Security Research
+- new croation translations, significant enhancements in other languages
+- many Bugfixes, see http://egroupware.org/changelog-1.0/
+
 * Sat Nov 06 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.006-1
 - Fix a security problem in JiNN application
 - Bugfixes
