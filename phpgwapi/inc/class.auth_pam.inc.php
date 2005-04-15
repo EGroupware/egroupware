@@ -24,7 +24,7 @@
 	{
 		function authenticate($username, $passwd)
 		{
-			if(pam_auth($username, $passwd, &$error))
+			if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, $error)) 
 			{
 				return True;
 			}
@@ -43,9 +43,10 @@
 		function update_lastlogin($account_id, $ip)
 		{
 			$account_id = get_account_id($account_id);
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
-				. "$ip', account_lastlogin='" . time()
-				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
+	
+			$GLOBALS['phpgw']->db->query('update phpgw_accounts set account_lastloginfrom='
+			        . $GLOBALS['phpgw']->db->quote($ip).', account_lastlogin=' . time()
+			        . ' where account_id='.(int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>
