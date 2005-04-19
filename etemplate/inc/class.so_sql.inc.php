@@ -458,7 +458,12 @@ class so_sql
 			}	
 			foreach($data2db_filter as $col => $val)
 			{
-				if ($val !== '') $db_filter[array_search($col,$this->db_cols)] = $val;
+				if ($val !== '')
+				{
+					if (!is_numeric($col)) $col = array_search($col,$this->db_cols);
+					
+					$db_filter[$col] = $val;
+				}
 			}
 			if ($query) 
 			{
