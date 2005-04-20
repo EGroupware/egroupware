@@ -314,7 +314,7 @@
 		function add_grid(&$parent,$grid,&$embeded_too)
 		{
 			$xul_grid = new xmlnode('grid');
-			$this->set_attributes($xul_grid,'width,height,border,class,spacing,padding',$grid['size']);
+			$this->set_attributes($xul_grid,'width,height,border,class,spacing,padding,overflow',$grid['size']);
 
 			$xul_columns = new xmlnode('columns');
 			$xul_rows = new xmlnode('rows');
@@ -531,7 +531,7 @@
 								if ($tag == 'grid')
 								{
 									$size = '';
-									foreach(array('padding','spacing','class','border','height','width') as $opt)
+									foreach(array('overflow','padding','spacing','class','border','height','width') as $opt)
 									{
 										$size = $attr[$opt] . ($size != '' ? ",$size" : '');
 									}
