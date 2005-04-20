@@ -407,7 +407,7 @@ class so_sql
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	 * @param boolean $only_keys True returns only keys, False returns all cols
-	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ','
+	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard appended befor and after each criteria
 	 * @param boolean $empty False=empty criteria are ignored in query, True=empty have to be empty in row
@@ -418,7 +418,7 @@ class so_sql
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
 		if (!is_array($criteria))
 		{
@@ -485,7 +485,7 @@ class so_sql
 		}
 		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
-			$query,__LINE__,__FILE__,$start,$order_by ? 'ORDER BY '.$order_by : '',false,0,$join);
+			$query,__LINE__,__FILE__,$start,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,0,$join);
 
 		if ($this->debug)
 		{
@@ -509,11 +509,12 @@ class so_sql
 		}
 		if ($extra_cols)	// extra columns to report
 		{
-			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
+			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
 			{
-				if (stristr($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
+				if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 				$cols[$col] = $col;
 			}
+			if ($this->table == 'Personen') _debug_array($cols);
 		}
 		$arr = array();
 		for ($n = 0; ($row = $this->db->row(true)); ++$n)
