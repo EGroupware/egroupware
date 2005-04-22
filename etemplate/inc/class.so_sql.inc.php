@@ -460,8 +460,11 @@ class so_sql
 			{
 				if ($val !== '')
 				{
-					if (!is_numeric($col)) $col = array_search($col,$this->db_cols);
-					
+					// check if a db-internal name conversation necessary
+					if (!is_numeric($col) && ($c = array_search($col,$this->db_cols))) 
+					{
+						$col = $c;
+					}
 					$db_filter[$col] = $val;
 				}
 			}
@@ -480,7 +483,7 @@ class so_sql
 		}
 		if ($start !== false)	// need to get the total too, saved in $this->total
 		{
-			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',false,0,$join);
+			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 		}
 		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
