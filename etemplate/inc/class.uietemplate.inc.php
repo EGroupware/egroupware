@@ -427,6 +427,7 @@
 			{
 				$opts = array();
 			}
+			$max_cols = $grid['cols'];
 			for ($r = 0; $row = 1+$r /*list($row,$cols) = each($data)*/; ++$r)
 			{
 				if (!(list($r_key) = each($data)))	// no further row
@@ -466,10 +467,16 @@
 					$col = $this->num2chrs($c);
 					if (!(list($c_key) = each($cols)))		// no further cols
 					{
-						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-							!$this->isset_array($content,$idx))
+						// only check if the max. column-number reached so far is exeeded
+						// otherwise the rows have a differen number of cells and it saved a lot checks
+						if ($c >= $max_cols)
 						{
-							break;	// no auto-col-repeat
+							if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
+								!$this->isset_array($content,$idx))
+							{
+								break;	// no auto-col-repeat
+							}
+							$max_cols = $c+1;
 						}
 					}
 					else
@@ -1224,7 +1231,7 @@
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$accesskey = $accesskey[1];
 				}
-				if ($label && ($accesskey || $label_for || $cell['name']))
+				if ($label && !$readonly && $type != 'label' && ($accesskey || $label_for || $cell['name']))
 				{
 					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
 						$form_name.($set_val?"[$set_val]":''),$accesskey);
