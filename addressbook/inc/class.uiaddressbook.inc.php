@@ -304,6 +304,10 @@
 				$GLOBALS['phpgw']->preferences->save_repository();
 			}
 
+			/* global here so nextmatchs accepts our setting of $query and $filter - may be changed again below */
+			$GLOBALS['query']  = $this->query;
+			$GLOBALS['filter'] = $this->filter;
+
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
 			foreach($this->bo->stock_contact_fields as $column => $db_name)

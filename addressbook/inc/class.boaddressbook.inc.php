@@ -249,9 +249,9 @@
 		{
 			$fields = CreateObject('addressbook.uifields',True);	// no extra bo-class
 
-			if (is_array($new_fields) && count($new_fields))
+			if(is_array($new_fields) && count($new_fields))
 			{
-				if (!$GLOBALS['phpgw_info']['user']['apps']['admin'])
+				if(!$GLOBALS['phpgw_info']['user']['apps']['admin'])
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 				}
@@ -265,7 +265,7 @@
 			{
 				$customfields[$data['name']] = $data['title'];
 			}
-			if ($this->xmlrpc && !isset($customfields['freebusy_url']))
+			if($this->xmlrpc && !isset($customfields['freebusy_url']))
 			{
 				$fields->save_custom_field('','freebusy URL');
 				$customfields['freebusy_url'] = 'freebusy URL';
@@ -276,14 +276,14 @@
 		// translate array of internal datas to xmlrpc, eg. format bday as iso8601
 		function data2xmlrpc($datas)
 		{
-			if (is_array($datas))
+			if(is_array($datas))
 			{
 				foreach($datas as $n => $data)
 				{
 					// translate birthday to a iso8601 date
-					if (isset($data['bday']))
+					if(isset($data['bday']))
 					{
-						if (strlen($data['bday']) > 2)
+						if(strlen($data['bday']) > 2)
 						{
 							list($m,$d,$y) = explode('/',$data['bday']);
 						}
@@ -294,12 +294,12 @@
 						$datas[$n]['bday'] = $GLOBALS['server']->date2iso8601(array('year'=>$y,'month'=>$m,'mday'=>$d));
 					}
 					// translate modification time
-					if (isset($data['last_mod']))
+					if(isset($data['last_mod']))
 					{
 						$datas[$n]['last_mod'] = $GLOBALS['server']->date2iso8601($data['last_mod']);
 					}
 					// translate categories-id-list to array with id-name pairs
-					if (isset($data['cat_id']))
+					if(isset($data['cat_id']))
 					{
 						$datas[$n]['cat_id'] = $GLOBALS['server']->cats2xmlrpc(explode(',',$data['cat_id']));
 					}
@@ -311,16 +311,16 @@
 		// retranslate from xmlrpc / iso8601 to internal format
 		function xmlrpc2data($data)
 		{
-			if (isset($data['bday']))
+			if(isset($data['bday']))
 			{
 				$arr = $GLOBALS['server']->iso86012date($data['bday']);
 				$data['bday'] = $arr['year'] && $arr['month'] && $arr['mday'] ? sprintf('%d/%02d/%04d',$arr['month'],$arr['mday'],$arr['year']) : '';
 			}
-			if (isset($data['last_mod']))
+			if(isset($data['last_mod']))
 			{
 				$data['last_mod']  = $GLOBALS['server']->iso86012date($data['last_mod'],True);
 			}
-			if (isset($data['cat_id']))
+			if(isset($data['cat_id']))
 			{
 				$cats = $GLOBALS['server']->xmlrpc2cats($data['cat_id']);
 				$data['cat_id'] = count($cats) > 1 ? ','.implode(',',$cats).',' : (int)$cats[0];
@@ -332,11 +332,11 @@
 		function user_pseudo_entry($account)
 		{
 			static $prefs=False;
-			if (!is_object($prefs))
+			if(!is_object($prefs))
 			{
 				$prefs = CreateObject('phpgwapi.preferences');	// wie need a new copy, as wie change the user
 			}
-			if (!is_array($account))
+			if(!is_array($account))
 			{
 				$GLOBALS['phpgw']->accounts->account_id = $account;
 				$account = $GLOBALS['phpgw']->accounts->read_repository();
@@ -344,7 +344,7 @@
 			$prefs->account_id = $account['account_id'];
 			$prefs->read_repository();
 			$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$account['account_lid'];
-			if ($freebusy_url[0] == '/')
+			if($freebusy_url[0] == '/')
 			{
 				$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
 			}
@@ -367,7 +367,7 @@
 		function get_users($type='all')
 		{
 			$users = array();
-			switch ($type)
+			switch($type)
 			{
 				case 'all':			// all
 					$accounts = $GLOBALS['phpgw']->accounts->get_list('accounts');
@@ -385,12 +385,12 @@
 			}
 			foreach($accounts as $key => $account)
 			{
-				if ($type == 'calendar' && $GLOBALS['phpgw']->accounts->get_type($account) == 'g' || $type == 'groupmates')
+				if($type == 'calendar' && $GLOBALS['phpgw']->accounts->get_type($account) == 'g' || $type == 'groupmates')
 				{
 					// $account is a group
 					unset($accounts[$key]);
 					$members = $GLOBALS['phpgw']->accounts->member($account);
-					if (is_array($members))
+					if(is_array($members))
 					{
 						foreach($members as $member)
 						{
@@ -399,7 +399,7 @@
 					}
 				}
 			}
-			if ($type != 'all')
+			if($type != 'all')
 			{
 				$accounts = array_unique($accounts);	// remove doubles
 			}
@@ -413,24 +413,24 @@
 
 		function read_entries($data)
 		{
-			if ($this->xmlrpc && !isset($data['fields']))
+			if($this->xmlrpc && !isset($data['fields']))
 			{
 				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields,$this->customfields()));
 			}
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
-			if (!is_array($entries))
+			if(!is_array($entries))
 			{
 				$entries = array();
 			}
 			$entries = $this->strip_html($entries);
 
 			// evtl. get uses as read-only addressbook entries, just with Name, Firstname, Email
-			if (@$data['include_users'])
+			if(@$data['include_users'])
 			{
 				$entries = array_merge($entries,$this->get_users($data['include_users']));
 			}
-			if ($this->xmlrpc)
+			if($this->xmlrpc)
 			{
 				$entries = $this->data2xmlrpc($entries);
 			}
@@ -440,14 +440,14 @@
 
 		function read_entry($data)
 		{
-			if ($this->xmlrpc && !isset($data['fields']))
+			if($this->xmlrpc && !isset($data['fields']))
 			{
 				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields,$this->customfields()));
 			}
-			if ($data['id'] < 0)
+			if($data['id'] < 0)
 			{
 				$entry = array($this->user_pseudo_entry(-$data['id']));
-				if ($this->xmlrpc)
+				if($this->xmlrpc)
 				{
 					$entry = $this->data2xmlrpc($entry);
 				}
@@ -457,13 +457,13 @@
 			{
 				$entry = $this->so->read_entry($data['id'],$data['fields']);
 				$entry = $this->strip_html($entry);
-				if ($this->xmlrpc)
+				if($this->xmlrpc)
 				{
 					$entry = $this->data2xmlrpc($entry);
 				}
 				return $entry;
 			}
-			if ($this->xmlrpc)
+			if($this->xmlrpc)
 			{
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
@@ -476,13 +476,13 @@
 			{
 				$entry = $this->so->read_last_entry($fields);
 				$entry = $this->strip_html($entry);
-				if ($this->xmlrpc)
+				if($this->xmlrpc)
 				{
 					$entry = $this->data2xmlrpc($entry);
 				}
 				return $entry;
 			}
-			if ($this->xmlrpc)
+			if($this->xmlrpc)
 			{
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
@@ -557,7 +557,7 @@
 			{
 				$fields['access'] = 'public';
 			}
-			if ($this->xmlrpc)
+			if($this->xmlrpc)
 			{
 				$fields = $this->xmlrpc2data($fields);
 			}
@@ -568,7 +568,7 @@
 				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'add', time());
 			}
 
-			if ($this->xmlrpc && !$id)
+			if($this->xmlrpc && !$id)
 			{
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
@@ -582,14 +582,14 @@
 
 		function update_entry($fields)
 		{
-			if (!$fields['id'] && !$fields['ab_id'])
+			if(!$fields['id'] && !$fields['ab_id'])
 			{
 				return $this->add_entry($fields);
 			}
 			$ok = False;
 			if($this->check_perms($fields,PHPGW_ACL_EDIT))
 			{
-				if ($this->xmlrpc)
+				if($this->xmlrpc)
 				{
 					$fields = $this->xmlrpc2data($fields);
 				}
@@ -598,9 +598,8 @@
 				{
 					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $fields['ab_id'], 'modify', time());
 				}
-
 			}
-			if ($this->xmlrpc && !$ok)
+			if($this->xmlrpc && !$ok)
 			{
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
@@ -629,7 +628,7 @@
 				$this->so->delete_entry($id);
 				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
-			elseif ($this->xmlrpc)
+			elseif($this->xmlrpc)
 			{
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
@@ -647,14 +646,14 @@
 		{
 			$id = (int) (!is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']));
 
-			if ($id < 0)
+			if($id < 0)
 			{
 				return $rights == PHPGW_ACL_READ;
 			}
-			if (!is_array($addr) || !isset($addr['rights']) && !isset($addr['owner']))
+			if(!is_array($addr) || !isset($addr['rights']) && !isset($addr['owner']))
 			{
 				$addr = $this->so->read_entry($id,array('owner'));
-				if (!$addr && $this->xmlrpc)
+				if(!$addr && $this->xmlrpc)
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
 				}
@@ -787,6 +786,5 @@
 					break;
 			}
 		}
-
 	}
 ?>
