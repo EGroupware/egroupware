@@ -373,11 +373,12 @@
 		 *  disables all cells with name == $name
 		 *
 		 * @param sting $name cell-name
+		 * @param boolean $disabled=true disable or enable a cell, default true=disable
 		 * @return mixed number of changed cells or False, if none changed
 		 */
-		function disable_cells($name)
+		function disable_cells($name,$disabled=True)
 		{
-			return $this->set_cell_attribute($name,'disabled',True);
+			return $this->set_cell_attribute($name,'disabled',$disabled);
 		}
 		
 		/**
