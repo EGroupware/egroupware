@@ -224,7 +224,11 @@
 
 				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2') as $val_name => $cell_name)
 				{
-					if (isset($value[$val_name])) $nextmatch->set_cell_attribute($cell_name,'disabled',$value[$val_name]);
+					if (isset($value[$val_name])) $nextmatch->disable_cells($cell_name,$value[$val_name]);
+				}
+				foreach(array('header_left','header_right') as $name)
+				{
+					if (!$value[$name]) $nextmatch->disable_cells('@'.$name);
 				}
 				foreach(array('filter','filter2') as $cell_name)
 				{
