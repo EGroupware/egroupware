@@ -247,8 +247,8 @@ class so_sql
 		}	
 		
 		$this->init($keys);
-
 		$this->data2db();
+
 		$query = false;
 		foreach ($this->db_key_cols as $db_col => $col)
 		{
@@ -259,7 +259,7 @@ class so_sql
 		}
 		if (!$query)	// no primary key in keys, lets try the data_cols for a unique key
 		{
-			foreach($this->db_data_cols as $db_col => $col)
+			foreach($this->db_uni_cols as $db_col => $col)
 			{
 				if ($this->data[$col] != '')
 				{
@@ -406,14 +406,14 @@ class so_sql
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean $only_keys True returns only keys, False returns all cols
-	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard appended befor and after each criteria
-	 * @param boolean $empty False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param int/boolean $start if != false, return only maxmatch rows begining with start
-	 * @param array $filter if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param boolean $only_keys=true True returns only keys, False returns all cols
+	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard='' appended befor and after each criteria
+	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @return array of matching rows (the row is an array of the cols) or False
@@ -427,10 +427,8 @@ class so_sql
 		else
 		{
 			$criteria = $this->data2db($criteria);
-
 			foreach($this->db_cols as $db_col => $col)
 			{	
-				//echo "testing col='$col', criteria[$col]='".print_r($criteria[$col],true)."'<br>";
 				if (isset($filter[$col]) && $filter[$col]) continue;	// added later
 
 				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
@@ -481,14 +479,17 @@ class so_sql
 			}
 			$query = $db_filter;
 		}
-		if ($start !== false)	// need to get the total too, saved in $this->total
+		$num_rows = 0;	// as spec. in max_matches in the user-prefs
+		if (is_array($start)) list($start,$num_rows) = $start;
+
+		if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
 		{
 			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 		}
 		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
-			$query,__LINE__,__FILE__,$start,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,0,$join);
+			$query,__LINE__,__FILE__,$start,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,$num_rows,$join);
 
 		if ($this->debug)
 		{
@@ -499,15 +500,19 @@ class so_sql
 		{
 			$cols = $this->db_key_cols;
 		}
-		elseif (!$only_keys)	// all columns
+		else
 		{
-			$cols = $this->db_cols;
-		}
-		else	// only the specified columns
-		{
-			foreach(explode(',',str_replace('DISTINCT ','',$only_keys)) as $col)
+			$cols = array();
+			foreach(explode(',',str_replace(array('DISTINCT ','distinct '),'',$only_keys)) as $col)
 			{
-				$cols[$col] = $col;
+				if (!$col || $col == '*' || $col == $this->table_name.'.*')	// all columns
+				{
+					$cols = array_merge($cols,$this->db_cols);
+				}
+				else	// only the specified columns
+				{
+					$cols[$col] = $col;
+				}
 			}
 		}
 		if ($extra_cols)	// extra columns to report
@@ -517,7 +522,6 @@ class so_sql
 				if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 				$cols[$col] = $col;
 			}
-			if ($this->table == 'Personen') _debug_array($cols);
 		}
 		$arr = array();
 		for ($n = 0; ($row = $this->db->row(true)); ++$n)
