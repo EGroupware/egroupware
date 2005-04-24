@@ -1,7 +1,7 @@
 %1 records imported	addressbook	sv	%1 poster inporterade
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sv	%1 poster lästa (inte importerade ännu, du kan gå %2tillbaka%3 och kryssa ur "Testa Import")
 (e.g. 1969)	addressbook	sv	(t ex:1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sv	<b> Ingen konverteringstyp &lt;ingen&gt; kunde hittas.</b> Var snäll och välj konverteringstyp från listan
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sv	<b> Ingen konverteringstyp <ingen> kunde hittas.</b> Var snäll och välj konverteringstyp från listan
 @-eval() is only availible to admins!!!	addressbook	sv	@-eval() är endast tillgängligt för administratörer
 actions	addressbook	sv	Åtgärder
 add a single entry by passing the fields.	addressbook	sv	Lägg till en enstaka post genom att passa fälten
@@ -106,6 +106,8 @@ ldap root dn for contacts	admin	sv	LDAP-rootkonto för export av kontakter
 ldap root pw for contacts	admin	sv	LDAP-lösenord för export av kontakter
 ldif	addressbook	sv	LDIF
 line 2	addressbook	sv	Linje 2
+list all categories	addressbook	sv	Visa alla kategorier
+list all customfields	addressbook	sv	Visa alla egendefinerade fält
 load vcard	addressbook	sv	Ladda vCard
 mark records as private	addressbook	sv	Markera posten som privat
 message phone	addressbook	sv	Växel eller Voicemail
@@ -128,6 +130,7 @@ postal	common	sv	Post
 pref	addressbook	sv	pref
 prefix	addressbook	sv	Prefix
 public key	addressbook	sv	Publik kryptonyckel
+read a list / search for entries.	addressbook	sv	Titta på lista/sök efter poster
 read a list of entries.	addressbook	sv	Läs lista över poster
 read a single entry by passing the id and fieldlist.	addressbook	sv	Läs en enstaka post genom att ange ID och fältlista
 record access	addressbook	sv	Åtkomst till posten
@@ -138,6 +141,7 @@ select all	addressbook	sv	Välj samtliga
 select the type of conversion	addressbook	sv	Välj konverteringstyp
 select the type of conversion:	addressbook	sv	Välj konverteringstyp
 select where you want to store	admin	sv	Välj var du vill lagra
+show	addressbook	sv	Visa
 show birthday reminders on main screen	addressbook	sv	Visa födelsedagsnotis på huvudskärm
 startrecord	addressbook	sv	Startpost
 state	common	sv	Stat

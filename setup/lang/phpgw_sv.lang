@@ -1,7 +1,7 @@
 %1 does not exist !!!	setup	sv	%1 existerar inte!!!
 %1 is %2%3 !!!	setup	sv	%1 är %2%3 !!!
 (searching accounts and changing passwords)	setup	sv	(söker konton och ändrar lösenord)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sv	Uppdatera *INTE* databasen via setup. Uppdateringen kan av brytas av max_execution_time vilket förstör databasen oåterkallerligt!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sv	Uppdatera *INTE* databasen via setup. Uppdateringen kan avbrytas av max_execution_time vilket förstör databasen oåterkallerligt!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sv	***Du måste uppdatera php.ini manuellt (finns vanligtvis i /etc på Linux och i windows-mappen på Windows) för att få eGW att fungera.
 00 (disable)	setup	sv	00 (stäng av/rekomenderat)
 13 (ntp)	setup	sv	13 (ntp)
@@ -11,7 +11,7 @@
 accounts existing	setup	sv	Existerande konton
 actions	setup	sv	Åtgärder
 add a domain	setup	sv	Lägg till domän
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sv	läg till auso-skapade användare till denna grupp ('Default' kommer att användas om denna är tom)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sv	lägg till automatiskt skapade användare till denna grupp ('Default' kommer att användas om denna är tom)
 additional settings	setup	sv	Övriga inställningar
 admin first name	setup	sv	Admins förnamn
 admin last name	setup	sv	Admins efternamn
@@ -28,11 +28,11 @@ all languages (incl. not listed ones)	setup	sv	Samtliga språk (inkl de som ej vi
 all users	setup	sv	Samtliga användare
 analysis	setup	sv	Analys
 and reload your webserver, so the above changes take effect !!!	setup	sv	OCH starta om webservern så att förändringarna träder i kraft!!
-app details	setup	sv	App detaljer
+app details	setup	sv	Applikationsdetaljer
 app install/remove/upgrade	setup	sv	App installera/uppgradera/avinstallera
 app process	setup	sv	app-process
-application data	setup	sv	Aplikationsdata
-application list	setup	sv	Aplikationslista
+application data	setup	sv	Applikationsdata
+application list	setup	sv	Applikationslista
 application management	setup	sv	Applikationshantering
 application name and status	setup	sv	Applikationsnamn och status
 application name and status information	setup	sv	Applikationsnamn och statusinformation
@@ -45,7 +45,7 @@ at your request, this script is going to attempt to install a previous backup	se
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	sv	På din begäran kommer detta script att försöka installera huvudtabellerna samt admin och alternativ-applikationerna.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	sv	På din begäran kommer detta script att försöka uppgradera dina befintliga applikationer till senaste version
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	sv	På din begäran kommer detta script att försöka uppgradera dina befintliga tabeller till det nya formatet
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	sv	På din begäran kommer detta script att radera dina gamla tabeller ich skapa om dem i det nya formatet
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	sv	På din begäran kommer detta script att radera dina gamla tabeller och skapa om dem i det nya formatet
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	sv	På din begäran kommer detta script att avinstallera samtliga applikationer, vilket raderar befintliga tabeller och data
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	sv	Försöka använda korrekt mime-typ för FTP istället för default 'application/octet-stream'
 authentication / accounts	setup	sv	Autenticering / Konton
@@ -57,7 +57,7 @@ back to user login	setup	sv	Tillbaka till användarlogin
 back's up your db now, this might take a view minutes	setup	sv	Backar upp din databas, kan ta några minuter
 backup '%1' deleted	setup	sv	backup %1 raderad
 backup '%1' renamed to '%2'	setup	sv	backup %1 omdöpt till %2
-backup '%1' restored	setup	sv	backup %1återläst
+backup '%1' restored	setup	sv	backup %1 återläst
 backup and restore	setup	sv	backup och återläsning
 backup failed	setup	sv	backup misslyckades
 backup finished	setup	sv	backup färdig
@@ -191,7 +191,7 @@ found existing configuration file. loading settings from the file...	setup	sv	Fa
 go back	setup	sv	Tillbaka
 go to	setup	sv	Gå till
 grant access	setup	sv	Ge åtkomst
-has a version mismatch	setup	sv	har versions-mismatch
+has a version mismatch	setup	sv	har versions-differens
 header 0assword	setup	sv	Header lösenord
 header admin login	setup	sv	Header Admin login
 header username	setup	sv	Header användarnamn
@@ -459,7 +459,7 @@ users choice	setup	sv	Användarval
 utf-8 (unicode)	setup	sv	UTF-8 (Unicode)
 version	setup	sv	Version
 version mismatch	setup	sv	Versionsfel
-view	setup	sv	Vy
+view	setup	sv	Visa
 warning!	setup	sv	Varning!
 we can proceed	setup	sv	Vi kan forstätta
 we will automatically update your tables/records to %1	setup	sv	Vi kommer automatiskt att uppdatera dina tabeller/poster till %1
