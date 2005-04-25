@@ -6,6 +6,7 @@
 	* shared functions for other account repository managers                   *
 	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
 	* Copyright (C) 2003 Joseph Engo, Bettina Gille                            *
+	* Caching and documentation added by RalfBecker-AT-outdoor-training.de     *
 	* -------------------------------------------------------------------------*
 	* This library is part of the eGroupWare API                               *
 	* http://www.egroupware.org                                                * 
@@ -22,6 +23,7 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
+
 	/* $Id$ */
 
 	if (empty($GLOBALS['egw_info']['server']['account_repository']))
@@ -80,11 +82,11 @@
 	);
 
 	/**
-	 *  @class_start accounts
-	  * Class for handling user and group accounts
-	  *
+	 * Class for handling user and group accounts
+	 *
+	 * The class can be instanciated for a certain account, if no account is specified the user of the session is used.
+	 * Some functions operate on that user!
 	 */
-
 	class accounts extends accounts_
 	{
 		var $memberships    = array();
@@ -93,17 +95,20 @@
 		// enables the session-cache
 		var $use_session_cache = True;
 
-		/**************************************************************************\
-		* Standard constructor for setting $this->account_id                       *
-		* This constructor sets the account id, if string is sent, converts to id  *
-		* I might move this to the accounts_shared if it stays around              *
-		\**************************************************************************/
+		/**
+		 * Standard constructor for setting $this->account_id
+		 *
+		 * This constructor sets the account id, if string is sent, converts to id
+		 *
+		 * @param int/string $account_id account to instanciate the class for, default user of the session
+		 * @param string $account_type type ('u' or 'g') to set $this->account_type if given
+		 */
 		function accounts($account_id = '', $account_type='')
 		{
 			// enable the caching in the session onyl for ldap
 			$this->use_session_cache = $GLOBALS['egw_info']['server']['account_repository'] == 'ldap';
 
-			$this->db = $GLOBALS['egw']->db;
+			$this->db =& $GLOBALS['egw']->db;
 
 			if($account_id != '')
 			{
@@ -141,11 +146,11 @@
 		}
 
 		/**
-		* Sets up the account-data cache
-		*
-		* The cache is shared between all instances of the account-class and it can be save in the session,
-		* if use_session_cache is set to True
-		*/
+		 * Sets up the account-data cache
+		 *
+		 * The cache is shared between all instances of the account-class and it can be save in the session,
+		 * if use_session_cache is set to True
+		 */
 		function setup_cache()
 		{
 			if ($this->use_session_cache &&		// are we supposed to use a session-cache
@@ -165,10 +170,10 @@
 		}
 
 		/**
-		* Saves the account-data cache in the session
-		*
-		* Gets called from common::phpgw_final()
-		*/
+		 * Saves the account-data cache in the session
+		 *
+		 * Gets called from common::phpgw_final()
+		 */
 		function save_session_cache()
 		{
 			if ($this->use_session_cache &&		// are we supposed to use a session-cache
@@ -183,6 +188,7 @@
 		/**
 		 * Searches / lists accounts: users and/or groups
 		 *
+		 * @param array with the following keys:
 		 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
 		 *	or integer group-id for a list of members of that group
 		 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
@@ -293,7 +299,11 @@
 			return $account_search[$serial]['data'];
 		}
 
-
+		/**
+		 * Searches / lists accounts: users and/or groups
+		 *
+		 * @deprecated 
+		 */
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
 			//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
@@ -336,6 +346,11 @@
 			return $account_list[$serial]['data'];
 		}
 
+		/**
+		 * test if the account this class is instanciated for is expired
+		 *
+		 * @return boolean true=expired (no more login possible), false otherwise
+		 */
 		function is_expired()
 		{
 			if ($this->data['expires'] != -1 && $this->data['expires'] < time())
@@ -349,22 +364,30 @@
 		}
 
 		/**
-		* Invalidate the cache (or parts of it) after change in $account_id
-		*
-		* Atm simplest approach - delete it all ;-)
-		*/
+		 * Invalidate the cache (or parts of it) after change in $account_id
+		 *
+		 * Atm simplest approach - delete it all ;-)
+		 */
 		function cache_invalidate($account_id)
 		{
 			//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
 			$GLOBALS['egw_info']['accounts']['cache'] = array();
 		}
 
+		/**
+		 * saves the account-data in the internal data-structure of this class to the repository
+		 */
 		function save_repository()
 		{
 			$this->cache_invalidate($this->account_id);
 			accounts_::save_repository();
 		}
 
+		/**
+		 * Deletes the account spezified by $accountid, deletes also all acl-entries for that account
+		 *
+		 * @param int $accountid numeric account-id
+		 */
 		function delete($accountid)
 		{
 			$this->cache_invalidate($accountid);
@@ -374,6 +397,12 @@
 			$GLOBALS['egw']->acl->delete_account($accountid);
 		}
 
+		/**
+		 * Create a new account with the given $account_info
+		 * 
+		 * @param array data for the new account
+		 * @return int new nummeric account-id
+		 */
 		function create($account_info,$default_prefs=True)
 		{
 			$account_id = accounts_::create($account_info,$default_prefs);
@@ -382,6 +411,11 @@
 			return $account_id;
 		}
 
+		/**
+		 * Reads the data of the account this class is instanciated for
+		 *
+		 * @return array with the internal data
+		 */
 		function read_repository()
 		{
 			$this->setup_cache();
@@ -394,6 +428,13 @@
 			return $account_data[$this->account_id] = accounts_::read_repository();
 		}
 
+		/**
+		 * Return data of the account this class is instanciated for
+		 *
+		 * only calls read_repository if no data read so far
+		 *
+		 * @return array with the internal data
+		 */
 		function read()
 		{
 			if (count($this->data) == 0)
@@ -405,6 +446,12 @@
 			return $this->data;
 		}
 
+		/**
+		 * copies the given $data into the internal array
+		 *
+		 * @param array with data
+		 * @return array $this->data = $data
+		 */
 		function update_data($data)
 		{
 			reset($data);
@@ -415,6 +462,13 @@
 			return $this->data;
 		}
 
+		/**
+		 * Get all memberships of an account $accountid / groups the account is a member off
+		 *
+		 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+		 *	default account of the user of this session
+		 * @return array or arrays with keys 'account_id' and 'account_name' for the groups $accountid is a member of
+		 */
 		function membership($accountid = '')
 		{
 			$this->setup_cache();
@@ -446,6 +500,13 @@
 			return $membership_list[$account_id] = $this->memberships;
 		}
 
+		/**
+		 * Get all members of the group $accountid
+		 *
+		 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+		 *	default account of the user of this session
+		 * @return array or arrays with keys 'account_id' and 'account_name'
+		 */
 		function member($accountid = '')
 		{
 			$account_id = get_account_id($accountid);
@@ -472,9 +533,11 @@
 		/**
 		 * Using the common functions next_id and last_id, find the next available account_id
 		 *
-		 * @param $account_type (optional, default to 'u')
+		 * NOTE: to my knowledge this is not used any more RalfBecker 2004/06/15
+		 *
+		 * @deprecated 
+		 * @param $string $account_type='u' (optional, default to 'u')
 		 */
-		// NOTE: to my knowledge this is not used any more RalfBecker 2004/06/15
 		function get_nextid($account_type='u')
 		{
 			$min = $GLOBALS['egw_info']['server']['account_min_id'] ? $GLOBALS['egw_info']['server']['account_min_id'] : 0;
@@ -523,16 +586,15 @@
 			return $nextid;
 		}
 
-
 		/**
-		* splits users and groups from a array of id's or the accounts with run-rights for a given app-name
-		*
-		* @param $app_users array of user-id's or app-name (if you use app-name the result gets cached!)
-		* @param $use string what should be returned only an array with id's of either 'accounts' or 'groups'.
-		*	Or an array with arrays for 'both' under the keys 'groups' and 'accounts' or 'merge' for accounts
-		*	and groups merged into one array
-		* @return see $use
-		*/
+		 * splits users and groups from a array of id's or the accounts with run-rights for a given app-name
+		 *
+		 * @param array $app_users array of user-id's or app-name (if you use app-name the result gets cached!)
+		 * @param string $use what should be returned only an array with id's of either 'accounts' or 'groups'.
+		 *	Or an array with arrays for 'both' under the keys 'groups' and 'accounts' or 'merge' for accounts
+		 *	and groups merged into one array
+		 * @return array/boolean see $use, false on error (wront $use)
+		 */
 		function split_accounts($app_users,$use='both')
 		{
 			if (!is_array($app_users))
@@ -593,6 +655,8 @@
 
 		/**
 		 * phpgw compatibility function, better use split_accounts
+		 *
+		 * @deprecated 
 		 */
 		function return_members($accounts)
 		{
@@ -604,6 +668,13 @@
 			);
 		}
 
+		/**
+		 * convert an alphanumeric account-value (account_lid, account_email) to the account_id
+		 *
+		 * @param string $name value to convert
+		 * @param string $which='account_lid' type of $name: account_lid (default), account_email
+		 * @return int/false numeric account_id or false on error ($name not found)
+		 */
 		function name2id($name,$which='account_lid')
 		{
 			$this->setup_cache();
@@ -622,6 +693,13 @@
 			return $name_list[$which][$name] = accounts_::name2id($name,$which);
 		}
 
+		/**
+		 * convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
+		 *
+		 * @param int $account_id numerica account_id
+		 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+		 * @return string/false converted value or false on error ($account_id not found)
+		 */
 		function id2name($account_id,$which='account_lid')
 		{
 			$this->setup_cache();
@@ -639,6 +717,13 @@
 			return $id_list[$account_id][$which] = accounts_::id2name($account_id,$which);
 		}
 
+		/**
+		 * get the type of an account: 'u' = user, 'g' = group
+		 *
+		 * @param int/string $accountid numeric account-id or alphanum. account-lid, 
+		 *	if !$accountid account of the user of this session
+		 * @return string/false 'u' = user, 'g' = group or false on error ($accountid not found)
+		 */
 		function get_type($accountid)
 		{
 			$this->setup_cache();
@@ -662,6 +747,16 @@
 			return $account_type[$account_id] = accounts_::get_type($account_id);
 		}
 
+		/**
+		 * Gets account-name (lid), firstname and lastname of an account $accountid
+		 *
+		 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+		 *	if !$accountid account of the user of this session
+		 * @param string &$lid on return: alphanumeric account-name (lid)
+		 * @param string &$fname on return: first name
+		 * @param string &$lname on return: last name
+		 * @return boolean true if $accountid was found, false otherwise
+		 */	 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
 			$this->setup_cache();
@@ -685,6 +780,14 @@
 			return $Ok;
 		}
 
+		/**
+		 * Reads account-data for a given $account_id from the repository AND sets the class-vars with it
+		 *
+		 * Same effect as instanciating the class with that account, dont do it with $GLOBALS['egw']->account !!!
+		 *
+		 * @param int $accountid numeric account-id 
+		 * @return array with keys lid, firstname, lastname, fullname, type
+		 */
 		function get_account_data($account_id)
 		{
 			$this->account_id = $account_id;
