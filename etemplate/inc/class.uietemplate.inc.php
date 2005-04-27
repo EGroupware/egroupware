@@ -618,7 +618,8 @@
 
 			if ($cell['name'][0] == '@' && $cell['type'] != 'template')
 			{
-				$cell['name'] = $this->get_array($content,substr($cell['name'],1));
+				$cell['name'] = $this->get_array($content,$this->expand_name(substr($cell['name'],1),
+					$show_c,$show_row,$content['.c'],$content['.row'],$content));
 			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
@@ -630,7 +631,7 @@
 			{
 				$options .= ' READONLY';
 			}
-			if ($cell['disabled'] || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
+			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
@@ -650,6 +651,14 @@
 				$this->set_array($content,$name,$value);
 			}
 			list(,$class) = explode(',',$cell['span']);	// might be set by extension
+			if (strchr($class,'$'))
+			{
+				$class = $this->expand_name($class,$show_c,$show_row,$content['.c'],$content['.row'],$content);
+			}
+			if ($class[0] == '@')
+			{
+				$class = $this->get_array($content,substr($class,1));
+			}
 
 			$cell_options = $cell['size'];
 			if (strchr($cell_options,'$'))
@@ -1112,6 +1121,7 @@
 							if ($cell[$n]['align'])
 							{
 								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
+								$sub_cell_has_align = true;
 							}
 							$class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 								$show_c,$show_row,$content['.c'],$content['.row'],$content);
@@ -1122,7 +1132,7 @@
 					{
 						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,CELLPADDING,CELLSPACING').
 							$this->html->formatOptions($cell['span'],',CLASS').
-							($cell['align'] && $orient != 'horizontal' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
+							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
 					}
 					// use a div to not loose the css class
 					elseif ($class && $orient)
