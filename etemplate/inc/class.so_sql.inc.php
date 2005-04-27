@@ -420,6 +420,8 @@ class so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
+		if ($this->debug) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+
 		if (!is_array($criteria))
 		{
 			$query = $criteria;
@@ -484,8 +486,18 @@ class so_sql
 
 		if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
 		{
-			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
-			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
+			if (!$join || stristr($join,'LEFT JOIN'))
+			{
+				$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
+				$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
+			}
+			else	// cant do a count, have to run the query without limit
+			{
+				$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
+					($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
+					$query,__LINE__,__FILE__,false,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,0,$join);
+				$this->total = $this->db->num_rows();
+			}
 		}
 		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
@@ -543,8 +555,10 @@ class so_sql
 	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
 	 * @param array &$rows returned rows/competitions
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 */
-	function get_rows($query,&$rows,&$readonlys)
+	function get_rows($query,&$rows,&$readonlys,$join='')
 	{
 		if ($this->debug)
 		{
@@ -559,7 +573,7 @@ class so_sql
 			}
 		}
 		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
-			'','%',false,'OR',(int)$query['start'],$query['col_filter']);
+			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join);
 
 		return $this->total;
 	}
