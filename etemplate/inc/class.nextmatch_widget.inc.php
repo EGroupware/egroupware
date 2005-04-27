@@ -308,8 +308,9 @@
 				$inputs = array('search','cat_id','filter','filter2');
 				foreach($inputs as $name)
 				{
-					if (isset($value['bottom'][$name]) && $value['bottom'][$name] != $old_value[$name])
+					if (isset($value['bottom'][$name]) && $value[$name] == $old_value[$name])
 					{
+						//echo "value[$name] overwritten by bottom-value[$name]='".$value['bottom'][$name]."', old_value[$name]='".$old_value[$name]."'<br>\n";
 						$value[$name] = $value['bottom'][$name];
 					}
 				}
@@ -325,8 +326,8 @@
 			}
 			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
 			    isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
-			    $old_value['filter'] != '' && isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
-			    $old_value['filter2'] != '' && isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
+			    isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
+			    isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
