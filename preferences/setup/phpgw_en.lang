@@ -22,6 +22,7 @@ description can not exceed 255 characters in length !	preferences	en	Description
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	en	Do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.
 edit custom fields	preferences	en	edit custom fields
 enter your new password	preferences	en	Enter your new password
+enter your old password	preferences	en	Enter your old password
 error: there was a problem finding the preference file for %1 in %2	preferences	en	Error: There was a problem finding the preference file for %1 in %2
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password.  Please contact your administrator.
 forced preferences	preferences	en	Forced Preferences
@@ -60,6 +61,7 @@ show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show More Applications
 text only	preferences	en	Text only
 the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
+the old password is not correct	preferences	en	The old password is not correct
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
