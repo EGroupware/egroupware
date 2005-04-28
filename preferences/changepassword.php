@@ -22,6 +22,7 @@
 
 	$n_passwd   = $_POST['n_passwd'];
 	$n_passwd_2 = $_POST['n_passwd_2'];
+	$o_passwd_2 = $_POST['o_passwd_2'];
 
 	if(!$GLOBALS['phpgw']->acl->check('changepassword', 1) || $_POST['cancel'])
 	{
@@ -34,6 +35,7 @@
 	));
 	$GLOBALS['phpgw']->template->set_var('lang_enter_password',lang('Enter your new password'));
 	$GLOBALS['phpgw']->template->set_var('lang_reenter_password',lang('Re-enter your password'));
+	$GLOBALS['phpgw']->template->set_var('lang_enter_old_password',lang('Enter your old password'));
 	$GLOBALS['phpgw']->template->set_var('lang_change',lang('Change'));
 	$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
 	$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/preferences/changepassword.php'));
@@ -46,6 +48,13 @@
 
 	if ($_POST['change'])
 	{
+		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
+		
+		if ($o_passwd != $o_passwd_2)
+		{
+		       $errors[] = lang('The old password is not correct');
+		}
+		
 		if ($n_passwd != $n_passwd_2)
 		{
 			$errors[] = lang('The two passwords are not the same');
@@ -65,7 +74,6 @@
 			$GLOBALS['phpgw']->common->phpgw_exit(True);
 		}
 
-		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
 		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
 		if(!$passwd_changed)
 		{

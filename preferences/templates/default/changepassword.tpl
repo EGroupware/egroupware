@@ -6,6 +6,14 @@
     <table border="0">
      <tr>
        <td>
+        {lang_enter_old_password}
+       </td>
+       <td>
+        <input type="password" name="o_passwd_2">
+       </td>
+     </tr>
+     <tr>
+       <td>
         {lang_enter_password}
        </td>
        <td>
