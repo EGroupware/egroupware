@@ -11,9 +11,8 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
-
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info'] = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp' => 'addressbook',
 		'noheader'   => True,
 		'nonavbar'   => True

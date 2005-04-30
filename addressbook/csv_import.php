@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp' => 'addressbook',
 		'noheader'   => True,
 		'enable_contacts_class' => True,
@@ -21,38 +21,38 @@
 
 	if (isset($_FILES['csvfile']['tmp_name']))
 	{
-		$csvfile = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],$GLOBALS['phpgw_info']['flags']['currentapp']."_");
-		$GLOBALS['phpgw']->session->appsession('csvfile','',$csvfile);
+		$csvfile = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+		$GLOBALS['egw']->session->appsession('csvfile','',$csvfile);
 		$_POST['action'] = move_uploaded_file($_FILES['csvfile']['tmp_name'],$csvfile) ?
 			'download' : '';
 	}
 	else
 	{
-		$csvfile = $GLOBALS['phpgw']->session->appsession('csvfile');
+		$csvfile = $GLOBALS['egw']->session->appsession('csvfile');
 	}
 	if ($_POST['cancel'])
 	{
 		@unlink($csvfile);
-		$GLOBALS['phpgw']->redirect_link('/addressbook/index.php');
+		$GLOBALS['egw']->redirect_link('/addressbook/index.php');
 	}
-	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
-	$GLOBALS['phpgw']->common->phpgw_header();
+	$GLOBALS['egw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
+	$GLOBALS['egw']->common->phpgw_header();
 
-	$GLOBALS['phpgw']->contacts = createobject('phpgwapi.contacts');
+	$GLOBALS['egw']->contacts = createobject('phpgwapi.contacts');
 
-	//$GLOBALS['phpgw']->template->set_unknowns('keep');
-	$GLOBALS['phpgw']->template->set_file(array('import' => 'csv_import.tpl'));
-	$GLOBALS['phpgw']->template->set_block('import','filename','filenamehandle');
-	$GLOBALS['phpgw']->template->set_block('import','fheader','fheaderhandle');
-	$GLOBALS['phpgw']->template->set_block('import','fields','fieldshandle');
-	$GLOBALS['phpgw']->template->set_block('import','ffooter','ffooterhandle');
-	$GLOBALS['phpgw']->template->set_block('import','imported','importedhandle');
+	//$GLOBALS['egw']->template->set_unknowns('keep');
+	$GLOBALS['egw']->template->set_file(array('import' => 'csv_import.tpl'));
+	$GLOBALS['egw']->template->set_block('import','filename','filenamehandle');
+	$GLOBALS['egw']->template->set_block('import','fheader','fheaderhandle');
+	$GLOBALS['egw']->template->set_block('import','fields','fieldshandle');
+	$GLOBALS['egw']->template->set_block('import','ffooter','ffooterhandle');
+	$GLOBALS['egw']->template->set_block('import','imported','importedhandle');
 
 	if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
 		$_POST['action'] = '';
 	}
-	$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/addressbook/csv_import.php'));
+	$GLOBALS['egw']->template->set_var('action_url',$GLOBALS['egw']->link('/addressbook/csv_import.php'));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 	$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -63,14 +63,14 @@
 	// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
 	function addr_id($n_family,$n_given,$org_name)
 	{
-		$addrs = $GLOBALS['phpgw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name");
+		$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name");
 		if(!count($addrs))
 		{
-			$addrs = $GLOBALS['phpgw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given");
+			$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given");
 		}
 		if(!count($addrs))
 		{
-			$addrs = $GLOBALS['phpgw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,org_name=$org_name");
+			$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,org_name=$org_name");
 		}
 
 		if(count($addrs))
@@ -99,22 +99,22 @@
 			}
 			else
 			{
-				if(!is_object($GLOBALS['phpgw']->categories))
+				if(!is_object($GLOBALS['egw']->categories))
 				{
-					$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
+					$GLOBALS['egw']->categories = createobject('phpgwapi.categories');
 				}
-				if (is_numeric($cat) && $GLOBALS['phpgw']->categories->id2name($cat) != '--')
+				if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 				{
 					$cat2id[$cat] = $ids[$cat] = $cat;
 				}	
-				elseif ($id = $GLOBALS['phpgw']->categories->name2id(addslashes($cat)))
+				elseif ($id = $GLOBALS['egw']->categories->name2id(addslashes($cat)))
 				{	// cat exists
 					$cat2id[$cat] = $ids[$cat] = $id;
 				}
 				else
 				{	// create new cat
-					$GLOBALS['phpgw']->categories->add(array('name' => $cat,'descr' => $cat));
-					$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id(addslashes($cat));
+					$GLOBALS['egw']->categories->add(array('name' => $cat,'descr' => $cat));
+					$cat2id[$cat] = $ids[$cat] = $GLOBALS['egw']->categories->name2id(addslashes($cat));
 				}
 			}
 		}
@@ -124,11 +124,11 @@
 		{
 			$id_str = ",$id_str,";
 		}
-		return  $id_str;
+		return $id_str;
 	}
-	if (!is_object($GLOBALS['phpgw']->html))
+	if (!is_object($GLOBALS['egw']->html))
 	{
-		$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+		$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
 	}
 
 	if ($_POST['next']) $_POST['action'] = 'next';
@@ -136,44 +136,44 @@
 	switch($_POST['action'])
 	{
 		case '':	// Start, ask Filename
-			$GLOBALS['phpgw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
-			$GLOBALS['phpgw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
-			$GLOBALS['phpgw']->template->set_var('lang_charset',lang('Charset of file'));
-			$GLOBALS['phpgw']->template->set_var('select_charset',
-				$GLOBALS['phpgw']->html->select('charset','',
-				$GLOBALS['phpgw']->translation->get_installed_charsets()+
+			$GLOBALS['egw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
+			$GLOBALS['egw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
+			$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
+			$GLOBALS['egw']->template->set_var('select_charset',
+				$GLOBALS['egw']->html->select('charset','',
+				$GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)'),True));
-			$GLOBALS['phpgw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
-			$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
-			$GLOBALS['phpgw']->template->set_var('csvfile',$csvfile);
-			$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
+			$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
+			$GLOBALS['egw']->template->set_var('submit',lang('Import'));
+			$GLOBALS['egw']->template->set_var('csvfile',$csvfile);
+			$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 
-			$GLOBALS['phpgw']->template->parse('filenamehandle','filename');
+			$GLOBALS['egw']->template->parse('filenamehandle','filename');
 			break;
 
 		case 'continue':
 		case 'download':
-			$defaults = $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['cvs_import'];
+			$defaults = $GLOBALS['egw_info']['user']['preferences']['addressbook']['cvs_import'];
 			if(!is_array($defaults))
 			{
 				$defaults = array();
 			}
-			$GLOBALS['phpgw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-			$GLOBALS['phpgw']->template->set_var('lang_addr_fieldname',lang('Addressbook-Fieldname'));
-			$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
-			$GLOBALS['phpgw']->template->set_var('submit',
-				$GLOBALS['phpgw']->html->submit_button('convert','Import') . '&nbsp;'.
-				$GLOBALS['phpgw']->html->submit_button('cancel','Cancel'));
-			$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-			$GLOBALS['phpgw']->template->parse('fheaderhandle','fheader');
+			$GLOBALS['egw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
+			$GLOBALS['egw']->template->set_var('lang_addr_fieldname',lang('Addressbook-Fieldname'));
+			$GLOBALS['egw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
+			$GLOBALS['egw']->template->set_var('submit',
+				$GLOBALS['egw']->html->submit_button('convert','Import') . '&nbsp;'.
+				$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+			$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
+			$GLOBALS['egw']->template->parse('fheaderhandle','fheader');
 
-			$addr_names = $GLOBALS['phpgw']->contacts->stock_contact_fields + array(
+			$addr_names = $GLOBALS['egw']->contacts->stock_contact_fields + array(
 				'cat_id' => 'Categories: id\'s or names, comma separated list',
 				'access' => 'Access: public, private',
 				'owner'  => 'Owner: user-id/-name, defaults to user',
 				'address2' => 'address line 2',
 				'address3' => 'address line 3',
-			 	'ophone'   => 'Other Phone'
+				'ophone'   => 'Other Phone'
 			);
 			$config = CreateObject('phpgwapi.config','addressbook');
 			$config->read_repository();
@@ -193,41 +193,41 @@
 			$addr_name_options = "<option value=\"\">none\n";
 			foreach($addr_names as $field => $name)
 			{
-				$addr_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
+				$addr_name_options .= "<option value=\"$field\">".$GLOBALS['egw']->strip_html($name)."\n";
 			}
 			$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-			$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
+			$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
 			$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 			$csv_fields[] = 'no CSV 2';
 			$csv_fields[] = 'no CSV 3';
 			foreach($csv_fields as $csv_idx => $csv_field)
 			{
-				$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
-				$GLOBALS['phpgw']->template->set_var('csv_idx',$csv_idx);
+				$GLOBALS['egw']->template->set_var('csv_field',$csv_field);
+				$GLOBALS['egw']->template->set_var('csv_idx',$csv_idx);
 				if($def = $defaults[$csv_field])
 				{
 					list($addr,$_POST['trans']) = explode($PSep,$def,2);
-					$GLOBALS['phpgw']->template->set_var('trans',$_POST['trans']);
-					$GLOBALS['phpgw']->template->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
+					$GLOBALS['egw']->template->set_var('trans',$_POST['trans']);
+					$GLOBALS['egw']->template->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('trans','');
-					$GLOBALS['phpgw']->template->set_var('addr_fields',$addr_name_options);
+					$GLOBALS['egw']->template->set_var('trans','');
+					$GLOBALS['egw']->template->set_var('addr_fields',$addr_name_options);
 				}
-				$GLOBALS['phpgw']->template->parse('fieldshandle','fields',True);
+				$GLOBALS['egw']->template->parse('fieldshandle','fields',True);
 			}
-			$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
-			$GLOBALS['phpgw']->template->set_var('start',get_var('start',array('POST'),1));
+			$GLOBALS['egw']->template->set_var('lang_start',lang('Startrecord'));
+			$GLOBALS['egw']->template->set_var('start',get_var('start',array('POST'),1));
 			$msg = ($safe_mode = ini_get('safe_mode') == 'On') ? lang('to many might exceed your execution-time-limit'):
 				lang('empty for all');
-			$GLOBALS['phpgw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
-			$GLOBALS['phpgw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
-			$GLOBALS['phpgw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
-			$GLOBALS['phpgw']->template->parse('ffooterhandle','ffooter');
+			$GLOBALS['egw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
+			$GLOBALS['egw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
+			$GLOBALS['egw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
+			$GLOBALS['egw']->template->parse('ffooterhandle','ffooter');
 			fclose($fp);
 
-			$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
+			$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
 				'action'  => 'import',
 				'fieldsep'=> $_POST['fieldsep'],
 				'charset' => $_POST['charset']
@@ -262,7 +262,7 @@
 				"will be automaticaly added.<p>".
 				"I hope that helped to understand the features, if not <a href='mailto:RalfBecker@outdoor-training.de'>ask</a>.";
 
-			$GLOBALS['phpgw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
+			$GLOBALS['egw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 			break;
 
 		case 'next':
@@ -270,7 +270,7 @@
 			$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
 			// fall-through
 		case 'import':
-			$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
+			$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
 				'action'  => 'continue',
 				'fieldsep'=> $_POST['fieldsep'],
 				'charset' => $_POST['charset'],
@@ -283,7 +283,7 @@
 			@set_time_limit(0);
 			$fp=fopen($csvfile,'rb');
 			$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-			$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
+			$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
 			$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 			$csv_fields[] = 'no CSV 2';
 			$csv_fields[] = 'no CSV 3';
@@ -299,9 +299,9 @@
 					$defaults[$csv_fields[$csv_idx]] .= $PSep.$_POST['trans'][$csv_idx];
 				}
 			}
-			$GLOBALS['phpgw']->preferences->read_repository();
-			$GLOBALS['phpgw']->preferences->add('addressbook','cvs_import',$defaults);
-			$GLOBALS['phpgw']->preferences->save_repository(True);
+			$GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw']->preferences->add('addressbook','cvs_import',$defaults);
+			$GLOBALS['egw']->preferences->save_repository(True);
 
 			$log = "<table border=1>\n\t<tr><td>#</td>\n";
 
@@ -354,7 +354,7 @@
 				{
 					break;	// EOF
 				}
-				$fields = $GLOBALS['phpgw']->translation->convert($fields,$_POST['charset']);
+				$fields = $GLOBALS['egw']->translation->convert($fields,$_POST['charset']);
 
 				$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
@@ -383,7 +383,7 @@
 								}
 								if($val[0] == '@')
 								{
-									if (!$GLOBALS['phpgw_info']['user']['apps']['admin'])
+									if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 									{
 										echo lang('@-eval() is only availible to admins!!!');
 									}
@@ -420,7 +420,7 @@
 				{
 					if (isset($values[$user]) && !is_numeric($user))
 					{
-						$values[$user] = $GLOBALS['phpgw']->accounts->name2id($values[$user]);
+						$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user]);
 					}
 				}
 				if (is_array($auto_fn))	// autocreate full name
@@ -438,26 +438,26 @@
 				}
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
-					$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
+					$GLOBALS['egw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['egw_info']['user']['account_id'],
 						$values);
 					// echo "<p>adding: ".print_r($values)."</p>\n";
 				}
 			}
 			$log .= "\t</tr>\n</table>\n";
 
-			$GLOBALS['phpgw']->template->set_var('anz_imported',($_POST['debug'] ?
+			$GLOBALS['egw']->template->set_var('anz_imported',($_POST['debug'] ?
 				lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
 				$anz,'','') :
 				lang('%1 records imported',$anz)). '&nbsp;'.
-				(!$_POST['debug'] && $fields ? $GLOBALS['phpgw']->html->submit_button('next','Import next set') . '&nbsp;':'').
-				$GLOBALS['phpgw']->html->submit_button('continue','Back') . '&nbsp;'.
-				$GLOBALS['phpgw']->html->submit_button('cancel','Cancel'));
-			$GLOBALS['phpgw']->template->set_var('log',$log);
-			$GLOBALS['phpgw']->template->parse('importedhandle','imported');
+				(!$_POST['debug'] && $fields ? $GLOBALS['egw']->html->submit_button('next','Import next set') . '&nbsp;':'').
+				$GLOBALS['egw']->html->submit_button('continue','Back') . '&nbsp;'.
+				$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+			$GLOBALS['egw']->template->set_var('log',$log);
+			$GLOBALS['egw']->template->parse('importedhandle','imported');
 			break;
 	}
 
-	$GLOBALS['phpgw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
-	$GLOBALS['phpgw']->template->pfp('out','import',True);
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
+	$GLOBALS['egw']->template->pfp('out','import',True);
+	$GLOBALS['egw']->common->phpgw_footer();
 ?>
