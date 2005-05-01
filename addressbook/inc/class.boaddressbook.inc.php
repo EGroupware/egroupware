@@ -194,13 +194,13 @@
 			if($this->use_session)
 			{
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
+				$GLOBALS['egw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
+			$data = $GLOBALS['egw']->session->appsession('session_data','addressbook');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
@@ -227,12 +227,12 @@
 				{
 					foreach($dirty[$i] as $name => $value)
 					{
-						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
+						$cleaned[$i][$name] = $GLOBALS['egw']->strip_html($dirty[$i][$name]);
 					}
 				}
 				else
 				{
-					$cleaned[$i] == $GLOBALS['phpgw']->strip_html($dirty[$i]);
+					$cleaned[$i] == $GLOBALS['egw']->strip_html($dirty[$i]);
 				}
 			}
 			return $cleaned;
@@ -251,7 +251,7 @@
 
 			if(is_array($new_fields) && count($new_fields))
 			{
-				if(!$GLOBALS['phpgw_info']['user']['apps']['admin'])
+				if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 				}
@@ -338,12 +338,12 @@
 			}
 			if(!is_array($account))
 			{
-				$GLOBALS['phpgw']->accounts->account_id = $account;
-				$account = $GLOBALS['phpgw']->accounts->read_repository();
+				$GLOBALS['egw']->accounts->account_id = $account;
+				$account = $GLOBALS['egw']->accounts->read_repository();
 			}
 			$prefs->account_id = $account['account_id'];
 			$prefs->read_repository();
-			$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$account['account_lid'];
+			$freebusy_url = $GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$account['account_lid'];
 			if($freebusy_url[0] == '/')
 			{
 				$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
@@ -353,7 +353,7 @@
 			$ret = array(
 				'n_family' => $lastname,
 				'n_given'  => $firstname,
-				'fn'       => $GLOBALS['phpgw']->common->display_fullname($account['account_lid'],$firstname,$lastname),
+				'fn'       => $GLOBALS['egw']->common->display_fullname($account['account_lid'],$firstname,$lastname),
 				'email'    => $prefs->email_address($account['account_id']),
 				'freebusy_url' => $freebusy_url,
 				'rights'   => PHPGW_ACL_READ,	// readonly access
@@ -370,14 +370,14 @@
 			switch($type)
 			{
 				case 'all':			// all
-					$accounts = $GLOBALS['phpgw']->accounts->get_list('accounts');
+					$accounts = $GLOBALS['egw']->accounts->get_list('accounts');
 					break;
 				case 'calendar':	// Calendar users
-					$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
+					$accounts = $GLOBALS['egw']->acl->get_ids_for_location('run',1,'calendar');
 					break;
 				case 'groupmates':	// Groupmates
 					$accounts = array();
-					foreach($GLOBALS['phpgw']->accounts->membership() as $group)
+					foreach($GLOBALS['egw']->accounts->membership() as $group)
 					{
 						$accounts[] = $group['account_id'];
 					}
@@ -385,11 +385,11 @@
 			}
 			foreach($accounts as $key => $account)
 			{
-				if($type == 'calendar' && $GLOBALS['phpgw']->accounts->get_type($account) == 'g' || $type == 'groupmates')
+				if($type == 'calendar' && $GLOBALS['egw']->accounts->get_type($account) == 'g' || $type == 'groupmates')
 				{
 					// $account is a group
 					unset($accounts[$key]);
-					$members = $GLOBALS['phpgw']->accounts->member($account);
+					$members = $GLOBALS['egw']->accounts->member($account);
 					if(is_array($members))
 					{
 						foreach($members as $member)
@@ -502,7 +502,7 @@
 				$vcard = CreateObject('phpgwapi.vcard');
 				$entry = $vcard->in_file($filename);
 				/* _debug_array($entry);exit; */
-				$entry['owner'] = (int)$GLOBALS['phpgw_info']['user']['account_id'];
+				$entry['owner'] = (int)$GLOBALS['egw_info']['user']['account_id'];
 				$entry['access'] = 'private';
 				$entry['tid'] = 'n';
 				/* _debug_array($entry);exit; */
@@ -534,11 +534,11 @@
 			$fields['email']    = $add_email;
 			$referer = urlencode($referer);
 
-			$this->so->add_entry($GLOBALS['phpgw_info']['user']['account_id'],$fields,'private','','n');
+			$this->so->add_entry($GLOBALS['egw_info']['user']['account_id'],$fields,'private','','n');
 			$ab_id = $this->get_lastid();
 
 			Header('Location: '
-				. $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
+				. $GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
 		}
 
 		function add_entry($fields)
@@ -551,7 +551,7 @@
 			}
 			if(!@$fields['owner'])
 			{
-				$fields['owner'] = (int)$GLOBALS['phpgw_info']['user']['account_id'];
+				$fields['owner'] = (int)$GLOBALS['egw_info']['user']['account_id'];
 			}
 			if(empty($fields['access']))
 			{
@@ -565,7 +565,7 @@
 			
 			if($id)
 			{
-				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'add', time());
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'add', time());
 			}
 
 			if($this->xmlrpc && !$id)
@@ -596,7 +596,7 @@
 				$ok = $this->so->update_entry($fields);
 				if($ok)
 				{
-					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $fields['ab_id'], 'modify', time());
+					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $fields['ab_id'], 'modify', time());
 				}
 			}
 			if($this->xmlrpc && !$ok)
@@ -626,7 +626,7 @@
 			if($this->check_perms($id,PHPGW_ACL_DELETE))
 			{
 				$this->so->delete_entry($id);
-				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
 			elseif($this->xmlrpc)
 			{
@@ -666,7 +666,7 @@
 
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
 		{
-			$GLOBALS['phpgw']->preferences->read_repository();
+			$GLOBALS['egw']->preferences->read_repository();
 			if(is_array($prefs))
 			{
 				/* _debug_array($prefs);exit; */
@@ -675,39 +675,39 @@
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
 					if($prefs[$pref] == 'on')
 					{
-						$GLOBALS['phpgw']->preferences->add('addressbook',$pref,'addressbook_on');
+						$GLOBALS['egw']->preferences->add('addressbook',$pref,'addressbook_on');
 					}
 					else
 					{
-						$GLOBALS['phpgw']->preferences->delete('addressbook',$pref);
+						$GLOBALS['egw']->preferences->delete('addressbook',$pref);
 					}
 				}
 			}
 			if(is_array($other))
 			{
-				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
+				$GLOBALS['egw']->preferences->delete('addressbook','mainscreen_showbirthdays');
 				if($other['mainscreen_showbirthdays'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
+					$GLOBALS['egw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
-				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
+				$GLOBALS['egw']->preferences->delete('addressbook','default_filter');
 				if($other['default_filter'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',$other['default_filter']);
+					$GLOBALS['egw']->preferences->add('addressbook','default_filter',$other['default_filter']);
 				}
 
-				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
+				$GLOBALS['egw']->preferences->delete('addressbook','autosave_category');
 				if($other['autosave_category'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
+					$GLOBALS['egw']->preferences->add('addressbook','autosave_category',True);
 				}
 			}
 
-			$GLOBALS['phpgw']->preferences->delete('addressbook','default_category');
-			$GLOBALS['phpgw']->preferences->add('addressbook','default_category',$fcat_id);
+			$GLOBALS['egw']->preferences->delete('addressbook','default_category');
+			$GLOBALS['egw']->preferences->add('addressbook','default_category',$fcat_id);
 
-			$GLOBALS['phpgw']->preferences->save_repository(True);
+			$GLOBALS['egw']->preferences->save_repository(True);
 		}
 
 		function list_methods($_type='xmlrpc')

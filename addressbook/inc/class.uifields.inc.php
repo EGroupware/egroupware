@@ -26,27 +26,27 @@
 		{
 			if (!$only_bo)
 			{
-				$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-				$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+				$GLOBALS['egw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+				$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			}
 			$this->config = CreateObject('phpgwapi.config','addressbook');
 		}
 
 		function index()
 		{
-			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
+			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
-			$GLOBALS['phpgw']->template->set_file(array(
+			$GLOBALS['egw']->template->set_file(array(
 				'field_list_t' => 'listfields.tpl',
 				'field_list'   => 'listfields.tpl'
 			));
-			$GLOBALS['phpgw']->template->set_block('field_list_t','field_list','list');
+			$GLOBALS['egw']->template->set_block('field_list_t','field_list','list');
 
 			$field = $_POST['field'];
 			$start = $_POST['start'] ? $_POST['start'] : $_GET['start'];
@@ -60,14 +60,14 @@
 				. '<input type="hidden" name="start"  value="' . $start  . '">' . "\n"
 				. '<input type="hidden" name="filter" value="' . $filter . '">' . "\n";
 
-			$GLOBALS['phpgw']->template->set_var('lang_action',lang('Custom Fields'));
-			$GLOBALS['phpgw']->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.add'));
-			$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
-			$GLOBALS['phpgw']->template->set_var('title_fields',lang('addressbook').' - '.lang('Custom Fields'));
-			$GLOBALS['phpgw']->template->set_var('lang_search',lang('Search'));
-			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
-			$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/admin/index.php'));
+			$GLOBALS['egw']->template->set_var('lang_action',lang('Custom Fields'));
+			$GLOBALS['egw']->template->set_var('add_action',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.add'));
+			$GLOBALS['egw']->template->set_var('lang_add',lang('Add'));
+			$GLOBALS['egw']->template->set_var('title_fields',lang('addressbook').' - '.lang('Custom Fields'));
+			$GLOBALS['egw']->template->set_var('lang_search',lang('Search'));
+			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'));
+			$GLOBALS['egw']->template->set_var('lang_done',lang('Done'));
+			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link('/admin/index.php'));
 
 			if(!$start)
 			{
@@ -82,28 +82,28 @@
 			$fields = $this->read_custom_fields($start,$limit,$query,$sort);
 			$total_records = count($fields);
 
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$GLOBALS['phpgw']->template->set_var('left',$GLOBALS['phpgw']->nextmatchs->left('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
-			$GLOBALS['phpgw']->template->set_var('right',$GLOBALS['phpgw']->nextmatchs->right('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
+			$GLOBALS['egw']->template->set_var('left',$GLOBALS['egw']->nextmatchs->left('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
+			$GLOBALS['egw']->template->set_var('right',$GLOBALS['egw']->nextmatchs->right('/index.php',$start,$total_records,'menuaction=addressbook.uifields.index'));
 
-			$GLOBALS['phpgw']->template->set_var('lang_showing',$GLOBALS['phpgw']->nextmatchs->show_hits($total_records,$start));
+			$GLOBALS['egw']->template->set_var('lang_showing',$GLOBALS['egw']->nextmatchs->show_hits($total_records,$start));
 
-			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
-			$GLOBALS['phpgw']->template->set_var('sort_field',$GLOBALS['phpgw']->nextmatchs->show_sort_order($sort,'name',$order,'/index.php',lang('Name')),'menuaction=addressbook.uifields.index');
-			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
-			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
+			$GLOBALS['egw']->template->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
+			$GLOBALS['egw']->template->set_var('sort_field',$GLOBALS['egw']->nextmatchs->show_sort_order($sort,'name',$order,'/index.php',lang('Name')),'menuaction=addressbook.uifields.index');
+			$GLOBALS['egw']->template->set_var('lang_edit',lang('Edit'));
+			$GLOBALS['egw']->template->set_var('lang_delete',lang('Delete'));
 
 			for($i=0;$i<count($fields);$i++)
 			{
-				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
-				$GLOBALS['phpgw']->template->set_var(tr_color,$tr_color);
+				$tr_color = $GLOBALS['egw']->nextmatchs->alternate_row_color($tr_color);
+				$GLOBALS['egw']->template->set_var(tr_color,$tr_color);
 
 				$field = $fields[$i]['name'];
 				$title = $fields[$i]['title'];
 
-				$GLOBALS['phpgw']->template->set_var('cfield',$title);
+				$GLOBALS['egw']->template->set_var('cfield',$title);
 
 				$params = array(
 					'menuaction' => 'addressbook.uifields.edit',
@@ -114,27 +114,27 @@
 					'order'      => $order,
 					'filter'     => $filter
 				);
-				$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$params));
-				$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
+				$GLOBALS['egw']->template->set_var('edit',$GLOBALS['egw']->link('/index.php',$params));
+				$GLOBALS['egw']->template->set_var('lang_edit_entry',lang('Edit'));
 
 				$params['menuaction'] = 'addressbook.uifields.delete';
-				$GLOBALS['phpgw']->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',$params));
-				$GLOBALS['phpgw']->template->set_var('lang_delete_entry',lang('Delete'));
-				$GLOBALS['phpgw']->template->parse('list','field_list',True);
+				$GLOBALS['egw']->template->set_var('delete',$GLOBALS['egw']->link('/index.php',$params));
+				$GLOBALS['egw']->template->set_var('lang_delete_entry',lang('Delete'));
+				$GLOBALS['egw']->template->parse('list','field_list',True);
 			}
 
-			$GLOBALS['phpgw']->template->parse('out','field_list_t',True);
-			$GLOBALS['phpgw']->template->p('out');
+			$GLOBALS['egw']->template->parse('out','field_list_t',True);
+			$GLOBALS['egw']->template->p('out');
 		}
 
 		function add()
 		{
-			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
+			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
 			$field      = stripslashes($_POST['field']);
@@ -144,9 +144,9 @@
 			$sort       = $_POST['sort'];
 			$submit     = $_POST['submit'];
 
-			$GLOBALS['phpgw']->template->set_file(array('form' => 'field_form.tpl'));
-			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
-			$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
+			$GLOBALS['egw']->template->set_file(array('form' => 'field_form.tpl'));
+			$GLOBALS['egw']->template->set_block('form','add','addhandle');
+			$GLOBALS['egw']->template->set_block('form','edit','edithandle');
 
 			if($submit)
 			{
@@ -169,49 +169,49 @@
 				}
 			}
 
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
 			if($errorcount)
 			{
-				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
+				$GLOBALS['egw']->template->set_var('message',$GLOBALS['egw']->common->error_list($error));
 			}
 			if(($submit) && (!$error) && (!$errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been added !', $field_name));
+				$GLOBALS['egw']->template->set_var('message',lang('Field %1 has been added !', $field_name));
 			}
 			if((!$submit) && (!$error) && (!$errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message','');
+				$GLOBALS['egw']->template->set_var('message','');
 			}
 
-			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Add Custom Field'));
-			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.add'));
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
-			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
+			$GLOBALS['egw']->template->set_var('title_fields',lang('Add Custom Field'));
+			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.add'));
+			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'));
+			$GLOBALS['egw']->template->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
 
-			$GLOBALS['phpgw']->template->set_var('lang_name',lang('Field name'));
+			$GLOBALS['egw']->template->set_var('lang_name',lang('Field name'));
 
-			$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
-			$GLOBALS['phpgw']->template->set_var('lang_reset',lang('Clear Form'));
-			$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
+			$GLOBALS['egw']->template->set_var('lang_add',lang('Add'));
+			$GLOBALS['egw']->template->set_var('lang_reset',lang('Clear Form'));
+			$GLOBALS['egw']->template->set_var('lang_done',lang('Done'));
 
-			$GLOBALS['phpgw']->template->set_var('field_name',$field_name);
+			$GLOBALS['egw']->template->set_var('field_name',$field_name);
 
-			$GLOBALS['phpgw']->template->set_var('edithandle','');
-			$GLOBALS['phpgw']->template->set_var('addhandle','');
-			$GLOBALS['phpgw']->template->pparse('out','form');
-			$GLOBALS['phpgw']->template->pparse('addhandle','add');
+			$GLOBALS['egw']->template->set_var('edithandle','');
+			$GLOBALS['egw']->template->set_var('addhandle','');
+			$GLOBALS['egw']->template->pparse('out','form');
+			$GLOBALS['egw']->template->pparse('addhandle','add');
 		}
 
 		function edit()
 		{
-			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
+			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
 			$field      = stripslashes($_POST['field'] ? $_POST['field'] : $_GET['field']);
@@ -223,12 +223,12 @@
 
 			if(!$field)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&sort=$sort&query=$query&start=$start"));
+				Header('Location: ' . $GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.index&sort=$sort&query=$query&start=$start"));
 			}
 
-			$GLOBALS['phpgw']->template->set_file(array('form' => 'field_form.tpl'));
-			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
-			$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
+			$GLOBALS['egw']->template->set_file(array('form' => 'field_form.tpl'));
+			$GLOBALS['egw']->template->set_block('form','add','addhandle');
+			$GLOBALS['egw']->template->set_block('form','edit','edithandle');
 
 			$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
 				. '<input type="hidden" name="query" value="' . $query . '">' . "\n"
@@ -249,20 +249,20 @@
 				}
 			}
 
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
 			if($errorcount)
 			{
-				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
+				$GLOBALS['egw']->template->set_var('message',$GLOBALS['egw']->common->error_list($error));
 			}
 			if(($submit) && (!$error) && (!$errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been updated !', $field_name));
+				$GLOBALS['egw']->template->set_var('message',lang('Field %1 has been updated !', $field_name));
 			}
 			if((!$submit) && (!$error) && (!$errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message','');
+				$GLOBALS['egw']->template->set_var('message','');
 			}
 
 			if($submit)
@@ -272,39 +272,39 @@
 			else
 			{
 				$fields = $this->read_custom_fields($start,$limit,$field);
-				$field  = $GLOBALS['phpgw']->strip_html($fields[0]['title']);
+				$field  = $GLOBALS['egw']->strip_html($fields[0]['title']);
 				$fn = $fields[0]['name'];
 			}
 
-			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Edit Custom Field'));
-			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.edit'));
-			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$fn&start=$start&query=$query&sort=$sort"));
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
+			$GLOBALS['egw']->template->set_var('title_fields',lang('Edit Custom Field'));
+			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.edit'));
+			$GLOBALS['egw']->template->set_var('deleteurl',$GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$fn&start=$start&query=$query&sort=$sort"));
+			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
 
-			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
-			$GLOBALS['phpgw']->template->set_var('lang_name',lang('Field name'));
+			$GLOBALS['egw']->template->set_var('hidden_vars',$hidden_vars);
+			$GLOBALS['egw']->template->set_var('lang_name',lang('Field name'));
 
-			$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
-			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
-			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
+			$GLOBALS['egw']->template->set_var('lang_done',lang('Done'));
+			$GLOBALS['egw']->template->set_var('lang_edit',lang('Edit'));
+			$GLOBALS['egw']->template->set_var('lang_delete',lang('Delete'));
 
-			$GLOBALS['phpgw']->template->set_var('field_name',$field);
+			$GLOBALS['egw']->template->set_var('field_name',$field);
 
-			$GLOBALS['phpgw']->template->set_var('edithandle','');
-			$GLOBALS['phpgw']->template->set_var('addhandle','');
+			$GLOBALS['egw']->template->set_var('edithandle','');
+			$GLOBALS['egw']->template->set_var('addhandle','');
 
-			$GLOBALS['phpgw']->template->pparse('out','form');
-			$GLOBALS['phpgw']->template->pparse('edithandle','edit');
+			$GLOBALS['egw']->template->pparse('out','form');
+			$GLOBALS['egw']->template->pparse('edithandle','edit');
 		}
 
 		function delete()
 		{
-			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
+			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
 			$field    = urldecode($_POST['field'] ? $_POST['field'] : $_GET['field']);
@@ -315,17 +315,17 @@
 
 			if(!$field)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
+				Header('Location: ' . $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'));
 			}
 
 			if($_POST['confirm'])
 			{
 				$this->save_custom_field($field);
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
+				Header('Location: ' . $GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
 			}
 			else
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 
 				$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
@@ -334,15 +334,15 @@
 					. '<input type="hidden" name="start" value="' . $start .'">' . "\n"
 					. '<input type="hidden" name="field" value="' . $field .'">' . "\n";
 
-				$GLOBALS['phpgw']->template->set_file(array('field_delete' => 'delete_common.tpl'));
-				$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this field?'));
+				$GLOBALS['egw']->template->set_file(array('field_delete' => 'delete_common.tpl'));
+				$GLOBALS['egw']->template->set_var('messages',lang('Are you sure you want to delete this field?'));
 
-				$nolinkf = $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&field_id=$field_id&start=$start&query=$query&sort=$sort");
+				$nolinkf = $GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.index&field_id=$field_id&start=$start&query=$query&sort=$sort");
 				$nolink = '<a href="' . $nolinkf . '">' . lang('No') . '</a>';
-				$GLOBALS['phpgw']->template->set_var('no',$nolink);
+				$GLOBALS['egw']->template->set_var('no',$nolink);
 
-				$yeslinkf = $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifieldsdelete&field_id=' . $field_id . '&confirm=True');
-				$yeslinkf = '<form method="POST" name="yesbutton" action="' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.delete') . '">'
+				$yeslinkf = $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifieldsdelete&field_id=' . $field_id . '&confirm=True');
+				$yeslinkf = '<form method="POST" name="yesbutton" action="' . $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.delete') . '">'
 					. $hidden_vars
 					. '<input type="hidden" name="field_id"  value="' . $field_id . '">'
 					. '<input type="hidden" name="confirm"   value="True">'
@@ -351,9 +351,9 @@
 
 				$yeslink = '<a href="' . $yeslinkf . '">' . lang('Yes') . '</a>';
 				$yeslink = $yeslinkf;
-				$GLOBALS['phpgw']->template->set_var('yes',$yeslink);
+				$GLOBALS['egw']->template->set_var('yes',$yeslink);
 
-				$GLOBALS['phpgw']->template->pparse('out','field_delete');
+				$GLOBALS['egw']->template->pparse('out','field_delete');
 			}
 		}
 

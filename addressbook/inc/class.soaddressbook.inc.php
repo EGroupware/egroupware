@@ -22,14 +22,14 @@
 
 		function soaddressbook()
 		{
-			if(!is_object($GLOBALS['phpgw']->contacts))
+			if(!is_object($GLOBALS['egw']->contacts))
 			{
-				$GLOBALS['phpgw']->contacts = CreateObject('phpgwapi.contacts');
+				$GLOBALS['egw']->contacts = CreateObject('phpgwapi.contacts');
 			}
-			$this->contacts = &$GLOBALS['phpgw']->contacts;
+			$this->contacts = &$GLOBALS['egw']->contacts;
 			$this->grants = &$this->contacts->grants;
 
-			/* _debug_array($GLOBALS['phpgw_info']); */
+			/* _debug_array($GLOBALS['egw_info']); */
 			/* _debug_array($grants); */
 		}
 

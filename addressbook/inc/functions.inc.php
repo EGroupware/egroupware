@@ -60,7 +60,7 @@
 		}
 
 		/* Get global and app-specific category listings */
-		$cats_link .= $GLOBALS['phpgw']->categories->formated_list('select','all',$cat_id,True);
+		$cats_link .= $GLOBALS['egw']->categories->formated_list('select','all',$cat_id,True);
 		$cats_link .= '</select>'."\n";
 		return $cats_link;
 	}
@@ -134,8 +134,8 @@
 	{
 		$i = 0; $j = 0;
 		$fields = array();
-		@reset($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
-		while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+		@reset($GLOBALS['egw_info']['user']['preferences']['addressbook']);
+		while(list($col,$descr) = @each($GLOBALS['egw_info']['user']['preferences']['addressbook']))
 		{
 			if( substr($col,0,6) == 'extra_' )
 			{
@@ -162,15 +162,15 @@
 
 	function save_custom_field($old='',$new='')
 	{
-		$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
+		$GLOBALS['egw']->preferences->read_repository($GLOBALS['egw_info']['user']['account_id']);
 		if($old)
 		{
-			$GLOBALS['phpgw']->preferences->delete('addressbook','extra_'.$old);
+			$GLOBALS['egw']->preferences->delete('addressbook','extra_'.$old);
 		}
 		if($new)
 		{
-			$GLOBALS['phpgw']->preferences->add('addressbook','extra_'.$new);
+			$GLOBALS['egw']->preferences->add('addressbook','extra_'.$new);
 		}
-		$GLOBALS['phpgw']->preferences->save_repository(1);
+		$GLOBALS['egw']->preferences->save_repository(1);
 	}
 ?>

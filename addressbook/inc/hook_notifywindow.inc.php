@@ -15,15 +15,15 @@
 	if($d1 == 'htt' || $d1 == 'ftp')
 	{
 		echo "Failed attempt to break in via an old Security Hole!<br>\n";
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		$GLOBALS['egw']->common->phpgw_exit();
 	}
 	unset($d1);
 
 	$tmp_app_inc = PHPGW_APP_INC;
-	define('PHPGW_APP_INC',$GLOBALS['phpgw']->common->get_inc_dir('addressbook'));
+	define('PHPGW_APP_INC',$GLOBALS['egw']->common->get_inc_dir('addressbook'));
 
-	if($GLOBALS['phpgw_info']['user']['apps']['addressbook']
-		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
+	if($GLOBALS['egw_info']['user']['apps']['addressbook']
+		&& $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
 		echo "\n<!-- Birthday info -->\n";
 
@@ -33,29 +33,29 @@
 			'n_family' => 'n_family',
 			'bday'     => 'bday'
 		);
-		$now = time() - ((60 * 60) * (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
-		$today = $GLOBALS['phpgw']->common->show_date($now,'n/d/');
+		$now = time() - ((60 * 60) * (int)$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
+		$today = $GLOBALS['egw']->common->show_date($now,'n/d/');
 //		echo $today."\n";
 
-		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
+		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
+				. $GLOBALS['egw']->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . "</td></tr>\n";
 		}
 
-		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
+		$tomorrow = $GLOBALS['egw']->common->show_date($now + 86400,'n/d/');
 //		echo $tomorrow."\n";
 
-		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
+		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
+				. $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . "</td></tr>\n";
 		}

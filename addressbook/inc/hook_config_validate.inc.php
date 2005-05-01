@@ -16,16 +16,16 @@
 	  Set a global flag to indicate this file was found by admin/config.php.
 	  config.php will unset it after parsing the form values.
 	*/
-	$GLOBALS['phpgw_info']['server']['found_validation_hook'] = True;
+	$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
 
 	/* Check a specific setting.  Name must match the setting. */
 	function ldap_contact_context($value='')
 	{
-		if($value == $GLOBALS['phpgw_info']['server']['ldap_context'])
+		if($value == $GLOBALS['egw_info']['server']['ldap_context'])
 		{
 			$GLOBALS['config_error'] = 'Contact context for ldap must be different from the context used for accounts';
 		}
-		elseif($value == $GLOBALS['phpgw_info']['server']['ldap_group_context'])
+		elseif($value == $GLOBALS['egw_info']['server']['ldap_group_context'])
 		{
 			$GLOBALS['config_error'] = 'Contact context for ldap must be different from the context used for groups';
 		}

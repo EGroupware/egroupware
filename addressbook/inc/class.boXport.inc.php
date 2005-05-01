@@ -35,7 +35,7 @@
 
 		function boXport($session=False)
 		{
-			$this->contacts = &$GLOBALS['phpgw']->contacts;
+			$this->contacts = &$GLOBALS['egw']->contacts;
 			$this->so = CreateObject('addressbook.soaddressbook');
 			if($session)
 			{
@@ -97,13 +97,13 @@
 			if($this->use_session)
 			{
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
+				$GLOBALS['egw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
+			$data = $GLOBALS['egw']->session->appsession('session_data','addressbook');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
@@ -349,7 +349,7 @@
 
 			// Read in user custom fields, if any
 			$customfields = array();
-			while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+			while(list($col,$descr) = @each($GLOBALS['egw_info']['user']['preferences']['addressbook']))
 			{
 				if(substr($col,0,6) == 'extra_')
 				{
@@ -391,7 +391,7 @@
 			// Here, buffer becomes a string suitable for printing
 			$buffer = $contacts->export_end_file($buffer);
 
-			$tsvfilename = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $tsvfilename;
+			$tsvfilename = $GLOBALS['egw_info']['server']['temp_dir'] . SEP . $tsvfilename;
 
 			return $buffer;
 		}

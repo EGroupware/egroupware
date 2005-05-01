@@ -23,33 +23,33 @@
 	display_sidebox can be called as much as you like
  */
 
-	$menu_title = $GLOBALS['phpgw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
+	$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 	$file = Array(
-		'Add'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
+		'Add'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
 		'_NewLine_', // give a newline
-		'import contacts' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import'),
-		'export contacts' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export')
+		'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
+		'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export')
 	);
 	display_sidebox($appname,$menu_title,$file);
 
-	if($GLOBALS['phpgw_info']['user']['apps']['preferences'])
+	if($GLOBALS['egw_info']['user']['apps']['preferences'])
 	{
 		$menu_title = lang('Preferences');
 		$file = Array(
-			'Addressbook preferences'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
-			'Grant Access'=>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=addressbook'),
-			'Edit Categories' =>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True')
+			'Addressbook preferences'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
+			'Grant Access'=>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=addressbook'),
+			'Edit Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True')
 		);
 		display_sidebox($appname,$menu_title,$file);
 	}
 
-	if ($GLOBALS['phpgw_info']['user']['apps']['admin'])
+	if ($GLOBALS['egw_info']['user']['apps']['admin'])
 	{
 		$menu_title = lang('Administration');
 		$file = Array(
-			'Configuration'=>$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=addressbook'),
-			'Custom Fields'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'),
-			'Global Categories' =>$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=addressbook')
+			'Configuration'=>$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=addressbook'),
+			'Custom Fields'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'),
+			'Global Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index&appname=addressbook')
 		);
 		display_sidebox($appname,$menu_title,$file);
 	}
