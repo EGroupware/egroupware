@@ -523,6 +523,7 @@ class so_sql
 				}
 				else	// only the specified columns
 				{
+					if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 					$cols[$col] = $col;
 				}
 			}
