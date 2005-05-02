@@ -60,6 +60,8 @@
 			$this->boetemplate($name,$load_via);
 
 			$this->xslt = is_object($GLOBALS['phpgw']->xslttpl);
+			
+			$this->sitemgr = is_object($GLOBALS['Common_BO']);
 		}
 
 		/**
@@ -134,9 +136,14 @@
 					$this->html->input_hidden('submit_button','',False).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
-					),'/etemplate/process_exec.php?menuaction='.$method,'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
+					),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
+					'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']); 
-			if (!$this->xslt)
+			if ($this->sitemgr)
+			{
+				
+			}
+			elseif (!$this->xslt)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
 				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && (int) $output_mode != 1)	// not just returning the html
@@ -156,7 +163,7 @@
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
 			}
 
-			if ((int) $output_mode != 1)	// NOT returning html
+			if (!$this->sitemgr && (int) $output_mode != 1)	// NOT returning html
 			{
 				if (!$this->xslt)
 				{
@@ -204,9 +211,10 @@
 				'output_mode' => $output_mode,
 				'session_used' => 0,
 				'ignore_validation' => $ignore_validation,
+				'method' => $method,
 			),$id);
 
-			if ((int) $output_mode == 1)	// return html
+			if ($this->sitemgr || (int) $output_mode == 1)	// return html
 			{
 					return $html;
 			}
@@ -247,6 +255,8 @@
 		 * it would set some constants to etemplate instead of the calling app. 
 		 * process_exec then calls process_show for the eTemplate (to adjust the content of the _POST) and
 		 * ExecMethod's the given callback from the app with the content of the form as first argument.
+		 *
+		 * @return mixed false if no sessiondata and $this->sitemgr, else the returnvalue of exec of the method-calls
 		 */
 		function process_exec()
 		{
@@ -256,6 +266,7 @@
 
 			if (!$_POST['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
 			{
+				if ($this->sitemgr) return false;
 				//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 				// this prevents an empty screen, if the sessiondata gets lost somehow
 				$this->location(array('menuaction' => $_GET['menuaction']));
@@ -308,13 +319,13 @@
 					$GLOBALS['phpgw_info']['flags']['app_header'] = $session_data['app_header'];
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
-				$this->exec($_GET['menuaction'],$session_data['content'],$session_data['sel_options'],
+				return $this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
 					$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],
 					$session_data['ignore_validation'],$content);
 			}
 			else
 			{
-				ExecMethod($_GET['menuaction'],$this->complete_array_merge($session_data['preserv'],$content));
+				return ExecMethod($session_data['method'],$this->complete_array_merge($session_data['preserv'],$content));
 			}
 		}
 
