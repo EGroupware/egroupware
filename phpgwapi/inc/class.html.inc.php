@@ -692,7 +692,7 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	 *
 	 * @param string $content of the form, if '' only the opening tag gets returned
 	 * @param array $hidden_vars array with name-value pairs for hidden input fields
-	 * @param string $url eGW relative URL, will be run through the link function
+	 * @param string $url eGW relative URL, will be run through the link function, if empty the current url is used
 	 * @param string/array $url_vars parameters for the URL, send to link function too
 	 * @param string $name name of the form, defaul ''=none
 	 * @param string $options attributes for the tag, default ''=none
@@ -701,7 +701,8 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	 */
 	function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
 	{
-		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\" $options>\n";
+		$url = $url ? $this->link($url,$url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"$url\" $options>\n";
 		$html .= $this->input_hidden($hidden_vars);
 		
 		if ($content)
