@@ -21,7 +21,8 @@ delete categories	preferences	es-es	Borrar categorías
 description can not exceed 255 characters in length !	preferences	es-es	La descripción no puede exceder de 255 caracteres
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	es-es	¿Prefiere el formato de 24 horas o el de 12 con am/pm detrás?
 edit custom fields	preferences	es-es	Editar campos personalizados
-enter your new password	preferences	es-es	Introduzca su nueva contraseña
+enter your new password	preferences	es-es	Introduzca la contraseña nueva
+enter your old password	preferences	es-es	Introduzca la contraseña anterior
 error: there was a problem finding the preference file for %1 in %2	preferences	es-es	Error: hubo un problema al buscar el fichero de preferencias para %1 en %2
 failed to change password.  please contact your administrator.	preferences	es-es	Fallo al cambiar la contraseña. Por favor, póngase en contacto con su administrador.
 forced preferences	preferences	es-es	Preferencias forzadas
@@ -62,6 +63,7 @@ show text on navigation icons	preferences	es-es	Mostrar descripción sobre los ic
 show_more_apps	common	es-es	Mostrar más aplicaciones
 text only	preferences	es-es	Sólo texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en eGroupWare o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
+the old password is not correct	preferences	es-es	La contraseña anterior no es correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-es	La caja de selección muestra todos los usuarios disponibles (puede ser muy lento en grandes instalaciones con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o grupo.
 the two passwords are not the same	preferences	es-es	Las dos contraseñas son distintas
 theme (colors/fonts) selection	preferences	es-es	Selección de temas (colores/tipos de letra)

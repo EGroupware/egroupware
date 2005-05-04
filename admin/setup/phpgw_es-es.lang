@@ -313,6 +313,7 @@ please select	admin	es-es	Por favor, seleccione
 postfix with ldap	admin	es-es	Postfix con LDAP
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
+qouta size in mbyte	admin	es-es	tamaño de la cuota en MBytes
 quota settings	admin	es-es	configuración de la cuota
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos
