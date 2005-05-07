@@ -297,7 +297,7 @@
 			
 			foreach($this->db_cols as $db_col => $col)
 			{
-				if ($col != 'data') $this->$col = is_array($name) ? $name[$col] : $$col;
+				if ($col != 'data') $this->$col = is_array($name) ? (string) $name[$col] : $$col;
 			}
 			if ($this->template == 'default')
 			{
@@ -368,43 +368,38 @@
 			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
 
-			$sql = "SELECT * FROM $this->table_name WHERE et_name='".$this->db->db_addslashes($this->name)."' AND ";
+			$where = array(
+				'et_name' => $this->name,
+			);
 			if (is_array($name))
 			{
 				$template = $name['template'];
 			}
 			if ($template == 'default')
 			{
-				$sql .= "(et_template='".$this->db->db_addslashes($pref_templ)."' OR et_template='')";
+				$where[] = '(et_template='.$this->db->quote($pref_templ)." OR et_template='')";
 			}
 			else
 			{
-				$sql .= "et_template='".$this->db->db_addslashes($this->template)."'";
+				$where['et_template'] = $this->template;
 			}
-			$sql .= ' AND ';
 			if (is_array($name))
 			{
 				$lang = $name['lang'];
 			}
 			if ($lang == 'default' || $name['lang'] == 'default')
 			{
-				$sql .= "(et_lang='".$this->db->db_addslashes($pref_lang)."' OR et_lang='')";
+				$where[] = '(et_lang='.$this->db->quote($pref_lang)." OR et_lang='')";
 			}
 			else
 			{
-				$sql .= "et_lang='".$this->db->db_addslashes($this->lang)."'";
+				$where['et_lang'] = $this->lang;
 			}
 			if ($this->version != '')
 			{
-				$sql .= "AND et_version='".$this->db->db_addslashes($this->version)."'";
+				$where['et_version'] = $this->version;
 			}
-			$sql .= " ORDER BY et_lang DESC,et_template DESC,et_version DESC";
-
-			if ($this->debug == $this->name)
-			{
-				echo "<p>soetemplate::read: sql='$sql'</p>\n";
-			}
-			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->select($this->table_name,'*',$where,__LINE__,__FILE__,false,'ORDER BY et_lang DESC,et_template DESC,et_version DESC');
 			if (!$this->db->next_record())
 			{
 				$version = $this->version;
@@ -495,6 +490,17 @@
 		}
 
 		/**
+		 * Convert the usual *,? wildcards to the sql ones and quote %,_
+		 *
+		 * @param string $pattern
+		 * @return string
+		 */
+		function sql_wildcards($pattern)
+		{
+			return str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$pattern);
+		}
+
+		/**
 		 * Lists the eTemplates matching the given criteria, sql wildcards % and _ possible
 		 *
 		 * @param string $name name of the eTemplate or array with the values for all keys
@@ -510,50 +516,39 @@
 			{
 				$this->test_import($this->name);	// import updates in setup-dir
 			}
-			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
-
 			if (is_array($name))
 			{
-				$template = $name['template'];
-				$lang = $name['lang'];
-				$group = $name['group'];
-				$version = $name['version'];
-				$name = $name['name'];
+				$template = (string) $name['template'];
+				$lang     = (string) $name['lang'];
+				$group    = (int) $name['group'];
+				$version  = (string) $name['version'];
+				$name     = (string) $name['name'];
 			}
-			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->table_name WHERE et_name LIKE '".$this->db->db_addslashes($name)."%'";
-
+			$where[] = 'et_name LIKE '.$this->db->quote($this->sql_wildcards($name).'%');
 			if ($template != '' && $template != 'default')
 			{
-				$sql .= " AND et_template LIKE '".$this->db->db_addslashes($template)."%'";
+				$where[] = 'et_template LIKE '.$this->db->qoute($this->sql_wildcards($template).'%');
 			}
 			if ($lang != '' && $lang != 'default')
 			{
-				$sql .= " AND et_lang LIKE '".$this->db->db_addslashes($lang)."%'";
+				$where[] = 'et_lang LIKE '.$this->db->qoute($this->sql_wildcards($lang).'%');
 			}
 			if ($this->version != '')
 			{
-				$sql .= " AND et_version LIKE '".$this->db->db_addslashes($version)."%'";
+				$where[] = 'et_version LIKE '.$this->db->qoute($this->sql_wildcards($version).'%');
 			}
-			$sql .= " ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC";
-
-			$tpl = new soetemplate;
-			$tpl->db->query($sql,__LINE__,__FILE__);
+			$this->db->select($this->table_name,'et_name,et_template,et_lang,et_group,et_version',$where,__LINE__,__FILE__,false,'ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC');
 			$result = array();
-			while ($tpl->db->next_record())
+			while (($row = $this->db->row(true,'et_')))
 			{
-				if ($tpl->db->f('et_lang') != '##')	// exclude or import-time-stamps
+				if ($row['lang'] != '##')	// exclude or import-time-stamps
 				{
-					$tpl->db2obj();
-					
-					$result[] = $tpl->as_array();
+					$result[] = $row;
 				}
 			}
 			if ($this->debug)
 			{
-				echo "<p>soetemplate::search('$name') sql='$sql'</p>\n<pre>\n";
-				print_r($result);
-				echo "</pre>\n";
+				_debug_array($result);
 			}
 			return $result;
 		}
@@ -804,6 +799,8 @@
 			{
 				$this->modified = time();
 			}
+			if (is_null($this->group) && !is_int($this->group)) $this->group = 0;
+			
 			$this->db->insert($this->table_name,$this->as_array(3,true),$this->as_array(-1,true),__LINE__,__FILE__);
 
 			$rows = $this->db->affected_rows();
