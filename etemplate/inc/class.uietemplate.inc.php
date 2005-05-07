@@ -42,6 +42,10 @@
 		var $xslt = false;	/* do we run in the xslt framework (true) or the regular eGW one (false) */
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 		var $public_functions = array('process_exec' => True);
+		/**
+		 * @var int $innerWidth inner width of browser window
+		 */
+		var $innerWidth;
 
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -62,6 +66,16 @@
 			$this->xslt = is_object($GLOBALS['phpgw']->xslttpl);
 			
 			$this->sitemgr = is_object($GLOBALS['Common_BO']);
+			
+			if (($this->innerWidth = (int) $_POST['innerWidth']))
+			{
+				$GLOBALS['egw']->session->appsession('innerWidth','etemplate',$this->innerWidth);
+			}
+			elseif (!($this->innerWidth = (int) $GLOBALS['egw']->session->appsession('innerWidth','etemplate')))
+			{
+				$this->innerWidth = 1018;	// default width for an assumed screen-resolution of 1024x768
+			}
+			//echo "<p>_POST[innerWidth]='$_POST[innerWidth]', innerWidth=$this->innerWidth</p>\n";
 		}
 
 		/**
@@ -133,11 +147,16 @@
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
 			$html = $this->html->form($this->include_java_script(1).
-					$this->html->input_hidden('submit_button','',False).
+					$this->html->input_hidden(array(
+						'submit_button' => '',
+						'innerWidth'    => '',
+					),'',False).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
 					),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
-					'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
+					'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options'].
+					// dont set the width of popups!
+					($output_mode == 2 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
 			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']); 
 			if ($this->sitemgr)
 			{
@@ -1083,8 +1102,9 @@
 						$img = $image;
 						list($app) = explode('.',$this->name);
 					}
-					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'border="0"');
-					list($extra_link,$extra_link_target) = explode(',',$cell['size']);
+					list($extra_link,$extra_link_target,$imagemap) = explode(',',$cell['size']);
+					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
+						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':''));
 					$extra_label = False;
 					break;
 				case 'file':
@@ -1252,7 +1272,7 @@
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$accesskey = $accesskey[1];
 				}
-				if ($label && !$readonly && $type != 'label' && ($accesskey || $label_for || $cell['name']))
+				if ($label && !$readonly && ($accesskey || $label_for || $type != 'label' && $cell['name']))
 				{
 					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
 						$form_name.($set_val?"[$set_val]":''),$accesskey);
@@ -1549,12 +1569,11 @@ if (document.getElementById) {
 </script>
 ';
 			}
-
 			// here are going all the necesarry functions if javascript is enabled
 			if ($what & 2 && $this->java_script(True))
 			{
 				$js .= '<script type="text/javascript" src="'.
-					$GLOBALS['phpgw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js"></script>';
+					$GLOBALS['phpgw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js"></script>'."\n";
 			}
 			return $js;
 		}
