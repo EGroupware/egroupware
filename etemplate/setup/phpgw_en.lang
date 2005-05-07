@@ -239,6 +239,7 @@ paste	etemplate	en	Paste
 path	etemplate	en	Path
 please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
 pm	etemplate	en	pm
+popup	etemplate	en	Popup
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.editor.styles" template="" lang="" group="0" version="1.0.1.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" class="redItalic" no_lang="1"/>
+				</row>
+				<row>
+					<menulist>
+						<menupopup label="CSS-Styles" id="from" onchange="1" no_lang="1" statustext=" edit embeded CSS styles or of the applications app.css file"/>
+					</menulist>
+				</row>
+				<row>
+					<textbox multiline="true" rows="22" cols="70" id="styles"/>
+				</row>
+				<row>
+					<hbox>
+						<button label="Save" id="save" statustext="save the changes made and close the window"/>
+						<button label="Apply" id="apply" statustext="applies the changes made"/>
+						<button label="Cancel" id="cancel" statustext="closes the window without saving the changes" onclick="window.close();"/>
+						<html id="java_script"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

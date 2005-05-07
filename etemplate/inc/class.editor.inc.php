@@ -76,16 +76,15 @@
 			'auto' => 'auto'
 		);
 		var $onclick_types = array(
-			'' => 'nothing',
+			''        => 'nothing',
 			'confirm' => 'confirm',
-			'custom' => 'custom',
+			'popup'   => 'popup',
+			'custom'  => 'custom',
 		);
 		var $extensions = '';
 
 		var $public_functions = array
 		(
-			'old_editor'   => True,
-			'process_edit' => True,
 			'delete'       => True,
 			'edit'         => True,
 			'widget'       => True,
@@ -97,435 +96,6 @@
 			$this->etemplate =& CreateObject('etemplate.etemplate');
 
 			$this->extensions = $GLOBALS['phpgw']->session->appsession('extensions','etemplate');
-		}
-
-		function old_editor($msg = '',$xml='',$xml_label='')
-		{
-			if (isset($_GET['name']) && !$this->etemplate->read($_GET))
-			{
-				$msg .= lang('Error: Template not found !!!');
-			}
-			if (!is_array($this->extensions))
-			{
-				if (($extensions = $this->scan_for_extensions()))
-				{
-					$msg .= lang('Extensions loaded:') . ' ' . $extensions;
-					$msg_ext_loaded = True;
-				}
-			}
-			list($app) = explode('.',$this->etemplate->name);
-			if ($app && $app != 'etemplate')
-			{
-				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
-
-				if (($extensions = $this->scan_for_extensions($app)))
-				{
-					$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . $extensions;
-				}
-			}
-			$content = $this->etemplate->as_array() + array(
-				'cols' => $this->etemplate->cols,
-				'msg' => $msg,
-				'xml_label' => $xml_label,
-				'xml' => $xml ? '<pre>'.$this->etemplate->html->htmlspecialchars($xml)."</pre>\n" : '',
-			);
-			foreach(explode(',',$this->etemplate->size) as $n => $opt)
-			{
-				$content['options'][$this->options[$n]] = $opt;
-			}
-			$cols_spanned = array();
-			reset($this->etemplate->data);
-			if (isset($this->etemplate->data[0]))
-			{
-				each($this->etemplate->data);
-			}
-			$no_button = array();
-			while (list($row,$cols) = each($this->etemplate->data))
-			{
-				if ($this->etemplate->rows <= 1)
-				{
-					$no_button["Row$row"]['delete_row[1]'] = True;
-				}
-				if ($row > 1)
-				{
-					$no_button["Row$row"]['insert_row[0]'] = True;
-				}
-				$content["Row$row"] = array(
-					'height' => array("h$row" => $this->etemplate->data[0]["h$row"]),
-					'class'  => array("c$row" => $this->etemplate->data[0]["c$row"])
-				);
-				for ($spanned = $c = 0; $c < $this->etemplate->cols; ++$c)
-				{
-					if (!(list($col,$cell) = each($cols)))
-					{
-						$cell = $this->etemplate->empty_cell();	// if cell gots lost, create it empty
-						$col = $this->etemplate->num2chrs($c);
-					}
-					if (--$spanned > 0)	// preserv spanned cells
-					{
-						while(list($k,$v) = each($cell))		// so spanned (not shown) cells got
-						{                                   // reported back like regular one
-							$cols_spanned[$col.$row][$k] = $v;
-						}
-					}
-					else
-					{
-						$spanned = $cell['span'] == 'all' ? $this->etemplate->cols-$c : 0+$cell['span'];
-						
-						switch($cell['type'])	// load a cell-type-specific tpl
-						{
-							case 'vbox':
-							case 'hbox':
-							case 'deck':
-							case 'box':
-								$cell['cell_tpl'] = '.vbox';
-								break;
-							case 'groupbox':
-								$cell['cell_tpl'] = '.groupbox';
-								break;
-						}
-						$content[$col.$row] = $cell;
-					}
-					if ($row == 1)
-					{
-						$content["Col$col"] = array('width' => array($col => $this->etemplate->data[0][$col]));
-						if ($this->etemplate->cols <= 1)
-						{
-							$no_button["Col$col"]['delete_col[1]'] = True;
-						}
-						if ($c > 0)
-						{
-							$no_button["Col$col"]['insert_col[0]'] = True;
-						}
-					}
-				}
-			}
-			$no_button['ColA']['exchange_col[1]'] = $no_button['Row1']['exchange_row[1]'] = True;
-
-			if ($this->debug)
-			{
-				echo 'editor.edit: content ='; _debug_array($content);
-			}
-			$editor =& new etemplate('etemplate.editor');
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
-			$editor->exec('etemplate.editor.process_edit',$content,
-				array(
-					'type' => array_merge($this->etemplate->types,$this->extensions),
-					'align' => $this->aligns,
-					'overflow' => $this->overflows
-				),
-				$no_button,$cols_spanned);
-		}
-
-		/**
-		 * swap the content of two variables
-		 *
-		 * @param mixed &$a
-		 * @param mixed &$b
-		 */
-		function swap(&$a,&$b)
-		{
-			$t = $a; $a = $b; $b = $t;
-		}
-
-		function process_edit($content=null)
-		{
-			if ($this->debug)
-			{
-				echo "editor.process_edit: content ="; _debug_array($content);
-			}
-			$this->etemplate->init($content);
-
-			$opts = array();
-			reset($this->options);
-			while (list(,$opt) = each($this->options))
-			{
-				$opts[$opt] = $content['options'][$opt];
-			}
-			$this->etemplate->size = ereg_replace(',*$','',implode(',',$opts));
-			$this->etemplate->style = $content['style'];
-
-			$names = array('width','height','class');
-			$opts = array();
-			while (list(,$opt) = each($names))
-			{
-				if (is_array($content[$opt]))
-				{
-					$opts += $content[$opt];
-				}
-			}
-			$this->etemplate->data = array($opts);
-			$row = 1; $col = 0;
-			while (isset($content[$name = $this->etemplate->num2chrs($col) . $row]))
-			{
-				$cell = &$content[$name];
-				switch ($cell['type'])
-				{
-					case 'vbox':
-					case 'hbox':
-					case 'deck':
-					case 'groupbox':
-					case 'box':
-						// default size for all boxes is 2, minimum size is 1 for a (group)box and 2 for the others
-						if ($cell['size'] < 2 && ($cell['type'] != 'groupbox' || $cell['type'] != 'box' || !$cell['size']))
-						{
-							$cell['size'] = 2;
-						}
-						for ($n = 1; $n <= $cell['size']; ++$n)	// create new rows
-						{
-							if (!isset($cell[$n]) || !is_array($cell[$n]))
-							{
-								$cell[$n] = $this->etemplate->empty_cell();
-							}
-						}
-						while (isset($cell[$n]))	// unset not longer used rows
-						{
-							unset($cell[$n++]);
-						}
-						break;
-				}
-				$row_data[$this->etemplate->num2chrs($col++)] = $cell;
-
-				if (!isset($content[$name = $this->etemplate->num2chrs($col) . $row]))	// try new row
-				{
-					if ($col > $cols)
-					{
-						$cols = $col;
-					}
-					$this->etemplate->data[$row] = $row_data;
-					++$row; $col = 0; $row_data = array();
-				}
-			}
-			$this->etemplate->rows = $row - 1;
-			$this->etemplate->cols = $cols;
-
-			if (isset($content['insert_row']))
-			{
-				list($row) = each($content['insert_row']);
-				$opts = $this->etemplate->data[0];		// move height + class options of rows
-				for ($r = $this->etemplate->rows; $r > $row; --$r)
-				{
-					$opts['c'.(1+$r)] = $opts["c$r"]; unset($opts["c$r"]);
-					$opts['h'.(1+$r)] = $opts["h$r"]; unset($opts["h$r"]);
-				}
-				$this->etemplate->data[0] = $opts;
-				$old = $this->etemplate->data;	// move rows itself
-				$row_data = array();
-				for ($col = 0; $col < $this->etemplate->cols; ++$col)
-				{
-					$row_data[$this->etemplate->num2chrs($col)] = $this->etemplate->empty_cell();
-				}
-				$this->etemplate->data[++$row] = $row_data;
-				for (; $row <= $this->etemplate->rows; ++$row)
-				{
-					$this->etemplate->data[1+$row] = $old[$row];
-				}
-				++$this->etemplate->rows;
-			}
-			elseif (isset($content['insert_col']))
-			{
-				list($insert_col) = each($content['insert_col']);
-				for ($row = 1; $row <= $this->etemplate->rows; ++$row)
-				{
-					$old = $row_data = $this->etemplate->data[$row];
-					$row_data[$this->etemplate->num2chrs($insert_col)] = $this->etemplate->empty_cell();
-					for ($col = $insert_col; $col < $this->etemplate->cols; ++$col)
-					{
-						$row_data[$this->etemplate->num2chrs(1+$col)] = $old[$this->etemplate->num2chrs($col)];
-					}
-					$this->etemplate->data[$row] = $row_data;
-				}
-				$width = $this->etemplate->data[0];
-				for ($col = $this->etemplate->cols; $col > $insert_col; --$col)
-				{
-					$width[$this->etemplate->num2chrs($col)] = $width[$this->etemplate->num2chrs($col-1)];
-				}
-				unset($width[$this->etemplate->num2chrs($insert_col)]);
-				$this->etemplate->data[0] = $width;
-
-				++$this->etemplate->cols;
-			}
-			elseif (isset($content['exchange_col']))
-			{
-				list($exchange_col) = each($content['exchange_col']);
-				$right = $this->etemplate->num2chrs($exchange_col-1);
-				$left  = $this->etemplate->num2chrs($exchange_col-2);
-
-				for ($row = 1; $row <= $this->etemplate->rows; ++$row)
-				{
-					$this->swap($this->etemplate->data[$row][$left],$this->etemplate->data[$row][$right]);
-				}
-				$this->swap($this->etemplate->data[0][$left],$this->etemplate->data[0][$right]);
-			}
-			elseif (isset($content['exchange_row']))
-			{
-				list($er2) = each($content['exchange_row']); $er1 = $er2-1;
-				$this->swap($this->etemplate->data[$er1],$this->etemplate->data[$er2]);
-				$this->swap($this->etemplate->data[0]["c$er1"],$this->etemplate->data[0]["c$er2"]);
-				$this->swap($this->etemplate->data[0]["h$er1"],$this->etemplate->data[0]["h$er2"]);
-			}
-			elseif (isset($content['delete_row']))
-			{
-				list($delete_row) = each($content['delete_row']);
-				$opts = $this->etemplate->data[0];
-				for ($row = $delete_row; $row < $this->etemplate->rows; ++$row)
-				{
-					$this->etemplate->data[$row] = $this->etemplate->data[1+$row];
-					$opts["c$row"] = $opts['c'.(1+$row)];
-					$opts["h$row"] = $opts['h'.(1+$row)];
-				}
-				unset($this->etemplate->data[$this->etemplate->rows--]);
-				$this->etemplate->data[0] = $opts;
-			}
-			elseif (isset($content['delete_col']))
-			{
-				list($delete_col) = each($content['delete_col']);
-				for ($row = 1; $row <= $this->etemplate->rows; ++$row)
-				{
-					$row_data = $this->etemplate->data[$row];
-					for ($col = $delete_col; $col < $this->etemplate->cols; ++$col)
-					{
-						$row_data[$this->etemplate->num2chrs($col-1)] = $row_data[$this->etemplate->num2chrs($col)];
-					}
-					unset($row_data[$this->etemplate->num2chrs($this->etemplate->cols-1)]);
-					$this->etemplate->data[$row] = $row_data;
-				}
-				$width = $this->etemplate->data[0];
-				for ($col = $delete_col; $col < $this->etemplate->cols; ++$col)
-				{
-					$width[$this->etemplate->num2chrs($col-1)] = $width[$this->etemplate->num2chrs($col)];
-				}
-				$this->etemplate->data[0] = $width;
-				--$this->etemplate->cols;
-			}
-			if ($this->debug)
-			{
-				echo 'editor.process_edit: rows='.$this->etemplate->rows.', cols='.
-					$this->etemplate->cols.', data ='; _debug_array($this->etemplate->data);
-			}
-			// Execute the action resulting from the submit-button
-			if ($content['read'])
-			{
-				if ($content['version'] != '')
-				{
-					$save_version = $content['version'];
-					unset($content['version']);
-					$this->etemplate->read($content);
-					$newest_version = $this->etemplate->version;
-					$content['version'] = $save_version;
-				}
-				if (!$this->etemplate->read($content))
-				{
-					$content['version'] = '';	// trying it without version
-					if ($this->etemplate->read($content))
-					{
-						$msg = lang('only an other Version found !!!');
-					}
-					else
-					{
-						$result = $this->etemplate->search($content);
-						if (count($result) > 1)
-						{
-							return $this->list_result(array('result' => $result),'','old_editor');
-						}
-						elseif (!count($result) || !$this->etemplate->read($result[0]))
-						{
-							$msg = lang('Error: Template not found !!!');
-						}
-						elseif ($content['name'] == $result[0]['name'])
-						{
-							$msg = lang('only an other Version found !!!');
-						}
-					}
-				}
-				elseif ($newest_version != '' && $this->etemplate->version != $newest_version)
-				{
-					$msg = lang("newer version '%1' exists !!!",$newest_version);
-				}
-			}
-			elseif ($content['delete'])
-			{
-				$this->delete('','old_editor');
-				return;
-			}
-			elseif ($content['dump'])
-			{
-				list($name) = explode('.',$content['name']);
-				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
-				{
-					$msg = lang('Application name needed to write a langfile or dump the eTemplates !!!');
-				}
-				else
-				{
-					$msg = $this->etemplate->dump4setup($content['name']);
-				}
-			}
-			elseif ($content['save'])
-			{
-				if (!$this->etemplate->modified_set || !$this->etemplate->modified)
-				{
-					$this->etemplate->modified = time();
-				}
-				$ok = $this->etemplate->save(trim($content['name']),trim($content['template']),trim($content['lang']),intval($content['group']),trim($content['version']));
-				$msg = $ok ? lang('Template saved') : lang('Error: while saveing !!!');
-			}
-			elseif ($content['show'])
-			{
-				$this->edit();
-				return;
-			}
-			elseif ($content['langfile'])
-			{
-				list($name) = explode('.',$content['name']);
-				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
-				{
-					$msg = lang('Application name needed to write a langfile or dump the eTemplates !!!');
-				}
-				else
-				{
-					$additional = array();
-					if ($name == 'etemplate')
-					{
-						$additional = $this->etemplate->types + $this->extensions + $this->aligns + $this->valigns +
-							$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu + $this->onclick_types;
-					}
-					else	// try to call the writeLangFile function of the app's ui-layer
-					{
-						foreach(array('ui'.$name,'ui',$name,'bo'.$name) as $class)
-						{
-							if (file_exists(EGW_INCLUDE_ROOT.'/'.$name.'/inc/class.'.$class.'.inc.php') &&
-								($ui =& CreateObject($name.'.'.$class)) && is_object($ui))
-							{
-								break;
-							}
-						}
-						if (is_object($ui) && @$ui->public_functions['writeLangFile'])
-						{
-							$msg = "$class::writeLangFile: ".$ui->writeLangFile();
-						}
-						unset($ui);
-					}
-					if (empty($msg))
-					{
-						$msg = $this->etemplate->writeLangFile($name,'en',$additional);
-					}
-				}
-			}
-			elseif ($content['export_xml'])
-			{
-				$msg = $this->export_xml($xml,$xml_label);
-			}
-			elseif ($content['import_xml'])
-			{
-				$msg = $this->import_xml($content['file']['tmp_name'],$xml);
-				$xml_label = $content['file']['name'];
-			}
-			elseif ($content['db_tools'])
-			{
-				ExecMethod('etemplate.db_tools.edit');
-				return;
-			}
-			$this->old_editor($msg,$xml,$xml_label);
 		}
 
 		function export_xml(&$xml,&$xml_label)
@@ -590,7 +160,7 @@
 		{
 			if ($file == 'none' || $file == '' || !($f = fopen($file,'r')))
 			{
-				return lang('no filename given or selected via Browse...');
+				return lang('no filename given or selected via Browse...')."file='$file'";
 			}
 			$xml = fread ($f, filesize ($file));
 			fclose($f);
@@ -617,71 +187,7 @@
 			return $imported;
 		}
 
-		function delete($content='',$back = 'edit')
-		{
-			if ($this->debug)
-			{
-				echo "delete(back='$back') content = "; _debug_array($content);
-			}
-			if (!is_array($content))
-			{
-				$content = array();
-			}
-			if (isset($content['name']))
-			{
-				$read_ok = $this->etemplate->read($content);
-			}
-			if (isset($content['yes']))	// Delete
-			{
-				if ($read_ok)
-				{
-					$read_ok = $this->etemplate->delete();
-				}
-				$msg = $read_ok ? lang('Template deleted') : lang('Error: Template not found !!!');
-
-				if (($back = $content['back']) == 'list_result')
-				{
-					$this->list_result($content['preserv'],$msg);
-				}
-				else
-				{
-					$this->$back(null,$msg);
-				}
-				return;
-			}
-			if (isset($content['no']))	// Back to ...
-			{
-				switch ($back = $content['back'])
-				{
-					case 'list_result':
-						$this->$back($content['preserv']);
-						return;
-					case 'old_editor':
-						break;
-					default:
-						$back = 'edit';
-				}
-				$this->$back();
-				return;
-			}
-			if (isset($_GET['name']) && !$this->etemplate->read($_GET))
-			{
-				$this->edit(lang('Error: Template not found !!!'));
-				return;
-			}
-			$preserv = array(
-				'preserv' => $content['preserv'],
-				'back'    => $back
-			);
-			$content = $this->etemplate->as_array();
-
-			$delete = new etemplate('etemplate.editor.delete');
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Delete Template');
-			$delete->exec('etemplate.editor.delete',$content,array(),array(),
-				$content+$preserv,'');
-		}
-
-		function list_result($cont='',$msg='',$editor='edit')
+		function list_result($cont='',$msg='')
 		{
 			if ($this->debug)
 			{
@@ -700,11 +206,17 @@
 			if (isset($cont['delete']))
 			{
 				list($delete) = each($cont['delete']);
-				$this->etemplate->read($result[$delete-1]);
-				unset($cont['delete']);
-				unset($cont['result']);
-				$this->delete(array('preserv' => $cont),'list_result');
-				return;
+				$this->etemplate->init($result[$delete-1]);
+				if ($this->etemplate->delete())
+				{
+					$msg = lang('Template deleted');
+					unset($result[$delete-1]);
+					$result = array_values($result);
+				}
+				else
+				{
+					$msg = lang('Error: Template not found !!!');
+				}
 			}
 			if (isset($cont['delete_selected']))
 			{
@@ -712,13 +224,12 @@
 				{
 					if ($sel)
 					{
-						$this->etemplate->read($result[$row-1]);
-						if (!$result[$row-1]['version'] && $this->etemplate->version)
+						$this->etemplate->init($result[$row-1]);
+						if ($this->etemplate->delete())
 						{
-							$this->etemplate->version = '';	// otherwise the newest tmpl get's deleted and not the one without version
+							unset($result[$row-1]);
+							++$n;
 						}
-						$this->etemplate->delete();
-						++$n;
 					}
 				}
 				if ($n)
@@ -727,18 +238,11 @@
 				}
 				unset($cont['selected']);
 				unset($cont['delete_selected']);
-				$result = $this->etemplate->search($cont);
+				$result = array_values($result);
 			}
 			if (isset($cont['read']))
 			{
 				list($read) = each($cont['read']);
-				$this->etemplate->read($result[$read-1]);
-				$this->$editor();
-				return;
-			}
-			if (isset($cont['view']))
-			{
-				list($read) = each($cont['view']);
 				$this->etemplate->read($result[$read-1]);
 				$this->edit();
 				return;
@@ -824,8 +328,6 @@
 				}
 				if (!$this->etemplate->read($content))
 				{
-					$msg .= lang('Error: Template not found !!!');
-	
 					if (isset($content['name']))
 					{
 						$version_backup = $content['version'];
@@ -851,6 +353,10 @@
 								$msg = lang('only an other Version found !!!');
 							}
 						}
+					}
+					else
+					{
+						$msg = lang('Error: Template not found !!!');
 					}
 				}
 				elseif ($newest_version != '' && $this->etemplate->version != $newest_version)
@@ -1036,9 +542,10 @@
 						list($num) = explode(',',$old['size']);
 						for ($n = 1; is_array($old[$n]) && $n <= $num; ++$n)
 						{
-							soetemplate::add_child($widget,$old[$n]);
 							$new_line = null;
 							if ($old_type != 'hbox') soetemplate::add_child($widget,$new_line);
+							soetemplate::add_child($widget,$old[$n]);
+							unset($widget[$n]);
 						}
 						$widget['size'] = '';
 					}
@@ -1215,7 +722,7 @@
 						// delete widget from parent
 						if ($parent['type'])	// box
 						{
-							list($num,$options) = explode('/',$parent['size'],2);
+							list($num,$options) = explode(',',$parent['size'],2);
 							if ($num <= 1)	// cant delete last child --> only empty it
 							{
 								$parent[$num=1] = soetemplate::empty_cell();
@@ -1246,6 +753,7 @@
 					}
 					else
 					{
+						$content['cell'] = soetemplate::empty_cell();
 						return lang('cant delete a single widget from a grid !!!');
 					}
 					break;
@@ -1495,6 +1003,24 @@
 					$cell_content['onclick'] = $matches[1];
 					$cell_content['onclick_type'] = 'confirm';
 				}
+				elseif (preg_match('/^window.open\(egw::link\(\'\/index.php\',\'([^\']+)\'\),\'([^\']+)\',\'dependent=yes,width=([0-9]+),height=([0-9]+),scrollbars=yes,status=yes\'\); return false;$/',$widget['onclick'],$matches))
+				{
+					$cell_content['onclick'] = $matches[1];
+					if ($matches[2] != '_blank')
+					{
+						$cell_content['onclick'] .= ','.$matches[2];
+					}
+					if ($matches[3] != '600')
+					{
+						$cell_content['onclick'] .= ($matches[2]=='_blank' ? ',':'').','.$matches[3];
+					}
+					if ($matches[4] != '450')
+					{
+						$cell_content['onclick'] .= ($matches[2]=='_blank' ? ',':'').
+							($matches[3]=='600' ? ',':'').','.$matches[4];
+					}
+					$cell_content['onclick_type'] = 'popup';
+				}
 				else
 				{
 					$cell_content['onclick_type'] = !$widget['onclick'] ? '' : 'custom';
@@ -1503,11 +1029,19 @@
 			else	// content --> widget
 			{
 				if (preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);?$/',$cell_content['onclick'],$matches) ||
-					$cell_content['onclick_type'] != 'custom' && $cell_content['onclick'])
+					$cell_content['onclick_type'] == 'confirm' && $cell_content['onclick'])
 				{
 					$cell_content['onclick_type'] = 'confirm';
 					$cell_content['onclick'] = is_array($matches) && $matches[1] ? $matches[1] : $cell_content['onclick'];
 					$widget['onclick'] = "return confirm('".$cell_content['onclick']."');";
+				}
+				elseif ($cell_content['onclick_type'] == 'popup' && $cell_content['onclick'])
+				{
+					list($get,$target,$width,$height) = explode(',',$cell_content['onclick']);
+					if (!$target) $target = '_blank';
+					if (!$width)  $width  = 600;
+					if (!$height) $height = 450;
+					$widget['onclick'] = "window.open(egw::link('/index.php','$get'),'$target','dependent=yes,width=$width,height=$height,scrollbars=yes,status=yes'); return false;";
 				}
 				elseif ($cell_content['onclick'])
 				{

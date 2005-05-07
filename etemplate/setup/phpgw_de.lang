@@ -239,6 +239,7 @@ paste	etemplate	de	Einfügen
 path	etemplate	de	Pfad
 please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 pm	etemplate	de	Nachmittag
+popup	etemplate	de	Popup
 precision	etemplate	de	Genauigkeit
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
