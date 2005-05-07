@@ -57,7 +57,7 @@ class so_resources
 				($order_by != '' ? " ORDER BY $order_by" : ''),__LINE__,__FILE__);
 	
 		$nr = $this->db->nf();
-		if($offset > 0)
+		if($offset > 0 && $nr > $offset)
 		{
 			$this->db->seek($offset-1);
 		}
