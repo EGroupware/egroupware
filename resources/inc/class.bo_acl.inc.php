@@ -118,7 +118,15 @@
 		*/
 		function get_cat_admin($cat_id)
 		{
-			return array_search (PHPGW_ACL_CAT_ADMIN, $this->get_rights($cat_id));
+			$cat_rights = $this->get_rights($cat_id));
+			foreach ($cat_rights as $userid => $right)
+			{
+				if ($right & PHPGW_ACL_CAT_ADMIN)
+				{
+					return $userid;
+				}
+			}
+			return lang('none');
 		}
 		
 		/*!
