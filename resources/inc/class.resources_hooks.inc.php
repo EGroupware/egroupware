@@ -26,8 +26,8 @@ class resources_hooks
 			$file = array(
 				'resources list' => $GLOBALS['phpgw']->link('/index.php',array(
 					'menuaction' => 'resources.ui_resources.index' )),
-				'add' => $GLOBALS['phpgw']->link('/index.php',array(
-					'menuaction' => 'resources.ui_resources.edit' ))
+				/*'add' => $GLOBALS['phpgw']->link('/index.php',array(
+					'menuaction' => 'resources.ui_resources.edit' ))*/
 			);
 			display_sidebox($appname,$GLOBALS['phpgw_info']['apps']['resources']['title'].' '.lang('Menu'),$file);
 		}
