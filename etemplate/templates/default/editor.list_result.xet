@@ -19,42 +19,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.list_result.list" template="" lang="" group="0" version="1.0.0.002">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th">
-					<description value="Name" class="lr_padding"/>
-					<description value="Template" class="lr_padding"/>
-					<description value="Lang" class="lr_padding"/>
-					<description align="center" value="Version" class="lr_padding"/>
-					<button label="Search" align="center" id="search" statustext="start new search for the above pattern" class="lr_padding"/>
-					<button label="Delete" id="delete_selected" statustext="delete ALL selected eTemplates, WITHOUT further inquiry" class="lr_padding"/>
-				</row>
-				<row class="row">
-					<description no_lang="1" options=",,,selected[$row]" value="@${row}[name]" class="lr_padding"/>
-					<description no_lang="1" id="${row}[template]" class="lr_padding"/>
-					<description no_lang="1" id="${row}[lang]" class="lr_padding"/>
-					<description no_lang="1" options=",,,selected[$row]" value="@${row}[version]" class="lr_padding"/>
-					<hbox align="center">
-						<button label="Edit" id="read[$row]" image="edit" statustext="load this template into the editor"/>
-						<button label="Delete" onclick="return confirm('Delete this eTemplate');" id="delete[$row]" image="delete" statustext="Delete this eTemplate"/>
-					</hbox>
-					<checkbox align="center" id="selected[$row]" statustext="select this eTemplate to delete it"/>
-				</row>
-			</rows>
-		</grid>
-		<styles>
-			td.lr_padding { padding-left: 5px; padding-right: 5px; }
-		</styles>
-	</template>
 	<template id="etemplate.editor.list_result" template="" lang="" group="0" version="1.0.0.002">
 		<grid width="100%">
 			<columns>
@@ -68,12 +32,43 @@
 					<template id="etemplate.editor.keys"/>
 				</row>
 				<row>
-					<template span="all" id="etemplate.editor.list_result.list"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Name" class="lr_padding"/>
+								<description value="Template" class="lr_padding"/>
+								<description value="Lang" class="lr_padding"/>
+								<description align="center" value="Version" class="lr_padding"/>
+								<button label="Search" align="center" id="search" statustext="start new search for the above pattern" class="lr_padding"/>
+								<button label="Delete" id="delete_selected" statustext="delete ALL selected eTemplates, WITHOUT further inquiry" class="lr_padding"/>
+							</row>
+							<row class="row">
+								<description no_lang="1" options=",,,selected[$row]" value="@${row}[name]" class="lr_padding"/>
+								<description no_lang="1" id="${row}[template]" class="lr_padding"/>
+								<description no_lang="1" id="${row}[lang]" class="lr_padding"/>
+								<description no_lang="1" options=",,,selected[$row]" value="@${row}[version]" class="lr_padding"/>
+								<hbox align="center">
+									<button label="Edit" id="read[$row]" image="edit" statustext="load this template into the editor"/>
+									<button label="Delete" onclick="return confirm('Delete this eTemplate');" id="delete[$row]" image="delete" statustext="Delete this eTemplate"/>
+								</hbox>
+								<checkbox align="center" id="selected[$row]" statustext="select this eTemplate to delete it"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 			</rows>
 		</grid>
 		<styles>
 			.redItalic { color:red; font-style:italic;}
+			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 		</styles>
 	</template>
 </overlay>
