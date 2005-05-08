@@ -85,7 +85,6 @@
 
 		var $public_functions = array
 		(
-			'delete'       => True,
 			'edit'         => True,
 			'widget'       => True,
 			'styles'       => True,
@@ -1067,7 +1066,7 @@
 			if (is_array($content))
 			{
 				$path = $content['goto'] ? $content['goto'] : ($content['goto2'] ? $content['goto2'] : $content['path']);
-				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],0,$path ? $content['version'] : $content['old_version']);
+				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],0,$content['goto'] || $content['goto2'] ? $content['version'] : $content['old_version']);
 			}
 			else
 			{
