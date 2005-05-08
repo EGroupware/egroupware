@@ -527,15 +527,15 @@
 			$where[] = 'et_name LIKE '.$this->db->quote($this->sql_wildcards($name).'%');
 			if ($template != '' && $template != 'default')
 			{
-				$where[] = 'et_template LIKE '.$this->db->qoute($this->sql_wildcards($template).'%');
+				$where[] = 'et_template LIKE '.$this->db->quote($this->sql_wildcards($template).'%');
 			}
 			if ($lang != '' && $lang != 'default')
 			{
-				$where[] = 'et_lang LIKE '.$this->db->qoute($this->sql_wildcards($lang).'%');
+				$where[] = 'et_lang LIKE '.$this->db->quote($this->sql_wildcards($lang).'%');
 			}
 			if ($this->version != '')
 			{
-				$where[] = 'et_version LIKE '.$this->db->qoute($this->sql_wildcards($version).'%');
+				$where[] = 'et_version LIKE '.$this->db->quote($this->sql_wildcards($version).'%');
 			}
 			$this->db->select($this->table_name,'et_name,et_template,et_lang,et_group,et_version',$where,__LINE__,__FILE__,false,'ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC');
 			$result = array();
