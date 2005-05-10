@@ -612,4 +612,38 @@ class so_sql
 		}
 		return 0;
 	}
+	
+	/**
+	 * Query DB for a list / array with one colum as key and an other one as value, eg. id => title pairs
+	 *
+	 * We do some caching as these kind of function is usualy called multiple times, eg. for option-lists.
+	 *
+	 * @param string $value_col column-name for the values of the array, can also be an expression aliased with AS
+	 * @param string $key_col='' column-name for the keys, default '' = same as $value_col: returns a distinct list
+	 * @param array $filter=array() to filter the entries
+	 * @return array with key_col => value_col pairs, ordered by value_col
+	 */
+	function query_list($value_col,$key_col='',$filter=array())
+	{
+		static $cache = array();
+		
+		$cache_key = $value_col.'-'.$key_col.'-'.serialize($filter);
+		
+		if (isset($cache[$cache_key]))
+		{
+			return $cache[$cache_key];
+		}
+		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').$value_col,$value_col,'','',false,'AND',false,$filter)))
+		{
+			if (preg_match('/AS ([a-z_0-9]+)$/i',$value_col,$matches))
+			{
+				$value_col = $matches[1];
+			}
+			foreach($search as $row)
+			{
+				$ret[$row[$key_col ? $key_col : $value_col]] = $row[$value_col];
+			}
+		}
+		return $cache[$cache_key] =& $ret;
+	}
 }
