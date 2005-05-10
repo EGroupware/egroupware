@@ -6,6 +6,9 @@
   * Encryption types other than md5() added by                               *
   *  Miles Lott <milos@groupwhere.org> based on code from                    *
   *  http://www.thomas-alfeld.de/frank/                                      *
+  * massive code cleanup and                                                 *
+  * added password migration by                                              *
+  *  Cornelius Weiss <egw@von-und-zu-weiss.de                                *
   * Authentication based on SQL table                                        *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * ------------------------------------------------------------------------ *
@@ -31,129 +34,68 @@
 
 		function auth_()
 		{
-			copyobj($GLOBALS['phpgw']->db,$this->db);
+			copyobj($GLOBALS['egw']->db,$this->db);
+			$this->type = @$GLOBALS['egw_info']['server']['sql_encryption_type']
+				? strtolower($GLOBALS['egw_info']['server']['sql_encryption_type'])
+				: 'md5';
 		}
 
+		/*!
+		@function authenticate
+		@abstract password authentication against password stored in sql datababse
+		@param $username username of account to authenticate
+		@param $passwd corresponding password
+		@param $passwd_type 'text' for cleartext passwords
+		*/
 		function authenticate($username, $passwd, $passwd_type)
 		{
+			/* normal web form login */
 			if($passwd_type == 'text')
 			{
-				/* normal web form login */
-				$type = @$GLOBALS['phpgw_info']['server']['sql_encryption_type']
-					? strtolower($GLOBALS['phpgw_info']['server']['sql_encryption_type'])
-					: 'md5';
-				switch($type)
+				$this->db->query("SELECT account_lid,account_pwd,account_lastlogin FROM phpgw_accounts WHERE account_lid = '$username' AND "
+					. " account_type='u' AND "
+					. " account_status ='A'",__LINE__,__FILE__);
+				$this->db->next_record();
+				
+				if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
 				{
-					case 'smd5':
-						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
-							. " account_type='u' AND "
-							. " account_status ='A'",__LINE__,__FILE__);
-						$this->db->next_record();
-
-						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
-						{
-							if($this->db->f('account_lid') != $username)
-							{
-								return false;
-							}
-						}
-						if($this->db->f('account_pwd'))
-						{
-							return $this->smd5_compare($passwd,$this->db->f('account_pwd'));
-						}
-						break;
-					case 'sha':
-						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
-							. " account_type='u' AND "
-							. " account_status ='A'",__LINE__,__FILE__);
-						$this->db->next_record();
-
-						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
-						{
-							if($this->db->f('account_lid') != $username)
-							{
-								return false;
-							}
-						}
-						if($this->db->f('account_pwd'))
-						{
-							return $this->sha_compare($passwd,$this->db->f('account_pwd'));
-						}
-						break;
-					case 'ssha':
-						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
-							. " account_type='u' AND "
-							. " account_status ='A'",__LINE__,__FILE__);
-						$this->db->next_record();
-
-						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
-						{
-							if($this->db->f('account_lid') != $username)
-							{
-								return false;
-							}
-						}
-						if($this->db->f('account_pwd'))
-						{
-							return $this->ssha_compare($passwd,$this->db->f('account_pwd'));
-						}
-						break;
-					case 'md5_crypt':
-					case 'blowfish_crypt':
-					case 'ext_crypt':
-					case 'crypt':
-						$this->db->query("SELECT account_lid,account_pwd FROM phpgw_accounts WHERE account_lid = '$username' AND "
-							. " account_type='u' AND "
-							. " account_status ='A'",__LINE__,__FILE__);
-						$this->db->next_record();
-
-						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
-						{
-							if($this->db->f('account_lid') != $username)
-							{
-								return false;
-							}
-						}
-						if($this->db->f('account_pwd'))
-						{
-							return $this->crypt_compare($passwd,$this->db->f('account_pwd'),$type);
-						}
-						break;
-					case 'md5':
-					default:
-						$this->db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
-							. " account_type='u' AND "
-							. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
-						$this->db->next_record();
-
-						if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
-						{
-							if($this->db->f('account_lid') != $username)
-							{
-								return false;
-							}
-						}
-						if($this->db->f('account_lid'))
-						{
-							$this->previous_login = $this->db->f('account_lastlogin');
-							return True;
-						}
-						else
-						{
-							return False;
-						}
-						break;
+					if($this->db->f('account_lid') != $username) return false;
 				}
+				if(!$this->db->f('account_pwd')) return false;
+				if(!$this->compare_password($passwd,$this->db->f('account_pwd'),$this->type,strtolower($username)))
+				{
+					// do we have to migrate an old password ?
+					if($GLOBALS['egw_info']['server']['passwd_migration_allowed'])
+					{
+						foreach($GLOBALS['egw_info']['server']['passwd_migration_types'] as $type)
+						{
+							if($this->compare_password($passwd,$this->db->f('account_pwd'),$type,strtolower($username)))
+							{
+								$account_id = $GLOBALS['egw_info']['user']['account_id'];
+								$encrypted_passwd = $this->encrypt_sql($passwd);
+								$this->_update_passwd($encrypted_passwd,$passwd,$account_id,false,__FILE__);
+								break;
+							}
+						}
+					}
+					else
+					{
+						return false;
+					}
+				}
+
+				/* if this point is reached, auth was successfull */
+				$this->previous_login = $this->db->f('account_lastlogin');
+				return true;
 			}
-			elseif($passwd_type == 'md5')
+			/* Auth via crypted password. NOTE: mail needs cleartext password to authenticate against mailserver! */
+			else
 			{
-				/* Where is this used? */
 				$this->db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
-//					. " account_type='u' AND "
 					. "account_pwd='" . $passwd . "' AND account_status ='A'",__LINE__,__FILE__);
 				$this->db->next_record();
 
-				if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+				if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
 				{
 					if($this->db->f('account_lid') != $username)
 					{
@@ -170,139 +112,40 @@
 					return False;
 				}
 			}
-			else
-			{
-				return False;
-			}
 		}
 
+		/*!
+		@function change_password
+		@abstract changes password in sql datababse
+		@param $old_passwd must be cleartext
+		@param $new_passwd must be cleartext
+		@param $account_id account id of user whose passwd should be changed
+		*/
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
 			$admin = True;
 			// Don't allow password changes for other accounts when using XML-RPC
-			if(!$account_id || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
+			if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
 			{
 				$admin = False;
-				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+				$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			}
-			$encrypted_passwd = $this->encrypt_sql($new_passwd);
+					
+			$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
+				. "' AND " // . " account_type='u' AND "
+				. " account_status ='A'",__LINE__,__FILE__);
+			$this->db->next_record();
+			if(!$this->db->f('account_pwd')) return false;
 
-			/* Grab configured type, or default to md5() (old method) */
-			$type = @$GLOBALS['phpgw_info']['server']['sql_encryption_type']
-				? strtolower($GLOBALS['phpgw_info']['server']['sql_encryption_type'])
-				: 'md5';
-			switch($type)
+			/* Check the old_passwd to make sure this is legal */
+			if(!$admin)
 			{
-				case 'smd5':
-					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
-						. "' AND " // . " account_type='u' AND "
-						. " account_status ='A'",__LINE__,__FILE__);
-					$this->db->next_record();
-					if($this->db->f('account_pwd'))
-					{
-						if(!$admin)
-						{
-							/* Check the old_passwd to make sure this is legal */
-							if(!$this->smd5_compare($old_passwd,$this->db->f('account_pwd')))
-							{
-								return False;
-							}
-						}
-						/* old password ok, or admin called the function from
-						 * the admin application (no old passwd available).
-						 */
-						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
-					}
-					return False;
-				case 'sha':
-					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
-						. "' AND " // . " account_type='u' AND "
-						. " account_status ='A'",__LINE__,__FILE__);
-					$this->db->next_record();
-					if($this->db->f('account_pwd'))
-					{
-						if(!$admin)
-						{
-							/* Check the old_passwd to make sure this is legal */
-							if(!$this->sha_compare($old_passwd,$this->db->f('account_pwd')))
-							{
-								return False;
-							}
-						}
-						/* old password ok, or admin called the function from
-						 * the admin application (no old passwd available).
-						 */
-						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
-					}
-					return False;
-				case 'ssha':
-					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
-						. "' AND " // . " account_type='u' AND "
-						. " account_status ='A'",__LINE__,__FILE__);
-					$this->db->next_record();
-					if($this->db->f('account_pwd'))
-					{
-						if(!$admin)
-						{
-							/* Check the old_passwd to make sure this is legal */
-							if(!$this->ssha_compare($old_passwd,$this->db->f('account_pwd')))
-							{
-								return False;
-							}
-						}
-						/* old password ok, or admin called the function from
-						 * the admin application (no old passwd available).
-						 */
-						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
-					}
-					return False;
-				case 'crypt':
-				case 'ext_crypt':
-				case 'md5_crypt':
-				case 'blowfish_crypt':
-					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
-						. "' AND " // . " account_type='u' AND "
-						. " account_status ='A'",__LINE__,__FILE__);
-					$this->db->next_record();
-					if($this->db->f('account_pwd'))
-					{
-						if(!$admin)
-						{
-							/* Check the old_passwd to make sure this is legal */
-							if(!$this->crypt_compare($old_passwd,$this->db->f('account_pwd'),$type))
-							{
-								return False;
-							}
-						}
-						/* old password ok, or admin called the function from
-						 * the admin application (no old passwd available).
-						 */
-						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
-					}
-					return False;
-				case 'md5':
-				default:
-					$pwd_check = '';
-					if(!$admin)
-					{
-						$pwd_check = " AND account_pwd='" . $this->encrypt_sql($old_passwd) . "'";
-					}
-					$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
-						. "account_lastpwd_change='" . time() . "' WHERE account_id='" . $account_id . "'" . $pwd_check,__LINE__,__FILE__);
-					$this->db->next_record();
-					if($this->db->affected_rows())
-					{
-						if(!$admin)
-						{
-							$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-						}
-						return $encrypted_passwd;
-					}
-					else
-					{
-						return False;
-					}
+				if(!$this->compare_password($old_passwd,$this->db->f('account_pwd'),$this->type,strtolower($username))) return false;
 			}
+
+			/* old password ok, or admin called the function from the admin application (no old passwd available).*/
+			$encrypted_passwd = $this->encrypt_sql($new_passwd);
+			return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
 		}
 
 		function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=False,$file='')
@@ -320,7 +163,7 @@
 			{
 				if(!$admin)
 				{
-					$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
+					$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 				}
 				return $encrypted_passwd;
 			}
@@ -332,7 +175,7 @@
 
 		function update_lastlogin($account_id, $ip)
 		{
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
+			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}

@@ -22,11 +22,11 @@
 
 	/* $Id$ */
 
-	if(empty($GLOBALS['phpgw_info']['server']['auth_type']))
+	if(empty($GLOBALS['egw_info']['server']['auth_type']))
 	{
-		$GLOBALS['phpgw_info']['server']['auth_type'] = 'sql';
+		$GLOBALS['egw_info']['server']['auth_type'] = 'sql';
 	}
-	include(PHPGW_API_INC.'/class.auth_'.$GLOBALS['phpgw_info']['server']['auth_type'].'.inc.php');
+	include(PHPGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'.inc.php');
 
 	class auth extends auth_
 	{
@@ -75,6 +75,38 @@
 				return $this->encrypt_sql($password);
 			}
 			return $this->encrypt_ldap($password);
+		}
+
+		/*!
+		@function compare_password
+		@abstract compagres an encrypted password
+		@abstract encryption type set in setup and calls the appropriate encryption functions
+		@param $cleartext cleartext password
+		@param $encrypted encrypted password
+		@param $type type of encryption
+		@param $username used as optional key of encryption for md5_hmac
+		*/
+		function compare_password($cleartext,$encrypted,$type,$username='')
+		{
+			switch($type)
+			{
+				case 'smd5':
+					return $this->smd5_compare($cleartext,$encrypted);
+				case 'sha':
+					return $this->sha_compare($cleartext,$encrypted);
+				case 'ssha':
+					return $this->ssha_compare($cleartext,$encrypted);
+				case 'crypt':
+				case 'md5_crypt':
+				case 'blowfish_crypt':
+				case 'ext_crypt':
+					return $this->crypt_compare($cleartext,$encrypted,$type);
+				case 'md5_hmac':
+					return $this->md5_hmac_compare($cleartext,$encrypted,$username);
+				case 'md5':
+				default:
+					return strcmp(md5($cleartext),$encrypted) == 0 ? true : false;
+			}
 		}
 
 		/*!
@@ -304,5 +336,26 @@
 			}
 			return False;
 		}
+
+		/**
+		@function md5_hmac_compare
+		@abstract compare md5_hmac-encrypted passwords for authentication (see RFC2104)
+		@param $form_val user input value for comparison
+		@param $db_val   stored value (from database)
+		@param $key       key for md5_hmac-encryption (username for imported smf users)
+		@return boolean	 True on successful comparison
+		*/
+		function md5_hmac_compare($form_val,$db_val,$key)
+		{
+			$key = str_pad(strlen($key) <= 64 ? $key : pack('H*', md5($key)), 64, chr(0x00));
+			$md5_hmac = md5(($key ^ str_repeat(chr(0x5c), 64)) . pack('H*', md5(($key ^ str_repeat(chr(0x36), 64)). $form_val)));
+			if(strcmp($md5_hmac,$db_val) == 0)
+			{
+				return True;
+			}
+			return False;
+
+		}
+
 	}
 ?>
