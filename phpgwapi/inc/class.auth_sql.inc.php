@@ -65,9 +65,10 @@
 				if(!$this->compare_password($passwd,$this->db->f('account_pwd'),$this->type,strtolower($username)))
 				{
 					// do we have to migrate an old password ?
-					if($GLOBALS['egw_info']['server']['passwd_migration_allowed'])
+					if($GLOBALS['egw_info']['server']['pwd_migration_allowed'])
 					{
-						foreach($GLOBALS['egw_info']['server']['passwd_migration_types'] as $type)
+						if(!is_array($GLOBALS['egw_info']['server']['pwd_migration_types'])) return false;
+						foreach($GLOBALS['egw_info']['server']['pwd_migration_types'] as $handle => $type)
 						{
 							if($this->compare_password($passwd,$this->db->f('account_pwd'),$type,strtolower($username)))
 							{
@@ -76,6 +77,7 @@
 								$this->_update_passwd($encrypted_passwd,$passwd,$account_id,false,__FILE__);
 								break;
 							}
+							return false;
 						}
 					}
 					else
