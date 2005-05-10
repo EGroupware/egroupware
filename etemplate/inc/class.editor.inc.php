@@ -1414,4 +1414,17 @@
 			
 			return implode(', ',$labels);
 		}
-	};
+		
+		/**
+		 * swap the values of $a and $b
+		 *
+		 * @param mixed &$a
+		 * @param mixed &$b
+		 */
+		function swap(&$a,&$b)
+		{
+			$h = $a;
+			$a = $b;
+			$b = $h;
+		}
+	}
