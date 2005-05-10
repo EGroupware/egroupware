@@ -709,7 +709,7 @@ class bocal
 			case 'integer':		// already a timestamp
 				break;
 			default:		// eg. boolean, means now in user-time (!)
-				$date = $this->now_us;
+				$date = $this->now_su;
 				break;
 		}
 		if ($user2server)
