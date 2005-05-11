@@ -89,6 +89,13 @@
 			<td align="left"></td>
 			</tr>
 <!-- END domain_selection -->
+<!-- BEGIN remember_me_selection -->
+		<tr>
+			<td align="right">{lang_remember_me}:&nbsp;</td>
+			<td align="left" colspan="2">{select_remember_me}</td>
+		</tr>
+<!-- END remember_me_selection -->
+
 			<tr>
 			<td align="right" tablindex="1">{lang_username}:&nbsp;</td>
 			<td align="left"><input name="login" value="{cookie}" style="width: 150px; border: 1px solid silver;"></td>

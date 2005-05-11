@@ -55,6 +55,7 @@
 			));
 		}
 	}
+	$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remeber');
 	$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
 	$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
 	$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
