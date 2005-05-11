@@ -13,7 +13,7 @@ if(empty($instance->instanceId)) {
   }
 }
 // Set the current user for this activity
-if(isset($GLOBALS['user']) && !empty($instance->instanceId) && !empty($activity_id)) {
+if(isset($GLOBALS['user']) && ($activity->isInteractive()) && !empty($instance->instanceId) && !empty($activity_id)) {
   $instance->setActivityUser($activity_id,$GLOBALS['user']);
 }
 
