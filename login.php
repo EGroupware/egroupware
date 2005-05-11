@@ -154,7 +154,7 @@
 
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
-			$eGW_remember = unserialize(stripslashes($_COOKIE['eGW_remeber']));
+			$eGW_remember = unserialize(stripslashes($_COOKIE['eGW_remember']));
 			
 			if($eGW_remember['login'] && $eGW_remember['passwd'] && $eGW_remember['passwd_type'])
 			{
@@ -206,7 +206,7 @@
 		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remeber');
+			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
@@ -248,7 +248,7 @@
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remeber');
+			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
@@ -275,7 +275,7 @@
 						$remember_time = 2147483647;
 						break;
 				}
-				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remeber',serialize(array(
+				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember',serialize(array(
 					'login' => $login,
 					'passwd' => $passwd,
 					'passwd_type' => $passwd_type)),
