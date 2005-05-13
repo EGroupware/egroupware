@@ -824,7 +824,7 @@
 					$entry['cn']             = $GLOBALS['egw']->translation->convert($account_info['account_lid'],$GLOBALS['egw']->translation->charset(),'utf-8');
 					$entry['gidnumber']      = $account_id;
 					#$entry['userpassword']   = $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd']);
-					$entry['description']    = 'phpgw-created group';
+					$entry['description']    = 'eGW-created group';
 				}
 				else
 				{
@@ -841,7 +841,7 @@
 					);
 
 					$entry['sn'] = $GLOBALS['egw']->translation->convert(
-						$account_info['account_lastname'],
+						$account_info['account_lastname'] ? $account_info['account_lastname'] : 'not set',
 						$GLOBALS['egw']->translation->charset(),
 						'utf-8'
 					);
@@ -1045,9 +1045,10 @@
 				$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_firstname'];
 				$GLOBALS['hook_values']['account_lastname'] = $acct_info['account_lastname'];
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'addaccount'
+					'location' => 'addaccount',
+					// at login-time only the hooks from the following apps will be called
+					'order' => array('felamimail'),
 				),False,True);  // called for every app now, not only enabled ones
-
 			} /* end account setup */
 			else /* if no account id abort the account creation */
 			{
