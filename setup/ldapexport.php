@@ -28,19 +28,19 @@
 	}
 	// Does not return unless user is authorized
 
-	class phpgw
+	class egw
 	{
 		var $common;
 		var $accounts;
 		var $applications;
 		var $db;
 	}
-	$phpgw = new phpgw;
-	$phpgw->common = CreateObject('phpgwapi.common');
+	$phpgw = new egw;
+	$egw->common = CreateObject('phpgwapi.common');
 
-	$common = $phpgw->common;
+	$common = $egw->common;
 	$GLOBALS['egw_setup']->loaddb();
-	copyobj($GLOBALS['egw_setup']->db,$phpgw->db);
+	$egw->db = clone($GLOBALS['egw_setup']->db);
 
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
@@ -68,8 +68,8 @@
 
 	$phpgw_info['server']['account_repository'] = 'ldap';
 
-	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
-	$acct                = $phpgw->accounts;
+	$egw->accounts     = CreateObject('phpgwapi.accounts');
+	$acct                = $egw->accounts;
 
 	// First, see if we can connect to the LDAP server, if not send `em back to config.php with an
 	// error message.
@@ -97,15 +97,9 @@
 		$account_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
 		$account_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
 		$account_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
+		$account_info[$i]['account_primary_group']   = $GLOBALS['egw_setup']->db->f('account_primary_group');
 	}
-
-	while(list($key,$data) = @each($account_info))
-	{
-		$tmp = $data['account_id'];
-		$newaccount[$tmp] = $data;
-	}
-	$account_info = $newaccount;
-
+	
 	$sql = "SELECT * FROM phpgw_accounts WHERE account_type='g'";
 	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
 	while($GLOBALS['egw_setup']->db->next_record())
@@ -118,13 +112,6 @@
 		$group_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
 		$group_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
 	}
-
-	while(list($key,$data) = @each($group_info))
-	{
-		$tmp = $data['account_id'][0];
-		$newgroup[$tmp] = $data;
-	}
-	$group_info = $newgroup;
 
 	$cancel = get_var('cancel','POST');
 	$submit = get_var('submit','POST');
@@ -182,7 +169,7 @@
 							'account_firstname' => $thisfirstname,
 							'account_lastname'  => $thislastname,
 							'account_status'    => 'A',
-							'account_expires'   => -1
+							'account_expires'   => -1,
 						);
 						$groups->create($thisaccount_info);
 					}
@@ -199,6 +186,7 @@
 				$thisacctlid   = $account_info[$accountid]['account_lid'];
 				$thisfirstname = $account_info[$accountid]['account_firstname'];
 				$thislastname  = $account_info[$accountid]['account_lastname'];
+				$thisprimarygroup = $account_info[$accountid]['account_primary_group'];
 
 				// Do some checks before we try to import the data.
 				if(!empty($thisacctid) && !empty($thisacctlid))
@@ -228,7 +216,8 @@
 							'account_status'    => 'A',
 							'account_expires'   => -1,
 							'homedirectory'     => $config['ldap_account_home'] . '/' . $thisacctlid,
-							'loginshell'        => $config['ldap_account_shell']
+							'loginshell'        => $config['ldap_account_shell'],
+							'account_primary_group' => $thisprimarygroup,
 						);
 						$accounts->create($thisaccount_info);
 					}
