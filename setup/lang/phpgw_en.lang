@@ -87,7 +87,7 @@ checking file-permissions of %1 for %2: %3	setup	en	Checking file-permissions of
 checking for gd support...	setup	en	Checking for GD support...
 checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
-click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
+click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	en	Click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.
 click here	setup	en	Click Here
 click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
 completed	setup	en	Completed
@@ -152,6 +152,7 @@ do you want persistent connections (higher performance, but consumes more resour
 do you want to manage homedirectory and loginshell attributes?	setup	en	Do you want to manage homedirectory and loginshell attributes?
 does not exist	setup	en	does not exist
 domain	setup	en	Domain
+domain name	setup	en	Domain name
 domain select box on login	setup	en	Domain select box on login
 dont touch my data	setup	en	Dont touch my data
 download	setup	en	Download
@@ -200,6 +201,7 @@ historylog removed	setup	en	Historylog removed
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
 host information	setup	en	Host information
+host/ip domain controler	setup	en	Host/IP Domain controler
 hostname/ip of database server	setup	en	Hostname/IP of database server
 hour (0-24)	setup	en	hour (0-24)
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
@@ -207,6 +209,7 @@ however, the application may still work	setup	en	However, the application may st
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
+if using ads (active directory) authentication	setup	en	If using ADS (Active Directory) authentication
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
@@ -477,6 +480,7 @@ writable by the webserver	setup	en	writable by the webserver
 write config	setup	en	Write config
 year	setup	en	year
 yes	setup	en	Yes
+yes, with lowercase usernames	setup	en	Yes, with lowercase usernames
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	en	You appear to be running version %1 of eGroupWare
@@ -502,7 +506,7 @@ you must enter a username for the admin	setup	en	You must enter a username for t
 you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README?sessionid=f69c6befb6636a1a9501e45ff0176385" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current

@@ -508,8 +508,12 @@
 				return False;
 			}
 
-			if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'] == True)
+			if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
 			{
+				if ($GLOBALS['egw_info']['server']['auto_create_acct'] == 'lowercase')
+				{
+					$this->account_lid = strtolower($this->account_lid);
+				}
 				$this->account_id = $GLOBALS['egw']->accounts->auto_add($this->account_lid, $passwd);
 			}
 

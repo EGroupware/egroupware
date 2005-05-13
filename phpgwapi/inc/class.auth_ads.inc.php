@@ -36,80 +36,68 @@
 				return False;
 			}
 
-			if(!$ldap = @ldap_connect($GLOBALS['phpgw_info']['server']['ldap_host']))
+			if(!$ldap = @ldap_connect($GLOBALS['egw_info']['server']['ads_host']))
 			{
-				$GLOBALS['phpgw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
-				$GLOBALS['phpgw']->log->commit();
+				//echo "<p>Failed connecting to ADS server '".$GLOBALS['egw_info']['server']['ads_host']."' for authenication, execution stopped</p>\n";
+				$GLOBALS['egw']->log->message('F-Abort, Failed connecting to ADS server for authenication, execution stopped');
+				$GLOBALS['egw']->log->commit();
 				return False;
 			}
+			//echo "<p>Connected to LDAP server '".$GLOBALS['egw_info']['server']['ads_host']."' for authenication</p>\n";
 
-			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
-			{
-				ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-			}
+			ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+			ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
 			/* Login with the LDAP Admin. User to find the User DN.  */
-			if(!@ldap_bind($ldap, $GLOBALS['phpgw_info']['server']['ldap_root_dn'], $GLOBALS['phpgw_info']['server']['ldap_root_pw']))
+			if(!@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd)) 
 			{
+				//echo "<p>Cant bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd' !!!</p>\n";
 				return False;
 			}
-			/* find the dn for this uid, the uid is not always in the dn */
-			#$attributes	= array('samaccountname','dn','givenName','sn','mail','uidNumber','gidNumber');
-			$attributes	= array('samaccountname','dn','givenName','sn','mail');
-			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
-			{
-				$filter = "(&(samaccountname=$username)(phpgwaccountstatus=A))";
-			}
-			else
-			{
-				$filter = "(samaccountname=$username)";
-			}
+			//echo "<p>Bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd'.</p>\n";
 
-			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter, $attributes);
+			$attributes	= array('samaccountname','givenName','sn','mail');
+			$filter = "(samaccountname=$username)";
+			// automatic create dn from domain: domain.com ==> DC=domain,DC=com
+			$base_dn = array();
+			foreach(explode('.',$GLOBALS['egw_info']['server']['ads_domain']) as $dc)
+			{
+				$base_dn[] = 'DC='.$dc;
+			}
+			$base_dn = implode(',',$base_dn);
+			
+			//echo "<p>Trying ldap_search(,$base_dn,$filter,".print_r($attributes,true)."</p>\n";
+			$sri = ldap_search($ldap, $base_dn, $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
+			//_debug_array($allValues);
 
 			if ($allValues['count'] > 0)
 			{
-				if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+				if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
 				{
 					if($allValues[0]['samaccountname'][0] != $username)
 					{
 						return false;
 					}
 				}
-				/* we only care about the first dn */
-				$userDN = $allValues[0]['dn'];
-				/*
-				generate a bogus password to pass if the user doesn't give us one 
-				this gets around systems that are anonymous search enabled
-				*/
-				if (empty($passwd))
+				
+				$account = CreateObject('phpgwapi.accounts',$username,'u');
+				if ($account->account_id)
 				{
-					$passwd = crypt(microtime());
+					return true;
 				}
-				/* try to bind as the user with user suplied password */
-				if (@ldap_bind($ldap, $userDN, $passwd))
+				if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 				{
-					if ($GLOBALS['phpgw_info']['server']['account_repository'] != 'ldap')
+					// create a global array with all availible info about that account
+					$GLOBALS['auto_create_acct'] = array();
+					foreach(array(
+						'givenname' => 'firstname',
+						'sn'        => 'lastname',
+						'mail'      => 'email',
+					) as $ldap_name => $acct_name)
 					{
-						$account = CreateObject('phpgwapi.accounts',$username,'u');
-						if (!$account->account_id && $GLOBALS['phpgw_info']['server']['auto_create_acct'])
-						{
-							// create a global array with all availible info about that account
-							$GLOBALS['auto_create_acct'] = array();
-							foreach(array(
-								'givenname' => 'firstname',
-								'sn'        => 'lastname',
-								'mail'      => 'email',
-							) as $ldap_name => $acct_name)
-							{
-								$GLOBALS['auto_create_acct'][$acct_name] =
-									$GLOBALS['phpgw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
-							}
-							return True;
-						}
-						$data = $account->read_repository();
-						return $data['status'] == 'A';
+						$GLOBALS['auto_create_acct'][$acct_name] =
+							$GLOBALS['egw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
 					}
 					return True;
 				}
@@ -120,40 +108,16 @@
 
 		function change_password($old_passwd, $new_passwd, $_account_id='') 
 		{
-			if ('' == $_account_id)
-			{
-				$_account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			}
-	
-			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
-			$allValues = ldap_get_entries($ds, $sri);
-	
-			$entry['userpassword'] = $this->encrypt_password($new_passwd);
-			$dn = $allValues[0]['dn'];
-	
-			if (!@ldap_modify($ds, $dn, $entry)) 
-			{
-				return false;
-			}
-			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-	
-			return $entry['userpassword'];
+			return false;		// Cant change passwd in ADS
 		}
 
 		function update_lastlogin($_account_id, $ip)
 		{
-			$entry['phpgwaccountlastlogin']     = time();
-			$entry['phpgwaccountlastloginfrom'] = $ip;
-
-			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
-			$allValues = ldap_get_entries($ds, $sri);
-
-			$dn = $allValues[0]['dn'];
-			$this->previous_login = $allValues[0]['phpgwaccountlastlogin'][0];
-
-			@ldap_modify($ds, $dn, $entry);
+			$account =& CreateObject('phpgwapi.accounts',$_account_id,'u');
+			$account->read_repository();
+			$account->data['lastlogin']     = time();
+			$account->data['lastloginfrom'] = $ip;
+			$account->save_repository();
 		}
 	}
 ?>

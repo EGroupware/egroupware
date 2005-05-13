@@ -88,7 +88,7 @@ checking file-permissions of %1 for %2: %3	setup	de	Überprüfe die Datei-Zugriffs
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
-click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zum Setup zurück zu kommen.
+click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	de	<a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">Hier klicken</a> um zum Setup zurück zu kommen.
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
 completed	setup	de	Abgeschlossen
@@ -153,6 +153,7 @@ do you want persistent connections (higher performance, but consumes more resour
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
 does not exist	setup	de	existiert nicht
 domain	setup	de	Domain
+domain name	setup	de	Name der Domain
 domain select box on login	setup	de	Domain-Auswahlbox beim Einloggen
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
@@ -171,7 +172,7 @@ enter the full path for users and group files.<br>examples: /files, e:\files	set
 enter the full path for users and group files.<br>examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br>if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br>Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br>Beispiel: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
 enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
 enter the title for your site	setup	de	Titel der eGroupWare Installation
@@ -204,6 +205,7 @@ historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen
+host/ip domain controler	setup	de	Hostname / IP des Domain Controler
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
@@ -211,6 +213,7 @@ however, the application may still work	setup	de	Wie auch immer, die Anwendung m
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
+if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
@@ -482,6 +485,7 @@ writable by the webserver	setup	de	schreibar durch den Webserver
 write config	setup	de	Konfiguration schreiben
 year	setup	de	Jahr
 yes	setup	de	Ja
+yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
@@ -507,7 +511,7 @@ you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen 
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende Schema in Ihren LDAP-Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende Schema in Ihren LDAP-Server laden - siehe <a href="../phpgwapi/doc/ldap/README?sessionid=f69c6befb6636a1a9501e45ff0176385" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell

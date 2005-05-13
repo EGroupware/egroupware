@@ -230,6 +230,7 @@
       <select name="newsettings[auto_create_acct]">
        <option value="">{lang_No}</option>
        <option value="True"{selected_auto_create_acct_True}>{lang_Yes}</option>
+       <option value="lowercase"{selected_auto_create_acct_lowercase}>{lang_Yes,_with lowercase_usernames}</option>
       </select>
     </td>
    </tr>
@@ -341,10 +342,25 @@
      </td>
     </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_ADS_(Active_Directory)_authentication}:</b></td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_Host/IP_Domain_controler}:</td>
+     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40"></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Domain_name}:</td>
+     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40"></td>
+   </tr>
+
+  <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
 
    <tr class="th">
     <td colspan="2"><b>{lang_Mcrypt_settings_(requires_mcrypt_PHP_extension)}</b></td>
