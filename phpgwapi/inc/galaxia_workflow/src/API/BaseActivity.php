@@ -72,10 +72,10 @@ class BaseActivity extends Base {
     $act->setName($res['wf_name']);
     $act->setProcessId($res['wf_p_id']);
     $act->setNormalizedName($res['wf_normalized_name']);
-    $act->setDescription($res['description']);
+    $act->setDescription($res['wf_description']);
     $act->setIsInteractive($res['wf_is_interactive']);
-    $act->setIsAutoRouted($res['is_autorouted']);
-    $act->setActivityId($res['activity_id']);
+    $act->setIsAutoRouted($res['wf_is_autorouted']);
+    $act->setActivityId($res['wf_activity_id']);
     $act->setType($res['wf_type']);
     
     //Now get forward transitions 
