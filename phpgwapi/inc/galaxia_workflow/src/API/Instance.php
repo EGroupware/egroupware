@@ -203,19 +203,34 @@ class Instance extends Base {
   Sets the user that must execute the activity indicated by the activityId.
   Note that the instance MUST be present in the activity to set the user,
   you can't program who will execute an activity.
+  
+  egw: if the user we set is not * verification is done before the update
+  that the instance has no user setted (or the same one)
+  return false if it was impossible to set the user, it can be because the
+  activity is not avaible anymore for this instance or because another user
+  is already there.
   */
   function setActivityUser($activityId,$theuser) {
     if(empty($theuser)) $theuser='*';
+    $found = false;
     for($i=0;$i<count($this->activities);$i++) {
       if($this->activities[$i]['wf_activity_id']==$activityId) {
-        $this->activities[$i]['wf_user']=$theuser;
+        $found = true;
         $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_user`=? where `wf_activity_id`=? and `wf_instance_id`=?";
-
-        $this->query($query,array($theuser,(int)$activityId,(int)$this->instanceId));
+        $bindvars = array($theuser,(int)$activityId,(int)$this->instanceId);
+        if(!($theuser=='*')) {
+          $query.= "and (`wf_user`=? or `wf_user`=?)";
+          $bindvars[]= $theuser;
+          $bindvars[]= '*';
+        }
+        $this->query($query,$bindvars);
+        if(!$this->db->Affected_Rows()) return false;
+        $this->activities[$i]['wf_user']=$theuser;
       }
-    }  
+    }
+    return $found;
   }
-  
+
   /*!
   Returns the user that must execute or is already executing an activity
   wherethis instance is present.
