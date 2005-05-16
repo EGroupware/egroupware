@@ -204,7 +204,7 @@
 							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$FormUser",$expire,'/');
-							$this->set_cookie('HeaderPW',"$FormPW",$expire,'/');
+							$this->set_cookie('HeaderPW',md5("$FormPW"),$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
 							return True;
 						}
@@ -223,7 +223,7 @@
 							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$HeaderUser",$expire,'/');
-							$this->set_cookie('HeaderPW',"$HeaderPW",$expire,'/');
+							$this->set_cookie('HeaderPW',md5("$HeaderPW"),$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
 							return True;
 						}
@@ -245,7 +245,7 @@
 							@$GLOBALS['egw_domain'][$FormDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$FormUser",$expire,'/');
-							$this->set_cookie('ConfigPW',"$FormPW",$expire,'/');
+							$this->set_cookie('ConfigPW',md5("$FormPW"),$expire,'/');
 							$this->set_cookie('ConfigDomain',"$FormDomain",$expire,'/');
 							/* Set this now since the cookie will not be available until the next page load */
 							$this->ConfigDomain = "$FormDomain";
@@ -267,7 +267,7 @@
 							@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$ConfigUser",$expire,'/');
-							$this->set_cookie('ConfigPW',"$ConfigPW",$expire,'/');
+							$this->set_cookie('ConfigPW',md5("$ConfigPW"),$expire,'/');
 							$this->set_cookie('ConfigDomain',$this->ConfigDomain,$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
 							return True;
@@ -294,8 +294,14 @@
 			}
 			if (preg_match('/^[0-9a-f]{32}$/',$conf_pw))	// $conf_pw is a md5
 			{
-				$pw = md5($pw);
+				/* Verify that $pw is not already encoded as md5 (new cookie 5-15-2005 - Milosch) */
+				if(!preg_match('/^[0-9a-f]{32}$/',$pw))
+				{
+					/* No?  Make it so. */
+					$pw = md5($pw);
+				}
 			}
+
 			return $pw == $conf_pw;
 		}
 
