@@ -248,6 +248,7 @@ class ActivityManager extends BaseManager {
    5) Standalone activities cannot have transitions
    6) Non intractive activities non-auto routed must have some role
       so the user can "send" the activity
+   7) start activities must be autorouted and interactive
   */
   function validate_process_activities($pId)
   {
@@ -269,14 +270,24 @@ class ActivityManager extends BaseManager {
     }
     
     // Rule 2 end must be reachable from start
+    // and Rule 7 start activities must be autorouted and interactive
     $nodes = Array();
     $endId = $this->getOne("select wf_activity_id from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$pId and wf_type='end'");
     $aux['id']=$endId;
     $aux['visited']=false;
     $nodes[] = $aux;
     
-    $startId = $this->getOne("select wf_activity_id from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$pId and wf_type='start'");
-    $start_node['id']=$startId;
+    $query = "select wf_is_autorouted,wf_is_interactive,wf_activity_id from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$pId and wf_type='start'";
+    $result = $this->query($query);
+    while($res = $result->fetchRow()) {
+      $start_node['id'] = $res['wf_activity_id'];
+      if(!($res['wf_is_interactive'] == 'y')) {
+            $errors[] = tra('start activities must be interactive');
+      }
+      if(!($res['wf_is_autorouted'] == 'y')) {
+            $errors[] = tra('start activities must be autorouted');
+      }
+    }
     $start_node['visited']=true;    
     
     while($this->_list_has_unvisited_nodes($nodes) && !$this->_node_in_list($start_node,$nodes)) {
