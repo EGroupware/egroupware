@@ -43,6 +43,16 @@
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_async';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_api_content_history';
 
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_mimetypes';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_quota';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_files';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_shares';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_versioning';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_customfields';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_customfields_data';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_prefixes';
+
+
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
 	$setup_info['notifywindow']['title']     = 'Notify Window';
