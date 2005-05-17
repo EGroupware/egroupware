@@ -159,4 +159,25 @@
 	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
 	
 	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
+
+	/*************************************************************************\
+	 *                    Default Records for VFS v2                         *
+	\*************************************************************************/
+	if ($GLOBALS['DEBUG'])
+	{
+		echo "<br>\n<b>initiating to create the default records for VFS SQL2...";
+	}
+	
+	include PHPGW_INCLUDE_ROOT.'/phpgwapi/setup/default_records_mime.inc.php';
+
+	$oProc->query("INSERT INTO phpgw_vfs2_files (mime_id,owner_id,createdby_id,size,directory,name)
+				   SELECT mime_id,0,0,4096,'/','' FROM phpgw_vfs2_mimetypes WHERE mime='Directory'");
+
+	if ($GLOBALS['DEBUG'])
+	{
+		echo " DONE!</b>";
+	}
+	/*************************************************************************/
+
+
 ?>
