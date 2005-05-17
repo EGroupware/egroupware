@@ -161,13 +161,26 @@
 				return false;
 			}
 
-			foreach($account_ids as $account_id => $acl_rights)
-			{
-				$this->db->delete('phpgw_vfs2_shares',
-					array('account_id'=>$account_id,'file_id'=>$file_id),
-					__LINE__,__FILE__);
-			}
+			//gets an array will all accounts as key
+			$accounts = array_keys($account_ids);
+			
+			$this->db->delete('phpgw_vfs2_shares',
+				array('account_id'=>$accounts,'file_id'=>$file_id),
+				__LINE__,__FILE__);
+
 			return true;
+		}
+
+		/**
+		 * Function: remove_all_permissions
+		 *
+		 *		Removes all permissions of a file 
+		 */
+		function remove_all_permissions($file_id)
+		{
+			$this->db->delete('phpgw_vfs2_shares',
+				array('file_id'=>$file_id),
+				__LINE__,__FILE__);
 		}
 
 		/*!
@@ -207,8 +220,42 @@
 		 *   others that he have $permission (false)
 		 * @result array with the list of the file_id's of all shares
 		 */
-		function get_shares($account_id,$is_owner=false,$permission=PHPGW_ACL_READ)
+		function get_shares($account_id,$is_owner=false,$permission=PHPGW_ACL_READ,$exclude_dir='')
 		{
+			$default_values = array(
+				'is_owner' => false,
+				'permission' => PHPGW_ACL_READ
+				);
+		
+			if (is_array($account_id))
+			{
+				$account_id = array_merge($default_values,$account_id);
+				$is_owner = $account_id['is_owner'];
+				$permission = $account_id['permission'];
+				$exclude_dir = $account_id['exclude_dir'];
+				$only_dir = $account_id['only_dir'];
+				$account_id = $account_id['account_id'];
+			}
+		
+			if ($exclude_dir)
+			{
+				if (is_array($exclude_dir))
+				{
+					foreach ($exclude_dir as $dir)
+					{
+						$append .= " AND fls.directory NOT LIKE '".$dir."%' ";
+					}
+				}
+				else
+				{
+					$append .= " AND fls.directory NOT LIKE '".$exclude_dir."%' ";
+				}
+			}
+			elseif ($only_dir)
+			{
+				$append .= " AND fls.directory LIKE '".$only_dir."%' ";
+			}
+		
 			if ($is_owner)
 			{
 				$sql = "SELECT DISTINCT sh.file_id     as file_id,
@@ -218,8 +265,11 @@
                                fls.owner_id   as owner_id
 						FROM   phpgw_vfs2_shares as sh,
 							   phpgw_vfs2_files  as fls
+						INNER JOIN phpgw_vfs2_mimetypes mime on fls.mime_id = mime.mime_id
 						WHERE  sh.file_id = fls.file_id
+						  AND  mime.mime = 'Directory'
 						  AND  fls.shared = 'Y' 
+						  $append
 						  AND  fls.owner_id = $account_id";
 			}
 			else
@@ -241,9 +291,12 @@
                                fls.owner_id   as owner_id
 						FROM   phpgw_vfs2_shares as sh,
 							   phpgw_vfs2_files  as fls
+						INNER JOIN phpgw_vfs2_mimetypes mime on fls.mime_id = mime.mime_id
 						WHERE  sh.file_id = fls.file_id
+						  AND  mime.mime = 'Directory'
 						  AND  sh.account_id IN (".implode(',',$accounts).")
 						  AND  fls.shared = 'Y' 
+						  $append
 						  AND  fls.owner_id != $account_id";
 			}
 
@@ -312,14 +365,16 @@
 			return $res;
 		}
 
-		/*!
-		 * function get_file_permissions
-		 * @description Get the permissions for a user in a given file
-		 *   For files in a shared dir, will get the acl rights of the parent
-		 *   dir, and if not specified, of the parent of the parent, and so on.
-		 *   NOTE: this consider that files CANNOT have permissions set, only
-		 *   their parent dir, and the file inherits the nearer parent with 
-		 *   permissions defined
+		/**
+		 * Function: get_file_permissions
+		 *
+		 *		Gets the permissions for a user in a given file For files in a
+		 *		shared dir, will get the acl rights of the parent dir, and if
+		 *		not specified, of the parent of the parent, and so on.  NOTE:
+		 *		this consider that files CANNOT have permissions set, only
+		 *		their parent dir, and the file inherits the nearer parent with
+		 *		permissions defined (even if these permissions are NONE)
+		 *
 		 * @result int some mask of various PHPGW_ACL_*
 		 */
 		function get_file_permissions($account_id,$file_id)
@@ -364,9 +419,9 @@
 			}
 
 			$accounts[] = $account_id;
+            $accounts[] = 0; //default permission for all users
 
 			$accounts = implode(',',$accounts);
-
 
 			//searches for information in the parent dirs
 			for($i=0; $i<count($parent_dirs_array);$i++)
@@ -374,48 +429,82 @@
 				$dir_name = array_pop(explode('/',$parent_dirs_array[$i]));
 				if ($dir_name)
 				{
+
+					//if file have a reg in table, will try to see if it is
+					//with permissions to the current user
 					$sql = "SELECT sh.acl_rights  as acl_rights,
 								   fls.directory  as directory,
 								   fls.name       as name,
-								   fls.owner_id   as owner_id
-							FROM   phpgw_vfs2_shares as sh,
-								   phpgw_vfs2_files  as fls
-							WHERE  sh.file_id = fls.file_id
-							  AND  (sh.account_id IN ($accounts)
-							       OR fls.owner_id = $account_id)
+								   fls.owner_id   as owner_id,
+								   fls.shared     as shared
+							FROM    phpgw_vfs2_files  as fls,
+							        phpgw_vfs2_shares as sh
+							WHERE  fls.file_id = sh.file_id
 							  AND  fls.directory = '".$parent_dirs_array[$i+1]."' 
-							  AND  fls.name      = '".$dir_name."'";
+							  AND  fls.name      = '".$dir_name."'
+							  AND  fls.shared    = 'Y'";
 
 					$this->db->query($sql,__LINE__,__FILE__);
-					
-/*
-					$this->db->select('phpgw_vfs2_files','file_id',
-						array('directory'=>$parent_dirs_array[$i+1],
-						      'name'=>$dir_name), __LINE__,__FILE__);
 
-					$this->db->next_record();
-					
-					$this->db->select('phpgw_vfs2_shares','acl_rights',
-						array('file_id'=>$this->db->Record['file_id'],
-						      'account_id'=>$account_id),__LINE__,__FILE__);*/
-
-					while ($this->db->next_record())
+					if ($this->db->next_record())
 					{
-						if ($this->db->Record['owner_id'] == $account_id)
+
+						$sql = "SELECT sh.acl_rights  as acl_rights,
+									   fls.directory  as directory,
+									   fls.name       as name,
+									   fls.owner_id   as owner_id,
+									   fls.shared     as shared
+								FROM    phpgw_vfs2_files  as fls,
+										phpgw_vfs2_shares as sh
+								WHERE  (sh.account_id IN ($accounts)
+									   OR fls.owner_id  = $account_id)
+								  AND  fls.file_id = sh.file_id
+								  AND  fls.directory = '".$parent_dirs_array[$i+1]."' 
+								  AND  fls.name      = '".$dir_name."'
+								  AND  fls.shared    = 'Y'";
+
+						$this->db->query($sql,__LINE__,__FILE__);
+
+						
+	/*
+						$this->db->select('phpgw_vfs2_files','file_id',
+							array('directory'=>$parent_dirs_array[$i+1],
+								  'name'=>$dir_name), __LINE__,__FILE__);
+
+						$this->db->next_record();
+						
+						$this->db->select('phpgw_vfs2_shares','acl_rights',
+							array('file_id'=>$this->db->Record['file_id'],
+								  'account_id'=>$account_id),__LINE__,__FILE__);*/
+
+
+								  
+
+//						echo "tested file: ".$dir_name." \n<br>";
+//						echo $sql."<br><br>\n\n";
+						while ($this->db->next_record())
 						{
-							//the user can do anything with any dir or file
-							//inside a dir that belongs to him.
-							return PHPGW_ACL_READ|PHPGW_ACL_EDIT|PHPGW_ACL_ADD;
+//							echo "results for file: ".$dir_name." \n<br>";
+							if ($this->db->Record['owner_id'] == $account_id)
+							{
+								//the user can do anything with any dir or file
+								//inside a dir that belongs to him.
+								return PHPGW_ACL_READ|PHPGW_ACL_EDIT|PHPGW_ACL_ADD;
+							}
+							else
+							{
+								$entered = true;
+								$result |= $this->db->Record['acl_rights'];
+							}
+						}
+						if($entered)
+						{
+							return $result;
 						}
 						else
 						{
-							$entered = true;
-							$result |= $this->db->Record['acl_rights'];
+							return 0;
 						}
-					}
-					if($entered)
-					{
-						return $result;
 					}
 				}
 			}

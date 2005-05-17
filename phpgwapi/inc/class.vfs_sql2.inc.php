@@ -1,9 +1,10 @@
 <?php
   /**************************************************************************\
   * eGroupWare API - VFS                                                     *
-  * This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
+  * This file written by Vinicius Cubas Brand, strongly based on vfs_sql of  *
+  *		Jason Wies (Zone) <zone@phpgroupware.org>                            *
   * This class handles file/dir access for eGroupWare                        *
-  * Copyright (C) 2001 Jason Wies		                             *
+  * Copyright (C) 2001 Jason Wies, (C) 2004 Vinicius Cubas Brand             *
   * -------------------------------------------------------------------------*
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            * 
@@ -21,72 +22,28 @@
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
 
-  /* $Id$ */
-
 	/*!
 	@class vfs
-	@abstract Virtual File System with SQL backend
-	@description Authors: Zone
+	@abstract Virtual File System with SQL backend - version 2
+	@description Authors: Zone, viniciuscb
 	*/
 
 	# viniciuscb 2004-09-06 Upgraded this class to the sql implementation v2.
 
 	/* These are used in calls to extra_sql () */
-	define ('VFS_SQL_SELECT', 1);
-	define ('VFS_SQL_DELETE', 2);
-	define ('VFS_SQL_UPDATE', 4);
 	define ('DEFAULT_LOW_PERMS',0600);
-
-	//tmp Here because this cannot be inside class.
-	//wondering if not more appropriate to have vfs_sql exactly as it is
-	//inside another file 
-	//Hopefully vfs_sql will not evolve anymore, and we can do these
-	//modifications
-/*
-	//vfs high level table relationship definitions
-	$GLOBALS['phpgw']->vfs_hl_tables = array(
-		#main fields
-		'mimetype' => array(
-			'table'      => 'phpgw_vfs2_mimetypes',
-			'file'       => 'mime_id,mime_id'
-		),
-		'file' => array(
-			'table'      => 'phpgw_vfs2_files',
-			'mimetype'   => 'mime_id,mime_id',
-			'custom'     => 'file_id,file_id',
-			'sharing'    => 'file_id,file_id',
-			'versioning' => 'file_id,file_id'
-		),
-		'custom' => array(
-			'table'      => 'phpgw_vfs2_customfields_data',
-			'file'       => 'file_id,file_id'
-		),
-		'sharing' => array(
-			'table'      => 'phpgw_vfs2_shares',
-			'file'       => 'file_id,file_id'
-		),
-		'versioning' => array(
-			'table'      => 'phpgw_vfs2_versioning',
-			'file'       => 'file_id,file_id'
-		),
-		#other fields
-		'custom_desc' => array(
-			'table' => 'phpgw_vfs2_customfields'
-		),
-		'quota' => array(
-			'table' => 'phpgw_vfs2_quota'
-		)
-	);
-*/
 
 	#upd viniciuscb 2004-09-06 Updated to the new database tables (the ones that
 	#  match phpgw_vfs2*). I have created a class to handle mime types and one
-	#  to handle the versioning system. Things can appear a litte weird 
-	#  sometimes, mostly because the operations in the versioning system are not
-	#  atomic as they should be (and, for example, some database operation
-	#  error can make the version table inconsistent with some sort of bugs.
+	#  to handle the versioning system. 
 
+	#upd viniciuscb 2005-03-11 Deleted some garbage
 
+	/**
+	 * Class: vfs
+	 *
+	 *	Virtual File System class - SQL v.2 implementation
+	 */
 	class vfs extends vfs_shared
 	{
 		var $working_id;
@@ -94,12 +51,15 @@
 		var $meta_types;
 		var $now;
 		var $file_actions;
-//		var $db_highlevel;
 		var $vfs_mimetypes;
 		var $vfs_versionsystem;
 		var $vfs_customfields;
 		var $vfs_sharing;
 		var $db;
+		var $db_hl;
+		var $appfiles_root;
+
+		var $Debug;
 
 		//other attributes may be in the custom fields....
 
@@ -123,7 +83,7 @@
 
 		//to external use.
 		//if $custom_field_support is set, then this class have support to
-		//custom fields in file.
+		//custom fields.
 		var $custom_field_support = 1;
 
 		//if $search_support is set, then this class have support to
@@ -138,7 +98,7 @@
 		function vfs ()
 		{
 
-			//just in case...
+			//just in case... this must change soon.
 			if (@$GLOBALS['phpgw_info']['flags']['currentapp']=='filemanager')
 			{
 				echo "FILEMANAGER UNTESTED WITH VFS2. ABORTED.";
@@ -146,6 +106,7 @@
 			}
 
 			$this->db =& $GLOBALS['phpgw']->db;
+			$this->db_hl =& $GLOBALS['phpgw']->db_hl;
 	
 			$this->vfs_shared ();
 			$this->basedir = $GLOBALS['phpgw_info']['server']['files_dir'];
@@ -153,9 +114,6 @@
 			$this->working_lid = $GLOBALS['phpgw']->accounts->id2name($this->working_id);
 			$this->now = date ('Y-m-d H:i:s');
 
-
-//			$this->db_highlevel = CreateObject("phpgwapi.db_highlevel","phpgwapi");
-//			$this->db_highlevel->set_conversion_tables($GLOBALS['phpgw']->vfs_hl_tables);
 
 			/*
 			   File/dir attributes, each corresponding to a database field.
@@ -197,31 +155,12 @@
 				echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
-			/*
-			 * These are stored in the MIME-type field and should normally be
-			 * ignored.  Adding a type here will ensure it is normally ignored,
-			 * but you will have to explicitly add it to acl_check (), and to
-			 * any other SELECT's in this file
-			*/
-
-			#upd viniciuscb Now meta-types arent used
-
-			#$this->meta_types = array ('journal', 'journal-deleted');
-
 
 			/* We store the linked directories in an array now, so we don't
 			 * have to make the SQL call again */
 
 
-			if ($GLOBALS['phpgw_info']['server']['db_type']=='mssql'
-				|| $GLOBALS['phpgw_info']['server']['db_type']=='sybase')
-			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name, file_id FROM phpgw_vfs2_files WHERE CONVERT(varchar,link_directory) != '' AND CONVERT(varchar,link_name) != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
-			}
-			else
-			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name, file_id FROM phpgw_vfs2_files WHERE (link_directory IS NOT NULL or link_directory != '') AND (link_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
-			}
+
 
 			$this->linked_dirs = array ();
 			while ($GLOBALS['phpgw']->db->next_record ())
@@ -236,9 +175,9 @@
 			$this->vfs_versionsystem =& CreateObject('phpgwapi.vfs_versionsystem',false);
 			$this->vfs_versionsystem->set_vfs($this);
 
-			$this->vfs_customfields = CreateObject('phpgwapi.vfs_customfields');
+			$this->vfs_customfields =& CreateObject('phpgwapi.vfs_customfields');
 
-			$this->vfs_sharing = CreateObject('phpgwapi.vfs_sharing');
+			$this->vfs_sharing =& CreateObject('phpgwapi.vfs_sharing');
 		}
 
 		/*!
@@ -265,429 +204,6 @@
 			}
 			return False;
 		}
-
-		/*!
-		@function extra_sql
-		@abstract Return extra SQL code that should be appended to certain queries
-		@param query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
-		@result Extra SQL code
-		*/
-		function extra_sql ($data)
-		{
-
-			#upd viniciuscb 2004-08-17: this function was used mainly to avoid
-			#meta-types (like journal for instance) in certain operations. Now
-			#meta-types aren't used.
-/*
-			if (!is_array ($data))
-			{
-				$data = array ('query_type' => VFS_SQL_SELECT);
-			}
-
-			if ($data['query_type'] == VFS_SQL_SELECT || $data['query_type'] == VFS_SQL_DELETE || $data['query_type'] = VFS_SQL_UPDATE)
-			{
-				$sql = ' AND ((';
-
-				foreach ($this->meta_types as $num => $type)
-				{
-					if ($num)
-						$sql .= ' AND ';
-
-					$sql .= "mime_type != '$type'";
-				}
-
-				$sql .= ') OR mime_type IS NULL)';
-			}
-
-			return ($sql);
-*/
-			return '';
-		}
-
-		/*!
-		@function add_journal
-		@abstract Add a journal entry after (or before) completing an operation,
-			  and increment the version number.  This function should be used internally only
-		@discussion Note that state_one and state_two are ignored for some VFS_OPERATION's, for others
-			    they are required.  They are ignored for any "custom" operation
-			    The two operations that require state_two:
-			    operation			state_two
-			    VFS_OPERATION_COPIED	fake_full_path of copied to
-			    VFS_OPERATION_MOVED		fake_full_path of moved to
-
-			    If deleting, you must call add_journal () before you delete the entry from the database
-		@param string File or directory to add entry for
-		@param relatives Relativity array
-		@param operation The operation that was performed.  Either a VFS_OPERATION define or
-				  a non-integer descriptive text string
-		@param state_one The first "state" of the file or directory.  Can be a file name, size,
-				  location, whatever is appropriate for the specific operation
-		@param state_two The second "state" of the file or directory
-		@param incversion Boolean True/False.  Increment the version for the file?  Note that this is
-				   handled automatically for the VFS_OPERATION defines.
-				   i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
-				   would not
-		@result Boolean True/False
-		*/
-		function add_journal ($data)
-		{
-			if (!is_array ($data))
-			{
-				$data = array ();
-			}
-
-			$default_values = array
-				(
-					'relatives'	=> array (RELATIVE_CURRENT),
-					'state_one'	=> False,
-					'state_two'	=> False,
-					'incversion'	=> True
-				);
-
-			$data = array_merge ($this->default_values ($data, $default_values), $data);
-
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-
-			$p = $this->path_parts (array ('string' => $data['string'], 'relatives' => array ($data['relatives'][0])));
-
-			/* We check that they have some sort of access to the file other than read */
-			//FIXME
-			if (!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_WRITE)) &&
-				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_EDIT)) &&
-				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_DELETE)))
-			{
-				return False;
-			}
-
-			if (!$this->file_exists (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask))))
-			{
-				return False;
-			}
-
-			$ls_array = $this->ls (array (
-					'string' => $p->fake_full_path,
-					'relatives' => array ($p->mask),
-					'checksubdirs' => False,
-					'mime_type'	=> False,
-					'nofiles'	=> True
-				)
-			);
-			$file_array = $ls_array[0];
-
-			$sql = 'INSERT INTO phpgw_vfs (';
-			$sql2 .= ' VALUES (';
-
-			for ($i = 0; list ($attribute, $value) = each ($file_array); $i++)
-			{
-				if ($attribute == 'file_id' || $attribute == 'content')
-				{
-					continue;
-				}
-
-				if ($attribute == 'owner_id')
-				{
-					$value = $account_id;
-				}
-
-				if ($attribute == 'created')
-				{
-					$value = $this->now;
-				}
-
-				if ($attribute == 'modified' && !$modified)
-				{
-					unset ($value);
-				}
-
-				if ($attribute == 'mime_type')
-				{
-					$value = 'journal';
-				}
-
-				if ($attribute == 'comment')
-				{
-					switch ($data['operation'])
-					{
-						case VFS_OPERATION_CREATED:
-							$value = 'Created';
-							$data['incversion'] = True;
-							break;
-						case VFS_OPERATION_EDITED:
-							$value = 'Edited';
-							$data['incversion'] = True;
-							break;
-						case VFS_OPERATION_EDITED_COMMENT:
-							$value = 'Edited comment';
-							$data['incversion'] = False;
-							break;
-						case VFS_OPERATION_COPIED:
-							if (!$data['state_one'])
-							{
-								$data['state_one'] = $p->fake_full_path;
-							}
-							if (!$data['state_two'])
-							{
-								return False;
-							}
-							$value = 'Copied '.$data['state_one'].' to '.$data['state_two'];
-							$data['incversion'] = False;
-							break;
-						case VFS_OPERATION_MOVED:
-							if (!$data['state_one'])
-							{
-								$data['state_one'] = $p->fake_full_path;
-							}
-							if (!$data['state_two'])
-							{
-								return False;
-							}
-							$value = 'Moved '.$data['state_one'].' to '.$data['state_two'];
-							$data['incversion'] = False;
-							break;
-						case VFS_OPERATION_DELETED:
-							$value = 'Deleted';
-							$data['incversion'] = False;
-							break;
-						default:
-							$value = $data['operation'];
-							break;
-					}
-				}
-
-				/*
-				   Let's increment the version for the file itself.  We keep the current
-				   version when making the journal entry, because that was the version that
-				   was operated on.  The maximum numbers for each part in the version string:
-				   none.99.9.9
-				*/
-				if ($attribute == 'version' && $data['incversion'])
-				{
-					$version_parts = split ("\.", $value);
-					$newnumofparts = $numofparts = count ($version_parts);
-
-					if ($version_parts[3] >= 9)
-					{
-						$version_parts[3] = 0;
-						$version_parts[2]++;
-						$version_parts_3_update = 1;
-					}
-					elseif (isset ($version_parts[3]))
-					{
-						$version_parts[3]++;
-					}
-
-					if ($version_parts[2] >= 9 && $version_parts[3] == 0 && $version_parts_3_update)
-					{
-						$version_parts[2] = 0;
-						$version_parts[1]++;
-					}
-
-					if ($version_parts[1] > 99)
-					{
-						$version_parts[1] = 0;
-						$version_parts[0]++;
-					}
-
-					for ($i = 0; $i < $newnumofparts; $i++)
-					{
-						if (!isset ($version_parts[$i]))
-						{
-							break;
-						}
-
-						if ($i)
-						{
-							$newversion .= '.';
-						}
-
-						$newversion .= $version_parts[$i];
-					}
-
-					$this->set_attributes (array(
-							'string'	=> $p->fake_full_path,
-							'relatives'	=> array ($p->mask),
-							'attributes'	=> array(
-										'version' => $newversion
-									)
-						)
-					);
-				}
-
-				if (isset ($value))
-				{
-					if ($i > 1)
-					{
-						$sql .= ', ';
-						$sql2 .= ', ';
-					}
-
-					$sql .= "$attribute";
-					$sql2 .= "'" . $this->clean_string (array ('string' => $value)) . "'";
-				}
-			}
-
-			$sql .= ')';
-			$sql2 .= ')';
-
-			$sql .= $sql2;
-
-			/*
-			   These are some special situations where we need to flush the journal entries
-			   or move the 'journal' entries to 'journal-deleted'.  Kind of hackish, but they
-			   provide a consistent feel to the system
-			*/
-			if ($data['operation'] == VFS_OPERATION_CREATED)
-			{
-				$flush_path = $p->fake_full_path;
-				$deleteall = True;
-			}
-
-			if ($data['operation'] == VFS_OPERATION_COPIED || $data['operation'] == VFS_OPERATION_MOVED)
-			{
-				$flush_path = $data['state_two'];
-				$deleteall = False;
-			}
-
-			if ($flush_path)
-			{
-				$flush_path_parts = $this->path_parts (array(
-						'string'	=> $flush_path,
-						'relatives'	=> array (RELATIVE_NONE)
-					)
-				);
-
-				$this->flush_journal (array(
-						'string'	=> $flush_path_parts->fake_full_path,
-						'relatives'	=> array ($flush_path_parts->mask),
-						'deleteall'	=> $deleteall
-					)
-				);
-			}
-
-			if ($data['operation'] == VFS_OPERATION_COPIED)
-			{
-				/*
-				   We copy it going the other way as well, so both files show the operation.
-				   The code is a bad hack to prevent recursion.  Ideally it would use VFS_OPERATION_COPIED
-				*/
-				$this->add_journal (array(
-						'string'	=> $data['state_two'],
-						'relatives'	=> array (RELATIVE_NONE),
-						'operation'	=> 'Copied '.$data['state_one'].' to '.$data['state_two'],
-						'state_one'	=> NULL,
-						'state_two'	=> NULL,
-						'incversion'	=> False
-					)
-				);
-			}
-
-			if ($data['operation'] == VFS_OPERATION_MOVED)
-			{
-				$state_one_path_parts = $this->path_parts (array(
-						'string'	=> $data['state_one'],
-						'relatives'	=> array (RELATIVE_NONE)
-					)
-				);
-
-				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".
-					$GLOBALS['phpgw']->db->db_addslashes($state_one_path_parts->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($state_one_path_parts->fake_name_clean)."' AND mime_type='journal'");
-
-				/*
-				   We create the file in addition to logging the MOVED operation.  This is an
-				   advantage because we can now search for 'Create' to see when a file was created
-				*/
-				$this->add_journal (array(
-						'string'	=> $data['state_two'],
-						'relatives'	=> array (RELATIVE_NONE),
-						'operation'	=> VFS_OPERATION_CREATED
-					)
-				);
-			}
-
-			/* This is the SQL query we made for THIS request, remember that one? */
-			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
-
-			/*
-			   If we were to add an option of whether to keep journal entries for deleted files
-			   or not, it would go in the if here
-			*/
-			if ($data['operation'] == VFS_OPERATION_DELETED)
-			{
-				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".
-					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."' AND mime_type='journal'");
-			}
-
-			return True;
-		}
-
-		/*!
-		@function flush_journal
-		@abstract Flush journal entries for $string.  Used before adding $string
-		@discussion flush_journal () is an internal function and should be called from add_journal () only
-		@param string File/directory to flush journal entries of
-		@param relatives Realtivity array
-		@param deleteall Delete all types of journal entries, including the active Create entry.
-				  Normally you only want to delete the Create entry when replacing the file
-				  Note that this option does not effect $deleteonly
-		@param deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
-		@result Boolean True/False
-		*/
-		function flush_journal ($data)
-		{
-		/*
-			if (!is_array ($data))
-			{
-				$data = array ();
-			}
-
-			$default_values = array
-				(
-					'relatives'	=> array (RELATIVE_CURRENT),
-					'deleteall'	=> False,
-					'deletedonly'	=> False
-				);
-
-			$data = array_merge ($this->default_values ($data, $default_values), $data);
-
-			$p = $this->path_parts (array(
-					'string'	=> $data['string'],
-					'relatives'	=> array ($data['relatives'][0])
-				)
-			);
-
-			$sql = "DELETE FROM phpgw_vfs WHERE directory='".
-				$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'";
-
-			if (!$data['deleteall'])
-			{
-				$sql .= " AND (mime_type != 'journal' AND comment != 'Created')";
-			}
-
-			$sql .= "  AND (mime_type='journal-deleted'";
-
-			if (!$data['deletedonly'])
-			{
-				$sql .= " OR mime_type='journal'";
-			}
-
-			$sql .= ")";
-
-			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
-
-			if ($query)
-			{
-				return True;
-			}
-			else
-			{
-				return False;
-			}
-			*/
-		}
-
 
 		/*!
 		@function get_id_from_path
@@ -796,7 +312,7 @@
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
 			/* Accommodate special situations */
-			if ($this->override_acl || $data['relatives'][0] == RELATIVE_USER_APP)
+			if ($this->override_acl || $data['relatives'][0] == RELATIVE_USER_APP || $GLOBALS['phpgw_info']['user']['apps']['admin'])
 			{
 				return True;
 			}
@@ -861,14 +377,13 @@
 				{
 					$p2 = $p;
 				}
-
 				/*
 				   We don't use ls () to get owner_id as we normally would,
 				   because ls () calls acl_check (), which would create an infinite loop
 				*/
 				$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs2_files WHERE directory='".
 					$GLOBALS['phpgw']->db->db_addslashes($p2->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($p2->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+					$GLOBALS['phpgw']->db->db_addslashes($p2->fake_name_clean)."'", __LINE__, __FILE__);
 				$GLOBALS['phpgw']->db->next_record ();
 
 				$owner_id = $GLOBALS['phpgw']->db->Record['owner_id'];
@@ -892,9 +407,36 @@
 				return True;
 			}
 
-			//find file id
+				
+			#viniciuscb: Check if the file is inside a dir which is an application dir. 
+			#            If so, see if the dir has permissions in vfs_sharing. If not, 
+			#            inherit permissions given by the source application
 
+			if ($this->is_appfolder($p2->fake_full_path))
+			{
+				$file_id = $this->get_file_id(array(
+					'string'    => $p2->fake_full_path,
+					'relatives' => array($p2->mask)));
 	
+				$rights = $this->vfs_sharing->get_file_permissions($GLOBALS['phpgw_info']['user']['account_id'],$file_id);
+
+				if ($rights & $data['operation'])
+				{
+					return true;
+				}
+				
+				$exp_path = explode('/',$p2->fake_full_path);
+				$appname = $exp_path[2];
+				$id = $exp_path[3];
+
+				//get hooks to know node permission
+				$resp = $GLOBALS['phpgw']->hooks->process(array(
+					'location' => 'files_info',
+					'account_id' => $GLOBALS['phpgw_info']['user']['account_id']
+					));
+
+				return ($resp[$appname][$id]['permissions'] & $data['operation']);
+			}
 
 			#viniciuscb: rethink the group files role and working schema
 			/* Check if they're in the group */
@@ -916,29 +458,24 @@
 			$acl->account_id = $owner_id;
 			$acl->read_repository ();
 
-#			$rights = $acl->get_rights ($user_id);
-
-			/* Add privileges from the groups this user belongs to */
-#			if (is_array ($memberships))
-#			{
-#				foreach ($memberships as $group_array)
-#				{
-#					$rights |= $acl->get_rights ($group_array['account_id']);
-#				}
-#			}
-
 			$file_id = $this->get_file_id(array(
 				'string'    => $p2->fake_full_path,
 				'relatives' => array($p2->mask)));
 
 			$rights = $this->vfs_sharing->get_file_permissions($user_id,$file_id);
+
+			if ($this->Debug)
+			{
+				echo "<br>\nRIGHTS OF THE FILE ".$p2->fake_full_path." ARE=$rights<br>\n";
+			}
+			
 			if ($rights & $data['operation'])
 			{
 				return True;
 			}
 			elseif (!$rights && $group_ok)
 			{
-				$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+				$conf =& CreateObject('phpgwapi.config', 'phpgwapi');
 				$conf->read_repository();
 				if ($conf->config_data['acl_default'] == 'grant')
 				{
@@ -988,7 +525,7 @@
 				return False;
 			}
 
-			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+			$conf =& CreateObject('phpgwapi.config', 'phpgwapi');
 			$conf->read_repository();
 			if ($this->file_actions || $p->outside)
 			{
@@ -1077,7 +614,7 @@
 				)
 			);
 
-			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+			$conf =& CreateObject('phpgwapi.config', 'phpgwapi');
 			$conf->read_repository();
 
 
@@ -1266,8 +803,6 @@
 		 */
 		function cp ($data)
 		{
-			#echo "<b>cp:</b>";
-			#print_r($data);
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -1407,7 +942,7 @@
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."', name='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."' WHERE owner_id='$this->working_id' AND directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' AND name='".
-						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);*/
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'", __LINE__, __FILE__);*/
 
 					$ls_array_dest = $this->ls (array(
 							'string'	=> $t->fake_full_path,
@@ -1558,9 +1093,6 @@
 			{
 				$this->vfs_versionsystem =& $GLOBALS['object_keeper']->GetObject('phpgwapi.vfs_versionsystem');
 			}
-
-			#echo "<b>mv:</b>";
-			#print_r($data);
 
 			if (!is_array ($data))
 			{
@@ -1721,7 +1253,7 @@
 					);
 					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files SET size=$size WHERE directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' AND name='".
-						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'", __LINE__, __FILE__);
 				}
 				elseif (!$t->outside)
 				{
@@ -1730,7 +1262,7 @@
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."', directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' WHERE directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($f->fake_leading_dirs_clean)."' AND name='".
-						$GLOBALS['phpgw']->db->db_addslashes($f->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+						$GLOBALS['phpgw']->db->db_addslashes($f->fake_name_clean)."'", __LINE__, __FILE__);
 				}
 
 
@@ -1788,8 +1320,8 @@
 					$newdir_clean = $this->clean_string (array ('string' => $newdir));
 
 					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files SET directory='".
-						$GLOBALS['phpgw']->db->db_addslashes($newdir_clean)."' WHERE file_id='$entry[file_id]'" .
-						$this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+						$GLOBALS['phpgw']->db->db_addslashes($newdir_clean)."' WHERE file_id='$entry[file_id]'",
+						__LINE__, __FILE__);
 					$this->correct_attributes (array(
 							'string'	=> "$newdir/$entry[name]",
 							'relatives'	=> array ($t->mask)
@@ -1888,7 +1420,7 @@
 
 				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs2_files WHERE directory='".
 					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'".$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'", __LINE__, __FILE__);
 
 				if ($query)
 					$this->vfs_versionsystem->commit($file['file_id']);
@@ -1982,8 +1514,8 @@
 
 				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs2_files WHERE directory='".
 					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
-					$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'",
+					__LINE__, __FILE__);
 
 				if ($query)
 					$this->vfs_versionsystem->commit();
@@ -2046,7 +1578,9 @@
 			{
 				if (!@is_dir($p->real_leading_dirs_clean))	// eg. /home or /group does not exist
 				{
-					if (!@mkdir($p->real_leading_dirs_clean,0770))	// ==> create it
+					if (!@$this->mkdir(array(
+						'string' => $p->fake_leading_dirs,
+						'relatives' => array(RELATIVE_NONE) )))	// ==> create it
 					{
 						return False;
 					}
@@ -2280,21 +1814,18 @@
 			if ($data['attributes']['mime_type'] && $data['attributes']['mime_type'] != 'application/octet-stream')
 			{
 				$mime_data = array (
-					'mime' => $data['attributes']['mime_type']
+					'mime' => $data['attributes']['mime_type'],
+					'extension' => @$this->get_file_extension($data['string'])
 				);
 
 				if (!$type = $this->vfs_mimetypes->get_type($mime_data))
 				{
-					$mime_data['extension'] = @$this->get_file_extension($data['string']);
-
 					$type = $this->vfs_mimetypes->add_filetype($mime_data);
-
 				}
 			}
 			//try to find a compatible mime/type based in file extension
 			else
 			{
-
 				$mime_data = array (
 					'extension' => @$this->get_file_extension($data['string'])
 				);
@@ -2601,16 +2132,16 @@
 					return false;
 				}
 				$rr = file_exists ($p->real_full_path);
-
+				
 				return $rr;
 			}
 
 			//TODO id: primary field
-			$db2 = $GLOBALS['phpgw']->db;
+			$db2 =& $GLOBALS['phpgw']->db;
 			$db2->query ("SELECT name FROM phpgw_vfs2_files WHERE directory='".
 				$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
-
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'", __LINE__, __FILE__);
+			
 			if ($db2->num_rows())
 			{
 				return True;
@@ -2693,8 +2224,7 @@
 			{
 				$query = $GLOBALS['phpgw']->db->query ("SELECT size FROM phpgw_vfs2_files WHERE directory='".
 					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
-					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
-					$this->extra_sql (array ('query_text' => VFS_SQL_SELECT)));
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'",__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record ();
 				$size += $GLOBALS['phpgw']->db->Record[0];
 			}
@@ -2764,11 +2294,26 @@
 					'checksubdirs'	=> True,
 					'mime_type'	=> False,
 					'nofiles'	=> False,
-					'orderby'	=> 'directory',
+					'orderby'	=> 'directory,name',
 					'backups'   => false, /* show or hide backups */
 					'files_specified' => array(),
 					'allow_outside' => true
 				);
+
+			//check if orderby is a valid field (or is composed by valid fields)
+			//this prevents a sql error that happens when sort field is invalid.
+			if ($data['orderby'])
+			{
+				$fields = explode(',',$data['orderby']);
+				foreach ($fields as $field_name)
+				{
+					if ($this->attribute_tables[trim($field_name)] != 'phpgw_vfs2_files')
+					{
+						unset($data['orderby']);
+						break;
+					}
+				}
+			}
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
@@ -2822,10 +2367,16 @@
 					$sql .= "directory='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean).
 						"' AND name='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'".$sql_backups;
 				}
+//				echo " select1: dir=".$p->fake_leading_dirs_clean." name=".$p->fake_name_clean." <br>\n";
 				$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
 				$GLOBALS['phpgw']->db->next_record ();
 				$record = $GLOBALS['phpgw']->db->Record;
+
+				if (!$record)
+				{
+					return array();
+				}
 
 				/* We return an array of one array to maintain the standard */
 				$rarray = array ();
@@ -2833,13 +2384,15 @@
 				{
 					if ($attribute == 'mime_type')
 					{
-						if (!is_numeric($record['mime_id']))
+						if (!is_numeric($record['mime_id'])) 
 						{
+							//no mime type registered for file, must find one and if not exist add one.
 							$extension = $this->get_file_extension($record['name']);
-				
-							$res = $this->vfs_mimetypes->add_filetype(array(
-								'extension' => $extension
-							));
+
+							if (!$res = $this->vfs_mimetypes->get_type(array('extension' => $extension)))
+							{
+								$res = $this->vfs_mimetypes->add_filetype(array('extension' => $extension));
+							}
 
 							if ($res)
 							{
@@ -2942,40 +2495,77 @@
 
 			/* $dir's not a file, is inside the virtual root, and they want to check subdirs */
 			/* SELECT all, the, attributes FROM phpgw_vfs WHERE file=$dir */
-			$sql = 'SELECT ';
 
-			foreach($this->attributes as $num => $attribute)
-			{
-				if ($this->attribute_tables[$attribute] == 'phpgw_vfs2_files')
-				{
-					if ($num)
-					{
-						$sql .= ", ";
-					}
-
-					$sql .= $attribute;
-				}
-			}
+//			echo "DIR_CLEAN: ".$dir_clean."<BR>";
 
 			$dir_clean = $this->clean_string (array ('string' => $dir));
-			$sql .= ", mime_id,is_backup FROM phpgw_vfs2_files WHERE directory LIKE '".$GLOBALS['phpgw']->db->db_addslashes($dir_clean)."%'".$sql_backups;
-			$sql .= $this->extra_sql (array ('query_type' => VFS_SQL_SELECT));
+
+
+			//This query must be fast and only bring things with the correct
+			//permissions. So, I'll get the list of all groups the current user
+			//belongs, get the list of the current dir and all parents over it
+			//and pass all these things in one query.
+
+			//gets the id of all groups $account_id belongs to
+			$groups = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+
+			foreach($groups as $group)
+			{
+				$accounts[] = $group['account_id'];
+			}
+
+			$accounts[] = $GLOBALS['phpgw_info']['user']['account_id'];
+			$accounts[] = 0; //default permission for all users
+
+			$paths = array();
+			
+			$dir_exploded = explode('/',$dir_clean);
+			$dir_parts = count($dir_parts);
+
+			for ($i=$dir_parts-1;$i>=0;$i--)
+			{	
+				$res = implode('/',array_slice($dir_explode,0,$i));
+				$paths[] = "'".($res) ? $res : '/'."'";
+			}
+
+			if (!$data['backups'])
+			{
+				$append .= " AND fls.is_backup = 'N'";
+			}
+
 
 			if ($data['mime_type'])
 			{
-				if ($res = $this->vfs_mimetypes->get_type(array(
-						'mime' => $data['mime_type']
-						)) )
-				{
-					$sql .= " AND mime_id=".$res['mime_id'];
-				}
-				else //no file with this mime
-				{
-					$sql .= " AND 1=0";
-				}
+				$other_where .= " AND mime.mime = '".$data['mime_type']."'";
+				$mime_join = ' INNER JOIN phpgw_vfs2_mimetypes mime ON fls.mime_id = mime.mime_id';
 			}
 
-			$sql .= ' ORDER BY '.$data['orderby'];
+			//orderby
+			$orderby = explode(',',$data['orderby']);
+
+			foreach($orderby as $key =>$orderby_instance)
+			{
+				$orderby[$key] = 'fls.'.$orderby_instance;
+			}
+
+
+			$append .= ' ORDER BY '.implode(',',$orderby);
+
+			$dir_rule = $data['checksubdirs'] ? "fls.directory LIKE '".$dir_clean."%'" : "fls.directory = '".$dir_clean."'";
+			//SQL to get all files in current dir, except those ones that user
+			//does not have permission to see
+			$sql = "SELECT	DISTINCT fls.*
+					FROM	phpgw_vfs2_files fls
+					$mime_join
+					LEFT JOIN phpgw_vfs2_shares sh ON fls.file_id = sh.file_id
+					WHERE	".$dir_rule." AND
+							(   (sh.account_id in (".implode(',',$accounts).") AND fls.shared = 'Y') OR 
+								(sh.account_id is NULL AND fls.shared = 'N') OR
+								fls.owner_id = ".$GLOBALS['phpgw_info']['user']['account_id']." )
+							$other_where $append";
+
+			
+//			echo "<xmp>\n$sql\n</xmp>";
 
 			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
@@ -3049,7 +2639,6 @@
 				}
 			}
 
-
 			return $rarray;
 		}
 
@@ -3058,6 +2647,10 @@
 		 */
 		function update_real ($data,$recursive = False)
 		{
+			//FIXME this method does not work when there are registrys in
+			//database, but not in filesystem. It starts corromping the
+			//database by putting wrong things that are in the partition root.
+			return false;
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -3199,13 +2792,13 @@
 					)
 				);
 
-				if($mime_type)
+/*				if($mime_type)
 				{
 					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files as file, phpgw_vfs2_mimetypes as mime SET mime.mime_id=file.mime_id WHERE mime.mime='".$mime_type."' AND file.directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND file.name='".
-						$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
-						$this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
-				}
+						$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'", 
+						__LINE__, __FILE__);
+				}*/
 			}
 
 			$size = filesize ($p->real_full_path);
@@ -3514,7 +3107,7 @@
 			switch($data['type'])
 			{
 				case 'zip':
-					$zip = CreateObject('phpgwapi.PclZip',$tmp_filename);
+					$zip =& CreateObject('phpgwapi.PclZip',$tmp_filename);
 
 					//FIXME not $dest->real_leading_dirs, but the path to be
 					//removed from files
@@ -3524,7 +3117,7 @@
 
 				default:
 				/*
-					$tar = CreateObject('phpgwapi.Archive_Tar',$tmp_filename,$data['type']);
+					$tar =& CreateObject('phpgwapi.Archive_Tar',$tmp_filename,$data['type']);
 					//FIXME not $dest->real_leading_dirs, but the path to be
 					//removed from files
 					if (!$tar->createModify($filenames,'',$dest->real_leading_dirs.'/'))
@@ -3717,7 +3310,7 @@
 			switch ($data['type'])
 			{
 				case 'zip':
-					$zip = CreateObject('phpgwapi.PclZip',$arch->real_full_path);
+					$zip =& CreateObject('phpgwapi.PclZip',$arch->real_full_path);
 					if (!$zip->extract(PCLZIP_OPT_PATH,$tmp_dest->real_full_path,PCLZIP_OPT_SET_CHMOD,DEFAULT_LOW_PERMS))
 					{
 						return false; //TODO handle error
@@ -3738,7 +3331,7 @@
 					$archive_obj->extract_files();
 					*/
 
-	/*				$tar = CreateObject('phpgwapi.Archive_Tar',$arch->real_full_path);
+	/*				$tar =& CreateObject('phpgwapi.Archive_Tar',$arch->real_full_path);
 					if (!$tar->extract($tmp_dest->real_full_path))
 					{
 						return false; //TODO handle error
@@ -3749,7 +3342,6 @@
 			}
 
 			#refresh db
-
 			$filelist = $this->ls(array(
 				'string'    => $tmp_dest->fake_full_path,
 				'relatives' => array($tmp_dest->mask),
@@ -3777,9 +3369,9 @@
 						'size' => $file['size']
 					)
 				));
-
-
 			}
+
+			return true;
 		}
 
 		/*!
@@ -4106,6 +3698,181 @@
 				}
 			}
 			$this->override_acl = false;
+		}
+
+		#                                              #
+		#  Functions that treat with application dirs  #
+		#                                              #
+
+		//gets the root of the application files dir
+		function get_appfiles_root()
+		{
+			if ($this->appfiles_root)
+			{
+				return $this->appfiles_root;
+			}
+			
+			$appfiles_root = '/'.$GLOBALS['phpgw_info']['server']['file_appfolder'];
+
+			if ($appfiles_root == '/') //folder not set in setup
+			{
+				//see if there is a /infolog file in vfs. If have, use it. Else use /appfiles.
+				$res = $this->db->select('phpgw_vfs2_files','file_id',array('directory'=>'/','name'=>'infolog'),__LINE__,__FILE__);
+				if ($this->db->next_record()) //dir exists
+				{
+					$appfiles_root = '/infolog';
+				}
+				else
+				{
+					$appfiles_root = '/appfiles';
+				}
+			}
+			$this->appfiles_root = $appfiles_root;
+			return $appfiles_root;
+		}
+
+		//is folder belonging to an application (like for instance projects)
+		//$path is the virtual path. Pass the real path here seems nonsense now.
+		function is_appfolder($path) 
+		{
+			$app_files_root = $this->get_appfiles_root();
+			
+			return preg_match('/'.str_replace('/',"\\/",$app_files_root).'/',$path);
+		}	
+	
+
+		/**
+		 * Method: get_external_name
+		 *
+		 *		Given an application name and an id of this application,
+		 *		returns its name.
+		 */
+		function get_external_name($p_appname,$p_appid)
+		{
+			if (!$this->external_files_info)
+			{
+				$this->_consult_external_files_info();
+			}
+			
+			if (!$this->external_files_info[$p_appname][$p_appid]['caption'])
+			{
+				return $GLOBALS['phpgw']->hooks->single(array(
+					'appname' => $p_appname,
+					'location' => 'get_name',
+					'id' => $p_appid
+					));
+			}
+			else
+			{
+				return $this->external_files_info[$p_appname][$p_appid]['caption'];
+			}
+		}
+
+		/**
+		 * Method: get_external_files_info
+		 *
+		 *		Returns all the external files info. This is good for some applications
+		 *		that need to show all the external files or all the external folders
+		 */
+		function &get_external_files_info()
+		{
+			if (!$this->external_files_info)
+			{
+				$this->_consult_external_files_info();
+			}
+			return $this->external_files_info;
+		}
+		
+		/**
+		 * Method: _consult_external_files_info
+		 *
+		 *		Consults the external files info and store it in the vfs 
+		 *		object attribute $this->external_files_info
+		 */
+		function _consult_external_files_info()
+		{
+			//Gets the application dirs that were set as shared, to include them
+			//also in the tree
+			$application_shared_files = $this->vfs_sharing->get_shares(array(
+				'only_dir' => $this->get_appfiles_root(),
+				'account_id' => $GLOBALS['phpgw_info']['user']['account_id']
+				));
+
+			foreach($application_shared_files as $shared_file)
+			{
+				$shared_file = ereg_replace($this->get_appfiles_root().'\/*','',$shared_file['directory'].'/'.$shared_file['name']);
+				$shared_file = ereg_replace('\/*$','',$shared_file);
+				$shared_file = explode('/',$shared_file);
+
+				$appname = $shared_file[0];
+				$appid = $shared_file[1];
+
+				$include_also[$appname][] = $appid;
+			}
+
+			$this->external_files_info = $GLOBALS['phpgw']->hooks->process(array(
+				'location' => 'files_info',
+				'account_id' => $this->userinfo['account_id'],
+				'include_also' => $include_also
+				));
+		}
+
+		/**
+		 * Method: set_sharing
+		 *
+		 *		Sets the file sharing of ONE file to the given ACL
+		 *
+		 * Parameters:
+		 * 
+		 * 		string - the full string describing the file
+		 *      relatives - the array of relativity
+		 *      permissions - an array with the user id as key, and the permissions
+		 * 		          (that are a boolean operation of PHPGW_ACLs) as value.
+		 *		          If you want to apply a default permission to all users,
+		 * 		          use the 0 id as key
+		 */
+		function set_sharing($params)
+		{
+			//sets the file attibute to be 'shared=Y'
+			$this->set_attributes(array(
+				'string' => $params['string'],
+				'relatives' => $params['relatives'],
+				'attributes' => array('shared' => 'Y')
+				));
+
+			$file_id = $this->get_file_id(array(
+				'string' => $params['string'],
+				'relatives' => $params['relatives']
+				));
+
+			$this->vfs_sharing->set_permissions(array($file_id => $params['permissions']));
+		}
+
+
+		/**
+		 * Method: unset_sharing
+		 *
+		 *		Unsets all file sharing and ACL permissions for a file
+		 *
+		 * Parameters:
+		 * 
+		 * 		string - the full string describing the file
+		 *      relatives - the array of relativity
+		 */
+		function unset_sharing($params)
+		{
+			$this->set_attributes(array(
+				'string' => $params['string'],
+				'relatives' => $params['relatives'],
+				'attributes' => array('shared' => 'N')
+				));
+
+			$file_id = $this->get_file_id(array(
+				'string' => $params['string'],
+				'relatives' => $params['relatives']
+				));
+		
+			$this->vfs_sharing->remove_all_permissions($file_id);
 		}
 	}
 ?>

@@ -200,7 +200,7 @@
 					
 					break;
 				case 'view':
-					$acl = CreateObject('phpgwapi.acl',$user_id);
+					$acl =& CreateObject('phpgwapi.acl',$user_id);
 
 					//fetch ids of prefixes that user can view
 					if (!$pr_list =  $acl->get_location_list_for_id(PHPGW_VFS2_PREFIX_APP,PHPGW_ACL_READ,$user_id))
@@ -301,7 +301,7 @@
 			$list_of_users_to_del = array_diff($current_permissions,$user_list);
 
 
-			$acl = CreateObject('phpgwapi.acl',$current_user_id);
+			$acl =& CreateObject('phpgwapi.acl',$current_user_id);
 
 			foreach($list_of_users_to_add as $user_id)
 			{
@@ -362,7 +362,7 @@
 				return false;
 			}
 
-			$acl = CreateObject('phpgwapi.acl');
+			$acl =& CreateObject('phpgwapi.acl');
 			$user_ids = $acl->get_ids_for_location($prefix_id,PHPGW_ACL_READ,PHPGW_VFS2_PREFIX_APP);
 
 			return ($user_ids)?$user_ids:array();

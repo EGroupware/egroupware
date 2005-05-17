@@ -81,7 +81,7 @@
 			// creating a new object.
 			if ($create_vfs)
 			{
-				$this->vfs = CreateObject('phpgwapi.vfs');
+				$this->vfs =& CreateObject('phpgwapi.vfs');
 			}
 
 			/* FIXME this takes a value defined in the filescenter

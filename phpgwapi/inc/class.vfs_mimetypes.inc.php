@@ -32,7 +32,7 @@
 			// same object (i.e. use reference) in $this->vfs
 			if ($create_vfs)
 			{
-				$this->vfs = CreateObject('phpgwapi.vfs');
+				$this->vfs =& CreateObject('phpgwapi.vfs');
 			}
 
 			$this->default_filetype_icon = PHPGW_INCLUDE_ROOT.'/filescenter/icons/default.gif';
@@ -58,11 +58,11 @@
 		 */
 		function add_filetype($data,$return_image=false,$dont_update=false)
 		{
-
 			if (!$data['extension'] && !$data['mime'])
 			{
 				return false;
 			}
+
 
 			if (!$data['mime'])
 			{
@@ -95,6 +95,8 @@
 				$fp = fopen($data['icon_name'],"r");
 				$data['image'] = fread($fp,filesize($data['icon_name']));
 				fclose($fp);
+
+				$data['image'] = $this->db->quote($data['image'],'blob');
 
 				unset($data['icon_name']);
 			}
@@ -161,6 +163,11 @@
 
 			$where['mime_id'] = $data['mime_id'];
 
+			if ($data['image'])
+			{
+				$data['image'] = $this->db->quote($data['image'],'blob');
+			}
+
 			$res = $this->db->update('phpgw_vfs2_mimetypes',$data,$where,__LINE__,__FILE__);
 			
 
@@ -197,7 +204,6 @@
 		 */
 		function get_type($data, $return_image=false)
 		{
-
 			//TODO error messages
 			if ((!$data['extension'] || $data['extension'] == '(n/a)') &&
 				!$data['mime_id'] && !$data['mime'])
@@ -222,8 +228,25 @@
 					array('mime'=>$data['mime']),__LINE__,__FILE__);
 			}
 	
-			if($this->db->next_record())
-				return $this->db->Record;
+			if ($data['extension'] && $data['mime'])
+			{
+				//if there is extension and mime specified and nothing was found only with extension, search mime
+				if ($this->db->next_record())
+					return $this->db->Record;
+				else
+				{
+					$this->db->select('phpgw_vfs2_mimetypes',$return_fields,
+						array('mime'=>$data['mime']),__LINE__,__FILE__);
+
+					if ($this->db->next_record())
+						return $this->db->Record;
+				}
+			}
+			else
+			{
+				if ($this->db->next_record())
+					return $this->db->Record;
+			}
 
 			return false;
 
@@ -274,6 +297,8 @@
 					$data['image'] = fread($fp,filesize($icon));
 					fclose($fp);
 				}
+
+				$data['image'] = $this->db->quote($data['image'],'blob');
 
 				unset($data['icon_name']);
 			}
