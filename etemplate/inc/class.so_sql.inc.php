@@ -416,9 +416,10 @@ class so_sql
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		if ($this->debug) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
@@ -429,15 +430,29 @@ class so_sql
 		else
 		{
 			$criteria = $this->data2db($criteria);
-			foreach($this->db_cols as $db_col => $col)
-			{	
-				if (isset($filter[$col]) && $filter[$col]) continue;	// added later
-
-				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
+			foreach($criteria as $col => $val)
+			{
+				if (is_int($col))
 				{
+					$query[] = $val;
+				}
+				elseif ($empty || $val != '')
+				{
+					if (!($db_col = array_search($col,$this->db_cols)))
+					{
+						$db_col = $col;
+					}
 					if ($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?'))
 					{
 						$query[] = $db_col.' LIKE '.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard);
+					}
+					elseif (strstr($db_col,'.'))	// we have a table-name specified
+					{
+						list($table,$only_col) = explode('.',$db_col);
+						
+						$table_def = $this->db->get_table_definitions(false,$table);
+						
+						$query[] = $db_col.(is_array($val) ? ' IN ' : '=').$this->db->quote($val,$table_def['fd'][$only_col]);
 					}
 					else
 					{
@@ -486,7 +501,11 @@ class so_sql
 
 		if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
 		{
-			if (!$join || stristr($join,'LEFT JOIN'))
+			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+			{
+				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+			}
+			elseif (!$need_full_no_count && (!$join || stristr($join,'LEFT JOIN')))
 			{
 				$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 				$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
@@ -499,10 +518,14 @@ class so_sql
 				$this->total = $this->db->num_rows();
 			}
 		}
-		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
+		$this->db->select($this->table_name,$mysql_calc_rows.($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
 			$query,__LINE__,__FILE__,$start,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,$num_rows,$join);
 
+		if ($mysql_calc_rows)
+		{
+			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
+		}
 		if ($this->debug)
 		{
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
@@ -532,7 +555,7 @@ class so_sql
 		{
 			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
 			{
-				if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
+				if (stristr($col,'as ')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 				$cols[$col] = $col;
 			}
 		}
@@ -558,8 +581,10 @@ class so_sql
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @return int total number of rows
 	 */
-	function get_rows($query,&$rows,&$readonlys,$join='')
+	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false)
 	{
 		if ($this->debug)
 		{
@@ -574,7 +599,7 @@ class so_sql
 			}
 		}
 		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
-			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join);
+			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join,$need_full_no_count);
 
 		return $this->total;
 	}
@@ -594,7 +619,7 @@ class so_sql
 		$n = 1;
 		foreach($this->db_uni_cols as $db_col => $col)
 		{
-			if (list($other) = $this->search(array($db_col => $data[$col])))
+			if (list($other) = $this->search(array($db_col => $data[$col]),false,'','','',false,'AND',false,null,''))
 			{
 				foreach($this->db_key_cols as $db_key_col => $key_col)
 				{
@@ -621,23 +646,31 @@ class so_sql
 	 * @param string $value_col column-name for the values of the array, can also be an expression aliased with AS
 	 * @param string $key_col='' column-name for the keys, default '' = same as $value_col: returns a distinct list
 	 * @param array $filter=array() to filter the entries
-	 * @return array with key_col => value_col pairs, ordered by value_col
+	 * @param string $order='' order, default '' = same as $value_col
+	 * @return array with key_col => value_col pairs
 	 */
-	function query_list($value_col,$key_col='',$filter=array())
+	function query_list($value_col,$key_col='',$filter=array(),$order='')
 	{
 		static $cache = array();
 		
-		$cache_key = $value_col.'-'.$key_col.'-'.serialize($filter);
+		$cache_key = $value_col.'-'.$key_col.'-'.serialize($filter).'-'.$order;
 		
 		if (isset($cache[$cache_key]))
 		{
 			return $cache[$cache_key];
 		}
-		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').$value_col,$value_col,'','',false,'AND',false,$filter)))
+		$val_col = $value_col;
+		if (preg_match('/AS ([a-z_0-9]+)$/i',$value_col,$matches))
 		{
-			if (preg_match('/AS ([a-z_0-9]+)$/i',$value_col,$matches))
+			$val_col = $matches[1];
+		}
+		if (!$order) $order = $val_col;
+
+		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').$value_col,$order,'','',false,'AND',false,$filter)))
+		{
+			if (preg_match('/AS ([a-z_0-9]+)$/i',$key_col,$matches))
 			{
-				$value_col = $matches[1];
+				$key_col = $matches[1];
 			}
 			foreach($search as $row)
 			{
