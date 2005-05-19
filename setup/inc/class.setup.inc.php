@@ -75,7 +75,7 @@
 			
 			if ($connect_and_setcharset)
 			{
-				$this->Halt_On_Error = 'no';	// table might not be created at that stage
+				$this->db->Halt_On_Error = 'no';	// table might not be created at that stage
 				
 				// Set the DB's client charset if a system-charset is set
 				$this->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='system_charset'",__LINE__,__FILE__);
@@ -203,9 +203,9 @@
 						if ($this->check_auth($FormUser,$FormPW,$GLOBALS['egw_info']['server']['header_admin_user'],
 							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
-							$this->set_cookie('HeaderUser',"$FormUser",$expire,'/');
-							$this->set_cookie('HeaderPW',md5("$FormPW"),$expire,'/');
-							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							$this->set_cookie('HeaderUser',$FormUser,$expire,'/');
+							$this->set_cookie('HeaderPW',md5($FormPW),$expire,'/');
+							$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
 							return True;
 						}
 						else
@@ -222,9 +222,9 @@
 						if ($this->check_auth($HeaderUser,$HeaderPW,$GLOBALS['egw_info']['server']['header_admin_user'],
 							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
-							$this->set_cookie('HeaderUser',"$HeaderUser",$expire,'/');
-							$this->set_cookie('HeaderPW',md5("$HeaderPW"),$expire,'/');
-							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							$this->set_cookie('HeaderUser',$HeaderUser,$expire,'/');
+							$this->set_cookie('HeaderPW',$HeaderPW,$expire,'/');
+							$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
 							return True;
 						}
 						else
@@ -244,12 +244,12 @@
 							$this->check_auth($FormUser,$FormPW,@$GLOBALS['egw_domain'][$FormDomain]['config_user'],
 							@$GLOBALS['egw_domain'][$FormDomain]['config_passwd']))
 						{
-							$this->set_cookie('ConfigUser',"$FormUser",$expire,'/');
-							$this->set_cookie('ConfigPW',md5("$FormPW"),$expire,'/');
-							$this->set_cookie('ConfigDomain',"$FormDomain",$expire,'/');
+							$this->set_cookie('ConfigUser',$FormUser,$expire,'/');
+							$this->set_cookie('ConfigPW',md5($FormPW),$expire,'/');
+							$this->set_cookie('ConfigDomain',$FormDomain,$expire,'/');
 							/* Set this now since the cookie will not be available until the next page load */
-							$this->ConfigDomain = "$FormDomain";
-							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							$this->ConfigDomain = $FormDomain;
+							$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
 							return True;
 						}
 						else
@@ -266,10 +266,10 @@
 						if ($this->check_auth($ConfigUser,$ConfigPW,@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_user'],
 							@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_passwd']))
 						{
-							$this->set_cookie('ConfigUser',"$ConfigUser",$expire,'/');
-							$this->set_cookie('ConfigPW',md5("$ConfigPW"),$expire,'/');
+							$this->set_cookie('ConfigUser',$ConfigUser,$expire,'/');
+							$this->set_cookie('ConfigPW',$ConfigPW,$expire,'/');
 							$this->set_cookie('ConfigDomain',$this->ConfigDomain,$expire,'/');
-							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
 							return True;
 						}
 						else
@@ -288,6 +288,7 @@
 		// returns True if user and pw match, if conf_pw is a md5 ONLY compare with md5($pw) and NOT the plaintext !!!
 		function check_auth($user,$pw,$conf_user,$conf_pw)
 		{
+			//echo "<p>setup::check_auth('$user','$pw','$conf_user','$conf_pw')</p>\n";
 			if ($user != $conf_user)
 			{
 				return False; // wrong username
@@ -301,6 +302,7 @@
 					$pw = md5($pw);
 				}
 			}
+			//echo "<p>setup::check_auth: ('$pw' == '$conf_pw') == ".(int)($pw == $conf_pw)."</p>\n";
 
 			return $pw == $conf_pw;
 		}
