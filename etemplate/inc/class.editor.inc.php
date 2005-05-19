@@ -296,9 +296,9 @@
 				$this->etemplate->init($content['import']);
 				$preserv['import'] = $content['import'];
 			}
-			elseif ($content['save'])
+			if ($content['save'])
 			{
-				$this->etemplate->read($content['old_keys']);
+				if (!is_array($content['import'])) $this->etemplate->read($content['old_keys']);
 
 				if (!$this->etemplate->modified_set || !$this->etemplate->modified)
 				{
