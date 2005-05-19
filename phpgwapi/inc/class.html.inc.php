@@ -424,15 +424,16 @@ class html
 	 * Please note: it need to be called before the call to phpgw_header() !!!
 	 *
 	 * @param string $name name and id of the input-field
-	 * @param string $content of the htmlarea (will be run through htmlspecialchars !!!), default ''
-	 * @param string $style inline styles, eg. dimension of textarea element
-	 * @param string $base_href set a base href to get relative image-pathes working
-	 * @param string $plugins plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
+	 * @param string $content='' of the htmlarea (will be run through htmlspecialchars !!!), default ''
+	 * @param string $style='' inline styles, eg. dimension of textarea element
+	 * @param string $base_href='' set a base href to get relative image-pathes working
+	 * @param string $plugins='' plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
 	 * (htmlarea breaks when a plugin calls a nonexisiting lang file)
-	 * @param string $custom_toolbar when given this toolbar lay-out replaces the default lay-out.
+	 * @param string $custom_toolbar='' when given this toolbar lay-out replaces the default lay-out.
+	 * @param boolean $custom_toolbar=false when set, width and height are specifiyed in the HTMLarea config (needed if in a not shown tab)
 	 * @return string the necessary html for the textarea
 	 */
-	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='')
+	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
 		// check if htmlarea is availible for the browser and use a textarea if not
 		if (!$this->htmlarea_availible())
@@ -558,9 +559,19 @@ HTMLArea.replace_'.$id.' = function(id, config)
 
 '.$load_plugin_string.'
 
-var htmlareaConfig_'.$id.' = new HTMLArea.Config();
+var htmlareaConfig_'.$id.' = new HTMLArea.Config();'."\n";
+		
+		// need to set width and height in the config, as it cant be determined by the values of the textarea
+		// eg. because HTMLarea is in a not displayed tab. For values other then px, we use a default.
+		if ($set_width_height_in_config)
+		{
+			$width_px = preg_match('/width: *([0-9]+px)/i',str_replace('min-width','',$style),$matches) ? $matches[1] : '800px';
+			$height_px = preg_match('/height: *([0-9]+px)/i',str_replace('min-height','',$style),$matches) ? $matches[1] : '300px';
 
-'.$custom_toolbar.'
+			$GLOBALS['phpgw_info']['flags']['java_script'] .= 'htmlareaConfig_'.$id.".width='$width_px';\n".
+				'htmlareaConfig_'.$id.".height='$height_px';\n"; 
+		}		
+		$GLOBALS['phpgw_info']['flags']['java_script'] .= $custom_toolbar.'
 
 htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		
