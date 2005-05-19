@@ -1,22 +1,29 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.tab_widget" template="" lang="" group="" version="0.9.15.002" width="100%" spacing="0" padding="0">
-		<columns>
-			<column/>
-		</columns>
-		<rows>
-			<row valign="bottom">
-				<grid id="@tabs"/>
-			</row>
-			<row class="row_off">
-				<grid id="@body"/>
-			</row>
-		</rows>
+	<template id="etemplate.tab_widget" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" spacing="0" padding="0">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<hbox id="tabs">
+						<description/>
+					</hbox>
+				</row>
+				<row class="row_off">
+					<deck class="tab_body" id="body">
+						<description/>
+					</deck>
+				</row>
+			</rows>
+		</grid>
 		<styles>
-			.etemplate_tab { border-style:solid; border-width:1px 1px 0px; border-color:black; padding:4px; width: 60px;}
-.etemplate_tab_active { border-style:solid; border-width:1px 1px 0px; border-color:black;padding:6px;  width: 60px;}
-.tab_body { border-style: solid; border-color: black; border-width: 1px; }
+			.etemplate_tab,.etemplate_tab_active { border-style:solid; border-width:1px 1px 0px; border-color:black; padding:3px; padding-left: 6px; padding-right: 6px; width: 60px; white-space: nowrap; }
+.etemplate_tab { cursor: pointer; cursor: hand; }
+.etemplate_tab_active { border-width:2px 2px 0px; }
+.tab_body { border: black solid 2px; }
 		</styles>
-	</grid>
+	</template>
 </overlay>

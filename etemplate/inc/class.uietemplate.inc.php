@@ -480,15 +480,15 @@
 				{
 					continue;	// row is disabled
 				}
-				$rows[".$row"] .= $this->html->formatOptions($height,'HEIGHT');
+				$rows[".$row"] .= $this->html->formatOptions($height,'height');
 				list($cl) = explode(',',$class);
 				if ($cl == 'nmr' || $cl == 'row')
 				{
 					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
 				}
 				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
-				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
-				$rows[".$row"] .= $this->html->formatOptions($class,',VALIGN');
+				$rows[".$row"] .= $this->html->formatOptions($cl,'class');
+				$rows[".$row"] .= $this->html->formatOptions($class,',valign');
 
 				reset ($cols);
 				$row_data = array();
@@ -547,20 +547,16 @@
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
 						continue;
 					}
-					/* TEST-RB
-					if ($cell['onclick'])	// can only be set via source at the moment
+					// can only be set via source at the moment
+					if (strlen($cell['onclick']) > 1 && $cell['type'] != 'button')
 					{
-						$row_data[".$col"] .= ' onClick="'.$cell['onclick'].'"';
-
-						if ($cell['id'])
-						{
-							$row_data[".$col"] .= ' ID="'.$cell['id'].'"';
-						}
-					}*/
+						$row_data[".$col"] .= ' onclick="'.$cell['onclick'].'"' .
+							($cell['id'] ? ' id="'.$cell['id'].'"' : '');
+					}
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
 					if ($colspan > 1)
 					{
-						$row_data[".$col"] .= " COLSPAN=\"$colspan\"";
+						$row_data[".$col"] .= " colspan=\"$colspan\"";
 						for ($i = 1; $i < $colspan; ++$i,++$c)
 						{
 							each($cols);	// skip next cell(s)
@@ -571,24 +567,28 @@
 						list($width,$disable) = explode(',',$opts[$col]);
 						if ($width)		// width only once for a non colspan cell
 						{
-							$row_data[".$col"] .= " WIDTH=\"$width\"";
+							$row_data[".$col"] .= " width=\"$width\"";
 							$opts[$col] = "0,$disable";
 						}
 					}
-					$row_data[".$col"] .= $this->html->formatOptions($cell['align']?$cell['align']:'left','ALIGN');
+					$row_data[".$col"] .= $this->html->formatOptions($cell['align']?$cell['align']:'left','align');
 					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 						$c,$r,$show_c,$show_row,$content);
-					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
+					$row_data[".$col"] .= $this->html->formatOptions($cl,'class');
 				}
 				$rows[$row] = $row_data;
 			}
 
-			$html = $this->html->table($rows,$this->html->formatOptions($grid['size'],'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING').
-				$this->html->formatOptions($grid['span'],',CLASS')/*TEST-RB,$no_table_tr*/);
+			list($width,$height,,,,,$overflow) = $options = explode(',',$grid['size']);
+			if ($overflow && $height)
+			{
+				$options[1] = '';	// set height in div only
+			}
+			$html = $this->html->table($rows,$this->html->formatOptions(/*$grid['size']*/$options,'width,height,border,class,cellspacing,cellpadding').
+				$this->html->formatOptions($grid['span'],',class')/*TEST-RB,$no_table_tr*/);
 
-			list($width,$height,,,,,$overflow) = explode(',',$grid['size']);
 			if (!empty($overflow)) {
-				$div_style=' STYLE="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow\"";
+				$div_style=' style="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow;\"";
 				$html = $this->html->div($html,$div_style);
 			}
 			return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
@@ -808,7 +808,7 @@
 					if (!$readonly)
 					{
 						list($styles,$plugins) = explode(',',$cell_options,2);
-						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins);
+						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins,'',true);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
 							'type'      => $cell['type'],
 							'needed'    => $cell['needed'],
@@ -816,7 +816,7 @@
 					}
 					else
 					{
-						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black;'.$cell_options.'"');
+						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black;'.$styles.'"');
 					}
 					break;
 				case 'checkbox':
@@ -1102,7 +1102,10 @@
 						$img = $image;
 						list($app) = explode('.',$this->name);
 					}
-					list($extra_link,$extra_link_target,$imagemap) = explode(',',$cell['size']);
+					if (!$readonly)
+					{
+						list($extra_link,$extra_link_target,$imagemap) = explode(',',$cell['size']);
+					}
 					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
 						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':''));
 					$extra_label = False;
@@ -1113,7 +1116,7 @@
 						$html .= $this->html->input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
 						$html .= $this->html->input($form_name,'','file',$options);
 						$GLOBALS['phpgw_info']['etemplate']['form_options'] =
-							"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path_name','$form_name')\"";
+							"enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					}
 					break;
@@ -1151,24 +1154,31 @@
 							$box_anz++;
 							if ($cell[$n]['align'])
 							{
-								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
+								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'align');
 								$sub_cell_has_align = true;
 							}
-							$class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
+							// can only be set via source at the moment
+							if (strlen($cell[$n]['onclick']) > 1 && $cell[$n]['type'] != 'button')
+							{
+								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$cell[$n]['onclick'].'"'.
+									($cell[$n]['id'] ? ' id="'.$cell[$n]['id'].'"' : '');
+							}
+							$box_item_class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 								$show_c,$show_row,$content['.c'],$content['.row'],$content);
-							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($class,'CLASS');
+							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($box_item_class,'class');
 						}
 					}
 					if ($box_anz > 1 && $orient)	// a single cell is NOT placed into a table
 					{
-						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,CELLPADDING,CELLSPACING').
-							$this->html->formatOptions($cell['span'],',CLASS').
-							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
+						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,cellpadding,cellspacing').
+							$this->html->formatOptions($cell['span'],',class').
+							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
 					}
 					// use a div to not loose the css class
 					elseif ($class && $orient)
 					{
-						$html = $this->html->div($html,'',$class);
+						//$html = $this->html->div($html,'',$class);
+						$class = $box_item_class;
 					}
 					if ($type == 'groupbox')
 					{
@@ -1184,7 +1194,7 @@
 								$cell['height'],
 								$cell['width'],
 								$cell['class'],
-							),'HEIGHT,WIDTH,CLASS'));
+							),'height,widht,class'));
 					}
 					if ($box_anz > 1)	// small docu in the html-source
 					{
@@ -1206,24 +1216,17 @@
 					{
 						$s_height = "height: $s_height".(substr($s_height,-1) != '%' ? 'px' : '').';';
 					}
+					$html = $this->html->input_hidden($form_name,$value);
+					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  $cell['type'];
+							
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
-						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
-						$html .= $this->html->div($h,$this->html->formatOptions(array(
-							$cl.($cl ? ' ':'').'tab_body',
-							"$s_width $s_height position: absolute; left: 0px; top: 0px; visibility: $vis; z-index: 50;",
+						$html .= $this->html->div($this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,
+							$show_row,$nul,$cl,$path.'/'.$n),$this->html->formatOptions(array(
+							'display: '.($value == $cell[$n]['name'] ? 'inline' : 'none').';',
 							$cell[$n]['name']
-						),'CLASS,STYLE,ID'));
+						),'style,id'));
 					}
-					$html .= $this->html->input_hidden($form_name,$value);	// to store active plane
-					
-					list (,$cl) = explode(',',$cell['span']);
-					$html = $this->html->input_hidden($form_name,$value)."\n".	// to store active plane
-						$this->html->div($html,$this->html->formatOptions(array(
-							$cl,
-							"$s_width $s_height position: relative; z-index: 100;"
-						),'CLASS,STYLE'));
 					break;
 				default:
 					if ($ext_type && $this->haveExtension($ext_type,'render'))
@@ -1295,8 +1298,8 @@
 				}
 				if ($extra_link)
 				{
-					$options = " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
-					$options .= " onMouseOut=\"self.status=''; return true;\"";
+					$options = " onmouseover=\"self.status='".addslashes(lang($help))."'; return true;\"";
+					$options .= " onmouseout=\"self.status=''; return true;\"";
 					if ($extra_link_target) $options .= ' target="'.$extra_link_target.'"';
 					return $this->html->a_href($html,$extra_link,'',$help != '' ? $options : '');
 				}

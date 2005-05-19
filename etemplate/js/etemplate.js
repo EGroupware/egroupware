@@ -26,7 +26,9 @@ function set_element(form,name,value)
 	{
 		if (form.elements[i].name == name)
 		{
+			//alert('set_element: '+name+'='+value);
 			form.elements[i].value = value;
+			//alert(name+'='+form.elements[i].value);
 		}
 	}
 }
@@ -66,8 +68,10 @@ function activate_tab(tab,all_tabs,name)
 			parts[last_part] = t;
 			t = parts.join('.');
 		}
-		document.getElementById(t).style.visibility = t == tab ? 'visible' : 'hidden';
+		document.getElementById(t).style.display = t == tab ? 'inline' : 'none';
 		document.getElementById(t+'-tab').className = 'etemplate_tab'+(t == tab ? '_active th' : ' row_on');
 	}
-	document.getElementByName(name).value = tab;
+	if (name) {
+		set_element(document.eTemplate,name,tab);
+	}
 }

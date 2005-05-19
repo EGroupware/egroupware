@@ -15,7 +15,7 @@
 	/**
 	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab
 	 *
-	 * See the example in 'etemplate.tab_widget.test' (use show to view it)
+	 * See the example in 'etemplate.tab_widget.test'
 	 *
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	 *
@@ -64,106 +64,105 @@
 		 */
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$dom_enabled = 0; //$GLOBALS['phpgw_info']['etemplate']['dom_enabled'];
+			//echo "<p>tab_widget::pre_process('$form_name',$value,,$extension_data)</p>\n";
+
+			if (!$cell['onchange'])	// onchange allows to use the old behavior (submit for each new tab)
+			{
+				$dom_enabled = isset($GLOBALS['phpgw_info']['etemplate']['dom_enabled']) ? $GLOBALS['phpgw_info']['etemplate']['dom_enabled'] : true;
+			}
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
 			$names = explode('|',$cell['name']);
 
-			$tab =& new etemplate('etemplate.tab_widget.tab'.($dom_enabled ? '_dom' : ''));
-			$tab_active =& new etemplate('etemplate.tab_widget.tab_active');
-			$tabs =& new etemplate();
-			$tabs->init('*** generated tabs','','',0,'',0,0);	// make an empty template
-			// keep the editor away from the generated tmpls
-			$tab->no_onclick = $tab_active->no_onclick = $tabs->no_onclick = true;
+			// disable tab mentioned in readonlys
+			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
+			{
+				if($name && $disable && ($key = array_search($name,$names)) !== false)
+				{
+					unset($names[$key]);
+					$names = array_values($names);
+					unset($helps[$key]);
+					$helps = array_values($helps);
+					unset($labels[$key]);
+					$labels = array_values($labels);
+				}
+			}
+			$all_names = implode('|',$names);
 
+			$tab_widget = new etemplate('etemplate.tab_widget');
+			$tab_widget->no_onclick = true;
+	
 			foreach($names as $k => $name)
 			{
 				if (!strstr($name,'.'))
 				{
 					$name = $names[$k] = $tmpl->name . '.' . $name;
 				}
-				if ($extension_data == $name)
+				if ($value == $name)
 				{
 					$selected_tab = $name;
 				}
 			}
 			if (empty($selected_tab))
 			{
-				$extension_data = $selected_tab = $names[0];
+				$value = $selected_tab = $names[0];
 			}
-			$tab_row = array();	// generate the tab row
-			while (list($k,$name) = each($names))
+			foreach($names as $k => $name)
 			{
 				if (!strstr($name,'.'))
 				{
 					$name = $names[$k] = $tmpl->name . '.' . $name;
 				}
-				$tcell = $tabs->empty_cell();
-				if ($extension_data == $name)
+				$tcell =& $tab_widget->empty_cell();
+				if ($value == $name)
 				{
-					// save selected tab in persistent extension_data to use it in post_process
-					$selected_tab = $name;
-					$tcell['obj'] = $tab_active;
-					$tcell['name'] = $tab_active->name;
+					$tcell['span'] = ',etemplate_tab_active th';
 				}
 				else
 				{
-					$tcell['obj'] = $tab;
-					$tcell['name'] = $tab->name;
+					$tcell['span'] = ',etemplate_tab row_on';
 				}
 				if ($dom_enabled)
 				{
-					$tcell['obj']->set_cell_attribute('tab','onclick',"activate_tab('$name','$cell[name]');");
-					$tcell['obj']->set_cell_attribute('tab','id',$name.'-tab');
+					$tcell['onclick'] = "activate_tab('$name','$all_names','$form_name');";
+					$tcell['id'] = $name.'-tab';
 				}
-				$tcell['type'] = 'template';
-				$tcell['size'] = $cell['name'].'['.$name.']';
-				$value[$name] = array(
-					'name'  => $name,
-					'label' => $labels[$k],
-					'help'  => $helps[$k]
-				);
-				$tab_row[$tabs->num2chrs($k)] = $tcell;
+				elseif ($value != $name)
+				{
+					$tcell['type'] = 'button';
+					$tcell['onchange'] = '1';
+					$tcell['name'] = $cell['name'].'['.$name.']';
+				}
+				$tcell['label'] = $labels[$k];
+				$tcell['help'] = $helps[$k];
+
+				$tab_widget->set_cell_attribute('tabs',1+$k,$tcell);
 			}
-			// add one empty cell to take all the space of the row
-			$tab_row[$k = $tabs->num2chrs(sizeof($tab_row))] = $tabs->empty_cell();
-			$tabs->data[0][$k] = '99%'; // width
-			$tabs->data[0]['c1'] = ',bottom';
+			$tab_widget->set_cell_attribute('tabs','type','hbox');
+			$tab_widget->set_cell_attribute('tabs','size',count($names));
+			$tab_widget->set_cell_attribute('tabs','name','');
 
-			$tabs->data[1] = $tab_row;
-			$tabs->set_rows_cols();
-			$tabs->size = "$cell[width],,,0,0";
-
-			$tab_widget = new etemplate('etemplate.tab_widget');
-			$tab_widget->no_onclick = true;
-			$tab_widget->set_cell_attribute('@tabs','obj',$tabs);
-			
 			if ($dom_enabled)
 			{
-				$tab_widget->set_cell_attribute('@body','type','deck');
-				$tab_widget->set_cell_attribute('@body','width',$cell['width']);
-				$tab_widget->set_cell_attribute('@body','height',$cell['height']);
-				$tab_widget->set_cell_attribute('@body','size',count($names));
-				$tab_widget->set_cell_attribute('@body','class',$cell['class']);
 				foreach($names as $n => $name)
 				{
-					$bcell = $tab_widget->empty_cell();
-					$bcell['type'] = 'template';
+					$bcell = $tab_widget->empty_cell('template',$name);
 					$bcell['obj'] = new etemplate($name,$tmpl->as_array());
-					$bcell['name'] = $name;
-					$tab_widget->set_cell_attribute('@body',$n+1,$bcell);
+					$tab_widget->set_cell_attribute('body',$n+1,$bcell);
 				}
-				$tab_widget->set_cell_attribute('@body','name',$cell['name']);
+				$tab_widget->set_cell_attribute('body','type','deck');
+				$tab_widget->set_cell_attribute('body','size',count($names));
+				$tab_widget->set_cell_attribute('body','span',',tab_body');
+				$tab_widget->set_cell_attribute('body','name',$cell['name']);
 			}
 			else
 			{
 				$stab = new etemplate($selected_tab,$tmpl->as_array());
-				$options = array_pad(explode(',',$stab->size),3,'');
-				$options[3] = ($options[3]!= '' ? $options[3].' ':'') . 'tab_body';
-				$stab->size = implode(',',$options);
-				$tab_widget->set_cell_attribute('@body','obj',$stab);
+				$tab_widget->set_cell_attribute('body','type','template');
+				$tab_widget->set_cell_attribute('body','size','');	// the deck has a '1' there
+				$tab_widget->set_cell_attribute('body','obj',$stab);
 			}
-			$tab_widget->set_cell_attribute('@body','name',$selected_tab);
+			$tab_widget->set_cell_attribute('body','name',$selected_tab);
 
 			$cell['type'] = 'template';
 			$cell['obj'] = &$tab_widget;
@@ -189,19 +188,24 @@
 		 * @param mixed &value_in the posted values (already striped of magic-quotes)
 		 * @return boolean true if $value has valid content, on false no content will be returned!
 		 */
-		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			//echo "<p>tab_widget::post_process($name): value = "; _debug_array($value);
-			if (is_array($value))
+			//echo "<p>tab_widget::post_process($name): value_in = "; _debug_array($value_in);
+
+			if (is_array($value_in))
 			{
-				reset($value);
-				list($tab,$button) = each($value);
-				list(,$button) = each($button);
-				if ($button)
+				foreach ($value_in as $tab => $button_pressed)
 				{
-					$extension_data = $tab;
-					$loop = True;
+					if ($button_pressed)
+					{
+						$value = $tab;
+						$loop = True;
+					}
 				}
+			}
+			else
+			{
+				$value = $value_in;
 			}
 			return True;
 		}
