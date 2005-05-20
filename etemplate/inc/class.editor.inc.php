@@ -1068,6 +1068,20 @@
 			{
 				$path = $content['goto'] ? $content['goto'] : ($content['goto2'] ? $content['goto2'] : $content['path']);
 				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],0,$content['goto'] || $content['goto2'] ? $content['version'] : $content['old_version']);
+				
+				// build size from options array, if applicable
+				if (is_array($content['cell']['options']))
+				{
+					$size = '';
+					for ($n = max(array_keys($content['cell']['options'])); $n >= 0; --$n)
+					{
+						if (strlen($content['cell']['options'][$n]) || strlen($size))
+						{
+							$size = $content['cell']['options'][$n].(strlen($size) ? ','.$size : '');
+						}
+					}
+					$content['cell']['size'] = $size;
+				}
 			}
 			else
 			{
@@ -1232,6 +1246,8 @@
 			$content['msg'] = $msg;
 			$content['goto'] = $this->path_components($content['path']);
 			$content['goto2'] = $this->parent_navigation($parent,$parent_path,$child_id,$widget);
+			
+			$content['cell']['options'] = explode(',',$content['cell']['size']);
 
 			$editor =& new etemplate('etemplate.editor.widget');
 			$type_tmpl =& new etemplate;
@@ -1248,24 +1264,28 @@
 				$editor->disable_cells('row_menu');
 				$editor->disable_cells('column_menu');
 			}
+			$preserv = $this->etemplate->as_array()+array(
+				'path'        => $content['path'],
+				'old_version' => $this->etemplate->version,
+				'opener'      => $content['opener'],
+				'cell'        => $content['cell'],
+				'goto'        => $content['goto'],
+			);
+			unset($preserv['cell']['options']);	// otherwise we never know if content is returned via options array or size
+			
 			$GLOBALS['phpgw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 			$editor->exec('etemplate.editor.widget',$content,array(
 					'type'       => array_merge($this->etemplate->types,$this->extensions),
-					'align'      => $this->aligns,
-					'valign'     => $this->valigns,
-					'edit_menu'  => $this->edit_menu,
-					'box_menu'   => $this->box_menu,
-					'row_menu'   => $this->row_menu,
-					'column_menu'=> $this->column_menu,
-					'onclick_type'=> $this->onclick_types,
-				),'',$this->etemplate->as_array()+array(
-					'path'        => $content['path'],
-					'old_version' => $this->etemplate->version,
-					'opener'      => $content['opener'],
-					'cell'        => $content['cell'],
-					'goto'        => $content['goto'],
-				),2);
+					'align'      => &$this->aligns,
+					'valign'     => &$this->valigns,
+					'edit_menu'  => &$this->edit_menu,
+					'box_menu'   => &$this->box_menu,
+					'row_menu'   => &$this->row_menu,
+					'column_menu'=> &$this->column_menu,
+					'onclick_type'=>&$this->onclick_types,
+					'options[6]' => &$this->overflows,
+				),'',$preserv,2);
 		}
 
 		/**

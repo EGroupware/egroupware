@@ -296,6 +296,7 @@ showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
 spacing	etemplate	en	Spacing
+span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
 stack	etemplate	en	Stack
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link

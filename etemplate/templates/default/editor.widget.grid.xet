@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.editor.widget.grid" template="" lang="" group="0" version="1.0.1.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row">
+					<description options=",,,type" value="Type"/>
+					<menulist>
+						<menupopup id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"/>
+					</menulist>
+					<description options=",,,align" value="Align" align="right"/>
+					<menulist>
+						<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
+					</menulist>
+					<description options=",,,span" value="Span" align="right"/>
+					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+				</row>
+				<row class="row">
+					<description options=",,,name" value="Name"/>
+					<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
+					<checkbox label="%s disabled" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell" span="2"/>
+					<description options=",,,options[3]" value="Class" align="right"/>
+					<textbox size="10" id="options[3]" statustext="CSS class for the table-tag"/>
+				</row>
+				<row class="row">
+					<description options=",,,options[0]" value="Width"/>
+					<textbox size="5" id="options[0]" statustext=" Width of the table in % or pixels for the table-tag and (optional) div"/>
+					<description options=",,,options[1]" value="Height" align="right"/>
+					<textbox size="5" id="options[1]" statustext=" Height of the table in % or pixels for the table-tag and (optional) div"/>
+					<description options=",,,options[6]" value="Overflow" align="right"/>
+					<menulist>
+						<menupopup no_lang="1" id="options[6]" statustext="what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,options[4]" value="Spacing"/>
+					<menulist>
+						<menupopup type="select-number" id="options[4]" statustext="Cellspacing for the table-tag" options="Default,0,10,1"/>
+					</menulist>
+					<description options=",,,options[5]" value="Padding"/>
+					<menulist>
+						<menupopup type="select-number" options="Default,0,10,1" id="options[5]" statustext="Cellpadding for the table-tag"/>
+					</menulist>
+					<description options=",,,options[2]" value="Border" align="right"/>
+					<menulist>
+						<menupopup type="select-number" options="Default,0,10,1" id="options[2]" statustext="Border-line-thickness for the table-tag"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

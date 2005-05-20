@@ -296,6 +296,7 @@ showing	etemplate	de	zeigt
 shows / allows you to enter values into the etemplate for testing	etemplate	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	etemplate	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
 spacing	etemplate	de	Zellenabstand
+span	etemplate	de	Überspannt
 span, class	etemplate	de	Span, Class
 stack	etemplate	de	Stapel
 start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
