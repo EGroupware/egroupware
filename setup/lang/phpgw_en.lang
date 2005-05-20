@@ -194,7 +194,6 @@ go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
 has a version mismatch	setup	en	has a version mismatch
-header 0assword	setup	en	Header Password
 header admin login	setup	en	Header Admin Login
 header password	setup	en	Header Password
 header username	setup	en	Header Username

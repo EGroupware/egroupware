@@ -195,7 +195,7 @@ go back	setup	sl	Pojdi nazaj
 go to	setup	sl	Pojdi na
 grant access	setup	sl	Dovoli dostop
 has a version mismatch	setup	sl	ima neskladje med različicami
-header 0assword	setup	sl	Geslo glave
+header password	setup	sl	Geslo glave
 header admin login	setup	sl	Prijava upravljalca glave
 header password	setup	sl	Geslo upravljalca glave
 header username	setup	sl	Uporabniško ime glave

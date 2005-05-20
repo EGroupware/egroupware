@@ -192,7 +192,7 @@ go back	setup	sv	Tillbaka
 go to	setup	sv	Gå till
 grant access	setup	sv	Ge åtkomst
 has a version mismatch	setup	sv	har versions-differens
-header 0assword	setup	sv	Header lösenord
+header password	setup	sv	Header lösenord
 header admin login	setup	sv	Header Admin login
 header username	setup	sv	Header användarnamn
 historylog removed	setup	sv	Historiklogg borttagen

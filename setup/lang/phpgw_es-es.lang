@@ -195,7 +195,7 @@ go back	setup	es-es	Volver
 go to	setup	es-es	Ir a
 grant access	setup	es-es	Conceder acceso
 has a version mismatch	setup	es-es	No coinciden las versiones
-header 0assword	setup	es-es	Contraseña del encabezado
+header password	setup	es-es	Contraseña del encabezado
 header admin login	setup	es-es	Usuario administrador del encabezado
 header password	setup	es-es	Contraseña del encabezado
 header username	setup	es-es	Usuario del encabezado

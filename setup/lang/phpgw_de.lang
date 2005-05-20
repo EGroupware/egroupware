@@ -197,7 +197,7 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
-header 0assword	setup	de	Passwor Headerverwaltung
+header password	setup	de	Passwor Headerverwaltung
 header admin login	setup	de	Login Headerverwaltung
 header password	setup	de	Passwort der Headerverwaltung
 header username	setup	de	Benutzername der Headerverwaltung

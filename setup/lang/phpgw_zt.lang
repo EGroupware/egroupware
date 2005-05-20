@@ -196,7 +196,7 @@ go back	setup	zt	回到上一頁
 go to	setup	zt	前往
 grant access	setup	zt	授與存取權
 has a version mismatch	setup	zt	版本不符
-header 0assword	setup	zt	頁首密碼
+header password	setup	zt	頁首密碼
 header admin login	setup	zt	頁首管理員登入
 header password	setup	zt	密碼
 header username	setup	zt	帳號

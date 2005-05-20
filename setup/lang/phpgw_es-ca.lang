@@ -193,7 +193,7 @@ go back	setup	es-ca	Tornar
 go to	setup	es-ca	Anar a
 grant access	setup	es-ca	Establir Accés
 has a version mismatch	setup	es-ca	No coincideixen les versions
-header 0assword	setup	es-ca	Contrasenya d'Administració Principal
+header password	setup	es-ca	Contrasenya d'Administració Principal
 header admin login	setup	es-ca	Connexió d'Administració Principal
 header username	setup	es-ca	Nom d'Usuari d'Administració Principal
 historylog removed	setup	es-ca	Registre de l'historial esborrat
