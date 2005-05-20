@@ -335,9 +335,20 @@ class html
 	 */
 	function select_option($value,$label,$selected,$no_lang=0,$title='')
 	{
-		//echo "select_option('$value','$label','".print_r($selected,true)."',".(int)$no_lang."</br>\n";
-		return '<option value="'.$this->htmlspecialchars($value).'"'.
-			(in_array($value,$selected,!$value) ? ' selected="1"' : '') .
+		// the following compares strict as strings, to archive: '0' == 0 != ''
+		// the first non-strict search via array_search, is for performance reasons, to not always search the whole array with php
+		if (($found = ($key = array_search($value,$selected)) !== false) && !$value)
+		{
+			if ((string) $value !== (string) $selected[$key])
+			{
+				$found = false;
+				foreach($selected as $sel)
+				{
+					if ($found = ((string) $value === (string) $selected[$key])) break;
+				}
+			}
+		}
+		return '<option value="'.$this->htmlspecialchars($value).'"'.($found  ? ' selected="1"' : '') .
 			($title ? ' title="'.$this->htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
 			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}
