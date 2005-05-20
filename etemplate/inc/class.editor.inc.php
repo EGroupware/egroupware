@@ -527,6 +527,7 @@
 					{
 						if (!is_array($widget[$n])) $widget[$n] = $n == 1 ? $old : soetemplate::empty_cell();
 					}
+					unset($widget['onclick']);	// not valid for a box
 				}
 				return; // no change necessary, eg. between different box-types
 			}
@@ -1132,6 +1133,7 @@
 					case 'goto':
 					case 'goto2':
 						$content['cell'] = $widget;
+						$this->fix_set_onclick($widget,$content['cell'],true);
 						break;
 
 					case '':
