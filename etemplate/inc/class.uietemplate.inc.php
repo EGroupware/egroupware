@@ -588,6 +588,8 @@
 				$this->html->formatOptions($grid['span'],',class')/*TEST-RB,$no_table_tr*/);
 
 			if (!empty($overflow)) {
+				if (is_numeric($height)) $height .= 'px';
+				if (is_numeric($width)) $width .= 'px';
 				$div_style=' style="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow;\"";
 				$html = $this->html->div($html,$div_style);
 			}
@@ -805,9 +807,10 @@
 					}
 					break;
 				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget][,plugins (comma-sep.)]
+					list($styles,$plugins) = explode(',',$cell_options,2);
+					if (!$styles) $styles = 'width: 100%; min-width: 500px; height: 300px;';	// default HTMLarea style in html-class
 					if (!$readonly)
 					{
-						list($styles,$plugins) = explode(',',$cell_options,2);
 						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins,'',true);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
 							'type'      => $cell['type'],
