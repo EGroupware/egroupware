@@ -201,7 +201,7 @@
 			}
 			if ($extra_label)
 			{
-				$select = array($extra_label) + $select;
+				$select = array_merge(array($extra_label),$select);
 			}
 			
 			if ($nohtml)
