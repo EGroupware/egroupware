@@ -209,15 +209,15 @@
 					$this->template->parse('row','row_colspan',True);
 					$header_type = $data['account_type'];
 				}
-				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+				$tr_class = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color,true);
 
 				if ($data['account_type'] == 'g')
 				{
-					$this->display_row($tr_color,'g_',$data['account_id'],$data['account_lid'],$no_privat_grants,$memberships);
+					$this->display_row($tr_class,'g_',$data['account_id'],$data['account_lid'],$no_privat_grants,$memberships);
 				}
 				else
 				{
-					$this->display_row($tr_color,'u_',$data['account_id'],$GLOBALS['phpgw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
+					$this->display_row($tr_class,'u_',$data['account_id'],$GLOBALS['phpgw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
 				}
 				$processed[] = $uid;
 			}
@@ -253,9 +253,10 @@
 			$this->template->set_var($acl.'_selected',$rights_set);
 		}
 
-		function display_row($bg_color,$label,$id,$name,$no_privat_grants,$memberships)
+		function display_row($tr_class,$label,$id,$name,$no_privat_grants,$memberships)
 		{
-			$this->template->set_var('row_color',$bg_color);
+			$this->template->set_var('row_class',$tr_class);
+			$this->template->set_var('row_color',$GLOBALS['phpgw_info']['theme'][$tr_class]);
 			$this->template->set_var('user',$name);
 			$rights = $this->acl->get_rights($id,$GLOBALS['phpgw_info']['flags']['currentapp']);
 			$is_group = $GLOBALS['phpgw']->accounts->get_type($id) == 'g';
