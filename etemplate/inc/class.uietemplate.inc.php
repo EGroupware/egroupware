@@ -828,7 +828,7 @@
 						list($true_val,$false_val,$ro_true,$ro_false) = explode(',',$cell_options);
 						$value = $value == $true_val;
 					}
-					else
+					if (count(explode(',',$cell_options)) < 3)
 					{
 						$ro_true = 'x';
 						$ro_false = '';
@@ -1074,16 +1074,30 @@
 					if ($multiple && !is_array($value)) $value = explode(',',$value);
 					if ($readonly)
 					{
-						if ($multiple)
+						foreach($multiple ? $value : array($value) as $val)
 						{
-							foreach($multiple ? $value : array($value) as $val)
+							if (is_array($sels[$val]))
 							{
-								$html .= ($html?"<br>\n":'').$this->html->htmlspecialchars($cell['no_lang'] ? $sels[$val] : lang($sels[$val]));
+								$option_label = $sels[$val]['label'];
+								$option_title = $sels[$val]['title'];
 							}
-						}
-						else
-						{
-							$html .= $this->html->htmlspecialchars($cell['no_lang'] ? $sels[$value] : lang($sels[$value]));
+							else
+							{
+								$option_label = $sels[$val];
+								$option_title = '';
+							}
+							if (!$cell['no_lang']) $option_label = lang($option_label);
+							
+							if ($html) $html .= "<br>\n";
+
+							if ($option_title)
+							{
+								$html .= '<span title="'.$this->html->htmlspecialchars($option_title).'">'.$this->html->htmlspecialchars($option_label).'</span>';
+							}
+							else
+							{
+								$html .= $this->html->htmlspecialchars($option_label);
+							}
 						}
 					}
 					else
