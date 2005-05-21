@@ -155,7 +155,7 @@ class so_sql
 	 */
 	function data_merge($new)
 	{
-		if ($this->debug) echo "<p>so_sql::data_merge(".print_r($new).")</p>\n";
+		if ($this->debug) echo "<p>so_sql::data_merge(".print_r($new,true).")</p>\n";
 
 		if (!is_array($new) || !count($new))
 		{
@@ -322,7 +322,7 @@ class so_sql
 
 		$this->data2db();
 
-		//echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data);
+		if ($this->debug) { echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data); }
 
 		if ($this->autoinc_id && !$this->data[$this->db_key_cols[$this->autoinc_id]])	// insert
 		{
@@ -350,6 +350,11 @@ class so_sql
 			foreach($this->db_key_cols as $db_col => $col)
 			{
 				$keys[$db_col] = $this->data[$col];
+			}
+			if (!$data && !$this->autoinc_id)	// happens if all columns are in the primary key
+			{
+				$data = $keys;
+				$keys = False;
 			}
 			if (!$this->autoinc_id)	// always try an insert if we have no autoinc_id, as we dont know if the data exists
 			{
@@ -639,42 +644,61 @@ class so_sql
 	}
 	
 	/**
-	 * Query DB for a list / array with one colum as key and an other one as value, eg. id => title pairs
+	 * Query DB for a list / array with one colum as key and an other one(s) as value, eg. id => title pairs
 	 *
 	 * We do some caching as these kind of function is usualy called multiple times, eg. for option-lists.
 	 *
-	 * @param string $value_col column-name for the values of the array, can also be an expression aliased with AS
-	 * @param string $key_col='' column-name for the keys, default '' = same as $value_col: returns a distinct list
+	 * @param string $value_col array of column-names for the values of the array, can also be an expression aliased with AS,
+	 *	if more then one column given, an array with keys identical to the given ones is returned and not just the value of the column
+	 * @param string $key_col='' column-name for the keys, default '' = same as (first) $value_col: returns a distinct list
 	 * @param array $filter=array() to filter the entries
-	 * @param string $order='' order, default '' = same as $value_col
-	 * @return array with key_col => value_col pairs
+	 * @param string $order='' order, default '' = same as (first) $value_col
+	 * @return array with key_col => value_col pairs or array if more then one value_col given (keys as in value_col)
 	 */
 	function query_list($value_col,$key_col='',$filter=array(),$order='')
 	{
 		static $cache = array();
 		
-		$cache_key = $value_col.'-'.$key_col.'-'.serialize($filter).'-'.$order;
+		$cache_key = serialize($value_col).'-'.$key_col.'-'.serialize($filter).'-'.$order;
 		
 		if (isset($cache[$cache_key]))
 		{
 			return $cache[$cache_key];
 		}
-		$val_col = $value_col;
-		if (preg_match('/AS ([a-z_0-9]+)$/i',$value_col,$matches))
+		if (!is_array($value_col)) $value_col = array($value_col);
+		
+		$cols = array();
+		foreach(is_array($value_col) ? $value_col : array($value_col) as $key => $col)
 		{
-			$val_col = $matches[1];
-		}
-		if (!$order) $order = $val_col;
+			$cols[$key] = preg_match('/AS ([a-z_0-9]+)$/i',$col,$matches) ? $matches[1] : $col;
+		}			
+		if (!$order) $order = current($cols);
 
-		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').$value_col,$order,'','',false,'AND',false,$filter)))
+		if (($search =& $this->search(array(),($key_col ? $key_col.',' : 'DISTINCT ').implode(',',$value_col),$order,'','',false,'AND',false,$filter)))
 		{
 			if (preg_match('/AS ([a-z_0-9]+)$/i',$key_col,$matches))
 			{
 				$key_col = $matches[1];
 			}
+			elseif (!$key_col)
+			{
+				$key_col = current($cols);
+			}
 			foreach($search as $row)
 			{
-				$ret[$row[$key_col ? $key_col : $value_col]] = $row[$value_col];
+				if (count($cols) > 1)
+				{
+					$data = array();
+					foreach($cols as $key => $col)
+					{
+						$data[$key] = $row[$col];
+					}
+				}
+				else
+				{
+					$data = $row[current($cols)];
+				}
+				$ret[$row[$key_col]] = $data;
 			}
 		}
 		return $cache[$cache_key] =& $ret;
