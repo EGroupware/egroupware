@@ -584,7 +584,7 @@
 			{
 				$options[1] = '';	// set height in div only
 			}
-			$html = $this->html->table($rows,$this->html->formatOptions(/*$grid['size']*/$options,'width,height,border,class,cellspacing,cellpadding').
+			$html = $this->html->table($rows,$this->html->formatOptions($options,'width,height,border,class,cellspacing,cellpadding').
 				$this->html->formatOptions($grid['span'],',class')/*TEST-RB,$no_table_tr*/);
 
 			if (!empty($overflow)) {
@@ -1008,6 +1008,13 @@
 					if ($cell['obj']->no_onclick)
 					{
 						$cell['obj']->onclick_proxy = $this->onclick_proxy ? $this->onclick_proxy : $this->name.':'.$this->version.':'.$path;
+					}
+					// propagate the CSS class to the template
+					if ($class)
+					{
+						$grid_size = array_pad(explode(',',$cell['obj']->size),4,'');
+						$grid_size[3] = ($grid_size[3] ? $grid_size[3].' ' : '') . $class;
+						$cell['obj']->size = implode(',',$grid_size);
 					}
 					$html = $cell['obj']->show($content,$this->sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
