@@ -69,9 +69,9 @@
 			
 			if (($this->innerWidth = (int) $_POST['innerWidth']))
 			{
-				$GLOBALS['egw']->session->appsession('innerWidth','etemplate',$this->innerWidth);
+				$GLOBALS['phpgw']->session->appsession('innerWidth','etemplate',$this->innerWidth);
 			}
-			elseif (!($this->innerWidth = (int) $GLOBALS['egw']->session->appsession('innerWidth','etemplate')))
+			elseif (!($this->innerWidth = (int) $GLOBALS['phpgw']->session->appsession('innerWidth','etemplate')))
 			{
 				$this->innerWidth = 1018;	// default width for an assumed screen-resolution of 1024x768
 			}

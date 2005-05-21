@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	include_once(EGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
+	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
 
 	/**
 	 * Business Object for eTemplates, extending the Storage Object
@@ -79,7 +79,7 @@
 			{
 				$this->init($name);
 			}
-			$this->garbage_collection_done =& $GLOBALS['egw_info']['etemplate']['garbage_collection_done'];
+			$this->garbage_collection_done =& $GLOBALS['phpgw_info']['etemplate']['garbage_collection_done'];
 		}
 
 		/**
@@ -238,7 +238,7 @@
 		{
 			list($msec,$sec) = explode(' ',microtime());
 			$time = 100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
-			$id = $GLOBALS['egw_info']['flags']['currentapp'] .':'. $time;
+			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] .':'. $time;
 			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
 			return $id;
 		}
@@ -261,9 +261,9 @@
 			{
 				$id = $this->appsession_id;
 			}
-			$GLOBALS['egw']->session->appsession($id,'etemplate',$data);
+			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
-			if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4' && !$this->garbage_collection_done)
+			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4' && !$this->garbage_collection_done)
 			{
 				return $this->php4_session_garbage_collection();
 			}
@@ -278,10 +278,10 @@
 		 */
 		function get_appsession($id)
 		{
-			$data = $GLOBALS['egw']->session->appsession($id,'etemplate');
+			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
 			//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
 
-			if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4')
+			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
 			{
 				$this->php4_session_garbage_collection($id);
 			}
@@ -299,6 +299,8 @@
 		 */
 		function php4_session_garbage_collection($id_used='')
 		{
+			if (!defined('EGW_SESSION_VAR')) return;	// for 1.0.0 compatibility
+
 			// now we are on php4 sessions and do a bit of garbage collection
 			$app_sessions =& $_SESSION[EGW_SESSION_VAR]['app_sessions']['etemplate'];
 			$session_used =& $app_sessions['session_used'];
@@ -461,7 +463,7 @@
 
 			if ($app == '')
 			{
-				$app = $GLOBALS['egw_info']['flags']['current_app'];
+				$app = $GLOBALS['phpgw_info']['flags']['current_app'];
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
@@ -473,11 +475,11 @@
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
-				return $GLOBALS['egw_info']['etemplate']['extension'][$type] = False;
+				return $GLOBALS['phpgw_info']['etemplate']['extension'][$type] = False;
 			}
-			$GLOBALS['egw_info']['etemplate']['extension'][$type] = CreateObject($app.'.'.$class,$ui='html');
+			$GLOBALS['phpgw_info']['etemplate']['extension'][$type] = CreateObject($app.'.'.$class,$ui='html');
 
-			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->human_name;
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->human_name;
 		}
 
 		/**
@@ -490,8 +492,8 @@
 		 */
 		function haveExtension($type,$function='')
 		{
-			return ($GLOBALS['egw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
-			        ($function == '' || $GLOBALS['egw_info']['etemplate']['extension'][$type]->public_functions[$function]);
+			return ($GLOBALS['phpgw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
+			        ($function == '' || $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->public_functions[$function]);
 		}
 
 		/**
@@ -510,8 +512,8 @@
 			{
 				return False;
 			}
-			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
-				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
 		/**
@@ -529,9 +531,9 @@
 			{
 				return True;
 			}
-			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->post_process($name,$value,
-				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],
-				$GLOBALS['egw_info']['etemplate']['loop'],$this,$value_in);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($name,$value,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],
+				$GLOBALS['phpgw_info']['etemplate']['loop'],$this,$value_in);
 		}
 
 		/**
@@ -550,8 +552,8 @@
 			{
 				return False;
 			}
-			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
-				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
 		/**
@@ -755,7 +757,7 @@
 		function store_in_cache()
 		{
 			//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-			$GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
+			$GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
 		}
 
 		/**
@@ -764,7 +766,7 @@
 		function delete_in_cache()
 		{
 			//echo "<p>delete_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-			unset($GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()]);
+			unset($GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()]);
 		}
 
 		/*
@@ -785,8 +787,8 @@
 				$version = $name['version'];
 				$name    = $name['name'];
 			}
-			if (!isset($GLOBALS['egw_info']['etemplate']['cache'][$cname]) ||
-			    !empty($version) && $GLOBALS['egw_info']['etemplate']['cache'][$cname]['version'] != $version)
+			if (!isset($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]) ||
+			    !empty($version) && $GLOBALS['phpgw_info']['etemplate']['cache'][$cname]['version'] != $version)
 			{
 				//echo " NOT found in cache</p>\n";
 				return False;
@@ -812,7 +814,7 @@
 			//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
 			if ($cname = $this->in_cache($name,$template,$lang,$group))
 			{
-				$this->init($GLOBALS['egw_info']['etemplate']['cache'][$cname]);
+				$this->init($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]);
 
 				return True;
 			}
