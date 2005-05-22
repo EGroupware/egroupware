@@ -28,19 +28,19 @@
 	}
 	/* Does not return unless user is authorized */
 
-	class phpgw
+	class egw
 	{
 		var $common;
 		var $accounts;
 		var $applications;
 		var $db;
 	}
-	$phpgw = new phpgw;
-	$phpgw->common = CreateObject('phpgwapi.common');
+	$GLOBALS['egw'] = new egw;
+	$GLOBALS['egw']->common = CreateObject('phpgwapi.common');
 
-	$common = $phpgw->common;
+	$common = $GLOBALS['egw']->common;
 	$GLOBALS['egw_setup']->loaddb();
-	copyobj($GLOBALS['egw_setup']->db,$phpgw->db);
+	$GLOBALS['egw']->db = clone($GLOBALS['egw_setup']->db);
 
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
@@ -64,8 +64,8 @@
 	$phpgw_info['server']['account_repository'] = $config['account_repository'];
 	$phpgw_info['server']['ldap_version3']      = $config['ldap_version3'];
 
-	$phpgw->accounts = CreateObject('phpgwapi.accounts');
-	$acct            = $phpgw->accounts;
+	$GLOBALS['egw']->accounts = CreateObject('phpgwapi.accounts');
+	$acct            = $GLOBALS['egw']->accounts;
 
 	/* connect to ldap server */
 	if(!$ldap = $common->ldapConnect())
