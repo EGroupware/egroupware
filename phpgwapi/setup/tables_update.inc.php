@@ -360,4 +360,12 @@
 	}
 
 
+	$test[] = '1.0.1.006';
+	function phpgwapi_upgrade1_0_1_006()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_async','egw_async');
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.007';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

@@ -15,13 +15,14 @@
 
 	/* $Id$ */
 
-	/*!
-	@class asyncservice
-	@author Ralf Becker
-	@copyright GPL - GNU General Public License
-	@abstract The class implements a general eGW service to execute callbacks at a given time.
-	@discussion see http://www.egroupware.org/wiki/TimedAsyncServices
-	*/
+	/**
+	 * The class implements a general eGW service to execute callbacks at a given time.
+	 *
+	 * see http://www.egroupware.org/wiki/TimedAsyncServices
+	 *
+	 * @author Ralf Becker
+	 * @copyright GPL - GNU General Public License
+	 */
 	class asyncservice
 	{
 		var $public_functions = array(
@@ -36,50 +37,48 @@
 		var $php = '';
 		var $crontab = '';
 		var $db;
-		var $db_table = 'phpgw_async';
+		var $db_table = 'egw_async';
 		var $debug = 0;
 		
-		/*!
-		@function asyncservice
-		@abstract constructor of the class
-		*/
+		/**
+		 * constructor of the class
+		 */
 		function asyncservice()
 		{
-			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->db->set_app('phpgwapi');
 				
-			$this->cronline = PHPGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['phpgw_info']['user']['domain'];
+			$this->cronline = EGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['egw_info']['user']['domain'];
 			
 			$this->only_fallback = substr(php_uname(), 0, 7) == "Windows";	// atm cron-jobs dont work on win
 		}
 
-		/*!
-		@function set_timer
-		@abstract calculates the next run of the timer and puts that with the rest of the data in the db for later execution.
-		@syntax set_timer($times,$id,$method,$data,$account_id=False)
-		@param $times unix timestamp or array('min','hour','dow','day','month','year') with execution time. 
-			Repeated events are possible to shedule by setting the array only partly, eg. 
-			array('day' => 1) for first day in each month 0am or array('min' => '* /5', 'hour' => '9-17') 
-			for every 5mins in the time from 9am to 5pm.
-		@param $id unique id to cancel the request later, if necessary. Should be in a form like 
-			eg. '<app><id>X' where id is the internal id of app and X might indicate the action.
-		@param $method Method to be called via ExecMethod($method,$data). $method has the form 
-			'<app>.<class>.<public function>'.
-		@param $data This data is passed back when the method is called. It might simply be an 
-			integer id, but it can also be a complete array.
-		@param $account_id account_id, under which the methode should be called or False for the actual user
-		@result False if $id already exists, else True	
-		*/
+		/**
+		 * calculates the next run of the timer and puts that with the rest of the data in the db for later execution.
+		 *
+		 * @param int/array $times unix timestamp or array('min','hour','dow','day','month','year') with execution time. 
+		 * 	Repeated events are possible to shedule by setting the array only partly, eg. 
+		 * 	array('day' => 1) for first day in each month 0am or array('min' => '* /5', 'hour' => '9-17') 
+		 * 	for every 5mins in the time from 9am to 5pm.
+		 * @param string $id unique id to cancel the request later, if necessary. Should be in a form like 
+		 * 	eg. '<app><id>X' where id is the internal id of app and X might indicate the action.
+		 * @param string $method Method to be called via ExecMethod($method,$data). $method has the form 
+		 * 	'<app>.<class>.<public function>'.
+		 * @param mixed $data This data is passed back when the method is called. It might simply be an 
+		 * 	integer id, but it can also be a complete array.
+		 * @param int $account_id account_id, under which the methode should be called or False for the actual user
+		 * @return boolean False if $id already exists, else True	
+		 */
 		function set_timer($times,$id,$method,$data,$account_id=False)
 		{
 			if (empty($id) || empty($method) || $this->read($id) || 
-			    !($next = $this->next_run($times)))
+					!($next = $this->next_run($times)))
 			{
 				return False;
 			}
 			if ($account_id === False)
 			{
-				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+				$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			}
 			$job = array(
 				'id'     => $id,
@@ -94,23 +93,22 @@
 			return True;
 		}
 
-		/*!
-		@function next_run
-		@abstract calculates the next execution time for $times
-		@syntax next_run($times)
-		@param $times unix timestamp or array('year'=>$year,'month'=>$month,'dow'=>$dow,'day'=>$day,'hour'=>$hour,'min'=>$min)
-			with execution time. Repeated execution is possible to shedule by setting the array only partly, 
-			eg. array('day' => 1) for first day in each month 0am or array('min' => '/5', 'hour' => '9-17') 
-			for every 5mins in the time from 9am to 5pm. All not set units before the smallest one set, 
-			are taken into account as every possible value, all after as the smallest possible value. 
-		@param $debug if True some debug-messages about syntax-errors in $times are echoed
-		@result a unix timestamp of the next execution time or False if no more executions
-		*/
+		/**
+		 * calculates the next execution time for $times
+		 *
+		 * @param int/array $times unix timestamp or array('year'=>$year,'month'=>$month,'dow'=>$dow,'day'=>$day,'hour'=>$hour,'min'=>$min)
+		 * 	with execution time. Repeated execution is possible to shedule by setting the array only partly, 
+		 * 	eg. array('day' => 1) for first day in each month 0am or array('min' => '/5', 'hour' => '9-17') 
+		 * 	for every 5mins in the time from 9am to 5pm. All not set units before the smallest one set, 
+		 * 	are taken into account as every possible value, all after as the smallest possible value. 
+		 * @param boolean $debug if True some debug-messages about syntax-errors in $times are echoed
+		 * @return int a unix timestamp of the next execution time or False if no more executions
+		 */
 		function next_run($times,$debug=False)
 		{
 			if ($this->debug)
 			{
-				echo "<p>next_run("; print_r($times); ",'$debug')</p>\n";
+				echo "<p>next_run("; print_r($times); echo ",'$debug')</p>\n";
 				$debug = True;	// enable syntax-error messages too
 			}
 			$now = time();
@@ -207,7 +205,7 @@
 							list($one,$inc) = $arr = explode('/',$t);
 							
 							if (!(is_numeric($one) && count($arr) == 1 || 
-							      count($arr) == 2 && is_numeric($inc)))
+										count($arr) == 2 && is_numeric($inc)))
 							{
 								if ($debug) echo "<p>Syntax error in $u='$t', allowed is a number or '{*|range}/inc', inc='$inc'</p>\n";
 
@@ -313,26 +311,25 @@
 			return mktime($found['hour'],$found['min'],0,$found['month'],$found['day'],$found['year']);
 		}
 
-		/*!
-		@function cancel_timer
-		@abstract cancels a timer
-		@syntax cancel_timer($id)
-		@param $id has to be the one used to set it.
-		@result True if the timer exists and is not expired.
-		*/
+		/**
+		 * cancels a timer
+		 *
+		 * @param string $id has to be the one used to set it.
+		 * @return boolean True if the timer exists and is not expired.
+		 */
 		function cancel_timer($id)
 		{
 			return $this->delete($id);
 		}
 
-		/*!
-		@function last_check_run
-		@abstract checks when the last check_run was run or set the run-semaphore if $semaphore == True 
-		@param $semaphore if False only check, if true try to set/release the semaphore
-		@param $release if $semaphore == True, tells if we should set or release the semaphore
-		@result if !$set array('start' => $start,'end' => $end) with timestamps of last check_run start and end,  \
-			!$end means check_run is just running. If $set returns True if it was able to get the semaphore, else False
-		*/
+		/**
+		 * checks when the last check_run was run or set the run-semaphore if $semaphore == True 
+		 *
+		 * @param boolean $semaphore if False only check, if true try to set/release the semaphore
+		 * @param boolean $release if $semaphore == True, tells if we should set or release the semaphore
+		 * @return mixed if !$set array('start' => $start,'end' => $end) with timestamps of last check_run start and end,  \
+		 * 	!$end means check_run is just running. If $set returns True if it was able to get the semaphore, else False
+		 */
 		function last_check_run($semaphore=False,$release=False,$run_by='')
 		{
 			//echo "<p>last_check_run(semaphore=".($semaphore?'True':'False').",release=".($release?'True':'False').")</p>\n";
@@ -390,10 +387,9 @@
 			return True;
 		}
 
-		/*!
-		@function check_run
-		@abstract checks if there are any jobs ready to run (timer expired) and executes them
-		*/
+		/**
+		 * checks if there are any jobs ready to run (timer expired) and executes them
+		 */
 		function check_run($run_by='')
 		{
 			flush();
@@ -408,32 +404,32 @@
 				{
 					// checking / setting up phpgw_info/user
 					//
-					if ($GLOBALS['phpgw_info']['user']['account_id'] != $job['account_id'])
+					if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
 					{
-						$domain = $GLOBALS['phpgw_info']['user']['domain'];
-						$lang   = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-						unset($GLOBALS['phpgw_info']['user']);
+						$domain = $GLOBALS['egw_info']['user']['domain'];
+						$lang   = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+						unset($GLOBALS['egw_info']['user']);
 
-						if ($GLOBALS['phpgw']->session->account_id = $job['account_id'])
+						if ($GLOBALS['egw']->session->account_id = $job['account_id'])
 						{
-							$GLOBALS['phpgw']->session->account_lid = $GLOBALS['phpgw']->accounts->id2name($job['account_id']);
-							$GLOBALS['phpgw']->session->account_domain = $domain;
-							$GLOBALS['phpgw']->session->read_repositories(False,False);
-							$GLOBALS['phpgw_info']['user']  = $GLOBALS['phpgw']->session->user;
+							$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($job['account_id']);
+							$GLOBALS['egw']->session->account_domain = $domain;
+							$GLOBALS['egw']->session->read_repositories(False,False);
+							$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->user;
 							
-							if ($lang != $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+							if ($lang != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 							{
 								unset($GLOBALS['lang']);
-								$GLOBALS['phpgw']->translation->add_app('common');
+								$GLOBALS['egw']->translation->add_app('common');
 							}
 						}
 						else
 						{
-							$GLOBALS['phpgw_info']['user']['domain'] = $domain;
+							$GLOBALS['egw_info']['user']['domain'] = $domain;
 						}
 					}
 					list($app) = explode('.',$job['method']);
-					$GLOBALS['phpgw']->translation->add_app($app);
+					$GLOBALS['egw']->translation->add_app($app);
 
 					ExecMethod($job['method'],$job['data']);
 					
@@ -459,17 +455,16 @@
 			return $jobs ? count($jobs) : False;
 		}
 
-		/*!
-		@function read
-		@abstract reads all matching db-rows / jobs
-		@syntax reay($id=0)
-		@param $id =0 reads all expired rows / jobs ready to run\
-			!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
-		@result db-rows / jobs as array or False if no matches
-		*/
+		/**
+		 * reads all matching db-rows / jobs
+		 *
+		 * @param string $id =0 reads all expired rows / jobs ready to run\
+		 * 	!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
+		 * @return array/boolean db-rows / jobs as array or False if no matches
+		 */
 		function read($id=0)
 		{
-			if (strpos($id,'%') !== False || strpos($id,'_') !== False)
+			if (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
 			{
 				$id = $this->db->quote($id);
 				$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
@@ -506,13 +501,12 @@
 			return $jobs;
 		}
 		
-		/*!
-		@function write
-		@abstract write a job / db-row to the db
-		@syntax write($job,$exists = False)
-		@param $job db-row as array
-		@param $exits if True, we do an update, else we check if update or insert necesary
-		*/
+		/**
+		 * write a job / db-row to the db
+		 *
+		 * @param array $job db-row as array
+		 * @param boolean $exits if True, we do an update, else we check if update or insert necesary
+		 */
 		function write($job,$exists = False)
 		{
 			$data = array(
@@ -532,11 +526,11 @@
 			}
 		}
 
-		/*!
-		@function delete
-		@abstract delete db-row / job with $id
-		@result False if $id not found else True
-		*/
+		/**
+		 * delete db-row / job with $id
+		 *
+		 * @return boolean False if $id not found else True
+		 */
 		function delete($id)
 		{
 			$this->db->delete($this->db_table,array('async_id' => $id),__LINE__,__FILE__);
@@ -562,6 +556,7 @@
 				$binarys = array(
 					'php'  => '/usr/bin/php',
 					'php4' => '/usr/bin/php4',		// this is for debian
+					'php5' => '/usr/bin/php5',		// SuSE 9.3 with php5
 					'crontab' => '/usr/bin/crontab'
 				);
 				foreach ($binarys as $name => $path)
@@ -600,17 +595,20 @@
 				{
 					$this->php = $this->php4;
 				}
+				if ($this->php5[0] == '/')	// we found a php5 binary
+				{
+					$this->php = $this->php5;
+				}
 			}
 		
 		}
 		
-		/*!
-		@function installed
-		@abstract checks if phpgwapi/cron/asyncservices.php is installed as cron-job
-		@syntax installed()
-		@result the times asyncservices are run (normaly 'min'=>'* /5') or False if not installed or 0 if crontab not found
-		@note Not implemented for Windows at the moment, always returns 0
-		*/
+		/**
+		 * checks if phpgwapi/cron/asyncservices.php is installed as cron-job
+		 *
+		 * @return array the times asyncservices are run (normaly 'min'=>'* /5') or False if not installed or 0 if crontab not found
+		 * Not implemented for Windows at the moment, always returns 0
+		 */
 		function installed()
 		{
 			if ($this->only_fallback) {
@@ -659,16 +657,16 @@
 			return $times;
 		}
 		
-		/*!
-		@function insall
-		@abstract installs /phpgwapi/cron/asyncservices.php as cron-job
-		@syntax install($times)
-		@param $times array with keys 'min','hour','day','month','dow', not set is equal to '*'.
-			False means de-install our own crontab line
-		@result the times asyncservices are run, False if they are not installed,
-			0 if crontab not found and ' ' if crontab is deinstalled
-		@note Not implemented for Windows at the moment, always returns 0
-		*/
+		/**
+		 * installs /phpgwapi/cron/asyncservices.php as cron-job
+		 *
+		 * Not implemented for Windows at the moment, always returns 0
+		 *
+		 * @param array $times array with keys 'min','hour','day','month','dow', not set is equal to '*'.
+		 * 	False means de-install our own crontab line
+		 * @return mixed the times asyncservices are run, False if they are not installed,
+		 * 	0 if crontab not found and ' ' if crontab is deinstalled
+		 */
 		function install($times)
 		{
 			if ($this->only_fallback && $times !== False) {
@@ -693,7 +691,7 @@
 					{
 						$cronline .= (isset($times[$cu]) ? $times[$cu] : '*') . ' ';
 					}
-					$cronline .= $this->php.' -q '.$this->cronline."\n";
+					$cronline .= $this->php.' -qC '.$this->cronline."\n";
 					//echo "<p>Installing: '$cronline'</p>\n";
 					fwrite($crontab,$cronline);
 				}
