@@ -91,6 +91,7 @@
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
 			$this->db = clone($GLOBALS['phpgw']->db);
+			$this->db->set_app('etemplate');
 			$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
 			if (empty($name))
