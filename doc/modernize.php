@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/bin/php -qC
 <?php
 /**************************************************************************\
 * eGroupWare - Tool to modernize the eGW code automaticaly                 *
@@ -30,8 +30,9 @@ else
 {
 	$remove_space_indention = 2;	// replace 2 space with a tab
 }
-if ($argc < 1 || !file_exists($argv[1])) 
+if ($argc <= 1 || !file_exists($argv[1])) 
 {
+	if (!file_exists($argv[1])) echo "File '$argv[1]' not found !!!\n\n";
 	echo "Usage: modernize.php [--no-phpgw] [--remove-space-indention N] <filename>\n";
 	echo "--no-phpgw dont change phpgw to egw, necessary for some API files\n";
 	echo "--remove-space-indention N substitute every N space at the beginning of a line with a tab (default 2)\n\n";
