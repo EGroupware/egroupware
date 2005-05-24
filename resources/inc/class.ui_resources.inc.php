@@ -218,6 +218,7 @@ class ui_resources
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		
+		$content['general|page|pictures|links|calendar'] = 'resources.edit_tabs.page';  //debug
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
