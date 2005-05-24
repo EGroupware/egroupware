@@ -24,7 +24,7 @@
 	{
 		function authenticate($username, $passwd)
 		{
-			if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, $error)) 
+			if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd, &$error)) 
 			{
 				return True;
 			}
