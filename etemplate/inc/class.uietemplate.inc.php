@@ -574,7 +574,11 @@
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align']?$cell['align']:'left','align');
 					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 						$c,$r,$show_c,$show_row,$content);
-					$row_data[".$col"] .= $this->html->formatOptions($cl,'class');
+					// else the class is set twice, in the table and the table-cell, which is not good for borders
+					if ($cl && $cell['type'] != 'template' && $cell['type'] != 'grid')
+					{
+						$row_data[".$col"] .= $this->html->formatOptions($cl,'class');
+					}
 				}
 				$rows[$row] = $row_data;
 			}
