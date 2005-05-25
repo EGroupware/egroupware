@@ -92,6 +92,10 @@
 			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 	
+			if ($value && !strstr($value,'.'))
+			{
+				$value = $tmpl->name . '.' . $value;
+			}
 			foreach($names as $k => $name)
 			{
 				if (!strstr($name,'.'))
@@ -107,6 +111,8 @@
 			{
 				$value = $selected_tab = $names[0];
 			}
+			$extension_data = $value;	// remember the active tab in the extension_data
+
 			foreach($names as $k => $name)
 			{
 				if (!strstr($name,'.'))
@@ -206,6 +212,11 @@
 			else
 			{
 				$value = $value_in;
+			}
+			// if value not set (other button pressed), set the value we remembered in the extension_data
+			if (!$value)
+			{
+				$value = $extension_data;	
 			}
 			return True;
 		}
