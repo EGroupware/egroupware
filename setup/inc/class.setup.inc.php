@@ -285,26 +285,43 @@
 			return False;
 		}
 
-		// returns True if user and pw match, if conf_pw is a md5 ONLY compare with md5($pw) and NOT the plaintext !!!
+                /**
+                * check if username and password is valid
+                *
+                * this function compares the supplied and stored username and password
+		* as any of the passwords can be clear text or md5 we convert them to md5 
+		* internal and compare always the md5 hashs
+                *
+                * @param string $user the user supplied username
+                * @param string $pw the user supplied password
+                * @param string $conf_user the configured username
+                * @param string $conf_pw the configured password
+                * @returns bool
+                */
+
 		function check_auth($user,$pw,$conf_user,$conf_pw)
 		{
-			//echo "<p>setup::check_auth('$user','$pw','$conf_user','$conf_pw')</p>\n";
+			#echo "<p>setup::check_auth('$user','$pw','$conf_user','$conf_pw')</p>\n";exit;
 			if ($user != $conf_user)
 			{
 				return False; // wrong username
 			}
-			if (preg_match('/^[0-9a-f]{32}$/',$conf_pw))	// $conf_pw is a md5
-			{
-				/* Verify that $pw is not already encoded as md5 (new cookie 5-15-2005 - Milosch) */
-				if(!preg_match('/^[0-9a-f]{32}$/',$pw))
-				{
-					/* No?  Make it so. */
-					$pw = md5($pw);
-				}
-			}
-			//echo "<p>setup::check_auth: ('$pw' == '$conf_pw') == ".(int)($pw == $conf_pw)."</p>\n";
 
+			// Verify that $pw is not already encoded as md5
+			if(!preg_match('/^[0-9a-f]{32}$/',$conf_pw))
+			{
+				$conf_pw = md5($conf_pw);
+			}
+			
+
+			// Verify that $pw is not already encoded as md5
+			if(!preg_match('/^[0-9a-f]{32}$/',$pw))
+			{
+				$pw = md5($pw);
+			}
+			
 			return $pw == $conf_pw;
+			 
 		}
 
 		function checkip($remoteip='')
