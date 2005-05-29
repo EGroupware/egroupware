@@ -325,7 +325,7 @@
 			{
 				foreach($table_def['fd'] as $col => $def)
 				{
-					if (strlower($col) == strtolower($OldColumnName))
+					if (strtolower($col) == strtolower($OldColumnName))
 					{
 						$old_def = $def;
 						break;
