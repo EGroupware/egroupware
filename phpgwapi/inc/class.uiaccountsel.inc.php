@@ -159,7 +159,6 @@
 			uasort($users,strcasecmp);
 			uasort($groups,strcasecmp);
 			$select = $already_selected + $users + $groups;
-
 			if (count($selected) && !isset($selected[0]))	// id's are the keys
 			{
 				foreach($selected as $id => $val)
@@ -201,7 +200,10 @@
 			}
 			if ($extra_label)
 			{
-				$select = array_merge(array($extra_label),$select);
+				//in php5 this put's the extra-label at the end: $select = array($extra_label) + $select;
+				$select2 = array($extra_label);
+				$select2 += $select;
+				$select =& $select2; unset($select2);
 			}
 			
 			if ($nohtml)
