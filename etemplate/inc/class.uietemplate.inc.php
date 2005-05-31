@@ -1202,11 +1202,10 @@
 							$this->html->formatOptions($cell['span'],',class').
 							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
 					}
-					// use a div to not loose the css class
-					elseif ($class && $orient)
+					// put the class of the box-cell, into the the class of this cell
+					elseif ($box_item_class)
 					{
-						//$html = $this->html->div($html,'',$class);
-						$class = $box_item_class;
+						$class = ($class ? $class . ' ' : '') . $box_item_class;
 					}
 					if ($type == 'groupbox')
 					{
