@@ -1,28 +1,28 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Translation class for SQL                               *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * and Dan Kuykendall <seek3r@phpgroupware.org>                             *
-  * Handles multi-language support use SQL tables                            *
-  * Copyright (C) 2000, 2001 Joseph Engo                                     *
-  * ------------------------------------------------------------------------ *
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            *
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - Translation class for SQL                               *
+	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
+	* and Dan Kuykendall <seek3r@phpgroupware.org>                             *
+	* Handles multi-language support use SQL tables                            *
+	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	// define the maximal length of a message_id, all message_ids have to be unique
 	// in this length, our column is varchar 255, but addslashes might add some length
@@ -46,6 +46,9 @@
 		var $loaded_apps = array();
 		var $line_rejected = array();
 
+		/**
+		 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
+		 */
 		function translation($warnings = False)
 		{
 			for ($i = 1; $i <= 9; $i++)
@@ -97,10 +100,12 @@
 			}
 		}
 
-		/*
-		@function charset
-		@abstract returns the charset to use (!$lang) or the charset of the lang-files or $lang
-		*/
+		/**
+		 * returns the charset to use (!$lang) or the charset of the lang-files or $lang
+		 *
+		 * @param string/boolean $lang=False return charset of the active user-lang, or $lang if specified
+		 * @return string charset
+		 */
 		function charset($lang=False)
 		{
 			if ($lang)
@@ -134,6 +139,9 @@
 			return $charset;
 		}
 
+		/**
+		 * Initialises global lang-array and loads the 'common' and app-spec. translations
+		 */
 		function init()
 		{
 			// post-nuke and php-nuke are using $GLOBALS['lang'] too
@@ -157,11 +165,14 @@
 			$this->add_app($GLOBALS['egw_info']['flags']['currentapp']);
 		}
 
-		/*!
-		@function translate
-		@abstract translates a phrase and evtl. substitute some variables
-		@returns the translation
-		*/
+		/**
+		 * translates a phrase and evtl. substitute some variables
+		 *
+		 * @param string $key phrase to translate, may contain placeholders %N (N=1,2,...) for vars
+		 * @param array/boolean $vars=false vars to replace the placeholders, or false for none
+		 * @param string $not_found='*' what to add to not found phrases, default '*'
+		 * @return string with translation
+		 */
 		function translate($key, $vars=false, $not_found='*' )
 		{
 			if (!is_array(@$GLOBALS['lang']) || !count($GLOBALS['lang']))
@@ -198,13 +209,12 @@
 			return $ret;
 		}
 
-		/*!
-		@function add_app
-		@abstract adds translations for an application from the database to the lang-array
-		@syntax add_app($app,$lang=False)
-		@param $app name of the application to add (or 'common' for the general translations)
-		@param $lang 2-char code of the language to use or False if the users language should be used
-		*/
+		/**
+		 * adds translations for an application from the database to the lang-array
+		 *
+		 * @param string $app name of the application to add (or 'common' for the general translations)
+		 * @param string/boolean $lang=false 2 or 5 char lang-code or false for the users language
+		 */
 		function add_app($app,$lang=False)
 		{
 			$lang = $lang ? $lang : $this->userlang;
@@ -227,13 +237,15 @@
 
 		/**
 		 * Adds setup's translations, they are not in the DB!
+		 *
+		 * @param string $lang 2 or 5 char lang-code
 		 */
 		function add_setup($lang)
 		{
-			$fn = PHPGW_SERVER_ROOT.'/setup/lang/phpgw_' . $lang . '.lang';
+			$fn = EGW_SERVER_ROOT.'/setup/lang/phpgw_' . $lang . '.lang';
 			if (!file_exists($fn))
 			{
-				$fn = PHPGW_SERVER_ROOT.'/setup/lang/phpgw_en.lang';
+				$fn = EGW_SERVER_ROOT.'/setup/lang/phpgw_en.lang';
 			}
 			if (file_exists($fn))
 			{
@@ -253,11 +265,11 @@
 			}
 			$this->loaded_apps['setup'] = $lang;
 		}
-		/*!
-		@function get_installed_langs
-		@abstract returns a list of installed langs
-		@returns array with 2-character lang-code as key and descriptiv lang-name as data
-		*/
+		/**
+		 * returns a list of installed langs
+		 *
+		 * @return array with lang-code => descriptiv lang-name pairs
+		 */
 		function get_installed_langs()
 		{
 			if (!is_array($this->langs))
@@ -279,22 +291,17 @@
 			return $this->langs;
 		}
 
-		/*!
-		@function get_installed_charsets
-		@abstract returns a list of installed charsets
-		@returns array with charset as key and comma-separated list of langs useing the charset as data
-		*/
+		/**
+		 * returns a list of installed charsets
+		 *
+		 * @return array with charset as key and comma-separated list of langs useing the charset as data
+		 */
 		function get_installed_charsets()
 		{
 			if (!is_array($this->charsets))
 			{
-				$distinct = 'DISTINCT';
-				switch($this->db->Type)
-				{
-					case 'sapdb': case 'maxdb':
-					case 'mssql':
-						$distinct = '';	// cant use distinct on text columns (l.content is text)
-				}
+				$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
+
 				$this->db->query("SELECT $distinct l.lang,lx.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
@@ -313,15 +320,14 @@
 			return $this->charsets;
 		}
 
-		/*!
-		@function convert
-		@abstract converts a string $data from charset $from to charset $to
-		@syntax convert($data,$from=False,$to=False)
-		@param $data string or array of strings to convert
-		@param $from charset $data is in or False if it should be detected
-		@param $to charset to convert to or False for the system-charset
-		@returns the converted string
-		*/
+		/**
+		 * converts a string $data from charset $from to charset $to
+		 *
+		 * @param string/array $data string(s) to convert
+		 * @param string/boolean $from charset $data is in or False if it should be detected
+		 * @param string/boolean $to charset to convert to or False for the system-charset the converted string
+		 * @return string/array converted string(s) from $data
+		 */
 		function convert($data,$from=False,$to=False)
 		{
 			if (is_array($data))
@@ -352,8 +358,8 @@
 				//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
 			}
 			/*
-			   php does not seem to support gb2312
-			   but seems to be able to decode it as EUC-CN
+				 php does not seem to support gb2312
+				 but seems to be able to decode it as EUC-CN
 			*/
 			switch($from)
 			{
@@ -405,13 +411,13 @@
 			return $data;
 		}
 
-		/*!
-		@function install_langs
-		@abstract installs translations for the selected langs into the database
-		@syntax install_langs($langs,$upgrademethod='dumpold')
-		@param $langs array of langs to install (as data NOT keys (!))
-		@param $upgrademethod 'dumpold' (recommended & fastest), 'addonlynew' languages, 'addmissing' phrases
-		*/
+		/**
+		 * installs translations for the selected langs into the database
+		 *
+		 * @param array $langs langs to install (as data NOT keys (!))
+		 * @param string $upgrademethod='dumpold' 'dumpold' (recommended & fastest), 'addonlynew' languages, 'addmissing' phrases
+		 * @param string/boolean $only_app=false app-name to install only one app or default false for all
+		 */
 		function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 		{
 			@set_time_limit(0);	// we might need some time
@@ -464,8 +470,8 @@
 					//echo '<br>Test: loop above file()';
 					if (!is_object($GLOBALS['egw_setup']))
 					{
-						$GLOBALS['egw_setup'] = CreateObject('setup.setup');
-						$GLOBALS['egw_setup']->db = $this->db;
+						$GLOBALS['egw_setup'] =& CreateObject('setup.setup');
+						$GLOBALS['egw_setup']->db = clone($this->db);
 					}
 					$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
 					$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
@@ -474,7 +480,7 @@
 					// Visit each app/setup dir, look for a phpgw_lang file
 					foreach($apps as $app)
 					{
-						$appfile = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
+						$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app;
 						if($GLOBALS['egw_setup']->app_registered($app) && file_exists($appfile))
 						{
@@ -497,6 +503,10 @@
 								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
 								$app_name = chop($app_name);
 								$raw[$app_name][$message_id] = $content;
+							}
+							if ($GLOBALS['egw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['egw_info']['server']['lang_ctimes']))
+							{
+								$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
 							}
 							$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
 						}
@@ -580,10 +590,9 @@
 			$config->save_value('lang_ctimes',$GLOBALS['egw_info']['server']['lang_ctimes'],'phpgwapi');
 		}
 
-		/*!
-		@function autolaod_changed_langfiles
-		@abstract re-loads all (!) langfiles if one langfile for the an app and the language of the user has changed
-		*/
+		/**
+		 * re-loads all (!) langfiles if one langfile for the an app and the language of the user has changed
+		 */
 		function autoload_changed_langfiles()
 		{
 			//echo "<h1>check_langs()</h1>\n";
@@ -598,7 +607,7 @@
 			$apps['phpgwapi'] = True;	// check the api too
 			foreach($apps as $app => $data)
 			{
-				$fname = PHPGW_SERVER_ROOT . "/$app/setup/phpgw_$lang.lang";
+				$fname = EGW_SERVER_ROOT . "/$app/setup/phpgw_$lang.lang";
 
 				if (file_exists($fname))
 				{
@@ -623,10 +632,12 @@
 
 		/* Following functions are called for app (un)install */
 
-		/*!
-		@function get_langs
-		@abstract return array of installed languages, e.g. array('de','en')
-		*/
+		/**
+		 * gets array of installed languages, e.g. array('de','en')
+		 *
+		 * @param boolean $DEBUG=false debug messages or not, default not
+		 * @return array with installed langs
+		 */
 		function get_langs($DEBUG=False)
 		{
 			if($DEBUG)
@@ -640,11 +651,13 @@
 			return $this->langs ? array_keys($this->langs) : array();
 		}
 
-		/*!
-		@function drop_langs
-		@abstract delete all lang entries for an application, return True if langs were found
-		@param $appname app_name whose translations you want to delete
-		*/
+		/**
+		 * delete all lang entries for an application, return True if langs were found
+		 *
+		 * @param $appname app_name whose translations you want to delete
+		 * @param boolean $DEBUG=false debug messages or not, default not
+		 * @return boolean true if $appname had translations installed, false otherwise
+		 */
 		function drop_langs($appname,$DEBUG=False)
 		{
 			if($DEBUG)
@@ -654,8 +667,8 @@
 			$this->db->select($this->lang_table,'COUNT(message_id)',array(
 				'app_name' => $appname
 			),__LINE__,__FILE__);
-			$this->db->next_record();
-			if($this->db->f(0))
+			
+			if($this->db->next_record() && $this->db->f(0))
 			{
 				$this->db->delete($this->lang_table,array(
 					'app_name' => $appname
@@ -665,11 +678,13 @@
 			return False;
 		}
 
-		/*!
-		@function add_langs
-		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
-		@param $appname app_name of application to process
-		*/
+		/**
+		 * process an application's lang files, calling get_langs() to see what langs the admin installed already
+		 *
+		 * @param string $appname app_name of application to process
+		 * @param boolean $DEBUG=false debug messages or not, default not
+		 * @param array/boolean $force_langs=false array with langs to install anyway (beside the allready installed ones), or false for none
+		 */
 		function add_langs($appname,$DEBUG=False,$force_langs=False)
 		{
 			$langs = $this->get_langs($DEBUG);
