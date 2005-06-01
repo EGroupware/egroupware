@@ -706,9 +706,16 @@
 				$cell_options = $this->get_array($content,substr($cell_options,1));
 			}
 			$label = $this->expand_name($cell['label'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+
 			$help = $cell['help'];
+			if (strchr($help,'$'))
+			{
+				$no_lang_on_help = true;
+				$help = $this->expand_name($help,$show_c,$show_row,$content['.c'],$content['.row'],$content);
+			}
 			if ($help[0] == '@')
 			{
+				$no_lang_on_help = true;
 				$help = $this->get_array($content,substr($help,1));
 			}
 			$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
@@ -727,7 +734,7 @@
 				}
 				if ($help)
 				{
-					if ((int)$cell['no_lang'] < 2)
+					if ((int)$cell['no_lang'] < 2 && !$no_lang_on_help)
 					{
 						$help = lang($help);
 					}
@@ -1325,10 +1332,12 @@
 				}
 				if ($extra_link)
 				{
-					$options = " onmouseover=\"self.status='".addslashes(lang($help))."'; return true;\"";
-					$options .= " onmouseout=\"self.status=''; return true;\"";
+					$options = $help ? ' onmouseover="self.status=\''.addslashes($this->html->htmlspecialchars($help)).'\'; return true;"' .
+						' onmouseout="self.status=\'\'; return true;"' : '';
+
 					if ($extra_link_target) $options .= ' target="'.$extra_link_target.'"';
-					return $this->html->a_href($html,$extra_link,'',$help != '' ? $options : '');
+
+					return $this->html->a_href($html,$extra_link,'',$options);
 				}
 			}
 			// if necessary show validation-error behind field
