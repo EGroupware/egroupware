@@ -692,6 +692,10 @@
 			list($type,$sub_type) = explode('-',$cell['type']);
 			if ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 			{
+				if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
+				{
+					$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+				}
 				$ext_type = $type;
 				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
 
@@ -699,36 +703,25 @@
 				$this->set_array($content,$name,$value);
 			}
 			list(,$class) = explode(',',$cell['span']);	// might be set by extension
-			if (strchr($class,'$'))
+			if (strchr($class,'$') || $class[0] == '@')
 			{
 				$class = $this->expand_name($class,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($class[0] == '@')
-			{
-				$class = $this->get_array($content,substr($class,1));
-			}
-
 			$cell_options = $cell['size'];
-			if (strchr($cell_options,'$'))
+			if (strchr($cell_options,'$') || $cell_options[0] == '@')
 			{
 				$cell_options = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($cell_options[0] == '@')
+			$label = $cell['label'];
+			if (strchr($label,'$') || $label[0] == '@')
 			{
-				$cell_options = $this->get_array($content,substr($cell_options,1));
+				$label = $this->expand_name($label,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			$label = $this->expand_name($cell['label'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-
 			$help = $cell['help'];
-			if (strchr($help,'$'))
+			if (strchr($help,'$') || $help[0] == '@')
 			{
 				$no_lang_on_help = true;
 				$help = $this->expand_name($help,$show_c,$show_row,$content['.c'],$content['.row'],$content);
-			}
-			if ($help[0] == '@')
-			{
-				$no_lang_on_help = true;
-				$help = $this->get_array($content,substr($help,1));
 			}
 			$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
 				(strlen($cell['blur']) <= 1 ? $cell['blur'] : lang($cell['blur']));
