@@ -572,6 +572,18 @@
 						}
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align']?$cell['align']:'left','align');
+					// allow to set further attributes in the tablecell, beside the class
+					if (is_array($cl))
+					{
+						foreach($cl as $attr => $val)
+						{
+							if ($attr != 'class' && $val)
+							{
+								$row_data['.'.$col] .= ' '.$attr.'="'.$val.'"';
+							}
+						}
+						$cl = $cl['class'];
+					}										
 					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 						$c,$r,$show_c,$show_row,$content);
 					// else the class is set twice, in the table and the table-cell, which is not good for borders
@@ -772,6 +784,14 @@
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
+					if ($help)
+					{
+						$class = array(
+							'class'       => $class,
+							'onmouseover' => "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;",
+							'onmouseout'  => "self.status=''; return true;",
+						);
+					}
 					break;
 				case 'html':
 					$extra_link = $cell_options;
@@ -1198,6 +1218,18 @@
 								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$cell[$n]['onclick'].'"'.
 									($cell[$n]['id'] ? ' id="'.$cell[$n]['id'].'"' : '');
 							}
+							// allow to set further attributes in the tablecell, beside the class
+							if (is_array($cl))
+							{
+								foreach($cl as $attr => $val)
+								{
+									if ($attr != 'class' && $val)
+									{
+										$rows[$box_row]['.'.$box_col] .= ' '.$attr.'="'.$val.'"';
+									}
+								}
+								$cl = $cl['class'];
+							}										
 							$box_item_class = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 								$show_c,$show_row,$content['.c'],$content['.row'],$content);
 							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($box_item_class,'class');
