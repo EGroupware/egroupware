@@ -79,6 +79,7 @@ cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
 day	etemplate	de	Tag
+days	etemplate	de	Tage
 db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stelt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	de	DB-spezifische Index-Optionen (Komma-getrennt), zB. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
 db-tools	etemplate	de	DB-Tools
@@ -107,6 +108,7 @@ documentation	etemplate	de	Dokumentation
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
+duration	etemplate	de	Dauer
 edit	etemplate	de	Bearbeiten
 edit embeded css styles or of the applications app.css file	etemplate	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
 edit the etemplate spez. above	etemplate	de	das oben spezifizierte eTemplate bearbeiten
@@ -165,6 +167,7 @@ height, disabled	etemplate	de	Höhe, Deaktiviert
 help	etemplate	de	Hilfe
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
+hours	etemplate	de	Stunden
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 image	etemplate	de	Grafik

@@ -51,6 +51,7 @@
 			'date-time' => 'Date+Time',	// date + time
 			'date-timeonly' => 'Time',	// time
 			'date-houronly' => 'Hour',	// hour
+			'date-duration' => 'Duration', // duration
 		);
 		var $dateformat;	// eg. Y-m-d, d-M-Y
 		var $timeformat;	// 12 or 24
@@ -90,13 +91,16 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$type = $cell['type'];
-			list($data_format,$options) = explode(',',$cell['size']);
+			if ($type == 'date-duration')
+			{
+				return $this->pre_process_duration($name,$value,$cell,$readonlys,$extension_data,$tmpl);
+			}
+			list($data_format,$options,$options2) = explode(',',$cell['size']);
 			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
 			$extension_data = array(
-				'data_format'	=> $data_format,
 				'type'			=> $type,
+				'data_format'	=> $data_format,
 			);	
-
 			if (!$value)
 			{
 				$value = array(
@@ -305,6 +309,100 @@
 		}
 
 		/**
+		 * pre-processing of the duration extension
+		 *
+		 * Options contain $data_format,$input_format,$hours_per_day
+		 *  - data_format: d = days, h = hours, default minutes
+		 *	- input_format: d = days, h = hours, default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
+		 *	- hours_per_day: default 8 (workday)
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
+		function pre_process_duration($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
+		{
+			$readonly = $readonlys || $cell['readonly'];
+			list($data_format,$input_format,$hours_per_day) = explode(',',$cell['size']);
+			if (!$hours_per_day) $hours_per_day = 8; // workday is 8 hours
+			if (($percent_allowed = strstr($input_format,'%') !== false))
+			{
+				$input_format = str_replace('%','',$input_format);
+			}
+			if ($input_format != 'h' && $input_format != 'd') $input_format = 'dh'; // hours + days
+			
+			$extension_data = array(
+				'type'			=> $cell['type'],
+				'data_format'	=> $data_format,
+				'unit'          => ($unit = $input_format == 'd' ? 'd' : 'h'),
+				'input_format'  => $input_format,
+				'hours_per_day' => $hours_per_day,
+				'percent_allowed'=> $percent_allowed,
+			);
+			switch($data_format)
+			{
+				case 'd':
+					$value *= $hours_per_day;
+					// fall-through
+				case 'h': case 'H':
+					$value *= 60;
+					break;
+			}			
+			$cell['type'] = 'text';
+			$cell['size'] = '4,,/^-?[0-9]*[,.]?[0-9]*'.($percent_allowed ? '%?' : '').'$/';
+			$cell_name = $cell['name'];
+			$cell['name'] .= '[value]';
+			
+			if ($input_format == 'dh' && $value >= 60*$hours_per_day)
+			{
+				$unit = 'd';
+			}
+			$value = !$value ? '' : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3);
+
+			if (!$readonly && $input_format == 'dh') // selectbox to switch between hours and days
+			{
+				$value = array(
+					'value' => $value,
+					'unit'  => $unit,
+				);
+				$tpl =& new etemplate;
+				$tpl->init('*** generated fields for duration','','',0,'',0,0);	// make an empty template
+				// keep the editor away from the generated tmpls
+				$tpl->no_onclick = true;
+				
+				$selbox =& $tpl->empty_cell('select',$cell_name.'[unit]');
+				$selbox['sel_options'] = array(
+					'h' => 'hours',
+					'd' => 'days',
+				);
+				
+				$tpl->data[0] = array();
+				$tpl->data[1] =array(
+					'A' => $cell,
+					'B' => $selbox,
+				);
+				$tpl->set_rows_cols();
+				$tpl->size = ',,,,0';
+	
+				unset($cell['size']);
+				$cell['type'] = 'template';
+				$cell['name'] = $tpl->name;
+				unset($cell['label']);
+				$cell['obj'] = &$tpl;
+			}
+			elseif (!$readonly || $value)
+			{
+				$cell['no_lang'] = 2;
+				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($input_format == 'h' ? lang('hours') : lang('days'));
+			}
+			return True;	// extra Label is ok
+		}
+
+		/**
 		 * postprocessing method, called after the submission of the form
 		 *
 		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
@@ -327,6 +425,40 @@
 			if (!isset($value) && !isset($value_in))
 			{
 				return False;
+			}
+			if ($extension_data['type'] == 'date-duration')
+			{
+				if (is_array($value))	// template with selectbox
+				{
+					$unit = $value['unit'];
+					$value = $value['value'];
+				}
+				elseif (!preg_match('/^-?[0-9]*[,.]?[0-9]*'.($extension_data['percent_allowed'] ? '%?' : '').'$/',$value_in))
+				{
+					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid floatingpoint number !!!",$value_in);
+					return false;
+				}
+				else
+				{
+					$value = $value_in;
+					$unit = $extension_data['unit'];
+				}
+				if ($extension_data['percent_allowed'] && substr($value,-1) == '%')
+				{
+					return $value;
+				}
+				$value = (int) round(str_replace(',','.',$value) * 60 * ($unit == 'd' ? $extension_data['hours_per_day'] : 1)); 
+
+				switch($extension_data['data_format'])
+				{
+					case 'd':
+						$value /= (float) $extension_data['hours_per_day'];
+						// fall-through
+					case 'h': case 'H':
+						$value /= 60.0;
+						break;
+				}
+				return true;
 			}
 			$no_date = substr($extension_data['type'],-4) == 'only';
 

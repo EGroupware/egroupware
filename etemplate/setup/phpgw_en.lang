@@ -79,6 +79,7 @@ cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
 day	etemplate	en	Day
+days	etemplate	en	days
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	en	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
 db-tools	etemplate	en	DB-Tools
@@ -107,6 +108,7 @@ documentation	etemplate	en	Documentation
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
+duration	etemplate	en	Duration
 edit	etemplate	en	Edit
 edit embeded css styles or of the applications app.css file	etemplate	en	edit embeded CSS styles or of the applications app.css file
 edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
@@ -165,6 +167,7 @@ height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
 horizontal rule	etemplate	en	Horizontal Rule
 hour	etemplate	en	Hour
+hours	etemplate	en	hours
 html	etemplate	en	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	en	Image

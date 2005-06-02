@@ -204,7 +204,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		(or as tooltip for buttons or general in gtk).
 		If the user has JavaScript switched off, the help-texts get NOT submitted, as this is detected.
 		If the helptext starts with a '@' it is replaced by the value of the content-array at this
-		index (with the '@'-removed).
+		index (with the '@'-removed and after expanding the variables).
 	</td>
 </tr>
 <tr>
@@ -216,7 +216,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		This attribute controls certain aspects of the different widgets. It's meaning and xml / xul-values
 		are document with the widgets.
 		If the options-string starts with a '@' it is replaced by the value of the content-array at this
-		index (with the '@'-removed).
+		index (with the '@'-removed and after expanding the variables).
 	</td>
 </tr>
 <tr>
@@ -288,6 +288,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 		of 'all' can be used to indicate it should span all remaining cells of a row.
 		This is not supported by xul-grid's at the moment, but is planned to be.<p>
 		<b>class</b>: the CSS class for the widget.
+		If the class-string starts with a '@' it is replaced by the value of the content-array at this
+		index (with the '@'-removed and after expanding the variables).
 	</td>
 </tr>
 <tr>
@@ -615,8 +617,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		&lt;date options="Y-m-d,1"/><p>
 		&lt;date type="date-time"/><p>
-		&lt;date type="date-timeonly" options="H:i"/>
-		&lt;date type="date-houronly"/>
+		&lt;date type="date-timeonly" options="H:i"/><p>
+		&lt;date type="date-houronly"/><p>
+		&lt;date type="date-duration"/>
 	</td>
 	<td>no</td>
 	<td>date</td>
@@ -639,7 +642,13 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>Sub-widgets</b>: <b>date-time</b>: a date and a time and <b>date-timeonly</b> or <b>date-houronly</b>: only a time / hour<br />
 		These widgets allow the input of times too or only, they use 12h am/pm or 24h format as 
 		specified in the user prefs.<br />
-		<i>If readonly is set, this widget can be used to display a date, without the need to convert it.</i>
+		<i>If readonly is set, this widget can be used to display a date, without the need to convert it.</i><p>
+		<b>Duration</b> a floating point input with an optional selectbox for the unit (hours or days)<br>
+		<b>Options</b>: [duration-storage-format] [,[duration-display][,hours_per_day]]<br />
+		<b>duration-storage-format</b>: 'h' = hours (float), 'd' = days (float), default minutes (integer)<br />
+		<b>duration-display</b>: 'd' = days, 'h' = hours, 'dh' = days or hours with selectbox, optional '%' allows to enter a percentage<br />
+		<b>hours_per_day</b>: conversation between hours and (working) day, default 8
+		<b>hours_per_day</b>: conversation between hours and (working) day, default 8
 	</td>
 </tr>
 <tr>
