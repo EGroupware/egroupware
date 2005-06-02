@@ -1,3 +1,5 @@
+%1 records imported	infolog	ru	%1 записей импортировано
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ru	%1 записей прочтено (но не импортировано, вы можете %2вернуться%3 и снять флаг с Тестового Импорта)
 0%	infolog	ru	0%
 10%	infolog	ru	10%
 20%	infolog	ru	20%
@@ -8,26 +10,94 @@
 70%	infolog	ru	70%
 80%	infolog	ru	80%
 90%	infolog	ru	90%
+abort without deleting	infolog	ru	Прервать без удаления
 add	infolog	ru	Добавить
 add a file	infolog	ru	Добавить файл
 add a new note	infolog	ru	Добавить новую Заметку
 add a new phonecall	infolog	ru	Добавить новый Телефонный Звонок
+add a new todo	infolog	ru	Добавить ToDo
+add file	infolog	ru	Добавить файл
 add:	infolog	ru	Добавить :
+are you shure you want to delete this entry ?	infolog	ru	Вы уверены, что хотите удалить данную запись ?
+are you sure you want to delete this entry	infolog	ru	Вы уверены, что хотите удалить данную запись
 attach file	infolog	ru	прикрепить файл
+back to main list	infolog	ru	Назад к основному списку
+back to projectlist	infolog	ru	Назад к списку проектов
+call	infolog	ru	звонок
+cancel	infolog	ru	Отмена
 categories	infolog	ru	Категории
 category	infolog	ru	Категория
+change the status of an entry, eg. close it	infolog	ru	Изменить статус записи или закрыть ее.
+charset of file	infolog	ru	Кодировка файла.
+click here to create the link	infolog	ru	Нажмите здесь для создания Ссылки
+click here to start the search	infolog	ru	Нажмите здесь для начала поиска
+close	infolog	ru	Закрыть
 create new links	infolog	ru	Создать новые ссылки
 dates, status, access	infolog	ru	Даты, Статус, Доступ
+default filter for infolog	infolog	ru	Фильтр по Умолчанию для InfoLog
+delegation	infolog	ru	Делегирование
+delete	infolog	ru	Удалить
+delete the entry	infolog	ru	Удалить запись
+delete this entry	infolog	ru	удалить данную запись
+deletes this field	infolog	ru	Удалить данное поле
+deletes this status	infolog	ru	Удалить данный статус
 description	infolog	ru	Описание
+edit	infolog	ru	Редактировать
+edit status	infolog	ru	Редактировать Статус
+edit the entry	infolog	ru	Редактировать запись
+edit this entry	infolog	ru	Редактировать данную запись
 enddate	infolog	ru	Дата окончания
+enddate can not be before startdate	infolog	ru	Дата окончания не модет быть до даты начала
+enter a textual description of the log-entry	infolog	ru	введите текстовое описание для записи
 existing links	infolog	ru	Имеющиеся ссылки
+fax	infolog	ru	Факс
+id	infolog	ru	ID
+import	infolog	ru	Импорт
+info log	common	ru	InfoLog
+infolog	common	ru	InfoLog
+infolog - delete	infolog	ru	InfoLog - Удаление
+infolog - edit	infolog	ru	InfoLog - Редактирование
+infolog list	infolog	ru	InfoLog список
+infolog preferences	common	ru	Настройки InfoLog
+invalid filename	infolog	ru	Неправильное имя файла
+last changed	infolog	ru	Последние изменения
+leave without saveing the entry	infolog	ru	выйти без сохранения записи
 link	infolog	ru	Сослаться
 links	infolog	ru	Ссылки
+links of this entry	infolog	ru	Ссылки связанные с данной записью
+list all categories	infolog	ru	Список всех категорий
 longer textual description	infolog	ru	Полное текстовое описание
+max number of entries to display on the main screen	infolog	ru	Максимальное количество записей отображаемых на главной странице
+new search	infolog	ru	Новый поиск
+no - cancel	infolog	ru	Нет - Отменить
+no filter	infolog	ru	без Фильтра
+note	infolog	ru	Заметка
 offer	infolog	ru	предложено
+ongoing	infolog	ru	в работе
+phone	infolog	ru	Телефонный Звонок
 phone/email	infolog	ru	Телефон/E-mail
+phonecall	infolog	ru	Телефонный Звонок
+project	infolog	ru	Проект
+re:	infolog	ru	Re:
 responsible	infolog	ru	Ответственный
+responsible user, priority, ...	infolog	ru	ответственный пользователь, приоритет, ...
+save	infolog	ru	Сохранить
+saves this entry	infolog	ru	Сохранить данную запись
+search	infolog	ru	Поиск
+select a category for this entry	infolog	ru	выбирите категорию для данной записи
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли InfoLog отображать открытые записи - не законченные задачи, телефонные звонки или заметки - на главной странице. Будет работать только если Вы не выбрали какое либо приложение для главной странице (в ваших настройках).
+show open entries: tasks/calls/notes on main screen	infolog	ru	Показывать открытые записи: Задачи/Звонки/Заметки на главной странице
 startdate	infolog	ru	Дата начала
 status	infolog	ru	Статус
+status ...	infolog	ru	Статус ...
+task	infolog	ru	ToDo
+today	infolog	ru	Сегодня
+todo	infolog	ru	ToDo
 typ	infolog	ru	Тип
+type ...	infolog	ru	Тип  ...
+type of the log-entry: note, phonecall or todo	infolog	ru	Тип записи: Заметка, Телефонный звонок или ToDo
 unlink	infolog	ru	Убрать ссылку
+yes - delete	infolog	ru	Да - Удалить
+you have entered an invalid ending date	infolog	ru	Вы ввели неправильную дату окончания
+you have entered an invalid starting date	infolog	ru	Вы ввели неправильную дату начала
+you must enter a subject or a description	infolog	ru	Вы должны ввести тему или описание

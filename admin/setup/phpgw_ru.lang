@@ -27,7 +27,9 @@ allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному
 anonymous user	admin	ru	Анонимный пользователь
 anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сессий)
 application	admin	ru	Приложение
+application name	admin	ru	Имя приложения
 applications	admin	ru	Приложения
+applications list	admin	ru	Список приложений
 are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что желаете удалить приложение %1?
 are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить данную учетную запичь?
 are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить данное приложение?
@@ -83,6 +85,9 @@ group manager	admin	ru	Менеджер Группы
 group name	admin	ru	Имя Группы
 home directory	admin	ru	Домашняя директория
 icon	admin	ru	Иконка
+installed applications	common	ru	Установленные приложения
+ip	admin	ru	IP
+kill session	admin	ru	Прервать сессию
 last %1 logins	admin	ru	Последние %1 подключений
 last %1 logins for %2	admin	ru	Последние %1 подключений для %2
 last login	admin	ru	последнее подключение
@@ -103,10 +108,12 @@ sorry, the above users are still a member of the group %1	admin	ru	Извините, но 
 submit changes	admin	ru	Отправить изменения
 the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
 they must be removed before you can continue	admin	ru	Они должны быть исключены прежде, чем вы сможете продолжить
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	ru	Таймаут для сессии в секундах (по умолчанию 14400 = 4 часа)
 total records	admin	ru	Всего записей
 user data	admin	ru	Данные Пользователя
 view access log	admin	ru	Смотреть журнал подключений
 view error log	admin	ru	Смотреть журнал ошибок
 view user account	admin	ru	Просмотр учетной записи пользователя
+would you like egroupware to check for a new version<br>when admins login ?	admin	ru	Хотите, что бы eGroupWare делала проверку на наличие новой версии <br> когда подключается администратор?
 you must select a file type	admin	ru	Вы должны выбрать тип файла
 you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
