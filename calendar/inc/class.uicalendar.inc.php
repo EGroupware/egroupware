@@ -837,7 +837,6 @@
 					$p->set_var($var);
 					$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 				}
-
 				$var = Array(
 					'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
 					'action_text_button'	=> lang('Alarm Management'),
@@ -850,6 +849,14 @@
 				$p->set_var($var);
 				$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
 			}
+			$var = Array(
+				'action_url_button'	=> $this->page('edit','&amp;copy_cal_id='.$cal_id),
+				'action_text_button'	=> lang('Copy'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			$button_left .= '<td>'.$p->fp('button','form_button').'</td>';
 
 			if ($this->bo->check_perms(PHPGW_ACL_DELETE,$event))
 			{
@@ -919,7 +926,7 @@
 							))
 						);
 						$p->set_var($var);
-						echo $p->fp('out','form_button');
+						$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
 					}
 				}
 			}
@@ -1002,6 +1009,7 @@
 				if(@isset($_POST['edit_type']) && $_POST['edit_type'] == 'single')
 				{
 					$event['id'] = 0;
+					unset($event['uid']);
 					$this->bo->set_recur_date($event,$_POST['date']);
 					$event['recur_type'] = MCAL_RECUR_NONE;
 					$event['recur_interval'] = 0;
@@ -1009,7 +1017,7 @@
 					$event['recur_enddate']['month'] = 0;
 					$event['recur_enddate']['mday'] = 0;
 					$event['recur_enddate']['year'] = 0;
-					$event['recur_exception'] = array();
+					$event['recur_exception'] = $event['alarm'] = array();
 				}
 				$this->edit_form(
 					Array(
@@ -1017,6 +1025,27 @@
 						'cd'	=> $cd
 					)
 				);
+			}
+			elseif(isset($_GET['copy_cal_id']))
+			{
+				$event = $this->bo->read_entry((int) $_GET['copy_cal_id']);
+
+				if(!$this->bo->check_perms(PHPGW_ACL_READ,$event))
+				{
+					$this-index();
+					return;
+				}
+				$event['id'] = 0;
+				unset($event['uid']);
+				$event['recur_exception'] = $event['alarm'] = array();
+				$event['owner'] = $this->bo->user;
+
+				$this->edit_form(
+					Array(
+						'event' => $event,
+						'cd'	=> $cd
+					)
+				);				
 			}
  		}
 
