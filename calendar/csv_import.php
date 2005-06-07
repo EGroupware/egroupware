@@ -377,15 +377,16 @@
 					{
 						if (ereg((string) $pattern,$val))
 						{
-							// echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",ereg_replace('$pattern','$replace','$val') = ";
+							//echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",ereg_replace('$pattern','$replace','$val') = ";
 							$val = ereg_replace((string) $pattern,str_replace($VPre,'\\',$replace),(string) $val);
-							// echo "'$val'</p>";
+							//echo "'$val'";
 
-							$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
+							$reg = $CPreReg.'([a-zA-Z_0-9 ]+)'.$CPosReg;
 							while (ereg($reg,$val,$vars))
 							{	// expand all CSV fields
 								$val = str_replace($CPre.$vars[1].$CPos,$val[0] == '@' ? "'".addslashes($fields[array_search($vars[1],$csv_fields)])."'" : $fields[array_search($vars[1],$csv_fields)],$val);
 							}
+							//echo "='$val'</p>";
 							if ($val[0] == '@')
 							{
 								// removing the $ to close security hole of showing vars, which contain eg. passwords
