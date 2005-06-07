@@ -165,7 +165,7 @@
 		{
 			if ($this->debug)
 			{
-				echo "<p>bolink.link('$app1',$id1,'".print_r($app2,true)."',$id2,'$remark',$owner,$lastmod)</p>\n";
+				echo "<p>bolink.link('$app1',$id1,'".print_r($app2,true)."',".print_r($id2,true).",'$remark',$owner,$lastmod)</p>\n";
 			}
 			if (!$app1 || !$app2 || $app1 == $app2 && $id1 == $id2)
 			{
@@ -658,7 +658,7 @@
 			}
 			$fname = $this->vfs_path($app,$id,$file['name']);
 			$tfname = '';
-			if (!empty($file['path']))
+			if (!empty($file['path']) && is_array($this->link_pathes) && count($this->link_pathes))
 			{
 				$file['path'] = str_replace('\\\\','/',$file['path']);	// vfs uses only '/'
 				@reset($this->link_pathes);
@@ -681,7 +681,6 @@
 				}
 			}
 			$this->vfs->override_acl = 1;
-
 			$this->vfs->cp(array(
 				'symlink' => !!$tfname,		// try a symlink
 				'from' => $tfname ? $tfname : $file['tmp_name'],
