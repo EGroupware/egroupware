@@ -45,6 +45,7 @@
 			}
 			$hol_id = $holiday['hol_id'];
 			unset($holiday['hol_id']);
+			unset($holiday['hol_locales']);
 
 			if ($hol_id)
 			{
@@ -171,7 +172,7 @@
 			$this->db->select($this->table,'DISTINCT hol_locale',$querymethod,__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
-				$locale[] = $this->db->f('locale');
+				$locale[] = $this->db->f('hol_locale');
 			}
 			return $locale;
 		}
