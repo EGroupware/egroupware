@@ -472,7 +472,11 @@
 				}
 			}
 			$info = $show_type ? '('.$acc['account_type'].') ' : '';
-
+			
+			if ($acc['account_type'] == 'g')
+			{
+				$longnames = 1;
+			}
 			switch ($longnames)
 			{
 				case 2:
