@@ -188,7 +188,7 @@ class uiviews extends uical
 		$GLOBALS['phpgw_info']['flags']['app_header'] .= ': '.lang(date('l',$ts)).', '.$this->bo->long_date($ts);
 		$GLOBALS['phpgw']->common->phpgw_header();
 
-		$todos = $this->get_todos(&$todo_label);
+		$todos = $this->get_todos($todo_label);
 
 		echo $this->html->table(array(0 => array(
 			$this->timeGridWidget($this->bo->search($this->search_params),$this->width-250,$this->cal_prefs['interval'],1.7),
