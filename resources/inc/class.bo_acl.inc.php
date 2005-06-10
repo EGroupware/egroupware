@@ -14,7 +14,9 @@
 	
 	class bo_acl
 	{
-		/*! @var $permissions Holds alls permissions for resources of user */
+		/**
+		  * @var $permissions Holds alls permissions for resources of user 
+		  */
 		var $permissions;
 		
 		var $acl;
@@ -30,14 +32,14 @@
 
 		function bo_acl($session=False)
 		{
-			define('PHPGW_ACL_CAT_ADMIN',64);
-			define('PHPGW_ACL_DIRECT_BOOKING',128);
-//			define('PHPGW_ACL_CUSTOM_3',256);
+			define('EGW_ACL_CAT_ADMIN',64);
+			define('EGW_ACL_DIRECT_BOOKING',128);
+//			define('EGW_ACL_CUSTOM_3',256);
 
-			$this->so = CreateObject('resources.so_acl');
-			$this->permissions = $this->so->get_permissions($GLOBALS['phpgw_info']['user']['account_id'],true);
-			$this->egw_cats = createobject('phpgwapi.categories');
-			$this->accounts = $GLOBALS['phpgw']->accounts->get_list();
+			$this->so =& CreateObject('resources.so_acl');
+			$this->permissions = $this->so->get_permissions($GLOBALS['egw_info']['user']['account_id'],true);
+			$this->egw_cats =& createobject('phpgwapi.categories');
+			$this->accounts = $GLOBALS['egw']->accounts->get_list();
 			$this->debug = False;
 			
 			//all this is only needed when called from uiacl.
@@ -61,14 +63,14 @@
 			}
 		}
 
-		/*!
-			@function get_cats
-			@abstract get list of cats where current user has given rights
-			@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-			@param int $perm_type one of PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE, PHPGW_ACL_DIRECT_BOOKING
-			@return array cat_id => cat_name
-			TODO mark subcats and so on!
-		*/
+		/**
+		 * get list of cats where current user has given rights
+		 *
+		 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+		 * @param int $perm_type one of EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+		 * @return array cat_id => cat_name
+		 * TODO mark subcats and so on!
+		 */
 		function get_cats($perm_type)
 		{
 			$cats = $this->egw_cats->return_sorted_array(0,False,'','','',!$type);
@@ -80,7 +82,7 @@
 					{
 						$s .= '&nbsp;';
 					}
-					$s .= $GLOBALS['phpgw']->strip_html($cat['name']);
+					$s .= $GLOBALS['egw']->strip_html($cat['name']);
 					if ($cat['app_name'] == 'phpgw')
 					{
 						$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
@@ -96,32 +98,32 @@
 		}
 		
 		
-		/*!
-			@function get_cat_name
-			@abstract gets name of category 
-			@author Lukas Weiß <wnz.gh05t@users.sourceforge.net>
-			@param int $cat_id
-			@return mixed name of category
-		*/
+		/**
+		 * gets name of category 
+		 *
+		 * @author Lukas Weiï¿½ <wnz.gh05t@users.sourceforge.net>
+		 * @param int $cat_id
+		 * @return mixed name of category
+		 */
 		function get_cat_name($cat_id)
 		{
-		    $cat = $this->egw_cats->return_single($cat_id);
-		    return $cat[0]['name'];
+				$cat = $this->egw_cats->return_single($cat_id);
+				return $cat[0]['name'];
 		}
 		
-		/*!
-			@function get_cat_admin
-			@abstract gets userid of admin for given category
-			@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-			@param int $cat_id
-			@return int userid of cat admin
-		*/
+		/**
+		 * gets userid of admin for given category
+		 *
+		 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+		 * @param int $cat_id
+		 * @return int userid of cat admin
+		 */
 		function get_cat_admin($cat_id)
 		{
 			$cat_rights = $this->get_rights($cat_id);
 			foreach ($cat_rights as $userid => $right)
 			{
-				if ($right & PHPGW_ACL_CAT_ADMIN)
+				if ($right & EGW_ACL_CAT_ADMIN)
 				{
 					return $userid;
 				}
@@ -129,25 +131,26 @@
 			return lang('none');
 		}
 		
-		/*!
-			@function is_permitted
-			@abstract cheks one of the following rights for current user:
-			@abstract PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE, PHPGW_ACL_DIRECT_BOOKING
-			@param int $cat_id
-			@param int $right
-			@return bool user is permitted or not for right
-		*/
+		/**
+		 * cheks one of the following rights for current user:
+		 *
+		 * EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+		 *
+		 * @param int $cat_id
+		 * @param int $right
+		 * @return bool user is permitted or not for right
+		 */
 		function is_permitted($cat_id,$right)
 		{
 			return $this->permissions['L'.$cat_id] & $right;
 		}
 		
-		/*!
-			@function get_rights
-			@abstract gets all rights from all user for given cat
-			@param int $cat_id
-			@return array userid => right
-		*/
+		/**
+		 * gets all rights from all user for given cat
+		 *
+		 * @param int $cat_id
+		 * @return array userid => right
+		 */
 		function get_rights($cat_id)
 		{
 			return $this->so->get_rights('L'.$cat_id);
@@ -165,12 +168,12 @@
 				'limit' => $this->limit,
 			);
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
-			$GLOBALS['phpgw']->session->appsession('session_data','resources_acl',$data);
+			$GLOBALS['egw']->session->appsession('session_data','resources_acl',$data);
 		}
 
 		function read_sessiondata()
 		{
-			$data = $GLOBALS['phpgw']->session->appsession('session_data','resources_acl');
+			$data = $GLOBALS['egw']->session->appsession('session_data','resources_acl');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
@@ -194,13 +197,13 @@
 				$account_id = $account['account_id'];
 				//write implies read
 				$rights = in_array($account_id,$writecat) ?
-					(PHPGW_ACL_READ | PHPGW_ACL_ADD | PHPGW_ACL_EDIT | PHPGW_ACL_DELETE) :
-					(in_array($account_id,$readcat) ? PHPGW_ACL_READ : False);
-				$rights = in_array($account_id,$bookcat) ? ($rights | PHPGW_ACL_DIRECT_BOOKING) : $rights;
-				$rights = in_array($account_id,$admincat) ? ($rights | PHPGW_ACL_CAT_ADMIN) : $rights;
+					(EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE) :
+					(in_array($account_id,$readcat) ? EGW_ACL_READ : False);
+				$rights = in_array($account_id,$bookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING) : $rights;
+				$rights = in_array($account_id,$admincat) ? ($rights | EGW_ACL_CAT_ADMIN) : $rights;
 				if ($rights)
 				{
-					$GLOBALS['phpgw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
+					$GLOBALS['egw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
 				}
 			}
 		}

@@ -22,21 +22,21 @@ class bo_resources
 	
 	function bo_resources()
 	{
-		$this->so = CreateObject('resources.so_resources');
-		$this->acl = CreateObject('resources.bo_acl');
+		$this->so =& CreateObject('resources.so_resources');
+		$this->acl =& CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
-		$this->vfs = CreateObject('phpgwapi.vfs');
-		$this->link = CreateObject('infolog.bolink');
-		$this->conf = CreateObject('phpgwapi.config');
+		$this->vfs =& CreateObject('phpgwapi.vfs');
+		$this->link =& CreateObject('infolog.bolink');
+		$this->conf =& CreateObject('phpgwapi.config');
 		$this->conf->read_repository();
 		
 	}
 
-	/*!
-		@function get_rows
-		@abstract get rows for resources list
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-	*/
+	/**
+	 * get rows for resources list
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		$query['search'] = $query['search'] ? $query['search'] : '*';
@@ -44,7 +44,7 @@ class bo_resources
 		$criteria = array(	'name' 			=> $query['search'], 
 					'short_description' 	=> $query['search']
 				);
-		$cats = $query['filter'] ? array($query['filter'] => '') : $this->acl->get_cats(PHPGW_ACL_READ);
+		$cats = $query['filter'] ? array($query['filter'] => '') : $this->acl->get_cats(EGW_ACL_READ);
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
 		
 		$rows = array( 0 => array(	'id'			=> '',
@@ -60,19 +60,19 @@ class bo_resources
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		
-		$nr = $this->so->search($criteria,$cats,&$rows,$accessory_of,$order_by,$offset=$query['start'],$num_rows=0);
+		$nr = $this->so->search($criteria,$cats,$rows,$accessory_of,$order_by,$offset=$query['start'],$num_rows=0);
 		
 		foreach($rows as $num => $resource)
 		{
-			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
+			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
 				$readonlys["edit[$resource[id]]"] = true;
 			}
-			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_DELETE))
+			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE))
 			{
 				$readonlys["delete[$resource[id]]"] = true;
 			}
-			if ((!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_ADD)) || $accessory_of != -1)
+			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $accessory_of != -1)
 			{
 				$readonlys["new_acc[$resource[id]]"] = true;
 			}
@@ -106,16 +106,16 @@ class bo_resources
 		return $nr;
 	}
 
-	/*!
-		@function read
-		@abstract reads a resource exept binary datas
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param int $id resource id
-		@return array with key => value or false if not found or allowed
-	*/
+	/**
+	 * reads a resource exept binary datas
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param int $id resource id
+	 * @return array with key => value or false if not found or allowed
+	 */
 	function read($id)
 	{
-		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$id),PHPGW_ACL_READ))
+		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$id),EGW_ACL_READ))
 		{
 			echo lang('You are not permitted to get information about this resource!') . '<br>';
 			echo lang('Notify your administrator to correct this situation') . '<br>';
@@ -124,16 +124,16 @@ class bo_resources
 		return $this->so->read($id);
 	}
 	
-	/*!
-		@function save
-		@abstract saves a resource. pictures are saved in vfs
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param array $resource array with key => value of all needed datas
-		@return string msg if somthing went wrong; nothing if all right
-	*/
+	/**
+	 * saves a resource. pictures are saved in vfs
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param array $resource array with key => value of all needed datas
+	 * @return string msg if somthing went wrong; nothing if all right
+	 */
 	function save($resource)
 	{
-		if(!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
+		if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 		{
 			return lang('You are not permitted to edit this reource!');
 		}
@@ -199,12 +199,12 @@ class bo_resources
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
 	}
 
-	/*!
-		@function delete
-		@abstract deletes resource including pictures and links
-		@autor Lukas Weiss <wnz_gh05t@users.sourceforge.net>
-		@param int $id id of resource
-	*/
+	/**
+	 * deletes resource including pictures and links
+	 *
+	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+	 * @param int $id id of resource
+	 */
 	function delete($id)
 	{
 		$this->remove_picture($id);
@@ -212,19 +212,19 @@ class bo_resources
 		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by deleting resource');
 	}
 	
-	/*!
-		@function get_acc_list
-		@abstract gets list of accessories for resource
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param int $id id of resource
-		@return array
-	*/
+	/**
+	 * gets list of accessories for resource
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param int $id id of resource
+	 * @return array
+	 */
 	function get_acc_list($id)
 	{
 		if($id < 1){return;}
 		$cat_id = $this->so->get_value('cat_id',$id);
 		$data[0] = array('id' => '', 'name' => '');
-		$this->so->search(array('name' => '*'),array($cat_id => ''),&$data,$accessory_of=$id,$order_by='',$offset=false,$num_rows=-1);
+		$this->so->search(array('name' => '*'),array($cat_id => ''),$data,$accessory_of=$id,$order_by='',$offset=false,$num_rows=-1);
 		foreach($data as $num => $resource)
 		{
 			$acc_list[$resource['id']] = $resource['name'];
@@ -232,18 +232,17 @@ class bo_resources
 		return $acc_list;
 	}
 
-	/*!
-		@function link_query
-		@syntax link_query(  $pattern  )
-		@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@abstract query infolog for entries matching $pattern
-	*/
+	/**
+	 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * query infolog for entries matching $pattern
+	 *
+	 */
 	function link_query( $pattern )
 	{
 		$criteria = array('name' => $pattern,'short_description'  => $pattern);
-		$cats = $this->acl->get_cats(PHPGW_ACL_READ);
+		$cats = $this->acl->get_cats(EGW_ACL_READ);
 		$data[0] = array('id' => '','name' => '', 'short_description' => '');
-		$this->so->search($criteria,$cats,&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
+		$this->so->search($criteria,$cats,$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
 		
 		foreach($data as $num => $resource)
 		{
@@ -255,12 +254,11 @@ class bo_resources
 		return $list;
 	}
 		
-	/*!
-		@function link_title
-		@syntax link_title(  $id  )
-		@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@abstract get title for an infolog entry identified by $id
-	*/
+	/**
+	 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * get title for an infolog entry identified by $id
+	 *
+	 */
 	function link_title( $resource )
 	{
 		if (!is_array($resource) && $resource > 0)
@@ -271,15 +269,15 @@ class bo_resources
 		return $title ? $title : false;
 	}
 	
-	/*!
-		@function save_picture
-		@abstract resizes and saves an pictures in vfs
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param array $file array with key => value
-		@param int $resource_id
-		@return mixed string with msg if somthing went wrong; nothing if all right
-		TODO make thumb an picture sizes choosable by preferences
-	*/	
+	/**
+	 * resizes and saves an pictures in vfs
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param array $file array with key => value
+	 * @param int $resource_id
+	 * @return mixed string with msg if somthing went wrong; nothing if all right
+	 * TODO make thumb an picture sizes choosable by preferences
+	 */	
 	function save_picture($file,$resouce_id)
 	{
 		// test upload dir
@@ -316,7 +314,7 @@ class bo_resources
 		$dst_img_size = array( 0 => 320, 1 => 240);
 		$thumb_size = array( 0 => 64, 1 => 48);
 		
-		$tmp_dir = $GLOBALS['phpgw_info']['server']['temp_dir'].'/';
+		$tmp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
 		if($src_img_size[0] > 64 || $src_img_size[1] > 48)
 		{
 			$f = $thumb_size[0] / $src_img_size[0];
@@ -357,7 +355,7 @@ class bo_resources
 			'attributes' => array (
 				'mime_type' => 'image/jpeg',
 				'comment' => 'picture of resource no.'.$resouce_id,
-				'app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+				'app' => $GLOBALS['egw_info']['flags']['currentapp']
 		)));
 		$this->vfs->mv(array(
 			'from' => $tmp_dir.$resouce_id.'.thumb.jpg',
@@ -370,20 +368,19 @@ class bo_resources
 			'attributes' => array (
 				'mime_type' => 'image/jpeg',
 				'comment' => 'thumbnail of resource no.'.$resouce_id,
-				'app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+				'app' => $GLOBALS['egw_info']['flags']['currentapp']
 		)));
 		$this->vfs->override_acl = 0;
 		return;
 	}
 	
-	/*!
-		@function get_picture
-		@abstact get resource picture either from vfs or from symlink
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param int $id id of resource
-		@param bool $size false = thumb, true = full pic
-		@return string url of picture
-	*/
+	/**
+	 * get resource picture either from vfs or from symlink
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param int $id id of resource
+	 * @param bool $size false = thumb, true = full pic
+	 * @return string url of picture
+	 */
 	function get_picture($id=0,$size=false)
 	{
 		if ($id > 0)
@@ -394,7 +391,7 @@ class bo_resources
 		switch($src)
 		{
 			case 'own_src':
-				$picture = $this->conf->config_data['dont_use_vfs'] ? $GLOBALS['phpgw_info']['server']['webserver_url'] : 'vfs:';
+				$picture = $this->conf->config_data['dont_use_vfs'] ? $GLOBALS['egw_info']['server']['webserver_url'] : 'vfs:';
 				$picture .= $size ? $this->pictures_dir.$id.'.jpg' : $this->thumbs_dir.$id.'.jpg';
 				break;
 			case 'cat_src':
@@ -402,24 +399,25 @@ class bo_resources
 				$picture = unserialize($picture['data']);
 				if($picture['icon'])
 				{
-					$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
+					$picture = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
 					break;
 				}
 			case 'gen_src':
 			default :
-				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->resource_icons;
+				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
 				$picture .= strstr($src,'.') ? $src : 'generic.png';
 		}
 		return $picture;
 	}
 	
-	/*!
-		@fuction remove_picture
-		@abstract removes picture from vfs
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param int $id id of resource
-		@return bool succsess or not
-	*/
+	/**
+	 * remove_picture
+	 * removes picture from vfs
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param int $id id of resource
+	 * @return bool succsess or not
+	 */
 	function remove_picture($id)
 	{
 		$vfs_data = array('string' => $this->pictures_dir.$id.'.jpg','relatives' => array(RELATIVE_ROOT));
@@ -433,16 +431,17 @@ class bo_resources
 		$this->vfs->override_acl = 0;
 	}
 
-	/*!
-		@fuction get_genpicturelist
-		@abstract gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@return array directory contens in eTemplates selectbox style
-	*/
+	/**
+	 * get_genpicturelist
+	 * gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @return array directory contens in eTemplates selectbox style
+	 */
 	function get_genpicturelist()
 	{
 		$icons['generic.png'] = lang('gernal resource');
-		$dir = dir(PHPGW_SERVER_ROOT.$this->resource_icons);
+		$dir = dir(EGW_SERVER_ROOT.$this->resource_icons);
 		while($file = $dir->read())
 		{
 			if (preg_match('/\\.(png|gif|jpe?g)$/i',$file) && $file != 'generic.png')

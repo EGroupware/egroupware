@@ -23,30 +23,30 @@ class ui_resources
 		'writeLangFile'	=> True
 		);
 
-	/*!
-		@function ui_resources
-		@abstract constructor of class ui_resources
-	*/
+	/**
+	 * constructor of class ui_resources
+	 *
+	 */
 	function ui_resources()
 	{
-// 		print_r($GLOBALS['phpgw_info']); die();
-		$this->tmpl	= CreateObject('etemplate.etemplate','resources.show');
-		$this->bo	= CreateObject('resources.bo_resources');
+// 		print_r($GLOBALS['egw_info']); die();
+		$this->tmpl	=& CreateObject('etemplate.etemplate','resources.show');
+		$this->bo	=& CreateObject('resources.bo_resources');
 		
-		if(!@is_object($GLOBALS['phpgw']->js))
+		if(!@is_object($GLOBALS['egw']->js))
 		{
-			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 		}
 	}
 
-	/*!
-		@function index
-		@abstract main resources list.
-		@autor Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@param array $content content from eTemplate callback
-		
-		FIXME don't translate cats in nextmach
-	*/
+	/**
+	 * main resources list.
+	 *
+	 * Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * @param array $content content from eTemplate callback
+	 * 
+	 * FIXME don't translate cats in nextmach
+	 */
 	function index($content='')
 	{
 		if (is_array($content))
@@ -56,7 +56,7 @@ class ui_resources
 			if (isset($content['nm']['rows']))
 			{
 				unset($sessiondata['rows']);
-				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				
 				unset($content['nm']['rows']['checkbox']);
 				switch (key($content['nm']['rows']))
@@ -73,7 +73,7 @@ class ui_resources
 					case 'view_acc':
 						list($id) = each($content['nm']['rows']['view_acc']);
  						$sessiondata['view_accs_of'] = $id;
-						$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+						$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 						return $this->index();
 					case 'view':
 						list($id) = each($content['nm']['rows']['view']);
@@ -84,39 +84,39 @@ class ui_resources
 			}
 			if (isset($content['add'])) // note: this isn't used as add is a popup now!
 			{
-				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				return $content['nm']['view_accs_of'] ? $this->edit(array('id' => 0, 'accessory_of' => $content['nm']['view_accs_of'])) : $this->edit(0);
 			}
 			if (isset($content['back']))
 			{
 				unset($sessiondata['view_accs_of']);
-				$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				return $this->index();
 			}
 		}
 		else
 		{
 			$content = array();
-			$content['nm'] = $GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm');
+			$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		}
 		
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= 'Category';
 		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(PHPGW_ACL_READ);
+		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		$content['nm']['no_filter2']	= true;
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
 		
 		// check if user is permitted to add resources
-		if(!$this->bo->acl->get_cats(PHPGW_ACL_ADD))
+		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
 		{
 			$no_button['add'] = true;
 		}
 		$no_button['back'] = true;
 		$no_button['add_sub'] = true;
-		$GLOBALS['phpgw_info']['flags']['app_header'] = lang('resources');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
 		
 		if($content['nm']['view_accs_of'])
 		{
@@ -128,22 +128,21 @@ class ui_resources
 			$no_button['back'] = false;
 			$no_button['add'] = true;
 			$no_button['add_sub'] = false;
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of ') . $master['name'] .
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of ') . $master['name'] .
 				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
-		$GLOBALS['phpgw']->session->appsession('session_data','resources_index_nm',$content['nm']);
+		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
 
-	/*!
-		@function edit
-		@syntax edit($content=0)
-		@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-		@abstract invokes add or edit dialog for resources
-		@param $content   Content from the eTemplate Exec call or id on inital call
-	*/
+	/**
+	 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 * invokes add or edit dialog for resources
+	 *
+	 * @param $content   Content from the eTemplate Exec call or id on inital call
+	 */
 	function edit($content=0,$accessory_of = -1)
 	{
 		if (is_array($content))
@@ -170,17 +169,17 @@ class ui_resources
 				{
 					return $this->edit($content);
 				}
-				$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',
+				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
 					array('menuaction' => 'resources.ui_resources.index'))."';";
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 			elseif($content['cancel'])
 			{
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 		else
@@ -208,7 +207,7 @@ class ui_resources
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-		$sel_options['cat_id'] =  $this->bo->acl->get_cats(PHPGW_ACL_ADD);
+		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
 		
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
@@ -226,11 +225,11 @@ class ui_resources
 		
 	}
 	
-	/*!
-		@function admin
-		@abstract adminsection of resources
-		@author Cornelius Weiß <egw@von-und-zu-weiss.de>
-	*/
+	/**
+	 * adminsection of resources
+	 *
+	 * @author Cornelius Weiï¿½ <egw@von-und-zu-weiss.de>
+	 */
 	function admin($content='')
 	{
 		if(is_array($content))
@@ -242,7 +241,7 @@ class ui_resources
 			}
 			else
 			{
-				return $GLOBALS['phpgw']->redirect_link('/admin/index.php');
+				return $GLOBALS['egw']->redirect_link('/admin/index.php');
 			}
 		}
 		$content = $this->bo->conf->read_repository();
@@ -250,12 +249,12 @@ class ui_resources
 		$this->tmpl->exec('resources.ui_resources.admin',$content,$sel_options,$no_button,$preserv);
 	}
 
-	/*!
-		@function show
-		@abstract showes a single resource
-		@param int $id resource id
-		@author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
-	*/
+	/**
+	 * showes a single resource
+	 *
+	 * @param int $id resource id
+	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
+	 */
 	function show($id=0)
 	{
 		if (isset($_GET['id'])) $id = $_GET['id'];
@@ -265,9 +264,9 @@ class ui_resources
 		$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
 		$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 		$content['link_to'] = array(
-		    'to_id' => $id,
-    		    'to_app' => 'resources'
-    		    );
+				'to_id' => $id,
+						'to_app' => 'resources'
+						);
 	
 		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
@@ -275,8 +274,8 @@ class ui_resources
 		
 		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable ').$content['useable'].')';
 		
-			    //$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-		    
+					//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
+				
 		$content['cat_name'] =  $this->bo->acl->get_cat_name($content['cat_id']);
 		$content['cat_admin'] = $this->bo->acl->get_cat_admin($content['cat_id']);
 		
@@ -297,12 +296,12 @@ class ui_resources
 		
 	}
 
-	/*!
-		@function delete
-		@abstract deletes a resource
-		@param int $id resource id
-		@author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
-	*/
+	/**
+	 * deletes a resource
+	 *
+	 * @param int $id resource id
+	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
+	 */
 	function delete($id)
 	{
  		$this->bo->delete($id);

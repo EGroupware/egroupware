@@ -18,7 +18,8 @@
 
 		function so_acl()
 		{
-			copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db = clone($GLOBALS['egw']->db);
+			$this->db->set_app('resources');
 		}
 
 		function get_rights($location)
@@ -39,20 +40,20 @@
 			$this->db->query($sql,__LINE__,__FILE__);
 		}
 
-		/*!
-			@function get_permission
-			@abstract gets permissions for resources of user 
-			@discussion This function is needed, cause eGW api dosn't provide a usefull function for that topic!
-			@discussion Using api-functions for that, would resault bad performace :-(
-			@autor autor of news_admin ?
-			
-			@param int $user user_id we want to get perms for
-			@param bool $inc_groups get rights due to groupmembership of user
-			
-		*/
+		/**
+		 * gets permissions for resources of user 
+		 *
+		 * This function is needed, cause eGW api dosn't provide a usefull function for that topic!
+		 * Using api-functions for that, would resault bad performace :-(
+		 * autor of news_admin ?
+		 * 
+		 * @param int $user user_id we want to get perms for
+		 * @param bool $inc_groups get rights due to groupmembership of user
+		 * 
+		 */
 		function get_permissions($user, $inc_groups)
 		{
-			$groups = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $user);
+			$groups = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $user);
 			$result = array();
 			$sql  = 'SELECT acl_location, acl_rights FROM phpgw_acl ';
 			$sql .= "WHERE acl_appname = 'resources' ";

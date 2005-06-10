@@ -12,12 +12,12 @@
 	\**************************************************************************/
 	
 	
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp'	=> 'resources',
 		'noheader'	=> True,
 		'nonavbar'	=> True
 	);
 	include('../header.inc.php');
 
-	$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=resources.ui_resources.index');
+	$GLOBALS['egw']->redirect_link('/index.php','menuaction=resources.ui_resources.index');
 	

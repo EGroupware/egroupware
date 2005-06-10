@@ -24,20 +24,20 @@ class resources_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				'resources list' => $GLOBALS['phpgw']->link('/index.php',array(
+				'resources list' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'resources.ui_resources.index' )),
-				/*'add' => $GLOBALS['phpgw']->link('/index.php',array(
+				/*'add' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'resources.ui_resources.edit' ))*/
 			);
-			display_sidebox($appname,$GLOBALS['phpgw_info']['apps']['resources']['title'].' '.lang('Menu'),$file);
+			display_sidebox($appname,$GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu'),$file);
 		}
 
-/*		if ($GLOBALS['phpgw_info']['user']['apps']['preferences'] && $location != 'admin')
+/*		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Preferences'     => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname),
-				'Grant Access'    => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Preferences'     => $GLOBALS['egw']->link('/preferences/preferences.php','appname='.$appname),
+				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -49,20 +49,20 @@ class resources_hooks
 			}
 		}
 */
-		if ($GLOBALS['phpgw_info']['user']['apps']['admin'] && $location != 'preferences')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array(
+				'Site configuration' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'resources.ui_resources.admin' )),
-				'Global Categories'  => $GLOBALS['phpgw']->link('/index.php',array(
+				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Configure Access Permissions' => $GLOBALS['phpgw']->link('/index.php',
+				'Configure Access Permissions' => $GLOBALS['egw']->link('/index.php',
 					'menuaction=resources.ui_acl.acllist')
-// 				'Custom fields, typ and status' => $GLOBALS['phpgw']->link('/index.php',array(
+// 				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
 // 					'menuaction' => 'infolog.uicustomfields.edit')),
-// 				'CSV-Import'         => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
+// 				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
 			);
 			if ($location == 'admin')
 			{
