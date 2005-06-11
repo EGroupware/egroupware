@@ -192,7 +192,7 @@
 			{
 				$value['template'] =& new etemplate($value['template'],$tmpl->as_array());
 			}
-			if ($total < 1)
+			if ($total < 1 && $value['template']->rows > 1)
 			{
 				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 			}
