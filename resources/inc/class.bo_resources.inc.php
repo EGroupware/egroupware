@@ -231,20 +231,7 @@ class bo_resources
 	 */
 	function get_calender_info($res_id)
 	{
-		if($id < 1) return;
-		$data[0] = array('name' => '', 'useable' => '');
-		foreach($res_id as $num => $id)
-		{
-			
-		}
-// 		$cats = array_flip($this->acl->get_cats(EGW_ACL_READ));
-		$this->so->search(array('name' => '*'),false,$data,-1,$order_by='',$offset=false,$num_rows=-1);
-		
-		if(is_array($res_id))
-		{
-		}
-		
-		return;
+		return $res_id < 1 ? false : $this->so->search(array('id' => $res_id),'name,useable');
 	}
 	
 	/**
