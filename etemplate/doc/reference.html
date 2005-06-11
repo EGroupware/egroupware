@@ -501,10 +501,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>onclick</b>: specify some java-script to be called if the button gets pressed/clicked: <br />
 		a) general javascript: "window.close();"<br />
 		b) confirmation: "return window.confirm('<message>');" (message get run through lang()!)<br />
-		c) popups: "window.open(egw::link('/index.php','menuaction=app.class.func&id=$cont[id]'),'_blank',
-		'dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;"
-		(egw::link('<url>','<vars>') calls $GLOBALS['phpgw']->link() to allow eGW installtion relative links 
-		and to pass the session-id.
+		c) popup: app.class.func&id=$cont[id],target(default _blank),width (default 600),height (default 450)
 		You can use $cont[<name>] or $row_cont[<name>] (note no quotes!) to pass further information to the popup 
 		via the content array.)
 	</td>

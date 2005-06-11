@@ -411,7 +411,7 @@ class so_sql
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean $only_keys=true True returns only keys, False returns all cols
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys or array to return certain values
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
