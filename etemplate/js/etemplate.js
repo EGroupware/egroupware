@@ -75,3 +75,26 @@ function activate_tab(tab,all_tabs,name)
 		set_element(document.eTemplate,name,tab);
 	}
 }
+
+/* proxy to to add options to a selectbox, needed by IE, but works everywhere */
+function selectbox_add_option(id,label,value,do_onchange)
+{
+	selectBox = document.getElementById(id);
+	for (i=0; i < selectBox.length; i++) {
+		if (selectBox.options[i].value == value) {
+			selectBox.options[i].selected = true;
+			break;
+		}
+		else if (value.slice(0,1) == "," && selectBox.options[i].value.slice(0,1) == ",") {
+			selectBox.options[i].value = value;
+			selectBox.options[i].text = "multiple*";
+			selectBox.options[i].title = label;
+			selectBox.options[i].selected = true;
+			break;
+		}
+	}
+	if (i >= selectBox.length) {
+		selectBox.options[selectBox.length] = new Option(label,value,false,true);
+	}
+	if (selectBox.onchange && do_onchange) selectBox.onchange();
+}
