@@ -42,7 +42,7 @@
 		array(
 			'text'   => 'eGroupWare '.lang('Documentation'),
 			'no_lang' => True,
-			'link'   => 'http://egroupware.org/wiki/DeveloperDocs/',
+			'link'   => 'http://egroupware.org/wiki/DeveloperDocs',
 			'target' => 'docs'
 		),
 		array(
