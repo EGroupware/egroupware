@@ -35,27 +35,27 @@ class bo_resources
 	/**
 	 * get rows for resources list
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		$query['search'] = $query['search'] ? $query['search'] : '*';
 		
-		$criteria = array(	'name' 			=> $query['search'], 
-					'short_description' 	=> $query['search']
-				); echo($query['filter']);
-		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
- 		$filter = array('cat_id' => ($query['filter'] ? $query['filter'] : array_flip($this->acl->get_cats(EGW_ACL_READ))),'accessory_of' => $accessory_of);
-		
+		$criteria = array('name' => $query['search'], 'short_description' => $query['search']);
 		$read_onlys = 'id,name,short_description,quantity,useable,bookable,buyable,cat_id,location';
+		
+		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
+ 		$filter = array('accessory_of' => $accessory_of);
+		$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
+		if($readcats) $filter = $filter + array('cat_id' => $readcats);
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 		
-		$rows = $this->so->search($criteria,$read_onlys,$order_by,$extra_cols='',$wildcard='',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
+		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
 		$nr = $this->so->total;
 		
-		foreach($rows as $num => $resource)
+		foreach((array)$rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
@@ -102,7 +102,7 @@ class bo_resources
 	/**
 	 * reads a resource exept binary datas
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param int $id resource id
 	 * @return array with key => value or false if not found or allowed
 	 */
@@ -120,7 +120,7 @@ class bo_resources
 	/**
 	 * saves a resource. pictures are saved in vfs
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param array $resource array with key => value of all needed datas
 	 * @return string msg if somthing went wrong; nothing if all right
 	 */
@@ -208,7 +208,7 @@ class bo_resources
 	/**
 	 * gets list of accessories for resource
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @return array
 	 */
@@ -225,7 +225,7 @@ class bo_resources
 	
 	/**
 	 * returns info about resource for calender
-	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param int/array $res_id single id or array $num => $res_id
 	 * @return array 
 	 */
@@ -248,7 +248,7 @@ class bo_resources
 	}
 	
 	/**
-	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
 	 *
 	 */
@@ -268,7 +268,7 @@ class bo_resources
 	}
 		
 	/**
-	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $id
 	 *
 	 */
@@ -285,7 +285,7 @@ class bo_resources
 	/**
 	 * resizes and saves an pictures in vfs
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param array $file array with key => value
 	 * @param int $resource_id
 	 * @return mixed string with msg if somthing went wrong; nothing if all right
@@ -389,7 +389,7 @@ class bo_resources
 	
 	/**
 	 * get resource picture either from vfs or from symlink
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @param bool $size false = thumb, true = full pic
 	 * @return string url of picture
@@ -427,7 +427,7 @@ class bo_resources
 	 * remove_picture
 	 * removes picture from vfs
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @return bool succsess or not
 	 */
@@ -448,7 +448,7 @@ class bo_resources
 	 * get_genpicturelist
 	 * gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
 	 * @return array directory contens in eTemplates selectbox style
 	 */
 	function get_genpicturelist()
