@@ -406,6 +406,7 @@ class ui_resources
 				window.close();
 			}</script>";
 		
+		$content['nm']['header_left'] = 'resources.resource_select.header';
 		$content['nm']['show_bookable'] = true;
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
