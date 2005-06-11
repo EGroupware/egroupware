@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row">
+					<description options=",,,start" value="Start Date/Time"/>
+					<date-time id="start"/>
+				</row>
+				<row class="row">
+					<description options=",,,end" value="End Date/Time"/>
+					<date-time id="end"/>
+				</row>
+				<row class="row">
+					<description options=",,,location" value="Location"/>
+					<textbox size="80" maxlength="255" id="location"/>
+				</row>
+				<row class="row" valign="top">
+					<description options=",,,category" value="Category"/>
+					<listbox type="select-cat" rows="3" id="category"/>
+				</row>
+				<row class="row">
+					<description options=",,,priority" value="Priority"/>
+					<menulist>
+						<menupopup type="select-priority" id="priority"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,public" value="Private"/>
+					<checkbox options="0,1" id="public"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" valign="top">
+					<description options=",,,description" value="Description"/>
+					<textbox multiline="true" rows="12" cols="70" id="description"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.resource_selectbox" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="bottom">
+					<listbox rows="14+" id="selectbox"/>
+					<button onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.select'),'','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;" id="button" label="Add resources" image="navbar" needed="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width="95"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" valign="top">
+					<description options=",,,participants" value="Participants"/>
+					<listbox type="select-account" rows="14" id="participants"/>
+					<template content="resources" id="resources.resource_selectbox"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.links" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.custom" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" id="msg"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th">
+					<description value="Title"/>
+					<textbox size="80" maxlength="255" id="title" span="all"/>
+				</row>
+				<row>
+					<tabbox span="all">
+						<tabs>
+							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
+							<tab label="Description" statustext="Full description"/>
+							<tab label="Participants" statustext="Participants, Resources, ..."/>
+							<tab label="Recurrence" statustext="Repeating Event Information"/>
+							<tab label="Links" statustext="Links"/>
+							<tab label="Custom" statustext="Custom fields"/>
+						</tabs>
+						<tabpanels>
+							<template id="calendar.edit.general"/>
+							<template id="calendar.edit.description"/>
+							<template id="calendar.edit.participants"/>
+							<template id="calendar.edit.recurrence"/>
+							<template id="calendar.edit.links"/>
+							<template id="calendar.edit.custom"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row class="row" disabled="!@owner">
+					<description value="Owner"/>
+					<menulist>
+						<menupopup type="select-account" id="owner" readonly="true"/>
+					</menulist>
+					<hbox align="right">
+						<date-time label="Updated" id="modified" readonly="true" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-account" label="by" id="modifier" readonly="true"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<hbox span="2">
+						<button id="edit" label="Edit" statustext="Edit this event"/>
+						<button label="Save" id="save" statustext="saves the changes made"/>
+						<button id="apply" label="Apply" statustext="apply the changes"/>
+						<button id="cancel" label="Cancel" onclick="window.close();"/>
+					</hbox>
+					<button label="Delete" align="right" id="delete"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
