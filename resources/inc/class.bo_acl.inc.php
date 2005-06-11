@@ -34,7 +34,7 @@
 		{
 			define('EGW_ACL_CAT_ADMIN',64);
 			define('EGW_ACL_DIRECT_BOOKING',128);
-//			define('EGW_ACL_CUSTOM_3',256);
+			define('EGW_ACL_CALREAD',256);
 
 			$this->so =& CreateObject('resources.so_acl');
 			$this->permissions = $this->so->get_permissions($GLOBALS['egw_info']['user']['account_id'],true);
@@ -183,11 +183,12 @@
 			$this->limit = $data['limit'];
 		}
 
-		function set_rights($cat_id,$read,$write,$book,$admin)
+		function set_rights($cat_id,$read,$write,$calread,$calbook,$admin)
 		{
 			$readcat = $read ? $read : array();
 			$writecat = $write ? $write : array();
-			$bookcat = $book ? $book : array();
+			$calreadcat = $calread ? $calread : array();
+			$calbookcat = $calbook ? $calbook : array();
 			$admincat = $admin ? $admin : array();
 
 			$this->so->remove_location('L' . $cat_id);
@@ -199,7 +200,8 @@
 				$rights = in_array($account_id,$writecat) ?
 					(EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE) :
 					(in_array($account_id,$readcat) ? EGW_ACL_READ : False);
-				$rights = in_array($account_id,$bookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING) : $rights;
+				$rights = in_array($account_id,$calreadcat) ? ($rights | EGW_ACL_CALREAD) : $rights;
+				$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING) : $rights;
 				$rights = in_array($account_id,$admincat) ? ($rights | EGW_ACL_CAT_ADMIN) : $rights;
 				if ($rights)
 				{

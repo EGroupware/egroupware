@@ -1,10 +1,10 @@
 <center>
-  <table border="0" cellspacing="2" cellpadding="2" width="80%">
+  <table border="0" cellspacing="2" cellpadding="2" width="100%">
    <tr>
-    <td colspan="3" align="center" bgcolor="#c9c9c9"><b>{title}<b/></td>
+    <td colspan="5" align="center" bgcolor="#c9c9c9"><b>{title}<b/></td>
    </tr>
    <tr>
-    <td colspan="3" align="left">
+    <td colspan="5" align="left">
      <table border="0" width="100%">
       <tr>
 	   {left}
@@ -16,18 +16,19 @@
    </tr>
    <tr>
     <td>&nbsp;</td>
-    <td colspan="3" align="right">
+    <td colspan="5" align="right">
 	<form method="POST"><input type="text" name="query"  value="{query}" />&nbsp;<input type="submit" name="btnSearch" value="{lang_search}" /></form>
 	</td>
   </tr>
  </table>
  <form method="POST">
-  <table border="0" cellspacing="2" cellpadding="2" width="80%">
+  <table border="0" cellspacing="2" cellpadding="2" width="100%">
    <tr bgcolor="{th_bg}" valign="middle" align="center">
 	<td>{sort_cat}<br>{lang_cat_admin}</td>
 	<td>{lang_read}</td>
 	<td>{lang_write}<br>({lang_implies})</td>
-	<td>{lang_book}</td>
+	<td>{lang_calread}</td>
+	<td>{lang_calbook}</td>
    </tr>
    <!-- BEGIN cat_list -->
    <tr bgcolor="{tr_color}">
@@ -37,11 +38,12 @@
 	</td>
 	<td align="center"><select multiple="multiple" size="5" name="inputread[{catid}][]">{read}</select></td>
 	<td align="center"><select multiple="multiple" size="5" name="inputwrite[{catid}][]">{write}</select></td>
-	<td align="center"><select multiple="multiple" size="5" name="inputbook[{catid}][]">{book}</select></td>
+	<td align="center"><select multiple="multiple" size="5" name="inputcalread[{catid}][]">{calread}</select></td>
+	<td align="center"><select multiple="multiple" size="5" name="inputcalbook[{catid}][]">{calbook}</select></td>
    </tr>
    <!-- END cat_list -->
    <tr>
-    <td colspan="4" align="left">
+    <td colspan="5" align="left">
 	<br>
 	<input type="submit" name="btnSave" value="{lang_save}"> &nbsp;
 	<input type="submit" name="btnDone" value="{lang_done}">

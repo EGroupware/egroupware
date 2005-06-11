@@ -57,7 +57,8 @@
 			{
 				foreach($_POST['catids'] as $cat_id)
 				{
-					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],$_POST['inputbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
+					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],
+						$_POST['inputcalread'][$cat_id],$_POST['inputcalbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
 				}
 			}
 
@@ -71,7 +72,8 @@
 				'lang_read' => lang('Read permissions'),
 				'lang_write' => lang('Write permissions'),
 				'lang_implies' => lang('implies read permission'),
-				'lang_book' => lang('Direct booking permissions'),
+				'lang_calread' => lang('Read Calender permissions'),
+				'lang_calbook' => lang('Direct booking permissions'),
 				'lang_cat_admin' => lang('Categories admin')
 			));
 
@@ -101,7 +103,8 @@
 					'catid' => $cat['id'],
 					'read' => $this->selectlist(EGW_ACL_READ),
 					'write' => $this->selectlist(EGW_ACL_ADD),
-					'book' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
+					'calread' => $this->selectlist(EGW_ACL_CALREAD),
+					'calbook' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
 					'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true)
 				));
 				$GLOBALS['egw']->template->parse('Cblock','cat_list',True);
