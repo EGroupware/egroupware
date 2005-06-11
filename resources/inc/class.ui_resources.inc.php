@@ -156,11 +156,11 @@ class ui_resources
 				if(isset($content['save']))
 				{
 					unset($content['save']);
-					if($content['id'] != 0)
-					{
-						// links are already saved by eTemplate
-						unset($resource['link_to']['to_id']);
-					}
+// 					if($content['id'] != 0)
+// 					{
+// 						// links are already saved by eTemplate
+// 						unset($resource['link_to']['to_id']);
+// 					}
 					$content['msg'] = $this->bo->save($content);
 				}
 				if(isset($content['delete']))
