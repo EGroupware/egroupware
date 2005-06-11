@@ -103,6 +103,7 @@ class ui_resources
 			$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		}
 		
+		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= 'Category';
