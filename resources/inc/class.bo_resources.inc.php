@@ -40,7 +40,6 @@ class bo_resources
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		$query['search'] = $query['search'] ? $query['search'] : '*';
-		
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search']);
 		$read_onlys = 'id,name,short_description,quantity,useable,bookable,buyable,cat_id,location';
 		
@@ -48,12 +47,16 @@ class bo_resources
  		$filter = array('accessory_of' => $accessory_of);
 		$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
 		if($readcats) $filter = $filter + array('cat_id' => $readcats);
+		if($query['show_bookable']) $filter = $filter + array('bookable' == true);
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 		
 		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
 		$nr = $this->so->total;
+		
+		// We don't need the readonly checkes if we only show bookable resources
+		if($query['show_bookable']) return $nr; 
 		
 		foreach((array)$rows as $num => $resource)
 		{
@@ -92,7 +95,6 @@ class bo_resources
 					}
 				}
 			}
-			print_r($content);
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
