@@ -80,15 +80,9 @@ function activate_tab(tab,all_tabs,name)
 function selectbox_add_option(id,label,value,do_onchange)
 {
 	selectBox = document.getElementById(id);
+	/*alert('selectbox_add_option('+id+','+label+','+value+') '+selectBox);*/
 	for (i=0; i < selectBox.length; i++) {
 		if (selectBox.options[i].value == value) {
-			selectBox.options[i].selected = true;
-			break;
-		}
-		else if (value.slice(0,1) == "," && selectBox.options[i].value.slice(0,1) == ",") {
-			selectBox.options[i].value = value;
-			selectBox.options[i].text = "multiple*";
-			selectBox.options[i].title = label;
 			selectBox.options[i].selected = true;
 			break;
 		}
