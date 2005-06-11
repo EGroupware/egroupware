@@ -304,101 +304,117 @@ class ui_resources
 	 *
 	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 	 */
-	function select()
+	function select($content='')
 	{
+		if($content['btn_close'])
+		{
+			echo "<html><body><script>window.close();</script></body></html>\n";
+			$GLOBALS['egw']->common->egw_exit();
+		}
+		
 		if (isset($_GET['name'])) $name = $_GET['name'];
 		$content=array('js_id' => $name);
 		$content['js'] = "<script LANGUAGE=\"JavaScript\">
-	window.focus();
-
-	function addOption(id,label,value,multiple)
-	{
-		openerSelectBox = opener.document.getElementById(id);
-
-		if (multiple && openerSelectBox) {
-			select = '';
-			for(i=0; i < openerSelectBox.length; i++) {
-				with (openerSelectBox.options[i]) {
-					if (selected || openerSelectBox.selectedIndex == i) {
-						select += (value.slice(0,1)==',' ? '' : ',')+value;
+			window.focus();
+		
+			function addOption(id,label,value,multiple)
+			{
+				openerSelectBox = opener.document.getElementById(id);
+		
+				if (multiple && openerSelectBox) {
+					select = '';
+					for(i=0; i < openerSelectBox.length; i++) {
+						with (openerSelectBox.options[i]) {
+							if (selected || openerSelectBox.selectedIndex == i) {
+								select += (value.slice(0,1)==',' ? '' : ',')+value;
+							}
+						}
 					}
+					select += (select ? ',' : '')+value;
+					opener.addOption(id,label,value,0);
+					opener.addOption(id,'multiple*',select,0);
 				}
-			}
-			select += (select ? ',' : '')+value;
-			opener.addOption(id,label,value,0);
-			opener.addOption(id,'multiple*',select,0);
-		}
-		else {
-			opener.addOption(id,label,value,!multiple && openerSelectBox && openerSelectBox.selectedIndex < 0);
-		}
-		selectBox = document.getElementById('uiaccountsel_popup_selection');
-		if (selectBox) {
-			for (i=0; i < selectBox.length; i++) {
-				if (selectBox.options[i].value == value) {
-					selectBox.options[i].selected = true;
-					break;
+				else {
+					opener.addOption(id,label,value,!multiple && openerSelectBox && openerSelectBox.selectedIndex < 0);
 				}
-			}
-			if (i >= selectBox.length) {
-				selectBox.options[selectBox.length] = new Option(label,value,false,true);
-			}
-		}
-	}
-
-	function removeSelectedOptions(id)
-	{
-		openerSelectBox = opener.document.getElementById(id);
-		if (openerSelectBox == null) window.close();
-		selectBox = document.getElementById('uiaccountsel_popup_selection');
-		for (i=0; i < selectBox.length; i++) {
-			if (selectBox.options[i].selected) {
-				for (j=0; j < openerSelectBox.length; j++) {
-					if (openerSelectBox[j].value == selectBox.options[i].value) {
-						openerSelectBox.removeChild(openerSelectBox[j]);
-					}
-				}
-				selectBox.options[i--] = null;
-			}
-		}
-	}
-
-	function copyOptions(id)
-	{
-		openerSelectBox = opener.document.getElementById(id);
-		selectBox = document.getElementById('uiaccountsel_popup_selection');
-		for (i=0; i < openerSelectBox.length; i++) {
-			with (openerSelectBox.options[i]) {
-				if (selected && value.slice(0,1) != ',') {
-					selectBox.options[selectBox.length] =  new Option(text,value);
-				}
-			}
-		}
-	}
-	
-	function oneLineSubmit(id)
-	{
-		openerSelectBox = opener.document.getElementById(id);
-
-		if (openerSelectBox) {
-			if (openerSelectBox.selectedIndex >= 0) {
-				selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
-				if (selected.slice(0,1) == ',') selected = selected.slice(1);
-				opener.addOption(id,'multiple*',selected,1);
-			}
-			else {
-				for (i=0; i < openerSelectBox.length; i++) {
-					with (openerSelectBox.options[i]) {
-						if (selected) {
-							opener.addOption(id,text,value,1);
+				selectBox = document.getElementById('uiaccountsel_popup_selection');
+				if (selectBox) {
+					for (i=0; i < selectBox.length; i++) {
+						if (selectBox.options[i].value == value) {
+							selectBox.options[i].selected = true;
 							break;
 						}
 					}
-				}	
+					if (i >= selectBox.length) {
+						selectBox.options[selectBox.length] = new Option(label,value,false,true);
+					}
+				}
 			}
-		}
-		window.close();
-	}	
-</script>";
+		
+			function removeSelectedOptions(id)
+			{
+				openerSelectBox = opener.document.getElementById(id);
+				if (openerSelectBox == null) window.close();
+				selectBox = document.getElementById('uiaccountsel_popup_selection');
+				for (i=0; i < selectBox.length; i++) {
+					if (selectBox.options[i].selected) {
+						for (j=0; j < openerSelectBox.length; j++) {
+							if (openerSelectBox[j].value == selectBox.options[i].value) {
+								openerSelectBox.removeChild(openerSelectBox[j]);
+							}
+						}
+						selectBox.options[i--] = null;
+					}
+				}
+			}
+		
+			function copyOptions(id)
+			{
+				openerSelectBox = opener.document.getElementById(id);
+				selectBox = document.getElementById('uiaccountsel_popup_selection');
+				for (i=0; i < openerSelectBox.length; i++) {
+					with (openerSelectBox.options[i]) {
+						if (selected && value.slice(0,1) != ',') {
+							selectBox.options[selectBox.length] =  new Option(text,value);
+						}
+					}
+				}
+			}
+			
+			function oneLineSubmit(id)
+			{
+				openerSelectBox = opener.document.getElementById(id);
+		
+				if (openerSelectBox) {
+					if (openerSelectBox.selectedIndex >= 0) {
+						selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
+						if (selected.slice(0,1) == ',') selected = selected.slice(1);
+						opener.addOption(id,'multiple*',selected,1);
+					}
+					else {
+						for (i=0; i < openerSelectBox.length; i++) {
+							with (openerSelectBox.options[i]) {
+								if (selected) {
+									opener.addOption(id,text,value,1);
+									break;
+								}
+							}
+						}	
+					}
+				}
+				window.close();
+			}</script>";
+		
+		$content['nm']['show_bookable'] = true;
+		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
+		$content['nm']['no_filter'] 	= False;
+		$content['nm']['filter_label']	= 'Category';
+		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
+		$content['nm']['options-filter']= array('0'=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		$content['nm']['no_filter2']	= true;
+		$content['nm']['filter_no_lang'] = true;
+		$content['nm']['no_cat']	= true;
+		
 		$sel_options = array();
 		$no_button = array();
 		$preserv = $content;
