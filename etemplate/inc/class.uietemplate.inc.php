@@ -447,6 +447,8 @@
 				'.col' => $this->num2chrs($show_c-1),
 				'.row' => $show_row
 			);
+			$rows = array();
+
 			$data = &$grid['data'];
 			reset($data);
 			if (isset($data[0]))
@@ -489,7 +491,6 @@
 				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
 				$rows[".$row"] .= $this->html->formatOptions($cl,'class');
 				$rows[".$row"] .= $this->html->formatOptions($class,',valign');
-
 				reset ($cols);
 				$row_data = array();
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
