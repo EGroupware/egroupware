@@ -3,7 +3,7 @@
 	* eGroupWare - resources hooks                                             *
 	* http://www.eGroupWare.org                                                *
 	* Originally written by Ralf Becker <RalfBecker@outdoor-training.de>       *
-	* Changes for resources by Cornelius Weiß <egw@von-und-zu-weiss.de>        *
+	* Changes for resources by Cornelius Weiï¿½<egw@von-und-zu-weiss.de>        *
 	*                                                                          *
 	* -------------------------------------------------------                  *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -76,12 +76,18 @@ class resources_hooks
 	}
 	function search_link($args)
 	{
-		$appname = 'resources';
 		return array(	'query' => 'resources.bo_resources.link_query',
 				'title' => 'resources.bo_resources.link_title',
 				'view' => array('menuaction' => 'resources.ui_resources.view'),
 				'view_id' => 'id'
 		);
+	}
+
+	function calender_resources($args)
+	{
+		return $args['type'] =='r' ? array(	'select_template' => 'resources.resource_selectbox',
+							'info' => 'resources.bo_resources.get_calender_info',
+							) : false;
 	}
 }
 

@@ -12,68 +12,18 @@
 	\**************************************************************************/
 	
 	/* $Id: */
+include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 	
-class so_resources
+class so_resources extends so_sql
 {
 	function so_resources()
 	{
+		$this->so_sql('resources','egw_resources');
 		$this->db = clone($GLOBALS['egw']->db);
 		$this->db->set_app('resources');
 		$this->rs_table = 'egw_resources';
 	}
 
-	/**
-	 * searches db for rows matching searchcriteria and categories
-	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
-	 * '*' is replaced with sql-wildcard '%'
-	 * @param array $criteria array of key => value for search. (or'ed together)
-	 * @param array $cats array of cat_id => cat_name to be searched
-	 * @param &array $data reference of data array with cols to return in first row ( key => '')
-	 * @param int $accessory_of find accessories of id, default -1 = show all exept accessories
-	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ','
-	 * @param int $offset row to start from, default 0
-	 * @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
-	 * 
-	 * @return int number of matching rows
-	 */
-	function search($criteria,$cats,&$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1)
-	{
-		$select = implode(',',array_keys($data[0]));
-		foreach($criteria as $col => $value)
-		{
-			$where .= ($where ? " OR " : " ( " ). $col . ((strstr($value,'*') || strstr($value,'*')) ?
-				" LIKE '" . strtr(str_replace('_','\\_',addslashes($value)),'*?','%_') ."'": 
-				"='" .$value."'");
-		}
-		$where .= " ) ";
-		foreach ((array)$cats as $cat_id => $cat_name)
-		{
-			$wherecats .= ($wherecats ? " OR " : " AND ( " ) .'cat_id' . "=".(int)$cat_id;
-		}
-		$wherecats .= $wherecats ? " ) " : "";
-		$whereacc = " AND (accessory_of ='".$accessory_of."')";
-
-		$this->db->query( 'SELECT '.$select." FROM ".$this->rs_table." WHERE ".$where.$wherecats.$whereacc.
-				($order_by != '' ? " ORDER BY $order_by" : ''),__LINE__,__FILE__);
-	
-		$nr = $this->db->nf();
-		if($offset > 0 && $nr > $offset)
-		{
-			$this->db->seek($offset-1);
-		}
-		if($num_rows==0)
-		{
-			$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-		}
-		for ($n = 1; $this->db->next_record() && $n!=$num_rows+1; ++$n)
-		{
-			$data[$n] = $this->db->row();
-		}
-		unset($data[0]);
-		return $nr;
-	}
-	
 	/**
 	 * gets the value of $key from resource of $id
 	 *

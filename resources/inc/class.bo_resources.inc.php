@@ -43,24 +43,17 @@ class bo_resources
 		
 		$criteria = array(	'name' 			=> $query['search'], 
 					'short_description' 	=> $query['search']
-				);
-		$cats = $query['filter'] ? array($query['filter'] => '') : $this->acl->get_cats(EGW_ACL_READ);
+				); echo($query['filter']);
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
+ 		$filter = array('cat_id' => ($query['filter'] ? $query['filter'] : array_flip($this->acl->get_cats(EGW_ACL_READ))),'accessory_of' => $accessory_of);
 		
-		$rows = array( 0 => array(	'id'			=> '',
-						'name' 			=> '',
-						'short_description' 	=> '',
-						'quantity'		=> '',
-						'useable'		=> '',
-						'bookable'		=> '',
-						'buyable'		=> '',
-						'cat_id'		=> '',
-						'location'		=> ''
-					));
+		$read_onlys = 'id,name,short_description,quantity,useable,bookable,buyable,cat_id,location';
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
+		$start = (int)$query['start'];
 		
-		$nr = $this->so->search($criteria,$cats,$rows,$accessory_of,$order_by,$offset=$query['start'],$num_rows=0);
+		$rows = $this->so->search($criteria,$read_onlys,$order_by,$extra_cols='',$wildcard='',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
+		$nr = $this->so->total;
 		
 		foreach($rows as $num => $resource)
 		{
@@ -222,16 +215,38 @@ class bo_resources
 	function get_acc_list($id)
 	{
 		if($id < 1){return;}
-		$cat_id = $this->so->get_value('cat_id',$id);
-		$data[0] = array('id' => '', 'name' => '');
-		$this->so->search(array('name' => '*'),array($cat_id => ''),$data,$accessory_of=$id,$order_by='',$offset=false,$num_rows=-1);
+		$data = $this->so->search('','id,name','','','','','',$start,array('accessory_of' => $id),'',$need_full_no_count=true);
 		foreach($data as $num => $resource)
 		{
 			$acc_list[$resource['id']] = $resource['name'];
 		}
 		return $acc_list;
 	}
-
+	
+	/**
+	 * returns info about resource for calender
+	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @param int/array $res_id single id or array $num => $res_id
+	 * @return array 
+	 */
+	function get_calender_info($res_id)
+	{
+		if($id < 1) return;
+		$data[0] = array('name' => '', 'useable' => '');
+		foreach($res_id as $num => $id)
+		{
+			
+		}
+// 		$cats = array_flip($this->acl->get_cats(EGW_ACL_READ));
+		$this->so->search(array('name' => '*'),false,$data,-1,$order_by='',$offset=false,$num_rows=-1);
+		
+		if(is_array($res_id))
+		{
+		}
+		
+		return;
+	}
+	
 	/**
 	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
@@ -239,11 +254,9 @@ class bo_resources
 	 */
 	function link_query( $pattern )
 	{
-		$criteria = array('name' => $pattern,'short_description'  => $pattern);
-		$cats = $this->acl->get_cats(EGW_ACL_READ);
-		$data[0] = array('id' => '','name' => '', 'short_description' => '');
-		$this->so->search($criteria,$cats,$data,$accessory_of=-1,$order_by='',$offset=false,$num_rows=-1);
-		
+		$criteria = array('name' => $pattern, 'short_description'  => $pattern);
+		$only_keys = 'id,name,short_description';
+		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR');
 		foreach($data as $num => $resource)
 		{
 			if($num != 0)
