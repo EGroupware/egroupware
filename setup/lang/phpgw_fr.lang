@@ -353,7 +353,7 @@ select which group(s) will be imported (group membership will be maintained)	set
 select which group(s) will be modified (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être modifié(s) (l'appartenance au groupe sera conservée)
 select which languages you would like to use	setup	fr	Choisissez quelles langues vous voudriez utiliser
 select which method of upgrade you would like to do	setup	fr	Choisissez quelle méthode de mise à jour vous voudriez utiliser
-select which type of authentication you are using	setup	fr	Choisissez quel type d'authentification vous utilisez
+select which type of authentication you are using	setup	fr	Choisissez quel type d'authentication vous utilisez
 select which user(s) will also have admin privileges	setup	fr	Choisissez quel(s) utilisateur(s) aura(auront) aussi les privilèges administrateur
 select which user(s) will be exported	setup	fr	Choisissez quel(s) utilisateur(s) sera(seront) exporté(s)
 select which user(s) will be imported	setup	fr	Choisissez quel(s) utilisateur(s) sera(seront) importé(s)

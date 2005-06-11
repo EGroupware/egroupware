@@ -175,7 +175,7 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Allow_authentification_via_cookie}:</td>
+    <td>{lang_Allow_authentication_via_cookie}:</td>
     <td>
       <select name="newsettings[allow_cookie_auth]">
          <option value="">{lang_No}</option>
