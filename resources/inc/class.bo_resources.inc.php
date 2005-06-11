@@ -47,8 +47,7 @@ class bo_resources
  		$filter = array('accessory_of' => $accessory_of);
 		$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
 		if($readcats) $filter = $filter + array('cat_id' => $readcats);
-		if($query['show_bookable']) $filter = $filter + array('bookable' == true);
-		
+		if($query['show_bookable']) $filter = $filter + array('bookable' => true);
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 		
