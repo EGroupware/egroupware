@@ -85,9 +85,11 @@ class resources_hooks
 
 	function calender_resources($args)
 	{
-		return $args['type'] =='r' ? array(	'select_template' => 'resources.resource_selectbox',
-							'info' => 'resources.bo_resources.get_calender_info',
-							) : false;
+		return array(	
+			'select_template' => 'resources.resource_selectbox',
+			'info' => 'resources.bo_resources.get_calender_info',
+			'type' => 'r',
+		);
 	}
 }
 
