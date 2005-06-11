@@ -307,7 +307,7 @@ class ui_resources
 	function select()
 	{
 		if (isset($_GET['name'])) $name = $_GET['name'];
-		$content=array('js_id' => $name)
+		$content=array('js_id' => $name);
 		$content['js'] = "<script LANGUAGE=\"JavaScript\">
 	window.focus();
 
