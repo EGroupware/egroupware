@@ -328,7 +328,6 @@ class ui_resources
 					}
 					select += (select ? ',' : '')+value;
 					opener.selectbox_add_option(openerid,label,value,0);
-					opener.selectbox_add_option(openerid,'multiple*',select,0);
 				}
 				selectBox = document.getElementById(id);
 				if (selectBox) {
