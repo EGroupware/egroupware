@@ -51,7 +51,7 @@ class ui_resources
 	function index($content='')
 	{
 		if (is_array($content))
-		{
+		{//_debug_array($content);
 			$sessiondata = $content['nm'];
 			
 			if (isset($content['nm']['rows']))
@@ -104,12 +104,7 @@ class ui_resources
 		$no_button['back'] = true;
 		$no_button['add_sub'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
-		$sel_options['action'] = array(
-				'multi_nothing' => lang('select action'),
-				'multi_book' => lang('book selected resources'),
-				'multi_buy' => lang('buy selected resources'),
-				'multi_delete' => lang('delete selected resources'),
-		);
+
 		if($content['nm']['view_accs_of'])
 		{
 			$master = $this->bo->so->read($content['nm']['view_accs_of']);
