@@ -83,11 +83,11 @@ class resources_hooks
 		);
 	}
 
-	function calender_resources($args)
+	function calendar_resources($args)
 	{
 		return array(	
 			'select_template' => 'resources.resource_selectbox',
-			'info' => 'resources.bo_resources.get_calender_info',
+			'info' => 'resources.bo_resources.get_calendar_info',
 			'type' => 'r',
 		);
 	}

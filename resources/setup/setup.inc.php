@@ -33,7 +33,7 @@
 	$setup_info['resources']['hooks']['admin']		= 'resources.resources_hooks.admin_prefs_sidebox';
 	$setup_info['resources']['hooks']['sidebox_menu']	= 'resources.resources_hooks.admin_prefs_sidebox';
 	$setup_info['resources']['hooks']['search_link']	= 'resources.resources_hooks.search_link';
-	$setup_info['resources']['hooks']['calender_resources']	= 'resources.resources_hooks.calender_resources';
+	$setup_info['resources']['hooks']['calendar_resources']	= 'resources.resources_hooks.calendar_resources';
 //	$setup_info['resources']['hooks'][]	= 'home';
 //	$setup_info['resources']['hooks'][]	= 'settings';
 
