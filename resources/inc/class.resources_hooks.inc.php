@@ -20,16 +20,24 @@ class resources_hooks
 	{
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
-
+		
 		if ($location == 'sidebox_menu')
 		{
-			$file = array(
-				'resources list' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'resources.ui_resources.index' )),
-				/*'add' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'resources.ui_resources.edit' ))*/
+			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
+			$file[] = array(
+					'text' => lang('resources list'),
+					'no_lang' => true,
+					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
+// 					'icon' => 
 			);
-			display_sidebox($appname,$GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu'),$file);
+			$file[] = array(
+					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.edit')).
+						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\'); 
+						return false;">'.lang('add resource').'</a>',
+					'no_lang' => true,
+					'link' => false
+			);
+			display_sidebox($appname,$title,$file);
 		}
 
 /*		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
