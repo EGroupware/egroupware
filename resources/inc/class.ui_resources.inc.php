@@ -73,11 +73,6 @@ class ui_resources
 					case 'buyable':
 				}
 			}
-			if (isset($content['add'])) // note: this isn't used as add is a popup now!
-			{
-				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-				return $content['nm']['view_accs_of'] ? $this->edit(array('id' => 0, 'accessory_of' => $content['nm']['view_accs_of'])) : $this->edit(0);
-			}
 			if (isset($content['back']))
 			{
 				unset($sessiondata['view_accs_of']);
