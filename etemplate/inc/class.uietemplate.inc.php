@@ -909,6 +909,10 @@
 							$url = $GLOBALS['phpgw']->link($matches[1],$matches[2]);
 							$onclick = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$onclick);
 						}
+						elseif (preg_match("/form::name\\('([^']+)'\\)/",$onclick,$matches))
+						{
+							$onclick = preg_replace("/form::name\\('([^']+)'\\)/",'\''.$this->form_name($cname,$matches[1]).'\'',$onclick);
+						}
 						elseif (preg_match('/^return confirm\(["\']{1}(.*)["\']{1}\);?$/',$cell['onclick'],$matches))
 						{
 							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
