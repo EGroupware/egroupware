@@ -1,6 +1,8 @@
 accessories of	resources	en	accessories of
+accessories:	resources	en	Accessories:
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
+add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	all categories
 book this resource	resources	en	Book this resource
@@ -10,6 +12,7 @@ buyable	resources	en	Buyable
 categories admin	resources	en	Categories admin
 check all	resources	en	Check all
 choose categories admin	resources	en	choose categories admin
+clear selection	resources	en	clear selection
 configure access permissions	resources	en	Configure Access Permissions
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
@@ -47,10 +50,12 @@ quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
 read permissions	resources	en	Read permissions
+related links	resources	en	Related links
 resources	resources	en	resources
 responsible:	resources	en	Responsible:
 saves entry and exits	resources	en	Saves entry and exits
 select a category	resources	en	Select a category
+select resource	resources	en	select resource
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
 something went wrong by deleting resource	resources	en	Something went wrong by deleting resource

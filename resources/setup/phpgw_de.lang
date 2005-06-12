@@ -1,23 +1,26 @@
 accessories of	resources	de	Zubehör von
+accessories:	resources	de	Zubehör:
 actions	resources	de	Aktionen
 add accessory	resources	de	Zubehör Hinzufügen
+add resources	resources	de	Resource hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
 book this resource	resources	de	Buchen der Resource
-bookable	resources	de	Bruchbar
-buy this resource	resources	de	Kaufen der Resource
-buyable	resources	de	Kaufbar
+bookable	resources	de	bruchbar
+buy this resource	resources	de	Diese Resource kaufen
+buyable	resources	de	käuflich
 categories admin	resources	de	Verwalter der Kategorie
-check all	resources	de	Alle
+check all	resources	de	Alle auswählen
 choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
-configure access permissions	resources	de	Konfiguieren der Zugangseinstellungen
+clear selection	resources	de	Ausgewählte löschen
+configure access permissions	resources	de	Zugangseinstellungen konfigurieren
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Resource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
-delete this entry	resources	de	Löschen des Eintrages
-description (short)	resources	de	Kurtzbeschreibung
+delete this entry	resources	de	Diesen Eintrag löschen
+description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
 don't use vfs (this will need a symlink --> see readme)	resources	de	Vfs nicht benutzen. (Dies erfordert einen symlink --> siehe README)
-edit this entry	resources	de	Bearbeiten des Eingrages
+edit this entry	resources	de	Diesen Eintrag bearbeiten
 existing links	resources	de	Bestehende Verknüpfungen
 general	resources	de	Generell
 general informations about resource	resources	de	Generelle Informationen über diese Resource
@@ -29,9 +32,9 @@ how many of this resource exists	resources	de	Stückzahl der existierenden Resour
 implies read permission	resources	de	Impliziert Leseberechtigung
 informations about the location of resource	resources	de	Informationen über den Lagerort der Resource
 is resource bookable?	resources	de	Ist diese Resource buchbar?
-is resource buyable?	resources	de	Ist diese Resource kaüflich?
+is resource buyable?	resources	de	Ist diese Resource käuflich?
 is this resource bookable?	resources	de	Ist diese Resource buchbar?
-is this resource buyable?	resources	de	Ist diese Resource kaüflich?
+is this resource buyable?	resources	de	Ist diese Resource käuflich?
 links	resources	de	Verknüpfungen
 location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Resource
@@ -47,10 +50,12 @@ quantity	resources	de	Stückzahl
 quantity of resource	resources	de	Stückzahl der Resource
 quantity:	resources	de	Stückzahl:
 read permissions	resources	de	Leseberechtigung
+related links	resources	de	Siehe auch
 resources	resources	de	Resourcen
-responsible:	resources	de	Verantwortilich
+responsible:	resources	de	Verantwortlich:
 saves entry and exits	resources	de	Speichern und Schließen
 select a category	resources	de	Wählen sie eine Kategorie
+select resource	resources	de	Resuource auswählen
 short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Resouce
 something went wrong by deleting resource	resources	de	Beim Löschen der Resource gab es ein Problem
@@ -60,7 +65,7 @@ the calendar of this resource	resources	de	Kalender der Resource
 use general resources icon	resources	de	Benutze generelles icon
 use own picture	resources	de	Benutze ein eingenes Bild
 use the category's icon	resources	de	Benutze Bild der Kategorie
-useable	resources	de	Benutzbar
+useable	resources	de	Nutzbar
 view accessories for this resource	resources	de	Zeige das Zubehör der Resource an
 view this entry	resources	de	Diesen Eintrag anschauen
 web-page of resource	resources	de	Ausführliche Beschreibung der Resource

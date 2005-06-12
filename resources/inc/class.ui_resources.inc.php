@@ -179,12 +179,6 @@ class ui_resources
 				echo "<html><body><script>$js</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
 			}
-			elseif($content['cancel'])
-			{
-				$js .= 'window.close();';
-				echo "<html><body><script>$js</script></body></html>\n";
-				$GLOBALS['egw']->common->egw_exit();
-			}
 		}
 		else
 		{
@@ -276,7 +270,7 @@ class ui_resources
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		
-		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable ').$content['useable'].')';
+		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable').' '.$content['useable'].')';
 		
 					//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 				
@@ -289,12 +283,19 @@ class ui_resources
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		} 
 	*/
-		$content['description'] = $content['long_description'] ? $content['long_description'] : $content['short_description'];
+		$content['description'] = chop($content['long_description']) ? $content['long_description'] : (chop($content['short_description']) ? $content['short_description'] : lang("no description available"));
 		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
+		$content['link_to'] = array(
+					'to_id' => $id,
+					'to_app' => 'resources'
+				);
 		$sel_options = array();
-		$no_button = array();
+		$no_button = array(
+			'btn_buyable' => !$content['buyable'],
+			'btn_bookable' => !$content['bookable'],
+			'btn_edit' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT)
+			);
 		$preserv = $content;
-		//print_r($content);
 		$this->tmpl->read('resources.showdetails');
 		$this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
 		
