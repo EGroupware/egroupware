@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.show.rows" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column width="3%"/>
+				<column/>
+				<column/>
+				<column width="5%"/>
+			</columns>
+			<rows>
+				<row class="nmh">
+					<description/>
+					<vbox>
+						<nextmatch-sortheader label="Name" id="name"/>
+						<nextmatch-sortheader label="Short description" id="short_description"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Useable" id="useable" statustext="How many of this resource are usable"/>
+						<nextmatch-sortheader label="Quantity" id="quantity" statustext="How many of this resource exists"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Category" id="cat_id"/>
+						<description value="Administrator"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Location" id="location"/>
+						<description value="Storage Inforation"/>
+					</vbox>
+					<hbox align="right">
+						<description value="Actions"/>
+						<description/>
+						<description needed="1"/>
+						<button image="check.png" label="Check all" align="right" id="check_all" statustext="Check all" 1="label" 2="label" 3="label" needed="1" onclick="toggle_all(this.form,form::name('checkbox[]')); return false;"/>
+					</hbox>
+				</row>
+				<row class="nmr" valign="top">
+					<image align="center" src="${row}[picture_thumb]"/>
+					<vbox>
+						<description no_lang="1" id="${row}[name]"/>
+						<description no_lang="1" id="${row}[short_description]"/>
+					</vbox>
+					<vbox align="right">
+						<description no_lang="1" align="right" id="${row}[useable]"/>
+						<description no_lang="1" align="right" id="${row}[quantity]"/>
+					</vbox>
+					<vbox>
+						<menulist>
+							<menupopup type="select-cat" no_lang="1" id="${row}[cat_id]" readonly="true"/>
+						</menulist>
+						<menulist>
+							<menupopup type="select-account" no_lang="1" id="${row}[admin]" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox>
+						<description no_lang="1" id="${row}[location]"/>
+						<description no_lang="1"/>
+					</vbox>
+					<hbox align="right">
+						<vbox class="buttonbox">
+							<button image="bookable.gif" label="Book this resource" align="center" id="bookable[$row_cont[id]]" statustext="Book this resource"/>
+							<button image="buyable.gif" label="Buy this resource" align="center" id="buyable[$row_cont[id]]" statustext="Buy this resource"/>
+						</vbox>
+						<vbox needed="1" align="right" class="buttonbox">
+							<button image="edit.gif" label="Edit" align="center" id="edit[$row_cont[id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;id=$row_cont[id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+							<button label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this entry" onclick="return confirm('Do you really want do delte this resource?');" image="delete.gif"/>
+						</vbox>
+						<vbox class="buttonbox">
+							<button image="new.gif" label="Create new accessory for this resource" align="center" id="new_acc[$row_cont[id]]" statustext="Create new accessory for this resource" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;id=0&amp;accessory_of=$row_cont[id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+							<button image="view_acc.gif" label="View accessories for this resource" align="center" id="view_acc[$row_cont[id]]" statustext="View accessories for this resource"/>
+						</vbox>
+						<vbox align="right" class="buttonbox">
+							<button image="view.gif" label="View" align="right" id="view[$row_cont[id]]" statustext="View this entry" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.show&amp;id=$row_cont[id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+							<checkbox align="right" id="checkbox[]" options="$row_cont[id]"/>
+						</vbox>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.show" template="" lang="" group="0" version="">
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row>
+					<nextmatch options="resources.show.rows" no_lang="1" id="nm"/>
+				</row>
+				<row>
+					<grid width="100%">
+						<columns>
+							<column/>
+							<column width="1%"/>
+							<column width="1%"/>
+							<column width="1%"/>
+							<column width="47px"/>
+						</columns>
+						<rows>
+							<row>
+								<description/>
+								<button image="bookable" label="book selected resources" id="btn_book_selected" statustext="book selected resources" align="right"/>
+								<button label="buy selected resources" no_lang="1" image="buyable" id="btn_buy_selected" statustext="buy selected resources" align="right"/>
+								<button image="delete" label="delete selected resources" id="btn_delete_selected" statustext="delete selected resources" align="right"/>
+								<vbox>
+									<description/>
+									<button image="arrow_ltr" label="select/deselect all" statustext="select/deselect all" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]')); return false;" needed="1"/>
+									<description/>
+								</vbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<hbox>
+						<button label="Add" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" id="add"/>
+						<button label="Add accessory" id="add_sub" onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.edit&amp;content=0&amp;accessory_of=$cont[view_accs_of]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Back" id="back"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
