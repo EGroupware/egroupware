@@ -88,6 +88,7 @@ class resources_hooks
 		return array(	
 			'select_template' => 'resources.resource_selectbox',
 			'info' => 'resources.bo_resources.get_calendar_info',
+			'new_status' => 'resources.bo_resources.get_calendar_new_status',
 			'type' => 'r',
 		);
 	}
