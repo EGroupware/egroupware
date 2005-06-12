@@ -236,23 +236,24 @@ class bo_resources
 	 */
 	function get_calendar_info($res_id)
 	{
-	         //echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
-                if(!is_array($res_id) && $res_id < 1) return
+		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
+		if(!is_array($res_id) && $res_id < 1) return;
+
 		$data = $this->so->search(array('id' => $res_id),'id,cat_id,name,useable');
 		
 		foreach($data as $num => $resource)
 		{
-			$resource['rights'] = false;
+			$data[$num]['rights'] = false;
 			foreach($this->cal_right_transform as $res_right => $cal_right)
 			{
-				if($this->bo->acl->is_permitted($resource['cat_id'],$res_right))
+				if($this->acl->is_permitted($resource['cat_id'],$res_right))
 				{
-					$resource['rights'] = $cal_right;
+					$data[$num]['rights'] = $cal_right;
 				}
 			}
-			$resource['responsible'] = $this->bo->acl->get_cat_admin($$resource['cat_id']);
-			
+			$data[$num]['responsible'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
+		return $data;
 	}
 	
 	/**
