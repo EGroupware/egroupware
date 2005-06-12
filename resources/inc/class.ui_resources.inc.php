@@ -62,26 +62,14 @@ class ui_resources
 				unset($content['nm']['rows']['checkbox']);
 				switch (key($content['nm']['rows']))
 				{
-					case 'edit': // note: this is a popup dialog now
-						list($id) = each($content['nm']['rows']['edit']);
-						return $this->edit($id);
 					case 'delete':
 						list($id) = each($content['nm']['rows']['delete']);
 						return $this->delete($id);
-					case 'new_acc': // note: this is a popup dialog now
-						list($id) = each($content['nm']['rows']['new_acc']);
-						return $this->edit($id = 0, $accessory_of = $id);
 					case 'view_acc':
 						list($id) = each($content['nm']['rows']['view_acc']);
  						$sessiondata['view_accs_of'] = $id;
 						$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 						return $this->index();
-					case 'view':
-						list($id) = each($content['nm']['rows']['view']);
-						return $this->show($id);
-					case 'select': // note: this is a popup dialog
-						return $this->select();
-					case 'bookable':
 					case 'buyable':
 				}
 			}
@@ -121,7 +109,12 @@ class ui_resources
 		$no_button['back'] = true;
 		$no_button['add_sub'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
-		
+		$sel_options['action'] = array(
+				'multi_nothing' => lang('select action'),
+				'multi_book' => lang('book selected resources'),
+				'multi_buy' => lang('buy selected resources'),
+				'multi_delete' => lang('delete selected resources'),
+		);
 		if($content['nm']['view_accs_of'])
 		{
 			$master = $this->bo->so->read($content['nm']['view_accs_of']);
