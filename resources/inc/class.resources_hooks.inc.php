@@ -76,10 +76,11 @@ class resources_hooks
 	}
 	function search_link($args)
 	{
-		return array(	'query' => 'resources.bo_resources.link_query',
-				'title' => 'resources.bo_resources.link_title',
-				'view' => array('menuaction' => 'resources.ui_resources.view'),
-				'view_id' => 'id'
+		return array(
+			'query' => 'resources.bo_resources.link_query',
+			'title' => 'resources.bo_resources.link_title',
+			'view' => array('menuaction' => 'resources.ui_resources.show'),
+			'view_id' => 'id'
 		);
 	}
 
