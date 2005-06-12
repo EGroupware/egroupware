@@ -461,9 +461,11 @@
 			list($class,$app) = explode('.',$type);
 			$class .= '_widget';
 
-			if ($app == '')
+			if (!$app) $app = $GLOBALS['phpgw_info']['flags']['current_app'];
+
+			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
-				$app = $GLOBALS['phpgw_info']['flags']['current_app'];
+				list($app) = explode('_',$type);
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
@@ -475,10 +477,12 @@
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
+				//echo "<p>boetemplate::loadExtension($type) extension not found</p>\n";
 				return $GLOBALS['phpgw_info']['etemplate']['extension'][$type] = False;
 			}
-			$GLOBALS['phpgw_info']['etemplate']['extension'][$type] = CreateObject($app.'.'.$class,$ui='html');
+			$GLOBALS['phpgw_info']['etemplate']['extension'][$type] =& CreateObject($app.'.'.$class,$ui='html');
 
+			//echo "<p>boetemplate::loadExtension($type) extension found in App. $app</p>\n";
 			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->human_name;
 		}
 
