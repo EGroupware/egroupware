@@ -310,7 +310,7 @@ class ui_resources
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 			window.focus();
 			
-			openerid='exec[resources][selectbox]';
+			openerid='exec[participants][resources]';
 			id='exec[nm][rows][selectbox]';
 		
 			function addOption(label,value)
