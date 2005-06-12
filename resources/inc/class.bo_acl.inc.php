@@ -192,17 +192,18 @@
 			$admincat = $admin ? $admin : array();
 
 			$this->so->remove_location('L' . $cat_id);
-			reset($this->accounts);
-			while (list($null,$account) = each($this->accounts))
+// 			reset($this->accounts);
+// 			while (list($null,$account) = each($this->accounts))
+
+			foreach($this->accounts as $num => $account)
 			{
 				$account_id = $account['account_id'];
-				//write implies read
-				$rights = in_array($account_id,$writecat) ?
-					(EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE) :
-					(in_array($account_id,$readcat) ? EGW_ACL_READ : False);
+				$rights = false;
+				$rights = in_array($account_id,$readcat) ? ($rights | EGW_ACL_READ) : false;
+				$rights = in_array($account_id,$writecat) ? ($rights | EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE): $rights;
 				$rights = in_array($account_id,$calreadcat) ? ($rights | EGW_ACL_CALREAD) : $rights;
-				$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING) : $rights;
-				$rights = in_array($account_id,$admincat) ? ($rights | EGW_ACL_CAT_ADMIN) : $rights;
+				$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING | EGW_ACL_CALREAD) : $rights;
+				$rights = in_array($account_id,$admincat) ? ($rights = 511) : $rights;
 				if ($rights)
 				{
 					$GLOBALS['egw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);

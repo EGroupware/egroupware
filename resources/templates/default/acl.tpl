@@ -26,9 +26,9 @@
    <tr bgcolor="{th_bg}" valign="middle" align="center">
 	<td>{sort_cat}<br>{lang_cat_admin}</td>
 	<td>{lang_read}</td>
-	<td>{lang_write}<br>({lang_implies})</td>
+	<td>{lang_write}<br>({lang_implies_read})</td>
 	<td>{lang_calread}</td>
-	<td>{lang_calbook}</td>
+	<td>{lang_calbook}<br>({lang_implies_book})</td>
    </tr>
    <!-- BEGIN cat_list -->
    <tr bgcolor="{tr_color}">
