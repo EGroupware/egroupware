@@ -237,7 +237,7 @@ class bo_resources
 
 		foreach($data as $num => $resource)
 		{
-			$resource['rights'] = 
+			$resource['rights'] = false;
 		}
 	}
 	
