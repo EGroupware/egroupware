@@ -763,7 +763,7 @@
 			}
 			if ($form_name != '')
 			{
-				$options = "id=\"$form_name\" $options";
+				$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 			}
 			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
