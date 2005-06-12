@@ -30,6 +30,10 @@ class bo_resources
 		$this->conf =& CreateObject('phpgwapi.config');
 		$this->conf->read_repository();
 		
+		$this->cal_right_transform = array(	EGW_ACL_CALREAD 	=> EGW_ACL_READ,
+							EGW_ACL_DIRECT_BOOKING 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
+							EGW_ACL_CAT_ADMIN 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
+		);
 	}
 
 	/**
@@ -233,11 +237,21 @@ class bo_resources
 	function get_calendar_info($res_id)
 	{
 	         //echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
-                return !is_array($res_id) && $res_id < 1 ? false : $this->so->search(array('id' => $res_id),'id,name,useable');
-
+                if(!is_array($res_id) && $res_id < 1) return
+		$data = $this->so->search(array('id' => $res_id),'id,cat_id,name,useable');
+		
 		foreach($data as $num => $resource)
 		{
 			$resource['rights'] = false;
+			foreach($this->cal_right_transform as $res_right => $cal_right)
+			{
+				if($this->bo->acl->is_permitted($resource['cat_id'],$res_right))
+				{
+					$resource['rights'] = $cal_right;
+				}
+			}
+			$resource['responsible'] = $this->bo->acl->get_cat_admin($$resource['cat_id']);
+			
 		}
 	}
 	
