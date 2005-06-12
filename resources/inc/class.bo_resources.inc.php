@@ -230,9 +230,10 @@ class bo_resources
 	 * @param int/array $res_id single id or array $num => $res_id
 	 * @return array 
 	 */
-	function get_calender_info($res_id)
+	function get_calendar_info($res_id)
 	{
-		return $res_id < 1 ? false : $this->so->search(array('id' => $res_id),'name,useable');
+		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
+		return !is_array($res_id) && $res_id < 1 ? false : $this->so->search(array('id' => $res_id),'id,name,useable');
 	}
 	
 	/**
