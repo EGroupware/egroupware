@@ -92,3 +92,23 @@ function selectbox_add_option(id,label,value,do_onchange)
 	}
 	if (selectBox.onchange && do_onchange) selectBox.onchange();
 }
+
+/* toggles all checkboxes named name in form form, to be used as custom javascript in onclick of a button/image */
+function toggle_all(form,name)
+{
+	/* alert('toggle_all('+form+','+name+',elements[name].length='+form.elements[name].length+')'); */
+	var all_set = true;
+
+	for (var i = 0; i < form.elements[name].length; i++)
+	{
+		if (!form.elements[name][i].checked)
+		{
+			all_set = false;
+			break;
+		}
+	}
+	for (var i = 0; i < form.elements[name].length; i++)
+	{
+		form.elements[name][i].checked = !all_set;
+	}
+}

@@ -848,10 +848,11 @@
 					}
 					break;
 				case 'checkbox':
+					$set_val = 1; $unset_val = 0;
 					if (!empty($cell_options))
 					{
-						list($true_val,$false_val,$ro_true,$ro_false) = explode(',',$cell_options);
-						$value = $value == $true_val;
+						list($set_val,$unset_val,$ro_true,$ro_false) = explode(',',$cell_options);
+						$value = $value == $set_val;
 					}
 					if (count(explode(',',$cell_options)) < 3)
 					{
@@ -868,11 +869,24 @@
 					}
 					else
 					{
-						$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = array(
-							'type' => $cell['type'],
-							'values' => $cell_options
-						);
+						if (($multiple = substr($cell['name'],-2) == '[]'))
+						{
+							// add the set_val to the id to make it unique
+							$options = str_replace('id="'.$form_name,'id="'.substr($form_name,0,-2)."[$set_val]",$options);
+						}
+						$html .= $this->html->input($form_name,$set_val,'checkbox',$options);
+						
+						if ($multiple) $form_name = $this->form_name($cname,substr($cell['name'],0,-2));
+
+						if (!isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
+						{
+							$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = array(
+								'type'        => $cell['type'],
+								'unset_value' => $unset_val,
+								'multiple'    => $multiple,
+							);
+						}
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]['values'][] = $set_val;
 					}
 					break;
 				case 'radio':		// size: value if checked
@@ -1019,8 +1033,8 @@
 								$span = 1 + $content['cols'] - $show_c;
 							}
 						}
-						$readonlys = $this->get_array($readonlys,$idx); //$readonlys[$idx];
-						$content = $this->get_array($content,$idx); // $content[$idx];
+						$readonlys = $this->get_array($readonlys,$idx);
+						$content = $this->get_array($content,$idx);
 						if ($idx_cname != '')
 						{
 							$cname .= $cname == '' ? $idx_cname : '['.str_replace('[','][',str_replace(']','',$idx_cname)).']';
@@ -1550,16 +1564,15 @@
 						$this->set_array($content,$form_name,is_array($value) ? implode(',',$value) : $value);
 						break;
 					case 'checkbox':
-						if (!isset($value))	// checkbox was not checked
+						if (!isset($value))
 						{
-							$value = 0;			// need to be reported too
+							$this->set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
 						}
-						if (!empty($attr['values']))
+						else
 						{
-							list($true_val,$false_val) = explode(',',$attr['values']);
-							$value = $value ? $true_val : $false_val;
+							$value = array_intersect(is_array($value) ? $value : array($value),$attr['values']); // return only allowed values
+							$this->set_array($content,$form_name,$attr['multiple'] ? $value : $value[0]);
 						}
-						$this->set_array($content,$form_name,$value);
 						break;
 					case 'file':
 						$parts = explode('[',str_replace(']','',$form_name));
