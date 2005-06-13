@@ -50,7 +50,7 @@ class ui_resources
 	 */
 	function index($content='')
 	{
-// 		_debug_array($content);
+//  		_debug_array($content);
 		if (is_array($content))
 		{
 			$sessiondata = $content['nm'];
@@ -90,13 +90,9 @@ class ui_resources
 				}
 			}
 		}
-		else
-		{
-			$msg = $content;
-			$content = array();
-			$content['msg'] = $msg;
-			$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
-		}
+		$msg = $content;
+		$content = array();
+		$content['msg'] = $msg;
 		
 		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
@@ -107,6 +103,10 @@ class ui_resources
 		$content['nm']['no_filter2']	= true;
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
+		$content['nm']['order']		= 'name';
+		$content['nm']['sort']		= 'ASC';
+		$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+
 		
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
@@ -119,7 +119,7 @@ class ui_resources
 
 		if($content['nm']['view_accs_of'])
 		{
-			$master = $this->bo->so->read($content['nm']['view_accs_of']);
+			$master = $this->bo->so->read(array('id' => $content['nm']['view_accs_of']));
 			$content['view_accs_of'] = $content['nm']['view_accs_of'];
 			$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 			$content['nm']['no_filter'] 	= true;
@@ -198,6 +198,7 @@ class ui_resources
 		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
+		$content['accessory_of'] = $accessory_of;
 		
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);

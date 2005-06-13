@@ -19,6 +19,7 @@ class bo_resources
 	var $pictures_dir = '/resources/pictures/';
 	var $thumbs_dir = '/resources/pictures/thumbs/';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
+	var $debug = 0;
 	
 	function bo_resources()
 	{
@@ -43,14 +44,22 @@ class bo_resources
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		if ($this->debug) _debug_array($query);
 		$query['search'] = $query['search'] ? $query['search'] : '*';
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search']);
 		$read_onlys = 'id,name,short_description,quantity,useable,bookable,buyable,cat_id,location';
 		
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
  		$filter = array('accessory_of' => $accessory_of);
-		$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
-		if($readcats) $filter = $filter + array('cat_id' => $readcats);
+		if ($query['filter'])
+		{
+			$filter = $filter + array('cat_id' => $query['filter']);
+		}
+		else
+		{
+			$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
+			if($readcats) $filter = $filter + array('cat_id' => $readcats);
+		}
 		if($query['show_bookable']) $filter = $filter + array('bookable' => true);
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
@@ -119,7 +128,7 @@ class bo_resources
 			echo lang('Notify your administrator to correct this situation') . '<br>';
 			return false;
 		}
-		return $this->so->read($id);
+		return $this->so->read(array('id' => $id));
 	}
 	
 	/**
@@ -298,7 +307,7 @@ class bo_resources
 	{
 		if (!is_array($resource) && $resource > 0)
 		{
-			$resource  = $this->so->read($resource);
+			$resource  = $this->so->read(array('id' => $resource));
 			$title = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 		}
 		return $title ? $title : false;
