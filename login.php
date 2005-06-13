@@ -451,10 +451,10 @@
 	
 	if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 	{
-		$this->html = CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
+		$html = CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
 		$tmpl->set_block('login_form','remember_me_selection');
 		$tmpl->set_var('lang_remember_me',lang('Remember me'));
-		$tmpl->set_var('select_remember_me',$this->html->select('remember_me', 'forever', array(
+		$tmpl->set_var('select_remember_me',$html->select('remember_me', 'forever', array(
 			false => lang('not'),
 			'1hour' => lang('1 Hour'),
 			'1day' => lang('1 Day'),
