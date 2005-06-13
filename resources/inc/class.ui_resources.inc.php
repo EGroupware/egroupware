@@ -105,8 +105,12 @@ class ui_resources
 		$content['nm']['no_cat']	= true;
 		$content['nm']['order']		= 'name';
 		$content['nm']['sort']		= 'ASC';
-		$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
-
+		
+		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+		if($nm_session_data)
+		{
+			$content['nm'] = $nm_session_data;
+		}
 		
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
