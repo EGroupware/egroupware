@@ -39,7 +39,7 @@ class bo_resources
 	/**
 	 * get rows for resources list
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
@@ -107,7 +107,7 @@ class bo_resources
 	/**
 	 * reads a resource exept binary datas
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $id resource id
 	 * @return array with key => value or false if not found or allowed
 	 */
@@ -125,7 +125,7 @@ class bo_resources
 	/**
 	 * saves a resource. pictures are saved in vfs
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $resource array with key => value of all needed datas
 	 * @return string msg if somthing went wrong; nothing if all right
 	 */
@@ -213,7 +213,7 @@ class bo_resources
 	/**
 	 * gets list of accessories for resource
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @return array
 	 */
@@ -230,7 +230,7 @@ class bo_resources
 	
 	/**
 	 * returns info about resource for calender
-	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
 	 * @param int/array $res_id single id or array $num => $res_id
 	 * @return array 
 	 */
@@ -258,7 +258,7 @@ class bo_resources
 	
 	/**
 	 * returns status for a new calendar entry depending on resources ACL
-	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int/array $res_id single id or array $num => $res_id
 	 * @return array 
 	 */
@@ -270,7 +270,7 @@ class bo_resources
 	}
 	
 	/**
-	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
 	 *
 	 */
@@ -290,7 +290,7 @@ class bo_resources
 	}
 		
 	/**
-	 * @author Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $id
 	 *
 	 */
@@ -307,7 +307,7 @@ class bo_resources
 	/**
 	 * resizes and saves an pictures in vfs
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $file array with key => value
 	 * @param int $resource_id
 	 * @return mixed string with msg if somthing went wrong; nothing if all right
@@ -411,7 +411,7 @@ class bo_resources
 	
 	/**
 	 * get resource picture either from vfs or from symlink
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @param bool $size false = thumb, true = full pic
 	 * @return string url of picture
@@ -449,7 +449,7 @@ class bo_resources
 	 * remove_picture
 	 * removes picture from vfs
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $id id of resource
 	 * @return bool succsess or not
 	 */
@@ -470,7 +470,7 @@ class bo_resources
 	 * get_genpicturelist
 	 * gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
 	 *
-	 * Cornelius Weiß <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @return array directory contens in eTemplates selectbox style
 	 */
 	function get_genpicturelist()

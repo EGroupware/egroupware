@@ -43,16 +43,32 @@ class ui_resources
 	/**
 	 * main resources list.
 	 *
-	 * Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $content content from eTemplate callback
 	 * 
 	 * FIXME don't translate cats in nextmach
 	 */
 	function index($content='')
 	{
+// 		_debug_array($content);
 		if (is_array($content))
-		{//_debug_array($content);
+		{
 			$sessiondata = $content['nm'];
+			
+			if (isset($content['back']))
+			{
+				unset($sessiondata['view_accs_of']);
+				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+				return $this->index();
+			}
+			if (isset($content['btn_delete_selected']))
+			{	
+				foreach($content['nm']['rows']['checkbox'] as $res_id)
+				{
+					$msg .= '<p>'. $this->bo->delete($res_id). '</p><br>';
+				}
+				return $this->index($msg);
+			}
 			
 			if (isset($content['nm']['rows']))
 			{
@@ -64,7 +80,7 @@ class ui_resources
 				{
 					case 'delete':
 						list($id) = each($content['nm']['rows']['delete']);
-						return $this->delete($id);
+						return $this->index($this->bo->delete($id));
 					case 'view_acc':
 						list($id) = each($content['nm']['rows']['view_acc']);
  						$sessiondata['view_accs_of'] = $id;
@@ -73,16 +89,12 @@ class ui_resources
 					case 'buyable':
 				}
 			}
-			if (isset($content['back']))
-			{
-				unset($sessiondata['view_accs_of']);
-				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-				return $this->index();
-			}
 		}
 		else
 		{
+			$msg = $content;
 			$content = array();
+			$content['msg'] = $msg;
 			$content['nm'] = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		}
 		
@@ -125,7 +137,7 @@ class ui_resources
 	}
 
 	/**
-	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * invokes add or edit dialog for resources
 	 *
 	 * @param $content   Content from the eTemplate Exec call or id on inital call
@@ -149,7 +161,7 @@ class ui_resources
 				if(isset($content['delete']))
 				{
 					unset($content['delete']);
-					$content['msg'] = $this->delete($content['id']);
+					$content['msg'] = $this->bo->delete($content['id']);
 				}
 				
 				if($content['msg'])
@@ -209,7 +221,7 @@ class ui_resources
 	/**
 	 * adminsection of resources
 	 *
-	 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 */
 	function admin($content='')
 	{
@@ -246,8 +258,8 @@ class ui_resources
 		$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 		$content['link_to'] = array(
 				'to_id' => $id,
-						'to_app' => 'resources'
-						);
+				'to_app' => 'resources'
+		);
 	
 		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
@@ -255,17 +267,17 @@ class ui_resources
 		
 		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable').' '.$content['useable'].')';
 		
-					//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
+		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 				
 		$content['cat_name'] =  $this->bo->acl->get_cat_name($content['cat_id']);
 		$content['cat_admin'] = $this->bo->acl->get_cat_admin($content['cat_id']);
 		
-	/*	if($content['accessory_of'] > 0)
+/*		if($content['accessory_of'] > 0)
 		{
 			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		} 
-	*/
+*/
 		$content['description'] = chop($content['long_description']) ? $content['long_description'] : (chop($content['short_description']) ? $content['short_description'] : lang("no description available"));
 		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
 		$content['link_to'] = array(
@@ -406,14 +418,15 @@ class ui_resources
 }
 
 	/**
-	 * deletes a resource
+	 * deletes a resource (lets do this only in bo ok?)
 	 *
 	 * @param int $id resource id
 	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 	 */
-	function delete($id)
+/*	function delete($id)
 	{
  		$this->bo->delete($id);
 		return $this->index();
 	}
+*/
 }
