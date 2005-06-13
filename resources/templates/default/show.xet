@@ -104,7 +104,7 @@
 								<description/>
 								<button image="bookable" label="book selected resources" id="btn_book_selected" statustext="book selected resources" align="right"/>
 								<button label="buy selected resources" no_lang="1" image="buyable" id="btn_buy_selected" statustext="buy selected resources" align="right"/>
-								<button image="delete" label="delete selected resources" id="btn_delete_selected" statustext="delete selected resources" align="right"/>
+								<button image="delete" label="delete selected resources" id="btn_delete_selected" statustext="delete selected resources" align="right" onclick="return confirm('Do you really want do delte the selected resources?');"/>
 								<vbox>
 									<description/>
 									<button image="arrow_ltr" label="select/deselect all" statustext="select/deselect all" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]')); return false;" needed="1"/>
