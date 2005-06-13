@@ -12,6 +12,7 @@
 	\**************************************************************************/
 	
 	/* $Id$ */
+	
 include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 	
 class so_resources extends so_sql
@@ -19,10 +20,6 @@ class so_resources extends so_sql
 	function so_resources()
 	{
 		$this->so_sql('resources','egw_resources');
-		
-// 		$this->db = clone($GLOBALS['egw']->db);
-// 		$this->db->set_app('resources');
-// 		$this->rs_table = 'egw_resources';
 	}
 
 	/**
