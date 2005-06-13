@@ -61,7 +61,7 @@
 					</vbox>
 					<hbox align="right">
 						<vbox class="buttonbox">
-							<button image="bookable.gif" label="Book this resource" align="center" id="bookable[$row_cont[id]]" statustext="Book this resource"/>
+							<button image="bookable.gif" label="Book this resource" align="center" id="bookable[$row_cont[id]]" statustext="Book this resource" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;id=r$row_cont[id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
 							<button image="buyable.gif" label="Buy this resource" align="center" id="buyable[$row_cont[id]]" statustext="Buy this resource"/>
 						</vbox>
 						<vbox needed="1" align="right" class="buttonbox">
