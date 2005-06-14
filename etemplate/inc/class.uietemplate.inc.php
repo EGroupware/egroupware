@@ -852,23 +852,24 @@
 					if (!empty($cell_options))
 					{
 						list($set_val,$unset_val,$ro_true,$ro_false) = explode(',',$cell_options);
+						if (!$set_val && !$unset_val) $set_val = 1;
 						$value = $value == $set_val;
-					}
-					if (count(explode(',',$cell_options)) < 3)
-					{
-						$ro_true = 'x';
-						$ro_false = '';
-					}
-					if ($value)
-					{
-						$options .= ' checked="1"';
 					}
 					if ($readonly)
 					{
+						if (count(explode(',',$cell_options)) < 3)
+						{
+							$ro_true = 'x';
+							$ro_false = '';
+						}
+						if (!$value && $ro_false == 'disable') return '';
+
 						$html .= $value ? $this->html->bold($ro_true) : $ro_false;
 					}
 					else
 					{
+						if ($value) $options .= ' checked="1"';
+
 						if (($multiple = substr($cell['name'],-2) == '[]'))
 						{
 							// add the set_val to the id to make it unique

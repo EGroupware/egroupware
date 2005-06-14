@@ -374,7 +374,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Label</b></td>
-	<td>&lt;description/></td>
+	<td>&lt;description /></td>
 	<td>yes</td>
 	<td>label</td>
 	<td>
@@ -391,7 +391,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Text</b></td>
-	<td>&lt;textbox/></td>
+	<td>&lt;textbox /></td>
 	<td>yes</td>
 	<td>text</td>
 	<td>
@@ -405,7 +405,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Integer</b></td>
-	<td>&lt;textbox<br />type="int"/></td>
+	<td>&lt;textbox<br />type="int" /></td>
 	<td>?</td>
 	<td>int</td>
 	<td>
@@ -435,7 +435,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Textarea</b></td>
-	<td>&lt;textbox<br />multiline="true"/></td>
+	<td>&lt;textbox<br />multiline="true" /></td>
 	<td>yes</td>
 	<td>textarea</td>
 	<td>
@@ -461,17 +461,28 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Checkbox</b></td>
-	<td>&lt;checkbox/></td>
+	<td>&lt;checkbox /></td>
 	<td>yes</td>
 	<td>checkbox</td>
 	<td>
 		<b>a widget that can be checked or unchecked</b><br />
 		In the html-UI this is rendered as &lt;input type="checkbox" ...>.
+		<p>Multiple checkboxes can have an identical name ending with [], in that case the value will be an array with the set_value's 
+		of the checked boxes. You can use a button with a custom javascript onclick action of eg. 
+		"toggle_all(this.form,form::name('nm[rows][checkbox][]')); return false;" and a set_value of "$row_cont[id]" to toggle 
+		all checkboxes in the lines of a nextmatch widget. The <b>form::name( )</b> function translate the name used
+		in the template into the name used in the form. <i>If the button is an image-button, check needed to render it as button
+		and not as image with link, which has no this.form property!</i></p>
+		<b>Options</b>: [set_value][,unset_value[,ro_true[,ro_false]]]<br />
+		<b>set_value</b>: which value in the content represents the checked state, default=1<br />
+		<b>unset_value</b>: value in the content representing the unchecked state, default=0<br />
+		<b>ro_true</b>: what should be displayed for a readonly checked box, default=x<br />
+		<b>ro_false</b>: display for an unchecked box, can be set to 'disable', to not display the widget (incl. label), default is empty
 	</td>
 </tr>
 <tr>
 	<td><b>Radiobutton</b></td>
-	<td>&lt;radio/></td>
+	<td>&lt;radio /></td>
 	<td>?</td>
 	<td>radio</td>
 	<td>
@@ -484,17 +495,16 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Submitbutton</b></td>
-	<td>&lt;button image="img.gif" ro_image="img-grey.gif"/></td>
+	<td>&lt;button image="img.gif" ro_image="img-grey.gif" /></td>
 	<td>yes</td>
 	<td>button</td>
 	<td>
 		<b>a button to submit the form / end the dialog</b><br />
 		In the html-UI this is rendered as &lt;input type="submit" ...>.<br />
 		If a button is set readonly (via seting its id in the $readonlys array passed to exec) it is not rendered
-		at all (if no ro_image is given), like it would be diabled.<p>
-		<b>onChange</b> xml: <b>onchange</b>: if set and the user has JavaScript enabled
-		the button is renderd as a link around the label and a hidden
-		input to set id if the link is clicked.<br />
+		at all (if no ro_image is given), like it would be disabled.<p>
+		<b>needed</b>: if set and the user has JavaScript enabled the button is renderd as a link around the label 
+		and a hidden input to set id if the link is clicked.<br />
 		<b>Options</b> xml: <b>image, ro_image</b>: Image to use instead of a Button with a label. There will
 		be no button around the image. If a ro_image is given (separated by a comma in the editors options)
 		it will be used if the button is set readonly (else the button is no rendered at all) .
@@ -508,7 +518,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Horizonatal Rule</b></td>
-	<td>&lt;hrule/></td>
+	<td>&lt;hrule /></td>
 	<td>no</td>
 	<td>hrule</td>
 	<td>
@@ -519,7 +529,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Template</b></td>
-	<td>&lt;grid id="app.name" content="subarr"/></td>
+	<td>&lt;template id="app.name" content="subarr" /></td>
 	<td>yes</td>
 	<td>template</td>
 	<td>
@@ -533,7 +543,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Image</b></td>
-	<td>&lt;image src="foo.gif" label="Get a foo" options="app.class.method"/></td>
+	<td>&lt;image src="foo.gif" label="Get a foo" options="app.class.method" /></td>
 	<td>yes</td>
 	<td>image</td>
 	<td>
@@ -547,7 +557,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td><b>Selectbox</b></td>
 	<td>
 		&lt;menulist><br />
-		&nbsp; &lt;menupopup id="name" options="Select one"/><br />
+		&nbsp; &lt;menupopup id="name" options="Select one" /><br />
 		&lt;/menulist><p>
 		<i>multiselect: <b>options</b> > 1</i><br />
 		&lt;listbox rows="#"/><p>
@@ -720,9 +730,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>Label</b> xml: <b>label</b>: the labels of the tabs eg. 'Tab 1|Tab 2|Tab 3'<br />
 		<b>Help</b> xml: <b>statustext</b>: of the tabs<br />
 		<b>Name</b> xml: <b>id</b>: the names/ids of the eTemplates/grid's to fill the bodies of the tabs, if the
-		name contains no '.', it will be prefixed with the name of the template the widget is in plus a '.'<p>
-		<b>Demo</b>: <i>There is a demo availible</i>: load 'etemplate.tab_widget.test' into the eTemplate editor and
-		run it with show.
+		name contains no '.', it will be prefixed with the name of the template the widget is in plus a '.'
 	</td>
 </tr>
 <tr>
