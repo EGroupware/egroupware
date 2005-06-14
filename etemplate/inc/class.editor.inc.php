@@ -1322,7 +1322,7 @@
 					{
 						rename($path,str_replace('.css','.old.css',$path));
 					}
-					if (file_exists($path) && !is_writable($path))
+					if (file_exists($path) && !is_writable(dirname($path)))
 					{
 						$msg .= lang("Error: webserver is not allowed to write into '%1' !!!",dirname($path));
 					}
