@@ -15,33 +15,71 @@
 
 error_reporting(E_ALL & ~ E_NOTICE);
 
-if (($no_phpgw = $argv[1] == '--no-phpgw'))
+// defaults
+$no_phpgw = $do_replace = false;
+$remove_space_indention = 2;	// replace 2 space with a tab
+
+while ($argc > 2)
 {
+	switch($argv[1])
+	{
+		case '--no-phpgw':
+			$no_phpgw = true;
+			break;
+			
+		case '--remove-space-indention':
+			$remove_space_indention = (int) $argv[2];
+			array_shift($argv);
+			--$argc;
+			break;
+			
+		case '--replace':
+			$do_replace = true;
+			break;
+		
+		default:
+			$argc = 0;	// invalid parameter ==> break the loop and give usage message
+			break;
+	}		
 	array_shift($argv);
 	--$argc;
 }
-if ($argv[1] == '--remove-space-indention')
+	
+if ($argc != 2 || !file_exists($file = $argv[1])) 
 {
-	$remove_space_indention = (int) $argv[2];
-	array_shift($argv);	array_shift($argv);
-	$argc -= 2;
-}
-else
-{
-	$remove_space_indention = 2;	// replace 2 space with a tab
-}
-if ($argc <= 1 || !file_exists($argv[1])) 
-{
-	if (!file_exists($argv[1])) echo "File '$argv[1]' not found !!!\n\n";
-	echo "Usage: modernize.php [--no-phpgw] [--remove-space-indention N] <filename>\n";
+	if ($argc == 2) echo "File '$file' not found !!!\n\n";
+	echo "Usage: modernize.php [--no-phpgw] [--remove-space-indention N] [--replace] <filename>\n";
 	echo "--no-phpgw dont change phpgw to egw, necessary for some API files\n";
-	echo "--remove-space-indention N substitute every N space at the beginning of a line with a tab (default 2)\n\n";
+	echo "--remove-space-indention N substitute every N space at the beginning of a line with a tab (default 2)\n";
+	echo "--replace replaces the given file (plus creating a backup) instead of acting as filter\n\n";
 	exit;
 }
+
+if ($do_replace)
+{
+	if (!is_writable($file) && !is_writable(dirname($file)))
+	{
+		echo "'$file' is NOT writeable !!!\n";
+		exit;
+	}
+	$do_replace = $file;
+	$file .= '.bak';
+	if (is_writable(dirname($file)))
+	{
+		rename($do_replace,$file);
+	}
+	else	// only file is writable not the directory, so we cant create a backup
+	{
+		$file = $do_replace;
+	}
+	ob_start();
+}
+	
 
 // some code modernizations
 $modernize = array(
 	// saves an unnecessary copy
+	'= CreateObject'           => '=& CreateObject',
 	'= CreateObject'           => '=& CreateObject',
 	'= new'                    => '=& new',
 	// php5 cloning of the DB object
@@ -62,7 +100,7 @@ if (!$no_phpgw)
 {
 	$modernize += array(
 		// phpGW --> eGW
-		'PHPGW_'	               => 'EGW_',
+// done now separate as it is case sensitve		'PHPGW_'	               => 'EGW_',
 		'$GLOBALS[\'phpgw_info\']' => '$GLOBALS[\'egw_info\']',
 		'$GLOBALS["phpgw_info"]'   => '$GLOBALS[\'egw_info\']',
 		'$GLOBALS[\'phpgw\']'      => '$GLOBALS[\'egw\']',
@@ -79,9 +117,10 @@ $modernize_from = array_keys($modernize);
 $modernize_to = array_values($modernize);
 
 $in_doc_block = false;
-foreach(file($argv[1]) as $n => $line)
+foreach(file($file) as $n => $line)
 {
-	$line = str_replace($modernize_from,$modernize_to,$line);
+	$func = function_exists('str_ireplace') ? 'str_ireplace' : 'str_replace';
+	$line = str_replace('PHPGW_','EGW_',$func($modernize_from,$modernize_to,$line));
 
 	if ($remove_space_indention)
 	{
@@ -164,4 +203,14 @@ foreach(file($argv[1]) as $n => $line)
 		echo $indent." */\n";
 		$one_line_block = $in_doc_block = false;
 	}
+}
+
+if ($do_replace && ($f = fopen($do_replace,'wb')))
+{
+	fwrite($f,ob_get_contents());
+	fclose($f);
+}
+else
+{
+	ob_flush();
 }
