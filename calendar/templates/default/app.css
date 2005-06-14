@@ -4,6 +4,8 @@
  * CSS settings for the new uiviews code
  */
 
+.redItalic { color: red; font-style: italic; }
+
 /* timeGridWidget, contains timeRow's and dayCol's
  */
 .calTimeGrid{
