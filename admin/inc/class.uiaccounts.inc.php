@@ -47,6 +47,7 @@
 			'netsaint'    => True,
 			'inv'         => True,
 			'phpbrain'    => True,
+			'projectmanager' => True,
 		);
 
 		function uiaccounts()
