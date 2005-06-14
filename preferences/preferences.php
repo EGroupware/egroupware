@@ -11,7 +11,7 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'noheader'                => True,
 		'noappheader'             => True,
 		'nonavbar'                => True,
@@ -22,14 +22,14 @@
 	
 	if ($_POST['cancel'])
 	{
-		$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
+		$GLOBALS['egw']->redirect_link('/preferences/index.php');
 	}
 	
 	$user    = get_var('user',Array('POST'));
 	$forced  = get_var('forced',Array('POST'));
 	$default = get_var('default',Array('POST'));
 
-	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('preferences'));
+	$t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('preferences'));
 	$t->set_file(array(
 		'preferences' => 'preferences.tpl'
 	));
@@ -40,7 +40,7 @@
 	
 	if ($_GET['appname'] != 'preferences')
 	{
-		$GLOBALS['phpgw']->translation->add_app('preferences');	// we need the prefs translations too
+		$GLOBALS['egw']->translation->add_app('preferences');	// we need the prefs translations too
 	}
 
 	/* Make things a little easier to follow */
@@ -59,7 +59,7 @@
 
 	function is_forced_value($_appname,$preference_name)
 	{
-		if (isset($GLOBALS['phpgw']->preferences->forced[$_appname][$preference_name]) && $GLOBALS['type'] != 'forced')
+		if (isset($GLOBALS['egw']->preferences->forced[$_appname][$preference_name]) && $GLOBALS['type'] != 'forced')
 		{
 			return True;
 		}
@@ -86,7 +86,7 @@
 	{
 		global $t,$prefs;
 
-		$charSet = $GLOBALS['phpgw']->translation->charset();
+		$charSet = $GLOBALS['egw']->translation->charset();
 
 		$_appname = check_app();
 		if (is_forced_value($_appname,$name))
@@ -114,18 +114,18 @@
 		
 		if ($GLOBALS['type'] == 'user')
 		{
-			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
 
 			if (isset($notifys[$name]))	// translate the substitution names
 			{
-				$def_text = $GLOBALS['phpgw']->preferences->lang_notify($def_text,$notifys[$name]);
+				$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$notifys[$name]);
 			}
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\"value=\"".
-			@htmlentities($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
+			@htmlspecialchars($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
 		$t->set_var('row_name',lang($label));
-		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+		$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
 
 		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
@@ -189,7 +189,7 @@
 
 			$t->set_var('row_value','');
 			$t->set_var('row_name','<span class="prefSection">'.lang($title).'</span>');
-			$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
 
 			$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
 		}
@@ -224,37 +224,36 @@
 		$s .= create_option_string($default,$values);
 		if ($GLOBALS['type'] == 'user')
 		{
-			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = $GLOBALS['egw']->preferences->default[$_appname][$name];
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$values[$def_text].'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<select name=\"${GLOBALS[type]}[$name]\">$s</select>$def_text");
 		$t->set_var('row_name',lang($label));
-		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+		$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
 
 		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
 	
-	/*!
-	@function create_notify
-	@abstract creates text-area or inputfield with subtitution-variables
-	@syntax create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='')
-	@param $label untranslated label
-	@param $name name of the pref 
-	@param $rows, $cols of the textarea or input-box ($rows==1)
-	@param $help untranslated help-text
-	@param $default default-value
-	@param $vars2 array with extra substitution-variables of the form key => help-text
-	*/
+	/**
+	 * creates text-area or inputfield with subtitution-variables
+	 *
+	 * @param $label untranslated label
+	 * @param $name name of the pref 
+	 * @param $rows, $cols of the textarea or input-box ($rows==1)
+	 * @param $help untranslated help-text
+	 * @param $default default-value
+	 * @param $vars2 array with extra substitution-variables of the form key => help-text
+	 */
 	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='',$subst_help=True,$run_lang=True)
 	{
 		global $t,$prefs,$notifys;
 
-		$vars = $GLOBALS['phpgw']->preferences->vars;
+		$vars = $GLOBALS['egw']->preferences->vars;
 		if (is_array($vars2))
 		{
 			$vars += $vars2;
 		}
-		$prefs[$name] = $GLOBALS['phpgw']->preferences->lang_notify($prefs[$name],$vars);
+		$prefs[$name] = $GLOBALS['egw']->preferences->lang_notify($prefs[$name],$vars);
 
 		$notifys[$name] = $vars;	// this gets saved in the app_session for re-translation
 
@@ -283,7 +282,7 @@
 	{
 		global $t,$prefs,$notifys;
 		
-		$charSet = $GLOBALS['phpgw']->translation->charset();
+		$charSet = $GLOBALS['egw']->translation->charset();
 
 		$_appname = check_app();
 		if (is_forced_value($_appname,$name))
@@ -298,18 +297,18 @@
 
 		if ($GLOBALS['type'] == 'user')
 		{
-			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
 
 			if (isset($notifys[$name]))	// translate the substitution names
 			{
-				$def_text = $GLOBALS['phpgw']->preferences->lang_notify($def_text,$notifys[$name]);
+				$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$notifys[$name]);
 			}
 			$def_text = $def_text != '' ? '<br><i><font size="-1"><b>'.lang('default').'</b>:<br>'.nl2br($def_text).'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".
 			htmlentities($default,ENT_COMPAT,$charSet)."</textarea>$def_text");
 		$t->set_var('row_name',lang($label));
-		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+		$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
 
 		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
@@ -346,7 +345,7 @@
 
 				if ($notifys[$var])	// need to translate the key-words back
 				{
-					$prefs[$var] = $GLOBALS['phpgw']->preferences->lang_notify($prefs[$var],$notifys[$var],True);
+					$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifys[$var],True);
 				}
 			}
 			else
@@ -360,7 +359,7 @@
 		// if you return something else than False, it is treated as an error-msg and 
 		// displayed to the user (the prefs get not saved !!!)
 		//
-		if ($error = $GLOBALS['phpgw']->hooks->single(array(
+		if ($error = $GLOBALS['egw']->hooks->single(array(
 			'location' => 'verify_settings',
 			'prefs'    => $repository[$_appname],
 			'prefix'   => $prefix,
@@ -370,13 +369,13 @@
 			return $error;
 		}
 		
-		$GLOBALS['phpgw']->preferences->save_repository(True,$GLOBALS['type']);
+		$GLOBALS['egw']->preferences->save_repository(True,$GLOBALS['type']);
 		
 		return False;
 	}
 
 	/* Only check this once */
-	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
+	if ($GLOBALS['egw']->acl->check('run',1,'admin'))
 	{
 		/* Don't use a global variable for this ... */
 		define('HAS_ADMIN_RIGHTS',1);
@@ -409,7 +408,7 @@
 		$list_shown = True;
 	}
 
-	$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
+	$session_data = $GLOBALS['egw']->session->appsession('session_data','preferences');
 
 	$prefix = get_var('prefix',array('GET'),$session_data['appname'] == $_GET['appname'] ? $session_data['prefix'] : '');
 	
@@ -430,7 +429,7 @@
 		$GLOBALS['type'] = 'user';
 	}
 	$show_help = "$session_data[show_help]" != '' && $session_data['appname'] == $_GET['appname'] ? 
-		$session_data['show_help'] : (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['show_help'];
+		$session_data['show_help'] : (int)$GLOBALS['egw_info']['user']['preferences']['common']['show_help'];
 
 	if ($toggle_help = get_var('toggle_help','POST'))
 	{
@@ -443,22 +442,22 @@
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
-			$error = process_array($GLOBALS['phpgw']->preferences->user,$user,$session_data['notifys'],$prefix);
+			$error = process_array($GLOBALS['egw']->preferences->user,$user,$session_data['notifys'],$prefix);
 		}
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
-			$error = process_array($GLOBALS['phpgw']->preferences->default, $default,$session_data['notifys']);
+			$error = process_array($GLOBALS['egw']->preferences->default, $default,$session_data['notifys']);
 		}
 
 		if ($GLOBALS['type'] == 'forced' && is_admin())
 		{
-			$error = process_array($GLOBALS['phpgw']->preferences->forced, $forced,$session_data['notifys']);
+			$error = process_array($GLOBALS['egw']->preferences->forced, $forced,$session_data['notifys']);
 		}
 
 		if (!is_admin() || $error)
 		{
-			$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
+			$GLOBALS['egw']->redirect_link('/preferences/index.php');
 		}
 		
 		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
@@ -466,7 +465,7 @@
 			$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
 		}
 	}
-	$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
+	$GLOBALS['egw']->session->appsession('session_data','preferences',array(
 		'type'      => $GLOBALS['type'],	// save our state in the app-session
 		'show_help' => $show_help,
 		'prefix'    => $prefix,
@@ -474,31 +473,26 @@
 	));
 	// changes for the admin itself, should have immediate feedback ==> redirect
 	if (!$error && $_POST['submit'] && $GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences') {
-		$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
+		$GLOBALS['egw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
 	}
 
-	$GLOBALS['phpgw_info']['flags']['app_header'] = $_GET['appname'] == 'preferences' ?
-		lang('Preferences') : lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$_GET['appname']]['title']);
-	$GLOBALS['phpgw']->common->phpgw_header();
-	echo parse_navbar();
-
 	$t->set_var('messages',$error);
-	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname']));
-	$t->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
-	$t->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
-	$t->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);
-	$t->set_var('row_off',$GLOBALS['phpgw_info']['theme']['row_off']);
+	$t->set_var('action_url',$GLOBALS['egw']->link('/preferences/preferences.php','appname=' . $_GET['appname']));
+	$t->set_var('th_bg',  $GLOBALS['egw_info']['theme']['th_bg']);
+	$t->set_var('th_text',$GLOBALS['egw_info']['theme']['th_text']);
+	$t->set_var('row_on', $GLOBALS['egw_info']['theme']['row_on']);
+	$t->set_var('row_off',$GLOBALS['egw_info']['theme']['row_off']);
 
 	switch ($GLOBALS['type'])	// set up some globals to be used by the hooks
 	{
 		case 'forced':  
-			$prefs = &$GLOBALS['phpgw']->preferences->forced[check_app()]; 
+			$prefs = &$GLOBALS['egw']->preferences->forced[check_app()]; 
 			break;
 		case 'default': 
-			$prefs = &$GLOBALS['phpgw']->preferences->default[check_app()];
+			$prefs = &$GLOBALS['egw']->preferences->default[check_app()];
 			break;
 		default:
-			$prefs = &$GLOBALS['phpgw']->preferences->user[check_app()];
+			$prefs = &$GLOBALS['egw']->preferences->user[check_app()];
 			// use prefix if given in the url, used for email extra-accounts
 			if ($prefix != '')
 			{
@@ -512,16 +506,22 @@
 	//echo "prefs=<pre>"; print_r($prefs); echo "</pre>\n";
 	
 	$notifys = array();
-	if (!$GLOBALS['phpgw']->hooks->single('settings',$_GET['appname']))
+	if (!$GLOBALS['egw']->hooks->single('settings',$_GET['appname']))
 	{
 		$t->set_block('preferences','form','formhandle');	// skip the form
 		$t->set_var('formhandle','');
 		
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-			$GLOBALS['phpgw_info']['navbar'][$_GET['appname']]['title'],PHPGW_SERVER_ROOT . SEP
+			$GLOBALS['egw_info']['navbar'][$_GET['appname']]['title'],EGW_SERVER_ROOT . SEP
 			. $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 	}
-	$tmpl_settings = PHPGW_TEMPLATE_DIR.'/hook_settings.inc.php';
+
+	$GLOBALS['egw_info']['flags']['app_header'] = $_GET['appname'] == 'preferences' ?
+		lang('Preferences') : lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$_GET['appname']]['title']);
+	$GLOBALS['egw']->common->egw_header();
+	echo parse_navbar();
+
+	$tmpl_settings = EGW_TEMPLATE_DIR.'/hook_settings.inc.php';
 	if ($_GET['appname'] == 'preferences' && file_exists($tmpl_settings))
 	{
 		include($tmpl_settings);
@@ -529,7 +529,7 @@
 
 	if (count($notifys))	// there have been notifys in the hook, we need to save in the session
 	{
-		$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
+		$GLOBALS['egw']->session->appsession('session_data','preferences',array(
 			'type'      => $GLOBALS['type'],	// save our state in the app-session
 			'show_help' => $show_help,
 			'prefix'    => $prefix,
@@ -542,15 +542,15 @@
 	{
 		$tabs[] = array(
 			'label' => lang('Your preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=user")
+			'link'  => $GLOBALS['egw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=user")
 		);
 		$tabs[] = array(
 			'label' => lang('Default preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=default")
+			'link'  => $GLOBALS['egw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=default")
 		);
 		$tabs[] = array(
 			'label' => lang('Forced preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=forced")
+			'link'  => $GLOBALS['egw']->link('/preferences/preferences.php','appname=' . $_GET['appname'] . "&type=forced")
 		);
 
 		switch($GLOBALS['type'])
@@ -559,7 +559,7 @@
 			case 'default': $selected = 1; break;
 			case 'forced':  $selected = 2; break;
 		}
-		$t->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
+		$t->set_var('tabs',$GLOBALS['egw']->common->create_tabs($tabs,$selected));
 	}
 	$t->set_var('lang_submit', lang('save'));
 	$t->set_var('lang_cancel', lang('cancel'));
@@ -573,7 +573,7 @@
 	}
 	$t->pfp('phpgw_body','preferences');
 	
-	//echo '<pre style="text-align: left;">'; print_r($GLOBALS['phpgw']->preferences->data); echo "</pre>\n";
+	//echo '<pre style="text-align: left;">'; print_r($GLOBALS['egw']->preferences->data); echo "</pre>\n";
 	
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->egw_footer();
 ?>
