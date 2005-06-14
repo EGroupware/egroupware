@@ -15,7 +15,12 @@
 
 	/* $Id$ */
 
-	ExecMethod('calendar.bocalendar.check_set_default_prefs');
+	// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
+	if (!is_object($GLOBALS['egw']->jscalendar))
+	{
+		$GLOBALS['egw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+	}
+	ExecMethod('calendar.bocal.check_set_default_prefs');
 
 	$default = array(
 		'day'          => lang('Daily'),
@@ -125,7 +130,7 @@
 
 	for ($i=0; $i < 24; ++$i)
 	{
-		$options[$i] = $GLOBALS['phpgw']->common->formattime($i,'00');
+		$options[$i] = $GLOBALS['egw']->common->formattime($i,'00');
 	}
 	create_select_box('work day starts on','workdaystarts',$options,
 		'This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.');
@@ -145,13 +150,13 @@
 	create_input_box('default appointment length (in minutes)','defaultlength',
 		'Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.','',3);
 
-	$groups = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+	$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
 	$options = array(-1 => lang('none'));
 	if (is_array($groups))
 	{
 		foreach($groups as $group)
 		{
-			$options[$group['account_id']] = $GLOBALS['phpgw']->common->grab_owner_name($group['account_id']);
+			$options[$group['account_id']] = $GLOBALS['egw']->common->grab_owner_name($group['account_id']);
 		}
 	}
 	create_select_box('Preselected group for entering the planner','planner_start_with_group',$options,
@@ -181,13 +186,14 @@
 	create_check_box('Set new events to private','default_private',
 		'Should new events created as private by default ?');
 
+/* not used at the moment
 	create_check_box('Print the mini calendars','display_minicals',
 		'Should the mini calendars by printed / displayed in the printer friendly views ?');
 
 	create_check_box('Print calendars in black & white','print_black_white',
 		'Should the printer friendly view be in black & white or in color (as in normal view)?');
-
-	$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$GLOBALS['phpgw_info']['user']['account_lid'].'&password='.$GLOBALS['phpgw_info']['user']['preferences']['calendar']['freebusy_pw'];
+*/
+	$freebusy_url = $GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$GLOBALS['egw_info']['user']['account_lid'].'&password='.$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw'];
 	if ($freebusy_url[0] == '/')
 	{
 		$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
