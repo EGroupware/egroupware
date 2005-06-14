@@ -887,6 +887,7 @@
 							);
 						}
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]['values'][] = $set_val;
+						if (!$multiple) unset($set_val);	// otherwise it will be added to the label
 					}
 					break;
 				case 'radio':		// size: value if checked
