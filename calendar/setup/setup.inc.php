@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['calendar']['name']    = 'calendar';
-	$setup_info['calendar']['version'] = '1.0.0.005';
+	$setup_info['calendar']['version'] = '1.0.0';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -44,22 +44,13 @@
 	$setup_info['calendar']['hooks'][] = 'home_month';
 	$setup_info['calendar']['hooks'][] = 'home_week';
 	$setup_info['calendar']['hooks'][] = 'home_year';
+	$setup_info['calendar']['hooks'][] = 'manual';
 	$setup_info['calendar']['hooks'][] = 'preferences';
 	$setup_info['calendar']['hooks'][] = 'settings';
-	$setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.uical.sidebox_menu';
-
-	/* Dependencies for this app to work */
-	$setup_info['calendar']['depends'][] = array(
-		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.14','0.9.15','0.9.16','1.0.0','1.0.1')
-	);
-	$setup_info['calendar']['depends'][] = array(
-		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.0','1.0.1')
-	);
-
-
-
-
-
-
+	$setup_info['calendar']['hooks'][] = 'sidebox_menu';
+	
+	$setup_info['calendar']['hooks']['toolbar'] = 'calendar.toolbar.toolbar';
+	$setup_info['calendar']['hooks']['menu'] = 'calendar.calendarmenu.calendarmenu';
+	
+	$setup_info['calendar']['hooks']['notify'] = 'calendar.calendernotify.notify';
+	
