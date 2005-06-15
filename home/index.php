@@ -20,7 +20,7 @@
 $GLOBALS['sessionid'] = @$_GET['sessionid'] ? $_GET['sessionid'] : @$_COOKIE['sessionid'];
 if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 {
-	Header('Location: login.php');
+	Header('Location: ../login.php');
 	exit;
 }
 
