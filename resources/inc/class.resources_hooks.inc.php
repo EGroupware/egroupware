@@ -95,10 +95,11 @@ class resources_hooks
 	function calendar_resources($args)
 	{
 		return array(	
-			'select_template' => 'resources.resource_selectbox',
-			'info' => 'resources.bo_resources.get_calendar_info',
-			'new_status' => 'resources.bo_resources.get_calendar_new_status',
-			'type' => 'r',
+			'widget' => 'resources_select',							// widget to use for the selection of resources
+			'info' => 'resources.bo_resources.get_calendar_info',	// info method, returns array with id, type & name for a given id
+			'max_quantity' => 'useable',							// if set, key for max. quantity in array returned by info method
+			'new_status' => 'resources.bo_resources.get_calendar_new_status',	// method returning the status for new items, else 'U' is used
+			'type' => 'r',											// one char type-identifiy for this resources
 		);
 	}
 }
