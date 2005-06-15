@@ -95,7 +95,7 @@
 							<table width="100%" cellspacing="0" cellpadding="0">
 					
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home.php">{user_login}</a></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home/index.php">{user_login}</a></td>
 								</tr>
 <!-- BEGIN loged_in -->
 								<tr class="divSideboxEntry">

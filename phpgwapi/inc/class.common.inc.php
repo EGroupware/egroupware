@@ -644,7 +644,7 @@
 			{
 				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			if ($appname == 'logout' || $appname == 'login')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -678,7 +678,7 @@
 			{
 				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about')
+			if ($appname == 'logout' || $appname == 'login' || $appname == 'about')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -779,7 +779,7 @@
 			{
 				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			if ($appname == 'logout' || $appname == 'login')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -1108,10 +1108,7 @@
 		*/
 		function navbar()
 		{
-			$GLOBALS['egw_info']['navbar']['home']['title'] = 'Home';
-			$GLOBALS['egw_info']['navbar']['home']['url']   = $GLOBALS['egw']->link('/home.php');
-			$GLOBALS['egw_info']['navbar']['home']['icon']  = $this->image('phpgwapi',Array('home','nonav'));
-			$GLOBALS['egw_info']['navbar']['home']['icon_hover']  = $this->image_on('phpgwapi',Array('home','nonav'),'-over');
+			
 
 			list($first) = each($GLOBALS['egw_info']['user']['apps']);
 			if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
@@ -1170,7 +1167,7 @@
 //					}
 				}
 			}
-			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'home' || $GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
+			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
 			{
 				$app = $app_title = 'eGroupWare';
 			}

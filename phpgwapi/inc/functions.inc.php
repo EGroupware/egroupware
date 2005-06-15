@@ -442,8 +442,7 @@
 		/*************************************************************************\
 		* Verify that the users session is still active otherwise kick them out   *
 		\*************************************************************************/
-		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
-			$GLOBALS['egw_info']['flags']['currentapp'] != 'about')
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'about')
 		{
 			// This will need to use ACL in the future
 			if (! $GLOBALS['egw_info']['user']['apps'][$GLOBALS['egw_info']['flags']['currentapp']] ||
