@@ -1,0 +1,96 @@
+Application Hooks for Idots2
+
+Introduction
+
+Since Idots2 is a new template and it contains some new features, to make an application that will benefit as much as possible from these new features they can contain one or more of the next hooks. 
+
+
+Toolbar hook
+
+To enable faster control of application's we have created an hook for a toolbar in application windows. Application don't need to use the toolbar but it is probably usefull for most application. 
+To enable the hook you should create a hook called "toolbar" in your application. 
+Example of this implementation can be found in:
+Calendar
+
+
+Example
+
+class.toolbar.inc.php
+class toolbar
+{
+	function toolbar()
+	{
+		$toolbar = Array();
+		$toolbar["name"] = Array(
+				"title" => "title",
+				"image" => "image",
+				"url" => "url");
+		return $toolbar;
+	}
+}
+
+Menu hooks
+
+If there is a hook  ?menu? is in your application then those will be the menu-items for the window menu, else the items of the sideboxmenu will be used as menu-items. So if you would like to change the categories of the menu or add/remove items it can be easy done for only the Idots2 template without loosing control in the other templates.
+Examples of this implementation can be found in:
+Calendar
+
+
+Example
+
+class calendarmenu
+{
+
+	function calendarmenu()
+	{
+		$menu = Array();
+		$menu['File']= Array(
+				'New Entry'   => "link",
+				'New Entry'   =>"link",
+				'New Entry'   =>"link"
+				);
+
+
+
+		return $menu;
+	}
+
+}
+
+Notify Hook
+
+To hook into the notification's make a hook called ?notify?, it should be a function returning a string with the message or an empty string if there is nothing to notify. Make sure you use a good classname, i.e. [applicationname]notify, because classes can't be redeclared.
+Examples of this implementation can be found in:
+Messenger
+Calendar
+
+Example
+
+class messengernotify
+{
+
+
+	function notify()
+	{
+		if(count($newmessages) > 0)
+		{			
+			return ?You have ?.count($newmessages).? new messages.?;
+
+		}
+	return  False;
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

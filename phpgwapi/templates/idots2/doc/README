@@ -17,9 +17,6 @@ made by Tim Dagger (http://www.essorant.com).
 
 Applications can hook into the following items:
 
-Please do not hook into them at this moment, it is still in
-development.
-
 - Toolbar 
 - Menu
 
@@ -45,7 +42,3 @@ See the License file.
 - Avans Hogeschool Den Bosch (Netherlands)
 - Tim Dagger for letting us use the skin.
 - Coffee ;)
-
-
-
-
