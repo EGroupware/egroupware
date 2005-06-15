@@ -153,6 +153,20 @@
 	{
 		$passwd = $_POST['passwd'];
 		$passwd_type = $_POST['passwd_type'];
+
+		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
+		{
+			$eGW_remember = unserialize(stripslashes($_COOKIE['eGW_remember']));
+			
+			if($eGW_remember['login'] && $eGW_remember['passwd'] && $eGW_remember['passwd_type'])
+			{
+				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember['login'];
+				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember['passwd'];
+				$passwd_type = $eGW_remember['passwd_type'];
+				$submit = True;
+			}
+		}
+		
 	}
 
 	# Apache + mod_ssl style SSL certificate authentication
@@ -194,6 +208,7 @@
 		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
+			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
@@ -219,10 +234,40 @@
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
+			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
 		{
+			/* set auth_cookie  */
+			if($GLOBALS['egw_info']['server']['allow_cookie_auth'] && $_POST['remember_me'] && $_POST['passwd'])
+			{
+				switch ($_POST['remember_me'])
+				{
+					case '1hour' :
+						$remember_time = time()+60*60;
+						break;
+					case '1day' :
+						$remember_time = time()+60*60*24;
+						break;
+					case '1week' :
+						$remember_time = time()+60*60*24*7;
+						break;
+					case '1month' :
+						$remember_time = time()+60*60*24*30;
+						break;
+					case 'forever' :
+					default:
+						$remember_time = 2147483647;
+						break;
+				}
+				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember',serialize(array(
+					'login' => $login,
+					'passwd' => $passwd,
+					'passwd_type' => $passwd_type)),
+					$remember_time); 
+			} 
+			
 			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
 			    $_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
@@ -314,8 +359,7 @@
 		}
 		$domain_select .= "</select>\n";
 		$tmpl->set_var('select_domain',$domain_select);
-}
-
+	}
 	elseif($last_loginid !== '')
 	{
 		reset($GLOBALS['egw_domain']);
@@ -325,6 +369,12 @@
 		{
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
+	}
+	if(!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
+	{
+		  /* trick to make domain section disapear */
+		  $tmpl->set_block('login_form','domain_selection');
+		  $tmpl->set_var('domain_selection','');
 	}
 
 	foreach($_GET as $name => $value)
@@ -352,6 +402,12 @@
 	if($config_reg[enable_registration]=='True' && $config_reg[register_link]=='True')
 	{
 		$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+	}
+	else
+	{
+		  /* trick to make registration section disapear */
+		  $tmpl->set_block('login_form','registration');
+		  $tmpl->set_var('registration','');
 	}
 
 	$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
@@ -410,6 +466,32 @@
 		$tmpl->set_var('language_select','');
 	}
 
+	/********************************************************\
+	* Check if authentification via cookies is allowed       *
+	* and place a time selectbox, how long cookie is valid   *
+	\********************************************************/
+	
+	if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
+	{
+		$html = CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
+		$tmpl->set_block('login_form','remember_me_selection');
+		$tmpl->set_var('lang_remember_me',lang('Remember me'));
+		$tmpl->set_var('select_remember_me',$html->select('remember_me', 'forever', array(
+			false => lang('not'),
+			'1hour' => lang('1 Hour'),
+			'1day' => lang('1 Day'),
+			'1week'=> lang('1 Week'),
+			'1month' => lang('1 Month'),
+			'forever' => lang('Forever')),true
+		));
+	}
+	else
+	{
+		  /* trick to make remember_me section disapear */
+		  $tmpl->set_block('login_form','remember_me_selection');
+		  $tmpl->set_var('remember_me_selection','');
+	}
+	
 	$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
 	$tmpl->pfp('loginout','login_form');
