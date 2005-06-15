@@ -162,10 +162,10 @@
 			$querymethod = '';
 			if($query)
 			{
-				$querymethod .= " WHERE hol_locale LIKE ".$this->db->quote('%'.$query.'%');
+				$querymethod = 'hol_locale LIKE '.$this->db->quote('%'.$query.'%');
 			}
 		
-			if(preg_match('/[a-zA-Z0-9_,]+/',$order))
+			if(preg_match('/^[a-zA-Z0-9_,]+$/',$order))
 			{
 				$querymethod .= ' ORDER BY '.$order;
 			}
