@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	<TITLE>System Message</TITLE> <SCRIPT>	
+ var xDT = parent.xDT;
+ var ppath = "../../";
+ if (xDT.resPath().match(/:\/\//)) ppath = "";
+ document.write('<link rel="stylesheet" type="text/css" href="' + ppath + xDT.resPath() + 'skins/' + xDT.dSkin() + '/' + xDT.dSkin() + '.css' + '">');
+</SCRIPT> 
+  </HEAD> 
+  <BODY> 
+	<TABLE CELLPADDING="3" CELLSPACING="0" WIDTH="100%" HEIGHT="100%"> 
+	  <TR> 
+		<TD
+		 STYLE="width: 100%; height: 100%; color: #000000; background-color: #ffffc0"
+		 ALIGN="LEFT" VALIGN="TOP"><SCRIPT>document.write('<pre>' + xDT.sysMessage() + '</pre>')</SCRIPT></TD> 
+	  </TR> 
+	</TABLE> </BODY>
+</HTML>

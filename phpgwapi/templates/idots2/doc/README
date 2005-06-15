@@ -1,0 +1,51 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   IDOTS2 TEMPLATE SET FOR eGroupWare
+   http://www.idots2.org
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Idots2 is based on the x-desktop project. 
+(http://www.x-desktop.org)
+
+The theme is based on the Retro skin for Windowsblind 
+made by Tim Dagger (http://www.essorant.com). 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+++ Hooks ++
+
+Applications can hook into the following items:
+
+Please do not hook into them at this moment, it is still in
+development.
+
+- Toolbar 
+- Menu
+
+++ License ++
+
+The Idots2 template set is published under the GPL license.
+See the License file.
+
+
+
+++ Copyright ++
+
+- Lingewoud B.V. http://www.lingewoud.nl
+- Edo van Bruggen edovanbruggen[at]raketnet.nl
+- Rob van Kraanen rvkraanen[at]gmail.com
+
+
+
+++ Special thanks to ++
+
+- Pim Snel/ Lingewoud B.V. for providing this oppurtunity 
+  and sponsoring.
+- Avans Hogeschool Den Bosch (Netherlands)
+- Tim Dagger for letting us use the skin.
+- Coffee ;)
+
+
+
+

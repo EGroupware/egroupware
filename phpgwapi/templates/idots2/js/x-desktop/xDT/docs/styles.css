@@ -1,0 +1,50 @@
+body {
+	scrollbar-3dlight-color : #ffffff;
+	scrollbar-arrow-color : #ffffff;
+	scrollbar-base-color : #000000;
+	scrollbar-darkshadow-color : #d6d6d6;
+	scrollbar-face-color : #005294;
+	scrollbar-highlight-color : #e6e6e6;
+	scrollbar-shadow-color : #000000;
+	scrollbar-track-color : #e0e0e0;
+}
+.button {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #d6d6d6; color: #005294; font-size: 11px; border: 1px #005294 solid; }
+.button2 {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; color: #b5b5b5; font-size: 11px; border: 1px #005294 solid; }
+.button3 {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; color: #d6d6d6; font-size: 11px; border: 1px #d6d6d6 solid; }
+
+.cross  {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; color: #b5ceef; font-weight: normal;}
+.browser  {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; color: #b5cee7; font-weight: normal;}
+
+.pre {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #FFFFEB; color: #000000; font-size: 11px; font-weight: normal;}
+
+.black {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; color: #000000;}
+.red {color: #ce0000}
+.TDheader {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; font-size: 12px; color: #ffffff;}
+.TDsubheader {font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #d6d6d6; font-size: 11px; color: #000000;}
+.TDbox {border: 1px #005294 solid; }
+
+.TDdark { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; color: #d6d6d6; font-weight: normal;}
+.darkbgr {background-color: #004284}
+
+.a_button:link, .a_button:visited, .a_button:active { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #d6d6d6; color: #005294; font-size: 11px; }
+.a_button:hover { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #d6d6d6; color: #ce0000; font-size: 11px; }
+
+.a_button3:link, .a_button3:visited, .a_button3:active { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; color: #d6d6d6; font-size: 11px; }
+.a_button3:hover { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; background-color: #005294; color: #ffffff; font-size: 11px; }
+
+.a_white:link, .a_white:visited, .a_white:active { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: underline; color: #FFFFFF; font-size: 11px; }
+.a_white:hover { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: underline; color: #ce0000; font-size: 11px; }
+
+
+TD { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: none; color: #000000; font-size: 11px; }
+A:link, A:visited, A:active { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: underline; color: #000000; font-size: 11px; }
+A:hover { font-family: Verdana, Arial, sans-serif, Helvetica; text-decoration: underline; color: #ce0000; font-size: 11px; }
+
+.dochdr {background-color: #ce0000; color: #ffffff ; padding: 5 px }
+.dochdr2 {background-color: #ce0000; color: #ffffff ; padding: 2 px }
+.pgbreak { page-break-before: always;}
+
+.q_button { background-color: #E6E6E6; color: #000000; font-size: 11px; border: 1px outset transparent;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; }
+.q_submit { background-color: #ced6e7; color: #000000; font-size: 11px; border: 1px outset transparent;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; }
+.q_text { background-color: #c6c6bd; color: #000000; font-size: 11px; border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; }
+.q_select { background-color: #ced6e7; color: #000000; font-size: 11px; border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; }

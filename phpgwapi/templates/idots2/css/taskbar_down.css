@@ -1,0 +1,114 @@
+div#taskbar {
+        border-top: 2px solid #000;
+        color: #D4D4D4;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        z-index: 9999;
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/menu_back.png');
+        padding-top: 2px;
+
+}
+div#tb {
+
+        float:left;
+        margin-top: 0;
+        margin-left: 5px;
+        font-size: 14px;
+        font-weight: 900;
+        cursor: pointer;
+        width: 23px;
+        height: 22px;
+}
+img#launch {
+        margin-top: 0;
+        margin-left: 4px;
+        cursor: pointer;
+        vertical-align: bottom;
+        display: block;
+        float: left;
+        clear: none;
+        width: 66px;
+        height: 22px;
+}
+
+div#clock {
+        float: right;
+        margin-top: 0;
+        margin-right: 2px;
+        width: 190px;
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 6px;
+        color: #000;
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/back_clock.png');
+        font-size: 11px;
+        height: 20px;
+        font-weight: 900;
+
+        cursor: pointer;
+        text-align: center;
+}
+a#warning {
+        display: none;
+        position: absolute;
+        bottom: 2px;
+        right: 210px;
+        z-index: 99999;
+}
+a.noclock#warning  {
+        right: 10px;
+}
+ul#notify {
+        position: absolute;
+        display: none;
+        background: #FFF;
+        bottom: 24px;
+        right: 50px;
+        border: 1px solid #000;
+        z-index: 111111;
+        padding-left: 15px;
+}
+ul#notify li {
+        padding: 2px;
+
+}
+
+
+
+div#clock span {
+        font-size: 15px;
+}
+
+img#xdesktoplogo
+{
+        position:absolute;
+        right:5px;
+        top:5px;
+        z-index: 2;
+        height: 60px;
+        width:160px;
+}
+
+img#egroupwarelogo
+{
+        position:absolute;
+        left:5px;
+        top:5px;
+        z-index: 2;
+        height: 114px;
+        width: 190px;
+}
+#launchmenu
+{
+        position: absolute;
+        bottom: 34px;
+        _bottom: 32px;
+        margin: 0;
+        left: 0;
+        z-index: 111111;
+        overflow: hidden;
+
+}

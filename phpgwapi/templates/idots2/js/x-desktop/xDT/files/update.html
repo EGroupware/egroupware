@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	<TITLE>Online Update check</TITLE> <SCRIPT>	
+ var xDT = parent.xDT;
+ var xCVersion = "";
+ var ppath = "../../";
+ if (xDT.resPath().match(/:\/\//)) ppath = "";
+ document.write('<link rel="stylesheet" type="text/css" href="' + ppath + xDT.resPath() + 'skins/' + xDT.dSkin() + '/' + xDT.dSkin() + '.css' + '">');
+ function DisplayUpdate() {
+  if (xCVersion == "") document.write('&lt;Online Update not available&gt;'); 
+  else document.write(xCVersion);
+ }
+ function DisplayDownload() {
+  if (xCVersion != "" && xCVersion != xDT.version()) document.write('<b style="background-color: #FFFFFF; color: #FF0000">Update recommended ! </b>&nbsp;&nbsp;<a href="http://www.x-desktop.org" target="_blank">Go to x-desktop.org</a>');
+  else if (xCVersion != "" && xCVersion == xDT.version()) document.write("<b style=\"background-color: #FFFFFF; color: #FF0000\">Congratulations. You've got the most recent release !</b>");
+ }
+ </SCRIPT> <SCRIPT TYPE="text/javascript" SRC="http://www.x-desktop.org/xDT.currentversion.js"></SCRIPT> 
+  </HEAD> 
+  <BODY> 
+	<TABLE CELLPADDING="5" CELLSPACING="0" ALIGN="CENTER"> 
+	  <TR> 
+		<TD><B>Your version:</B></TD> 
+		<TD><SCRIPT>document.write(xDT.version())</SCRIPT></TD> 
+	  </TR> 
+	  <TR> 
+		<TD><B>Most recent version:</B></TD> 
+		<TD><SCRIPT>DisplayUpdate()</SCRIPT></TD> 
+	  </TR> 
+	  <TR> 
+		<TD COLSPAN="2" ALIGN="CENTER"><SCRIPT>DisplayDownload()</SCRIPT></TD> 
+	  </TR> 
+	</TABLE> </BODY>
+</HTML>

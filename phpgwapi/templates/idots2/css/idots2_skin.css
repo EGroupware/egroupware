@@ -1,0 +1,328 @@
+html, body {
+        scrollbar-3dlight-color : #000000;
+        scrollbar-arrow-color : #000000;
+        scrollbar-base-color : #000000;
+        scrollbar-darkshadow-color : #000000;
+        scrollbar-face-color : #C6C6C6;
+        scrollbar-highlight-color : #C6C6C6;
+        scrollbar-shadow-color : #000000;
+        scrollbar-track-color : #e0e0e0;
+        font-family: Verdana, Arial, sans-serif, Helvetica;
+        font-style: normal;
+        text-decoration: none;
+        font-size: 11px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+}
+
+div.xDT_clsCBE
+{
+        position:absolute; visibility:hidden; top: 0px; left: 0px;
+        width:100%; height:100%; clip:rect(0,100%,100%,0); overflow: hidden;
+        color: #000000; margin:0px;
+        padding-bottom: 2px;
+        _padding-bottom: 50px;
+}
+
+#xdesktop
+{
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+}
+
+
+
+.xF_button { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #ffffff;  font-size: 11px;}
+.xF_submit { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_text { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_textarea { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_select { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal; text-decoration: none; font-size: 11px;}
+.xF_title {color: #000000; font-size: 12px; font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;}
+.xF_a_button:link, .xF_a_button:visited, .xF_a_button:hover, .xF_a_button:active { font-family: Verdana, Arial, sans-serif;  font-size: 11px; font-weight: normal; color:#FFFFFF; text-decoration:underline }
+
+a:link, a:visited, a:hover, a:active  { font-family: Verdana, Arial, sans-serif;  font-size: 11px; font-weight: normal; color:#000000; text-decoration:underline }
+TD {color: #000000; font-size: 11px; font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;}
+
+.posabs {position: absolute }
+.xDT_moveWindow {
+        font-family: Verdana, Arial, sans-serif, Helvetica;
+        text-decoration: none;
+        background-color: transparent;
+        color: #000000;
+        font-size: 10px;
+        border: 1px #000 solid;
+
+}
+img {
+        border: none;
+}
+
+img#backstretched {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top:0;
+        padding: 0;
+        margin: 0;
+        z-index: 1;
+}
+
+#launchmenu ul
+{
+        display: block;
+        list-style-type: none;
+        float: left;
+        margin: 0;
+        margin-left: -1px;
+        width: 235px;
+        padding: 0;
+        border: 1px solid #7e7e7e;
+        background-color: #FFF;
+}
+#launchmenu ul li
+{
+        display: block;
+        width: 240px;
+        margin-right: 2px;
+        margin-left: 2px;
+        padding: 0;
+        clear: both;
+        float: left;
+        vertical-align: middle;
+}
+
+#launchmenu ul li img
+{
+        display: block;
+        float: left;
+        width: 20px;
+        height: 20px;
+        margin: 1px;
+        margin-right: 10px;
+}
+#launchmenu ul li a
+{
+        display: block;
+        font-size: 16px;
+        margin: 2px;
+        text-decoration: none;
+        overflow: hidden;
+	   height: 20px;
+}
+#launchmenu ul li a:hover
+{
+        display: block;
+        border: 1px solid #A24533;
+        margin: 1px;
+        padding-right: 3px;
+
+
+}
+#launchmenu ul li.programs
+{
+	background-color: #F00;        
+	background-image: url('../js/x-desktop/xDT/skins/IDOTS2/menu_back.png');
+     margin: 0;
+        width: 235px;
+        padding-left: 10px;
+        height: 23px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        border-bottom: 1px solid #7e7e7e;
+
+}
+#launchmenu ul li.programs img
+{
+        width: 9px;
+        height: 23px;
+        margin: 0;
+}
+#launchmenu ul li.programs span
+{
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/btn_white_middle.png');
+        padding-left: 10px;
+
+}
+
+#launchinfo {
+        float: left;
+        background: #CCC;
+        width: 15px;
+        height: 100%;
+        display: hidden;
+}
+#tasks {
+        margin-top: 2px;
+}
+img.taskbegin {
+        float: left;
+        margin: 0;
+        margin-left: 0;
+}
+a.taskNode {
+        display:block;
+        width: 150px;
+        height: 23px;
+        float: left;
+        margin: 0;
+        margin-left: 20px;
+        text-align: center;
+        color: #000;
+        font-weight: 900;
+}
+
+a.taskNode span {
+        float: left;
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/btn_white_middle.png');
+        height: 21px;
+        margin: 0px;
+        padding: 0px;
+        padding-top: 2px;
+}
+a.taskNode2 {
+        display:block;
+        width: 150px;
+        height: 23px;
+        float: left;
+
+        margin: 0;
+        margin-left: 20px;
+        text-align: center;
+        color: #000;
+        font-weight: 900;
+}
+a.taskNode2 span {
+        float: left;
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/btn_orange_middle.png');
+        height: 21px;
+        padding-top: 2px;
+}
+img.taskend {
+        float: left;
+        margin: 0;
+
+        clear: none;
+}
+
+img.titleleft
+{
+        float: left;
+        height: 23px;
+        display: block;
+        clear: none;
+        margin-left: 10px;
+}
+span.titlemiddle
+{
+        float: left;
+        background-image: url('../js/x-desktop/xDT/skins/IDOTS2/btn_white_middle.png');
+        height: 19px;
+        padding: 0;
+        padding-top: 4px;
+        text-align: center;
+        color: #000;
+        font-weight: 900;
+        display: block;
+        clear: none;
+}
+img.titleright
+{
+        float: left;
+        height: 23px;
+        display: block;
+        clear: none;
+}
+
+ul#context, ul#context2
+{
+        position: absolute;
+        /*height: 100px;
+        width: 100px;*/
+        background-color: #FFF;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+        list-style: none;
+        padding: 0;
+        padding-right: 10px;
+        _padding-right: 0;
+        border: 1px solid #7e7e7e;
+        _width:125px;
+}
+#context li, #context2 li
+{
+        height: 100%;
+        width: 100%;
+}
+#context a, #context2 a
+{
+        border: 1px solid transparent;
+        background-color: #FFF;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 100%;
+        width: 100%;
+        padding: 2px;
+        color: #006699;
+        cursor:pointer;
+        display: block;
+        text-decoration: none;
+}
+#context a:hover, #context2 a:hover
+{
+        border: 1px solid #7e7e7e;
+        margin-top: 2px;
+        background-color: #EEE;
+        margin-bottom: 2px;
+        text-decoration:none;
+        color: #FF9933;
+        font-family: Verdana, sans-serif;
+}
+
+#tiled, #centered, #stretched
+{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+}
+#centered
+{
+        background-position: center center;
+        background-repeat: no-repeat;
+}
+
+div.shortcut
+{
+        display: block;
+        position: absolute;
+        z-index: 3;
+        text-decoration:none;
+        text-align: center;
+        padding-top: 32px;
+        _padding-top: inherit;
+}
+div.shortcut span.iex {
+        width: 32px;
+        height: 32px;
+        display: block;
+}
+
+div.shortcut span.title
+{
+        clear: left;
+        display: block;
+        background-color: #FFF;
+
+}

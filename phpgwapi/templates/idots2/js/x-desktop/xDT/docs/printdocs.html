@@ -1,0 +1,2481 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	<TITLE></TITLE> <LINK REL="stylesheet" TYPE="text/css" HREF="styles.css"> 
+  </HEAD> 
+  <BODY BACKGROUND="images/logobgr.gif" LEFTMARGIN="0" TOPMARGIN="0"
+   MARGINWIDTH="0" MARGINHEIGHT="0"> 
+	<FORM STYLE="position: absolute"> 
+	  <TABLE CELLPADDING="0" CELLSPACING="0" ALIGN="CENTER"> 
+		<TR> 
+		  <TD WIDTH="10"></TD> 
+		  <TD> 
+			<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="0"> 
+			  <TR> 
+				<TD ALIGN="CENTER" COLSPAN="2" BGCOLOR="#c6d6ef"><BR><BR><IMG
+				  SRC="logo.gif" BORDER="0" WIDTH="400" HEIGHT="106"> <BR>Documentation x-Desktop
+				  Release 1 
+				  <P
+				   ALIGN="center"><B>http://www.x-desktop.org</B></P><BR><BR></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDheader"><B>Documentation Index</B><A
+				  NAME="INDEX">&nbsp;</A></TD> 
+				<TD CLASS="TDheader" ALIGN="RIGHT"> 
+				  <SELECT CLASS="q_select" NAME="quickselect"
+				   SIZE="1"
+				   ONCHANGE="if (this.value) self.location.href = this.value; this.selectedIndex = 0;">
+					
+					<OPTION VALUE="">-- QuickJump --</OPTION> 
+					<OPTION VALUE="#xDT_checkUpdate">Online Update</OPTION> 
+					<OPTION VALUE="#xDT_docs">Onsite documentation</OPTION> 
+					<OPTION VALUE="#xDT_version">Version check</OPTION> 
+					<OPTION VALUE="#xDT_alert">xDT.alert</OPTION> 
+					<OPTION VALUE="#xDT_confirm">xDT.confirm</OPTION> 
+					<OPTION VALUE="#xDT_quit">xDT.quit</OPTION> 
+					<OPTION VALUE="#xDT_sysMessage">xDT.sysMessage</OPTION> 
+					<OPTION VALUE="#xDT_language">xDT.language</OPTION> 
+					<OPTION VALUE="#xDT_resPath">xDT.resPath</OPTION> 
+					<OPTION VALUE="#xDT_playSound">xDT.playSound</OPTION> 
+					<OPTION VALUE="#xDT_frameName">xDT.frameName</OPTION> 
+					<OPTION VALUE="#xDT_taskbar">xDT.taskbar</OPTION> 
+					<OPTION VALUE="#xDT_taskbarColor">xDT.taskbarColor</OPTION>
+					
+					<OPTION
+					 VALUE="#xDT_taskbarStatus">xDT.taskbarStatus</OPTION> 
+					<OPTION VALUE="#xDT_addWindow">xDT.addWindow</OPTION> 
+					<OPTION VALUE="#xDT_show">xDT.show</OPTION> 
+					<OPTION VALUE="#xDT_hide">xDT.hide</OPTION> 
+					<OPTION VALUE="#xDT_popupWindow">xDT.popupWindow</OPTION> 
+					<OPTION VALUE="#xDT_url">xDT.url</OPTION> 
+					<OPTION VALUE="#xDT_html">xDT.html</OPTION> 
+					<OPTION VALUE="#xDT_closeWindow">xDT.closeWindow</OPTION> 
+					<OPTION VALUE="#xDT_deleteWindow">xDT.deleteWindow</OPTION>
+					
+					<OPTION
+					 VALUE="#xDT_refreshWindow">xDT.refreshWindow</OPTION> 
+					<OPTION
+					 VALUE="#xDT_positionWindow">xDT.positionWindow</OPTION> 
+					<OPTION
+					 VALUE="#xDT_maximizeWindow">xDT.maximizeWindow</OPTION> 
+					<OPTION
+					 VALUE="#xDT_minimizeWindow">xDT.minimizeWindow</OPTION> 
+					<OPTION VALUE="#xDT_window_name">xDT.window.name</OPTION> 
+					<OPTION VALUE="#xDT_window_find">xDT.window.find</OPTION> 
+					<OPTION VALUE="#xDT_window_skin">xDT.window.skin</OPTION> 
+					<OPTION VALUE="#xDT_window_pos">xDT.window.pos</OPTION> 
+					<OPTION VALUE="#xDT_window_title">xDT.window.title</OPTION>
+					
+					<OPTION VALUE="#xDT_window_icon">xDT.window.icon</OPTION> 
+					<OPTION
+					 VALUE="#xDT_window_onClose">xDT.window.onClose</OPTION> 
+					<OPTION
+					 VALUE="#xDT_window_properties">xDT.window.properties</OPTION> 
+					<OPTION
+					 VALUE="#xDT_minimizeAllWindows">xDT.minimizeAllWindows</OPTION> 
+					<OPTION
+					 VALUE="#xDT_restoreAllWindows">xDT.restoreAllWindows</OPTION> 
+					<OPTION
+					 VALUE="#xDT_arrangeAllWindows">xDT.arrangeAllWindows</OPTION> 
+					<OPTION
+					 VALUE="#xDT_closeAllWindows">xDT.closeAllWindows</OPTION> 
+					<OPTION
+					 VALUE="#xDT_deleteAllWindows">xDT.deleteAllWindows</OPTION> 
+					<OPTION
+					 VALUE="#xDT_positionAllWindows">xDT.positionAllWindows</OPTION> 
+					<OPTION VALUE="#xDT_innerWindows">xDT.innerWindows</OPTION>
+					
+					<OPTION VALUE="#xDT_addSkin">xDT.addSkin</OPTION> 
+					<OPTION VALUE="#xDT_dSkin">xDT.dSkin</OPTION> 
+					<OPTION VALUE="#xDT_desktop_init">xDT.desktop.init</OPTION>
+					
+					<OPTION VALUE="#xDT_desktop_skin">xDT.desktop.skin</OPTION>
+					
+					<OPTION VALUE="#xDT_hideDesktop">xDT.hideDesktop</OPTION> 
+					<OPTION VALUE="#xDT_prop">xDT.prop</OPTION> 
+					<OPTION VALUE="#xDT_cbe">xDT.cbe</OPTION> 
+					<OPTION VALUE="#SKINS">Creating Skins</OPTION> 
+					<OPTION VALUE="#Prepareforskins">6 steps to your own
+					  skin</OPTION> 
+					<OPTION VALUE="#Desktop_FUN">Desktop_SKIN function</OPTION>
+					
+					<OPTION VALUE="#Windowskin_FUN">Window_SKIN
+					  function</OPTION> 
+				  </SELECT> </TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="3" CELLSPACING="3" WIDTH="100%"> 
+					<TR VALIGN="TOP"> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"><A
+						HREF="#INTRO" CLASS="a_button">Introduction</A></TD> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"> 
+						<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="0"> 
+						  <TR> 
+							<TD><A HREF="#Prepare_files">Prepare files &amp;
+							  directories</A></TD> 
+							<TD><A HREF="#Create_Frameset">1. Create
+							  Frameset</A></TD> 
+							<TD WIDTH="33%"><A HREF="#Create_baseloader">2.
+							  Create base loader</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#Create_firstappfile">3. Create first
+							  application file</A></TD> 
+							<TD></TD> 
+							<TD></TD> 
+						  </TR> 
+						</TABLE></TD> 
+					</TR> 
+					<TR VALIGN="TOP"> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"><A
+						HREF="#METHODS" CLASS="a_button">Methods</A></TD> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"> 
+						<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="0"> 
+						  <TR> 
+							<TD COLSPAN="2"><B>Global stuff</B></TD> 
+							<TD WIDTH="25%"></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#Desktop_initialization">Desktop
+							  initialization</A></TD> 
+							<TD><A HREF="#xDT_checkUpdate">Online Update
+							  Check</A></TD> 
+							<TD><A HREF="#xDT_docs">Onsite
+							  documentation</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_version">Version check</A></TD> 
+							<TD></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD COLSPAN="2"><B>General stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR VALIGN="TOP"> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_alert">xDT.alert</A></TD> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_confirm">xDT.confirm</A></TD> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_quit">xDT.quit</A></TD> 
+						  </TR> 
+						  <TR VALIGN="TOP"> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_sysMessage">xDT.sysMessage</A></TD> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_language">xDT.language</A></TD> 
+							<TD VALIGN="TOP" ALIGN="LEFT"><A
+							  HREF="#xDT_resPath">xDT.resPath</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_playSound">xDT.playSound</A></TD>
+							
+							<TD><A HREF="#xDT_frameName">xDT.frameName</A></TD>
+							
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD COLSPAN="2"><B>Taskbar stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_taskbar">xDT.taskbar</A></TD> 
+							<TD><A
+							  HREF="#xDT_taskbarColor">xDT.taskbarColor</A></TD> 
+							<TD><A
+							  HREF="#xDT_taskbarStatus">xDT.taskbarStatus</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD NOWRAP="NOWRAP" COLSPAN="2"><B>Single window
+							  stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_addWindow">xDT.addWindow</A></TD>
+							
+							<TD><A HREF="#xDT_show">xDT.show</A></TD> 
+							<TD><A HREF="#xDT_hide">xDT.hide</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_popupWindow">xDT.popupWindow</A></TD> 
+							<TD><A HREF="#xDT_url">xDT.url</A></TD> 
+							<TD><A HREF="#xDT_html">xDT.html</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_closeWindow">xDT.closeWindow</A></TD> 
+							<TD><A
+							  HREF="#xDT_deleteWindow">xDT.deleteWindow</A></TD> 
+							<TD><A
+							  HREF="#xDT_refreshWindow">xDT.refreshWindow</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_positionWindow">xDT.positionWindow</A></TD> 
+							<TD><A
+							  HREF="#xDT_maximizeWindow">xDT.maximizeWindow</A></TD> 
+							<TD><A
+							  HREF="#xDT_minimizeWindow">xDT.minimizeWindow</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_window_name">xDT.window.name</A></TD> 
+							<TD><A
+							  HREF="#xDT_window_find">xDT.window.find</A></TD> 
+							<TD><A
+							  HREF="#xDT_window_skin">xDT.window.skin</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_window_pos">xDT.window.pos</A></TD> 
+							<TD><A
+							  HREF="#xDT_window_title">xDT.window.title</A></TD> 
+							<TD><A
+							  HREF="#xDT_window_icon">xDT.window.icon</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_window_onClose">xDT.window.onClose</A></TD> 
+							<TD><A
+							  HREF="#xDT_window_properties">xDT.window.properties</A></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD NOWRAP="NOWRAP" COLSPAN="2"><B>Multiple window
+							  stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_minimizeAllWindows">xDT.minimizeAllWindows</A></TD> 
+							<TD><A
+							  HREF="#xDT_restoreAllWindows">xDT.restoreAllWindows</A></TD> 
+							<TD><A
+							  HREF="#xDT_arrangeAllWindows">xDT.arrangeAllWindows</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_closeAllWindows">xDT.closeAllWindows</A></TD> 
+							<TD><A
+							  HREF="#xDT_deleteAllWindows">xDT.deleteAllWindows</A></TD> 
+							<TD><A
+							  HREF="#xDT_positionAllWindows">xDT.positionAllWindows</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_innerWindows">xDT.innerWindows</A></TD> 
+							<TD></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD COLSPAN="2"><B>Desktop stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_addSkin">xDT.addSkin</A></TD> 
+							<TD><A HREF="#xDT_dSkin">xDT.dSkin</A></TD> 
+							<TD><A
+							  HREF="#xDT_desktop_init">xDT.desktop.init</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A
+							  HREF="#xDT_desktop_skin">xDT.desktop.skin</A></TD> 
+							<TD><A
+							  HREF="#xDT_hideDesktop">xDT.hideDesktop</A></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD COLSPAN="2"><B>Other stuff</B></TD> 
+							<TD></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#xDT_prop">xDT.prop</A></TD> 
+							<TD><A HREF="#xDT_cbe">xDT.cbe</A></TD> 
+							<TD></TD> 
+						  </TR> 
+						</TABLE></TD> 
+					</TR> 
+					<TR VALIGN="TOP"> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"><A
+						HREF="#SKINS" CLASS="a_button">Creating skins</A></TD> 
+					  <TD VALIGN="TOP" ALIGN="LEFT" CLASS="button"> 
+						<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="0"> 
+						  <TR> 
+							<TD><A HREF="#Prepareforskins">6 steps to your own
+							  skin</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#Desktop_FUN">The desktop_FUN()
+							  function</A></TD> 
+						  </TR> 
+						  <TR> 
+							<TD><A HREF="#Windowskin_FUN">The window
+							  skin_FUN(wName) function</A></TD> 
+						  </TR> 
+						</TABLE></TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDheader"><B>Introduction</B><A
+				  NAME="INTRO">&nbsp;</A></TD> 
+				<TD CLASS="TDheader" ALIGN="RIGHT"><A HREF="#INDEX"
+				  CLASS="a_white">top</A>&nbsp;</TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" ALIGN="LEFT" VALIGN="TOP" COLSPAN="2">Those
+				  are the steps to follow in order to start a new x-Desktop project:<BR></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" ALIGN="LEFT" VALIGN="TOP" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0"> 
+					<TR> 
+					  <TD><B>Prepare files &amp; directories</B><A
+						NAME="Prepare_files">&nbsp;</A></TD> 
+					</TR> 
+					<TR> 
+					  <TD>After download and installation we recommend copying
+						the minimum set of files &amp; directories into an new project directory. If
+						you don't want any other desktop style than DEFAULT, all x-desktop_skin_???.js
+						files are optional, as well as their corresponding xDT/skins/??? directory. The
+						sounds directory is not yet in use, we may add sound events later. The
+						cbe_slide.js file is not currently in use. However we plan to add animated
+						windows as well, therefore it is included.<BR><BR></TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre"> 
+						<PRE>
+index.html
+startup.html
+x-desktop.css
+x-desktop.html
+cbe_core.js
+cbe_event.js
+cbe_slide.js
+x-desktop_core.js
+x-desktop_skin_AEON.js
+x-desktop_skin_GNOME.js
+x-desktop_skin_KDE.js
+x-desktop_skin_NONE.js
+x-desktop_skin_OSX.js
+x-desktop_skin_OSXA.js
+x-desktop_skin_REDHAT.js
+x-desktop_skin_SBO.js
+x-desktop_skin_WIN.js
+x-desktop_skin_XP.js
+xDT
+ !-- docs
+      !--- styles.css
+      !--- docs.html
+ !-- files
+      !--- alert.html
+      !--- confirm.html
+      !--- update.html
+      !--- sysmsg.html
+ !-- images
+      !-- alert.gif
+      !-- confirm.gif
+      !-- opac.gif
+      !-- blank.gif
+ !-- skins
+      !-- DEFAULT
+           !-- DEFAULT.css
+           !-- wallpaper_default.jpg
+           !-- winclose.gif
+           !-- winclose_over.gif
+           !-- winleft.gif
+           !-- winleft_over.gif
+           !-- winmax.gif
+           !-- winmax_over.gif
+           !-- winmin.gif
+           !-- winmin_over.gif
+           !-- wintitlebgr.gif
+           !-- wintitleleft.gif
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD>&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" ALIGN="LEFT" VALIGN="TOP" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0"> 
+					<TR> 
+					  <TD><B>1. Create a Frameset (i.e. index.html)</B><A
+						NAME="Create_Frameset">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">The reason for using a frameset is
+						because of the different resizing behaviours. Some browsers do reserve a scroll
+						bar, some not. It's a nightmare, but solveable with an outer frameset. However,
+						if you are already in a frameset - go ahead and open the x-desktop.html in
+						it.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+&lt;HTML&gt; 
+ &lt;HEAD&gt;&lt;TITLE&gt;My Desktop&lt;/TITLE&gt;&lt;/HEAD&gt; 
+  &lt;FRAMESET ROWS="100%"&gt;
+    &lt;FRAME SRC="x-desktop.html" noresize="noresize" scrolling="no"&gt;
+    &lt;NOFRAMES&gt;&lt;BODY&gt;&lt;/BODY&gt;&lt;/NOFRAMES&gt;
+  &lt;/FRAMESET&gt;
+&lt;/HTML&gt;
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" ALIGN="LEFT" VALIGN="TOP" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0"> 
+					<TR> 
+					  <TD><B>2. Create the "base loader" (i.e.
+						x-desktop.html)</B><A NAME="Create_baseloader">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">You must load all .js except the
+						x-desktop_skin_???.js files. Those are optional and depending on the number of
+						desktops you want to use (if any). If you want to start with a different
+						desktop than DEFAULT and jump into another start funtion than "function
+						start()" - make sure you supply certain parameters to the main object
+						initialization function</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+&lt;HTML&gt; 
+  &lt;HEAD&gt; 
+    &lt;TITLE&gt;Top&lt;/TITLE&gt;
+&lt;LINK REL="stylesheet" TYPE="text/css" HREF="x-desktop.css"&gt;
+&lt;script type='text/javascript' src='cbe_core.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='cbe_event.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='cbe_slide.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_WIN.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_OSX.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_OSXA.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_KDE.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_GNOME.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_SBO.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_XP.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_AEON.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_REDHAT.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_skin_NONE.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='x-desktop_core.js'&gt;&lt;/script&gt;
+
+  &lt;/HEAD&gt; 
+&lt;BODY&gt;
+&lt;script&gt;
+ var xDT = new xDesktop();
+ function start() {
+  xDT.desktop.init();
+  xDT.addWindow('test','Desktop Startup Window: x-desktop.html',500,350,'center',0);
+  xDT.url("test",'startup.html');
+  xDT.show("test");
+ }
+}
+&lt;/script&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" ALIGN="LEFT" VALIGN="TOP" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0"> 
+					<TR> 
+					  <TD><B>3. Create the first application file (i.e.
+						startup.html)</B><A NAME="Create_firstappfile">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This is the basic outline of any file
+						loaded into a x-Desktop window. However this a recommendation - but loading the
+						appropiate style sheet and using the common classes ensures the compatibilty
+						when switching between different desktops.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+&lt;HTML&gt; 
+ &lt;HEAD&gt;&lt;TITLE&gt;Basic Outline&lt;/TITLE&gt; 
+  &lt;SCRIPT&gt; 
+   var xDT = parent.xDT; // reference to the parent xDT object
+   document.write('&lt;link rel="stylesheet" type="text/css" href="' + 
+                    xDT.resPath() + 'skins/' + xDT.dSkin() + '/' + 
+                    xDT.dSkin() + '.css' + '"&gt;'); // the skin css
+  &lt;/SCRIPT&gt; 
+ &lt;/HEAD&gt; 
+ &lt;BODY LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"&gt; 
+  ...put your stuff here ...
+ &lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE> </TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDheader" COLSPAN="2"><B>Methods</B><A
+				  NAME="METHODS">&nbsp;</A></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">Desktop initialization</B><A
+						NAME="Desktop_initialization">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">You must name the main x-Desktop object
+						xDT ! You can supply 4 optional parameters, if none are supplied, default is
+						used<BR>1. Resource Path: could be local or remote (http://), don't forget the
+						trailing '/'<BR>2. Default startup desktop: i.e. 'XP', if you want to start
+						with XP<BR>3. Number of internal maximum window objects: default is 50 (min: 20
+						max: 500)<BR>4. Name of function which will be executed after desktop
+						initialization<BR>5. First call must be xDT.desktop.init();<BR></TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+var xDT = new xDesktop('./xDT/','DEFAULT',50,start);
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example default startup</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+var xDT = new xDesktop();
+function start() {
+  xDT.desktop.init();
+  //... now you can add windows, apply methods etc...
+  win = xDT.addWindow('windowname','window title',360,190,'center');
+  xDT.url(win,'anyfile.html');
+  xDT.show(win);
+}
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.addWindow</B><A
+						NAME="xDT_addWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">The main method to add a new window to
+						the desktop. It may take several parameters and returns the name of the
+						successfully created window or 0 in case of error</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+var win = xDT.addWindow(wName,wTitle,wWidth,wHeight,wPos,wSkin)
+windowName: only characters and numbers, no spaces, 
+            default: "w" + number (in case not name given)
+windowTitle: as you like
+windowWidth: 1 .... 10000, default 300
+windowHeight: 1 .... 10000, default 200
+windowPos: "x,y" or 
+           "center","n","s","e","w","ne","nw","se","sw" or
+           'windowname:T|B|L|R:Offset' in case you want the position
+                                         relative to another existing window
+            windowname: must be an existing window
+            dock to T(op), B(ottom), L(eft) or R(ight) side of window
+            Offset in px: space between borders of the 2 windows 
+windowSkin: if not specified uses same name as Desktop Skin
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example windows</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+  //centered window
+  win = xDT.addWindow('main','This is the main window',360,190,'center');
+  //north-east window
+  win = xDT.addWindow('main','This is the main window',360,190,'ne');
+  //absolut positioned window, 100px from left and 200 px from top
+  win = xDT.addWindow('main','This is the main window',360,190,'100,200');
+  //dock to Left side of window 'menu' with 5 px space
+  win = xDT.addWindow('main','This is the main window',360,190,'menu:L:5');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.docs</B><A
+						NAME="xDT_docs">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method allows you to access the
+						local documentation</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.docs(anker)
+anker: direct anker inside the document
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.docs(); // opens top of docu
+xDT.docs('addWindow'); // jumps to addWindow doc
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.checkUpdate</B><A
+						NAME="xDT_checkUpdate">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method will check your current
+						version against the public release. </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.checkUpdate()
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+&lt;INPUT CLASS="xF_button" TYPE="button" VALUE="Update" ONCLICK="xDT.checkUpdate()"&gt;
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.show</B><A
+						NAME="xDT_show">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method will make an existing window
+						visible, sets visibility to "true" and returns "true"</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.show(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+win = xDT.addWindow('main','This is the main window',360,190,'center');
+xDT.show(win)
+// or hardcoded name
+xDT.addWindow('test','This is a test window',360,190,'center');
+xDT.show('test');
+if ( xDT.show('test') ) xDT.alert('test is visible');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.hide</B><A
+						NAME="xDT_hide">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method will make an existing window
+						invisible, sets visibility to "false" and returns "true"</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.hide(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+win = xDT.addWindow('main','This is the main window',360,190,'center');
+xDT.show(win); // show window
+xDT.hide(win); // hide window
+// or hardcoded name
+xDT.addWindow('test','This is a test window',360,190,'center');
+xDT.show('test');
+xDT.hide('test');
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.popupWindow</B><A
+						NAME="xDT_popupWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method will make an existing window
+						visible and sets the z-Index to the highest value, keeping it therefor on top
+						of all other windows. Good use to bring a window on top of all others if
+						clicked anywhere in the &lt;body&gt;&lt;/body&gt; area. Returns the window
+						name.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.popupWindow(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+win = xDT.addWindow('main','This is the main window',360,190,'center');
+xDT.popupWindow(win)
+// or hardcoded name
+xDT.addWindow('test','This is a test window',360,190,'center');
+xDT.popupWindow('test');
+// HTML Example - tricky: create, popup and assign url in one statement
+&lt;input type="button" value="google" 
+ onclick="xDT.url(xDT.popupWindow(xDT.addWindow()),'http://www.google.de')"&gt;
+// in Body Tag of an application html file to bring window on top
+// strip of "xDTiF_" which is the iFrame name, 
+// followed by the window name, with method xDT.window.name()
+&lt;BODY onclick="xDT.popupWindow(xDT.window.name(window.name))"&gt;  
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.url</B><A
+						NAME="xDT_url">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Load an URL into a created window. If you
+						load a URL of which you have no control, make sure it will not break out of
+						your frame using target "_top" anywhere. Check external URLs before open them
+						in a x-Desktop window.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.url(windowName,URL)
+windowName: Name of existing window
+URL: any URL or file (if local to relative path)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addWindow('google','google.com',360,190,'center');
+xDT.url('google','http://www.google.com');
+// local file
+xDT.url('local','test.html');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.html</B><A
+						NAME="xDT_html">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Writes any HTML code into an existing
+						window. Please note, that all code will be kept in your "base loader" file, so
+						make sure you load any extra css files etc. in case you are refereing to any
+						specific style sheet classes</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.html(windowName,HtmlCode)
+windowName: Name of existing window
+HtmlCode: any valid HTML Code, which could reside inside the &lt;body&gt;&lt;/body&gt; tag.
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addWindow('test','This is a test window',360,190,'center');
+xDT.html('test','&lt;table align="center"&gt;&lt;tr&gt;&lt;td&gt;This is a cell&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.taskbar</B><A
+						NAME="xDT_taskbar">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">When called with an existing window name
+						it will put the window to the taskbar. If called without an window name it will
+						re-arrange the taskbar. After minimizing a window the taskbar will be
+						automatically re-arranged, so there is normally no need to call this method
+						without argument.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.taskbar(windowName)
+windowName: Name of existing window
+or
+xDT.taskbar()
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addWindow('test','This is a test window',360,190,'center');
+xDT.taskbar('test'); // minimize this window and put it in taskbar
+.....
+xDT.taskbar(); //re-arrange taskbar
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.alert</B><A
+						NAME="xDT_alert">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This Method is an replacement for the
+						message box created by javascript: alert() function. The main difference is
+						that program execution will not stop ! The screen will darken and the user can
+						only push the 'OK' button. Because opacity does not work correctly or stable in
+						other browsers than IE so far, we "fake" the opacity with an image, making the
+						screen "shatter" a little bit, but still readable. </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(message)
+message: any string
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert('This is a message');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.confirm</B><A
+						NAME="xDT_confirm">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This Method is an replacement for the
+						confirm box created by javascript: confirm() function. The main difference is
+						that program execution will not stop ! Therefore you can pass a function to the
+						method in case the user hits 'OK' or 'Cancel'. The screen will darken and the
+						user can only push the 'OK' or 'Cancel' button. Because opacity does not work
+						correctly or stable in other browsers than IE so far, we "fake" the opacity
+						with an image, making the screen "shatter" a little bit, but still readable.
+						</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.confirm(message,cOK,cCANCEL)
+message: any string
+cOK: confirm OK function supplied as string or function 
+cCANCEL: confirm CANCEL function supplied as string or function
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+// use string if passing arguments
+xDT.confirm('Close this application ?',"CloseApp('now')","ContinueApp(1)"; 
+// use function if no arguments
+xDT.confirm('Close this application ?',parent.CloseApp,parent.ContinueApp); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.quit</B><A
+						NAME="xDT_quit">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method executes whatever function is
+						passed to an xDT.confirm method. Normally there is no need to call this
+						method,it will be called automatically from the alert/confirm.html file in the
+						resource files/ directory.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.quit(param)
+param: 'cOK' or 'cCANCEL'
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.quit('cOK'); // executes confirm cOK function, if any
+xDT.quit('cCANCEL'); // executes confirm cCANCEL function, if any
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.language</B><A
+						NAME="xDT_language">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Sets or gets the current language. We
+						recommend to use the ISO abbreviations. Currently only "" = default and GERMAN
+						'de' is being used (alert/confirm.html). </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.language(language)
+language: any string (iso abbreviation recommended)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.language('de'); // sets the language to 'de' 
+xDT.language(); // returns 'de'
+if (xDT.language() == 'de') xDT.alert('Language is German');
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.resPath</B><A
+						NAME="xDT_resPath">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Sets or gets the resource path. Don't
+						forget to put a trailing '/' (slash) as last character when changing the
+						resource path.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.resPath(resourcepath)
+resourcepath: any URL or local/relative path
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+//display current resource path
+xDT.alert('Current resource path is ' + xDT.resPath()); 
+xDT.resPath('http://intranet/xDT/');
+xDT.resPath('./xDT/'); // default
+// sets the path to local drive e:/home/...
+xDT.resPath('file:///e|/home/xdesktop/xDT/'); </PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.deleteWindow</B> or
+						<B CLASS="dochdr">xDT.closeWindow</B><A NAME="xDT_deleteWindow">&nbsp;</A><A
+						NAME="xDT_closeWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Deletes/closes a window, freeing the
+						resources for a new one.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.deleteWindow(windowName,windowCommand)
+windowName: Name of existing window
+windowCommand: optionally 'KILL' (any assigned closing function will be ignored)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+// deletes window test
+xDT.deleteWindow('test'); 
+// deletes window test does not execute any closing function (fClose property)
+xDT.deleteWindow('test','KILL'); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.refreshWindow</B><A
+						NAME="xDT_refreshWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Refreshes a window (reloads the content)
+						and optionally changes the window skin.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.refreshWindow(windowName,windowSkin)
+windowName: Name of existing window
+windowSkin: a valid skin 
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addWindow('test','This is a test window',360,190,'center','XP');
+xDT.refreshWindow('test'); // refresh
+xDT.refreshWindow('test',OSXA); // refresh &amp; set skin to OS X Aqua
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.positionWindow</B><A
+						NAME="xDT_positionWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Positions a window within the defined
+						borders of the desktop. Normally there's no need to call this method. During
+						drag&amp;drop and/or resize operations it will be done automatically.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.positionWindow(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.positionWindow('test'); //position Window 'test'
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.maximizeWindow</B><A
+						NAME="xDT_maximizeWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Maximizes a window to full screen.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.maximizeWindow(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.maximizeWindow('test'); //put Window 'test' to full screen
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.minimizeWindow</B><A
+						NAME="xDT_minimizeWindow">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Same as xDT.taskbar</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.minimizeWindow(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.minimizeWindow('test'); //put Window 'test' to the taskbar
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.innerWindows</B><A
+						NAME="xDT_innerWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method hides or shows all windows
+						except the window passed as first argument. This is usefull for window moving
+						operations in order to avoid disruption with mouseover events etc.. Except you
+						write a special function, you probably don't need to call this method.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.innerWindows(windowName,status)
+windowName: Name of existing window
+status: 'hide' or 'show'
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.innerWindows('test','hide'); // hide all windows except window 'test'
+xDT.innerWindows('test','show'); // show all windows, 
+                                    leave 'test' as is (normally shown as well)
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.positionAllWindows</B><A
+						NAME="xDT_positionAllWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Positions all windows. Invoked
+						after/during resizing of the x-Desktop by the system itself. Except you write a
+						special function, you probably don't need to call this method.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.positionAllWindows
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.positionAllWindows(); //re-positions all Windows
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.minimizeAllWindows</B><A
+						NAME="xDT_minimizeAllWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Does minimize all windows to the taskbar
+						except the one passed as argument</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.minimizeAllWindows(windowName)
+windowName: Name of existing window (optional)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.minimizeAllWindows(); //minimizes all windows
+xDT.minimizeAllWindows('test'); //minimizes all windows except window 'test'
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.closeAllWindows</B> or
+						<B CLASS="dochdr">xDT.deleteAllWindows</B><A
+						NAME="xDT_closeAllWindows">&nbsp;</A><A
+						NAME="xDT_deleteAllWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Closes / deletes all windows except the
+						one passed as argument</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.closeAllWindows(windowName,option)
+windowName: name of existing window (optional)
+option: could be 'KILL'or any value evaluating true (i.e. 1)
+        in order avoid that any closing function will be executed
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+// does close all windows with no attached closing function
+xDT.closeAllWindows(); 
+// does close all windows with no attached closing function, skipping window 'test'
+xDT.closeAllWindows('test'); 
+// does close all windows, skipping window 'test'
+xDT.closeAllWindows('test',1); 
+// both do close all windows
+xDT.closeAllWindows('','KILL'); 
+xDT.closeAllWindows('',1); 
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.restoreAllWindows</B><A
+						NAME="xDT_restoreAllWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Does restore all minimized windows from
+						taskbar to their previous position</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.restoreAllWindows
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.restoreAllWindows(); // does restore all windows
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.arrangeAllWindows</B><A
+						NAME="xDT_arrangeAllWindows">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Does arrange all windows except the
+						optional window passed as last argument</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.arrangeAllWindows(startX,startY,offsetX,offsetY,windowName)
+startX: number of px from left (for first window)
+startY: number of px from top  (for first window)
+offsetX: accumulating offset of px from left for following windows...
+offsetY: accumulating offset of px from top for following windows...
+windowName: ame of existing window (optional), which will be skipped
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+// arrange all Windows with a 20x20 offset starting at 0,0 of usable desktop area
+xDT.arrangeAllWindows();
+xDT.arrangeAllWindows(0,20,0,20); // same 1st example (default values)
+
+// arrange all windows except 'qrmenu', all windows from left 250, no offset and
+//   from top 20, then accumulating offset of 30 px (250/0 and 20/30)
+//   this is a vertical alignment of all windows
+xDT.arrangeAllWindows(250,20,0,30,'qrmenu')
+
+// do a horizontal alignment, skip window 'qrmenu'
+xDT.arrangeAllWindows(250,20,30,0,'qrmenu')
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.frameName</B><A
+						NAME="xDT_frameName">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Returns the Inline Window Name (frame
+						name) of a x-Desktop window to be used as a target attribute for Forms / and
+						HREFs. The inline window frame is always "xDTiF_" + windowName. However if you
+						are using this as a target instead of the xDT.url method, xDT.refreshWindow
+						will not work, because the content has not been created through an xDT
+						method.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.frameName
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(xDT.frameName('test')); // outputs iFrame name 'xDTiF_test'
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.cbe</B><A
+						NAME="xDT_cbe">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">This method is a direct interface to the
+						underlying CBE library. You should not use it unless you are familiar with CBE.
+						All methods are applied to the named window. Using this function also does
+						increase the risk of many changes in case the CBE lib will change.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.cbe(windowName).&lt;cbeMethod&gt;
+windowName: Name of existing window
+&lt;cbeMethod&gt;: any valid CBE method applicable to a cbe element
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.cbe('test').show(); //make window 'test' visible
+xDT.cbe('test').hide(); //make window 'test' invisible
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.prop</B><A
+						NAME="xDT_prop">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Change any property of a window. Use it
+						very carefully until you are not familiar with the different window properties.
+						Better use the xDT.window.&lt;..&gt; methods instead.<BR>Returns the current
+						property value. Changes to the properties will not execute anyhting. Values
+						will only be applied by appropiate methods.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.prop(windowName,propertyName,propertyValue)
+windowName: Name of existing window
+propertyName: 
+         !--  cbe        : object 
+         !--  innercbe   : object if window content is URL
+         !--  wName      : window name
+         !--  wTitle     : window title
+         !--  wWidthOrg  : original window width (when created)
+         !--  wWidth     : current window width
+         !--  wHeightOrg : original window height (when created)
+         !--  wHeight    : current window height
+         !--  wPos       : window position (i.e. center)
+         !--  wX         : window X position
+         !--  wY         : window Y position
+         !--  wSkin      : window skin
+         !--  wIcon      : window icon stat (I1/0, M1/0, X1/0 C1/0)
+         !--  wUrl       : window url
+         !--  wScroll    : window scrollable (content)
+         !--  wHtml      : window html content (if not URL)
+         !--  zIndex     : window zIndex
+         !--  wIndex     : internal window index (number)
+         !--  wStat      : window status (min)
+         !--  fClose     : function executed before window closes (if any)
+         !--  wVisible   : window visibility status
+propertyValue: if passed to the function, Value will be set
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.prop('test','wX'); //returns X coordinate 
+xDT.prop('test','wTitle'); //returns window Title
+//shows alert when 'test' will be closed
+xDT.prop('test','fClose',"xDT.alert('Closing test is not allowed')"); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.taskbarColor</B><A
+						NAME="xDT_taskbarColor">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Sets the taskbar colors</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.taskbarColor(backgroundColor,foregroundColor,borderColor)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.taskbarColor("#6B8CCE","#ffffff","#000000");
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.taskbarStatus</B><A
+						NAME="xDT_taskbarStatus">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD HEIGHT="19" COLSPAN="2">Returns taskbar status</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.taskbarStatus
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+if (xDT.taskbarStatus()) xDT.alert('There is a taskbar');
+else xDT.alert('There is no taskbar');
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.version</B><A
+						NAME="xDT_version">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Returns the current version</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.version
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(xDT.version());
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.addSkin</B><A
+						NAME="xDT_addSkin">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">explanation</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addSkin(skinName,distanceTop,distanceBottom)
+skinName: name of the skin (x-desktop_skin_*.js)
+distanceTop: borderheight top
+distanceBottom: borderheight bottom
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addSkin('XP',0,0);  // XP skin no borderheights
+// SAP Business One skin with 70px top and 40px bottom distance
+xDT.addSkin('SBO',70,40); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.dSkin</B><A
+						NAME="xDT_dSkin">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Returns the name of the current desktop
+						skin</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.dSkin
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert('Current desktop skin is ' + xDT.dSkin());
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.playSound</B><A
+						NAME="xDT_playSound">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Not yet really implemented</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.playSound(soundFile)
+soundFile: URL to any soundfile (mp3, wav, mid)
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.playSound('intro.mp3');
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.hideDesktop</B><A
+						NAME="xDT_hideDesktop">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Hides Desktop background when doing
+						moving/resizing operations. Needs to be set to true if desktop is a live
+						webpage.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.hideDesktop(status)
+status: true or false
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.hideDesktop(true); // hides the desktop during window operations
+xDT.hideDesktop(false); // leaves the deskop visible during window operations
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.sysMessage</B><A
+						NAME="xDT_sysMessage">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Writes a text string to the system
+						message window and displays it.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.sysMessage(message,hide)
+message: any (HTML) string
+hide: optional, true or false
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.sysMessage('This is a message'); // does show the message
+xDT.sysMessage('This is a message',true); // does not display the message
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.name</B><A
+						NAME="xDT_window_name">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Returns the window name of the passed
+						window name. Mainly useful for getting the x-Desktop window name from the
+						browser's 'window.name' object property<BR>Returns 0 if window not found.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.name(windowName)
+windowName: either a existing window name or the browser object 'window.name'
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+// strips 'xDTiF_' of the iFrame (window.name) and returns the x-Desktop name
+xDT.alert(xDT.window.name(window.name)); 
+//any click in window pops it on top
+&lt;BODY onclick="xDT.popupWindow(xDT.window.name(window.name))"&gt;  
+
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.find</B><A
+						NAME="xDT_window_find">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Checks if a window is there (regardless
+						if visible or hidden).<BR>Returns 1 if window has been found otherwise 0</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.find(windowName)
+windowName: Name of existing window
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.addWindow('mywin','This is a test window',360,190,'center');
+if (xDT.window.find('mywin') ) xDT.alert('window mywin found');
+if (xDT.window.find('xxx') ) xDT.alert('window xxx does not exists');
+
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.skin</B><A
+						NAME="xDT_window_skin">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Gets or sets the window skin property.
+						Normally no need to set (is done during addWindow().<BR>Returns 0 if no window
+						found, otherwise returns skin name</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.skin(windowName,windowSkin)
+windowName: Name of existing window
+windowSkin: skin name of loaded x-desktop_skin_???.js
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+//returns the skin name of the current window
+xDT.alert(xDT.window.skin(xDT.window.name(window.name))); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.pos</B><A
+						NAME="xDT_window_pos">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Gets or sets the window position
+						property. Normally no need to set (is done during addWindow().</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.pos(windowName,windowPos)
+windowName: Name of existing window
+windowPos: 'center', 'n', etc.. or 'x,y'
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(xDT.window.pos('test')); // displays position of window 'test'
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.title</B><A
+						NAME="xDT_window_title">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Gets or sets the window title property.
+						Normally no need to set (is done during addWindow().</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.title(windowName,windowTitle)
+windowName: Name of existing window
+windowTitle: any string
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(xDT.window.title('test')); // display window title of window 'test'
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.icon</B><A
+						NAME="xDT_window_icon">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Gets or sets the window icon property. Is
+						of use for mouseover/mouseout function for the supported window actions.<BR>Use
+						in desktop_SKIN creation function. Does return the window icon property</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.icon(windowName,iconStatus)
+windowName: Name of existing window
+iconStatus: 
+   !- info icon     : I1 - mouseover, I0 - mousout
+   !- minimize icon : M1 - mouseover, M0 - mousout
+   !- maximize icon : X1 - mouseover, X0 - mousout
+   !- close icon    : C1 - mouseover, C0 - mousout
+
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.alert(xDT.window.icon('test')); // display window icon property value
+// by the way this would be the same as xDT.prop('test','wIcon');
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.onClose</B><A
+						NAME="xDT_window_onClose">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Assigns a function to the window close
+						event. In order to close window, function must return true.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.onClose(windowName,closeFunction)
+windowName: Name of existing window
+closeFunction: either a string to eval or function name
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+//assigns an alert when user tries to close window
+//window will not be closed because xDT.alert() does not return true
+xDT.window.onClose(xDT.window.name(window.name),
+                   "xDT.alert('hakuna matata - do not close me')");
+//define a closing function OUTSIDE of the content of the closing window
+top.onCloseWindow = function() {xDT.alert('I am sad to say goodbye'); return true}
+xDT.window.onClose(xDT.window.name(window.name),"top.onCloseWindow()");
+// same as
+xDT.window.onClose(xDT.window.name(window.name),top.onCloseWindow);
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.window.properties</B><A
+						NAME="xDT_window_properties">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Does display the info window with all
+						properties for any or all windows. If given window name can not be found all
+						window properties will be shown</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.window.properties(windowName)
+windowName: optional existing window name
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+//display infos about current window
+xDT.window.properties(xDT.window.name(window.name)); 
+//display infos about all windows (including system windows)
+xDT.window.properties(); 
+
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.desktop.init</B><A
+						NAME="xDT_desktop_init">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Must be first called in the start
+						functionafter creating the object</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.desktop.init
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Examples </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.desktop.init(); // initializes the desktop
+
+// complete init routine in base loading file
+var xDT = new xDesktop();
+function start() {
+  xDT.desktop.init();
+  //... now you can add windows, apply methods etc...
+  ..
+  ..
+  ..
+}
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0" WIDTH="100%"> 
+					<TR> 
+					  <TD><B CLASS="dochdr">xDT.desktop.skin</B><A
+						NAME="xDT_desktop_skin">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Does set a new skin and reloads all
+						windows with the new skin. Does change only those window skins equal to the
+						(previous) desktop skin in order to leave any extra windows like selection
+						windows, etc. as they were. Make sure the appropriate x-desktop_skin_???.js
+						file is loaded in your baseloading file and the resources (at least the
+						????.css in ./xDT/skins/????) are available.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.desktop.skin(skinName)
+skinName: any skin name where a desktop .js exists
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Example </TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+xDT.desktop.skin('XP'); // sets the current skin to Win XP style
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> </TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDheader" COLSPAN="2"><B>Creating desktop &amp;
+				  window skins</B><A NAME="SKINS">&nbsp;</A></TD> 
+			  </TR> 
+			  <TR> 
+				<TD CLASS="TDbox" COLSPAN="2"> 
+				  <TABLE CELLPADDING="5" CELLSPACING="0"> 
+					<TR> 
+					  <TD><B>6 steps to create your own skin</B><A
+						NAME="Prepareforskins">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">You need a least the script file and the
+						skin stylesheet. After you decide for a name (we suggest using capital letters)
+						following following steps:<BR>Let's take an example, we create a FUN skin 
+						<UL> 
+						  <LI>Create the resource directory (default
+							./xDT/skins/FUN)</LI> 
+						  <LI>Copy i.e. the ./xDT/skins/DEFAULT/DEFAULT.css to
+							./xDT/skins/FUN/FUN.css</LI> 
+						  <LI>Create the script file
+							./x-desktop_skin_FUN.js</LI> 
+						  <LI>Create at least the 2 mandatory functions
+							"skin_FUN(wName) " &amp; "desktop_FUN()"</LI> 
+						  <LI>Load the script in your "base loader" file (i.e.
+							x-desktop.html):<BR>&lt;script type='text/javascript'
+							src='x-desktop_skin_FUN.js'&gt;&lt;/script&gt;</LI> 
+						  <LI>Use the skin when creating the xDT object or
+							later with xDT.desktop.skin('FUN')</LI> 
+						</UL></TD> 
+					</TR> 
+					<TR> 
+					  <TD><B>The desktop_FUN() function</B><A
+						NAME="Desktop_FUN">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Whatever you do here it will become the
+						desktop background. All operations are done</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+function desktop_FUN() {
+ // register the skin
+ xDT.addSkin('FUN',0,0); 
+ //grey bgr, black fg, yellow border
+ xDT.taskbarColor("#E6E6E6","#0000FF",'#FFFF00'); 
+ //resize to fullscreen
+ xDT.cbe("dDesktop").resizeTo(document.cbe.width(),document.cbe.height());
+ // here you can to what you want, any &lt;BODY&gt; HTML code allowed
+ xDT.cbe("dDesktop").innerHtml(
+    '&lt;table width="100%" height="100%"&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;'
+    );
+ // set background color and/or background image (2nd argument)
+ xDT.cbe("dDesktop").background('#0000FF','');  
+ //always leave that unchanged
+ xDT.cbe("dDesktop").zIndex(0);
+ xDT.show("dDesktop");
+}
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD><B>The window skin_FUN(wName) function </B><A
+						NAME="Windowskin_FUN">&nbsp;</A></TD> 
+					  <TD ALIGN="RIGHT"><A HREF="#INDEX">top</A>&nbsp;</TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">When designing skins keep in mind that
+						you do need some border on top and bottom otherwise the window is not
+						"clickable" for drag and resize operations. First example is without any window
+						icon functions.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+function skin_FUN(wName) {
+ return (
+  '&lt;table bgcolor="#0066FF" cellpadding="0" ' + 
+         'cellspacing="0" border="0" height="100%" width="100%"&gt;' +
+    '&lt;tr&gt;&lt;td height="20" bgcolor="#FFFFFF"&gt;' +  // the top border
+    '&lt;/td&gt;&lt;/tr&gt;' +
+    '&lt;tr&gt;&lt;td align="left" bgcolor="#FFFF00" color="#000000" valign="top" ' + 
+            'width="100%" height="100%" id="' + wName + 'iTD' + '"&gt;&lt;/td&gt;&lt;/tr&gt;' +
+    '&lt;tr&gt;&lt;td height="10" bgcolor="#FFFFFF"&gt;&lt;/td&gt;&lt;/tr&gt;' +  // the bottom border
+  '&lt;/table&gt;'
+ );
+}
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">Now we add the basic icons (I)nfo,
+						(M)inimize, ma(X)imize and (C)lose as links. In addition we add a function that
+						those windows cannot be closed (which may not make sense because it will apply
+						to all windows based on that skin ! In most examples we use
+						xDT.prop(wName,'wIcon','I1') etc..., which is the same, but different method.
+						We recommend using the xDT.window.icon method.</TD> 
+					</TR> 
+					<TR> 
+					  <TD CLASS="pre" COLSPAN="2"> 
+						<PRE>
+function skin_FUN(wName) {
+ xDT.window.onClose(wName,"xDT.alert('Please do not close me')");
+ return (
+  '&lt;table bgcolor="#0066FF" cellpadding="0" ' + 
+         'cellspacing="0" border="0" height="100%" width="100%"&gt;' +
+    '&lt;tr&gt;&lt;td height="20" bgcolor="#FFFFFF"&gt;' +  // the top border
+    '&lt;/td&gt;&lt;/tr&gt;' +
+
+    "&lt;a href=\"javascript: void(0)\" onmouseover=\"xDT.window.icon('" + 
+      wName + "','I1')\" onmouseout=\"xDT.window.icon('" + 
+      wName + "','I0')\"&gt;&amp;nbsp;i&amp;nbsp;&lt;/a&gt;" +
+    "&lt;a href=\"javascript: void(0)\" onmouseover=\"xDT.window.icon('" + 
+      wName + "','M1')\" onmouseout=\"xDT.window.icon('" + 
+      wName + "','M0')\"&gt;&amp;nbsp;m&amp;nbsp;&lt;/a&gt;" +
+    "&lt;a href=\"javascript: void(0)\" onmouseover=\"xDT.window.icon('" + 
+      wName + "','X1')\" onmouseout=\"xDT.window.icon('" + 
+      wName + "','X0')\"&gt;&amp;nbsp;M&amp;nbsp;&lt;/a&gt;" +
+    "&lt;a href=\"javascript: void(0)\" onmouseover=\"xDT.window.icon('" + 
+      wName + "','C1')\" onmouseout=\"xDT.window.icon('" + 
+      wName + "','C0')\"&gt;&amp;nbsp;X&amp;nbsp;&lt;/a&gt;" +
+
+    '&lt;tr&gt;&lt;td align="left" bgcolor="#FFFF00" color="#000000" valign="top" ' + 
+            'width="100%" height="100%" id="' + wName + 'iTD' + '"&gt;&lt;/td&gt;&lt;/tr&gt;' +
+    '&lt;tr&gt;&lt;td height="10" bgcolor="#FFFFFF"&gt;&lt;/td&gt;&lt;/tr&gt;' +  // the bottom border
+  '&lt;/table&gt;'
+ );
+}
+</PRE></TD> 
+					</TR> 
+					<TR> 
+					  <TD COLSPAN="2">&nbsp;</TD> 
+					</TR> 
+				  </TABLE></TD> 
+			  </TR> 
+			</TABLE></TD> 
+		  <TD WIDTH="10"></TD> 
+		</TR> 
+	  </TABLE></FORM> </BODY>
+</HTML>

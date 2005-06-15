@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+    <TITLE>HTML window</TITLE> <SCRIPT> 
+ var xDT = parent.xDT;
+ var ppath = "../../";
+ if (xDT.resPath().match(/:\/\//)) ppath = "";
+ document.write('<link rel="stylesheet" type="text/css" href="' + ppath + xDT.resPath() + 'skins/' + xDT.dSkin() + '/' + xDT.dSkin() + '.css' + '">');
+</SCRIPT> 
+  </HEAD> 
+  <BODY LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0">
+<div id="htd" style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;">
+          <SCRIPT>document.write(xDT.prop(xDT.window.name(window.name),"wHtml"))</SCRIPT>
+</div> </BODY>
+</HTML>

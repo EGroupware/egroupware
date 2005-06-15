@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
+<HTML> 
+  <HEAD> 
+	<TITLE>Alert</TITLE> <SCRIPT>	
+ var xDT = parent.xDT;
+ var ppath = "../../";
+ if (xDT.resPath().match(/:\/\//)) ppath = "";
+ document.write('<link rel="stylesheet" type="text/css" href="' + ppath + xDT.resPath() + 'skins/' + xDT.dSkin() + '/' + xDT.dSkin() + '.css' + '">');
+</SCRIPT> 
+  </HEAD> 
+  <BODY> 
+	<FORM name="form1">
+	  <TABLE CELLPADDING="5" CELLSPACING="0" ALIGN="CENTER"> 
+		<TR> 
+		  <TD valign="top"><IMG SRC="../images/alert.gif" BORDER="0" WIDTH="32"
+			HEIGHT="32"></TD> 
+		  <TD><SCRIPT>document.write(xDT.alert())</SCRIPT></TD> 
+		</TR> 
+		<TR> 
+		  <TD></TD> 
+		  <TD align="center"><INPUT TYPE="BUTTON" NAME="ok" VALUE=" OK " CLASS="xF_button" onclick="xDT.quit()"></TD>
+		  
+		</TR> 
+	  </TABLE></FORM> 
+<script>
+(xDT.language() == 'de') ? document.form1.ok.value = " weiter " : document.form1.ok.value = " OK ";
+</script>      
+	  
+	  </BODY>
+</HTML>

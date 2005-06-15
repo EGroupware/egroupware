@@ -1,0 +1,98 @@
+div#taskbar {
+	background-color: #CCC;
+	border: 1px solid #000;
+	color: #D4D4D4;
+	height: 24px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+}
+div#tb {
+	border: 1px solid #000;
+	width: 25px;
+	height: 18px;
+	position:absolute;
+	float:left;
+	background-color: #FFF;
+	margin-top: 2px;
+	margin-left: 115px;
+	font-size: 14px;
+	font-weight: 900;
+	cursor: pointer;
+	
+}
+div#launch {
+	border: 1px solid #000;
+	width: 100px;
+	height: 18px;
+	float:left;
+	background-color: #AAA;
+	margin-top: 2px;
+	margin-left: 4px;
+	font-size: 14px;
+	font-weight: 900;
+	cursor: pointer;
+	
+}
+div#launch img {
+	width: 16px;
+	float: left;
+	height: 16px;
+	height:100%;
+	border: none;
+	margin-top: 2px;
+
+}
+
+img#bgimg {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top:0;
+}
+div#clock {
+	float: right;
+	margin-top: 2px;
+	margin-right: 5px;
+	width: auto;
+	padding-left: 3px;
+	padding-right: 3px;
+	color: #000;
+	background-color: #E5E5E5;
+	font-size: 14px;
+	height: 18px;
+	font-weight: 900;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+
+img#xdesktoplogo
+{
+	position:absolute;
+	right:5px;
+	top:50px;
+	z-index:1;
+}
+
+img#egroupwarelogo
+{
+	position:absolute;
+	left:5px;
+	top:50px;
+	z-index:1;
+
+}
+#launchmenu
+{
+	position: absolute;
+	top: 25px;
+	bottom: 0;
+	margin: 0;
+	left: 0;
+	margin-top: 5px;
+	z-index: 111111;
+	overflow: auto;
+	
+}
