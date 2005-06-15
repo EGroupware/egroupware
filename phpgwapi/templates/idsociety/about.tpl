@@ -1,26 +1,41 @@
-<table border="0" width="100%">
- <tr>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+<!-- BEGIN egroupware -->
+<tr>
   <td align="left">
-   <a href="http://www.egroupware.org" target="_new"><img src="{webserver_url}/logo.gif" border="0"></a>
+   <a href="http://www.eGroupWare.org" target="_new"><img src="{phpgw_logo}" border="0" alt="eGroupWare"></a>
   </td>
  </tr>
  <tr>
   <td>&nbsp;</td>
  </tr>
  <tr>
-  <td align="center">{phpgw_version}</td>
+  <td align="left">{phpgw_version}</td>
  </tr>
  <tr>
-  <td align="center"><a href="http://www.egroupware.org" target="_new">eGroupWare</a> is a multi-user, web-based groupware suite written in <a href="http://www.php.net" target="_new">PHP</a>.</td>
+  <td align="left">{phpgw_message}</td>
  </tr>
  <tr>
-  <td><hr></td>
- </tr>
+ <td  height="3"><img src="phpgwapi/templates/default/images/spacer.gif" alt="spacer" height="3" /></td>
+</tr>
+<tr>
+  <td align="center"><div class="greyLine"></div></td>
+</tr>
+
+<!-- END egroupware -->
+
+<!-- BEGIN application -->
  <tr>
-  <td align="center">
+ <td  height="3"><img src="phpgwapi/templates/default/images/spacer.gif" alt="spacer" height="3" /></td>
+</tr>
+ <tr>
+  <td align="left">
 
 {phpgw_app_about}
 
   </td>
  </tr>
+<!-- END application --> 
+ 
+ 
 </table>
