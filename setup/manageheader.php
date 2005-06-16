@@ -50,9 +50,9 @@
 	$realpath = realpath('..');
 	if(!ereg('^' . $_SERVER['DOCUMENT_ROOT'],$realpath))
 	{
-		if(PHP_OS == 'Windows')
+		if(strtoupper(substr(PHP_OS, 0,3)) == 'WIN')
 		{
-			$realpath = 'Drive:\\\\Path';
+			$realpath = 'Drive:/Path/to/egroupware';
 		}
 		else
 		{
