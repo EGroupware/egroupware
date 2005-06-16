@@ -88,8 +88,10 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			
 			if ($cell['type'] == 'link-to' && ($cell['readonly'] || $readonlys))
 			{
+				//echo "<p>link-to is readonly, cell=".print_r($cell,true).", readonlys=".print_r($readonlys)."</p>\n";
 				// readonly ==> omit the whole widget
 				$cell = $tmpl->empty_cell();
 				return;
@@ -121,6 +123,7 @@
 			}
 			if ($this->debug)
 			{
+				echo "<p>link_widget::pre_process($name,$value,".print_r($cell,true).",$readonlys,,)</p>\n";
 				echo "<p>start: $cell[type][$name]::pre_process: value ="; _debug_array($value);
 				echo "extension_data[$cell[type]][$name] ="; _debug_array($extension_data);
 			}
@@ -235,6 +238,8 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
+			//echo "<p>link_widget::post_process('$name',value=".print_r($value,true).",ext=".print_r($extension_data,true).",$loop,,value_in=".print_r($value_in,true)."</p>\n";
+
 			$buttons = array('search','create','new','upload','attach');
 			while (!$button && list(,$bname) = each($buttons))
 			{
@@ -247,7 +252,7 @@
 			}
 			unset($value[$button]);
 
-			$value = array_merge($extension_data,$value);
+			$value = array_merge($extension_data,(array) $value);
 
 			if ($button && $this->debug)
 			{
@@ -311,7 +316,7 @@
 				case 'unlink':
 					if ($this->debug)
 					{
-						echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
+						//echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
 						if (is_array($value['to_id'])) _debug_array($value['to_id']);
 					}
 					$this->link->unlink2($unlink,$value['to_app'],$value['to_id']);
