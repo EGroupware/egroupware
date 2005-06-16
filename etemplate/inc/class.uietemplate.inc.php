@@ -349,6 +349,35 @@
 		}
 
 		/**
+		 * process the values transfered with the javascript function values2url
+		 *
+		 * The returned array contains the preserved values overwritten (only!) with the variables named in values2url
+		 *
+		 * @return array/boolean content array or false on error
+		 */
+		function process_values2url()
+		{
+			//echo "process_exec: _GET ="; _debug_array($_GET);
+			$session_data = $this->get_appsession($_GET['etemplate_exec_id']);
+			//echo "<p>process_exec: session_data ="; _debug_array($session_data);
+
+			if (!$_GET['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
+			{
+				return false;
+			}
+			$GLOBALS['phpgw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
+
+			$content = $_GET['exec'];
+			if (!is_array($content))
+			{
+				$content = array();
+			}
+			$this->process_show($content,$session_data['to_process'],'exec');
+
+			return $this->complete_array_merge($session_data['preserv'],$content);
+		}
+
+		/**
 		 * creates HTML from an eTemplate
 		 *
 		 * This is done by calling show_cell for each cell in the form. show_cell itself
@@ -744,12 +773,19 @@
 					{
 						$help = lang($help);
 					}
-					$onFocus .= "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;";
-					$onBlur  .= "self.status=''; return true;";
-					if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
+					if (($use_tooltip_for_help = strstr($help,'<') && strip_tags($help) != $help))	// helptext is html => use a tooltip
 					{
-						$options .= " onMouseOver=\"self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;\"";
-						$options .= " onMouseOut=\"self.status=''; return true;\"";
+						$options .= $this->html->tooltip($help);
+					}
+					else	// "regular" help-text in the statusline
+					{
+						$onFocus .= "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;";
+						$onBlur  .= "self.status=''; return true;";
+						if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
+						{
+							$options .= " onMouseOver=\"self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;\"";
+							$options .= " onMouseOut=\"self.status=''; return true;\"";
+						}
 					}
 				}
 				if ($onBlur)

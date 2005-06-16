@@ -1003,21 +1003,21 @@
 					$cell_content['onclick'] = $matches[1];
 					$cell_content['onclick_type'] = 'confirm';
 				}
-				elseif (preg_match('/^window.open\(egw::link\(\'\/index.php\',\'([^\']+)\'\),\'([^\']+)\',\'dependent=yes,width=([0-9]+),height=([0-9]+),scrollbars=yes,status=yes\'\); return false;$/',$widget['onclick'],$matches))
+				elseif (preg_match('/^window.open\(egw::link\(\'\/index.php\',\'([^\']+)\'\)(\+values2url\(.*\))?,\'([^\']+)\',\'dependent=yes,width=([0-9]+),height=([0-9]+),scrollbars=yes,status=yes\'\); return false;$/',$widget['onclick'],$matches))
 				{
-					$cell_content['onclick'] = $matches[1];
-					if ($matches[2] != '_blank')
+					$cell_content['onclick'] = $matches[1].($matches[2] ? str_replace('+values2url(this.form,','&values2url(',$matches[2]) : '');
+					if ($matches[3] != '_blank')
 					{
-						$cell_content['onclick'] .= ','.$matches[2];
+						$cell_content['onclick'] .= ','.$matches[3];
 					}
-					if ($matches[3] != '600')
+					if ($matches[4] != '600')
 					{
-						$cell_content['onclick'] .= ($matches[2]=='_blank' ? ',':'').','.$matches[3];
+						$cell_content['onclick'] .= ($matches[3]=='_blank' ? ',':'').','.$matches[4];
 					}
-					if ($matches[4] != '450')
+					if ($matches[5] != '450')
 					{
-						$cell_content['onclick'] .= ($matches[2]=='_blank' ? ',':'').
-							($matches[3]=='600' ? ',':'').','.$matches[4];
+						$cell_content['onclick'] .= ($matches[3]=='_blank' ? ',':'').
+							($matches[4]=='600' ? ',':'').','.$matches[5];
 					}
 					$cell_content['onclick_type'] = 'popup';
 				}
@@ -1037,11 +1037,18 @@
 				}
 				elseif ($cell_content['onclick_type'] == 'popup' && $cell_content['onclick'])
 				{
-					list($get,$target,$width,$height) = explode(',',$cell_content['onclick']);
+					// eg: menuaction=calendar.uiforms.freetimesearch&values2url('start,end,participants'),ft_search,700,500
+					if  (($values2url = preg_match('/&values2url\((\'[^\']+\')\)/',$cell_content['onclick'],$matches)))
+					{
+						$values2url = $matches[1];
+						$onclick = str_replace('&values2url('.$values2url.')','',$cell_content['onclick']);
+					}
+					list($get,$target,$width,$height) = explode(',',$values2url ? $onclick : $cell_content['onclick']);
 					if (!$target) $target = '_blank';
 					if (!$width)  $width  = 600;
 					if (!$height) $height = 450;
-					$widget['onclick'] = "window.open(egw::link('/index.php','$get'),'$target','dependent=yes,width=$width,height=$height,scrollbars=yes,status=yes'); return false;";
+					$widget['onclick'] = "window.open(egw::link('/index.php','$get')".($values2url ? "+values2url(this.form,$values2url)" : '').
+						",'$target','dependent=yes,width=$width,height=$height,scrollbars=yes,status=yes'); return false;";
 				}
 				elseif ($cell_content['onclick'])
 				{

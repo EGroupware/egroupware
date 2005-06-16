@@ -112,3 +112,39 @@ function toggle_all(form,name)
 		form.elements[name][i].checked = !all_set;
 	}
 }
+
+/* gets the values of the named widgets (use the etemplate-name, not the form-name) and creates an url from it */
+function values2url(form,names)
+{
+	url = '';
+	names = names.split(',');
+	for(i=0; i < names.length; i++)
+	{
+		form_name = names[i];
+		b = form_name.indexOf('[');
+		if (b < 0) {
+			form_name = 'exec['+form_name+']';
+		} else {
+			form_name = 'exec['+form_name.slice(0,b-1)+']'+form_name.slice(b,99);
+		}
+		//alert('Searching for '+form_name);
+		for (f=0; f < form.elements.length; f++) {
+			element = form.elements[f];
+			//alert('checking '+element.name);
+			if (element.name.slice(0,form_name.length) == form_name) {
+				//alert('found '+element.name+', value='+element.value);
+				if (element.type == 'checkbox' || element.type == 'radio') {	// checkbox or radio
+					if (element.checked) url += '&'+element.name+'='+element.value;
+				} else if (element.value != null) {
+					url += '&'+element.name+'='+element.value;
+				} else if (element.options) {	// selectbox
+					for(opt=0; opt < element.options.length; opt++) {
+						if (element.options[opt].selected) url += '&'+element.name+'[]='+element.options[opt].value;
+					}
+				}
+			}
+		}
+	}
+	//alert('url='+url);
+	return url+'&etemplate_exec_id='+form['etemplate_exec_id'].value;
+}
