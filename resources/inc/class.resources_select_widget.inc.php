@@ -66,6 +66,9 @@
 				break;
 			}
 			$tpl =& new etemplate('resources.resource_selectbox');
+			// keep the editor away from the generated tmpls
+			$tpl->no_onclick = true;			
+
 			if ($value)
 			{
 				foreach(ExecMethod('resources.bo_resources.get_calendar_info',$value) as $data)
