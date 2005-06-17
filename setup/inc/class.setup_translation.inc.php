@@ -148,7 +148,7 @@
 				while(($line = fgets($f)) !== false)
 				{
 					list($lang,$language) = explode("\t",trim($line));
-					if ($lang && ($lf = fopen("../phpgwapi/setup/phpgw_$lang.lang",'r')))
+					if ($lang && ($lf = @fopen("../phpgwapi/setup/phpgw_$lang.lang",'r')))
 					{
 						while(($line = fgets($lf)) !== false)
 						{
