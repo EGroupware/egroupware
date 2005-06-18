@@ -200,6 +200,7 @@
   background: #d8e0e4;
   font-size: 90%;
   padding: 1px;
+  z-index: 100;
 }
 
 .calendar .combo .label,

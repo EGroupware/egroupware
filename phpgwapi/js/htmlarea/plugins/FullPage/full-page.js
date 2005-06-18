@@ -49,6 +49,7 @@ FullPage.prototype.buttonPress = function(editor, id) {
 		var links = doc.getElementsByTagName("link");
 		var style1 = '';
 		var style2 = '';
+		var charset = '';
 		for (var i = links.length; --i >= 0;) {
 			var link = links[i];
 			if (/stylesheet/i.test(link.rel)) {
@@ -56,6 +57,14 @@ FullPage.prototype.buttonPress = function(editor, id) {
 					style2 = link.href;
 				else
 					style1 = link.href;
+			}
+		}
+		var metas = doc.getElementsByTagName("meta");
+		for (var i = metas.length; --i >= 0;) {
+			var meta = metas[i];
+			if (/content-type/i.test(meta.httpEquiv)) {
+				r = /^text\/html; *charset=(.*)$/i.exec(meta.content);
+				charset = r[1];
 			}
 		}
 		var title = doc.getElementsByTagName("title")[0];
@@ -67,7 +76,7 @@ FullPage.prototype.buttonPress = function(editor, id) {
 			f_body_fgcolor : HTMLArea._colorToRgb(doc.body.style.color),
 			f_base_style   : style1,
 			f_alt_style    : style2,
-
+			f_charset      : charset,
 			editor         : editor
 		};
 		editor._popupDialog("plugin://FullPage/docprop", function(params) {
@@ -82,8 +91,11 @@ FullPage.prototype.setDocProp = function(params) {
 	var doc = this.editor._doc;
 	var head = doc.getElementsByTagName("head")[0];
 	var links = doc.getElementsByTagName("link");
+	var metas = doc.getElementsByTagName("meta");
 	var style1 = null;
 	var style2 = null;
+	var charset = null;
+	var charset_meta = null;
 	for (var i = links.length; --i >= 0;) {
 		var link = links[i];
 		if (/stylesheet/i.test(link.rel)) {
@@ -93,11 +105,26 @@ FullPage.prototype.setDocProp = function(params) {
 				style1 = link;
 		}
 	}
+	for (var i = metas.length; --i >= 0;) {
+		var meta = metas[i];
+		if (/content-type/i.test(meta.httpEquiv)) {
+			r = /^text\/html; *charset=(.*)$/i.exec(meta.content);
+			charset = r[1];
+			charset_meta = meta;
+		}
+	}
 	function createLink(alt) {
 		var link = doc.createElement("link");
 		link.rel = alt ? "alternate stylesheet" : "stylesheet";
 		head.appendChild(link);
 		return link;
+	};
+	function createMeta(name, content) {
+		var meta = doc.createElement("meta");
+		meta.httpEquiv = name;
+		meta.content = content;
+		head.appendChild(meta);
+		return meta;
 	};
 
 	if (!style1 && params.f_base_style)
@@ -114,7 +141,14 @@ FullPage.prototype.setDocProp = function(params) {
 	else if (style2)
 		head.removeChild(style2);
 
-	for (var i in params) {
+	if (charset_meta) {
+		head.removeChild(charset_meta);
+		charset_meta = null;
+	}
+	if (!charset_meta && params.f_charset)
+		charset_meta = createMeta("Content-Type", "text/html; charset="+params.f_charset);
+
+  	for (var i in params) {
 		var val = params[i];
 		switch (i) {
 		    case "f_title":

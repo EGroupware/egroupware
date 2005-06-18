@@ -18,11 +18,13 @@
         editor.registerPlugin(FullPage);
         editor.generate();
       }
+
+      HTMLArea.onload = initDocument;
     </script>
 
   </head>
 
-  <body onload="initDocument()">
+  <body onload="HTMLArea.init()">
     <h1>Test of FullPage plugin</h1>
 
     <textarea id="editor" style="height: 30em; width: 100%;">
@@ -69,7 +71,7 @@
     <hr />
     <address><a href="http://dynarch.com/mishoo/">Mihai Bazon</a></address>
 <!-- Created: Wed Oct  1 19:55:37 EEST 2003 -->
-<!-- hhmts start --> Last modified: Wed Jan 28 11:10:07 EET 2004 <!-- hhmts end -->
+<!-- hhmts start --> Last modified: Wed Aug 11 13:59:07 CEST 2004 <!-- hhmts end -->
 <!-- doc-lang: English -->
   </body>
 </html>

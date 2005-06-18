@@ -190,6 +190,7 @@
   color: MenuText;
   font-size: 90%;
   padding: 1px;
+  z-index: 100;
 }
 
 .calendar .combo .label,

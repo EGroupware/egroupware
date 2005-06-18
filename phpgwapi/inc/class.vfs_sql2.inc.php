@@ -67,9 +67,9 @@
 			'file_id'       => 'phpgw_vfs2_files',	
 			'owner_id'      => 'phpgw_vfs2_files',
 			'createdby_id'  => 'phpgw_vfs2_files',
-			'modifiedby_id' => 'phpgw_vfs2_versioning',
+			'modifiedby_id' => 'phpgw_vfs2_files',
 			'created'       => 'phpgw_vfs2_files',
-			'modified'      => 'phpgw_vfs2_versioning',
+			'modified'      => 'phpgw_vfs2_files',
 			'size'			=> 'phpgw_vfs2_files',
 			'mime_type'     => 'phpgw_vfs2_mimetypes',
 			'comment'       => 'phpgw_vfs2_files',
@@ -89,6 +89,9 @@
 		//if $search_support is set, then this class have support to
 		//searching in files for a particular value in a particular property.
 		var $search_support = 1;
+
+		var $compress_support = 1;
+		var $extract_support = 1;
 
 
 		/*!
@@ -1088,12 +1091,6 @@
 		 */
 		function mv ($data)
 		{
-			//FIXME unknown bug tricky solving (temp)
-			if (!is_object($this->vfs_versionsystem))
-			{
-				$this->vfs_versionsystem =& $GLOBALS['object_keeper']->GetObject('phpgwapi.vfs_versionsystem');
-			}
-
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -1251,6 +1248,7 @@
 							'relatives'	=> array ($t->mask)
 						)
 					);
+
 					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files SET size=$size WHERE directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' AND name='".
 						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'", __LINE__, __FILE__);
@@ -1269,7 +1267,7 @@
 /*				$this->set_attributes(array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'attributes'	=> array (
+							'attributes'	=> array (
 									'modifiedby_id' => $account_id,
 									'modified' => $this->now
 								)
@@ -1284,7 +1282,31 @@
 
 				if ($this->file_actions)
 				{
-					$rr = rename ($f->real_full_path, $t->real_full_path);
+					if(file_exists($t->real_full_path)) 
+					{
+						unlink($t->real_full_path);
+						$ok = rename($f->real_full_path, $t->real_full_path);
+					} 
+					else 
+					{
+						$ok = rename($f->real_full_path, $t->real_full_path); 
+					}
+
+					if (!$ok)
+					{
+						return false;
+					}
+
+					if (is_dir($t->real_full_path) && $f->outside)
+					{
+						$this->update_real(array(
+							'string' => $t->fake_full_path,
+							'relatives' => array($t->mask)
+							));
+
+					}
+				
+					//$rr = rename ($f->real_full_path, $t->real_full_path);
 				}
 
 				/*
@@ -1295,7 +1317,7 @@
 				{
 					$this->rm (array(
 							'string'	=> $f->fake_full_path,
-							'relatives'	=> $f->mask
+							'relatives'	=> array($f->mask)
 						)
 					);
 				}
@@ -1578,6 +1600,10 @@
 			{
 				if (!@is_dir($p->real_leading_dirs_clean))	// eg. /home or /group does not exist
 				{
+					if (!ereg_replace('^/','',$p->fake_leading_dirs))
+					{
+						return false;
+					}
 					if (!@$this->mkdir(array(
 						'string' => $p->fake_leading_dirs,
 						'relatives' => array(RELATIVE_NONE) )))	// ==> create it
@@ -1588,7 +1614,9 @@
 
 				if (@is_dir($p->real_full_path))	// directory already exists
 				{
-					$this->update_real($data,True);		// update its contents
+					//WITH Serious BUG when registrys are in database, but not
+					//in filesystem. Correct this ASAP.
+					//$this->update_real($data,True);		// update its contents
 				}
 				elseif (!@mkdir ($p->real_full_path, 0770))
 				{
@@ -2297,7 +2325,8 @@
 					'orderby'	=> 'directory,name',
 					'backups'   => false, /* show or hide backups */
 					'files_specified' => array(),
-					'allow_outside' => true
+					'allow_outside' => true,
+					'modifiedby_information' => false
 				);
 
 			//check if orderby is a valid field (or is composed by valid fields)
@@ -2367,6 +2396,7 @@
 					$sql .= "directory='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean).
 						"' AND name='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'".$sql_backups;
 				}
+
 //				echo " select1: dir=".$p->fake_leading_dirs_clean." name=".$p->fake_name_clean." <br>\n";
 				$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
@@ -2382,37 +2412,44 @@
 				$rarray = array ();
 				foreach($this->attributes as $attribute)
 				{
-					if ($attribute == 'mime_type')
+					switch ($attribute)
 					{
-						if (!is_numeric($record['mime_id'])) 
-						{
-							//no mime type registered for file, must find one and if not exist add one.
-							$extension = $this->get_file_extension($record['name']);
 
-							if (!$res = $this->vfs_mimetypes->get_type(array('extension' => $extension)))
+						case 'mime_type':
+							if (!is_numeric($record['mime_id'])) 
 							{
-								$res = $this->vfs_mimetypes->add_filetype(array('extension' => $extension));
+								//no mime type registered for file, must find one and if not exist add one.
+								$extension = $this->get_file_extension($record['name']);
+
+								if (!$res = $this->vfs_mimetypes->get_type(array('extension' => $extension)))
+								{
+									$res = $this->vfs_mimetypes->add_filetype(array('extension' => $extension));
+								}
+
+								if ($res)
+								{
+									$this->db->update('phpgw_vfs2_files',
+										array('mime_id'   => $res['mime_id']),
+										array('directory' => $p->fake_leading_dirs_clean,
+											  'name'      => $p->fake_name_clean
+										),__LINE__,__FILE__);
+
+								}
+							}
+							else
+							{
+								$res = $this->vfs_mimetypes->get_type(array(
+									'mime_id' => $record['mime_id']
+								));
 							}
 
-							if ($res)
-							{
-								$this->db->update('phpgw_vfs2_files',
-									array('mime_id'   => $res['mime_id']),
-									array('directory' => $p->fake_leading_dirs_clean,
-										  'name'      => $p->fake_name_clean
-									),__LINE__,__FILE__);
-
-							}
-						}
-						else
-						{
-							$res = $this->vfs_mimetypes->get_type(array(
-								'mime_id' => $record['mime_id']
-							));
-						}
-
-						$record['mime_type'] = $res['mime'];
-						$record['mime_friendly'] = $res['friendly'];
+							$record['mime_type'] = $res['mime'];
+							$record['mime_friendly'] = $res['friendly'];
+							break;
+						case 'created':
+						case 'modified':
+							$record[$attribute] = $this->db->from_timestamp($record[$attribute]);
+							break;
 					}
 
 
@@ -2589,38 +2626,44 @@
 
 				foreach($this->attributes as $attribute)
 				{
-					if ($attribute == 'mime_type')
+					switch($attribute)
 					{
-						if (!is_numeric($record['mime_id']))
-						{
-							$extension = $this->get_file_extension($record['name']);
-							if(!$res = $this->vfs_mimetypes->get_type(array(
-									'extension' => $extension)) )
+						case 'mime_type':
+							if (!is_numeric($record['mime_id']))
 							{
-								$res = $this->vfs_mimetypes->add_filetype(array(
-									'extension'
-								));
-
-								if ($res)
+								$extension = $this->get_file_extension($record['name']);
+								if(!$res = $this->vfs_mimetypes->get_type(array(
+										'extension' => $extension)) )
 								{
-									$this->db->update('phpgw_vfs2_files',
-										array('mime_id'   => $res['mime_id']),
-										array('directory' => $p->fake_leading_dirs_clean,
-											  'name'      => $p->fake_name_clean
-										),__LINE__,__FILE__);
+									$res = $this->vfs_mimetypes->add_filetype(array(
+										'extension'
+									));
+
+									if ($res)
+									{
+										$this->db->update('phpgw_vfs2_files',
+											array('mime_id'   => $res['mime_id']),
+											array('directory' => $p->fake_leading_dirs_clean,
+												  'name'      => $p->fake_name_clean
+											),__LINE__,__FILE__);
+									}
+
 								}
-
 							}
-						}
-						else
-						{
-							$res = $this->vfs_mimetypes->get_type(array(
-								'mime_id' => $record['mime_id']
-							));
-						}
+							else
+							{
+								$res = $this->vfs_mimetypes->get_type(array(
+									'mime_id' => $record['mime_id']
+								));
+							}
 
-						$record['mime_type'] = $res['mime'];
-						$rarray[$i]['mime_friendly'] = $res['friendly'];
+							$record['mime_type'] = $res['mime'];
+							$rarray[$i]['mime_friendly'] = $res['friendly'];
+							break;
+						case 'created':
+						case 'modified':
+							$record[$attribute] = $this->db->from_timestamp($record[$attribute]);
+							break;
 					}
 
 					$rarray[$i][$attribute] = $record[$attribute];
@@ -2650,7 +2693,7 @@
 			//FIXME this method does not work when there are registrys in
 			//database, but not in filesystem. It starts corromping the
 			//database by putting wrong things that are in the partition root.
-			return false;
+			//return false;
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -3351,9 +3394,7 @@
 
 			foreach ($filelist as $file)
 			{
-				
-
-				$this->mv(array(
+				$res = $this->mv(array(
 					'from' => $file['directory'].'/'.$file['name'],
 					'to'   => $dest->fake_full_path.'/'.$file['name'],
 					'relatives' => array(RELATIVE_NONE|VFS_REAL,$dest->mask)

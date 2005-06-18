@@ -368,4 +368,37 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.007';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '1.0.1.007';
+	function phpgwapi_upgrade1_0_1_007()
+	{
+		//Creating cached values for modified and modifiedby_id
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modifiedby_id', array('type' => 'int','precision' => 4));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modified', array('type' => 'timestamp', 'nullable' => true));
+
+		//Updating existing values
+		$sql = "SELECT max(modified) as mod, file_id, modifiedby_id from phpgw_vfs2_versioning group by file_id";
+
+		$GLOBALS['phpgw_setup']->oProc->m_odb->query($sql,__LINE__,__FILE__);
+
+		while ($GLOBALS['phpgw_setup']->oProc->m_odb->next_record())
+		{
+			$files_to_change[] = $GLOBALS['phpgw_setup']->oProc->m_odb->Record;
+		}
+
+		foreach ($files_to_change as $key => $val)
+		{
+			$GLOBALS['phpgw_setup']->oProc->m_odb->update('phpgw_vfs2_files',
+				array(
+					'modified' => $val['mod'],
+					'modifiedby_id' => $val['modifiedby_id']
+					),
+				array('file_id' => $val['file_id']),__LINE__,__FILE__
+				);
+		}
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.008';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>

@@ -177,6 +177,7 @@ progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFFFFF,
   background: #ffe;
   color: #000;
   font-size: smaller;
+  z-index: 100;
 }
 
 .combo .label,

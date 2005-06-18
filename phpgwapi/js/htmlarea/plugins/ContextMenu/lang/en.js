@@ -40,6 +40,8 @@ ContextMenu.I18N = {
 	"Make link"                                             : "Make lin_k...",
 	"Remove the"                                            : "Remove the",
 	"Element"                                               : "Element...",
+	"Insert paragraph before"                               : "Insert paragraph before",
+	"Insert paragraph after"                                : "Insert paragraph after",
 
 	// Other labels (tooltips and alert/confirm box messages)
 
@@ -62,5 +64,7 @@ ContextMenu.I18N = {
 	"Insert a new column before the current one"            : "Insert a new column before the current one",
 	"Insert a new column after the current one"             : "Insert a new column after the current one",
 	"Delete the current column"                             : "Delete the current column",
-	"Create a link"                                         : "Create a link"
+	"Create a link"                                         : "Create a link",
+	"Insert a paragraph before the current node"            : "Insert a paragraph before the current node",
+	"Insert a paragraph after the current node"             : "Insert a paragraph after the current node"
 };

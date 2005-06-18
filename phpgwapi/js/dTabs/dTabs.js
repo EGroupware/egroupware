@@ -21,61 +21,19 @@
 	 *                   'selectedClass': <name of the class to be used when Tab is selected>,
 	 *                   'unselectedClass': <name of the class to be used when Tab is not selected>});
 	 */
-
-	if (document.all)
-	{
-		navigator.userAgent.toLowerCase().indexOf('msie 5') != -1 ? is_ie5 = true : is_ie5 = false;
-		is_ie = true;
-		is_moz1_6 = false;
-		is_mozilla = false;
-		is_ns4 = false;
-	}
-	else if (document.getElementById)
-	{
-		navigator.userAgent.toLowerCase().match('mozilla.*rv[:]1\.6.*gecko') ? is_moz1_6 = true : is_moz1_6 = false;
-		is_ie = false;
-		is_ie5 = false;
-		is_mozilla = true;
-		is_ns4 = false;
-	}
-	else if (document.layers)
-	{
-		is_ie = false;
-		is_ie5 = false
-		is_moz1_6 = false;
-		is_mozilla = false;
-		is_ns4 = true;
-	}
-
-	/* The code below is a wrapper to call the dTabs content insertion
-	 * just after the document is loaded in IE... I still don't know why people
-	 * use this crap!
+	 
+	/* Mozilla 1.6 has a bug which impossibilitates it to manage DOM contents that are defined in the
+	 * original document. So we have to workaround it.
 	 */
-	var _dTabs_onload;
-	
-	if (document.all)
-	{
-		_dTabs_onload = false;
-	
-		var _dTabs_onload_f = document.body.onload;
-		var _dTabs_f = function(e)
-		{
-			_dTabs_onload = true;
-			
-			if (_dTabs_onload_f)
-			{
-				_dTabs_onload_f();
-			}
-		};
-
-		document.body.onload = _dTabs_f;
-	}
-	else
-	{
-		_dTabs_onload = true;
-	}
-	
+	navigator.userAgent.toLowerCase().match('mozilla.*rv[:]1\.6.*gecko') ? is_moz1_6 = true : is_moz1_6 = false;
+		
 	function dTabsManager(params)
+	{
+		this._tabEvents = { show: {}, hide: {}};
+		this.init(params);
+	}
+
+	dTabsManager.prototype.init = function(params)
 	{
 		/* Attributes definition */
 		this._Tabs = new Array();
@@ -91,7 +49,13 @@
 
 
 		/* Create and insert the container */
-		var table, tbody, tr, td;
+		var table, tbody, tr, td, style;
+
+		style = document.createElement('link');
+		style.href = GLOBALS['serverRoot'] + "phpgwapi/js/dTabs/dTabs.css";
+		style.rel = "stylesheet";
+		style.type = "text/css";
+		document.body.appendChild(style);
 
 		this._Tabs['root'] = document.createElement('div');
 		this._Tabs['root'].id = params['id'];
@@ -106,10 +70,17 @@
 		table.style.border = '0px solid black';
 		table.style.width  = '100%';
 		table.style.height = '100%';
+		table.cellpadding = '10px';
 
 		this._Tabs['tabIndexTR'] = document.createElement('tr');
 		this._Tabs['tabIndexTR'].style.height = '30px';
+		this._Tabs['tabIndexTR'].className = 'dTabs_tr_index';
 		//this._Tabs['tabIndexTR'].style.width  = '100%';
+		
+		this._Tabs['emptyTab'] = document.createElement('td');
+		this._Tabs['emptyTab'].className = 'dTabs_noTabs';
+		this._Tabs['emptyTab'].innerHTML = '&nbsp;';
+		this._Tabs['tabIndexTR'].appendChild(this._Tabs['emptyTab']);
 		
 		tr = document.createElement('tr');
 		td = document.createElement('td');
@@ -131,29 +102,7 @@
 		
 		this._Tabs['contents'] = new Array();
 
-		if (!_dTabs_onload)
-		{
-			if (document.getElementById && !document.all)
-			{
-				document.body.appendChild(this._Tabs['root']);
-			}
-			else
-			{
-				var _this = this;
-				var now = document.body.onload ? document.body.onload : null;
-				var f = function(e)
-				{
-					document.body.appendChild(_this._Tabs['root']);
-					now ? now() : false;
-				};
-
-				document.body.onload = f;
-			}
-		}
-		else
-		{
-			document.body.appendChild(this._Tabs['root']);
-		}
+		document.body.appendChild(this._Tabs['root']);
 	}
 
 	/*
@@ -167,9 +116,9 @@
 			return false;
 		}
 
-		if (!params['id'] || !_dtElement(params['id']) || 
-		    _dtElement(params['id']).tagName.toLowerCase() != 'div' ||
-			_dtElement(params['id']).style.position.toLowerCase() != 'absolute')
+		if (!params['id'] || !Element(params['id']) || 
+		    Element(params['id']).tagName.toLowerCase() != 'div' ||
+			Element(params['id']).style.position.toLowerCase() != 'absolute')
 		{
 			return false;
 		}
@@ -181,7 +130,7 @@
 		}
 
 		//var contents, tdIndex;
-		var element = _dtElement(params['id']);
+		var element = Element(params['id']);
 		
 		if (is_moz1_6)
 		{/*
@@ -205,23 +154,23 @@
 		this._Tabs.tabIndexTDs[params['id']] = document.createElement('td');
 		
 		var _this = this;
+		this._Tabs.tabIndexTDs[params['id']].innerHTML           = '&nbsp;&nbsp;'+(params['name'] ? params['name'] : 'undefined')+'&nbsp;&nbsp;';
+		this._Tabs.tabIndexTDs[params['id']].selectedClassName   = 'dTabs_selected';
+		this._Tabs.tabIndexTDs[params['id']].unselectedClassName = 'dTabs_unselected';
+		this._Tabs.tabIndexTDs[params['id']].className           = 'dTabs_unselected';
+		this._Tabs.tabIndexTDs[params['id']].onclick             = function() {_this._showTab(params['id']);};
+
+		/* Old Version
 		this._Tabs.tabIndexTDs[params['id']].innerHTML           = params['name'] ? params['name'] : 'undefined';
 		this._Tabs.tabIndexTDs[params['id']].selectedClassName   = params['selectedClass'];
 		this._Tabs.tabIndexTDs[params['id']].unselectedClassName = params['unselectedClass'];
 		this._Tabs.tabIndexTDs[params['id']].className           = params['unselectedClass'];
 		this._Tabs.tabIndexTDs[params['id']].onclick             = function() {_this._showTab(params['id']);};
+		*/
 
-		for (var i in this._Tabs.tabIndexTDs)
-		{
-			if (i == 'length')
-			{
-				return;
-			}
-			
-			this._Tabs.tabIndexTDs[i].style.width = (100/(this._nTabs+1)) + '%';
-		}
-
+		this._Tabs.tabIndexTR.removeChild(this._Tabs['emptyTab']);
 		this._Tabs.tabIndexTR.appendChild(this._Tabs.tabIndexTDs[params['id']]);
+		this._Tabs.tabIndexTR.appendChild(this._Tabs['emptyTab']);
 
 		if (!is_moz1_6)
 		{
@@ -258,6 +207,25 @@
 		return this._Tabs.root;
 	}
 	
+	dTabsManager.prototype.enableTab = function(id)
+	{
+		if (this._Tabs.contents[id])
+		{
+			var _this = this;
+			this._Tabs.tabIndexTDs[id].className = 'dTabs_unselected';
+			this._Tabs.tabIndexTDs[id].onclick = function() {_this._showTab(id);};
+		}
+	}
+
+	dTabsManager.prototype.disableTab = function(id)
+	{
+		if (this._Tabs.contents[id])
+		{
+			this._Tabs.tabIndexTDs[id].className = 'dTabs_disabled';
+			this._Tabs.tabIndexTDs[id].onclick = false;
+		}
+	}
+
 	/****************************************************************************\
 	 *                         Private Methods                                  *
 	\****************************************************************************/
@@ -290,20 +258,25 @@
 				continue;
 			}
 			
-			this._Tabs.contents[i].style.visibility = 'hidden';
-			this._Tabs.contents[i].style.zIndex = '-1';
+			//viniciuscb: mystery
+			if (this._Tabs.contents[i].style != null)
+			{
+				this._Tabs.contents[i].style.visibility = 'hidden';
+				this._Tabs.contents[i].style.display = 'none';
+				this._Tabs.contents[i].style.zIndex = '-1';
+				if (this._tabEvents['hide'][i]) this._tabEvents['hide'][i]();
+			}
 		}
 		
 		this._Tabs.contents[id].style.visibility = 'visible';
+		this._Tabs.contents[id].style.display = '';
 		this._Tabs.contents[id].style.zIndex = '10';
+		if (this._tabEvents['show'][id]) this._tabEvents['show'][id]();
 
 		if (this._selectedIndex && this._selectedIndex != id)
 		{
 			this._Tabs.tabIndexTDs[this._selectedIndex].className = this._Tabs.tabIndexTDs[this._selectedIndex].unselectedClassName;
-			if (!document.all)
-			{
-				this._focus(this._Tabs.contents[id]);
-			}
+			this._focus(this._Tabs.contents[id]);
 		}
 		
 		this._selectedIndex = id;
@@ -325,21 +298,5 @@
 					return true;
 				}
 			}
-		}
-	}
-
-	function _dtElement(id)
-	{
-		if (document.getElementById)
-		{
-			return document.getElementById(id);
-		}
-		else if (document.all)
-		{
-			return document.all[id];
-		}
-		else
-		{
-			throw('Browser not supported');
 		}
 	}

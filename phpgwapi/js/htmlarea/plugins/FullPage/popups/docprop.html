@@ -16,7 +16,8 @@ window.resizeTo(400, 100);
       f_body_bgcolor  : true,
       f_body_fgcolor  : true,
       f_base_style    : true,
-      f_alt_style     : true
+      f_alt_style     : true,
+      f_charset       : true
   };
 
 var editor = null;
@@ -119,6 +120,17 @@ border-bottom: 1px solid black; letter-spacing: 2px;
       <tr>
         <td class="label"><span>Text color:</span></td>
         <td><input type="text" id="f_body_fgcolor" size="7" /></td>
+      </tr>
+      <tr>
+        <td class="label"><span>Character set:</span></td>
+        <td><select id="f_charset">
+          <option value=""></option>
+          <option value="utf-8">UTF-8 (recommended)</option>
+          <option value="windows-1251">cyrillic (WINDOWS-1251)</option>
+          <option value="koi8-r">cyrillic (KOI8-R)</option>
+          <option value="iso-8859-5">cyrillic (ISO-8859-5)</option>
+          <option value="iso-8859-1">western (ISO-8859-1)</option>
+        </select></td>
       </tr>
     </table>
 

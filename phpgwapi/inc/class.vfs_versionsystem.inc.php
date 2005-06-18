@@ -156,6 +156,13 @@
 			
 			$res = $this->db->insert('phpgw_vfs2_versioning',$insert_data,null,
 				__LINE__,__FILE__);
+
+/*			$this->db->update('phpgw_vfs2_files',array(
+					'modified' => $insert_data['modified'],
+					'modifiedby_id' => $insert_data['modifiedby_id']
+				),
+				array('file_id' => $insert_data['file_id']).__LINE__,__FILE__
+				);*/
 			
 
 
@@ -188,7 +195,6 @@
 		 */
 		function save_snapshot($file_id,$operation,$comment='',$other='')
 		{
-
 			//Prevent recursive reentrant when working in vfs->copy, f.inst
 			if ($GLOBALS['phpgw']->banish_journal)
 			{
@@ -467,7 +473,11 @@
 				{
 	
 					$this->db->update('phpgw_vfs2_files',
-						array('version' => $this->inc($file_data['insert_data']['version'])),
+						array(
+							'version' => $this->inc($file_data['insert_data']['version']),
+							'modified' => $file_data['insert_data']['modified'],
+							'modifiedby_id' => $file_data['insert_data']['modifiedby_id']
+							),
 						array('file_id' => $file_data['insert_data']['file_id']),
 						__LINE__, __FILE__
 					);

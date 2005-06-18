@@ -11,9 +11,110 @@
   </head>
 
   <body>
+    <div style="float: right; border: 1px solid #000; background: #fff; padding: 10px; ">
+      <a href="http://www.dynarch.com/projects/calendar/">The Coolest DHTML Calendar</a><br />
+      © <a href="http://www.dynarch.com/">Dynarch.com</a> 2002 and later.
+    </div>
     <h1>jscalendar release notes</h1>
 
-    <p>This release compiled at Friday,  6 Feb 2004 (21:40).</p>
+    <p>This release compiled at Monday,  7 Mar 2005 (19:06).</p>
+
+    <h2>1.0</h2>
+
+    <ul>
+
+      <li>
+        Added support for multiple dates selection.  In this mode the
+        calendar will allow the user to select more than one date, and
+        will maintain an array of selected dates that can be
+        investigated from your custom handlers.  Sample in <a
+        href="multiple-dates.html">multiple-dates.html</a>.
+      </li>
+
+      <li>
+        Support for “day info”.  Using this feature you can display
+        custom information for certain dates.  Sample in <a
+        href="dayinfo.html">dayinfo.html</a>.  Note that if the text
+        is really big the calendar layout might appear somehow broken;
+        this is something that should be easy to fix in the CSS file.
+      </li>
+
+      <li>
+        Clicking on “Today” will now close the calendar if the current
+        date is already selected.
+      </li>
+
+      <li>
+        The “first day of week” setting can now be defined in the
+        language file--after all, it is locale-specific.  The new
+        parameter is “Calendar._FD”.  Language files should be
+        updated, but the calendar will not complain nor fail to
+        function if the parameter is not present.
+      </li>
+
+      <li>
+        Some fixes to make the thing work in Safari.  It now seems to
+        be properly supported, please let me know if you encounter any
+        problems.
+      </li>
+
+      <li>
+        New skin: Aqua theme, appropriate for MacOSX fan sites :-)
+        This theme is located in “skins/aqua/theme.css” (in the
+        future, all themes will go to this directory).
+      </li>
+
+      <li>
+        <b>Bug fixes.</b>
+        <ul>
+          <li>
+            Keyboard operation now functions normally when the
+            calendar is displaying days from adjacent months; it might
+            even work correctly for months containing disabled dates
+            :).  This fix was originally developed under contract for
+            <a
+            href="http://www.zapatec.com/website/main/products/prod1/">The
+            Zapatec Calendar</a>.  Zapatec kindly allowed us to
+            include the bugfixes back in the open source calendar.
+          </li>
+          <li>
+            Fixed the time selection bug: the previous version would
+            reset the time to current time when a new date was
+            clicked.
+          </li>
+          <li>
+            Parsing hours like "12:XX pm" would wrongfully replace
+            "pm" with "am"--fixed.
+          </li>
+          <li>
+            Fixed critical bugs in parseDate function that would
+            initialize the calendar with 'NaN' values in all cells if
+            the string to be parsed is not a valid date.
+          </li>
+          <li>
+            The golbal variable that we are using was renamed to
+            “_dynarch_popupCalendar” to minimize the risk of name
+            clashes.  It's still difficult to get rid of it.
+          </li>
+          <li>
+            Added z-index property to drop-down menus style.
+          </li>
+          <li>
+            The calendar will update an input field even in flat mode,
+            if an input field was passed.  Also, the “showOthers”
+            parameter will be effective in both popup and flat mode.
+          </li>
+          <li>
+            Others, probably.
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        Documentation &amp; sample files updated.
+      </li>
+
+    </ul>
 
     <h2>0.9.6</h2>
 

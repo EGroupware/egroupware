@@ -1313,6 +1313,29 @@
 		{
 			$java_script = '';
 
+			//viniciuscb: in Concisus this condition is inexistent, and in all
+			//pages the javascript globals are inserted. Today, because
+			//filescenter needs these javascript globals, this
+			//include_jsbackend is a must to the javascript globals be
+			//included.
+			if ($GLOBALS['egw_info']['flags']['include_jsbackend'])
+			{
+				if (!$GLOBALS['egw_info']['flags']['nojsapi'])
+				{
+					if(!@is_object($GLOBALS['egw']->js))
+					{
+						$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+					}
+		
+					$GLOBALS['egw']->js->validate_jsapi();
+				}
+				
+				if(@is_object($GLOBALS['egw']->js))
+				{
+					$java_script .= $GLOBALS['egw']->js->get_javascript_globals();
+				}
+			}
+
 			/* this flag is for all javascript code that has to be put before other jscode. 
 			Think of conf vars etc...  (pim@lingewoud.nl) */
 			if (isset($GLOBALS['egw_info']['flags']['java_script_thirst']))

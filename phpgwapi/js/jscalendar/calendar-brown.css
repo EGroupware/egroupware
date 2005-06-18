@@ -163,6 +163,7 @@ div.calendar { position: relative; }
   background: #ffe;
   color: #000;
   font-size: 90%;
+  z-index: 100;
 }
 
 .calendar .combo .label,

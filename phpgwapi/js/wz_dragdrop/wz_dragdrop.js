@@ -198,7 +198,9 @@ dd.getDivW = function(d_o)
 {
 	return dd.Int(
 		dd.n4? (d_o.div? d_o.div.clip.width : 0)
-		: d_o.div? (d_o.div.offsetWidth || d_o.css.pixelWidth || d_o.css.width || 0)
+
+
+		: d_o.div? (d_o.div.offsetWidth || (d_o.css ? d_o.css.pixelWidth || d_o.css.width : 0))
 		: 0
 	);
 };
@@ -207,7 +209,7 @@ dd.getDivH = function(d_o)
 {
 	return dd.Int(
 		dd.n4? (d_o.div? d_o.div.clip.height : 0)
-		: d_o.div? (d_o.div.offsetHeight || d_o.css.pixelHeight || d_o.css.height || 0)
+		: d_o.div? (d_o.div.offsetHeight || (d_o.css ? d_o.css.pixelHeight || d_o.css.height : 0))
 		: 0
 	);
 };
@@ -360,6 +362,7 @@ dd.addProps = function(d_o)
 	{
 		d_o.div = dd.getDiv(d_o.id);
 		if (d_o.div && typeof d_o.div.style != "undefined") d_o.css = d_o.div.style;
+		else d_o.css = {};
 		d_o.nimg = (dd.n4 && d_o.div)? d_o.div.document.images[0] : (document.images[d_o.id+'NImG'] || null);
 		if (!d_o.noalt && !dd.noalt)
 		{
@@ -571,6 +574,7 @@ function DDObj(d_o, d_i)
 	else
 	{
 		if (!!(this.div = dd.getDiv(this.id)) && typeof this.div.style != "undefined") this.css = this.div.style;
+		else this.css = {};
 		dd.getWH(this);
 		if (this.div)
 		{
