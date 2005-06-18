@@ -37,6 +37,12 @@ class resources_hooks
 					'no_lang' => true,
 					'link' => false
 			);
+// 			$file[] = array(
+// 					'text' => lang('planer'),
+// 					'no_lang' => true,
+// 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_calviews.planer' )),
+// 					'icon' => 
+// 			);
 			display_sidebox($appname,$title,$file);
 		}
 

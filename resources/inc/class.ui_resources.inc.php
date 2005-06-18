@@ -33,6 +33,7 @@ class ui_resources
 // 		print_r($GLOBALS['egw_info']); die();
 		$this->tmpl	=& CreateObject('etemplate.etemplate','resources.show');
 		$this->bo	=& CreateObject('resources.bo_resources');
+// 		$this->calui	= CreateObject('resources.ui_calviews');
 		
 		if(!@is_object($GLOBALS['egw']->js))
 		{
@@ -382,13 +383,13 @@ class ui_resources
 					if (openerSelectBox.selectedIndex >= 0) {
 						selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
 						if (selected.slice(0,1) == ',') selected = selected.slice(1);
-						opener.addOption(openerid,'multiple*',selected,1);
+						opener.selectbox_add_option(openerid,'multiple*',selected,1);
 					}
 					else {
 						for (i=0; i < openerSelectBox.length; i++) {
 							with (openerSelectBox.options[i]) {
 								if (selected) {
-									opener.addOption(openerid,text,value,1);
+									opener.selectbox_add_option(openerid,text,value,1);
 									break;
 								}
 							}

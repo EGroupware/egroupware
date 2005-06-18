@@ -61,7 +61,7 @@
 					</vbox>
 					<hbox align="right">
 						<vbox class="buttonbox">
-							<button image="bookable.gif" label="Book this resource" align="center" id="bookable[$row_cont[id]]" statustext="Book this resource" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;id=r$row_cont[id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+							<button image="bookable.gif" label="Book this resource" align="center" id="bookable[$row_cont[id]]" statustext="Book this resource" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;participants=r$row_cont[id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
 							<button image="buyable.gif" label="Buy this resource" align="center" id="buyable[$row_cont[id]]" statustext="Buy this resource"/>
 						</vbox>
 						<vbox needed="1" align="right" class="buttonbox">
@@ -102,7 +102,7 @@
 						<rows>
 							<row>
 								<description/>
-								<button image="bookable" label="book selected resources" id="btn_book_selected" statustext="book selected resources" align="right"/>
+								<button image="bookable" label="book selected resources" id="btn_book_selected" statustext="book selected resources" align="right" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;participants=r$row_cont[id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
 								<button label="buy selected resources" no_lang="1" image="buyable" id="btn_buy_selected" statustext="buy selected resources" align="right"/>
 								<button image="delete" label="delete selected resources" id="btn_delete_selected" statustext="delete selected resources" align="right" onclick="return confirm('Do you really want do delte the selected resources?');"/>
 								<vbox>

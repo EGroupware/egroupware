@@ -2,6 +2,7 @@ accessories of	resources	en	accessories of
 accessories:	resources	en	Accessories:
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
+add resource	resources	en	add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	all categories
@@ -29,6 +30,7 @@ how many of the resources are useable?	resources	en	How many of the resources ar
 how many of them are useable?	resources	en	How many of them are useable?
 how many of this resource are usable	resources	en	How many of this resource are usable
 how many of this resource exists	resources	en	How many of this resource exists
+implies booking permission	resources	en	implies booking permission
 implies read permission	resources	en	implies read permission
 informations about the location of resource	resources	en	Informations about the location of resource
 is resource bookable?	resources	en	Is resource bookable?
@@ -45,13 +47,16 @@ picture	resources	en	Picture
 picture source	resources	en	picture source
 picture type is not supported, sorry!	resources	en	Picture type is not supported, sorry!
 pictures or resource	resources	en	Pictures or resource
+planer	resources	en	planer
 prizeing information for booking or buying	resources	en	Prizeing information for booking or buying
 quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
+read calender permissions	resources	en	Read Calender permissions
 read permissions	resources	en	Read permissions
 related links	resources	en	Related links
 resources	resources	en	resources
+resources list	resources	en	resources list
 responsible:	resources	en	Responsible:
 saves entry and exits	resources	en	Saves entry and exits
 select a category	resources	en	Select a category

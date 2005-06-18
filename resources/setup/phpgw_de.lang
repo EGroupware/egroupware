@@ -2,7 +2,8 @@ accessories of	resources	de	Zubehör von
 accessories:	resources	de	Zubehör:
 actions	resources	de	Aktionen
 add accessory	resources	de	Zubehör Hinzufügen
-add resources	resources	de	Resource hinzufügen
+add resource	resources	de	Resource hinzufügen
+add resources	resources	de	Resourcen hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
 book this resource	resources	de	Buchen der Resource
@@ -29,6 +30,7 @@ how many of the resources are useable?	resources	de	Stückzahl der benutzbaren Re
 how many of them are useable?	resources	de	Stückzahl der benutzbaren Resourcen
 how many of this resource are usable	resources	de	Stückzahl der benutzbaren Resourcen
 how many of this resource exists	resources	de	Stückzahl der existierenden Resourcen
+implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
 informations about the location of resource	resources	de	Informationen über den Lagerort der Resource
 is resource bookable?	resources	de	Ist diese Resource buchbar?
@@ -49,9 +51,11 @@ prizeing information for booking or buying	resources	de	Preisinformation für Buc
 quantity	resources	de	Stückzahl
 quantity of resource	resources	de	Stückzahl der Resource
 quantity:	resources	de	Stückzahl:
+read calender permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 related links	resources	de	Siehe auch
 resources	resources	de	Resourcen
+resources list	resources	de	Resourcen Liste
 responsible:	resources	de	Verantwortlich:
 saves entry and exits	resources	de	Speichern und Schließen
 select a category	resources	de	Wählen sie eine Kategorie
