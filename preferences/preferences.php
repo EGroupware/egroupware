@@ -187,12 +187,24 @@
 	{
 		global $t;
 
-			$t->set_var('row_value','');
-			$t->set_var('row_name','<span class="prefSection">'.lang($title).'</span>');
-			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
+		$t->set_var('row_value','');
+		$t->set_var('row_name','<span class="prefSection">'.lang($title).'</span>');
+		$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
 
-			$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
-		}
+		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
+	}
+
+	/* for creating different sections with a title */
+	function create_subsection($title='')
+	{
+		global $t;
+
+		$t->set_var('row_value','');
+		$t->set_var('row_name','<span class="prefSubSection">'.lang($title).'</span>');
+		$GLOBALS['egw']->nextmatchs->template_alternate_row_color($t);
+
+		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
+	}
 
 	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True)
 	{
