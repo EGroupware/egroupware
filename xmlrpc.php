@@ -12,6 +12,8 @@
 
 	/* $Id$ */
 	/* $Source$ */
+	/*list($usec, $sec) = explode(" ", microtime());
+	$GLOBALS['concisus']['script_start'] = ((float)$usec + (float)$sec);*/
 
 	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
@@ -21,7 +23,11 @@
 	);
 	include('header.inc.php');
 
+	//viniciuscb: a secure way to know if we're in a xmlrpc call...
+	$GLOBALS['phpgw_info']['server']['xmlrpc'] = true;
+
 	$server = CreateObject('phpgwapi.xmlrpc_server');
+	
 	/* uncomment here if you want to show all of the testing functions for compatibility */
 	//include(PHPGW_API_INC . '/xmlrpc.interop.php');
 
@@ -41,6 +47,16 @@
 		$kp3 = get_var('kp3',array('COOKIE','GET'));
 	}
 	$server->authed = $GLOBALS['phpgw']->session->verify($sessionid,$kp3);
+
+	if (!$server->authed and isset($_SERVER['PHP_AUTH_USER']) and isset($_SERVER['PHP_AUTH_PW']))
+	{
+		$authed = $GLOBALS['phpgw']->session->create($login.'@'.$domain, $_SERVER['PHP_AUTH_PW'], 'text');
+
+		if ($authed)
+		{
+			$server->authed = true;
+		}
+	}
 
 	$server->service($_SERVER['HTTP_RAW_POST_DATA']);
 ?>

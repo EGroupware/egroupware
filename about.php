@@ -151,21 +151,45 @@ function about_display($info)
 					{
 						$infos = array('email' => $info[$key.'_email'],'name' => $infos);
 					}
+				    elseif(!is_array($infos) && isset($info[$key.'_url']))
+				    {
+						$infos = array('url' => $info[$key.'_url'],'name' => $infos);
+				    }
 					if (is_array($infos))
 					{
-						$names = explode('<br>',$infos['name']);
-						$emails = split('@|<br>',$infos['email']);
-						if (count($names) < count($emails)/2)
+						if ($infos['email'])
 						{
-						$names = '';
+							$names = explode('<br>',$infos['name']);
+							$emails = split('@|<br>',$infos['email']);
+							if (count($names) < count($emails)/2)
+							{
+							$names = '';
+							}
+							$infos = '';
+							while (list($user,$domain) = $emails)
+							{
+							if ($infos) $infos .= '<br>';
+							$name = $names ? array_shift($names) : $user;
+							$infos .= "<a href='mailto:$user at $domain'><span onClick=\"document.location='mailto:$user'+'@'+'$domain'; return false;\">$name</span></a>";
+							array_shift($emails); array_shift($emails);
+							}
 						}
-						$infos = '';
-						while (list($user,$domain) = $emails)
-						{
-						if ($infos) $infos .= '<br>';
-						$name = $names ? array_shift($names) : $user;
-						$infos .= "<a href='mailto:$user at $domain'><span onClick=\"document.location='mailto:$user'+'@'+'$domain'; return false;\">$name</span></a>";
-						array_shift($emails); array_shift($emails);
+					    elseif($infos['url'])
+					    {
+							$img = $info[$key.'_img'];
+							if ($img)
+							{
+								$img_url = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
+								if (!$img_url)
+								{
+									$img_url = $GLOBALS['phpgw']->common->image($info['name'],$img);
+								}
+								$infos = '<table border="0"><tr><td style="text-align:center;"><a href="'.$infos['url'].'"><img src="'.$img_url.'" border="0"><br>'.$infos['name'].'</a></td></tr></table>';
+							}
+							else
+							{
+								$infos = '<a href="'.$infos['url'].'">'.$infos['name'].'</a>';
+							}
 						}
 					}
 					$s .= ($n ? '<br>' : '') . $infos;
