@@ -1,7 +1,6 @@
 <?php
 	/***************************************************************************\
 	* eGroupWare - content history class                                        *
-	* http://www.linux-at-work.de                                               *
 	* http://www.egroupware.org                                                 *
 	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
 	* -------------------------------------------------                         *
@@ -36,6 +35,32 @@
 		}
 		
 		/**
+		* mark mapping as expired
+		*
+		* mark a mapping from externel to internal id as expired, when
+		* a egw entry gets deleted
+		*
+		* @param $_appName string the appname example: infolog_notes
+		* @param $_id int the internal egwapp content id
+		* @return bool 
+		*/
+		function expireMapping($_appName, $_id)
+		{
+			$where = array (
+				'map_guid'		=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
+			);
+
+			$newData = array (
+				'map_expired'		=> 1,
+			);
+			
+			if(!$this->db->update('egw_contentmap',$newData,$where,__LINE__,__FILE__))
+				return FALSE;
+			else
+				return TRUE;
+		}
+
+		/**
 		* get the timestamp for action
 		*
 		* find which content changed since $_ts for application $_appName
@@ -47,35 +72,34 @@
 		*/
 		function getHistory($_appName, $_action, $_ts)
 		{
+			$query = "select sync_guid from egw_api_content_history where sync_appname = '".$this->db->db_addslashes($_appName)."' and ";
+			
 			switch($_action)
 			{
 				case 'modify':
-					$query = "sync_modified > '".$this->db->to_timestamp($_ts)."' AND sync_modified > sync_deleted";
+					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and sync_modified > sync_deleted";
 					break;
-					
 				case 'delete':
-					$query = "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
+					$query .= "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
 					break;
-					
 				case 'add':
-					$query = "sync_added > '".$this->db->to_timestamp($_ts)."' AND sync_added > sync_deleted";
+					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and sync_added > sync_deleted and sync_added > sync_modified";
 					break;
-					
 				default:
 					// no valid $_action set
 					return array();
+					break;
 			}
 			
-			$this->db->select($this->table,array(
-				'sync_appname' => $_appName,
-				$query,				
-			), __LINE__, __FILE__);
+			$this->db->query($query, __LINE__, __FILE__);
 
 			$guidList = array();
+
 			while($this->db->next_record())
 			{
 				$guidList[] = $this->db->f('sync_guid');
 			}
+			
 			return $guidList;
 		}
 		
@@ -99,12 +123,15 @@
 				{
 					case 'add':
 						return $this->db->from_timestamp($this->db->f('sync_added'));
-
+						break;
 					case 'delete':
 						return $this->db->from_timestamp($this->db->f('sync_deleted'));
-
+						break;
 					case 'modify':
 						return $this->db->from_timestamp($this->db->f('sync_modified'));
+						break;
+					default:
+						return false;
 				}
 			}
 			
@@ -128,7 +155,7 @@
 				'sync_appname'		=> $_appName,
 				'sync_contentid'	=> $_id,
 				'sync_added'		=> $_ts,
-				'sync_guid'			=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
+				'sync_guid'		=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
 				'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 			);
 			switch($_action)
@@ -162,3 +189,4 @@
 			return true;
 		}
 	}
+?>
