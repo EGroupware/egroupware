@@ -1,10 +1,8 @@
 // ** I18N
 
-// Calendar ES (spanish) language
-// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Updater: Servilio Afre Puentes <servilios@yahoo.com>
-// Updated: 2004-06-03
-// Encoding: utf-8
+// Calendar EN language
+// Author: Mihai Bazon, <mishoo@infoiasi.ro>
+// Encoding: any
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -16,10 +14,10 @@ Calendar._DN = new Array
 ("Domingo",
  "Lunes",
  "Martes",
- "Miércoles",
+ "Miircoles",
  "Jueves",
  "Viernes",
- "Sábado",
+ "Sabado",
  "Domingo");
 
 // Please note that the following array of short day names (and the same goes
@@ -39,15 +37,11 @@ Calendar._SDN = new Array
 ("Dom",
  "Lun",
  "Mar",
- "Mié",
+ "Mii",
  "Jue",
  "Vie",
- "Sáb",
+ "Sab",
  "Dom");
-
-// First day of the week. "0" means display Sunday first, "1" means display
-// Monday first, etc.
-Calendar._FD = 1;
 
 // full month names
 Calendar._MN = new Array
@@ -85,45 +79,36 @@ Calendar._TT["INFO"] = "Acerca del calendario";
 
 Calendar._TT["ABOUT"] =
 "Selector DHTML de Fecha/Hora\n" +
-"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
-"Para conseguir la última versión visite: http://www.dynarch.com/projects/calendar/\n" +
-"Distribuido bajo licencia GNU LGPL. Visite http://gnu.org/licenses/lgpl.html para más detalles." +
+"(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
+"Para conseguir la zltima versisn visite: http://dynarch.com/mishoo/calendar.epl\n" +
+"Distribuido bajo licencia GNU LGPL. Visite http://gnu.org/licenses/lgpl.html para mas detalles." +
 "\n\n" +
-"Selección de fecha:\n" +
-"- Use los botones \xab, \xbb para seleccionar el año\n" +
+"Seleccisn de fecha:\n" +
+"- Use los botones \xab, \xbb para seleccionar el aqo\n" +
 "- Use los botones " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " para seleccionar el mes\n" +
-"- Mantenga pulsado el ratón en cualquiera de estos botones para una selección rápida.";
+"- Mantenga pulsado el ratsn en cualquiera de estos botones para una seleccisn rapida.";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
-"Selección de hora:\n" +
+"Seleccisn de hora:\n" +
 "- Pulse en cualquiera de las partes de la hora para incrementarla\n" +
-"- o pulse las mayúsculas mientras hace clic para decrementarla\n" +
-"- o haga clic y arrastre el ratón para una selección más rápida.";
+"- s pulse las mayzsculas mientras hace clic para decrementarla\n" +
+"- s haga clic y arrastre el ratsn para una seleccisn mas rapida.";
 
-Calendar._TT["PREV_YEAR"] = "Año anterior (mantener para menú)";
-Calendar._TT["PREV_MONTH"] = "Mes anterior (mantener para menú)";
+Calendar._TT["PREV_YEAR"] = "Aqo anterior (mantener para menu)";
+Calendar._TT["PREV_MONTH"] = "Mes anterior (mantener para menu)";
 Calendar._TT["GO_TODAY"] = "Ir a hoy";
-Calendar._TT["NEXT_MONTH"] = "Mes siguiente (mantener para menú)";
-Calendar._TT["NEXT_YEAR"] = "Año siguiente (mantener para menú)";
+Calendar._TT["NEXT_MONTH"] = "Mes siguiente (mantener para menu)";
+Calendar._TT["NEXT_YEAR"] = "Aqo siguiente (mantener para menu)";
 Calendar._TT["SEL_DATE"] = "Seleccionar fecha";
 Calendar._TT["DRAG_TO_MOVE"] = "Arrastrar para mover";
 Calendar._TT["PART_TODAY"] = " (hoy)";
-
-// the following is to inform that "%s" is to be the first day of week
-// %s will be replaced with the day name.
-Calendar._TT["DAY_FIRST"] = "Hacer %s primer día de la semana";
-
-// This may be locale-dependent.  It specifies the week-end days, as an array
-// of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
-// means Monday, etc.
-Calendar._TT["WEEKEND"] = "0,6";
-
+Calendar._TT["MON_FIRST"] = "Mostrar lunes primero";
+Calendar._TT["SUN_FIRST"] = "Mostrar domingo primero";
 Calendar._TT["CLOSE"] = "Cerrar";
 Calendar._TT["TODAY"] = "Hoy";
-Calendar._TT["TIME_PART"] = "(Mayúscula-)Clic o arrastre para cambiar valor";
+Calendar._TT["TIME_PART"] = "(Mayzscula-)Clic o arrastre para cambiar valor";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "%d/%m/%Y";
 Calendar._TT["TT_DATE_FORMAT"] = "%A, %e de %B de %Y";
 
 Calendar._TT["WK"] = "sem";
-Calendar._TT["TIME"] = "Hora:";
