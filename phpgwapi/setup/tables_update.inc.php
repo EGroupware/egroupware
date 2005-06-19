@@ -381,6 +381,7 @@
 
 		$GLOBALS['phpgw_setup']->oProc->m_odb->query($sql,__LINE__,__FILE__);
 
+		$files_to_change = array();
 		while ($GLOBALS['phpgw_setup']->oProc->m_odb->next_record())
 		{
 			$files_to_change[] = $GLOBALS['phpgw_setup']->oProc->m_odb->Record;
