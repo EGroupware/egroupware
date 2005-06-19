@@ -430,7 +430,11 @@
 			$path = '/';
 			foreach ($this->children as $n => $child)
 			{
-				$html .= $this->show_cell($child,$content,$readonlys,$cname,$show_c,$show_row,$nul,$nul,$path.$n);
+				$h = $this->show_cell($child,$content,$readonlys,$cname,$show_c,$show_row,$nul,$class,$path.$n);
+				$html .= $class || $child['align'] ? $this->html->div($h,$this->html->formatOptions(array(
+					$class,
+					$child['align'],
+				),'class,align')) : $h;
 			}
 			return $html."<!-- END eTemplate $this->name -->\n\n";
 		}
@@ -1250,7 +1254,7 @@
 							}
 							if (!$orient)
 							{
-								$html .= $h;
+								$html .= $cl ? $this->html->div($h," class=\"$cl\"") : $h;
 							}
 							else
 							{
