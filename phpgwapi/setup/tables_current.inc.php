@@ -511,5 +511,49 @@
 			'ix' => array(),
 			'uc' => array()
 		),
+		'egw_contentmap' => array(
+			'fd' => array(
+				'map_id'	=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
+				'map_guid'	=> array('type' => 'varchar', 'precision' => '200', 'nullable' => False),
+				'map_locuid'	=> array('type' => 'varchar', 'precision' => '200', 'nullable' => False),
+				'map_timestamp'	=> array('type' => 'timestamp', 'nullable' => False),
+				'map_expired'	=> array('type' => 'bool', 'nullable' => False),
+			),
+			'pk' => array(array('map_id','map_guid','map_locuid')),
+			'fk' => array(),
+			'ix' => array(array('map_id','map_locuid'),'map_expired'),
+			'uc' => array()
+		),
+		'egw_syncmldevinfo' => array(
+			'fd' => array(
+				'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
+				'dev_dtdversion'	=> array('type' => 'varchar', 'precision' => '10', 'nullable' => False),
+				'dev_numberofchanges'	=> array('type' => 'bool', 'nullable' => False),
+				'dev_largeobjs'		=> array('type' => 'bool', 'nullable' => False),
+				'dev_swversion'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_oem'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_model'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_manufacturer'	=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_devicetype'	=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_deviceid'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'dev_datastore'		=> array('type' => 'text', 'nullable' => False),
+			),
+			'pk' => array('dev_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),
+		'egw_syncmlsummary' => array(
+			'fd' => array(
+				'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
+				'sync_path'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
+				'sync_serverts'		=> array('type' => 'varchar', 'precision' => '20', 'nullable' => False),
+				'sync_clientts'		=> array('type' => 'varchar', 'precision' => '20', 'nullable' => False),
+			),
+			'pk' => array(array('dev_id','sync_path')),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),
 		/*********************************************************************/
 	);
