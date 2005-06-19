@@ -323,7 +323,7 @@
 					$value = intval($value);
 					break;
 					
-				case 'select-dow':
+				case 'select-dow':	// options: rows[,0=summaries befor days, 1=summaries after days, 2=no summaries
 					if (!defined('MCAL_M_SUNDAY'))
 					{
 						define('MCAL_M_SUNDAY',1);
@@ -340,7 +340,7 @@
 					}
 					$weekstart = $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts'];
 					$cell['sel_options'] = array();
-					if ($rows >= 2) 
+					if ($rows >= 2 && !$type) 
 					{
 						$cell['sel_options'] = array(
 							MCAL_M_ALLDAYS	=> 'all days',
@@ -359,6 +359,14 @@
 					);
 					if ($weekstart != 'Saturday') $cell['sel_options'][MCAL_M_SATURDAY] = 'saturday';
 					if ($weekstart == 'Monday') $cell['sel_options'][MCAL_M_SUNDAY] = 'sunday';
+					if ($rows >= 2 && $type == 1) 
+					{
+						$cell['sel_options'] += array(
+							MCAL_M_ALLDAYS	=> 'all days',
+							MCAL_M_WEEKDAYS	=> 'working days',
+							MCAL_M_WEEKEND	=> 'weekend',
+						);
+					}
 					$value_in = $value;
 					$value = array();
 					$readonly = $cell['readonly'] || $readonlys;
@@ -366,7 +374,7 @@
 					{
 						if (($value_in & $val) == $val)
 						{
-							$value[] = $readonly ? lang($lable) : $val;
+							$value[] = $val;
 							
 							if ($val == MCAL_M_ALLDAYS || 
 								$val == MCAL_M_WEEKDAYS && $value_in == MCAL_M_WEEKDAYS ||
@@ -376,11 +384,7 @@
 							}			
 						}
 					}
-					if ($readonly)
-					{
-						$cell['type'] = 'lable';
-					}
-					else
+					if (!$readonly)
 					{
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-select-dow';
 					}
