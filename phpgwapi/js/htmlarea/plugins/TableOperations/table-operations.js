@@ -24,7 +24,7 @@ function TableOperations(editor) {
 
 	// register the toolbar buttons provided by this plugin
 	var toolbar = ["linebreak"];
-	for (var i = 0; i < bl.length; ++i) {
+	for (var i in bl) {
 		var btn = bl[i];
 		if (!btn) {
 			toolbar.push("separator");
@@ -65,7 +65,7 @@ TableOperations.prototype.getClosest = function(tagName) {
 	var ancestors = editor.getAllAncestors();
 	var ret = null;
 	tagName = ("" + tagName).toLowerCase();
-	for (var i = 0; i < ancestors.length; ++i) {
+	for (var i in ancestors) {
 		var el = ancestors[i];
 		if (el.tagName.toLowerCase() == tagName) {
 			ret = el;
@@ -502,17 +502,11 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		var rows = td.parentNode.parentNode.rows;
 		var index = td.cellIndex;
 		for (var i = rows.length; --i >= 0;) {
-      /*
-      var tr = rows;   
-      var otd = tr.insertCell(index + (/after/.test(button_id) ? 1 : 0));   
-      otd.innerHTML = mozbr;   
-      */
 			var tr = rows[i];
 			var ref = tr.cells[index + (/after/.test(button_id) ? 1 : 0)];
 			var otd = editor._doc.createElement("td");
 			otd.innerHTML = mozbr;
 			tr.insertBefore(otd, ref);
-      
 		}
 		editor.focusEditor();
 		break;
@@ -874,7 +868,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 		td.appendChild(select);
 		select.name = "f_st_float";
 		options = ["None", "Left", "Right"];
-		for (var i = 0; i < options.length; ++i) {
+		for (i in options) {
 			var Val = options[i];
 			var val = options[i].toLowerCase();
 			option = doc.createElement("option");
@@ -929,7 +923,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 	input.size = "1";
 	input.style.fontFamily = "monospace";
 	td.appendChild(input);
-	for (var i = 0; i < options.length; ++i) {
+	for (i in options) {
 		var Val = options[i];
 		var val = Val.toLowerCase();
 		option = doc.createElement("option");
@@ -984,7 +978,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 	select.style.marginLeft = "0.5em";
 	td.appendChild(select);
 	options = ["Top", "Middle", "Bottom", "Baseline"];
-	for (var i = 0; i < options.length; ++i) {
+	for (i in options) {
 		var Val = options[i];
 		var val = Val.toLowerCase();
 		option = doc.createElement("option");
@@ -1076,7 +1070,7 @@ TableOperations.createStyleFieldset = function(doc, editor, el) {
 	// That is, "top right bottom left" -- we only consider the first
 	// value.
 	(currentBorderStyle.match(/([^\s]*)\s/)) && (currentBorderStyle = RegExp.$1);
-	for (var i in options) {
+	for (i in options) {
 		var val = options[i];
 		option = doc.createElement("option");
 		option.value = val;
@@ -1086,7 +1080,7 @@ TableOperations.createStyleFieldset = function(doc, editor, el) {
 	}
 	select.style.marginRight = "0.5em";
 	function setBorderFieldsStatus(value) {
-		for (var i = 0; i < borderFields.length; ++i) {
+		for (i in borderFields) {
 			var el = borderFields[i];
 			el.style.visibility = value ? "hidden" : "visible";
 			if (!value && (el.tagName.toLowerCase() == "input")) {

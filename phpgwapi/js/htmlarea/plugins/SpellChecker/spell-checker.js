@@ -18,7 +18,7 @@ function SpellChecker(editor) {
 
 	// register the toolbar buttons provided by this plugin
 	var toolbar = [];
-	for (var i = 0; i < bl.length; ++i) {
+	for (var i in bl) {
 		var btn = bl[i];
 		if (!btn) {
 			toolbar.push("separator");
@@ -33,7 +33,7 @@ function SpellChecker(editor) {
 		}
 	}
 
-	for (var i = 0; i < toolbar.length; ++i) {
+	for (var i in toolbar) {
 		cfg.toolbar[0].push(toolbar[i]);
 	}
 };

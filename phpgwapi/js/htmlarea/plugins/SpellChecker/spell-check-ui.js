@@ -126,7 +126,7 @@ function replaceAllClicked() {
 	}
 	*/
 	if (ok) {
-		for (var i = 0; i < spans.length; ++i) {
+		for (var i in spans) {
 			if (spans[i] != currentElement) {
 				replaceWord(spans[i]);
 			}
@@ -156,7 +156,7 @@ function learnClicked() {
 
 function internationalizeWindow() {
 	var types = ["div", "span", "button"];
-	for (var i = 0; i < types.length; ++i) {
+	for (var i in types) {
 		var tag = types[i];
 		var els = document.getElementsByTagName(tag);
 		for (var j = els.length; --j >= 0;) {
@@ -237,7 +237,7 @@ function wordClicked(scroll) {
 	if (currentElement) {
 		var a = allWords[currentElement.__msh_origWord];
 		currentElement.className = currentElement.className.replace(/\s*HA-spellcheck-current\s*/g, " ");
-		for (var i = 0; i < a.length; ++i) {
+		for (var i in a) {
 			var el = a[i];
 			if (el != currentElement) {
 				el.className = el.className.replace(/\s*HA-spellcheck-same\s*/g, " ");
@@ -247,7 +247,7 @@ function wordClicked(scroll) {
 	currentElement = this;
 	this.className += " HA-spellcheck-current";
 	var a = allWords[currentElement.__msh_origWord];
-	for (var i = 0; i < a.length; ++i) {
+	for (var i in a) {
 		var el = a[i];
 		if (el != currentElement) {
 			el.className += " HA-spellcheck-same";

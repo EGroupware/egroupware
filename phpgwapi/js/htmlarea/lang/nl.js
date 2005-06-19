@@ -47,7 +47,7 @@ HTMLArea.I18N = {
 		undo:					"Ongedaan maken",
 		redo:					"Herhalen",
 		cut:					"Knippen",
-		copy:					"Kopi?ren",
+		copy:					"Kopiëren",
 		paste:					"Plakken",
 		lefttoright:			"Tekstrichting links naar rechts",
 		righttoleft:			"Tekstrichting rechts naar links"
@@ -61,7 +61,7 @@ HTMLArea.I18N = {
 	msg: {
 		"Path":					"Pad",
 		"TEXT_MODE":			"Je bent in TEKST-mode. Gebruik de [<>] knop om terug te keren naar WYSIWYG-mode.",
-
+      
 		"IE-sucks-full-screen" :
 		// translate here
 		"Fullscreen-mode veroorzaakt problemen met Internet Explorer door bugs in de webbrowser " +
@@ -87,3 +87,4 @@ HTMLArea.I18N = {
 		"You must enter the URL where this link points to"  : "Geef de URL in waar de link naar verwijst"
 	}
 };
+

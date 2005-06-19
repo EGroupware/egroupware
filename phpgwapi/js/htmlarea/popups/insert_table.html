@@ -10,8 +10,6 @@
 window.resizeTo(400, 100);
 
 function Init() {
-  i18n = window.opener.HTMLArea.I18N.dialogs; // load the HTMLArea plugin and lang file
-  __dlg_translate(i18n);
   __dlg_init();
   document.getElementById("f_rows").focus();
 };
@@ -29,13 +27,13 @@ function onOK() {
       return false;
     }
   }
-  var fields = ["f_rows", "f_cols", "f_width", "f_unit", "f_fixed",
+  var fields = ["f_rows", "f_cols", "f_width", "f_unit",
                 "f_align", "f_border", "f_spacing", "f_padding"];
   var param = new Object();
   for (var i in fields) {
     var id = fields[i];
     var el = document.getElementById(id);
-    param[id] = (el.type == "checkbox") ? el.checked : el.value;
+    param[id] = el.value;
   }
   __dlg_close(param);
   return false;
@@ -90,6 +88,13 @@ form { padding: 0px; margin: 0px; }
   <tr>
     <td style="width: 4em; text-align: right">Rows:</td>
     <td><input type="text" name="rows" id="f_rows" size="5" title="Number of rows" value="2" /></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="width: 4em; text-align: right">Cols:</td>
+    <td><input type="text" name="cols" id="f_cols" size="5" title="Number of columns" value="4" /></td>
     <td style="width: 4em; text-align: right">Width:</td>
     <td><input type="text" name="width" id="f_width" size="5" title="Width of the table" value="100" /></td>
     <td><select size="1" name="unit" id="f_unit" title="Width unit">
@@ -98,13 +103,7 @@ form { padding: 0px; margin: 0px; }
       <option value="em"              >Em</option>
     </select></td>
   </tr>
-  <tr>
-    <td style="width: 4em; text-align: right">Cols:</td>
-    <td><input type="text" name="cols" id="f_cols" size="5" title="Number of columns" value="4" /></td>
-    <td style="text-align: right"><input type="checkbox" checked="checked" name="fixed" id="f_fixed" /></td>
-    <td colspan="2"><label for="f_fixed"
-    >Fixed width columns</label></td>
-  </tr>
+
   </tbody>
 </table>
 
@@ -117,7 +116,7 @@ form { padding: 0px; margin: 0px; }
 
 <div class="fl">Alignment:</div>
 <select size="1" name="align" id="f_align"
-  title="Positioning of this table">
+  title="Positioning of this image">
   <option value="" selected="1"                >Not set</option>
   <option value="left"                         >Left</option>
   <option value="right"                        >Right</option>

@@ -1,7 +1,7 @@
 // I18N constants
 
 // LANG: "en", ENCODING: UTF-8 | ISO-8859-1
-// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
+// Author: Mihai Bazon, <mishoo@infoiasi.ro>
 // translated into Norwegia: ses@online.no  11.11.03
 
 // FOR TRANSLATORS:

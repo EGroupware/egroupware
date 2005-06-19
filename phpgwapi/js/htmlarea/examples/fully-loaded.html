@@ -28,17 +28,15 @@
       // in our case "lang/en.js" loaded above).
 
       // If this lang file is not found the plugin will fail to
-      // load correctly and NOTHING WILL WORK.
+      // load correctly and nothing will work.
 
       HTMLArea.loadPlugin("TableOperations");
       HTMLArea.loadPlugin("SpellChecker");
       HTMLArea.loadPlugin("FullPage");
       HTMLArea.loadPlugin("CSS");
       HTMLArea.loadPlugin("ContextMenu");
-      //HTMLArea.loadPlugin("HtmlTidy");
+      HTMLArea.loadPlugin("HtmlTidy");
       HTMLArea.loadPlugin("ListType");
-      HTMLArea.loadPlugin("CharacterMap");
-HTMLArea.loadPlugin("DynamicCSS");
 </script>
 
 <style type="text/css">
@@ -56,7 +54,6 @@ textarea { background-color: #fff; border: 1px solid 00f; }
 
 <script type="text/javascript">
 var editor = null;
-
 function initEditor() {
 
   // create an editor for the "ta" textbox
@@ -72,13 +69,10 @@ function initEditor() {
   editor.registerPlugin(SpellChecker);
   
   // register the HtmlTidy plugin
-  //editor.registerPlugin(HtmlTidy);
+  editor.registerPlugin(HtmlTidy);
 
   // register the ListType plugin
   editor.registerPlugin(ListType);
-
-  editor.registerPlugin(CharacterMap);
-editor.registerPlugin(DynamicCSS);
 
   // register the CSS plugin
   editor.registerPlugin(CSS, {
@@ -118,11 +112,11 @@ editor.registerPlugin(DynamicCSS);
   // load the stylesheet used by our CSS plugin configuration
   editor.config.pageStyle = "@import url(custom.css);";
 
-  editor.generate();
+  setTimeout(function() {
+    editor.generate();
+  }, 500);
   return false;
 }
-
-HTMLArea.onload = initEditor;
 
 function insertHTML() {
   var html = prompt("Enter some HTML code here");
@@ -139,7 +133,7 @@ function highlight() {
 
 <!-- use <body onload="HTMLArea.replaceAll()" if you don't care about
      customizing the editor.  It's the easiest way! :) -->
-<body onload="HTMLArea.init();">
+<body onload="initEditor()">
 
 <h1>HTMLArea 3.0</h1>
 

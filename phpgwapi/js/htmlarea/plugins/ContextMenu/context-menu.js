@@ -63,26 +63,6 @@ ContextMenu.prototype.getContextMenu = function(target) {
 		tbo.buttonPress(editor, opcode);
 	};
 
-	function insertPara(after) {
-		var el = currentTarget;
-		var par = el.parentNode;
-		var p = editor._doc.createElement("p");
-		p.appendChild(editor._doc.createElement("br"));
-		par.insertBefore(p, after ? el.nextSibling : el);
-		var sel = editor._getSelection();
-		var range = editor._createRange(sel);
-		if (!HTMLArea.is_ie) {
-			sel.removeAllRanges();
-			range.selectNodeContents(p);
-			range.collapse(true);
-			sel.addRange(range);
-		} else {
-			range.moveToElementText(p);
-			range.collapse(true);
-			range.select();
-		}
-	};
-
 	for (; target; target = target.parentNode) {
 		var tag = target.tagName;
 		if (!tag)
@@ -209,41 +189,32 @@ ContextMenu.prototype.getContextMenu = function(target) {
 				  i18n["Create a link"],
 				  config.btnList["createlink"][1] ]);
 
-	for (var i = 0; i < elmenus.length; ++i)
+	for (var i in elmenus)
 		menu.push(elmenus[i]);
 
-	if (!/html|body/i.test(currentTarget.tagName))
-		menu.push(null,
-			  [ i18n["Remove the"] + " &lt;" + currentTarget.tagName + "&gt; " + i18n["Element"],
-			    function() {
-				    if (confirm(i18n["Please confirm that you want to remove this element:"] + " " +
-						currentTarget.tagName)) {
-					    var el = currentTarget;
-					    var p = el.parentNode;
-					    p.removeChild(el);
-					    if (HTMLArea.is_gecko) {
-						    if (p.tagName.toLowerCase() == "td" && !p.hasChildNodes())
-							    p.appendChild(editor._doc.createElement("br"));
-						    editor.forceRedraw();
-						    editor.focusEditor();
-						    editor.updateToolbar();
-						    if (table) {
-							    var save_collapse = table.style.borderCollapse;
-							    table.style.borderCollapse = "collapse";
-							    table.style.borderCollapse = "separate";
-							    table.style.borderCollapse = save_collapse;
-						    }
+	menu.push(null,
+		  [ i18n["Remove the"] + " &lt;" + currentTarget.tagName + "&gt; " + i18n["Element"],
+		    function() {
+			    if (confirm(i18n["Please confirm that you want to remove this element:"] + " " + currentTarget.tagName)) {
+				    var el = currentTarget;
+				    var p = el.parentNode;
+				    p.removeChild(el);
+				    if (HTMLArea.is_gecko) {
+					    if (p.tagName.toLowerCase() == "td" && !p.hasChildNodes())
+						    p.appendChild(editor._doc.createElement("br"));
+					    editor.forceRedraw();
+					    editor.focusEditor();
+					    editor.updateToolbar();
+					    if (table) {
+						    var save_collapse = table.style.borderCollapse;
+						    table.style.borderCollapse = "collapse";
+						    table.style.borderCollapse = "separate";
+						    table.style.borderCollapse = save_collapse;
 					    }
 				    }
-			    },
-			    i18n["Remove this node from the document"] ],
-			  [ i18n["Insert paragraph before"],
-			    function() { insertPara(false); },
-			    i18n["Insert a paragraph before the current node"] ],
-			  [ i18n["Insert paragraph after"],
-			    function() { insertPara(true); },
-			    i18n["Insert a paragraph after the current node"] ]
-			  );
+			    }
+		    },
+		    i18n["Remove this node from the document"] ]);
 	return menu;
 };
 
@@ -414,8 +385,12 @@ ContextMenu.prototype.popupMenu = function(ev) {
 	}
 
 	if (!HTMLArea.is_ie) {
-		var dx = x + div.offsetWidth - window.innerWidth + 4;
-		var dy = y + div.offsetHeight - window.innerHeight + 4;
+//		var dx = x + div.offsetWidth - window.innerWidth + 4;
+//		var dy = y + div.offsetHeight - window.innerHeight + 4;
+
+		var dx = x + div.offsetWidth - window.innerWidth - window.pageXOffset + 4;
+		var dy = y + div.offsetHeight - window.innerHeight - window.pageYOffset + 4;    
+
 		if (dx > 0) x -= dx;
 		if (dy > 0) y -= dy;
 		div.style.left = x + "px";

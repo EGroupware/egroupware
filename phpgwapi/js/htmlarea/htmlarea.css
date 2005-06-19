@@ -3,7 +3,7 @@
 .htmlarea .toolbar {
   cursor: default;
   background: ButtonFace;
-  padding: 3px;
+  padding: 1px 1px 2px 1px;
   border: 1px solid;
   border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
 }
@@ -20,16 +20,11 @@
   width: 18px;
   height: 18px;
 }
-.htmlarea .toolbar a.button:hover {
+.htmlarea .toolbar .buttonHover {
   border: 1px solid;
   border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
 }
-.htmlarea .toolbar a.buttonDisabled:hover {
-  border-color: ButtonFace;
-}
-.htmlarea .toolbar .buttonActive,
-.htmlarea .toolbar .buttonPressed
-{
+.htmlarea .toolbar .buttonActive, .htmlarea .toolbar .buttonPressed {
   padding: 2px 0px 0px 2px;
   border: 1px solid;
   border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
@@ -47,12 +42,12 @@
 }
 
 .htmlarea .toolbar .buttonDisabled img {
-  filter: gray() alpha(opacity = 25);
+  filter: alpha(opacity = 25);
   -moz-opacity: 0.25;
 }
 
 .htmlarea .toolbar .separator {
-  /*position: relative;*/
+  position: relative;
   margin: 3px;
   border-left: 1px solid ButtonShadow;
   border-right: 1px solid ButtonHighlight;
@@ -68,11 +63,6 @@
 .htmlarea .toolbar select,
 .htmlarea .toolbar select:hover,
 .htmlarea .toolbar select:active { background: FieldFace; color: ButtonText; }
-
-.htmlarea iframe
-{
-  border: none;
-}
 
 .htmlarea .statusBar {
   border: 1px solid;
@@ -112,8 +102,7 @@
 
 .dialog table { border-collapse: collapse; }
 
-.dialog .title, .dialog h1
-{
+.dialog .title {
   background: #008;
   color: #ff8;
   border-bottom: 1px solid #000;
@@ -122,7 +111,7 @@
   font-weight: bold;
   cursor: default;
 }
-.dialog h1 { margin:0px;}
+
 .dialog .title .button {
   float: right;
   border: 1px solid #66a;
@@ -189,46 +178,3 @@
 }
 
 form { margin: 0px; border: none; }
-
-
-/** Panels **/
-.htmlarea .panels.top
-{
-  border-bottom : 1px solid;
-  border-color: ButtonShadow;
-}
-
-.htmlarea .panels.right
-{
-  border-left : 1px solid;
-  border-color: ButtonShadow;
-}
-
-.htmlarea .panels.left
-{
-  border-right : 1px solid;
-  border-color: ButtonShadow;
-}
-
-.htmlarea .panels.bottom
-{
-  border-top : 1px solid;
-  border-color: ButtonShadow;
-}
-
-.htmlarea .panel h1 {
-  background: ButtonFace;
-  border: 1px solid;
-  border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
-  margin:   0px;
-  padding:  0px;
-  font-size:100%;
-  font-weight:bold;
-  padding: 2px;
-}
-
-.htmlarea .panels.left  .panel { border-right:none; border-left:none; }
-.htmlarea .panels.left  h1     { border-right:none;  }
-.htmlarea .panels.right .panel { border-right:none; border-left:none; }
-.htmlarea .panels.left  h1     { border-left:none;  }
-div.htmlarea { border: 1px solid black; }
