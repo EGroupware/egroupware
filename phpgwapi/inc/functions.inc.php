@@ -37,7 +37,9 @@
 		exit;
 	}
 
-	include(PHPGW_API_INC.'/common_functions.inc.php');
+	if (!defined('EGW_API_INC')) define('EGW_API_INC',PHPGW_API_INC);	// this is to support the header upgrade
+	
+	include(EGW_API_INC.'/common_functions.inc.php');
 	
 	/*!
 	 @function lang
@@ -58,7 +60,7 @@
 	}
 
 	/* Make sure the header.inc.php is current. */
-	if (!isset($GLOBALS['egw_info']) || $GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
+	if (!isset($GLOBALS['egw_domain']) || $GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
 	{
 		echo '<center><b>You need to port your settings to the new header.inc.php version by running <a href="setup/manageheader.php">setup/headeradmin</a>.</b></center>';
 		exit;
@@ -81,12 +83,6 @@
 	* Multi-Domain support                                                       *
 	\****************************************************************************/
 	
-	/* make them fix their header */
-	if (!isset($GLOBALS['egw_domain']))
-	{
-		echo '<center><b>The administrator must upgrade the header.inc.php file before you can continue.</b></center>';
-		exit;
-	}
 	if (!isset($GLOBALS['egw_info']['server']['default_domain']) ||	// allow to overwrite the default domain
 		!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]))
 	{
@@ -139,13 +135,13 @@
 	 * These lines load up the API, fill up the $phpgw_info array, etc            *
 	 \****************************************************************************/
 	 /* Load main class */
-	$GLOBALS['egw'] = CreateObject('phpgwapi.egw');
+	$GLOBALS['egw'] =& CreateObject('phpgwapi.egw');
 	// for the migration
 	$GLOBALS['phpgw'] =& $GLOBALS['egw'];
 	 /************************************************************************\
 	 * Load up the main instance of the db class.                             *
 	 \************************************************************************/
-	$GLOBALS['egw']->db           = CreateObject('phpgwapi.db');
+	$GLOBALS['egw']->db           =& CreateObject('phpgwapi.egw_db');
 	if ($GLOBALS['egw']->debug)
 	{
 		$GLOBALS['egw']->db->Debug = 1;
@@ -232,17 +228,17 @@
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
-	$GLOBALS['egw']->log			= CreateObject('phpgwapi.errorlog');
-	$GLOBALS['egw']->translation  	= CreateObject('phpgwapi.translation');
-	$GLOBALS['egw']->common       	= CreateObject('phpgwapi.common');
-	$GLOBALS['egw']->hooks        	= CreateObject('phpgwapi.hooks');
-	$GLOBALS['egw']->auth         	= CreateObject('phpgwapi.auth');
-	$GLOBALS['egw']->accounts     	= CreateObject('phpgwapi.accounts');
-	$GLOBALS['egw']->acl          	= CreateObject('phpgwapi.acl');
-	$GLOBALS['egw']->session      	= CreateObject('phpgwapi.sessions',$domain_names);
-	$GLOBALS['egw']->preferences  	= CreateObject('phpgwapi.preferences');
-	$GLOBALS['egw']->applications 	= CreateObject('phpgwapi.applications');
-	$GLOBALS['egw']->contenthistory	= CreateObject('phpgwapi.contenthistory');
+	$GLOBALS['egw']->log			=& CreateObject('phpgwapi.errorlog');
+	$GLOBALS['egw']->translation  	=& CreateObject('phpgwapi.translation');
+	$GLOBALS['egw']->common       	=& CreateObject('phpgwapi.common');
+	$GLOBALS['egw']->hooks        	=& CreateObject('phpgwapi.hooks');
+	$GLOBALS['egw']->auth         	=& CreateObject('phpgwapi.auth');
+	$GLOBALS['egw']->accounts     	=& CreateObject('phpgwapi.accounts');
+	$GLOBALS['egw']->acl          	=& CreateObject('phpgwapi.acl');
+	$GLOBALS['egw']->session      	=& CreateObject('phpgwapi.sessions',$domain_names);
+	$GLOBALS['egw']->preferences  	=& CreateObject('phpgwapi.preferences');
+	$GLOBALS['egw']->applications 	=& CreateObject('phpgwapi.applications');
+	$GLOBALS['egw']->contenthistory	=& CreateObject('phpgwapi.contenthistory');
 	print_debug('main class loaded', 'messageonly','api');
 	if (! isset($GLOBALS['egw_info']['flags']['included_classes']['error']) ||
 		! $GLOBALS['egw_info']['flags']['included_classes']['error'])
@@ -301,7 +297,7 @@
 				print_debug('User ID',$login_id,'app');
 				$GLOBALS['egw']->accounts->accounts($login_id);
 				$GLOBALS['egw']->preferences->preferences($login_id);
-				$GLOBALS['egw']->datetime = CreateObject('phpgwapi.datetime');
+				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
 			}
 		}
 	/**************************************************************************\
@@ -331,7 +327,7 @@
 			exit;
 		}
 
-		$GLOBALS['egw']->datetime = CreateObject('phpgwapi.datetime');
+		$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
 
 		/* A few hacker resistant constants that will be used throught the program */
 		define('EGW_TEMPLATE_DIR', $GLOBALS['egw']->common->get_tpl_dir('phpgwapi'));
@@ -366,7 +362,7 @@
 			{
 				$enable_class = str_replace('enable_','',$phpgw_class_name[0]);
 				$enable_class = str_replace('_class','',$enable_class);
-				eval('$GLOBALS["phpgw"]->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
+				eval('$GLOBALS["phpgw"]->' . $enable_class . ' =& CreateObject(\'phpgwapi.' . $enable_class . '\');');
 			}
 		}
 		unset($enable_class);
@@ -377,7 +373,7 @@
 		\*************************************************************************/
 		if(!@$GLOBALS['egw_info']['flags']['disable_Template_class'])
 		{
-			$GLOBALS['egw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+			$GLOBALS['egw']->template =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 		}
 
 		/*************************************************************************\
@@ -464,7 +460,7 @@
 
 		if(!is_object($GLOBALS['egw']->datetime))
 		{
-			$GLOBALS['egw']->datetime = CreateObject('phpgwapi.datetime');
+			$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
 		}
 		$GLOBALS['egw']->applications->read_installed_apps();	// to get translated app-titles
 		
@@ -480,17 +476,14 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (PHPGW_APP_INC != "" &&
-                   ! preg_match ("/phpgwapi/i", PHPGW_APP_INC) &&
-                   file_exists(PHPGW_APP_INC . '/functions.inc.php') &&
-                   !isset($_GET['menuaction']))
+		if (EGW_APP_INC != "" && ! preg_match ('/phpgwapi/i', EGW_APP_INC) &&
+        	file_exists(EGW_APP_INC . '/functions.inc.php') && !isset($_GET['menuaction']))
 		{
-			include(PHPGW_APP_INC . '/functions.inc.php');
+			include(EGW_APP_INC . '/functions.inc.php');
 		}
-		if (!@$GLOBALS['egw_info']['flags']['noheader'] &&
-			!@$GLOBALS['egw_info']['flags']['noappheader'] &&
-			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($_GET['menuaction']))
+		if (!@$GLOBALS['egw_info']['flags']['noheader'] && !@$GLOBALS['egw_info']['flags']['noappheader'] &&
+			file_exists(EGW_APP_INC . '/header.inc.php') && !isset($_GET['menuaction']))
 		{
-			include(PHPGW_APP_INC . '/header.inc.php');
+			include(EGW_APP_INC . '/header.inc.php');
 		}
 	}

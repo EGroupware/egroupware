@@ -63,7 +63,7 @@
 			{
 				$GLOBALS['egw_info']['server']['db_persistent'] = False;
 			}
-			$this->db           =& CreateObject('phpgwapi.db');
+			$this->db           =& CreateObject('phpgwapi.egw_db');
 			$this->db->Host     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_host'];
 			$this->db->Port     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_port'];
 			$this->db->Type     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
