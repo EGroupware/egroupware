@@ -46,19 +46,12 @@
 	
 	switch ($phpgw_flags['currentapp'])
 	{
-		case 'jinn' :
-			$BASE_DIR = $sessdata[UploadImageBaseDir];
-			$BASE_URL = $sessdata[UploadImageBaseURL];
-			$MAX_HEIGHT = $sessdata[UploadImageMaxHeight];
-			$MAX_WIDTH = $sessdata[UploadImageMaxWidth];
-			//   _debug_array($sessdata);
-			//die();
-			break;
 		case 'sitemgr' :
 			if(is_writeable($sessdata['upload_dir']))
 			{
 				$BASE_DIR = $sessdata['upload_dir'];
 				$BASE_URL = str_replace($GLOBALS['_SERVER']['DOCUMENT_ROOT'],'',$sessdata['upload_dir']);
+				break;
 			}
 			else
 			{
@@ -71,7 +64,14 @@
 					'Notify your Administrator to correct this Situation';
 				die();
 			}
-		default :
+		case 'jinn' :
+		default : 
+			$BASE_DIR = $sessdata[UploadImageBaseDir];
+			$BASE_URL = $sessdata[UploadImageBaseURL];
+			$MAX_HEIGHT = $sessdata[UploadImageMaxHeight];
+			$MAX_WIDTH = $sessdata[UploadImageMaxWidth];
+			//   _debug_array($sessdata);
+			//die();
 			break;
 	}
 	
@@ -90,12 +90,16 @@
 	$BASE_ROOT = '';
 	$IMG_ROOT = $BASE_ROOT;
 	
-	if(strrpos($BASE_DIR, '/')!= strlen($BASE_DIR)-1) 
-	$BASE_DIR .= '/';
-	
-	if(strrpos($BASE_URL, '/')!= strlen($BASE_URL)-1) 
-	$BASE_URL .= '/';
-	
+	// this seems to make no sense... maybe jinn needs it for some reason
+	if ($phpgw_flags['app'] == 'jinn')
+	{
+		if(strrpos($BASE_DIR, '/')!= strlen($BASE_DIR)-1) 
+		$BASE_DIR .= '/';
+		
+		if(strrpos($BASE_URL, '/')!= strlen($BASE_URL)-1) 
+		$BASE_URL .= '/';
+	}
+
 	//Built in function of dirname is faulty
 	//It assumes that the directory nane can not contain a . (period)
 	function dir_name($dir) 
