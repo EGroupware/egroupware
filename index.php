@@ -98,11 +98,10 @@
 		}
 		if($GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] && !$hasupdates) {
 			
-			Header('Location: ' . $GLOBALS['phpgw']->link('/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'].'/index.php'));
-			exit();
+			$GLOBALS['phpgw']->redirect_link('/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'].'/index.php');
 		}
 		else {
-			Header('Location: ' . $GLOBALS['phpgw']->link('home/index.php'));
+			$GLOBALS['phpgw']->redirect_link('/home/index.php');
 		}
 			
 	}
@@ -171,7 +170,7 @@
 				$GLOBALS['phpgw']->log->commit();
 			}
 			
-			$GLOBALS['phpgw']->redirect_link('home/index.php');
+			$GLOBALS['phpgw']->redirect_link('/home/index.php');
 		}
 	
 		if(!isset($GLOBALS['phpgw_info']['nofooter']))
