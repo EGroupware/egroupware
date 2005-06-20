@@ -47,9 +47,9 @@
 			{
 				$this->schema_proc = CreateObject('phpgwapi.schema_proc');
 			}
-			$this->db = $this->schema_proc->m_odb;
-			$this->adodb = &$GLOBALS['phpgw']->ADOdb;
 
+			$this->db = $this->schema_proc->m_odb;
+			$this->adodb = &$GLOBALS['egw']->ADOdb;
 			if (is_object($GLOBALS['phpgw_setup']))		// called from setup
 			{
 				$tables = $this->adodb->MetaTables('TABLES');
@@ -82,7 +82,7 @@
 				{
 					$this->backup_dir = $GLOBALS['phpgw_info']['server']['files_dir'].'/db_backup';
 				}
-				$this->charset = $GLOBALS['phpgw']->translation->charset();
+				$this->charset = $GLOBALS['egw']->translation->charset();
 			}
 			if (!is_dir($this->backup_dir) && is_writable(dirname($this->backup_dir)))
 			{

@@ -44,14 +44,14 @@
 		 */
 		function schema_proc($dbms=False)
 		{
-			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
+			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->m_odb->connect();
-			
+
 			$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
 
 			$this->adodb = &$GLOBALS['egw']->ADOdb;
 			$this->dict = NewDataDictionary($this->adodb);
-			
+
 			// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1
 			if ($this->debug > 1) $this->dict->debug = True;
 			
@@ -644,7 +644,7 @@
 		* @param mixed $line the line method was called from - use __LINE__
 		* @param string $file the file method was called from - use __FILE__
 		* @param int $offset row to start from
-		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
+		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
 		* @return ADORecordSet or false, if the query fails
 		*/
 		function query($sQuery, $line='', $file='')
