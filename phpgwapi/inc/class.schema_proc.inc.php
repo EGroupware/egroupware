@@ -44,7 +44,7 @@
 		 */
 		function schema_proc($dbms=False)
 		{
-			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['phpgw_setup']->db;
+			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 			$this->m_odb->connect();
 
 			$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
