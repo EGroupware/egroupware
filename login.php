@@ -13,26 +13,21 @@
 
 	/* $Id$ */
 
-	$egw_info = array();
 	$submit = False;			// set to some initial value
 
-	$GLOBALS['egw_info']['flags'] = array(
-		'disable_Template_class' => True,
-		'login'                  => True,
-		'enable_network_class'    => True,
-		'enable_contacts_class'   => True,
-		'enable_nextmatchs_class' => True,
-		'currentapp'             => 'login',
-		'noheader'               => True
-
-	);
+	$GLOBALS['egw_info'] = array('flags' => array(
+		'disable_Template_class'  => True,
+		'login'                   => True,
+		'currentapp'              => 'login',
+		'noheader'                => True
+	));
 
 	if(file_exists('./header.inc.php'))
 	{
 		include('./header.inc.php');
 		if(function_exists('CreateObject'))
 		{
-			$GLOBALS['egw']->session = CreateObject('phpgwapi.sessions');
+			$GLOBALS['egw']->session =& CreateObject('phpgwapi.sessions',array_keys($GLOBALS['egw_domain']));
 		}
 		else
 		{
@@ -46,7 +41,7 @@
 		exit;
 	}
 
-	$GLOBALS['egw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
+	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
 	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['egw_info']['server']['template_dir']);
 
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
@@ -78,7 +73,7 @@
 /*
 	if($GLOBALS['egw_info']['server']['usecookies'] == True)
 	{
-		$GLOBALS['egw']->session->egw_setcookie('eGroupWareLoginTime', time());
+		$GLOBALS['egw']->session->phpgw_setcookie('eGroupWareLoginTime', time());
 	}
 */
 /*
@@ -130,7 +125,7 @@
 				//fix for bug php4 expired sessions bug
 				if($GLOBALS['egw_info']['server']['sessions_type'] == 'php4')
 				{
-					$GLOBALS['egw']->session->phpgw_setcookie(PHPGW_PHPSESSID);
+					$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
 				}
 
 				return '<font color="#FF0000">' . lang('Your session could not be verified.') . '</font>';
@@ -178,7 +173,7 @@
 		# the username is deliberately lowercase, to ease LDAP integration
 		$sslattribs = explode('/',$_SERVER['SSL_CLIENT_S_DN']);
 		# skip the part in front of the first '/' (nothing)
-		while($sslattrib = next($sslattribs))
+		while(($sslattrib = next($sslattribs)))
 		{
 			list($key,$val) = explode('=',$sslattrib);
 			$sslattributes[$key] = $val;
@@ -222,13 +217,29 @@
 			$login = $_POST['login'];
 		}
 		
-		if(strstr($login,'@') === False && isset($_POST['logindomain']))
+		//conference - for strings like vinicius@thyamad.com@default , allows
+		//that user have a login that is his e-mail. (viniciuscb)
+		$login_parts = explode('@',$login);
+		$got_login = false;
+		if (count($login_parts) > 1)
 		{
-			$login .= '@' . $_POST['logindomain'];
+			//Last part of login string, when separated by @, is a domain name
+			if (array_key_exists(array_pop($login_parts),$GLOBALS['egw_domain']))
+			{
+				$got_login = true;
+			}
 		}
-		elseif(!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))
+
+		if (!$got_login)
 		{
-			$login .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
+			if(isset($_POST['logindomain']))
+			{
+				$login .= '@' . $_POST['logindomain'];
+			}
+			elseif(!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))
+			{
+				$login .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
+			}
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$passwd,$passwd_type,'u');
 
@@ -278,7 +289,7 @@
 			{
 				$GLOBALS['egw']->translation->autoload_changed_langfiles();
 			}
-			$forward = isset($_GET['egw_forward']) ? urldecode($_GET['egw_forward']) : @$_POST['egw_forward'];
+			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 			if (!$forward)
 			{
 				$extra_vars['cd'] = 'yes';
@@ -304,8 +315,8 @@
 		// Commenting out the code will not fix it. (jengo)
 		if(isset($_COOKIE['last_loginid']))
 		{
-			$accounts = CreateObject('phpgwapi.accounts');
-			$prefs = CreateObject('phpgwapi.preferences', $accounts->name2id($_COOKIE['last_loginid']));
+			$accounts =& CreateObject('phpgwapi.accounts');
+			$prefs =& CreateObject('phpgwapi.preferences', $accounts->name2id($_COOKIE['last_loginid']));
 
 			if($prefs->account_id)
 			{
@@ -342,7 +353,9 @@
 		}
 	}
 
+	$tmpl->set_block('login_form','domain_selection');
 	$domain_select = '&nbsp;';
+	$lang_domain_select = '&nbsp;';
 	$last_loginid = $_COOKIE['last_loginid'];
 	if($GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
@@ -358,7 +371,7 @@
 			$domain_select .= '>' . $domain_name . "</option>\n";
 		}
 		$domain_select .= "</select>\n";
-		$tmpl->set_var('select_domain',$domain_select);
+		$lang_domain_select = lang('Domain');
 	}
 	elseif($last_loginid !== '')
 	{
@@ -370,16 +383,18 @@
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
 	}
+	$tmpl->set_var('lang_select_domain',$lang_domain_select);
+	$tmpl->set_var('select_domain',$domain_select);
+
 	if(!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
 		  /* trick to make domain section disapear */
-		  $tmpl->set_block('login_form','domain_selection');
 		  $tmpl->set_var('domain_selection','');
 	}
 
 	foreach($_GET as $name => $value)
 	{
-		if(ereg('epgw_',$name))
+		if(ereg('phpgw_',$name))
 		{
 			$extra_vars .= '&' . $name . '=' . urlencode($value);
 		}
@@ -395,28 +410,50 @@
 	* And if the register link must be placed                *
 	\********************************************************/
 	
-	$cnf_reg = createobject('phpgwapi.config','registration');
+	$cnf_reg =& CreateObject('phpgwapi.config','registration');
 	$cnf_reg->read_repository();
 	$config_reg = $cnf_reg->config_data;
 
-	if($config_reg[enable_registration]=='True' && $config_reg[register_link]=='True')
+	if($config_reg[enable_registration]=='True')
 	{
-		$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
-	}
-	else
-	{
+	   if ($config_reg[register_link]=='True')
+	   {
+		  $reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+	   }
+	   if ($config_reg[lostpassword_link]=='True')
+	   {
+		  $lostpw_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostpw1">'.lang('Lost password').'</a><br/>';
+	   }
+	   if ($config_reg[lostid_link]=='True')
+	   {
+		  $lostid_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostid1">'.lang('Lost Login Id').'</a><br/>';
+	   }
+
+	   /* if at least one option of "registration" is activated display the registration section */
+	   if($config_reg[register_link]=='True' || $config_reg[lostpassword_link]=='True' || $config_reg[lostid_link]=='True')
+	   {
+		  $tmpl->set_var('register_link',$reg_link);
+		  $tmpl->set_var('lostpassword_link',$lostpw_link);
+		  $tmpl->set_var('lostid_link',$lostid_link) ;
+		  
+		  //$tmpl->set_var('registration_url',$GLOBALS['egw_info']['server']['webserver_url'] . '/registration/');
+	   }
+	   else
+	   {
 		  /* trick to make registration section disapear */
 		  $tmpl->set_block('login_form','registration');
 		  $tmpl->set_var('registration','');
+	   }
 	}
 
+	// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+	header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
+	
 	$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
-	$tmpl->set_var('register_link',$reg_link);
 	$tmpl->set_var('charset',$GLOBALS['egw']->translation->charset());
 	$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
-	$tmpl->set_var('registration_url',$GLOBALS['egw_info']['server']['webserver_url'] . '/registration/');
-	$tmpl->set_var('version',$GLOBALS['egw_info']['server']['versions']['egwapi']);
+	$tmpl->set_var('version',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 	$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
 	$tmpl->set_var('cookie',$last_loginid);
 
@@ -435,7 +472,7 @@
 	}
 	else
 	{
-		$var['logo_file'] = $GLOBALS['egw']->common->image('egwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
+		$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
 	}
 	$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 	if (substr($var['logo_url'],0,4) != 'http')
@@ -445,9 +482,10 @@
 	$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 	$tmpl->set_var($var);
 
+	/* language section if activated in site config */
 	if (@$GLOBALS['egw_info']['server']['login_show_language_selection'])
 	{
-		$select_lang = '<select name="lang" onchange="'."location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
+		$select_lang = '<select name="lang" onchange="'."if (this.form.login.value && this.form.passwd.value) this.form.submit(); else location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
 		$langs = $GLOBALS['egw']->translation->get_installed_langs();
 		uasort($langs,'strcasecmp');
 		foreach ($langs as $key => $name)	// if we have a translation use it
@@ -473,7 +511,7 @@
 	
 	if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 	{
-		$html = CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
+		$html =& CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
 		$tmpl->set_block('login_form','remember_me_selection');
 		$tmpl->set_var('lang_remember_me',lang('Remember me'));
 		$tmpl->set_var('select_remember_me',$html->select('remember_me', 'forever', array(
