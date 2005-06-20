@@ -156,7 +156,7 @@
 			$suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
 			$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
 			
-			return $prefix . '@' . $suffix;
+			return $prefix;
 		}
 		
 		/**
