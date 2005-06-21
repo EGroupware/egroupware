@@ -1,0 +1,3 @@
+* Add support for XML bases style format. Described in Feature Request #970971, external style file.
+* Add callback for source editor fixContent (So source formatting can be applied)
+* Add execcommand callback option.

@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link href="../docs/style.css" rel="stylesheet" type="text/css">
+
+<!-- tinyMCE -->
+<script language="javascript" type="text/javascript" src="../../jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+	tinyMCE.init({
+		theme : "advanced",
+		mode : "textareas",
+		language : "zh_cn",
+		content_css : "editor_content.css",
+		popups_css : "editor_popup.css",
+		editor_css : "editor_ui.css",
+		plugins : "table",
+		theme_advanced_buttons3_add_before : "tablecontrols,separator",
+		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,formatselect,fontselect,fontsizeselect,forecolor",
+		extended_valid_elements : "font[face|size|color]"
+	});
+</script>
+<!-- /tinyMCE -->
+
+<title>邮件示例</title></head>
+<body>
+ <a href="example_simple.htm">[简单示例]</a> <a href="example_advanced.htm">[高级示例]</a> [邮件示例] <a href="example_full.htm">[全功能示例]</a>
+ <h3>邮件示例</h3>
+以下例子展示了在在线邮件系统和其他不能使用CSS类的情况下，如何启用字体名称和字体大小选择框。但是对于网站上使用的内容，我们建议您还是使用CSS方法。欲了解TinyMCE更多的特征和设置，请查看 <a href="../../docs/zh_cn/index.htm">手册</a>。<br>
+<br>
+
+<!-- Form with textare element with width: 100% -->
+<form method="post" action="post.php">
+<textarea id="elm1" name="elm2" style="width:100%" rows="15">
+	<h3>Test mail header 3</h3>
+	Some <b>element</b>. <br /> This editor instance has a 100% width to it.
+	<p>Some paragraph. <a href="http://www.sourceforge.net">Some link</a></p>
+	<img src="../logo.jpg">
+</textarea>
+</form>
+
+</body>
+</html>

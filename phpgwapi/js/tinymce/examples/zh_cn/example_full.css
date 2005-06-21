@@ -1,0 +1,43 @@
+body {
+	background-color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	scrollbar-3dlight-color: #F0F0EE;
+	scrollbar-arrow-color: #676662;
+	scrollbar-base-color: #F0F0EE;
+	scrollbar-darkshadow-color: #DDDDDD;
+	scrollbar-face-color: #E0E0DD;
+	scrollbar-highlight-color: #F0F0EE;
+	scrollbar-shadow-color: #F0F0EE;
+	scrollbar-track-color: #F5F5F5;
+}
+
+td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+
+pre {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+
+/* Custom class needed by the flash plugin */
+.mce_plugin_flash {
+	border: 1px dotted #cc0000;
+	background-image: url(../jscripts/tiny_mce/plugins/flash/images/flash.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #ffffcc;
+}
+
+.example1 {
+	font-weight: bold;
+	font-size: 14px
+}
+
+.example2 {
+	font-weight: bold;
+	font-size: 12px;
+	color: #FF0000
+}
