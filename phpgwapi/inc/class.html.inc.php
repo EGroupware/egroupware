@@ -596,6 +596,59 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<textarea name=\"$name\" id=\"$id\"$style>".$this->htmlspecialchars($content)."</textarea>\n";
 	}
 	
+	
+	/**
+	* creates a textarea inputfield for the tinymce js-widget (returns the necessary html and js)
+	*
+	* Please note: it need to be called before the call to phpgw_header() !!!
+	*
+	* @param string $name name and id of the input-field
+	* @param string $content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
+	* @param string $style='' initial css for the style attribute 
+	* @param string $init_options='', see http://tinymce.moxiecode.com/ for all init options. mode and elements are allready set.
+	* @return string the necessary html for the textarea
+	* @todo make wrapper for backwards compatibility with htmlarea
+	* @todo enable all features from htmlarea
+	*/
+	function tinymce($name,$content='',$style='',$init_options='')
+	{
+	   if (!$style) 
+	   {
+		  $style = 'width:100%; min-width:500px; height:300px;';
+	   }
+
+	   if (!$this->htmlarea_availible())
+	   {
+		  return $this->textarea($name,$content,'style="'.$style.'"');
+	   }
+
+	   if (!is_object($GLOBALS['phpgw']->js))
+	   {
+		  $GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+	   }
+
+	   /* do stuff once */
+	   if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'tinyMCE'))
+	   {
+		  $GLOBALS['phpgw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
+	   }
+
+	   /* do again and again */
+	   return '
+	   <script language="javascript" type="text/javascript">
+		  tinyMCE.init({
+			 mode : "exact",
+			 elements : "'.$name.'",
+			 '.$init_options.'
+		  });
+	   </script>
+
+	   <textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
+		  '.$this->htmlspecialchars($content).'	
+	   </textarea>
+	   ';
+	}	
+	
 	/**
 	 * represents html's input tag
 	 *
