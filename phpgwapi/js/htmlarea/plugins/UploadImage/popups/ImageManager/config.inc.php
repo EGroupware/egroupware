@@ -16,6 +16,18 @@
 	// FIXME: autodetect safe_mode
 	// FIXME include header nicer
 	
+	/*
+		USAGE: If you like to use this plugin, insinde the eGW framework, you have to do two things
+		1.	Add 'UploadImage' to the $plugins variable on htmlarea call
+		2.	supply an array in the session with like this example shows:
+				$UploadImage = array(
+					'app' => 'news_admin',
+					'upload_dir' => $GLOBALS['phpgw_info']['user']['preferences']['news_admin']['uploaddir'],
+					'admin_method' => $GLOBALS['phpgw']->link('/index.php', 'menuaction=app.file.method');; 
+				$GLOBALS['phpgw']->session->appsession('UploadImage','phpgwapi',$UploadImage);
+			
+	*/
+	
 	$phpgw_flags = Array(
 		'currentapp'	=>	'home',
 		'noheader'	=>	True,
@@ -46,7 +58,15 @@
 	
 	switch ($phpgw_flags['currentapp'])
 	{
-		case 'sitemgr' :
+		case 'jinn' :
+			$BASE_DIR = $sessdata[UploadImageBaseDir];
+			$BASE_URL = $sessdata[UploadImageBaseURL];
+			$MAX_HEIGHT = $sessdata[UploadImageMaxHeight];
+			$MAX_WIDTH = $sessdata[UploadImageMaxWidth];
+			//   _debug_array($sessdata);
+			//die();
+			break;
+		default : 
 			if(is_writeable($sessdata['upload_dir']))
 			{
 				$BASE_DIR = $sessdata['upload_dir'];
@@ -58,21 +78,11 @@
 				echo '<p><b>Error</b></p>';
 				echo '<p>Upload directory does not exist, or is not writeable by webserver</p>';
 				echo $GLOBALS['egw_info']['user']['apps']['admin'] ? 
-					'<a href="'. $GLOBALS['phpgw']->link('/index.php',
-					'menuaction=sitemgr.Common_UI.DisplayPrefs').'">Choose an other directory</a><br>
+					'<a href="'. $sessdata['admin_method']. '">Choose an other directory</a><br>
 					or make "'. $sessdata['upload_dir']. '" writeable by webserver' : 
 					'Notify your Administrator to correct this Situation';
 				die();
 			}
-		case 'jinn' :
-		default : 
-			$BASE_DIR = $sessdata[UploadImageBaseDir];
-			$BASE_URL = $sessdata[UploadImageBaseURL];
-			$MAX_HEIGHT = $sessdata[UploadImageMaxHeight];
-			$MAX_WIDTH = $sessdata[UploadImageMaxWidth];
-			//   _debug_array($sessdata);
-			//die();
-			break;
 	}
 	
 	if(!$MAX_HEIGHT) $MAX_HEIGHT = 10000;
