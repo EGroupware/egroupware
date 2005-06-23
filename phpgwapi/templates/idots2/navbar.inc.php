@@ -117,37 +117,56 @@
 			$var["dIcons"] = "";
 			$var["urlpref"] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 			$first = true;
+			$first2 = true;
 			if($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi'])
 			{
 				foreach($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi'] as $shortcut => $shortcut_data)
 				{
-					if($first)
-					{
-					    $var["appTitles"] = $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['title']]['title'];
-					    // $shortcut_data['title'];
-						$var["appImgs"] = $shortcut_data['icon'];
-						$var["appUrls"] = $shortcut_data['link'];
-						$var["appTop"] = $shortcut_data['top'];
-						$var["appLeft"] = $shortcut_data['left'];
-						$var["appType"] = $shortcut_data['type'];
-						$var["appName"] = $shortcut_data['title'];
-						$first= false;
-					}
-					else
-					{
+					if(strpos($shortcut, "size_") === false) {	
+						if($first)
+						{
+							$var["appTitles"] = $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['title']]['title'];
 						
-						$var["appTitles"] .=','. $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['title']]['title'];
-						$var["appImgs"] .=','. $shortcut_data['icon'];
-						$var["appUrls"] .=','. $shortcut_data['link'];
-						$var["appTop"] .=','. $shortcut_data['top'];
-						$var["appLeft"] .=','. $shortcut_data['left'];
-						$var["appType"] .=','. $shortcut_data['type'];
-				 		$var["appName"] .=','. $shortcut_data['title'];
-
-					 }
+							$var["appImgs"] = $shortcut_data['icon'];
+							$var["appUrls"] = $shortcut_data['link'];
+							$var["appTop"] = $shortcut_data['top'];
+							$var["appLeft"] = $shortcut_data['left'];
+							$var["appType"] = $shortcut_data['type'];
+							$var["appName"] = $shortcut_data['title'];
+							$first= false;
+						}
+						else
+						{
+							
+							$var["appTitles"] .=','. $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['title']]['title'];
+							$var["appImgs"] .=','. $shortcut_data['icon'];
+							$var["appUrls"] .=','. $shortcut_data['link'];
+							$var["appTop"] .=','. $shortcut_data['top'];
+							$var["appLeft"] .=','. $shortcut_data['left'];
+							$var["appType"] .=','. $shortcut_data['type'];
+							$var["appName"] .=','. $shortcut_data['title'];
+	
+						}
+					}
+					else {
+						if($first2)
+						{
+							$var["sizeTitles"] = $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['name']]['title'];
+							$var["sizeWidth"] = $shortcut_data['width'];
+							$var["sizeHeight"] = $shortcut_data['height'];
+							$first2= false;
+						}
+						else
+						{
+							$var["sizeTitles"] .=','. $GLOBALS['phpgw_info']['user']['apps'][$shortcut_data['name']]['title'];
+							$var["sizeWidth"] .=','. $shortcut_data['width'];
+							$var["sizeHeight"] .=','. $shortcut_data['height'];
+	
+						}
 					
-				}
-			 }
+					}
+			 	}
+			}
 			 
 			$var["back_shortcut"] = $GLOBALS['phpgw_info']['user']['preferences']['common']['back_icons'];
 
@@ -171,10 +190,8 @@
 
 			
 			$var["appTitles"] = addslashes($var["appTitles"]);
-			$var["xmlUrl"] = $template_dir."/write_shortcut_setting.php";
-			$var["strXmlRemUrl"] = $template_dir."/remove_shortcut.php";
-			$var["addShorcutUrl"] = $template_dir . '/add_shortcut.php';
-			//$var["addShorcutUrl"] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/add_shortcut.php';
+			$var["strXmlUrl"] = "phpgwapi/templates/" . $GLOBALS['phpgw_info']['server']['template_set'];
+
 			if(empty($GLOBALS['phpgw_info']['user']['preferences']['common']['scrWidth']))
 			{
 				$var["scrWidth"] = "600"; 

@@ -1,13 +1,22 @@
 var LastClick;
-var strXmlUrl;
 document.onselectstart = function()
 {
         return false;
 }
 
-function showShortcuts(appTitles, appUrls, appImgs, appTop, appLeft, appType, appName, xmlUrl)
+var aTitle;
+var aWidth;
+var aHeight;
+
+function initSizes(titles, w, h) {
+	aTitle = titles.split(',');
+	aWidth = w.split(',');
+	aHeight = h.split(',');
+}
+
+
+function showShortcuts(appTitles, appUrls, appImgs, appTop, appLeft, appType, appName)
 {
-        strXmlUrl = xmlUrl;
         var aTitle = appTitles.split(',');
         var aUrl = appUrls.split(',');
         var aImg = appImgs.split(',');
@@ -238,7 +247,7 @@ function remShort(id)
                 id = mObj.parentNode.id;
         }
 
-        strXmlRemUrl2 = strXmlRemUrl + "?id=";
+        strXmlRemUrl2 = strXmlUrl + "remove_shortcut.php?id=";
         strXmlRemUrl2 = strXmlRemUrl2 + id;
         if (window.XMLHttpRequest)
         {
@@ -298,12 +307,7 @@ function mouseUp(id,e)
         y2 = findPosY(mObj);
         x2 = findPosX(mObj);
         mObj.onmousemove = "";
-        strXmlUrl2 = strXmlUrl +  "?id=";
-        strXmlUrl2 = strXmlUrl2 + id;
-        strXmlUrl2 = strXmlUrl2 + "&top=";
-        strXmlUrl2 = strXmlUrl2 + y2;
-        strXmlUrl2 = strXmlUrl2 + "&left=";
-        strXmlUrl2 = strXmlUrl2 + x2;
+        strXmlUrl2 = strXmlUrl +  "write_shortcut_setting.php?id=" + id + "&top=" + y2 + "&left=" + x2;
         createPos(mObj, x2,y2);
         if (window.XMLHttpRequest)
         {
@@ -346,7 +350,7 @@ document.oncontextmenu = function(e)
         }
         if (source.className != "shortcut" && source.parentNode.className != "shortcut")
         {
-                createContext(true, addShorcutUrl,e.clientX,e.clientY);
+                createContext(true, strXmlUrl + "/add_shortcut.php",e.clientY);
         }
         e.cancelBubble = true;
         if(e.stopPropagation)

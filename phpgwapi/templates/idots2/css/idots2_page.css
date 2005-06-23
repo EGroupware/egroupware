@@ -13,6 +13,7 @@ body, html{
 	left: 0;
 	margin: 0;
 	padding: 0;
+	padding-top: 2px;
 	background-color: #C6C6C6;
 	font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #000000;
 	font-size: 11px;
@@ -446,7 +447,7 @@ a.textSidebox
 	width:99%;
 }
 
-.toolbar
+.idots2toolbar
 {
 	background-color: #e5e5e5;
 	display: block;
@@ -459,7 +460,7 @@ a.textSidebox
 	z-index: 49;
 	border-bottom: 1px solid #9c9c9c;
 }
-.toolbar a
+.idots2toolbar a
 {
 	background-color: #e5e5e5;
 	display: block;

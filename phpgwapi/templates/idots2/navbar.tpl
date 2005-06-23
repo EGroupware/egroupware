@@ -7,8 +7,7 @@ var clock_show = '{clock_show}';
 var url_pref = '{urlpref}';
 var default_app = '{default_app}';
 var default_title = '{default_title}';
-var addShorcutUrl = '{addShorcutUrl}';
-var strXmlRemUrl = '{strXmlRemUrl}';
+var strXmlUrl = '{strXmlUrl}';
 var scrWidth = '{scrWidth}';
 var scrHeight = '{scrHeight}';
 var titleAdd = '{titleAdd}';
@@ -19,7 +18,9 @@ var programs = '{programs}';
 var back_shortcut = '{back_shortcut}';
 var color_shortcut = '{color_shortcut}';
 var color_text_sc = '{color_text_sc}';
-showShortcuts('{appTitles}', '{appUrls}', '{appImgs}','{appTop}','{appLeft}','{appType}','{appName}','{xmlUrl}');
+showShortcuts('{appTitles}', '{appUrls}', '{appImgs}','{appTop}','{appLeft}','{appType}','{appName}','{strXmlUrl}');
+initSizes('{sizeTitles}', '{sizeWidth}', '{sizeHeight}');
+
 			
 function start() {
 	xDT.resPath('{template_dir}/js/x-desktop/xDT/'); 
@@ -132,7 +133,7 @@ function start() {
 <!-- BEGIN begin_toolbar -->
 </ul>
 
-<div class="toolbar">
+<div class="idots2toolbar">
 
 <!-- END begin_toolbar -->
 

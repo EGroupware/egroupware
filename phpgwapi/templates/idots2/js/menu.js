@@ -1,9 +1,3 @@
-// If x-desktop is not loaded go somewhere else
-if(!(window.parent && window.parent.xDT))
-{
-	document.location = '../index.php?cd=yes';
-}
-
 var curmenu;
 /*
 * document.onclick

@@ -83,14 +83,28 @@ function getWindowHeight() {
 
 function openX(idotsname, url)
 {
-        if(scrHeight =="")
-        {
-                scrHeight = 400;
-        }
         if(scrWidth == "")
         {
-                scrWidth = 600;
+                scrWidth2 = 600;
         }
+	else {
+		scrWidth2 = scrWidth;
+	}
+	if(scrHeight =="")
+        {
+                scrHeight2 = 400;
+        }
+	else {
+		scrHeight2 = scrHeight;
+	}
+	for(i = 0; i < aTitle.length; i++)
+	{
+		if(aTitle[i] != "" && aTitle[i] == idotsname) {
+			scrWidth2 = aWidth[i];
+			scrHeight2 = aHeight[i];
+		}
+	}
+
 
         if(document.getElementById('context'))
         {
@@ -101,12 +115,64 @@ function openX(idotsname, url)
         {
                 document.getElementById('launchmenu').style.display = "none";
         }
-
+	
+	startX = Math.round((getWindowWidth() / 2) - (scrWidth2 / 2));
+	startY = Math.round((getWindowHeight() / 2) - (scrHeight2 / 2));
+	
+	
         idotsW = "xD" + new Date().getUTCMilliseconds();
-        xDT.addWindow(idotsW, idotsname, scrWidth, scrHeight, 'center', 'IDOTS2');
+	for (var i=0;i<=xDT.maxWindow();i++) {
+		winName = xDT.wName(i);
+		
+		if (typeof(winName) != "undefined" && i >= xDTwin.syswin && winName != "")
+		{
+			oldPos = xDT.window.pos(winName);
+			posArray = oldPos.split("," );
+			if(posArray[0] == startX)
+				startX+=20;
+			
+			if(posArray[1] == startY)
+				startY+=20;
+
+			if(Math.round(startX)+Math.round(scrWidth2) > getWindowWidth() && Math.round(startY)+Math.round(scrHeight2) > getWindowHeight()) 
+			{	
+				startX = 0;
+				startY = 0;
+			}
+		}
+	}
+
+        xDT.addWindow(idotsW, idotsname, scrWidth2, scrHeight2, '' + startX + ',' +  startY, 'IDOTS2');
         xDT.url(idotsW, url);
         xDT.show(idotsW);
+	xDT.window.onClose(idotsW, "saveSize('" + idotsW + "');");
         correctPNG();
+}
+function saveSize(idotsName) {
+	title = xDT.prop(idotsName, 'wTitle');
+	w = xDT.prop(idotsName, 'wWidth');
+	h = xDT.prop(idotsName, 'wHeight');
+	
+	url = strXmlUrl + "/write_size.php?title=" + title + "&w="  + w + "&h="  + h;
+	var found = false;
+	for(i = 0; i < aTitle.length; i++)
+	{
+		if(aTitle[i] != "" && aTitle[i] == title) {
+			aWidth[i] = w;
+			aHeight[i] = h;
+			found = true;
+		}
+	}
+	if(!found) 
+	{
+		aTitle[aTitle.length] = title;
+		aWidth[aWidth.length] = w;
+		aHeight[aHeight.length] = h;	
+	}
+
+	loadXMLDoc(url);
+	return true;
+
 }
 
 function findPosX(obj)
