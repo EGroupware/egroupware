@@ -25,20 +25,10 @@
    $GLOBALS['phpgw_info']['flags']['noheader'] = True;
    include('header.inc.php');
 
-   
    if ($app)
    {
 	  if (!($included = $GLOBALS['phpgw']->hooks->single('about',$app)))
 	  {
-		 function about_app()
-		 {
-			global $app;
-			$icon = $GLOBALS['phpgw']->common->image($app,array('navbar','nonav'));
-			include (PHPGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php");
-			$info = $setup_info[$app];
-			$info['title'] = $GLOBALS['phpgw_info']['apps'][$app]['title'];
-			return about_display($info);
-		 }		 
 		 $api_only = !($included = file_exists(PHPGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php"));
 	  }
    }
@@ -89,14 +79,24 @@
    }
 
    $GLOBALS['phpgw']->common->phpgw_footer();
-
+   
+   function about_app()
+   {
+	  global $app;
+	  include (PHPGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php");
+	  $info = $setup_info[$app];
+	  $info['icon'] = $GLOBALS['phpgw']->common->image($app,array('navbar','nonav'));
+	  $info['title'] = $GLOBALS['phpgw_info']['apps'][$app]['title'];
+	  return about_display($info);
+   }	
    
 function about_template()
 {
 	$template = $GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi');
 	
-	include ($template . "/settings/settings.inc.php");
+	include ($template . "/setup/setup.inc.php");
 	$s = "";
+	$template_info[] = $GLOBALS['egw_info']['template'][$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']];
 	foreach($template_info as $info)
 	{
 		$s .= about_display($info);

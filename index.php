@@ -70,25 +70,23 @@
 	);
 	include('./header.inc.php');
 	
-	
-// 	Check if we are using windows or normal webpage
+	// 	Check if we are using windows or normal webpage
 	$windowed = false;
-	$settings = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '/settings/settings.inc.php';
+	$tpl_info = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '/setup/setup.inc.php';
  	
-	if(@file_exists($settings))
+	if(@file_exists($tpl_info))
 	{
-		
-		include($settings);
-		if(isset($template_info)) {
-			if($template_info['idots2']['windowed'])
-			{
-				$windowed = true;
-				
-			}	
-		}
+	   include_once($tpl_info);
+//	   if(isset($template_info)) 
+//	   {
+		  if($GLOBALS['egw_info']['template'][$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']]['windowed'])
+		  {
+			 $windowed = true;
+		  }	
+//	   }
 	}
+
 				
-	
 	if($app == 'home' && !$api_requested && !$windowed)
 	{
 		if ($GLOBALS['phpgw_info']['server']['force_default_app'] && $GLOBALS['phpgw_info']['server']['force_default_app'] != 'user_choice')
