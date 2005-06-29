@@ -1,6 +1,5 @@
-
-body, html{
-
+body, html
+{
 	scrollbar-3dlight-color : #000000;
 	scrollbar-arrow-color : #000000;
 	scrollbar-base-color : #000000;
@@ -13,85 +12,14 @@ body, html{
 	left: 0;
 	margin: 0;
 	padding: 0;
-	padding-top: 2px;
-	background-color: #C6C6C6;
-	font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #000000;
+	padding-top: 0px;
+	background-color: #ffffff;
+	font-family: Verdana, Arial, sans-serif, Helvetica;  
+	font-style: normal;  
+	text-decoration: none;  
+	color: #000000;
 	font-size: 11px;
 }
-
-.xF_button { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #ffffff;  font-size: 11px;}
-.xF_submit { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
-.xF_text { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
-.xF_textarea { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
-.xF_select { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal; text-decoration: none; font-size: 11px;}
-.xF_title {color: #000000; font-size: 12px; font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;}
-.xF_a_button:link, .xF_a_button:visited, .xF_a_button:hover, .xF_a_button:active { font-family: Verdana, Arial, sans-serif;  font-size: 11px; font-weight: normal; color:#FFFFFF; text-decoration:underline }
-
-
-
-a:link, a:visited, a:hover, a:active  { font-family: Verdana, Arial, sans-serif;  font-size: 11px; font-weight: normal; color:#000000; text-decoration:underline }
-TD {color: #000000; font-size: 11px; font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;}
-
-#nav{
-	padding: 0;
-	list-style: none;
-	height: 26px;
-	width:100%;	
-	position: fixed;
-	margin:0;
-	background-color: #FFF;
-	top:0;
-	left:0;
-	background-image:url('../images/back_menubar.png'); 
-	z-index: 900;
-	border-bottom: 1px solid #9c9c9c;
-}
- 
-#nav a {
-	text-decoration:none; 
-	margin: 2px;
-	padding-left: 3px;
-	padding-right: 3px;
-}
-#nav a.activated {
-	background-color:#EEE; 
-	border: 1px solid #000;
-	margin: 1px;
-}
-
-#nav a:hover {
-	background-color:#EEE; 
-	border: 1px solid #000;
-	margin: 1px;
-}
-
-#nav ul {
-	padding-top: 2px;
-	background-color:#FFF;
-	border: 1px solid #000;
- 	display:none;
-	margin-left: 1px;
-	padding-left: 0px;
-	position: absolute;
-	z-index: 900;
-}
-#nav li
-{
-	padding: 0;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	margin: 0;
-
-	list-style: none;
-	float:left;
-	height: 18px;
-}
-#nav li li
-{
-	clear:both;
-	margin-right:2px;
-}
-
 form
 {
 	margin:0px;
@@ -102,8 +30,6 @@ img
 {
 	border-width:0px;
 	border-style:none;
-	/*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader;
-*/
 }
 
 a:link,a:visited
@@ -118,13 +44,7 @@ a:hover,a:active
 	color: #ff9933;
 	text-decoration: underline;
 }
-/*
-a:active 
-{
-	color: #006699; 
-	text-decoration: underline;
-}
-*/
+
 input,button
 {
 	font-size: 12px; 
@@ -155,14 +75,123 @@ select
 	border: 1px #bbbbbb solid;
 }
 
-td
+td 
 {
+	color: #000000; 
+	font-size: 11px; 
+	font-family: Verdana, Arial, sans-serif, Helvetica;  
+	font-style: normal;  
+	text-decoration: none;
+}
 
-/* global tags should never be defined here [ndee]*/
-	font-size: 11px;
-/* removed text-align:left; [ndee]*/
-	/*	padding-top:1px;
-	padding-bottom:1px;*/
+.xF_button { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #ffffff;  font-size: 11px;}
+.xF_submit { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_text { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_textarea { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none; font-size: 11px;}
+.xF_select { background-color: #FFFFFF;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal; text-decoration: none; font-size: 11px;}
+.xF_title {color: #000000; font-size: 12px; font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;}
+.xF_a_button:link, .xF_a_button:visited, .xF_a_button:hover, .xF_a_button:active { font-family: Verdana, Arial, sans-serif;  font-size: 11px; font-weight: normal; color:#FFFFFF; text-decoration:underline }
+
+
+#nav
+{
+	padding: 0;
+	list-style: none;
+	height: 20px;
+	width:100%;	
+	position: fixed;
+	margin:0;
+	background-color: #ffffff;
+	top:0;
+	left:0;
+	background-color:#dedede;
+	z-index: 900;
+	border-bottom: 1px solid #9c9c9c;
+}
+ 
+#nav a,#nav a:visited 
+{
+	display:block;
+	text-decoration:none; 
+	margin: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+
+#nav a:hover, #nav a:active 
+{
+	display:block;
+	background-color:#2773fe; 
+	border: 0px solid #000;
+	color:#ffffff;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+#nav ul {
+	padding-top: 0px;
+	margin-top:5px;
+	background-color:#eeeeee;
+	border-bottom: 1px solid #666666;
+	border-top: 1px solid #666666;
+ 	display:none;
+	min-width:100px;
+	margin-left: 0px;
+	padding-left: 0px;
+	z-index: 900;
+}
+
+#nav ul ul,#nav ul
+{
+	position: absolute;
+}
+
+#nav li:hover, #nav li li:hover
+{
+display:block;
+background-color:#2773fe; 
+color:white;
+}
+
+#nav li, #nav li:hover
+{
+	padding: 0;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	margin: 0;
+	list-style: none;
+	float:left;
+	height: 18px;
+}
+
+#nav li:hover ul
+{
+	display:block;
+}
+
+#nav li li,#nav li li:hover 
+{
+	display:block;
+	color:white;
+	list-style: none;
+	position: relative;
+	clear:both;
+	margin:0px;
+	height:18px;
+	padding:0px;
+	padding-top: 2px;
+}
+
+#nav li li:hover a, #nav li:hover>a
+{
+	color:white;
+}
+
+a.textSidebox,a.textSidebox:active
+{
+	display:block;
+	font-size: 10px; 
 }
 
 .divLoginbox 
@@ -217,22 +246,6 @@ a.appTitles,.appTitles
 	padding-bottom:2px;
 }
 
-a.textSidebox
-{
-	font-size: 10px; 
-	border-top: #aaaaaa 0px none;
-}
-
-.textSidebox
-{
-	font-size: 10px; 
-	height:18px;
-	padding-top:2px;
-	padding-bottom:2px;
-	border-top: #aaaaaa 1px solid;
-
-}
-
 .sideboxSpace
 {
 	height:9px;
@@ -264,21 +277,11 @@ a.textSidebox
 
 #extraIcons
 {
-/*	position:absolute;
-	z-index:13;
-	right:10px;
-	top:113px;
-	visibility:hidden;*/
-/*	background-image:url(../images/alpha-white.png);*/
 	background-color:#eeeeee;
 	border-width:1px;
 	border-color:#7e7e7e;
 	border-style:solid;
 }
-
-
-
-
 
 #divLogo
 {
@@ -286,16 +289,6 @@ a.textSidebox
 	left:20px;
 	top:5px;
 	z-index:51;
-}
-
-#divAppIconBar
-{
-	background-color:white;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	background-image: url(../images/background-icon-bar.png); 
-	background-repeat: repeat-x
 }
 
 #divAppTextBar
@@ -309,13 +302,8 @@ a.textSidebox
 	height:15px;
 	padding-left:10px;
 	margin-top: 13px;
-	/*	margin-bottom: 2px;*/
 }
 
-/*#divSubContainer
-{
-}
-*/
 #tdSidebox
 {
 	width:170px;
@@ -344,49 +332,25 @@ a.textSidebox
 
 #divAppboxHeader
 {
-	/*width:100%;*/
-	background-image:url(../images/appbox-header-background.png);
-	background-repeat: repeat-x;
-	height:36px;
-	line-height:28px;
-	text-align:center;
-	/*	padding-top:7px;*/
 	padding-bottom:0px;
 	font-size:14px;
 	font-weight:bold;
 	color:#666666;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
 }
 
 #divAppbox
 {
-/*	width:100%;*/
-	background-color:#f7f7f7;
+	background-color:#ffffff;
 	margin-top:50px;
-	_margin-top: 0;
 	padding:0;
-	border: 1px solid #9c9c9c;
-	
 }
 
-#fmStatusBar
+fmStatusBar
 {
 	margin-left:4px;
 	margin-bottom:3px;
 	font-size: 10px; 
-/*	font-family: Verdana, Arial, Helvetica, sans-serif;*/
-	
-
 }
-
 
 .fmButton
 {
@@ -399,12 +363,8 @@ a.textSidebox
 #fmLocation
 {
 	position:relative;
-	/*background-image:url(../images/buttonbackgroundscaled.png);
-	background-repeat: repeat-x;*/
-	/*margin-left:4px;*/
 	margin-bottom:3px;
 	height:27px;
-
 }
 
 #fmMenu
@@ -476,7 +436,4 @@ a.textSidebox
 	background-position: center center;
 	background-repeat: no-repeat;
 	border: 1px solid #e5e5e5;
-	
 }
-
-

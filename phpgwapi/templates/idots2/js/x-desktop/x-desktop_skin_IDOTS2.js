@@ -10,12 +10,12 @@ function skin_IDOTS2(wName) {
 	var frame_borderwidth = 1;
 	var taskbar_style = 2;
 	var frame_topheight = 20;
-	var frame_bottomheight = 20;
+	var frame_bottomheight = 10;
 	var frame_contentbgcolor = '#CCCCCC';
 	var frame_dummypic = xDT.resPath() + 'images/blank.gif';
 	var iconpath = xDT.resPath() + 'skins/IDOTS2';
 	var frame_stylecolor = '#fff';
-	var frame_border = 2;
+	var frame_border = 1;
 	var frame_bordertype = "outset"; // solid, outset, inset
 	var frame_style =         'border-top: ' + frame_border + 'px ' + frame_stylecolor + ' ' + frame_bordertype + '; ' +
 		'border-bottom: ' + frame_border + 'px ' + frame_stylecolor + ' ' + frame_bordertype + '; ' +

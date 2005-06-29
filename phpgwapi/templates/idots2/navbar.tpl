@@ -196,7 +196,7 @@ function start() {
 
 <!-- BEGIN extra_block_row_raw -->
 
-<li><a href="#">{lang_item}</a></li>
+<li><div>><a href="#">{lang_item}</a></div></li>
 
 <!-- END extra_block_row_raw -->
 
