@@ -184,7 +184,7 @@ select a responsible user: a person you want to delegate this task	infolog	iw	ב
 select a typ to edit it's status-values or delete it	infolog	iw	בחר סוג כדי לערוך את ערכי הסטאטוס שלו או למחוק אותו
 select an app to search in	infolog	iw	בחר יישום לחפש בו
 select an entry to link with	infolog	iw	בחר רשומה לקשור אליה
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	iw	להציג את הרשומות הפתוחות שלך - משימות שלא הסתיימו, שיחות טלפון ופתקים - במסך הראשי InfoLog האם על<br>
+should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	iw	להציג את הרשומות הפתוחות שלך - משימות שלא הסתיימו, שיחות טלפון ופתקים - במסך הראשי InfoLog האם על<br>
 (פועל רק כאשר לא נבחרה יישום למסך הראשי (בהעדיפויות
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	iw	להציג תתימשימות, -שיחות, -הערת בתצוגה רגילה או לא. תמיד ניתן לראותם דרך הוריהם InfoLog האם על
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	iw	להציג קישורים ליישומים אחרים InfoLog האם על

@@ -85,7 +85,7 @@ save	infolog	ru	Сохранить
 saves this entry	infolog	ru	Сохранить данную запись
 search	infolog	ru	Поиск
 select a category for this entry	infolog	ru	выбирите категорию для данной записи
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли InfoLog отображать открытые записи - не законченные задачи, телефонные звонки или заметки - на главной странице. Будет работать только если Вы не выбрали какое либо приложение для главной странице (в ваших настройках).
+should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли InfoLog отображать открытые записи - не законченные задачи, телефонные звонки или заметки - на главной странице. Будет работать только если Вы не выбрали какое либо приложение для главной странице (в ваших настройках).
 show open entries: tasks/calls/notes on main screen	infolog	ru	Показывать открытые записи: Задачи/Звонки/Заметки на главной странице
 startdate	infolog	ru	Дата начала
 status	infolog	ru	Статус

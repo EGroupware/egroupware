@@ -18,7 +18,7 @@
 		2 => lang('Yes').' - '.lang('show list of upcoming entries'),
 	);	
 	create_select_box('Show open entries: Tasks/Calls/Notes on main screen','homeShowEvents',$show_entries,
-		'Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).');
+		'Should InfoLog display your open entries - not finished tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).');
 	unset($show_entries);
 
 	create_input_box('Max number of entries to display on the main screen','mainscreen_maxshow',
