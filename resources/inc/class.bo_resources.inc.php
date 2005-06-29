@@ -31,9 +31,10 @@ class bo_resources
 		$this->conf =& CreateObject('phpgwapi.config');
 		$this->conf->read_repository();
 		
-		$this->cal_right_transform = array(	EGW_ACL_CALREAD 	=> EGW_ACL_READ,
-							EGW_ACL_DIRECT_BOOKING 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
-							EGW_ACL_CAT_ADMIN 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
+		$this->cal_right_transform = array(	
+			EGW_ACL_CALREAD 	=> EGW_ACL_READ,
+			EGW_ACL_DIRECT_BOOKING 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
+			EGW_ACL_CAT_ADMIN 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
 		);
 	}
 
@@ -47,7 +48,7 @@ class bo_resources
 		if ($this->debug) _debug_array($query);
 		$query['search'] = $query['search'] ? $query['search'] : '*';
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search']);
-		$read_onlys = 'id,name,short_description,quantity,useable,bookable,buyable,cat_id,location';
+		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 		
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
  		$filter = array('accessory_of' => $accessory_of);
@@ -74,40 +75,40 @@ class bo_resources
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
-				$readonlys["edit[$resource[id]]"] = true;
+				$readonlys["edit[$resource[res_id]]"] = true;
 			}
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE))
 			{
-				$readonlys["delete[$resource[id]]"] = true;
+				$readonlys["delete[$resource[res_id]]"] = true;
 			}
 			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $accessory_of != -1)
 			{
-				$readonlys["new_acc[$resource[id]]"] = true;
+				$readonlys["new_acc[$resource[res_id]]"] = true;
 			}
 			if (!$resource['bookable'] /* && calender-acl viewable */)
 			{
-				$readonlys["bookable[$resource[id]]"] = true;
+				$readonlys["bookable[$resource[res_id]]"] = true;
 			}
 			if (!$resource['buyable'])
 			{
-				$readonlys["buyable[$resource[id]]"] = true;
+				$readonlys["buyable[$resource[res_id]]"] = true;
 			}
-			$readonlys["view_acc[$resource[id]]"] = true;
-			$links = $this->link->get_links('resources',$resource['id']);
+			$readonlys["view_acc[$resource[res_id]]"] = true;
+			$links = $this->link->get_links('resources',$resource['res_id']);
 			if(count($links) != 0)
 			{
 				foreach ($links as $link_num => $link)
 				{
 					if($link['app'] == 'resources')
 					{
-						if($this->so->get_value('accessory_of',$link['id']) != -1)
+						if($this->so->get_value('accessory_of',$link['res_id']) != -1)
 						{
-							$readonlys["view_acc[$resource[id]]"] = false;
+							$readonlys["view_acc[$resource[res_id]]"] = false;
 						}
 					}
 				}
 			}
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
+			$rows[$num]['picture_thumb'] = $this->get_picture($resource['res_id']);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 		return $nr;
@@ -117,18 +118,18 @@ class bo_resources
 	 * reads a resource exept binary datas
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $id resource id
+	 * @param int $res_id resource id
 	 * @return array with key => value or false if not found or allowed
 	 */
-	function read($id)
+	function read($res_id)
 	{
-		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$id),EGW_ACL_READ))
+		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),EGW_ACL_READ))
 		{
 			echo lang('You are not permitted to get information about this resource!') . '<br>';
 			echo lang('Notify your administrator to correct this situation') . '<br>';
 			return false;
 		}
-		return $this->so->read(array('id' => $id));
+		return $this->so->read(array('res_id' => $res_id));
 	}
 	
 	/**
@@ -146,18 +147,18 @@ class bo_resources
 		}
 		
 		// we need an id to save pictures and make links...
-		if(!$resource['id'])
+		if(!$resource['res_id'])
 		{
-			$resource['id'] = $this->so->save($resource);
+			$resource['res_id'] = $this->so->save($resource);
 		}
 
 		switch ($resource['picture_src'])
 		{
 			case 'own_src':
-				$vfs_data = array('string' => $this->pictures_dir.$resource['id'].'.jpg','relatives' => array(RELATIVE_ROOT));
+				$vfs_data = array('string' => $this->pictures_dir.$resource['res_id'].'.jpg','relatives' => array(RELATIVE_ROOT));
 				if($resource['own_file']['size'] > 0)
 				{
-					$msg = $this->save_picture($resource['own_file'],$resource['id']);
+					$msg = $this->save_picture($resource['own_file'],$resource['res_id']);
 					break;
 				}
 				elseif($this->vfs->file_exists($vfs_data))
@@ -174,7 +175,7 @@ class bo_resources
 				if($resource['own_file']['size'] > 0)
 				{
 					$resource['picture_src'] = 'own_src';
-					$msg = $this->save_picture($resource['own_file'],$resource['id']);
+					$msg = $this->save_picture($resource['own_file'],$resource['res_id']);
 				}
 				else
 				{
@@ -190,17 +191,17 @@ class bo_resources
 		// delete old pictures
 		if($resource['picture_src'] != 'own_src')
 		{
-			$this->remove_picture($resource['id']);
+			$this->remove_picture($resource['res_id']);
 		}
 
 		// save links
 		if(is_array($resource['link_to']['to_id']))
 		{
-			$this->link->link('resources',$resource['id'],$resource['link_to']['to_id']);
+			$this->link->link('resources',$resource['res_id'],$resource['link_to']['to_id']);
 		}
 		if($resource['accessory_of'] != -1)
-		{	echo $resource['id'].', '.$resource['accessory_of'];
-			$this->link->link('resources',$resource['id'],'resources',$resource['accessory_of']);
+		{	echo $resource['res_id'].', '.$resource['accessory_of'];
+			$this->link->link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
 		}
 		
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
@@ -210,29 +211,29 @@ class bo_resources
 	 * deletes resource including pictures and links
 	 *
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
-	 * @param int $id id of resource
+	 * @param int $res_id id of resource
 	 */
-	function delete($id)
+	function delete($res_id)
 	{
-		$this->remove_picture($id);
- 		$this->link->unlink(0,'resources',$id);
-		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by deleting resource');
+		$this->remove_picture($res_id);
+ 		$this->link->unlink(0,'resources',$res_id);
+		return $this->so->delete(array('res_id'=>$res_id)) ? false : lang('Something went wrong by deleting resource');
 	}
 	
 	/**
 	 * gets list of accessories for resource
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $id id of resource
+	 * @param int $res_id id of resource
 	 * @return array
 	 */
-	function get_acc_list($id)
+	function get_acc_list($res_id)
 	{
-		if($id < 1){return;}
-		$data = $this->so->search('','id,name','','','','','',$start,array('accessory_of' => $id),'',$need_full_no_count=true);
+		if($res_id < 1){return;}
+		$data = $this->so->search('','res_id,name','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
 		foreach($data as $num => $resource)
 		{
-			$acc_list[$resource['id']] = $resource['name'];
+			$acc_list[$resource['res_id']] = $resource['name'];
 		}
 		return $acc_list;
 	}
@@ -248,7 +249,7 @@ class bo_resources
 		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
 		if(!is_array($res_id) && $res_id < 1) return;
 
-		$data = $this->so->search(array('id' => $res_id),'id,cat_id,name,useable');
+		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
 		
 		foreach($data as $num => $resource)
 		{
@@ -286,13 +287,13 @@ class bo_resources
 	function link_query( $pattern )
 	{
 		$criteria = array('name' => $pattern, 'short_description'  => $pattern);
-		$only_keys = 'id,name,short_description';
+		$only_keys = 'res_id,name,short_description';
 		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR');
 		foreach($data as $num => $resource)
 		{
 			if($num != 0)
 			{
-				$list[$resource['id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+				$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 			}
 		}
 		return $list;
@@ -300,14 +301,14 @@ class bo_resources
 		
 	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * get title for an infolog entry identified by $id
+	 * get title for an infolog entry identified by $res_id
 	 *
 	 */
 	function link_title( $resource )
 	{
 		if (!is_array($resource) && $resource > 0)
 		{
-			$resource  = $this->so->read(array('id' => $resource));
+			$resource  = $this->so->read(array('res_id' => $resource));
 			$title = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 		}
 		return $title ? $title : false;
@@ -421,25 +422,25 @@ class bo_resources
 	/**
 	 * get resource picture either from vfs or from symlink
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $id id of resource
+	 * @param int $res_id id of resource
 	 * @param bool $size false = thumb, true = full pic
 	 * @return string url of picture
 	 */
-	function get_picture($id=0,$size=false)
+	function get_picture($res_id=0,$size=false)
 	{
-		if ($id > 0)
+		if ($res_id > 0)
 		{
-			$src = $this->so->get_value('picture_src',$id);
+			$src = $this->so->get_value('picture_src',$res_id);
 		}
 		
 		switch($src)
 		{
 			case 'own_src':
 				$picture = $this->conf->config_data['dont_use_vfs'] ? $GLOBALS['egw_info']['server']['webserver_url'] : 'vfs:';
-				$picture .= $size ? $this->pictures_dir.$id.'.jpg' : $this->thumbs_dir.$id.'.jpg';
+				$picture .= $size ? $this->pictures_dir.$res_id.'.jpg' : $this->thumbs_dir.$res_id.'.jpg';
 				break;
 			case 'cat_src':
-				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$id));
+				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$res_id));
 				$picture = unserialize($picture['data']);
 				if($picture['icon'])
 				{
@@ -459,17 +460,17 @@ class bo_resources
 	 * removes picture from vfs
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int $id id of resource
+	 * @param int $res_id id of resource
 	 * @return bool succsess or not
 	 */
-	function remove_picture($id)
+	function remove_picture($res_id)
 	{
-		$vfs_data = array('string' => $this->pictures_dir.$id.'.jpg','relatives' => array(RELATIVE_ROOT));
+		$vfs_data = array('string' => $this->pictures_dir.$res_id.'.jpg','relatives' => array(RELATIVE_ROOT));
 		$this->vfs->override_acl = 1;
 		if($this->vfs->file_exists($vfs_data))
 		{
 			$this->vfs->rm($vfs_data);
-			$vfs_data['string'] = $this->thumbs_dir.$id.'.jpg';
+			$vfs_data['string'] = $this->thumbs_dir.$res_id.'.jpg';
 			$this->vfs->rm($vfs_data);
 		}
 		$this->vfs->override_acl = 0;

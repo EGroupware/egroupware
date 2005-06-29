@@ -15,7 +15,7 @@
 	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'resources';
-	$setup_info['resources']['version']	= '0.0.1.017';
+	$setup_info['resources']['version']	= '0.0.1.020';
 	$setup_info['resources']['app_order']	= 1;
 	$setup_info['resources']['tables']	= array('egw_resources');
 	$setup_info['resources']['enable']	= 1;
@@ -57,6 +57,9 @@
 		 'appname' => 'wiki',
 		 'versions' => Array('1.0.0')
 	);
+
+
+
 
 
 

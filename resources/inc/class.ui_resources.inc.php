@@ -104,6 +104,7 @@ class ui_resources
 		$content['nm']['no_filter2']	= true;
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
+		$content['nm']['bottom_too']	= true;
 		$content['nm']['order']		= 'name';
 		$content['nm']['sort']		= 'ASC';
 		
@@ -124,7 +125,7 @@ class ui_resources
 
 		if($content['nm']['view_accs_of'])
 		{
-			$master = $this->bo->so->read(array('id' => $content['nm']['view_accs_of']));
+			$master = $this->bo->so->read(array('res_id' => $content['nm']['view_accs_of']));
 			$content['view_accs_of'] = $content['nm']['view_accs_of'];
 			$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 			$content['nm']['no_filter'] 	= true;
@@ -166,7 +167,7 @@ class ui_resources
 				if(isset($content['delete']))
 				{
 					unset($content['delete']);
-					$content['msg'] = $this->bo->delete($content['id']);
+					$content['msg'] = $this->bo->delete($content['res_id']);
 				}
 				
 				if($content['msg'])
@@ -182,25 +183,25 @@ class ui_resources
 		}
 		else
 		{
-			$id = $content;
-			if (isset($_GET['id'])) $id = $_GET['id'];
+			$res_id = $content;
+			if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 			if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-			$content = array('id' => $id);
+			$content = array('res_id' => $res_id);
 			
-			if ($id > 0)
+			if ($res_id > 0)
 			{
-				$content = $this->bo->read($id);
+				$content = $this->bo->read($res_id);
 				$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
 				$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 				$content['link_to'] = array(
-					'to_id' => $id,
+					'to_id' => $res_id,
 					'to_app' => 'resources'
 				);
 			}
 			
 		}
 		// some presetes
-		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
+		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $accessory_of;
@@ -216,7 +217,7 @@ class ui_resources
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		
-		$content['general|page|pictures|links|calendar'] = 'resources.edit_tabs.page';  //debug
+// 		$content['general|page|pictures|links|calendar'] = 'resources.edit_tabs.page';  //debug
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
@@ -251,23 +252,23 @@ class ui_resources
 	/**
 	 * showes a single resource
 	 *
-	 * @param int $id resource id
+	 * @param int $res_id resource id
 	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 	 */
-	function show($id=0)
+	function show($res_id=0)
 	{
-		if (isset($_GET['id'])) $id = $_GET['id'];
+		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 
-		$content = array('id' => $id);
-		$content = $this->bo->read($id);
+		$content = array('res_id' => $res_id);
+		$content = $this->bo->read($res_id);
 		$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
 		$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 		$content['link_to'] = array(
-				'to_id' => $id,
+				'to_id' => $res_id,
 				'to_app' => 'resources'
 		);
 	
-		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
+		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		
@@ -287,7 +288,7 @@ class ui_resources
 		$content['description'] = chop($content['long_description']) ? $content['long_description'] : (chop($content['short_description']) ? $content['short_description'] : lang("no description available"));
 		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
 		$content['link_to'] = array(
-					'to_id' => $id,
+					'to_id' => $res_id,
 					'to_app' => 'resources'
 				);
 		$sel_options = array();
@@ -421,18 +422,6 @@ class ui_resources
 		$no_button = array();
 		$this->tmpl->read('resources.resource_select');
 		$this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
+	}
 }
 
-	/**
-	 * deletes a resource (lets do this only in bo ok?)
-	 *
-	 * @param int $id resource id
-	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
-	 */
-/*	function delete($id)
-	{
- 		$this->bo->delete($id);
-		return $this->index();
-	}
-*/
-}

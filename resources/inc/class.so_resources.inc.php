@@ -23,16 +23,16 @@ class so_resources extends so_sql
 	}
 
 	/**
-	 * gets the value of $key from resource of $id
+	 * gets the value of $key from resource of $res_id
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param string $key key of value to get
-	 * @param int $id resource id
+	 * @param int $res_id resource id
 	 * @return mixed value of key and resource, false if key or id not found.
 	 */
-	function get_value($key,$id)
+	function get_value($key,$res_id)
 	{
-		if($this->db->select($this->table_name,$key,array('id' => $id),__LINE__,__FILE__))
+		if($this->db->select($this->table_name,$key,array('res_id' => $res_id),__LINE__,__FILE__))
 		{
 			$value = $this->db->row(row);
 			return $value[$key];
@@ -50,7 +50,7 @@ class so_resources extends so_sql
 	function save($resource)
 	{
 		$this->data = $resource;
-		return  parent::save() == 0 ? $this->data['id'] : false; 
+		return  parent::save() == 0 ? $this->data['res_id'] : false; 
 	}
 	
 }

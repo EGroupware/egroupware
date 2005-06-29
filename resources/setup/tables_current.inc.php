@@ -16,7 +16,7 @@
 	$phpgw_baseline = array(
 		'egw_resources' => array(
 			'fd' => array(
-				'id' => array('type' => 'auto'),
+				'res_id' => array('type' => 'auto'),
 				'name' => array('type' => 'varchar','precision' => '100'),
 				'short_description' => array('type' => 'varchar','precision' => '100'),
 				'cat_id' => array('type' => 'int','precision' => '11','nullable' => False),
@@ -28,9 +28,11 @@
 				'prize' => array('type' => 'varchar','precision' => '200'),
 				'long_description' => array('type' => 'longtext'),
 				'picture_src' => array('type' => 'varchar','precision' => '20'),
-				'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1')
+				'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1'),
+				'storage_info' => array('type' => 'varchar','precision' => '200'),
+				'inventory_number' => array('type' => 'varchar','precision' => '20')
 			),
-			'pk' => array('id'),
+			'pk' => array('res_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()

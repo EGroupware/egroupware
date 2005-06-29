@@ -204,4 +204,61 @@
 		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.017';
 		return $GLOBALS['setup_info']['resources']['currentver'];
 	}
+
+
+	$test[] = '0.0.1.017';
+	function resources_upgrade0_0_1_017()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('egw_resources','id','res_id');
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('egw_resources',array(
+			'fd' => array(
+				'res_id' => array('type' => 'auto'),
+				'name' => array('type' => 'varchar','precision' => '100'),
+				'short_description' => array('type' => 'varchar','precision' => '100'),
+				'cat_id' => array('type' => 'int','precision' => '11','nullable' => False),
+				'quantity' => array('type' => 'int','precision' => '11','default' => '1'),
+				'useable' => array('type' => 'int','precision' => '11','default' => '1'),
+				'location' => array('type' => 'varchar','precision' => '100'),
+				'bookable' => array('type' => 'varchar','precision' => '1'),
+				'buyable' => array('type' => 'varchar','precision' => '1'),
+				'prize' => array('type' => 'varchar','precision' => '200'),
+				'long_description' => array('type' => 'longtext'),
+				'picture_src' => array('type' => 'varchar','precision' => '20'),
+				'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1')
+			),
+			'pk' => array('res_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.018';
+		return $GLOBALS['setup_info']['resources']['currentver'];
+	}
+
+
+	$test[] = '0.0.1.018';
+	function resources_upgrade0_0_1_018()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','storage_info',array(
+			'type' => 'varchar',
+			'precision' => '200'
+		));
+
+		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.019';
+		return $GLOBALS['setup_info']['resources']['currentver'];
+	}
+
+
+	$test[] = '0.0.1.019';
+	function resources_upgrade0_0_1_019()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','inventory_number',array(
+			'type' => 'varchar',
+			'precision' => '20'
+		));
+
+		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.020';
+		return $GLOBALS['setup_info']['resources']['currentver'];
+	}
 ?>
