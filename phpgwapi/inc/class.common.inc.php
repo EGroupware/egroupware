@@ -746,16 +746,15 @@
 			$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-				if ($entry != 'CVS' && $entry != '.' && $entry != '..'
-					&& $entry != 'phpgw_website'
-					&& is_dir(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
+			   if ($entry != '..' && is_file(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/setup/setup.inc.php')
+				 )
 				{
 					$list[$entry]['name'] = $entry;
-					$f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
+					$f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php';
 					if (file_exists ($f))
 					{
 						include($f);
-						$list[$entry]['title'] = 'Use '.$GLOBALS['egw_info']['template'][$entry]['title'].'interface';
+						$list[$entry]['title'] = $GLOBALS['egw_info']['template'][$entry]['title'];
 					}
 					else
 					{
@@ -763,6 +762,9 @@
 					}
 				}
 			}
+			//_debug_array($GLOBALS['egw_info'][template]);
+			//die();
+			
 			$d->close();
 			ksort($list);
 			return $list;
