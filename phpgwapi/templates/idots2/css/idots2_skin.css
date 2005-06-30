@@ -82,25 +82,28 @@ img#backstretched {
 
 #launchmenu ul
 {
-        display: block;
+        
+	display: block;
         list-style-type: none;
         float: left;
         margin: 0;
-        margin-left: -1px;
+		margin-left: -1px;
         width: 235px;
         padding: 0;
         border: 1px solid #7e7e7e;
+		/*border-left:0;*/
         background-color: #FFF;
 }
 #launchmenu ul li
 {
         display: block;
-        width: 240px;
-        margin-right: 2px;
-        margin-left: 2px;
-        padding: 0;
+/*        width: 240px;*/
+/*        margin-right: 2px;
+        margin-left: 2px;*/
+        height: 22px;
+/*		padding: 2px 0px 2px 0px;*/
         clear: both;
-        float: left;
+/*        float: left;*/
         vertical-align: middle;
 }
 
@@ -110,38 +113,39 @@ img#backstretched {
         float: left;
         width: 20px;
         height: 20px;
-        margin: 1px;
-        margin-right: 10px;
+        margin: 0px 10px 0px 3px;
 }
 #launchmenu ul li a
 {
-        display: block;
-        font-size: 16px;
-        margin: 2px;
-        text-decoration: none;
-        overflow: hidden;
-	   height: 20px;
+	display: block;
+	font-size: 12px;
+	padding-top:2px;
+	text-decoration: none;
+	overflow: hidden;
+	/*	   height: 20px;*/
 }
 #launchmenu ul li a:hover
 {
         display: block;
-        border: 1px solid #A24533;
+		background-color:#2773fe; 
+		color:white;
+/*        border: 1px solid #A24533;
         margin: 1px;
         padding-right: 3px;
-
-
+		*/
 }
+
 #launchmenu ul li.programs
 {
 	background-color: #F00;        
 	background-image: url('../js/x-desktop/xDT/skins/IDOTS2/menu_back.png');
-     margin: 0;
-        width: 235px;
-        padding-left: 10px;
-        height: 23px;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        border-bottom: 1px solid #7e7e7e;
+	margin: 0;
+	width: 235px;
+/*	padding-left: 10px;*/
+	height: 23px;
+/*	padding-top: 2px;
+	padding-bottom: 2px;*/
+	border-bottom: 1px solid #7e7e7e;
 
 }
 #launchmenu ul li.programs img
@@ -157,6 +161,7 @@ img#backstretched {
 
 }
 
+
 #launchinfo {
         float: left;
         background: #CCC;
@@ -164,6 +169,7 @@ img#backstretched {
         height: 100%;
         display: hidden;
 }
+
 #tasks {
         margin-top: 2px;
 }

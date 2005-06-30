@@ -10,7 +10,7 @@ body, html
 	scrollbar-track-color : #e0e0e0;
 	top: 0;
 	left: 0;
-	margin: 0;
+	margin: 0px 5px 5px 5px;
 	padding: 0;
 	padding-top: 0px;
 	background-color: #ffffff;
@@ -99,12 +99,11 @@ td
 	list-style: none;
 	height: 20px;
 	width:100%;	
+	background-color:#eeeeee;
 	position: fixed;
 	margin:0;
-	background-color: #ffffff;
 	top:0;
 	left:0;
-	background-color:#dedede;
 	z-index: 900;
 	border-bottom: 1px solid #9c9c9c;
 }
@@ -114,28 +113,31 @@ td
 	display:block;
 	text-decoration:none; 
 	margin: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
 }
 
-
+#nav>li a
+{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+#nav>ul
+{
+	height: 20px;
+}
 #nav a:hover, #nav a:active 
 {
 	display:block;
 	background-color:#2773fe; 
 	border: 0px solid #000;
 	color:#ffffff;
-	padding-left: 3px;
-	padding-right: 3px;
 }
 
 #nav ul {
 	padding-top: 0px;
-	margin-top:5px;
-	background-color:#eeeeee;
-	border-bottom: 1px solid #666666;
-	border-top: 1px solid #666666;
+	margin-top:3px;
+	border: 1px solid #9c9c9c;
  	display:none;
+	border-style: outset;
 	min-width:100px;
 	margin-left: 0px;
 	padding-left: 0px;
@@ -144,6 +146,7 @@ td
 
 #nav ul ul,#nav ul
 {
+	background-color:#eeeeee;
 	position: absolute;
 }
 
@@ -154,7 +157,7 @@ background-color:#2773fe;
 color:white;
 }
 
-#nav li, #nav li:hover
+#nav>li, #nav>li:hover
 {
 	padding: 0;
 	padding-top: 2px;
@@ -165,7 +168,7 @@ color:white;
 	height: 18px;
 }
 
-#nav li:hover ul
+#nav>li:hover ul
 {
 	display:block;
 }
@@ -186,12 +189,6 @@ color:white;
 #nav li li:hover a, #nav li:hover>a
 {
 	color:white;
-}
-
-a.textSidebox,a.textSidebox:active
-{
-	display:block;
-	font-size: 10px; 
 }
 
 .divLoginbox 

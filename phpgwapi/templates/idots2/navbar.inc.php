@@ -317,11 +317,27 @@
 			// Show the menu
 			$menu_title = lang('Help');
 			$file = array(
-				array(
-					'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
-					'no_lang' => True,
-					'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
-				)
+			   array(
+				  'text'    => lang('%1 Manual',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
+			   'no_lang' => True,
+			   'link'    => $GLOBALS['phpgw_info']['navbar']['manual']['url']
+			),
+			   array(
+				  'text'    => '<hr style="border:0;border-bottom:dashed 1px #444444;height:1px;color:#444444;">',
+			   'no_lang' => True
+			),
+			   array(
+			   'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
+			   'no_lang' => True,
+			   'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
+			),
+			array(
+				  'text'    => lang('About eGroupware'),
+				  'no_lang' => True,
+				  'link'    => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/about.php',
+				  //below is how it aught to be
+				  //				  'link'    => 'javascript:openX(\'about\',\''.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/about.php'.'\')'
+			   ),
 			);
 	
 			$var['menu_link'] = '';
@@ -331,8 +347,6 @@
 			$GLOBALS['idots2_tpl']->set_var($var);
 			$GLOBALS['idots2_tpl']->pparse('out','appbox');
 	
-			
-			
 			$var['sideboxcolend'] = '';
 			
 			$GLOBALS['idots2_tpl']->set_var($var);

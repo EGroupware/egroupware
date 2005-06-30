@@ -439,6 +439,7 @@ function launchSize(forceResize)
 function launchSizeAll(forceResize)
 {
         var iconpath = xDT.resPath() + 'skins/IDOTS2';
+		var divideAmount= 22.5;
         if(forceResize || !launchInit)
         {
                 launchInit = true;
@@ -472,12 +473,12 @@ function launchSizeAll(forceResize)
 
                 document.getElementById('launchinfo').style.height = divHeight + "px";
 
-                maxItems = Math.floor((divHeight / 25)-1);
+                maxItems = Math.floor((divHeight / divideAmount)-1);
 
-                margin = divHeight % 25;
+                margin = divHeight % divideAmount;
                 if(maxItems >= totItems)
                 {
-                        margin += (maxItems - totItems) * 25;
+                        margin += (maxItems - totItems) * divideAmount;
                 }
 	
                 document.getElementById('launchmenu').style.top = (margin)+ "px";
@@ -530,7 +531,8 @@ function launchSizeAll(forceResize)
 
 function launchSizeIE(forceResize) {
         var iconpath = xDT.resPath() + 'skins/IDOTS2';
-        if(forceResize || !launchInit)
+		var divideAmount= 23;
+		if(forceResize || !launchInit)
         {
 
                 launchInit = true;
@@ -556,19 +558,18 @@ function launchSizeIE(forceResize) {
                         }
                 }
 
-
                 totItems = listItems.length;
                 taskHeight = document.getElementById('taskbar').clientHeight;
                 divHeight = getWindowHeight()-(taskHeight);
 
 
 
-                maxItems = Math.floor((divHeight / 23)-1);
+                maxItems = Math.floor((divHeight / divideAmount)-1);
 
-                margin = divHeight % 23;
+                margin = divHeight % divideAmount;
                 if(maxItems >= totItems)
                 {
-                        margin += (maxItems - totItems) * 23;
+                        margin += (maxItems - totItems) * divideAmount;
                 }
 
                 document.getElementById('launchmenu').style.bottom = taskHeight + "px";
