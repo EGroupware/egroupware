@@ -34,6 +34,9 @@
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
 	//print_r($headers);
+	$isodate = $headers['isoDate'] ? $headers['isoDate'] : $headers['isodate'];
+	$isodate = ($isodate == 'simple') ? True : False;
+	$server->setSimpleDate($isodate);
 	$auth_header = $headers['Authorization'] ? $headers['Authorization'] : $headers['authorization'];
 
 	if(eregi('Basic *([^ ]*)',$auth_header,$auth))
