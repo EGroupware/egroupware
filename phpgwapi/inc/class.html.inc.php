@@ -52,6 +52,7 @@ class html
 	 * @var boolean
 	 */
 	var $wz_tooltip_included = False;
+
 	
 	/**
 	 * Constructor: initialised the class-vars
@@ -596,11 +597,30 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<textarea name=\"$name\" id=\"$id\"$style>".$this->htmlspecialchars($content)."</textarea>\n";
 	}
 	
+	/**
+	* init the tinymce js-widget by adding the js file in the head of the page
+	*
+	* Please note: it need to be called before the call to phpgw_header() !!!
+	*
+	*/
+	function init_tinymce()
+	{
+	   /* do stuff once */
+	   if (!is_object($GLOBALS['phpgw']->js))
+	   {
+		  $GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+	   }
+
+	   if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'tinyMCE'))
+	   {
+		  $GLOBALS['phpgw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
+	   }
+	}
 	
 	/**
 	* creates a textarea inputfield for the tinymce js-widget (returns the necessary html and js)
 	*
-	* Please note: it need to be called before the call to phpgw_header() !!!
+	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
 	*
 	* @param string $name name and id of the input-field
 	* @param string $content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
@@ -617,20 +637,12 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		  $style = 'width:100%; min-width:500px; height:300px;';
 	   }
 
+	   /* do stuff once */
+	   $this->init_tinymce();
+
 	   if (!$this->htmlarea_availible())
 	   {
 		  return $this->textarea($name,$content,'style="'.$style.'"');
-	   }
-
-	   if (!is_object($GLOBALS['phpgw']->js))
-	   {
-		  $GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
-	   }
-
-	   /* do stuff once */
-	   if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'tinyMCE'))
-	   {
-		  $GLOBALS['phpgw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
 	   }
 
 	   /* do again and again */
