@@ -189,7 +189,7 @@
 				$GLOBALS['_xh'][$parser]['qt']=0;
 				break;
 			case 'NAME':
-				$GLOBALS['_xh'][$parser]['st'] .= "'";
+				$GLOBALS['_xh'][$parser]['st'] .= '"';
 				$GLOBALS['_xh'][$parser]['ac'] = '';
 				break;
 			case 'FAULT':
@@ -265,7 +265,7 @@
 				$GLOBALS['_xh'][$parser]['cm']--;
 				break;
 			case 'NAME':
-				$GLOBALS['_xh'][$parser]['st'].= $GLOBALS['_xh'][$parser]['ac'] . "' => ";
+				$GLOBALS['_xh'][$parser]['st'].= $GLOBALS['_xh'][$parser]['ac'] . '" => ';
 				break;
 			case 'BOOLEAN':
 				// special case here: we translate boolean 1 or 0 into PHP
@@ -293,7 +293,7 @@
 				}
 				elseif ($GLOBALS['_xh'][$parser]['qt']==2)
 				{
-					$GLOBALS['_xh'][$parser]['st'].="base64_decode('". $GLOBALS['_xh'][$parser]['ac'] . "')"; 
+					$GLOBALS['_xh'][$parser]['st'].= 'base64_decode("' . $GLOBALS['_xh'][$parser]['ac'] . '")'; 
 				}
 				elseif ($name=='BOOLEAN')
 				{

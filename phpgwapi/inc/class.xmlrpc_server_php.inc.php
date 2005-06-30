@@ -46,7 +46,7 @@
 		var $resp_struct = array();
 		var $debug = False;
 		var $method_requested;
-		var $log = False;	//'/tmp/xmlrpc.log';
+		var $log = '/tmp/xmlrpc.log';
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
@@ -291,11 +291,16 @@
 				$plist = '';
 				for($i=0; $i<sizeof($GLOBALS['_xh'][$parser]['params']); $i++)
 				{
-					//print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n";
+					// print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n");
 					$plist .= "$i - " . $GLOBALS['_xh'][$parser]['params'][$i]. " \n";
 					$code = '$m->addParam(' . $GLOBALS['_xh'][$parser]['params'][$i] . ');';
 					$code = str_replace(',,',",'',",$code);
-					eval($code);
+					$allok = 0;
+					@eval($code . '; $allok = 1;');
+					if(!$allok)
+					{
+						break;
+					}
 				}
 				// uncomment this to really see what the server's getting!
 				// xmlrpc_debugmsg($plist);
@@ -380,7 +385,12 @@
 						{
 							$code = '$r=' . $dmap[$methName]['function'] . '($this, $m);';
 							$code = str_replace(',,',",'',",$code);
-							eval($code);
+							$allok = 0;
+							@eval($code . '; $allok = 1;');
+							if(!$allok)
+							{
+								return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
+							}
 						}
 						else
 						{
@@ -388,16 +398,26 @@
 							{
 								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
 								$code = str_replace(',,',",'',",$code);
-								eval($code);
+								$allok = 0;
+								@eval($code . '; $allok = 1;');
+								if(!$allok)
+								{
+									return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
+								}
 							}
 							else
 							{
 								/* phpgw mod - finally, execute the function call and return the values */
 								$params = $GLOBALS['_xh'][$parser]['params'][0];
 								$code = '$p = '  . $params . ';';
-								if (count($params) != 0)
+								if(count($params) != 0)
 								{
-									eval($code);
+									$allok = 0;
+									@eval($code . '; $allok = 1;');
+									if(!$allok)
+									{
+										return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
+									}
 									$params = $p->getval();
 								}
 
@@ -420,7 +440,7 @@
 								//$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
 								// this fixes the unnecessary (and not standard-conform) array/xmlrpc struct around everything
 								$r = CreateObject('phpgwapi.xmlrpcresp',$this->build_resp($res,True));
-								/* _debug_array($r); */
+								// _debug_array($r);
 							}
 						}
 					}

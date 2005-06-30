@@ -221,16 +221,24 @@
 			{
 				$code = '$v=' . $GLOBALS['_xh'][$parser]['st'] . '; $allOK=1;';
 				$code = str_replace(',,',",'',",$code);
-				eval($code);
-				if ($GLOBALS['_xh'][$parser]['isf'])
+				$allok = 0;
+				@eval($code);
+				if(!$allok)
 				{
-					$f  = $v->structmem('faultCode');
-					$fs = $v->structmem('faultString');
-					$r  = CreateObject('phpgwapi.xmlrpcresp',$v, $f->scalarval(), $fs->scalarval());
+					$r = CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);
 				}
 				else
 				{
-					$r = CreateObject('phpgwapi.xmlrpcresp',$v);
+					if ($GLOBALS['_xh'][$parser]['isf'])
+					{
+						$f  = $v->structmem('faultCode');
+						$fs = $v->structmem('faultString');
+						$r  = CreateObject('phpgwapi.xmlrpcresp',$v, $f->scalarval(), $fs->scalarval());
+					}
+					else
+					{
+						$r = CreateObject('phpgwapi.xmlrpcresp',$v);
+					}
 				}
 			}
 			$r->hdrs = $GLOBALS['_xh'][$parser]['ha']; //split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
