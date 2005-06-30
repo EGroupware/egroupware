@@ -3,10 +3,10 @@
  <form method="POST" action="{action_url}">
   <table border="0" align="center" cellspacing="1" cellpadding="1" width="98%">
   <tr class="th">
-    <td colspan="6" align="center"><font color="#000000" face="">{lang_fields}:</font></td>
+    <td colspan="6" align="center">{lang_fields}:</font></td>
   </tr>
   <tr class="row_on">
-    <td colspan="6"><font color="#000000" face="">{lang_personal}:</font></td>
+    <td colspan="6">{lang_personal}:</font></td>
   </tr>
   <tr class="row_off">
     <td><input type="checkbox" name="prefs[fn]"{fn_checked}>{fn}</option></td>
@@ -28,7 +28,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr class="row_on">
-    <td colspan="6"><font color="#000000" face="">{lang_business}:</font></td>
+    <td colspan="6">{lang_business}:</font></td>
   </tr>
   <tr class="row_off">
     <td><input type="checkbox" name="prefs[org_name]"{org_name_checked}>{org_name}</option></td>
@@ -57,7 +57,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr class="row_on">
-    <td colspan="6"><font color="#000000" face="">{lang_home}:</font></td>
+    <td colspan="6">{lang_home}:</font></td>
   </tr>
   <tr class="row_off">
     <td><input type="checkbox" name="prefs[adr_two_street]"{adr_two_street_checked}>{adr_two_street}</option></td>
@@ -78,7 +78,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr class="row_on">
-    <td colspan="6"><font color="#000000" face="">{lang_phones}:</font></td>
+    <td colspan="6">{lang_phones}:</font></td>
   </tr>
   <tr class="row_off">
     <td><input type="checkbox" name="prefs[tel_voice]"{tel_voice_checked}>{tel_voice}</option></td>
@@ -100,7 +100,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr class="row_on">
-    <td colspan="6"><font color="#000000" face="">{lang_other}:</font></td>
+    <td colspan="6">{lang_other}:</font></td>
   </tr>
   <tr class="row_off">
     <td><input type="checkbox" name="prefs[geo]"{geo_checked}>{geo}</option></td>
@@ -115,7 +115,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr class="th">
-    <td colspan="6" align="center"><font color="#000000" face="">{lang_otherprefs}:</font></td>
+    <td colspan="6" align="center">{lang_otherprefs}:</font></td>
   </tr>
   <tr class="row_off">
     <td>{lang_default_filter}</td>
