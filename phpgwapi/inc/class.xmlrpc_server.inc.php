@@ -22,12 +22,14 @@
 	// contains useful functions for xmlrpc methods
 	class xmlrpc_server_shared
 	{
+		var $simpledate = False;
+
 		// convert a date-array or timestamp into a datetime.iso8601 string
 		function date2iso8601($date)
 		{
 			if (!is_array($date))
 			{
-				if(strstr($_SERVER['HTTP_USER_AGENT'],"vbXMLRPC"))
+				if($this->simpledate)
 				{
 					return date('Ymd\TH:i:s',$date);
 				}
@@ -35,7 +37,7 @@
 			}
 
 			$formatstring = "%04d-%02d-%02dT%02d:%02d:%02d";
-			if(strstr($_SERVER['HTTP_USER_AGENT'],"vbXMLRPC"))
+			if($this->simpledate)
 			{
 				$formatstring = "%04d%02d%02dT%02d:%02d:%02d";
 			}
@@ -47,16 +49,28 @@
 		// convert a datetime.iso8601 string into a datearray or timestamp
 		function iso86012date($isodate,$timestamp=False)
 		{
-			if (($arr = split('[-:T]',$isodate)) && count($arr) == 6)
+			$arr = array();
+
+			if (ereg('^([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})$',$isodate,$arr))
 			{
-				foreach(array('year','month','mday','hour','min','sec') as $n => $name)
-				{
-					$date[$name] = (int)$arr[$n];
-				}
-				return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
-					$date['month'],$date['mday'],$date['year']) : $date;
+				// $isodate is simple ISO8601, remove the difference between split and ereg
+				array_shift($arr);
 			}
-			return False;
+			elseif (($arr = split('[-:T]',$isodate)) && count($arr) == 6)
+			{
+				// $isodate is extended ISO8601, do nothing
+			}
+			else
+			{
+				return False;
+			}
+
+			foreach(array('year','month','mday','hour','min','sec') as $n => $name)
+			{
+				$date[$name] = (int)$arr[$n];
+			}
+			return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
+				$date['month'],$date['mday'],$date['year']) : $date;
 		}
 
 		// translate cat-ids to array with id-name pairs
@@ -141,6 +155,10 @@
 				}
 			}
 			return $cats;
+		}
+
+		function setSimpleDate($enable=True) {
+			$this->simpledate = $enable;
 		}
 	}
 
