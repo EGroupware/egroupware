@@ -1629,8 +1629,8 @@
 						. '<option value="11"' . $temp_month[11] . '>' . lang('november')  . '</option>'
 						. '<option value="12"' . $temp_month[12] . '>' . lang('december')  . '</option>'
 						. '</select>';
-					$bday_day  = '<input maxlength="2" name="entry[bday_day]"  value="' . $day . '" size="2">';
-					$bday_year = '<input maxlength="4" name="entry[bday_year]" value="' . $year . '" size="4">';
+					$bday_day  = '<input type="text" maxlength="2" name="entry[bday_day]"  value="' . $day . '" size="2">';
+					$bday_year = '<input type="text" maxlength="4" name="entry[bday_year]" value="' . $year . '" size="4">';
 				}
 				else
 				{
@@ -1649,8 +1649,8 @@
 						. '<option value="11">' . lang('november')  . '</option>'
 						. '<option value="12">' . lang('december')  . '</option>'
 						. '</select>';
-					$bday_day  = '<input name="entry[bday_day]"  size="2" maxlength="2">';
-					$bday_year = '<input name="entry[bday_year]" size="4" maxlength="4">';
+					$bday_day  = '<input type="text" name="entry[bday_day]"  size="2" maxlength="2">';
+					$bday_year = '<input type="text" name="entry[bday_year]" size="4" maxlength="4">';
 				}
 
 				$time_zone = '<select name="entry[timezone]">' . "\n";
@@ -1834,7 +1834,7 @@
 			}
 			else
 			{
-				 $GLOBALS['egw']->template->set_var('bcountry','<input name="entry[bcountry]" value="' . $bcountry . '">');
+				 $GLOBALS['egw']->template->set_var('bcountry','<input type="text" name="entry[bcountry]" value="' . $bcountry . '">');
 			}
 			$GLOBALS['egw']->template->set_var('lang_badrtype',lang('Address Type'));
 			$GLOBALS['egw']->template->set_var('badrtype',$badrtype);
@@ -1860,7 +1860,7 @@
 			}
 			else
 			{
-				$GLOBALS['egw']->template->set_var('hcountry','<input name="entry[hcountry]" value="' . $hcountry . '">');
+				$GLOBALS['egw']->template->set_var('hcountry','<input type="text" name="entry[hcountry]" value="' . $hcountry . '">');
 			}
 			$GLOBALS['egw']->template->set_var('lang_hadrtype',lang('Address Type'));
 			$GLOBALS['egw']->template->set_var('hadrtype',$hadrtype);
