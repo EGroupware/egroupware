@@ -57,9 +57,9 @@
     <td width="20%">{lang_lastname}</td>
     <td width="20%">{lang_firstname}</td>
     <td>{lang_email}</td>
-    <td width="5%">{lang_edit}</td>
-    <td width="5%">{lang_delete}</td>
-    <td width="5%">{lang_view}</td>
+    <td class="narrow_column">{lang_edit}</td>
+    <td class="narrow_column">{lang_delete}</td>
+    <td class="narrow_column">{lang_view}</td>
    </tr>
 
  <!-- BEGIN row -->

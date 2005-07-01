@@ -46,7 +46,7 @@
     <td>{row_loginid}</td>
     <td>{row_lastname}</td>
     <td>{row_firstname}</td>
-    <td width="5%">{row_access}</td>
+    <td class="narrow_column">{row_access}</td>
    </tr>
 <!-- END row -->
 

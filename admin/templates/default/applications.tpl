@@ -43,8 +43,8 @@
 <!-- BEGIN row -->
   <tr bgcolor="{tr_color}">
    <td>{name}</td>
-   <td width="5%">{edit}</td>
-   <td width="5%">{delete}</td>
-   <td width="5%" align="center">{status}</td>
+   <td class="narrow_column">{edit}</td>
+   <td class="narrow_column">{delete}</td>
+   <td class="narrow_column" align="center">{status}</td>
   </tr>
 <!-- END row -->
