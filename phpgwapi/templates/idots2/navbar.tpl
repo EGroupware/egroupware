@@ -149,11 +149,66 @@ function start() {
 <!-- END end_toolbar -->
 
 
-<!-- BEGIN Sidebox Column -->
+<!-- BEGIN sidebox_container -->
+<script>
+function sidebox_close()
+{
+	document.getElementById('sidebox_container').style.display="none";
+	document.getElementById('divAppbox').style.marginLeft="0px;";
+}
 
-<div id="sidebox"></div>
+function sidebox_open()
+{
+	document.getElementById('sidebox_container').style.display="block";
+	document.getElementById('divAppbox').style.marginLeft="180px;";
+}
+</script>
 
-<!-- END Sidebox Column -->
+<div id="sidebox_container">
+<br/>
+<!-- END sidebox_container -->
+
+<!-- BEGIN sidebox_container_footer -->
+</div>
+
+<!-- END sidebox_container_footer -->
+
+
+
+
+<!-- BEGIN sidebox -->
+
+<div class="sidebox">
+<ul>
+<!-- END sidebox -->
+
+<!-- BEGIN sidebox_footer -->
+</ul>
+</div>
+
+<!-- END sidebox_footer -->
+
+
+<!-- BEGIN extra_sidebox_block_row -->
+
+<li><a class="rowSidebox" href="{item_link}"{target}>{lang_item}</a></li>
+
+<!-- END extra_sidebox_block_row -->
+
+
+<!-- BEGIN extra_sidebox_block_row_raw -->
+
+<li><div><a href="#">{lang_item}</a></div></li>
+
+<!-- END extra_sidebox_block_row_raw -->
+
+
+<!-- BEGIN extra_sidebox_block_row_no_link -->
+
+<li><a href="#">{lang_item}</a></li>
+
+<!-- END extra_sidebox_block_row_no_link -->
+
 
 
 <!-- BEGIN navbar_footer -->	
@@ -189,7 +244,7 @@ function start() {
 
 <!-- BEGIN extra_block_row_raw -->
 
-<li><div>><a href="#">{lang_item}</a></div></li>
+<li><div><a href="#">{lang_item}</a></div></li>
 
 <!-- END extra_block_row_raw -->
 

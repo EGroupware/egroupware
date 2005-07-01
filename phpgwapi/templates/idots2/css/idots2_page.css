@@ -1,87 +1,87 @@
 body, html
 {
-	scrollbar-3dlight-color : #000000;
-	scrollbar-arrow-color : #000000;
-	scrollbar-base-color : #000000;
-	scrollbar-darkshadow-color : #000000;
-	scrollbar-face-color : #C6C6C6;
-	scrollbar-highlight-color : #C6C6C6;
-	scrollbar-shadow-color : #000000;
-	scrollbar-track-color : #e0e0e0;
-	top: 0;
-	left: 0;
-	margin: 0px 5px 5px 5px;
-	padding: 0;
-	padding-top: 0px;
-	background-color: #ffffff;
-	font-family: Verdana, Arial, sans-serif, Helvetica;  
-	font-style: normal;  
-	text-decoration: none;  
-	color: #000000;
-	font-size: 11px;
+   scrollbar-3dlight-color : #000000;
+   scrollbar-arrow-color : #000000;
+   scrollbar-base-color : #000000;
+   scrollbar-darkshadow-color : #000000;
+   scrollbar-face-color : #C6C6C6;
+   scrollbar-highlight-color : #C6C6C6;
+   scrollbar-shadow-color : #000000;
+   scrollbar-track-color : #e0e0e0;
+   top: 0;
+   left: 0;
+   margin: 0px 5px 5px 5px;
+   padding: 0;
+   padding-top: 0px;
+   background-color: #ffffff;
+   font-family: Verdana, Arial, sans-serif, Helvetica;  
+   font-style: normal;  
+   text-decoration: none;  
+   color: #000000;
+   font-size: 11px;
 }
 form
 {
-	margin:0px;
-	padding:0px;
+   margin:0px;
+   padding:0px;
 }
 
 img
 {
-	border-width:0px;
-	border-style:none;
+   border-width:0px;
+   border-style:none;
 }
 
 a:link,a:visited
 {
-	cursor:pointer;
-	color: #006699; 
-	text-decoration: none;
+   cursor:pointer;
+   color: #006699; 
+   text-decoration: none;
 }
 a:hover,a:active
 {
-	cursor:pointer;
-	color: #ff9933;
-	text-decoration: underline;
+   cursor:pointer;
+   color: #ff9933;
+   text-decoration: underline;
 }
 
 input,button
 {
-	font-size: 12px; 
-	color: #006699; 
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px #bbbbbb solid;
+   font-size: 12px; 
+   color: #006699; 
+   font-family: Arial, Helvetica, sans-serif;
+   border: 1px #bbbbbb solid;
 }
 
 input[type=submit],input[type=button],input[type=reset],button
 {
-	margin:1px;
-	padding:1px;
-	cursor: pointer; 
-	cursor: hand;
+   margin:1px;
+   padding:1px;
+   cursor: pointer; 
+   cursor: hand;
 }
 
 input[type=image]
 {
-	cursor: pointer; 
-	cursor: hand;
-	border: 0px #bbbbbb none;
+   cursor: pointer; 
+   cursor: hand;
+   border: 0px #bbbbbb none;
 }
 select 
 {
-	font-size: 11px; 
-	color: #006699; 
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px #bbbbbb solid;
+   font-size: 11px; 
+   color: #006699; 
+   font-family: Arial, Helvetica, sans-serif;
+   border: 1px #bbbbbb solid;
 }
 
 td 
 {
-	color: #000000; 
-	font-size: 11px; 
-	font-family: Verdana, Arial, sans-serif, Helvetica;  
-	font-style: normal;  
-	text-decoration: none;
+   color: #000000; 
+   font-size: 11px; 
+   font-family: Verdana, Arial, sans-serif, Helvetica;  
+   font-style: normal;  
+   text-decoration: none;
 }
 
 .xF_button { background-color: #638494;  border: 1px solid #000000;  font-family: Verdana, Arial, sans-serif, Helvetica;  font-style: normal;  text-decoration: none;  color: #ffffff;  font-size: 11px;}
@@ -95,342 +95,362 @@ td
 
 #nav
 {
-	padding: 0;
-	list-style: none;
-	height: 20px;
-	width:100%;	
-	background-color:#eeeeee;
-	position: fixed;
-	margin:0;
-	top:0;
-	left:0;
-	z-index: 900;
-	border-bottom: 1px solid #9c9c9c;
+   padding: 0;
+   list-style: none;
+   height: 20px;
+   width:100%;	
+   background-color:#eeeeee;
+   position: fixed;
+   margin:0;
+   top:0;
+   left:0;
+   z-index: 900;
+   border-bottom: 1px solid #9c9c9c;
 }
- 
+
 #nav a,#nav a:visited 
 {
-	display:block;
-	text-decoration:none; 
-	margin: 0px;
+   display:block;
+   text-decoration:none; 
+   margin: 0px;
 }
 
 #nav>li a
 {
-	padding-left: 5px;
-	padding-right: 5px;
+   padding-left: 5px;
+   padding-right: 5px;
 }
 #nav>ul
 {
-	height: 20px;
+   height: 20px;
 }
 #nav a:hover, #nav a:active 
 {
-	display:block;
-	background-color:#2773fe; 
-	border: 0px solid #000;
-	color:#ffffff;
+   display:block;
+   background-color:#2773fe; 
+   border: 0px solid #000;
+   color:#ffffff;
 }
 
 #nav ul {
-	padding-top: 0px;
-	margin-top:3px;
-	border: 1px solid #9c9c9c;
- 	display:none;
-	border-style: outset;
-	min-width:100px;
-	margin-left: 0px;
-	padding-left: 0px;
-	z-index: 900;
+   padding-top: 0px;
+   margin-top:3px;
+   border: 1px solid #9c9c9c;
+   display:none;
+   border-style: outset;
+   min-width:100px;
+   margin-left: 0px;
+   padding-left: 0px;
+   z-index: 900;
 }
 
 #nav ul ul,#nav ul
 {
-	background-color:#eeeeee;
-	position: absolute;
+   background-color:#eeeeee;
+   position: absolute;
 }
 
 #nav li:hover, #nav li li:hover
 {
-display:block;
-background-color:#2773fe; 
-color:white;
+   display:block;
+   background-color:#2773fe; 
+   color:white;
 }
 
 #nav>li, #nav>li:hover
 {
-	padding: 0;
-	padding-top: 2px;
-	padding-bottom: 0px;
-	margin: 0;
-	list-style: none;
-	float:left;
-	height: 18px;
+   padding: 0;
+   padding-top: 2px;
+   padding-bottom: 0px;
+   margin: 0;
+   list-style: none;
+   float:left;
+   height: 18px;
 }
 
 #nav>li:hover ul
 {
-	display:block;
+   display:block;
 }
 
 #nav li li,#nav li li:hover 
 {
-	display:block;
-	color:white;
-	list-style: none;
-	position: relative;
-	clear:both;
-	margin:0px;
-	height:18px;
-	padding:0px;
-	padding-top: 2px;
+   display:block;
+   color:white;
+   list-style: none;
+   position: relative;
+   clear:both;
+   margin:0px;
+   height:18px;
+   padding:0px;
+   padding-top: 2px;
 }
 
 #nav li li:hover a, #nav li:hover>a
 {
-	color:white;
+   color:white;
+}
+
+
+
+#sidebox_container
+{
+   border-top:outset 1px #9c9c9c;	
+   border-bottom:outset 1px #9c9c9c;	
+   border-right:outset 1px #9c9c9c;	
+/*   padding-top:50px;
+   padding-bottom:60px;
+  */
+   left:0px;
+   width:170px;
+/**   height:100%;*/
+   background-color:#cccccc;
+   display:none;
+   overflow:visible;
+   position:fixed;
+   z-index:899;	
 }
 
 .divLoginbox 
 {
-	position:relative;
-	width: 300px; 
-	border-right: #9c9c9c 1px solid; 
-	border-top: #9c9c9c 1px solid; 
-	border-left: #9c9c9c 1px solid; 
-	border-bottom: #9c9c9c 1px solid
+   position:relative;
+   width: 300px; 
+   border-right: #9c9c9c 1px solid; 
+   border-top: #9c9c9c 1px solid; 
+   border-left: #9c9c9c 1px solid; 
+   border-bottom: #9c9c9c 1px solid
 }
 
 .divLoginboxHeader 
 {
-	text-align:center;
-	background-color:#dddddd;
-	padding-top:2px;
-	font-size:11px;
-	font-weight:bold;
-	color:#FFFFFF;
+   text-align:center;
+   background-color:#dddddd;
+   padding-top:2px;
+   font-size:11px;
+   font-weight:bold;
+   color:#FFFFFF;
 }
 .divSidebox 
 {
-	position:relative;
-	width: 147px; 
-	border-right: #9c9c9c 1px solid; 
-	border-top: #9c9c9c 1px solid; 
-	border-left: #9c9c9c 1px solid; 
-	border-bottom: #9c9c9c 1px solid
+   position:relative;
+   width: 147px; 
+   border-right: #9c9c9c 1px solid; 
+   border-top: #9c9c9c 1px solid; 
+   border-left: #9c9c9c 1px solid; 
+   border-bottom: #9c9c9c 1px solid
 }
 
 .divSideboxHeader 
 {
-	text-align:center;
-	padding-top:2px;
-	font-size:10px;
-	color:#666666;
+   text-align:center;
+   padding-top:2px;
+   font-size:10px;
+   color:#666666;
 }
 
 a.divSideboxEntry, .divSideboxEntry
 {
-	text-align:left;
-	height:16px;
-	background-color:#eeeeee;
+   text-align:left;
+   height:16px;
+   background-color:#eeeeee;
 }
 
 a.appTitles,.appTitles
 {
-	font-size: 10px; 
-	height:18px;
-	padding-top:2px;
-	padding-bottom:2px;
+   font-size: 10px; 
+   height:18px;
+   padding-top:2px;
+   padding-bottom:2px;
 }
 
 .sideboxSpace
 {
-	height:9px;
+   height:9px;
 }
 
 .greyLine
 {
-	margin:1px;
-	border-top-color:#7e7e7e;
-	border-top-width:1px;
-	border-top-style:solid;
-	height:1px;
+   margin:1px;
+   border-top-color:#7e7e7e;
+   border-top-width:1px;
+   border-top-style:solid;
+   height:1px;
 }
 
 .prefSection
 {
-	font-weight:bold;
-	font-size:16px;
-	line-height:40px;
+   font-weight:bold;
+   font-size:16px;
+   line-height:40px;
 }
 
 .extraIconsRow
 {
-	border-top-color:#dddddd;
-	border-top-width:1px;
-	border-top-style:solid;
-	padding:2px;
+   border-top-color:#dddddd;
+   border-top-width:1px;
+   border-top-style:solid;
+   padding:2px;
 }
 
 #extraIcons
 {
-	background-color:#eeeeee;
-	border-width:1px;
-	border-color:#7e7e7e;
-	border-style:solid;
+   background-color:#eeeeee;
+   border-width:1px;
+   border-color:#7e7e7e;
+   border-style:solid;
 }
 
 #divLogo
 {
-	position:absolute;
-	left:20px;
-	top:5px;
-	z-index:51;
+   position:absolute;
+   left:20px;
+   top:5px;
+   z-index:51;
 }
 
 #divAppTextBar
 {
-	background-color:white;
+   background-color:white;
 }
 
 #divStatusBar
 {
-	background-color:white;
-	height:15px;
-	padding-left:10px;
-	margin-top: 13px;
+   background-color:white;
+   height:15px;
+   padding-left:10px;
+   margin-top: 13px;
 }
 
 #tdSidebox
 {
-	width:170px;
-	background-color:white;
-	overflow:visible;
+   width:170px;
+   background-color:white;
+   overflow:visible;
 }
 
 
 #tdAppbox
 {
-	background-color:white;
-	padding-left:5px;
-	width: 100%;
+   background-color:white;
+   padding-left:5px;
+   width: 100%;
 }
 #divSideboxContainer
 {
-	position:relative;
-	width:150px;
-	top:0px;
-	left:0px;
-	background-color:white;
-	border-width:1px;
-	border-style:solid;
-	z-index:40;
+   position:relative;
+   width:150px;
+   top:0px;
+   left:0px;
+   background-color:white;
+   border-width:1px;
+   border-style:solid;
+   z-index:40;
 }
 
 #divAppboxHeader
 {
-	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#666666;
+   padding-bottom:0px;
+   font-size:14px;
+   font-weight:bold;
+   color:#666666;
 }
 
 #divAppbox
 {
-	background-color:#ffffff;
-	margin-top:50px;
-	padding:0;
+   background-color:#ffffff;
+   margin-top:50px;
+   padding:0;
 }
 
 fmStatusBar
 {
-	margin-left:4px;
-	margin-bottom:3px;
-	font-size: 10px; 
+   margin-left:4px;
+   margin-bottom:3px;
+   font-size: 10px; 
 }
 
 .fmButton
 {
-	background-image:url(../images/buttonbackground.png);
-	width:28px;
-	height:28px;
-	background-repeat: no-repeat;
+   background-image:url(../images/buttonbackground.png);
+   width:28px;
+   height:28px;
+   background-repeat: no-repeat;
 }
 
 #fmLocation
 {
-	position:relative;
-	margin-bottom:3px;
-	height:27px;
+   position:relative;
+   margin-bottom:3px;
+   height:27px;
 }
 
 #fmMenu
 {
-	position:relative;
+   position:relative;
 }
 #fmFileWindow
 {
-	background-color:#ffffff;
-	margin-left:4px;
-	padding:5px;
-	position:relative;
-	border-right: #cccccc 1px solid; 
-	border-top: #9c9c9c 2px solid; 
-	border-left: #9c9c9c 2px solid; 
-	border-bottom: #cccccc 1px solid
+   background-color:#ffffff;
+   margin-left:4px;
+   padding:5px;
+   position:relative;
+   border-right: #cccccc 1px solid; 
+   border-top: #9c9c9c 2px solid; 
+   border-left: #9c9c9c 2px solid; 
+   border-bottom: #cccccc 1px solid
 }
 
 #admin_info
 {
-	position:relative;
-	text-align:right;
+   position:relative;
+   text-align:right;
 }
 
 #divGenTime
 {
-	bottom:14px;
-	font-size: 9px;
-	color: #ff0000;
-	text-align:center;
-	width:99%;
+   bottom:14px;
+   font-size: 9px;
+   color: #ff0000;
+   text-align:center;
+   width:99%;
 }
 
 #divPoweredBy 
 {
-	bottom:14px;
-	font-size: 9px;
-	color: #000;
-	text-align:center;
-	width:99%;
+   bottom:14px;
+   font-size: 9px;
+   color: #000;
+   text-align:center;
+   width:99%;
 }
 
 .idots2toolbar
 {
-	background-color: #e5e5e5;
-	display: block;
-	position: fixed;
-	top: 20px;
-	left: 0;
-	padding: 0;	
-	width: 100%;
-	height: 26px;
-	z-index: 49;
-	border-bottom: 1px solid #9c9c9c;
+   background-color: #e5e5e5;
+   display: block;
+   position: fixed;
+   top: 20px;
+   left: 0;
+   padding: 0;	
+   width: 100%;
+   height: 26px;
+   z-index: 49;
+   border-bottom: 1px solid #9c9c9c;
 }
 .idots2toolbar a
 {
-	background-color: #e5e5e5;
-	display: block;
-	float: left;
-	width: 30px;
-	height: 20px;
-	padding: 0;
-	margin-top: 2px;
-	margin-bottom: 1px;
-	margin-left: 2px;
-	margin-right: 2px;
-	text-align: center;
-	background-position: center center;
-	background-repeat: no-repeat;
-	border: 1px solid #e5e5e5;
+   background-color: #e5e5e5;
+   display: block;
+   float: left;
+   width: 30px;
+   height: 20px;
+   padding: 0;
+   margin-top: 2px;
+   margin-bottom: 1px;
+   margin-left: 2px;
+   margin-right: 2px;
+   text-align: center;
+   background-position: center center;
+   background-repeat: no-repeat;
+   border: 1px solid #e5e5e5;
 }
