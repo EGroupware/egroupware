@@ -197,5 +197,16 @@
 		 echo "<strong>Backtrace</strong>: ".function_backtrace(2)."<br/>\n";
 	  }
 
+	  function fetch_string($string)
+	  {
+		 $tmpfname = tempnam ("/tmp", "sav");
+		 $fp = fopen($tmpfname, "w");
+		 fwrite($fp, $string);
+		 fclose($fp);
+		 $this->addPath('template','/tmp');
+		 $file_arr= explode('/',$tmpfname);
+		 return $this->fetch($file_arr[2]);
+		 unlink($tmpfname);
+	  }
 
    }
