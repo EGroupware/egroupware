@@ -37,12 +37,9 @@ function start() {
 }
 
 </script>
-	
-
-
-	
 	{dIcons}
 <!-- END xdesktop_header -->
+
 
 <!-- BEGIN show_clock -->
 
@@ -53,6 +50,7 @@ function start() {
 
 <!-- END show_clock -->
 
+
 <!-- BEGIN no_clock -->
 
 <div id="taskbar"><IMG SRC="{iconpath}/launch.png" onClick="displayLaunch();" id="launch"><div id="tb" OnClick="sdt();"><img src="{iconpath}/show_desktop.png"></div><div id="tasks"></div></div>
@@ -60,29 +58,29 @@ function start() {
 	<img src="{serverpath}/phpgwapi/templates/idots2/js/x-desktop/xDT/skins/IDOTS2/idea.png" alt="New notification">
 </a>
 
-
 <!-- END no_clock -->
 
-<!-- BEGIN logo -->
 
+<!-- BEGIN logo -->
 
 <img src="{iconpath}/x-desktop.png" id="xdesktoplogo"><img src="{iconpath}/egroupware.png" id="egroupwarelogo">
 
 <!-- END logo -->
 
-<!-- BEGIN background_stretched -->
 
+<!-- BEGIN background_stretched -->
 
 <img src="{backgroundimage}" id="{backgroundstyle}" style="background-color: {backgroundcolor}">
 
 <!-- END background_stretched -->
 
-<!-- BEGIN background -->
 
+<!-- BEGIN background -->
 
 <div id="{backgroundstyle}" style="background-color: {backgroundcolor}; background-image: url('{backgroundimage}');"></div>
 
 <!-- END background -->
+
 
 <!-- BEGIN background_none -->
 
@@ -90,52 +88,47 @@ function start() {
 
 <!-- END background_none -->
 
-<!-- BEGIN navbar_header_begin -->
 
+<!-- BEGIN navbar_header_begin -->
 
 <div id="launchmenu" class="" style="display:none;" onBlur="this.style.display='none';">
 	<div id="launchinfo"> </div>
 	<ul>
+
 <!-- END navbar_header_begin -->
+
 
 <!-- BEGIN navbar_header_end -->		
 	</ul>
 </div>
 
-
-
-
-<ul id="notify" onBlur="this.style.display='none';">
-
-</ul>
-
-
-
+<ul id="notify" onBlur="this.style.display='none';"></ul>
 
 <!-- END navbar_header_end -->
 
+
 <!-- BEGIN appbox -->	
-	
 
 {sideboxcolstart}<ul id="nav">
 
-
 <!-- END appbox -->
 
+
 <!-- BEGIN end_appbox -->	
-	
 
 </ul>
 
-
 <!-- END end_appbox -->
 
+
 <!-- BEGIN begin_toolbar -->
+
 </ul>
 
 <div class="idots2toolbar">
 
 <!-- END begin_toolbar -->
+
 
 <!-- BEGIN toolbar_item -->
 
@@ -143,11 +136,11 @@ function start() {
 
 <!-- END toolbar_item -->
 
+
 <!-- BEGIN toolbar_seperator -->
 
-
-
 <!-- END toolbar_seperator -->
+
 
 <!-- BEGIN end_toolbar -->
 
@@ -156,16 +149,16 @@ function start() {
 <!-- END end_toolbar -->
 
 
+<!-- BEGIN Sidebox Column -->
+
+<div id="sidebox"></div>
+
+<!-- END Sidebox Column -->
 
 
 <!-- BEGIN navbar_footer -->	
-{sideboxcolend}
 
-		
-
-<!-- End Sidebox Column -->
-
-<!-- Applicationbox Column -->
+{sideboxcolend}		
 		
 <div id="divAppbox">	
 			
@@ -187,12 +180,12 @@ function start() {
 <!-- END extra_blocks_footer -->
 
 
-
 <!-- BEGIN extra_block_row -->
 
 <li><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></li>
 
 <!-- END extra_block_row -->
+
 
 <!-- BEGIN extra_block_row_raw -->
 
@@ -200,10 +193,13 @@ function start() {
 
 <!-- END extra_block_row_raw -->
 
+
 <!-- BEGIN extra_block_row_no_link -->
+
 <li><a href="#">{lang_item}</a></li>
 
 <!-- END extra_block_row_no_link -->
+
 
 <!-- BEGIN extra_block_spacer -->
 &nbsp;
@@ -215,6 +211,7 @@ function start() {
 <li><a href="javascript:openX('{title}', '{url}');"><img src="{icon}" alt="{title}" title="{title}">{title}</a></li>
 					
 <!-- END launch_app -->
+
 
 <!-- BEGIN logout -->
 
