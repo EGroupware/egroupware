@@ -10,7 +10,7 @@
 	* Free Software Foundation; version 2 of the License.                      *
 	\**************************************************************************/
 	
-	/* $id$ */
+	/* $Id$ */
 	
 	// FIXME: remove imageMagick shit, we only use gdlib
 	// FIXME: autodetect safe_mode
