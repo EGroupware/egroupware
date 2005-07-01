@@ -51,7 +51,7 @@ class ui_resources
 	 */
 	function index($content='')
 	{
-//  		_debug_array($content);
+// 		_debug_array($content);
 		if (is_array($content))
 		{
 			$sessiondata = $content['nm'];
@@ -122,6 +122,31 @@ class ui_resources
 		$no_button['back'] = true;
 		$no_button['add_sub'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
+		
+		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
+			function js_btn_book_selected(form)
+			{
+				resources = '';
+				for (f=0; f < form.elements.length; f++)
+				{
+					element = form.elements[f];
+					if(element.name == 'exec[nm][rows][checkbox][]' && element.checked)
+					{
+						if(resources.length > 0)
+						{
+							resources += ',';
+						}
+						resources += 'r' + element.value;
+					}
+				}
+				if(resources.length == 0)
+				{
+					alert('". lang('No resources selected'). "');
+					return false;
+				}
+				return resources;
+			}
+		</script>";
 
 		if($content['nm']['view_accs_of'])
 		{
@@ -217,7 +242,7 @@ class ui_resources
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		
-// 		$content['general|page|pictures|links|calendar'] = 'resources.edit_tabs.page';  //debug
+		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');

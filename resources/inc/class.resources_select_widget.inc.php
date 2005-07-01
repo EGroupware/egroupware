@@ -73,7 +73,7 @@
 			{
 				foreach(ExecMethod('resources.bo_resources.get_calendar_info',$value) as $data)
 				{
-					$sel_options[$data['id']] = $data['name'];
+					$sel_options[$data['res_id']] = $data['name'];
 				}
 				$tpl->set_cell_attribute('resources','sel_options',$sel_options);
 			}

@@ -269,14 +269,14 @@ class bo_resources
 	/**
 	 * returns status for a new calendar entry depending on resources ACL
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @param int/array $res_id single id or array $num => $res_id
+	 * @param int $res_id single id
 	 * @return array 
 	 */
 	function get_calendar_new_status($res_id)
 	{
-		$cat_id = $this->so->get_value('cat_id',$res_id);
-		$cat_admin = $this->acl->get_cat_admin($cat_id);
-		return $this->acl->is_permitted($cat_id,EGW_ACL_DIRECT_BOOKING) ? A : U;
+		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,bookable');
+		if($data[0]['bookable'] == 0) return 'x';
+		return $this->acl->is_permitted($data[0]['cat_id'],EGW_ACL_DIRECT_BOOKING) ? A : U;
 	}
 	
 	/**
