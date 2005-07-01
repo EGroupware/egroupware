@@ -8,7 +8,7 @@
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td bgcolor="{row_on}">&nbsp;&nbsp;<a href="{link_done}">{lang_done}</a></td>
+						<td class="row_on">&nbsp;&nbsp;<a href="{link_done}">{lang_done}</a></td>
 					</tr>
 				</table>
 <!-- END menu_links -->
