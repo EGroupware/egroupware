@@ -125,7 +125,7 @@
 		}
 
 		/* send command to remote server */
-		function send($method_name, $args, $url, $debug=True)
+		function send($method_name, $args, $url, $debug=False)
 		{
 			$cmd = '_send_' . ($this->mode ? $this->mode : 'xmlrpc') . '_' . $this->security;
 			$this->$cmd($method_name, $args, $url, $debug);
@@ -188,7 +188,7 @@
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			}
 
-			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
+			$this->debug('<pre>' . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$uri, $hostpart, 443);
 			$c->setCredentials($this->sessionid,$this->kp3);
 			$c->setDebug($debug);
