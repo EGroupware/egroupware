@@ -62,7 +62,7 @@
 			$GLOBALS['egw']->country    = CreateObject('phpgwapi.country');
 			$GLOBALS['egw']->browser    = CreateObject('phpgwapi.browser');
 			$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-			$this->fields = CreateObject('addressbook.uifields');
+			$this->fields = CreateObject('addressbook.bofields');
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
 			$this->cat      = CreateObject('phpgwapi.categories');
@@ -282,7 +282,7 @@
 			unset($aar);
 			unset($char);
 
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			$customfields = array();
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
@@ -685,7 +685,7 @@
 
 		function copy()
 		{
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			$customfields = array();
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
@@ -740,7 +740,7 @@
 			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
@@ -803,7 +803,7 @@
 			echo parse_navbar();
 
 			/* Read in user custom fields, if any */
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			$customfields = array();
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
@@ -962,7 +962,7 @@
 			$GLOBALS['egw']->template->set_block('view_t','view_footer','view_footer');
 			$GLOBALS['egw']->template->set_block('view_t','view_buttons','view_buttons');
 
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			$customfields = array();
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
@@ -1188,7 +1188,7 @@
 			$other   = $_POST['other'];
 			$fcat_id = (int)$_POST['fcat_id'];
 
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			$customfields = array();
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
@@ -1451,7 +1451,7 @@
 			}
 			$fields['adr_two_type'] = substr($typeb,0,-1);
 
-			$custom = $this->fields->read_custom_fields();
+			$custom = $this->fields->_read();
 			foreach($custom as $name => $val)
 			{
 				$fields[$val['name']] = $entry[$val['name']];

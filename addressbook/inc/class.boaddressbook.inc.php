@@ -247,7 +247,7 @@
 		// return array with all addressbook customfields (for xmlrpc)
 		function customfields($new_fields=False)
 		{
-			$fields = CreateObject('addressbook.uifields',True);	// no extra bo-class
+			$fields = CreateObject('addressbook.bofields');
 
 			if(is_array($new_fields) && count($new_fields))
 			{
@@ -257,17 +257,17 @@
 				}
 				foreach($new_fields as $new)
 				{
-					$fields->save_custom_field('',$new);
+					$fields->_save('',$new);
 				}
 			}
 			$customfields = array();
-			foreach($fields->read_custom_fields() as $data)
+			foreach($fields->_read() as $data)
 			{
 				$customfields[$data['name']] = $data['title'];
 			}
 			if($this->xmlrpc && !isset($customfields['freebusy_url']))
 			{
-				$fields->save_custom_field('','freebusy URL');
+				$fields->_save('','freebusy URL');
 				$customfields['freebusy_url'] = 'freebusy URL';
 			}
 			return $customfields;

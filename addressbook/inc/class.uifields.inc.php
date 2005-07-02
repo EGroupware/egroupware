@@ -21,15 +21,13 @@
 			'edit'   => True,
 			'delete' => True
 		);
+		var $bo;
 
-		function uifields($only_bo=False)
+		function uifields()
 		{
-			if (!$only_bo)
-			{
-				$GLOBALS['egw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-				$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-			}
-			$this->config = CreateObject('phpgwapi.config','addressbook');
+			$GLOBALS['egw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+			$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->bo = CreateObject('addressbook.bofields');
 		}
 
 		function index()
@@ -79,7 +77,7 @@
 				$sort = 'ASC';
 			}
 
-			$fields = $this->read_custom_fields($start,$limit,$query,$sort);
+			$fields = $this->bo->_read($start,$limit,$query,$sort);
 			$total_records = count($fields);
 
 			$GLOBALS['egw']->common->phpgw_header();
@@ -157,7 +155,7 @@
 					$error[$errorcount++] = lang('Please enter a name for that field !');
 				}
 
-				$fields = $this->read_custom_fields($start,$limit,$field_name);
+				$fields = $this->bo->_read($start,$limit,$field_name);
 				if($fields[0]['name'])
 				{
 					$error[$errorcount++] = lang('That field name has been used already !');
@@ -165,7 +163,7 @@
 
 				if(!$error)
 				{
-					$this->save_custom_field($field,$field_name);
+					$this->bo->_save($field,$field_name);
 				}
 			}
 
@@ -245,7 +243,7 @@
 
 				if(!$error)
 				{
-					$this->save_custom_field($field,$field_name);
+					$this->bo->_save($field,$field_name);
 				}
 			}
 
@@ -271,7 +269,7 @@
 			}
 			else
 			{
-				$fields = $this->read_custom_fields($start,$limit,$field);
+				$fields = $this->bo->_read($start,$limit,$field);
 				$field  = $GLOBALS['egw']->strip_html($fields[0]['title']);
 				$fn = $fields[0]['name'];
 			}
@@ -320,7 +318,7 @@
 
 			if($_POST['confirm'])
 			{
-				$this->save_custom_field($field);
+				$this->bo->_save($field);
 				Header('Location: ' . $GLOBALS['egw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
 			}
 			else
@@ -355,78 +353,6 @@
 
 				$GLOBALS['egw']->template->pparse('out','field_delete');
 			}
-		}
-
-		function read_custom_fields($start=0,$limit=5,$query='')
-		{
-			$i = 0;
-			$fields = array();
-
-			$this->config->read_repository();
-
-			while(list($name,$descr) = @each($this->config->config_data['custom_fields']))
-			{
-				/*
-				if($start < $i)
-				{
-					continue;
-				}
-				*/
-
-				$test = @strtolower($name);
-				//if($query && !strstr($test,strtolower($query)))
-				if($query && ($query != $test))
-				{
-				}
-				else
-				{
-					$fields[$i]['name'] = $name;
-					$fields[$i]['title'] = $descr;
-					$fields[$i]['id'] = $i;
-
-					/*
-					if($i >= $limit)
-					{
-						break;
-					}
-					*/
-					$i++;
-				}
-			}
-			switch($sort)
-			{
-				case 'DESC';
-					krsort($fields);
-					break;
-				case 'ASC':
-				default:
-					ksort($fields);
-			}
-			@reset($fields);
-
-			return $fields;
-		}
-
-		function save_custom_field($old='',$new='')
-		{
-			$this->config->read_repository();
-
-			if(!is_array($this->config->config_data['custom_fields']))
-			{
-				$this->config->config_data['custom_fields'] = array();
-			}
-
-			if($old)
-			{
-				unset($this->config->config_data['custom_fields'][$old]);
-			}
-			if($new)
-			{
-				$tmp = strtolower(str_replace(' ','_',$new));
-				$this->config->config_data['custom_fields'][$tmp] = $new;
-			}
-
-			$this->config->save_repository();
 		}
 	}
 ?>
