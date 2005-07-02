@@ -219,7 +219,7 @@
 			}
 			else
 			{
-				$code = '$v=' . $GLOBALS['_xh'][$parser]['st'] . '; $allOK=1;';
+				$code = '$v=' . $GLOBALS['_xh'][$parser]['st'] . '; $allok=1;';
 				$code = str_replace(',,',",'',",$code);
 				$allok = 0;
 				@eval($code);
