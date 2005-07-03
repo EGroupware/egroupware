@@ -81,7 +81,7 @@
 				*/
 				$entry = $this->vcard->in($buffer[$i]);
 				/* Now actually add the new entry */
-				$this->contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry,$access,$cat_id);
+				$this->contacts->add($GLOBALS['egw_info']['user']['account_id'],$entry,$access,$cat_id);
 			}
 			$num = $i - 1;
 			return lang('Successfully imported %1 records into your addressbook.',$num);

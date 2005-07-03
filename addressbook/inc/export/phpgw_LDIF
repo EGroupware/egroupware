@@ -132,9 +132,9 @@
 		// Tack on some extra values
 		function export_end_record($buffer)
 		{
-			if ($GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if ($GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
-				$context = $GLOBALS['phpgw_info']['server']['ldap_contact_context'];
+				$context = $GLOBALS['egw_info']['server']['ldap_contact_context'];
 			}
 			$time = gettimeofday();
 			$cn = str_replace(',','',$buffer[$this->id]['cn']);
@@ -168,7 +168,7 @@
 				$entries .= 'objectClass: organizationalPerson' . "\n";
 				# not needed for openldap > 2.1 anymore
 				#$entries .= 'objectClass: inetOrgPerson' . "\n";
-				$entries .= 'objectClass: phpgwContact' . "\n";
+				$entries .= 'objectClass: egwContact' . "\n";
 				$entries .= "\n";
 			}
 			$buffer = $entries;

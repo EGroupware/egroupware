@@ -109,7 +109,7 @@
 				$entry[$i]['adr_one_type']    = 'intl';
 				$entry[$i]['adr_two_type']    = 'intl';
 				/* echo '<br>'; */
-				$contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
+				$contacts->add($GLOBALS['egw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
 			}
 			$num = $i - 1;
 			return lang('Successfully imported %1 records into your addressbook.',$num);

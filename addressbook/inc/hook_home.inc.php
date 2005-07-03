@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * eGroupWare - E-Mail                                                      *
+  * eGroupWare - Addressbook                                                 *
   * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -11,16 +11,16 @@
 
 	/* $Id$ */
 	
-	$d1 = strtolower(substr(PHPGW_APP_INC,0,3));
+	$d1 = strtolower(substr(EGW_APP_INC,0,3));
 	if($d1 == 'htt' || $d1 == 'ftp' )
 	{
 		echo "Failed attempt to break in via an old Security Hole!<br>\n";
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		$GLOBALS['egw']->common->phpgw_exit();
 	}
 	unset($d1);
 
-	if($GLOBALS['phpgw_info']['user']['apps']['addressbook']
-		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
+	if($GLOBALS['egw_info']['user']['apps']['addressbook']
+		&& $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
 		echo "\n<!-- Birthday info -->\n";
 
@@ -30,25 +30,25 @@
 			'n_family' => 'n_family',
 			'bday'     => 'bday'
 		);
-		$now = time() - ((60 * 60) * (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
-		$today = $GLOBALS['phpgw']->common->show_date($now,'n/d/');
+		$now = time() - ((60 * 60) * (int)$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
+		$today = $GLOBALS['egw']->common->show_date($now,'n/d/');
 		
-		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
+		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
 		
 		$title = '<center><font color="#FFFFFF">'.lang('Birthdays').'</font></center>';
 
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
 				'title'     => $title,
-				'primary'   => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'secondary' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'tertiary'  => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'primary'   => $GLOBALS['egw_info']['theme']['navbar_bg'],
+				'secondary' => $GLOBALS['egw_info']['theme']['navbar_bg'],
+				'tertiary'  => $GLOBALS['egw_info']['theme']['navbar_bg'],
 				'width'     => '100%',
 				'outerborderwidth' => '0',
-				'header_background_image' => $GLOBALS['phpgw']->common->image($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'),'bg_filler')
+				'header_background_image' => $GLOBALS['egw']->common->image($GLOBALS['egw']->common->get_tpl_dir('phpgwapi'),'bg_filler')
 			)
 		);
-		$app_id = $GLOBALS['phpgw']->applications->name2id('addressbook');
+		$app_id = $GLOBALS['egw']->applications->name2id('addressbook');
 		$GLOBALS['portal_order'][] = $app_id;
 		$var = Array(
 			'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
@@ -71,18 +71,18 @@
 			{
 				$portalbox->data[] = array(
 					'text' => lang("Today is %1's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-					'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id'])
+					'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id'])
 				);
 			}
 //			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
+//				. $GLOBALS['egw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 //			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . '</td></tr>' . "\n";
 		}
 
-		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
+		$tomorrow = $GLOBALS['egw']->common->show_date($now + 86400,'n/d/');
 
-		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
+		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{
@@ -90,11 +90,11 @@
 			{
 				$portalbox->data[] = array(
 					'text' => lang("Tomorrow is %1's birthday.",$val['n_given'] . ' ' . $val['n_family']),
-					'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
+					'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
 				);
 			}
 //			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
+//				. $GLOBALS['egw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
 //			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . '</td></tr>' . "\n";
 		}
