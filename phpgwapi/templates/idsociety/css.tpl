@@ -8,7 +8,7 @@
 	.row_on { color: {row_text}; background-color: {row_on}; }
 	.row_off { color: {row_text}; background-color: {row_off}; }
 	.th { color: {th_text}; background-color: {th_bg}; }
-	.narrow_column { width: 6em; }
+	.narrow_column { width: 1%; white-space: nowrap; }
 	.tablink { color: #000000; }
 	{app_css}
 -->

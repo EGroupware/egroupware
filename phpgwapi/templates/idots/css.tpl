@@ -3,7 +3,7 @@
 	.row_on { color: {row_text}; background-color: #F1F1F1; }
 	.row_off { color: {row_text}; background-color: #ffffff; }
 	.th { color: {th_text}; background-color: {th_bg}; }
-	.narrow_column { width: 6em; }
+	.narrow_column { width: 1%; white-space: nowrap; }
 	{app_css}
 
 #dhtmltooltip
