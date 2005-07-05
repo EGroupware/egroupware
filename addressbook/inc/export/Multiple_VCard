@@ -84,10 +84,6 @@
 			'email_home'             => 'email_home'
 		);
 
-		/* This will store the contacts and vcard objects */
-		var $contacts = '';
-		var $vcard = '';
-
 		/* Read full list of user's contacts only to get id's for each */
 		function export_start_file($buffer,$ncat_id='')
 		{
