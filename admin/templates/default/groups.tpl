@@ -9,7 +9,7 @@
  </table>
 
  <table border="0" width="45%" align="center">
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
    <td>{sort_name}</td>
    <td>{header_edit}</td>
    <td>{header_delete}</td>
@@ -36,7 +36,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
- <tr bgcolor="{tr_color}">
+ <tr class="{class}">
   <td>{group_name}</td>
   <td class="narrow_column">{edit_link}</td>
   <td class="narrow_column">{delete_link}</td>

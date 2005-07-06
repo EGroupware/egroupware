@@ -28,11 +28,11 @@
 			$this->rowColor[1] = $GLOBALS['phpgw_info']['theme']['row_off'];
 		}
 
-		function section_item($pref_link='',$pref_text='', $bgcolor)
+		function section_item($pref_link='',$pref_text='', $class)
 		{
 			$this->t->set_var('row_link',$pref_link);
 			$this->t->set_var('row_text',$pref_text);
-			$this->t->set_var('tr_color',$bgcolor);
+			$this->t->set_var('class',$class);
 			$this->t->parse('all_rows','link_row',True);
 		}
 
@@ -58,11 +58,9 @@
 				{
 					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
 				}
-				$this->section_item($link,lang($value['description']),$this->rowColor[($i % 2)]);
+				$this->section_item($link,lang($value['description']),($i%2) ? "row_on": "row_off");
 				$i++;
 			}
-
-			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
 			if(strpos($_menuData[0]['extradata'],'user'))
 			{

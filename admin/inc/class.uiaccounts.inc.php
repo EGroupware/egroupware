@@ -143,7 +143,6 @@
 			$total = $GLOBALS['phpgw']->accounts->total;
 
 			$var = Array(
-				'th_bg'             => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'left_next_matchs'  => $this->nextmatchs->left('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
 				'right_next_matchs' => $this->nextmatchs->right('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
 				'lang_groups' => lang('%1 - %2 of %3 user groups',$start+1,$start+count($account_info),$total),
@@ -177,9 +176,8 @@
 
 				foreach($account_info as $account)
 				{
-					$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 					$var = Array(
-						'tr_color'    => $tr_color,
+						'class'       => $this->nextmatchs->alternate_row_color('', True),
 						'group_name'  => (!$account['account_lid']?'&nbsp;':$account['account_lid']),
 						'delete_link' => $this->row_action('delete','group',$account['account_id'])
 					);
@@ -744,7 +742,6 @@
 			$t->set_block('account','link_row');
 
 			$var = Array(
-				'th_bg'        => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'tr_color1'    => $GLOBALS['phpgw_info']['theme']['row_on'],
 				'tr_color2'    => $GLOBALS['phpgw_info']['theme']['row_off'],
 				'lang_action'  => lang('View user account'),
@@ -999,8 +996,8 @@
 				$app = $perm_display[$i][0];
 				if(!($i & 1))
 				{
-					$tr_color = $this->nextmatchs->alternate_row_color();
-					$perm_html .= '<tr bgcolor="'.$tr_color.'">';
+					$tr_class = $this->nextmatchs->alternate_row_color('',True);
+					$perm_html .= '<tr class="'.$tr_class.'">';
 				}
 				$perm_html .= '<td>' . $perm_display[$i][1] . '</td>'
 					. '<td><input type="checkbox" name="account_apps['
