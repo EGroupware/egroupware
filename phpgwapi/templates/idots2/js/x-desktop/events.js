@@ -175,6 +175,33 @@ function saveSize(idotsName) {
 
 }
 
+function saveSideboxState(idotsName,sideboxstate) {
+title = xDT.prop(idotsName, 'wTitle');
+//w = xDT.prop(idotsName, 'wWidth');
+//h = xDT.prop(idotsName, 'wHeight');
+
+url = strXmlUrl + "/write_settings.php?action=save_sidebox_state&title=" + idotsName + "&sidebox_state="+sideboxstate;
+/*var found = false;
+for(i = 0; i < aTitle.length; i++)
+{
+	if(aTitle[i] != "" && aTitle[i] == title) {
+		aWidth[i] = w;
+		aHeight[i] = h;
+		found = true;
+	}
+}
+if(!found) 
+{
+	aTitle[aTitle.length] = title;
+	aWidth[aWidth.length] = w;
+	aHeight[aHeight.length] = h;	
+}
+*/
+loadXMLDoc(url);
+return true;
+
+}
+
 function findPosX(obj)
 {
         var curleft = 0;

@@ -29,7 +29,6 @@
 	standalone="yes"?>';
 	echo "\r\n<response>\r\n";
 
-
 	$title = $_GET["title"];
 	$width = $_GET["w"];
 	$height= $_GET["h"];
@@ -44,8 +43,6 @@
 			$size['height'] = $height;
 			$GLOBALS['phpgw']->preferences->change('phpgwapi','size_'.$name,$size);
 			$GLOBALS['phpgw']->preferences->save_repository(True);
-			
-			
 		}
 	}
 	echo "</response>";

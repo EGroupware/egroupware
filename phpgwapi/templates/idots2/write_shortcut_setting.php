@@ -3,6 +3,7 @@
 * eGroupWare                                                               *
 * http://www.egroupware.org                                                *
 * This file is written by Rob van Kraanen <rvkraanen@gmail.com>            *
+* Copyright 2005 Lingewoud BV - www.lingewoud.com                          *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *

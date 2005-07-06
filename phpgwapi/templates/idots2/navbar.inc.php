@@ -41,21 +41,25 @@
 	  $GLOBALS['idots2_tpl']->set_block('navbar','show_clock','show_clock');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','no_clock','no_clock');
 
+	  
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_container','sidebox_container');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_container_footer','sidebox_container_footer');
-	  
+	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_set_open','sidebox_set_open');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox','sidebox');
+	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_spacer','sidebox_spacer');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_footer','sidebox_footer');
+
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_sidebox_block_row','extra_sidebox_block_row');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_sidebox_block_row_raw','extra_sidebox_block_row_raw');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_sidebox_block_row_no_link','extra_sidebox_block_row_no_link');
 
-	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
+	 
+	  $GLOBALS['idots2_tpl']->set_block('navbar','menu_header','menu_header');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_row','extra_block_row');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_row_no_link','extra_block_row_no_link');
-	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
-	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
+	  $GLOBALS['idots2_tpl']->set_block('navbar','txt_menu_spacer','txt_menu_spacer');
+	  $GLOBALS['idots2_tpl']->set_block('navbar','menu_footer','menu_footer');
 
 	  $GLOBALS['idots2_tpl']->set_block('navbar','begin_toolbar','begin_toolbar');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','end_toolbar','end_toolbar');
@@ -319,6 +323,19 @@
 	  }
 	  else 
 	  {
+		 $GLOBALS['phpgw']->preferences->read_repository();
+
+/*		 foreach($GLOBALS['phpgw_info']['user']['apps'] as $name => $data)
+		 {
+			if($data['title'] == $title) {
+			   $state['name'] = $name;
+			   $GLOBALS['phpgw']->preferences->change('phpgwapi','sidebox_state'.$name,$state);
+			   $GLOBALS['phpgw']->preferences->save_repository(True);
+			   break;
+			}
+		 }
+		 */
+		 
 		 // build the menu
 		 $menu=array();
 		 $menu['Window'] = array(
@@ -348,7 +365,7 @@
 			array(
 			   'text'    => lang('%1 manual',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
 			   'no_lang' => True,
-			   'link'    => 'javascript:parent.openX(\''.lang('%1 manual',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']).'\',\''.$GLOBALS['phpgw_info']['navbar']['manual']['url'].'\')'
+			   'link'    => 'javascript:parent.openX(\''.lang('%1 manual',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']).'\',\''.$GLOBALS['phpgw_info']['navbar']['manual']['url'].'?app_manual='.$GLOBALS['phpgw_info']['flags']['currentapp'].'\')'
 			),
 			array(
 			   'text'    => '<hr style="border:0;border-bottom:dashed 1px #444444;height:1px;color:#444444;">',
@@ -434,20 +451,24 @@
 			'Logout'=>$GLOBALS['egw_info']['navbar']['logout']['url']
 		 );
 		 $var['menu_link'] = '';
-		 //$var['sideboxcolstart'] = '<t'.'d id="tdSidebox" valign="top">';
 		 $var['remove_padding'] = '';
+		 $var['current_app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 		 $GLOBALS['idots2_tpl']->set_var($var);
 		 
 		 $GLOBALS['idots2_tpl']->pparse('out','sidebox_container');
 
-		 //display_sidebox('',$menu_title,$file);
 		 $GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
-		 //$var['sideboxcolend'] = '</'.'td>';
 		 $GLOBALS['idots2_tpl']->pparse('out','sidebox_container_footer');
 
-		 
+
 		 $GLOBALS['idots2_tpl']->pparse('out','navbar_footer');
+		 
+		 // get sidebox state and set it with js
+		 if($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi']['sidebox_'.$GLOBALS['phpgw_info']['flags']['currentapp']]!='close')
+		 {
+			$GLOBALS['idots2_tpl']->pparse('out','sidebox_set_open');
+		 }
 
 		 // If the application has a header include, we now include it
 		 if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
@@ -491,14 +512,14 @@
 	  {
 		 $var['lang_title']=$menu_title;//$appname.' '.lang('Menu');
 		 $GLOBALS['idots2_tpl']->set_var($var);
-		 $GLOBALS['idots2_tpl']->pfp('out','extra_blocks_header');
+		 $GLOBALS['idots2_tpl']->pfp('out','menu_header');
 
 		 foreach($file as $text => $url)
 		 {
-			sidebox_menu_item($url,$text);
+			textmenu_item($url,$text);
 		 }
 
-		 $GLOBALS['idots2_tpl']->pparse('out','extra_blocks_footer');
+		 $GLOBALS['idots2_tpl']->pparse('out','menu_footer');
 	  }
    }
 
@@ -506,7 +527,7 @@
    {
 	  if($item_text === '_NewLine_' || $item_link === '_NewLine_')
 	  {
-		 $GLOBALS['idots2_tpl']->pparse('out','extra_block_spacer');
+		 $GLOBALS['idots2_tpl']->pparse('out','txt_menu_spacer');
 	  }
 	  else
 	  {
@@ -563,7 +584,7 @@
    {
 	  if($item_text === '_NewLine_' || $item_link === '_NewLine_')
 	  {
-		 $GLOBALS['idots2_tpl']->pparse('out','extra_block_spacer');
+		 $GLOBALS['idots2_tpl']->pparse('out','sidebox_spacer');
 	  }
 	  else
 	  {

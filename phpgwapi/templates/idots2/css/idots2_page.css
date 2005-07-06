@@ -198,17 +198,39 @@ td
    border-top:outset 1px #9c9c9c;	
    border-bottom:outset 1px #9c9c9c;	
    border-right:outset 1px #9c9c9c;	
-/*   padding-top:50px;
-   padding-bottom:60px;
-  */
    left:0px;
    width:170px;
-/**   height:100%;*/
-   background-color:#cccccc;
+   background-color:white;
    display:none;
    overflow:visible;
    position:fixed;
    z-index:899;	
+   padding:0;
+}
+
+.sidebox
+{
+
+}
+
+.sidebox li
+{
+   display:block;
+   margin:2px;
+}
+
+.sidebox ul
+{
+	_list-style:none;
+	list-style-position:inside;
+	padding-left:10px;
+}
+
+.sidebox_title
+{
+	background-color:#dedede;
+	padding:5px;
+	font-weight:bold;
 }
 
 .divLoginbox 

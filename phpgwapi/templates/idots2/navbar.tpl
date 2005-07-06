@@ -155,17 +155,18 @@ function sidebox_close()
 {
 	document.getElementById('sidebox_container').style.display="none";
 	document.getElementById('divAppbox').style.marginLeft="0px;";
+	parent.saveSideboxState('{current_app}','close');
 }
 
 function sidebox_open()
 {
 	document.getElementById('sidebox_container').style.display="block";
-	document.getElementById('divAppbox').style.marginLeft="180px;";
+	document.getElementById('divAppbox').style.marginLeft="170px;";
+	parent.saveSideboxState('{current_app}','open');
 }
 </script>
 
 <div id="sidebox_container">
-<br/>
 <!-- END sidebox_container -->
 
 <!-- BEGIN sidebox_container_footer -->
@@ -174,16 +175,23 @@ function sidebox_open()
 <!-- END sidebox_container_footer -->
 
 
+<!-- BEGIN sidebox_set_open -->
+<script>
+sidebox_open();
+</script>
+<!-- END sidebox_set_open -->
+
 
 
 <!-- BEGIN sidebox -->
 
 <div class="sidebox">
-<ul>
+<div class="sidebox_title">{lang_title}</div>
+<table style="width:100%">
 <!-- END sidebox -->
 
 <!-- BEGIN sidebox_footer -->
-</ul>
+</table>
 </div>
 
 <!-- END sidebox_footer -->
@@ -191,9 +199,16 @@ function sidebox_open()
 
 <!-- BEGIN extra_sidebox_block_row -->
 
-<li><a class="rowSidebox" href="{item_link}"{target}>{lang_item}</a></li>
+<tr class="divSideboxEntry">
+<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
+</tr>
 
 <!-- END extra_sidebox_block_row -->
+
+
+<!-- BEGIN sidebox_spacer -->
+
+<!-- END sidebox_spacer -->
 
 
 <!-- BEGIN extra_sidebox_block_row_raw -->
@@ -220,19 +235,19 @@ function sidebox_open()
 <!-- END navbar_footer -->
 
 
-<!-- BEGIN extra_blocks_header -->
+<!-- BEGIN menu_header -->
 
 	<li onclick="itemClick(event);" onmouseover="itemHover(event);"> <a href="javascript:void(0);">{lang_title}</a>
 	<ul>
 
-<!-- END extra_blocks_header -->
+<!-- END menu_header -->
 
 
-<!-- BEGIN extra_blocks_footer -->
+<!-- BEGIN menu_footer -->
 
 	</ul></li>
 
-<!-- END extra_blocks_footer -->
+<!-- END menu_footer -->
 
 
 <!-- BEGIN extra_block_row -->
@@ -256,9 +271,10 @@ function sidebox_open()
 <!-- END extra_block_row_no_link -->
 
 
-<!-- BEGIN extra_block_spacer -->
+<!-- BEGIN txt_menu_spacer -->
 &nbsp;
-<!-- END extra_block_spacer -->
+<!-- END txt_menu_spacer -->
+
 
 
 <!-- BEGIN launch_app -->

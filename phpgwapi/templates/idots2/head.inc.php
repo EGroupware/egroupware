@@ -83,7 +83,8 @@
 		$app = "";
 	
 	}
-	$var = Array(
+	
+$var = Array(
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'slider_effects'=> $slider_effects,
