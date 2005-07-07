@@ -82,8 +82,6 @@
 	{
 		global $pref_tpl;
 
-		$pref_tpl->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-//		$pref_tpl->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 		$pref_tpl->set_var('a_name',$appname);
 		$pref_tpl->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$appname]['title']);
 		$pref_tpl->set_var('app_icon',$icon);
