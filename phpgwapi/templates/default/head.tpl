@@ -1,16 +1,16 @@
-<!-- BEGIN head --><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
-<META NAME="description" CONTENT="eGroupWare">
-<META NAME="keywords" CONTENT="eGroupWare">
-<meta name="robots" content="none">
-<LINK REL="ICON" href="{img_icon}" type="image/x-ico">
-<LINK REL="SHORTCUT ICON" href="{img_shortcut}">
+<!-- BEGIN head --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<meta name="AUTHOR" content="eGroupWare http://www.egroupware.org" />
+<meta name="description" content="eGroupWare" />
+<meta name="keywords" content="eGroupWare" />
+<meta name="robots" content="none" />
+<link rel="ICON" href="{img_icon}" type="image/x-ico" />
+<link rel="SHORTCUT ICON" href="{img_shortcut}" />
 {css}
-<TITLE>{website_title}</TITLE>
+<title>{website_title}</title>
 {java_script}
-</HEAD>
-<BODY {body_tags}>
+</head>
+<body {body_tags}>
 <!-- END head -->

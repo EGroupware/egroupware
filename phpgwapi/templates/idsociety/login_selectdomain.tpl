@@ -1,16 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="AUTHOR" content="eGroupWare http://www.egroupware.org">
-<meta name="description" content="eGroupWare">
-<meta name="keywords" content="eGroupWare login screen">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="AUTHOR" content="eGroupWare http://www.egroupware.org" />
+<meta name="description" content="eGroupWare" />
+<meta name="keywords" content="eGroupWare login screen" />
 <style type="text/css">
   a { text-decoration:none; }
-  A:link{ text-decoration:none; color: #336699; }
-  A:visted{ text-decoration:none; color: #336699; }
-  A:active{ text-decoration:none; color: #ff0000; }
-  A:hover{ text-decoration:none; color: #cc0000; }
+  a:link{ text-decoration:none; color: #336699; }
+  a:visted{ text-decoration:none; color: #336699; }
+  a:active{ text-decoration:none; color: #ff0000; }
+  a:hover{ text-decoration:none; color: #cc0000; }
   td {text-decoration:none; color: #ffffff; }
   body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "Arial, Helvetica, san-serif" }
   .tablink { color: #000000; }

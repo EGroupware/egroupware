@@ -1,13 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={charset}">
-<meta name="author" content="eGroupWare http://www.phpgroupware.org">
-<meta name="description" content="eGroupWare login screen">
-<meta name="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-<meta name="keywords" content="eGroupWare login screen">
-<link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico">
-<link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<meta name="author" content="eGroupWare http://www.phpgroupware.org" />
+<meta name="description" content="eGroupWare login screen" />
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+<meta name="keywords" content="eGroupWare login screen" />
+<link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico" />
+<link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico" />
 <link href="phpgwapi/templates/idots/css/idots.css" type="text/css" rel="StyleSheet" />
 <title>{website_title} - Login</title>
 <style type="text/css">

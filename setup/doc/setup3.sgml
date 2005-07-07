@@ -1,5 +1,5 @@
-<!doctype article public "-//OASIS//DTD DocBook V3.1//EN"
- [ <!entity header system "header.sgml">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V3.1//EN"
+ [ <!entity header SYSTEM "header.sgml">
  
 ]>
 

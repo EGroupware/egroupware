@@ -1,15 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
-<META NAME="description" CONTENT="eGroupWare">
-<META NAME="keywords" CONTENT="eGroupWare">
-<meta name="robots" content="none">
-<LINK REL="ICON" href="{img_icon}" type="image/x-ico">
-<LINK REL="SHORTCUT ICON" href="{img_shortcut}">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<neta name="AUTHOR" content="eGroupWare http://www.egroupware.org" />
+<meta name="description" content="eGroupWare" />
+<meta name="keywords" content="eGroupWare" />
+<meta name="robots" content="none" />
+<link rel="ICON" href="{img_icon}" type="image/x-ico" />
+<link rel="SHORTCUT ICON" href="{img_shortcut}" />
 {css}
-</STYLE>
+</style>
 <script language="JavaScript">
 <!--
 function MM_preloadImages()
@@ -29,7 +29,7 @@ function MM_preloadImages()
 //-->
 </script>
 {java_script}
-<TITLE>{website_title}</TITLE>
-</HEAD>
+<title>{website_title}</title>
+</head>
 <!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there -->
-<BODY {body_tags}
+<body {body_tags}

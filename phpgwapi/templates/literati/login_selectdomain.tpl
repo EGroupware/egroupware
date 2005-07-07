@@ -1,66 +1,66 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupware http://www.egroupware.org">
-<META NAME="description" CONTENT="eGroupware login screen">
-<META NAME="keywords" CONTENT="eGroupware login screen">
-<link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">	
-<TITLE>{website_title} - Login</TITLE>
-</HEAD>
-<BODY bgcolor="#FFFFFF">
-<br>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<meta name="AUTHOR" content="eGroupware http://www.egroupware.org" />
+<meta name="description" content="eGroupware login screen" />
+<meta name="keywords" content="eGroupware login screen" />
+<link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css" />
+<title>{website_title} - Login</title>
+</head>
+<body bgcolor="#FFFFFF">
+<br />
 <a href="{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
-<CENTER>{lang_message}</CENTER>
+<center>{lang_message}</center>
 <p>&nbsp;</p>
-<TABLE class=sidebox cellSpacing=1 cellPadding=0  border=0  align=center>
-<TR> 
-<TD class="sideboxtitle" align="center"  height=28>{website_title}</TD>
-</TR>
-<TR> 
-<TD class="sideboxcontent" bgColor="#efefef">
-<FORM method="post" action="{login_url}">
+<table class="sidebox" cellspacing="1" cellpadding="0"  border="0"  align="center">
+<tr>
+<td class="sideboxtitle" align="center"  height=28>{website_title}</td>
+</tr>
+<tr> 
+<td class="sideboxcontent" bgColor="#efefef">
+<form method="post" action="{login_url}">
 	<input type="hidden" name="passwd_type" value="text">
     <input type="hidden" name="account_type" value="u">
-<TABLE class="sideboxtext" cellSpacing=0 cellPadding=0 width="100%" border="0">
-<TR bgcolor="#e6e6e6">
-<TD colspan="3" align="center">
+<table class="sideboxtext" cellSpacing=0 cellPadding=0 width="100%" border="0">
+<tr bgcolor="#e6e6e6">
+<td colspan="3" align="center">
 {cd}
-<br>
-<img width="300" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="">
-</TD>
-</TR>
-<TR bgcolor="#e6e6e6">
-<TD colspan="3"> <input type="hidden" name="passwd_type" value="text"> </TD>
-</TR>
-<TR bgcolor="#e6e6e6">
-<td align="right"><font color="#000000">{lang_username}:&nbsp;</font></TD>
-<td align="right"><input name="login" value="{cookie}" style="width: 100px;"></TD>
-<TD align="left"><select name="logindomain">{select_domain}</select></TD>
-</TR>
-<TR bgcolor="#e6e6e6">
-<TD align="RIGHT"><font color="#000000">{lang_password}:&nbsp;</font></TD>
-<td align="right"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px;"></TD>
+<br />
+<img width="300" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="" />
+</td>
+</tr>
+<tr bgcolor="#e6e6e6">
+<td colspan="3"> <input type="hidden" name="passwd_type" value="text"> </td>
+</tr>
+<tr bgcolor="#e6e6e6">
+<td align="right"><font color="#000000">{lang_username}:&nbsp;</font></td>
+<td align="right"><input name="login" value="{cookie}" style="width: 100px;"></td>
+<td align="left"><select name="logindomain">{select_domain}</select></td>
+</tr>
+<tr bgcolor="#e6e6e6">
+<td align="RIGHT"><font color="#000000">{lang_password}:&nbsp;</font></td>
+<td align="right"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px;"></td>
 <td>&nbsp;</td>
-</TR>
-<TR bgcolor="#e6e6e6">
-<TD colspan="3" align="CENTER">
+</tr>
+<tr bgcolor="#e6e6e6">
+<td colspan="3" align="CENTER">
 <input type="submit" value="{lang_login}" name="submitit">
-</TD>
-</TR>
+</td>
+</tr>
 <!--
-<TR bgcolor="#e6e6e6">
-<TD colspan="3" align="RIGHT">
+<tr bgcolor="#e6e6e6">
+<td colspan="3" align="RIGHT">
 <font color="#000000" size="-1">eGroupWare {version}</font>
-</TD>
-</TR>
+</td>
+</tr>
 -->
-</TABLE>
-</FORM>
+</table>
+</form>
 
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 <div style="bottom:10px;left:10px;position:absolute;visibility:hidden;">
 <img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
 <img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">

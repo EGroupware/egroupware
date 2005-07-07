@@ -3,57 +3,57 @@
 <!-- END submit_button -->
 
 <!-- BEGIN border_top -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-	<HEAD>
-		<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-		<META name="AUTHOR" content="eGroupWare inline documentation parser http://www.egroupware.org">
-		<META NAME="description" CONTENT="eGroupWare documentation">
-		<META NAME="keywords" CONTENT="eGroupWare documentation">
-		<TITLE>Local setup - Login</TITLE>
-	</HEAD>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta name="AUTHOR" content="eGroupWare inline documentation parser http://www.egroupware.org" />
+		<meta name="description" content="eGroupWare documentation" />
+		<meta name="keywords" content="eGroupWare documentation" />
+		<title>Local setup - Login</title>
+	</head>
 
-	<BODY bgcolor="#FFFFFF">
+	<body bgcolor="#FFFFFF">
 <!-- END border_top -->
 
 <!-- BEGIN group -->
-		<H1>{group_name}</H1>
+		<h1>{group_name}</h1>
 		{group_contents}
-		<P>
+		<p>
 <!-- END group -->
 
 <!-- BEGIN object -->
-		<H2><A href="{PHP_SELF}?object={object_id}">{object_name}</A></H2>
+		<h2><a href="{PHP_SELF}?object={object_id}">{object_name}</a></h2>
 		{object_contents}
 <!-- END object -->
 
 <!-- BEGIN abstract -->
-	<B>Abstract:</B> {abstract}<BR>
+	<b>Abstract:</b> {abstract}<br />
 <!-- END abstract -->
 
 <!-- BEGIN generic -->
-	<B>{generic_name}:</B> {generic_value}<BR>
+	<b>{generic_name}:</b> {generic_value}<br />
 <!-- END generic -->
 
 <!-- BEGIN generic_para -->
-	<P><B>{generic_name}:</B> {generic_value}</P>
+	<p><b>{generic_name}:</b> {generic_value}</p>
 <!-- END generic_para -->
 
 <!-- BEGIN generic_pre -->
-		<B>{generic_name}:</B>
-		<PRE>
+		<b>{generic_name}:</b>
+		<pre>
 		{generic_value}
-		</PRE>
+		</pre>
 <!-- END generic_pre -->
 
 <!-- BEGIN params -->
-	<TABLE border="1">
-		<TR>
-			<TD>Name</TD>
-			<TD>Details</TD>
-		</TR>
+	<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Details</td>
+		</tr>
 		{param_entry}
-	</TABLE>
+	</table>
 <!-- END params -->
 
 <!-- BEGIN param_entry -->
@@ -64,6 +64,6 @@
 <!-- END param_entry -->
 
 <!-- BEGIN border_bottom -->
-	</BODY>
-</HTML>
+	</body>
+</html>
 <!-- END border_bottom -->

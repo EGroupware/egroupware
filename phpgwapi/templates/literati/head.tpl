@@ -1,17 +1,17 @@
-<!-- BEGIN head --><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
-<META NAME="description" CONTENT="eGroupWare">
-<META NAME="keywords" CONTENT="eGroupWare">
+<!-- BEGIN head --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+<meta name="AUTHOR" content="eGroupWare http://www.egroupware.org" />
+<meta name="description" content="eGroupWare" />
+<meta NAME="keywords" content="eGroupWare" />
 <meta name="robots" content="none">
-<LINK REL="ICON" href="{img_icon}" type="image/x-ico">
-<LINK REL="SHORTCUT ICON" href="{img_shortcut}">
-<LINK href="{theme_css}" type=text/css rel=StyleSheet>
+<link rel="ICON" href="{img_icon}" type="image/x-ico" />
+<link rel="SHORTCUT ICON" href="{img_shortcut}" />
+<link href="{theme_css}" type="text/css" rel="stylesheet" />
 {css}
-<TITLE>{website_title}</TITLE>
+<title>{website_title}</title>
 {java_script}
-</HEAD>
-<BODY bgColor="#e5e5e5" {body_tags}>
+</head>
+<body bgcolor="#e5e5e5" {body_tags}>
 <!-- END head -->
