@@ -11,15 +11,15 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$egw_info = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'disable_Template_class' => True,
 		'currentapp' => 'notifywindow'
 	);
 	include('header.inc.php');
-	$charSet = $GLOBALS['phpgw']->translation->charset();
+	$charSet = $GLOBALS['egw']->translation->charset();
 ?>
 <html>
 <head>
@@ -29,11 +29,11 @@
 ?>
 	<title>Notify Window</title>
 </head>
-<body bgcolor="<?php echo $GLOBALS['phpgw_info']['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
+<body bgcolor="<?php echo $GLOBALS['egw_info']['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
 <table>
-	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>"><?php print lang('Check Now'); ?></a></td></tr>
+	<tr><td><a href="<?php echo $GLOBALS['egw']->link('/notify.php'); ?>"><?php print lang('Check Now'); ?></a></td></tr>
 <?php
-	$GLOBALS['phpgw']->hooks->process('notifywindow');
+	$GLOBALS['egw']->hooks->process('notifywindow');
 ?>
 </table>
 </body>

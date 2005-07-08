@@ -21,7 +21,7 @@
 	$login  = 'anonymous';
 	$passwd = 'anonymous';
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'login' => True,
 		'currentapp' => 'login',
@@ -35,6 +35,6 @@
 	$login  = 'anonymous'; 
 	$passwd = 'anonymous'; 
 
-	$sessionid = $GLOBALS['phpgw']->session->create($login,$passwd,'text');
-	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php'));
+	$sessionid = $GLOBALS['egw']->session->create($login,$passwd,'text');
+	$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php'));
 ?>

@@ -12,8 +12,8 @@
 
 	/* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$egw_info = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'currentapp' => 'login',
 		'noheader'   => True,
@@ -23,7 +23,7 @@
 
 	$GLOBALS['server'] = CreateObject('phpgwapi.soap_server');
 	/* _debug_array($GLOBALS['server']);exit; */
-	/* include(PHPGW_API_INC . '/soaplib.soapinterop.php'); */
+	/* include(EGW_API_INC . '/soaplib.soapinterop.php'); */
 
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
@@ -36,11 +36,11 @@
 		$auth = base64_decode(trim($tmp));
 		list($sessionid,$kp3) = split(':',$auth);
 
-		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
+		if($GLOBALS['egw']->session->verify($sessionid,$kp3))
 		{
 			$GLOBALS['server']->authed = True;
 		}
-		elseif($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
+		elseif($GLOBALS['egw']->session->verify_server($sessionid,$kp3))
 		{
 			$GLOBALS['server']->authed = True;
 		}

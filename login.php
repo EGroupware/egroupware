@@ -89,8 +89,8 @@
 	if(isset($_SERVER['PHP_AUTH_USER']) && $_GET['cd'] == '1')
 	{
 		Header('HTTP/1.0 401 Unauthorized');
-		Header('WWW-Authenticate: Basic realm="phpGroupWare"'); 
-		echo 'You have to re-authentificate yourself'; 
+		Header('WWW-Authenticate: Basic realm="phpGroupWare"');
+		echo 'You have to re-authentificate yourself';
 		exit;
 	}
 */
@@ -134,7 +134,7 @@
 				return '&nbsp;';
 		}
 	}
-	
+
 	/* Program starts here */
 
 	if($GLOBALS['egw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
@@ -152,7 +152,7 @@
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
 			$eGW_remember = unserialize(stripslashes($_COOKIE['eGW_remember']));
-			
+
 			if($eGW_remember['login'] && $eGW_remember['passwd'] && $eGW_remember['passwd_type'])
 			{
 				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember['login'];
@@ -161,7 +161,6 @@
 				$submit = True;
 			}
 		}
-		
 	}
 
 	# Apache + mod_ssl style SSL certificate authentication
@@ -203,20 +202,20 @@
 		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
+			$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
 		#{
 		#	$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=4'));
 		#}
-		
+
 		// don't get login data again when $submit is true
 		if($submit == false)
 		{
 			$login = $_POST['login'];
 		}
-		
+
 		//conference - for strings like vinicius@thyamad.com@default , allows
 		//that user have a login that is his e-mail. (viniciuscb)
 		$login_parts = explode('@',$login);
@@ -245,7 +244,7 @@
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['phpgw']->session->phpgw_setcookie('eGW_remember');
+			$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
@@ -276,11 +275,11 @@
 					'login' => $login,
 					'passwd' => $passwd,
 					'passwd_type' => $passwd_type)),
-					$remember_time); 
-			} 
-			
+					$remember_time);
+			}
+
 			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
-			    $_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+				$_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
 				$GLOBALS['egw']->preferences->add('common','lang',$_POST['lang'],'session');
 			}
@@ -293,7 +292,7 @@
 			if (!$forward)
 			{
 				$extra_vars['cd'] = 'yes';
-				if($GLOBALS['egw']->hooks->single('hasUpdates', 'home')) 
+				if($GLOBALS['egw']->hooks->single('hasUpdates', 'home'))
 				{
 					$extra_vars['hasupdates'] = 'yes';
 				}
@@ -388,8 +387,8 @@
 
 	if(!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
-		  /* trick to make domain section disapear */
-		  $tmpl->set_var('domain_selection','');
+		/* trick to make domain section disapear */
+		$tmpl->set_var('domain_selection','');
 	}
 
 	foreach($_GET as $name => $value)
@@ -409,46 +408,46 @@
 	* Check is the registration app is installed, activated  *
 	* And if the register link must be placed                *
 	\********************************************************/
-	
+
 	$cnf_reg =& CreateObject('phpgwapi.config','registration');
 	$cnf_reg->read_repository();
 	$config_reg = $cnf_reg->config_data;
 
 	if($config_reg[enable_registration]=='True')
 	{
-	   if ($config_reg[register_link]=='True')
-	   {
-		  $reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
-	   }
-	   if ($config_reg[lostpassword_link]=='True')
-	   {
-		  $lostpw_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostpw1">'.lang('Lost password').'</a><br/>';
-	   }
-	   if ($config_reg[lostid_link]=='True')
-	   {
-		  $lostid_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostid1">'.lang('Lost Login Id').'</a><br/>';
-	   }
+		if ($config_reg[register_link]=='True')
+		{
+			$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+		}
+		if ($config_reg[lostpassword_link]=='True')
+		{
+			$lostpw_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostpw1">'.lang('Lost password').'</a><br/>';
+		}
+		if ($config_reg[lostid_link]=='True')
+		{
+			$lostid_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostid1">'.lang('Lost Login Id').'</a><br/>';
+		}
 
-	   /* if at least one option of "registration" is activated display the registration section */
-	   if($config_reg[register_link]=='True' || $config_reg[lostpassword_link]=='True' || $config_reg[lostid_link]=='True')
-	   {
-		  $tmpl->set_var('register_link',$reg_link);
-		  $tmpl->set_var('lostpassword_link',$lostpw_link);
-		  $tmpl->set_var('lostid_link',$lostid_link) ;
-		  
-		  //$tmpl->set_var('registration_url',$GLOBALS['egw_info']['server']['webserver_url'] . '/registration/');
-	   }
-	   else
-	   {
-		  /* trick to make registration section disapear */
-		  $tmpl->set_block('login_form','registration');
-		  $tmpl->set_var('registration','');
-	   }
+		/* if at least one option of "registration" is activated display the registration section */
+		if($config_reg[register_link]=='True' || $config_reg[lostpassword_link]=='True' || $config_reg[lostid_link]=='True')
+		{
+			$tmpl->set_var('register_link',$reg_link);
+			$tmpl->set_var('lostpassword_link',$lostpw_link);
+			$tmpl->set_var('lostid_link',$lostid_link) ;
+
+			//$tmpl->set_var('registration_url',$GLOBALS['egw_info']['server']['webserver_url'] . '/registration/');
+		}
+		else
+		{
+			/* trick to make registration section disapear */
+			$tmpl->set_block('login_form','registration');
+			$tmpl->set_var('registration','');
+		}
 	}
 
 	// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 	header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
-	
+
 	$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
 	$tmpl->set_var('charset',$GLOBALS['egw']->translation->charset());
@@ -508,7 +507,7 @@
 	* Check if authentification via cookies is allowed       *
 	* and place a time selectbox, how long cookie is valid   *
 	\********************************************************/
-	
+
 	if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 	{
 		$html =& CreateObject('phpgwapi.html'); /* Why the hell was nobody useing this here before??? */
@@ -525,11 +524,11 @@
 	}
 	else
 	{
-		  /* trick to make remember_me section disapear */
-		  $tmpl->set_block('login_form','remember_me_selection');
-		  $tmpl->set_var('remember_me_selection','');
+		/* trick to make remember_me section disapear */
+		$tmpl->set_block('login_form','remember_me_selection');
+		$tmpl->set_var('remember_me_selection','');
 	}
-	
+
 	$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
 	$tmpl->pfp('loginout','login_form');

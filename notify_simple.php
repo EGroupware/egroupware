@@ -11,8 +11,8 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$egw_info = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'disable_Template_class' => True,
@@ -21,6 +21,6 @@
 	include('./header.inc.php');
 
 	echo '<html><body>';
-	$GLOBALS['phpgw']->hooks->process('notifywindow_simple',array('email'));
+	$GLOBALS['egw']->hooks->process('notifywindow_simple',array('email'));
 	echo '</body></html>';
 ?>

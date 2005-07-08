@@ -15,8 +15,8 @@
 	/*list($usec, $sec) = explode(" ", microtime());
 	$GLOBALS['concisus']['script_start'] = ((float)$usec + (float)$sec);*/
 
-	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info'] = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp'            => 'login',
 		'noheader'              => True,
 		'disable_Template_class' => True
@@ -24,12 +24,12 @@
 	include('header.inc.php');
 
 	//viniciuscb: a secure way to know if we're in a xmlrpc call...
-	$GLOBALS['phpgw_info']['server']['xmlrpc'] = true;
+	$GLOBALS['egw_info']['server']['xmlrpc'] = true;
 
 	$server = CreateObject('phpgwapi.xmlrpc_server');
-	
+
 	/* uncomment here if you want to show all of the testing functions for compatibility */
-	//include(PHPGW_API_INC . '/xmlrpc.interop.php');
+	//include(EGW_API_INC . '/xmlrpc.interop.php');
 
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
@@ -49,11 +49,11 @@
 		$sessionid = get_var('sessionid',array('COOKIE','GET'));
 		$kp3 = get_var('kp3',array('COOKIE','GET'));
 	}
-	$server->authed = $GLOBALS['phpgw']->session->verify($sessionid,$kp3);
+	$server->authed = $GLOBALS['egw']->session->verify($sessionid,$kp3);
 
 	if (!$server->authed and isset($_SERVER['PHP_AUTH_USER']) and isset($_SERVER['PHP_AUTH_PW']))
 	{
-		$authed = $GLOBALS['phpgw']->session->create($login.'@'.$domain, $_SERVER['PHP_AUTH_PW'], 'text');
+		$authed = $GLOBALS['egw']->session->create($login.'@'.$domain, $_SERVER['PHP_AUTH_PW'], 'text');
 
 		if ($authed)
 		{

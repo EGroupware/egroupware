@@ -27,7 +27,7 @@
 	{
 		$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
 	}
-	
+
 	define('EGW_SERVER_ROOT','{SERVER_ROOT}');
 	define('EGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
 	define('PHPGW_SERVER_ROOT','{SERVER_ROOT}');
