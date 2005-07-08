@@ -18,6 +18,8 @@ class resources_hooks
 {
 	function admin_prefs_sidebox($args)
 	{
+		$this->acl =& CreateObject('resources.bo_acl');
+		
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
 		
@@ -30,13 +32,17 @@ class resources_hooks
 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
 // 					'icon' => 
 			);
-			$file[] = array(
+			
+			if($this->acl->get_cats(EGW_ACL_ADD))
+			{
+				$file[] = array(
 					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.edit')).
 						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\'); 
 						return false;">'.lang('add resource').'</a>',
 					'no_lang' => true,
 					'link' => false
-			);
+				);
+			}
 // 			$file[] = array(
 // 					'text' => lang('planer'),
 // 					'no_lang' => true,
