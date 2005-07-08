@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.0.0.007
+%define version 1.0.0.008
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -506,10 +506,13 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
-* Sat Apr 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.007-1
+* Fri Jul 08 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.008-1
+- Fixed xmlrpc security problems
+
+* Sat Apr 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.007-2
 - Fixed security problems reported by James from GulfTech Security Research
 - new croation translations, significant enhancements in other languages
-- many Bugfixes, see http://egroupware.org/changelog-1.0/
+- many Bugfixes, see http://egroupware.org/cvschangelog-1.0/
 
 * Sat Nov 06 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.006-1
 - Fix a security problem in JiNN application

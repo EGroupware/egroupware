@@ -72,7 +72,7 @@ echo "---------------------------------------"              				>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
 
-if [ ! -d egroupware ] ; then
+if [ ! -d egroupware/phpgwapi ] ; then
 
 	[ $CVSACCOUT = 'pserver:anonymous'] && cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
 
