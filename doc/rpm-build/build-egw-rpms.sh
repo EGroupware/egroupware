@@ -18,7 +18,7 @@
 # to
 # rpmbuild -bb egroupware-rh.spec                    >> $LOGFILE 2>&1
 #  
-# in the sript
+# in the script
 # How to create GPG keys to sign your rpm's you will found in a seperate
 # Document
 #
@@ -45,8 +45,9 @@ PACKAGING=`grep "%define packaging" $SPECFILE | cut -f3 -d' '`
 PACKAGINGFEDORA=`grep "Release:" $SPECFILEFEDORA | cut -f2 -d' '`
                                                                                                                              
 HOMEBUILDDIR=`whoami`
-CVSACCOUNT=ext:ralfbecker
-#CVSACCOUNT=pserver:anonymous
+#which account to use for checkouts and updates, after that the tree is made anonymous anyway, to allow users to update
+#CVSACCOUNT=ext:ralfbecker
+CVSACCOUNT=pserver:anonymous
 ANONCVSDIR=/tmp/build_root/egroupware
 ANONCVSDIRFEDORA=/tmp/build_root/fedora
 ANONCVSDIRFEDORABUILD=/tmp/build_root/fedora/egroupware
@@ -71,23 +72,30 @@ echo "Start Build Process of - $PACKAGENAME $VERSION"                           
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
+	
+[ "$CVSACCOUNT" = 'pserver:anonymous' ] && cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
 
-if [ ! -d egroupware/phpgwapi ] ; then
-
-	[ $CVSACCOUT = 'pserver:anonymous'] && cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
-
-	cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -r $BRANCH egroupware
+if [ ! -d egroupware/phpgwapi ]	# new checkout
+then
+	cvs -z9 -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -Pr $BRANCH egroupware
 	cd egroupware
-	cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -r $BRANCH all
-
+	cvs -z9 -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -Pr $BRANCH all
+else										# updating an existing checkout in the build-root
+	[ "$CVSACCOUNT" != 'pserver:anonymous' ] && {	# changing back to the developer account
+		echo ":$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware" > Root.developer
+		find . -name CVS -exec cp Root.developer {}/Root \;
+		rm Root.developer
+	}
+	cd egroupware						# need to step into the eGW dir (no CVS dir otherwise)
+	cvs -z9 update -r $BRANCH -dP                                    		>> $LOGFILE 2>&1
 fi
+
 cd $ANONCVSDIR
 
-cvs -z9 update -r $BRANCH -dP                                     		>> $LOGFILE 2>&1
-
-echo ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware" > Root.anonymous	
-find . -type d -name CVS -exec cp Root.anonymous {}/Root \;				>> $LOGFILE 2>&1
+echo ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware" > Root.anonymous
+find . -name CVS -exec cp Root.anonymous {}/Root \;				>> $LOGFILE 2>&1
 rm Root.anonymous
+
 echo "End from CVS update"						     		>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 find . -type d -exec chmod 775 {} \;
