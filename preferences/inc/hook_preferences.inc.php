@@ -12,12 +12,11 @@
 
 	/* $Id$ */
 
-	if ($GLOBALS['phpgw']->acl->check('changepassword',1))
+	if ($GLOBALS['egw']->acl->check('changepassword',1))
 	{
-		$file['Change your Password'] = $GLOBALS['phpgw']->link('/preferences/changepassword.php');
+		$file['Change your Password'] = $GLOBALS['egw']->link('/preferences/changepassword.php');
 	}
-	$file['change your settings'] = $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=preferences');
+	$file['change your settings'] = $GLOBALS['egw']->link('/preferences/preferences.php','appname=preferences');
 
 	display_section('preferences',$file);
-
 ?>

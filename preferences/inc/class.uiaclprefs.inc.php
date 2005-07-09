@@ -20,11 +20,11 @@
 
 		function uiaclprefs()
 		{
-			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-			
-			if (!is_object($GLOBALS['phpgw']->html))
+			$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+
+			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
 			}
 		}
 
@@ -33,7 +33,7 @@
 			$acl_app	= get_var('acl_app',array('POST','GET'));
 			$start		= get_var('start',array('POST','GET'),0);
 			$query		= get_var('query',array('POST','GET'));
-			$owner		= get_var('owner',array('POST','GET'),$GLOBALS['phpgw_info']['user']['account_id']);
+			$owner		= get_var('owner',array('POST','GET'),$GLOBALS['egw_info']['user']['account_id']);
 
 			if (!$acl_app)
 			{
@@ -42,42 +42,42 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->translation->add_app($acl_app);
+				$GLOBALS['egw']->translation->add_app($acl_app);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['currentapp'] = $acl_app;
+			$GLOBALS['egw_info']['flags']['currentapp'] = $acl_app;
 
 			if ($acl_app_not_passed)
 			{
-				if(is_object($GLOBALS['phpgw']->log))
+				if(is_object($GLOBALS['egw']->log))
 				{
-					$GLOBALS['phpgw']->log->message(array(
+					$GLOBALS['egw']->log->message(array(
 						'text' => 'F-BadmenuactionVariable, failed to pass acl_app.',
 						'line' => __LINE__,
 						'file' => __FILE__
 					));
-					$GLOBALS['phpgw']->log->commit();
+					$GLOBALS['egw']->log->commit();
 				}
 			}
 
-			if (($GLOBALS['phpgw_info']['server']['deny_user_grants_access'] || $owner != $GLOBALS['phpgw_info']['user']['account_id'])
-				&& !isset($GLOBALS['phpgw_info']['user']['apps']['admin']) || $acl_app_not_passed)
+			if (($GLOBALS['egw_info']['server']['deny_user_grants_access'] || $owner != $GLOBALS['egw_info']['user']['account_id'])
+				&& !isset($GLOBALS['egw_info']['user']['apps']['admin']) || $acl_app_not_passed)
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 				echo '<center><b>' . lang('Access not permitted') . '</b></center>';
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				$GLOBALS['egw']->common->phpgw_footer();
 				return;
 			}
 
-			$owner_name = $GLOBALS['phpgw']->accounts->id2name($owner);		// get owner name for title
-			if($no_privat_grants = $GLOBALS['phpgw']->accounts->get_type($owner) == 'g')
+			$owner_name = $GLOBALS['egw']->accounts->id2name($owner);		// get owner name for title
+			if($no_privat_grants = $GLOBALS['egw']->accounts->get_type($owner) == 'g')
 			{
 				$owner_name = lang('Group').' ('.$owner_name.')';
 			}
 			else	// admin setting acl-rights is handled as group-rights => no private grants !!
 			{
-				$no_privat_grants = $owner != $GLOBALS['phpgw_info']['user']['account_id'];
+				$no_privat_grants = $owner != $GLOBALS['egw_info']['user']['account_id'];
 			}
 			$this->acl = CreateObject('phpgwapi.acl',(int)$owner);
 			$this->acl->read_repository();
@@ -88,13 +88,13 @@
 				$to_remove = unserialize(urldecode($processed));
 				foreach($to_remove as $uid)
 				{
-					//echo "deleting acl-records for $uid=".$GLOBALS['phpgw']->accounts->id2name($uid)." and $acl_app<br>\n";
+					//echo "deleting acl-records for $uid=".$GLOBALS['egw']->accounts->id2name($uid)." and $acl_app<br>\n";
 					$this->acl->delete($acl_app,$uid);
 				}
 
 				/* Group records */
 				$totalacl = array();
-				$group_variable = $_POST['g_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
+				$group_variable = $_POST['g_'.$GLOBALS['egw_info']['flags']['currentapp']];
 
 				if (is_array($group_variable))
 				{
@@ -108,16 +108,16 @@
 						if($no_privat_grants)
 						{
 							/* Don't allow group-grants or admin to grant private */
-							$rights &= ~PHPGW_ACL_PRIVATE;
+							$rights &= ~EGW_ACL_PRIVATE;
 						}
-						//echo "adding acl-rights $rights for $group_id=".$GLOBALS['phpgw']->accounts->id2name($group_id)." and $acl_app<br>\n";
-						$this->acl->add($GLOBALS['phpgw_info']['flags']['currentapp'],$group_id,$rights);
+						//echo "adding acl-rights $rights for $group_id=".$GLOBALS['egw']->accounts->id2name($group_id)." and $acl_app<br>\n";
+						$this->acl->add($GLOBALS['egw_info']['flags']['currentapp'],$group_id,$rights);
 					}
 				}
 
 				/* User records */
 				$totalacl = array();
-				$user_variable = $_POST['u_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
+				$user_variable = $_POST['u_'.$GLOBALS['egw_info']['flags']['currentapp']];
 
 				if (is_array($user_variable))
 				{
@@ -131,19 +131,19 @@
 						if($no_privat_grants)
 						{
 							/* Don't allow group-grants or admin to grant private */
-							$rights &= ~ PHPGW_ACL_PRIVATE;
+							$rights &= ~ EGW_ACL_PRIVATE;
 						}
-						//echo "adding acl-rights $rights for $user_id=".$GLOBALS['phpgw']->accounts->id2name($user_id)." and $acl_app<br>\n";
-						$this->acl->add($GLOBALS['phpgw_info']['flags']['currentapp'],$user_id,$rights);
+						//echo "adding acl-rights $rights for $user_id=".$GLOBALS['egw']->accounts->id2name($user_id)." and $acl_app<br>\n";
+						$this->acl->add($GLOBALS['egw_info']['flags']['currentapp'],$user_id,$rights);
 					}
 				}
 				$this->acl->save_repository();
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$this->template = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($acl_app));
+			$this->template = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($acl_app));
 			$templates = Array (
 				'preferences' => 'preference_acl.tpl',
 				'row_colspan' => 'preference_colspan.tpl',
@@ -166,10 +166,10 @@
 			$var = Array(
 				'errors'      => '',
 				'title'       => '<br>',
-				'action_url'  => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=' . $acl_app),
-				'bg_color'    => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'action_url'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=' . $acl_app),
+				'bg_color'    => $GLOBALS['egw_info']['theme']['th_bg'],
 				'submit_lang' => lang('Save'),
-				'common_hidden_vars_form' => $GLOBALS['phpgw']->html->input_hidden($common_hidden_vars)
+				'common_hidden_vars_form' => $GLOBALS['egw']->html->input_hidden($common_hidden_vars)
 			);
 			$this->template->set_var($var);
 
@@ -185,16 +185,16 @@
 				}
 			}
 
-			$accounts = $GLOBALS['phpgw']->accounts->search(array(
+			$accounts = $GLOBALS['egw']->accounts->search(array(
 				'type'	=> 'both',
 				'start'	=> $start,
 				'query'	=> $query,
 				'order' => 'account_type,account_lid',
 				'sort'	=> 'ASC',
 			));
-			$totalentries = $GLOBALS['phpgw']->accounts->total;
-			
-			$memberships = (array) $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
+			$totalentries = $GLOBALS['egw']->accounts->total;
+
+			$memberships = (array) $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
 
 			$header_type = '';
 			$processed = Array();
@@ -209,7 +209,7 @@
 					$this->template->parse('row','row_colspan',True);
 					$header_type = $data['account_type'];
 				}
-				$tr_class = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color,true);
+				$tr_class = $GLOBALS['egw']->nextmatchs->alternate_row_color($tr_color,true);
 
 				if ($data['account_type'] == 'g')
 				{
@@ -217,7 +217,7 @@
 				}
 				else
 				{
-					$this->display_row($tr_class,'u_',$data['account_id'],$GLOBALS['phpgw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
+					$this->display_row($tr_class,'u_',$data['account_id'],$GLOBALS['egw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
 				}
 				$processed[] = $uid;
 			}
@@ -229,9 +229,9 @@
 			);
 
 			$var = Array(
-				'nml'          => $GLOBALS['phpgw']->nextmatchs->left('/index.php',$start,$totalentries,$extra_parms),
-				'nmr'          => $GLOBALS['phpgw']->nextmatchs->right('/index.php',$start,$totalentries,$extra_parms),
-				'search_value' => isset($query) && $query ? $GLOBALS['phpgw']->html->htmlspecialchars($query) : '',
+				'nml'          => $GLOBALS['egw']->nextmatchs->left('/index.php',$start,$totalentries,$extra_parms),
+				'nmr'          => $GLOBALS['egw']->nextmatchs->right('/index.php',$start,$totalentries,$extra_parms),
+				'search_value' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
 				'search'       => lang('search'),
 				'processed'    => urlencode(serialize($processed))
 			);
@@ -243,7 +243,7 @@
 
 		function check_acl($label,$id,$acl,$rights,$right,$disabled=False)
 		{
-			$this->template->set_var($acl,$label.$GLOBALS['phpgw_info']['flags']['currentapp'].'['.$id.'_'.$right.']');
+			$this->template->set_var($acl,$label.$GLOBALS['egw_info']['flags']['currentapp'].'['.$id.'_'.$right.']');
 			$rights_set = ($rights & $right) ? ' checked="1"' : '';
 			if ($disabled)
 			{
@@ -256,31 +256,31 @@
 		function display_row($tr_class,$label,$id,$name,$no_privat_grants,$memberships)
 		{
 			$this->template->set_var('row_class',$tr_class);
-			$this->template->set_var('row_color',$GLOBALS['phpgw_info']['theme'][$tr_class]);
+			$this->template->set_var('row_color',$GLOBALS['egw_info']['theme'][$tr_class]);
 			$this->template->set_var('user',$name);
-			$rights = $this->acl->get_rights($id,$GLOBALS['phpgw_info']['flags']['currentapp']);
-			$is_group = $GLOBALS['phpgw']->accounts->get_type($id) == 'g';
+			$rights = $this->acl->get_rights($id,$GLOBALS['egw_info']['flags']['currentapp']);
+			$is_group = $GLOBALS['egw']->accounts->get_type($id) == 'g';
 
 			foreach(array(
-				PHPGW_ACL_READ		=> 'read',
-				PHPGW_ACL_ADD		=> 'add',
-				PHPGW_ACL_EDIT		=> 'edit',
-				PHPGW_ACL_DELETE	=> 'delete',
-				PHPGW_ACL_PRIVATE	=> 'private',
-				PHPGW_ACL_CUSTOM_1	=> 'custom_1',
-				PHPGW_ACL_CUSTOM_2	=> 'custom_2',
-				PHPGW_ACL_CUSTOM_3	=> 'custom_3',
+				EGW_ACL_READ		=> 'read',
+				EGW_ACL_ADD		=> 'add',
+				EGW_ACL_EDIT		=> 'edit',
+				EGW_ACL_DELETE	=> 'delete',
+				EGW_ACL_PRIVATE	=> 'private',
+				EGW_ACL_CUSTOM_1	=> 'custom_1',
+				EGW_ACL_CUSTOM_2	=> 'custom_2',
+				EGW_ACL_CUSTOM_3	=> 'custom_3',
 			) as $right => $name)
 			{
 				$is_group_set = False;
 				if ($is_group)
 				{
-					$grantors = $this->acl->get_ids_for_location($id,$right,$GLOBALS['phpgw_info']['flags']['currentapp']);
+					$grantors = $this->acl->get_ids_for_location($id,$right,$GLOBALS['egw_info']['flags']['currentapp']);
 					if (is_array($grantors))
 					{
 						foreach($grantors as $grantor)
 						{
-							//echo $GLOBALS['phpgw']->accounts->id2name($id)."=$id: $name-grant from ".$GLOBALS['phpgw']->accounts->id2name($grantor)."=$grantor<br>\n";
+							//echo $GLOBALS['egw']->accounts->id2name($id)."=$id: $name-grant from ".$GLOBALS['egw']->accounts->id2name($grantor)."=$grantor<br>\n";
 							// check if the grant comes from a group, the owner is a member off, in that case he is NOT allowed to remove it
 							if(in_array($grantor,$memberships))
 							{
@@ -290,7 +290,7 @@
 						}
 					}
 				}
-				$this->check_acl($label,$id,$name,$rights,$right,$is_group_set || $no_privat_grants && $right == PHPGW_ACL_PRIVATE);
+				$this->check_acl($label,$id,$name,$rights,$right,$is_group_set || $no_privat_grants && $right == EGW_ACL_PRIVATE);
 			}
 			$this->template->parse('row','acl_row',True);
 		}

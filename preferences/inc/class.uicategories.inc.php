@@ -39,15 +39,15 @@
 
 			$this->bo			= CreateObject('preferences.bocategories',$cats_app);
 			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
-			$this->account		= $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->user			= $GLOBALS['phpgw_info']['user']['fullname'];
+			$this->account		= $GLOBALS['egw_info']['user']['account_id'];
+			$this->user			= $GLOBALS['egw_info']['user']['fullname'];
 
 			$this->start = $this->bo->start;
 			$this->query = $this->bo->query;
 			$this->sort  = $this->bo->sort;
 			$this->order = $this->bo->order;
 
-			$dir = dir(PHPGW_SERVER_ROOT.'/phpgwapi/images');
+			$dir = dir(EGW_SERVER_ROOT.'/phpgwapi/images');
 			while($file = $dir->read())
 			{
 				if (preg_match('/\\.(png|gif|jpe?g)$/i',$file))
@@ -57,7 +57,7 @@
 			}
 			$dir->close();
 			sort($this->icons);
-			$this->img_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/images/';
+			$this->img_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/';
 		}
 
 		function save_sessiondata($cats_app)
@@ -74,22 +74,22 @@
 
 		function set_langs()
 		{
-			$GLOBALS['phpgw']->template->set_var('lang_access',lang('Private'));
-			$GLOBALS['phpgw']->template->set_var('lang_save',lang('Save'));
-			$GLOBALS['phpgw']->template->set_var('user_name',$this->user);
-			$GLOBALS['phpgw']->template->set_var('lang_search',lang('Search'));
-			$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
-			$GLOBALS['phpgw']->template->set_var('lang_sub',lang('Add sub'));
-			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
-			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
-			$GLOBALS['phpgw']->template->set_var('lang_parent',lang('Parent category'));
-			$GLOBALS['phpgw']->template->set_var('lang_none',lang('None'));
-			$GLOBALS['phpgw']->template->set_var('lang_name',lang('Name'));
-			$GLOBALS['phpgw']->template->set_var('lang_descr',lang('Description'));
-			$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
-			$GLOBALS['phpgw']->template->set_var('lang_reset',lang('Clear Form'));
-			$GLOBALS['phpgw']->template->set_var('lang_color',lang('Color'));
-			$GLOBALS['phpgw']->template->set_var('lang_icon',lang('Icon'));
+			$GLOBALS['egw']->template->set_var('lang_access',lang('Private'));
+			$GLOBALS['egw']->template->set_var('lang_save',lang('Save'));
+			$GLOBALS['egw']->template->set_var('user_name',$this->user);
+			$GLOBALS['egw']->template->set_var('lang_search',lang('Search'));
+			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
+			$GLOBALS['egw']->template->set_var('lang_sub',lang('Add sub'));
+			$GLOBALS['egw']->template->set_var('lang_edit',lang('Edit'));
+			$GLOBALS['egw']->template->set_var('lang_delete',lang('Delete'));
+			$GLOBALS['egw']->template->set_var('lang_parent',lang('Parent category'));
+			$GLOBALS['egw']->template->set_var('lang_none',lang('None'));
+			$GLOBALS['egw']->template->set_var('lang_name',lang('Name'));
+			$GLOBALS['egw']->template->set_var('lang_descr',lang('Description'));
+			$GLOBALS['egw']->template->set_var('lang_add',lang('Add'));
+			$GLOBALS['egw']->template->set_var('lang_reset',lang('Clear Form'));
+			$GLOBALS['egw']->template->set_var('lang_color',lang('Color'));
+			$GLOBALS['egw']->template->set_var('lang_icon',lang('Icon'));
 		}
 
 		function cat_data($edata,$data)
@@ -125,22 +125,22 @@
 			{
 				$edata = array('icon');
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps'][$cats_app]['title'].
+			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$cats_app]['title'].
 				'&nbsp;'.lang('categories for').':&nbsp;'.$this->user;
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$GLOBALS['phpgw']->template->set_file(array(
+			$GLOBALS['egw']->template->set_file(array(
 				'cat_list_t'  => 'listcats.tpl',
 			));
-			$GLOBALS['phpgw']->template->set_block('cat_list_t','cat_list','list');
+			$GLOBALS['egw']->template->set_block('cat_list_t','cat_list','list');
 
 			$this->set_langs();
 
-			$GLOBALS['phpgw']->template->set_var('title_categories',lang('categories for'));
-			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
-			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
-			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/preferences/index.php'));
+			$GLOBALS['egw']->template->set_var('title_categories',lang('categories for'));
+			$GLOBALS['egw']->template->set_var('lang_app',lang($cats_app));
+			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php',$link_data));
+			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link('/preferences/index.php'));
 
 			if(!$this->start)
 			{
@@ -159,28 +159,28 @@
 
 			$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->cats->total_records,$link_data);
 			$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->cats->total_records,$link_data);
-			$GLOBALS['phpgw']->template->set_var('left',$left);
-			$GLOBALS['phpgw']->template->set_var('right',$right);
+			$GLOBALS['egw']->template->set_var('left',$left);
+			$GLOBALS['egw']->template->set_var('right',$right);
 
-			$GLOBALS['phpgw']->template->set_var('lang_showing',$this->nextmatchs->show_hits($this->bo->cats->total_records,$this->start));
+			$GLOBALS['egw']->template->set_var('lang_showing',$this->nextmatchs->show_hits($this->bo->cats->total_records,$this->start));
 
 // ------------------------------ end nextmatch ------------------------------------------
 
 //------------------- list header variable template-declarations ------------------------- 
 
-			$GLOBALS['phpgw']->template->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
-			$GLOBALS['phpgw']->template->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
+			$GLOBALS['egw']->template->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
+			$GLOBALS['egw']->template->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
 
 			if (is_array($edata))
 			{
 				for($i=0;$i<count($edata);$i++)
 				{
-					$GLOBALS['phpgw']->template->set_var('sort_data','<td class="th">' . lang($edata[$i]) . '</td>');
+					$GLOBALS['egw']->template->set_var('sort_data','<td class="th">' . lang($edata[$i]) . '</td>');
 				}
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_var('th_data','');
+				$GLOBALS['egw']->template->set_var('th_data','');
 			}
 
 // -------------------------- end header declaration --------------------------------------
@@ -191,15 +191,15 @@
 
 				if ($data['color'])
 				{
-					$GLOBALS['phpgw']->template->set_var('tr_color',$data['color']);
+					$GLOBALS['egw']->template->set_var('tr_color',$data['color']);
 					$gray = (hexdec(substr($data['color'],1,2))+hexdec(substr($data['color'],3,2))+hexdec(substr($data['color'],5,2)))/3;
 				}
 				else
 				{
-					$this->nextmatchs->template_alternate_row_color($GLOBALS['phpgw']->template);
+					$this->nextmatchs->template_alternate_row_color($GLOBALS['egw']->template);
 					$gray = 255;
 				}
-				$GLOBALS['phpgw']->template->set_var('color',$gray < 128 ? 'style="color: white;"' : '');
+				$GLOBALS['egw']->template->set_var('color',$gray < 128 ? 'style="color: white;"' : '');
 
 				if ($cat['app_name'] == 'phpgw')
 				{
@@ -207,7 +207,7 @@
 				}
 				elseif ($cat['owner'] == '-1')
 				{
-					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$cats_app]['title'] . '&gt;';
+					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['egw_info']['apps'][$cats_app]['title'] . '&gt;';
 				}
 				else
 				{
@@ -220,10 +220,10 @@
 				{
 					$space = '&nbsp;&nbsp;';
 					$spaceset = str_repeat($space,$level);
-					$name = $spaceset . $GLOBALS['phpgw']->strip_html($cat['name']) . $appendix;
+					$name = $spaceset . $GLOBALS['egw']->strip_html($cat['name']) . $appendix;
 				}
 
-				$descr = $GLOBALS['phpgw']->strip_html($cat['description']);
+				$descr = $GLOBALS['egw']->strip_html($cat['description']);
 				if (!$descr) { $descr = '&nbsp;'; }
 
 				if (is_array($edata))
@@ -232,26 +232,26 @@
 					{
 						$holder = '<td>&nbsp;</td>' . "\n";
 						$placeholder = str_repeat($holder,count($edata));
-						$GLOBALS['phpgw']->template->set_var('td_data',$placeholder);
+						$GLOBALS['egw']->template->set_var('td_data',$placeholder);
 					}
 					else
 					{
-						$GLOBALS['phpgw']->template->set_var('td_data',$this->cat_data($edata,$data));
+						$GLOBALS['egw']->template->set_var('td_data',$this->cat_data($edata,$data));
 					}
 				}
 
 				if ($level == 0)
 				{
-					$name = '<font color="FF0000"><b>' . $GLOBALS['phpgw']->strip_html($cat['name']) . '</b></font>' . $appendix;
+					$name = '<font color="FF0000"><b>' . $GLOBALS['egw']->strip_html($cat['name']) . '</b></font>' . $appendix;
 					$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
 				}
 
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'name'  => $name,
 					'descr' => $descr
 				));
 
-				$GLOBALS['phpgw']->template->set_var('app_url',$GLOBALS['phpgw']->link('/' . $cats_app . '/index.php','cat_id=' . $cat['id']));
+				$GLOBALS['egw']->template->set_var('app_url',$GLOBALS['egw']->link('/' . $cats_app . '/index.php','cat_id=' . $cat['id']));
 
 				if ($cats_level || ($level == 0))
 				{
@@ -260,44 +260,44 @@
 						$link_data['menuaction'] = 'preferences.uicategories.edit';
 						$link_data['cat_parent'] = $cat['id'];
 						unset($link_data['cat_id']);
-						$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
-						$GLOBALS['phpgw']->template->set_var('lang_sub_entry',lang('Add sub'));
+						$GLOBALS['egw']->template->set_var('add_sub',$GLOBALS['egw']->link('/index.php',$link_data));
+						$GLOBALS['egw']->template->set_var('lang_sub_entry',lang('Add sub'));
 					}
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('add_sub','');
-					$GLOBALS['phpgw']->template->set_var('lang_sub_entry','&nbsp;');
+					$GLOBALS['egw']->template->set_var('add_sub','');
+					$GLOBALS['egw']->template->set_var('lang_sub_entry','&nbsp;');
 				}
 
 				$link_data['cat_id'] = $cat['id'];
 				if ($cat['owner'] == $this->account && $cat['app_name'] != 'phpgw')
 				{
 					$link_data['menuaction'] = 'preferences.uicategories.edit';
-					$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$link_data));
-					$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
+					$GLOBALS['egw']->template->set_var('edit',$GLOBALS['egw']->link('/index.php',$link_data));
+					$GLOBALS['egw']->template->set_var('lang_edit_entry',lang('Edit'));
 
 					$link_data['menuaction'] = 'preferences.uicategories.delete';
-					$GLOBALS['phpgw']->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',$link_data));
-					$GLOBALS['phpgw']->template->set_var('lang_delete_entry',lang('Delete'));
+					$GLOBALS['egw']->template->set_var('delete',$GLOBALS['egw']->link('/index.php',$link_data));
+					$GLOBALS['egw']->template->set_var('lang_delete_entry',lang('Delete'));
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('edit','');
-					$GLOBALS['phpgw']->template->set_var('lang_edit_entry','&nbsp;');
+					$GLOBALS['egw']->template->set_var('edit','');
+					$GLOBALS['egw']->template->set_var('lang_edit_entry','&nbsp;');
 
-					$GLOBALS['phpgw']->template->set_var('delete','');
-					$GLOBALS['phpgw']->template->set_var('lang_delete_entry','&nbsp;');
+					$GLOBALS['egw']->template->set_var('delete','');
+					$GLOBALS['egw']->template->set_var('lang_delete_entry','&nbsp;');
 				}
-				$GLOBALS['phpgw']->template->fp('list','cat_list',True);
+				$GLOBALS['egw']->template->fp('list','cat_list',True);
 			}
 			$link_data['menuaction'] = 'preferences.uicategories.edit';
 			unset($link_data['cat_id']);
 			unset($link_data['cat_parent']);
-			$GLOBALS['phpgw']->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['egw']->template->set_var('add_action',$GLOBALS['egw']->link('/index.php',$link_data));
 			$this->save_sessiondata($cats_app);
 
-			$GLOBALS['phpgw']->template->pfp('out','cat_list_t',True);
+			$GLOBALS['egw']->template->pfp('out','cat_list_t',True);
 		}
 
 		function edit()
@@ -325,13 +325,13 @@
 			$cat_access			= $_POST['cat_access'];
 			$old_parent			= $_POST['old_parent'];
 
-			$GLOBALS['phpgw']->template->set_file(array('form' => 'category_form.tpl'));
-			$GLOBALS['phpgw']->template->set_block('form','data_row','row');
-			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
-			$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
+			$GLOBALS['egw']->template->set_file(array('form' => 'category_form.tpl'));
+			$GLOBALS['egw']->template->set_block('form','data_row','row');
+			$GLOBALS['egw']->template->set_block('form','add','addhandle');
+			$GLOBALS['egw']->template->set_block('form','edit','edithandle');
 
 			$this->set_langs();
-			$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['egw']->template->set_var('cancel_url',$GLOBALS['egw']->link('/index.php',$link_data));
 
 			if ($new_parent)
 			{
@@ -363,13 +363,13 @@
 				$error = $this->bo->check_values($values);
 				if (is_array($error))
 				{
-					$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
+					$GLOBALS['egw']->template->set_var('message',$GLOBALS['egw']->common->error_list($error));
 				}
 				else
 				{
 					$cat_id = $this->bo->save_cat($values);
 					return $this->index();
-					//$GLOBALS['phpgw']->template->set_var('message',lang('Category %1 has been updated !',$cat_name));
+					//$GLOBALS['egw']->template->set_var('message',lang('Category %1 has been updated !',$cat_name));
 				}
 			}
 
@@ -391,10 +391,10 @@
 			}
 
 			$link_data['menuaction'] = 'preferences.uicategories.edit';
-			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cat['name']));
-			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cat['description']));
+			$GLOBALS['egw']->template->set_var('cat_name',$GLOBALS['egw']->strip_html($cat['name']));
+			$GLOBALS['egw']->template->set_var('cat_description',$GLOBALS['egw']->strip_html($cat['description']));
 
 			$hidden_vars = '<input type="hidden" name="old_parent" value="' . $cat['parent'] . '">';
 
@@ -407,19 +407,19 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array(
+			$GLOBALS['egw']->template->set_var('category_list',$this->bo->cats->formated_list(array(
 				'type' => $type,'selected' => $cat['parent'],
 				'globals' => $global_cats, 'self' => $cat_id
 			)));
 
-			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
+			$GLOBALS['egw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
 				. ($cat['access'] == 'private' ? ' checked' : '') . '>');
 
-			if (!is_object($GLOBALS['phpgw']->html))
+			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
 			}
-			$GLOBALS['phpgw']->template->set_var('color',$GLOBALS['phpgw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
+			$GLOBALS['egw']->template->set_var('color',$GLOBALS['egw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
 			$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
 			foreach ($this->icons as $icon)
@@ -427,8 +427,8 @@
 				$options .= '<option value="'.$icon.'"'.($icon == $cat['data']['icon'] ? ' selected="1"':'').'>'.
 					ucfirst(preg_replace('/\\.(png|gif|jpe?g)$/i','',$icon))."</option>\n";
 			}
-			$GLOBALS['phpgw']->template->set_var('select_icon', '<select name="cat_data[icon]" onchange="document.images[\'icon\'].src=\''.$this->img_url.'\' + this.value;">'.$options."</select>\n");
-			$GLOBALS['phpgw']->template->set_var('icon','<img id="icon" src="'. $this->img_url.$cat['data']['icon'] .'">');
+			$GLOBALS['egw']->template->set_var('select_icon', '<select name="cat_data[icon]" onchange="document.images[\'icon\'].src=\''.$this->img_url.'\' + this.value;">'.$options."</select>\n");
+			$GLOBALS['egw']->template->set_var('icon','<img id="icon" src="'. $this->img_url.$cat['data']['icon'] .'">');
 
 			$already_done = array('icon','color');
 
@@ -436,10 +436,10 @@
 			{
 				foreach(explode(',',$extra) as $i => $name)
 				{
-					$GLOBALS['phpgw']->template->set_var('class',($i & 1) ? 'row_on' : 'row_off');
-					$GLOBALS['phpgw']->template->set_var('td_data','<input name="cat_data[' . htmlspecialchars($name) . ']" size="50" value="' . htmlspecialchars($cat['data'][$name]) . '">');
-					$GLOBALS['phpgw']->template->set_var('lang_data',lang($name));
-					$GLOBALS['phpgw']->template->fp('row','data_row',True);
+					$GLOBALS['egw']->template->set_var('class',($i & 1) ? 'row_on' : 'row_off');
+					$GLOBALS['egw']->template->set_var('td_data','<input name="cat_data[' . htmlspecialchars($name) . ']" size="50" value="' . htmlspecialchars($cat['data'][$name]) . '">');
+					$GLOBALS['egw']->template->set_var('lang_data',lang($name));
+					$GLOBALS['egw']->template->fp('row','data_row',True);
 					$already_done[] = $name;
 				}
 			}
@@ -454,28 +454,28 @@
 					}
 				}
 			}
-			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
+			$GLOBALS['egw']->template->set_var('hidden_vars',$hidden_vars);
 
 			if ($cat['owner'] == $this->account)
 			{
 				$link_data['menuaction'] = 'preferences.uicategories.delete';
-				$GLOBALS['phpgw']->template->set_var('delete','<form method="POST" action="' . $GLOBALS['phpgw']->link('/index.php',$link_data)
+				$GLOBALS['egw']->template->set_var('delete','<form method="POST" action="' . $GLOBALS['egw']->link('/index.php',$link_data)
 					. '"><input type="submit" value="' . lang('Delete') .'"></form>');
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_var('delete','&nbsp;');
+				$GLOBALS['egw']->template->set_var('delete','&nbsp;');
 			}
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang($cat_id ? 'Edit %1 category for' : 'Add %1 category for',
-				$GLOBALS['phpgw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw_info']['flags']['app_header'] = lang($cat_id ? 'Edit %1 category for' : 'Add %1 category for',
+				$GLOBALS['egw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$GLOBALS['phpgw']->template->set_var('edithandle','');
-			$GLOBALS['phpgw']->template->set_var('addhandle','');
-			$GLOBALS['phpgw']->template->pfp('out','form');
-			$GLOBALS['phpgw']->template->pfp('edithandle','edit');
+			$GLOBALS['egw']->template->set_var('edithandle','');
+			$GLOBALS['egw']->template->set_var('addhandle','');
+			$GLOBALS['egw']->template->pfp('out','form');
+			$GLOBALS['egw']->template->pfp('edithandle','edit');
 		}
 
 		function delete()
@@ -498,7 +498,7 @@
 
 			if (!$cat_id || $_POST['cancel'])
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
+				$GLOBALS['egw']->redirect_link('/index.php',$link_data);
 			}
 
 			if ($_POST['confirm'])
@@ -511,17 +511,17 @@
 				{
 					$this->bo->delete($cat_id,False);
 				}
-				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
+				$GLOBALS['egw']->redirect_link('/index.php',$link_data);
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_file(array('category_delete' => 'delete.tpl'));
+				$GLOBALS['egw']->template->set_file(array('category_delete' => 'delete.tpl'));
 
-				$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Delete Categories');
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$GLOBALS['egw_info']['flags']['app_header'] = lang('Delete Categories');
+				$GLOBALS['egw']->common->phpgw_header();
 				echo parse_navbar();
 
-				$GLOBALS['phpgw']->template->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
+				$GLOBALS['egw']->template->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));
 
 				$exists = $this->bo->exists(array
 				(
@@ -532,20 +532,20 @@
 
 				if ($exists)
 				{
-					$GLOBALS['phpgw']->template->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
-					$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="subs" value="True">');
+					$GLOBALS['egw']->template->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
+					$GLOBALS['egw']->template->set_var('subs','<input type="checkbox" name="subs" value="True">');
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('lang_subs','');
-					$GLOBALS['phpgw']->template->set_var('subs', '');
+					$GLOBALS['egw']->template->set_var('lang_subs','');
+					$GLOBALS['egw']->template->set_var('subs', '');
 				}
 
-				$GLOBALS['phpgw']->template->set_var('lang_no',lang('No'));
+				$GLOBALS['egw']->template->set_var('lang_no',lang('No'));
 				$link_data['menuaction'] = 'preferences.uicategories.delete';
-				$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
-				$GLOBALS['phpgw']->template->set_var('lang_yes',lang('Yes'));
-				$GLOBALS['phpgw']->template->pfp('out','category_delete');
+				$GLOBALS['egw']->template->set_var('action_url',$GLOBALS['egw']->link('/index.php',$link_data));
+				$GLOBALS['egw']->template->set_var('lang_yes',lang('Yes'));
+				$GLOBALS['egw']->template->pfp('out','category_delete');
 			}
 		}
 	}

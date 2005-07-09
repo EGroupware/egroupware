@@ -19,12 +19,12 @@
 		'enable_nextmatchs_class' => True
 	);
 	include('../header.inc.php');
-	
+
 	if ($_POST['cancel'])
 	{
 		$GLOBALS['egw']->redirect_link('/preferences/index.php');
 	}
-	
+
 	$user    = get_var('user',Array('POST'));
 	$forced  = get_var('forced',Array('POST'));
 	$default = get_var('default',Array('POST'));
@@ -37,7 +37,7 @@
 	$t->set_block('preferences','row','rowhandle');
 	$t->set_block('preferences','help_row','help_rowhandle');
 	$t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => ''));
-	
+
 	if ($_GET['appname'] != 'preferences')
 	{
 		$GLOBALS['egw']->translation->add_app('preferences');	// we need the prefs translations too
@@ -72,7 +72,7 @@
 	function create_password_box($label_name,$preference_name,$help='',$size = '',$max_size = '',$run_lang=True)
 	{
 		global $user,$forced,$default;
-		
+
 		$_appname = check_app();
 		if (is_forced_value($_appname,$preference_name))
 		{
@@ -80,7 +80,7 @@
 		}
 		create_input_box($label_name,$preference_name.'][pw',$help,'',$size,$max_size,'password',$run_lang);
 	}
-	
+
 	function create_input_box($label,$name,$help='',$default='',$size = '',$max_size = '',$type='',
 		$run_lang=True)
 	{
@@ -111,7 +111,7 @@
 		{
 			$default = $prefs[$name];
 		}
-		
+
 		if ($GLOBALS['type'] == 'user')
 		{
 			$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
@@ -129,7 +129,7 @@
 
 		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
-	
+
 	function process_help($help,$run_lang=True)
 	{
 		global $t,$show_help,$has_help;
@@ -137,11 +137,11 @@
 		if (!empty($help))
 		{
 			$has_help = True;
-			
+
 			if ($show_help)
 			{
 				$t->set_var('help_value',$run_lang ? lang($help) : $help);
-				
+
 				return True;
 			}
 		}
@@ -152,7 +152,7 @@
 	{
 		// checkboxes itself can't be use as they return nothing if uncheckt !!!
 		global $prefs;
-		
+
 		if ($GLOBALS['type'] != 'user')
 		{
 			$default = '';	// no defaults for default or forced prefs
@@ -161,7 +161,7 @@
 		{
 			$prefs[$name] = (int)(!!$prefs[$name]);	// to care for '' and 'True'
 		}
-		
+
 		return create_select_box($label,$name,array(
 			'0' => lang('No'),
 			'1' => lang('Yes')
@@ -215,7 +215,7 @@
 		{
 			return True;
 		}
-		
+
 		if (isset($prefs[$name]) || $GLOBALS['type'] != 'user')
 		{
 			$default = $prefs[$name];
@@ -245,12 +245,12 @@
 
 		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
-	
+
 	/**
 	 * creates text-area or inputfield with subtitution-variables
 	 *
 	 * @param $label untranslated label
-	 * @param $name name of the pref 
+	 * @param $name name of the pref
 	 * @param $rows, $cols of the textarea or input-box ($rows==1)
 	 * @param $help untranslated help-text
 	 * @param $default default-value
@@ -293,7 +293,7 @@
 	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
 		global $t,$prefs,$notifys;
-		
+
 		$charSet = $GLOBALS['egw']->translation->charset();
 
 		$_appname = check_app();
@@ -301,7 +301,7 @@
 		{
 			return True;
 		}
-		
+
 		if (isset($prefs[$name]) || $GLOBALS['type'] != 'user')
 		{
 			$default = $prefs[$name];
@@ -367,8 +367,8 @@
 		}
 		//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$_appname]); echo "</pre>\n";
 
-		// the following hook can be used to verify the prefs 
-		// if you return something else than False, it is treated as an error-msg and 
+		// the following hook can be used to verify the prefs
+		// if you return something else than False, it is treated as an error-msg and
 		// displayed to the user (the prefs get not saved !!!)
 		//
 		if ($error = $GLOBALS['egw']->hooks->single(array(
@@ -380,9 +380,9 @@
 		{
 			return $error;
 		}
-		
+
 		$GLOBALS['egw']->preferences->save_repository(True,$GLOBALS['type']);
-		
+
 		return False;
 	}
 
@@ -408,7 +408,7 @@
 			return False;
 		}
 	}
-	
+
 	function show_list($header = '&nbsp;')
 	{
 		global $t,$list_shown;
@@ -423,7 +423,7 @@
 	$session_data = $GLOBALS['egw']->session->appsession('session_data','preferences');
 
 	$prefix = get_var('prefix',array('GET'),$session_data['appname'] == $_GET['appname'] ? $session_data['prefix'] : '');
-	
+
 	if (is_admin())
 	{
 		/* This is where we will keep track of our postion. */
@@ -440,7 +440,7 @@
 	{
 		$GLOBALS['type'] = 'user';
 	}
-	$show_help = "$session_data[show_help]" != '' && $session_data['appname'] == $_GET['appname'] ? 
+	$show_help = "$session_data[show_help]" != '' && $session_data['appname'] == $_GET['appname'] ?
 		$session_data['show_help'] : (int)$GLOBALS['egw_info']['user']['preferences']['common']['show_help'];
 
 	if ($toggle_help = get_var('toggle_help','POST'))
@@ -471,7 +471,7 @@
 		{
 			$GLOBALS['egw']->redirect_link('/preferences/index.php');
 		}
-		
+
 		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
 		{
 			$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
@@ -497,10 +497,10 @@
 
 	switch ($GLOBALS['type'])	// set up some globals to be used by the hooks
 	{
-		case 'forced':  
-			$prefs = &$GLOBALS['egw']->preferences->forced[check_app()]; 
+		case 'forced':
+			$prefs = &$GLOBALS['egw']->preferences->forced[check_app()];
 			break;
-		case 'default': 
+		case 'default':
 			$prefs = &$GLOBALS['egw']->preferences->default[check_app()];
 			break;
 		default:
@@ -516,13 +516,13 @@
 			}
 	}
 	//echo "prefs=<pre>"; print_r($prefs); echo "</pre>\n";
-	
+
 	$notifys = array();
 	if (!$GLOBALS['egw']->hooks->single('settings',$_GET['appname']))
 	{
 		$t->set_block('preferences','form','formhandle');	// skip the form
 		$t->set_var('formhandle','');
-		
+
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
 			$GLOBALS['egw_info']['navbar'][$_GET['appname']]['title'],EGW_SERVER_ROOT . SEP
 			. $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
@@ -584,8 +584,8 @@
 		show_list();
 	}
 	$t->pfp('phpgw_body','preferences');
-	
+
 	//echo '<pre style="text-align: left;">'; print_r($GLOBALS['egw']->preferences->data); echo "</pre>\n";
-	
+
 	$GLOBALS['egw']->common->egw_footer();
 ?>

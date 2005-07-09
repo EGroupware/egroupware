@@ -11,13 +11,13 @@
 
 	/* $Id$ */
 
-	$templates = $GLOBALS['phpgw']->common->list_templates();
+	$templates = $GLOBALS['egw']->common->list_templates();
 	while (list($var,$value) = each($templates))
 	{
 		$_templates[$var] = $templates[$var]['title'];
 	}
 
-	$themes = $GLOBALS['phpgw']->common->list_themes();
+	$themes = $GLOBALS['egw']->common->list_themes();
 	while (list(,$value) = each($themes))
 	{
 		$_themes[$value] = $value;
@@ -38,9 +38,9 @@
 	create_select_box('Show navigation bar as','navbar_format',$navbar_format,
 		'You can show the applications as icons only, icons with app-name or both.');
 
-	$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
+	$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 	$format = ($format ? $format : 'Y/m/d') . ', ';
-	if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12')
+	if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
 	{
 		$format .= 'h:i a';
 	}
@@ -84,8 +84,8 @@
 	$sbox = createobject('phpgwapi.sbox');
 	create_select_box('Country','country',$sbox->country_array,
 		'In which country are you. This is used to set certain defaults for you.');
-	
-	$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
+
+	$langs = $GLOBALS['egw']->translation->get_installed_langs();
 	create_select_box('Language','lang',$langs,
 		'Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.');
 
@@ -96,12 +96,12 @@
 			'Should the number of active sessions be displayed for you all the time.');
 	}
 
-	reset($GLOBALS['phpgw_info']['user']['apps']);
-	while (list($app) = each($GLOBALS['phpgw_info']['user']['apps']))
+	reset($GLOBALS['egw_info']['user']['apps']);
+	while (list($app) = each($GLOBALS['egw_info']['user']['apps']))
 	{
-		if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $app)
+		if ($GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $app)
 		{
-			$user_apps[$app] = $GLOBALS['phpgw_info']['apps'][$app]['title'] ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app);
+			$user_apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'] ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps,
@@ -109,7 +109,7 @@
 
 	create_input_box('Currency','currency',
 		'Which currency symbol or name should be used in eGroupWare.');
-		
+
 	$account_sels = array(
 		'selectbox' => lang('Selectbox'),
 		'primary_group' => lang('Selectbox with primary group and search'),

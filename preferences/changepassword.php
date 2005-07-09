@@ -12,43 +12,42 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'preferences'
 	);
-
 	include('../header.inc.php');
 
 	$n_passwd   = $_POST['n_passwd'];
 	$n_passwd_2 = $_POST['n_passwd_2'];
 	$o_passwd_2 = $_POST['o_passwd_2'];
 
-	if(!$GLOBALS['phpgw']->acl->check('changepassword', 1) || $_POST['cancel'])
+	if(!$GLOBALS['egw']->acl->check('changepassword', 1) || $_POST['cancel'])
 	{
-		$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		$GLOBALS['egw']->redirect_link('/preferences/index.php');
+		$GLOBALS['egw']->common->phpgw_exit();
 	}
 
-	$GLOBALS['phpgw']->template->set_file(array(
+	$GLOBALS['egw']->template->set_file(array(
 		'form' => 'changepassword.tpl'
 	));
-	$GLOBALS['phpgw']->template->set_var('lang_enter_password',lang('Enter your new password'));
-	$GLOBALS['phpgw']->template->set_var('lang_reenter_password',lang('Re-enter your password'));
-	$GLOBALS['phpgw']->template->set_var('lang_enter_old_password',lang('Enter your old password'));
-	$GLOBALS['phpgw']->template->set_var('lang_change',lang('Change'));
-	$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
-	$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/preferences/changepassword.php'));
+	$GLOBALS['egw']->template->set_var('lang_enter_password',lang('Enter your new password'));
+	$GLOBALS['egw']->template->set_var('lang_reenter_password',lang('Re-enter your password'));
+	$GLOBALS['egw']->template->set_var('lang_enter_old_password',lang('Enter your old password'));
+	$GLOBALS['egw']->template->set_var('lang_change',lang('Change'));
+	$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
+	$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/preferences/changepassword.php'));
 
-	if ($GLOBALS['phpgw_info']['server']['auth_type'] != 'ldap')
+	if ($GLOBALS['egw_info']['server']['auth_type'] != 'ldap')
 	{
-		$GLOBALS['phpgw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
+		$GLOBALS['egw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
 			. 'need to be done manually.'));
 	}
 
 	if ($_POST['change'])
 	{
-		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
+		$o_passwd = $GLOBALS['egw_info']['user']['passwd'];
 		
 		if ($o_passwd != $o_passwd_2)
 		{
@@ -67,45 +66,45 @@
 
 		if(is_array($errors))
 		{
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
-			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
-			$GLOBALS['phpgw']->template->pfp('out','form');
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
+			$GLOBALS['egw']->template->set_var('messages',$GLOBALS['egw']->common->error_list($errors));
+			$GLOBALS['egw']->template->pfp('out','form');
+			$GLOBALS['egw']->common->phpgw_exit(True);
 		}
 
-		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
+		$passwd_changed = $GLOBALS['egw']->auth->change_password($o_passwd, $n_passwd);
 		if(!$passwd_changed)
 		{
 			$errors[] = lang('Failed to change password.  Please contact your administrator.');
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
-			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
-			$GLOBALS['phpgw']->template->pfp('out','form');
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
+			$GLOBALS['egw']->template->set_var('messages',$GLOBALS['egw']->common->error_list($errors));
+			$GLOBALS['egw']->template->pfp('out','form');
+			$GLOBALS['egw']->common->phpgw_exit(True);
 		}
 		else
 		{
-			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',base64_encode($n_passwd));
-			$GLOBALS['phpgw_info']['user']['passwd'] = $n_passwd;
-			$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
+			$GLOBALS['egw']->session->appsession('password','phpgwapi',base64_encode($n_passwd));
+			$GLOBALS['egw_info']['user']['passwd'] = $n_passwd;
+			$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 			$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
 			$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
 			
 			// called for every app now, not only for the ones enabled for the user
-			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'changepassword',
 			),False,True);
-			$GLOBALS['phpgw']->redirect_link('/preferences/index.php','cd=18');
+			$GLOBALS['egw']->redirect_link('/preferences/index.php','cd=18');
 		}
 	}
 	else
 	{
-		$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Change your password');
-		$GLOBALS['phpgw']->common->phpgw_header();
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Change your password');
+		$GLOBALS['egw']->common->phpgw_header();
 		echo parse_navbar();
 
-		$GLOBALS['phpgw']->template->pfp('out','form');
-		$GLOBALS['phpgw']->common->phpgw_footer();
+		$GLOBALS['egw']->template->pfp('out','form');
+		$GLOBALS['egw']->common->phpgw_footer();
 	}
 ?>

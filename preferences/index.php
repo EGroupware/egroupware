@@ -12,14 +12,14 @@
 
 	/* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$egw_info = array();
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp' => 'preferences',
 		'disable_Template_class' => True
 	);
 	include('../header.inc.php');
 
-	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$pref_tpl = CreateObject('phpgwapi.Template',EGW_APP_TPL);
 	$templates = Array(
 		'pref' => 'index.tpl'
 	);
@@ -32,16 +32,16 @@
 	$pref_tpl->set_block('pref','link_row');
 	$pref_tpl->set_block('pref','spacer_row');
 
-	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
+	if ($GLOBALS['egw']->acl->check('run',1,'admin'))
 	{
 		// This is where we will keep track of our position.
 		// Developers won't have to pass around a variable then
-		$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
+		$session_data = $GLOBALS['egw']->session->appsession('session_data','preferences');
 
 		if (! is_array($session_data))
 		{
 			$session_data = array('type' => 'user');
-			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
+			$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
 		}
 
 		if (! $GLOBALS['HTTP_GET_VARS']['type'])
@@ -52,20 +52,20 @@
 		{
 			$type = $GLOBALS['HTTP_GET_VARS']['type'];
 			$session_data = array('type' => $type);
-			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
+			$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
 		}
 
 		$tabs[] = array(
 			'label' => lang('Your preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=user')
+			'link'  => $GLOBALS['egw']->link('/preferences/index.php','type=user')
 		);
 		$tabs[] = array(
 			'label' => lang('Default preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=default')
+			'link'  => $GLOBALS['egw']->link('/preferences/index.php','type=default')
 		);
 		$tabs[] = array(
 			'label' => lang('Forced preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=forced')
+			'link'  => $GLOBALS['egw']->link('/preferences/index.php','type=forced')
 		);
 
 		switch($type)
@@ -74,7 +74,7 @@
 			case 'default': $selected = 1; break;
 			case 'forced':  $selected = 2; break;
 		}
-		$pref_tpl->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
+		$pref_tpl->set_var('tabs',$GLOBALS['egw']->common->create_tabs($tabs,$selected));
 	}
 
 	// This func called by the includes to dump a row header
@@ -83,7 +83,7 @@
 		global $pref_tpl;
 
 		$pref_tpl->set_var('a_name',$appname);
-		$pref_tpl->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$appname]['title']);
+		$pref_tpl->set_var('app_name',$GLOBALS['egw_info']['apps'][$appname]['title']);
 		$pref_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
@@ -101,7 +101,7 @@
 
 		$pref_tpl->set_var('pref_link',$pref_link);
 
-		if (strtolower($pref_text) == 'grant access' && $GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
+		if (strtolower($pref_text) == 'grant access' && $GLOBALS['egw_info']['server']['deny_user_grants_access'])
 		{
 			return False;
 		}
@@ -126,7 +126,7 @@
 		{
 			$file = $file2;
 		}
-		section_start($appname,$GLOBALS['phpgw']->common->image($appname,Array('navbar',$appname)));
+		section_start($appname,$GLOBALS['egw']->common->image($appname,Array('navbar',$appname)));
 
 		while(list($text,$url) = each($file))
 		{
@@ -135,7 +135,7 @@
 		section_end();
 	}
 
-	$GLOBALS['phpgw']->hooks->process('preferences',array('preferences'));
+	$GLOBALS['egw']->hooks->process('preferences',array('preferences'));
 	$pref_tpl->pfp('out','list');
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->phpgw_footer();
 ?>
