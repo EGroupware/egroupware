@@ -462,4 +462,47 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '1.0.1.009';
+	function phpgwapi_upgrade1_0_1_009()
+	{
+		if (@file_exists(EGW_SERVER_ROOT . '/home/setup/setup.inc.php'))
+		{
+			// automatic install of the new home app
+			include(EGW_SERVER_ROOT . '/home/setup/setup.inc.php');
+			$home_version = $setup_info['home']['version'];
+			
+			$GLOBALS['phpgw_setup']->db->insert('phpgw_applications',array(
+				'app_enabled' => $setup_info['home']['enable'],
+				'app_order'   => $setup_info['home']['app_order'],
+				'app_version' => $setup_info['home']['version'],
+				'app_tables'  => '',
+			),array(
+				'app_name' => 'home',
+			),__LINE__,__FILE__);
+			
+			// give all users and groups with preferences rights, rights for the home app.
+			$GLOBALS['phpgw_setup']->db->select('phpgw_acl','acl_account',array(
+				'acl_appname'  => 'preferences',
+				'acl_location' => 'run',
+				'acl_rights'   => 1,
+			),__LINE__,__FILE__);
+			$accounts_with_preference_rights = array();
+			while (($row = $GLOBALS['phpgw_setup']->db->row(true)))
+			{
+				$accounts_with_preference_rights[] = $row['acl_account'];
+			}
+			foreach($accounts_with_preference_rights as $account)
+			{
+				$GLOBALS['phpgw_setup']->db->insert('phpgw_acl',array(
+					'acl_rights'   => 1,
+				),array(
+					'acl_appname'  => 'home',
+					'acl_location' => 'run',
+					'acl_account'  => $account,
+				),__LINE__,__FILE__);
+			}	
+		}
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.010';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
