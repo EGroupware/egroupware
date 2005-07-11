@@ -798,17 +798,17 @@
 
 			if ($file)
 			{
-				printf("<br><b>File:</b> %s",$file);
+				printf("<br /><b>File:</b> %s",$file);
 			}
 			if ($line)
 			{
-				printf("<br><b>Line:</b> %s",$line);
+				printf("<br /><b>Line:</b> %s",$line);
 			}
-			printf("<br><b>Function:</b> %s\n",function_backtrace(2));
+			printf("<br /><b>Function:</b> %s</p>\n",function_backtrace(2));
 
 			if ($this->Halt_On_Error != "report")
 			{
-				echo "<p><b>Session halted.</b>";
+				echo "<p><b>Session halted.</b></p>";
 				if (is_object($GLOBALS['egw']->common))
 				{
 					$GLOBALS['egw']->common->phpgw_exit(True);

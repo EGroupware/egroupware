@@ -1,7 +1,7 @@
 <!-- begin db_backup.tpl -->
 <p align="center"><font color="red">{error_msg}</font></p>
 
-<form method="POST" action="{self}" enctype="multipart/form-data">
+<form method="post" action="{self}" enctype="multipart/form-data">
 <table border="0" align="center" width="98%" cellpadding="5">
 <!-- BEGIN setup_header -->
 	<tr bgcolor="#486591">

@@ -181,12 +181,12 @@
 			$GLOBALS['setup_tpl']->pparse('out','T_alert_msg');
 		}
 
-		function make_frm_btn_simple($pre_frm_blurb='',$frm_method='POST',$frm_action='',$input_type='submit',$input_value='',$post_frm_blurb='')
+		function make_frm_btn_simple($pre_frm_blurb='',$frm_method='post',$frm_action='',$input_type='submit',$input_value='',$post_frm_blurb='')
 		{
 			/* a simple form has simple components */
 			$simple_form = $pre_frm_blurb  ."\n"
 				. '<form method="' . $frm_method . '" action="' . $frm_action  . '">' . "\n"
-				. '<input type="'  . $input_type . '" value="'  . $input_value . '">' . "\n"
+				. '<input type="'  . $input_type . '" value="'  . $input_value . '" />' . "\n"
 				. '</form>' . "\n"
 				. $post_frm_blurb . "\n";
 			return $simple_form;
@@ -226,7 +226,7 @@
 				{
 					foreach($GLOBALS['egw_domain'] as $domain => $data)
 					{
-						$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['egw_info']['setup']['LastDomain'] ? ' SELECTED' : '').">$domain</option>\n";
+						$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['egw_info']['setup']['LastDomain'] ? ' selected="selected"' : '').">$domain</option>\n";
 					}
 					$GLOBALS['setup_tpl']->set_var('domains',$domains);
 

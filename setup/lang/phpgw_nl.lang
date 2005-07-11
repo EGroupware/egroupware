@@ -6,7 +6,7 @@
 00 (disable)	setup	nl	00 (deactiveer / aanbevolen)
 13 (ntp)	setup	nl	13 (ntp)
 80 (http)	setup	nl	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	nl	<b>Dit maakt 1 beheerdersaccount en 3 demo accounts</b><br>De gebruikersnamen/wachtwoorden zijn: demo/guest, demo2/guest and demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	nl	<b>Dit maakt 1 beheerdersaccount en 3 demo accounts</b><br />De gebruikersnamen/wachtwoorden zijn: demo/guest, demo2/guest and demo3/guest.
 actions	setup	nl	Acties
 add a domain	setup	nl	Een domein toevoegen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
@@ -60,11 +60,11 @@ you appear to have oracle support enabled	setup	nl	Oracle ondersteuning lijkt te
 you appear to have oracle v8 (oci) support enabled	setup	nl	Oracle V8 (OCI) ondersteuning lijkt te zijn geactiveerd.
 you appear to have postgres-db support enabled	setup	nl	Postgres-DB ondersteuning lijkt te zijn geactiveerd.
 you appear to have xml support enabled	setup	nl	XML ondersteuning lijkt te zijn geactiveerd.
-you are ready for this stage, but this stage is not yet written.<br>	setup	nl	U bent klaar voor dit stadium, maar dit stadium is nog niet weggeschreven.</br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	nl	U bent klaar voor dit stadium, maar dit stadium is nog niet weggeschreven.</br>
 you didn't enter a config password for domain %1	setup	nl	U heeft geen configuratie wachtwoord ingevoerd voor domein %1.
 you didn't enter a header admin password	setup	nl	U heeft geen header beheerderwachtwoord ingevoerd.
-you do not have any languages installed. please install one now <br>	setup	nl	U heeft nog geen talen geïnstalleerd. Doe dit a.u.b. nu.<br/>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	nl	U heeft nog geen header.inc.php gemaakt! <br/> U kunt dit nu doen.
+you do not have any languages installed. please install one now <br />	setup	nl	U heeft nog geen talen geïnstalleerd. Doe dit a.u.b. nu.<br/>
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	nl	U heeft nog geen header.inc.php gemaakt! <br/> U kunt dit nu doen.
 you have successfully logged out	setup	nl	U bent correct uitgelogd.
 you must enter a username for the admin	setup	nl	U moet een gebruikersnaam geven voor de beheerder
 you need to add some domains to your header.inc.php.	setup	nl	U moet één of meerdere domeinen toevoegen aan uw header.inc.php.
@@ -78,7 +78,7 @@ your database is not working!	setup	nl	U database werkt niet!
 your database is working, but you dont have any applications installed	setup	nl	U database werkt, maar u heeft nog geen toepassingen geïnstalleerd.
 your header admin password is not set. please set it now!	setup	nl	Uw header-beheerderwachtwoord is niet ingesteld. Doe dit nu!
 your header.inc.php needs upgrading.	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken. <br>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken. <br />
 your tables are current	setup	nl	Uw tabellen zijn actueel
 your tables may be altered and you may lose data	setup	nl	U tabellen kunnen gewijzigd worden en u kunt gegevens verliezen
 your tables will be dropped and you will lose data	setup	nl	U tabellen worden verwijderd en alle gegevens gaan verloren !!

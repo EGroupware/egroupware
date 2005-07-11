@@ -101,7 +101,7 @@
 		{
 			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
 		}
-		$select = '<select name="ConfigLang"'.($onChange ? ' onChange="this.form.submit();"' : '').'>' . "\n";
+		$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
 		$languages = get_langs();
 		usort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
 		foreach($languages as $data)
@@ -112,7 +112,7 @@
 				$short = substr($data['lang'],0,2);
 				if ($short == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
 				{
-					$selected = ' selected';
+					$selected = ' selected="selected"';
 				}
 				$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
 			}

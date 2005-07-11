@@ -38,9 +38,9 @@
 				exit;
 			}
 		}
-		$passed_icon = '<img src="templates/default/images/completed.png" title="Passed" align="middle"> ';
-		$error_icon = '<img src="templates/default/images/incomplete.png" title="Error" align="middle"><span id="setup_error">';
-		$warning_icon = '<img src="templates/default/images/dep.png" title="Warning" align="middle"><span id="setup_warning"> ';
+		$passed_icon = '<img src="templates/default/images/completed.png" title="Passed" alt="Passed" align="middle" />';
+		$error_icon = '<img src="templates/default/images/incomplete.png" title="Error" alt="Error" align="middle" />';
+		$warning_icon = '<img src="templates/default/images/dep.png" title="Warning" alt="Warning" align="middle" />';
 	}
 	else
 	{
@@ -98,42 +98,42 @@
 		),
 		'mysql' => array(
 			'func' => 'extension_check',
-			'warning' => "<div id='setup_info'>" . lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL').'</div>'
+			'warning' => "<div class='setup_info'>" . lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL').'</div>'
 		),
 		'pgsql' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','pgsql','pgSQL').'</div>'
+			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','pgsql','pgSQL').'</div>'
 		),
 		'mssql' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL') . '</div>',
+			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL') . '</div>',
 			'win_only' => True
 		),
 		'odbc' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB, MsSQL or Oracle') . '</div>',
+			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB, MsSQL or Oracle') . '</div>',
 		),
 		'oci8' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','oci','Oracle') . '</div>',
+			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','oci','Oracle') . '</div>',
 		),
 		'mbstring' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>"
+			'warning' => '<div class="setup_info">' . lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>"
 		),
 		'mbstring.func_overload' => array(
 			'func' => 'php_ini_check',
 			'value' => 7,
-			'warning' => '<div id="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
+			'warning' => '<div class="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
 			'change' => extension_loaded('mbstring')  || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX) ? 'mbstring.func_overload = 7' : '',
 		),
 		'imap' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).') . '</div>'
+			'warning' => '<div class="setup_info">' . lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).') . '</div>'
 		),
 		'session' => array(
 			'func' => 'extension_check',
-			'warning' => '<div id="setup_info">' . lang('The session extension is needed to use php4 session (db-sessions work without).') . "</div>"
+			'warning' => '<div class="setup_info">' . lang('The session extension is needed to use php4 session (db-sessions work without).') . "</div>"
 		),	
 		'.' => array(
 			'func' => 'permission_check',
@@ -178,17 +178,17 @@
 			return True;	// check only under windows
 		}
 		// we check for the existens of 'dl', as multithreaded webservers dont have it !!!
-		$availible = extension_loaded($name) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
+		$available = extension_loaded($name) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
 
-		echo ($availible ? $passed_icon : $warning_icon).' '.lang('Checking extension %1 is loaded or loadable',$name).': '.($availible ? lang('True') : lang('False'))."</span><br>\n";
+		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.lang('Checking extension %1 is loaded or loadable',$name).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
 
-		if (!$availible)
+		if (!$available)
 		{
 			echo $args['warning'];
 		}
 		echo "\n";
 
-		return $availible;
+		return $available;
 	}
 
 	function verbosePerms( $in_Perms )
@@ -278,17 +278,17 @@
 		$checks = implode(', ',$checks);
 
 		$icon = $passed_icon;
-		$msg = lang('Checking file-permissions of %1 for %2: %3',$rel_name,$checks,$perms)."<br>\n";
+		$msg = lang('Checking file-permissions of %1 for %2: %3',$rel_name,$checks,$perms)."<br />\n";
 
 		if (!file_exists($name))
 		{
-			echo $error_icon . $msg . lang('%1 does not exist !!!',$rel_name)."</span><br/>\n";
+			echo '<div>'. $error_icon . '<span class="setup_error">' . $msg . lang('%1 does not exist !!!',$rel_name)."</span></div>\n";
 			return False;
 		}
 		$warning = False;
 		if (!$GLOBALS['run_by_webserver'] && (@$args['is_readable'] || @$args['is_writable']))
 		{
-			echo $warning_icon.' '.$msg. lang('Check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.')."</span><br/>\n";
+			echo $warning_icon.' '.$msg. lang('Check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.')."\n";
 			unset($args['is_readable']);
 			unset($args['is_writable']);
 			$warning = True;
@@ -296,22 +296,22 @@
 		$Ok = True;
 		if (isset($args['is_writable']) && is_writable($name) != $args['is_writable'])
 		{
-			echo "$error_icon $msg ".lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writable by the webserver'))."</span><br/>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writable by the webserver'))."</span></div>\n";
 			$Ok = False;
 		}
 		if (isset($args['is_readable']) && is_readable($name) != $args['is_readable'])
 		{
-			echo "$error_icon $msg ". lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."</span><br/>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."</span></div>\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
 		{
-			echo "$error_icon $msg" . lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'',lang('world readable'))."</span><br/>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'',lang('world readable'))."</span></div>\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
 		{
-			echo "$error_icon $msg " . lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'',lang('world writable'))."</span><br/>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'',lang('world writable'))."</span></div>\n";
 			$Ok = False;
 		}
 		if ($Ok && !$warning && $verbose)
@@ -322,7 +322,7 @@
 		{
 			if ($verbose)
 			{
-				echo "<div id='setup_info'>" . lang('This might take a while, please wait ...')."</div>\n";
+				echo "<div class='setup_info'>" . lang('This might take a while, please wait ...')."</div>\n";
 				flush();
 			}
 			@set_time_limit(0);
@@ -386,30 +386,30 @@
 				$result = $ini_value == $args['value'];
 				break;
 		}
-		$msg = ' '.lang('Checking php.ini').": $name $check $verbose_value: <div id='setup_info'>ini_get('$name')='$ini_value'$ini_value_verbose</div>\n";
+		$msg = ' '.lang('Checking php.ini').": $name $check $verbose_value: <span class='setup_info'>ini_get('$name')='$ini_value'$ini_value_verbose</span>";
 
 		if ($result)
 		{
-			echo $passed_icon.$msg;
+			echo "<div>".$passed_icon.$msg."</div>\n";
 		}
 		if (!$result)
 		{
 			if (isset($args['warning']))
 			{
-				echo $warning_icon.$msg.$args['warning']."<br/></span>\n";
+				echo "<div>".$warning_icon.' <span class="setup_warning">'.$msg.'</span><div class="setup_info">'.$args['warning']."</div></div>\n";
 			}
 			if (isset($args['error']))
 			{
-				echo $error_icon.$msg.$args['error']."</br></span>\n";
+				echo "<div>".$error_icon.' <span class="setup_error">'.$msg.'</span><div class="setup_info">'.$args['error']."</div></div>\n";
 			}
 			if (isset($args['safe_mode']) && $safe_mode || @$args['change'])
 			{
 				if (!isset($args['warning']) && !isset($args['error']))
 				{
-					echo $error_icon.$msg."<br/></span>";
+					echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.'</span></div>';
 				}
-				echo "<div id='setup_error'>\n";
-				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."<br>\n";
+				echo "<div class='setup_error'>\n";
+				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."<br />\n";
 				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."</div>\n";
 			}
 		}
@@ -431,7 +431,7 @@
 		global $passed_icon, $warning_icon;
 		$available = (function_exists('imagecopyresampled')  || function_exists('imagecopyresized'));
 		
-		echo ($available ? $passed_icon : $warning_icon).' '.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."<br/></span>\n";
+		echo "<div>".($available ? $passed_icon : $warning_icon).' <span'.($available?'':' class="setup_warning"').'>'.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."</span></div>\n";
 		
 		if (!$available)
 		{
@@ -461,8 +461,8 @@
 			{
 				echo '<p><form action="check_install.php?intro=1" method="Post">Please Select your language '.lang_select(True,'en')."</form></p>\n";
 			}
-			echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.');
-			echo '<br /><br />'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.');
+			echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.').'</p>';
+			echo '<p>'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.').'</p>';
 			echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
 			$setup_tpl->pparse('out','T_footer');
 			exit;
@@ -509,7 +509,7 @@
 			{
 				echo lang('Please fix the above errors (%1) and warnings(%2)',$error_icon,$warning_icon).'. ';
 			}
-			echo '<br><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
+			echo '<br /><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 		}
 		$setup_tpl->pparse('out','T_footer');
 		//echo "</body>\n</html>\n";

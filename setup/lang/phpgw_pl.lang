@@ -1,5 +1,5 @@
 (account deletion in sql only)	setup	pl	(dotyczy tylko kont w SQL)
-<br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	pl	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
+<br /><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	pl	<br /><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
 actions	setup	pl	Polecenia
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 admin first name	setup	pl	Imiê administratora
@@ -28,10 +28,10 @@ authentication / accounts	setup	pl	Uwierzytelnianie / Konta
 auto create account records for authenticated users	setup	pl	Automatycznie twórz zapisy kont dla uwierzytelnionych u¿ytkowników
 auto-created user accounts expire	setup	pl	Utworzone automatycznie konta u¿ytkowników wygas³y
 available version	setup	pl	Dostêpne wersje
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	pl	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	pl	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>
 because it depends upon	setup	pl	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	pl	because it is not a user application, or access is controlled via acl
-because it requires manual table installation, <br>or the table definition was incorrect	setup	pl	because it requires manual table installation, <br>or the table definition was incorrect
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pl	because it requires manual table installation, <br />or the table definition was incorrect
 because it was manually disabled	setup	pl	because it was manually disabled
 because of a failed upgrade or install	setup	pl	because of a failed upgrade or install
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	pl	because of a failed upgrade, or the database is newer than the installed version of this app
@@ -50,7 +50,7 @@ create database	setup	pl	Tworzenie bazy danych
 create one now	setup	pl	Create one now
 creating tables	setup	pl	Tworzenie tabel
 current version	setup	pl	Aktualna wersja
-currently installed languages: %1 <br>	setup	pl	Zainstalowane wersje jêzykowe: %1 <br>
+currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje jêzykowe: %1 <br />
 db root password	setup	pl	Has³o root do bazy danych
 db root username	setup	pl	nazwa u¿ytkownika root bazy danych
 default file system space per user/group ?	setup	pl	Domy¶lny rozmiar plików na u¿ytkownika/grupê ?
@@ -66,11 +66,11 @@ domain	setup	pl	Ustawienia domeny
 dont touch my data	setup	pl	Nie dotykaj moich danych
 edit current configuration	setup	pl	Edytuj bie¿±c± konfiguracjê
 enter some random text for app session encryption	setup	pl	Wprowad¼ losowy tekst  dla zaszyfrowania sesji aplikacji
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	pl	Wprowad¼ losowy tekst  dla zaszyfrowania <br>sesji aplikacji (wymaga mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br>Na przyk³ad: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	pl	Podaj pe³n± ¶ie¿kê do plików u¿ytkowników i grup.<br>Na przyk³ad: /files, E:\FILES
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	Wprowad¼ losowy tekst  dla zaszyfrowania <br />sesji aplikacji (wymaga mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br />Na przyk³ad: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pe³n± ¶ie¿kê do plików u¿ytkowników i grup.<br />Na przyk³ad: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br>Na przyk³ad: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>Bez koñcz±cego ciacha (,,/'')</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br />Na przyk³ad: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>Bez koñcz±cego ciacha (,,/'')</b>
 enter the site password for peer servers	setup	pl	Wprowad¼ has³o serwisu dla serwerów równorzêdnych (peer servers)
 enter the site username for peer servers	setup	pl	Wprowad¼ nazwê u¿ytkownika serwisu dla serwerów równorzêdnych (peer servers)
 enter the title for your site	setup	pl	Podaj nazwê swojego portala (serwisu)
@@ -159,7 +159,7 @@ remove	setup	pl	Usuñ
 requires reinstall or manual repair	setup	pl	Wymaga reinstalacji lub rêcznej naprawy
 requires upgrade	setup	pl	Wymaga aktualizacji
 resolve	setup	pl	Rozwi±¿
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	pl	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pl	Select an app, enter a target version, then submit to process to that version.<br />If you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select the default applications to which your users will have access	setup	pl	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	pl	Wybierz z dostêpnych ¿±dane polecenie
 select to download file	setup	pl	Select to download file
@@ -193,13 +193,13 @@ target version	setup	pl	Wersja docelowa
 text entry	setup	pl	Wpisywanie tekstu
 the table definition was correct, and the tables were installed	setup	pl	Definicja tabel jest poprawna i tabele zosta³y zainstalowane
 the tables	setup	pl	tabele
-there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	pl	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
+there was a problem tring to connect to your ldap server. <br />please check your ldap server configuration	setup	pl	There was a problem tring to connect to your LDAP server. <br />please check your LDAP server configuration
 this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomo¿e Ci zainstalowaæ lub uaktualniæ wersje jêzykowe eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	pl	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	pl	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
-this stage is completed<br>	setup	pl	Etap zakoñczony<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	pl	Zostanie utworzone jedno konto administratora i trzy konta demonstracyne<br>Nazwy u¿ytkowników/has³a: demo/guest, demo2/guest i demo3/guest.<br><b>UWAGA! Wszystkie istniej±ce konta zostan± usuniête!!!</b><br>
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	pl	aby za³o¿yæ jedno konto administracyjne i trzy konta demo.<br><b>Istniej±ce konta zostan± usuniete!</b>
+this stage is completed<br />	setup	pl	Etap zakoñczony<br />
+this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!this will delete all existing accounts!!!</b><br />	setup	pl	Zostanie utworzone jedno konto administratora i trzy konta demonstracyne<br />Nazwy u¿ytkowników/has³a: demo/guest, demo2/guest i demo3/guest.<br /><b>UWAGA! Wszystkie istniej±ce konta zostan± usuniête!!!</b><br />
+to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	pl	aby za³o¿yæ jedno konto administracyjne i trzy konta demo.<br /><b>Istniej±ce konta zostan± usuniete!</b>
 top	setup	pl	U góry
 translations added	setup	pl	Dodano t³umaczenia
 translations removed	setup	pl	Usuniêto t³umaczenia
@@ -216,14 +216,14 @@ users choice	setup	pl	Wybór u¿ytkownika
 version mismatch	setup	pl	Niezgodne wersje
 we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br>when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja eGroupWare<br>gdy loguje siê administrator?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja eGroupWare<br />gdy loguje siê administrator?
 would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 yes	setup	pl	Tak
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version 4.1.0	setup	pl	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version 4.1.0	setup	pl	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version 4.1.0
 you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of eGroupWare
-you are ready for this stage, but this stage is not yet written.<br>	setup	pl	You are ready for this stage, but this stage is not yet written.<br>
-you do not have any languages installed. please install one now <br>	setup	pl	You do not have any languages installed. Please install one now <br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
+you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
 you must enter a username for the admin	setup	pl	Musisz podaæ nazwê administratora
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	You should either uninstall and then reinstall it, or attempt manual repairs
 your applications are current	setup	pl	Your applications are current

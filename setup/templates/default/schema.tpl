@@ -1,5 +1,5 @@
 <!-- BEGIN header -->
-<br>
+<br />
 <div align="center">
 <table border="0" width="70%" cellspacing="0" cellpadding="2">
   <tr>
@@ -10,7 +10,7 @@
 <!-- END header -->
 
 <!-- BEGIN app_header -->
-<form method="POST" action="{action_url}">
+<form method="post" action="{action_url}">
   <tr>
     <td colspan="4" bgcolor="#486591"><center><font color="#fefefe">{appdata}</font></center></td>
     <td colspan="1" bgcolor="#486591"><center><font color="#fefefe">{actions}</font></center></td>
@@ -25,7 +25,7 @@
 
 <!-- BEGIN apps -->
   <tr bgcolor="{bg_color}">
-    <td><a href="schematoy.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" border="0"></a></td>
+    <td><a href="schematoy.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" border="0" /></a></td>
     <td>{appinfo}&nbsp;</td>
     <td>{apptitle}&nbsp;</td>
     <td align="center"><select name="version[{appname}]">{select_version}</select></td>
@@ -72,8 +72,8 @@
 <table border="0" width="70%" cellspacing="0" cellpadding="2">
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" name="submit" value="{submit}">
-      <input type="submit" name="cancel" value="{cancel}">
+      <input type="submit" name="submit" value="{submit}" />
+      <input type="submit" name="cancel" value="{cancel}" />
     </td>
   </tr>
 </table>

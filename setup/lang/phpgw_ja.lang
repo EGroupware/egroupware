@@ -21,15 +21,15 @@ at your request, this script is going to attempt to upgrade your old application
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	古いテーブルを現在のフォーマットにアップグレードしました。
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ja	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ja	アプリケーションアンインストールで、テーブルとデータを削除しました
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br>正しいタイプを使う
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br />正しいタイプを使う
 authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
 auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
 available version	setup	ja	最新の<BR>バージョン
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	ja	<br>しかし、この処理が、あなたのデータを破壊してしまった場合に備えて、<u>データバックアップをお勧めします。</u>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ja	<br />しかし、この処理が、あなたのデータを破壊してしまった場合に備えて、<u>データバックアップをお勧めします。</u>
 because it depends upon	setup	ja	理由は次のとおりです
 because it is not a user application, or access is controlled via acl	setup	ja	ユーザのアプリケーションでないか、ACL によってアクセス制限しています。
-because it requires manual table installation, <br>or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br>テーブル定義が正しくありません。
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br />テーブル定義が正しくありません。
 because of a failed upgrade or install	setup	ja	追加もしくは更新に失敗しました。
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	ja	データベースのバージョンがこのアプリケーションの動作可能バージョンよりも新しいため、更新に失敗しました。
 because the enable flag for this app is set to 0, or is undefined	setup	ja	このアプリケーションが利用可能となっていません。
@@ -48,7 +48,7 @@ create	setup	ja	作成
 create database	setup	ja	データベースを作成しました
 created	setup	ja	作成
 creating tables	setup	ja	テーブルを作成しました。
-currently installed languages: %1 <br>	setup	ja	現在の言語: %1 <br>
+currently installed languages: %1 <br />	setup	ja	現在の言語: %1 <br />
 current version	setup	ja	現在の<BR>バージョン
 delete all my tables and data	setup	ja	すべてのテーブルとデータを削除します
 delete all old languages and install new ones	setup	ja	現在の言語をすべて削除して、選択した言語をインストールする
@@ -60,12 +60,12 @@ deregistered	setup	ja	登録解除しました
 details for admin account	setup	ja	管理者アカウントの詳細情報
 domain	setup	ja	ドメイン
 edit current configuration	setup	ja	環境設定
-enter some random text for app session <br>encryption (requires mcrypt)	setup	ja	アプリケーションセッション暗号化のための<br>任意テキスト入力(mcrypt 時必要)
+enter some random text for app session <br />encryption (requires mcrypt)	setup	ja	アプリケーションセッション暗号化のための<br />任意テキスト入力(mcrypt 時必要)
 enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
-enter the full path for temporary files.<br>Examples: /tmp, c:\temp	setup	ja	テンポラリファイル（フルパス）<br>例：/tmp や C:\TEMP など
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br>例：/files や E:\FILES など
+enter the full path for temporary files.<br />Examples: /tmp, c:\temp	setup	ja	テンポラリファイル（フルパス）<br />例：/tmp や C:\TEMP など
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br />例：/files や E:\FILES など
 enter the hostname of the machine on which this server is running	setup	ja	eGroupWare が動作するホスト名
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ja	eGroupWare の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	eGroupWare の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
 enter the site username for peer servers	setup	ja	同等サーバのユーザ名
 enter the site password for peer servers	setup	ja	同等サーバのパスワード
 enter the title for your site	setup	ja	タイトル名
@@ -98,7 +98,7 @@ is disabled	setup	ja	使用できません
 ldap account import/export	setup	ja	LDAP アカウント インポート/エクスポート
 ldap accounts configuration	setup	ja	LDAP アカウント設定
 ldap accounts context	setup	ja	LDAP アカウントコンテキスト
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	既定のホームディレクトリプレフィックス<br> &nbsp; &nbsp; (例：/home ならば /home/uername となります)
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	既定のホームディレクトリプレフィックス<br /> &nbsp; &nbsp; (例：/home ならば /home/uername となります)
 ldap default shell (e.g. /bin/bash)	setup	ja	既定のシェル &nbsp; (例：/bin/bashなど)
 ldap encryption type	setup	ja	LDAP 暗号化タイプ
 ldap export users	setup	ja	LDAP エクスポートユーザ
@@ -175,14 +175,14 @@ tables dropped	setup	ja	テーブルを削除しました
 tables installed, unless there are errors printed above	setup	ja	をインストールしました。エラー表示がなければ完了です。
 tables upgraded	setup	ja	テーブルを更新しました
 text entry	setup	ja	テキスト入力
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
+there was a problem tring to connect to your ldap server. <br />please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br />please check your LDAP server configuration
 the tables	setup	ja	the tables
 this program will help you upgrade or install different languages for eGroupWare	setup	ja	eGroupWare での、言語環境を設定します。
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ja	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	ja	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
-this stage is completed<br>	setup	ja	この段階は完了しました。<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	ja	１つの管理者アカウントと３つのデモアカウントをセットアップします。<br>デモアカウントのユーザ名とパスワードは demo/guest, demo2/guest, demo3/guest です。<br><b>現在のアカウントをすべて削除しますので注意してください。</b><br>
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	ja	と、１つの管理者アカウントと３つのデモアカウントをセットアップします。<br><b>現在のアカウントをすべて削除しますので注意してください。</b>
+this stage is completed<br />	setup	ja	この段階は完了しました。<br />
+this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br />	setup	ja	１つの管理者アカウントと３つのデモアカウントをセットアップします。<br />デモアカウントのユーザ名とパスワードは demo/guest, demo2/guest, demo3/guest です。<br /><b>現在のアカウントをすべて削除しますので注意してください。</b><br />
+to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	ja	と、１つの管理者アカウントと３つのデモアカウントをセットアップします。<br /><b>現在のアカウントをすべて削除しますので注意してください。</b>
 top	setup	ja	上部
 two weeks	setup	ja	２週間
 uninstall all applications	setup	ja	アプリケーションのアンインストール
@@ -195,15 +195,15 @@ use cookies to pass sessionid	setup	ja	cookieのセッションidを使用
 users choice	setup	ja	ユーザ選択
 version mismatch	setup	ja	Version Mismatch
 we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
-would you like egroupware to check for a new version<br>when admins login ?	setup	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like egroupware to check for a new version<br />when admins login ?	setup	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
 would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare のキャッシュにphpgw info 配列を利用する
 would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
 yes	setup	ja	はい
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	ja	PHPのバージョンが古いようです。<br>バージョンアップをお勧めします。<br>古いバージョンの PHP では、eGroupWare のすべての機能が正確に動作しません。<br><br>Ver 4.1.0 以降にバージョンアップしてください。
-You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version 4.1.0	setup	ja	PHPのバージョンが古いようです。<br />バージョンアップをお勧めします。<br />古いバージョンの PHP では、eGroupWare のすべての機能が正確に動作しません。<br /><br />Ver 4.1.0 以降にバージョンアップしてください。
+You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running version %1 of eGroupWare	setup	ja	現在、eGroupWare Ver. %1 が動作していると思われます。
-you are ready for this stage, but this stage is not yet written.<br>	setup	ja	You are ready for this stage, but this stage is not yet written.<br>
-you do not have any languages installed. please install one now <br>	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	ja	You are ready for this stage, but this stage is not yet written.<br />
+you do not have any languages installed. please install one now <br />	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br />
 you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。
 your applications are current	setup	ja	アプリケーションのインストールは完了しました。
 your database does not exist	setup	ja	データベースが存在しません。

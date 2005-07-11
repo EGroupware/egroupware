@@ -94,14 +94,14 @@
 				call_user_func($setting,$newsettings);
 				if($GLOBALS['config_error'])
 				{
-					$GLOBALS['error'] .= '<br>' . lang($GLOBALS['config_error']) . '&nbsp;';
+					$GLOBALS['error'] .= '<br />' . lang($GLOBALS['config_error']) . '&nbsp;';
 					$GLOBALS['config_error'] = '';
 					/* Bail out, stop writing config data */
 					break;
 				}
 				else
 				{
-					/* echo '<br>Updating: ' . $setting . '=' . $value; */
+					/* echo '<br />Updating: ' . $setting . '=' . $value; */
 					/* Don't erase passwords, since we also do not print them below */
 					if($value || (!stristr($setting,'passwd') && !stristr($setting,'password') && !stristr($setting,'root_pw')))
 					{
@@ -254,7 +254,7 @@
 		{
 			/* Please check the number and dial again :) */
 			$GLOBALS['egw_setup']->html->show_alert_msg('Error',
-				lang('There was a problem trying to connect to your LDAP server. <br>'
+				lang('There was a problem trying to connect to your LDAP server. <br />'
 					.'please check your LDAP server configuration') . '.');
 		}
 

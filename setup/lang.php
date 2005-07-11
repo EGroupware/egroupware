@@ -57,7 +57,7 @@
 	$tbl_width   = @$newinstall ? '60%' : '80%';
 	$td_colspan  = @$newinstall ? '1' : '2';
 	$td_align    = @$newinstall ? ' align="center"' : '';
-	$hidden_var1 = @$newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
+	$hidden_var1 = @$newinstall ? '<input type="hidden" name="newinstall" value="True" />' : '';
 
 	if (!@$newinstall && !isset($GLOBALS['egw_info']['setup']['installed_langs']))
 	{
@@ -72,7 +72,7 @@
 		$select_box_langs =
 			@$select_box_langs
 			.'<option value="' . $id . '"'
-			.(@$GLOBALS['egw_info']['setup']['installed_langs'][$id]?' SELECTED="1"':'').'>'
+			.(@$GLOBALS['egw_info']['setup']['installed_langs'][$id]?' selected="selected"':'').'>'
 			. $data['descr'] . '</option>'
 			."\n";
 	}
@@ -104,7 +104,7 @@
 		{
 			$_f_buffer = split("[/\\]", $badline['appfile']);
 			$str .= lang('Application: %1, File: %2, Line: "%3"','<b>'.$_f_buffer[count($_f_buffer)-3].'</b>',
-				'<b>'.$_f_buffer[count($_f_buffer)-1].'</b>',$badline['line'])."<br>\n";
+				'<b>'.$_f_buffer[count($_f_buffer)-1].'</b>',$badline['line'])."<br />\n";
 		}
 		$setup_tpl->set_var('V_alert_word', lang('Rejected lines'));
 		$setup_tpl->set_var('V_alert_msg', $str);

@@ -7,7 +7,7 @@
 13 (ntp)	setup	sv	13 (ntp)
 80 (http)	setup	sv	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sv	<b>teckentabell som skall användas</b> (använd utf-8 om du skall ha stöd för språk med olika teckentabeller)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sv	<b>Detta kommer att skapa ett (1) adminkonto och tre demokonton</b><br>Användarnamnen/lösenorden är demo/guest, demo2/guest samt demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sv	<b>Detta kommer att skapa ett (1) adminkonto och tre demokonton</b><br />Användarnamnen/lösenorden är demo/guest, demo2/guest samt demo3/guest.
 accounts existing	setup	sv	Existerande konton
 actions	setup	sv	Åtgärder
 add a domain	setup	sv	Lägg till domän
@@ -67,15 +67,15 @@ backup started, this might take a view minutes ...	setup	sv	Backup har påbörjats
 because an application it depends upon was upgraded	setup	sv	på grund av att en applikation som den var beroende av uppgraderats
 because it depends upon	setup	sv	eftersom den är beroende av
 because it is not a user application, or access is controlled via acl	setup	sv	eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
-because it requires manual table installation, <br>or the table definition was incorrect	setup	sv	eftersom den kräver manuell installation av tabeller, <br>eller att  tabelldefinitionen var inkorrekt
+because it requires manual table installation, <br />or the table definition was incorrect	setup	sv	eftersom den kräver manuell installation av tabeller, <br />eller att  tabelldefinitionen var inkorrekt
 because it was manually disabled	setup	sv	eftersom den stängts av  manuellt
 because of a failed upgrade or install	setup	sv	eftersom uppgradering eller installation misslyckats
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	sv	eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
 because the enable flag for this app is set to 0, or is undefined	setup	sv	eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
 bottom	setup	sv	botten
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	sv	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. <br> <strong>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	sv	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. <br /> <strong>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</strong>
 cancel	setup	sv	Avbryt
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	sv	Kan inte skapa header.inc.php-filen på grund av bristande behörighet.<br>Istället kan du %1 filen.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	sv	Kan inte skapa header.inc.php-filen på grund av bristande behörighet.<br />Istället kan du %1 filen.
 change system-charset	setup	sv	Ändra system-teckentabell
 charset	setup	sv	teckentabell
 charset to convert to	setup	sv	Teckentabell att konvertera till
@@ -120,11 +120,11 @@ creating tables	setup	sv	Skapar tabeller
 current system-charset	setup	sv	Nuvarande system-teckentabell
 current system-charset is %1, click %2here%3 to change it.	setup	sv	Nuvarande system-teckentabell är %1, klicka %2här%3 för att ändra
 current version	setup	sv	Aktuell version
-currently installed languages: %1 <br>	setup	sv	Installerade språk: %1 <br>
+currently installed languages: %1 <br />	setup	sv	Installerade språk: %1 <br />
 database successfully converted from '%1' to '%2'	setup	sv	Databas konverterad från '%1' till '%2'
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	sv	Datetime-port.<br>Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br>(Port: 13 / Host 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sv	Datetime-port.<br />Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br />(Port: 13 / Host 129.6.15.28)
 day	setup	sv	dag
-day of week<br>(0-6, 0=sunday)	setup	sv	veckodag<br>(0-6, 0=söndag)
+day of week<br />(0-6, 0=sunday)	setup	sv	veckodag<br />(0-6, 0=söndag)
 db backup and restore	setup	sv	DB backup och restore
 db host	setup	sv	DB host
 db name	setup	sv	DB namn
@@ -162,12 +162,12 @@ enable for extra debug-messages	setup	sv	visa extra debug-meddelanden
 enable ldap version 3	setup	sv	möjliggör LDAP version 3
 enable mcrypt	setup	sv	möjliggör MCrypt
 enter some random text for app session encryption	setup	sv	Skriv in lite slumpmässig text för kryptering av sessionsinformation
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	sv	Skriv in lite slumpmässig text för<br>kryptering av sessionsinformation (kräver MCrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	sv	Ange fullständig sökväg för temp-filer <br>T ex: /tmp, c:\temp
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler <br>T ex: /files, e:\files
-enter the full path to the backup directory.<br>if empty: files directory	setup	sv	Ange fullständig sökväg för backupkatalog <br>om tomt: samma som användarfiler
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	sv	Skriv in lite slumpmässig text för<br />kryptering av sessionsinformation (kräver MCrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sv	Ange fullständig sökväg för temp-filer <br />T ex: /tmp, c:\temp
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler <br />T ex: /files, e:\files
+enter the full path to the backup directory.<br />if empty: files directory	setup	sv	Ange fullständig sökväg för backupkatalog <br />om tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	sv	Ange hostnamn för maskinen som kör denna server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	sv	Ange eGroupWare:s URL.<br>T ex: http://www.doman.com/egroupware  eller  /egroupware<br><b>Ingen avslutande slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sv	Ange eGroupWare:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
 enter the site password for peer servers	setup	sv	Ange sitelösenord för peer-servers
 enter the site username for peer servers	setup	sv	Ange siteanvändarnamn för peer-servers
 enter the title for your site	setup	sv	Ange titel för din webbplats
@@ -358,7 +358,7 @@ save	setup	sv	Spara
 save this text as contents of your header.inc.php	setup	sv	Spara denna text som innehållet i din header.inc.php
 schedule	setup	sv	schema
 scheduled backups	setup	sv	schemalagda backuper
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	sv	Välj en applikation, ange målversion, tryck sedan verkställ för att processa den versionen<br> om du inte anger version kommer bara grudtabellerna att installeras för denna applikation <br> <blink>Detta kommer att ta bort applikationens alla tabeller först</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	sv	Välj en applikation, ange målversion, tryck sedan verkställ för att processa den versionen<br /> om du inte anger version kommer bara grudtabellerna att installeras för denna applikation <br /> <blink>Detta kommer att ta bort applikationens alla tabeller först</blink>
 select one...	setup	sv	välj en
 select the default applications to which your users will have access	setup	sv	Välj vilka applikationer användare skall ha access till default
 select the desired action(s) from the available choices	setup	sv	Välj återgärder från listan nedan
@@ -420,8 +420,8 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sv	mbstring.func_overload = 7 behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
 the table definition was correct, and the tables were installed	setup	sv	Tabelldefinitionen var korrekt och tabellerna installerades
 the tables	setup	sv	tabellerna
-there was a problem trying to connect to your ldap server. <br>	setup	sv	Det uppstod problem med att kontakta din LDAP-server. <br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	sv	Det uppstod problem med att kontakta din LDAP-server.<br>kontrollera din LDAP serverkonfiguration
+there was a problem trying to connect to your ldap server. <br />	setup	sv	Det uppstod problem med att kontakta din LDAP-server. <br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	sv	Det uppstod problem med att kontakta din LDAP-server.<br />kontrollera din LDAP serverkonfiguration
 this has to be outside the webservers document-root!!!	setup	sv	Måste ligga utanför webserverns dokumentrot!!!
 this might take a while, please wait ...	setup	sv	Detta kan ta ett tag, vänta...
 this program lets you backup your database, schedule a backup or restore it.	setup	sv	Detta program låter dig backa upp din databas, schemalägga en backup eller återställa en backup.
@@ -430,8 +430,8 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	sv	Denna sektion hjälper dig exportera användare och grupper från eGroupWares tabeller till ett LDAP-träd
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	sv	Denna sektion hjälper dig att importera användare och grupper från ditt LDAP-träd till eGroupWares tabeller
 this section will help you setup your ldap accounts for use with egroupware	setup	sv	Denna sektion hjälper dig ställa in dina LDAP-konton för användning i eGroupWare
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	sv	Detta bör vara ca 30 bytes i längd. <br>Not: Default är slumpmässigt genererat.
-this stage is completed<br>	setup	sv	Detta stadium klart
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sv	Detta bör vara ca 30 bytes i längd. <br />Not: Default är slumpmässigt genererat.
+this stage is completed<br />	setup	sv	Detta stadium klart
 to a version it does not know about	setup	sv	till en okänd version
 to setup 1 admin account and 3 demo accounts.	setup	sv	för att skapa ett adminkonto och tre demokonton
 top	setup	sv	överst
@@ -470,14 +470,14 @@ which database type do you want to use with egroupware?	setup	sv	Vilken typ av d
 world readable	setup	sv	Läsbar av alla (world readable)
 world writable	setup	sv	Skrivbar av alla (world writable)
 would you like egroupware to cache the phpgw info array ?	setup	sv	Vill du att eGroupWare skall cacha phpgw info array?
-would you like egroupware to check for a new version<br>when admins login ?	setup	sv	Vill du att eGroupWare skall kontrollera om det finns nya versioner<br>när admin loggar in?
+would you like egroupware to check for a new version<br />when admins login ?	setup	sv	Vill du att eGroupWare skall kontrollera om det finns nya versioner<br />när admin loggar in?
 would you like to show each application's upgrade status ?	setup	sv	Vill du visa varje applikations uppgraderingsstatus?
 writable by the webserver	setup	sv	Skrivbar av webservern
 write config	setup	sv	Skriv konfiguration
 year	setup	sv	år
 yes	setup	sv	Ja
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	sv	Du verkar köra en pre-beta version av eGroupWare.<br>Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br>Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br> och sedan uppgradera igen med denna version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	sv	Du verkar köra en äldre version av PHP.<br>Det är rekommenderat att du uppgraderar till en nyare version.<br>Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br><br>Du rekommenderas starkt att uppgradera till åtminstone version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sv	Du verkar köra en pre-beta version av eGroupWare.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sv	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
 you appear to be running version %1 of egroupware	setup	sv	Du verkar köra version %1 av eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	sv	Du verkar köra en äldre version av PHP än 4.1.0. eGroupWare kräver PHP 4.1.0 eller senare.
 you appear to be using php3. disabling php4 sessions support	setup	sv	Du verkar köra PHP3, stänger av PHP4:as sessionsstöd
@@ -489,13 +489,13 @@ you appear to have oracle support enabled	setup	sv	Du verkar ha stöd för Oracle 
 you appear to have oracle v8 (oci) support enabled	setup	sv	Du verkar ha stöd för Oracle V8 (OC1) aktiverat
 you appear to have postgresql support enabled	setup	sv	Du verkar ha stöd för PostgreSQL aktiverat
 you appear to have xml support enabled	setup	sv	Du verkar ha stöd för XML aktiverat
-you are ready for this stage, but this stage is not yet written.<br>	setup	sv	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	sv	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br />
 you didn't enter a config password for domain %1	setup	sv	Du angav inget config-lösenord  för domän %1
 you didn't enter a config username for domain %1	setup	sv	Du angav inget config-användarnamn  för domän %1
 you didn't enter a header admin password	setup	sv	Du angav inget header admin-lösenord
 you didn't enter a header admin username	setup	sv	Du angav inget header admin-användarnamn
-you do not have any languages installed. please install one now <br>	setup	sv	Du har för närvarande inga språk installerade. Var vänlig installera ett nu<br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	sv	Du har inte skapat din header.php.inc ännu!<br>Du kan skapa den nu.
+you do not have any languages installed. please install one now <br />	setup	sv	Du har för närvarande inga språk installerade. Var vänlig installera ett nu<br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	sv	Du har inte skapat din header.php.inc ännu!<br />Du kan skapa den nu.
 you have successfully logged out	setup	sv	Du har nu loggat ut.
 you must enter a username for the admin	setup	sv	Du måste ange ett lösenord för admin
 you need to add some domains to your header.inc.php.	setup	sv	Du måste lägga till några domäner till din header.inc.php
@@ -512,7 +512,7 @@ your database is working, but you dont have any applications installed	setup	sv	
 your files directory '%1' %2	setup	sv	din filkatalog '%1' %2
 your header admin password is not set. please set it now!	setup	sv	Ditt header admin-lösenord är inte satt. Skriv in det nu!
 your header.inc.php needs upgrading.	setup	sv	Din header.inc.php behöver uppgraderas.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	sv	Din header.inc.php behöver uppgraderas<br><blink><b class="msg">VARNING!</b></blink><br><b>TA BACKUP!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	sv	Din header.inc.php behöver uppgraderas<br /><blink><b class="msg">VARNING!</b></blink><br /><b>TA BACKUP!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	sv	Din PHP-installation saknar korrekt GD-stöd. Du behöver GD-library version 1.8 eller bättre om du vill använda Gantt-diagram i Projekt
 your tables are current	setup	sv	Dina tabeller är aktuella
 your tables will be dropped and you will lose data	setup	sv	Dina tabeller kommer att tas bort och du förlorar data!!

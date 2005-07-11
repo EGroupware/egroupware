@@ -7,7 +7,7 @@
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	de	<b>Zeichensatz</b> (benutzen sie utf-8 wenn sie planen Sprachen mit verschiedenen Zeichensätzen zu verwenden)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br />Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 add a domain	setup	de	Eine Domain hinzufügen
@@ -68,15 +68,15 @@ backup started, this might take a view minutes ...	setup	de	Datensicherung gesta
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
-because it requires manual table installation, <br>or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br>oder die Tabellen-definition war nicht korrekt
+because it requires manual table installation, <br />or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br />oder die Tabellen-definition war nicht korrekt
 because it was manually disabled	setup	de	weil es manuell ausgeschaltet wurde
 because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installation fehlgeschlug
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlschlug, oder die Datenbank ist neuer als die installierte Version dieser Applikation
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br /><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
 cancel	setup	de	Abbrechen
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br>Stattdessen können Sie die Datei %1.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1.
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	ISO-8859-1
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
@@ -121,11 +121,11 @@ creating tables	setup	de	Erstelle Tabellen
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
 current version	setup	de	Gegenwärtige Version
-currently installed languages: %1 <br>	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
+currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br />Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br />(Port 13/Host: 129.6.15.28)
 day	setup	de	Tag
-day of week<br>(0-6, 0=sunday)	setup	de	Wochentag<br>(0-6, 0=Sonntag)
+day of week<br />(0-6, 0=sunday)	setup	de	Wochentag<br />(0-6, 0=Sonntag)
 db backup and restore	setup	de	DB Datensicherung und Wiederherstellung
 db host	setup	de	Datenbank-Host
 db name	setup	de	Datenbank-Name
@@ -165,14 +165,14 @@ enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldu
 enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br>(benötigt mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path for users and group files.<br>examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path to the backup directory.<br>if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br>Wenn leer: Dateiverzeichnis
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
+enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
+enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br />Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
 enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
 enter the title for your site	setup	de	Titel der eGroupWare Installation
@@ -366,7 +366,7 @@ save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
 schedule	setup	de	planen
 scheduled backups	setup	de	Regelmäßige Datensicherungen
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br />Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br /><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden
 select the desired action(s) from the available choices	setup	de	Wählen Sie die verlangten Aktion(en) aus der verfügbaren Auswahl
@@ -390,7 +390,7 @@ selectbox	setup	de	Auswahlfeld
 server root	setup	de	Server-Root
 sessions type	setup	de	Session-Typ
 set	setup	de	gesetzt
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen &lt; 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
@@ -428,9 +428,9 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
-there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP-Server aufzubauen. <br>Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP-Servers.
-there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
+there was a problem tring to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP-Server aufzubauen. <br />Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP-Servers.
+there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss au&szlig;erhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
 this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
 this program lets you backup your database, schedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder sie zurücksichern.
@@ -439,8 +439,8 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim Exportieren von Benutzern/Gruppen aus eGroupWare's Account-Tabellen in Ihren LDAP-Baum behilflich sein
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim Importieren von Benutzern/Gruppen aus Ihrem LDAP-Baum in eGroupWare's Account-Tabellen behilflich sein
 this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird Ihnen helfen Ihre LDAP-Benutzer für eGroupWare vorzubereiten.
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br>Hinweis: Die Vorgabe wurde zufällig erzeugt.
-this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br />Hinweis: Die Vorgabe wurde zufällig erzeugt.
+this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen<br />
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
 to setup 1 admin account and 3 demo accounts.	setup	de	zum Anlegen von eines Administratorkontos und ggf. 3 Demo-Benutzerkonten.
 top	setup	de	oben
@@ -479,15 +479,15 @@ which database type do you want to use with egroupware?	setup	de	Welchen Datenba
 world readable	setup	de	lesbar von jedem (world readable)
 world writable	setup	de	schreibbar von jedem (world writeable)
 would you like egroupware to cache the phpgw info array ?	setup	de	Soll eGroupWare das phpgw info Array cachen ?
-would you like egroupware to check for a new version<br>when admins login ?	setup	de	Soll eGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	de	Soll eGroupWare nach neuen Versionen suchen,<br /> wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 writable by the webserver	setup	de	schreibar durch den Webserver
 write config	setup	de	Konfiguration schreiben
 year	setup	de	Jahr
 yes	setup	de	Ja
 yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br />Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br />Sie möchten vieleicht erst auf
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br />Es ist notwendig auf eine neue Version zu aktualisieren.<br />Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br /><br />Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. eGroupWare benötigt nun Version 4.1.0 oder höher.
 you appear to be using php3. disabling php4 sessions support	setup	de	Sie scheinen PHP3 zu verwenden. Schalte PHP4 Session Unterstützung ab.
@@ -499,13 +499,13 @@ you appear to have oracle support enabled	setup	de	Sie scheinen Oracle Unterstüt
 you appear to have oracle v8 (oci) support enabled	setup	de	Sie scheinen Oracle V8 (OCI) Unterstützung zu haben.
 you appear to have postgresql support enabled	setup	de	Sie scheinen PostgreSQL Unterstützung zu haben.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
-you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die Headerverwaltung eingegeben
 you didn't enter a header admin username	setup	de	Sie haben keinen Benutzernamen für die Headerverwaltung eingegeben
-you do not have any languages installed. please install one now <br>	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br>Sie können sie jetzt anlegen.
+you do not have any languages installed. please install one now <br />	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br />Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
@@ -522,7 +522,7 @@ your database is working, but you dont have any applications installed	setup	de	
 your files directory '%1' %2	setup	de	Ihr Dateiverzeichnis '%1' %2
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br /><blink><b class="msg">WARNUNG!</b></blink><br /><b>MACHEN SIE EINE SICHERUNG!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	de	Ihre PHP Installation hat nicht die benötigte GD Unterstützung. Die Anwendung Projekte benötigen die GD Bibliothek in der Version 1.8 um Gantcharts anzeigen zu können.
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden alle Daten verlieren!

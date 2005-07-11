@@ -1,5 +1,6 @@
 <!-- BEGIN header -->
-<script>
+<script type="text/javascript">
+<!--
 function check_all(which)
 {
   for (i=0; i<document.apps.elements.length; i++)
@@ -17,20 +18,21 @@ function check_all(which)
     } 
   }
 }
+// -->
 </script>
 
-<br>
+<br />
 <div align="center">
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
   <tr>
     <td align="center">{description}</td>
   </tr>
 </table>
+<form name="apps" method="post" action="{action_url}">
 <table width="90%" cellspacing="0" cellpadding="2">
 <!-- END header -->
 
 <!-- BEGIN app_header -->
-<form name="apps" method="POST" action="{action_url}">
   <tr class="th">
     <td colspan="5" align="center">{appdata}</td>
     <td colspan="4" align="center">{actions}</td>
@@ -48,21 +50,21 @@ function check_all(which)
   <tr>
     <td bgcolor="{bg_color}" colspan="5">&nbsp;</td>
     <td bgcolor="{bg_color}" align="center">
-     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}"></a>
+     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}" /></a>
     </td>
     <td bgcolor="{bg_color}" align="center">
-     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}"></a>
+     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}" /></a>
     </td>
     <td bgcolor="{bg_color}">&nbsp;</td>
     <td bgcolor="{bg_color}" align="center">
-      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}"></a>
+      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}" /></a>
     </td>
   </tr>
 <!-- END app_header -->
 
 <!-- BEGIN apps -->
   <tr bgcolor="{bg_color}">
-    <td><a href="applications.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" title="{instalt}" border="0"></a></td>
+    <td><a href="applications.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" title="{instalt}" border="0" /></a></td>
     <td>{appinfo}&nbsp;</td>
     <td>{apptitle}&nbsp;</td>
     <td>{currentver}&nbsp;</td>
@@ -113,22 +115,22 @@ function check_all(which)
   <tr>
     <td bgcolor="{bg_color}" colspan="5">{debug} {lang_debug}</td>
     <td bgcolor="{bg_color}" align="center">
-     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}"></a>
+     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}" /></a>
     </td>
     <td bgcolor="{bg_color}" align="center">
-     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}"></a>
+     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}" /></a>
     </td>
     <td bgcolor="{bg_color}">&nbsp;</td>
     <td bgcolor="{bg_color}" align="center">
-      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}"></a>
+      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}" /></a>
     </td>
   </tr>
 </table>
 <table border="0" width="70%" cellspacing="0" cellpadding="2">
   <tr>
     <td colspan="2" align="center">
-     <input type="submit" name="submit" value="{submit}">
-     <input type="submit" name="cancel" value="{cancel}">
+     <input type="submit" name="submit" value="{submit}" />
+     <input type="submit" name="cancel" value="{cancel}" />
     </td>
   </tr>
 </table>
@@ -136,9 +138,7 @@ function check_all(which)
 <!-- END app_footer -->
 
 <!-- BEGIN footer -->
-  </tr>
-</table>
-<br>
+<br />
 <table width="100%" cellspacing="0">
   <tr class="banner">
     <td>&nbsp;</td>

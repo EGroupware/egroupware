@@ -5,7 +5,7 @@
 00 (disable)	setup	ko	00 ( 미사용 / 추천 )
 13 (ntp)	setup	ko	13 (ntp)
 80 (http)	setup	ko	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ko	<b>이것은 1개의 관리자 계정돠 3개의 데모 계정을 생성합니다</b><br>사용자이름/암호는 demo/guest, demo2/guest, demo3/guest 입니다
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ko	<b>이것은 1개의 관리자 계정돠 3개의 데모 계정을 생성합니다</b><br />사용자이름/암호는 demo/guest, demo2/guest, demo3/guest 입니다
 accounts existing	setup	ko	계정 존재함
 actions	setup	ko	액션
 add a domain	setup	ko	도메인 추가
@@ -49,18 +49,18 @@ auto-created user accounts expire	setup	ko	자동생성된 사용자 계정 만료
 available version	setup	ko	가능한 버전
 back to the previous screen	setup	ko	이전 화면으로 돌아가기
 back to user login	setup	ko	사용자 접속으로 돌아가기
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있습니다.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br /><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있습니다.</strong>
 because an application it depends upon was upgraded	setup	ko	응용프로그램이 업그레이드 되었는지 여부에 달려있음
 because it depends upon	setup	ko	의존성때문에
 because it is not a user application, or access is controlled via acl	setup	ko	사용자 응용프로그램이 아니기때문에, 접근 제어는 ACL을 통해서
-because it requires manual table installation, <br>or the table definition was incorrect	setup	ko	이는 테이블 설치를 수동으로 해야하거나, 테이블 정의가 틀렸기 때문입니다
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ko	이는 테이블 설치를 수동으로 해야하거나, 테이블 정의가 틀렸기 때문입니다
 because it was manually disabled	setup	ko	직접 사용안함으로 설정했기 때문입니다
 because of a failed upgrade or install	setup	ko	업그레이드나 설치에 실패했기 때문입니다
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	ko	업그레이드에 실패했거나, 데이터베이스가 설치된 응용프로그램보다 새 버전이 때문입니다
 because the enable flag for this app is set to 0, or is undefined	setup	ko	이 응용프로그램의 활성화플레그가 0으로 설정되었거나, 아에 정의되지 않았기 때문입니다
 bottom	setup	ko	하단
 cancel	setup	ko	취소
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	ko	파일 권한이 없기때문에 header.inc.php를 생성할수 없습니다. 대신 %1 파일로 할수 있습니다
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ko	파일 권한이 없기때문에 header.inc.php를 생성할수 없습니다. 대신 %1 파일로 할수 있습니다
 change system-charset	setup	ko	시스템 문자셋 바꾸기
 charset	setup	ko	문자셋
 charset to convert to	setup	ko	전환할 문자셋
@@ -103,9 +103,9 @@ creating tables	setup	ko	테이블 생성중
 current system-charset	setup	ko	현재 시스템 문자셋
 current system-charset is %1, click %2here%3 to change it.	setup	ko	현재 시스템 문자셋은 %1입니다. 바꾸시려면 %2여기%3을 누르세요.
 current version	setup	ko	현재 버전
-currently installed languages: %1 <br>	setup	ko	현재 설치된 언어: %1 <br>
+currently installed languages: %1 <br />	setup	ko	현재 설치된 언어: %1 <br />
 database successfully converted from '%1' to '%2'	setup	ko	데이터베이스가 '%1'에서 '%2'으로 전환에 성공했습니다.
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	ko	날짜시간 포트를 설정합니다<br> 만약 13번 포트를 사용하신다면 적합한 방화벽 정책을 설정하시고 이 페이지를 서브밋(submit)해 주세요.<br>(포트:13 / 호스트:129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ko	날짜시간 포트를 설정합니다<br /> 만약 13번 포트를 사용하신다면 적합한 방화벽 정책을 설정하시고 이 페이지를 서브밋(submit)해 주세요.<br />(포트:13 / 호스트:129.6.15.28)
 db host	setup	ko	DB 호스트
 db name	setup	ko	DB 이름
 db password	setup	ko	DB 암호
@@ -142,11 +142,11 @@ enable for extra debug-messages	setup	ko	자세한 디버그-메세지 출력
 enable ldap version 3	setup	ko	LDAP Version 3 활성화
 enable mcrypt	setup	ko	MCrypt 활성화
 enter some random text for app session encryption	setup	ko	응용프로그램 세션 암호화에 사용할 무작위 문자열 입력
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	ko	응용프로그램 세션 암호화에 <br>사용할 임의 문자열을 입력하세요 (mcrypt 필요)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	ko	임시 파일의 완전한경로를 입력하세요.<br>예: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	ko	사용자와 그룹파일을 위한 완전한경로를 입력하세요. <br>예: /files, E:\FILES
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	ko	응용프로그램 세션 암호화에 <br />사용할 임의 문자열을 입력하세요 (mcrypt 필요)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ko	임시 파일의 완전한경로를 입력하세요.<br />예: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ko	사용자와 그룹파일을 위한 완전한경로를 입력하세요. <br />예: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	ko	이 서버가 실행되고 있는 장비의 호스트 이름을 입력하세요
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ko	eGroupWare의 URL을 입력<br>예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br><b>단 슬래시(/)로 끝나지 않게 하세요</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	eGroupWare의 URL을 입력<br />예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br /><b>단 슬래시(/)로 끝나지 않게 하세요</b>
 enter the site password for peer servers	setup	ko	피어서버의 사이트암호 입력
 enter the site username for peer servers	setup	ko	피어서버의 사이트사용자이름 입력
 enter the title for your site	setup	ko	귀하의 사이트 제목을 입력
@@ -318,7 +318,7 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	ko	구성 예제를 찾을수 없습니다. 기본설정으로 작성됩니다
 save	setup	ko	저장
 save this text as contents of your header.inc.php	setup	ko	이 텍스트를 귀하의 header.inc.php로 저장
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	ko	응용프로그램을 선택해서 대상 버전을 입력한후 보내세요(submit).<br>만약 버전을 입력하지 않으시면, 설치된 응용프로그램의 기본 테이블들만  설치됩니다.<br><blink>이 작업은 모든 응용프로그램의 테이블을 먼저 삭제합니다</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ko	응용프로그램을 선택해서 대상 버전을 입력한후 보내세요(submit).<br />만약 버전을 입력하지 않으시면, 설치된 응용프로그램의 기본 테이블들만  설치됩니다.<br /><blink>이 작업은 모든 응용프로그램의 테이블을 먼저 삭제합니다</blink>
 select one...	setup	ko	하나를 선택하세요...
 select the default applications to which your users will have access	setup	ko	사용자가 접근할 기본응용프로그램 선택
 select the desired action(s) from the available choices	setup	ko	가능한 선택들 중에서 원하는 액션을 선택
@@ -376,8 +376,8 @@ the imap extension is needed by the two email apps (even if you use email with p
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	mbstring 확장은 유니코드(UTF-8)이나 기타 다중바이트-문자셋을 완벽히 지원하는데 필요합니다
 the table definition was correct, and the tables were installed	setup	ko	테이블 정의가 수정되었고 테이블들이 설치되었습니다
 the tables	setup	ko	여러 테이블
-there was a problem trying to connect to your ldap server. <br>	setup	ko	LDAP서버에 접속하는데 문제가 있습니다.<br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	ko	+* LDAP서버에 접속하는데 문제가 있습니다.<br> 귀하의 LDAP 서버의 구성을 확인해보세요
+there was a problem trying to connect to your ldap server. <br />	setup	ko	LDAP서버에 접속하는데 문제가 있습니다.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	ko	+* LDAP서버에 접속하는데 문제가 있습니다.<br /> 귀하의 LDAP 서버의 구성을 확인해보세요
 this has to be outside the webservers document-root!!!	setup	ko	웹서버의 DocumentRoot 외부에 있어야 합니다!!!
 this might take a while, please wait ...	setup	ko	약간 시간이 걸립니다, 잠시만 기다리세요...
 this program will convert your database to a new system-charset.	setup	ko	이 프로그램은 귀하의 데이터베이스를 새 시스템-문자셋으로 변환해줍니다
@@ -385,8 +385,8 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ko	이 섹션은 eGroupWare의 사용자와 그룹들의 계정 테이블을 LDAP 트리로 내보는데 도움을 줍니다
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ko	이 섹션은 LDAP 트리의 사용자와 그룹들의 eGroupWare의 계정 테이블로 가져오는데 도움을 줍니다
 this section will help you setup your ldap accounts for use with egroupware	setup	ko	이 섹션은 eGroupWare와 함께 사용할 LDAP 계정을 설정하는데 도움을 줍니다.
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	ko	30 바이트 내외여야 합니다.<br> 주의: 기본설정은 아무값이나 생성됩니다
-this stage is completed<br>	setup	ko	스테이지가 완료됨<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ko	30 바이트 내외여야 합니다.<br /> 주의: 기본설정은 아무값이나 생성됩니다
+this stage is completed<br />	setup	ko	스테이지가 완료됨<br />
 to a version it does not know about	setup	ko	잘 알수 없는 버전으로
 to setup 1 admin account and 3 demo accounts.	setup	ko	1개의 관리자 계정과 3개의 데모 계정을 설정
 top	setup	ko	최상위
@@ -422,13 +422,13 @@ which database type do you want to use with egroupware?	setup	ko	eGroupWare와 함
 world readable	setup	ko	누구나 읽을수 있음
 world writable	setup	ko	누구나 쓸수 있음
 would you like egroupware to cache the phpgw info array ?	setup	ko	eGroupWare가 phpgw info 배열을 캐쉬하길 원하십니까?
-would you like egroupware to check for a new version<br>when admins login ?	setup	ko	관리자가 로그인했을때 <br> eGroupWare 새버전을 확인할까요?
+would you like egroupware to check for a new version<br />when admins login ?	setup	ko	관리자가 로그인했을때 <br /> eGroupWare 새버전을 확인할까요?
 would you like to show each application's upgrade status ?	setup	ko	각 응용프로그램의 업그레이드 상태를 보여줄까요?
 writable by the webserver	setup	ko	웹서버가 쓸수 있음
 write config	setup	ko	구성 기록
 yes	setup	ko	예
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ko	eGroupWare 베타버전을 사용하시고 계십니다.<br>이 버전은 더이상 지원하지 않으며 설정에 업그레이드할 경로도 없습니다<br> 먼저 0.9.10 버전(베타업그레이드 지원 마지막버전)으로 업그레이드 하시고<br>그 후에 최신 버전으로 업그레이드 하세요.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	ko	PHP버전이 오래되었습니다<br>새로운 버전으로 업그레이드 하시길 권장합니다.<br>이전 버전의 PHP는 eGroupWare가 정상적으로 동작하지 않습니다<br><br>적어도 %1 버전으로는 업그레이드 해주셔야 합니다.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ko	eGroupWare 베타버전을 사용하시고 계십니다.<br />이 버전은 더이상 지원하지 않으며 설정에 업그레이드할 경로도 없습니다<br /> 먼저 0.9.10 버전(베타업그레이드 지원 마지막버전)으로 업그레이드 하시고<br />그 후에 최신 버전으로 업그레이드 하세요.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ko	PHP버전이 오래되었습니다<br />새로운 버전으로 업그레이드 하시길 권장합니다.<br />이전 버전의 PHP는 eGroupWare가 정상적으로 동작하지 않습니다<br /><br />적어도 %1 버전으로는 업그레이드 해주셔야 합니다.
 you appear to be running version %1 of egroupware	setup	ko	eGroupWare 버전 %1을 사용하고 있습니다
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ko	PHP버전 4.1.0 이전버전을 사용하고 계십니다. eGroupWare는 4.1.0 이나 이 이후 버전이 필요합니다
 you appear to be using php3. disabling php4 sessions support	setup	ko	PHP3을 사용하고 계십니다. PHP4 세션 지원을 비활성화 합니다
@@ -439,13 +439,13 @@ you appear to have oracle support enabled	setup	ko	Oracle을 지원합니다.
 you appear to have oracle v8 (oci) support enabled	setup	ko	Oracle V8 (OCI) 을 지원합니다.
 you appear to have postgresql support enabled	setup	ko	PostgreSQL을 지원합니다.
 you appear to have xml support enabled	setup	ko	XML을 지원합니다.
-you are ready for this stage, but this stage is not yet written.<br>	setup	ko	현재 스테이지를 수행할 준비가 되었습니다만, 아직 완전히 작성되지는 않았습니다.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	ko	현재 스테이지를 수행할 준비가 되었습니다만, 아직 완전히 작성되지는 않았습니다.<br />
 you didn't enter a config password for domain %1	setup	ko	%1도메인의 구성암호를 입력하지 않았습니다
 you didn't enter a config username for domain %1	setup	ko	%1도메인의 구성사용자이름을 입력하지 않았습니다
 you didn't enter a header admin password	setup	ko	상위관리자 암호를 입력하지 않았습니다
 you didn't enter a header admin username	setup	ko	상위관리자 사용자이름을 입력하지 않았습니다.
-you do not have any languages installed. please install one now <br>	setup	ko	아무언어도 설치되어 있지 않습니다. 한가지를 지금 설치하세요<br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	ko	귀하의 header.inc.php를 아직 생성하지 않았습니다!<br>지금 생성하세요.
+you do not have any languages installed. please install one now <br />	setup	ko	아무언어도 설치되어 있지 않습니다. 한가지를 지금 설치하세요<br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	ko	귀하의 header.inc.php를 아직 생성하지 않았습니다!<br />지금 생성하세요.
 you have successfully logged out	setup	ko	성공적으로 접속종료 되었습니다
 you must enter a username for the admin	setup	ko	관리할 사용자이름을 입력하세요
 you need to add some domains to your header.inc.php.	setup	ko	header.inc.php 에 어떤 도메인이든 추가하셔야 합니다.
@@ -460,7 +460,7 @@ your database is not working!	setup	ko	데이터베이스가 동작하지 않습니다.
 your database is working, but you dont have any applications installed	setup	ko	데이터베이스는 장동합니다만, 설치된 응용프로그램이 없습니다
 your header admin password is not set. please set it now!	setup	ko	상위관리자 암호가 설정되지 않았습니다. 지금 설정하세요!
 your header.inc.php needs upgrading.	setup	ko	header.inc.php 의 업그레이드가 필요합니다.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ko	귀하의 header.inc.php 는 업그레이드가 필요합니다.<br><blink><b class="msg">경고!</b></blink><br><b>백업하세요!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ko	귀하의 header.inc.php 는 업그레이드가 필요합니다.<br /><blink><b class="msg">경고!</b></blink><br /><b>백업하세요!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ko	귀하의 PHP에 GD지원이 없습니다. gd 라이브러리버전 1.8 이나 그 이후의 버전을 설치하셔야 프로젝트에서 간트챠트를 보실수 있습니다
 your tables are current	setup	ko	테이블에 이상 없음
 your tables may be altered and you may lose data	setup	ko	테이블이 변경되면서 데이터를 잃을수도 있습니다.

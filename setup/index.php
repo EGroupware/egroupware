@@ -161,7 +161,7 @@
 	{
 		$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',
-			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1','4.1'));
+			 lang('You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1','4.1'));
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
@@ -193,21 +193,21 @@
 				case 'mysql':
 					$setup_tpl->set_var('instr',
 						lang("Instructions for creating the database in %1:",'MySql')
-						. '<br>'.lang('Login to mysql -')
-						. '<br><i>[user@server user]# mysql -u root -p</i><br>'
+						. '<br />'.lang('Login to mysql -')
+						. '<br /><i>[user@server user]# mysql -u root -p</i><br />'
 						. lang('Create the empty database and grant user permissions -')
-						. "<br><i>mysql> create database $info[db_name];</i>"
-						. "<br><i>mysql> grant all on " . $info['db_name']
+						. "<br /><i>mysql> create database $info[db_name];</i>"
+						. "<br /><i>mysql> grant all on " . $info['db_name']
 						. ".* to " . $info['db_user'] . "@localhost identified by '" . $info['db_pass'] . "';</i>");
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				case 'pgsql':
 					$setup_tpl->set_var('instr',
 						lang('Instructions for creating the database in %1:','PostgreSQL')
-						. '<br>'.lang('Start the postmaster')
-						. "<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>"
+						. '<br />'.lang('Start the postmaster')
+						. "<br /><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br />"
 						. lang('Create the empty database -')
-						. "<br><i>[user@server user]# createdb " . $info['db_name'] . "</i>");
+						. "<br /><i>[user@server user]# createdb " . $info['db_name'] . "</i>");
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				default:
@@ -217,7 +217,7 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 2:
-			$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.'));
+			$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->parse('V_db_stage_2','B_db_stage_2');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_2');
@@ -241,7 +241,7 @@
 		case 4:
 			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
-			$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>'));
+			$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>'));
 			$setup_tpl->set_var('lang_backup',lang('create a backup before upgrading the DB'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
@@ -433,7 +433,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 		case 1:
 			$btn_config_now = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				lang('Please configure eGroupWare for your environment'),
-				'POST','config.php',
+				'post','config.php',
 				'submit',lang('Configure Now'),
 				'');
 			$setup_tpl->set_var('config_table_data',$btn_config_now);
@@ -461,11 +461,11 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			}
 			if (!check_dir($config['files_dir'],$error_msg,true))
 			{
-				$config_msg .= ($config_msg?"<br>\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
+				$config_msg .= ($config_msg?"<br />\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
 			}
 			if (!check_dir($config['backup_dir'],$error_msg,true))
 			{
-				$config_msg .= ($config_msg?"<br>\n":'').lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
+				$config_msg .= ($config_msg?"<br />\n":'').lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
 			}
 			if (!$config_msg)
 			{
@@ -475,7 +475,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			}
 			$btn_edit_config = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$config_msg,
-				'POST','config.php',
+				'post','config.php',
 				'submit',lang('Edit Current Configuration'),
 				''
 			);
@@ -485,7 +485,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 				{
 					$btn_config_ldap = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 						lang('LDAP account import/export'),
-						'POST','ldap.php',
+						'post','ldap.php',
 						'submit',lang('Configure Now'),
 						''
 					);
@@ -519,7 +519,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('admin_status_alt',$no_accounts ? lang('not completed') : lang('completed'));
 			$setup_tpl->set_var('admin_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$no_accounts ? lang('No accounts existing') : lang('Accounts existing'),
-				'POST','setup_demo.php',
+				'post','setup_demo.php',
 				'submit',lang('Create admin account'),
 				''
 			));
@@ -545,8 +545,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('lang_status_img',$incomplete);
 			$setup_tpl->set_var('lang_status_alt','not completed');
 			$btn_install_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-				lang('You do not have any languages installed. Please install one now <br>'),
-				'POST','lang.php',
+				lang('You do not have any languages installed. Please install one now <br />'),
+				'post','lang.php',
 				'submit',lang('Install Language'),
 				'');
 			$setup_tpl->set_var('lang_table_data',$btn_install_lang);
@@ -561,8 +561,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
 			$btn_manage_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-				lang('This stage is completed<br>') . lang('Currently installed languages: %1 <br>',implode(', ',$langs_list)),
-				'POST','lang.php',
+				lang('This stage is completed<br />') . lang('Currently installed languages: %1 <br />',implode(', ',$langs_list)),
+				'post','lang.php',
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
@@ -598,8 +598,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			}
 			$btn_manage_apps = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				count($to_upgrade) ? '<b>'.lang('The following applications need to be upgraded:').'</b> '.implode(', ',$to_upgrade) :
-				lang('This stage is completed<br>'),
-				'','applications.php',
+				lang('This stage is completed<br />'),
+				'post','applications.php',
 				'submit',lang('Manage Applications'),
 				'');
 			$setup_tpl->set_var('apps_table_data',$btn_manage_apps);
@@ -618,8 +618,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('backup_status_img',$completed);
 			$setup_tpl->set_var('backup_status_alt',lang('completed'));
 			$setup_tpl->set_var('backup_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
-				''/*lang('This stage is completed<br>')*/,
-				'','db_backup.php',
+				''/*lang('This stage is completed<br />')*/,
+				'post','db_backup.php',
 				'submit',lang('backup and restore'),
 				''));
 			break;

@@ -7,16 +7,16 @@
 </div>
 </div>
 
-<div id="divPoweredBy"><br/><span>&nbsp;<a class="copyright" href="http://www.egroupware.org/">eGroupWare</a> {lang_version} {pgw_ver} </span></div>	
+<div id="divPoweredBy"><br /><span>&nbsp;<a class="copyright" href="http://www.egroupware.org/">eGroupWare</a> {lang_version} {pgw_ver} </span></div>	
 </body>
 </html>
 <!-- END footer.tpl -->
-<!--<br/><br/>
+<!--<br /><br />
 </td>
 </tr>
 </tbody></table>
 
-<br></td>
+<br /></td>
 <td width="15"></td>
 </tr>
 </tbody></table>

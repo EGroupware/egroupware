@@ -33,7 +33,7 @@
 				{
 					if($config['mcrypt_algo'] == $value)
 					{
-						$selected = ' selected';
+						$selected = ' selected="selected"';
 					}
 					else
 					{
@@ -79,7 +79,7 @@
 				{
 					if($config['mcrypt_mode'] == $value)
 					{
-						$selected = ' selected';
+						$selected = ' selected="selected"';
 					}
 					else
 					{
@@ -94,12 +94,12 @@
 			if(!$found)
 			{
 				/* Something is wrong with their mcrypt install or php.ini */
-				$out = '<option value="" selected>' . lang('no modes available') . '</option>' . "\n";
+				$out = '<option value="" selected="selected">' . lang('no modes available') . '</option>' . "\n";
 			}
 		}
 		else
 		{
-			$out = '<option value="cbc" selected>CBC</option>' . "\n";
+			$out = '<option value="cbc" selected="selected">CBC</option>' . "\n";
 		}
 		return $out;
 	}
@@ -123,7 +123,7 @@
 		{
 			if($config['ldap_encryption_type'] == $value)
 			{
-				$selected = ' selected';
+				$selected = ' selected="selected"';
 			}
 			else
 			{
@@ -173,7 +173,7 @@
 		{
 			if($config['sql_encryption_type'] == $value)
 			{
-				$selected = ' selected';
+				$selected = ' selected="selected"';
 			}
 			else
 			{

@@ -11,8 +11,8 @@
   </tr>
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" name="submit" value="{lang_submit}">
-      <input type="submit" name="cancel" value="{lang_cancel}">
+      <input type="submit" name="submit" value="{lang_submit}" />
+      <input type="submit" name="cancel" value="{lang_cancel}" />
     </td>
   </tr>
   <tr class="banner">

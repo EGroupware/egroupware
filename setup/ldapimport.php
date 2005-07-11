@@ -152,12 +152,12 @@
 	{
 		if(!count($admins))
 		{
-			$error = '<br>You must select at least 1 admin';
+			$error = '<br />You must select at least 1 admin';
 		}
 
 		if(!count($s_apps))
 		{
-			$error .= '<br>You must select at least 1 application';
+			$error .= '<br />You must select at least 1 application';
 		}
 
 		if(!$error)
@@ -295,12 +295,12 @@
 							{
 								continue;
 							}
-							/* echo '<br>members: ' . $members; */
+							/* echo '<br />members: ' . $members; */
 							$tmpid = 0;
 							@reset($account_info);
 							while(list($x,$y) = each($account_info))
 							{
-								/* echo '<br>checking: '.$y['account_lid']; */
+								/* echo '<br />checking: '.$y['account_lid']; */
 								if($members == $y['account_lid'])
 								{
 									$tmpid = $acct->name2id($y['account_lid']);
@@ -411,13 +411,13 @@
 
 	if($error)
 	{
-		//echo '<br><center><b>Error:</b> '.$error.'</center>';
+		//echo '<br /><center><b>Error:</b> '.$error.'</center>';
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$error);
 	}
 
 	if($setup_complete)
 	{
-		echo '<br><center>'.lang('Import has been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
+		echo '<br /><center>'.lang('Import has been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
@@ -467,7 +467,7 @@
 		}
 		else
 		{
-			$app_list .= '<option value="' . $appname . '" selected>' . $apptitle . '</option>';
+			$app_list .= '<option value="' . $appname . '" selected="selected">' . $apptitle . '</option>';
 		}
 	}
 

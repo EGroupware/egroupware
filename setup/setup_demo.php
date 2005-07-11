@@ -48,7 +48,7 @@
 		$GLOBALS['egw_setup']->html->show_header(lang('Demo Server Setup'));
 
 		$setup_tpl->set_var('action_url','setup_demo.php');
-		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
+		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
 		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?'));
 
 		$setup_tpl->set_var('detailadmin',lang('Details for Admin account'));

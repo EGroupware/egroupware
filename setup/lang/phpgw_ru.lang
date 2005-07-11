@@ -35,4 +35,4 @@ really uninstall all applications	setup	ru	Действительно деинсталировать все при
 yes	setup	ru	Да
 your database is not working!	setup	ru	Ваша База Данных не работает!
 your header.inc.php needs upgrading.	setup	ru	Файл header.inc.php требует обновления.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ru	Файл header.inc.php требует обновления.<br><blink><b class="msg">ВНИМАНИЕ!</b></blink><br><b>СДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	ru	Файл header.inc.php требует обновления.<br /><blink><b class="msg">ВНИМАНИЕ!</b></blink><br /><b>СДЕЛАЙТЕ РЕЗЕРВНУЮ КОПИЮ!</b>

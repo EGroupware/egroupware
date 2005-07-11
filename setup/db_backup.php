@@ -218,7 +218,7 @@
 		'lang_year'				=> lang('year'),
 		'lang_month'			=> lang('month'),
 		'lang_day'				=> lang('day'),
-		'lang_dow'				=> lang('day of week<br>(0-6, 0=sunday)'),
+		'lang_dow'				=> lang('day of week<br />(0-6, 0=sunday)'),
 		'lang_hour'				=> lang('hour (0-24)'),
 		'lang_minute'			=> lang('minute'),
 		'lang_next_run'			=> lang('next run'),

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xml:lang="{lang_code}" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<!--
 		HTML Coding Standards;
@@ -59,7 +59,7 @@
 	</head>
 	<body>
 
-<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo-setup.png" border="0" alt="egroupware"/></a></div>
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo-setup.png" border="0" alt="egroupware" /></a></div>
 
 <div id="divMain">
 	<div id="divAppIconBar">

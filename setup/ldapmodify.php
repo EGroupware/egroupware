@@ -139,7 +139,7 @@
 				$entry = array();
 				$thisacctid    = $group_info[$groupid]['gidnumber'][0];
 				$thisacctlid   = $group_info[$groupid]['cn'][0];
-				/* echo "Updating GROUPID : ".$thisacctlid."<br>\n"; */
+				/* echo "Updating GROUPID : ".$thisacctlid."<br />\n"; */
 				$thisfirstname = $group_info[$groupid]['cn'][0];
 				$thismembers   = $group_info[$groupid]['memberuid'];
 				$thisdn        = $group_info[$groupid]['dn'];
@@ -199,12 +199,12 @@
 							{
 								continue;
 							}
-							/* echo '<br>members: ' . $members; */
+							/* echo '<br />members: ' . $members; */
 							$tmpid = 0;
 							@reset($account_info);
 							while(list($x,$y) = each($account_info))
 							{
-								/* echo '<br>checking: '.$y['account_lid']; */
+								/* echo '<br />checking: '.$y['account_lid']; */
 								if($members == $y['account_lid'])
 								{
 									$tmpid = $y['account_id'];
@@ -254,7 +254,7 @@
 				$id_exist = 0;
 				$thisacctid  = $account_info[$id]['uidnumber'][0];
 				$thisacctlid = $account_info[$id]['uid'][0];
-				/* echo "Updating USERID : ".$thisacctlid."<br>\n"; */
+				/* echo "Updating USERID : ".$thisacctlid."<br />\n"; */
 				$thisdn      = $account_info[$id]['dn'];
 
 				/* Do some checks before we try to import the data. */
@@ -349,13 +349,13 @@
 
 	if(isset($_GET['error']))
 	{
-		/* echo '<br><center><b>Error:</b> '.$error.'</center>'; */
+		/* echo '<br /><center><b>Error:</b> '.$error.'</center>'; */
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$_GET['error']);
 	}
 
 	if($setup_complete)
 	{
-		echo '<br><center>'.lang('Modifications have been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'<br><center>';
+		echo '<br /><center>'.lang('Modifications have been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'<br /><center>';
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}

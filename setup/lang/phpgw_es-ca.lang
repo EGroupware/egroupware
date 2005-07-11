@@ -7,7 +7,7 @@
 13 (ntp)	setup	es-ca	13 (ntp)
 80 (http)	setup	es-ca	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	es-ca	<b>conjunt de caràcters a utilitzar</b> (utilitzeu utf-8 si heu fer servir llenguatges amb diferents conjunts de caràcters
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-ca	<b>Això crearà un compte d'administrador i 3 de demostració</b><br>Els noms d'usuari i contrasenyes són: demo/guest, demo2/guest i demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-ca	<b>Això crearà un compte d'administrador i 3 de demostració</b><br />Els noms d'usuari i contrasenyes són: demo/guest, demo2/guest i demo3/guest.
 accounts existing	setup	es-ca	Comptes existents
 actions	setup	es-ca	Accions
 add a domain	setup	es-ca	Afegir un domini
@@ -67,15 +67,15 @@ backup started, this might take a view minutes ...	setup	es-ca	còpia de segureta
 because an application it depends upon was upgraded	setup	es-ca	perquè una aplicació de la que en depèn s'ha actualitzat
 because it depends upon	setup	es-ca	perquè depèn de
 because it is not a user application, or access is controlled via acl	setup	es-ca	perqué no és una aplicació d'usuari, o bé l'accés està controlat per ACL
-because it requires manual table installation, <br>or the table definition was incorrect	setup	es-ca	perquè necessita una instal·lació manual de les taules,<br> o bé la seva definició fou incorrecta
+because it requires manual table installation, <br />or the table definition was incorrect	setup	es-ca	perquè necessita una instal·lació manual de les taules,<br /> o bé la seva definició fou incorrecta
 because it was manually disabled	setup	es-ca	perquè es desactivà manualment
 because of a failed upgrade or install	setup	es-ca	perquè es va produir una errada en actualitzar o instal.lar
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	es-ca	perqué va fallar la actualització, o la base de dades és més nova que la versió instal.lada d'aquesta aplicació
 because the enable flag for this app is set to 0, or is undefined	setup	es-ca	perqué la senyal d' "activada" d'aquesta aplicació està a 0, o no està definida
 bottom	setup	es-ca	peu
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	es-ca	però us <u>recomanem que feu copia de seguretat</u> de les taules per el cas que el script faci malbé l'informació.<br><strong>Aquests scripts automàtics poden fàcilment destruir la vostra informació.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	es-ca	però us <u>recomanem que feu copia de seguretat</u> de les taules per el cas que el script faci malbé l'informació.<br /><strong>Aquests scripts automàtics poden fàcilment destruir la vostra informació.</strong>
 cancel	setup	es-ca	Cancel·lar
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	es-ca	No es pot crear l'arxiu header.inc.php degut als permisos d'arxius.<br> Altrament podeu %1 l'arxiu.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	es-ca	No es pot crear l'arxiu header.inc.php degut als permisos d'arxius.<br /> Altrament podeu %1 l'arxiu.
 change system-charset	setup	es-ca	Canviar el joc de caràcters del sistema
 charset	setup	es-ca	ISO-8859-1
 charset to convert to	setup	es-ca	Joc de caràcters al que convertir
@@ -120,11 +120,11 @@ creating tables	setup	es-ca	Creant Taules
 current system-charset	setup	es-ca	Joc de caràcters actual del sistema
 current system-charset is %1, click %2here%3 to change it.	setup	es-ca	El joc de caràcters del sistema actualment és %1. Premeu %2aquí%3 per canviar.
 current version	setup	es-ca	Versió Actual
-currently installed languages: %1 <br>	setup	es-ca	Idiomes actualment instal·lats: %1 <br>
+currently installed languages: %1 <br />	setup	es-ca	Idiomes actualment instal·lats: %1 <br />
 database successfully converted from '%1' to '%2'	setup	es-ca	Base de dades convertida correctament de '%1' a '%2'
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	es-ca	Port de l'hora.<br>Si utilitzeu el port 13, establiu les regles del tallafocs acuradament abans d'enviar aquesta plana.
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	es-ca	Port de l'hora.<br />Si utilitzeu el port 13, establiu les regles del tallafocs acuradament abans d'enviar aquesta plana.
 day	setup	es-ca	dia
-day of week<br>(0-6, 0=sunday)	setup	es-ca	dia de la setmana<br>(0-6. 0=diumenge)
+day of week<br />(0-6, 0=sunday)	setup	es-ca	dia de la setmana<br />(0-6. 0=diumenge)
 db backup and restore	setup	es-ca	còpia de seguretat i restauració de la BBDD
 db host	setup	es-ca	Servidor de la base de dades
 db name	setup	es-ca	Nom de la base de dades
@@ -163,12 +163,12 @@ enable for extra debug-messages	setup	es-ca	activar els missatges de depuració e
 enable ldap version 3	setup	es-ca	Activar LDAP versió 3
 enable mcrypt	setup	es-ca	Activar MCrypt
 enter some random text for app session encryption	setup	es-ca	Introduïu qualsevol text aleatori per el xifrat de la sessió de l'aplicació
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	es-ca	Introduïu qualsevol text aleatori per el xifrat de la sessió<br> de l'aplicació (necessita mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	es-ca	Introduïu la ruta completa per als fitxers temporals.<br>Exemple: /tmp, C:TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	es-ca	Introduïu la ruta completa per als fitxers d'usuaris i grups.<br>Exemple: /files, E:FILES
-enter the full path to the backup directory.<br>if empty: files directory	setup	es-ca	Introduïu la ruta completa per al directori de la còpia de seguretat.<br>si es deixa en blanc: directori dels fitxers
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	es-ca	Introduïu qualsevol text aleatori per el xifrat de la sessió<br /> de l'aplicació (necessita mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	es-ca	Introduïu la ruta completa per als fitxers temporals.<br />Exemple: /tmp, C:TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	es-ca	Introduïu la ruta completa per als fitxers d'usuaris i grups.<br />Exemple: /files, E:FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	es-ca	Introduïu la ruta completa per al directori de la còpia de seguretat.<br />si es deixa en blanc: directori dels fitxers
 enter the hostname of the machine on which this server is running	setup	es-ca	Introduïu el nom de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	es-ca	Introduïu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware o bé &nbsp; /egroupware<br><b>Sense la barra final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-ca	Introduïu l'adreça URL d'eGroupWare.<br />Exemple: http://www.domini.com/egroupware o bé &nbsp; /egroupware<br /><b>Sense la barra final</b>
 enter the site password for peer servers	setup	es-ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	setup	es-ca	Introduïu el nom d'usuari del lloc per a servidors parells
 enter the title for your site	setup	es-ca	Introduïu el títol per al vostre lloc
@@ -359,7 +359,7 @@ save	setup	es-ca	Desar
 save this text as contents of your header.inc.php	setup	es-ca	Desar aquest text com a contingut del vostre header.inc.php
 schedule	setup	es-ca	programar
 scheduled backups	setup	es-ca	còpies de seguretat programades
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	es-ca	Seleccioneu una aplicació, entreu una versió destí, llavors premeu "Enviar" per a processar l'actualització fins a aquesta versió.<br>Si no entreu una versió, només s'instal·laran les taules base per a l'aplicació.<br><blink>AIXÒ ESBORRARÀ TOTES LES TAULES DE L'APLICACIÓ PRIMER!</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	es-ca	Seleccioneu una aplicació, entreu una versió destí, llavors premeu "Enviar" per a processar l'actualització fins a aquesta versió.<br />Si no entreu una versió, només s'instal·laran les taules base per a l'aplicació.<br /><blink>AIXÒ ESBORRARÀ TOTES LES TAULES DE L'APLICACIÓ PRIMER!</blink>
 select one...	setup	es-ca	seleccionar un...
 select the default applications to which your users will have access	setup	es-ca	Seleccioneu les aplicacions predeterminades a les que tindran accés els usuaris
 select the desired action(s) from the available choices	setup	es-ca	Seleccioneu les accion(s) desitjades de la llista d'opcions disponibles
@@ -421,8 +421,8 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-ca	mbstring.func_overload = 7 és necessària per a suportar completament l'unicode (utf-8) o altres conjunts de caràcters de més d'un byte.
 the table definition was correct, and the tables were installed	setup	es-ca	La definició de la taula ha estat correcta, i s'han instal·lat les taules
 the tables	setup	es-ca	les taules
-there was a problem trying to connect to your ldap server. <br>	setup	es-ca	Hi ha un problema intentant connectar al servidor LDAP.<br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	es-ca	Hi ha un problema intentant connectar al servidor LDAP.<br>Si us plau, comproveu la configuració del servidor LDAP
+there was a problem trying to connect to your ldap server. <br />	setup	es-ca	Hi ha un problema intentant connectar al servidor LDAP.<br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	es-ca	Hi ha un problema intentant connectar al servidor LDAP.<br />Si us plau, comproveu la configuració del servidor LDAP
 this has to be outside the webservers document-root!!!	setup	es-ca	Això ha d'estar fora de l'arrel de documents dels servidors web!!!
 this might take a while, please wait ...	setup	es-ca	Això pot trigar una estona, espereu si us plau ...
 this program lets you backup your database, schedule a backup or restore it.	setup	es-ca	Aquest programa et permet fer còpies de seguretat de la teva base de dades, programar una còpia de seguretat o restaurar-la.
@@ -431,8 +431,8 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	es-ca	Aquesta secció intentarà exportar els usuaris i grups de les taules de comptes d'eGroupWare a l'arbre LDAP
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	es-ca	Aquesta secció us ajudarà a importar usuaris i grups de l'arbre LDAP a les taules de comptes d'eGroupWare
 this section will help you setup your ldap accounts for use with egroupware	setup	es-ca	Aquesta secció us ajudarà a configurar els comptes LDAP per a usar amb eGroupWare
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	es-ca	Ha de ser una cadena d'uns 30 caràcters.<br>Nota: la predeterminada s'ha generat aleatòriament.
-this stage is completed<br>	setup	es-ca	Fase acabada<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	es-ca	Ha de ser una cadena d'uns 30 caràcters.<br />Nota: la predeterminada s'ha generat aleatòriament.
+this stage is completed<br />	setup	es-ca	Fase acabada<br />
 to a version it does not know about	setup	es-ca	a una versió que no coneix
 to setup 1 admin account and 3 demo accounts.	setup	es-ca	per a configurar un compte d'administrador i 3 de convidat
 top	setup	es-ca	capçalera
@@ -471,14 +471,14 @@ which database type do you want to use with egroupware?	setup	es-ca	Quin tipus d
 world readable	setup	es-ca	pot ser llegit per tothom
 world writable	setup	es-ca	pot ser modificat per tothom
 would you like egroupware to cache the phpgw info array ?	setup	es-ca	Voleu que eGroupWare desi en memòria cau la matriu d'informació phpgw?
-would you like egroupware to check for a new version<br>when admins login ?	setup	es-ca	Voleu que eGroupWare comprovi l'existència de noves versions<br>quan un administrador inicïi la sessió?
+would you like egroupware to check for a new version<br />when admins login ?	setup	es-ca	Voleu que eGroupWare comprovi l'existència de noves versions<br />quan un administrador inicïi la sessió?
 would you like to show each application's upgrade status ?	setup	es-ca	Voleu mostrar l'estat de l'actualització de cada aplicació?
 writable by the webserver	setup	es-ca	pot ser modificat pel servidor web
 write config	setup	es-ca	Escriure configuració
 year	setup	es-ca	any
 yes	setup	es-ca	Sí
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es-ca	Sembla que esteu executant una versió pre-beta d'eGroupWare.<br>Aquestes versions ja no se suporten, i no hi ha camí d'actualització per a elles a la instal·lació.<br>Hauríeu d'actualitzar primer a la 0.9.10 (la darrera versió amb suport d'actualitzacions pre-beta)<br>i després actualitzar a la versió actual.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es-ca	Sembla que esteu executant una versió antiga de PHP<br>Es recomana que actualitzeu a una nova versió.<br>Les versions antiges de PHP pot ser que no funcionin correctament o ni siquiera funcionin a eGroupWare.<br><br>Si us plau, actualitzeu al menys a la versió %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-ca	Sembla que esteu executant una versió pre-beta d'eGroupWare.<br />Aquestes versions ja no se suporten, i no hi ha camí d'actualització per a elles a la instal·lació.<br />Hauríeu d'actualitzar primer a la 0.9.10 (la darrera versió amb suport d'actualitzacions pre-beta)<br />i després actualitzar a la versió actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-ca	Sembla que esteu executant una versió antiga de PHP<br />Es recomana que actualitzeu a una nova versió.<br />Les versions antiges de PHP pot ser que no funcionin correctament o ni siquiera funcionin a eGroupWare.<br /><br />Si us plau, actualitzeu al menys a la versió %1
 you appear to be running version %1 of egroupware	setup	es-ca	Sembla que esteu executant la versió %1 d'eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	es-ca	Sembla que esteu usant una versió de PHP anterior a la 4.1.0. Necessiteu tenir 4.1.0 o superior.
 you appear to be using php3. disabling php4 sessions support	setup	es-ca	Sembla que esteu usant PHP3. Desactivant el suport de sessions PHP
@@ -490,13 +490,13 @@ you appear to have oracle support enabled	setup	es-ca	Sembla que teniu activat e
 you appear to have oracle v8 (oci) support enabled	setup	es-ca	Sembla que teniu activat el suport d'Oracle V8 (OCI)
 you appear to have postgresql support enabled	setup	es-ca	Sembla que teniu activat el suport de PostgreSQL
 you appear to have xml support enabled	setup	es-ca	Sembla que teniu activat el suport de XML
-you are ready for this stage, but this stage is not yet written.<br>	setup	es-ca	Esteu preparats per a aquesta fase, però aquesta fase no està escrita encara.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	es-ca	Esteu preparats per a aquesta fase, però aquesta fase no està escrita encara.<br />
 you didn't enter a config password for domain %1	setup	es-ca	No heu entrat una contrasenya de configuració per al domini %1
 you didn't enter a config username for domain %1	setup	es-ca	No heu entrat un nom d'usuari de configuració per al domini %1
 you didn't enter a header admin password	setup	es-ca	No heu entrat una contrasenya per a l'administració de capceleres
 you didn't enter a header admin username	setup	es-ca	No heu entrat un nom d'usuari per a l'administració de capceleres
-you do not have any languages installed. please install one now <br>	setup	es-ca	No teniu cap idioma instal·lat. Si us plau, instal·leu-ne un ara <br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	es-ca	No heu creat encara l'arxiu header.inc.php!<br>Podeu crear-lo ara.
+you do not have any languages installed. please install one now <br />	setup	es-ca	No teniu cap idioma instal·lat. Si us plau, instal·leu-ne un ara <br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-ca	No heu creat encara l'arxiu header.inc.php!<br />Podeu crear-lo ara.
 you have successfully logged out	setup	es-ca	Us heu desconnectat correctament.
 you must enter a username for the admin	setup	es-ca	Heu d'introduir un nom d'usuari per a l'administrador
 you need to add some domains to your header.inc.php.	setup	es-ca	Necessiteu afegir alguns dominis a l'arxiu header.inc.php.
@@ -513,7 +513,7 @@ your database is working, but you dont have any applications installed	setup	es-
 your files directory '%1' %2	setup	es-ca	El vostre directori de fitxers '%1' %2
 your header admin password is not set. please set it now!	setup	es-ca	La contrasenya d'administrador de capceleres NO està configurada. Si us plau, entreu-ne una ara.
 your header.inc.php needs upgrading.	setup	es-ca	El vostre header.inc.php necessita actualització
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	es-ca	El vostre header.inc.php necessita actualització.<br><blink><b class="msg">ATENCIÓ!!</b></blink><br><b>FEU COPIES DE SEGURETAT!!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	es-ca	El vostre header.inc.php necessita actualització.<br /><blink><b class="msg">ATENCIÓ!!</b></blink><br /><b>FEU COPIES DE SEGURETAT!!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	es-ca	La vostra instal·lació de PHP no te el suport GD adient. Necessiteu la llibreria gd versió 1.8 o superior per a veure els diagrames de Gantt als projectes.
 your tables are current	setup	es-ca	Les vostres taules estan actualitzades
 your tables will be dropped and you will lose data	setup	es-ca	Les vostres taules s'esborraran i perdreu la informació que continguin!!

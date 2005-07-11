@@ -1,7 +1,7 @@
 <!-- begin system_charset.tpl -->
 <p align="center"><font color="red">{error_msg}</font></p>
 
-<form method="POST" action="system_charset.php">
+<form method="post" action="system_charset.php">
 <table border="0" align="center" width="80%">
 	<tr bgcolor="#486591">
 		<td colspan="2">
@@ -36,8 +36,8 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="center">
-			<input type="submit" name="convert" value="{lang_convert}"> &nbsp;
-			<input type="submit" name="cancel" value="{lang_cancel}">
+			<input type="submit" name="convert" value="{lang_convert}" /> &nbsp;
+			<input type="submit" name="cancel" value="{lang_cancel}" />
 		</td>
 	</tr>
 </table>

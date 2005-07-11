@@ -22,7 +22,7 @@
 				<tr>
 					<td>{lang_config_username}:</td>
 					<td>
-						<input type="text" name="FormUser" value="">
+						<input type="text" name="FormUser" value="" />
 					</td>
 					<td>
 						{lang_select}
@@ -31,7 +31,7 @@
 				<tr>
 					<td>{lang_config_password}:</td>
 					<td>
-						<input type="password" name="FormPW" value="">
+						<input type="password" name="FormPW" value="" />
 					</td>
 				</tr>
 				</table>
@@ -42,7 +42,7 @@
 				<tr>
 					<td>{lang_config_username}:</td>
 					<td>
-						<input type="text" name="FormUser" value="">
+						<input type="text" name="FormUser" value="" />
 					</td>
 					<td>
 						{lang_select}
@@ -51,14 +51,15 @@
 				<tr>
 					<td>{lang_config_password}:</td>
 					<td>
-						<input type="password" name="FormPW" value="">
+						<input type="password" name="FormPW" value="" />
 					</td>
+				</tr>
 				</table>
-				<input type="hidden" name="FormDomain" value="{default_domain_zero}">
+				<input type="hidden" name="FormDomain" value="{default_domain_zero}" />
 		<!-- END B_single_domain -->
 
-				<input type="hidden" name="ConfigLogin" value="Login">
-				<input type="submit" name="submit" value="Login">
+				<input type="hidden" name="ConfigLogin" value="Login" />
+				<input type="submit" name="submit" value="Login" />
 			</form>
 		</td>
 	</tr>

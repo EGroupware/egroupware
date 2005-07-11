@@ -14,7 +14,7 @@
 </tr>
 <tr>
 	<td align="center" width="30%">
-		<img src="{config_status_img}" alt="{config_status_alt}" border="0">
+		<img src="{config_status_img}" alt="{config_status_alt}" border="0" />
 	</td>
 	<td>
 		{config_table_data}
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td align="center" width="30%">
-		<img src="{admin_status_img}" alt="{admin_status_alt}" border="0">
+		<img src="{admin_status_img}" alt="{admin_status_alt}" border="0" />
 	</td>
 	<td>
 		{admin_table_data}
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td align="center">
-		<img src="{lang_status_img}" alt="{lang_status_alt}" border="0">
+		<img src="{lang_status_img}" alt="{lang_status_alt}" border="0" />
 	</td>
 	<td>
 		{lang_table_data}
@@ -59,7 +59,7 @@
 </tr>
 <tr>
 	<td align="center">
-		<img src="{apps_status_img}" alt="{apps_status_alt}" border="0">
+		<img src="{apps_status_img}" alt="{apps_status_alt}" border="0" />
 	</td>
 	<td>
 		{apps_table_data}
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td align="center">
-		<img src="{backup_status_img}" alt="{backup_status_alt}" border="0">
+		<img src="{backup_status_img}" alt="{backup_status_alt}" border="0" />
 	</td>
 	<td>
 		{backup_table_data}

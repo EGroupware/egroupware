@@ -349,7 +349,7 @@ class html
 				}
 			}
 		}
-		return '<option value="'.$this->htmlspecialchars($value).'"'.($found  ? ' selected="1"' : '') .
+		return '<option value="'.$this->htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
 			($title ? ' title="'.$this->htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
 			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}

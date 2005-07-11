@@ -4,7 +4,7 @@
 <table align="center" cellspacing="0" cellpadding="5" style="border: 0px solid rgb(72, 101, 145);" width="450">
 {V_login_stage_header}
 	<tr class="row_on" >
-		<td colspan="2">&nbsp;</strong></td>
+		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="th">
 		<td bgcolor="#cccccc" colspan="2">&nbsp;<strong>{lang_header_login}</strong></td>
@@ -18,16 +18,16 @@
 				<table>
 					<tr>
 						<td>{lang_header_username}:</td>
-						<td><input type="text" name="FormUser" value=""></td>
+						<td><input type="text" name="FormUser" value="" /></td>
 						<td>{lang_select}</td>
 					</tr>
 					<tr>
 						<td>{lang_header_password}:</td>
-						<td><input type="password" name="FormPW" value=""></td>
+						<td><input type="password" name="FormPW" value="" /></td>
 					</tr>
 				</table>
-				<input type="submit" name="Submit" value="Login">
-				<input type="hidden" name="HeaderLogin" value="Login">
+				<input type="submit" name="Submit" value="Login" />
+				<input type="hidden" name="HeaderLogin" value="Login" />
 			</form>
 		</td>
 	</tr>

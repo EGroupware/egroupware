@@ -140,22 +140,22 @@
 				if ($setup_info[$appname]['tables'])
 				{
 					$GLOBALS['egw_setup']->process->droptables($terror,$DEBUG);
-					echo '<br>' . $app_title . ' ' . lang('tables dropped') . '.';
+					echo '<br />' . $app_title . ' ' . lang('tables dropped') . '.';
 				}
 
 				$GLOBALS['egw_setup']->deregister_app($setup_info[$appname]['name']);
-				echo '<br>' . $app_title . ' ' . lang('deregistered') . '.';
+				echo '<br />' . $app_title . ' ' . lang('deregistered') . '.';
 
 				if ($setup_info[$appname]['hooks'])
 				{
 					$GLOBALS['egw_setup']->deregister_hooks($setup_info[$appname]['name']);
-					echo '<br>' . $app_title . ' ' . lang('hooks deregistered') . '.';
+					echo '<br />' . $app_title . ' ' . lang('hooks deregistered') . '.';
 				}
 				$do_langs = true;
 
 				if ($historylog->delete($appname))
 				{
-					echo '<br>' . $app_title . ' ' . lang('Historylog removed') . '.';
+					echo '<br />' . $app_title . ' ' . lang('Historylog removed') . '.';
 				}
 
 				// delete all application categories and ACL
@@ -176,7 +176,7 @@
 				{
 					$terror = $GLOBALS['egw_setup']->process->current($terror,$DEBUG);
 					$terror = $GLOBALS['egw_setup']->process->default_records($terror,$DEBUG);
-					echo '<br>' . $app_title . ' '
+					echo '<br />' . $app_title . ' '
 						. lang('tables installed, unless there are errors printed above') . '.';
 				}
 				else
@@ -189,12 +189,12 @@
 					{
 						$GLOBALS['egw_setup']->register_app($setup_info[$appname]['name']);
 					}
-					echo '<br>' . $app_title . ' ' . lang('registered') . '.';
+					echo '<br />' . $app_title . ' ' . lang('registered') . '.';
 
 					if ($setup_info[$appname]['hooks'])
 					{
 						$GLOBALS['egw_setup']->register_hooks($setup_info[$appname]['name']);
-						echo '<br>' . $app_title . ' ' . lang('hooks registered') . '.';
+						echo '<br />' . $app_title . ' ' . lang('hooks registered') . '.';
 					}
 				}
 				$do_langs = true;
@@ -212,12 +212,12 @@
 				$GLOBALS['egw_setup']->process->upgrade($terror,$DEBUG);
 				if ($setup_info[$appname]['tables'])
 				{
-					echo '<br>' . $app_title . ' ' . lang('tables upgraded') . '.';
+					echo '<br />' . $app_title . ' ' . lang('tables upgraded') . '.';
 					// The process_upgrade() function also handles registration
 				}
 				else
 				{
-					echo '<br>' . $app_title . ' ' . lang('upgraded') . '.';
+					echo '<br />' . $app_title . ' ' . lang('upgraded') . '.';
 				}
 				$do_langs = true;
 			}
@@ -227,7 +227,7 @@
 			$GLOBALS['egw_setup']->process->translation->drop_add_all_langs();
 		}
 		//$setup_tpl->set_var('goback',
-		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
+		echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		//$setup_tpl->pparse('out','submit');
 		$setup_tpl->pparse('out','footer');
 		exit;
@@ -275,7 +275,7 @@
 			}
 		}
 
-		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
+		echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
@@ -291,18 +291,18 @@
 		{
 			echo '"' . $app_title . '" ' . lang('may be broken') . ' ';
 			echo lang('because an application it depends upon was upgraded');
-			echo '<br>';
+			echo '<br />';
 			echo lang('to a version it does not know about') . '.';
-			echo '<br>';
+			echo '<br />';
 			echo lang('However, the application may still work') . '.';
 		}
 		elseif(get_var('badinstall',Array('GET')))
 		{
 			echo '"' . $app_title . '" ' . lang('is broken') . ' ';
 			echo lang('because of a failed upgrade or install') . '.';
-			echo '<br>';
+			echo '<br />';
 			echo lang('Some or all of its tables are missing') . '.';
-			echo '<br>';
+			echo '<br />';
 			echo lang('You should either uninstall and then reinstall it, or attempt manual repairs') . '.';
 		}
 		elseif (!$version)
@@ -320,12 +320,12 @@
 			{
 				if($setup_info[$resolve]['status'] == 'D')
 				{
-					echo lang('because it depends upon') . ':<br>' . "\n";
+					echo lang('because it depends upon') . ':<br />' . "\n";
 					list($depapp,$depver) = parsedep($setup_info[$resolve]['depends'],False);
                                 $depapp_count = count($depapp);
 					for ($i=0; $i<$depapp_count; $i++)
 					{
-						echo '<br>' . $depapp[$i] . ': ';
+						echo '<br />' . $depapp[$i] . ': ';
 						$list = '';
 						foreach($depver[$i] as $x => $y)
 						{
@@ -334,7 +334,7 @@
 						$list = substr($list,0,-2);
 						echo "$list\n";
 					}
-					echo '<br><br>' . lang('The table definition was correct, and the tables were installed') . '.';
+					echo '<br /><br />' . lang('The table definition was correct, and the tables were installed') . '.';
 				}
 				else
 				{
@@ -351,32 +351,32 @@
 			}
 			else
 			{
-				echo lang('because it requires manual table installation, <br>or the table definition was incorrect') . ".\n"
+				echo lang('because it requires manual table installation, <br />or the table definition was incorrect') . ".\n"
 					. lang("Please check for sql scripts within the application's directory") . '.';
 			}
-			echo '<br>' . lang('However, the application is otherwise installed') . '.';
+			echo '<br />' . lang('However, the application is otherwise installed') . '.';
 		}
 		else
 		{
 			echo $app_title . ' ' . lang('has a version mismatch') . ' ';
 			echo lang('because of a failed upgrade, or the database is newer than the installed version of this app') . '.';
-			echo '<br>';
+			echo '<br />';
 			echo lang('If the application has no defined tables, selecting upgrade should remedy the problem') . '.';
-			echo '<br>' . lang('However, the application is otherwise installed') . '.';
+			echo '<br />' . lang('However, the application is otherwise installed') . '.';
 		}
 
-		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
+		echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
 	else
 	{
 		$setup_tpl->set_var('description',lang('Select the desired action(s) from the available choices'));
+		$setup_tpl->set_var('action_url','applications.php');
 		$setup_tpl->pparse('out','header');
 
 		$setup_tpl->set_var('appdata',lang('Application Data'));
 		$setup_tpl->set_var('actions',lang('Actions'));
-		$setup_tpl->set_var('action_url','applications.php');
 		$setup_tpl->set_var('app_info',lang('Application Name and Status Information'));
 		$setup_tpl->set_var('app_title',lang('Application Title'));
 		$setup_tpl->set_var('app_currentver',lang('Current Version'));
@@ -390,7 +390,7 @@
 		$setup_tpl->set_var('upgrade_all',lang('Upgrade All'));
 		$setup_tpl->set_var('remove_all',lang('Remove All'));
 		$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
-		$setup_tpl->set_var('debug','<input type="checkbox" name="debug" value="True"' .($DEBUG ? ' checked' : '') . '>');
+		$setup_tpl->set_var('debug','<input type="checkbox" name="debug" value="True"' .($DEBUG ? ' checked="checked"' : '') . ' />');
 		$setup_tpl->set_var('bg_color',$bgcolor[0]);
 
 		$setup_tpl->pparse('out','app_header');
@@ -409,7 +409,7 @@
 				switch($value['status'])
 				{
 					case 'C':
-						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
+						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('upgrade','&nbsp;');
 						if (!$GLOBALS['egw_setup']->detection->check_app_tables($value['name']))
 						{
@@ -452,7 +452,7 @@
 							if ($value['tables'] && $GLOBALS['egw_setup']->detection->check_app_tables($value['name'],True))
 							{
 								// Some tables missing
-								$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
+								$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 								$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&badinstall=True">' . lang('Potential Problem') . '</a>');
 								$status = lang('Requires reinstall or manual repair') . ' - ' . $value['status'];
 							}
@@ -463,7 +463,7 @@
 								$status = lang('Requires upgrade') . ' - ' . $value['status'];
 							}
 							$setup_tpl->set_var('bg_color','CCFFCC');
-							$setup_tpl->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']">');
+							$setup_tpl->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']" />');
 							$setup_tpl->set_var('upgrade','&nbsp;');
 							$status = lang('Please install') . ' - ' . $value['status'];
 						}
@@ -472,8 +472,8 @@
 							$setup_tpl->set_var('bg_color','CCCCFF');
 							$setup_tpl->set_var('install','&nbsp;');
 							// TODO display some info about breakage if you mess with this app
-							$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']">');
-							$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
+							$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
+							$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 							$setup_tpl->set_var('resolution','');
 							$status = lang('Requires upgrade') . ' - ' . $value['status'];
 						}
@@ -482,8 +482,8 @@
 						$setup_tpl->set_var('instimg','incomplete.png');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						$setup_tpl->set_var('install','&nbsp;');
-						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
-						$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']">');
+						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+						$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&version=True">' . lang('Possible Solutions') . '</a>');
 						$status = lang('Version Mismatch') . ' - ' . $value['status'];
 						break;

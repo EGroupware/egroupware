@@ -2,12 +2,12 @@
 %1 is %2%3 !!!	setup	iw	%1 הנו %2%3
 (searching accounts and changing passwords)	setup	iw	(מחפש חשבונות ומשנה סיסמאות)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	iw	אין לעדכן את בסיס הנתונים בעזרת הגדרה,
-<br>(יתכן שייגמר זמן הרצה המירבי ובסיס הנתונים ישאר במצב שאין ממנו חזרה (הנתונים יאבדו
+<br />(יתכן שייגמר זמן הרצה המירבי ובסיס הנתונים ישאר במצב שאין ממנו חזרה (הנתונים יאבדו
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	iw	(Linux-ב /etc-בדרך כלל ב) php.ini-יש לבצע את השינוים ידנית ב
-<br>לעבוד בצורה שלמה eGW-כדי לגרום לך ש
+<br />לעבוד בצורה שלמה eGW-כדי לגרום לך ש
 00 (disable)	setup	iw	00 (בטל/מומלץ)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	iw	זה ייצור חשבון מנהל אחד ושלוש חשבונות דמו
-<br> demo/guest, demo2/guest and demo3/guest :שמות הכניסה / הסיסמאות הנם
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	iw	זה ייצור חשבון מנהל אחד ושלוש חשבונות דמו
+<br /> demo/guest, demo2/guest and demo3/guest :שמות הכניסה / הסיסמאות הנם
 accounts existing	setup	iw	החשבונות קיימות
 actions	setup	iw	פעולות
 add a domain	setup	iw	הוסף דומיין
@@ -52,20 +52,20 @@ available version	setup	iw	גירסה זמינה
 back to the previous screen	setup	iw	חזרה למסך הקודם
 back to user login	setup	iw	חזרה לכניסת המשתמש
 backupwarn	setup	iw	.אבל אנו ממליצים בחום שתגבה את הנתונים שלך במקרה שהסקריפט גורם נזק לנתונים
-<br>.סקריפטים אוטומטים אלה יכולים להרוס את הנתונים שלך בקלות. נא לגבות לפני שתמשיך הלאה
+<br />.סקריפטים אוטומטים אלה יכולים להרוס את הנתונים שלך בקלות. נא לגבות לפני שתמשיך הלאה
 because an application it depends upon was upgraded	setup	iw	מכיוון שיישום בו הוא תלוי שודרג
 because it depends upon	setup	iw	-מכיוון שהוא תלוי ב
 because it is not a user application, or access is controlled via acl	setup	iw	מכיוון שהוא אינו יישום משתמש או שהגישה אלין נחסמה בעזרת רשימת גישה
-because it requires manual table installation, <br>or the table definition was incorrect	setup	iw	,מיכוון שדרוש התקנת טבלאות ידנית
-<br>או שהגדרת הטבלה החתה שגויה
+because it requires manual table installation, <br />or the table definition was incorrect	setup	iw	,מיכוון שדרוש התקנת טבלאות ידנית
+<br />או שהגדרת הטבלה החתה שגויה
 because it was manually disabled	setup	iw	מיכוון שהוא הוגדר לא פעיל ידנית
 because of a failed upgrade or install	setup	iw	בגלל התקנה או שדרוג כושל
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	iw	בגלל שדרוג כושל, או שבסיס הנתונים חדש יותר מאפשר היישום המותקן
 because the enable flag for this app is set to 0, or is undefined	setup	iw	בגלל שדגל הפעיל של יישום זה הנו 0 או שאינו מוגדר כלל
 bottom	setup	iw	תחתית
 cancel	setup	iw	בטל
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	iw	.בגלל מגבלות של הרשאות header.inc.php לא מצליח ליצור את הקובץ
-<br>במקום זאת נסה ל%1 את הקובץ
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	iw	.בגלל מגבלות של הרשאות header.inc.php לא מצליח ליצור את הקובץ
+<br />במקום זאת נסה ל%1 את הקובץ
 change system-charset	setup	iw	שנה את סט התוים של המערכת
 charset	setup	iw	סט התוים
 charset to convert to	setup	iw	סט התוים אליו יש לעבור
@@ -108,10 +108,10 @@ creating tables	setup	iw	יוצר טבלאות
 current system-charset	setup	iw	סט תוים הנוכחי של המערכת
 current system-charset is %1, click %2here%3 to change it.	setup	iw	.סט התוים הנוכחי של המערכת הנו %1, לחץ %2כאן%3 כדי לשנות אותו
 current version	setup	iw	גירסא נוכחית
-currently installed languages: %1 <br>	setup	iw	שפות מותקנות : %1 <br>
+currently installed languages: %1 <br />	setup	iw	שפות מותקנות : %1 <br />
 database successfully converted from '%1' to '%2'	setup	iw	בסיס הנתונים הומר בהצלחה מ-'%1' ל-'%2'
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	iw	פורט תאריך/שעה<br>
-.לפני הגשת עמוד זה firewall-אם נה להגדיר נכון את חוקי ה<br>
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	iw	פורט תאריך/שעה<br />
+.לפני הגשת עמוד זה firewall-אם נה להגדיר נכון את חוקי ה<br />
 (Port: 13 / Host: 129.6.15.28)
 db host	setup	iw	שרת בסיס הנתונים
 db name	setup	iw	שם בסיס הנתונים
@@ -149,16 +149,16 @@ enable for extra debug-messages	setup	iw	נוספות debug לאפשר לקבל�
 enable ldap version 3	setup	iw	גירסה 3 LDAP לאפשר
 enable mcrypt	setup	iw	MCrypt לאפשר
 enter some random text for app session encryption	setup	iw	הכנס טקסט אקראי כלשהו עבור הצפנת יישומים
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	iw	הכנס טקסט אקראי כלשהו עבור הצפנת יישומים
-<br>(MCrypt מחייב)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	iw	.הכנס את המסלול המלא אל קבצים זמניים
-<br>/tmp, C:\TEMP :דוגמאות
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	iw	.הכנס את המסלול המלא אל קבצים של משתמשים וקבוצות
-<br>/files, E:\FILES :דוגמאות
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	iw	הכנס טקסט אקראי כלשהו עבור הצפנת יישומים
+<br />(MCrypt מחייב)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	iw	.הכנס את המסלול המלא אל קבצים זמניים
+<br />/tmp, C:\TEMP :דוגמאות
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	iw	.הכנס את המסלול המלא אל קבצים של משתמשים וקבוצות
+<br />/files, E:\FILES :דוגמאות
 enter the hostname of the machine on which this server is running	setup	iw	הכנס את שם המחשב בו שרת זה רץ
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	iw	eGroupWare של URL-הכנס את מיקום ה
-<br>http://www.domain.com/egroupware &nbsp; או &nbsp; /egroupware :לדוגמא
-<br>ללא קו נטוי בסיום
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	iw	eGroupWare של URL-הכנס את מיקום ה
+<br />http://www.domain.com/egroupware &nbsp; או &nbsp; /egroupware :לדוגמא
+<br />ללא קו נטוי בסיום
 enter the site password for peer servers	setup	iw	הכנס סיסמה עבור שרתים חברים
 enter the site username for peer servers	setup	iw	הכנס שם משתמש עבור שרתים חברים
 enter the title for your site	setup	iw	הכנס כותרת לאתר שלך
@@ -192,7 +192,7 @@ however, the application is otherwise installed	setup	iw	יחד עם זאת, ל�
 however, the application may still work	setup	iw	יחד עם זאת, יתכן שהיישום יפעל
 if no acl records for user or any group the user is a member of	setup	iw	-בחבר אם אין רשומות למשתמש או לכל קבוצה בה הוא חבר בשום רשימת גישה המשתמש יהיה חבר ב
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	iw	רץ במצב בטוח eGroupWare אם
-<br>הוא לא יכול לשנות הגדרות מסוימות בשעת ריצה, וגם לא לטעון מודול שעדיין לא טעונים
+<br />הוא לא יכול לשנות הגדרות מסוימות בשעת ריצה, וגם לא לטעון מודול שעדיין לא טעונים
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	iw	.ליישום אין כל טבלאות מוגדרות . בחירת עדכון אמורה לתקן בעיה זו
 if using ldap	setup	iw	LDAP-אם משתמשים ב
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	iw	?הכניסה shell האם ברצונך לנהל את מחיצות הבית ואת, LDAP-אם משתמשים ב
@@ -241,7 +241,7 @@ makesure	setup	iw	וודא שבסיס הנתונים נוצר ושהרשאות �
 manage applications	setup	iw	ניהול יישומים
 manage languages	setup	iw	ניהול שפות
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	iw	:(זמן הרצה מירבי נקבע כפחות מ-30 (שניות
-<br>זקוק לזמן הרצה מירבי גבוה יותר. תצפה לבעיות לעתים eGroupWare
+<br />זקוק לזמן הרצה מירבי גבוה יותר. תצפה לבעיות לעתים eGroupWare
 maximum account id (e.g. 65535 or 1000000)	setup	iw	(זיהוי חשבון מירבי (למשל 65335 או 100000
 may be broken	setup	iw	יתכן ששבור
 mcrypt algorithm (default tripledes)	setup	iw	(TripleDES ברירת מחדל) MCrypt אלגוריטם של
@@ -271,7 +271,7 @@ no postgresql support found. disabling	setup	iw	הופך ללא זמין .Postgr
 no xml support found. disabling	setup	iw	הופך ללא זמין .XML-לא נמצאה תמיכה ב
 not	setup	iw	אינו
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	iw	.eGroupWare עובדים עם MCrypt לא כל האלגוריטמים ומצבים של
-<br>אם אתה נתקל בבעיות, נסה לכבות אותו
+<br />אם אתה נתקל בבעיות, נסה לכבות אותו
 not complete	setup	iw	לא הושלם
 not completed	setup	iw	לא הסתיים
 not ready for this stage yet	setup	iw	עדיין לא מוכן לשלב זה
@@ -331,9 +331,9 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	iw	לא מצאתי דוגמא של הגדרות, משתמשי בברירות מחדל המובנות
 save	setup	iw	שמור
 save this text as contents of your header.inc.php	setup	iw	header.inc.php-שמור טקסט זה כ
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	iw	.בחר יישום, הכנס גירסת יעד, והגש כדי לטפל בגירסה זו
-<br>אם לא תציין גרסה, רק טבלאות הבסיסיות יותקנו עבור היישום.
-<br><blink>זה קודם יפיל את כל טבלאות היישום</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	iw	.בחר יישום, הכנס גירסת יעד, והגש כדי לטפל בגירסה זו
+<br />אם לא תציין גרסה, רק טבלאות הבסיסיות יותקנו עבור היישום.
+<br /><blink>זה קודם יפיל את כל טבלאות היישום</blink>
 select one...	setup	iw	...בחר אחד
 select the default applications to which your users will have access	setup	iw	.בחר את יישומי ברירת המחדל אליהם למשתמשים שלך תהיה גישה
 select the desired action(s) from the available choices	setup	iw	בחר את הפעולות המבוקשות מהבחירות
@@ -389,9 +389,9 @@ the following applications need to be upgraded:	setup	iw	:יש לשדרג את �
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	iw	(pop3 נדרשת על ידי שני יישומי הדוא"ל (גם אם אתה משתמש בפרוטוקול דוא"ל LDAP הרחבת
 the table definition was correct, and the tables were installed	setup	iw	הגדרות הטבלה נכונות, והטבלאות הותקנו
 the tables	setup	iw	הטבלאות
-there was a problem trying to connect to your ldap server. <br>	setup	iw	שלך LDAP-היתה בעיה בהתחברות לשרת ה
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	iw	שלך LDAP-היתה בעיה בהתחברות לשרת ה
-<br>שלך LDAP-נא לבדוק את הגדרות שרת ה
+there was a problem trying to connect to your ldap server. <br />	setup	iw	שלך LDAP-היתה בעיה בהתחברות לשרת ה
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	iw	שלך LDAP-היתה בעיה בהתחברות לשרת ה
+<br />שלך LDAP-נא לבדוק את הגדרות שרת ה
 this has to be outside the webservers document-root!!!	setup	iw	!זה חייב להיות מחוץ לשורש המסמכים של שרת הווב
 this might take a while, please wait ...	setup	iw	..זה עשוי להמשך זמן מה, המתן בבקשה
 this program will convert your database to a new system-charset.	setup	iw	.תוכנית זו ימיר את בסיס הנתונים שלך לסט תווים מערכתי חדש
@@ -399,9 +399,9 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	iw	שלך LDAP-אל תוך עץ ה eGroupWare חלק זה יעזור לך לייצא משתמשים וקבוצות מטבלאות חשבון של
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	iw	.eGroupWare שלך אל תוך טבלאות חשבון של LDAP-חלק זה יעזור לך לייצא משתמשים וקבוצות מעץ ה
 this section will help you setup your ldap accounts for use with egroupware	setup	iw	eGroupWare-שלך לשימוש ב LDAP-חלק זה יעזור לך להגדיר את חשבונות ה
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	iw	.זה צריך להיות באורך של כ-30 בתים
-<br>.הערה: ברירת המחדל חולל באופן אקראי
-this stage is completed<br>	setup	iw	שלב זה הסתיים<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	iw	.זה צריך להיות באורך של כ-30 בתים
+<br />.הערה: ברירת המחדל חולל באופן אקראי
+this stage is completed<br />	setup	iw	שלב זה הסתיים<br />
 to a version it does not know about	setup	iw	לגירסה לא מוכרת לו
 to setup 1 admin account and 3 demo accounts.	setup	iw	.כדי להגדיר חשבון ניהול אחד ושלושה חשבונות דמו
 top	setup	iw	עליון
@@ -431,11 +431,11 @@ we will automatically update your tables/records to %1	setup	iw	נעדכן או�
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	iw	.נריץ כעת סדרת בדיקות, מה שעלול להארך זמן מה. הקלק על הקישור למטה להמשיך
 welcome to the egroupware installation	setup	iw	eGroupWare ברוך בואך אל התקנת
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	iw	?איזה סוג של ניהול מושבים ברצונך להשתמש 
-<br>?(עשוי להיות בעל ביצועים טובים יותר php4 ניהול מושבים של)
+<br />?(עשוי להיות בעל ביצועים טובים יותר php4 ניהול מושבים של)
 which database type do you want to use with egroupware?	setup	iw	?eGroupWare איזה סוג בסיס נתונים ברצונך להשמש עם
 would you like egroupware to cache the phpgw info array ?	setup	iw	?phpgw יטמין את מערך המידע של eGroupWare-ברצונך ש
-would you like egroupware to check for a new version<br>when admins login ?	setup	iw	יבדוק אם יש גרסה חדשה eGroupWare-ברצונך ש
-<br>כאשר מנהלים נכנסים למערכת
+would you like egroupware to check for a new version<br />when admins login ?	setup	iw	יבדוק אם יש גרסה חדשה eGroupWare-ברצונך ש
+<br />כאשר מנהלים נכנסים למערכת
 would you like to show each application's upgrade status ?	setup	iw	?ברצונך הלציג את סטטוס העדכון של כל יישום
 yes	setup	iw	כן
 you appear to be running version %1 of egroupware	setup	iw	eGroupWare כנראה אתה מריץ גרסה %1 של
@@ -448,14 +448,14 @@ you appear to have oracle support enabled	setup	iw	מאפשרת Oracle-כנרא�
 you appear to have oracle v8 (oci) support enabled	setup	iw	מאפשרת Oracle V8 (OCI)-כנראה שתמיכה ב
 you appear to have postgresql support enabled	setup	iw	מאפשרת PostgreSQL-כנראה שתמיכה ב
 you appear to have xml support enabled	setup	iw	מאפשרת XML-כנראה שתמיכה ב
-you are ready for this stage, but this stage is not yet written.<br>	setup	iw	.אתה מוכן לשלב הזה, אבל השלב הזה עוד לא נכתב<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	iw	.אתה מוכן לשלב הזה, אבל השלב הזה עוד לא נכתב<br />
 you didn't enter a config password for domain %1	setup	iw	לא הכנסת סיסמת קונפיגורציה עבור דומיין %1
 you didn't enter a config username for domain %1	setup	iw	לא הכנסתשם משתמש קונפיגורציה עבור דומיין %1
 you didn't enter a header admin password	setup	iw	לא הכנסת סיסמת ניהול כותרות
 you didn't enter a header admin username	setup	iw	לא הכנסת שם משתמש ניהול כותרות
-you do not have any languages installed. please install one now <br>	setup	iw	אין שום שפה מותקנת. נא להתקין אחת כעת<br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	iw	!שלך header.inc.php-עוד לא יצרת את ה
-<br>אפשר ליצור כזה כעת
+you do not have any languages installed. please install one now <br />	setup	iw	אין שום שפה מותקנת. נא להתקין אחת כעת<br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	iw	!שלך header.inc.php-עוד לא יצרת את ה
+<br />אפשר ליצור כזה כעת
 you have successfully logged out	setup	iw	יצאת מהמערכת בהצלחה
 you must enter a username for the admin	setup	iw	עליך להכניס שם משתמש למנהל
 you need to add some domains to your header.inc.php.	setup	iw	.שלך header.inc.php-עליך להוסיף כמה דוניינים ל
@@ -469,9 +469,9 @@ your database is not working!	setup	iw	!בסיס הנתונים שלך לא פו
 your database is working, but you dont have any applications installed	setup	iw	בסיס הנתונים שלך פועל, אבל לא מותקן שום יישום
 your header admin password is not set. please set it now!	setup	iw	!סיסמה לניהול כותרות לא נקבע. אנא קבע אותו כעת
 your header.inc.php needs upgrading.	setup	iw	.שלך זקוק לעדכון header.inc.php-קובץ ה
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	iw	.שלך זקוק לעדכון header.inc.php-קובץ ה
-<br><blink><b class="msg">אזהרה!</b></blink>
-<br><b>!גבה את החומר</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	iw	.שלך זקוק לעדכון header.inc.php-קובץ ה
+<br /><blink><b class="msg">אזהרה!</b></blink>
+<br /><b>!גבה את החומר</b>
 your tables are current	setup	iw	הטבלאות שלך מעודכנות
 your tables may be altered and you may lose data	setup	iw	.יתכן שהתבלאות שלך ישתנו, ויתכן שתאבד נתומים
 your tables will be dropped and you will lose data	setup	iw	!הטבלאות שלך ייופלו ואתה תאבד נתונים

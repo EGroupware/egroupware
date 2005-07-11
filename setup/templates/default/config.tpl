@@ -2,7 +2,7 @@
 
 <!-- BEGIN header -->
  
-<form method="POST" action="{action_url}">
+<form method="post" action="{action_url}">
 <table align="center" cellspacing="0" border="5" width="90%" >
    <tr class="th">
     <td colspan="2">&nbsp;{title}</td>
@@ -16,23 +16,23 @@
    </tr>
    
    <tr class="row_off">
-    <td>{lang_Enter_the_full_path_for_temporary_files.<br>Examples:_/tmp,_C:\TEMP}:</td>
-    <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40"></td>
+    <td>{lang_Enter_the_full_path_for_temporary_files.<br />Examples:_/tmp,_C:\TEMP}:</td>
+    <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40" /></td>
    </tr>
 
    <tr class="row_on">
-    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br>Examples:_/files,_E:\FILES}:<br><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b><br>{lang_or_http://webdav.domain.com_(WebDAV)}:</td>
-    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40"></td>
+    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br />Examples:_/files,_E:\FILES}:<br /><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b><br />{lang_or_http://webdav.domain.com_(WebDAV)}:</td>
+    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40" /></td>
    </tr>
    
    <tr class="row_off">
-    <td>{lang_Enter_the_full_path_to_the_backup_directory.<br>if_empty:_files_directory}/db_backup:<br><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b></td>
-    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40"></td>
+    <td>{lang_Enter_the_full_path_to_the_backup_directory.<br />if_empty:_files_directory}/db_backup:<br /><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b></td>
+    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40" /></td>
    </tr>
    
    <tr class="row_on">
-    <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br>Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br><b>No_trailing_slash</b>}:</td>
-    <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40"></td>
+    <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br />Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br /><b>No_trailing_slash</b>}:</td>
+    <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40" /></td>
    </tr>
 
    <tr class="row_off">
@@ -66,12 +66,12 @@
 
    <tr class="row_on">
     <td>{lang_Enter_the_hostname_of_the_machine_on_which_this_server_is_running}:</td>
-    <td><input name="newsettings[hostname]" value="{value_hostname}"></td>
+    <td><input name="newsettings[hostname]" value="{value_hostname}" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_Enter_your_default_FTP_server}:</td>
-    <td><input name="newsettings[default_ftp_server]" value="{value_default_ftp_server}"></td>
+    <td><input name="newsettings[default_ftp_server]" value="{value_default_ftp_server}" /></td>
    </tr>
 
    <tr class="row_on">
@@ -85,7 +85,7 @@
    </tr>
 <!-- this is not working correct
    <tr class="row_off">
-    <td>{lang_Datetime_port.<br>If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br>(Port:_13_/_Host:_129.6.15.28)}</td>
+    <td>{lang_Datetime_port.<br />If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br />(Port:_13_/_Host:_129.6.15.28)}</td>
     <td>
       <select name="newsettings[daytime_port]">
        <option value="00"{selected_daytime_port_00}>{lang_00_(disable)}</option>
@@ -97,33 +97,33 @@
 -->
    <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server}:</td>
-    <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}"></td>
+    <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_port}:</td>
-    <td><input name="newsettings[httpproxy_port]" value="{value_httpproxy_port}"></td>
+    <td><input name="newsettings[httpproxy_port]" value="{value_httpproxy_port}" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server_username}:</td>
-    <td><input name="newsettings[httpproxy_server_username]" value="{value_httpproxy_server_username}"></td>
+    <td><input name="newsettings[httpproxy_server_username]" value="{value_httpproxy_server_username}" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_password}:</td>
-    <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}"></td>
+    <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}" /></td>
    </tr>
 
 <!-- until they are working
    <tr class="row_off">
     <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
-    <td><input name="newsettings[site_username]" value="{value_site_username}"></td>
+    <td><input name="newsettings[site_username]" value="{value_site_username}" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Enter_the_site_password_for_peer_servers}.</td>
-    <td><input type="password" name="newsettings[site_password]" value="{value_site_password}"></td>
+    <td><input type="password" name="newsettings[site_password]" value="{value_site_password}" /></td>
    </tr>
 -->
 
@@ -197,21 +197,21 @@
    <tr class="row_on">
     <td>{lang_Allowed_migration_types_(comma-separated)}:</td>
     <td>
-      <input name="newsettings[pwd_migration_types]" value="{value_pwd_migration_types}" size="20">
+      <input name="newsettings[pwd_migration_types]" value="{value_pwd_migration_types}" size="20" />
     </td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_Minimum_account_id_(e.g._500_or_100,_etc.)}:</td>
-    <td><input name="newsettings[account_min_id]" value="{value_account_min_id}"></td>
+    <td><input name="newsettings[account_min_id]" value="{value_account_min_id}" /></td>
    </tr>
    <tr class="row_on">
     <td>{lang_Maximum_account_id_(e.g._65535_or_1000000)}:</td>
-    <td><input name="newsettings[account_max_id]" value="{value_account_max_id}"></td>
+    <td><input name="newsettings[account_max_id]" value="{value_account_max_id}" /></td>
    </tr>
    <tr class="row_off">
     <td>{lang_User_account_prefix}:</td>
-    <td><input name="newsettings[account_prefix]" value="{value_account_prefix}"></td>
+    <td><input name="newsettings[account_prefix]" value="{value_account_prefix}" /></td>
    </tr>
 
    <tr class="row_on">
@@ -249,7 +249,7 @@
 
    <tr class="row_off">
     <td>{lang_Add_auto-created_users_to_this_group_('Default'_will_be_attempted_if_this_is_empty.)}:</td>
-    <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}"></td>
+    <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}" /></td>
    </tr>
 
    <tr class="row_on">
@@ -285,42 +285,42 @@
 
    <tr class="row_on">
     <td>{lang_LDAP_Default_homedirectory_prefix_(e.g._/home_for_/home/username)}:</td>
-    <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}"></td>
+    <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_Default_shell_(e.g._/bin/bash)}:</td>
-    <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}"></td>
+    <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_LDAP_host}:</td>
-    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}"></td>
+    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_accounts_context}:</td>
-    <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40"></td>
+    <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_LDAP_search_filter_for_accounts,_default:_"(uid=%user)",_%domain=eGW-domain}:</td>
-    <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="40"></td>
+    <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="40" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_groups_context}:</td>
-    <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
+    <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_LDAP_rootdn} {lang_(searching_accounts_and_changing_passwords)}:</td>
-    <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
+    <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_root_password}:</td>
-    <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
+    <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}" /></td>
    </tr>
 
    <tr class="row_on">
@@ -351,11 +351,11 @@
    </tr>
    <tr class="row_off">
      <td>{lang_Host/IP_Domain_controler}:</td>
-     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40"></td>
+     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40" /></td>
    </tr>
    <tr class="row_on">
      <td>{lang_Domain_name}:</td>
-     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40"></td>
+     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
    </tr>
 
   <tr class="row_off">
@@ -368,7 +368,7 @@
 
    <tr class="row_on">
     <td>{lang_Enter_some_random_text_for_app_session_encryption}:</td>
-    <td><input name="newsettings[encryptkey]" value="{value_encryptkey}" size="40"></td>
+    <td><input name="newsettings[encryptkey]" value="{value_encryptkey}" size="40" /></td>
    </tr>
 
    <tr class="row_off">
@@ -398,7 +398,7 @@
    <tr class="row_on">
     <td>
 	{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:
-	<br>
+	<br />
 	({lang_file_type,_size,_version,_etc.})
     </td>
     <td>
@@ -412,7 +412,7 @@
    <tr class="row_off">
     <td>
 	{lang_Select_where_you_want_to_store/retrieve_file_contents}:
-	<br>
+	<br />
 	({lang_Recommended:_Filesystem})
     </td>
     <td>
@@ -438,8 +438,8 @@
   </tr>
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" name="submit" value="Submit">
-      <input type="submit" name="cancel" value="Cancel">
+      <input type="submit" name="submit" value="Submit" />
+      <input type="submit" name="cancel" value="Cancel" />
     </td>
   </tr>
 </table>

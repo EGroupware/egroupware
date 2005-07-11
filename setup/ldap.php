@@ -47,7 +47,7 @@
 
 	if ($GLOBALS['error'])
 	{
-		//echo '<br><center><b>Error:</b> '.$error.'</center>';
+		//echo '<br /><center><b>Error:</b> '.$error.'</center>';
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$GLOBALS['error']);
 	}
 

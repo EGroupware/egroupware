@@ -5,7 +5,7 @@
 00 (disable)	setup	hr	00 (disable / recomended)
 13 (ntp)	setup	hr	13 (ntp)
 80 (http)	setup	hr	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	hr	<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	hr	<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	hr	Accounts existing
 actions	setup	hr	Actions
 add a domain	setup	hr	Add a domain
@@ -49,18 +49,18 @@ auto-created user accounts expire	setup	hr	Auto-created user accounts expire
 available version	setup	hr	Available Version
 back to the previous screen	setup	hr	Back to the previous screen
 back to user login	setup	hr	Back to user login
-backupwarn	setup	hr	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
+backupwarn	setup	hr	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong><br /><em>Please backup before going any further!</em>
 because an application it depends upon was upgraded	setup	hr	because an application it depends upon was upgraded
 because it depends upon	setup	hr	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	hr	because it is not a user application, or access is controlled via acl
-because it requires manual table installation, <br>or the table definition was incorrect	setup	hr	because it requires manual table installation, <br>or the table definition was incorrect
+because it requires manual table installation, <br />or the table definition was incorrect	setup	hr	because it requires manual table installation, <br />or the table definition was incorrect
 because it was manually disabled	setup	hr	because it was manually disabled
 because of a failed upgrade or install	setup	hr	because of a failed upgrade or install
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	hr	because of a failed upgrade, or the database is newer than the installed version of this app
 because the enable flag for this app is set to 0, or is undefined	setup	hr	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	hr	bottom
 cancel	setup	hr	Cancel
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	hr	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	hr	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 the file.
 change system-charset	setup	hr	Change system-charset
 charset	setup	hr	ISO-8859-1
 charset to convert to	setup	hr	Charset to convert to
@@ -103,9 +103,9 @@ creating tables	setup	hr	Creating Tables
 current system-charset	setup	hr	Current system-charset
 current system-charset is %1, click %2here%3 to change it.	setup	hr	Current system-charset is %1, click %2here%3 to change it.
 current version	setup	hr	Current Version
-currently installed languages: %1 <br>	setup	hr	Currently installed languages: %1 <br>
+currently installed languages: %1 <br />	setup	hr	Currently installed languages: %1 <br />
 database successfully converted from '%1' to '%2'	setup	hr	Database successfully converted from '%1' to '%2'
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	hr	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	hr	Datetime port.<br />If using port 13, please set firewall rules appropriately before submitting this page.<br />(Port: 13 / Host: 129.6.15.28)
 db host	setup	hr	DB Host
 db name	setup	hr	DB Name
 db password	setup	hr	DB Password
@@ -142,11 +142,11 @@ enable for extra debug-messages	setup	hr	enable for extra debug-messages
 enable ldap version 3	setup	hr	Enable LDAP Version 3
 enable mcrypt	setup	hr	Enable MCrypt
 enter some random text for app session encryption	setup	hr	Enter some random text for app session encryption
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	hr	Enter some random text for app_session <br>encryption (requires mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	hr	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	hr	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	hr	Enter some random text for app_session <br />encryption (requires mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	hr	Enter the full path for temporary files.<br />Examples: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	hr	Enter the full path for users and group files.<br />Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	hr	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	hr	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	hr	Enter the location of eGroupWare's URL.<br />Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>No trailing slash</b>
 enter the site password for peer servers	setup	hr	Enter the site password for peer servers
 enter the site username for peer servers	setup	hr	Enter the site username for peer servers
 enter the title for your site	setup	hr	Enter the title for your site
@@ -318,7 +318,7 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	hr	Sample configuration not found. using built in defaults
 save	setup	hr	Save
 save this text as contents of your header.inc.php	setup	hr	Save this text as contents of your header.inc.php
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	hr	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	hr	Select an app, enter a target version, then submit to process to that version.<br />If you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select one...	setup	hr	select one...
 select the default applications to which your users will have access	setup	hr	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	hr	Select the desired action(s) from the available choices
@@ -376,8 +376,8 @@ the imap extension is needed by the two email apps (even if you use email with p
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	hr	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the table definition was correct, and the tables were installed	setup	hr	The table definition was correct, and the tables were installed
 the tables	setup	hr	the tables
-there was a problem trying to connect to your ldap server. <br>	setup	hr	There was a problem trying to connect to your LDAP server. <br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	hr	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
+there was a problem trying to connect to your ldap server. <br />	setup	hr	There was a problem trying to connect to your LDAP server. <br />
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	hr	There was a problem trying to connect to your LDAP server. <br />please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	hr	This has to be outside the webservers document-root!!!
 this might take a while, please wait ...	setup	hr	This might take a while, please wait ...
 this program will convert your database to a new system-charset.	setup	hr	This program will convert your database to a new system-charset.
@@ -385,8 +385,8 @@ this program will help you upgrade or install different languages for egroupware
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	hr	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	hr	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
 this section will help you setup your ldap accounts for use with egroupware	setup	hr	This section will help you setup your LDAP accounts for use with eGroupWare
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	hr	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
-this stage is completed<br>	setup	hr	This stage is completed<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	hr	This should be around 30 bytes in length.<br />Note: The default has been randomly generated.
+this stage is completed<br />	setup	hr	This stage is completed<br />
 to a version it does not know about	setup	hr	to a version it does not know about
 to setup 1 admin account and 3 demo accounts.	setup	hr	to setup 1 admin account and 3 demo accounts.
 top	setup	hr	top
@@ -422,13 +422,13 @@ which database type do you want to use with egroupware?	setup	hr	Which database 
 world readable	setup	hr	world readable
 world writable	setup	hr	world writable
 would you like egroupware to cache the phpgw info array ?	setup	hr	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br>when admins login ?	setup	hr	Would you like eGroupWare to check for a new version<br>when admins login ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	hr	Would you like eGroupWare to check for a new version<br />when admins login ?
 would you like to show each application's upgrade status ?	setup	hr	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	hr	writable by the webserver
 write config	setup	hr	Write config
 yes	setup	hr	Yes
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	hr	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	hr	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	hr	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	hr	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	hr	You appear to be running version %1 of eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	hr	You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later
 you appear to be using php3. disabling php4 sessions support	setup	hr	You appear to be using PHP3. Disabling PHP4 sessions support
@@ -439,13 +439,13 @@ you appear to have oracle support enabled	setup	hr	You appear to have Oracle sup
 you appear to have oracle v8 (oci) support enabled	setup	hr	You appear to have Oracle V8 (OCI) support enabled
 you appear to have postgresql support enabled	setup	hr	You appear to have PostgreSQL support enabled
 you appear to have xml support enabled	setup	hr	You appear to have XML support enabled
-you are ready for this stage, but this stage is not yet written.<br>	setup	hr	You are ready for this stage, but this stage is not yet written.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	hr	You are ready for this stage, but this stage is not yet written.<br />
 you didn't enter a config password for domain %1	setup	hr	You didn't enter a config password for domain %1
 you didn't enter a config username for domain %1	setup	hr	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	hr	You didn't enter a header admin password
 you didn't enter a header admin username	setup	hr	You didn't enter a header admin username
-you do not have any languages installed. please install one now <br>	setup	hr	You do not have any languages installed. Please install one now <br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	hr	You have not created your header.inc.php yet!<br> You can create it now.
+you do not have any languages installed. please install one now <br />	setup	hr	You do not have any languages installed. Please install one now <br />
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	hr	You have not created your header.inc.php yet!<br /> You can create it now.
 you have successfully logged out	setup	hr	You have successfully logged out
 you must enter a username for the admin	setup	hr	You must enter a username for the admin
 you need to add some domains to your header.inc.php.	setup	hr	You need to add some domains to your header.inc.php.
@@ -460,7 +460,7 @@ your database is not working!	setup	hr	Your Database is not working!
 your database is working, but you dont have any applications installed	setup	hr	Your database is working, but you dont have any applications installed
 your header admin password is not set. please set it now!	setup	hr	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	hr	Your header.inc.php needs upgrading.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	hr	Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	hr	Your header.inc.php needs upgrading.<br /><blink><b class="msg">WARNING!</b></blink><br /><b>MAKE BACKUPS!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	hr	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.
 your tables are current	setup	hr	Your tables are current
 your tables may be altered and you may lose data	setup	hr	Your tables may be altered and you may lose data.
