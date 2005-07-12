@@ -3,12 +3,11 @@
    * eGroupWare                                                               *
    * http://www.egroupware.org                                                *
    * --------------------------------------------                             *
-   *  This program is free software; you can redistribute it and/or modify it *
-   *  under the terms of the GNU General Public License as published by the   *
-   *  Free Software Foundation; either version 2 of the License, or (at your  *
-   *  option) any later version.                                              *
+   * This program is free software; you can redistribute it and/or modify it *
+   * under the terms of the GNU General Public License as published by the   *
+   * Free Software Foundation; either version 2 of the License, or (at your  *
+   * option) any later version.                                              *
    \**************************************************************************/
-
 
    /*
    * parse_navbar
@@ -19,6 +18,8 @@
    */
    function parse_navbar($force = False)
    {
+
+	  $GLOBALS['phpgw']->preferences->read_repository();
 
 	  $GLOBALS['idots2_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	  $GLOBALS['idots2_tpl']->set_file(
@@ -41,7 +42,7 @@
 	  $GLOBALS['idots2_tpl']->set_block('navbar','show_clock','show_clock');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','no_clock','no_clock');
 
-	  
+
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_container','sidebox_container');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_container_footer','sidebox_container_footer');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','sidebox_set_open','sidebox_set_open');
@@ -53,7 +54,7 @@
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_sidebox_block_row_raw','extra_sidebox_block_row_raw');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_sidebox_block_row_no_link','extra_sidebox_block_row_no_link');
 
-	 
+
 	  $GLOBALS['idots2_tpl']->set_block('navbar','menu_header','menu_header');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_row','extra_block_row');
 	  $GLOBALS['idots2_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
@@ -317,25 +318,26 @@
 
 		 $GLOBALS['idots2_tpl']->pfp('out','navbar_header_end');
 
-		 /******************************************************\
-		 * The menu's                                           *
-		 \******************************************************/
 	  }
+	  // its an application, create a window
 	  else 
 	  {
-		 $GLOBALS['phpgw']->preferences->read_repository();
 
-/*		 foreach($GLOBALS['phpgw_info']['user']['apps'] as $name => $data)
+		 //this checks if the rootwindow exist
+		 $var['rooturl'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/index.php?cd=yes';
+
+		 //set some shortcut vars
+		 $current_app= $GLOBALS['phpgw_info']['flags']['currentapp'];
+		 $current_app_title=	$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']; 
+
+		 //		 _debug_array($GLOBALS['phpgw_info']['flags']['currentapp']);
+		 //		 _debug_array($GLOBALS['egw']->hooks->found_hooks[$current_app]); 
+		 //		 die();
+		 if($GLOBALS['egw']->hooks->found_hooks[$current_app]['sidebox_menu'])
 		 {
-			if($data['title'] == $title) {
-			   $state['name'] = $name;
-			   $GLOBALS['phpgw']->preferences->change('phpgwapi','sidebox_state'.$name,$state);
-			   $GLOBALS['phpgw']->preferences->save_repository(True);
-			   break;
-			}
+			$sidebox_enabled=true;
 		 }
-		 */
-		 
+
 		 // build the menu
 		 $menu=array();
 		 $menu['Window'] = array(
@@ -343,23 +345,27 @@
 			   'text'    => lang('%1 start',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
 			   'no_lang' => True,
 			   'link'    => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/'.$GLOBALS['phpgw_info']['flags']['currentapp'].'/index.php'
-		 ),
-		 array(
+			),
+			array(
 			   'text'    => lang('Refresh'),
 			   'no_lang' => True,
 			   'link'    => 'javascript:document.location=document.location'
 			),
-			array(
+		 );
+
+		 if($sidebox_enabled)
+		 {
+			$menu['Window'][] =  array(
 			   'text'    => lang('Open sidebox'),
 			   'no_lang' => True,
 			   'link'    => 'javascript:sidebox_open()'
-			),
-			array(
+			);
+			$menu['Window'][] =  array(
 			   'text'    => lang('Close sidebox'),
 			   'no_lang' => True,
 			   'link'    => 'javascript:sidebox_close()'
-			),
-		 );
+			);
+		 }
 
 		 $menu['Help'] = array(
 			array(
@@ -374,7 +380,6 @@
 			array(
 			   'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
 			   'no_lang' => True,
-			   //'link'    => 'javascript:parent.openX(\'about\',\''.$GLOBALS['phpgw_info']['navbar']['about']['url'].'\')'
 			   'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
 			),
 			array(
@@ -395,28 +400,19 @@
 
 		 $GLOBALS['idots2_tpl']->set_var($var);
 		 $menu_from_app = $GLOBALS['phpgw']->hooks->single('menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
-		 //_debug_array($menu_new);
-		 //die();
 		 if(is_array($menu_from_app)) 
 		 {
-		 $menu = array_merge($menu_from_app,$menu);					 
+			$menu = array_merge($menu_from_app,$menu);					 
 		 }
-		 /*		 else
-		 {
-			$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
-			display_sidebox('',$menu_title,$menu_help);
-		 }
-		 */
 
 		 foreach($menu as $menu_title =>$menu)
 		 {
-		 display_textmenu('',$menu_title,$menu);
+			display_textmenu('',$menu_title,$menu);
 		 }
 
 		 $GLOBALS['idots2_tpl']->pparse('out','end_appbox');
 
 		 //build the toolbar
-		 
 		 $toolbar = Array();
 		 $toolbar['refresh'] = Array(
 			'title' => "Refresh",
@@ -424,48 +420,63 @@
 			'url'=>'javascript:document.location=document.location'
 		 );
 
+		 if($sidebox_enabled)
+		 {
+			$toolbar['opensidebox'] = Array(
+			   'title' => "Open sidebox",
+			   'image'   => 'open_sidebox.png',
+			   'url'=>'javascript:sidebox_open()'
+			);
+			$toolbar['closesidebox'] = Array(
+			   'title' => "Open sidebox",
+			   'image'   => 'close_sidebox.png',
+			   'url'=>'javascript:sidebox_close()'
+			);
+		 }
+
 		 //Is there a toolbar hooked in this application
 		 $toolbar_from_app = $GLOBALS['phpgw']->hooks->single('toolbar',$GLOBALS['phpgw_info']['flags']['currentapp']);
 		 if(is_array($toolbar_from_app) && count($toolbar_from_app) > 0) 
 		 {
-			$toolbar = array_merge($toolbar_from_app,$toolbar);					 
+			$toolbar['sep'] = '';
+			$toolbar = array_merge($toolbar,$toolbar_from_app);					 
 		 }
 
 		 display_toolbar($toolbar);
 
-		 
 		 //build the sidebox
-		 $menu_title = lang('General Menu');
-
-		 $file['Home'] = $GLOBALS['egw_info']['navbar']['home']['url'];
-		 if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		 if($sidebox_enabled)
 		 {
-			$file['Preferences'] = $GLOBALS['egw_info']['navbar']['preferences']['url'];
+			$menu_title = lang('General Menu');
+
+			$file['Home'] = $GLOBALS['egw_info']['navbar']['home']['url'];
+			if($GLOBALS['egw_info']['user']['apps']['preferences'])
+			{
+			   $file['Preferences'] = $GLOBALS['egw_info']['navbar']['preferences']['url'];
+			}
+			$file += array(
+			   array(
+				  'text'    => lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']),
+				  'no_lang' => True,
+				  'link'    => $GLOBALS['egw_info']['navbar']['about']['url']
+			   ),
+			   'Logout'=>$GLOBALS['egw_info']['navbar']['logout']['url']
+			);
+			$var['menu_link'] = '';
+			$var['remove_padding'] = '';
+			$var['current_app'] = $GLOBALS['egw_info']['flags']['currentapp'];
+			$GLOBALS['idots2_tpl']->set_var($var);
+
+			$GLOBALS['idots2_tpl']->pparse('out','sidebox_container');
+
+			$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
+
+			$GLOBALS['idots2_tpl']->pparse('out','sidebox_container_footer');
 		 }
-		 $file += array(
-			array(
-			   'text'    => lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']),
-			   'no_lang' => True,
-			   'link'    => $GLOBALS['egw_info']['navbar']['about']['url']
-			),
-			'Logout'=>$GLOBALS['egw_info']['navbar']['logout']['url']
-		 );
-		 $var['menu_link'] = '';
-		 $var['remove_padding'] = '';
-		 $var['current_app'] = $GLOBALS['egw_info']['flags']['currentapp'];
-		 $GLOBALS['idots2_tpl']->set_var($var);
-		 
-		 $GLOBALS['idots2_tpl']->pparse('out','sidebox_container');
-
-		 $GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
-
-		 $GLOBALS['idots2_tpl']->pparse('out','sidebox_container_footer');
-
 
 		 $GLOBALS['idots2_tpl']->pparse('out','navbar_footer');
-		 
 		 // get sidebox state and set it with js
-		 if($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi']['sidebox_'.$GLOBALS['phpgw_info']['flags']['currentapp']]!='close')
+		 if($sidebox_enabled && $GLOBALS['phpgw_info']['user']['preferences']['phpgwapi']['sidebox_'.$GLOBALS['phpgw_info']['flags']['currentapp']]!='close')
 		 {
 			$GLOBALS['idots2_tpl']->pparse('out','sidebox_set_open');
 		 }
@@ -483,12 +494,11 @@
 	  return;
    }
 
-
    /*
    * display_toolbar
    * 
    * The toolbar
-   * 
+   * @todo toggle buttons, better lay-out hover and active 
    */
    function display_toolbar($toolbar) {
 	  $GLOBALS['idots2_tpl']->pparse('out','begin_toolbar');
@@ -499,7 +509,8 @@
 			$GLOBALS['idots2_tpl']->set_var($item);
 			$GLOBALS['idots2_tpl']->pfp('out','toolbar_item');
 		 }
-		 else {
+		 else 
+		 {
 			$GLOBALS['idots2_tpl']->pparse('out','toolbar_seperator');
 		 }
 	  }

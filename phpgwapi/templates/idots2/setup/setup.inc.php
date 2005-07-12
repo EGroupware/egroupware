@@ -20,7 +20,8 @@
 	$GLOBALS['egw_info']['template']['idots2']['icon'] = "phpgwapi/templates/idots2/images/logo-idots.png";
 	$GLOBALS['egw_info']['template']['idots2']['maintainer'] = array(
 		array('name' => 'Edo van Bruggen', 'email' => 'edovanbruggen@raketnet.nl'),
-		array('name' => 'Rob van Kraanen', 'email' => 'rvkraanen@gmail.com')
+		array('name' => 'Rob van Kraanen', 'email' => 'rvkraanen@gmail.com'),
+		array('name' => 'Pim Snel', 'email' => 'pim@lingewoud.nl')
 	);
 
 	$GLOBALS['egw_info']['template']['idots2']['description'] = "

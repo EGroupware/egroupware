@@ -1,6 +1,6 @@
 <!-- BEGIN xdesktop_header -->
 <script type='text/javascript'>
-
+var rootwindow=true;
 var xDT = new xDesktop();
 var clock_set = '{clock}';
 var clock_show = '{clock_show}';
@@ -21,7 +21,6 @@ var color_text_sc = '{color_text_sc}';
 showShortcuts('{appTitles}', '{appUrls}', '{appImgs}','{appTop}','{appLeft}','{appType}','{appName}','{strXmlUrl}');
 initSizes('{sizeTitles}', '{sizeWidth}', '{sizeHeight}');
 
-			
 function start() {
 	xDT.resPath('{template_dir}/js/x-desktop/xDT/'); 
 	xDT.desktop.init();
@@ -33,7 +32,6 @@ function start() {
 		openX(default_title, default_app); 
 	
 	}
-	
 }
 
 </script>
@@ -132,13 +130,13 @@ function start() {
 
 <!-- BEGIN toolbar_item -->
 
-<a href="{url}" onmouseout="this.style.border='1px solid #e5e5e5';" onmouseover="'this.style.border=1px outset #FFF';" onmousedown="this.style.border='1px inset #FFF';" style="background-image: url({image})"></a>
+<a href="{url}" onmouseout="this.style.border='1px solid #e5e5e5';" onmouseover="'this.style.border=1px outset #aaa';" onmousedown="this.style.border='1px inset #fff';" style="width:18px;height:18px;background-image: url({image})"></a>
 
 <!-- END toolbar_item -->
 
 
 <!-- BEGIN toolbar_seperator -->
-
+<div style="float:left;width:1px;height:19px;margin-top:3px;margin-left:2px;margin-right:3px;border-right:solid 1px #aaaaaa"></div>
 <!-- END toolbar_seperator -->
 
 
@@ -236,6 +234,12 @@ sidebox_open();
 
 
 <!-- BEGIN menu_header -->
+   <script type=text/javascript>
+if(!parent.rootwindow)
+{
+   parent.location.href='{rooturl}';
+}
+</script>
 
 	<li onclick="itemClick(event);" onmouseover="itemHover(event);"> <a href="javascript:void(0);">{lang_title}</a>
 	<ul>
