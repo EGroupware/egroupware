@@ -307,7 +307,7 @@ function mouseUp(id,e)
         y2 = findPosY(mObj);
         x2 = findPosX(mObj);
         mObj.onmousemove = "";
-        strXmlUrl2 = strXmlUrl +  "write_shortcut_setting.php?id=" + id + "&top=" + y2 + "&left=" + x2;
+		strXmlUrl2 = strXmlUrl +  "/write_settings.php?action=shortcut_sets&id=" + id + "&top=" + y2 + "&left=" + x2;
         createPos(mObj, x2,y2);
         if (window.XMLHttpRequest)
         {

@@ -30,7 +30,6 @@ function start() {
 	idotsW = "xD" + new Date().getUTCMilliseconds();
 	if(default_app != "") {
 		openX(default_title, default_app); 
-	
 	}
 }
 
@@ -41,7 +40,7 @@ function start() {
 
 <!-- BEGIN show_clock -->
 
-<div id="taskbar"><IMG SRC="{iconpath}/launch.png" onClick="displayLaunch();" id="launch"><div id="tb" OnClick="sdt();"><img src="{iconpath}/show_desktop.png"></div><div id="tasks"></div><div id="clock" onclick="openX('{calendarTitle}', 'calendar/index.php');"></div></div>
+<div id="taskbar"><img src="{iconpath}/launch.png" onClick="displayLaunch();" id="launch"><div id="tb" OnClick="sdt();"><img src="{iconpath}/show_desktop.png"></div><div id="tasks"></div><div id="clock" onclick="openX('{calendarTitle}', 'calendar/index.php');"></div></div>
 <a id="warning" onClick="warning();">
 	<img src="{serverpath}/phpgwapi/templates/idots2/js/x-desktop/xDT/skins/IDOTS2/idea.png" alt="New notification">
 </a>
@@ -51,7 +50,7 @@ function start() {
 
 <!-- BEGIN no_clock -->
 
-<div id="taskbar"><IMG SRC="{iconpath}/launch.png" onClick="displayLaunch();" id="launch"><div id="tb" OnClick="sdt();"><img src="{iconpath}/show_desktop.png"></div><div id="tasks"></div></div>
+<div id="taskbar"><img src="{iconpath}/launch.png" onClick="displayLaunch();" id="launch"><div id="tb" OnClick="sdt();"><img src="{iconpath}/show_desktop.png"></div><div id="tasks"></div></div>
 <a id="warning" class="noclock" onClick="warning();">
 	<img src="{serverpath}/phpgwapi/templates/idots2/js/x-desktop/xDT/skins/IDOTS2/idea.png" alt="New notification">
 </a>
@@ -185,7 +184,7 @@ sidebox_open();
 
 <div class="sidebox">
 <div class="sidebox_title">{lang_title}</div>
-<table style="width:100%">
+<table style="width:100%;background-color:#eeeeee;">
 <!-- END sidebox -->
 
 <!-- BEGIN sidebox_footer -->

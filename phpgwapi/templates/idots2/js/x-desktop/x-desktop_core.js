@@ -225,8 +225,10 @@ function xDesktop(respath,sdt,maxwin,_fmain) {                 // resourcepath, 
   wHeight = ChooseSize(wHeight);
   (wWidth > 0 && wWidth <= 10000) ? wWidth = wWidth : wWidth = 300;
   (wHeight > 0 && wHeight <= 10000) ? wHeight = wHeight : wHeight = 200;
-  _property(wName,"wWidth",wWidth);                                                        // default window width
-  _property(wName,"wHeight",wHeight);                                                        // default window height
+//  _property(wName,"wWidth",wWidth);  //fixme this must be set in preferences // default window width
+//  _property(wName,"wHeight",wHeight); //fixme this must be set in preferences // default window height
+  _property(wName,"wWidth",300);  //fixme this must be set in preferences // default window width
+  _property(wName,"wHeight",200); //fixme this must be set in preferences // default window height
   _property(wName,"wWidthOrg",_property(wName,"wWidth"));                                // save Org width Value
   _property(wName,"wHeightOrg",_property(wName,"wHeight"));                                // save Org height Values
   _cbe(wName).resizeTo(wWidth,wHeight);
@@ -238,8 +240,9 @@ function xDesktop(respath,sdt,maxwin,_fmain) {                 // resourcepath, 
   _property(wName,"zIndex",p_zIndex);
   _setSkin(wName,wSkin);
   _cbe(wName).zIndex(p_zIndex);
-        _taskbar();
-  return wName;
+  _taskbar();
+  _resizeWindow(wName,wWidth,wHeight,wPos); // workaround
+ return wName;
  }
  function _resizeWindow(wName,wWidth,wHeight,wPos) {
   if (! xDTwin.window(wName)) return;

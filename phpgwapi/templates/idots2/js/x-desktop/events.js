@@ -153,7 +153,7 @@ function saveSize(idotsName) {
 	w = xDT.prop(idotsName, 'wWidth');
 	h = xDT.prop(idotsName, 'wHeight');
 	
-	url = strXmlUrl + "/write_size.php?title=" + title + "&w="  + w + "&h="  + h;
+	url = strXmlUrl + "/write_settings.php?action=write_size&title=" + title + "&w="  + w + "&h="  + h;
 	var found = false;
 	for(i = 0; i < aTitle.length; i++)
 	{

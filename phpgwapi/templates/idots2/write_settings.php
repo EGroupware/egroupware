@@ -11,7 +11,7 @@
    *  Free Software Foundation; either version 2 of the License, or (at your  *
    *  option) any later version.                                              *
    \**************************************************************************/
-   
+
    //todo move shortcutsetting and size also to this file
 
    $phpgw_info = array();
@@ -21,7 +21,7 @@
 	  'disable_Template_class' => True,
 	  'currentapp' => 'notifywindow'
    );
-   
+
    include('../../../header.inc.php');
    header("Content-type: text/xml");
    header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); 
@@ -48,6 +48,49 @@
 		 }
 	  }
    }
+   elseif($_GET[action]=='shortcut_sets')
+   {
+	  $id = $_GET["id"];
+	  $top = $_GET["top"];
+	  $left = $_GET["left"];
+	  echo $id." ".$top."  ".$left;
+	  $GLOBALS['phpgw']->preferences->read_repository();
+	  if($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi'])
+	  {
+		 foreach($GLOBALS['phpgw_info']['user']['preferences']['phpgwapi'] as $shortcut => $shortcut_data)
+		 {
+			if($shortcut_data['title'] == $id)
+			{
+			   $shortcut_data['top'] = $top;
+			   $shortcut_data['left'] = $left;
+			   $GLOBALS['phpgw']->preferences->change('phpgwapi',$shortcut,$shortcut_data);
+			   $GLOBALS['phpgw']->preferences->save_repository(True);
+			}
+		 }
+	  }
+   }
+   elseif($_GET[action]=='write_size')
+   {
+
+	  $title = $_GET["title"];
+	  $width = $_GET["w"];
+	  $height= $_GET["h"];
+	  echo $title." ".$width."  ".$height;
+	  $GLOBALS['phpgw']->preferences->read_repository();
+
+	  foreach($GLOBALS['phpgw_info']['user']['apps'] as $name => $data)
+	  {
+		 if($data['title'] == $title) {
+			$size['name'] = $name;
+			$size['width'] = $width;
+			$size['height'] = $height;
+			$GLOBALS['phpgw']->preferences->change('phpgwapi','size_'.$name,$size);
+			$GLOBALS['phpgw']->preferences->save_repository(True);
+		 }
+	  }
+
+
+   }
    echo "</response>"; 
-   
+
 ?>

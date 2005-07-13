@@ -323,7 +323,7 @@
 	  else 
 	  {
 
-		 //this checks if the rootwindow exist
+		 //this is the url to goto when rootwindow not exist
 		 $var['rooturl'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/index.php?cd=yes';
 
 		 //set some shortcut vars
