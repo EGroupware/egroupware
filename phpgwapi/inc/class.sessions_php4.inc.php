@@ -131,7 +131,7 @@
 				
 				if (isset($sessions[$sessionid]))
 				{
-					//echo "<p>session_php4::destroy($session_id): unlink('".$sessions[$sessionid]['php_session_file'].")</p>\n";
+					//echo "<p>session_php4::destroy($session_id): unlink('".$sessions[$sessionid]['php_session_file']."')</p>\n";
 					@unlink($sessions[$sessionid]['php_session_file']);
 				}
 			}
@@ -240,6 +240,7 @@
 					}
 					$session = unserialize(substr($session,1+strlen(EGW_SESSION_VAR)));
 					unset($session['app_sessions']);	// not needed, saves memory
+					$session['php_session_file'] = $path . '/' . $file;
 					$session_cache[$file] = $session;
 
 					if($session['session_flags'] == 'A' || !$session['session_id'] ||
@@ -257,8 +258,10 @@
 						$session_cache[$file] = false;
 						continue;
 					}
-					$session['php_session_file'] = $path . '/' . $file;
 				}
+				// ignore (empty) login sessions created by IE and konqueror, when clicking on [login] (double submission of the form)
+				if ($session['session_action'] == $GLOBALS['egw_info']['server']['webserver_url'].'/login.php') continue;
+
 				//echo "file='$file'=<pre>"; print_r($session); echo "</pre>"; 
 				$values[$session['session_id']] = $session;
 			}
