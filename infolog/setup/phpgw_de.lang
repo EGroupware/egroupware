@@ -111,6 +111,7 @@ for which types should this field be used	infolog	de	für welche Typen soll diese
 from	infolog	de	Von
 high	infolog	de	hoch
 id	infolog	de	Id
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
 import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
 info log	common	de	InfoLog
@@ -142,6 +143,7 @@ max length of the input [, length of the inputfield (optional)]	infolog	de	max. 
 max number of entries to display on the main screen	infolog	de	Wieviele Einträge sollen maximal auf der Startseite angezeigt werden
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
+never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
 new name	infolog	de	neuer name
 new search	infolog	de	Neue Suche
 no - cancel	infolog	de	Nein - Abbruch

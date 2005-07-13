@@ -185,9 +185,17 @@
 			return $query['total'];
 		}
 
-		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False)
+		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False,$own_referer='')
 		{
-			$referer = is_array($values) ? $values['referer'] : $referer;
+			if (is_array($values))
+			{
+				$referer = $values['referer'];
+				$own_referer = $values['own_referer'];
+			}
+			elseif ($own_referer !== '')
+			{
+				$own_referer = ereg_replace('^.*'.$GLOBALS['egw_info']['server']['webserver_url'],'',$_SERVER['HTTP_REFERER']);
+			}
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]') values=\n"; _debug_array($values);
 			if (!is_array($values))
 			{
@@ -218,6 +226,10 @@
 				{
 					list($type) = each($values['add']);
 					return $this->edit(0,$action,$action_id,$type,$referer);
+				}
+				elseif ($values['cancel'] && $own_referer)
+				{
+					$this->tmpl->location($own_referer);					
 				}
 				else
 				{
@@ -275,9 +287,12 @@
 				$values['nm']['header_left'] = 'infolog.index.header_left';
 			}
 			$values['nm']['bottom_too'] = True;
+			$values['nm']['never_hide'] = isset($GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide']) ? 
+				$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
 			$persist['action'] = $values['nm']['action'] = $action;
 			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['referer'] = $referer;
+			$persist['own_referer'] = $own_referer;
 
 			$all_stati = array();
 			foreach($this->bo->status as $typ => $stati)

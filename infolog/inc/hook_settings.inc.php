@@ -49,3 +49,5 @@
 	create_select_box('Show in the InfoLog list','show_links',$show_links,
 		'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).');
 	unset($show_links);
+	
+	create_check_box('Never hide search and filters','never_hide','If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).');

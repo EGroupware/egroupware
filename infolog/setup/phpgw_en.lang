@@ -111,6 +111,7 @@ for which types should this field be used	infolog	en	for which types should this
 from	infolog	en	From
 high	infolog	en	high
 id	infolog	en	Id
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
 import	infolog	en	Import
 import next set	infolog	en	import next set
 info log	common	en	InfoLog
@@ -142,6 +143,7 @@ max length of the input [, length of the inputfield (optional)]	infolog	en	max l
 max number of entries to display on the main screen	infolog	en	Max number of entries to display on the main screen
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
+never hide search and filters	infolog	en	Never hide search and filters
 new name	infolog	en	new name
 new search	infolog	en	New search
 no - cancel	infolog	en	No - Cancel
