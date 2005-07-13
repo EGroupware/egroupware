@@ -29,6 +29,7 @@
 	 * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
 	 * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
 	 * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
+	 *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
 	 * 	'start'          =>		// IO position in list
 	 * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
 	 * 	'search'         =>		// IO search pattern
@@ -197,7 +198,7 @@
 				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 			}
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-			if ($total <= $max && $options && $value['search'] == '' &&
+			if (!$value['never_hide'] && $total <= $max && $options && $value['search'] == '' &&
 				 ($value['no_cat'] || !$value['cat_id']) &&
 				 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
 				 ($value['no_filter2'] || !$value['filter2'] || $value['filter2'] == 'none'))
