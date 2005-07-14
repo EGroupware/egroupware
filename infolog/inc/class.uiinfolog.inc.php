@@ -66,6 +66,10 @@
 			$this->filters = array(
 				'none'             =>	'no Filter',
 				'done'             =>	'done',
+				'my'               =>	'my',
+				'my-open-today'    =>	'my open',
+				'my-open-overdue'  =>	'my overdue',
+				'my-upcoming'      =>	'my upcoming',
 				'own'              =>	'own',
 				'own-open-today'   =>	'own open',
 				'own-open-overdue' =>	'own overdue',
@@ -88,6 +92,8 @@
 			$this->html = &$this->tmpl->html;
 
 			$this->user = $GLOBALS['egw_info']['user']['account_id'];
+			
+			$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 		}
 
 		function get_info($info,&$readonlys,$action='',$action_id='')
@@ -136,7 +142,7 @@
 		function save_sessiondata($values)
 		{
 			$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
-			//echo "<p>$for: uiinfolog::save_sessiondata(".print_r($values,True).") called_by='$this->called_by'</p>\n";
+			//echo "<p>$for: uiinfolog::save_sessiondata(".print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
 			$GLOBALS['egw']->session->appsession($for.'session_data','infolog',array(
 				'search' => $values['search'],
 				'start'  => $values['start'],
@@ -157,7 +163,7 @@
 				$values['session_for'] = $this->called_by;
 				$this->save_sessiondata($values);
 			}
-			//echo "<p>$this->called_by: uiinfolog::read_sessiondata() = ".print_r($values,True)."</p>\n";
+			//echo "<p>called_by='$this->called_by': uiinfolog::read_sessiondata() = ".print_r($values,True)."</p>\n";
 			return $values;
 		}
 
@@ -200,9 +206,10 @@
 			if (!is_array($values))
 			{
 				$values = array('nm' => $this->read_sessiondata());
-				if (isset($_GET['filter']))
+				if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']))
 				{
-					$values['nm']['filter'] = $_GET['filter'];	// infolog/index.php sets defaultFilter that way
+					$values['nm']['filter'] = $_GET['filter'] && $_GET['filter'] != 'default' ? $_GET['filter'] :
+						$GLOBALS['egw_info']['user']['preferences']['infolog']['defaultFilter'];
 				}
 				if (!isset($values['nm']['order']) || !$values['nm']['order'])
 				{
@@ -257,10 +264,6 @@
 							break;
 					}
 				}
-			}
-			else
-			{
-				$this->save_sessiondata($values['nm']);
 			}
 			switch ($action)
 			{

@@ -93,18 +93,18 @@
 		 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
 		 *
 		 * @param $filter: none|all - list all entrys user have rights to see<br>
-		 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!) 
+		 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!), my = entries the user is responsible for 
 		 * @return string the necesary sql
 		 */
 		function aclFilter($filter = False)
 		{
-			preg_match('/(own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
+			preg_match('/(my|own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
 			$filter = $vars[1];
 			$f_user   = intval($vars[2]);
 
-			if (isset($this->acl_filter[$filter.$user]))
+			if (isset($this->acl_filter[$filter.$f_user]))
 			{
-				return $this->acl_filter[$filter.$user];  // used cached filter if found
+				return $this->acl_filter[$filter.$f_user];  // used cached filter if found
 			}
 			if (is_array($this->grants))
 			{
@@ -126,7 +126,11 @@
 				}
 			}
 			$filtermethod = " (info_owner=$this->user"; // user has all rights
-
+			
+			if ($filter == 'my')
+			{
+				$filtermethod .= ' AND info_responsible=0';
+			}
 			// implicit read-rights for responsible user
 			$filtermethod .= " OR (info_responsible=$this->user AND info_access='public')";
 
@@ -138,7 +142,7 @@
 						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
-			else      				// none --> all entrys user has rights to see
+			elseif ($filter != 'my')      				// none --> all entrys user has rights to see
 			{
 				if ($has_private_access)
 				{
@@ -156,7 +160,7 @@
 				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR info_responsible=$f_user) AND $filtermethod)";
 			}
 			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
-			return $this->acl_filter[$filter.$user] = $filtermethod;  // cache the filter
+			return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 		}
 	
 		/**
@@ -237,25 +241,6 @@
 		}
 
 		/**
-		 * copy data after a query into $data
-		 *
-		 * copy only non-numeric keys
-		 *
-		 * @param $data array to copy the data
-		 */
-		function db2data(&$data)
-		{
-			$data = array();
-			foreach ($this->db->Record as $key => $val)
-			{
-				if (!is_numeric($key))
-				{
-					$data[$key] = $val;
-				}
-			}
-		}
-
-		/**
 		 * read InfoLog entry $info_id
 		 *
 		 * some cacheing is done to prevent multiple reads of the same entry
@@ -265,19 +250,17 @@
 		 */
 		function read($info_id)		// did _not_ ensure ACL
 		{
-			$info_id = intval($info_id);
+			$info_id = (int) $info_id;
 
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
 				(!$this->db->select($this->info_table,'*',array('info_id'=>$info_id),__LINE__,__FILE__) ||
-				 !$this->db->next_record()))
+				 !(($this->data = $this->db->row(true)))))
 			{
 				$this->init( );
 				return False;
 			}
 			if ($info_id != $this->data['info_id'])      // data yet read in
 			{
-				$this->db2data($this->data);
-
 				$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$info_id),__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
@@ -483,13 +466,15 @@
 
 			if (is_array($query['col_filter']))
 			{
+				if (!$this->table_defs) $this->table_defs = $this->db->get_table_definitions('infolog',$this->info_table);
 				foreach($query['col_filter'] as $col => $data)
 				{
-					$data = $this->db->db_addslashes($data);
 					if (substr($col,0,5) != 'info_') $col = 'info_'.$col;
+					$data = $this->db->quote($data,$this->table_defs['fd'][$col]['type']);
 					if (!empty($data) && eregi('^[a-z_0-9]+$',$col))
 					{
-						$filtermethod .= " AND $col = '$data'";
+						$filtermethod .= $col != 'info_responsible' ? " AND $col=$data" :
+							" AND (info_responsible=$data OR info_responsible=0 AND info_owner=$data)";
 					}
 				}
 			}
@@ -555,10 +540,9 @@
 				}
 				$this->db->limit_query($sql="SELECT $distinct $this->info_table.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
-				while ($this->db->next_record())
+				while (($info =& $this->db->row(true)))
 				{
-					$this->db2data($info);
-					$ids[$info['info_id']] = $info;
+					$ids[$info['info_id']] =& $info;
 				}
 			}
 			else

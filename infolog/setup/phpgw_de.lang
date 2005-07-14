@@ -141,6 +141,10 @@ longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 max number of entries to display on the main screen	infolog	de	Wieviele Einträge sollen maximal auf der Startseite angezeigt werden
+my	infolog	de	meine
+my open	infolog	de	meine offen
+my overdue	infolog	de	meine überfällig
+my upcoming	infolog	de	meine zukünftig
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
 never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
@@ -201,6 +205,8 @@ select a responsible user: a person you want to delegate this task	infolog	de	ei
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
+select to filter by owner	infolog	de	Besiter zum Filtern auswählen
+select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.

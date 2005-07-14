@@ -22,6 +22,8 @@
 		$GLOBALS['portal_order'][] = $app_id;
 
 		$infolog =& CreateObject('infolog.uiinfolog');
+		$infolog->called_by = 'home';
+
 		switch($showevents)
 		{
 			case 1:

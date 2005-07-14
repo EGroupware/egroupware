@@ -22,7 +22,7 @@
 
 	$GLOBALS['egw']->redirect_link('/index.php',array(
 		'menuaction' => 'infolog.uiinfolog.index',
-		'filter'     => $GLOBALS['egw_info']['user']['preferences']['infolog']['defaultFilter']
+//		'filter'     => 'default',
 	));
 	$GLOBALS['egw']->common->egw_exit();
 ?>
