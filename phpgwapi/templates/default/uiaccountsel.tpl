@@ -21,7 +21,7 @@
 			opener.addOption(id,'{lang_multiple}',select,0);
 		}
 		else {
-			opener.addOption(id,label,value,!multiple && openerSelectBox && openerSelectBox.selectedIndex < 0);
+			opener.addOption(id,label,value,!multiple);
 		}
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		if (selectBox) {
