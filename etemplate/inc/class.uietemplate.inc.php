@@ -723,18 +723,25 @@
 			}
 			$extra_label = True;
 
+			// the while loop allows to build extensions from other extensions
+			// please note: only the first extension's post_process function is called !!!
 			list($type,$sub_type) = explode('-',$cell['type']);
-			if ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
+			while ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 			{
+				//echo "<p>pre_process($cell[name]/$cell[type])</p>\n";
 				if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
 				{
 					$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 				}
-				$ext_type = $type;
-				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
+				if (!$ext_type) $ext_type = $type;
+				$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name]);
 
 				$readonly = $readonly || $cell['readonly'];	// might be set by extension
 				$this->set_array($content,$name,$value);
+
+				if ($cell['type'] == $type.'-'.$sub_type) break;	// stop if no further type-change
+
+				list($type,$sub_type) = explode('-',$cell['type']);				
 			}
 			list(,$class) = explode(',',$cell['span']);	// might be set by extension
 			if (strchr($class,'$') || $class[0] == '@')
@@ -805,7 +812,6 @@
 			{
 				$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 			}
-			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
 			{
 				case 'label':		//  size: [[b]old][[i]talic][,link][,activate_links][,label_for]
@@ -1018,16 +1024,17 @@
 					$html .= $this->html->hr($cell_options);
 					break;
 				case 'grid':
-					if ($readonly)
+					if ($readonly && !$readonlys['__ALL__'])
 					{
 						if (!is_array($readonlys)) $readonlys = array();
-						$readonlys['__ALL__'] = True;
+						$set_readonlys_all = $readonlys['__ALL__'] = True;
 					}
 					if ($name != '')
 					{
 						$cname .= $cname == '' ? $name : '['.str_replace('[','][',str_replace(']','',$name)).']';
 					}
 					$html .= $this->show_grid($cell,$name ? $value : $content,$readonlys,$cname,$show_c,$show_row,$path);
+					if ($set_readonlys_all) unset($readonlys['__ALL__']);
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if (is_object($cell['name']))
@@ -1083,10 +1090,10 @@
 						}
 						//echo "<p>show_cell-autorepeat($name,$show_c,$show_row,cname='$cname',idx='$idx',idx_cname='$idx_cname',span='$span'): content ="; _debug_array($content);
 					}
-					if ($readonly)
+					if ($readonly && !$readonlys['__ALL__'])
 					{
 						if (!is_array($readonlys)) $readonlys = array();
-						$readonlys['__ALL__'] = True;
+						$set_readonlys_all = $readonlys['__ALL__'] = True;
 					}
 					// propagate our onclick handler to embeded templates, if they dont have their own
 					if (!isset($cell['obj']->onclick_handler)) $cell['obj']->onclick_handler = $this->onclick_handler;
@@ -1102,6 +1109,8 @@
 						$cell['obj']->size = implode(',',$grid_size);
 					}
 					$html = $cell['obj']->show($content,$this->sel_options,$readonlys,$cname,$show_c,$show_row);
+					
+					if ($set_readonlys_all) unset($readonlys['__ALL__']);
 					break;
 				case 'select':	// size:[linesOnMultiselect|emptyLabel]
 					$sels = array();
