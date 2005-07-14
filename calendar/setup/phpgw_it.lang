@@ -67,6 +67,7 @@ defines the size in minutes of the lines in the day view.	calendar	it	Definisci 
 delete a single entry by passing the id.	calendar	it	Cancella una singola voce inserendo l'ID
 delete an entire users calendar.	calendar	it	Cancella tutto il calendario di un utente
 delete selected contacts	calendar	it	Cancella il contatto selezionato
+delete selected participants	calendar	it	Cancella i partecipanti selezionati
 delete series	calendar	it	Cancella serie
 delete single	calendar	it	Cancellazione singola
 deleted	calendar	it	Eliminato
@@ -85,6 +86,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
 download	calendar	it	Download
 duration	calendar	it	Durata
+duration of the meeting	calendar	it	Durata della riunione
 edit series	calendar	it	Modifica Serie
 edit single	calendar	it	Modifica Singolo
 email notification	calendar	it	Notifica via e-mail
@@ -94,6 +96,7 @@ enable	calendar	it	Abilita
 enabled	calendar	it	abilitato
 end date/time	calendar	it	Data/Ora finale
 enddate	calendar	it	Data-finale
+enddate / -time of the meeting, eg. for more then one day	calendar	it	Data/ora finale della riunione, es: per più di un giorno
 ends	calendar	it	finisce
 enter output filename: ( .vcs appended )	calendar	it	Inserisci il nome del file di destinazione
 event details follow	calendar	it	Dettagli dell'evento
@@ -105,11 +108,13 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	it	Partecipanti Esterni
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	it	Invio messaggio a '%1' #%2 soggetto='%3', mittente='%4' fallito!!!
 fieldseparator	calendar	it	Separatore
+find free timeslots where the marked participants are availible for the given timespan	calendar	it	Trova spazi liberi in cui i partecipanti selezionati sono disponibili per il periodo stabilito
 firstname of person to notify	calendar	it	Nome della persona da avvisare
 format of event updates	calendar	it	Formato degli aggiornamenti degli eventi
 fr	calendar	it	V
 free/busy	calendar	it	Libero/Occupato
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	it	libero/occupato: Utente '%1' sconosciuto, password errata o non disponibile agli utenti non loggati !!!
+freetime search	calendar	it	Ricerca Tempo libero
 frequency	calendar	it	Frequenza
 fri	calendar	it	Ven
 full description	calendar	it	Descrizione completa
@@ -129,9 +134,11 @@ holiday management	calendar	it	Gestione Festività
 holiday-management	calendar	it	Gestione-Festività
 holidays	calendar	it	Festività
 hours	calendar	it	ore
+how far to search (from startdate)	calendar	it	quanto lontano cercare (dalla data iniziale)
 i participate	calendar	it	Io Partecipo
 ical / rfc2445	calendar	it	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	it	Se selezionato la festività che ricorre nel weekend sarà spostata al lunedì successivo.
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
 if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	it	Se non imposti una password, le infomrazioni saranno disponibili a tutti coloro che conoscono l'URL!!!
 ignore conflict	calendar	it	Ignora Conflitto
 import	calendar	it	Importa
@@ -150,6 +157,7 @@ list all categories.	calendar	it	Lista tutte le categorie.
 load [iv]cal	calendar	it	Carica [iv]Cal
 location	calendar	it	Località
 location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
+make freebusy information available to not loged in persons?	calendar	it	Rendere disponibili le informazioni libero/occupato alle persone non loggate?
 make freebusy information availible to not loged in persons?	calendar	it	Rendi le informazioni di disponibilità alle persone non loggate?
 matrixview	calendar	it	Vista a Matrice
 minutes	calendar	it	minutes
@@ -165,6 +173,7 @@ monthview	calendar	it	Vista Mensile
 needs javascript to be enabled !!!	calendar	it	Necessita dell'abilitazione di javascript !!!
 new entry	calendar	it	Nuova Voce
 new name must not exist and not be empty!!!	calendar	it	I nuovi nomi devono esistere e non essere vuoti!!!
+new search with the above parameters	calendar	it	nuova ricerca con i parametri indicati sopra
 next day	calendar	it	giorno seguente
 no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
@@ -188,7 +197,11 @@ on any time change too	calendar	it	anche ad ogni cambio ora
 on invitation / cancelation only	calendar	it	solo su invito / cancellazione
 on participant responses too	calendar	it	anche sulle risposte dei partecipanti
 on time change of more than 4 hours too	calendar	it	anche sul cambio ora maggiore di 4 ore
+one month	calendar	it	un mese
+one week	calendar	it	una settimana
+one year	calendar	it	un anno
 open todo's:	calendar	it	ToDo Aperti:
+or enddate / -time	calendar	it	o data/ora finale
 order	calendar	it	Ordine
 overlap holiday	calendar	it	sovrapposizione di una festività
 participant	calendar	it	Partecipante
@@ -235,6 +248,7 @@ sat	calendar	it	Sab
 scheduling conflict	calendar	it	Conflitto di orario
 search results	calendar	it	Risultati Ricerca
 select a %1	calendar	it	Seleziona %1
+select a time	calendar	it	seleziona un'ora
 selected contacts (%1)	calendar	it	Contatti selezionati (%1)
 send updates via email	common	it	Invia aggiornamenti via e-mail
 send/receive updates via email	calendar	it	Invia/Ricevi aggiornamenti via e-mail
@@ -265,6 +279,8 @@ specifies the the number of intervals shown in the planner view.	calendar	it	Spe
 start date/time	calendar	it	Data/Ora Inizio
 start- and enddates	calendar	it	Data Iniziale e Finale
 startdate	calendar	it	Data Inizio
+startdate / -time	calendar	it	Data/ora iniziale
+startdate and -time of the search	calendar	it	Data/ora iniziale della ricerca
 startrecord	calendar	it	Primo Record
 su	calendar	it	Do
 submit to repository	calendar	it	Invia all'archivio
@@ -289,7 +305,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	it	Questo mese
 this week	calendar	it	Questa settimana
 this year	calendar	it	Questo anno
+three month	calendar	it	tre mesi
 thu	calendar	it	Gio
+til	calendar	it	fino
+timeframe	calendar	it	Spazio temporale
+timeframe to search	calendar	it	Spazio temporale da cercare
 title	calendar	it	Titolo
 title of the event	calendar	it	Titolo dell'evento
 title-row	calendar	it	Riga del Titolo
@@ -302,14 +322,18 @@ translation	calendar	it	Traduzione
 tu	calendar	it	M
 tue	calendar	it	Mar
 two dayview	calendar	it	vista due giorni
+two weeks	calendar	it	due settimane
 update a single entry by passing the fields.	calendar	it	Aggiornamento di una singola voce compilando i campi
 updated	calendar	it	Modificato
 use end date	calendar	it	Usa data di termine
+use the selected time and close the popup	calendar	it	utilizza l'ora selezionata e chiudi popup
 view this entry	calendar	it	Visualizza questa voce
 we	calendar	it	M
 wed	calendar	it	Mer
 week	calendar	it	Settimana
 weekday starts on	calendar	it	La settimana inizia di
+weekdays	calendar	it	Giorni settimanali
+weekdays to use in search	calendar	it	Giorni settimanali da usare per la ricerca
 weekly	calendar	it	Settimanale
 weekview	calendar	it	Vista Settimanale
 weekview including weekend	calendar	it	Vista settimanale con weekend
