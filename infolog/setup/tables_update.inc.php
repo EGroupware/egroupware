@@ -370,4 +370,75 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0.001';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '1.0.0.001';
+	function infolog_upgrade1_0_0_001()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_infolog','info_time','info_planned_time');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_infolog','info_bill_cat','info_used_time');
+		// timestamps have to be 8byte ints
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_datemodified',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_startdate',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False,
+			'default' => '0'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_enddate',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False,
+			'default' => '0'
+		));
+		
+		// setting numerical priority 3=urgent, 2=high, 1=normal, 0=
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_infolog','info_priority',array(
+			'type' => 'int',
+			'precision' => '2',
+			'default' => '1'
+		));
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_infolog SET info_priority=(CASE WHEN info_pri='urgent' THEN 3 WHEN info_pre='high' THEN 2 WHEN info_pri='low' THEN 0 ELSE 1 END)",__LINE__,__FILE__);
+
+		$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_infolog',array(
+			'fd' => array(
+				'info_id' => array('type' => 'auto','nullable' => False),
+				'info_type' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => 'task'),
+				'info_from' => array('type' => 'varchar','precision' => '255'),
+				'info_addr' => array('type' => 'varchar','precision' => '255'),
+				'info_subject' => array('type' => 'varchar','precision' => '255'),
+				'info_des' => array('type' => 'text'),
+				'info_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'info_responsible' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_access' => array('type' => 'varchar','precision' => '10','default' => 'public'),
+				'info_cat' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_datemodified' => array('type' => 'int','precision' => '8','nullable' => False),
+				'info_startdate' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'info_enddate' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'info_id_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_planned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_used_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_status' => array('type' => 'varchar','precision' => '40','default' => 'done'),
+				'info_confirm' => array('type' => 'varchar','precision' => '10','default' => 'not'),
+				'info_modifier' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_link_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_priority' => array('type' => 'int','precision' => '2','default' => '1')
+			),
+			'pk' => array('info_id'),
+			'fk' => array(),
+			'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
+			'uc' => array()
+		),'info_pri');
+		
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog','egw_infolog');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog_extra','egw_infolog_extra');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_links','egw_links');
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.1.001';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>

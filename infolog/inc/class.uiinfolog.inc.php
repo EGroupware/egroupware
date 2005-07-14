@@ -104,7 +104,7 @@
 			}
 			$id = $info['info_id'];
 			$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed';
-			$info['sub_class'] = $info['info_pri'] . ($done ? '_done' : '');
+			$info['sub_class'] = $this->bo->enums['priority'][$info['info_priority']] . ($done ? '_done' : '');
 			if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 			{
 				$info['end_class'] = 'overdue';
@@ -565,7 +565,7 @@
 			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],
-				'info_pri'      => $this->bo->enums['priority'],
+				'info_priority' => $this->bo->enums['priority'],
 				'info_confirm'  => $this->bo->enums['confirm'],
 				'info_status'   => $this->bo->status[$content['info_type']]
 			),$readonlys,array(

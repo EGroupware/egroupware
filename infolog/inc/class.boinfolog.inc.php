@@ -65,13 +65,20 @@
 		var $tz_offset = 0;
 		var $tz_offset_s = 0;
 		var $user_time_now;
+		/**
+		 * @var array $config infolog configuration
+		 */
+		var $config;
 		
 		function boinfolog( $info_id = 0)
 		{
 			$this->enums = $this->stock_enums = array(
 				'priority' => array (
-					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
-					'low' => 'low' ),
+					3 => 'urgent',
+					2 => 'high',
+					1 => 'normal',
+					0 => 'low' 
+				),
 /*				'status'   => array(
 					'offer' => 'offer','ongoing' => 'ongoing','call' => 'call',
 					'will-call' => 'will-call','done' => 'done',

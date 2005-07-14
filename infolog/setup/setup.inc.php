@@ -12,9 +12,9 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['version']   = '1.0.0.001';
+	$setup_info['infolog']['version']   = '1.0.1.001';
 	$setup_info['infolog']['app_order'] = 5;
-	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links','phpgw_infolog_extra');
+	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_links');
 	$setup_info['infolog']['enable']    = 1;
 
 	$setup_info['infolog']['author'] = 
@@ -69,6 +69,8 @@
 		 'appname' => 'etemplate',
 		 'versions' => Array('0.9.15','0.9.16','1.0.0')
 	);
+
+
 
 
 

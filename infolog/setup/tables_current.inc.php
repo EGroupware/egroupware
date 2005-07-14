@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$phpgw_baseline = array(
-		'phpgw_infolog' => array(
+		'egw_infolog' => array(
 			'fd' => array(
 				'info_id' => array('type' => 'auto','nullable' => False),
 				'info_type' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => 'task'),
@@ -24,24 +24,24 @@
 				'info_responsible' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_access' => array('type' => 'varchar','precision' => '10','default' => 'public'),
 				'info_cat' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-				'info_datemodified' => array('type' => 'int','precision' => '4','nullable' => False),
-				'info_startdate' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-				'info_enddate' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_datemodified' => array('type' => 'int','precision' => '8','nullable' => False),
+				'info_startdate' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'info_enddate' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'info_id_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-				'info_pri' => array('type' => 'varchar','precision' => '10','default' => 'normal'),
-				'info_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-				'info_bill_cat' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_planned_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_used_time' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_status' => array('type' => 'varchar','precision' => '40','default' => 'done'),
 				'info_confirm' => array('type' => 'varchar','precision' => '10','default' => 'not'),
 				'info_modifier' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
-				'info_link_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
+				'info_link_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_priority' => array('type' => 'int','precision' => '2','default' => '1')
 			),
 			'pk' => array('info_id'),
 			'fk' => array(),
 			'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
 			'uc' => array()
 		),
-		'phpgw_links' => array(
+		'egw_links' => array(
 			'fd' => array(
 				'link_id' => array('type' => 'auto','nullable' => False),
 				'link_app1' => array('type' => 'varchar','precision' => '25','nullable' => False),
@@ -57,7 +57,7 @@
 			'ix' => array(array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
 			'uc' => array()
 		),
-		'phpgw_infolog_extra' => array(
+		'egw_infolog_extra' => array(
 			'fd' => array(
 				'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'info_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),

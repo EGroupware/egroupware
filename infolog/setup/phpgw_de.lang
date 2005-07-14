@@ -181,6 +181,7 @@ pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/Email
 phonecall	infolog	de	Telefonanruf
+planned time	infolog	de	geplante Zeit
 priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
@@ -191,7 +192,7 @@ reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	Verantwortlich
-responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
+responsible user, priority, times	infolog	de	Verantwortlicher, Priorität, Zeiten
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
@@ -232,6 +233,7 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
+times	infolog	de	Zeiten
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
 today	infolog	de	Heute
 todo	infolog	de	Auftrag
@@ -247,6 +249,7 @@ urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
 use button to search for address	infolog	de	Button zum Suchen der Adresse verwenden
 use button to search for project	infolog	de	Button zum Suchen des Projekts verwenden
+used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen

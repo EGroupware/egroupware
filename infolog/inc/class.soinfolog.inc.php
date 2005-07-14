@@ -31,8 +31,8 @@
 		var $grants;
 		var $data = array( );
 		var $user;
-		var $info_table = 'phpgw_infolog';
-		var $extra_table = 'phpgw_infolog_extra';
+		var $info_table = 'egw_infolog';
+		var $extra_table = 'egw_infolog_extra';
 
 		/**
 		 * constructor
@@ -235,8 +235,8 @@
 		function init()
 		{
 			$this->data = array(
-				'info_owner' => $this->user,
-				'info_pri'   => 'normal'
+				'info_owner'    => $this->user,
+				'info_priority' => 1,
 			);
 		}
 

@@ -32,7 +32,7 @@
 	{
 		var $db;
 		var $user;
-		var $link_table = 'phpgw_links';
+		var $link_table = 'egw_links';
 		var $debug;
 
 		/**

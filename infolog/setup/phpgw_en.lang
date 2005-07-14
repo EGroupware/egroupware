@@ -181,6 +181,7 @@ pattern for search in projects	infolog	en	pattern for search in Projects
 phone	infolog	en	Phone Call
 phone/email	infolog	en	Phone/Email
 phonecall	infolog	en	Phone Call
+planned time	infolog	en	planned time
 priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
@@ -190,7 +191,7 @@ reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local 
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 responsible	infolog	en	Responsible
-responsible user, priority, ...	infolog	en	responsible user, priority, ...
+responsible user, priority, times	infolog	en	responsible user, priority, times
 returns a list / search for records.	infolog	en	Returns a list / search for records.
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	saves the changes made and leaves
@@ -231,6 +232,7 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	en	the text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phone call be finished
+times	infolog	en	Times
 to many might exceed your execution-time-limit	infolog	en	to many might exceed your execution-time-limit
 today	infolog	en	Today
 todo	infolog	en	ToDo
@@ -246,6 +248,7 @@ urgency	infolog	en	urgency
 urgent	infolog	en	urgent
 use button to search for address	infolog	en	use Button to search for Address
 use button to search for project	infolog	en	use Button to search for Project
+used time	infolog	en	used time
 valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
 values for selectbox	infolog	en	Values for selectbox
 view all subs of this entry	infolog	en	View all subs of this entry
