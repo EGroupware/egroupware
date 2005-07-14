@@ -164,7 +164,7 @@
 		{
 			list($rows,$type,$type2,$type3) = explode(',',$cell['size']);
 
-			$extension_data = $cell['type'];
+			$extension_data['type'] = $cell['type'];
 
 			switch ($cell['type'])
 			{
@@ -256,6 +256,7 @@
 					break;
 
 				case 'select-account':	// options: #rows,{accounts(default)|both|groups},{0(=lid)|1(default=name)|2(=lid+name))}
+//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
 					// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 					if ($cell['readonly'] || $readonlys)
 					{
@@ -270,7 +271,7 @@
 					{
 						if (!is_object($GLOBALS['phpgw']->uiaccountsel))
 						{
-							$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
+							$GLOBALS['phpgw']->uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
 						}
 						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
 						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
@@ -520,7 +521,7 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			switch ($extension_data)
+			switch ($extension_data['type'])
 			{
 				case 'select-dow':
 					$value = 0;
