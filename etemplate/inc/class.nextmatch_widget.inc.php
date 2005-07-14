@@ -66,7 +66,8 @@
 		var $human_name = array(
 			'nextmatch' => 'Nextmatch',
 			'nextmatch-sortheader' => 'Nextmatch Sortheader',
-			'nextmatch-filterheader' => 'Nextmatch Filterheader'
+			'nextmatch-filterheader' => 'Nextmatch Filterheader',
+			'nextmatch-accountfilter' => 'Nextmatch Accountfilter',
 		);
 
 		/**
@@ -143,6 +144,21 @@
 					if (!$cell['help'])
 					{
 						$cell['help'] = 'select which values to show';
+					}
+					$cell['onchange'] = True;
+					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
+					return True;
+
+				case 'nextmatch-accountfilter':
+					$cell['type'] = 'select-account';
+					$cell['name'] .= '[account]';
+					if (!$cell['size'])
+					{
+						$cell['size'] = 'All';
+					}
+					if (!$cell['help'])
+					{
+						$cell['help'] = 'select which accounts to show';
 					}
 					$cell['onchange'] = True;
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
@@ -282,7 +298,7 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
-			//echo "<p>nextmatch_widget.post_process(name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
+			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
 			switch($extension_data['type'])
 			{
 				case 'nextmatch-sortheader':
@@ -292,9 +308,11 @@
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
 
+				case 'select-account':		// used by nextmatch-accountfilter
 				case 'nextmatch-filterheader':
 					if ($value_in != $extension_data['old_value'])
 					{
+						//echo "<p>setting nm_global[filter][".$this->last_part($name)."]=$value_in</p>\n";
 						$nm_global['filter'][$this->last_part($name)] = $value_in;
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
@@ -369,6 +387,7 @@
 			elseif ($nm_global['filter'])
 			{
 				if (!is_array($value['col_filter'])) $value['col_filter'] = array();
+
 				$value['col_filter'] += $nm_global['filter'];
 				$loop = True;
 			}
