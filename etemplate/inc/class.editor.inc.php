@@ -305,7 +305,7 @@
 					$this->etemplate->modified = time();
 				}
 				$ok = $this->etemplate->save(trim($content['name']),trim($content['template']),trim($content['lang']),(int) $content['group'],trim($content['version']));
-				$msg = $ok ? lang('Template saved') : lang('Error: while saveing !!!');
+				$msg = $ok ? lang('Template saved') : lang('Error: while saving !!!');
 				if ($ok) unset($preserv['import']);
 			}
 			elseif (isset($_GET['name']) || isset($content['name']))
@@ -1188,7 +1188,7 @@
 					case 'apply-no-merge':
 						//$this->etemplate->echo_tmpl();
 						$ok = $this->etemplate->save($content);
-						$msg .= $ok ? lang('Template saved') : lang('Error: while saveing !!!');
+						$msg .= $ok ? lang('Template saved') : lang('Error: while saving !!!');
 	
 						// if necessary fix the version of our opener
 						if ($content['opener']['name'] == $content['name'] &&
@@ -1347,7 +1347,7 @@
 				{
 					$this->etemplate->style = $content['styles'];
 					$ok = $this->etemplate->save();
-					$msg = $ok ? lang('Template saved') : lang('Error: while saveing !!!');
+					$msg = $ok ? lang('Template saved') : lang('Error: while saving !!!');
 				}
 				$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',array(
 						'menuaction' => 'etemplate.editor.edit',
