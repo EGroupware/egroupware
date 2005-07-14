@@ -47,7 +47,7 @@
 	);
 	$setup_info['resources']['depends'][]	= array( // cause the link class is not in the api yet
 		 'appname' => 'infolog',
-		 'versions' => Array('1.0.0')
+		 'versions' => Array('1.0.0','1.0.1')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
 		 'appname' => 'filemanager',
