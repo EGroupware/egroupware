@@ -191,12 +191,11 @@ function cat_id($cats)
 			'cat'         => 'Category: int(11) category-id or -name (new ones got created)',
 			'startdate'   => 'Start Date: DateTime: Timestamp or eg. YYYY-MM-DD hh:mm',
 			'enddate'     => 'End Date: DateTime',
-			'datecreated' => 'Date Created: DateTime, if empty = Start Date or now',
 			'datemodified'=> 'Date Last Modified: DateTime, if empty = Date Created',
 			'modifier'    => 'Modifier: int(11) user-id, if empty current user',
-			'pri'         => 'Priority: urgent,high,normal,low',
-			'time'        => 'Time: int(11) time used in min',
-			//'bill_cat'    => 'Billing Cathegory: int(11)',
+			'priority'    => 'Priority: 3=urgent, 2=high, 1=normal, 0=low',
+			'planned_time'=> 'planned Time: int(11) time used in min',
+			'used_time'   => 'used Time: int(11) time used in min',
 			'status'      => 'Status: char(10) offer,ongoing,call,will-call,done,billed,xx%',
 			'confirm'     => 'Confirmation: char(10) not,accept,finish,both when to confirm',
 			'addr_id'     => 'Addressbook id, to set use @addr_id(nlast,nfirst,org)'
@@ -428,7 +427,7 @@ function cat_id($cats)
 			}
 
 			// convert dates to timestamps
-			foreach(array('datecreated','startdate','enddate','datemodified') as $date)
+			foreach(array('startdate','enddate','datemodified') as $date)
 			{
 				if (isset($values[$date]) && !is_numeric($date))
 				{
@@ -436,9 +435,7 @@ function cat_id($cats)
 					$values[$date] = strtotime($values[$date]);
 				}
 			}
-			if (!isset($values['datecreated'])) $values['datecreated'] = $values['startdate'];
-
-			if (!isset($values['datemodified'])) $values['datemodified'] = $values['datecreated'];
+			if (!isset($values['datemodified'])) $values['datemodified'] = $values['startdate'];
 
 			// convert user-names to user-id's
 			foreach(array('owner','responsible') as $user)
