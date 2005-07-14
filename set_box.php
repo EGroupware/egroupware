@@ -19,17 +19,7 @@
 	);
 	include('header.inc.php');
 
-//	if(basename($HTTP_REFERER) != 'home.php')
-//	{
-//		Header('Location: '.$GLOBALS['egw']->link('/home.php'));
-//		$GLOBALS['egw']->common->phpgw_exit();
-//	}
-
 	@reset($GLOBALS['egw_info']['user']['preferences']);
-	//_debug_array($GLOBALS['egw_info']['user']['preferences']['portal_order']);
-//	$GLOBALS['egw']->preferences->delete('portal_order');
-//	unset($GLOBALS['egw_info']['user']['preferences']['portal_order']);
-//	$GLOBALS['egw']->preferences->save_repository();
 
 	function move_boxes($curr_position,$new_order,$offset,$value_to_check,$max_num)
 	{
@@ -106,6 +96,5 @@
 		default:
 	}
 
-	header('Location: '.$GLOBALS['egw']->link('/home.php'));
-	$GLOBALS['egw']->common->phpgw_exit();
+	$GLOBALS['egw']->redirect_link('/home/index.php');
 ?>
