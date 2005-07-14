@@ -849,10 +849,11 @@ function index($content = 0)
 	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b></td>
 	<td>
 		&lt;nextmatch type="nextmatch-sortheader" id="col-name" label="ColLabel"/><p>
-		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/>
+		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/><p>
+		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/>
 	</td>
 	<td>no</td>
-	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader</td>
+	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />accountfilter</td>
 	<td>
 		These widget are an optional part of the nextmatch widget.<p>
 		<b>nextmatch-sortheader</b><br />
@@ -865,7 +866,10 @@ function index($content = 0)
 		(xml:id), the options of the displayed selectbox need to be set as for an ordinary selectbox (eg. in the options
 		parameter to the uietemplate::exec function). If no extra-label is given in options, lang('all') will be used for
 		the empty value, which means no filter activ. An (optional) <b>label</b> can be given.<p>
-		<i><u>Note</u>:</i> Both widgets interoperate with the nextmatch-widget which passes the set values as part if
+		<b>nextmatch-accountfilter</b><br />
+		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them. In all other aspects
+		it is identical to the filterheader.<p>
+		<i><u>Note</u>:</i> All three widgets interoperate with the nextmatch-widget which passes the set values as part if
 		the query-parameter to its get_rows function, they are <u>not</u> returned in the rows sub-array.
 	</td>
 </tr>
