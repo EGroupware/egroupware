@@ -217,6 +217,7 @@ new search	etemplate	en	New search
 new table created	etemplate	en	New table created
 newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
 nextmatch	etemplate	en	Nextmatch
+nextmatch accountfilter	etemplate	en	Nextmatch Accountfilter
 nextmatch filterheader	etemplate	en	Nextmatch Filterheader
 nextmatch sortheader	etemplate	en	Nextmatch Sortheader
 no column to swap with !!!	etemplate	en	no column to swap with !!!
@@ -288,6 +289,7 @@ select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
 select the indexed columns in their desired order	etemplate	en	Select the indexed columns in their desired order
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
+select which accounts to show	etemplate	en	select which accounts to show
 select which values to show	etemplate	en	select which values to show
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox

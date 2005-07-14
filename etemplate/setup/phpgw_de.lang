@@ -217,6 +217,7 @@ new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
+nextmatch accountfilter	etemplate	de	Nextmatch Benutzerfilter
 nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
 nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
@@ -288,6 +289,7 @@ select priority	etemplate	de	Priorität auswählen
 select state	etemplate	de	US-State auswählen
 select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünchten Reihenfolge auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
+select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
 select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
