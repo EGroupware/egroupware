@@ -1,7 +1,7 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
 %define version 1.0.0.008
-%define packaging 1
+%define packaging 2
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -133,6 +133,10 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Fri Jul 16 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.008-2
+- Fixed projects problem (editing of project not working, dates are allways 
+  set to ~ 1970-01-01) introduced by security fix between 007 and 008
+
 * Fri Jul 08 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.008-1
 - Fixed xmlrpc security problems
 
