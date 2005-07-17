@@ -111,6 +111,7 @@
 		 * 		(eg. to implement ACL grants on field-level or to remove buttons not applicable)
 		 * @param array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
 		 * @param int $output_mode 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
+		 *	-1 = first time return html, after use 0 (echo html incl. navbar), eg. for home
 		 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
 		 * @param array $changes change made in the last call if looping, only used internaly by process_exec
 		 * @return string html for $output_mode == 1, else nothing
@@ -143,6 +144,7 @@
 				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
 			}
 			$id = $this->appsession_id();
+
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
@@ -156,8 +158,8 @@
 					),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
 					'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options'].
 					// dont set the width of popups!
-					($output_mode == 2 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
-			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']); 
+					($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
+					//echo "to_process="; _debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']); 
 			if ($this->sitemgr)
 			{
 				
@@ -165,7 +167,7 @@
 			elseif (!$this->xslt)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && (int) $output_mode != 1)	// not just returning the html
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 				{
 					$GLOBALS['phpgw_info']['flags']['java_script'] .= $this->include_java_script(2);
 					$GLOBALS['phpgw']->common->phpgw_header();
@@ -181,8 +183,9 @@
 				$hooked = $hooked['body_data'];
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
 			}
+			//echo "<p>uietemplate::exec($method,...) after show: sitemgr=$this->sitemgr, xslt=$this->xslt, hooked=$hooked, output_mode=$output_mode</p>\n";
 
-			if (!$this->sitemgr && (int) $output_mode != 1)	// NOT returning html
+			if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
 			{
 				if (!$this->xslt)
 				{
@@ -227,13 +230,13 @@
 				'dom_enabled' => $GLOBALS['phpgw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content'],
 				'app_header' => $GLOBALS['phpgw_info']['flags']['app_header'],
-				'output_mode' => $output_mode,
+				'output_mode' => $output_mode != -1 ? $output_mode : 0,
 				'session_used' => 0,
 				'ignore_validation' => $ignore_validation,
 				'method' => $method,
 			),$id);
 
-			if ($this->sitemgr || (int) $output_mode == 1)	// return html
+			if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
 			{
 					return $html;
 			}
@@ -711,7 +714,7 @@
 
 			if ($readonly = $cell['readonly'] || @$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
 			{
-				$options .= ' READONLY';
+				$options .= ' readonly="1"';
 			}
 			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
 			{
