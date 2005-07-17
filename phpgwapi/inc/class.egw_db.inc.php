@@ -301,6 +301,9 @@
 					$this->Link_ID = &$GLOBALS['egw']->ADOdb;
 				}
 			}
+			// next ADOdb version: if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
+			if (!$this->Link_ID->_connectionID) $this->Link_ID->Connect();
+
 			//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 			return $this->Link_ID;
 		}

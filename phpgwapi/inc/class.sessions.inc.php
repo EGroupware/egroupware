@@ -281,6 +281,8 @@
 		*/
 		function verify($sessionid='',$kp3='')
 		{
+			$fill_egw_info_and_repositories = !$GLOBALS['egw_info']['flags']['restored_from_session'];
+
 			if(empty($sessionid) || !$sessionid)
 			{
 				$sessionid = get_var('sessionid',array('GET','COOKIE'));
@@ -323,7 +325,7 @@
 			$this->iv  = $GLOBALS['egw_info']['server']['mcrypt_iv'];
 			$GLOBALS['egw']->crypto->init(array($this->key,$this->iv));
 
-			$this->read_repositories(@$GLOBALS['egw_info']['server']['cache_phpgw_info']);
+			if ($fill_egw_info_and_repositories) $this->read_repositories(@$GLOBALS['egw_info']['server']['cache_phpgw_info']);
 			
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
@@ -339,13 +341,14 @@
 				}
 				return False;
 			}
-
-			$GLOBALS['egw_info']['user']  = $this->user;
-			$GLOBALS['egw_info']['hooks'] = $this->hooks;
-
-			$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
-			$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
-
+			if ($fill_egw_info_and_repositories)
+			{
+				$GLOBALS['egw_info']['user']  = $this->user;
+				$GLOBALS['egw_info']['hooks'] = $this->hooks;
+	
+				$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
+				$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
+			}
 			if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 			{
 				if(is_object($GLOBALS['egw']->log))
@@ -384,11 +387,13 @@
 				}
 			}
 
-			$GLOBALS['egw']->acl->acl($this->account_id);
-			$GLOBALS['egw']->accounts->accounts($this->account_id);
-			$GLOBALS['egw']->preferences->preferences($this->account_id);
-			$GLOBALS['egw']->applications->applications($this->account_id);
-
+			if ($fill_egw_info_and_repositories)
+			{
+				$GLOBALS['egw']->acl->acl($this->account_id);
+				$GLOBALS['egw']->accounts->accounts($this->account_id);
+				$GLOBALS['egw']->preferences->preferences($this->account_id);
+				$GLOBALS['egw']->applications->applications($this->account_id);
+			}
 			if (! $this->account_lid)
 			{
 				if(is_object($GLOBALS['egw']->log))
@@ -488,7 +493,11 @@
 
 			$this->clean_sessions();
 			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
-
+			// add domain to the login, if not already there
+			if (substr($this->login,-strlen($this->account_domain)-1) != '@'.$this->account_domain)
+			{
+				$this->login .= '@'.$this->account_domain;
+			}
 			$now = time();
 
 			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
@@ -573,7 +582,7 @@
 			}
 
 			$GLOBALS['egw']->db->transaction_begin();
-			$this->register_session($login,$user_ip,$now,$session_flags);
+			$this->register_session($this->login,$user_ip,$now,$session_flags);
 			if ($session_flags != 'A')		// dont log anonymous sessions
 			{
 				$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);

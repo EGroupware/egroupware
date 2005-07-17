@@ -1221,10 +1221,10 @@
 			header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
 
 			ob_end_flush();
-			include(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
+			include_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
 				. '/head.inc.php');
 			$this->navbar(False);
-			include(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
+			include_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
 				. '/navbar.inc.php');
 			if (!@$GLOBALS['egw_info']['flags']['nonavbar'] && !@$GLOBALS['egw_info']['flags']['navbar_target'])
 			{

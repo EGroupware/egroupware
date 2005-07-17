@@ -1129,15 +1129,19 @@
 		if (function_exists('debug_backtrace'))
 		{
 			$backtrace = debug_backtrace();
-			//echo "<pre>".print_r($backtrace,True)."</pre>\n";
+			//echo "function_backtrace($remove)<pre>".print_r($backtrace,True)."</pre>\n";
 			foreach($backtrace as $level)
 			{
 				if ($remove-- < 0)
 				{
-					$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'];
+					$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'].
+						(!$level['class'] ? '('.str_replace(EGW_SERVER_ROOT,'',$level['args'][0]).')' : '');
 				}
 			}
-			return implode(' / ',$ret);
+			if (is_array($ret))
+			{
+				return implode(' / ',$ret);
+			}
 		}
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(EGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
@@ -1200,5 +1204,21 @@
 			return $obj;
 		}
 		');
+	}
+
+	/**
+	 * function to handle multilanguage support
+	 */
+	if (!function_exists('lang'))	// setup declares an own version
+	{
+		function lang($key,$vars='')
+		{
+			if(!is_array($m1))
+			{
+				$vars = func_get_args();
+				array_shift($vars);	// remove $key
+			}
+			return $GLOBALS['egw']->translation->translate($key,$vars);
+		}
 	}
 ?>

@@ -45,6 +45,7 @@
 		var $userlang = 'en';
 		var $loaded_apps = array();
 		var $line_rejected = array();
+		var $lang_array = array();
 
 		/**
 		 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
@@ -128,7 +129,7 @@
 			else
 			{
 				// if no translations are loaded (system-startup) use a default, else lang('charset')
-				$charset = !is_array(@$GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
+				$charset = !is_array(@$this->lang_arr) ? 'iso-8859-1' : strtolower($this->translate('charset'));
 			}
 			// we need to set our charset as mbstring.internal_encoding if mbstring.func_overlaod > 0
 			// else we get problems for a charset is different from the default utf-8
@@ -144,12 +145,9 @@
 		 */
 		function init()
 		{
-			// post-nuke and php-nuke are using $GLOBALS['lang'] too
-			// but not as array!
-			// this produces very strange results
-			if (!is_array(@$GLOBALS['lang']))
+			if (!is_array(@$this->lang_arr))
 			{
-				$GLOBALS['lang'] = array();
+				$this->lang_arr = array();
 			}
 
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
@@ -157,7 +155,7 @@
 				$this->userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 			}
 			$this->add_app('common');
-			if (!count($GLOBALS['lang']))
+			if (!count($this->lang_arr))
 			{
 				$this->userlang = 'en';
 				$this->add_app('common');
@@ -175,24 +173,24 @@
 		 */
 		function translate($key, $vars=false, $not_found='*' )
 		{
-			if (!is_array(@$GLOBALS['lang']) || !count($GLOBALS['lang']))
+			if (!is_array(@$this->lang_arr) || !count($this->lang_arr))
 			{
 				$this->init();
 			}
 			$ret = $key.$not_found;	// save key if we dont find a translation
 
-			if (isset($GLOBALS['lang'][$key]))
+			if (isset($this->lang_arr[$key]))
 			{
-				$ret = $GLOBALS['lang'][$key];
+				$ret = $this->lang_arr[$key];
 			}
 			else
 			{
 				$new_key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
 
-				if (isset($GLOBALS['lang'][$new_key]))
+				if (isset($this->lang_arr[$new_key]))
 				{
 					// we save the original key for performance
-					$ret = $GLOBALS['lang'][$key] = $GLOBALS['lang'][$new_key];
+					$ret = $this->lang_arr[$key] = $this->lang_arr[$new_key];
 				}
 			}
 			if (is_array($vars) && count($vars))
@@ -229,7 +227,7 @@
 				),__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
-					$GLOBALS['lang'][strtolower ($this->db->f('message_id'))] = $this->db->f('content');
+					$this->lang_arr[strtolower ($this->db->f('message_id'))] = $this->db->f('content');
 				}
 				$this->loaded_apps[$app] = $lang;
 			}
@@ -260,7 +258,7 @@
 				
 				foreach($phrases as $message_id => $content)
 				{
-					$GLOBALS['lang'][$message_id] = $this->convert($content,$phrases['charset']);
+					$this->lang_arr[$message_id] = $this->convert($content,$phrases['charset']);
 				}
 			}
 			$this->loaded_apps['setup'] = $lang;
