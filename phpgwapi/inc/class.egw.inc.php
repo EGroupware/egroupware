@@ -137,6 +137,7 @@ class egw
 	 */
 	function __wakeup()
 	{
+		$GLOBALS['egw'] =& $this;	// we need to be imediatly avalilible there for the other classes we instanciate
 		// for the migration: reference us to the old phpgw object
 		$GLOBALS['phpgw'] =& $this;
 		register_shutdown_function(array($this->common, 'egw_final'));
@@ -149,7 +150,11 @@ class egw
 				$this->$class->db->Link_ID =& $this->db->Link_ID;
 			}
 		}
-
+		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
+		{
+			// reconnect the LDAP server, unfortunally this does not work via accounts::__wakeup() as the common-object is not yet availible
+			$this->accounts->ds = $this->common->ldapConnect();
+		}
 		$this->define_egw_constants();
 	}
 	
