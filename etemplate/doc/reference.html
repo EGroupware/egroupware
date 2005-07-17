@@ -786,10 +786,6 @@ function get_rows($query,&$rows,&$readonlys)
 	{
 		$rows = array( );
 	}
-	else
-	{
-		array_unshift($rows,0); each($rows);	<span>// first entry is not used !!!</span>
-	}
 	$readonlys = array( );	<span>// set readonlys to enable/disable our edit/delete-buttons</span>
 	while (list($n,$note) = each($rows))
 	{
@@ -846,9 +842,9 @@ function index($content = 0)
 	</td>
 </tr>
 <tr>
-	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b></td>
+	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b><p><b>Nextmatch-<br />AccountFilter</b></td>
 	<td>
-		&lt;nextmatch type="nextmatch-sortheader" id="col-name" label="ColLabel"/><p>
+		&lt;nextmatch type="nextmatch-sortheader" id="col-name" options="DESC" label="ColLabel"/><p>
 		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/><p>
 		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/>
 	</td>
@@ -859,7 +855,8 @@ function index($content = 0)
 		<b>nextmatch-sortheader</b><br />
 		Widget to be placed as a colum-header in the headerline of a nextmatch-template. It allows, by clicking on it,
 		to order the lines of the nextmatch after a certain column. The column-name is given as <b>name</b> (xml:id) the
-		<b>label</b> is show as a link of button (no javascript). Consecutive click on the header change the sorting
+		<b>label</b> is show as a link of button (no javascript). One can specify a default sorting: <b>options</b>={DESC|ASC} (default=ASC), 
+		to be used when the header is clicked for the first time. Consecutive click on the header change the sorting
 		direction, indicated by a little up- or down-arrow.<p>
 		<b>nextmatch-filterheader</b><br />
 		Widget to allow to show only certain row, which match a selected filter-value. The column-name is given as <b>name</b>

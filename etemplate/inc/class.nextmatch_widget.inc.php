@@ -113,7 +113,8 @@
 			);
 			switch ($cell['type'])
 			{
-				case 'nextmatch-sortheader':
+				case 'nextmatch-sortheader':	// Option: default sort: ASC(default) or DESC
+					$extension_data['default_sort'] = preg_match('/^(ASC|DESC)$/i',$cell['size']) ? strtoupper($cell['size']) : 'ASC';
 					$cell['type'] = 'button';
 					$cell['onchange'] = True;
 					if (!$cell['help'])
@@ -135,7 +136,7 @@
 					}
 					return True;
 
-				case 'nextmatch-filterheader':
+				case 'nextmatch-filterheader':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
 					$cell['type'] = 'select';
 					if (!$cell['size'])
 					{
@@ -149,7 +150,7 @@
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 
-				case 'nextmatch-accountfilter':
+				case 'nextmatch-accountfilter':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
 					$cell['type'] = 'select-account';
 					$cell['name'] .= '[account]';
 					if (!$cell['size'])
@@ -305,14 +306,15 @@
 					if ($value_in)
 					{
 						$nm_global['order'] = $this->last_part($name);
+						$nm_global['default_sort'] = $extension_data['default_sort'];
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
 
 				case 'select-account':		// used by nextmatch-accountfilter
 				case 'nextmatch-filterheader':
-					if ($value_in != $extension_data['old_value'])
+					if ($value_in != $extension_data['old_value'] && !(!$value_in && !$extension_data['old_value']))
 					{
-						//echo "<p>setting nm_global[filter][".$this->last_part($name)."]=$value_in</p>\n";
+						//echo "<p>setting nm_global[filter][".$this->last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
 						$nm_global['filter'][$this->last_part($name)] = $value_in;
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
@@ -381,7 +383,15 @@
 			elseif ($nm_global['order'])
 			{
 				$value['order'] = $nm_global['order'];
-				$value['sort']  = $old_value['order'] == $nm_global['order'] && $old_value['sort']!='DESC'?'DESC':'ASC';
+				if ($old_value['order'] != $value['order'])
+				{
+					$value['sort'] = $nm_global['default_sort'];
+				}
+				else
+				{
+					$value['sort'] = $old_value['sort'] != 'DESC' ? 'DESC' : 'ASC';
+				}
+				//echo "<p>old_value=$old_value[order]/$old_value[sort] ==> $value[order]/$value[sort]</p>\n";
 				$loop = True;
 			}
 			elseif ($nm_global['filter'])
