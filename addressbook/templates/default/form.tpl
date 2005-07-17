@@ -68,7 +68,7 @@
   </tr>
   <tr class="row_on">
     <td>&nbsp;</td>
-	<td>
+    <td>
      <font size="-1">{lang_email}:
     </td>
     <td>
@@ -138,9 +138,9 @@
   </tr>
   <tr class="row_on">
     <td>&nbsp;</td>
-	<td><font size="-1">{lang_badrtype}:</font></td>
+    <td><font size="-1">{lang_badrtype}:</font></td>
     <td colspan="3">
-	  <font size="-1">{badrtype}</font>
+      <font size="-1">{badrtype}</font>
     </td>
   </tr>
   <tr class="row_off">
@@ -242,9 +242,9 @@
   </tr>
   <tr class="row_off">
     <td>&nbsp;</td>
-	<td><font size="-1">{lang_hadrtype}:</font></td>
+    <td><font size="-1">{lang_hadrtype}:</font></td>
     <td colspan="3">
-	  <font size="-1">{hadrtype}</font>
+      <font size="-1">{hadrtype}</font>
     </td>
   </tr>
   <tr class="row_on">
@@ -272,7 +272,7 @@
     <td colspan="4">{cats_link}</td>
   </tr>
   <tr bgcolor="{th_bg}">
-	<td colspan="5"><font size="-1">{lang_custom}</font></td>
+    <td colspan="5"><font size="-1">{lang_custom}</font></td>
   </tr>
 {custom}
   <!-- BEGIN creator -->

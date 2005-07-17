@@ -6,8 +6,11 @@
 <!-- <table border="0" cellPadding="1" cellSpacing="1" width="95%" align="center">-->
      <tr valign="top">
       <td align="left" width="10%">
-       <input type="submit" name="submit" value="{lang_save}"></form>
-      </TD>
+       <input type="submit" name="save" value="{lang_save}">
+      </td>
+      <td align="left" width="10%">
+       <input type="submit" name="apply" value="{lang_apply}"></form>
+      </td>
       <td align="left" colspan="3">
        {cancel_link}
        &nbsp;<input type="submit" name="cancel" value="{lang_cancel}"></form>

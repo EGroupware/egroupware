@@ -136,6 +136,7 @@
   <tr height="40">
     <td colspan="6">
       <input type="submit" name="save" value="{lang_save}"> &nbsp;
+      <input type="submit" name="apply" value="{lang_apply}"> &nbsp;
       <input type="submit" name="cancel" value="{lang_cancel}">
     </td>
   </tr>

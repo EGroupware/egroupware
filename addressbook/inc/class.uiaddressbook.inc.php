@@ -710,7 +710,7 @@
 
 		function add()
 		{
-			if($_POST['submit'])
+			if($_POST['save'] || $_POST['apply'])
 			{
 				$fields = $this->get_form();
 
@@ -726,7 +726,7 @@
 				}
 //				$ab_id = $this->bo->get_lastid();
 
-				if(!$errors)
+				if(!$errors && $_POST['save'])
 				{
 					Header('Location: '
 						. $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
@@ -754,6 +754,7 @@
 				$GLOBALS['egw']->template->set_var('errors',implode(',',$errors));
 			}
 			$GLOBALS['egw']->template->set_var('lang_save',lang('Save'));
+			$GLOBALS['egw']->template->set_var('lang_apply',lang('Apply'));
 			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['egw']->template->set_var('cancel_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			$GLOBALS['egw']->template->parse('out','add');
@@ -762,7 +763,7 @@
 
 		function edit()
 		{
-			if($_POST['submit'])
+			if($_POST['save'] || $_POST['apply'])
 			{
 				$_fields = $this->get_form();
 				/* _debug_array($_fields);exit; */
@@ -782,11 +783,13 @@
 
 				$this->bo->update_entry($_fields);
 
-				Header('Location: '
-					. $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $_fields['ab_id'] . '&referer=' . $referer)
-				);
-
-				$GLOBALS['egw']->common->phpgw_exit();
+				if($_POST['save'])
+				{
+					Header('Location: '
+						. $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $_fields['ab_id'] . '&referer=' . $referer)
+					);
+					$GLOBALS['egw']->common->phpgw_exit();
+				}
 			}
 
 			/* First, make sure they have permission to this entry */
@@ -824,6 +827,7 @@
 			$GLOBALS['egw']->template->set_var('tid',$check[0]['tid']);
 			$GLOBALS['egw']->template->set_var('referer',$referer);
 			$GLOBALS['egw']->template->set_var('lang_save',lang('Save'));
+			$GLOBALS['egw']->template->set_var('lang_apply',lang('Apply'));
 			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['egw']->template->set_var('cancel_link','<form method="POST" action="'
 				. $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.index') . '">');
@@ -940,7 +944,8 @@
 		function view()
 		{
 			$ab_id   = (int) $_GET['ab_id'];
-			$submit  = $_POST['submit'];
+			$save    = $_POST['save'];
+			$apply   = $_POST['apply'];
 			$referer = $this->rebuild_referer($_GET['referer']);
 
 			/* First, make sure they have permission to this entry */
@@ -949,7 +954,7 @@
 				Header('Location: ' . $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['egw']->common->phpgw_exit();
 			}
-			elseif(!$submit && $ab_id)
+			elseif(!($save || $apply) && $ab_id)
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] = lang('Address book - view');
 				$GLOBALS['egw']->common->phpgw_header();
@@ -1334,6 +1339,7 @@
 			$GLOBALS['egw']->template->set_var('lang_other',lang('Other').' '.lang('Fields'));
 			$GLOBALS['egw']->template->set_var('lang_otherprefs',lang('Other').' '.lang('Preferences'));
 			$GLOBALS['egw']->template->set_var('lang_save',lang('Save'));
+			$GLOBALS['egw']->template->set_var('lang_apply',lang('Apply'));
 			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['egw']->template->set_var('th_bg',  $GLOBALS['egw_info']['theme']['th_bg']);
 			$GLOBALS['egw']->template->set_var('th_text',$GLOBALS['egw_info']['theme']['th_text']);

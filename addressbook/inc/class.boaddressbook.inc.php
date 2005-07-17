@@ -23,7 +23,7 @@
 			'add_vcard'       => True,
 			'add_email'       => True,
 			'update_entry'    => True,
-			'delete_entry'    => True,
+			'delete_entry'    => True
 		);
 
 		var $xml_functions  = array();
@@ -56,7 +56,7 @@
 			'customfields' => array(
 				'in' => array('array'),
 				'out'=> array('struct')
-			),
+			)
 		);
 
 		var $debug = False;
