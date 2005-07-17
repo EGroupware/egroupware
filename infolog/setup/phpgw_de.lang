@@ -151,6 +151,7 @@ never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
 new name	infolog	de	neuer name
 new search	infolog	de	Neue Suche
 no - cancel	infolog	de	Nein - Abbruch
+no describtion, links or attachments	infolog	de	Keine Beschreibung, Verküpfungen oder Anhänge
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
 no filter	infolog	de	kein Filter
 no links or attachments	infolog	de	keine Verknüpfungen oder Anhänge
@@ -208,6 +209,7 @@ select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
 select to filter by owner	infolog	de	Besiter zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
@@ -267,3 +269,4 @@ you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Endd
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
 you have to enter a name, to create a new typ!!!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
 you must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	de	Ihre Datenbank ist NICHT aktuell (%1 gegenüber %2), bitte rufen Sie  %3setup%4 auf um ihre Datenbank zu aktualisieren.

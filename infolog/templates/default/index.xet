@@ -96,7 +96,7 @@
 				<column/>
 				<column width="8%"/>
 				<column width="8%"/>
-				<column width="12%"/>
+				<column width="9%"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
@@ -114,7 +114,7 @@
 						<rows>
 							<row>
 								<nextmatch-sortheader label="Subject" id="info_subject"/>
-								<nextmatch-sortheader label="Priority" align="right" id="info_priority"/>
+								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Description" id="info_des"/>
@@ -130,7 +130,7 @@
 						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner"/>
 						<nextmatch-accountfilter id="info_responsible" options="Responsible" statustext="Select to filter by responsible"/>
 					</vbox>
-					<nextmatch-sortheader label="last changed" id="info_datemodified"/>
+					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 					<description value="Sub"/>
 					<description value="Action"/>
 				</row>

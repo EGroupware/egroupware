@@ -121,7 +121,7 @@
 
 			$show_links = $GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'];
 
-			if ($show_links != 'none' && ($links = $this->link->get_links('infolog',$info['info_id'])))
+			if ($show_links != 'none' && $show_links != 'no_describtion' && ($links = $this->link->get_links('infolog',$info['info_id'])))
 			{
 				foreach ($links as $link)
 				{
@@ -178,15 +178,18 @@
 			{
 				$ids = array( );
 			}
-			$rows = array( $query['total'] );
-			$readonlys = array();
+			$readonlys = $rows = array();
 			foreach($ids as $id => $info)
 			{
-				$rows[] = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
+				if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'] == 'no_describtion')
+				{
+					unset($info['info_des']);
+				}
+				$rows[] = $info;
 			}
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
-			reset($rows);
 
 			return $query['total'];
 		}
@@ -302,12 +305,13 @@
 			{
 				if ($typ != 'defaults') $all_stati += $stati;
 			}
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog');
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
 
 			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_status'   => $all_stati
-			),$readonlys,$persist,(int) $return_html);
+			),$readonlys,$persist,$return_html ? -1 : 0);
 		}
 
 		function delete($values=0,$referer='')

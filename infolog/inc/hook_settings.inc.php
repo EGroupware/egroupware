@@ -44,7 +44,8 @@
 		'all'    => lang('all links and attachments'),
 		'links'  => lang('only the links'),
 		'attach' => lang('only the attachments'),
-		'none'   => lang('no links or attachments')
+		'none'   => lang('no links or attachments'),
+		'no_describtion' => lang('no describtion, links or attachments'),
 	);
 	create_select_box('Show in the InfoLog list','show_links',$show_links,
 		'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).');
