@@ -1208,7 +1208,7 @@
 				$GLOBALS['egw']->redirect_link('/preferences/index.php');
 			}
 
-			if($_POST['save'])
+			if($_POST['save'] || $_POST['apply'])
 			{
 				$totalerrors = 0;
 				if(!count($prefs))
@@ -1219,7 +1219,14 @@
 				{
 					@reset($qfields);
 					$this->bo->save_preferences($prefs,$other,$qfields,$fcat_id);
-					$GLOBALS['egw']->redirect_link('/preferences/index.php');
+					if($_POST['save'])
+					{
+						$GLOBALS['egw']->redirect_link('/preferences/index.php');
+					}
+					if($_POST['apply'])
+					{
+						$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.preferences');
+					}
 				}
 			}
 
