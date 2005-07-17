@@ -287,7 +287,7 @@ startrecord	calendar	es-es	Registro inicial
 su	calendar	es-es	Do
 submit to repository	calendar	es-es	Enviar al repositorio
 sun	calendar	es-es	Dom
-tentative	calendar	es-es	Tentativo
+tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
 text	calendar	es-es	Texto
 th	calendar	es-es	J
@@ -366,8 +366,8 @@ you have not entered a\nbrief description	calendar	es-es	Ud. no ha ingresado una
 you have not entered a\nvalid time of day.	calendar	es-es	Ud. no ha ingresado una\nvalid hora valida.
 you have not entered participants	calendar	es-es	No ha introducido participantes
 you must enter one or more search keywords	calendar	es-es	Ud. debe entrar una o mas claves de busqueda
-you must select a [iv]cal. (*.[iv]cs)	calendar	es-es	Debe seleccionar un [iv]Val. (*.[iv]cs)
-you need to set either a day or a occurence !!!	calendar	es-es	Debe poner un día o una ocurrencia
+you must select a [iv]cal. (*.[iv]cs)	calendar	es-es	Debe seleccionar un [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un día o una ocurrencia
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-es	Sus horas sugeridas de <B> %1 - %2 </B> están en conflicto con las siguientes entradas es el calendario:

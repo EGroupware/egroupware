@@ -13,6 +13,12 @@
 3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
 3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
 80 (http)	admin	es-es	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	es-es	\n Limpiando el código HTML. Por favor, espere...
+_delete row	htmlarea-ContextMenu	es-es	Borrar fila
+_image properties...	htmlarea-ContextMenu	es-es	Propiedades de la _imagen
+_modify link...	htmlarea-ContextMenu	es-es	_Modificar enlace
+_remove link...	htmlarea-ContextMenu	es-es	Bo_rrar enlace...
+_table properties...	htmlarea-ContextMenu	es-es	Propiedades de la _tabla...
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about the calendar	jscalendar	es-es	Acerca del calendario
@@ -102,6 +108,7 @@ bulgaria	common	es-es	BULGARIA
 bulleted list	htmlarea	es-es	Lista de esquema
 burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	es-es	Propiedades de la c_elda
 calendar	common	es-es	Calendario
 cambodia	common	es-es	CAMBODIA
 cameroon	common	es-es	CAMEROON
@@ -123,6 +130,7 @@ chad	common	es-es	CHAD
 change	common	es-es	Cambiar
 char	htmlarea-TableOperations	es-es	Carácter
 charset	common	es-es	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	es-es	Comprobar enlace...
 check installation	common	es-es	Comprobar instalación
 check now	common	es-es	Comprobar ahora
 chile	common	es-es	CHILE
@@ -171,6 +179,7 @@ date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
 date selection:	jscalendar	es-es	Seleccionar fecha:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
+de_lete column	htmlarea-ContextMenu	es-es	Borrar co_lumna
 december	common	es-es	Diciembre
 decimal numbers	htmlarea-ListType	es-es	Números decimales
 decrease indent	htmlarea	es-es	Reducir sangría
@@ -196,6 +205,7 @@ display monday first	jscalendar	es-es	Mostrar el lunes primero
 display sunday first	jscalendar	es-es	Mostar el domingo primero
 djibouti	common	es-es	DJIBOUTI
 do you also want to delete all subcategories ?	common	es-es	¿También desea eliminar todas las subcategorías?
+doctype:	common	es-es	DOCTYPE:
 document properties	common	es-es	Propiedades del documento
 document title:	common	es-es	Título del documento
 domain	common	es-es	Dominio
@@ -225,7 +235,7 @@ enabled	common	es-es	Habilitado
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
 enlarge editor	htmlarea	es-es	Agrandar editor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware &nbsp; o &nbsp; /egroupware<br><b>Sin barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
 equatorial guinea	common	es-es	EQUATORIAL GUINEA
@@ -316,6 +326,7 @@ how did you get here? (please report!)	htmlarea-ContextMenu	es-es	¿Cómo ha llega
 how many columns would you like to merge?	htmlarea-TableOperations	es-es	¿Cuántas columnas desea combinar?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
 how many rows would you like to merge?	htmlarea-TableOperations	es-es	¿Cuántas columnas desea combinar?
+html tidy	htmlarea-HtmlTidy	es-es	Limpiar HTML
 htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	es-es	HTMLArea, de forma cobarde, se niega a borrar la última celda de una fila.
 htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	es-es	HTMLArea, de forma cobarde, se niega a borrar la última columna de una tabla.
 htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	es-es	HTMLArea, de forma cobarde, se niega a borrar la última fila de una tabla.
@@ -531,6 +542,7 @@ phone number	common	es-es	Número de teléfono
 phpinfo	common	es-es	PhpInfo
 phpwebhostin	common	es-es	Manejo Avanzado de Archivos
 pitcairn	common	es-es	PITCAIRN
+pixels	htmlarea-TableOperations	es-es	pixels
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please click into some cell	htmlarea-TableOperations	es-es	Por favor, pulse dentro de alguna celda
 please confirm that you want to open this link	htmlarea-SpellChecker	es-es	Por favor, confirme que desea abrir este enlace
@@ -544,6 +556,7 @@ please set your preferences for this application	common	es-es	Por favor, elija s
 please wait.  calling spell checker.	htmlarea-SpellChecker	es-es	Por favor, espere. Llamando al corrector ortográfico.
 please wait...	common	es-es	Por favor, espere...
 please wait: changing dictionary to	htmlarea-SpellChecker	es-es	Por favor, espere: cambiando diccionario a
+pliz weit ;-)	htmlarea-SpellChecker	es-es	por favor, espere ;-)
 poland	common	es-es	POLAND
 portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal

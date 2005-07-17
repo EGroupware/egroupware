@@ -27,6 +27,9 @@ all applications	setup	es-es	Todas las aplicaciones
 all core tables and the admin and preferences applications	setup	es-es	Todas las tablas principales y las aplicaciones de preferencias y administración
 all languages (incl. not listed ones)	setup	es-es	todos los idiomas (incluyendo los no listados)
 all users	setup	es-es	Todos los usuarios
+allow authentication via cookie	setup	es-es	Permitir identificación por cookies
+allow password migration	setup	es-es	Permitir migración de la contraseña
+allowed migration types (comma-separated)	setup	es-es	Permitir tipos de migración (separados por comas)
 analysis	setup	es-es	Análisis
 and reload your webserver, so the above changes take effect !!!	setup	es-es	Y reiniciar el servidor web, para que los cambios de arriba tengan efecto
 app details	setup	es-es	Detalles de la Apliación
@@ -90,6 +93,7 @@ checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking php.ini	setup	es-es	Comprobando php.ini
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
+click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
 completed	setup	es-es	Completado
@@ -154,6 +158,7 @@ do you want persistent connections (higher performance, but consumes more resour
 do you want to manage homedirectory and loginshell attributes?	setup	es-es	¿Administrar el directorio personal y atributos de inicio de sesión?
 does not exist	setup	es-es	no existe
 domain	setup	es-es	Dominio
+domain name	setup	es-es	Nombre del dominio
 domain select box on login	setup	es-es	Cuadro de selección de dominio en el inicio de sesión
 dont touch my data	setup	es-es	No tocar mis datos
 download	setup	es-es	Descargar
@@ -195,7 +200,6 @@ go back	setup	es-es	Volver
 go to	setup	es-es	Ir a
 grant access	setup	es-es	Conceder acceso
 has a version mismatch	setup	es-es	No coinciden las versiones
-header password	setup	es-es	Contraseña del encabezado
 header admin login	setup	es-es	Usuario administrador del encabezado
 header password	setup	es-es	Contraseña del encabezado
 header username	setup	es-es	Usuario del encabezado
@@ -203,6 +207,7 @@ historylog removed	setup	es-es	Se borró el registro del historial
 hooks deregistered	setup	es-es	Se borraron del registro las cadenas sueltas
 hooks registered	setup	es-es	Se registraron las cadenas sueltas
 host information	setup	es-es	Información del servidor
+host/ip domain controler	setup	es-es	Servidor/IP del controlador de dominio
 hostname/ip of database server	setup	es-es	Nombre del servidor o dirección IP del servidor de la base de datos
 hour (0-24)	setup	es-es	hora (0-24)
 however, the application is otherwise installed	setup	es-es	De todas formas, la aplicación fué instalada
@@ -210,6 +215,7 @@ however, the application may still work	setup	es-es	Sin embargo, puede que la ap
 if no acl records for user or any group the user is a member of	setup	es-es	Si no hay registros ACL ni grupo para el usuario, entonces es miembro de
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	es-es	Si está activado safe_mode, eGW no puede cambiar ciertas opciones en modo de ejecución, ni puede cargar ningún módulo que aún no sea cargable.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	es-es	Si la aplicación no ha definido tablas, seleccionando actualizar debería de remediar el problemas
+if using ads (active directory) authentication	setup	es-es	Si se usa identificación del Directorio Activo
 if using ldap	setup	es-es	Si usa LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	es-es	Si usa LDAP ¿desea administrar los atributos del directorio personal y línea de comandos?
 if you did not receive any errors, your applications have been	setup	es-es	Si no ha recibido ningún eror, sus aplicaciones han sido
@@ -427,6 +433,7 @@ the following applications need to be upgraded:	setup	es-es	Las siguientes aplic
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	es-es	La extensión imap es necesaria por las dos aplicaciones de correo, incluso si usa pop3.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
+the session extension is needed to use php4 session (db-sessions work without).	setup	es-es	Se necesita la extensión de la sesión para usar la sesión php4 (las extensiones por base de datos no lo necesitan).
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
 the table definition was correct, and the tables were installed.	setup	es-es	La definición de las tablas fué correcta, y las tablas fueron instaladas
 the tables	setup	es-es	las tablas
@@ -489,6 +496,7 @@ writable by the webserver	setup	es-es	con permiso de escritura para el servidor 
 write config	setup	es-es	Escribir configuración
 year	setup	es-es	año
 yes	setup	es-es	Sí
+yes, with lowercase usernames	setup	es-es	Sí, con los nombres de usuario en minúsculas
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br />Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br />Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br />y luego actualizar desde ahí a la versión actual.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br />Se recomienda que actualice a una nueva versión.<br />Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en eGroupWare.<br /><br />Por favor, actualice al menos a la versión %1
 you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de eGroupWare
@@ -500,6 +508,7 @@ you appear to have mysql support enabled	setup	es-es	Parece que tiene activado e
 you appear to have odbc support enabled	setup	es-es	Parece que tiene activado el soporte ODBC
 you appear to have oracle support enabled	setup	es-es	Parece que tiene activado el soporte Oracle
 you appear to have oracle v8 (oci) support enabled	setup	es-es	Parece que tiene activado el soporte Oracle V8 (OCI)
+you appear to have php4 session support. enabling php4 sessions.	setup	es-es	Parece que tiene soporte para sesiones PHP4. Activando sesiones PHP4.
 you appear to have postgres-db support enabled	setup	es-es	Parece que tiene activado el soporte Postgre-DB
 you appear to have postgresql support enabled	setup	es-es	Parece que tiene activado el soporte PostgreSQL
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
