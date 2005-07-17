@@ -24,7 +24,7 @@
 
   /* $Id$ */
 
-	CreateObject('phpgwapi.portalbox');
+	require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.portalbox.inc.php');
 
 	class listbox extends portalbox
 	{
