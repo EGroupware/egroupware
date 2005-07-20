@@ -1343,8 +1343,9 @@
 				require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
 				$xajax = new xajax($GLOBALS['egw']->link('/xajax.php'));
 				$xajax->registerFunction("doXMLHTTP");
+
+				$java_script .= $xajax->getJavascript();
 			}
-			$java_script .= $xajax->getJavascript();
 
 			/* this flag is for all javascript code that has to be put before other jscode. 
 			Think of conf vars etc...  (pim@lingewoud.nl) */
