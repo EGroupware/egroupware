@@ -128,6 +128,10 @@ class egw
 			
 			$this->load_optional_classes();
 		}
+		else	// set the defines for login, in case it's more then just login
+		{
+			$this->define_egw_constants();
+		}
 	}
 	
 	/**
