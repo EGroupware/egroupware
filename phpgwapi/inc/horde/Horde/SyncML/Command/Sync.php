@@ -97,7 +97,8 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
         $state = $_SESSION['SyncML.state'];
         if($state->getSyncStatus() == CLIENT_SYNC_FINNISHED || $state->getSyncStatus() == SERVER_SYNC_DATA_PENDING)
         {
-##############        
+##############  
+	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);      
         $targets = $state->getTargets();
         Horde::logMessage('SyncML: starting sync to client '.$targets[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
         $attrs = array();
@@ -139,7 +140,7 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 	
 		$output->endElement($state->getURI(), 'Sync');
 		
-		if($currentCmdID > MAX_DATA) break;
+		break;
 	}
 	#Horde::logMessage('SyncML: ending sync to client '.$targets[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	

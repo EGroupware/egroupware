@@ -33,6 +33,7 @@ class XML_WBXML_ContentHandler {
     function XML_WBXML_ContentHandler()
     {
         $this->_currentUri = &new XML_WBXML_LifoQueue();
+        $this->_output = '<?xml version="1.0" encoding="UTF-8" ?>';
     }
 
     function raiseError($error)

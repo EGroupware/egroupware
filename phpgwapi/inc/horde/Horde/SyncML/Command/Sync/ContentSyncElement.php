@@ -127,7 +127,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
             }
             if (isset($this->_content)) {
                 $output->startElement($state->getURI(), 'Data', $attrs);
-                $chars = $this->_content;
+                $chars = '<![CDATA['.$this->_content.']]>';
                 $output->characters($chars);
                 $output->endElement($state->getURI(), 'Data');
             }

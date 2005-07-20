@@ -66,6 +66,10 @@ class Horde_SyncML_Command {
 
     function characters($str)
     {
+    	$tempValue = trim($str);
+    	
+    	if(empty($tempValue)) return;
+    	
         if (isset($this->_chars)) {
             $this->_chars = $this->_chars . $str;
         } else {

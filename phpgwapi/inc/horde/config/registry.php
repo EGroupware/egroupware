@@ -100,3 +100,13 @@ $this->applications['egwcalendarsync'] = array(
     'menu_parent' => 'organizing'
 );
 
+$this->applications['egwtaskssync'] = array(
+    'fileroot' => EGW_SERVER_ROOT.'/syncml/tasks',
+    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
+    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
+    'name' => _("Tasks"),
+    'status' => 'active',
+    'provides' => 'tasks',
+    'menu_parent' => 'organizing'
+);
+

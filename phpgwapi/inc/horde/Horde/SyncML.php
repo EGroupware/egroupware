@@ -536,8 +536,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
               }
               Horde::logMessage('SyncML: summary:' . $s, __FILE__, __LINE__, PEAR_LOG_INFO);
               // session can be closed here!
-              session_unset();
-              session_destroy();
+              //session_unset();
+              //session_destroy();
             }
             break;
 

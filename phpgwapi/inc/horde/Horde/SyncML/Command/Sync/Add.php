@@ -17,9 +17,11 @@ include_once 'Horde/SyncML/Command/Sync/SyncElement.php';
  */
 class Horde_SyncML_Command_Sync_Add extends Horde_SyncML_Command_Sync_SyncElement {
 
+    var $_status = RESPONSE_ITEM_ADDED;
+
     function output($currentCmdID, &$output)
     {
-        $status = &new Horde_SyncML_Command_Status(RESPONSE_ITEM_ADDED, 'Add');
+        $status = &new Horde_SyncML_Command_Status($this->_status, 'Add');
         $status->setCmdRef($this->_cmdID);
 
         if (isset($this->_luid)) {

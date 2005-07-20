@@ -129,7 +129,8 @@ define('CLIENT_SYNC_FINNISHED',		2);
 define('SERVER_SYNC_DATA_PENDING',	3);
 define('SERVER_SYNC_FINNISHED',		4);
 
-define('MAX_DATA',			30);
+define('MAX_DATA',			19);
+define('MAX_ENTRIES',			10);
 
 /**
  * The Horde_SyncML_State class provides a SyncML state object.

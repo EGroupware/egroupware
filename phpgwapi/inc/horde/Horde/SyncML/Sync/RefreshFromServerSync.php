@@ -47,7 +47,7 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync {
 		
 		$syncItems++;
 		// return if we have to much data
-		if($syncItems > MAX_DATA)
+		if($syncItems >= MAX_ENTRIES)
 		{
 			$state->setMoreDataPending();
 			return $currentCmdID;

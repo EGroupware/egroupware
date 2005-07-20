@@ -201,6 +201,19 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 	}
 	else
 	{
+        	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
+        	$status->setCmdRef($this->_cmdID);
+        	if ($this->_sourceLocURI != null) {
+        	    $status->setSourceRef($this->_sourceLocURI);
+        	}
+        	if ($this->_targetLocURI != null) {
+        	    $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
+        	}
+
+        	$currentCmdID = $status->output($currentCmdID, $output);
+	}
+/*	else
+	{
         	if ($state->isAuthorized()) {
         	    $output->startElement($state->getURI(), 'Alert', $attrs);
 
@@ -238,8 +251,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 		    
 		    $currentCmdID++;
 		}
-	}
-
+	}*/
 
         return $currentCmdID;
     }

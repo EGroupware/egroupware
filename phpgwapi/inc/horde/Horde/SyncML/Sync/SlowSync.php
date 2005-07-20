@@ -38,18 +38,19 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 
 	Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
         $serverAnchorNext = $state->getServerAnchorNext($syncType);
+	$counter = 0;	
 
 	while($guid = array_shift($adds))
 	{
             #$guid_ts = max($history->getTSforAction($guid, 'add'),$history->getTSforAction($guid, 'modify'));
             $sync_ts = $state->getChangeTS($syncType, $guid);
-	    #Horde::logMessage("SyncML: timestamp add: $guid sync_ts: $sync_ts anchorNext: ". $serverAnchorNext.' / '.time(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	    Horde::logMessage("SyncML: slowsync timestamp add: $guid sync_ts: $sync_ts anchorNext: ". $serverAnchorNext.' / '.time(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
             // $sync_ts                       it got synced from client to server someone
             // $sync_ts >= $serverAnchorNext  it got synced from client to server in this sync package already
             if ($sync_ts && $sync_ts >= $serverAnchorNext) {
                 // Change was done by us upon request of client.
                 // Don't mirror that back to the client.
-                #Horde::logMessage("SyncML: add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+                //Horde::logMessage("SyncML: slowsync add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
                 continue;
             }
 
@@ -64,6 +65,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
             $c = $registry->call($hordeType . '/export',
                                  array('guid' => $guid,
                                        'contentType' => $contentType));
+	    Horde::logMessage("SyncML: slowsync add to server $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
             if (!is_a($c, 'PEAR_Error')) {
                 // Item in history but not in database. Strange, but
                 // can happen.
@@ -75,7 +77,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
                 $state->log('Server-Add');
 
                 // return if we have to much data
-                if($currentCmdID > MAX_DATA)
+                if(++$counter >= MAX_ENTRIES)
                 {
 	               	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
                 	return $currentCmdID;
@@ -100,7 +102,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 	Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
 	$adds = &$state->getAddedItems($hordeType);
-	
 	$this->_syncDataLoaded = TRUE;
 
 	return count($state->getAddedItems($hordeType));

@@ -89,9 +89,9 @@ class Horde_SyncML_Sync {
      * Command takes place. Entries are added, deleted or replaced
      * from the server database by using Horde API (Registry) calls.
      */
-    function runSyncCommand($command)
+    function runSyncCommand(&$command)
     {
-        Horde::logMessage('SyncML: content type is ' . $command->getContentType(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+        Horde::logMessage('SyncML: content type is ' . $command->getContentType() .' moreData '. $command->_moreData, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         global $registry;
 
         #require_once 'Horde/History.php';
@@ -99,6 +99,63 @@ class Horde_SyncML_Sync {
         $history = $GLOBALS['phpgw']->contenthistory;
 
         $state = &$_SESSION['SyncML.state'];
+        
+        if(isset($state->_moreData['luid']))
+        {
+        	if(($command->_luid == $state->_moreData['luid']))
+        	{
+        		$lastChunks = implode('',$state->_moreData['chunks']);
+        		$command->_content = $lastChunks.$command->_content;
+		        $stringlen1 =  strlen($lastChunks);
+		        $stringlen2 =  strlen($command->_content);
+        		
+        		if(!$command->_moreData && 
+        			strlen($command->_content) 
+        			 != $state->_moreData['contentSize']
+        		)
+        		{
+	        		$command->_status = RESPONSE_SIZE_MISMATCH;
+		        	$state->_moreData = array();
+	        		
+	        		return;
+        		}
+        		elseif(!$command->_moreData && 
+        			strlen($command->_content) 
+        			 == $state->_moreData['contentSize']
+        		)
+        		{
+		        	$state->_moreData = array();
+	        		
+	        		return;
+        		}
+        		
+        	}
+        	else
+        	{
+        		// alert 223 needed too
+        		#$command->_status = ALERT_NO_END_OF_DATA;
+
+	        	$state->_moreData = array();
+        		
+        		return;
+        	}
+        }
+        
+        // don't add/replace the data currently, they are not yet complete
+        if($command->_moreData == TRUE)
+        {
+        	$state->_moreData['chunks'][]	= $command->_content;
+        	$state->_moreData['luid']	= $command->_luid;
+        	
+        	// gets only set with the first chunk of data
+        	if(isset($command->_contentSize))
+        		$state->_moreData['contentSize'] = $command->_contentSize;
+        	
+        	$command->_status = RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED;
+
+        	return;
+        }
+        
         $hordeType = $type = $this->_targetLocURI;
         // remove the './' from the beginning
         $hordeType = str_replace('./','',$hordeType);

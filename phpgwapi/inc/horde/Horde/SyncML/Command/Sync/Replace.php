@@ -19,7 +19,7 @@ class Horde_SyncML_Command_Sync_Replace extends Horde_SyncML_Command_Sync_SyncEl
 
     function output($currentCmdID, &$output)
     {
-        $status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Replace');
+        $status = &new Horde_SyncML_Command_Status($this->_status, 'Replace');
         $status->setCmdRef($this->_cmdID);
 
         if (isset($this->_luid)) {

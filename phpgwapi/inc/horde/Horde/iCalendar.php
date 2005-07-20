@@ -406,7 +406,6 @@ class Horde_iCalendar {
      */
     function parsevCalendar($text, $base = 'VCALENDAR', $charset = 'utf-8', $clear = true)
     {
-	$botranslation = CreateObject('phpgwapi.translation');
         if ($clear) {
             $this->clear();
         }
@@ -494,18 +493,18 @@ class Horde_iCalendar {
                     $value = quoted_printable_decode($value);
                     // Quoted printable is normally encoded as utf-8.
                     if (isset($params['CHARSET'])) {
-                        $value = $botranslation->convert($value, $params['CHARSET']);
+                        $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET'],'iso-8859-1');
                     } else {
-                        $value = $botranslation->convert($value, 'utf-8');
+                        $value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
                     }
                 }
 
                 if (isset($params['CHARSET'])) {
-                    $value = $botranslation->convert($value, $params['CHARSET']);
+                    $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
                 } else {
                     // As per RFC 2279, assume UTF8 if we don't have
                     // an explicit charset parameter.
-                    $value = $botranslation->convert($value, $charset);
+                    $value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
                 }
 
                 switch ($tag) {
@@ -1177,7 +1176,7 @@ class Horde_iCalendar {
      * @access private
      * @return string
      */
-    function EncodeQP ($str) {
+    function EncodeQP_old ($str) {
         $encoded = $this->FixEOL($str);
         #$encoded = $str;
         #if (substr($encoded, -(strlen($this->LE))) != $this->LE)
@@ -1189,6 +1188,8 @@ class Horde_iCalendar {
         $encoded = preg_replace('/([\000-\012\015\016\020-\037\075\177-\377])/e',
                   "'='.sprintf('%02X', ord('\\1'))", $encoded);
         // Replace every spaces and tabs when it's the last character on a line
+        #$encoded = preg_replace("/([\011\040])".$this->LE."/e",
+        #          "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
         $encoded = preg_replace("/([\011\040])".$this->LE."/e",
                   "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
 
@@ -1205,7 +1206,7 @@ class Horde_iCalendar {
      * @access private
      * @return string
      */
-    function WrapText($message, $length, $qp_mode = false) {
+    function WrapText_old($message, $length, $qp_mode = false) {
         $soft_break = ($qp_mode) ? "=\r\n" : $this->LE;
 
         #$message = $this->FixEOL($message);
@@ -1291,5 +1292,110 @@ class Horde_iCalendar {
         return $str;
     }
 
+    /**
+     * Encode string to quoted-printable.  
+     * @access private
+     * @return string
+     */
+    function EncodeQP ($str) {
+        $encoded = $this->FixEOL($str);
+        if (substr($encoded, -(strlen($this->LE))) != $this->LE)
+            $encoded .= $this->LE;
+
+        // Replace every high ascii, control and = characters
+        #$encoded = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e',
+        #          "'='.sprintf('%02X', ord('\\1'))", $encoded);
+        $encoded = preg_replace('/([\000-\012\015\016\020-\037\075\177-\377])/e',
+                  "'='.sprintf('%02X', ord('\\1'))", $encoded);
+        // Replace every spaces and tabs when it's the last character on a line
+        $encoded = preg_replace("/([\011\040])".$this->LE."/e",
+                  "'='.sprintf('%02X', ord('\\1')).'".$this->LE."'", $encoded);
+
+        // Maximum line length of 76 characters before CRLF (74 + space + '=')
+        #$encoded = $this->WrapText($encoded, 74, true);
+
+        return $encoded;
+    }
+
+    /**
+     * Wraps message for use with mailers that do not
+     * automatically perform wrapping and for quoted-printable.
+     * Original written by philippe.  
+     * @access private
+     * @return string
+     */
+    function WrapText($message, $length, $qp_mode = false) {
+        $soft_break = ($qp_mode) ? sprintf(" =%s", $this->LE) : $this->LE;
+        $soft_break = "..=";
+
+        $message = $this->FixEOL($message);
+        if (substr($message, -1) == $this->LE)
+            $message = substr($message, 0, -1);
+
+        $line = explode($this->LE, $message);
+        $message = "";
+        for ($i=0 ;$i < count($line); $i++)
+        {
+          $line_part = explode(" ", $line[$i]);
+          $buf = "";
+          for ($e = 0; $e<count($line_part); $e++)
+          {
+              $word = $line_part[$e];
+              if ($qp_mode and (strlen($word) > $length))
+              {
+                $space_left = $length - strlen($buf) - 1;
+                if ($e != 0)
+                {
+                    if ($space_left > 20)
+                    {
+                        $len = $space_left;
+                        if (substr($word, $len - 1, 1) == "=")
+                          $len--;
+                        elseif (substr($word, $len - 2, 1) == "=")
+                          $len -= 2;
+                        $part = substr($word, 0, $len);
+                        $word = substr($word, $len);
+                        $buf .= " " . $part;
+                        $message .= $buf . sprintf("=%s", $this->LE);
+                    }
+                    else
+                    {
+                        $message .= $buf . $soft_break;
+                    }
+                    $buf = "";
+                }
+                while (strlen($word) > 0)
+                {
+                    $len = $length;
+                    if (substr($word, $len - 1, 1) == "=")
+                        $len--;
+                    elseif (substr($word, $len - 2, 1) == "=")
+                        $len -= 2;
+                    $part = substr($word, 0, $len);
+                    $word = substr($word, $len);
+
+                    if (strlen($word) > 0)
+                        $message .= $part . sprintf("=%s", $this->LE);
+                    else
+                        $buf = $part;
+                }
+              }
+              else
+              {
+                $buf_o = $buf;
+                $buf .= ($e == 0) ? $word : (" " . $word); 
+
+                if (strlen($buf) > $length and $buf_o != "")
+                {
+                    $message .= $buf_o . $soft_break;
+                    $buf = $word;
+                }
+              }
+          }
+          $message .= $buf . $this->LE;
+        }
+
+        return $message;
+    }
 
 }

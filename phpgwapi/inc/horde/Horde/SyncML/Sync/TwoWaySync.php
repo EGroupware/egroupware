@@ -56,6 +56,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
         #$history = &Horde_History::singleton();
         $history = $GLOBALS['phpgw']->contenthistory;
         $state = &$_SESSION['SyncML.state'];
+	$counter = 0;
         
         $changes = &$state->getChangedItems($hordeType);
         $deletes = &$state->getDeletedItems($hordeType);
@@ -104,7 +105,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
                 $state->log('Server-Replace');
                 
                 // return if we have to much data
-                if($currentCmdID > MAX_DATA)
+                if(++$counter >= MAX_ENTRIES)
                 {
                 	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
                 	return $currentCmdID;
@@ -141,7 +142,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
             $state->removeUID($syncType, $locid);
 
 	    // return if we have to much data
-	    if($currentCmdID > MAX_DATA)
+	    if(++$counter >= MAX_ENTRIES)
 	    {
                	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 	    	return $currentCmdID;
@@ -200,7 +201,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
                 $state->log('Server-Add');
 
                 // return if we have to much data
-                if($currentCmdID > MAX_DATA)
+                if(++$counter >= MAX_ENTRIES)
                 {
 	               	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
                 	return $currentCmdID;

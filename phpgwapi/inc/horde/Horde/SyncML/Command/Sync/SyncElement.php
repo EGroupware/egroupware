@@ -22,6 +22,7 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
     var $_isSource;
     var $_content;
     var $_contentType;
+    var $_status = RESPONSE_OK;
 
     function &factory($command, $params = null)
     {
@@ -52,6 +53,8 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
     function endElement($uri, $element)
     {
+    	$search = array('/ *\n/','/ *$/m');
+    	$replace = array('','');
         switch ($this->_xmlStack) {
         case 1:
             // Need to add sync elements to the Sync method?
@@ -61,7 +64,9 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
             if ($element == 'Source') {
                 $this->_isSource = false;
             } elseif ($element == 'Data') {
-                $this->_content = trim($this->_chars);
+                $this->_content = $this->_chars;
+            } elseif ($element == 'MoreData') {
+                $this->_moreData = TRUE;
             } elseif ($element == 'Type') {
             	if(!isset($this->_contentType))
                 	$this->_contentType = trim($this->_chars);
@@ -73,6 +78,8 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
                 $this->_luid = trim($this->_chars);
             } elseif ($element == 'Type') {
                 $this->_contentType = trim($this->_chars);
+            } elseif ($element == 'Size') {
+                $this->_contentSize = trim($this->_chars);
             }
             break;
         }
@@ -119,5 +126,9 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
     {
         $this->_content = $content;
     }
-
+    
+    function setStatus($_status)
+    {
+    	$this->_status = $_status;
+    }
 }

@@ -39,7 +39,7 @@ class Horde_RPC_syncml extends Horde_RPC {
     /**
      * Debug directory, if set will store copies of all packets.
      */
-    var $_debugDir = '/var/www/groupware.groupwareappliance.com/htdocs/syncml/';
+    var $_debugDir = '/var/www/html/syncdebug/';
 
     /**
      * Default character set.  Only supports UTF-8(ASCII?).

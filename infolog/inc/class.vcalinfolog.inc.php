@@ -19,6 +19,8 @@
 		function exportVTODO($_taskID, $_version)
 		{
 			$taskData = $this->read($_taskID);
+
+			$taskData = $GLOBALS['egw']->translation->convert($taskData,$GLOBALS['egw']->translation->charset(),'UTF-8');
 			
 			//_debug_array($taskData);
 			
@@ -88,13 +90,14 @@
 					foreach($component->_attributes as $attributes)
 					{
 						#print $attributes['name'].' - '.$attributes['value'].'<br>';
+						#$attributes['value'] = $GLOBALS['egw']->translation->convert($attributes['value'],'UTF-8');
 						switch($attributes['name'])
 						{
 							case 'CLASS':
-								$taskData['info_access']	= strtolower($attributes['value']);
+								$taskData['info_access']		= strtolower($attributes['value']);
 								break;
 							case 'DESCRIPTION':
-								$taskData['info_des']		= $botranslation->convert($attributes['value'],'utf-8');
+								$taskData['info_des']			= $attributes['value'];
 								break;
 							case 'DUE':
 								$taskData['info_enddate']		= $attributes['value'];
