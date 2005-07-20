@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>DHTML Tree samples. dhtmlXTree - Checkboxes</title>
+</head>
+<style>
+	body {font-size:12px}
+	.{font-family:arial;font-size:12px}
+	h1 {cursor:hand;font-size:16px;margin-left:10px;line-height:10px}
+	xmp {color:green;font-size:12px;margin:0px;font-family:courier;background-color:#e6e6fa;padding:2px}
+</style>
+<body>
+	<h1>Checkboxes</h1>
+	<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXTree.css">
+	<script  src="../js/dhtmlXCommon.js"></script>
+	<script  src="../js/dhtmlXTree.js"></script>		
+	
+	<table>
+		<tr>
+			<td valign="top">
+				<div id="treeboxbox_tree" style="width:250; height:218;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"></div>
+			</td>
+			<td  style="padding-left:25" valign="top">
+			
+			Two state checkboxes
+			<a href="javascript:void(0);" onclick="tree.setCheck(tree.getSelectedItemId(),true);">Check item</a><br><br>
+			<a href="javascript:void(0);" onclick="tree.setCheck(tree.getSelectedItemId(),false);">UnCheck item</a><br><br>
+			<a href="javascript:void(0);" onclick="tree.setSubChecked(tree.getSelectedItemId(),true);">Check branch</a><br><br>
+			<a href="javascript:void(0);" onclick="tree.setSubChecked(tree.getSelectedItemId(),false);">UnCheck branch</a><br><br>
+			
+			<a href="javascript:void(0);" onclick="alert(tree.getAllChecked());">Get list of checked</a><br><br>
+
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<div id="treeboxbox_tree2" style="width:250; height:218;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"></div>
+			</td>
+			<td  style="padding-left:25" valign="top">
+			
+						Three state checkboxes<br>
+						<br>
+						
+			<a href="javascript:void(0);" onclick="tree2.setCheck(tree2.getSelectedItemId(),true);">Check item</a><br><br>
+			<a href="javascript:void(0);" onclick="tree2.setCheck(tree2.getSelectedItemId(),false);">UnCheck item</a><br><br>
+		
+			<a href="javascript:void(0);" onclick="alert(tree2.getAllChecked());">Get list of checked</a><br><br>
+
+			</td>
+		</tr>
+	</table>
+	<hr>	
+<XMP>
+<div id="treeboxbox_tree" style="width:200;height:200"></div>
+<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			//enable checkboxes
+			tree.enableCheckBoxes(1);
+			tree.loadXML("tree.xml");
+			
+			....
+			//check item
+			tree.setCheck(id,true);
+			//uncheck item
+			tree.setCheck(id,false);	
+			//check branch
+			tree.setSubChecked(id,true);
+			//uncheck branch
+			tree.setSubChecked(id,false);	
+			//check item
+			tree.setCheck(id,true);
+			//return ids of checked items
+			var list=tree.getAllChecked();	
+</script>
+</XMP>
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.enableCheckBoxes(1);
+			
+			tree.loadXML("tree3.xml");
+			
+			tree2=new dhtmlXTreeObject("treeboxbox_tree2","100%","100%",0);
+			tree2.setImagePath("../imgs/");
+			tree2.enableCheckBoxes(1);
+			tree2.enableThreeStateCheckboxes(true);
+			tree2.loadXML("tree3.xml");
+						
+	</script>
+<br><br>
+
+</body>
+</html>

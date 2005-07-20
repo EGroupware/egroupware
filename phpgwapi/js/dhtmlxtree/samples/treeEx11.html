@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>DHTML Tree samples. dhtmlXTree - Initialize object on page</title>
+</head>
+<style>
+	body {font-size:12px}
+	.{font-family:arial;font-size:12px}
+	h1 {cursor:hand;font-size:16px;margin-left:10px;line-height:10px}
+	xmp {color:green;font-size:12px;margin:0px;font-family:courier;background-color:#e6e6fa;padding:2px}
+</style>
+<body>
+	<h1>Initialize object on page</h1>
+	<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXTree.css">
+	<script  src="../js/dhtmlXCommon.js"></script>
+	<script  src="../js/dhtmlXTree.js"></script>		
+	<table>
+		<tr>
+			<td>
+				<div id="treeboxbox_tree" style="width:250; height:218;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"/>
+			</td>
+			<td rowspan="2" style="padding-left:25" valign="top">
+
+		</div>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+<hr>
+<XMP>
+<div id="treeboxbox_tree" style="width:200;height:200"></div>
+<script>
+	tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+		tree.setImagePath("../imgs/");
+		tree.loadXML("tree.xml")
+</script>
+</XMP>
+		Parameters passed to the constructor are:
+			<li>object to attach tree to (should be loaded before calling constructor)</li>
+			<li>width of the tree</li>
+			<li>height of the tree</li>
+			<li>identifier of level parent to tree root level</li><br>
+		Specify Additional parameters of the tree:
+			<li>setImagePath(url) - method specifies the path to the folder with tree icons</li>
+			<li>loadXML("tree.xml") - load tree items from XML</li>
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.loadXML("tree3.xml")
+	</script>
+<br><br>
+
+</body>
+</html>

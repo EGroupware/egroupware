@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>DHTML Tree samples. dhtmlXTree - Easy skinable design</title>
+</head>
+<style>
+	body {font-size:12px}
+	.{font-family:arial;font-size:12px}
+	h1 {cursor:hand;font-size:16px;margin-left:10px;line-height:10px}
+	xmp {color:green;font-size:12px;margin:0px;font-family:courier;background-color:#e6e6fa;padding:2px}
+</style>
+<body>
+	<h1>Easy skinable design</h1>
+	<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXTree.css">
+	<script  src="../js/dhtmlXCommon.js"></script>
+	<script  src="../js/dhtmlXTree.js"></script>		
+	<script>
+		function setDesign(n){
+			switch(n){
+			case 4:
+				tree.enableTreeLines(true);
+				tree.setImageArrays("plus","plus2.gif","plus3.gif","plus4.gif","plus.gif","plus5.gif");
+				tree.setImageArrays("minus","minus2.gif","minus3.gif","minus4.gif","minus.gif","minus5.gif");
+				tree.setStdImages("book.gif","books_open.gif","books_close.gif");					
+				break;
+	
+			    break;
+			case 3:
+				tree.enableTreeLines(true);
+				tree.setImageArrays("plus","plus2.gif","plus3.gif","plus4.gif","plus.gif","plus5.gif");
+				tree.setImageArrays("minus","minus2.gif","minus3.gif","minus4.gif","minus.gif","minus5.gif");
+				tree.setStdImages("item2.gif","close2.gif","open2.gif");					
+				break;
+			case 2:
+				tree.enableTreeLines(true);
+				tree.setImageArrays("plus","open2.gif","open2.gif","open2.gif","open2.gif","open2.gif");
+				tree.setImageArrays("minus","close2.gif","close2.gif","close2.gif","close2.gif","close2.gif");
+				tree.setStdImages("book.gif","books_open.gif","books_close.gif");					
+				break;
+			case 1:
+				tree.enableTreeLines(false);
+				tree.setImageArrays("plus","","","","plus_ar.gif","plus_ar.gif");
+				tree.setImageArrays("minus","","","","minus_ar.gif","minus_ar.gif");
+				tree.setStdImages("book.gif","books_open.gif","books_close.gif");					
+				break;
+			}
+			tree.refreshItem(0);
+		}
+	</script>
+	<table>
+		<tr>
+			<td valign="top">
+
+
+				<div id="treeboxbox_tree" style="width:250; height:218;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"></div><br>
+				<br>
+
+			</td>
+			<td rowspan="2" style="padding-left:25" valign="top">
+			
+			<a href="javascript:void(0)" onclick="setDesign(1);">Set design 1</a><br>
+			<a href="javascript:void(0)" onclick="setDesign(2);">Set design 2</a><br>
+			<a href="javascript:void(0)" onclick="setDesign(3);">Set design 3</a><br>
+			<a href="javascript:void(0)" onclick="setDesign(4);">Set design 4</a><br>
+			
+
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	<hr>	
+<XMP>
+<div id="treeboxbox_tree" style="width:200;height:200"></div>
+<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.loadXML("tree.xml");
+
+				// enable/disable tree lines
+				tree.enableTreeLines(false);
+				// set plus images
+				tree.setImageArrays("plus","","","","open2.gif");
+				//set minus images
+				tree.setImageArrays("minus","","","","close2.gif");
+				//set default node images
+				tree.setStdImages("book.gif","books_open.gif","books_close.gif");	
+
+</script>
+</XMP>	
+ 
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.enableDragAndDrop(0);
+				tree.enableTreeLines(false);
+				tree.setImageArrays("plus","","","","plus_ar.gif");
+				tree.setImageArrays("minus","","","","minus_ar.gif");
+				tree.setStdImages("book.gif","books_open.gif","books_close.gif");		
+			tree.setXMLAutoLoading("tree4.xml");
+			tree.loadXML("tree4.xml");
+	</script>
+<br><br>
+
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>DHTML Tree samples. dhtmlXTree - Change text/image</title>
+</head>
+<style>
+	body {font-size:12px}
+	.{font-family:arial;font-size:12px}
+	h1 {cursor:hand;font-size:16px;margin-left:10px;line-height:10px}
+	xmp {color:green;font-size:12px;margin:0px;font-family:courier;background-color:#e6e6fa;padding:2px}
+</style>
+<body>
+	<h1>Change text/image</h1>
+	<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXTree.css">
+	<script  src="../js/dhtmlXCommon.js"></script>
+	<script  src="../js/dhtmlXTree.js"></script>		
+	<script>
+		function setColor(color1,color2)
+		{
+			tree.setItemColor(tree.getSelectedItemId(),color1,color2);
+		}
+	</script>
+	<table>
+		<tr>
+			<td valign="top">
+				<div id="treeboxbox_tree" style="width:250; height:218;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"></div>
+			</td>
+			<td rowspan="2" style="padding-left:25" valign="top">
+			
+			
+			<a href="javascript:void(0);" onclick="var d=new Date(); tree.setItemText(tree.getSelectedItemId(),document.getElementById('ed1').value);">Set new item label</a>&nbsp;<input type="text" value="New label" id="ed1"><br><br>
+			
+			To change item's image - click on one of next images: 
+			<table>
+				<tr><td>
+					<a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'tombs.gif','tombs.gif','tombs.gif');"><img src="../imgs/tombs.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'book.gif','book.gif','book.gif');"><img src="../imgs/book.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'book_titel.gif','book_titel.gif','book_titel.gif');"><img src="../imgs/book_titel.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'magazines_close.gif','magazines_close.gif','magazines_close.gif');"><img src="../imgs/magazines_close.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'leaf.gif','leaf.gif','leaf.gif');"><img src="../imgs/leaf.gif" border="0"></a></td>
+				</td></tr>
+				<tr><td nowrap>
+					<a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'iconJob.gif','iconJob.gif','iconJob.gif');"><img src="../imgs/iconJob.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'iconTask.gif','iconTask.gif','iconTask.gif');"><img src="../imgs/iconTask.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'iconReport.gif','iconReport.gif','iconReport.gif');"><img src="../imgs/iconReport.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'iconClient.gif','iconClient.gif','iconClient.gif');"><img src="../imgs/iconClient.gif" border="0"></a></td>
+					<td><a href="javascript:void(0);" onclick="tree.setItemImage2(tree.getSelectedItemId(),'iconTimeRecordsEdit.gif','iconTimeRecordsEdit.gif','iconTimeRecordsEdit.gif');"><img src="../imgs/iconTimeRecordsEdit.gif" border="0"></a></td>
+				</td></tr>				
+			</table>
+			<br>
+			To change item's color - click on one of next colors: 
+			<table>
+				<tr>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#ff0000;" onclick="setColor('#ff0000','#ff0000')">&nbsp;</div></td>
+					<td><div style="cursor:pointer;width:20px; height:20px; background-color:#ffa500;" onclick="setColor('#ffa500','#ffa500')">&nbsp;</div></td>
+					<td><div style="cursor:pointer;width:20px; height:20px; background-color:#ffff00;" onclick="setColor('#ffff00','#ffff00')">&nbsp;</div></td>				
+				</tr>			
+				<tr> 
+					<td><div style="cursor:pointer;width:20px; height:20px; background-color:#008000;" onclick="setColor('#008000','#adff2f')">&nbsp;</div></td>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#00ff7f;" onclick="setColor('#00ff7f','#adff2f')">&nbsp;</div></td>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#adff2f;" onclick="setColor('#adff2f')">&nbsp;</div></td>				
+				</tr>
+				<tr>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#0000ff;" onclick="setColor('#0000ff','#87ceeb')">&nbsp;</div></td>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#9932cc;" onclick="setColor('#9932cc','#9932cc')">&nbsp;</div></td>
+					<td><div style="cursor:pointer; width:20px; height:20px; background-color:#87ceeb;" onclick="setColor('#87ceeb','#87ceeb')">&nbsp;</div></td>				
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	<hr>	
+<XMP>
+<div id="treeboxbox_tree" style="width:200;height:200"></div>
+<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.loadXML("tree.xml");
+			
+			....
+			//set item text
+			tree.setItemText(id,"New text");
+			//set item images
+			tree.setItemImage2(id,"item.gif","closeItem.gif","openItem.gif");
+</script>
+</XMP>
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setImagePath("../imgs/");
+			tree.loadXML("tree3.xml");
+
+	</script>
+<br><br>
+
+</body>
+</html>
