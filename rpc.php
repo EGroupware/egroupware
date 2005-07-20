@@ -8,13 +8,14 @@
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  */
 
+error_reporting(E_ALL & ~E_NOTICE);
 @define('AUTH_HANDLER', true);
 @define('HORDE_BASE', dirname(__FILE__).'/phpgwapi/inc/horde/');
 require_once HORDE_BASE . '/lib/core.php';
 require_once 'Horde/RPC.php';
 
-$GLOBALS['phpgw_info'] = array();
-$GLOBALS['phpgw_info']['flags'] = array(
+$GLOBALS['egw_info'] = array();
+$GLOBALS['egw_info']['flags'] = array(
 	'currentapp'            => 'login',
 	'noheader'              => True,
 	'disable_Template_class' => True
