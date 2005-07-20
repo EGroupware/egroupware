@@ -16,6 +16,12 @@
 
   /* $Id$ */
 
+	class egw_dummy {
+		var $db;
+		var $common;
+		var $accounts;
+	}
+
 	class setup
 	{
 		var $db;
@@ -880,9 +886,9 @@
 				{
 					$GLOBALS['egw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
 				}
-				if (!is_object($GLOBALS['egw']))
+				//if (!is_object($GLOBALS['egw']))
 				{
-					$GLOBALS['egw'] =& CreateObject('phpgwapi.egw');
+					$GLOBALS['egw'] =& new egw_dummy();
 					$GLOBALS['phpgw'] =& $GLOBALS['egw'];
 				}
 				$GLOBALS['egw']->db          = clone($this->db);
