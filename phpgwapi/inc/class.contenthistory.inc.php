@@ -77,20 +77,20 @@
 			switch($_action)
 			{
 				case 'modify':
-					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and sync_modified > sync_deleted";
+					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null";
 					break;
 				case 'delete':
 					$query .= "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
 					break;
 				case 'add':
-					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and sync_added > sync_deleted and sync_added > sync_modified";
+					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null and sync_modified is null ";
 					break;
 				default:
 					// no valid $_action set
 					return array();
 					break;
 			}
-			
+			//Horde::logMessage("SymcML: egwcontactssync $query", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$this->db->query($query, __LINE__, __FILE__);
 
 			$guidList = array();
