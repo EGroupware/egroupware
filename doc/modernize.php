@@ -89,7 +89,7 @@ $modernize = array(
 	"\r"                       => '',
 );
 
-foreach(array('GET','POST','SERVER') as $name)
+foreach(array('GET','POST','SERVER','SESSION') as $name)
 {
 	$modernize['$HTTP_'.$name.'_VARS'] = '$_'.$name;
 	$modernize['$GLOBALS[\'HTTP_'.$name.'_VARS\']'] = '$_'.$name;
