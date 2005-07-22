@@ -167,6 +167,7 @@
 			{
 				$this->cache = &$GLOBALS['egw_info']['accounts']['cache'];
 			}
+			if (!is_array($this->cache)) $this->cache = array();
 		}
 
 		/**
@@ -372,6 +373,8 @@
 		{
 			//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
 			$GLOBALS['egw_info']['accounts']['cache'] = array();
+			
+			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
 		}
 
 		/**
