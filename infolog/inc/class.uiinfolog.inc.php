@@ -531,6 +531,7 @@
 						}
 					case 'new':		// new entry
 						$content['info_startdate'] = $today;
+						$content['info_priority'] = 1; // normal
 						if ($type != '')
 						{
 							$content['info_type'] = $type;
