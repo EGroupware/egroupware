@@ -1,25 +1,25 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - VFS                                                     *
-  * This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
-  * This class handles file/dir access for eGroupWare                        *
-  * Copyright (C) 2001-2003 Jason Wies, Jonathon Sim		             *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - VFS                                                     *
+	* This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
+	* This class handles file/dir access for eGroupWare                        *
+	* Copyright (C) 2001-2003 Jason Wies, Jonathon Sim		             *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
 
 	/*Different aspects of debugging. DEBUG enables debug output for this class
@@ -57,25 +57,25 @@
 			'publisher_id' => 'owner_id'
 		);
 		
-		/*!
-		@function vfs
-		@abstract constructor, sets up variables
-		*/
+		/**
+		 * constructor, sets up variables
+		 *
+		 */
 
 		function vfs ()
 		{
-			$this->basedir = $GLOBALS['phpgw_info']['server']['files_dir'];
+			$this->basedir = $GLOBALS['egw_info']['server']['files_dir'];
 			$this->fakebase = '/home';
-			$this->working_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->working_lid = $GLOBALS['phpgw']->accounts->id2name($this->working_id);
+			$this->working_id = $GLOBALS['egw_info']['user']['account_id'];
+			$this->working_lid = $GLOBALS['egw']->accounts->id2name($this->working_id);
 			$this->now = date ('Y-m-d');
 			$this->override_acl = 0;
 			/*
-			   File/dir attributes, each corresponding to a database field.  Useful for use in loops
-			   If an attribute was added to the table, add it here and possibly add it to
-			   set_attributes ()
+				 File/dir attributes, each corresponding to a database field.  Useful for use in loops
+				 If an attribute was added to the table, add it here and possibly add it to
+				 set_attributes ()
 
-			   set_attributes now uses this array().   07-Dec-01 skeeter
+				 set_attributes now uses this array().   07-Dec-01 skeeter
 			*/
 
 			$this->attributes = array(
@@ -98,39 +98,39 @@
 			);
 
 			/*
-			   These are stored in the MIME-type field and should normally be ignored.
-			   Adding a type here will ensure it is normally ignored, but you will have to
-			   explicitly add it to acl_check (), and to any other SELECT's in this file
+				 These are stored in the MIME-type field and should normally be ignored.
+				 Adding a type here will ensure it is normally ignored, but you will have to
+				 explicitly add it to acl_check (), and to any other SELECT's in this file
 			*/
 
 			$this->meta_types = array ('journal', 'journal-deleted');
 
 			/* We store the linked directories in an array now, so we don't have to make the SQL call again */
-			if ($GLOBALS['phpgw_info']['server']['db_type']=='mssql'
-				|| $GLOBALS['phpgw_info']['server']['db_type']=='sybase')
+			if ($GLOBALS['egw_info']['server']['db_type']=='mssql'
+				|| $GLOBALS['egw_info']['server']['db_type']=='sybase')
 			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE CONVERT(varchar,link_directory) != '' AND CONVERT(varchar,link_name) != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+				$query = $GLOBALS['egw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE CONVERT(varchar,link_directory) != '' AND CONVERT(varchar,link_name) != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
 			}
 			else
 			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE (link_directory IS NOT NULL or link_directory != '') AND (link_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+				$query = $GLOBALS['egw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE (link_directory IS NOT NULL or link_directory != '') AND (link_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
 			}
 
 			$this->linked_dirs = array ();
-			while ($GLOBALS['phpgw']->db->next_record ())
+			while ($GLOBALS['egw']->db->next_record ())
 			{
-				$this->linked_dirs[] = $GLOBALS['phpgw']->db->Record;
+				$this->linked_dirs[] = $GLOBALS['egw']->db->Record;
 			}
 
 			
-			$this->repository = $GLOBALS['phpgw_info']['server']['files_dir'];
-			$this->dav_user=$GLOBALS['phpgw_info']['user']['userid'];
-			$this->dav_pwd=$GLOBALS['phpgw_info']['user']['passwd'];
+			$this->repository = $GLOBALS['egw_info']['server']['files_dir'];
+			$this->dav_user=$GLOBALS['egw_info']['user']['userid'];
+			$this->dav_pwd=$GLOBALS['egw_info']['user']['passwd'];
 			$parsed_url = parse_url($this->repository);
 			$this->dav_host=$parsed_url['host'];
 			$this->dav_port=@isset($parsed_url['port']) ? $parsed_url['port'] : 80;
 
-			$this->dav_client = CreateObject('phpgwapi.http_dav_client');
+			$this->dav_client =& CreateObject('phpgwapi.http_dav_client');
 			$this->dav_client->set_credentials($this->dav_user,$this->dav_pwd);
 			$this->dav_client->set_attributes($this->attributes,$this->vfs_property_map);
 			$result = $this->dav_client->connect($this->dav_host,$this->dav_port);
@@ -153,8 +153,8 @@
 			}
 */	
 			//Reload the overriden_locks
-			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$session_data = base64_decode($GLOBALS['phpgw']->session->appsession ('vfs_dav',$app));
+			$app = $GLOBALS['egw_info']['flags']['currentapp'];
+			$session_data = base64_decode($GLOBALS['egw']->session->appsession ('vfs_dav',$app));
 			$this->override_locks = array();
 			if ($session_data)
 			{
@@ -191,22 +191,22 @@
 			}
 		}
 
-		/*!
-		@function dav_path
-		@abstract Apaches mod_dav in particular requires that the path sent in a dav request NOT be a URI
-		*/
+		/**
+		 * Apaches mod_dav in particular requires that the path sent in a dav request NOT be a URI
+		 *
+		 */
 		function dav_path($uri) {
 			//$this->debug('DAV path');
 			$parsed = parse_url($uri);
 			return $parsed['path'];
 		}
 
-		/*!
-		@function glue_url
-		@abstract glues a parsed url (ie parsed using PHP's parse_url) back
-			together
-		@param $url	The parsed url (its an array)
-		*/
+		/**
+		 * glues a parsed url (ie parsed using PHP's parse_url) back
+		 *
+		 * 	together
+		 * @param $url	The parsed url (its an array)
+		 */
 		function glue_url ($url){
 			if (!is_array($url))
 			{
@@ -256,11 +256,11 @@
 		}
 
 
-		/*!
-		@function set_relative
-		@abstract Set path relativity
-		@param mask Relative bitmask (see RELATIVE_ defines)
-		*/
+		/**
+		 * Set path relativity
+		 *
+		 * @param mask Relative bitmask (see RELATIVE_ defines)
+		 */
 		function set_relative ($data)
 		{
 			if (!is_array ($data))
@@ -278,11 +278,11 @@
 			}
 		}
 
-		/*!
-		@function get_relative
-		@abstract Return relativity bitmask
-		@discussion Returns relativity bitmask, or the default of "completely relative" if unset
-		*/
+		/**
+		 * Return relativity bitmask
+		 *
+		 * Returns relativity bitmask, or the default of "completely relative" if unset
+		 */
 		function get_relative ()
 		{
 			if (isset ($this->relative) && $this->relative)
@@ -295,15 +295,15 @@
 			}
 		}
 
-		/*!
-		@function sanitize
-		@abstract Removes leading .'s from 'string'
-		@discussion You should not pass all filenames through sanitize () unless you plan on rejecting
-				.files.  Instead, pass the name through securitycheck () first, and if it fails,
-				pass it through sanitize
-		@param string string to sanitize
-		@result $string 'string' without it's leading .'s
-		*/
+		/**
+		 * Removes leading .'s from 'string'
+		 *
+		 * You should not pass all filenames through sanitize () unless you plan on rejecting
+		 * 		 * .files.  Instead, pass the name through securitycheck () first, and if it fails,
+		 * 		 * pass it through sanitize
+		 * @param string string to sanitize
+		 * @return $string 'string' without it's leading .'s
+		 */
 		function sanitize ($data)
 		{
 			if (!is_array ($data))
@@ -321,14 +321,14 @@
 			return (ereg_replace ('^\.+', '', $p->fake_name));
 		}
 
-		/*!
-		@function securitycheck
-		@abstract Security check function
-		@discussion Checks for basic violations such as ..
-				If securitycheck () fails, run your string through vfs->sanitize ()
-		@param string string to check security of
-		@result Boolean True/False.  True means secure, False means insecure
-		*/
+		/**
+		 * Security check function
+		 *
+		 * Checks for basic violations such as ..
+		 * 		 * If securitycheck () fails, run your string through vfs->sanitize ()
+		 * @param string string to check security of
+		 * @return Boolean True/False.  True means secure, False means insecure
+		 */
 		function securitycheck ($data)
 		{
 			if (!is_array ($data))
@@ -346,12 +346,12 @@
 			}
 		}
 
-		/*!
-		@function db_clean
-		@abstract Clean 'string' for use in database queries
-		@param string String to clean
-		@result Cleaned version of 'string'
-		*/
+		/**
+		 * Clean 'string' for use in database queries
+		 *
+		 * @param string String to clean
+		 * @return Cleaned version of 'string'
+		 */
 		function db_clean ($data)
 		{
 			if (!is_array ($data))
@@ -364,115 +364,115 @@
 			return $string;
 		}
 
-		/*!
-		@function extra_sql
-		@abstract Return extra SQL code that should be appended to certain queries
-		@param query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
-		@result Extra SQL code
-		*/
+		/**
+		 * Return extra SQL code that should be appended to certain queries
+		 *
+		 * @param query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
+		 * @return Extra SQL code
+		 */
 		function extra_sql ($data)
 		{ //This is purely for SQL
 			return '';
 		}
 
-		/*!
-		@function add_journal
-		@abstract Add a journal entry after (or before) completing an operation,
-			  and increment the version number.  This function should be used internally only
-		@discussion Note that state_one and state_two are ignored for some VFS_OPERATION's, for others
-			    they are required.  They are ignored for any "custom" operation
-			    The two operations that require state_two:
-			    operation			state_two
-			    VFS_OPERATION_COPIED	fake_full_path of copied to
-			    VFS_OPERATION_MOVED		fake_full_path of moved to
+		/**
+		 * Add a journal entry after (or before) completing an operation,
+		 *
+		 * 		 * and increment the version number.  This function should be used internally only
+		 * Note that state_one and state_two are ignored for some VFS_OPERATION's, for others
+		 * 		 * 	they are required.  They are ignored for any "custom" operation
+		 * 		 * 	The two operations that require state_two:
+		 * 		 * 	operation		 * 	state_two
+		 * 		 * 	VFS_OPERATION_COPIED	fake_full_path of copied to
+		 * 		 * 	VFS_OPERATION_MOVED		 * fake_full_path of moved to
 
-			    If deleting, you must call add_journal () before you delete the entry from the database
-		@param string File or directory to add entry for
-		@param relatives Relativity array
-		@param operation The operation that was performed.  Either a VFS_OPERATION define or
-				  a non-integer descriptive text string
-		@param state_one The first "state" of the file or directory.  Can be a file name, size,
-				  location, whatever is appropriate for the specific operation
-		@param state_two The second "state" of the file or directory
-		@param incversion Boolean True/False.  Increment the version for the file?  Note that this is
-				   handled automatically for the VFS_OPERATION defines.
-				   i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
-				   would not
-		@result Boolean True/False
-		*/
+		 * 		 * 	If deleting, you must call add_journal () before you delete the entry from the database
+		 * @param string File or directory to add entry for
+		 * @param relatives Relativity array
+		 * @param operation The operation that was performed.  Either a VFS_OPERATION define or
+		 * 		 * 	a non-integer descriptive text string
+		 * @param state_one The first "state" of the file or directory.  Can be a file name, size,
+		 * 		 * 	location, whatever is appropriate for the specific operation
+		 * @param state_two The second "state" of the file or directory
+		 * @param incversion Boolean True/False.  Increment the version for the file?  Note that this is
+		 * 		 * 	 handled automatically for the VFS_OPERATION defines.
+		 * 		 * 	 i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
+		 * 		 * 	 would not
+		 * @return Boolean True/False
+		 */
 		function add_journal ($data) {
 		//The journalling dont work :(  Ideally this will become "versioning"
 			return True;
 		}
 
 
-		/*!
-		@function flush_journal
-		@abstract Flush journal entries for $string.  Used before adding $string
-		@discussion flush_journal () is an internal function and should be called from add_journal () only
-		@param string File/directory to flush journal entries of
-		@param relatives Realtivity array
-		@param deleteall Delete all types of journal entries, including the active Create entry.
-				  Normally you only want to delete the Create entry when replacing the file
-				  Note that this option does not effect $deleteonly
-		@param deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
-		@result Boolean True/False
-		*/
+		/**
+		 * Flush journal entries for $string.  Used before adding $string
+		 *
+		 * flush_journal () is an internal function and should be called from add_journal () only
+		 * @param string File/directory to flush journal entries of
+		 * @param relatives Realtivity array
+		 * @param deleteall Delete all types of journal entries, including the active Create entry.
+		 * 		 * 	Normally you only want to delete the Create entry when replacing the file
+		 * 		 * 	Note that this option does not effect $deleteonly
+		 * @param deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
+		 * @return Boolean True/False
+		 */
 		function flush_journal ($data)
 		{
 			return True;
 		}
 
 
-		/*!
-		@function get_journal
-		@abstract Retrieve journal entries for $string
-		@param string File/directory to retrieve journal entries of
-		@param relatives Relativity array
-		@param type 0/False = any, 1 = 'journal', 2 = 'journal-deleted'
-		@result Array of arrays of journal entries
-		*/
+		/**
+		 * Retrieve journal entries for $string
+		 *
+		 * @param string File/directory to retrieve journal entries of
+		 * @param relatives Relativity array
+		 * @param type 0/False = any, 1 = 'journal', 2 = 'journal-deleted'
+		 * @return Array of arrays of journal entries
+		 */
 		function get_journal ($data)
 		{
 			return array();
 		}
 
-		/*!
-		@function path_parts
-		@abstract take a real or fake pathname and return an array of its component parts
-		@param string full real or fake path
-		@param relatives Relativity array
-		@param object True returns an object instead of an array
-		@param nolinks Don't check for links (made with make_link ()).  Used internally to prevent recursion
-		@result $rarray/$robject Array or object containing the fake and real component parts of the path
-		@discussion Returned values are:
-				mask
-				outside
-				fake_full_path
-				fake_leading_dirs
-				fake_extra_path		BROKEN
-				fake_name
-				real_full_path
-				real_leading_dirs
-				real_extra_path		BROKEN
-				real_name
-				fake_full_path_clean
-				fake_leading_dirs_clean
-				fake_extra_path_clean	BROKEN
-				fake_name_clean
-				real_full_path_clean
-				real_leading_dirs_clean
-				real_extra_path_clean	BROKEN
-				real_name_clean
-				real_uri
-			"clean" values are run through vfs->db_clean () and
-			are safe for use in SQL queries that use key='value'
-			They should be used ONLY for SQL queries, so are used
-			mostly internally
-			mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
-			and is used internally
-			outside is boolean, True if 'relatives' contains VFS_REAL
-		*/
+		/**
+		 * take a real or fake pathname and return an array of its component parts
+		 *
+		 * @param string full real or fake path
+		 * @param relatives Relativity array
+		 * @param object True returns an object instead of an array
+		 * @param nolinks Don't check for links (made with make_link ()).  Used internally to prevent recursion
+		 * @return $rarray/$robject Array or object containing the fake and real component parts of the path
+		 * Returned values are:
+		 * 		 * mask
+		 * 		 * outside
+		 * 		 * fake_full_path
+		 * 		 * fake_leading_dirs
+		 * 		 * fake_extra_path		 * BROKEN
+		 * 		 * fake_name
+		 * 		 * real_full_path
+		 * 		 * real_leading_dirs
+		 * 		 * real_extra_path		 * BROKEN
+		 * 		 * real_name
+		 * 		 * fake_full_path_clean
+		 * 		 * fake_leading_dirs_clean
+		 * 		 * fake_extra_path_clean	BROKEN
+		 * 		 * fake_name_clean
+		 * 		 * real_full_path_clean
+		 * 		 * real_leading_dirs_clean
+		 * 		 * real_extra_path_clean	BROKEN
+		 * 		 * real_name_clean
+		 * 		 * real_uri
+		 * 	"clean" values are run through vfs->db_clean () and
+		 * 	are safe for use in SQL queries that use key='value'
+		 * 	They should be used ONLY for SQL queries, so are used
+		 * 	mostly internally
+		 * 	mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
+		 * 	and is used internally
+		 * 	outside is boolean, True if 'relatives' contains VFS_REAL
+		 */
 		function path_parts ($data)
 		{
 			$default_values = array
@@ -620,8 +620,8 @@
 			
 			
 			/*
-			   We have to count it before because new keys will be added,
-			   which would create an endless loop
+				 We have to count it before because new keys will be added,
+				 which would create an endless loop
 			*/
 			$count = count ($rarray);
 			reset ($rarray);
@@ -632,7 +632,7 @@
 
 			if ($data['object'])
 			{
-				$robject = new path_class;
+				$robject =& new path_class;
 
 				reset ($rarray);
 				while (list ($key, $value) = each ($rarray))
@@ -663,14 +663,14 @@
 			}
 		}
 
-		/*!
-		@function getabsolutepath
-		@abstract get the absolute path
-		@param string defaults to False, directory/file to get path of, relative to relatives[0]
-		@param mask Relativity bitmask (see RELATIVE_ defines).  RELATIVE_CURRENT means use $this->relative
-		@param fake Returns the "fake" path, ie /home/user/dir/file (not always possible.  use path_parts () instead)
-		@result $basedir Full fake or real path
-		*/
+		/**
+		 * get the absolute path
+		 *
+		 * @param string defaults to False, directory/file to get path of, relative to relatives[0]
+		 * @param mask Relativity bitmask (see RELATIVE_ defines).  RELATIVE_CURRENT means use $this->relative
+		 * @param fake Returns the "fake" path, ie /home/user/dir/file (not always possible.  use path_parts () instead)
+		 * @return $basedir Full fake or real path
+		 */
 		function getabsolutepath ($data)
 		{
 			$default_values = array
@@ -748,12 +748,12 @@
 
 			if (($data['mask'][0] & RELATIVE_USER) || ($data['mask'][0] & RELATIVE_USER_APP))
 			{
-				$basedir = $basedir . $GLOBALS['phpgw_info']['user']['account_lid'] . $sep;
+				$basedir = $basedir . $GLOBALS['egw_info']['user']['account_lid'] . $sep;
 			}
 
 			if ($data['mask'][0] & RELATIVE_USER_APP)
 			{
-				$basedir = $basedir . "." . $GLOBALS['phpgw_info']['flags']['currentapp'] . $sep;
+				$basedir = $basedir . "." . $GLOBALS['egw_info']['flags']['currentapp'] . $sep;
 			}
 
 			/* Don't add string if it's a /, just for aesthetics */
@@ -773,26 +773,26 @@
 			return $basedir;
 		}
 
-		/*!
-		@function acl_check
-		@abstract Check ACL access to $file for $GLOBALS['phpgw_info']["user"]["account_id"];
-		@param string File to check access of
-		@discussion To check the access for a file or directory, pass 'string'/'relatives'/'must_exist'.
-				To check the access to another user or group, pass 'owner_id'.
-				If 'owner_id' is present, we bypass checks on 'string'/'relatives'/'must_exist'
-		@param relatives Standard relativity array
-		@param operation Operation to check access to.  In the form of a PHPGW_ACL defines bitmask.  Default is read
-		@param owner_id Owner id to check access of (see discussion above)
-		@param must_exist Boolean.  Set to True if 'string' must exist.  Otherwise, we check the parent directory as well
-		@result Boolean.  True if access is ok, False otherwise
-		*/
+		/**
+		 * Check ACL access to $file for $GLOBALS['egw_info']["user"]["account_id"];
+		 *
+		 * @param string File to check access of
+		 * To check the access for a file or directory, pass 'string'/'relatives'/'must_exist'.
+		 * 		 * To check the access to another user or group, pass 'owner_id'.
+		 * 		 * If 'owner_id' is present, we bypass checks on 'string'/'relatives'/'must_exist'
+		 * @param relatives Standard relativity array
+		 * @param operation Operation to check access to.  In the form of a EGW_ACL defines bitmask.  Default is read
+		 * @param owner_id Owner id to check access of (see discussion above)
+		 * @param must_exist Boolean.  Set to True if 'string' must exist.  Otherwise, we check the parent directory as well
+		 * @return Boolean.  True if access is ok, False otherwise
+		 */
 		function acl_check ($data)
 		{
 			return True;
 			$default_values = array
 				(
 					'relatives'	=> array (RELATIVE_CURRENT),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> False
 				);
 
@@ -821,7 +821,7 @@
 				/* Read access is always allowed here, but nothing else is */
 				if ($data['string'] == '/' || $data['string'] == $this->fakebase)
 				{
-					if ($data['operation'] == PHPGW_ACL_READ)
+					if ($data['operation'] == EGW_ACL_READ)
 					{
 						return True;
 					}
@@ -878,7 +878,7 @@
 				$owner_id = 0;
 			}
 
-			$user_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$user_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			/* They always have access to their own files */
 			if ($owner_id == $user_id)
@@ -887,7 +887,7 @@
 			}
 
 			/* Check if they're in the group */
-			$memberships = $GLOBALS['phpgw']->accounts->membership ($user_id);
+			$memberships = $GLOBALS['egw']->accounts->membership ($user_id);
 
 			if (is_array ($memberships))
 			{
@@ -902,7 +902,7 @@
 				}
 			}
 
-			$acl = CreateObject ('phpgwapi.acl', $owner_id);
+			$acl =& CreateObject ('phpgwapi.acl', $owner_id);
 			$acl->account_id = $owner_id;
 			$acl->read_repository ();
 
@@ -924,7 +924,7 @@
 			}
 			elseif (!$rights && $group_ok)
 			{
-				$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+				$conf =& CreateObject('phpgwapi.config', 'phpgwapi');
 				$conf->read_repository();
 				if ($conf->config_data['acl_default'] == 'grant')
 				{
@@ -941,14 +941,14 @@
 			}
 		}
 
-		/*!
-		@function cd
-		@abstract Change directory
-		@discussion To cd to the files root '/', use cd ('/', False, array (RELATIVE_NONE));
-		@param string default '/'.  directory to cd into.  if "/" and $relative is True, uses "/home/<working_lid>";
-		@param relative default True/relative means add target to current path, else pass $relative as mask to getabsolutepath()
-		@param relatives Relativity array
-		*/
+		/**
+		 * Change directory
+		 *
+		 * To cd to the files root '/', use cd ('/', False, array (RELATIVE_NONE));
+		 * @param string default '/'.  directory to cd into.  if "/" and $relative is True, uses "/home/<working_lid>";
+		 * @param relative default True/relative means add target to current path, else pass $relative as mask to getabsolutepath()
+		 * @param relatives Relativity array
+		 */
 		function cd ($data = '')
 		{
 			if (!is_array ($data))
@@ -990,7 +990,7 @@
 				}
 				else
 				{
-					$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
+					$currentdir = $GLOBALS['egw']->session->appsession('vfs','');
 					$basedir = $this->getabsolutepath (array(
 							'string'	=> $currentdir . $sep . $data['string'],
 							'mask'	=> array ($data['relatives'][0]),
@@ -1008,17 +1008,17 @@
 				);
 			}
 
-			$GLOBALS['phpgw']->session->appsession('vfs','',$basedir);
+			$GLOBALS['egw']->session->appsession('vfs','',$basedir);
 
 			return True;
 		}
 
-		/*!
-		@function pwd
-		@abstract current working dir
-		@param full default True returns full fake path, else just the extra dirs (false strips the leading /)
-		@result $currentdir currentdir
-		*/
+		/**
+		 * current working dir
+		 *
+		 * @param full default True returns full fake path, else just the extra dirs (false strips the leading /)
+		 * @return $currentdir currentdir
+		 */
 		function pwd ($data = '')
 		{
 			$default_values = array
@@ -1028,7 +1028,7 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
+			$currentdir = $GLOBALS['egw']->session->appsession('vfs','');
 
 			if (!$data['full'])
 			{
@@ -1045,20 +1045,20 @@
 			return $currentdir;
 		}
 
-		/*!
-		@function read
-		@abstract return file contents
-		@param string filename
-		@param relatives Relativity array
-		@result $contents Contents of $file, or False if file cannot be read
-		*/
+		/**
+		 * return file contents
+		 *
+		 * @param string filename
+		 * @param relatives Relativity array
+		 * @return $contents Contents of $file, or False if file cannot be read
+		 */
 		function read ($data)
 		{
 
 			/*If the user really wants to 'view' the file in the browser, it
 			is much smarter simply to redirect them to the files web-accessable
 			url */
-/*			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+/*			$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			if ( ! $data['noview'] && ($app == 'phpwebhosting' || $app = 'filemanager' ))
 			{
 				$this->view($data);
@@ -1085,7 +1085,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 			)
 			{
@@ -1093,14 +1093,14 @@
 			}
 			if ($p->outside)
 			{
-					    
-			    if (! $fp = fopen ($p->real_full_path, 'r')) 
-			    {
-			    	return False;
-			    }
-			    $size=filesize($p->real_full_path);
-			    $buffer=fread($fp, $size);
-			    fclose ($fp);
+							
+					if (! $fp = fopen ($p->real_full_path, 'r')) 
+					{
+						return False;
+					}
+					$size=filesize($p->real_full_path);
+					$buffer=fread($fp, $size);
+					fclose ($fp);
 				return $buffer;
 			}
 			else
@@ -1191,7 +1191,7 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 			
-			$ls_array = $GLOBALS['phpgw']->vfs->ls (array (
+			$ls_array = $GLOBALS['egw']->vfs->ls (array (
 			'string'	=> $data['string'],
 			'relatives'	=> $data['relatives']
 			)
@@ -1228,7 +1228,7 @@
 			
 			if (!strlen($data['token']))
 			{
-				$ls_array = $GLOBALS['phpgw']->vfs->ls (array (
+				$ls_array = $GLOBALS['egw']->vfs->ls (array (
 				'string'	=> $data['string'],
 				'relatives'	=> $data['relatives']
 				)
@@ -1270,7 +1270,7 @@
 			
 			if (!strlen($data['token']))
 			{
-				$ls_array = $GLOBALS['phpgw']->vfs->ls (array (
+				$ls_array = $GLOBALS['egw']->vfs->ls (array (
 				'string'	=> $data['string'],
 				'relatives'	=> $data['relatives']
 				)
@@ -1350,14 +1350,14 @@
 			}
 		}
 		
-		/*!
-		@function write
-		@abstract write to a file
-		@param string file name
-		@param relatives Relativity array
-		@param content content
-		@result Boolean True/False
-		*/
+		/**
+		 * write to a file
+		 *
+		 * @param string file name
+		 * @param relatives Relativity array
+		 * @param content content
+		 * @return Boolean True/False
+		 */
 		function write ($data)
 		{
 			$default_values = array
@@ -1380,12 +1380,12 @@
 				))
 			)
 			{
-				$acl_operation = PHPGW_ACL_EDIT;
+				$acl_operation = EGW_ACL_EDIT;
 				$journal_operation = VFS_OPERATION_EDITED;
 			}
 			else
 			{
-				$acl_operation = PHPGW_ACL_ADD;
+				$acl_operation = EGW_ACL_ADD;
 			}
 
 			if (!$this->acl_check (array(
@@ -1401,8 +1401,8 @@
 			//umask(000);
 
 			/*
-			   If 'string' doesn't exist, touch () creates both the file and the database entry
-			   If 'string' does exist, touch () sets the modification time and modified by
+				 If 'string' doesn't exist, touch () creates both the file and the database entry
+				 If 'string' does exist, touch () sets the modification time and modified by
 			*/
 			/*$this->touch (array(
 					'string'	=> $p->fake_full_path,
@@ -1413,13 +1413,13 @@
 			$size=strlen($data['content']);
 			if ($p->outside)
 			{			    
-			    if (! $fp = fopen ($p->real_full_path, 'w')) 
-			    {
-			    	return False;
-			    }
-			    $result = fwrite($fp, $data['content']);
-			    fclose ($fp);
-			    return $result;
+					if (! $fp = fopen ($p->real_full_path, 'w')) 
+					{
+						return False;
+					}
+					$result = fwrite($fp, $data['content']);
+					fclose ($fp);
+					return $result;
 			}
 			else
 			{
@@ -1437,13 +1437,13 @@ $this->debug('Put complete,  status: '.$status);
 			}
 		}
 
-		/*!
-		@function touch
-		@abstract Create blank file $file or set the modification time and modified by of $file to current time and user
-		@param string File to touch or set modifies
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Create blank file $file or set the modification time and modified by of $file to current time and user
+		 *
+		 * @param string File to touch or set modifies
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function touch ($data)
 		{
 			$default_values = array(
@@ -1451,23 +1451,23 @@ $this->debug('Put complete,  status: '.$status);
 						);
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 
 			$p = $this->path_parts (array(
-						      'string'	=> $data['string'],
-						      'relatives'	=> array ($data['relatives'][0])
-						      )
+									'string'	=> $data['string'],
+									'relatives'	=> array ($data['relatives'][0])
+									)
 						);
 			umask (000);
 
 			/*
-			   PHP's touch function will automatically decide whether to
-			   create the file or set the modification time
+				 PHP's touch function will automatically decide whether to
+				 create the file or set the modification time
 			*/
 			if($p->outside)
 			{
-			  return @touch($p->real_full_path);
+				return @touch($p->real_full_path);
 			}
 			elseif ($this->file_exists (array(
 					'string'	=> $p->fake_full_path,
@@ -1488,14 +1488,14 @@ $this->debug('Put complete,  status: '.$status);
 				if (!$this->acl_check (array(
 						'string'	=> $p->fake_full_path,
 						'relatives'	=> array ($p->mask),
-						'operation'	=> PHPGW_ACL_ADD
+						'operation'	=> EGW_ACL_ADD
 					))
 				) return False;
 				$result = $this->write (array(
-						      'string'	=> $data['string'],
-						      'relatives'	=> array ($data['relatives'][0]),
-						      'content' => ''
-						      ));
+									'string'	=> $data['string'],
+									'relatives'	=> array ($data['relatives'][0]),
+									'content' => ''
+									));
 				$this->set_attributes(array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
@@ -1509,14 +1509,14 @@ $this->debug('Put complete,  status: '.$status);
 			return ($result);
 		}
 
-		/*!
-		@function cp
-		@abstract copy file
-		@param from from file/directory
-		@param to to file/directory
-		@param relatives Relativity array
-		@result boolean True/False
-		*/
+		/**
+		 * copy file
+		 *
+		 * @param from from file/directory
+		 * @param to to file/directory
+		 * @param relatives Relativity array
+		 * @return boolean True/False
+		 */
 		function cp ($data)
 		{
 			$default_values = array
@@ -1526,7 +1526,7 @@ $this->debug('Put complete,  status: '.$status);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			$f = $this->path_parts (array(
 					'string'	=> $data['from'],
@@ -1543,7 +1543,7 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 			)
 			{
@@ -1556,19 +1556,19 @@ $this->debug('Put complete,  status: '.$status);
 				))
 			)
 			{
-				$remote_operation=PHPGW_ACL_EDIT;
+				$remote_operation=EGW_ACL_EDIT;
 			}
 			else
 			{
-				$remote_operation=PHPGW_ACL_ADD;
+				$remote_operation=EGW_ACL_ADD;
 
 			}
 			if (!$this->acl_check (array(
-						     'string'	=> $t->fake_full_path,
-						     'relatives'	=> array ($t->mask),
-						     'operation'	=> $remote_operation
-						     ))
-			    )
+								 'string'	=> $t->fake_full_path,
+								 'relatives'	=> array ($t->mask),
+								 'operation'	=> $remote_operation
+								 ))
+					)
 			{
 				return False;
 			}
@@ -1581,14 +1581,14 @@ $this->debug('Put complete,  status: '.$status);
 				)) != 'Directory'
 			)
 			{
-			  
+				
 				if ($f->outside && $t->outside)
 				{
 					return copy($f->real_full_path, $t->real_full_url);
 				}
 				elseif ($f->outside || $t->outside)
 				{
-			      	$content = $this->read(array(
+							$content = $this->read(array(
 						'string'	=> $f->fake_full_path,
 						'noview' => true,
 						'relatives'	=> array ($f->mask)
@@ -1600,15 +1600,15 @@ $this->debug('Put complete,  status: '.$status);
 						'content' => $content
 						)
 					);
-			    }
+					}
 				else 
 				{
-				    $status=$this->dav_client->copy($f->real_full_path, $t->real_full_url,True, 'Infinity', $this->override_locks[$p->real_full_path]);
-				    $result = $status == 204 || $status==201;
-				    if (!$result)
-				    {
-				    	return False;
-				    }
+						$status=$this->dav_client->copy($f->real_full_path, $t->real_full_url,True, 'Infinity', $this->override_locks[$p->real_full_path]);
+						$result = $status == 204 || $status==201;
+						if (!$result)
+						{
+							return False;
+						}
 			 	 }
 
 				$this->set_attributes(array(
@@ -1627,14 +1627,14 @@ $this->debug('Put complete,  status: '.$status);
 			{
 				//if the files are both on server, its just a depth=infinity copy
 				$status=$this->dav_client->copy($f->real_full_path, $t->real_full_url,True, 'infinity', $this->override_locks[$p->real_full_path]);
-			    if($status != 204 && $status!=201) 
-			    {
-			    	return False;
-			    }
-			    else 
-			    {
-			    	return True;
-			    }
+					if($status != 204 && $status!=201) 
+					{
+						return False;
+					}
+					else 
+					{
+						return True;
+					}
 			}
 			else	/* It's a directory, and one of the files is local */
 			{
@@ -1696,14 +1696,14 @@ $this->debug('Put complete,  status: '.$status);
 			return $this->cp ($data);
 		}
 
-		/*!
-		@function mv
-		@abstract move file/directory
-		@param from from file/directory
-		@param to to file/directory
-		@param relatives Relativity array
-		@result boolean True/False
-		*/
+		/**
+		 * move file/directory
+		 *
+		 * @param from from file/directory
+		 * @param to to file/directory
+		 * @param relatives Relativity array
+		 * @return boolean True/False
+		 */
 		function mv ($data)
 		{
 			$default_values = array
@@ -1713,7 +1713,7 @@ $this->debug('Put complete,  status: '.$status);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			$f = $this->path_parts (array(
 					'string'	=> $data['from'],
@@ -1730,12 +1730,12 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 				|| !$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_DELETE
+					'operation'	=> EGW_ACL_DELETE
 				))
 			)
 			{
@@ -1745,7 +1745,7 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $t->fake_full_path,
 					'relatives'	=> array ($t->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				))
 			)
 			{
@@ -1761,7 +1761,7 @@ $this->debug('Put complete,  status: '.$status);
 				if (!$this->acl_check (array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'operation'	=> PHPGW_ACL_EDIT
+						'operation'	=> EGW_ACL_EDIT
 					))
 				)
 				{
@@ -1847,7 +1847,7 @@ $this->debug('Put complete,  status: '.$status);
 				}
 				else {  //we can do a server-side copy if both files are on the server
 					$status=$this->dav_client->move($f->real_full_path, $t->real_full_url,True, 'infinity', $this->override_locks[$p->real_full_path]);
-			        $result = ($status==201 || $status==204);
+							$result = ($status==201 || $status==204);
 				}
 				
 				if ($result) $this->set_attributes(array(
@@ -1876,22 +1876,22 @@ $this->debug('Put complete,  status: '.$status);
 			return True;
 		}
 
-		/*!
-		@function move
-		@abstract shortcut to mv
-		*/
+		/**
+		 * shortcut to mv
+		 *
+		 */
 		function move ($data)
 		{
 			return $this->mv ($data);
 		}
 
-		/*!
-		@function rm
-		@abstract delete file/directory
-		@param string file/directory to delete
-		@param relatives Relativity array
-		@result boolean True/False
-		*/
+		/**
+		 * delete file/directory
+		 *
+		 * @param string file/directory to delete
+		 * @param relatives Relativity array
+		 * @return boolean True/False
+		 */
 		function rm ($data)
 		{
 			$default_values = array
@@ -1909,7 +1909,7 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_DELETE
+					'operation'	=> EGW_ACL_DELETE
 				))
 			)
 			{
@@ -1986,7 +1986,7 @@ $this->debug('Put complete,  status: '.$status);
 					)
 				);
 
-				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
+				$query = $GLOBALS['egw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
 
 				//rmdir ($p->real_full_path);
 				$this->dav_client->delete($p->real_full_path.'/','Infinity', $this->override_locks[$p->real_full_path]);
@@ -1995,22 +1995,22 @@ $this->debug('Put complete,  status: '.$status);
 			}
 		}
 
-		/*!
-		@function delete
-		@abstract shortcut to rm
-		*/
+		/**
+		 * shortcut to rm
+		 *
+		 */
 		function delete ($data)
 		{
 			return $this->rm ($data);
 		}
 
-		/*!
-		@function mkdir
-		@abstract make a new directory
-		@param string Directory name
-		@param relatives Relativity array
-		@result boolean True on success
-		*/
+		/**
+		 * make a new directory
+		 *
+		 * @param string Directory name
+		 * @param relatives Relativity array
+		 * @return boolean True on success
+		 */
 		function mkdir ($data)
 		{
 			if (!is_array ($data))
@@ -2025,8 +2025,8 @@ $this->debug('Put complete,  status: '.$status);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 
 			$p = $this->path_parts (array(
 					'string'	=> $data['string'],
@@ -2037,7 +2037,7 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_ADD)
+					'operation'	=> EGW_ACL_ADD)
 				)
 			)
 			{
@@ -2072,11 +2072,11 @@ $this->debug('Put complete,  status: '.$status);
 				$homedir = $this->fakebase.'/'.$this->dav_user; 
 				if ( substr($p->fake_leading_dirs, 0, strlen($homedir)) == $homedir)
 				{ 
-					$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+					$conf =& CreateObject('phpgwapi.config', 'phpgwapi');
 					$conf->read_repository();
 					if (!$conf->config_data['acl_default'] == 'grant')
 					{
-						$htaccess = 'require user '.$GLOBALS['phpgw_info']['user']['account_lid'];
+						$htaccess = 'require user '.$GLOBALS['egw_info']['user']['account_lid'];
 						if ( ! $this->write(array(
 								'string' =>  $p->fake_full_path.'/.htaccess',
 								'content' => $htaccess,
@@ -2095,16 +2095,16 @@ $this->debug('Put complete,  status: '.$status);
 			}
 		}
 
-		/*!
-		@function make_link
-		@abstract Make a link from virtual directory 'vdir' to real directory 'rdir'
-		@discussion Making a link from 'vdir' to 'rdir' will cause path_parts () to substitute 'rdir' for the real
-				path variables when presented with 'vdir'
-		@param vdir Virtual dir to make link from
-		@param rdir Real dir to make link to
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Make a link from virtual directory 'vdir' to real directory 'rdir'
+		 *
+		 * Making a link from 'vdir' to 'rdir' will cause path_parts () to substitute 'rdir' for the real
+		 * 		 * path variables when presented with 'vdir'
+		 * @param vdir Virtual dir to make link from
+		 * @param rdir Real dir to make link to
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function make_link ($data)
 		{
 			return False; //This code certainly wont work anymore.  Does anything use it?
@@ -2116,8 +2116,8 @@ $this->debug('Put complete,  status: '.$status);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 
 			$vp = $this->path_parts (array(
 					'string'	=> $data['vdir'],
@@ -2134,7 +2134,7 @@ $this->debug('Put complete,  status: '.$status);
 			if (!$this->acl_check (array(
 					'string'	=> $vp->fake_full_path,
 					'relatives'	=> array ($vp->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				))
 			) return False;
 
@@ -2177,31 +2177,31 @@ $this->debug('Put complete,  status: '.$status);
 	*/
 		}
 
-		/*!
-		@function set_attributes
-		@abstract Update database entry for 'string' with the attributes in 'attributes'
-		@param string file/directory to update
-		@param relatives Relativity array
-		@param attributes keyed array of attributes.  key is attribute name, value is attribute value
-		@result Boolean True/False
-		@discussion Valid attributes are:
-				owner_id
-				createdby_id
-				modifiedby_id
-				created
-				modified
-				size
-				mime_type
-				deleteable
-				comment
-				app
-				link_directory
-				link_name
-				version
-				name
-				directory
-		*/
-		function set_attributes ($data,$operation=PHPGW_ACL_EDIT)
+		/**
+		 * Update database entry for 'string' with the attributes in 'attributes'
+		 *
+		 * @param string file/directory to update
+		 * @param relatives Relativity array
+		 * @param attributes keyed array of attributes.  key is attribute name, value is attribute value
+		 * @return Boolean True/False
+		 * Valid attributes are:
+		 * 		 * owner_id
+		 * 		 * createdby_id
+		 * 		 * modifiedby_id
+		 * 		 * created
+		 * 		 * modified
+		 * 		 * size
+		 * 		 * mime_type
+		 * 		 * deleteable
+		 * 		 * comment
+		 * 		 * app
+		 * 		 * link_directory
+		 * 		 * link_name
+		 * 		 * version
+		 * 		 * name
+		 * 		 * directory
+		 */
+		function set_attributes ($data,$operation=EGW_ACL_EDIT)
 		{
 			/*To get much benefit out of DAV properties we should use 
 			some sensible XML namespace.  We will use the Dublin Core 
@@ -2219,19 +2219,19 @@ $this->debug('Put complete,  status: '.$status);
 			}
 			if ($id=$data['attributes']['owner_id'])
 			{
-				$GLOBALS['phpgw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
+				$GLOBALS['egw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
 				$dav_properties['dc:publisher'] = $fname .' '. $lname;
 				$dav_properties['publisher_id'] = $id;
 			}
 			if ($id=$data['attributes']['createdby_id'])
 			{
-				$GLOBALS['phpgw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
+				$GLOBALS['egw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
 				$dav_properties['dc:creator'] = $fname .' '. $lname;
 				$dav_properties['creator_id'] = $id;
 			}
 			if ($id=$data['attributes']['modifiedby_id'])
 			{
-				$GLOBALS['phpgw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
+				$GLOBALS['egw']->accounts->get_account_name($id,&$lid,&$fname,&$lname);
 				$dav_properties['dc:contributor'] = $fname .' '. $lname;
 				$dav_properties['contributor_id'] = $id;
 			}
@@ -2241,13 +2241,13 @@ $this->debug('Put complete,  status: '.$status);
 			return True;
 		}
 
-		/*!
-		@function correct_attributes
-		@abstract Set the correct attributes for 'string' (e.g. owner)
-		@param string File/directory to correct attributes of
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Set the correct attributes for 'string' (e.g. owner)
+		 *
+		 * @param string File/directory to correct attributes of
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function correct_attributes ($data)
 		{
 			$default_values = array
@@ -2279,7 +2279,7 @@ $this->debug('correct_attributes: '.$data['string']);
 			elseif (preg_match ("+^$this->fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 			{
 				$set_attributes_array = Array(
-					'owner_id' => $GLOBALS['phpgw']->accounts->name2id ($matches[1])
+					'owner_id' => $GLOBALS['egw']->accounts->name2id ($matches[1])
 				);
 			}
 			else
@@ -2299,13 +2299,13 @@ $this->debug('correct_attributes: '.$data['string']);
 			return True;
 		}
 
-		/*!
-		@function file_type
-		@abstract return file/dir type (MIME or other)
-		@param string File or directory path (/home/user/dir/dir2/dir3, /home/user/dir/dir2/file)
-		@param relatives Relativity array
-		@result MIME type, "Directory", or nothing if MIME type is not known
-		*/
+		/**
+		 * return file/dir type (MIME or other)
+		 *
+		 * @param string File or directory path (/home/user/dir/dir2/dir3, /home/user/dir/dir2/file)
+		 * @param relatives Relativity array
+		 * @return MIME type, "Directory", or nothing if MIME type is not known
+		 */
 		function file_type ($data)
 		{
 $this->debug('file_type');
@@ -2325,15 +2325,15 @@ $this->debug('file_type');
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> True
 				))
 			) return False;
 
 			if ($p->outside)
 			{
-			  if(is_dir($p->real_full_path)) return ('Directory');
-			  else return $this->get_ext_mime_type(array('string' => $p->real_full_path));
+				if(is_dir($p->real_full_path)) return ('Directory');
+				else return $this->get_ext_mime_type(array('string' => $p->real_full_path));
 
 			}
 			$tmp_prop=$this->dav_client->get_properties($p->real_full_path);
@@ -2348,18 +2348,18 @@ $this->debug('file_type: Mime type : '.$mime_type);
 			return $mime_type;
 		}
 
-		/*!
-		@function get_ext_mime_type
-		@abstract return MIME type based on file extension
-		@description Authors: skeeter
-			     Internal use only.  Applications should call vfs->file_type ()
-		@param string File name, with or without leading paths
-		@result MIME type based on file extension
-		*/
+		/**
+		 * return MIME type based on file extension
+		 *
+		 * Authors: skeeter
+		 * 		 * 	 Internal use only.  Applications should call vfs->file_type ()
+		 * @param string File name, with or without leading paths
+		 * @return MIME type based on file extension
+		 */
 		function get_ext_mime_type ($data)
 		{
 			$file=basename($data['string']);
-			$mimefile=PHPGW_API_INC.'/phpgw_mime.types';
+			$mimefile=EGW_API_INC.'/phpgw_mime.types';
 			$fp=fopen($mimefile,'r');
 			$contents = explode("\n",fread($fp,filesize($mimefile)));
 			fclose($fp);
@@ -2390,13 +2390,13 @@ $this->debug('file_type: Mime type : '.$mime_type);
 		
 
  
-		/*!
-		@function file_exists
-		@abstract check if file/directory exists
-		@param string file/directory to check existance of
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * check if file/directory exists
+		 *
+		 * @param string file/directory to check existance of
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function file_exists ($data)
 		{
 			$default_values = array
@@ -2415,7 +2415,7 @@ $this->debug('vfs->file_exists() data:'.$data['string']);
 $this->debug('vfs->file_exists() full_path:  '.$p->real_full_path);
 			if ($p->outside)
 			{
-			  return file_exists($p->real_full_path);
+				return file_exists($p->real_full_path);
 			}
 			
 			$path = $p->real_full_path;
@@ -2436,14 +2436,14 @@ $this->debug('vfs->file_exists() full_path:  '.$p->real_full_path);
 			}
 		}
 
-		/*!
-		@function get_size
-		@abstract Return size of 'string'
-		@param string file/directory to get size of
-		@param relatives Relativity array
-		@param checksubdirs Boolean, recursively add the size of all sub directories as well?
-		@result Size of 'string' in bytes
-		*/
+		/**
+		 * Return size of 'string'
+		 *
+		 * @param string file/directory to get size of
+		 * @param relatives Relativity array
+		 * @param checksubdirs Boolean, recursively add the size of all sub directories as well?
+		 * @return Size of 'string' in bytes
+		 */
 		function get_size ($data)
 		{
 			if (!is_array ($data))
@@ -2468,7 +2468,7 @@ $this->debug('vfs->file_exists() full_path:  '.$p->real_full_path);
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> True
 				))
 			)
@@ -2477,11 +2477,11 @@ $this->debug('vfs->file_exists() full_path:  '.$p->real_full_path);
 			}
 
 			/*
-			   WIP - this should run through all of the subfiles/directories in the directory and tally up
-			   their sizes.  Should modify ls () to be able to return a list for files outside the virtual root
+				 WIP - this should run through all of the subfiles/directories in the directory and tally up
+				 their sizes.  Should modify ls () to be able to return a list for files outside the virtual root
 			*/
 			if ($p->outside){
-			  return filesize($p->real_full_path);
+				return filesize($p->real_full_path);
 			}
 
 			$ls_array = $this->ls (array(
@@ -2495,8 +2495,8 @@ $this->debug('vfs->file_exists() full_path:  '.$p->real_full_path);
 			while (list ($num, $file_array) = each ($ls_array))
 			{
 				/*
-				   Make sure the file is in the directory we want, and not
-				   some deeper nested directory with a similar name
+					 Make sure the file is in the directory we want, and not
+					 some deeper nested directory with a similar name
 				*/
 /*
 				if (@!ereg ('^' . $file_array['directory'], $p->fake_full_path))
@@ -2512,14 +2512,14 @@ $this->debug('size:getting size from fs: '.$size);
 			return $size;
 		}
 
-		/*!
-		@function checkperms
-		@abstract Check if $this->working_id has write access to create files in $dir
-		@discussion Simple call to acl_check
-		@param string Directory to check access of
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Check if $this->working_id has write access to create files in $dir
+		 *
+		 * Simple call to acl_check
+		 * @param string Directory to check access of
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function checkperms ($data)
 		{
 			if (!is_array ($data))
@@ -2543,7 +2543,7 @@ $this->debug('size:getting size from fs: '.$size);
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				))
 			)
 			{
@@ -2555,20 +2555,20 @@ $this->debug('size:getting size from fs: '.$size);
 			}
 		}
 
-		/*!
-		@function ls
-		@abstract get directory listing or info about a single file
-		@discussion Note: The entries are not guaranteed to be returned in any logical order
-			    Note: The size for directories does not include subfiles/subdirectories.
-				  If you need that, use $this->get_size ()
-		@param string File or Directory
-		@param relatives Relativity array
-		@param checksubdirs Boolean, recursively list all sub directories as well?
-		@param mime_type Only return entries matching MIME-type 'mime_type'.  Can be any MIME-type, "Directory" or "\ " for those without MIME types
-		@param nofiles Boolean.  True means you want to return just the information about the directory $dir.  If $dir is a file, $nofiles is implied.  This is the equivalent of 'ls -ld $dir'
-		@param orderby How to order results.  Note that this only works for directories inside the virtual root
-		@result array of arrays.  Subarrays contain full info for each file/dir.
-		*/
+		/**
+		 * get directory listing or info about a single file
+		 *
+		 * Note: The entries are not guaranteed to be returned in any logical order
+		 * 		 * 	Note: The size for directories does not include subfiles/subdirectories.
+		 * 		 * 	If you need that, use $this->get_size ()
+		 * @param string File or Directory
+		 * @param relatives Relativity array
+		 * @param checksubdirs Boolean, recursively list all sub directories as well?
+		 * @param mime_type Only return entries matching MIME-type 'mime_type'.  Can be any MIME-type, "Directory" or "\ " for those without MIME types
+		 * @param nofiles Boolean.  True means you want to return just the information about the directory $dir.  If $dir is a file, $nofiles is implied.  This is the equivalent of 'ls -ld $dir'
+		 * @param orderby How to order results.  Note that this only works for directories inside the virtual root
+		 * @return array of arrays.  Subarrays contain full info for each file/dir.
+		 */
 		function ls ($data)
 		{
 			$default_values = array
@@ -2717,24 +2717,24 @@ $this->debug('ls:returning 3:');
 			return $rarray;
 		}
 
-		/*!
-		@function dir
-		@abstract shortcut to ls
-		*/
+		/**
+		 * shortcut to ls
+		 *
+		 */
 		function dir ($data)
 		{
 			return $this->ls ($data);
 		}
 
-		/*!
-		@function command_line
-		@abstract Process and run a Unix-sytle command line
-		@discussion EXPERIMENTAL.  DANGEROUS.  DO NOT USE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
-			    This is mostly working, but the command parser needs to be improved to take
-			    files with spaces into consideration (those should be in "").
-		@param command_line Unix-style command line with one of the commands in the $args array
-		@result $result The return value of the actual VFS call
-		*/
+		/**
+		 * Process and run a Unix-sytle command line
+		 *
+		 * EXPERIMENTAL.  DANGEROUS.  DO NOT USE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
+		 * 		 * 	This is mostly working, but the command parser needs to be improved to take
+		 * 		 * 	files with spaces into consideration (those should be in "").
+		 * @param command_line Unix-style command line with one of the commands in the $args array
+		 * @return $result The return value of the actual VFS call
+		 */
 		function command_line ($data)
 		{
 			if (!is_array ($data))
@@ -2840,7 +2840,7 @@ $this->debug('ls:returning 3:');
 
 		function default_values ($data, $default_values)
 		{
-		  if(!is_array($data)) $data=array();
+			if(!is_array($data)) $data=array();
 			for ($i = 0; list ($key, $value) = each ($default_values); $i++)
 			{
 				if (!isset ($data[$key]))
@@ -2904,14 +2904,14 @@ $this->debug('ls:returning 3:');
 		function save_session()
 		{
 			//Save the overrided locks in the session
-			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			$a = array();
 			foreach ($this->override_locks as $name => $token)
 			{
 				$a[] = $name.';'.$token;	
 			}	
 			$session_data = implode('\n', $a);
-			$this->session = $GLOBALS['phpgw']->session->appsession ('vfs_dav',$app, base64_encode($session_data));
+			$this->session = $GLOBALS['egw']->session->appsession ('vfs_dav',$app, base64_encode($session_data));
 				
 		}	
 	}

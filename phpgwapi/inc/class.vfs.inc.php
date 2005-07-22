@@ -1,31 +1,31 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - VFS base class                                          *
-  * This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
-  * This class handles file/dir access for eGroupWare                        *
-  * Copyright (C) 2001 Jason Wies		                             *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - VFS base class                                          *
+	* This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
+	* This class handles file/dir access for eGroupWare                        *
+	* Copyright (C) 2001 Jason Wies		                             *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-	if (empty ($GLOBALS['phpgw_info']['server']['file_repository']))
+	if (empty ($GLOBALS['egw_info']['server']['file_repository']))
 	{
-		$GLOBALS['phpgw_info']['server']['file_repository'] = 'sql';
+		$GLOBALS['egw_info']['server']['file_repository'] = 'sql';
 	}
 
 	/* Relative defines.  Used mainly by getabsolutepath () */
@@ -47,10 +47,10 @@
 	define ('VFS_OPERATION_MOVED', 16);
 	define ('VFS_OPERATION_DELETED', 32);
 
-	/*!
-	 * @class path_class
-	 * @abstract helper class for path_parts
-	 */
+	/**
+	 *  * helper class for path_parts
+	 *  *
+	  */
 	class path_class
 	{
 		var $mask;
@@ -73,11 +73,11 @@
 		var $real_name_clean;
 	}
 
-	/*!
-	 * @class vfs_shared
-	 * @abstract Base class for Virtual File System classes
-	 * @author Zone
-	 */
+	/**
+	 *  * Base class for Virtual File System classes
+	 *  *
+	 *  * @author Zone
+	  */
 	class vfs_shared
 	{
 		/*
@@ -142,12 +142,12 @@
 			'version',	/* Version of file.  May be 0 */
 		);
 
-		/*!
-		 * @function vfs_shared
-		 * @abstract constructor
-		 * @description All derived classes should call this function in their
+		/**
+		 *  * constructor
+		 *  *
+		 *  * All derived classes should call this function in their
 		 *		constructor ($this->vfs_shared())
-		 */
+		  */
 		function vfs_shared ()
 		{
 		}
@@ -185,16 +185,16 @@
 		function add_journal ($data) {}
 		function flush_journal ($data) {}
 
-		/*!
-		 * @function get_journal
-		 * @abstract Get journal entries for a location
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional type	[0|1|2]
+		/**
+		 *  * Get journal entries for a location
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * type	[0|1|2]
 		 *				0 = any journal entries
 		 *				1 = current journal entries
 		 *				2 = deleted journal entries
-		 * @result Array of arrays of journal entries
+		 *  * @return Array of arrays of journal entries
 		 *	   The keys will vary depending on the implementation,
 		 *	   with most attributes in this->attributes being valid,
 		 *	   and these keys being mandatory:
@@ -203,7 +203,7 @@
 		 *		comment - Human readable comment describing the action
 		 *		version - May be 0 if the derived class does not support
 		 *			  versioning
-		 */
+		  */
 		function get_journal ($data) { return array(array()); }
 
 		/*
@@ -222,24 +222,24 @@
 		 * acl_check() - Check access for a user to a given
 		 */
 
-		/*!
-		 * @function acl_check
-		 * @abstract Check access for a user to a given location
-		 * @discussion If $this->override_acl is set, always return True
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @required operation	Operation to check access for.  Any combination
-		 *			of the PHPGW_ACL_* defines, for example:
-		 *			PHPGW_ACL_READ
-		 *			PHPGW_ACL_READ|PHPGW_ACL_WRITE
-		 * @optional owner_id	phpGW ID to check access for.
-		 * 			Default: $GLOBALS['phpgw_info']['user']['account_id']
-		 * @optional must_exist	If set, string must exist, and acl_check() must
+		/**
+		 *  * Check access for a user to a given location
+		 *  *
+		 *  * If $this->override_acl is set, always return True
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * operation	Operation to check access for.  Any combination
+		 *			of the EGW_ACL_* defines, for example:
+		 *			EGW_ACL_READ
+		 *			EGW_ACL_READ|EGW_ACL_WRITE
+		 *  * owner_id	phpGW ID to check access for.
+		 *  * 			Default: $GLOBALS['egw_info']['user']['account_id']
+		 *  * must_exist	If set, string must exist, and acl_check() must
 		 *			return False if it doesn't.  If must_exist isn't
 		 *			passed, and string doesn't exist, check the owner_id's
 		 *			access to the parent directory, if it exists.
-		 * @result Boolean.  True if access is ok, False otherwise.
-		 */
+		 *  * @return Boolean.  True if access is ok, False otherwise.
+		  */
 		function acl_check ($data) { return True; }
 
 		/*
@@ -267,26 +267,26 @@
 		 * mkdir - Create directory
 		 */
 
-		/*!
-		 * @function read
-		 * @abstract Retreive file contents
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result String.  Contents of 'string', or False on error.
-		 */
+		/**
+		 *  * Retreive file contents
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return String.  Contents of 'string', or False on error.
+		  */
 		function read ($data) { return False; }
 
-		 /*!
-		@function view
-		@abstract Views the specified file (does not return!)
-		@param string filename
-		@param relatives Relativity array
-		@result None (doesnt return)
-		@discussion By default this function just reads the file and
-		outputs it too the browser, after setting the content-type header 
-		appropriately.  For some other VFS implementations though, there
-		may be some more sensible way of viewing the file.
-		*/
+		 /**
+		 * Views the specified file (does not return!)
+		 *
+		 * @param string filename
+		 * @param relatives Relativity array
+		 * @return None (doesnt return)
+		 * By default this function just reads the file and
+		 * outputs it too the browser, after setting the content-type header 
+		 * appropriately.  For some other VFS implementations though, there
+		 * may be some more sensible way of viewing the file.
+		 */
 		 function view($data)
 		 {
 		 	
@@ -296,10 +296,10 @@
 				);
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
  
-			$GLOBALS['phpgw_info']['flags']['noheader'] = true;
-			$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
-			$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
-			$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
+			$GLOBALS['egw_info']['flags']['noheader'] = true;
+			$GLOBALS['egw_info']['flags']['nonavbar'] = true;
+			$GLOBALS['egw_info']['flags']['noappheader'] = true;
+			$GLOBALS['egw_info']['flags']['noappfooter'] = true;
 			$ls_array = $this->ls (array (
 					'string'	=>  $data['string'],
 					'relatives'	=> $data['relatives'],
@@ -326,62 +326,62 @@
 			exit(); 
 		 }
 		
-		/*!
-		 * @function write
-		 * @abstract Store file contents
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Store file contents
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function write ($data) { return False; }
 
-		/*!
-		 * @function touch
-		 * @abstract Create a file if it doesn't exist.
+		/**
+		 *  * Create a file if it doesn't exist.
+		 *  *
 		 *	     Optionally, update the modified time and
 		 *	     modified user if the file exists.
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function touch ($data) { return False; }
 
-		/*!
-		 * @function cp
-		 * @abstract Copy location
-		 * @required from	Path to location to copy from
-		 * @required to		Path to location to copy to
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Copy location
+		 *  *
+		 *  * from	Path to location to copy from
+		 *  * to		Path to location to copy to
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function cp ($data) { return False; }
 
-		/*!
-		 * @function mv
-		 * @abstract Move location
-		 * @required from	Path to location to move from
-		 * @required to		Path to location to move to
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Move location
+		 *  *
+		 *  * from	Path to location to move from
+		 *  * to		Path to location to move to
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function mv ($data) { return False; }
 
-		/*!
-		 * @function rm
-		 * @abstract Delete location
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Delete location
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function rm ($data) { return False; }
 
-		/*!
-		 * @function mkdir
-		 * @abstract Create directory
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Create directory
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function mkdir ($data) { return False; }
 
 		/*
@@ -401,56 +401,56 @@
 		 * ls - Return detailed information for location(s)
 		 */
 
-		/*!
-		 * @function set_attributes
-		 * @abstract Set attributes for a location
-		 * @discussion Valid attributes are listed in vfs->attributes,
+		/**
+		 *  * Set attributes for a location
+		 *  *
+		 *  * Valid attributes are listed in vfs->attributes,
 		 *	       which may be extended by each derived class
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional attributes	Keyed array of attributes.  Key is attribute
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * attributes	Keyed array of attributes.  Key is attribute
 		 *			name, value is attribute value.
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		 function set_attributes ($data) { return False; }
 
-		/*!
-		 * @function file_exists
-		 * @abstract Check if a location (file or directory) exists
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True if file exists, False otherwise.
-		 */
+		/**
+		 *  * Check if a location (file or directory) exists
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True if file exists, False otherwise.
+		  */
 		function file_exists ($data) { return False; }
 
-		/*!
-		 * @function get_size
-		 * @abstract Determine size of location
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional checksubdirs	Boolean.  If set, include the size of
+		/**
+		 *  * Determine size of location
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * checksubdirs	Boolean.  If set, include the size of
 		 *				all subdirectories recursively.
-		 * @result Integer.  Size of location in bytes.
-		 */
+		 *  * @return Integer.  Size of location in bytes.
+		  */
 		function get_size ($data) { return 0; }
 
-		/*!
-		 * @function ls
-		 * @abstract Return detailed information for location(s)
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional checksubdirs	Boolean.  If set, return information for all
+		/**
+		 *  * Return detailed information for location(s)
+		 *  *
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * checksubdirs	Boolean.  If set, return information for all
 		 *				subdirectories recursively.
-		 * @optional mime	String.  Only return information for locations with MIME type
+		 *  * mime	String.  Only return information for locations with MIME type
 		 *			specified.  VFS classes must recogize these special types:
 		 *				"Directory" - Location is a directory
 		 *				" " - Location doesn't not have a MIME type
-		 * @optional nofiles	Boolean.  If set and 'string' is a directory, return
+		 *  * nofiles	Boolean.  If set and 'string' is a directory, return
 		 *			information about the directory, not the files in it.
-		 * @result Array of arrays of file information.
+		 *  * @return Array of arrays of file information.
 		 *	   Keys may vary depending on the implementation, but must include
 		 *	   at least those attributes listed in $this->attributes.
-		 */
+		  */
 		function ls ($data) { return array(array()); }
 
 		/*
@@ -480,14 +480,14 @@
 		 * make_link - Create a real to virtual directory link
 		 */
 
-		/*!
-		 * @function make_link
-		 * @abstract Create a real to virtual directory link
-		 * @required rdir	Real directory to make link from/to
-		 * @required vdir	Virtual directory to make link to/from
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Create a real to virtual directory link
+		 *  *
+		 *  * rdir	Real directory to make link from/to
+		 *  * vdir	Virtual directory to make link to/from
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT, RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function make_link ($data) { return False; }
 
 		/*
@@ -503,46 +503,46 @@
 		 * extract - Dearchives a file or set of files of a compressed file
 		 */
 
-		/*!
-		 * @function update_real
-		 * @abstract Ensure that information about a location is up-to-date
-		 * @discussion Some VFS backends store information about locations
+		/**
+		 *  * Ensure that information about a location is up-to-date
+		 *  *
+		 *  * Some VFS backends store information about locations
 		 *	       in a secondary location, for example in a database
 		 *	       or in a cache file.  update_real() can be called to
 		 *	       ensure that the information in the secondary location
 		 *	       is up-to-date.
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		function update_real ($data) { return False; }
 		
-		/*!
-		 * @function compress
-		 * @abstract Creates an archive from a file or a set of files
-		 * @required files	File names to be stored in archive (array)
-		 * @required name  Name of archive
-		 * @optional type  The type of compression, can be 'zip'(default)or 'gz'
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 *           Note: the last item is the relativity of the dest archive
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Creates an archive from a file or a set of files
+		 *  *
+		 *  * files	File names to be stored in archive (array)
+		 *  * name  Name of archive
+		 *  * type  The type of compression, can be 'zip'(default)or 'gz'
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  *           Note: the last item is the relativity of the dest archive
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 
 		function compress ($data) { return False; }
 
-		/*!
-		 * @function extract
-		 * @abstract Extracts a file (or files) from archive 
-		 * @required name  Name of archive
-		 * @required dest  The destination path of files to be extracted
-		 * @optional type  The type of compression, can be 'zip' or 'gz'. If
-		 *                 not specified, uses according to the extension
-		 * @optional files	Files to be extracted from archive
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 *    Note: the first item is the relativity of the archive, the last of
-		 *          the dest dir
-		 * @result Boolean.  True on success, False otherwise.
-		 */
+		/**
+		 *  * Extracts a file (or files) from archive 
+		 *  *
+		 *  * name  Name of archive
+		 *  * dest  The destination path of files to be extracted
+		 *  * type  The type of compression, can be 'zip' or 'gz'. If
+		 *  *                 not specified, uses according to the extension
+		 *  * files	Files to be extracted from archive
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  *    Note: the first item is the relativity of the archive, the last of
+		 *  *          the dest dir
+		 *  * @return Boolean.  True on success, False otherwise.
+		  */
 		 
 		function extract ($data) { return False; }
 
@@ -610,14 +610,14 @@
 
 		/* PRIVATE functions */
 
-		/*!
-		 * @function securitycheck
-		 * @abstract Check if location string is ok to use in VFS functions
-		 * @discussion Checks for basic violations such as ..
+		/**
+		 *  * Check if location string is ok to use in VFS functions
+		 *  *
+		 *  * Checks for basic violations such as ..
 		 *	       If securitycheck () fails, run your string through $this->sanitize ()
-		 * @required string	Path to location
-		 * @result Boolean.  True if string is ok, False otherwise.
-		 */
+		 *  * string	Path to location
+		 *  * @return Boolean.  True if string is ok, False otherwise.
+		  */
 		function securitycheck ($data)
 		{
 			if (!is_array ($data))
@@ -635,17 +635,17 @@
 			}
 		}
 
-		/*!
-		 * @function sanitize
-		 * @abstract Remove any possible security problems from a location
+		/**
+		 *  * Remove any possible security problems from a location
+		 *  *
 		 *	     string (i.e. remove leading '..')
-		 * @discussion You should not pass all filenames through sanitize ()
+		 *  * You should not pass all filenames through sanitize ()
 		 *	       unless you plan on rejecting .files.  Instead, pass
 		 *	       the name through securitycheck () first, and if it fails,
 		 *	       pass it through sanitize.
-		 * @required string	Path to location
-		 * @result String. 'string' with any security problems fixed.
-		 */
+		 *  * string	Path to location
+		 *  * @return String. 'string' with any security problems fixed.
+		  */
 		function sanitize ($data)
 		{
 			if (!is_array ($data))
@@ -663,16 +663,16 @@
 			return (ereg_replace ("^\.+", '', $p->fake_name));
 		}
 
-		/*!
-		 * @function clean_string
-		 * @abstract Clean location string.  This function is used if
+		/**
+		 *  * Clean location string.  This function is used if
+		 *  *
 		 *	     any special characters need to be escaped or removed
 		 *	     before accessing a database, network protocol, etc.
 		 *	     The default is to escape characters before doing an SQL
 		 *	     query.
-		 * @required string	Location string to clean
-		 * @result String.  Cleaned version of 'string'.
-		 */
+		 *  * string	Location string to clean
+		 *  * @return String.  Cleaned version of 'string'.
+		  */
 		function clean_string ($data)
 		{
 			if (!is_array ($data))
@@ -680,24 +680,24 @@
 				$data = array ();
 			}
 
-			$string = $GLOBALS['phpgw']->db->db_addslashes ($data['string']);
+			$string = $GLOBALS['egw']->db->db_addslashes ($data['string']);
 
 			return $string;
 		}
 
-		/*!
-		 * @function getabsolutepath
-		 * @abstract Translate a location string depending on the
+		/**
+		 *  * Translate a location string depending on the
+		 *  *
 		 *	     relativity. This is the only function that is
 		 *	     directly concerned with relativity.
-		 * @optional string	Path to location, relative to mask[0].
-		 * 			Defaults to empty string.
-		 * @optional mask	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional fake	Boolean.  If set, returns the 'fake' path,
+		 *  * string	Path to location, relative to mask[0].
+		 *  * 			Defaults to empty string.
+		 *  * mask	Relativity array (default: RELATIVE_CURRENT)
+		 *  * fake	Boolean.  If set, returns the 'fake' path,
 		 *			i.e. /home/user/dir/file.  This is not always
 		 *			possible,  use path_parts() instead.
-		 * @result String. Full fake or real path, or False on error.
-		 */
+		 *  * @return String. Full fake or real path, or False on error.
+		  */
 		function getabsolutepath ($data)
 		{
 			if (!is_array ($data))
@@ -780,12 +780,12 @@
 
 			if (($data['mask'][0] & RELATIVE_USER) || ($data['mask'][0] & RELATIVE_USER_APP))
 			{
-				$basedir = $basedir . $GLOBALS['phpgw_info']['user']['account_lid'] . $sep;
+				$basedir = $basedir . $GLOBALS['egw_info']['user']['account_lid'] . $sep;
 			}
 
 			if ($data['mask'][0] & RELATIVE_USER_APP)
 			{
-				$basedir = $basedir . "." . $GLOBALS['phpgw_info']['flags']['currentapp'] . $sep;
+				$basedir = $basedir . "." . $GLOBALS['egw_info']['flags']['currentapp'] . $sep;
 			}
 
 			/* Don't add string if it's a /, just for aesthetics */
@@ -805,14 +805,14 @@
 			return $basedir;
 		}
 
-		/*!
-		 * @function get_ext_mime_type
-		 * @abstract Return MIME type based on file extension
-		 * @description Internal use only.  Applications should call vfs->file_type ()
-		 * @author skeeter
-		 * @required string	Real path to file, with or without leading paths
-		 * @result String.  MIME type based on file extension.
-		 */
+		/**
+		 *  * Return MIME type based on file extension
+		 *  *
+		 *  * Internal use only.  Applications should call vfs->file_type ()
+		 *  * @author skeeter
+		 *  * string	Real path to file, with or without leading paths
+		 *  * @return String.  MIME type based on file extension.
+		  */
 		function get_ext_mime_type ($data)
 		{
 			if (!is_array ($data))
@@ -821,7 +821,7 @@
 			}
 
 			$file=basename($data['string']);
-			$mimefile=PHPGW_API_INC.'/phpgw_mime.types';
+			$mimefile=EGW_API_INC.'/phpgw_mime.types';
 			$fp=fopen($mimefile,'r');
 			$contents = explode("\n",fread($fp,filesize($mimefile)));
 			fclose($fp);
@@ -852,14 +852,14 @@
 
 		/* PUBLIC functions (mandatory) */
 
-		/*!
-		 * @function set_relative
-		 * @abstract Sets the current relativity, the relativity used
+		/**
+		 *  * Sets the current relativity, the relativity used
+		 *  *
 		 *	     when RELATIVE_CURRENT is passed to a function
-		 * @optional mask	Relative bitmask.  If not set, relativity
+		 *  * mask	Relative bitmask.  If not set, relativity
 		 *			will be returned to the default.
-		 * @result Void
-		 */
+		 *  * @return Void
+		  */
 		function set_relative ($data)
 		{
 			if (!is_array ($data))
@@ -877,13 +877,13 @@
 			}
 		}
 
-		/*!
-		 * @function get_relative
-		 * @abstract Return the current relativity
-		 * @discussion Returns relativity bitmask, or the default
+		/**
+		 *  * Return the current relativity
+		 *  *
+		 *  * Returns relativity bitmask, or the default
 		 *	       of "completely relative" if unset
-		 * @result Integer.  One of the RELATIVE_* defines.
-		 */
+		 *  * @return Integer.  One of the RELATIVE_* defines.
+		  */
 		function get_relative ()
 		{
 			if (isset ($this->relative) && $this->relative)
@@ -896,19 +896,19 @@
 			}
 		}
 
-		/*!
-		 * @function path_parts
-		 * @abstract Return information about the component parts of a location string
-		 * @discussion Most VFS functions call path_parts() with their 'string' and
+		/**
+		 *  * Return information about the component parts of a location string
+		 *  *
+		 *  * Most VFS functions call path_parts() with their 'string' and
 		 *	       'relatives' arguments before doing their work, in order to
 		 *	       determine the file/directory to work on.
-		 * @required string	Path to location
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 * @optional object	If set, return an object instead of an array
-		 * @optional nolinks	Don't check for linked directories (made with
+		 *  * string	Path to location
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		 *  * object	If set, return an object instead of an array
+		 *  * nolinks	Don't check for linked directories (made with
 		 *			make_link()).  Used internally to prevent recursion.
-		 * @result Array or object.  Contains the fake and real component parts of the path.
-		 * @discussion Returned values are:
+		 *  * @return Array or object.  Contains the fake and real component parts of the path.
+		 *  * Returned values are:
 		 *		mask
 		 *		outside
 		 *		fake_full_path
@@ -934,7 +934,7 @@
 		 *	mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
 		 *	and is used internally
 		 *	outside is boolean, True if 'relatives' contains VFS_REAL
-		 */
+		  */
 		function path_parts ($data)
 		{
 			if (!is_array ($data))
@@ -1084,8 +1084,8 @@
 			}
 
 			/*
-			   We have to count it before because new keys will be added,
-			   which would create an endless loop
+				 We have to count it before because new keys will be added,
+				 which would create an endless loop
 			*/
 			$count = count ($rarray);
 			reset ($rarray);
@@ -1096,7 +1096,7 @@
 
 			if ($data['object'])
 			{
-				$robject = new path_class;
+				$robject =& new path_class;
 
 				reset ($rarray);
 				while (list ($key, $value) = each ($rarray))
@@ -1126,23 +1126,23 @@
 			}
 		}
 
-		/*!
-		 * @function cd
-		 * @abstract Change current directory.  This function is used to store the
+		/**
+		 *  * Change current directory.  This function is used to store the
+		 *  *
 		 *	     current directory in a standard way, so that it may be accessed
 		 *	     throughout phpGroupWare to provide a consistent view for the user.
-		 * @discussion To cd to the root '/', use:
+		 *  * To cd to the root '/', use:
 		 *		cd (array(
 		 *			'string' => '/',
 		 *			'relative' => False,
 		 *			'relatives' => array (RELATIVE_NONE)
 		 *		));
-		 * @optional string	Directory location to cd into.  Default is '/'.
-		 * @optional relative	If set, add target to current path.
+		 *  * string	Directory location to cd into.  Default is '/'.
+		 *  * relative	If set, add target to current path.
 		 *			Else, pass 'relative' as mask to getabsolutepath()
 		 *			Default is True.
-		 * @optional relatives	Relativity array (default: RELATIVE_CURRENT)
-		 */
+		 *  * relatives	Relativity array (default: RELATIVE_CURRENT)
+		  */
 		function cd ($data = '')
 		{
 			if (!is_array ($data))
@@ -1184,7 +1184,7 @@
 				}
 				else
 				{
-					$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
+					$currentdir = $GLOBALS['egw']->session->appsession('vfs','');
 					$basedir = $this->getabsolutepath (array(
 							'string'	=> $currentdir . $sep . $data['string'],
 							'mask'	=> array ($data['relatives'][0]),
@@ -1202,19 +1202,19 @@
 				);
 			}
 
-			$GLOBALS['phpgw']->session->appsession('vfs','',$basedir);
+			$GLOBALS['egw']->session->appsession('vfs','',$basedir);
 
 			return True;
 		}
 
-		/*!
-		 * @function pwd
-		 * @abstract Return current directory
-		 * @optional full	If set, return full fake path, else just
+		/**
+		 *  * Return current directory
+		 *  *
+		 *  * full	If set, return full fake path, else just
 		 *			the extra dirs (False strips the leading /).
 		 *			Default is True.
-		 * @result String.  The current directory.
-		 */
+		 *  * @return String.  The current directory.
+		  */
 		function pwd ($data = '')
 		{
 			if (!is_array ($data))
@@ -1229,7 +1229,7 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
+			$currentdir = $GLOBALS['egw']->session->appsession('vfs','');
 
 			if (!$data['full'])
 			{
@@ -1246,54 +1246,54 @@
 			return $currentdir;
 		}
 
-		/*!
-		 * @function copy
-		 * @abstract shortcut to cp
-		 */
+		/**
+		 *  * shortcut to cp
+		 *  *
+		  */
 		function copy ($data)
 		{
 			return $this->cp ($data);
 		}
 
-		/*!
-		 * @function move
-		 * @abstract shortcut to mv
-		 */
+		/**
+		 *  * shortcut to mv
+		 *  *
+		  */
 		function move ($data)
 		{
 			return $this->mv ($data);
 		}
 
-		/*!
-		 * @function delete
-		 * @abstract shortcut to rm
-		 */
+		/**
+		 *  * shortcut to rm
+		 *  *
+		  */
 		function delete ($data)
 		{
 			return $this->rm ($data);
 		}
 
-		/*!
-		 * @function dir
-		 * @abstract shortcut to ls
-		 */
+		/**
+		 *  * shortcut to ls
+		 *  *
+		  */
 		function dir ($data)
 		{
 			return $this->ls ($data);
 		}
 
-		/*!
-		 * @function command_line
-		 * @abstract Process and run a Unix-sytle command line
-		 * @discussion EXPERIMENTAL.  DANGEROUS.  DO NOT USE THIS UNLESS YOU
+		/**
+		 *  * Process and run a Unix-sytle command line
+		 *  *
+		 *  * EXPERIMENTAL.  DANGEROUS.  DO NOT USE THIS UNLESS YOU
 		 *	       KNOW WHAT YOU'RE DOING!
-		 * 	       This is mostly working, but the command parser needs
+		 *  * 	       This is mostly working, but the command parser needs
 		 *	       to be improved to take files with spaces into
 		 *	       consideration (those should be in "").
-		 * @required command_line	Unix-style command line with one of the
+		 *  * command_line	Unix-style command line with one of the
 		 *				commands in the $args array
-		 * @result The return value of the actual VFS call
-		 */
+		 *  * @return The return value of the actual VFS call
+		  */
 		function command_line ($data)
 		{
 			if (!is_array ($data))
@@ -1412,4 +1412,4 @@
 
 	}
 	
-	include (PHPGW_API_INC . '/class.vfs_' . $GLOBALS['phpgw_info']['server']['file_repository'] . '.inc.php');
+	include (EGW_API_INC . '/class.vfs_' . $GLOBALS['egw_info']['server']['file_repository'] . '.inc.php');

@@ -1,33 +1,33 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - VFS                                                     *
-  * This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
-  * This class handles file/dir access for eGroupWare                        *
-  * Copyright (C) 2001 Jason Wies		                                     *
-  * Database layer reworked 2005/09/20 by RalfBecker-AT-outdoor-training.de  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - VFS                                                     *
+	* This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
+	* This class handles file/dir access for eGroupWare                        *
+	* Copyright (C) 2001 Jason Wies		                                     *
+	* Database layer reworked 2005/09/20 by RalfBecker-AT-outdoor-training.de  *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-	/*!
-	@class vfs
-	@abstract Virtual File System with SQL backend
-	@description Authors: Zone
-	*/
+	/**
+	 * Virtual File System with SQL backend
+	 *
+	 * Authors: Zone
+	 */
 
 	/* These are used in calls to extra_sql () */
 	define ('VFS_SQL_SELECT', 1);
@@ -44,24 +44,24 @@
 		var $vfs_table = 'egw_vfs';
 		var $vfs_column_prefix = 'vfs_';
 
-		/*!
-		@function vfs
-		@abstract constructor, sets up variables
-		*/
+		/**
+		 * constructor, sets up variables
+		 *
+		 */
 		function vfs ()
 		{
 			$this->vfs_shared ();
-			$this->basedir = $GLOBALS['phpgw_info']['server']['files_dir'];
-			$this->working_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->working_lid = $GLOBALS['phpgw_info']['user']['account_lid'];
+			$this->basedir = $GLOBALS['egw_info']['server']['files_dir'];
+			$this->working_id = $GLOBALS['egw_info']['user']['account_id'];
+			$this->working_lid = $GLOBALS['egw_info']['user']['account_lid'];
 			$this->now = date ('Y-m-d');
 
 			/*
-			   File/dir attributes, each corresponding to a database field.  Useful for use in loops
-			   If an attribute was added to the table, add it here and possibly add it to
-			   set_attributes ()
+				 File/dir attributes, each corresponding to a database field.  Useful for use in loops
+				 If an attribute was added to the table, add it here and possibly add it to
+				 set_attributes ()
 
-			   set_attributes now uses this array().   07-Dec-01 skeeter
+				 set_attributes now uses this array().   07-Dec-01 skeeter
 			*/
 
 			$this->attributes[] = 'deleteable';
@@ -74,34 +74,34 @@
 				$this->attributes[$this->vfs_column_prefix.$attr] = $attr;
 			}
 			/*
-			   Decide whether to use any actual filesystem calls (fopen(), fread(),
-			   unlink(), rmdir(), touch(), etc.).  If not, then we're working completely
-			   in the database.
+				 Decide whether to use any actual filesystem calls (fopen(), fread(),
+				 unlink(), rmdir(), touch(), etc.).  If not, then we're working completely
+				 in the database.
 			*/
-			$this->file_actions = $GLOBALS['phpgw_info']['server']['file_store_contents'] == 'filesystem' ||
-				!$GLOBALS['phpgw_info']['server']['file_store_contents'];
+			$this->file_actions = $GLOBALS['egw_info']['server']['file_store_contents'] == 'filesystem' ||
+				!$GLOBALS['egw_info']['server']['file_store_contents'];
 
 			// test if the files-dir is inside the document-root, and refuse working if so
 			//
 			if ($this->file_actions && $this->in_docroot($this->basedir))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
-				if ($GLOBALS['phpgw_info']['flags']['noheader']) 
+				$GLOBALS['egw']->common->egw_header();
+				if ($GLOBALS['egw_info']['flags']['noheader']) 
 				{
 					echo parse_navbar();
 				}
 				echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 			/*
-			   These are stored in the MIME-type field and should normally be ignored.
-			   Adding a type here will ensure it is normally ignored, but you will have to
-			   explicitly add it to acl_check (), and to any other SELECT's in this file
+				 These are stored in the MIME-type field and should normally be ignored.
+				 Adding a type here will ensure it is normally ignored, but you will have to
+				 explicitly add it to acl_check (), and to any other SELECT's in this file
 			*/
 
 			$this->meta_types = array ('journal', 'journal-deleted');
 			
-			$this->db = clone($GLOBALS['phpgw']->db);
+			$this->db = clone($GLOBALS['egw']->db);
 			$this->db->set_app('phpgwapi');
 
 			/* We store the linked directories in an array now, so we don't have to make the SQL call again */
@@ -137,13 +137,13 @@
 			$this->grants = $GLOBALS['egw']->acl->get_grants('filemanager');
 		}
 
-		/*!
-		@function in_docroot
-		@abstract test if $path lies within the webservers document-root
-		*/
+		/**
+		 * test if $path lies within the webservers document-root
+		 *
+		 */
 		function in_docroot($path)
 		{
-			$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+			$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
 
 			foreach ($docroots as $docroot)
 			{
@@ -162,12 +162,12 @@
 			return False;
 		}
 
-		/*!
-		@function extra_sql
-		@abstract Return extra SQL code that should be appended (AND'ed) to certain queries
-		@param query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
-		@result Extra SQL code
-		*/
+		/**
+		 * Return extra SQL code that should be appended (AND'ed) to certain queries
+		 *
+		 * @param query_type The type of query to get extra SQL code for, in the form of a VFS_SQL define
+		 * @return Extra SQL code
+		 */
 		function extra_sql ($data)
 		{
 			if (!is_array ($data))
@@ -182,31 +182,31 @@
 			return '';
 		}
 
-		/*!
-		@function add_journal
-		@abstract Add a journal entry after (or before) completing an operation,
-			  and increment the version number.  This function should be used internally only
-		@discussion Note that state_one and state_two are ignored for some VFS_OPERATION's, for others
-			    they are required.  They are ignored for any "custom" operation
-			    The two operations that require state_two:
-			    operation			state_two
-			    VFS_OPERATION_COPIED	fake_full_path of copied to
-			    VFS_OPERATION_MOVED		fake_full_path of moved to
+		/**
+		 * Add a journal entry after (or before) completing an operation,
+		 *
+		 * 		 * and increment the version number.  This function should be used internally only
+		 * Note that state_one and state_two are ignored for some VFS_OPERATION's, for others
+		 * 		 * 	they are required.  They are ignored for any "custom" operation
+		 * 		 * 	The two operations that require state_two:
+		 * 		 * 	operation		 * 	state_two
+		 * 		 * 	VFS_OPERATION_COPIED	fake_full_path of copied to
+		 * 		 * 	VFS_OPERATION_MOVED		 * fake_full_path of moved to
 
-			    If deleting, you must call add_journal () before you delete the entry from the database
-		@param string File or directory to add entry for
-		@param relatives Relativity array
-		@param operation The operation that was performed.  Either a VFS_OPERATION define or
-				  a non-integer descriptive text string
-		@param state_one The first "state" of the file or directory.  Can be a file name, size,
-				  location, whatever is appropriate for the specific operation
-		@param state_two The second "state" of the file or directory
-		@param incversion Boolean True/False.  Increment the version for the file?  Note that this is
-				   handled automatically for the VFS_OPERATION defines.
-				   i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
-				   would not
-		@result Boolean True/False
-		*/
+		 * 		 * 	If deleting, you must call add_journal () before you delete the entry from the database
+		 * @param string File or directory to add entry for
+		 * @param relatives Relativity array
+		 * @param operation The operation that was performed.  Either a VFS_OPERATION define or
+		 * 		 * 	a non-integer descriptive text string
+		 * @param state_one The first "state" of the file or directory.  Can be a file name, size,
+		 * 		 * 	location, whatever is appropriate for the specific operation
+		 * @param state_two The second "state" of the file or directory
+		 * @param incversion Boolean True/False.  Increment the version for the file?  Note that this is
+		 * 		 * 	 handled automatically for the VFS_OPERATION defines.
+		 * 		 * 	 i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
+		 * 		 * 	 would not
+		 * @return Boolean True/False
+		 */
 		function add_journal ($data)
 		{
 			if (!is_array ($data))
@@ -224,14 +224,14 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			$p = $this->path_parts (array ('string' => $data['string'], 'relatives' => array ($data['relatives'][0])));
 
 			/* We check that they have some sort of access to the file other than read */
-			if (!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_WRITE)) &&
-				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_EDIT)) &&
-				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => PHPGW_ACL_DELETE)))
+			if (!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => EGW_ACL_WRITE)) &&
+				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => EGW_ACL_EDIT)) &&
+				!$this->acl_check (array ('string' => $p->fake_full_path, 'relatives' => array ($p->mask), 'operation' => EGW_ACL_DELETE)))
 			{
 				return False;
 			}
@@ -330,10 +330,10 @@
 				}
 
 				/*
-				   Let's increment the version for the file itself.  We keep the current
-				   version when making the journal entry, because that was the version that
-				   was operated on.  The maximum numbers for each part in the version string:
-				   none.99.9.9
+					 Let's increment the version for the file itself.  We keep the current
+					 version when making the journal entry, because that was the version that
+					 was operated on.  The maximum numbers for each part in the version string:
+					 none.99.9.9
 				*/
 				if ($attribute == 'version' && $data['incversion'])
 				{
@@ -394,9 +394,9 @@
 				}
 			}
 			/*
-			   These are some special situations where we need to flush the journal entries
-			   or move the 'journal' entries to 'journal-deleted'.  Kind of hackish, but they
-			   provide a consistent feel to the system
+				 These are some special situations where we need to flush the journal entries
+				 or move the 'journal' entries to 'journal-deleted'.  Kind of hackish, but they
+				 provide a consistent feel to the system
 			*/
 			if ($data['operation'] == VFS_OPERATION_CREATED)
 			{
@@ -429,8 +429,8 @@
 			if ($data['operation'] == VFS_OPERATION_COPIED)
 			{
 				/*
-				   We copy it going the other way as well, so both files show the operation.
-				   The code is a bad hack to prevent recursion.  Ideally it would use VFS_OPERATION_COPIED
+					 We copy it going the other way as well, so both files show the operation.
+					 The code is a bad hack to prevent recursion.  Ideally it would use VFS_OPERATION_COPIED
 				*/
 				$this->add_journal (array(
 						'string'	=> $data['state_two'],
@@ -458,8 +458,8 @@
 					),__LINE__,__FILE__);
 
 				/*
-				   We create the file in addition to logging the MOVED operation.  This is an
-				   advantage because we can now search for 'Create' to see when a file was created
+					 We create the file in addition to logging the MOVED operation.  This is an
+					 advantage because we can now search for 'Create' to see when a file was created
 				*/
 				$this->add_journal (array(
 						'string'	=> $data['state_two'],
@@ -473,8 +473,8 @@
 			$this->db->insert($this->vfs_table,$to_write,false, __LINE__, __FILE__);
 
 			/*
-			   If we were to add an option of whether to keep journal entries for deleted files
-			   or not, it would go in the if here
+				 If we were to add an option of whether to keep journal entries for deleted files
+				 or not, it would go in the if here
 			*/
 			if ($data['operation'] == VFS_OPERATION_DELETED)
 			{
@@ -490,18 +490,18 @@
 			return True;
 		}
 
-		/*!
-		@function flush_journal
-		@abstract Flush journal entries for $string.  Used before adding $string
-		@discussion flush_journal () is an internal function and should be called from add_journal () only
-		@param string File/directory to flush journal entries of
-		@param relatives Realtivity array
-		@param deleteall Delete all types of journal entries, including the active Create entry.
-				  Normally you only want to delete the Create entry when replacing the file
-				  Note that this option does not effect $deleteonly
-		@param deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
-		@result Boolean True/False
-		*/
+		/**
+		 * Flush journal entries for $string.  Used before adding $string
+		 *
+		 * flush_journal () is an internal function and should be called from add_journal () only
+		 * @param string File/directory to flush journal entries of
+		 * @param relatives Realtivity array
+		 * @param deleteall Delete all types of journal entries, including the active Create entry.
+		 * 		 * 	Normally you only want to delete the Create entry when replacing the file
+		 * 		 * 	Note that this option does not effect $deleteonly
+		 * @param deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
+		 * @return Boolean True/False
+		 */
 		function flush_journal ($data)
 		{
 			if (!is_array ($data))
@@ -611,7 +611,7 @@
 			$default_values = array
 				(
 					'relatives'	=> array (RELATIVE_CURRENT),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> False
 				);
 
@@ -640,7 +640,7 @@
 				/* Read access is always allowed here, but nothing else is */
 				if ($data['string'] == '/' || $data['string'] == $this->fakebase)
 				{
-					if ($data['operation'] == PHPGW_ACL_READ)
+					if ($data['operation'] == EGW_ACL_READ)
 					{
 						return True;
 					}
@@ -685,8 +685,8 @@
 				}
 
 				/*
-				   We don't use ls () to get owner_id as we normally would,
-				   because ls () calls acl_check (), which would create an infinite loop
+					 We don't use ls () to get owner_id as we normally would,
+					 because ls () calls acl_check (), which would create an infinite loop
 				*/
 				$this->db->select($this->vfs_table,'vfs_owner_id',array(
 						'vfs_directory'	=> $p2->fake_leading_dirs,
@@ -709,44 +709,13 @@
 				$owner_id = 0;
 			}
 
-			$user_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$user_id = $GLOBALS['egw_info']['user']['account_id'];
 			//echo "user=$user_id, ";
 			/* They always have access to their own files */
 			if ($owner_id == $user_id)
 			{
 				return True;
 			}
-/* RalfBecker 2005/03/07 using ACL standard function acl::get_grants() now
-			// Check if they're in the group
-			$memberships = $GLOBALS['phpgw']->accounts->membership ($user_id);
-
-			if (is_array ($memberships))
-			{
-				foreach ($memberships as $group_array)
-				{
-					if ($owner_id == $group_array['account_id'])
-					{
-						$group_ok = 1;
-						break;
-					}
-				}
-			}
-
-			$acl = CreateObject ('phpgwapi.acl', $owner_id);
-			$acl->account_id = $owner_id;
-			$acl->read_repository ();
-
-			$rights = $acl->get_rights ($user_id);
-
-			// Add privileges from the groups this user belongs to
-			if (is_array ($memberships))
-			{
-				foreach ($memberships as $group_array)
-				{
-					$rights |= $acl->get_rights ($group_array['account_id']);
-				}
-			}
-*/
 			$rights = $this->grants[$owner_id];
 			//echo "rights=$rights, ";
 			if ($rights & $data['operation'])
@@ -755,7 +724,7 @@
 			}
 			elseif (!$rights && $group_ok)
 			{
-				return $GLOBALS['phpgw_info']['server']['acl_default'] == 'grant';
+				return $GLOBALS['egw_info']['server']['acl_default'] == 'grant';
 			}
 			else
 			{
@@ -789,7 +758,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 			)
 			{
@@ -852,12 +821,12 @@
 				))
 			)
 			{
-				$acl_operation = PHPGW_ACL_EDIT;
+				$acl_operation = EGW_ACL_EDIT;
 				$journal_operation = VFS_OPERATION_EDITED;
 			}
 			else
 			{
-				$acl_operation = PHPGW_ACL_ADD;
+				$acl_operation = EGW_ACL_ADD;
 			}
 
 			if (!$this->acl_check (array(
@@ -873,8 +842,8 @@
 			umask(0177);
 
 			/*
-			   If 'string' doesn't exist, touch () creates both the file and the database entry
-			   If 'string' does exist, touch () sets the modification time and modified by
+				 If 'string' doesn't exist, touch () creates both the file and the database entry
+				 If 'string' does exist, touch () sets the modification time and modified by
 			*/
 			$this->touch (array(
 					'string'	=> $p->fake_full_path,
@@ -952,8 +921,8 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 
 			$p = $this->path_parts (array(
 					'string'	=> $data['string'],
@@ -966,8 +935,8 @@
 			if ($this->file_actions)
 			{
 				/*
-				   PHP's touch function will automatically decide whether to
-				   create the file or set the modification time
+					 PHP's touch function will automatically decide whether to
+					 create the file or set the modification time
 				*/
 				$rr = @touch ($p->real_full_path);
 
@@ -987,7 +956,7 @@
 				if (!$this->acl_check (array(
 						'string'	=> $p->fake_full_path,
 						'relatives'	=> array ($p->mask),
-						'operation'	=> PHPGW_ACL_EDIT
+						'operation'	=> EGW_ACL_EDIT
 					)))
 				{
 					return False;
@@ -1008,7 +977,7 @@
 				if (!$this->acl_check (array(
 						'string'	=> $p->fake_full_path,
 						'relatives'	=> array ($p->mask),
-						'operation'	=> PHPGW_ACL_ADD
+						'operation'	=> EGW_ACL_ADD
 					))
 				)
 				{
@@ -1068,7 +1037,7 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			$f = $this->path_parts (array(
 					'string'	=> $data['from'],
@@ -1085,7 +1054,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 			)
 			{
@@ -1101,7 +1070,7 @@
 				if (!$this->acl_check (array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'operation'	=> PHPGW_ACL_EDIT
+						'operation'	=> EGW_ACL_EDIT
 					))
 				)
 				{
@@ -1113,7 +1082,7 @@
 				if (!$this->acl_check (array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'operation'	=> PHPGW_ACL_ADD
+						'operation'	=> EGW_ACL_ADD
 					))
 				)
 				{
@@ -1181,18 +1150,6 @@
 					))
 				)
 				{
-					/* RalfBecker 2004/09/19: for my undetstanding the query does nothing, as it only sets rows already containing these values !!!
-					$query = $this->db->update($this->vfs_table,array(
-							'owner_id'	=> $this->working_id, 
-							'directory'	=> $t->fake_leading_dirs,
-							'name'		=> $t->fake_name,
-						),array(
-							'owner_id'	=> $this->working_id,
-							'directory'	=> $t->fake_leading_dirs,
-							'name'		=> $t->fake_name,
-							$this->extra_sql(VFS_SQL_UPDATE)
-						), __LINE__, __FILE__);
-					*/
 					$set_attributes_array = array (
 						'createdby_id' => $account_id,
 						'created' => $this->now,
@@ -1336,7 +1293,7 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			$f = $this->path_parts (array(
 					'string'	=> $data['from'],
@@ -1353,12 +1310,12 @@
 			if (!$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_READ
+					'operation'	=> EGW_ACL_READ
 				))
 				|| !$this->acl_check (array(
 					'string'	=> $f->fake_full_path,
 					'relatives'	=> array ($f->mask),
-					'operation'	=> PHPGW_ACL_DELETE
+					'operation'	=> EGW_ACL_DELETE
 				))
 			)
 			{
@@ -1368,7 +1325,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $t->fake_full_path,
 					'relatives'	=> array ($t->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				))
 			)
 			{
@@ -1384,7 +1341,7 @@
 				if (!$this->acl_check (array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'operation'	=> PHPGW_ACL_EDIT
+						'operation'	=> EGW_ACL_EDIT
 					))
 				)
 				{
@@ -1435,8 +1392,8 @@
 				}
 
 				/*
-				   We add the journal entry now, before we delete.  This way the mime_type
-				   field will be updated to 'journal-deleted' when the file is actually deleted
+					 We add the journal entry now, before we delete.  This way the mime_type
+					 field will be updated to 'journal-deleted' when the file is actually deleted
 				*/
 				if (!$f->outside)
 				{
@@ -1451,8 +1408,8 @@
 				}
 
 				/*
-				   If the from file is outside, it won't have a database entry,
-				   so we have to touch it and find the size
+					 If the from file is outside, it won't have a database entry,
+					 so we have to touch it and find the size
 				*/
 				if ($f->outside)
 				{
@@ -1503,8 +1460,8 @@
 				}
 
 				/*
-				   This removes the original entry from the database
-				   The actual file is already deleted because of the rename () above
+					 This removes the original entry from the database
+					 The actual file is already deleted because of the rename () above
 				*/
 				if ($t->outside)
 				{
@@ -1584,7 +1541,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_DELETE
+					'operation'	=> EGW_ACL_DELETE
 				))
 			)
 			{
@@ -1751,8 +1708,8 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 
 			$p = $this->path_parts (array(
 					'string'	=> $data['string'],
@@ -1763,10 +1720,10 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_ADD)
+					'operation'	=> EGW_ACL_ADD)
 				)
 			)
-			{//echo "!acl_check('$p->fake_full_path',PHPGW_ACL_ADD)";
+			{//echo "!acl_check('$p->fake_full_path',EGW_ACL_ADD)";
 				return False;
 			}
 
@@ -1875,7 +1832,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $vp->fake_full_path,
 					'relatives'	=> array ($vp->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				))
 			)
 			{
@@ -1951,13 +1908,13 @@
 			);
 
 			/*
-			   This is kind of trivial, given that set_attributes () can change owner_id,
-			   size, etc.
+				 This is kind of trivial, given that set_attributes () can change owner_id,
+				 size, etc.
 			*/
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_EDIT
+					'operation'	=> EGW_ACL_EDIT
 				))
 			)
 			{
@@ -1974,8 +1931,8 @@
 			}
 
 			/*
-			   All this voodoo just decides which attributes to update
-			   depending on if the attribute was supplied in the 'attributes' array
+				 All this voodoo just decides which attributes to update
+				 depending on if the attribute was supplied in the 'attributes' array
 			*/
 
 			$ls_array = $this->ls (array(
@@ -1993,8 +1950,8 @@
 				if (isset ($data['attributes'][$attribute]))
 				{
 					/*
-					   Indicate that the EDITED_COMMENT operation needs to be journaled,
-					   but only if the comment changed
+						 Indicate that the EDITED_COMMENT operation needs to be journaled,
+						 but only if the comment changed
 					*/
 					if ($attribute == 'comment' && $data['attributes'][$attribute] != $record[$attribute])
 					{
@@ -2027,13 +1984,13 @@
 			return True;
 		}
 
-		/*!
-		@function correct_attributes
-		@abstract Set the correct attributes for 'string' (e.g. owner)
-		@param string File/directory to correct attributes of
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Set the correct attributes for 'string' (e.g. owner)
+		 *
+		 * @param string File/directory to correct attributes of
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function correct_attributes ($data)
 		{
 			if (!is_array ($data))
@@ -2070,7 +2027,7 @@
 			elseif (preg_match ("+^$this->fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 			{
 				$set_attributes_array = Array(
-					'owner_id' => $GLOBALS['phpgw']->accounts->name2id ($matches[1])
+					'owner_id' => $GLOBALS['egw']->accounts->name2id ($matches[1])
 				);
 			}
 			else
@@ -2081,7 +2038,7 @@
 			}
 
 			$this->set_attributes (array(
-					'string'	=> $p->fake_full_name,
+					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
 					'attributes'	=> $set_attributes_array
 				)
@@ -2116,7 +2073,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> True
 				))
 			)
@@ -2132,14 +2089,14 @@
 				}
 
 				/*
-				   We don't return an empty string here, because it may still match with a database query
-				   because of linked directories
+					 We don't return an empty string here, because it may still match with a database query
+					 because of linked directories
 				*/
 			}
 
 			/*
-			   We don't use ls () because it calls file_type () to determine if it has been
-			   passed a directory
+				 We don't use ls () because it calls file_type () to determine if it has been
+				 passed a directory
 			*/
 			$db2 = clone($this->db);
 			$db2->select($this->vfs_table,'vfs_mime_type',array(
@@ -2149,18 +2106,15 @@
 				), __LINE__, __FILE__);
 			$db2->next_record ();
 			$mime_type = $db2->Record['vfs_mime_type'];
-			if(!$mime_type)
+			if(!$mime_type && ($mime_type = $this->get_ext_mime_type (array ('string' => $data['string']))))
 			{
-				$mime_type = $this->get_ext_mime_type (array ('string' => $data['string']));
-				{
-					$db2->update($this->vfs_table,array(
-							'vfs_mime_type'	=> $mime_type
-						),array(
-							'vfs_directory'	=> $p->fake_leading_dirs,
-							'vfs_name'		=> $p->fake_name,
-							$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
-						), __LINE__, __FILE__);
-				}
+				$db2->update($this->vfs_table,array(
+						'vfs_mime_type'	=> $mime_type
+					),array(
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
+						$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
+					), __LINE__, __FILE__);
 			}
 			return $mime_type;
 		}
@@ -2232,7 +2186,7 @@
 			if (!$this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_READ,
+					'operation'	=> EGW_ACL_READ,
 					'must_exist'	=> True
 				))
 			)
@@ -2241,8 +2195,8 @@
 			}
 
 			/*
-			   WIP - this should run through all of the subfiles/directories in the directory and tally up
-			   their sizes.  Should modify ls () to be able to return a list for files outside the virtual root
+				 WIP - this should run through all of the subfiles/directories in the directory and tally up
+				 their sizes.  Should modify ls () to be able to return a list for files outside the virtual root
 			*/
 			if ($p->outside)
 			{
@@ -2259,8 +2213,8 @@
 				)) as $file_array)
 			{
 				/*
-				   Make sure the file is in the directory we want, and not
-				   some deeper nested directory with a similar name
+					 Make sure the file is in the directory we want, and not
+					 some deeper nested directory with a similar name
 				*/
 /*
 				if (@!ereg ('^' . $file_array['directory'], $p->fake_full_path))
@@ -2286,14 +2240,14 @@
 			return $size;
 		}
 
-		/*!
-		@function checkperms
-		@abstract Check if $this->working_id has write access to create files in $dir
-		@discussion Simple call to acl_check
-		@param string Directory to check access of
-		@param relatives Relativity array
-		@result Boolean True/False
-		*/
+		/**
+		 * Check if $this->working_id has write access to create files in $dir
+		 *
+		 * Simple call to acl_check
+		 * @param string Directory to check access of
+		 * @param relatives Relativity array
+		 * @return Boolean True/False
+		 */
 		function checkperms ($data)
 		{
 			if (!is_array ($data))
@@ -2317,7 +2271,7 @@
 			return $this->acl_check (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
-					'operation'	=> PHPGW_ACL_ADD
+					'operation'	=> EGW_ACL_ADD
 				));
 		}
 
