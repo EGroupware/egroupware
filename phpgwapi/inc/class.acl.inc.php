@@ -24,19 +24,19 @@
   /* $Id$ */
 
 	/**
-		 * Access Control List System
-		 *
-		 * This class provides an ACL security scheme.
-		 * This can manage rights to 'run' applications, and limit certain features within an application.
-		 * It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
-		 * It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
-		 * $acl =& CreateObject('phpgwapi.acl',5);  // 5 is the user id
-		 *
-		 * @author Seek3r and others
-		 * @copyright LGPL
-		 * @package api
-		 * @subpackage accounts
-		 * @access public
+	 * Access Control List System
+	 *
+	 * This class provides an ACL security scheme.
+	 * This can manage rights to 'run' applications, and limit certain features within an application.
+	 * It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
+	 * It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
+	 * $acl =& CreateObject('phpgwapi.acl',5);  // 5 is the user id
+	 *
+	 * @author Seek3r and others
+	 * @copyright LGPL
+	 * @package api
+	 * @subpackage accounts
+	 * @access public
 	 */
 	class acl
 	{
@@ -243,6 +243,10 @@
 					),false,__LINE__,__FILE__);
 				}
 			}
+			if ($this->account_id == $GLOBALS['egw_info']['user']['account_id'])
+			{
+				$GLOBALS['egw']->invalidate_session_cache();
+			}
 			return $this->data;
 		}
 
@@ -381,6 +385,10 @@
 				'acl_account'  => $account_id,
 			),__LINE__,__FILE__);
 
+			if ($account_id == $GLOBALS['egw_info']['user']['account_id'])
+			{
+				$GLOBALS['egw']->invalidate_session_cache();
+			}
 			return True;
 		}
 
@@ -411,6 +419,8 @@
 					$where['acl_account'] = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 				}
 			}
+			$GLOBALS['egw']->invalidate_session_cache();
+
 			if ($app == '%' || $app == '%%') unset($where['acl_appname']);
 
 			$this->db->delete($this->table_name,$where,__LINE__,__FILE__);

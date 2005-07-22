@@ -33,20 +33,26 @@
 		{
 			if (! $appname)
 			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
-
-			$this->db      = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			if (is_object($GLOBALS['egw']->db))
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+			}
+			else
+			{
+				$this->db = clone($GLOBALS['egw_setup']->db);
+			}
 			$this->db->set_app('phpgwapi');
 			$this->table = 'phpgw_config';
 			$this->appname = $appname;
 		}
 
-		/*!
-		@function read_repository
-		@abstract reads the whole repository for $this->appname, appname has to be set via the constructor
-		@returns the whole config-array for that app
-		*/
+		/**
+		 * reads the whole repository for $this->appname, appname has to be set via the constructor
+		 *
+		 * the whole config-array for that app
+		 */
 		function read_repository()
 		{
 			$this->config_data = array();
@@ -67,19 +73,15 @@
 			return $this->read_data = $this->config_data;
 		}
 
-		/*!
-		@function save_repository
-		@abstract updates the whole repository for $this->appname, you have to call read_repository() before (!)
-		*/
+		/**
+		 * updates the whole repository for $this->appname, you have to call read_repository() before (!)
+		 *
+		 */
 		function save_repository()
 		{
 			if (is_array($this->config_data))
 			{
-				$this->db->lock(array('phpgw_config','phpgw_app_sessions'));
-				if($this->appname == 'phpgwapi')
-				{
-					$this->db->query("delete from phpgw_app_sessions where sessionid = '0' and loginid = '0' and app = '".$this->appname."' and location = 'config'",__LINE__,__FILE__);
-				}
+				$this->db->lock(array('phpgw_config'));
 				foreach($this->config_data as $name => $value)
 				{
 					$this->save_value($name,$value);
@@ -92,17 +94,22 @@
 					}
 				}
 				$this->db->unlock();
+
+				if ($this->appname == 'phpgwapi')
+				{
+					$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
+				}
 			}
 			$this->read_data = $this->config_data;
 		}
 
-		/*!
-		@function save_value
-		@abstract updates or insert a single config-value
-		@param $name string name of the config-value
-		@param $value mixed content
-		@param $app string app-name, defaults to $this->appname set via the constructor
-		*/
+		/**
+		 * updates or insert a single config-value
+		 *
+		 * @param $name string name of the config-value
+		 * @param $value mixed content
+		 * @param $app string app-name, defaults to $this->appname set via the constructor
+		 */
 		function save_value($name,$value,$app=False)
 		{
 			//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
@@ -124,30 +131,30 @@
 			return $this->db->insert($this->table,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 
-		/*!
-		@function delete_repository
-		@abstract deletes the whole repository for $this->appname, appname has to be set via the constructor
-		*/
+		/**
+		 * deletes the whole repository for $this->appname, appname has to be set via the constructor
+		 *
+		 */
 		function delete_repository()
 		{
 			$this->db->delete("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
-		/*!
-		@function delete_value
-		@abstract deletes a single value from the repository, you need to call save_repository after
-		@param $variable_name string name of the config
-		*/
+		/**
+		 * deletes a single value from the repository, you need to call save_repository after
+		 *
+		 * @param $variable_name string name of the config
+		 */
 		function delete_value($variable_name)
 		{
 			unset($this->config_data[$variable_name]);
 		}
-		/*!
-		@function value
-		@abstract sets a single value in the repositry, you need to call save_repository after
-		@param $variable_name string name of the config
-		@param $variable_data mixed the content
-		*/
+		/**
+		 * sets a single value in the repositry, you need to call save_repository after
+		 *
+		 * @param $variable_name string name of the config
+		 * @param $variable_data mixed the content
+		 */
 		function value($variable_name,$variable_data)
 		{
 			$this->config_data[$variable_name] = $variable_data;

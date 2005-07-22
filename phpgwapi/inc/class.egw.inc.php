@@ -307,15 +307,16 @@ class egw
 	 */
 	function load_theme_info()
 	{
-		global $phpgw_info;	// the theme-files use this
+		global $phpgw_info;		// this is necesary as the included theme-files use $phpgw_info !!!
+
 		// at the moment we still need the theme files, hopefully they are gone soon in favor of CSS
 		if(@file_exists(EGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.theme'))
 		{
-			include(EGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.theme');
+			include($file = EGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.theme');
 		}
 		elseif(@file_exists(EGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
 		{
-			include(EGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
+			include($file = EGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
 		}
 		else
 		{
@@ -371,6 +372,19 @@ class egw
 		define('PHPGW_APP_TPL',EGW_APP_TPL);
 		define('PHPGW_IMAGES',EGW_IMAGES);
 		define('PHPGW_APP_IMAGES_DIR',EGW_APP_IMAGES_DIR);
+	}
+	
+	/**
+	 * force the session cache to be re-created, because some of it's data changed
+	 *
+	 * Needs to be called if user-preferences, system-config or enabled apps of the current user have been changed and 
+	 * the change should have immediate effect
+	 */
+	function invalidate_session_cache()
+	{
+		unset($_SESSION['egw_info_cache']);
+		unset($_SESSION['egw_included_files']);
+		unset($_SESSION['egw_object_cache']);
 	}
 
 	/**
