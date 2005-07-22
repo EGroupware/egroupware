@@ -599,7 +599,7 @@
 					$jscal = CreateObject('phpgwapi.jscalendar',False);
 					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
 				}
-				if (!$errors = $this->validate_user($userData))
+				if (!($errors = $this->validate_user($userData)))
 				{
 					$this->save_user($userData);
 					$GLOBALS['hook_values'] = $userData;
@@ -612,11 +612,24 @@
 					// there are also some other plugins
 					if (!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
 					{
+						if ($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+						{
+							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
+								'menuaction' => 'admin.uiaccounts.list_users',
+							));
+						}
 						ExecMethod('admin.uiaccounts.list_users');
 						return False;
 					}
 					else
 					{
+						if ($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+						{
+							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
+								'menuaction' => 'admin.uiaccounts.edit_user',
+								'account_id' => $_GET['account_id'],
+							));
+						}
 						ExecMethod('admin.uiaccounts.edit_user',$_GET['account_id']);
 						return False;
 					}
