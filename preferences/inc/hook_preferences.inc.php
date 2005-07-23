@@ -14,9 +14,9 @@
 
 	if ($GLOBALS['egw']->acl->check('changepassword',1))
 	{
-		$file['Change your Password'] = $GLOBALS['egw']->link('/preferences/changepassword.php');
+		$file['Change your Password'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uipassword.change');
 	}
-	$file['change your settings'] = $GLOBALS['egw']->link('/preferences/preferences.php','appname=preferences');
+	$file['change your settings'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=preferences');
 
 	display_section('preferences',$file);
 ?>

@@ -25,9 +25,12 @@
 
 	$menu_title = $GLOBALS['phpgw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 	$file = Array(
-	array('','text'=>'Filemanager Preferences','link'=>$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=filemanager')),
+		array(
+			'',
+			'text' => 'Filemanager Preferences',
+			'link' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=filemanager')
+		)
 	);
 	display_sidebox($appname,$menu_title,$file);
-
 }
 ?>

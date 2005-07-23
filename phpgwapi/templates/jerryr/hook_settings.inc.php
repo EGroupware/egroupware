@@ -10,7 +10,13 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-	create_section('Preferences for the idots template set');
+
+	$click_or_onmouseover = array(
+		'click'       => lang('Click'),
+		'onmouseover' => lang('On Mouse Over')
+	);
+
+	create_section('Preferences for the jerryr template set');
 
 	create_input_box(
 		'Max number of icons in navbar',
@@ -22,11 +28,6 @@
 		'Autohide Sidebox menu\'s',
 		'auto_hide_sidebox',
 		'Automatically hide the Sidebox menu\'s?'
-	);
-
-	$click_or_onmouseover = array(
-		'click'       => lang('Click'),
-		'onmouseover' => lang('On Mouse Over')
 	);
 
 	create_select_box(

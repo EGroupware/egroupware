@@ -15,8 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-//		'Preferences Old' => $GLOBALS['phpgw']->link('/filemanager/preferences.php'),
-		'Preferences' => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname)
+		'Preferences' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $appname)
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);

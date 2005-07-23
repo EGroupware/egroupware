@@ -10,6 +10,8 @@
 	*  option)                                                                 *
 	\**************************************************************************/
 
+	/* $Id$ */
+
 	//ExecMethod('filemanager.bofilemanager.check_set_default_prefs');
 
 	/*create_section('TESTING');
@@ -17,7 +19,15 @@
 	create_check_box('Use new experimental Filemanager?','experimental_new_code','The future filemanager, now for TESTING PURPOSES ONLY, please send bugreports');
 
 	*/
-	create_section('Display attributes');
+	settype($GLOBALS['settings'],'array');
+
+	$GLOBALS['settings']['display_attrs'] = array(
+		'type'   => 'section',
+		'title'  => 'Display attributes',
+		'name'   => 'display_attrs',
+		'xmlrpc' => True,
+		'admin'  => False
+	);
 
 	$file_attributes = Array(
 		'name' => 'File Name',
@@ -34,12 +44,24 @@
 		'version' => 'Version'
 	);
 
-	while (list ($key, $value) = each ($file_attributes))
+	foreach($file_attributes as $key => $value)
 	{
-		create_check_box($value,$key);
+		$GLOBALS['settings'][$key] = array(
+			'type'  => 'check',
+			'label' => "$value",
+			'name'  => $key,
+			'xmlrpc' => True,
+			'admin'  => False
+		);
 	}
-	
-	create_section('Other settings');
+
+	$GLOBALS['settings']['other_settings'] = array(
+		'type'   => 'section',
+		'title'  => 'Other settings',
+		'name'   => 'other_settings',
+		'xmlrpc' => True,
+		'admin'  => False
+	);
 
 	$other_checkboxes = array (
 		"viewinnewwin" => "View documents in new window", 
@@ -49,17 +71,29 @@
 		"dotfiles" => "Show .files", 
 	);
 
-	while (list ($key, $value) = each ($other_checkboxes))
+	foreach($other_checkboxes as $key => $value)
 	{
-		create_check_box($value,$key);
+		$GLOBALS['settings'][$key] = array(
+			'type'  => 'check',
+			'label' => "$value",
+			'name'  => $key,
+			'xmlrpc' => True,
+			'admin'  => False
+		);
 	}
 
-	$upload_boxes=array(
-		"1"=>"1",
-		"5"=>"5",
-		"10"=>"10",
-		"20"=>"20",
-		"30"=>"30"
+	$upload_boxes = array(
+		'1'  => '1',
+		'5'  => '5',
+		'10' => '10',
+		'20' => '20',
+		'30' => '30'
 	);
-	
-	create_select_box('Default number of upload fields to show','show_upload_boxes',$upload_boxes);
+
+	$GLOBALS['settings']['show_upload_boxes'] = array(
+		'label'  => 'Default number of upload fields to show',
+		'name'   => 'show_upload_boxes',
+		'values' => $upload_boxes,
+		'xmlrpc' => True,
+		'admin'  => False
+	);

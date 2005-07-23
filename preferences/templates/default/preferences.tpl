@@ -18,7 +18,8 @@
 
  <tr height="30" valign="bottom">
   <td align="left">
-   <input type="submit" name="submit" value="{lang_submit}"> &nbsp;
+   <input type="submit" name="save" value="{lang_save}"> &nbsp;
+   <input type="submit" name="apply" value="{lang_apply}"> &nbsp;
    <input type="submit" name="cancel" value="{lang_cancel}">
   </td>
   <td align="right">&nbsp; {help_button}</td>
