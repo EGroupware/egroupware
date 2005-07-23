@@ -18,7 +18,6 @@
 		1 => lang('Yes'),
 		2 => lang('Yes').' - '.lang('show list of upcoming entries'),
 	);
-	unset($show_entries);
 
 	$ui =& CreateObject('infolog.uiinfolog');	// need some labels from
 	foreach($ui->filters as $key => $label)
@@ -30,7 +29,8 @@
 		'all'    => lang('all links and attachments'),
 		'links'  => lang('only the links'),
 		'attach' => lang('only the attachments'),
-		'none'   => lang('no links or attachments')
+		'none'   => lang('no links or attachments'),
+ 		'no_describtion' => lang('no describtion, links or attachments'),
 	);
 
 	/* Settings array for this app */
