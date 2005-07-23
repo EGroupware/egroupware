@@ -22,7 +22,7 @@
 
 		function uisettings()
 		{
-			$this->bo = CreateObject('preferences.bosettings');
+			$this->bo =& CreateObject('preferences.bosettings');
 
 			if($GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
