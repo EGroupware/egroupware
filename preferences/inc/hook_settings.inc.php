@@ -70,9 +70,9 @@
 	$sbox = createobject('phpgwapi.sbox');
 	$langs = $GLOBALS['egw']->translation->get_installed_langs();
 
-	foreach($GLOBALS['egw_info']['user']['apps'] as $app)
+	$user_apps = array();
+	foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
 	{
-		$app = $app[0];
 		if($GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $app)
 		{
 			$user_apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'] ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);

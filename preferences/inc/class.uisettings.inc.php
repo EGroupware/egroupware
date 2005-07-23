@@ -22,7 +22,7 @@
 
 		function uisettings()
 		{
-			$this->bo =& CreateObject('preferences.bosettings');
+			$this->bo =& CreateObject('preferences.bosettings',$_GET['appname']);
 
 			if($GLOBALS['egw']->acl->check('run',1,'admin'))
 			{
@@ -149,7 +149,7 @@
 				{
 					if($valarray['admin'])
 					{
-						next;
+						continue;
 					}
 				}
 				switch($valarray['type'])
@@ -230,13 +230,7 @@
 			// TODO - what is the purpose of this?
 			if(count($notifies))	// there have been notifies in the hook, we need to save in the session
 			{
-				$this->bo->save_session(
-					$GLOBALS['type'],	// save our state in the app-session
-					$this->show_help,
-					$this->prefix,
-					$_GET['appname'],	// we use this to reset prefix on appname-change
-					$notifies
-				);
+				$this->bo->save_session($_GET['appname'],$GLOBALS['type'],$this->show_help,$this->prefix,$notifies);
 				//_debug_array($notifies);
 			}
 			if($this->is_admin())
@@ -404,7 +398,7 @@
 				$s .= '<option value="' . $var . '"';
 				if("$var" == "$selected")	// the "'s are necessary to force a string-compare
 				{
-					$s .= ' selected';
+					$s .= ' selected="1"';
 				}
 				$s .= '>' . $value . '</option>';
 			}
@@ -490,8 +484,8 @@
 
 			$notifies[$name] = $vars;	// this gets saved in the app_session for re-translation
 
-			$help = $help && $run_lang ? lang($help) : $help;
-			if($subst_help)
+			$help = $help && ($run_lang || is_null($run_lang)) ? lang($help) : $help;
+			if($subst_help || is_null($subst_help))
 			{
 				$help .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
 				foreach($vars as $var => $var_help)

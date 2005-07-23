@@ -43,36 +43,35 @@
 			$this->xmlrpc = @is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 			$this->session_data = $GLOBALS['egw']->session->appsession('session_data','preferences');
 
-			if($appname)
-			{
-				$this->call_hook($appname);
-			}
+			$this->appname = $appname;
 		}
 
-		function save_session($appname,$type,$show_help,$prefix)
+		function save_session($appname,$type,$show_help,$prefix,$notifies='')
 		{
 			$GLOBALS['egw']->session->appsession('session_data','preferences',array(
 				'type'      => $type,	// save our state in the app-session
 				'show_help' => $show_help,
 				'prefix'    => $prefix,
-				'appname'   => $appname		// we use this to reset prefix on appname-change
+				'appname'   => $appname,		// we use this to reset prefix on appname-change
+				'notifies'  => $notifies,
 			));
 		}
 
 		function call_hook($appname)
 		{
 			$this->appname = $appname;
-			if(!$GLOBALS['egw']->hooks->single('settings',$this->appname))
-			{
-				return False;
-			}
-			$this->settings = array_merge($this->settings,$GLOBALS['settings']);
 
 			$GLOBALS['egw']->translation->add_app($this->appname);
 			if($this->appname != 'preferences')
 			{
 				$GLOBALS['egw']->translation->add_app('preferences');	// we need the prefs translations too
 			}
+
+			if(!$GLOBALS['egw']->hooks->single('settings',$this->appname))
+			{
+				return False;
+			}
+			$this->settings = array_merge($this->settings,$GLOBALS['settings']);
 
 			/* Remove ui-only settings */
 			if($this->xmlrpc)
@@ -165,11 +164,11 @@
 							continue;	// dont write empty password-fields
 						}
 					}
-					$prefs[$var] = stripslashes($value);
+					$prefs[$var] = get_magic_quotes_gpc() ? stripslashes($value) : $value;
 
-					if($notifies[$var])	// need to translate the key-words back
+					if($this->session_data['notifies'][$var])	// need to translate the key-words back
 					{
-						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
+						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$this->session_data['notifies'][$var],True);
 					}
 				}
 				else
