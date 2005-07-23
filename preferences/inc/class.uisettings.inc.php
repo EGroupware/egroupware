@@ -231,11 +231,11 @@
 			if(count($notifies))	// there have been notifies in the hook, we need to save in the session
 			{
 				$this->bo->save_session(
-					'type'      => $GLOBALS['type'],	// save our state in the app-session
-					'show_help' => $this->show_help,
-					'prefix'    => $this->prefix,
-					'appname'   => $_GET['appname'],	// we use this to reset prefix on appname-change
-					'notifies'  => $notifies
+					$GLOBALS['type'],	// save our state in the app-session
+					$this->show_help,
+					$this->prefix,
+					$_GET['appname'],	// we use this to reset prefix on appname-change
+					$notifies
 				);
 				//_debug_array($notifies);
 			}

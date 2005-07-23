@@ -232,7 +232,7 @@
 							'function'  => '_read',
 							'signature' => array(array(xmlrpcStruct,xmlrpcString,xmlrpcString,xmlrpcString)),
 							'docstring' => lang('Read prefs for the specified application.')
-						)
+						),
 						'write' => array(
 							'function'  => 'process_array',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcString,xmlrpcString)),
