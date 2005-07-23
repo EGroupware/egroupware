@@ -444,7 +444,7 @@ function load_cal(url,id) {
 		{
 			$menu_title = lang('Preferences');
 			$file = Array(
-				'Calendar preferences'=>$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=calendar'),
+				'Calendar preferences'=>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
 				'Grant Access'=>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
 				'Edit Categories' =>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			);
