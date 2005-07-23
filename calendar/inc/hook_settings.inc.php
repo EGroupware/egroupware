@@ -208,8 +208,8 @@
 		),
 		'notifyModified' => array(
 			'type'   => 'notify',
-			'Notification messages for modified events ',
-			'notifyModified',
+			'label'  => 'Notification messages for modified events ',
+			'name'   => 'notifyModified',
 			'rows'   => 5,
 			'cols'   => 50,
 			'help'   => 'This message is sent for modified or moved events.',
