@@ -39,7 +39,7 @@
 
 		function hooks($db='')
 		{
-			$this->db = $db ? $db : $GLOBALS['phpgw']->db;	// this is to allow setup to set the db
+			$this->db = $db ? $db : $GLOBALS['egw']->db;	// this is to allow setup to set the db
 
 			$this->db->query("SELECT hook_appname, hook_location, hook_filename FROM phpgw_hooks",__LINE__,__FILE__);
 			while( $this->db->next_record() )
@@ -71,7 +71,7 @@
 			if ($order == '')
 			{
 				$order = is_array($args) && isset($args['order']) ? $args['order'] : 
-					array($GLOBALS['phpgw_info']['flags']['currentapp']);
+					array($GLOBALS['egw_info']['flags']['currentapp']);
 			}
 
 			/* First include the ordered apps hook file */
@@ -88,11 +88,11 @@
 			/* Then add the rest */
 			if ($no_permission_check)
 			{
-				$apps = $GLOBALS['phpgw_info']['apps'];
+				$apps = $GLOBALS['egw_info']['apps'];
 			}
 			else
 			{
-				$apps = $GLOBALS['phpgw_info']['user']['apps'];
+				$apps = $GLOBALS['egw_info']['user']['apps'];
 			}
 			settype($apps,'array');
 			foreach($apps as $app)
@@ -132,7 +132,7 @@
 			}
 			if (!$appname)
 			{
-				$appname = is_array($args) && isset($args['appname']) ? $args['appname'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$appname = is_array($args) && isset($args['appname']) ? $args['appname'] : $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			$SEP = filesystem_separator();
 
@@ -147,9 +147,9 @@
 					{
 						$method = 'hook_'.$location.'.inc.php';
 					}
-					$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $method;
+					$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $method;
 					if (file_exists($f) &&
-						( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
+						( $GLOBALS['egw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
 					{
 						include($f);
 						return True;
@@ -177,7 +177,7 @@
 		function count($location)
 		{
 			$count = 0;
-			foreach($GLOBALS['phpgw_info']['user']['apps'] as $appname => $data)
+			foreach($GLOBALS['egw_info']['user']['apps'] as $appname => $data)
 			{
 				if (isset($this->found_hooks[$appname][$location]))
 				{
@@ -248,9 +248,9 @@
 		{
 			$SEP = filesystem_separator();
 			
-			foreach($GLOBALS['phpgw_info']['apps'] as $appname => $app)
+			foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
 			{			
-				$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
+				$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
 				if(@file_exists($f))
 				{
 					include($f);
