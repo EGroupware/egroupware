@@ -38,6 +38,7 @@ class Horde_SyncML_Sync {
 
     function &factory($alert)
     {
+    	Horde::logMessage('SyncML: new sync for alerttype ' . $alert, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         switch ($alert) {
         case ALERT_TWO_WAY:
             include_once 'Horde/SyncML/Sync/TwoWaySync.php';

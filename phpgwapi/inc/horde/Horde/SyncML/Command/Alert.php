@@ -312,10 +312,9 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         switch ($this->_xmlStack) {
         case 1:
             $state = & $_SESSION['SyncML.state'];
-            Horde::logMessage('SyncML: looking for sync for ' . $this->_targetLocURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
             $sync = $state->getSync($this->_targetLocURI);
 
-            if (!$sync) {
+            if (!$sync && $this->_alert < ALERT_RESULT_ALERT) {
                 Horde::logMessage('SyncML: create new sync for ' . $this->_targetLocURI . ' ' . $this->_alert, __FILE__, __LINE__, PEAR_LOG_DEBUG);
                 $sync = &Horde_SyncML_Sync::factory($this->_alert);
                 
