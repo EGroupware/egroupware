@@ -92,7 +92,7 @@
 
 	for ($i=0; $i < 24; ++$i)
 	{
-		$options[$i] = $GLOBALS['egw']->common->formattime($i,'00');
+		$times[$i] = $GLOBALS['egw']->common->formattime($i,'00');
 	}
 
 	$intervals = array(
@@ -272,7 +272,7 @@
 			'type'   => 'select',
 			'label'  => 'work day starts on',
 			'name'   => 'workdaystarts',
-			'values' => $options,
+			'values' => $times,
 			'help'   => 'This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.',
 			'xmlrpc' => True,
 			'admin'  => False
@@ -281,7 +281,7 @@
 			'type'   => 'select',
 			'label'  => 'work day ends on',
 			'name'   => 'workdayends',
-			'values' => $options,
+			'values' => $times,
 			'help'   => 'This defines the end of your dayview. Events after this time, are shown below the dayview.',
 			'xmlrpc' => True,
 			'admin'  => False
@@ -359,14 +359,15 @@
 		),
 */
 		'freebusy' => array(
-			'type'  => 'select',
+			'type'  => 'check',
 			'label' => 'Make freebusy information available to not loged in persons?',
 			'name'  => 'freebusy',
 			'help'  => $freebusy_help,
+			'run_lang' => false,
 			'default' => '',
 			'subst_help' => False,
 			'xmlrpc' => True,
-			'admin'  => False
+			'admin'  => False,
 		),
 		'freebusy_pw' => array(
 			'type'  => 'input',
