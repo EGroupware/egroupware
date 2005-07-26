@@ -52,7 +52,6 @@ application name	admin	zt	應用程式名稱
 application title	admin	zt	應用程式標題
 applications	admin	zt	應用程式
 applications list	admin	zt	應用程式列表
-apply	admin	zt	同意
 are you sure you want to delete the application %1 ?	admin	zt	您確定要刪除這個應用程式%1？
 are you sure you want to delete this account ?	admin	zt	您確定要移除此帳號嗎？
 are you sure you want to delete this application ?	admin	zt	您確定要移除此應用程式嗎？

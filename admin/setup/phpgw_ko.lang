@@ -50,7 +50,6 @@ application name	admin	ko	응용프로그램 이름
 application title	admin	ko	응용프로그램 제목
 applications	admin	ko	응용프로그램들
 applications list	admin	ko	응용프로그램 목록
-apply	admin	ko	적용
 are you sure you want to delete the application %1 ?	admin	ko	%1 응용프로그램을 정말 삭제하시겠습니까?
 are you sure you want to delete this account ?	admin	ko	이 계정을 정말 삭제하시겠습니까 ?
 are you sure you want to delete this application ?	admin	ko	이 응용프로그램을 정말 삭제하시겠습니까?

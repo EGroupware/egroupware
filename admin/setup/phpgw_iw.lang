@@ -80,7 +80,6 @@ application title	admin	iw	כותרת היישום
 application: %1, file: %2, line: "%3"	setup	iw	יישום: %1, קובץ: %2, שורה:"%3"
 applications	admin	iw	יישומים
 applications list	admin	iw	רשימת יישומים
-apply	admin	iw	בצע
 are you sure you want to delete the application %1 ?	admin	iw	?בטוח שברצונך למחוק את היישום %1
 are you sure you want to delete this account ?	admin	iw	?בטוח שברצונך למחוק חשבון זה
 are you sure you want to delete this application ?	admin	iw	?בטוח שברצונך למחוק יישום זה

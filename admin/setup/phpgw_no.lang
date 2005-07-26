@@ -49,7 +49,6 @@ application name	admin	no	Applikasjonsnavn
 application title	admin	no	Applikasjonstittel
 applications	admin	no	Applikasjoner
 applications list	admin	no	Applikasjoneliste
-apply	admin	no	bruke
 are you sure you want to delete the application %1 ?	admin	no	Er du sikker på at du vil slette applikasjon %1 ?
 are you sure you want to delete this account ?	admin	no	Er du sikker på at du vil slette denne kontoen?
 are you sure you want to delete this application ?	admin	no	Er du sikker på at du vil slette denne applikasjonen?

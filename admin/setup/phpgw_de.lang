@@ -52,7 +52,6 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
-apply	admin	de	anwenden
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, dass Sie diese Applikation löschen möchten?

@@ -48,7 +48,6 @@ application name	admin	zh	应用程序名称
 application title	admin	zh	应用程序标题
 applications	admin	zh	应用程序
 applications list	admin	zh	列举应用程序
-apply	admin	zh	应用
 are you sure you want to delete the application %1 ?	admin	zh	确定要删除应用程序%1吗?
 are you sure you want to delete this account ?	admin	zh	确定要删除该账户吗?
 are you sure you want to delete this application ?	admin	zh	确定要删除该应用程序吗?

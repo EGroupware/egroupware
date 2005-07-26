@@ -47,7 +47,6 @@ application name	admin	nl	Toepassingsnaam
 application title	admin	nl	Toepassingstitel
 applications	admin	nl	Toepassingen
 applications list	admin	nl	Toepassingenlijst
-apply	admin	nl	toepassen
 are you sure you want to delete the application %1 ?	admin	nl	Weet u zeker dat de toepassing %1 wilt verwijderen?
 are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
 are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
