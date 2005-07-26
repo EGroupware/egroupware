@@ -211,7 +211,7 @@
 			}
 		}
 
-		/* TODO these need work */
+		/* TODO these need work and may change without notice.  Please remove this line when this is settled. */
 		function list_methods($_type='xmlrpc')
 		{
 			/*
